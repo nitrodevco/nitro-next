@@ -9,10 +9,7 @@ export interface IlluminaDarkHeaderLayoutProps {
 export const IlluminaDarkHeaderLayout = ({ headerContainer, layout }: IlluminaDarkHeaderLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 0, height: 0, ...layout }}>
-            <IlluminaDarkHeaderLayoutHeaderContainer
-                tags={[ '_EXCLUDE', '_INTERNAL' ]}
-                {...headerContainer}
-            />
+            <IlluminaDarkHeaderLayoutHeaderContainer {...headerContainer} />
         </Region>
     );
 };
@@ -21,19 +18,16 @@ export const IlluminaDarkHeaderLayout = ({ headerContainer, layout }: IlluminaDa
 export interface IlluminaDarkHeaderLayoutHeaderContainerProps {
     captionHeaderTitleText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IlluminaDarkHeaderLayoutHeaderContainer = ({ captionHeaderTitleText, layout, tags }: IlluminaDarkHeaderLayoutHeaderContainerProps) => {
+export const IlluminaDarkHeaderLayoutHeaderContainer = ({ captionHeaderTitleText, layout }: IlluminaDarkHeaderLayoutHeaderContainerProps) => {
     return (
         <Region
             name="header_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 30, ...layout }}
         >
             <Region
                 name="header_title_text"
-                tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL', '_COLORIZE' ]}
                 layout={{ position: 'absolute', left: 20, width: 12, top: 2, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 backgroundColor="#24211c"
             >

@@ -34,14 +34,12 @@ export interface ErrorInfoViewLayoutContentsProps {
     captionErrorText?: string;
     layout?: BoxLayout;
     srcTypeIcon?: string;
-    tags?: string[];
 }
 
-export const ErrorInfoViewLayoutContents = ({ captionErrorName, captionErrorText, layout, srcTypeIcon, tags }: ErrorInfoViewLayoutContentsProps) => {
+export const ErrorInfoViewLayoutContents = ({ captionErrorName, captionErrorText, layout, srcTypeIcon }: ErrorInfoViewLayoutContentsProps) => {
     return (
         <Region
             name="contents"
-            tags={tags}
             layout={{ position: 'absolute', left: 8, right: 9, top: 3, height: 100, minHeight: 100, justifyContent: 'center', ...layout }}
         >
             <ThemeImage

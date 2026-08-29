@@ -20,14 +20,12 @@ export interface LayoutBuildersClubLoyaltyLayoutCtlgBuildersClubLoyaltyProps {
     builderLoyaltyWidget?: BuilderLoyaltyWidgetProps;
     captionCtlgDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LayoutBuildersClubLoyaltyLayoutCtlgBuildersClubLoyalty = ({ builderLoyaltyWidget, captionCtlgDescription, layout, tags }: LayoutBuildersClubLoyaltyLayoutCtlgBuildersClubLoyaltyProps) => {
+export const LayoutBuildersClubLoyaltyLayoutCtlgBuildersClubLoyalty = ({ builderLoyaltyWidget, captionCtlgDescription, layout }: LayoutBuildersClubLoyaltyLayoutCtlgBuildersClubLoyaltyProps) => {
     return (
         <Region
             name="ctlg_builders_club_loyalty"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <Region

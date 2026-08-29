@@ -25,14 +25,12 @@ export const SeparatorLayout = ({ children, layout, srcCanvas }: SeparatorLayout
 /** Named region `children` of SeparatorLayout - configured through the parent's `children` prop. */
 export interface SeparatorLayoutChildrenProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SeparatorLayoutChildren = ({ layout, tags }: SeparatorLayoutChildrenProps) => {
+export const SeparatorLayoutChildren = ({ layout }: SeparatorLayoutChildrenProps) => {
     return (
         <Region
             name="children"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         />
     );

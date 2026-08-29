@@ -70,14 +70,12 @@ export const FastfoodGamePromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
 export interface FastfoodGamePromoLayoutCol1Props {
     layout?: BoxLayout;
     srcTeaserImage?: string;
-    tags?: string[];
 }
 
-export const FastfoodGamePromoLayoutCol1 = ({ layout, srcTeaserImage, tags }: FastfoodGamePromoLayoutCol1Props) => {
+export const FastfoodGamePromoLayoutCol1 = ({ layout, srcTeaserImage }: FastfoodGamePromoLayoutCol1Props) => {
     return (
         <Region
             name="col1"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 245, ...layout }}
         >
@@ -93,14 +91,12 @@ export const FastfoodGamePromoLayoutCol1 = ({ layout, srcTeaserImage, tags }: Fa
 /** Named region `spacing` of FastfoodGamePromoLayout - configured through the parent's `spacing` prop. */
 export interface FastfoodGamePromoLayoutSpacingProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FastfoodGamePromoLayoutSpacing = ({ layout, tags }: FastfoodGamePromoLayoutSpacingProps) => {
+export const FastfoodGamePromoLayoutSpacing = ({ layout }: FastfoodGamePromoLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 250, height: 6, flexShrink: 0, ...layout }}
         />

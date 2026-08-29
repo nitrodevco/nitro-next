@@ -22,14 +22,12 @@ export interface GiftPaletteItemLayoutColorContainerProps {
     srcBorder?: string;
     srcColor?: string;
     srcSelection?: string;
-    tags?: string[];
 }
 
-export const GiftPaletteItemLayoutColorContainer = ({ layout, onColorContainer, srcBorder, srcColor, srcSelection, tags }: GiftPaletteItemLayoutColorContainerProps) => {
+export const GiftPaletteItemLayoutColorContainer = ({ layout, onColorContainer, srcBorder, srcColor, srcSelection }: GiftPaletteItemLayoutColorContainerProps) => {
     return (
         <Region
             name="color_container"
-            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onColorContainer}
             cursor="pointer"

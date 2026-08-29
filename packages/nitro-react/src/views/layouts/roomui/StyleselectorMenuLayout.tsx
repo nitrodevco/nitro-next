@@ -22,14 +22,12 @@ export const StyleselectorMenuLayout = ({ itemgrid, layout }: StyleselectorMenuL
 /** Named region `itemgrid` of StyleselectorMenuLayout - configured through the parent's `itemgrid` prop. */
 export interface StyleselectorMenuLayoutItemgridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const StyleselectorMenuLayoutItemgrid = ({ layout, tags }: StyleselectorMenuLayoutItemgridProps) => {
+export const StyleselectorMenuLayoutItemgrid = ({ layout }: StyleselectorMenuLayoutItemgridProps) => {
     return (
         <Region
             name="itemgrid"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, width: 55, top: 5, height: 33, flexDirection: 'row', flexWrap: 'wrap', gap: 1, ...layout }}
         />
     );

@@ -18,14 +18,12 @@ export const RosBadwordLayout = ({ badwordContainer, layout }: RosBadwordLayoutP
 export interface RosBadwordLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
-    tags?: string[];
 }
 
-export const RosBadwordLayoutBgRegion = ({ layout, onBgRegion, tags }: RosBadwordLayoutBgRegionProps) => {
+export const RosBadwordLayoutBgRegion = ({ layout, onBgRegion }: RosBadwordLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 111, top: 0, height: 20, ...layout }}
@@ -38,14 +36,12 @@ export interface RosBadwordLayoutBadwordContainerProps {
     bgRegion?: RosBadwordLayoutBgRegionProps;
     captionBadwordTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RosBadwordLayoutBadwordContainer = ({ bgRegion, captionBadwordTxt, layout, tags }: RosBadwordLayoutBadwordContainerProps) => {
+export const RosBadwordLayoutBadwordContainer = ({ bgRegion, captionBadwordTxt, layout }: RosBadwordLayoutBadwordContainerProps) => {
     return (
         <Region
             name="badword_container"
-            tags={tags}
             backgroundColor="#cc0000"
             layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 20, ...layout }}
         >

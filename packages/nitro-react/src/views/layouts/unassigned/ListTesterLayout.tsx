@@ -37,10 +37,9 @@ export const ListTesterLayout = ({ layout, listHorizontal, listVertical, onClose
 /** Named region `_list_vertical` of ListTesterLayout - configured through the parent's `listVertical` prop. */
 export interface ListTesterLayoutListVerticalProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ListTesterLayoutListVertical = ({ layout, tags }: ListTesterLayoutListVerticalProps) => {
+export const ListTesterLayoutListVertical = ({ layout }: ListTesterLayoutListVerticalProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -48,7 +47,6 @@ export const ListTesterLayoutListVertical = ({ layout, tags }: ListTesterLayoutL
         >
             <Region
                 name="_list_vertical"
-                tags={tags}
                 backgroundColor="#eeeeee"
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
@@ -59,10 +57,9 @@ export const ListTesterLayoutListVertical = ({ layout, tags }: ListTesterLayoutL
 /** Named region `_list_horizontal` of ListTesterLayout - configured through the parent's `listHorizontal` prop. */
 export interface ListTesterLayoutListHorizontalProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ListTesterLayoutListHorizontal = ({ layout, tags }: ListTesterLayoutListHorizontalProps) => {
+export const ListTesterLayoutListHorizontal = ({ layout }: ListTesterLayoutListHorizontalProps) => {
     return (
         <ScrollArea
             orientation="horizontal"
@@ -70,7 +67,6 @@ export const ListTesterLayoutListHorizontal = ({ layout, tags }: ListTesterLayou
         >
             <Region
                 name="_list_horizontal"
-                tags={tags}
                 backgroundColor="#cceeee"
                 layout={{ flexDirection: 'row', width: '100%' }}
             />

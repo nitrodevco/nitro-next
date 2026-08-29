@@ -18,14 +18,12 @@ export const BarLayout = ({ border, layout }: BarLayoutProps) => {
 /** Named region `friendtools` of BarLayout - configured through the parent's `friendtools` prop. */
 export interface BarLayoutFriendtoolsProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BarLayoutFriendtools = ({ layout, tags }: BarLayoutFriendtoolsProps) => {
+export const BarLayoutFriendtools = ({ layout }: BarLayoutFriendtoolsProps) => {
     return (
         <Region
             name="friendtools"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 270, top: 5, height: 32, ...layout }}
         />
     );
@@ -36,14 +34,12 @@ export interface BarLayoutMessengerProps {
     layout?: BoxLayout;
     onMessenger?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const BarLayoutMessenger = ({ layout, onMessenger, srcIcon, tags }: BarLayoutMessengerProps) => {
+export const BarLayoutMessenger = ({ layout, onMessenger, srcIcon }: BarLayoutMessengerProps) => {
     return (
         <Region
             name="messenger"
-            tags={tags}
             onPointerTap={onMessenger}
             cursor="pointer"
             layout={{ position: 'absolute', left: 280, width: 42, top: 5, height: 42, ...layout }}
@@ -60,14 +56,12 @@ export const BarLayoutMessenger = ({ layout, onMessenger, srcIcon, tags }: BarLa
 /** Named region `list` of BarLayout - configured through the parent's `list` prop. */
 export interface BarLayoutListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BarLayoutList = ({ layout, tags }: BarLayoutListProps) => {
+export const BarLayoutList = ({ layout }: BarLayoutListProps) => {
     return (
         <Region
             name="list"
-            tags={tags}
             layout={{ position: 'absolute', left: 24, width: 0, top: 0, height: 38, flexDirection: 'row', gap: 3, ...layout }}
         />
     );
@@ -79,21 +73,18 @@ export interface BarLayoutWrapperProps {
     list?: BarLayoutListProps;
     onButtonLeftPage?: () => void;
     onButtonRightPage?: () => void;
-    tags?: string[];
 }
 
-export const BarLayoutWrapper = ({ layout, list, onButtonLeftPage, onButtonRightPage, tags }: BarLayoutWrapperProps) => {
+export const BarLayoutWrapper = ({ layout, list, onButtonLeftPage, onButtonRightPage }: BarLayoutWrapperProps) => {
     return (
         <Region
             name="wrapper"
-            tags={tags}
             layout={{ position: 'absolute', width: 48, top: 0, height: 38, ...layout }}
         >
             <BarLayoutList {...list} />
             <ContainerButton
                 variant="3"
                 name="button_left_page"
-                tags={[ 'arrow', 'left' ]}
                 onPointerTap={onButtonLeftPage}
                 layout={{ position: 'absolute', left: 0, width: 24, top: 7, height: 24 }}
             >
@@ -106,7 +97,6 @@ export const BarLayoutWrapper = ({ layout, list, onButtonLeftPage, onButtonRight
             <ContainerButton
                 variant="3"
                 name="button_right_page"
-                tags={[ 'arrow', 'right' ]}
                 onPointerTap={onButtonRightPage}
                 layout={{ position: 'absolute', right: 0, width: 24, top: 7, height: 24 }}
             >
@@ -124,15 +114,13 @@ export const BarLayoutWrapper = ({ layout, list, onButtonLeftPage, onButtonRight
 export interface BarLayoutContainerProps {
     layout?: BoxLayout;
     onContainer?: () => void;
-    tags?: string[];
     wrapper?: BarLayoutWrapperProps;
 }
 
-export const BarLayoutContainer = ({ layout, onContainer, tags, wrapper }: BarLayoutContainerProps) => {
+export const BarLayoutContainer = ({ layout, onContainer, wrapper }: BarLayoutContainerProps) => {
     return (
         <Region
             name="container"
-            tags={tags}
             onPointerTap={onContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 330, right: 10, top: 5, height: 42, justifyContent: 'center', ...layout }}
@@ -149,14 +137,12 @@ export interface BarLayoutBorderProps {
     layout?: BoxLayout;
     messenger?: BarLayoutMessengerProps;
     onBorder?: () => void;
-    tags?: string[];
 }
 
-export const BarLayoutBorder = ({ container, friendtools, layout, messenger, onBorder, tags }: BarLayoutBorderProps) => {
+export const BarLayoutBorder = ({ container, friendtools, layout, messenger, onBorder }: BarLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            tags={tags}
             onPointerTap={onBorder}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 420, top: 0, height: 48, ...layout }}

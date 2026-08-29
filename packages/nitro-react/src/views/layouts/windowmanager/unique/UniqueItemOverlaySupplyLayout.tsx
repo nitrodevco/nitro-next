@@ -25,16 +25,14 @@ export interface UniqueItemOverlaySupplyLayoutLimitedItemWidgetProps {
     layout?: BoxLayout;
     srcPlaque?: string;
     srcUniqueItemSoldOutBitmap?: string;
-    tags?: string[];
 }
 
-export const UniqueItemOverlaySupplyLayoutLimitedItemWidget = ({ captionItemsLeft, captionItemsLeftCount, captionItemsTotal, captionItemsTotalCount, layout, srcPlaque, srcUniqueItemSoldOutBitmap, tags }: UniqueItemOverlaySupplyLayoutLimitedItemWidgetProps) => {
+export const UniqueItemOverlaySupplyLayoutLimitedItemWidget = ({ captionItemsLeft, captionItemsLeftCount, captionItemsTotal, captionItemsTotalCount, layout, srcPlaque, srcUniqueItemSoldOutBitmap }: UniqueItemOverlaySupplyLayoutLimitedItemWidgetProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="limitedItemWidget"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 40, ...layout }}
         >
             <ThemeImage

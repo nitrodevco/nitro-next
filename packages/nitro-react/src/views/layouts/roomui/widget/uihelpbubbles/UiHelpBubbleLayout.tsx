@@ -19,14 +19,12 @@ export interface UiHelpBubbleLayoutProfileRegionProps {
     captionHelpBubbleText?: string;
     layout?: BoxLayout;
     onProfileRegion?: () => void;
-    tags?: string[];
 }
 
-export const UiHelpBubbleLayoutProfileRegion = ({ captionHelpBubbleText, layout, onProfileRegion, tags }: UiHelpBubbleLayoutProfileRegionProps) => {
+export const UiHelpBubbleLayoutProfileRegion = ({ captionHelpBubbleText, layout, onProfileRegion }: UiHelpBubbleLayoutProfileRegionProps) => {
     return (
         <Region
             name="profile_region"
-            tags={tags}
             onPointerTap={onProfileRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 2, right: 18, top: 2, bottom: 58, maxWidth: 200, ...layout }}
@@ -50,15 +48,13 @@ export interface UiHelpBubbleLayoutMasterContainerProps {
     layout?: BoxLayout;
     onHelpBubbleBtnOk?: () => void;
     profileRegion?: UiHelpBubbleLayoutProfileRegionProps;
-    tags?: string[];
     visibleBubble?: boolean;
 }
 
-export const UiHelpBubbleLayoutMasterContainer = ({ layout, onHelpBubbleBtnOk, profileRegion, tags, visibleBubble }: UiHelpBubbleLayoutMasterContainerProps) => {
+export const UiHelpBubbleLayoutMasterContainer = ({ layout, onHelpBubbleBtnOk, profileRegion, visibleBubble }: UiHelpBubbleLayoutMasterContainerProps) => {
     return (
         <Region
             name="master_container"
-            tags={tags}
             layout={{ position: 'absolute', right: 0, width: 180, top: 0, height: 500, maxWidth: 180, ...layout }}
         >
             <Region

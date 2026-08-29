@@ -20,14 +20,12 @@ export interface GrsFrontPageSearchBigLayoutContProps {
     layout?: BoxLayout;
     onCont?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const GrsFrontPageSearchBigLayoutCont = ({ captionCaption, layout, onCont, srcIcon, tags }: GrsFrontPageSearchBigLayoutContProps) => {
+export const GrsFrontPageSearchBigLayoutCont = ({ captionCaption, layout, onCont, srcIcon }: GrsFrontPageSearchBigLayoutContProps) => {
     return (
         <Region
             name="cont"
-            tags={tags}
             onPointerTap={onCont}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: -251, top: 0, height: 42, ...layout }}

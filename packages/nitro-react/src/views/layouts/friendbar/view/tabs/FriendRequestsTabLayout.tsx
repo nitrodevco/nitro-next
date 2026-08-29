@@ -104,16 +104,14 @@ export interface FriendRequestsTabLayoutHeaderItemProps {
     layout?: BoxLayout;
     onHeader?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const FriendRequestsTabLayoutHeaderItem = ({ captionLabel, layout, onHeader, srcIcon, tags }: FriendRequestsTabLayoutHeaderItemProps) => {
+export const FriendRequestsTabLayoutHeaderItem = ({ captionLabel, layout, onHeader, srcIcon }: FriendRequestsTabLayoutHeaderItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             onPointerTap={onHeader}
             cursor="pointer"
             layout={{ width: 112, height: 31, flexShrink: 0, ...layout }}
@@ -125,7 +123,6 @@ export const FriendRequestsTabLayoutHeaderItem = ({ captionLabel, layout, onHead
             />
             <Region
                 name="label"
-                tags={[ 'label' ]}
                 layout={{ position: 'absolute', left: 29, width: 77, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -142,14 +139,12 @@ export const FriendRequestsTabLayoutHeaderItem = ({ captionLabel, layout, onHead
 export interface FriendRequestsTabLayoutTabContentProps {
     itemsTabContent?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FriendRequestsTabLayoutTabContent = ({ itemsTabContent, layout, tags }: FriendRequestsTabLayoutTabContentProps) => {
+export const FriendRequestsTabLayoutTabContent = ({ itemsTabContent, layout }: FriendRequestsTabLayoutTabContentProps) => {
     return (
         <Region
             name="tab_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 40, minHeight: 40, flexDirection: 'column', ...layout }}
         >
             {itemsTabContent ?? (
@@ -164,14 +159,12 @@ export interface FriendRequestsTabLayoutRegionProfileProps {
     layout?: BoxLayout;
     onRegionProfile?: () => void;
     srcCanvas?: string;
-    tags?: string[];
 }
 
-export const FriendRequestsTabLayoutRegionProfile = ({ layout, onRegionProfile, srcCanvas, tags }: FriendRequestsTabLayoutRegionProfileProps) => {
+export const FriendRequestsTabLayoutRegionProfile = ({ layout, onRegionProfile, srcCanvas }: FriendRequestsTabLayoutRegionProfileProps) => {
     return (
         <Region
             name="region_profile"
-            tags={tags}
             onPointerTap={onRegionProfile}
             cursor="pointer"
             layout={{ position: 'absolute', left: 1, right: 156, top: 3, height: 44, ...layout }}
@@ -190,14 +183,12 @@ export interface FriendRequestsTabLayoutRegionProfileNameProps {
     captionName?: string;
     layout?: BoxLayout;
     onRegionProfileName?: () => void;
-    tags?: string[];
 }
 
-export const FriendRequestsTabLayoutRegionProfileName = ({ captionName, layout, onRegionProfileName, tags }: FriendRequestsTabLayoutRegionProfileNameProps) => {
+export const FriendRequestsTabLayoutRegionProfileName = ({ captionName, layout, onRegionProfileName }: FriendRequestsTabLayoutRegionProfileNameProps) => {
     return (
         <Region
             name="region_profile_name"
-            tags={tags}
             onPointerTap={onRegionProfileName}
             cursor="pointer"
             layout={{ position: 'absolute', left: 43, right: 15, top: 6, height: 17, ...layout }}
@@ -221,16 +212,14 @@ export interface FriendRequestsTabLayoutClickAreaDiscardProps {
     captionTextDiscard?: string;
     layout?: BoxLayout;
     onClickAreaDiscard?: () => void;
-    tags?: string[];
 }
 
-export const FriendRequestsTabLayoutClickAreaDiscard = ({ captionTextDiscard, layout, onClickAreaDiscard, tags }: FriendRequestsTabLayoutClickAreaDiscardProps) => {
+export const FriendRequestsTabLayoutClickAreaDiscard = ({ captionTextDiscard, layout, onClickAreaDiscard }: FriendRequestsTabLayoutClickAreaDiscardProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="click_area_discard"
-            tags={tags}
             onPointerTap={onClickAreaDiscard}
             cursor="pointer"
             layout={{ position: 'absolute', left: 42, width: 119, top: 25, height: 18, ...layout }}
@@ -256,16 +245,14 @@ export interface FriendRequestsTabLayoutRequestEntityItemProps {
     onButtonAccept?: () => void;
     regionProfile?: FriendRequestsTabLayoutRegionProfileProps;
     regionProfileName?: FriendRequestsTabLayoutRegionProfileNameProps;
-    tags?: string[];
 }
 
-export const FriendRequestsTabLayoutRequestEntityItem = ({ clickAreaDiscard, layout, onButtonAccept, regionProfile, regionProfileName, tags }: FriendRequestsTabLayoutRequestEntityItemProps) => {
+export const FriendRequestsTabLayoutRequestEntityItem = ({ clickAreaDiscard, layout, onButtonAccept, regionProfile, regionProfileName }: FriendRequestsTabLayoutRequestEntityItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="request_entity"
-            tags={tags}
             backgroundColor="#ab8710"
             layout={{ width: 196, height: 50, flexShrink: 0, ...layout }}
         >
@@ -288,10 +275,9 @@ export const FriendRequestsTabLayoutRequestEntityItem = ({ clickAreaDiscard, lay
 export interface FriendRequestsTabLayoutRequestEntityListProps {
     itemsRequestEntityList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FriendRequestsTabLayoutRequestEntityList = ({ itemsRequestEntityList, layout, tags }: FriendRequestsTabLayoutRequestEntityListProps) => {
+export const FriendRequestsTabLayoutRequestEntityList = ({ itemsRequestEntityList, layout }: FriendRequestsTabLayoutRequestEntityListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -299,7 +285,6 @@ export const FriendRequestsTabLayoutRequestEntityList = ({ itemsRequestEntityLis
         >
             <Region
                 name="request_entity_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsRequestEntityList ?? (
@@ -314,16 +299,14 @@ export const FriendRequestsTabLayoutRequestEntityList = ({ itemsRequestEntityLis
 export interface FriendRequestsTabLayoutClickAreaDiscardAllProps {
     layout?: BoxLayout;
     onClickAreaDiscardAll?: () => void;
-    tags?: string[];
 }
 
-export const FriendRequestsTabLayoutClickAreaDiscardAll = ({ layout, onClickAreaDiscardAll, tags }: FriendRequestsTabLayoutClickAreaDiscardAllProps) => {
+export const FriendRequestsTabLayoutClickAreaDiscardAll = ({ layout, onClickAreaDiscardAll }: FriendRequestsTabLayoutClickAreaDiscardAllProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="click_area_discard_all"
-            tags={tags}
             onPointerTap={onClickAreaDiscardAll}
             cursor="pointer"
             layout={{ position: 'absolute', left: 11, width: 143, bottom: 30, height: 16, ...layout }}

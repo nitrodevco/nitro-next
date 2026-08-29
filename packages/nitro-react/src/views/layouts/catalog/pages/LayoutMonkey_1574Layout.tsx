@@ -19,14 +19,12 @@ export interface LayoutMonkey_1574LayoutCtlgTeaserimg1RegionProps {
     layout?: BoxLayout;
     onCtlgTeaserimg1Region?: () => void;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const LayoutMonkey_1574LayoutCtlgTeaserimg1Region = ({ layout, onCtlgTeaserimg1Region, srcCtlgTeaserimg1, tags }: LayoutMonkey_1574LayoutCtlgTeaserimg1RegionProps) => {
+export const LayoutMonkey_1574LayoutCtlgTeaserimg1Region = ({ layout, onCtlgTeaserimg1Region, srcCtlgTeaserimg1 }: LayoutMonkey_1574LayoutCtlgTeaserimg1RegionProps) => {
     return (
         <Region
             name="ctlg_teaserimg_1_region"
-            tags={tags}
             onPointerTap={onCtlgTeaserimg1Region}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 339, top: 20, bottom: 96, ...layout }}
@@ -45,14 +43,12 @@ export interface LayoutMonkey_1574LayoutCtlgSpecialImgRegionProps {
     layout?: BoxLayout;
     onCtlgSpecialImgRegion?: () => void;
     srcCtlgSpecialImg?: string;
-    tags?: string[];
 }
 
-export const LayoutMonkey_1574LayoutCtlgSpecialImgRegion = ({ layout, onCtlgSpecialImgRegion, srcCtlgSpecialImg, tags }: LayoutMonkey_1574LayoutCtlgSpecialImgRegionProps) => {
+export const LayoutMonkey_1574LayoutCtlgSpecialImgRegion = ({ layout, onCtlgSpecialImgRegion, srcCtlgSpecialImg }: LayoutMonkey_1574LayoutCtlgSpecialImgRegionProps) => {
     return (
         <Region
             name="ctlg_special_img_region"
-            tags={tags}
             onPointerTap={onCtlgSpecialImgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 339, bottom: 5, height: 80, ...layout }}
@@ -71,14 +67,12 @@ export interface LayoutMonkey_1574LayoutCtlgMonkeyProps {
     ctlgSpecialImgRegion?: LayoutMonkey_1574LayoutCtlgSpecialImgRegionProps;
     ctlgTeaserimg1Region?: LayoutMonkey_1574LayoutCtlgTeaserimg1RegionProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LayoutMonkey_1574LayoutCtlgMonkey = ({ ctlgSpecialImgRegion, ctlgTeaserimg1Region, layout, tags }: LayoutMonkey_1574LayoutCtlgMonkeyProps) => {
+export const LayoutMonkey_1574LayoutCtlgMonkey = ({ ctlgSpecialImgRegion, ctlgTeaserimg1Region, layout }: LayoutMonkey_1574LayoutCtlgMonkeyProps) => {
     return (
         <Region
             name="ctlg_monkey"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <LayoutMonkey_1574LayoutCtlgTeaserimg1Region {...ctlgTeaserimg1Region} />

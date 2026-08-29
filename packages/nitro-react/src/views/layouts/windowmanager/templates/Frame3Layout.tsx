@@ -14,16 +14,11 @@ export const Frame3Layout = ({ contentArea, layout }: Frame3LayoutProps) => {
         >
             <Header
                 name="titlebar"
-                tags={[ '_HEADER', '_EXCLUDE', '_INTERNAL', '_COLORIZE' ]}
                 layout={{ position: 'absolute', left: 6, right: 8, top: 6, height: 27 }}
             />
-            <Frame3LayoutContentArea
-                tags={[ '_CONTENT', '_INTERNAL', '_EXCLUDE' ]}
-                {...contentArea}
-            />
+            <Frame3LayoutContentArea {...contentArea} />
             <Scaler
                 name="_FRAME_SCALER"
-                tags={[ '_SCALER', '_EXCLUDE', '_INTERNAL', '_COLORIZE' ]}
                 layout={{ position: 'absolute', right: 3, width: 20, bottom: 4, height: 20 }}
             />
         </Region>
@@ -33,14 +28,12 @@ export const Frame3Layout = ({ contentArea, layout }: Frame3LayoutProps) => {
 /** Named region `content_area` of Frame3Layout - configured through the parent's `contentArea` prop. */
 export interface Frame3LayoutContentAreaProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Frame3LayoutContentArea = ({ layout, tags }: Frame3LayoutContentAreaProps) => {
+export const Frame3LayoutContentArea = ({ layout }: Frame3LayoutContentAreaProps) => {
     return (
         <Region
             name="content_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 3, right: 3, top: 36, bottom: 3, ...layout }}
         />
     );

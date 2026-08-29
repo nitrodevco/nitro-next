@@ -313,14 +313,12 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
 export interface WiredStyleUbuntuLayoutCloseRuleRegionProps {
     layout?: BoxLayout;
     onCloseRuleRegion?: () => void;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutCloseRuleRegion = ({ layout, onCloseRuleRegion, tags }: WiredStyleUbuntuLayoutCloseRuleRegionProps) => {
+export const WiredStyleUbuntuLayoutCloseRuleRegion = ({ layout, onCloseRuleRegion }: WiredStyleUbuntuLayoutCloseRuleRegionProps) => {
     return (
         <Region
             name="close_rule_region"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onCloseRuleRegion}
             cursor="pointer"
@@ -328,12 +326,10 @@ export const WiredStyleUbuntuLayoutCloseRuleRegion = ({ layout, onCloseRuleRegio
         >
             <Border
                 variant="12"
-                tags={[ '#bg' ]}
                 tintColor="#dddddd"
                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
             >
                 <ThemeImage
-                    tags={[ '#bg' ]}
                     src={layoutImage('common_close_x.png')}
                     tint="#777777"
                     layout={{ position: 'absolute', left: 3, width: 9, top: 3, height: 9 }}
@@ -347,14 +343,12 @@ export const WiredStyleUbuntuLayoutCloseRuleRegion = ({ layout, onCloseRuleRegio
 export interface WiredStyleUbuntuLayoutCloseRegionProps {
     layout?: BoxLayout;
     onCloseRegion?: () => void;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutCloseRegion = ({ layout, onCloseRegion, tags }: WiredStyleUbuntuLayoutCloseRegionProps) => {
+export const WiredStyleUbuntuLayoutCloseRegion = ({ layout, onCloseRegion }: WiredStyleUbuntuLayoutCloseRegionProps) => {
     return (
         <Region
             name="close_region"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onCloseRegion}
             cursor="pointer"
@@ -362,12 +356,10 @@ export const WiredStyleUbuntuLayoutCloseRegion = ({ layout, onCloseRegion, tags 
         >
             <Border
                 variant="12"
-                tags={[ '#bg' ]}
                 tintColor="#dddddd"
                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
             >
                 <ThemeImage
-                    tags={[ '#bg' ]}
                     src={layoutImage('common_close_x.png')}
                     tint="#777777"
                     layout={{ position: 'absolute', left: 3, width: 9, top: 3, height: 9 }}
@@ -384,14 +376,12 @@ export interface WiredStyleUbuntuLayoutElementEntryTemplateItemProps {
     layout?: BoxLayout;
     onElementEntryTemplate?: () => void;
     srcCoinsIcon?: string;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantityAmount, closeRegion, layout, onElementEntryTemplate, srcCoinsIcon, tags }: WiredStyleUbuntuLayoutElementEntryTemplateItemProps) => {
+export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantityAmount, closeRegion, layout, onElementEntryTemplate, srcCoinsIcon }: WiredStyleUbuntuLayoutElementEntryTemplateItemProps) => {
     return (
         <Region
             name="element_entry_template"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under_gentle"
             onPointerTap={onElementEntryTemplate}
             cursor="pointer"
@@ -400,7 +390,6 @@ export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantity
             <Border
                 variant="4"
                 name="icon_border"
-                tags={[ '#icon' ]}
                 tintColor="#eeeeee"
                 layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
             >
@@ -422,14 +411,12 @@ export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantity
                 <Border
                     variant="4"
                     name="quantity_border"
-                    tags={[ '#ico' ]}
                     tintColor="#cccccc"
                     blend={0.8}
                     layout={{ position: 'absolute', right: 3, width: 16, bottom: 2, height: 13 }}
                 >
                     <Region
                         name="quantity_amount"
-                        tags={[ '#ico' ]}
                         layout={{ position: 'absolute', left: 3, top: -1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
@@ -448,14 +435,12 @@ export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantity
 export interface WiredStyleUbuntuLayoutAddMoreContainerItemProps {
     layout?: BoxLayout;
     onAddMore?: () => void;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutAddMoreContainerItem = ({ layout, onAddMore, tags }: WiredStyleUbuntuLayoutAddMoreContainerItemProps) => {
+export const WiredStyleUbuntuLayoutAddMoreContainerItem = ({ layout, onAddMore }: WiredStyleUbuntuLayoutAddMoreContainerItemProps) => {
     return (
         <Region
             name="add_more_container"
-            tags={tags}
             layout={{ width: 26, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ContainerButton
@@ -472,14 +457,12 @@ export const WiredStyleUbuntuLayoutAddMoreContainerItem = ({ layout, onAddMore, 
 export interface WiredStyleUbuntuLayoutGridProps {
     itemsGrid?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutGrid = ({ itemsGrid, layout, tags }: WiredStyleUbuntuLayoutGridProps) => {
+export const WiredStyleUbuntuLayoutGrid = ({ itemsGrid, layout }: WiredStyleUbuntuLayoutGridProps) => {
     return (
         <Region
             name="grid"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, right: 6, top: 21, height: 42, flexDirection: 'row', flexWrap: 'wrap', gap: 6, ...layout }}
         >
             {itemsGrid ?? (
@@ -495,15 +478,13 @@ export const WiredStyleUbuntuLayoutGrid = ({ itemsGrid, layout, tags }: WiredSty
 /** Named region `ruler_view` of WiredStyleUbuntuLayout - configured through the parent's `rulerView` prop. */
 export interface WiredStyleUbuntuLayoutRulerViewProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleRulerView?: boolean;
 }
 
-export const WiredStyleUbuntuLayoutRulerView = ({ layout, tags, visibleRulerView }: WiredStyleUbuntuLayoutRulerViewProps) => {
+export const WiredStyleUbuntuLayoutRulerView = ({ layout, visibleRulerView }: WiredStyleUbuntuLayoutRulerViewProps) => {
     return (
         <Region
             name="ruler_view"
-            tags={tags}
             visible={visibleRulerView ?? false}
             layout={{ position: 'absolute', left: 0, width: 228, top: 0, height: 1, ...layout }}
         >
@@ -518,15 +499,13 @@ export const WiredStyleUbuntuLayoutRulerView = ({ layout, tags, visibleRulerView
 /** Named region `ruler_view_vertical` of WiredStyleUbuntuLayout - configured through the parent's `rulerViewVertical` prop. */
 export interface WiredStyleUbuntuLayoutRulerViewVerticalProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleRulerViewVertical?: boolean;
 }
 
-export const WiredStyleUbuntuLayoutRulerViewVertical = ({ layout, tags, visibleRulerViewVertical }: WiredStyleUbuntuLayoutRulerViewVerticalProps) => {
+export const WiredStyleUbuntuLayoutRulerViewVertical = ({ layout, visibleRulerViewVertical }: WiredStyleUbuntuLayoutRulerViewVerticalProps) => {
     return (
         <Region
             name="ruler_view_vertical"
-            tags={tags}
             visible={visibleRulerViewVertical ?? false}
             layout={{ position: 'absolute', left: 0, width: 1, top: 0, height: 50, ...layout }}
         >
@@ -544,15 +523,13 @@ export interface WiredStyleUbuntuLayoutExpandCollapseRegionProps {
     onExpandCollapseRegion?: () => void;
     srcDownArrow?: string;
     srcUpArrow?: string;
-    tags?: string[];
     visibleExpandCollapseRegion?: boolean;
 }
 
-export const WiredStyleUbuntuLayoutExpandCollapseRegion = ({ layout, onExpandCollapseRegion, srcDownArrow, srcUpArrow, tags, visibleExpandCollapseRegion }: WiredStyleUbuntuLayoutExpandCollapseRegionProps) => {
+export const WiredStyleUbuntuLayoutExpandCollapseRegion = ({ layout, onExpandCollapseRegion, srcDownArrow, srcUpArrow, visibleExpandCollapseRegion }: WiredStyleUbuntuLayoutExpandCollapseRegionProps) => {
     return (
         <Region
             name="expand_collapse_region"
-            tags={tags}
             visible={visibleExpandCollapseRegion ?? false}
             onPointerTap={onExpandCollapseRegion}
             cursor="pointer"
@@ -580,15 +557,13 @@ export interface WiredStyleUbuntuLayoutMenuItemTemplateItemProps {
     layout?: BoxLayout;
     onCheckbox?: () => void;
     onMenuItemTemplate?: () => void;
-    tags?: string[];
     visibleMenuItemTemplate?: boolean;
 }
 
-export const WiredStyleUbuntuLayoutMenuItemTemplateItem = ({ captionText, layout, onCheckbox, onMenuItemTemplate, tags, visibleMenuItemTemplate }: WiredStyleUbuntuLayoutMenuItemTemplateItemProps) => {
+export const WiredStyleUbuntuLayoutMenuItemTemplateItem = ({ captionText, layout, onCheckbox, onMenuItemTemplate, visibleMenuItemTemplate }: WiredStyleUbuntuLayoutMenuItemTemplateItemProps) => {
     return (
         <Region
             name="menu_item_template"
-            tags={tags}
             visible={visibleMenuItemTemplate ?? false}
             onPointerTap={onMenuItemTemplate}
             cursor="pointer"
@@ -616,14 +591,12 @@ export const WiredStyleUbuntuLayoutMenuItemTemplateItem = ({ captionText, layout
 /** Row template `spacer_template` of WiredStyleUbuntuLayout - pass real rows through its `items…` slot. */
 export interface WiredStyleUbuntuLayoutSpacerTemplateItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutSpacerTemplateItem = ({ layout, tags }: WiredStyleUbuntuLayoutSpacerTemplateItemProps) => {
+export const WiredStyleUbuntuLayoutSpacerTemplateItem = ({ layout }: WiredStyleUbuntuLayoutSpacerTemplateItemProps) => {
     return (
         <Region
             name="spacer_template"
-            tags={tags}
             layout={{ width: 141, height: 3, flexShrink: 0, ...layout }}
         >
             <Region
@@ -638,14 +611,12 @@ export const WiredStyleUbuntuLayoutSpacerTemplateItem = ({ layout, tags }: Wired
 export interface WiredStyleUbuntuLayoutMenuListProps {
     itemsMenuList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutMenuList = ({ itemsMenuList, layout, tags }: WiredStyleUbuntuLayoutMenuListProps) => {
+export const WiredStyleUbuntuLayoutMenuList = ({ itemsMenuList, layout }: WiredStyleUbuntuLayoutMenuListProps) => {
     return (
         <Region
             name="menu_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 3, flexDirection: 'column', ...layout }}
         >
             {itemsMenuList ?? (
@@ -661,14 +632,12 @@ export const WiredStyleUbuntuLayoutMenuList = ({ itemsMenuList, layout, tags }: 
 /** Named region `border` of WiredStyleUbuntuLayout - configured through the parent's `border` prop. */
 export interface WiredStyleUbuntuLayoutBorderProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutBorder = ({ layout, tags }: WiredStyleUbuntuLayoutBorderProps) => {
+export const WiredStyleUbuntuLayoutBorder = ({ layout }: WiredStyleUbuntuLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 1, top: 2, height: 13, minWidth: 1, maxWidth: 1, ...layout }}
         />
@@ -678,14 +647,12 @@ export const WiredStyleUbuntuLayoutBorder = ({ layout, tags }: WiredStyleUbuntuL
 /** Named region `margin_item_color_left` of WiredStyleUbuntuLayout - configured through the parent's `marginItemColorLeft` prop. */
 export interface WiredStyleUbuntuLayoutMarginItemColorLeftProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutMarginItemColorLeft = ({ layout, tags }: WiredStyleUbuntuLayoutMarginItemColorLeftProps) => {
+export const WiredStyleUbuntuLayoutMarginItemColorLeft = ({ layout }: WiredStyleUbuntuLayoutMarginItemColorLeftProps) => {
     return (
         <Region
             name="margin_item_color_left"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 13, minWidth: 1, maxWidth: 1, minHeight: 13, maxHeight: 13, ...layout }}
         />
@@ -696,14 +663,12 @@ export const WiredStyleUbuntuLayoutMarginItemColorLeft = ({ layout, tags }: Wire
 export interface WiredStyleUbuntuLayoutBorder2Props {
     layout?: BoxLayout;
     marginItemColorLeft?: WiredStyleUbuntuLayoutMarginItemColorLeftProps;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutBorder2 = ({ layout, marginItemColorLeft, tags }: WiredStyleUbuntuLayoutBorder2Props) => {
+export const WiredStyleUbuntuLayoutBorder2 = ({ layout, marginItemColorLeft }: WiredStyleUbuntuLayoutBorder2Props) => {
     return (
         <Region
             name="border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 1, width: 1, top: 1, height: 15, minWidth: 1, maxWidth: 1, minHeight: 15, maxHeight: 15, ...layout }}
         >
@@ -717,14 +682,12 @@ export interface WiredStyleUbuntuLayoutLeftPaddingItemProps {
     border?: WiredStyleUbuntuLayoutBorderProps;
     border2?: WiredStyleUbuntuLayoutBorder2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutLeftPaddingItem = ({ border, border2, layout, tags }: WiredStyleUbuntuLayoutLeftPaddingItemProps) => {
+export const WiredStyleUbuntuLayoutLeftPaddingItem = ({ border, border2, layout }: WiredStyleUbuntuLayoutLeftPaddingItemProps) => {
     return (
         <Region
             name="left_padding"
-            tags={tags}
             layout={{ width: 2, height: 17, flexShrink: 0, minWidth: 2, maxWidth: 2, minHeight: 17, maxHeight: 17, ...layout }}
         >
             <WiredStyleUbuntuLayoutBorder {...border} />
@@ -736,14 +699,12 @@ export const WiredStyleUbuntuLayoutLeftPaddingItem = ({ border, border2, layout,
 /** Row template `left_pad` of WiredStyleUbuntuLayout - pass real rows through its `items…` slot. */
 export interface WiredStyleUbuntuLayoutLeftPadItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutLeftPadItem = ({ layout, tags }: WiredStyleUbuntuLayoutLeftPadItemProps) => {
+export const WiredStyleUbuntuLayoutLeftPadItem = ({ layout }: WiredStyleUbuntuLayoutLeftPadItemProps) => {
     return (
         <Region
             name="left_pad"
-            tags={tags}
             layout={{ width: 2, height: 15, flexShrink: 0, minWidth: 2, maxWidth: 2, minHeight: 15, maxHeight: 15, ...layout }}
         />
     );
@@ -753,14 +714,12 @@ export const WiredStyleUbuntuLayoutLeftPadItem = ({ layout, tags }: WiredStyleUb
 export interface WiredStyleUbuntuLayoutTypeIconBitmapItemProps {
     layout?: BoxLayout;
     srcTypeIconBitmap?: string;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutTypeIconBitmapItem = ({ layout, srcTypeIconBitmap, tags }: WiredStyleUbuntuLayoutTypeIconBitmapItemProps) => {
+export const WiredStyleUbuntuLayoutTypeIconBitmapItem = ({ layout, srcTypeIconBitmap }: WiredStyleUbuntuLayoutTypeIconBitmapItemProps) => {
     return (
         <ThemeImage
             name="type_icon_bitmap"
-            tags={tags}
             src={srcTypeIconBitmap}
             layout={{ width: 9, height: 11, flexShrink: 0, minHeight: 11, maxHeight: 11, ...layout }}
         />
@@ -770,14 +729,12 @@ export const WiredStyleUbuntuLayoutTypeIconBitmapItem = ({ layout, srcTypeIconBi
 /** Row template `right_pad` of WiredStyleUbuntuLayout - pass real rows through its `items…` slot. */
 export interface WiredStyleUbuntuLayoutRightPadItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutRightPadItem = ({ layout, tags }: WiredStyleUbuntuLayoutRightPadItemProps) => {
+export const WiredStyleUbuntuLayoutRightPadItem = ({ layout }: WiredStyleUbuntuLayoutRightPadItemProps) => {
     return (
         <Region
             name="right_pad"
-            tags={tags}
             layout={{ width: 2, height: 15, flexShrink: 0, minWidth: 2, maxWidth: 2, minHeight: 15, maxHeight: 15, ...layout }}
         />
     );
@@ -787,14 +744,12 @@ export const WiredStyleUbuntuLayoutRightPadItem = ({ layout, tags }: WiredStyleU
 export interface WiredStyleUbuntuLayoutSourceElementsProps {
     itemsSourceElements?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutSourceElements = ({ itemsSourceElements, layout, tags }: WiredStyleUbuntuLayoutSourceElementsProps) => {
+export const WiredStyleUbuntuLayoutSourceElements = ({ itemsSourceElements, layout }: WiredStyleUbuntuLayoutSourceElementsProps) => {
     return (
         <Region
             name="source_elements"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row', ...layout }}
         >
@@ -814,14 +769,12 @@ export interface WiredStyleUbuntuLayoutSourceBtnItemProps {
     layout?: BoxLayout;
     onSourceBtn?: () => void;
     sourceElements?: WiredStyleUbuntuLayoutSourceElementsProps;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutSourceBtnItem = ({ layout, onSourceBtn, sourceElements, tags }: WiredStyleUbuntuLayoutSourceBtnItemProps) => {
+export const WiredStyleUbuntuLayoutSourceBtnItem = ({ layout, onSourceBtn, sourceElements }: WiredStyleUbuntuLayoutSourceBtnItemProps) => {
     return (
         <Region
             name="source_btn"
-            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onSourceBtn}
             cursor="pointer"
@@ -836,14 +789,12 @@ export const WiredStyleUbuntuLayoutSourceBtnItem = ({ layout, onSourceBtn, sourc
 export interface WiredStyleUbuntuLayoutSourceOptionsListProps {
     itemsSourceOptionsList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutSourceOptionsList = ({ itemsSourceOptionsList, layout, tags }: WiredStyleUbuntuLayoutSourceOptionsListProps) => {
+export const WiredStyleUbuntuLayoutSourceOptionsList = ({ itemsSourceOptionsList, layout }: WiredStyleUbuntuLayoutSourceOptionsListProps) => {
     return (
         <Region
             name="source_options_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row', gap: 1, ...layout }}
         >
             {itemsSourceOptionsList ?? (
@@ -857,14 +808,12 @@ export const WiredStyleUbuntuLayoutSourceOptionsList = ({ itemsSourceOptionsList
 export interface WiredStyleUbuntuLayoutSourceOptionsContProps {
     layout?: BoxLayout;
     sourceOptionsList?: WiredStyleUbuntuLayoutSourceOptionsListProps;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutSourceOptionsCont = ({ layout, sourceOptionsList, tags }: WiredStyleUbuntuLayoutSourceOptionsContProps) => {
+export const WiredStyleUbuntuLayoutSourceOptionsCont = ({ layout, sourceOptionsList }: WiredStyleUbuntuLayoutSourceOptionsContProps) => {
     return (
         <Region
             name="source_options_cont"
-            tags={tags}
             backgroundColor="#181818"
             layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 15, minHeight: 15, maxHeight: 15, ...layout }}
         >
@@ -877,14 +826,12 @@ export const WiredStyleUbuntuLayoutSourceOptionsCont = ({ layout, sourceOptionsL
 export interface WiredStyleUbuntuLayoutSourceOptionsBorderItemProps {
     layout?: BoxLayout;
     sourceOptionsCont?: WiredStyleUbuntuLayoutSourceOptionsContProps;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutSourceOptionsBorderItem = ({ layout, sourceOptionsCont, tags }: WiredStyleUbuntuLayoutSourceOptionsBorderItemProps) => {
+export const WiredStyleUbuntuLayoutSourceOptionsBorderItem = ({ layout, sourceOptionsCont }: WiredStyleUbuntuLayoutSourceOptionsBorderItemProps) => {
     return (
         <Region
             name="source_options_border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 13, height: 17, flexShrink: 0, minHeight: 17, maxHeight: 17, ...layout }}
         >
@@ -896,14 +843,12 @@ export const WiredStyleUbuntuLayoutSourceOptionsBorderItem = ({ layout, sourceOp
 /** Named region `margin_item_color_right` of WiredStyleUbuntuLayout - configured through the parent's `marginItemColorRight` prop. */
 export interface WiredStyleUbuntuLayoutMarginItemColorRightProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutMarginItemColorRight = ({ layout, tags }: WiredStyleUbuntuLayoutMarginItemColorRightProps) => {
+export const WiredStyleUbuntuLayoutMarginItemColorRight = ({ layout }: WiredStyleUbuntuLayoutMarginItemColorRightProps) => {
     return (
         <Region
             name="margin_item_color_right"
-            tags={tags}
             backgroundColor="#222222"
             layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 13, minWidth: 1, maxWidth: 1, minHeight: 13, maxHeight: 13, ...layout }}
         />
@@ -914,14 +859,12 @@ export const WiredStyleUbuntuLayoutMarginItemColorRight = ({ layout, tags }: Wir
 export interface WiredStyleUbuntuLayoutBorder3Props {
     layout?: BoxLayout;
     marginItemColorRight?: WiredStyleUbuntuLayoutMarginItemColorRightProps;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutBorder3 = ({ layout, marginItemColorRight, tags }: WiredStyleUbuntuLayoutBorder3Props) => {
+export const WiredStyleUbuntuLayoutBorder3 = ({ layout, marginItemColorRight }: WiredStyleUbuntuLayoutBorder3Props) => {
     return (
         <Region
             name="border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 15, minWidth: 1, maxWidth: 1, minHeight: 15, maxHeight: 15, ...layout }}
         >
@@ -933,14 +876,12 @@ export const WiredStyleUbuntuLayoutBorder3 = ({ layout, marginItemColorRight, ta
 /** Named region `border` of WiredStyleUbuntuLayout - configured through the parent's `border` prop. */
 export interface WiredStyleUbuntuLayoutBorder4Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutBorder4 = ({ layout, tags }: WiredStyleUbuntuLayoutBorder4Props) => {
+export const WiredStyleUbuntuLayoutBorder4 = ({ layout }: WiredStyleUbuntuLayoutBorder4Props) => {
     return (
         <Region
             name="border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 1, width: 1, top: 2, height: 13, minWidth: 1, maxWidth: 1, ...layout }}
         />
@@ -952,14 +893,12 @@ export interface WiredStyleUbuntuLayoutRightPaddingItemProps {
     border?: WiredStyleUbuntuLayoutBorder3Props;
     border2?: WiredStyleUbuntuLayoutBorder4Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutRightPaddingItem = ({ border, border2, layout, tags }: WiredStyleUbuntuLayoutRightPaddingItemProps) => {
+export const WiredStyleUbuntuLayoutRightPaddingItem = ({ border, border2, layout }: WiredStyleUbuntuLayoutRightPaddingItemProps) => {
     return (
         <Region
             name="right_padding"
-            tags={tags}
             layout={{ width: 2, height: 17, flexShrink: 0, minWidth: 2, maxWidth: 2, minHeight: 17, maxHeight: 17, ...layout }}
         >
             <WiredStyleUbuntuLayoutBorder3 {...border} />
@@ -972,14 +911,12 @@ export const WiredStyleUbuntuLayoutRightPaddingItem = ({ border, border2, layout
 export interface WiredStyleUbuntuLayoutSourcetypeSelectorViewProps {
     itemsSourcetypeSelectorView?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutSourcetypeSelectorView = ({ itemsSourcetypeSelectorView, layout, tags }: WiredStyleUbuntuLayoutSourcetypeSelectorViewProps) => {
+export const WiredStyleUbuntuLayoutSourcetypeSelectorView = ({ itemsSourcetypeSelectorView, layout }: WiredStyleUbuntuLayoutSourcetypeSelectorViewProps) => {
     return (
         <Region
             name="sourcetype_selector_view"
-            tags={tags}
             visible={false}
             layout={{ position: 'absolute', left: 0, top: -2, minHeight: 17, maxHeight: 17, flexDirection: 'row', ...layout }}
         >
@@ -998,14 +935,12 @@ export const WiredStyleUbuntuLayoutSourcetypeSelectorView = ({ itemsSourcetypeSe
 export interface WiredStyleUbuntuLayoutSliderMovementAreaProps {
     layout?: BoxLayout;
     srcSliderButton?: string;
-    tags?: string[];
 }
 
-export const WiredStyleUbuntuLayoutSliderMovementArea = ({ layout, srcSliderButton, tags }: WiredStyleUbuntuLayoutSliderMovementAreaProps) => {
+export const WiredStyleUbuntuLayoutSliderMovementArea = ({ layout, srcSliderButton }: WiredStyleUbuntuLayoutSliderMovementAreaProps) => {
     return (
         <Region
             name="slider_movement_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17, ...layout }}
         >
             <ThemeImage
@@ -1022,15 +957,13 @@ export interface WiredStyleUbuntuLayoutSliderProps {
     layout?: BoxLayout;
     sliderMovementArea?: WiredStyleUbuntuLayoutSliderMovementAreaProps;
     srcSliderBase?: string;
-    tags?: string[];
     visibleSlider?: boolean;
 }
 
-export const WiredStyleUbuntuLayoutSlider = ({ layout, sliderMovementArea, srcSliderBase, tags, visibleSlider }: WiredStyleUbuntuLayoutSliderProps) => {
+export const WiredStyleUbuntuLayoutSlider = ({ layout, sliderMovementArea, srcSliderBase, visibleSlider }: WiredStyleUbuntuLayoutSliderProps) => {
     return (
         <Region
             name="slider"
-            tags={tags}
             visible={visibleSlider ?? false}
             layout={{ position: 'absolute', left: 0, width: 148, top: 0, height: 18, ...layout }}
         >
@@ -1050,15 +983,13 @@ export interface WiredStyleUbuntuLayoutMiniButtonViewProps {
     layout?: BoxLayout;
     onMiniButtonClick?: () => void;
     srcMiniButtonIcon?: string;
-    tags?: string[];
     visibleMiniButtonView?: boolean;
 }
 
-export const WiredStyleUbuntuLayoutMiniButtonView = ({ layout, onMiniButtonClick, srcMiniButtonIcon, tags, visibleMiniButtonView }: WiredStyleUbuntuLayoutMiniButtonViewProps) => {
+export const WiredStyleUbuntuLayoutMiniButtonView = ({ layout, onMiniButtonClick, srcMiniButtonIcon, visibleMiniButtonView }: WiredStyleUbuntuLayoutMiniButtonViewProps) => {
     return (
         <Region
             name="mini_button_view"
-            tags={tags}
             visible={visibleMiniButtonView ?? false}
             layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19, ...layout }}
         >

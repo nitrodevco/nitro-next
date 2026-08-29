@@ -21,23 +21,19 @@ export interface LayoutPets_1592LayoutCtlgPetsProps {
     layout?: BoxLayout;
     newPetsWidget?: NewPetsWidget2Props;
     petsWidget?: PetsWidgetProps;
-    tags?: string[];
 }
 
-export const LayoutPets_1592LayoutCtlgPets = ({ layout, newPetsWidget, petsWidget, tags }: LayoutPets_1592LayoutCtlgPetsProps) => {
+export const LayoutPets_1592LayoutCtlgPets = ({ layout, newPetsWidget, petsWidget }: LayoutPets_1592LayoutCtlgPetsProps) => {
     return (
         <Region
             name="ctlg_pets"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <PetsWidget
-                tags={[ 'EMBEDDED' ]}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 {...petsWidget}
             />
             <NewPetsWidget2
-                tags={[ 'EMBEDDED' ]}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 {...newPetsWidget}
             />

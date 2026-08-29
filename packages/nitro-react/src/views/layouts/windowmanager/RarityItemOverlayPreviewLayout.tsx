@@ -20,14 +20,12 @@ export interface RarityItemOverlayPreviewLayoutRarityItemWidgetProps {
     captionLevel?: string;
     layout?: BoxLayout;
     srcPlaque?: string;
-    tags?: string[];
 }
 
-export const RarityItemOverlayPreviewLayoutRarityItemWidget = ({ captionLevel, layout, srcPlaque, tags }: RarityItemOverlayPreviewLayoutRarityItemWidgetProps) => {
+export const RarityItemOverlayPreviewLayoutRarityItemWidget = ({ captionLevel, layout, srcPlaque }: RarityItemOverlayPreviewLayoutRarityItemWidgetProps) => {
     return (
         <Region
             name="rarityItemWidget"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 28, ...layout }}
         >
             <ThemeImage

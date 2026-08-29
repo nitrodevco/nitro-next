@@ -1,6 +1,6 @@
 import { Color, Container } from 'pixi.js';
 import { DropShadowFilter } from 'pixi-filters';
-import { forwardRef, ForwardRefExoticComponent, JSX, MouseEventHandler, PointerEventHandler, ReactNode, Ref, RefAttributes, useCallback } from 'react';
+import { CSSProperties, forwardRef, ForwardRefExoticComponent, JSX, MouseEventHandler, PointerEventHandler, ReactNode, Ref, RefAttributes, useCallback } from 'react';
 
 import { boxLayoutToStyle } from './dom';
 import { getRenderMode, pointerEventsFromEventMode, resolveEventMode, wrapTextChildren } from './utils';
@@ -89,7 +89,7 @@ BoxPixi.displayName = 'BoxPixi';
  * Pixi-only concern that simply doesn't apply in DOM mode and is dropped rather than faked.
  */
 const BoxDom = forwardRef<Container, BoxProps>(
-    ({ children, layout, eventMode, cursor, x, y, zIndex, alpha, visible, filters, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+    ({ children, layout, eventMode, cursor, x, y, zIndex, alpha, visible, filters, blendMode, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const style = boxLayoutToStyle(layout as BoxLayout | undefined);
         const dropShadows = (Array.isArray(filters) ? filters : filters ? [ filters ] : []).filter((filter): filter is DropShadowFilter => filter instanceof DropShadowFilter);
 
@@ -110,6 +110,8 @@ const BoxDom = forwardRef<Container, BoxProps>(
         if (typeof zIndex === 'number') style.zIndex = zIndex;
         if (typeof alpha === 'number') style.opacity = alpha;
         if (visible === false) style.display = 'none';
+        // CSS has no additive blend; `screen` is the closest look for the glow sprites that use it.
+        if (typeof blendMode === 'string' && blendMode !== 'normal' && blendMode !== 'inherit') style.mixBlendMode = (blendMode === 'add' ? 'screen' : blendMode) as CSSProperties['mixBlendMode'];
         if (x || y) {
             style.transform = `translate(${x}px, ${y}px)`;
             style.transformOrigin = 'top left';

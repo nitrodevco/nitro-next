@@ -30,14 +30,12 @@ export interface AvatarMenuWidgetLayoutProfileLinkProps {
     layout?: BoxLayout;
     onProfileLink?: () => void;
     srcRelationshipStatus?: string;
-    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutProfileLink = ({ captionName, layout, onProfileLink, srcRelationshipStatus, tags }: AvatarMenuWidgetLayoutProfileLinkProps) => {
+export const AvatarMenuWidgetLayoutProfileLink = ({ captionName, layout, onProfileLink, srcRelationshipStatus }: AvatarMenuWidgetLayoutProfileLinkProps) => {
     return (
         <Region
             name="profile_link"
-            tags={tags}
             onPointerTap={onProfileLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 7, height: 16, justifyContent: 'center', ...layout }}
@@ -66,37 +64,41 @@ export interface AvatarMenuWidgetLayoutOpenProfileItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutOpenProfileItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutOpenProfileItemProps) => {
+export const AvatarMenuWidgetLayoutOpenProfileItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutOpenProfileItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="open_profile"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.open_profile')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.open_profile')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -106,37 +108,41 @@ export interface AvatarMenuWidgetLayoutFriendItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutFriendItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutFriendItemProps) => {
+export const AvatarMenuWidgetLayoutFriendItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutFriendItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="friend"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.friend')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.friend')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -146,37 +152,41 @@ export interface AvatarMenuWidgetLayoutTradeItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutTradeItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutTradeItemProps) => {
+export const AvatarMenuWidgetLayoutTradeItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutTradeItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="trade"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.trade')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.trade')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -186,37 +196,41 @@ export interface AvatarMenuWidgetLayoutWhisperItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutWhisperItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutWhisperItemProps) => {
+export const AvatarMenuWidgetLayoutWhisperItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutWhisperItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="whisper"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.whisper')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.whisper')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -226,37 +240,41 @@ export interface AvatarMenuWidgetLayoutRespectItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutRespectItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutRespectItemProps) => {
+export const AvatarMenuWidgetLayoutRespectItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutRespectItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="respect"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.respect')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.respect')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -266,42 +284,45 @@ export interface AvatarMenuWidgetLayoutReplenishRespectItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutReplenishRespectItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutReplenishRespectItemProps) => {
+export const AvatarMenuWidgetLayoutReplenishRespectItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutReplenishRespectItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="replenish_respect"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.replenish_respect')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.replenish_respect')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <ThemeImage
+                        src={layoutImage('pursearea_duckets_icon.png')}
+                        layout={{ position: 'absolute', left: 110, width: 15, top: 10, height: 15 }}
                     />
-                </Region>
-                <ThemeImage
-                    tags={[ '#icon' ]}
-                    src={layoutImage('pursearea_duckets_icon.png')}
-                    layout={{ position: 'absolute', left: 110, width: 15, top: 10, height: 15 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -311,35 +332,39 @@ export interface AvatarMenuWidgetLayoutBlowItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutBlowItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutBlowItemProps) => {
+export const AvatarMenuWidgetLayoutBlowItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutBlowItemProps) => {
     return (
         <Region
             name="blow"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? 'infostand.button.blow'}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? 'infostand.button.blow'}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -349,43 +374,46 @@ export interface AvatarMenuWidgetLayoutPerformItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutPerformItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutPerformItemProps) => {
+export const AvatarMenuWidgetLayoutPerformItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutPerformItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="perform"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.link.perform')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.link.perform')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="5"
+                        name="icon"
+                        layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                     />
-                </Region>
-                <Icon
-                    variant="5"
-                    name="icon"
-                    tags={[ 'arrow_right' ]}
-                    layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -395,43 +423,46 @@ export interface AvatarMenuWidgetLayoutRelationshipItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutRelationshipItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutRelationshipItemProps) => {
+export const AvatarMenuWidgetLayoutRelationshipItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutRelationshipItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="relationship"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.link.relationship')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.link.relationship')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="5"
+                        name="icon"
+                        layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                     />
-                </Region>
-                <Icon
-                    variant="5"
-                    name="icon"
-                    tags={[ 'arrow_right' ]}
-                    layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -441,37 +472,41 @@ export interface AvatarMenuWidgetLayoutKickItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutKickItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutKickItemProps) => {
+export const AvatarMenuWidgetLayoutKickItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutKickItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="kick"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.kick')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.kick')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -481,43 +516,46 @@ export interface AvatarMenuWidgetLayoutMuteItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutMuteItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutMuteItemProps) => {
+export const AvatarMenuWidgetLayoutMuteItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutMuteItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mute"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.mute')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.mute')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="5"
+                        name="icon"
+                        layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                     />
-                </Region>
-                <Icon
-                    variant="5"
-                    name="icon"
-                    tags={[ 'arrow_right' ]}
-                    layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -527,37 +565,41 @@ export interface AvatarMenuWidgetLayoutMute2minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutMute2minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutMute2minItemProps) => {
+export const AvatarMenuWidgetLayoutMute2minItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutMute2minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mute_2min"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.mute_2min')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.mute_2min')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -567,37 +609,41 @@ export interface AvatarMenuWidgetLayoutMute5minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutMute5minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutMute5minItemProps) => {
+export const AvatarMenuWidgetLayoutMute5minItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutMute5minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mute_5min"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.mute_5min')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.mute_5min')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -607,37 +653,41 @@ export interface AvatarMenuWidgetLayoutMute10minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutMute10minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutMute10minItemProps) => {
+export const AvatarMenuWidgetLayoutMute10minItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutMute10minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mute_10min"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.mute_10min')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.mute_10min')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -647,43 +697,46 @@ export interface AvatarMenuWidgetLayoutBanWithDurationItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutBanWithDurationItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutBanWithDurationItemProps) => {
+export const AvatarMenuWidgetLayoutBanWithDurationItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutBanWithDurationItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ban_with_duration"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.ban')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.ban')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="5"
+                        name="icon"
+                        layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                     />
-                </Region>
-                <Icon
-                    variant="5"
-                    name="icon"
-                    tags={[ 'arrow_right' ]}
-                    layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -693,37 +746,41 @@ export interface AvatarMenuWidgetLayoutBanHourItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutBanHourItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutBanHourItemProps) => {
+export const AvatarMenuWidgetLayoutBanHourItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutBanHourItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ban_hour"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.ban_hour')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.ban_hour')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -733,37 +790,41 @@ export interface AvatarMenuWidgetLayoutBanDayItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutBanDayItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutBanDayItemProps) => {
+export const AvatarMenuWidgetLayoutBanDayItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutBanDayItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ban_day"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.ban_day')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.ban_day')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -773,37 +834,41 @@ export interface AvatarMenuWidgetLayoutPermBanItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutPermBanItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutPermBanItemProps) => {
+export const AvatarMenuWidgetLayoutPermBanItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutPermBanItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="perm_ban"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.perm_ban')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.perm_ban')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -813,37 +878,41 @@ export interface AvatarMenuWidgetLayoutGiveRightsItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutGiveRightsItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutGiveRightsItemProps) => {
+export const AvatarMenuWidgetLayoutGiveRightsItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutGiveRightsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="give_rights"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.giverights')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.giverights')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -853,37 +922,41 @@ export interface AvatarMenuWidgetLayoutRemoveRightsItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutRemoveRightsItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutRemoveRightsItemProps) => {
+export const AvatarMenuWidgetLayoutRemoveRightsItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutRemoveRightsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="remove_rights"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.removerights')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.removerights')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -893,37 +966,41 @@ export interface AvatarMenuWidgetLayoutUnignoreItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutUnignoreItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutUnignoreItemProps) => {
+export const AvatarMenuWidgetLayoutUnignoreItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutUnignoreItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="unignore"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.unignore')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.unignore')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -933,37 +1010,41 @@ export interface AvatarMenuWidgetLayoutIgnoreItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutIgnoreItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutIgnoreItemProps) => {
+export const AvatarMenuWidgetLayoutIgnoreItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutIgnoreItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ignore"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.ignore')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.ignore')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -973,37 +1054,41 @@ export interface AvatarMenuWidgetLayoutReportItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutReportItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutReportItemProps) => {
+export const AvatarMenuWidgetLayoutReportItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutReportItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="report"
-            tags={tags}
+            visible={visibleGroups?.moderate ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'moderate' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.moderate ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.report')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.report')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1013,43 +1098,46 @@ export interface AvatarMenuWidgetLayoutModerateItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutModerateItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutModerateItemProps) => {
+export const AvatarMenuWidgetLayoutModerateItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutModerateItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="moderate"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.link.moderate')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.link.moderate')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="5"
+                        name="icon"
+                        layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                     />
-                </Region>
-                <Icon
-                    variant="5"
-                    name="icon"
-                    tags={[ 'arrow_right' ]}
-                    layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1058,14 +1146,12 @@ export const AvatarMenuWidgetLayoutModerateItem = ({ captionLabel, layout, onBut
 export interface AvatarMenuWidgetLayoutRelationshipHeartItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutRelationshipHeartItem = ({ layout, onButton, tags }: AvatarMenuWidgetLayoutRelationshipHeartItemProps) => {
+export const AvatarMenuWidgetLayoutRelationshipHeartItem = ({ layout, onButton }: AvatarMenuWidgetLayoutRelationshipHeartItemProps) => {
     return (
         <Region
             name="relationship_heart"
-            tags={tags}
             layout={{ width: 45, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1088,14 +1174,12 @@ export const AvatarMenuWidgetLayoutRelationshipHeartItem = ({ layout, onButton, 
 export interface AvatarMenuWidgetLayoutRelationshipSmileItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutRelationshipSmileItem = ({ layout, onButton, tags }: AvatarMenuWidgetLayoutRelationshipSmileItemProps) => {
+export const AvatarMenuWidgetLayoutRelationshipSmileItem = ({ layout, onButton }: AvatarMenuWidgetLayoutRelationshipSmileItemProps) => {
     return (
         <Region
             name="relationship_smile"
-            tags={tags}
             layout={{ width: 45, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1118,14 +1202,12 @@ export const AvatarMenuWidgetLayoutRelationshipSmileItem = ({ layout, onButton, 
 export interface AvatarMenuWidgetLayoutRelationshipBobbaItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutRelationshipBobbaItem = ({ layout, onButton, tags }: AvatarMenuWidgetLayoutRelationshipBobbaItemProps) => {
+export const AvatarMenuWidgetLayoutRelationshipBobbaItem = ({ layout, onButton }: AvatarMenuWidgetLayoutRelationshipBobbaItemProps) => {
     return (
         <Region
             name="relationship_bobba"
-            tags={tags}
             layout={{ width: 45, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1148,14 +1230,12 @@ export const AvatarMenuWidgetLayoutRelationshipBobbaItem = ({ layout, onButton, 
 export interface AvatarMenuWidgetLayoutRelationshipGridItemProps {
     itemsRelationshipGrid?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutRelationshipGridItem = ({ itemsRelationshipGrid, layout, tags }: AvatarMenuWidgetLayoutRelationshipGridItemProps) => {
+export const AvatarMenuWidgetLayoutRelationshipGridItem = ({ itemsRelationshipGrid, layout }: AvatarMenuWidgetLayoutRelationshipGridItemProps) => {
     return (
         <Region
             name="relationship_grid"
-            tags={tags}
             layout={{ width: 137, height: 25, flexShrink: 0, flexDirection: 'row', flexWrap: 'wrap', gap: 1, ...layout }}
         >
             {itemsRelationshipGrid ?? (
@@ -1174,37 +1254,41 @@ export interface AvatarMenuWidgetLayoutNoRelationshipItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutNoRelationshipItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutNoRelationshipItemProps) => {
+export const AvatarMenuWidgetLayoutNoRelationshipItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutNoRelationshipItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="no_relationship"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.clear_relationship')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.clear_relationship')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1214,43 +1298,46 @@ export interface AvatarMenuWidgetLayoutActionsItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutActionsItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutActionsItemProps) => {
+export const AvatarMenuWidgetLayoutActionsItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutActionsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="actions"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.link.actions')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.link.actions')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="4"
+                        name="icon"
+                        layout={{ position: 'absolute', left: 10, width: 5, top: 12, height: 10 }}
                     />
-                </Region>
-                <Icon
-                    variant="4"
-                    name="icon"
-                    tags={[ 'arrow_left' ]}
-                    layout={{ position: 'absolute', left: 10, width: 5, top: 12, height: 10 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1260,37 +1347,41 @@ export interface AvatarMenuWidgetLayoutPassHanditemItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutPassHanditemItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutPassHanditemItemProps) => {
+export const AvatarMenuWidgetLayoutPassHanditemItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutPassHanditemItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="pass_handitem"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.pass_hand_item')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.pass_hand_item')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1300,37 +1391,41 @@ export interface AvatarMenuWidgetLayoutChangeBotNameItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutChangeBotNameItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutChangeBotNameItemProps) => {
+export const AvatarMenuWidgetLayoutChangeBotNameItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutChangeBotNameItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="change_bot_name"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.change_bot_name')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.change_bot_name')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1340,37 +1435,41 @@ export interface AvatarMenuWidgetLayoutDressUpItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutDressUpItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutDressUpItemProps) => {
+export const AvatarMenuWidgetLayoutDressUpItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutDressUpItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dress_up"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.dress_up')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.dress_up')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1380,37 +1479,41 @@ export interface AvatarMenuWidgetLayoutSetupChatItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutSetupChatItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutSetupChatItemProps) => {
+export const AvatarMenuWidgetLayoutSetupChatItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutSetupChatItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="setup_chat"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.setup_chat')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.setup_chat')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1420,37 +1523,41 @@ export interface AvatarMenuWidgetLayoutRandomWalkItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutRandomWalkItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutRandomWalkItemProps) => {
+export const AvatarMenuWidgetLayoutRandomWalkItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutRandomWalkItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="random_walk"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.random_walk')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.random_walk')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1460,37 +1567,41 @@ export interface AvatarMenuWidgetLayoutDanceItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutDanceItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutDanceItemProps) => {
+export const AvatarMenuWidgetLayoutDanceItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutDanceItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.dance')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.dance')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1500,37 +1611,41 @@ export interface AvatarMenuWidgetLayoutPickItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutPickItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutPickItemProps) => {
+export const AvatarMenuWidgetLayoutPickItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutPickItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="pick"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.pick_up')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.pick_up')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1540,39 +1655,42 @@ export interface AvatarMenuWidgetLayoutNuxProceed1ItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
     visibleNuxProceed1?: boolean;
 }
 
-export const AvatarMenuWidgetLayoutNuxProceed1Item = ({ captionLabel, layout, onButton, tags, visibleNuxProceed1 }: AvatarMenuWidgetLayoutNuxProceed1ItemProps) => {
+export const AvatarMenuWidgetLayoutNuxProceed1Item = ({ captionLabel, layout, onButton, visibleGroups, visibleNuxProceed1 }: AvatarMenuWidgetLayoutNuxProceed1ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="nux_proceed_1"
-            tags={tags}
-            visible={visibleNuxProceed1 ?? false}
+            visible={(visibleGroups?.action ?? true) && (visibleNuxProceed1 ?? false)}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.nux.proceed')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.nux.proceed')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1582,37 +1700,41 @@ export interface AvatarMenuWidgetLayoutNuxTakeTourItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutNuxTakeTourItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutNuxTakeTourItemProps) => {
+export const AvatarMenuWidgetLayoutNuxTakeTourItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutNuxTakeTourItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="nux_take_tour"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.nux.take.tour')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.nux.take.tour')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1622,37 +1744,41 @@ export interface AvatarMenuWidgetLayoutNuxAgainItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutNuxAgainItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutNuxAgainItemProps) => {
+export const AvatarMenuWidgetLayoutNuxAgainItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutNuxAgainItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="nux_again"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.nux.again')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.nux.again')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1662,35 +1788,39 @@ export interface AvatarMenuWidgetLayoutNuxRestartItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutNuxRestartItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutNuxRestartItemProps) => {
+export const AvatarMenuWidgetLayoutNuxRestartItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutNuxRestartItemProps) => {
     return (
         <Region
             name="nux_restart"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? 'NUX RESTART'}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? 'NUX RESTART'}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1700,35 +1830,39 @@ export interface AvatarMenuWidgetLayoutNuxNextDayItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutNuxNextDayItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutNuxNextDayItemProps) => {
+export const AvatarMenuWidgetLayoutNuxNextDayItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutNuxNextDayItemProps) => {
     return (
         <Region
             name="nux_next_day"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? 'NUX NEXT DAY'}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? 'NUX NEXT DAY'}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1738,37 +1872,40 @@ export interface AvatarMenuWidgetLayoutLinkTemplateItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
     visibleLinkTemplate?: boolean;
 }
 
-export const AvatarMenuWidgetLayoutLinkTemplateItem = ({ captionLabel, layout, onButton, tags, visibleLinkTemplate }: AvatarMenuWidgetLayoutLinkTemplateItemProps) => {
+export const AvatarMenuWidgetLayoutLinkTemplateItem = ({ captionLabel, layout, onButton, visibleGroups, visibleLinkTemplate }: AvatarMenuWidgetLayoutLinkTemplateItemProps) => {
     return (
         <Region
             name="link_template"
-            tags={tags}
-            visible={visibleLinkTemplate ?? false}
+            visible={(visibleGroups?.action ?? true) && (visibleLinkTemplate ?? false)}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? 'PH'}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? 'PH'}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1778,43 +1915,46 @@ export interface AvatarMenuWidgetLayoutAmbassadorItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutAmbassadorItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.link.ambassador')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.link.ambassador')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="5"
+                        name="icon"
+                        layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
                     />
-                </Region>
-                <Icon
-                    variant="5"
-                    name="icon"
-                    tags={[ 'arrow_right' ]}
-                    layout={{ position: 'absolute', right: 10, width: 5, top: 12, height: 10 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1824,37 +1964,41 @@ export interface AvatarMenuWidgetLayoutAmbassadorAlertItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorAlertItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorAlertItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorAlertItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutAmbassadorAlertItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_alert"
-            tags={tags}
+            visible={visibleGroups?.ambassador ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'ambassador' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.ambassador ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.ambassador.alert')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.ambassador.alert')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1864,37 +2008,41 @@ export interface AvatarMenuWidgetLayoutAmbassadorKickItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorKickItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorKickItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorKickItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutAmbassadorKickItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_kick"
-            tags={tags}
+            visible={visibleGroups?.ambassador ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'ambassador' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.ambassador ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.kick')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.kick')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1904,37 +2052,41 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute2minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute2minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute2minItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute2minItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutAmbassadorMute2minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_2min"
-            tags={tags}
+            visible={visibleGroups?.ambassador ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'ambassador' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.ambassador ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.mute_2min')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.mute_2min')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1944,37 +2096,41 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute10minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute10minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute10minItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute10minItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutAmbassadorMute10minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_10min"
-            tags={tags}
+            visible={visibleGroups?.ambassador ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'ambassador' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.ambassador ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.mute_10min')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.mute_10min')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1984,37 +2140,41 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute15minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute15minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute15minItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute15minItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutAmbassadorMute15minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_15min"
-            tags={tags}
+            visible={visibleGroups?.ambassador ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'ambassador' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.ambassador ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.mute_15min')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.mute_15min')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -2024,37 +2184,41 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute60minItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute60minItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute60minItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute60minItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutAmbassadorMute60minItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_60min"
-            tags={tags}
+            visible={visibleGroups?.ambassador ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'ambassador' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.ambassador ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.mute_60min')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.mute_60min')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -2064,37 +2228,41 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute18hourItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute18hourItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute18hourItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute18hourItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutAmbassadorMute18hourItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_18hour"
-            tags={tags}
+            visible={visibleGroups?.ambassador ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'ambassador' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.ambassador ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.mute_18hour')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.mute_18hour')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -2104,37 +2272,41 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute36hourItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute36hourItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute36hourItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute36hourItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutAmbassadorMute36hourItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_36hour"
-            tags={tags}
+            visible={visibleGroups?.ambassador ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'ambassador' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.ambassador ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.mute_36hour')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.mute_36hour')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -2144,37 +2316,41 @@ export interface AvatarMenuWidgetLayoutAmbassadorMute72hourItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorMute72hourItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorMute72hourItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorMute72hourItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutAmbassadorMute72hourItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_mute_72hour"
-            tags={tags}
+            visible={visibleGroups?.ambassador ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'ambassador' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.ambassador ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.mute_72hour')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.mute_72hour')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -2184,37 +2360,41 @@ export interface AvatarMenuWidgetLayoutAmbassadorUnmuteItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutAmbassadorUnmuteItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutAmbassadorUnmuteItemProps) => {
+export const AvatarMenuWidgetLayoutAmbassadorUnmuteItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutAmbassadorUnmuteItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ambassador_unmute"
-            tags={tags}
+            visible={visibleGroups?.ambassador ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'ambassador' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.ambassador ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.unmute')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ff8133', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.unmute')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ff8133', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -2224,37 +2404,41 @@ export interface AvatarMenuWidgetLayoutDonateToAllItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutDonateToAllItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutDonateToAllItemProps) => {
+export const AvatarMenuWidgetLayoutDonateToAllItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutDonateToAllItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="donate_to_all"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.dta')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.dta')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -2264,37 +2448,41 @@ export interface AvatarMenuWidgetLayoutDonateToUserItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutDonateToUserItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutDonateToUserItemProps) => {
+export const AvatarMenuWidgetLayoutDonateToUserItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutDonateToUserItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="donate_to_user"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.dtu')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.dtu')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -2304,37 +2492,41 @@ export interface AvatarMenuWidgetLayoutWiredInspectItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const AvatarMenuWidgetLayoutWiredInspectItem = ({ captionLabel, layout, onButton, tags }: AvatarMenuWidgetLayoutWiredInspectItemProps) => {
+export const AvatarMenuWidgetLayoutWiredInspectItem = ({ captionLabel, layout, onButton, visibleGroups }: AvatarMenuWidgetLayoutWiredInspectItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wired_inspect"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 137, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.wired_inspect')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.wired_inspect')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -2343,72 +2535,70 @@ export const AvatarMenuWidgetLayoutWiredInspectItem = ({ captionLabel, layout, o
 export interface AvatarMenuWidgetLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutButtons = ({ itemsButtons, layout, tags }: AvatarMenuWidgetLayoutButtonsProps) => {
+export const AvatarMenuWidgetLayoutButtons = ({ itemsButtons, layout }: AvatarMenuWidgetLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ position: 'absolute', left: 2, right: 2, top: 28, minHeight: 1402, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsButtons ?? (
                 <>
-                    <AvatarMenuWidgetLayoutOpenProfileItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutFriendItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutTradeItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutWhisperItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutRespectItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutReplenishRespectItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutBlowItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutPerformItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutRelationshipItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutKickItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutMuteItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutMute2minItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutMute5minItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutMute10minItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutBanWithDurationItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutBanHourItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutBanDayItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutPermBanItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutGiveRightsItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutRemoveRightsItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutUnignoreItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutIgnoreItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutReportItem tags={[ 'moderate' ]} />
-                    <AvatarMenuWidgetLayoutModerateItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutRelationshipGridItem tags={[ 'grid' ]} />
-                    <AvatarMenuWidgetLayoutNoRelationshipItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutActionsItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutPassHanditemItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutChangeBotNameItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutDressUpItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutSetupChatItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutRandomWalkItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutDanceItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutPickItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutNuxProceed1Item tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutNuxTakeTourItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutNuxAgainItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutNuxRestartItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutNuxNextDayItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutLinkTemplateItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutAmbassadorItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutAmbassadorAlertItem tags={[ 'ambassador' ]} />
-                    <AvatarMenuWidgetLayoutAmbassadorKickItem tags={[ 'ambassador' ]} />
-                    <AvatarMenuWidgetLayoutAmbassadorMute2minItem tags={[ 'ambassador' ]} />
-                    <AvatarMenuWidgetLayoutAmbassadorMute10minItem tags={[ 'ambassador' ]} />
-                    <AvatarMenuWidgetLayoutAmbassadorMute15minItem tags={[ 'ambassador' ]} />
-                    <AvatarMenuWidgetLayoutAmbassadorMute60minItem tags={[ 'ambassador' ]} />
-                    <AvatarMenuWidgetLayoutAmbassadorMute18hourItem tags={[ 'ambassador' ]} />
-                    <AvatarMenuWidgetLayoutAmbassadorMute36hourItem tags={[ 'ambassador' ]} />
-                    <AvatarMenuWidgetLayoutAmbassadorMute72hourItem tags={[ 'ambassador' ]} />
-                    <AvatarMenuWidgetLayoutAmbassadorUnmuteItem tags={[ 'ambassador' ]} />
-                    <AvatarMenuWidgetLayoutDonateToAllItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutDonateToUserItem tags={[ 'action' ]} />
-                    <AvatarMenuWidgetLayoutWiredInspectItem tags={[ 'action' ]} />
+                    <AvatarMenuWidgetLayoutOpenProfileItem />
+                    <AvatarMenuWidgetLayoutFriendItem />
+                    <AvatarMenuWidgetLayoutTradeItem />
+                    <AvatarMenuWidgetLayoutWhisperItem />
+                    <AvatarMenuWidgetLayoutRespectItem />
+                    <AvatarMenuWidgetLayoutReplenishRespectItem />
+                    <AvatarMenuWidgetLayoutBlowItem />
+                    <AvatarMenuWidgetLayoutPerformItem />
+                    <AvatarMenuWidgetLayoutRelationshipItem />
+                    <AvatarMenuWidgetLayoutKickItem />
+                    <AvatarMenuWidgetLayoutMuteItem />
+                    <AvatarMenuWidgetLayoutMute2minItem />
+                    <AvatarMenuWidgetLayoutMute5minItem />
+                    <AvatarMenuWidgetLayoutMute10minItem />
+                    <AvatarMenuWidgetLayoutBanWithDurationItem />
+                    <AvatarMenuWidgetLayoutBanHourItem />
+                    <AvatarMenuWidgetLayoutBanDayItem />
+                    <AvatarMenuWidgetLayoutPermBanItem />
+                    <AvatarMenuWidgetLayoutGiveRightsItem />
+                    <AvatarMenuWidgetLayoutRemoveRightsItem />
+                    <AvatarMenuWidgetLayoutUnignoreItem />
+                    <AvatarMenuWidgetLayoutIgnoreItem />
+                    <AvatarMenuWidgetLayoutReportItem />
+                    <AvatarMenuWidgetLayoutModerateItem />
+                    <AvatarMenuWidgetLayoutRelationshipGridItem />
+                    <AvatarMenuWidgetLayoutNoRelationshipItem />
+                    <AvatarMenuWidgetLayoutActionsItem />
+                    <AvatarMenuWidgetLayoutPassHanditemItem />
+                    <AvatarMenuWidgetLayoutChangeBotNameItem />
+                    <AvatarMenuWidgetLayoutDressUpItem />
+                    <AvatarMenuWidgetLayoutSetupChatItem />
+                    <AvatarMenuWidgetLayoutRandomWalkItem />
+                    <AvatarMenuWidgetLayoutDanceItem />
+                    <AvatarMenuWidgetLayoutPickItem />
+                    <AvatarMenuWidgetLayoutNuxProceed1Item />
+                    <AvatarMenuWidgetLayoutNuxTakeTourItem />
+                    <AvatarMenuWidgetLayoutNuxAgainItem />
+                    <AvatarMenuWidgetLayoutNuxRestartItem />
+                    <AvatarMenuWidgetLayoutNuxNextDayItem />
+                    <AvatarMenuWidgetLayoutLinkTemplateItem />
+                    <AvatarMenuWidgetLayoutAmbassadorItem />
+                    <AvatarMenuWidgetLayoutAmbassadorAlertItem />
+                    <AvatarMenuWidgetLayoutAmbassadorKickItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute2minItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute10minItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute15minItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute60minItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute18hourItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute36hourItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute72hourItem />
+                    <AvatarMenuWidgetLayoutAmbassadorUnmuteItem />
+                    <AvatarMenuWidgetLayoutDonateToAllItem />
+                    <AvatarMenuWidgetLayoutDonateToUserItem />
+                    <AvatarMenuWidgetLayoutWiredInspectItem />
                 </>
             )}
         </Region>
@@ -2419,14 +2609,12 @@ export const AvatarMenuWidgetLayoutButtons = ({ itemsButtons, layout, tags }: Av
 export interface AvatarMenuWidgetLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
-    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutMinimize = ({ layout, onMinimize, tags }: AvatarMenuWidgetLayoutMinimizeProps) => {
+export const AvatarMenuWidgetLayoutMinimize = ({ layout, onMinimize }: AvatarMenuWidgetLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 3, right: 4, bottom: 11, height: 18, justifyContent: 'center', ...layout }}
@@ -2446,14 +2634,12 @@ export interface AvatarMenuWidgetLayoutBorderProps {
     layout?: BoxLayout;
     minimize?: AvatarMenuWidgetLayoutMinimizeProps;
     profileLink?: AvatarMenuWidgetLayoutProfileLinkProps;
-    tags?: string[];
 }
 
-export const AvatarMenuWidgetLayoutBorder = ({ buttons, layout, minimize, profileLink, tags }: AvatarMenuWidgetLayoutBorderProps) => {
+export const AvatarMenuWidgetLayoutBorder = ({ buttons, layout, minimize, profileLink }: AvatarMenuWidgetLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 8, top: 0, height: 1458, ...layout }}
         >
             <AvatarMenuWidgetLayoutProfileLink {...profileLink} />

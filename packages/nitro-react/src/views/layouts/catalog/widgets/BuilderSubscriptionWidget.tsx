@@ -1,5 +1,6 @@
 import { useTranslation } from '#base/context';
 import { BoxLayout, ButtonThick, Region } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `builderSubscriptionWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -7,25 +8,23 @@ import { BoxLayout, ButtonThick, Region } from '#base/theme';
  * (LayoutBuildersClubFrontpageLayout); each passes its own placement through `layout`.
  */
 /** Named region `builderSubscriptionWidget` of BuilderSubscriptionWidget - configured through the parent's `builderSubscriptionWidget` prop. */
-export interface BuilderSubscriptionWidgetProps {
+export interface BuilderSubscriptionWidgetProps extends CatalogWidgetFlags {
     layout?: BoxLayout;
     onSubscribeButton?: () => void;
     onSubscribeButtonBig?: () => void;
     onSubscribeButtonSms?: () => void;
     onTryButton?: () => void;
-    tags?: string[];
     visibleSubscribeButton?: boolean;
     visibleSubscribeButtonBig?: boolean;
     visibleSubscribeButtonSms?: boolean;
 }
 
-export const BuilderSubscriptionWidget = ({ layout, onSubscribeButton, onSubscribeButtonBig, onSubscribeButtonSms, onTryButton, tags, visibleSubscribeButton, visibleSubscribeButtonBig, visibleSubscribeButtonSms }: BuilderSubscriptionWidgetProps) => {
+export const BuilderSubscriptionWidget = ({ layout, onSubscribeButton, onSubscribeButtonBig, onSubscribeButtonSms, onTryButton, visibleSubscribeButton, visibleSubscribeButtonBig, visibleSubscribeButtonSms }: BuilderSubscriptionWidgetProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="builderSubscriptionWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Region

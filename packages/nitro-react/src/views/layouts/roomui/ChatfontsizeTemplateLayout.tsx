@@ -19,14 +19,12 @@ export interface ChatfontsizeTemplateLayoutChatfontsizeRegionProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onChatfontsizeRegion?: () => void;
-    tags?: string[];
 }
 
-export const ChatfontsizeTemplateLayoutChatfontsizeRegion = ({ captionLabel, layout, onChatfontsizeRegion, tags }: ChatfontsizeTemplateLayoutChatfontsizeRegionProps) => {
+export const ChatfontsizeTemplateLayoutChatfontsizeRegion = ({ captionLabel, layout, onChatfontsizeRegion }: ChatfontsizeTemplateLayoutChatfontsizeRegionProps) => {
     return (
         <Region
             name="chatfontsize_region"
-            tags={tags}
             onPointerTap={onChatfontsizeRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18, ...layout }}

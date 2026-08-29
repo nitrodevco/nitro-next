@@ -19,14 +19,12 @@ export interface BadgeLayerLayoutPreviewContainerProps {
     layout?: BoxLayout;
     onPartButton?: () => void;
     srcPartPreview?: string;
-    tags?: string[];
 }
 
-export const BadgeLayerLayoutPreviewContainer = ({ layout, onPartButton, srcPartPreview, tags }: BadgeLayerLayoutPreviewContainerProps) => {
+export const BadgeLayerLayoutPreviewContainer = ({ layout, onPartButton, srcPartPreview }: BadgeLayerLayoutPreviewContainerProps) => {
     return (
         <Region
             name="preview_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 3, width: 51, top: 0, height: 49, ...layout }}
         >
             <ButtonThick
@@ -49,14 +47,12 @@ export interface BadgeLayerLayoutPositionContainerProps {
     layout?: BoxLayout;
     srcPositionGrid?: string;
     srcPositionPicker?: string;
-    tags?: string[];
 }
 
-export const BadgeLayerLayoutPositionContainer = ({ layout, srcPositionGrid, srcPositionPicker, tags }: BadgeLayerLayoutPositionContainerProps) => {
+export const BadgeLayerLayoutPositionContainer = ({ layout, srcPositionGrid, srcPositionPicker }: BadgeLayerLayoutPositionContainerProps) => {
     return (
         <Region
             name="position_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 67, width: 43, top: 3, height: 43, ...layout }}
         >
             <ThemeImage
@@ -76,14 +72,12 @@ export const BadgeLayerLayoutPositionContainer = ({ layout, srcPositionGrid, src
 /** Named region `color_selector` of BadgeLayerLayout - configured through the parent's `colorSelector` prop. */
 export interface BadgeLayerLayoutColorSelectorProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BadgeLayerLayoutColorSelector = ({ layout, tags }: BadgeLayerLayoutColorSelectorProps) => {
+export const BadgeLayerLayoutColorSelector = ({ layout }: BadgeLayerLayoutColorSelectorProps) => {
     return (
         <Region
             name="color_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 124, width: 120, top: 2, height: 45, flexDirection: 'row', flexWrap: 'wrap', ...layout }}
         />
     );
@@ -95,14 +89,12 @@ export interface BadgeLayerLayoutContainerProps {
     layout?: BoxLayout;
     positionContainer?: BadgeLayerLayoutPositionContainerProps;
     previewContainer?: BadgeLayerLayoutPreviewContainerProps;
-    tags?: string[];
 }
 
-export const BadgeLayerLayoutContainer = ({ colorSelector, layout, positionContainer, previewContainer, tags }: BadgeLayerLayoutContainerProps) => {
+export const BadgeLayerLayoutContainer = ({ colorSelector, layout, positionContainer, previewContainer }: BadgeLayerLayoutContainerProps) => {
     return (
         <Region
             name="container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 247, top: 0, height: 49, ...layout }}
         >
             <Border

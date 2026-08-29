@@ -67,16 +67,14 @@ export const MemberEntryLayout = ({ actionLinkRegion, adminContainer, bgRegion, 
 export interface MemberEntryLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
-    tags?: string[];
 }
 
-export const MemberEntryLayoutBgRegion = ({ layout, onBgRegion, tags }: MemberEntryLayoutBgRegionProps) => {
+export const MemberEntryLayoutBgRegion = ({ layout, onBgRegion }: MemberEntryLayoutBgRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bg_region"
-            tags={tags}
             tooltip={t('group.members.showinfo')}
             onPointerTap={onBgRegion}
             cursor="pointer"
@@ -90,15 +88,13 @@ export interface MemberEntryLayoutActionLinkRegionProps {
     captionActionLink?: string;
     layout?: BoxLayout;
     onActionLinkRegion?: () => void;
-    tags?: string[];
     visibleActionLinkRegion?: boolean;
 }
 
-export const MemberEntryLayoutActionLinkRegion = ({ captionActionLink, layout, onActionLinkRegion, tags, visibleActionLinkRegion }: MemberEntryLayoutActionLinkRegionProps) => {
+export const MemberEntryLayoutActionLinkRegion = ({ captionActionLink, layout, onActionLinkRegion, visibleActionLinkRegion }: MemberEntryLayoutActionLinkRegionProps) => {
     return (
         <Region
             name="action_link_region"
-            tags={tags}
             visible={visibleActionLinkRegion ?? false}
             onPointerTap={onActionLinkRegion}
             cursor="pointer"
@@ -119,14 +115,12 @@ export interface MemberEntryLayoutAdminContainerProps {
     layout?: BoxLayout;
     srcIconAdminOff?: string;
     srcIconAdminOver?: string;
-    tags?: string[];
 }
 
-export const MemberEntryLayoutAdminContainer = ({ layout, srcIconAdminOff, srcIconAdminOver, tags }: MemberEntryLayoutAdminContainerProps) => {
+export const MemberEntryLayoutAdminContainer = ({ layout, srcIconAdminOff, srcIconAdminOver }: MemberEntryLayoutAdminContainerProps) => {
     return (
         <Region
             name="admin_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 33, width: 15, top: 15, height: 13, ...layout }}
         >
             <ThemeImage
@@ -150,14 +144,12 @@ export interface MemberEntryLayoutBlockRegionProps {
     srcIconCloseDown?: string;
     srcIconCloseOff?: string;
     srcIconCloseOver?: string;
-    tags?: string[];
 }
 
-export const MemberEntryLayoutBlockRegion = ({ layout, onBlockRegion, srcIconCloseDown, srcIconCloseOff, srcIconCloseOver, tags }: MemberEntryLayoutBlockRegionProps) => {
+export const MemberEntryLayoutBlockRegion = ({ layout, onBlockRegion, srcIconCloseDown, srcIconCloseOff, srcIconCloseOver }: MemberEntryLayoutBlockRegionProps) => {
     return (
         <Region
             name="block_region"
-            tags={tags}
             onPointerTap={onBlockRegion}
             cursor="pointer"
             layout={{ position: 'absolute', right: 17, width: 17, top: 1, height: 18, ...layout }}
@@ -188,14 +180,12 @@ export interface MemberEntryLayoutRemoveRegionProps {
     srcIconCloseDown?: string;
     srcIconCloseOff?: string;
     srcIconCloseOver?: string;
-    tags?: string[];
 }
 
-export const MemberEntryLayoutRemoveRegion = ({ layout, onRemoveRegion, srcIconCloseDown, srcIconCloseOff, srcIconCloseOver, tags }: MemberEntryLayoutRemoveRegionProps) => {
+export const MemberEntryLayoutRemoveRegion = ({ layout, onRemoveRegion, srcIconCloseDown, srcIconCloseOff, srcIconCloseOver }: MemberEntryLayoutRemoveRegionProps) => {
     return (
         <Region
             name="remove_region"
-            tags={tags}
             onPointerTap={onRemoveRegion}
             cursor="pointer"
             layout={{ position: 'absolute', right: 1, width: 17, top: 1, height: 18, ...layout }}

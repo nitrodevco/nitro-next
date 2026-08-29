@@ -32,7 +32,6 @@ export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, 
                 </Region>
                 <Border
                     variant="2"
-                    tags={[ 'ITEM_HILIGHT' ]}
                     tintColor="#a1a19b"
                     layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 62 }}
                 >
@@ -120,7 +119,6 @@ export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, 
                         layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
                     >
                         <ThemeImage
-                            tags={[ 'ITEM_HILIGHT_TOP' ]}
                             src={layoutImage('inventory_thumb_selected_outline.png')}
                             layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
                         />
@@ -136,14 +134,12 @@ export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, 
 export interface MintGridItemLayoutAmountTextRightItemProps {
     captionAmountTextRight?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MintGridItemLayoutAmountTextRightItem = ({ captionAmountTextRight, layout, tags }: MintGridItemLayoutAmountTextRightItemProps) => {
+export const MintGridItemLayoutAmountTextRightItem = ({ captionAmountTextRight, layout }: MintGridItemLayoutAmountTextRightItemProps) => {
     return (
         <Region
             name="amount_text_right"
-            tags={tags}
             layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionAmountTextRight ?? '00000'} />
@@ -154,15 +150,13 @@ export const MintGridItemLayoutAmountTextRightItem = ({ captionAmountTextRight, 
 /** Row template `currency_indicator_bitmap_right` of MintGridItemLayout - pass real rows through its `items…` slot. */
 export interface MintGridItemLayoutCurrencyIndicatorBitmapRightItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MintGridItemLayoutCurrencyIndicatorBitmapRightItem = ({ layout, tags }: MintGridItemLayoutCurrencyIndicatorBitmapRightItemProps) => {
+export const MintGridItemLayoutCurrencyIndicatorBitmapRightItem = ({ layout }: MintGridItemLayoutCurrencyIndicatorBitmapRightItemProps) => {
     return (
         <Icon
             variant="35"
             name="currency_indicator_bitmap_right"
-            tags={tags}
             layout={{ width: 15, height: 15, flexShrink: 0, ...layout }}
         />
     );
@@ -172,14 +166,12 @@ export const MintGridItemLayoutCurrencyIndicatorBitmapRightItem = ({ layout, tag
 export interface MintGridItemLayoutTotalpriceContainerProps {
     itemsTotalpriceContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MintGridItemLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout, tags }: MintGridItemLayoutTotalpriceContainerProps) => {
+export const MintGridItemLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout }: MintGridItemLayoutTotalpriceContainerProps) => {
     return (
         <Region
             name="totalprice_container"
-            tags={tags}
             layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1, ...layout }}
         >
             {itemsTotalpriceContainer ?? (

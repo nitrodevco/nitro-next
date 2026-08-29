@@ -44,10 +44,9 @@ export const MotdNotificationLayout = ({ layout, messageList, onClose, onClose2 
 /** Named region `message_list` of MotdNotificationLayout - configured through the parent's `messageList` prop. */
 export interface MotdNotificationLayoutMessageListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MotdNotificationLayoutMessageList = ({ layout, tags }: MotdNotificationLayoutMessageListProps) => {
+export const MotdNotificationLayoutMessageList = ({ layout }: MotdNotificationLayoutMessageListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -55,7 +54,6 @@ export const MotdNotificationLayoutMessageList = ({ layout, tags }: MotdNotifica
         >
             <Region
                 name="message_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>

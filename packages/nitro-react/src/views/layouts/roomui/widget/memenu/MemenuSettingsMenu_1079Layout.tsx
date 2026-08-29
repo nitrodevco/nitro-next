@@ -18,14 +18,12 @@ export const MemenuSettingsMenu_1079Layout = ({ danceContainer, layout }: Memenu
 /** Named region `line` of MemenuSettingsMenu_1079Layout - configured through the parent's `line` prop. */
 export interface MemenuSettingsMenu_1079LayoutLineProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MemenuSettingsMenu_1079LayoutLine = ({ layout, tags }: MemenuSettingsMenu_1079LayoutLineProps) => {
+export const MemenuSettingsMenu_1079LayoutLine = ({ layout }: MemenuSettingsMenu_1079LayoutLineProps) => {
     return (
         <Region
             name="line"
-            tags={tags}
             backgroundColor="#2f2f2f"
             layout={{ position: 'absolute', left: 5, width: 160, top: 22, height: 1, ...layout }}
         />
@@ -41,16 +39,14 @@ export interface MemenuSettingsMenu_1079LayoutDanceContainerProps {
     onBack?: () => void;
     onCharacterSettings?: () => void;
     onSoundSettings?: () => void;
-    tags?: string[];
 }
 
-export const MemenuSettingsMenu_1079LayoutDanceContainer = ({ captionIdentityText, captionSettingsTitle, layout, line, onBack, onCharacterSettings, onSoundSettings, tags }: MemenuSettingsMenu_1079LayoutDanceContainerProps) => {
+export const MemenuSettingsMenu_1079LayoutDanceContainer = ({ captionIdentityText, captionSettingsTitle, layout, line, onBack, onCharacterSettings, onSoundSettings }: MemenuSettingsMenu_1079LayoutDanceContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 135, justifyContent: 'center', ...layout }}
         >
             <Region

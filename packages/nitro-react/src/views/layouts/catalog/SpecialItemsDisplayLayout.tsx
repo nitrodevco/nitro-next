@@ -73,14 +73,12 @@ export const SpecialItemsDisplayLayout = ({ backgroundContainer, bottom, caption
 /** Named region `bg1` of SpecialItemsDisplayLayout - configured through the parent's `bg1` prop. */
 export interface SpecialItemsDisplayLayoutBg1Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutBg1 = ({ layout, tags }: SpecialItemsDisplayLayoutBg1Props) => {
+export const SpecialItemsDisplayLayoutBg1 = ({ layout }: SpecialItemsDisplayLayoutBg1Props) => {
     return (
         <Region
             name="bg1"
-            tags={tags}
             backgroundColor="#bfbfbf"
             layout={{ position: 'absolute', left: 3, right: 3, top: 0, bottom: 7, ...layout }}
         />
@@ -90,14 +88,12 @@ export const SpecialItemsDisplayLayoutBg1 = ({ layout, tags }: SpecialItemsDispl
 /** Named region `bg2` of SpecialItemsDisplayLayout - configured through the parent's `bg2` prop. */
 export interface SpecialItemsDisplayLayoutBg2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutBg2 = ({ layout, tags }: SpecialItemsDisplayLayoutBg2Props) => {
+export const SpecialItemsDisplayLayoutBg2 = ({ layout }: SpecialItemsDisplayLayoutBg2Props) => {
     return (
         <Region
             name="bg2"
-            tags={tags}
             backgroundColor="#bfbfbf"
             layout={{ position: 'absolute', left: 4, right: 4, bottom: 5, height: 2, ...layout }}
         />
@@ -107,14 +103,12 @@ export const SpecialItemsDisplayLayoutBg2 = ({ layout, tags }: SpecialItemsDispl
 /** Named region `bg3` of SpecialItemsDisplayLayout - configured through the parent's `bg3` prop. */
 export interface SpecialItemsDisplayLayoutBg3Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutBg3 = ({ layout, tags }: SpecialItemsDisplayLayoutBg3Props) => {
+export const SpecialItemsDisplayLayoutBg3 = ({ layout }: SpecialItemsDisplayLayoutBg3Props) => {
     return (
         <Region
             name="bg3"
-            tags={tags}
             backgroundColor="#bfbfbf"
             layout={{ position: 'absolute', left: 6, right: 6, bottom: 4, height: 1, ...layout }}
         />
@@ -127,14 +121,12 @@ export interface SpecialItemsDisplayLayoutBackgroundContainerProps {
     bg2?: SpecialItemsDisplayLayoutBg2Props;
     bg3?: SpecialItemsDisplayLayoutBg3Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutBackgroundContainer = ({ bg1, bg2, bg3, layout, tags }: SpecialItemsDisplayLayoutBackgroundContainerProps) => {
+export const SpecialItemsDisplayLayoutBackgroundContainer = ({ bg1, bg2, bg3, layout }: SpecialItemsDisplayLayoutBackgroundContainerProps) => {
     return (
         <Region
             name="background_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33, ...layout }}
         >
             <SpecialItemsDisplayLayoutBg1 {...bg1} />
@@ -149,16 +141,14 @@ export interface SpecialItemsDisplayLayoutHeaderProps {
     captionSetDesc?: string;
     captionSetTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutHeader = ({ captionSetDesc, captionSetTitle, layout, tags }: SpecialItemsDisplayLayoutHeaderProps) => {
+export const SpecialItemsDisplayLayoutHeader = ({ captionSetDesc, captionSetTitle, layout }: SpecialItemsDisplayLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 107, ...layout }}
         >
             <Border
@@ -199,14 +189,12 @@ export const SpecialItemsDisplayLayoutHeader = ({ captionSetDesc, captionSetTitl
 /** Named region `item_rotation` of SpecialItemsDisplayLayout - configured through the parent's `itemRotation` prop. */
 export interface SpecialItemsDisplayLayoutItemRotationProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutItemRotation = ({ layout, tags }: SpecialItemsDisplayLayoutItemRotationProps) => {
+export const SpecialItemsDisplayLayoutItemRotation = ({ layout }: SpecialItemsDisplayLayoutItemRotationProps) => {
     return (
         <Region
             name="item_rotation"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 197, ...layout }}
         >
             <WidgetSlot
@@ -226,14 +214,12 @@ export interface SpecialItemsDisplayLayoutItemViewerProps {
     srcPlatformImg?: string;
     srcSpotlightBaseImg?: string;
     srcSpotlightImg?: string;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutItemViewer = ({ itemRotation, layout, srcPlatformImg, srcSpotlightBaseImg, srcSpotlightImg, tags }: SpecialItemsDisplayLayoutItemViewerProps) => {
+export const SpecialItemsDisplayLayoutItemViewer = ({ itemRotation, layout, srcPlatformImg, srcSpotlightBaseImg, srcSpotlightImg }: SpecialItemsDisplayLayoutItemViewerProps) => {
     return (
         <Region
             name="item_viewer"
-            tags={tags}
             layout={{ position: 'absolute', left: 40, width: 340, top: 0, height: 197, ...layout }}
         >
             <ThemeImage
@@ -249,8 +235,8 @@ export const SpecialItemsDisplayLayoutItemViewer = ({ itemRotation, layout, srcP
             <SpecialItemsDisplayLayoutItemRotation {...itemRotation} />
             <ThemeImage
                 name="spotlight_img"
-                tags={[ 'BLEND_ADD' ]}
                 src={srcSpotlightImg ?? layoutImage('special_items_spotlight1.png')}
+                blendMode="add"
                 layout={{ position: 'absolute', left: 124, width: 91, top: -100, height: 271 }}
             />
         </Region>
@@ -261,21 +247,18 @@ export const SpecialItemsDisplayLayoutItemViewer = ({ itemRotation, layout, srcP
 export interface SpecialItemsDisplayLayoutPreviousButtonProps {
     layout?: BoxLayout;
     onPreviousButton?: () => void;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutPreviousButton = ({ layout, onPreviousButton, tags }: SpecialItemsDisplayLayoutPreviousButtonProps) => {
+export const SpecialItemsDisplayLayoutPreviousButton = ({ layout, onPreviousButton }: SpecialItemsDisplayLayoutPreviousButtonProps) => {
     return (
         <Region
             name="previous_button"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under_gentle"
             onPointerTap={onPreviousButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 8, width: 33, top: 97, height: 38, ...layout }}
         >
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('icons_back.png')}
                 layout={{ position: 'absolute', left: 0, width: 33, top: 4, height: 34 }}
             />
@@ -287,21 +270,18 @@ export const SpecialItemsDisplayLayoutPreviousButton = ({ layout, onPreviousButt
 export interface SpecialItemsDisplayLayoutNextButtonProps {
     layout?: BoxLayout;
     onNextButton?: () => void;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutNextButton = ({ layout, onNextButton, tags }: SpecialItemsDisplayLayoutNextButtonProps) => {
+export const SpecialItemsDisplayLayoutNextButton = ({ layout, onNextButton }: SpecialItemsDisplayLayoutNextButtonProps) => {
     return (
         <Region
             name="next_button"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under_gentle"
             onPointerTap={onNextButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 379, width: 33, top: 97, height: 38, ...layout }}
         >
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('icons_forward.png')}
                 layout={{ position: 'absolute', left: 0, width: 33, top: 4, height: 34 }}
             />
@@ -314,14 +294,12 @@ export interface SpecialItemsDisplayLayoutPageTemplateItemProps {
     layout?: BoxLayout;
     onPageTemplate?: () => void;
     srcPageImage?: string;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutPageTemplateItem = ({ layout, onPageTemplate, srcPageImage, tags }: SpecialItemsDisplayLayoutPageTemplateItemProps) => {
+export const SpecialItemsDisplayLayoutPageTemplateItem = ({ layout, onPageTemplate, srcPageImage }: SpecialItemsDisplayLayoutPageTemplateItemProps) => {
     return (
         <Region
             name="page_template"
-            tags={tags}
             onPointerTap={onPageTemplate}
             cursor="pointer"
             layout={{ width: 10, height: 11, flexShrink: 0, ...layout }}
@@ -340,14 +318,12 @@ export interface SpecialItemsDisplayLayoutPageTemplateItem2Props {
     layout?: BoxLayout;
     onPageTemplate?: () => void;
     srcPageImage?: string;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutPageTemplateItem2 = ({ layout, onPageTemplate, srcPageImage, tags }: SpecialItemsDisplayLayoutPageTemplateItem2Props) => {
+export const SpecialItemsDisplayLayoutPageTemplateItem2 = ({ layout, onPageTemplate, srcPageImage }: SpecialItemsDisplayLayoutPageTemplateItem2Props) => {
     return (
         <Region
             name="page_template"
-            tags={tags}
             onPointerTap={onPageTemplate}
             cursor="pointer"
             layout={{ width: 10, height: 11, flexShrink: 0, ...layout }}
@@ -366,14 +342,12 @@ export interface SpecialItemsDisplayLayoutPageTemplateItem3Props {
     layout?: BoxLayout;
     onPageTemplate?: () => void;
     srcPageImage?: string;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutPageTemplateItem3 = ({ layout, onPageTemplate, srcPageImage, tags }: SpecialItemsDisplayLayoutPageTemplateItem3Props) => {
+export const SpecialItemsDisplayLayoutPageTemplateItem3 = ({ layout, onPageTemplate, srcPageImage }: SpecialItemsDisplayLayoutPageTemplateItem3Props) => {
     return (
         <Region
             name="page_template"
-            tags={tags}
             onPointerTap={onPageTemplate}
             cursor="pointer"
             layout={{ width: 10, height: 11, flexShrink: 0, ...layout }}
@@ -391,14 +365,12 @@ export const SpecialItemsDisplayLayoutPageTemplateItem3 = ({ layout, onPageTempl
 export interface SpecialItemsDisplayLayoutPageListProps {
     itemsPageList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutPageList = ({ itemsPageList, layout, tags }: SpecialItemsDisplayLayoutPageListProps) => {
+export const SpecialItemsDisplayLayoutPageList = ({ itemsPageList, layout }: SpecialItemsDisplayLayoutPageListProps) => {
     return (
         <Region
             name="page_list"
-            tags={tags}
             layout={{ position: 'absolute', top: 0, flexDirection: 'row', gap: 7, ...layout }}
         >
             {itemsPageList ?? (
@@ -416,14 +388,12 @@ export const SpecialItemsDisplayLayoutPageList = ({ itemsPageList, layout, tags 
 export interface SpecialItemsDisplayLayoutPageContainerProps {
     layout?: BoxLayout;
     pageList?: SpecialItemsDisplayLayoutPageListProps;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutPageContainer = ({ layout, pageList, tags }: SpecialItemsDisplayLayoutPageContainerProps) => {
+export const SpecialItemsDisplayLayoutPageContainer = ({ layout, pageList }: SpecialItemsDisplayLayoutPageContainerProps) => {
     return (
         <Region
             name="page_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 39, width: 342, top: 207, height: 11, justifyContent: 'center', ...layout }}
         >
             <SpecialItemsDisplayLayoutPageList {...pageList} />
@@ -438,14 +408,12 @@ export interface SpecialItemsDisplayLayoutCenterProps {
     nextButton?: SpecialItemsDisplayLayoutNextButtonProps;
     pageContainer?: SpecialItemsDisplayLayoutPageContainerProps;
     previousButton?: SpecialItemsDisplayLayoutPreviousButtonProps;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutCenter = ({ itemViewer, layout, nextButton, pageContainer, previousButton, tags }: SpecialItemsDisplayLayoutCenterProps) => {
+export const SpecialItemsDisplayLayoutCenter = ({ itemViewer, layout, nextButton, pageContainer, previousButton }: SpecialItemsDisplayLayoutCenterProps) => {
     return (
         <Region
             name="center"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 168, height: 220, ...layout }}
         >
             <SpecialItemsDisplayLayoutItemViewer {...itemViewer} />
@@ -459,14 +427,12 @@ export const SpecialItemsDisplayLayoutCenter = ({ itemViewer, layout, nextButton
 /** Named region `claim_spacer` of SpecialItemsDisplayLayout - configured through the parent's `claimSpacer` prop. */
 export interface SpecialItemsDisplayLayoutClaimSpacerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutClaimSpacer = ({ layout, tags }: SpecialItemsDisplayLayoutClaimSpacerProps) => {
+export const SpecialItemsDisplayLayoutClaimSpacer = ({ layout }: SpecialItemsDisplayLayoutClaimSpacerProps) => {
     return (
         <Region
             name="claim_spacer"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 0, ...layout }}
         />
     );
@@ -476,16 +442,14 @@ export const SpecialItemsDisplayLayoutClaimSpacer = ({ layout, tags }: SpecialIt
 export interface SpecialItemsDisplayLayoutItemTitleItemProps {
     captionItemTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutItemTitleItem = ({ captionItemTitle, layout, tags }: SpecialItemsDisplayLayoutItemTitleItemProps) => {
+export const SpecialItemsDisplayLayoutItemTitleItem = ({ captionItemTitle, layout }: SpecialItemsDisplayLayoutItemTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="item_title"
-            tags={tags}
             layout={{ width: 300, height: 17, flexShrink: 0, maxWidth: 300, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -500,16 +464,14 @@ export const SpecialItemsDisplayLayoutItemTitleItem = ({ captionItemTitle, layou
 export interface SpecialItemsDisplayLayoutItemDescItemProps {
     captionItemDesc?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutItemDescItem = ({ captionItemDesc, layout, tags }: SpecialItemsDisplayLayoutItemDescItemProps) => {
+export const SpecialItemsDisplayLayoutItemDescItem = ({ captionItemDesc, layout }: SpecialItemsDisplayLayoutItemDescItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="item_desc"
-            tags={tags}
             layout={{ width: 300, height: 57, flexShrink: 0, maxWidth: 300, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -524,10 +486,9 @@ export const SpecialItemsDisplayLayoutItemDescItem = ({ captionItemDesc, layout,
 export interface SpecialItemsDisplayLayoutItemScrollAreaProps {
     itemsItemScrollArea?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SpecialItemsDisplayLayoutItemScrollArea = ({ itemsItemScrollArea, layout, tags }: SpecialItemsDisplayLayoutItemScrollAreaProps) => {
+export const SpecialItemsDisplayLayoutItemScrollArea = ({ itemsItemScrollArea, layout }: SpecialItemsDisplayLayoutItemScrollAreaProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -535,7 +496,6 @@ export const SpecialItemsDisplayLayoutItemScrollArea = ({ itemsItemScrollArea, l
         >
             <Region
                 name="item_scroll_area"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 10, width: '100%' }}
             >
                 {itemsItemScrollArea ?? (
@@ -554,15 +514,13 @@ export interface SpecialItemsDisplayLayoutBottomProps {
     itemScrollArea?: SpecialItemsDisplayLayoutItemScrollAreaProps;
     layout?: BoxLayout;
     srcTemp?: string;
-    tags?: string[];
     visibleBottomborder2?: boolean;
 }
 
-export const SpecialItemsDisplayLayoutBottom = ({ itemScrollArea, layout, srcTemp, tags, visibleBottomborder2 }: SpecialItemsDisplayLayoutBottomProps) => {
+export const SpecialItemsDisplayLayoutBottom = ({ itemScrollArea, layout, srcTemp, visibleBottomborder2 }: SpecialItemsDisplayLayoutBottomProps) => {
     return (
         <Region
             name="bottom"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 33, height: 135, ...layout }}
         >
             <Border

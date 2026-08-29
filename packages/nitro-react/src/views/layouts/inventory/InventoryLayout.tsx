@@ -26,10 +26,7 @@ export const InventoryLayout = ({ layout, onClose, subContentArea, topContent }:
             layout={{ width: 490, height: 342, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <InventoryLayoutTopContent
-                    tags={[ 'TOP_CONTENT' ]}
-                    {...topContent}
-                />
+                <InventoryLayoutTopContent {...topContent} />
                 <InventoryLayoutSubContentArea {...subContentArea} />
             </Region>
         </Frame>
@@ -43,17 +40,15 @@ export interface InventoryLayoutEmptyContainerProps {
     layout?: BoxLayout;
     onOpenCatalogBtn?: () => void;
     srcImage?: string;
-    tags?: string[];
     visibleEmptyContainer?: boolean;
 }
 
-export const InventoryLayoutEmptyContainer = ({ captionInventoryEmptyDescription, captionInventoryEmptyTitle, layout, onOpenCatalogBtn, srcImage, tags, visibleEmptyContainer }: InventoryLayoutEmptyContainerProps) => {
+export const InventoryLayoutEmptyContainer = ({ captionInventoryEmptyDescription, captionInventoryEmptyTitle, layout, onOpenCatalogBtn, srcImage, visibleEmptyContainer }: InventoryLayoutEmptyContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="empty_container"
-            tags={tags}
             visible={visibleEmptyContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 478, top: 20, bottom: 3, justifyContent: 'center', ...layout }}
         >
@@ -65,7 +60,6 @@ export const InventoryLayoutEmptyContainer = ({ captionInventoryEmptyDescription
             <Region layout={{ position: 'absolute', left: 287, width: 176, top: 64, height: 154, flexDirection: 'column', gap: 5 }}>
                 <Region
                     name="inventory_empty_title"
-                    tags={[ 'furni_description' ]}
                     layout={{ width: 176, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -76,7 +70,6 @@ export const InventoryLayoutEmptyContainer = ({ captionInventoryEmptyDescription
                 </Region>
                 <Region
                     name="inventory_empty_description"
-                    tags={[ 'furni_description' ]}
                     layout={{ width: 176, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -102,15 +95,13 @@ export const InventoryLayoutEmptyContainer = ({ captionInventoryEmptyDescription
 export interface InventoryLayoutLoadingContainerProps {
     layout?: BoxLayout;
     srcDownloadImage?: string;
-    tags?: string[];
     visibleLoadingContainer?: boolean;
 }
 
-export const InventoryLayoutLoadingContainer = ({ layout, srcDownloadImage, tags, visibleLoadingContainer }: InventoryLayoutLoadingContainerProps) => {
+export const InventoryLayoutLoadingContainer = ({ layout, srcDownloadImage, visibleLoadingContainer }: InventoryLayoutLoadingContainerProps) => {
     return (
         <Region
             name="loading_container"
-            tags={tags}
             visible={visibleLoadingContainer ?? false}
             layout={{ position: 'absolute', left: 6, width: 264, top: 27, bottom: 6, ...layout }}
         >
@@ -127,15 +118,13 @@ export const InventoryLayoutLoadingContainer = ({ layout, srcDownloadImage, tags
 export interface InventoryLayoutClearFilterButtonProps {
     layout?: BoxLayout;
     onClearFilterButton?: () => void;
-    tags?: string[];
     visibleClearFilterButton?: boolean;
 }
 
-export const InventoryLayoutClearFilterButton = ({ layout, onClearFilterButton, tags, visibleClearFilterButton }: InventoryLayoutClearFilterButtonProps) => {
+export const InventoryLayoutClearFilterButton = ({ layout, onClearFilterButton, visibleClearFilterButton }: InventoryLayoutClearFilterButtonProps) => {
     return (
         <Region
             name="clear_filter_button"
-            tags={tags}
             visible={visibleClearFilterButton ?? false}
             onPointerTap={onClearFilterButton}
             cursor="pointer"
@@ -152,10 +141,9 @@ export const InventoryLayoutClearFilterButton = ({ layout, onClearFilterButton, 
 /** Named region `item_grid` of InventoryLayout - configured through the parent's `itemGrid` prop. */
 export interface InventoryLayoutItemGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutItemGrid = ({ layout, tags }: InventoryLayoutItemGridProps) => {
+export const InventoryLayoutItemGrid = ({ layout }: InventoryLayoutItemGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -163,7 +151,6 @@ export const InventoryLayoutItemGrid = ({ layout, tags }: InventoryLayoutItemGri
         >
             <Region
                 name="item_grid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
             />
         </ScrollArea>
@@ -173,21 +160,16 @@ export const InventoryLayoutItemGrid = ({ layout, tags }: InventoryLayoutItemGri
 /** Named region `item_grid_pages` of InventoryLayout - configured through the parent's `itemGridPages` prop. */
 export interface InventoryLayoutItemGridPagesProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutItemGridPages = ({ layout, tags }: InventoryLayoutItemGridPagesProps) => {
+export const InventoryLayoutItemGridPages = ({ layout }: InventoryLayoutItemGridPagesProps) => {
     return (
         <Region
             name="item_grid_pages"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 280, bottom: 1, height: 10, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 8, height: 14, flexShrink: 0 }}>
-                <Region
-                    tags={[ 'PAGE' ]}
-                    layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text="0"
                         textStyle="text-style-il-small"
@@ -204,20 +186,15 @@ export interface InventoryLayoutGridContainerProps {
     itemGrid?: InventoryLayoutItemGridProps;
     itemGridPages?: InventoryLayoutItemGridPagesProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutGridContainer = ({ captionItemsShown, itemGrid, itemGridPages, layout, tags }: InventoryLayoutGridContainerProps) => {
+export const InventoryLayoutGridContainer = ({ captionItemsShown, itemGrid, itemGridPages, layout }: InventoryLayoutGridContainerProps) => {
     return (
         <Region
             name="grid_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 284, top: 27, bottom: 3, ...layout }}
         >
-            <InventoryLayoutItemGrid
-                tags={[ 'FURNI_ITEM_GRID' ]}
-                {...itemGrid}
-            />
+            <InventoryLayoutItemGrid {...itemGrid} />
             <InventoryLayoutItemGridPages {...itemGridPages} />
             <Region
                 name="items.shown"
@@ -236,14 +213,12 @@ export const InventoryLayoutGridContainer = ({ captionItemsShown, itemGrid, item
 export interface InventoryLayoutFurniPreviewRegionProps {
     layout?: BoxLayout;
     onFurniPreviewRegion?: () => void;
-    tags?: string[];
 }
 
-export const InventoryLayoutFurniPreviewRegion = ({ layout, onFurniPreviewRegion, tags }: InventoryLayoutFurniPreviewRegionProps) => {
+export const InventoryLayoutFurniPreviewRegion = ({ layout, onFurniPreviewRegion }: InventoryLayoutFurniPreviewRegionProps) => {
     return (
         <Region
             name="furni_preview_region"
-            tags={tags}
             onPointerTap={onFurniPreviewRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 5, right: 5, top: 0, bottom: 107, minHeight: 50, ...layout }}
@@ -255,14 +230,12 @@ export const InventoryLayoutFurniPreviewRegion = ({ layout, onFurniPreviewRegion
 export interface InventoryLayoutFurniNameItemProps {
     captionFurniName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutFurniNameItem = ({ captionFurniName, layout, tags }: InventoryLayoutFurniNameItemProps) => {
+export const InventoryLayoutFurniNameItem = ({ captionFurniName, layout }: InventoryLayoutFurniNameItemProps) => {
     return (
         <Region
             name="furni_name"
-            tags={tags}
             layout={{ width: 190, height: 17, flexShrink: 0, minWidth: 190, maxWidth: 190, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -277,14 +250,12 @@ export const InventoryLayoutFurniNameItem = ({ captionFurniName, layout, tags }:
 export interface InventoryLayoutFurniDescriptionItemProps {
     captionFurniDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutFurniDescriptionItem = ({ captionFurniDescription, layout, tags }: InventoryLayoutFurniDescriptionItemProps) => {
+export const InventoryLayoutFurniDescriptionItem = ({ captionFurniDescription, layout }: InventoryLayoutFurniDescriptionItemProps) => {
     return (
         <Region
             name="furni_description"
-            tags={tags}
             layout={{ width: 190, height: 30, flexShrink: 0, minWidth: 190, maxWidth: 190, maxHeight: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -299,14 +270,12 @@ export const InventoryLayoutFurniDescriptionItem = ({ captionFurniDescription, l
 export interface InventoryLayoutFurniExtraItemProps {
     captionFurniExtra?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutFurniExtraItem = ({ captionFurniExtra, layout, tags }: InventoryLayoutFurniExtraItemProps) => {
+export const InventoryLayoutFurniExtraItem = ({ captionFurniExtra, layout }: InventoryLayoutFurniExtraItemProps) => {
     return (
         <Region
             name="furni_extra"
-            tags={tags}
             layout={{ width: 190, height: 17, flexShrink: 0, minWidth: 190, maxWidth: 190, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -320,14 +289,12 @@ export const InventoryLayoutFurniExtraItem = ({ captionFurniExtra, layout, tags 
 /** Row template `spacer` of InventoryLayout - pass real rows through its `items…` slot. */
 export interface InventoryLayoutSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutSpacerItem = ({ layout, tags }: InventoryLayoutSpacerItemProps) => {
+export const InventoryLayoutSpacerItem = ({ layout }: InventoryLayoutSpacerItemProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ width: 30, height: 12, flexShrink: 0, ...layout }}
         />
     );
@@ -337,17 +304,15 @@ export const InventoryLayoutSpacerItem = ({ layout, tags }: InventoryLayoutSpace
 export interface InventoryLayoutPlaceinroomBtnItemProps {
     layout?: BoxLayout;
     onPlaceinroomBtn?: () => void;
-    tags?: string[];
 }
 
-export const InventoryLayoutPlaceinroomBtnItem = ({ layout, onPlaceinroomBtn, tags }: InventoryLayoutPlaceinroomBtnItemProps) => {
+export const InventoryLayoutPlaceinroomBtnItem = ({ layout, onPlaceinroomBtn }: InventoryLayoutPlaceinroomBtnItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="placeinroom_btn"
-            tags={tags}
             onPointerTap={onPlaceinroomBtn}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 180, height: 22, flexShrink: 0, ...layout }}
@@ -361,17 +326,15 @@ export const InventoryLayoutPlaceinroomBtnItem = ({ layout, onPlaceinroomBtn, ta
 export interface InventoryLayoutGotoRoomBtnItemProps {
     layout?: BoxLayout;
     onGotoRoomBtn?: () => void;
-    tags?: string[];
 }
 
-export const InventoryLayoutGotoRoomBtnItem = ({ layout, onGotoRoomBtn, tags }: InventoryLayoutGotoRoomBtnItemProps) => {
+export const InventoryLayoutGotoRoomBtnItem = ({ layout, onGotoRoomBtn }: InventoryLayoutGotoRoomBtnItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="goto_room_btn"
-            tags={tags}
             onPointerTap={onGotoRoomBtn}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 165, height: 22, flexShrink: 0, ...layout }}
@@ -402,17 +365,15 @@ export const InventoryLayoutOffertotradeCntItem = ({ layout }: InventoryLayoutOf
 export interface InventoryLayoutOffertotradeBtnItemProps {
     layout?: BoxLayout;
     onOffertotradeBtn?: () => void;
-    tags?: string[];
 }
 
-export const InventoryLayoutOffertotradeBtnItem = ({ layout, onOffertotradeBtn, tags }: InventoryLayoutOffertotradeBtnItemProps) => {
+export const InventoryLayoutOffertotradeBtnItem = ({ layout, onOffertotradeBtn }: InventoryLayoutOffertotradeBtnItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="offertotrade_btn"
-            tags={tags}
             onPointerTap={onOffertotradeBtn}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 148, height: 22, flexShrink: 0, minWidth: 60, ...layout }}
@@ -426,17 +387,15 @@ export const InventoryLayoutOffertotradeBtnItem = ({ layout, onOffertotradeBtn, 
 export interface InventoryLayoutSellBtnItemProps {
     layout?: BoxLayout;
     onSellBtn?: () => void;
-    tags?: string[];
 }
 
-export const InventoryLayoutSellBtnItem = ({ layout, onSellBtn, tags }: InventoryLayoutSellBtnItemProps) => {
+export const InventoryLayoutSellBtnItem = ({ layout, onSellBtn }: InventoryLayoutSellBtnItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="sell_btn"
-            tags={tags}
             onPointerTap={onSellBtn}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 167, height: 22, flexShrink: 0, ...layout }}
@@ -450,17 +409,15 @@ export const InventoryLayoutSellBtnItem = ({ layout, onSellBtn, tags }: Inventor
 export interface InventoryLayoutUseBtnItemProps {
     layout?: BoxLayout;
     onUseBtn?: () => void;
-    tags?: string[];
 }
 
-export const InventoryLayoutUseBtnItem = ({ layout, onUseBtn, tags }: InventoryLayoutUseBtnItemProps) => {
+export const InventoryLayoutUseBtnItem = ({ layout, onUseBtn }: InventoryLayoutUseBtnItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="use_btn"
-            tags={tags}
             onPointerTap={onUseBtn}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 125, height: 28, flexShrink: 0, ...layout }}
@@ -474,17 +431,15 @@ export const InventoryLayoutUseBtnItem = ({ layout, onUseBtn, tags }: InventoryL
 export interface InventoryLayoutExtendrentBtnItemProps {
     layout?: BoxLayout;
     onExtendrentBtn?: () => void;
-    tags?: string[];
 }
 
-export const InventoryLayoutExtendrentBtnItem = ({ layout, onExtendrentBtn, tags }: InventoryLayoutExtendrentBtnItemProps) => {
+export const InventoryLayoutExtendrentBtnItem = ({ layout, onExtendrentBtn }: InventoryLayoutExtendrentBtnItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="extendrent_btn"
-            tags={tags}
             onPointerTap={onExtendrentBtn}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 168, height: 22, flexShrink: 0, ...layout }}
@@ -498,17 +453,15 @@ export const InventoryLayoutExtendrentBtnItem = ({ layout, onExtendrentBtn, tags
 export interface InventoryLayoutBuyrenteditemBtnItemProps {
     layout?: BoxLayout;
     onBuyrenteditemBtn?: () => void;
-    tags?: string[];
 }
 
-export const InventoryLayoutBuyrenteditemBtnItem = ({ layout, onBuyrenteditemBtn, tags }: InventoryLayoutBuyrenteditemBtnItemProps) => {
+export const InventoryLayoutBuyrenteditemBtnItem = ({ layout, onBuyrenteditemBtn }: InventoryLayoutBuyrenteditemBtnItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="buyrenteditem_btn"
-            tags={tags}
             onPointerTap={onBuyrenteditemBtn}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 189, height: 22, flexShrink: 0, ...layout }}
@@ -522,30 +475,28 @@ export const InventoryLayoutBuyrenteditemBtnItem = ({ layout, onBuyrenteditemBtn
 export interface InventoryLayoutPreviewElementListProps {
     itemsPreviewElementList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutPreviewElementList = ({ itemsPreviewElementList, layout, tags }: InventoryLayoutPreviewElementListProps) => {
+export const InventoryLayoutPreviewElementList = ({ itemsPreviewElementList, layout }: InventoryLayoutPreviewElementListProps) => {
     return (
         <Region
             name="preview_element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 2, height: 266, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsPreviewElementList ?? (
                 <>
-                    <InventoryLayoutFurniNameItem tags={[ 'furni_name' ]} />
-                    <InventoryLayoutFurniDescriptionItem tags={[ 'furni_description' ]} />
-                    <InventoryLayoutFurniExtraItem tags={[ 'furni_extra' ]} />
+                    <InventoryLayoutFurniNameItem />
+                    <InventoryLayoutFurniDescriptionItem />
+                    <InventoryLayoutFurniExtraItem />
                     <InventoryLayoutSpacerItem />
-                    <InventoryLayoutPlaceinroomBtnItem tags={[ 'FIT:inventory.furni.placetoroom' ]} />
-                    <InventoryLayoutGotoRoomBtnItem tags={[ 'FIT:inventory.furni.gotoroom' ]} />
+                    <InventoryLayoutPlaceinroomBtnItem />
+                    <InventoryLayoutGotoRoomBtnItem />
                     <InventoryLayoutOffertotradeCntItem />
                     <InventoryLayoutOffertotradeBtnItem />
                     <InventoryLayoutSellBtnItem />
                     <InventoryLayoutUseBtnItem />
-                    <InventoryLayoutExtendrentBtnItem tags={[ 'FIT:inventory.furni.extendrent' ]} />
-                    <InventoryLayoutBuyrenteditemBtnItem tags={[ 'FIT:inventory.furni.buyrenteditem' ]} />
+                    <InventoryLayoutExtendrentBtnItem />
+                    <InventoryLayoutBuyrenteditemBtnItem />
                 </>
             )}
         </Region>
@@ -558,16 +509,14 @@ export interface InventoryLayoutTradeableInfoRegionItemProps {
     layout?: BoxLayout;
     onTradeableInfoRegion?: () => void;
     srcTradeableIcon?: string;
-    tags?: string[];
 }
 
-export const InventoryLayoutTradeableInfoRegionItem = ({ captionTradeableNumber, layout, onTradeableInfoRegion, srcTradeableIcon, tags }: InventoryLayoutTradeableInfoRegionItemProps) => {
+export const InventoryLayoutTradeableInfoRegionItem = ({ captionTradeableNumber, layout, onTradeableInfoRegion, srcTradeableIcon }: InventoryLayoutTradeableInfoRegionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="tradeable_info_region"
-            tags={tags}
             tooltip={t('inventory.furni.preview.tradeable_amount')}
             onPointerTap={onTradeableInfoRegion}
             cursor="pointer"
@@ -575,7 +524,6 @@ export const InventoryLayoutTradeableInfoRegionItem = ({ captionTradeableNumber,
         >
             <Region
                 name="tradeable_number"
-                tags={[ 'NUMBER', 'COUNT' ]}
                 layout={{ position: 'absolute', left: 33, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionTradeableNumber ?? ''} />
@@ -595,16 +543,14 @@ export interface InventoryLayoutRecyclableInfoRegionItemProps {
     layout?: BoxLayout;
     onRecyclableInfoRegion?: () => void;
     srcRecyclableIcon?: string;
-    tags?: string[];
 }
 
-export const InventoryLayoutRecyclableInfoRegionItem = ({ captionRecyclableNumber, layout, onRecyclableInfoRegion, srcRecyclableIcon, tags }: InventoryLayoutRecyclableInfoRegionItemProps) => {
+export const InventoryLayoutRecyclableInfoRegionItem = ({ captionRecyclableNumber, layout, onRecyclableInfoRegion, srcRecyclableIcon }: InventoryLayoutRecyclableInfoRegionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="recyclable_info_region"
-            tags={tags}
             tooltip={t('inventory.furni.preview.recyclable_amount')}
             onPointerTap={onRecyclableInfoRegion}
             cursor="pointer"
@@ -612,7 +558,6 @@ export const InventoryLayoutRecyclableInfoRegionItem = ({ captionRecyclableNumbe
         >
             <Region
                 name="recyclable_number"
-                tags={[ 'NUMBER', 'COUNT' ]}
                 layout={{ position: 'absolute', left: 18, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionRecyclableNumber ?? ''} />
@@ -630,14 +575,12 @@ export const InventoryLayoutRecyclableInfoRegionItem = ({ captionRecyclableNumbe
 export interface InventoryLayoutIconsElementListProps {
     itemsIconsElementList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutIconsElementList = ({ itemsIconsElementList, layout, tags }: InventoryLayoutIconsElementListProps) => {
+export const InventoryLayoutIconsElementList = ({ itemsIconsElementList, layout }: InventoryLayoutIconsElementListProps) => {
     return (
         <Region
             name="icons_element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 34, flexDirection: 'column', ...layout }}
         >
             {itemsIconsElementList ?? (
@@ -658,16 +601,14 @@ export interface InventoryLayoutPreviewContainerProps {
     onNextItemButton?: () => void;
     onViewItemButton?: () => void;
     previewElementList?: InventoryLayoutPreviewElementListProps;
-    tags?: string[];
 }
 
-export const InventoryLayoutPreviewContainer = ({ furniPreviewRegion, iconsElementList, layout, onNextItemButton, onViewItemButton, previewElementList, tags }: InventoryLayoutPreviewContainerProps) => {
+export const InventoryLayoutPreviewContainer = ({ furniPreviewRegion, iconsElementList, layout, onNextItemButton, onViewItemButton, previewElementList }: InventoryLayoutPreviewContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="preview_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 290, width: 180, top: 27, bottom: -3, ...layout }}
         >
             <InventoryLayoutFurniPreviewRegion {...furniPreviewRegion} />
@@ -718,17 +659,15 @@ export interface InventoryLayoutFurniProps {
     onFilterOptions?: () => void;
     onPlacementOptions?: () => void;
     previewContainer?: InventoryLayoutPreviewContainerProps;
-    tags?: string[];
     visibleFurni?: boolean;
 }
 
-export const InventoryLayoutFurni = ({ clearFilterButton, gridContainer, layout, onFilterOptions, onPlacementOptions, previewContainer, tags, visibleFurni }: InventoryLayoutFurniProps) => {
+export const InventoryLayoutFurni = ({ clearFilterButton, gridContainer, layout, onFilterOptions, onPlacementOptions, previewContainer, visibleFurni }: InventoryLayoutFurniProps) => {
     const [ filterValue, setFilterValue ] = useState('');
 
     return (
         <Region
             name="furni"
-            tags={tags}
             visible={visibleFurni ?? false}
             layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0, ...layout }}
         >
@@ -772,15 +711,13 @@ export const InventoryLayoutFurni = ({ clearFilterButton, gridContainer, layout,
 export interface InventoryLayoutClearFilterButton2Props {
     layout?: BoxLayout;
     onClearFilterButton?: () => void;
-    tags?: string[];
     visibleClearFilterButton?: boolean;
 }
 
-export const InventoryLayoutClearFilterButton2 = ({ layout, onClearFilterButton, tags, visibleClearFilterButton }: InventoryLayoutClearFilterButton2Props) => {
+export const InventoryLayoutClearFilterButton2 = ({ layout, onClearFilterButton, visibleClearFilterButton }: InventoryLayoutClearFilterButton2Props) => {
     return (
         <Region
             name="clear_filter_button"
-            tags={tags}
             visible={visibleClearFilterButton ?? false}
             onPointerTap={onClearFilterButton}
             cursor="pointer"
@@ -797,10 +734,9 @@ export const InventoryLayoutClearFilterButton2 = ({ layout, onClearFilterButton,
 /** Named region `item_grid` of InventoryLayout - configured through the parent's `itemGrid` prop. */
 export interface InventoryLayoutItemGrid2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutItemGrid2 = ({ layout, tags }: InventoryLayoutItemGrid2Props) => {
+export const InventoryLayoutItemGrid2 = ({ layout }: InventoryLayoutItemGrid2Props) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -808,7 +744,6 @@ export const InventoryLayoutItemGrid2 = ({ layout, tags }: InventoryLayoutItemGr
         >
             <Region
                 name="item_grid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
             />
         </ScrollArea>
@@ -818,21 +753,16 @@ export const InventoryLayoutItemGrid2 = ({ layout, tags }: InventoryLayoutItemGr
 /** Named region `item_grid_pages` of InventoryLayout - configured through the parent's `itemGridPages` prop. */
 export interface InventoryLayoutItemGridPages2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutItemGridPages2 = ({ layout, tags }: InventoryLayoutItemGridPages2Props) => {
+export const InventoryLayoutItemGridPages2 = ({ layout }: InventoryLayoutItemGridPages2Props) => {
     return (
         <Region
             name="item_grid_pages"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 280, bottom: 1, height: 10, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 8, height: 14, flexShrink: 0 }}>
-                <Region
-                    tags={[ 'PAGE' ]}
-                    layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text="0"
                         textStyle="text-style-il-small"
@@ -849,20 +779,15 @@ export interface InventoryLayoutGridContainer2Props {
     itemGrid?: InventoryLayoutItemGrid2Props;
     itemGridPages?: InventoryLayoutItemGridPages2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutGridContainer2 = ({ captionItemsShown, itemGrid, itemGridPages, layout, tags }: InventoryLayoutGridContainer2Props) => {
+export const InventoryLayoutGridContainer2 = ({ captionItemsShown, itemGrid, itemGridPages, layout }: InventoryLayoutGridContainer2Props) => {
     return (
         <Region
             name="grid_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 284, top: 27, bottom: 3, ...layout }}
         >
-            <InventoryLayoutItemGrid2
-                tags={[ 'FURNI_ITEM_GRID' ]}
-                {...itemGrid}
-            />
+            <InventoryLayoutItemGrid2 {...itemGrid} />
             <InventoryLayoutItemGridPages2 {...itemGridPages} />
             <Region
                 name="items.shown"
@@ -882,14 +807,12 @@ export const InventoryLayoutGridContainer2 = ({ captionItemsShown, itemGrid, ite
 export interface InventoryLayoutNftNameItemProps {
     captionNftName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutNftNameItem = ({ captionNftName, layout, tags }: InventoryLayoutNftNameItemProps) => {
+export const InventoryLayoutNftNameItem = ({ captionNftName, layout }: InventoryLayoutNftNameItemProps) => {
     return (
         <Region
             name="nft_name"
-            tags={tags}
             layout={{ width: 190, height: 17, flexShrink: 0, minWidth: 190, maxWidth: 190, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -904,14 +827,12 @@ export const InventoryLayoutNftNameItem = ({ captionNftName, layout, tags }: Inv
 export interface InventoryLayoutNftTypeItemProps {
     captionNftType?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutNftTypeItem = ({ captionNftType, layout, tags }: InventoryLayoutNftTypeItemProps) => {
+export const InventoryLayoutNftTypeItem = ({ captionNftType, layout }: InventoryLayoutNftTypeItemProps) => {
     return (
         <Region
             name="nft_type"
-            tags={tags}
             layout={{ width: 190, height: 17, flexShrink: 0, minWidth: 190, maxWidth: 190, maxHeight: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -926,20 +847,18 @@ export const InventoryLayoutNftTypeItem = ({ captionNftType, layout, tags }: Inv
 export interface InventoryLayoutNftInfoProps {
     itemsNftInfo?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutNftInfo = ({ itemsNftInfo, layout, tags }: InventoryLayoutNftInfoProps) => {
+export const InventoryLayoutNftInfo = ({ itemsNftInfo, layout }: InventoryLayoutNftInfoProps) => {
     return (
         <Region
             name="nft_info"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, right: 0, top: 5, height: 35, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsNftInfo ?? (
                 <>
-                    <InventoryLayoutNftNameItem tags={[ 'furni_name' ]} />
-                    <InventoryLayoutNftTypeItem tags={[ 'furni_description' ]} />
+                    <InventoryLayoutNftNameItem />
+                    <InventoryLayoutNftTypeItem />
                 </>
             )}
         </Region>
@@ -967,17 +886,15 @@ export const InventoryLayoutOffertotradeCntItem2 = ({ layout }: InventoryLayoutO
 export interface InventoryLayoutOffertotradeBtnItem2Props {
     layout?: BoxLayout;
     onOffertotradeBtn?: () => void;
-    tags?: string[];
 }
 
-export const InventoryLayoutOffertotradeBtnItem2 = ({ layout, onOffertotradeBtn, tags }: InventoryLayoutOffertotradeBtnItem2Props) => {
+export const InventoryLayoutOffertotradeBtnItem2 = ({ layout, onOffertotradeBtn }: InventoryLayoutOffertotradeBtnItem2Props) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="offertotrade_btn"
-            tags={tags}
             onPointerTap={onOffertotradeBtn}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 148, height: 22, flexShrink: 0, minWidth: 60, ...layout }}
@@ -991,14 +908,12 @@ export const InventoryLayoutOffertotradeBtnItem2 = ({ layout, onOffertotradeBtn,
 export interface InventoryLayoutOfferOptionsProps {
     itemsOfferOptions?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutOfferOptions = ({ itemsOfferOptions, layout, tags }: InventoryLayoutOfferOptionsProps) => {
+export const InventoryLayoutOfferOptions = ({ itemsOfferOptions, layout }: InventoryLayoutOfferOptionsProps) => {
     return (
         <Region
             name="offer_options"
-            tags={tags}
             layout={{ position: 'absolute', left: -18, right: 5, top: 160, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsOfferOptions ?? (
@@ -1017,17 +932,15 @@ export interface InventoryLayoutTradeableInfoRegionItem2Props {
     layout?: BoxLayout;
     onTradeableInfoRegion?: () => void;
     srcTradeableIcon?: string;
-    tags?: string[];
     visibleTradeableInfoRegion?: boolean;
 }
 
-export const InventoryLayoutTradeableInfoRegionItem2 = ({ captionTradeableNumber, layout, onTradeableInfoRegion, srcTradeableIcon, tags, visibleTradeableInfoRegion }: InventoryLayoutTradeableInfoRegionItem2Props) => {
+export const InventoryLayoutTradeableInfoRegionItem2 = ({ captionTradeableNumber, layout, onTradeableInfoRegion, srcTradeableIcon, visibleTradeableInfoRegion }: InventoryLayoutTradeableInfoRegionItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="tradeable_info_region"
-            tags={tags}
             tooltip={t('inventory.furni.preview.tradeable_amount')}
             visible={visibleTradeableInfoRegion ?? false}
             onPointerTap={onTradeableInfoRegion}
@@ -1036,7 +949,6 @@ export const InventoryLayoutTradeableInfoRegionItem2 = ({ captionTradeableNumber
         >
             <Region
                 name="tradeable_number"
-                tags={[ 'NUMBER', 'COUNT' ]}
                 layout={{ position: 'absolute', left: 33, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionTradeableNumber ?? ''} />
@@ -1054,14 +966,12 @@ export const InventoryLayoutTradeableInfoRegionItem2 = ({ captionTradeableNumber
 export interface InventoryLayoutIconsElementList2Props {
     itemsIconsElementList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutIconsElementList2 = ({ itemsIconsElementList, layout, tags }: InventoryLayoutIconsElementList2Props) => {
+export const InventoryLayoutIconsElementList2 = ({ itemsIconsElementList, layout }: InventoryLayoutIconsElementList2Props) => {
     return (
         <Region
             name="icons_element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 34, flexDirection: 'column', ...layout }}
         >
             {itemsIconsElementList ?? (
@@ -1079,18 +989,16 @@ export interface InventoryLayoutPreviewContainer2Props {
     offerOptions?: InventoryLayoutOfferOptionsProps;
     onNextItemButton?: () => void;
     onViewItemButton?: () => void;
-    tags?: string[];
     visibleNextItemButton?: boolean;
     visibleViewItemButton?: boolean;
 }
 
-export const InventoryLayoutPreviewContainer2 = ({ iconsElementList, layout, nftInfo, offerOptions, onNextItemButton, onViewItemButton, tags, visibleNextItemButton, visibleViewItemButton }: InventoryLayoutPreviewContainer2Props) => {
+export const InventoryLayoutPreviewContainer2 = ({ iconsElementList, layout, nftInfo, offerOptions, onNextItemButton, onViewItemButton, visibleNextItemButton, visibleViewItemButton }: InventoryLayoutPreviewContainer2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="preview_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 290, width: 180, top: 27, bottom: -3, ...layout }}
         >
             <Border
@@ -1158,17 +1066,15 @@ export interface InventoryLayoutCollectiblesProps {
     layout?: BoxLayout;
     onFilterOptions?: () => void;
     previewContainer?: InventoryLayoutPreviewContainer2Props;
-    tags?: string[];
     visibleCollectibles?: boolean;
 }
 
-export const InventoryLayoutCollectibles = ({ clearFilterButton, gridContainer, layout, onFilterOptions, previewContainer, tags, visibleCollectibles }: InventoryLayoutCollectiblesProps) => {
+export const InventoryLayoutCollectibles = ({ clearFilterButton, gridContainer, layout, onFilterOptions, previewContainer, visibleCollectibles }: InventoryLayoutCollectiblesProps) => {
     const [ filterValue, setFilterValue ] = useState('');
 
     return (
         <Region
             name="collectibles"
-            tags={tags}
             visible={visibleCollectibles ?? false}
             layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0, ...layout }}
         >
@@ -1206,15 +1112,13 @@ export const InventoryLayoutCollectibles = ({ clearFilterButton, gridContainer, 
 export interface InventoryLayoutClearFilterButton3Props {
     layout?: BoxLayout;
     onClearFilterButton?: () => void;
-    tags?: string[];
     visibleClearFilterButton?: boolean;
 }
 
-export const InventoryLayoutClearFilterButton3 = ({ layout, onClearFilterButton, tags, visibleClearFilterButton }: InventoryLayoutClearFilterButton3Props) => {
+export const InventoryLayoutClearFilterButton3 = ({ layout, onClearFilterButton, visibleClearFilterButton }: InventoryLayoutClearFilterButton3Props) => {
     return (
         <Region
             name="clear_filter_button"
-            tags={tags}
             visible={visibleClearFilterButton ?? false}
             onPointerTap={onClearFilterButton}
             cursor="pointer"
@@ -1231,10 +1135,9 @@ export const InventoryLayoutClearFilterButton3 = ({ layout, onClearFilterButton,
 /** Named region `grid` of InventoryLayout - configured through the parent's `grid` prop. */
 export interface InventoryLayoutGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutGrid = ({ layout, tags }: InventoryLayoutGridProps) => {
+export const InventoryLayoutGrid = ({ layout }: InventoryLayoutGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -1242,7 +1145,6 @@ export const InventoryLayoutGrid = ({ layout, tags }: InventoryLayoutGridProps) 
         >
             <Region
                 name="grid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
             />
         </ScrollArea>
@@ -1257,16 +1159,14 @@ export interface InventoryLayoutPreviewContainer3Props {
     layout?: BoxLayout;
     onPlaceButton?: () => void;
     srcPreviewImage?: string;
-    tags?: string[];
 }
 
-export const InventoryLayoutPreviewContainer3 = ({ captionPreviewDescription, captionPreviewInfo, captionPreviewText, layout, onPlaceButton, srcPreviewImage, tags }: InventoryLayoutPreviewContainer3Props) => {
+export const InventoryLayoutPreviewContainer3 = ({ captionPreviewDescription, captionPreviewInfo, captionPreviewText, layout, onPlaceButton, srcPreviewImage }: InventoryLayoutPreviewContainer3Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="preview_container"
-            tags={tags}
             layout={{ position: 'absolute', right: -2, width: 190, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -1323,17 +1223,15 @@ export interface InventoryLayoutPetsProps {
     onFilterOptions?: () => void;
     onFilterRarity?: () => void;
     previewContainer?: InventoryLayoutPreviewContainer3Props;
-    tags?: string[];
     visiblePets?: boolean;
 }
 
-export const InventoryLayoutPets = ({ clearFilterButton, grid, layout, onFilterOptions, onFilterRarity, previewContainer, tags, visiblePets }: InventoryLayoutPetsProps) => {
+export const InventoryLayoutPets = ({ clearFilterButton, grid, layout, onFilterOptions, onFilterRarity, previewContainer, visiblePets }: InventoryLayoutPetsProps) => {
     const [ filterValue, setFilterValue ] = useState('');
 
     return (
         <Region
             name="pets"
-            tags={tags}
             visible={visiblePets ?? false}
             layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0, ...layout }}
         >
@@ -1376,10 +1274,9 @@ export const InventoryLayoutPets = ({ clearFilterButton, grid, layout, onFilterO
 /** Named region `grid` of InventoryLayout - configured through the parent's `grid` prop. */
 export interface InventoryLayoutGrid2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutGrid2 = ({ layout, tags }: InventoryLayoutGrid2Props) => {
+export const InventoryLayoutGrid2 = ({ layout }: InventoryLayoutGrid2Props) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -1387,7 +1284,6 @@ export const InventoryLayoutGrid2 = ({ layout, tags }: InventoryLayoutGrid2Props
         >
             <Region
                 name="grid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
             />
         </ScrollArea>
@@ -1401,16 +1297,14 @@ export interface InventoryLayoutPreviewContainer4Props {
     layout?: BoxLayout;
     onPlaceButton?: () => void;
     srcPreviewImage?: string;
-    tags?: string[];
 }
 
-export const InventoryLayoutPreviewContainer4 = ({ captionBotDescription, captionBotName, layout, onPlaceButton, srcPreviewImage, tags }: InventoryLayoutPreviewContainer4Props) => {
+export const InventoryLayoutPreviewContainer4 = ({ captionBotDescription, captionBotName, layout, onPlaceButton, srcPreviewImage }: InventoryLayoutPreviewContainer4Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="preview_container"
-            tags={tags}
             layout={{ position: 'absolute', right: -2, width: 190, top: 0, bottom: 0, ...layout }}
         >
             <Region
@@ -1454,15 +1348,13 @@ export interface InventoryLayoutBotsProps {
     grid?: InventoryLayoutGrid2Props;
     layout?: BoxLayout;
     previewContainer?: InventoryLayoutPreviewContainer4Props;
-    tags?: string[];
     visibleBots?: boolean;
 }
 
-export const InventoryLayoutBots = ({ grid, layout, previewContainer, tags, visibleBots }: InventoryLayoutBotsProps) => {
+export const InventoryLayoutBots = ({ grid, layout, previewContainer, visibleBots }: InventoryLayoutBotsProps) => {
     return (
         <Region
             name="bots"
-            tags={tags}
             visible={visibleBots ?? false}
             layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0, ...layout }}
         >
@@ -1476,14 +1368,12 @@ export const InventoryLayoutBots = ({ grid, layout, previewContainer, tags, visi
 export interface InventoryLayoutClearFilterButton4Props {
     layout?: BoxLayout;
     onClearFilterButton?: () => void;
-    tags?: string[];
 }
 
-export const InventoryLayoutClearFilterButton4 = ({ layout, onClearFilterButton, tags }: InventoryLayoutClearFilterButton4Props) => {
+export const InventoryLayoutClearFilterButton4 = ({ layout, onClearFilterButton }: InventoryLayoutClearFilterButton4Props) => {
     return (
         <Region
             name="clear_filter_button"
-            tags={tags}
             onPointerTap={onClearFilterButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 120, width: 20, top: 0, height: 20, ...layout }}
@@ -1499,10 +1389,9 @@ export const InventoryLayoutClearFilterButton4 = ({ layout, onClearFilterButton,
 /** Named region `inactive_items` of InventoryLayout - configured through the parent's `inactiveItems` prop. */
 export interface InventoryLayoutInactiveItemsProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutInactiveItems = ({ layout, tags }: InventoryLayoutInactiveItemsProps) => {
+export const InventoryLayoutInactiveItems = ({ layout }: InventoryLayoutInactiveItemsProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -1510,7 +1399,6 @@ export const InventoryLayoutInactiveItems = ({ layout, tags }: InventoryLayoutIn
         >
             <Region
                 name="inactive_items"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
             />
         </ScrollArea>
@@ -1520,21 +1408,16 @@ export const InventoryLayoutInactiveItems = ({ layout, tags }: InventoryLayoutIn
 /** Named region `item_grid_pages` of InventoryLayout - configured through the parent's `itemGridPages` prop. */
 export interface InventoryLayoutItemGridPages3Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutItemGridPages3 = ({ layout, tags }: InventoryLayoutItemGridPages3Props) => {
+export const InventoryLayoutItemGridPages3 = ({ layout }: InventoryLayoutItemGridPages3Props) => {
     return (
         <Region
             name="item_grid_pages"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 328, bottom: 81, height: 10, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 8, height: 14, flexShrink: 0 }}>
-                <Region
-                    tags={[ 'PAGE' ]}
-                    layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text="0"
                         textStyle="text-style-il-small"
@@ -1548,14 +1431,12 @@ export const InventoryLayoutItemGridPages3 = ({ layout, tags }: InventoryLayoutI
 /** Named region `active_items` of InventoryLayout - configured through the parent's `activeItems` prop. */
 export interface InventoryLayoutActiveItemsProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutActiveItems = ({ layout, tags }: InventoryLayoutActiveItemsProps) => {
+export const InventoryLayoutActiveItems = ({ layout }: InventoryLayoutActiveItemsProps) => {
     return (
         <Region
             name="active_items"
-            tags={tags}
             layout={{ position: 'absolute', right: -2, width: 135, top: 58, bottom: 83, flexDirection: 'row', flexWrap: 'wrap', gap: 2, ...layout }}
         />
     );
@@ -1565,16 +1446,14 @@ export const InventoryLayoutActiveItems = ({ layout, tags }: InventoryLayoutActi
 export interface InventoryLayoutBadgeNameItemProps {
     captionBadgeName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutBadgeNameItem = ({ captionBadgeName, layout, tags }: InventoryLayoutBadgeNameItemProps) => {
+export const InventoryLayoutBadgeNameItem = ({ captionBadgeName, layout }: InventoryLayoutBadgeNameItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="badgeName"
-            tags={tags}
             layout={{ width: 211, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -1589,14 +1468,12 @@ export const InventoryLayoutBadgeNameItem = ({ captionBadgeName, layout, tags }:
 export interface InventoryLayoutBadgeDescriptionItemProps {
     captionBadgeDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutBadgeDescriptionItem = ({ captionBadgeDescription, layout, tags }: InventoryLayoutBadgeDescriptionItemProps) => {
+export const InventoryLayoutBadgeDescriptionItem = ({ captionBadgeDescription, layout }: InventoryLayoutBadgeDescriptionItemProps) => {
     return (
         <Region
             name="badgeDescription"
-            tags={tags}
             visible={false}
             layout={{ width: 271, height: 4, flexShrink: 0, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -1615,15 +1492,13 @@ export interface InventoryLayoutBadgeDetailsListProps {
     captionBadgeRarityBorder?: string;
     itemsBadgeDetailsList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
     visibleBadgeRarityTag?: boolean;
 }
 
-export const InventoryLayoutBadgeDetailsList = ({ captionBadgeOwnerCount, captionBadgeRarity, captionBadgeRarityBorder, itemsBadgeDetailsList, layout, tags, visibleBadgeRarityTag }: InventoryLayoutBadgeDetailsListProps) => {
+export const InventoryLayoutBadgeDetailsList = ({ captionBadgeOwnerCount, captionBadgeRarity, captionBadgeRarityBorder, itemsBadgeDetailsList, layout, visibleBadgeRarityTag }: InventoryLayoutBadgeDetailsListProps) => {
     return (
         <Region
             name="badgeDetailsList"
-            tags={tags}
             layout={{ position: 'absolute', left: 63, width: 271, top: 3, height: 39, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsBadgeDetailsList ?? (
@@ -1645,7 +1520,6 @@ export const InventoryLayoutBadgeDetailsList = ({ captionBadgeOwnerCount, captio
                     >
                         <Region
                             name="badgeRarityBorder"
-                            tags={[ 'BLEND_SUBTRACT' ]}
                             layout={{ position: 'absolute', left: 5, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -1655,7 +1529,6 @@ export const InventoryLayoutBadgeDetailsList = ({ captionBadgeOwnerCount, captio
                         </Region>
                         <Region
                             name="badgeRarity"
-                            tags={[ 'BLEND_INVERT' ]}
                             layout={{ position: 'absolute', left: 5, width: 81, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
@@ -1685,16 +1558,14 @@ export interface InventoryLayoutDescriptionAreaProps {
     badgeDetailsList?: InventoryLayoutBadgeDetailsListProps;
     layout?: BoxLayout;
     onWearBadgeButton?: () => void;
-    tags?: string[];
 }
 
-export const InventoryLayoutDescriptionArea = ({ badgeDetailsList, layout, onWearBadgeButton, tags }: InventoryLayoutDescriptionAreaProps) => {
+export const InventoryLayoutDescriptionArea = ({ badgeDetailsList, layout, onWearBadgeButton }: InventoryLayoutDescriptionAreaProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="descriptionArea"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: -1, height: 78, ...layout }}
         >
             <Border
@@ -1726,17 +1597,15 @@ export const InventoryLayoutDescriptionArea = ({ badgeDetailsList, layout, onWea
 export interface InventoryLayoutAchievementsScoreContainerProps {
     captionScoreDescriptionText?: string;
     layout?: BoxLayout;
-    tags?: string[];
     visibleAchievementsScoreContainer?: boolean;
 }
 
-export const InventoryLayoutAchievementsScoreContainer = ({ captionScoreDescriptionText, layout, tags, visibleAchievementsScoreContainer }: InventoryLayoutAchievementsScoreContainerProps) => {
+export const InventoryLayoutAchievementsScoreContainer = ({ captionScoreDescriptionText, layout, visibleAchievementsScoreContainer }: InventoryLayoutAchievementsScoreContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="achievements_score_container"
-            tags={tags}
             visible={visibleAchievementsScoreContainer ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: -2, height: 24, ...layout }}
         >
@@ -1773,17 +1642,15 @@ export interface InventoryLayoutBadgesProps {
     layout?: BoxLayout;
     onFilterOptions?: () => void;
     onFilterRarity?: () => void;
-    tags?: string[];
 }
 
-export const InventoryLayoutBadges = ({ achievementsScoreContainer, activeItems, captionMyBadgesTitle, captionWearingTitle, clearFilterButton, descriptionArea, inactiveItems, itemGridPages, layout, onFilterOptions, onFilterRarity, tags }: InventoryLayoutBadgesProps) => {
+export const InventoryLayoutBadges = ({ achievementsScoreContainer, activeItems, captionMyBadgesTitle, captionWearingTitle, clearFilterButton, descriptionArea, inactiveItems, itemGridPages, layout, onFilterOptions, onFilterRarity }: InventoryLayoutBadgesProps) => {
     const t = useTranslation();
     const [ filterValue, setFilterValue ] = useState('');
 
     return (
         <Region
             name="badges"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0, ...layout }}
         >
             <Border
@@ -1816,15 +1683,9 @@ export const InventoryLayoutBadges = ({ achievementsScoreContainer, activeItems,
                 onPointerTap={onFilterRarity}
                 layout={{ position: 'absolute', left: 274, width: 119, top: 2, height: 21 }}
             />
-            <InventoryLayoutInactiveItems
-                tags={[ 'BADGE_ITEM_GRID' ]}
-                {...inactiveItems}
-            />
+            <InventoryLayoutInactiveItems {...inactiveItems} />
             <InventoryLayoutItemGridPages3 {...itemGridPages} />
-            <InventoryLayoutActiveItems
-                tags={[ 'ACTIVE_BADGE_ITEM_GRID' ]}
-                {...activeItems}
-            />
+            <InventoryLayoutActiveItems {...activeItems} />
             <Region
                 name="myBadgesTitle"
                 visible={false}
@@ -1860,14 +1721,12 @@ export interface InventoryLayoutContentAreaProps {
     furni?: InventoryLayoutFurniProps;
     layout?: BoxLayout;
     pets?: InventoryLayoutPetsProps;
-    tags?: string[];
 }
 
-export const InventoryLayoutContentArea = ({ badges, bots, collectibles, furni, layout, pets, tags }: InventoryLayoutContentAreaProps) => {
+export const InventoryLayoutContentArea = ({ badges, bots, collectibles, furni, layout, pets }: InventoryLayoutContentAreaProps) => {
     return (
         <Region
             name="contentArea"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 468, top: 35, bottom: 5, ...layout }}
         >
             <InventoryLayoutFurni {...furni} />
@@ -1891,16 +1750,14 @@ export interface InventoryLayoutTopContentProps {
     onFurni?: () => void;
     onPets?: () => void;
     onRentables?: () => void;
-    tags?: string[];
 }
 
-export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout, loadingContainer, onBadges, onBots, onCollectibles, onFurni, onPets, onRentables, tags }: InventoryLayoutTopContentProps) => {
+export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout, loadingContainer, onBadges, onBots, onCollectibles, onFurni, onPets, onRentables }: InventoryLayoutTopContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="top_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 478, top: 0, bottom: 41, ...layout }}
         >
             <TabContext
@@ -1985,14 +1842,12 @@ export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout,
 /** Named region `subContentArea` of InventoryLayout - configured through the parent's `subContentArea` prop. */
 export interface InventoryLayoutSubContentAreaProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryLayoutSubContentArea = ({ layout, tags }: InventoryLayoutSubContentAreaProps) => {
+export const InventoryLayoutSubContentArea = ({ layout }: InventoryLayoutSubContentAreaProps) => {
     return (
         <Region
             name="subContentArea"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 478, top: 301, height: 1, ...layout }}
         />
     );

@@ -100,14 +100,12 @@ export const EntityLayout = ({ bubbleClickRegionReject, captionBubbleCaption, ca
 /** Named region `icons` of EntityLayout - configured through the parent's `icons` prop. */
 export interface EntityLayoutIconsProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EntityLayoutIcons = ({ layout, tags }: EntityLayoutIconsProps) => {
+export const EntityLayoutIcons = ({ layout }: EntityLayoutIconsProps) => {
     return (
         <Region
             name="icons"
-            tags={tags}
             layout={{ position: 'absolute', right: 10, width: 0, top: -13, height: 25, flexDirection: 'row', gap: 2, ...layout }}
         />
     );
@@ -118,14 +116,12 @@ export interface EntityLayoutRegionProfileProps {
     layout?: BoxLayout;
     onRegionProfile?: () => void;
     srcCanvas?: string;
-    tags?: string[];
 }
 
-export const EntityLayoutRegionProfile = ({ layout, onRegionProfile, srcCanvas, tags }: EntityLayoutRegionProfileProps) => {
+export const EntityLayoutRegionProfile = ({ layout, onRegionProfile, srcCanvas }: EntityLayoutRegionProfileProps) => {
     return (
         <Region
             name="region_profile"
-            tags={tags}
             onPointerTap={onRegionProfile}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 86, top: 0, height: 24, ...layout }}
@@ -147,21 +143,18 @@ export interface EntityLayoutHeaderItemProps {
     layout?: BoxLayout;
     onHeader?: () => void;
     regionProfile?: EntityLayoutRegionProfileProps;
-    tags?: string[];
 }
 
-export const EntityLayoutHeaderItem = ({ captionName, layout, onHeader, regionProfile, tags }: EntityLayoutHeaderItemProps) => {
+export const EntityLayoutHeaderItem = ({ captionName, layout, onHeader, regionProfile }: EntityLayoutHeaderItemProps) => {
     return (
         <Region
             name="header"
-            tags={tags}
             onPointerTap={onHeader}
             cursor="pointer"
             layout={{ width: 119, height: 24, flexShrink: 0, ...layout }}
         >
             <Region
                 name="name"
-                tags={[ 'label' ]}
                 layout={{ position: 'absolute', left: 33, width: 86, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -179,14 +172,12 @@ export const EntityLayoutHeaderItem = ({ captionName, layout, onHeader, regionPr
 export interface EntityLayoutPiecesProps {
     itemsPieces?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EntityLayoutPieces = ({ itemsPieces, layout, tags }: EntityLayoutPiecesProps) => {
+export const EntityLayoutPieces = ({ itemsPieces, layout }: EntityLayoutPiecesProps) => {
     return (
         <Region
             name="pieces"
-            tags={tags}
             layout={{ position: 'absolute', left: 3, right: 3, top: 7, bottom: -1, minHeight: 30, flexDirection: 'column', ...layout }}
         >
             {itemsPieces ?? (
@@ -201,16 +192,14 @@ export interface EntityLayoutBubbleClickRegionRejectProps {
     captionBubbleLinkReject?: string;
     layout?: BoxLayout;
     onBubbleClickRegionReject?: () => void;
-    tags?: string[];
 }
 
-export const EntityLayoutBubbleClickRegionReject = ({ captionBubbleLinkReject, layout, onBubbleClickRegionReject, tags }: EntityLayoutBubbleClickRegionRejectProps) => {
+export const EntityLayoutBubbleClickRegionReject = ({ captionBubbleLinkReject, layout, onBubbleClickRegionReject }: EntityLayoutBubbleClickRegionRejectProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bubble_click_region_reject"
-            tags={tags}
             onPointerTap={onBubbleClickRegionReject}
             cursor="pointer"
             layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 118, bottom: 26, height: 15, ...layout }}

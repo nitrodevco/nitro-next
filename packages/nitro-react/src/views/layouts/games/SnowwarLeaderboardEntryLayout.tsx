@@ -19,7 +19,6 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
             <Region layout={{ position: 'absolute', left: 0, width: 356, top: 0, height: 42 }}>
                 <ThemeImage
                     name="highlight"
-                    tags={[ 'bitmap' ]}
                     src={srcHighlight ?? layoutImage('leaderboard_highlighter.png')}
                     layout={{ position: 'absolute', left: 0, width: 356, top: 0, height: 42 }}
                 />
@@ -58,7 +57,6 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
                 </Region>
                 <ThemeImage
                     name="divider"
-                    tags={[ 'bitmap' ]}
                     src={srcDivider ?? layoutImage('leaderboard_divider.png')}
                     layout={{ position: 'absolute', left: 0, width: 350, bottom: 0, height: 2 }}
                 />
@@ -71,14 +69,12 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
 export interface SnowwarLeaderboardEntryLayoutImageRegionProps {
     layout?: BoxLayout;
     onImageRegion?: () => void;
-    tags?: string[];
 }
 
-export const SnowwarLeaderboardEntryLayoutImageRegion = ({ layout, onImageRegion, tags }: SnowwarLeaderboardEntryLayoutImageRegionProps) => {
+export const SnowwarLeaderboardEntryLayoutImageRegion = ({ layout, onImageRegion }: SnowwarLeaderboardEntryLayoutImageRegionProps) => {
     return (
         <Region
             name="imageRegion"
-            tags={tags}
             onPointerTap={onImageRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 53, width: 44, top: 1, height: 40, ...layout }}

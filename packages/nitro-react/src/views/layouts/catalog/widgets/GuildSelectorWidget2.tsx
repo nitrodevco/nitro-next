@@ -1,5 +1,6 @@
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Droplist, Region, ThemeText } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `guildSelectorWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -7,19 +8,17 @@ import { Border, BoxLayout, Button, Droplist, Region, ThemeText } from '#base/th
  * (GuildSelectorWidgetLayout); each passes its own placement through `layout`.
  */
 /** Named region `guildSelectorWidget` of GuildSelectorWidget2 - configured through the parent's `guildSelectorWidget` prop. */
-export interface GuildSelectorWidget2Props {
+export interface GuildSelectorWidget2Props extends CatalogWidgetFlags {
     layout?: BoxLayout;
     onFindGroupsButton?: () => void;
-    tags?: string[];
 }
 
-export const GuildSelectorWidget2 = ({ layout, onFindGroupsButton, tags }: GuildSelectorWidget2Props) => {
+export const GuildSelectorWidget2 = ({ layout, onFindGroupsButton }: GuildSelectorWidget2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guildSelectorWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Droplist

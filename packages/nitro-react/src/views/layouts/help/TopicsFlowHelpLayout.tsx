@@ -102,18 +102,16 @@ export interface TopicsFlowHelpLayoutStartContainerProps {
     onReportsStatus?: () => void;
     onSanctionInfoLink?: () => void;
     srcReportsStatusBitmap?: string;
-    tags?: string[];
     visibleButtonHabboHelp?: boolean;
     visibleStartContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionReportsStatus, captionSanctionInfoLink, layout, onButtonAccount, onButtonHabboHelp, onButtonUserReport, onFaqLink, onReportsStatus, onSanctionInfoLink, srcReportsStatusBitmap, tags, visibleButtonHabboHelp, visibleStartContainer }: TopicsFlowHelpLayoutStartContainerProps) => {
+export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionReportsStatus, captionSanctionInfoLink, layout, onButtonAccount, onButtonHabboHelp, onButtonUserReport, onFaqLink, onReportsStatus, onSanctionInfoLink, srcReportsStatusBitmap, visibleButtonHabboHelp, visibleStartContainer }: TopicsFlowHelpLayoutStartContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="start_container"
-            tags={tags}
             visible={visibleStartContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 480, ...layout }}
         >
@@ -244,16 +242,14 @@ export interface TopicsFlowHelpLayoutHelpContainerProps {
     onHabbowayLink?: () => void;
     onInstructionsButton?: () => void;
     onSafetybookletLink?: () => void;
-    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutHelpContainer = ({ layout, onHabbowayLink, onInstructionsButton, onSafetybookletLink, tags }: TopicsFlowHelpLayoutHelpContainerProps) => {
+export const TopicsFlowHelpLayoutHelpContainer = ({ layout, onHabbowayLink, onInstructionsButton, onSafetybookletLink }: TopicsFlowHelpLayoutHelpContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="help_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 480, ...layout }}
         >
             <ThemeImage
@@ -329,16 +325,14 @@ export interface TopicsFlowHelpLayoutUserPrototypeItemProps {
     captionUserName?: string;
     layout?: BoxLayout;
     onUserPrototype?: () => void;
-    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, captionUserName, layout, onUserPrototype, tags }: TopicsFlowHelpLayoutUserPrototypeItemProps) => {
+export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, captionUserName, layout, onUserPrototype }: TopicsFlowHelpLayoutUserPrototypeItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_prototype"
-            tags={tags}
             onPointerTap={onUserPrototype}
             cursor="pointer"
             layout={{ width: 367, height: 57, flexShrink: 0, ...layout }}
@@ -346,7 +340,6 @@ export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, caption
             <Border
                 variant="2"
                 name="user_bg"
-                tags={[ 'BACKGROUND' ]}
                 layout={{ position: 'absolute', left: 0, width: 367, top: 0, height: 52 }}
             />
             <Region
@@ -381,10 +374,9 @@ export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, caption
 export interface TopicsFlowHelpLayoutUserListProps {
     itemsUserList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutUserList = ({ itemsUserList, layout, tags }: TopicsFlowHelpLayoutUserListProps) => {
+export const TopicsFlowHelpLayoutUserList = ({ itemsUserList, layout }: TopicsFlowHelpLayoutUserListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -392,7 +384,6 @@ export const TopicsFlowHelpLayoutUserList = ({ itemsUserList, layout, tags }: To
         >
             <Region
                 name="user_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsUserList ?? (
@@ -406,18 +397,16 @@ export const TopicsFlowHelpLayoutUserList = ({ itemsUserList, layout, tags }: To
 /** Named region `users_container` of TopicsFlowHelpLayout - configured through the parent's `usersContainer` prop. */
 export interface TopicsFlowHelpLayoutUsersContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
     userList?: TopicsFlowHelpLayoutUserListProps;
     visibleUsersContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutUsersContainer = ({ layout, tags, userList, visibleUsersContainer }: TopicsFlowHelpLayoutUsersContainerProps) => {
+export const TopicsFlowHelpLayoutUsersContainer = ({ layout, userList, visibleUsersContainer }: TopicsFlowHelpLayoutUsersContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="users_container"
-            tags={tags}
             visible={visibleUsersContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 430, ...layout }}
         >
@@ -448,17 +437,15 @@ export interface TopicsFlowHelpLayoutUserProps {
     captionUserInfoTitle?: string;
     layout?: BoxLayout;
     onChangeUser?: () => void;
-    tags?: string[];
     visibleUser?: boolean;
 }
 
-export const TopicsFlowHelpLayoutUser = ({ captionChangeUser, captionReportedUserName, captionUserInfoTitle, layout, onChangeUser, tags, visibleUser }: TopicsFlowHelpLayoutUserProps) => {
+export const TopicsFlowHelpLayoutUser = ({ captionChangeUser, captionReportedUserName, captionUserInfoTitle, layout, onChangeUser, visibleUser }: TopicsFlowHelpLayoutUserProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user"
-            tags={tags}
             visible={visibleUser ?? false}
             layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 90, ...layout }}
         >
@@ -517,15 +504,13 @@ export interface TopicsFlowHelpLayoutReasonPrototypeItemProps {
     captionName?: string;
     layout?: BoxLayout;
     onReasonPrototype?: () => void;
-    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutReasonPrototypeItem = ({ captionName, layout, onReasonPrototype, tags }: TopicsFlowHelpLayoutReasonPrototypeItemProps) => {
+export const TopicsFlowHelpLayoutReasonPrototypeItem = ({ captionName, layout, onReasonPrototype }: TopicsFlowHelpLayoutReasonPrototypeItemProps) => {
     return (
         <ContainerButton
             variant="5"
             name="reason_prototype"
-            tags={tags}
             tintColor="#aa0000"
             onPointerTap={onReasonPrototype}
             layout={{ width: 355, height: 40, flexShrink: 0, ...layout }}
@@ -548,10 +533,9 @@ export const TopicsFlowHelpLayoutReasonPrototypeItem = ({ captionName, layout, o
 export interface TopicsFlowHelpLayoutReasonListProps {
     itemsReasonList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutReasonList = ({ itemsReasonList, layout, tags }: TopicsFlowHelpLayoutReasonListProps) => {
+export const TopicsFlowHelpLayoutReasonList = ({ itemsReasonList, layout }: TopicsFlowHelpLayoutReasonListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -559,7 +543,6 @@ export const TopicsFlowHelpLayoutReasonList = ({ itemsReasonList, layout, tags }
         >
             <Region
                 name="reason_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 5, width: '100%' }}
             >
                 {itemsReasonList ?? (
@@ -574,17 +557,15 @@ export const TopicsFlowHelpLayoutReasonList = ({ itemsReasonList, layout, tags }
 export interface TopicsFlowHelpLayoutReasonContainerProps {
     layout?: BoxLayout;
     reasonList?: TopicsFlowHelpLayoutReasonListProps;
-    tags?: string[];
     visibleReasonContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutReasonContainer = ({ layout, reasonList, tags, visibleReasonContainer }: TopicsFlowHelpLayoutReasonContainerProps) => {
+export const TopicsFlowHelpLayoutReasonContainer = ({ layout, reasonList, visibleReasonContainer }: TopicsFlowHelpLayoutReasonContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="reason_container"
-            tags={tags}
             visible={visibleReasonContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 445, top: 90, height: 340, ...layout }}
         >
@@ -604,16 +585,14 @@ export interface TopicsFlowHelpLayoutUnlawfulMessageContentProps {
     captionUnlawfulMessageConfirmLabel?: string;
     layout?: BoxLayout;
     onUnlawfulMessageConfirm?: () => void;
-    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutUnlawfulMessageContent = ({ captionUnlawfulMessageConfirmLabel, layout, onUnlawfulMessageConfirm, tags }: TopicsFlowHelpLayoutUnlawfulMessageContentProps) => {
+export const TopicsFlowHelpLayoutUnlawfulMessageContent = ({ captionUnlawfulMessageConfirmLabel, layout, onUnlawfulMessageConfirm }: TopicsFlowHelpLayoutUnlawfulMessageContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="unlawful_message_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 30, width: 390, top: 230, height: 100, ...layout }}
         >
             <WidgetSlot
@@ -652,18 +631,16 @@ export interface TopicsFlowHelpLayoutMessageContainerProps {
     captionMessageContainerDescription?: string;
     captionMessagePhaseTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
     unlawfulMessageContent?: TopicsFlowHelpLayoutUnlawfulMessageContentProps;
     visibleMessageContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutMessageContainer = ({ captionMessageContainerDescription, captionMessagePhaseTitle, layout, tags, unlawfulMessageContent, visibleMessageContainer }: TopicsFlowHelpLayoutMessageContainerProps) => {
+export const TopicsFlowHelpLayoutMessageContainer = ({ captionMessageContainerDescription, captionMessagePhaseTitle, layout, unlawfulMessageContent, visibleMessageContainer }: TopicsFlowHelpLayoutMessageContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="message_container"
-            tags={tags}
             visible={visibleMessageContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 445, top: 100, height: 330, ...layout }}
         >
@@ -702,14 +679,12 @@ export interface TopicsFlowHelpLayoutChatPrototypeItemProps {
     layout?: BoxLayout;
     onChatCheck?: () => void;
     onChatText?: () => void;
-    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutChatPrototypeItem = ({ captionChatText, layout, onChatCheck, onChatText, tags }: TopicsFlowHelpLayoutChatPrototypeItemProps) => {
+export const TopicsFlowHelpLayoutChatPrototypeItem = ({ captionChatText, layout, onChatCheck, onChatText }: TopicsFlowHelpLayoutChatPrototypeItemProps) => {
     return (
         <Region
             name="chat_prototype"
-            tags={tags}
             layout={{ width: 360, height: 20, flexShrink: 0, ...layout }}
         >
             <CheckBox
@@ -739,10 +714,9 @@ export const TopicsFlowHelpLayoutChatPrototypeItem = ({ captionChatText, layout,
 export interface TopicsFlowHelpLayoutChatListProps {
     itemsChatList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TopicsFlowHelpLayoutChatList = ({ itemsChatList, layout, tags }: TopicsFlowHelpLayoutChatListProps) => {
+export const TopicsFlowHelpLayoutChatList = ({ itemsChatList, layout }: TopicsFlowHelpLayoutChatListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -750,7 +724,6 @@ export const TopicsFlowHelpLayoutChatList = ({ itemsChatList, layout, tags }: To
         >
             <Region
                 name="chat_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 2, width: '100%' }}
             >
                 {itemsChatList ?? (
@@ -765,17 +738,15 @@ export const TopicsFlowHelpLayoutChatList = ({ itemsChatList, layout, tags }: To
 export interface TopicsFlowHelpLayoutChatContainerProps {
     chatList?: TopicsFlowHelpLayoutChatListProps;
     layout?: BoxLayout;
-    tags?: string[];
     visibleChatContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutChatContainer = ({ chatList, layout, tags, visibleChatContainer }: TopicsFlowHelpLayoutChatContainerProps) => {
+export const TopicsFlowHelpLayoutChatContainer = ({ chatList, layout, visibleChatContainer }: TopicsFlowHelpLayoutChatContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="chat_container"
-            tags={tags}
             visible={visibleChatContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 444, top: 100, height: 330, ...layout }}
         >
@@ -805,17 +776,15 @@ export const TopicsFlowHelpLayoutChatContainer = ({ chatList, layout, tags, visi
 export interface TopicsFlowHelpLayoutSummaryContainerProps {
     layout?: BoxLayout;
     onSubmitButton?: () => void;
-    tags?: string[];
     visibleSummaryContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutSummaryContainer = ({ layout, onSubmitButton, tags, visibleSummaryContainer }: TopicsFlowHelpLayoutSummaryContainerProps) => {
+export const TopicsFlowHelpLayoutSummaryContainer = ({ layout, onSubmitButton, visibleSummaryContainer }: TopicsFlowHelpLayoutSummaryContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="summary_container"
-            tags={tags}
             visible={visibleSummaryContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 444, top: 100, height: 380, ...layout }}
         >

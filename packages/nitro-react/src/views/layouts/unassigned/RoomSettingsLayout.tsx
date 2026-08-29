@@ -40,10 +40,9 @@ export interface RoomSettingsLayoutTagCategoryContainerProps {
     onCategories?: () => void;
     onMaxvisitors?: () => void;
     onTradesettings?: () => void;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutTagCategoryContainer = ({ captionCategoryLabel, captionMaxvisitorsLabel, captionTagLabel, captionTradesettingsLabel, layout, onCategories, onMaxvisitors, onTradesettings, tags }: RoomSettingsLayoutTagCategoryContainerProps) => {
+export const RoomSettingsLayoutTagCategoryContainer = ({ captionCategoryLabel, captionMaxvisitorsLabel, captionTagLabel, captionTradesettingsLabel, layout, onCategories, onMaxvisitors, onTradesettings }: RoomSettingsLayoutTagCategoryContainerProps) => {
     const t = useTranslation();
     const [ tag1Value, setTag1Value ] = useState('');
     const [ tag2Value, setTag2Value ] = useState('');
@@ -51,7 +50,6 @@ export const RoomSettingsLayoutTagCategoryContainer = ({ captionCategoryLabel, c
     return (
         <Region
             name="tag_category_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 300, top: 100, height: 192, ...layout }}
         >
             <Region
@@ -129,16 +127,14 @@ export interface RoomSettingsLayoutAdvancedContainerProps {
     captionWalkThroughText?: string;
     layout?: BoxLayout;
     onAllowWalkThroughCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutAdvancedContainer = ({ captionWalkThroughText, layout, onAllowWalkThroughCheckbox, tags }: RoomSettingsLayoutAdvancedContainerProps) => {
+export const RoomSettingsLayoutAdvancedContainer = ({ captionWalkThroughText, layout, onAllowWalkThroughCheckbox }: RoomSettingsLayoutAdvancedContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="advanced_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 216, top: 239, height: 82, ...layout }}
         >
             <CheckBox
@@ -165,16 +161,14 @@ export interface RoomSettingsLayoutRemoveLinkRegionProps {
     captionRemoveLink?: string;
     layout?: BoxLayout;
     onRemoveLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutRemoveLinkRegion = ({ captionRemoveLink, layout, onRemoveLinkRegion, tags }: RoomSettingsLayoutRemoveLinkRegionProps) => {
+export const RoomSettingsLayoutRemoveLinkRegion = ({ captionRemoveLink, layout, onRemoveLinkRegion }: RoomSettingsLayoutRemoveLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="remove_link_region"
-            tags={tags}
             onPointerTap={onRemoveLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', width: 189, top: 334, height: 22, ...layout }}
@@ -207,10 +201,9 @@ export interface RoomSettingsLayoutTabContainer1ItemProps {
     layout?: BoxLayout;
     removeLinkRegion?: RoomSettingsLayoutRemoveLinkRegionProps;
     tagCategoryContainer?: RoomSettingsLayoutTagCategoryContainerProps;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutTabContainer1Item = ({ advancedContainer, captionDescriptionLabel, captionRoomNameLabel, layout, removeLinkRegion, tagCategoryContainer, tags }: RoomSettingsLayoutTabContainer1ItemProps) => {
+export const RoomSettingsLayoutTabContainer1Item = ({ advancedContainer, captionDescriptionLabel, captionRoomNameLabel, layout, removeLinkRegion, tagCategoryContainer }: RoomSettingsLayoutTabContainer1ItemProps) => {
     const t = useTranslation();
     const [ roomNameValue, setRoomNameValue ] = useState('');
     const [ descriptionValue, setDescriptionValue ] = useState('');
@@ -218,7 +211,6 @@ export const RoomSettingsLayoutTabContainer1Item = ({ advancedContainer, caption
     return (
         <Region
             name="tab_container_1"
-            tags={tags}
             layout={{ width: 321, height: 360, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -265,14 +257,12 @@ export interface RoomSettingsLayoutDoormodeProps {
     onDoormodeInvisible?: () => void;
     onDoormodeOpen?: () => void;
     onDoormodePassword?: () => void;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutDoormode = ({ layout, onDoormodeDoorbell, onDoormodeInvisible, onDoormodeOpen, onDoormodePassword, tags }: RoomSettingsLayoutDoormodeProps) => {
+export const RoomSettingsLayoutDoormode = ({ layout, onDoormodeDoorbell, onDoormodeInvisible, onDoormodeOpen, onDoormodePassword }: RoomSettingsLayoutDoormodeProps) => {
     return (
         <Region
             name="doormode"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 274, top: 18, height: 80, ...layout }}
         >
             <RadioButton
@@ -312,16 +302,14 @@ export interface RoomSettingsLayoutDoormodeContainerProps {
     captionDoormodePasswordLabel?: string;
     doormode?: RoomSettingsLayoutDoormodeProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutDoormodeContainer = ({ captionDoormodeDoorbellLabel, captionDoormodeInvisibleLabel, captionDoormodeLabel, captionDoormodeOpenLabel, captionDoormodePasswordLabel, doormode, layout, tags }: RoomSettingsLayoutDoormodeContainerProps) => {
+export const RoomSettingsLayoutDoormodeContainer = ({ captionDoormodeDoorbellLabel, captionDoormodeInvisibleLabel, captionDoormodeLabel, captionDoormodeOpenLabel, captionDoormodePasswordLabel, doormode, layout }: RoomSettingsLayoutDoormodeContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="doormode_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 309, top: 87, height: 95, ...layout }}
         >
             <Region
@@ -379,10 +367,9 @@ export interface RoomSettingsLayoutPasswordContainerProps {
     captionPasswordConfirmLabel?: string;
     captionPasswordLabel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutPasswordContainer = ({ captionPasswordConfirmLabel, captionPasswordLabel, layout, tags }: RoomSettingsLayoutPasswordContainerProps) => {
+export const RoomSettingsLayoutPasswordContainer = ({ captionPasswordConfirmLabel, captionPasswordLabel, layout }: RoomSettingsLayoutPasswordContainerProps) => {
     const t = useTranslation();
     const [ passwordValue, setPasswordValue ] = useState('');
     const [ passwordConfirmValue, setPasswordConfirmValue ] = useState('');
@@ -390,7 +377,6 @@ export const RoomSettingsLayoutPasswordContainer = ({ captionPasswordConfirmLabe
     return (
         <Region
             name="password_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 41, width: 195, top: 188, height: 68, ...layout }}
         >
             <Region
@@ -435,17 +421,15 @@ export interface RoomSettingsLayoutNormalAccessContainerProps {
     layout?: BoxLayout;
     onBuildersFaqButton?: () => void;
     passwordContainer?: RoomSettingsLayoutPasswordContainerProps;
-    tags?: string[];
     visibleDoormodeOverrideInfo?: boolean;
 }
 
-export const RoomSettingsLayoutNormalAccessContainer = ({ captionRoomAccessTabCaption, captionRoomAccessTabInfo, doormodeContainer, layout, onBuildersFaqButton, passwordContainer, tags, visibleDoormodeOverrideInfo }: RoomSettingsLayoutNormalAccessContainerProps) => {
+export const RoomSettingsLayoutNormalAccessContainer = ({ captionRoomAccessTabCaption, captionRoomAccessTabInfo, doormodeContainer, layout, onBuildersFaqButton, passwordContainer, visibleDoormodeOverrideInfo }: RoomSettingsLayoutNormalAccessContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="normal_access_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 354, ...layout }}
         >
             <Region
@@ -509,16 +493,14 @@ export const RoomSettingsLayoutNormalAccessContainer = ({ captionRoomAccessTabCa
 export interface RoomSettingsLayoutGuildAccessDisclaimerItemProps {
     captionGuildAccessDisclaimer?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutGuildAccessDisclaimerItem = ({ captionGuildAccessDisclaimer, layout, tags }: RoomSettingsLayoutGuildAccessDisclaimerItemProps) => {
+export const RoomSettingsLayoutGuildAccessDisclaimerItem = ({ captionGuildAccessDisclaimer, layout }: RoomSettingsLayoutGuildAccessDisclaimerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guild_access_disclaimer"
-            tags={tags}
             layout={{ width: 305, height: 33, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -540,16 +522,14 @@ export interface RoomSettingsLayoutAdvancedContainerItemProps {
     onAllowFoodconsumeCheckbox?: () => void;
     onAllowPetsCheckbox?: () => void;
     onMuteAllPetsCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutAdvancedContainerItem = ({ captionAllowFoodConsumeText, captionAllowPetsText, captionMuteAllPetsText, captionPetsContainer, layout, onAllowFoodconsumeCheckbox, onAllowPetsCheckbox, onMuteAllPetsCheckbox, tags }: RoomSettingsLayoutAdvancedContainerItemProps) => {
+export const RoomSettingsLayoutAdvancedContainerItem = ({ captionAllowFoodConsumeText, captionAllowPetsText, captionMuteAllPetsText, captionPetsContainer, layout, onAllowFoodconsumeCheckbox, onAllowPetsCheckbox, onMuteAllPetsCheckbox }: RoomSettingsLayoutAdvancedContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="advanced_container"
-            tags={tags}
             layout={{ width: 278, height: 82, flexShrink: 0, ...layout }}
         >
             <CheckBox
@@ -614,14 +594,12 @@ export const RoomSettingsLayoutAdvancedContainerItem = ({ captionAllowFoodConsum
 export interface RoomSettingsLayoutFlexibleContentProps {
     itemsFlexibleContent?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutFlexibleContent = ({ itemsFlexibleContent, layout, tags }: RoomSettingsLayoutFlexibleContentProps) => {
+export const RoomSettingsLayoutFlexibleContent = ({ itemsFlexibleContent, layout }: RoomSettingsLayoutFlexibleContentProps) => {
     return (
         <Region
             name="flexible_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 315, top: 260, height: 117, flexDirection: 'column', ...layout }}
         >
             {itemsFlexibleContent ?? (
@@ -639,14 +617,12 @@ export interface RoomSettingsLayoutTabContainer2ItemProps {
     flexibleContent?: RoomSettingsLayoutFlexibleContentProps;
     layout?: BoxLayout;
     normalAccessContainer?: RoomSettingsLayoutNormalAccessContainerProps;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutTabContainer2Item = ({ flexibleContent, layout, normalAccessContainer, tags }: RoomSettingsLayoutTabContainer2ItemProps) => {
+export const RoomSettingsLayoutTabContainer2Item = ({ flexibleContent, layout, normalAccessContainer }: RoomSettingsLayoutTabContainer2ItemProps) => {
     return (
         <Region
             name="tab_container_2"
-            tags={tags}
             layout={{ width: 321, height: 366, flexShrink: 0, ...layout }}
         >
             <RoomSettingsLayoutNormalAccessContainer {...normalAccessContainer} />
@@ -658,17 +634,15 @@ export const RoomSettingsLayoutTabContainer2Item = ({ flexibleContent, layout, n
 /** Named region `guild_rights_container` of RoomSettingsLayout - configured through the parent's `guildRightsContainer` prop. */
 export interface RoomSettingsLayoutGuildRightsContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleGuildRightsContainer?: boolean;
 }
 
-export const RoomSettingsLayoutGuildRightsContainer = ({ layout, tags, visibleGuildRightsContainer }: RoomSettingsLayoutGuildRightsContainerProps) => {
+export const RoomSettingsLayoutGuildRightsContainer = ({ layout, visibleGuildRightsContainer }: RoomSettingsLayoutGuildRightsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guild_rights_container"
-            tags={tags}
             visible={visibleGuildRightsContainer ?? false}
             layout={{ position: 'absolute', left: 6, right: -62, top: 0, height: 367, ...layout }}
         >
@@ -693,10 +667,9 @@ export const RoomSettingsLayoutGuildRightsContainer = ({ layout, tags, visibleGu
 /** Named region `users_with_rights_item_list` of RoomSettingsLayout - configured through the parent's `usersWithRightsItemList` prop. */
 export interface RoomSettingsLayoutUsersWithRightsItemListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutUsersWithRightsItemList = ({ layout, tags }: RoomSettingsLayoutUsersWithRightsItemListProps) => {
+export const RoomSettingsLayoutUsersWithRightsItemList = ({ layout }: RoomSettingsLayoutUsersWithRightsItemListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -704,7 +677,6 @@ export const RoomSettingsLayoutUsersWithRightsItemList = ({ layout, tags }: Room
         >
             <Region
                 name="users_with_rights_item_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -714,10 +686,9 @@ export const RoomSettingsLayoutUsersWithRightsItemList = ({ layout, tags }: Room
 /** Named region `friends_item_list` of RoomSettingsLayout - configured through the parent's `friendsItemList` prop. */
 export interface RoomSettingsLayoutFriendsItemListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutFriendsItemList = ({ layout, tags }: RoomSettingsLayoutFriendsItemListProps) => {
+export const RoomSettingsLayoutFriendsItemList = ({ layout }: RoomSettingsLayoutFriendsItemListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -725,7 +696,6 @@ export const RoomSettingsLayoutFriendsItemList = ({ layout, tags }: RoomSettings
         >
             <Region
                 name="friends_item_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -740,20 +710,18 @@ export interface RoomSettingsLayoutNormalRightsContainerProps {
     friendsItemList?: RoomSettingsLayoutFriendsItemListProps;
     layout?: BoxLayout;
     onRemoveAllFlatCtrls?: () => void;
-    tags?: string[];
     usersWithRightsItemList?: RoomSettingsLayoutUsersWithRightsItemListProps;
     visibleFriendsCont?: boolean;
     visibleUsersWithRightsCont?: boolean;
 }
 
-export const RoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, captionSearchTxt, captionUsersWithRightsTxt, friendsItemList, layout, onRemoveAllFlatCtrls, tags, usersWithRightsItemList, visibleFriendsCont, visibleUsersWithRightsCont }: RoomSettingsLayoutNormalRightsContainerProps) => {
+export const RoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, captionSearchTxt, captionUsersWithRightsTxt, friendsItemList, layout, onRemoveAllFlatCtrls, usersWithRightsItemList, visibleFriendsCont, visibleUsersWithRightsCont }: RoomSettingsLayoutNormalRightsContainerProps) => {
     const t = useTranslation();
     const [ filterUsersInputValue, setFilterUsersInputValue ] = useState('');
 
     return (
         <Region
             name="normal_rights_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: -68, top: 0, height: 367, justifyContent: 'center', ...layout }}
         >
             <Border
@@ -844,14 +812,12 @@ export interface RoomSettingsLayoutTabContainer3ItemProps {
     guildRightsContainer?: RoomSettingsLayoutGuildRightsContainerProps;
     layout?: BoxLayout;
     normalRightsContainer?: RoomSettingsLayoutNormalRightsContainerProps;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutTabContainer3Item = ({ guildRightsContainer, layout, normalRightsContainer, tags }: RoomSettingsLayoutTabContainer3ItemProps) => {
+export const RoomSettingsLayoutTabContainer3Item = ({ guildRightsContainer, layout, normalRightsContainer }: RoomSettingsLayoutTabContainer3ItemProps) => {
     return (
         <Region
             name="tab_container_3"
-            tags={tags}
             layout={{ width: 324, height: 367, flexShrink: 0, ...layout }}
         >
             <RoomSettingsLayoutGuildRightsContainer {...guildRightsContainer} />
@@ -881,10 +847,9 @@ export interface RoomSettingsLayoutTabContainer4ItemProps {
     onIdleAutokickCheckbox?: () => void;
     onIdleSleepCheckbox?: () => void;
     onWallThickness?: () => void;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, captionDoNotLeaveOnDoorTileText, captionHideWallsText, captionIdleAutokickText, captionIdleAutokickTimeoutLabel, captionIdleSleepText, captionIdleSleepTimeoutLabel, captionRoomBehaviorText, captionVipSettingsText, captionVipTabCaption, captionVipTabInfo, layout, onChatFloodSensitivity, onDoNotLeaveOnDoorTileCheckbox, onFloorThickness, onHideWallsCheckbox, onIdleAutokickCheckbox, onIdleSleepCheckbox, onWallThickness, tags }: RoomSettingsLayoutTabContainer4ItemProps) => {
+export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, captionDoNotLeaveOnDoorTileText, captionHideWallsText, captionIdleAutokickText, captionIdleAutokickTimeoutLabel, captionIdleSleepText, captionIdleSleepTimeoutLabel, captionRoomBehaviorText, captionVipSettingsText, captionVipTabCaption, captionVipTabInfo, layout, onChatFloodSensitivity, onDoNotLeaveOnDoorTileCheckbox, onFloorThickness, onHideWallsCheckbox, onIdleAutokickCheckbox, onIdleSleepCheckbox, onWallThickness }: RoomSettingsLayoutTabContainer4ItemProps) => {
     const t = useTranslation();
     const [ idleSleepTimeoutValue, setIdleSleepTimeoutValue ] = useState('');
     const [ idleAutokickTimeoutValue, setIdleAutokickTimeoutValue ] = useState('');
@@ -892,7 +857,6 @@ export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, c
     return (
         <Region
             name="tab_container_4"
-            tags={tags}
             layout={{ width: 322, height: 395, flexShrink: 0, ...layout }}
         >
             <Region
@@ -1060,16 +1024,14 @@ export interface RoomSettingsLayoutModerationMuteSelectorProps {
     layout?: BoxLayout;
     onModerationMuteNone?: () => void;
     onModerationMuteRights?: () => void;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutModerationMuteSelector = ({ captionModerationMuteNoneLabel, captionModerationMuteRightsLabel, layout, onModerationMuteNone, onModerationMuteRights, tags }: RoomSettingsLayoutModerationMuteSelectorProps) => {
+export const RoomSettingsLayoutModerationMuteSelector = ({ captionModerationMuteNoneLabel, captionModerationMuteRightsLabel, layout, onModerationMuteNone, onModerationMuteRights }: RoomSettingsLayoutModerationMuteSelectorProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="moderation_mute_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 291, top: 75, height: 31, ...layout }}
         >
             <RadioButton
@@ -1109,16 +1071,14 @@ export interface RoomSettingsLayoutModerationKickSelectorProps {
     onModerationKickAll?: () => void;
     onModerationKickNone?: () => void;
     onModerationKickRights?: () => void;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutModerationKickSelector = ({ captionModerationKickAllLabel, captionModerationKickNoneLabel, captionModerationKickRightsHeader, layout, onModerationKickAll, onModerationKickNone, onModerationKickRights, tags }: RoomSettingsLayoutModerationKickSelectorProps) => {
+export const RoomSettingsLayoutModerationKickSelector = ({ captionModerationKickAllLabel, captionModerationKickNoneLabel, captionModerationKickRightsHeader, layout, onModerationKickAll, onModerationKickNone, onModerationKickRights }: RoomSettingsLayoutModerationKickSelectorProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="moderation_kick_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 325, top: 130, height: 26, ...layout }}
         >
             <RadioButton
@@ -1168,16 +1128,14 @@ export interface RoomSettingsLayoutModerationBanSelectorProps {
     layout?: BoxLayout;
     onModerationBanNone?: () => void;
     onModerationBanRights?: () => void;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutModerationBanSelector = ({ captionModerationBanNoneLabel, captionModerationBanRights, layout, onModerationBanNone, onModerationBanRights, tags }: RoomSettingsLayoutModerationBanSelectorProps) => {
+export const RoomSettingsLayoutModerationBanSelector = ({ captionModerationBanNoneLabel, captionModerationBanRights, layout, onModerationBanNone, onModerationBanRights }: RoomSettingsLayoutModerationBanSelectorProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="moderation_ban_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 293, top: 180, height: 23, ...layout }}
         >
             <Region
@@ -1211,10 +1169,9 @@ export const RoomSettingsLayoutModerationBanSelector = ({ captionModerationBanNo
 /** Named region `moderation_banned_users` of RoomSettingsLayout - configured through the parent's `moderationBannedUsers` prop. */
 export interface RoomSettingsLayoutModerationBannedUsersProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutModerationBannedUsers = ({ layout, tags }: RoomSettingsLayoutModerationBannedUsersProps) => {
+export const RoomSettingsLayoutModerationBannedUsers = ({ layout }: RoomSettingsLayoutModerationBannedUsersProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -1222,7 +1179,6 @@ export const RoomSettingsLayoutModerationBannedUsers = ({ layout, tags }: RoomSe
         >
             <Region
                 name="moderation_banned_users"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -1242,16 +1198,14 @@ export interface RoomSettingsLayoutTabContainer5ItemProps {
     moderationKickSelector?: RoomSettingsLayoutModerationKickSelectorProps;
     moderationMuteSelector?: RoomSettingsLayoutModerationMuteSelectorProps;
     onModerationUnbanBtn?: () => void;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader, captionModerationBannedUsersLabel, captionModerationHeader, captionModerationKickHeader, captionModerationMuteHeader, layout, moderationBannedUsers, moderationBanSelector, moderationKickSelector, moderationMuteSelector, onModerationUnbanBtn, tags }: RoomSettingsLayoutTabContainer5ItemProps) => {
+export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader, captionModerationBannedUsersLabel, captionModerationHeader, captionModerationKickHeader, captionModerationMuteHeader, layout, moderationBannedUsers, moderationBanSelector, moderationKickSelector, moderationMuteSelector, onModerationUnbanBtn }: RoomSettingsLayoutTabContainer5ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="tab_container_5"
-            tags={tags}
             layout={{ width: 297, height: 367, flexShrink: 0, ...layout }}
         >
             <Region
@@ -1315,10 +1269,9 @@ export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader
 export interface RoomSettingsLayoutContentsProps {
     itemsContents?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomSettingsLayoutContents = ({ itemsContents, layout, tags }: RoomSettingsLayoutContentsProps) => {
+export const RoomSettingsLayoutContents = ({ itemsContents, layout }: RoomSettingsLayoutContentsProps) => {
     const t = useTranslation();
 
     return (
@@ -1328,7 +1281,6 @@ export const RoomSettingsLayoutContents = ({ itemsContents, layout, tags }: Room
         >
             <Region
                 name="contents"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsContents ?? (

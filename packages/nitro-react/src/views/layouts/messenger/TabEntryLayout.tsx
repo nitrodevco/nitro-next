@@ -25,14 +25,12 @@ export interface TabEntryLayoutTabProps {
     srcTabBgNext?: string;
     srcTabBgSel?: string;
     srcTabBgUnsel?: string;
-    tags?: string[];
 }
 
-export const TabEntryLayoutTab = ({ layout, onTab, srcFace, srcNext, srcPrev, srcTabBgHilite, srcTabBgNext, srcTabBgSel, srcTabBgUnsel, tags }: TabEntryLayoutTabProps) => {
+export const TabEntryLayoutTab = ({ layout, onTab, srcFace, srcNext, srcPrev, srcTabBgHilite, srcTabBgNext, srcTabBgSel, srcTabBgUnsel }: TabEntryLayoutTabProps) => {
     return (
         <Region
             name="tab"
-            tags={tags}
             onPointerTap={onTab}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30, justifyContent: 'center', ...layout }}

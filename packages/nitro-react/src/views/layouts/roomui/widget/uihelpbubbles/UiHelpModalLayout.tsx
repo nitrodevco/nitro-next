@@ -26,14 +26,12 @@ export const UiHelpModalLayout = ({ layout, srcBitmap, uiContainer }: UiHelpModa
 /** Named region `ui_container` of UiHelpModalLayout - configured through the parent's `uiContainer` prop. */
 export interface UiHelpModalLayoutUiContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UiHelpModalLayoutUiContainer = ({ layout, tags }: UiHelpModalLayoutUiContainerProps) => {
+export const UiHelpModalLayoutUiContainer = ({ layout }: UiHelpModalLayoutUiContainerProps) => {
     return (
         <Region
             name="ui_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 4, top: 0, bottom: 6, ...layout }}
         />
     );

@@ -10,15 +10,15 @@ export interface Main_100LayoutProps {
     header?: Main_100LayoutHeaderProps;
     layout?: BoxLayout;
     onClose?: () => void;
+    recolorDark?: string;
 }
 
-export const Main_100Layout = ({ body, header, layout, onClose }: Main_100LayoutProps) => {
+export const Main_100Layout = ({ body, header, layout, onClose, recolorDark }: Main_100LayoutProps) => {
     return (
         <Frame
             variant="3"
-            tags={[ 'RECOLORABLE_DARK' ]}
             caption="Reward Track"
-            tintColor="#3576b9"
+            tintColor={recolorDark ?? '#3576b9'}
             onClose={onClose}
             layout={{ width: 1103, height: 722, ...layout }}
         >
@@ -33,20 +33,18 @@ export const Main_100Layout = ({ body, header, layout, onClose }: Main_100Layout
 /** Named region `cutout` of Main_100Layout - configured through the parent's `cutout` prop. */
 export interface Main_100LayoutCutout2Props {
     layout?: BoxLayout;
-    tags?: string[];
+    recolorLight?: string;
 }
 
-export const Main_100LayoutCutout2 = ({ layout, tags }: Main_100LayoutCutout2Props) => {
+export const Main_100LayoutCutout2 = ({ layout, recolorLight }: Main_100LayoutCutout2Props) => {
     return (
         <Region
             name="cutout"
-            tags={tags}
             layout={{ position: 'absolute', right: -32, width: 35, top: 2, bottom: 0, ...layout }}
         >
             <Shape
-                tags={[ 'RECOLORABLE_LIGHT' ]}
                 shape="ellipse"
-                color="#ddebf9"
+                color={recolorLight ?? '#ddebf9'}
                 strokeColor="#000000"
                 strokeThickness={2}
                 radius={40}
@@ -61,14 +59,12 @@ export interface Main_100LayoutTrackTitleRegionItemProps {
     captionTrackTitleTxt?: string;
     layout?: BoxLayout;
     onTrackTitleRegion?: () => void;
-    tags?: string[];
 }
 
-export const Main_100LayoutTrackTitleRegionItem = ({ captionTrackTitleTxt, layout, onTrackTitleRegion, tags }: Main_100LayoutTrackTitleRegionItemProps) => {
+export const Main_100LayoutTrackTitleRegionItem = ({ captionTrackTitleTxt, layout, onTrackTitleRegion }: Main_100LayoutTrackTitleRegionItemProps) => {
     return (
         <Region
             name="track_title_region"
-            tags={tags}
             onPointerTap={onTrackTitleRegion}
             cursor="pointer"
             layout={{ width: 160, height: 24, flexShrink: 0, ...layout }}
@@ -89,14 +85,12 @@ export const Main_100LayoutTrackTitleRegionItem = ({ captionTrackTitleTxt, layou
 /** Row template `spacer` of Main_100Layout - pass real rows through its `items…` slot. */
 export interface Main_100LayoutSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutSpacerItem = ({ layout, tags }: Main_100LayoutSpacerItemProps) => {
+export const Main_100LayoutSpacerItem = ({ layout }: Main_100LayoutSpacerItemProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ width: 30, height: 2, flexShrink: 0, ...layout }}
         />
     );
@@ -106,14 +100,12 @@ export const Main_100LayoutSpacerItem = ({ layout, tags }: Main_100LayoutSpacerI
 export interface Main_100LayoutTrackDescTxtItemProps {
     captionTrackDescTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutTrackDescTxtItem = ({ captionTrackDescTxt, layout, tags }: Main_100LayoutTrackDescTxtItemProps) => {
+export const Main_100LayoutTrackDescTxtItem = ({ captionTrackDescTxt, layout }: Main_100LayoutTrackDescTxtItemProps) => {
     return (
         <Region
             name="track_desc_txt"
-            tags={tags}
             layout={{ width: 160, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -128,14 +120,12 @@ export const Main_100LayoutTrackDescTxtItem = ({ captionTrackDescTxt, layout, ta
 export interface Main_100LayoutTrackInstructionsTxtItemProps {
     captionTrackInstructionsTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutTrackInstructionsTxtItem = ({ captionTrackInstructionsTxt, layout, tags }: Main_100LayoutTrackInstructionsTxtItemProps) => {
+export const Main_100LayoutTrackInstructionsTxtItem = ({ captionTrackInstructionsTxt, layout }: Main_100LayoutTrackInstructionsTxtItemProps) => {
     return (
         <Region
             name="track_instructions_txt"
-            tags={tags}
             layout={{ width: 157, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -150,14 +140,12 @@ export const Main_100LayoutTrackInstructionsTxtItem = ({ captionTrackInstruction
 export interface Main_100LayoutTrackInfoProps {
     itemsTrackInfo?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutTrackInfo = ({ itemsTrackInfo, layout, tags }: Main_100LayoutTrackInfoProps) => {
+export const Main_100LayoutTrackInfo = ({ itemsTrackInfo, layout }: Main_100LayoutTrackInfoProps) => {
     return (
         <Region
             name="track_info"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 160, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 73, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsTrackInfo ?? (
@@ -178,25 +166,24 @@ export interface Main_100LayoutCutoutProps {
     captionRewardsCollectedTxt?: string;
     cutout?: Main_100LayoutCutout2Props;
     layout?: BoxLayout;
-    tags?: string[];
+    recolorLight?: string;
+    recolorMedium?: string;
     trackInfo?: Main_100LayoutTrackInfoProps;
 }
 
-export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRewardsCollectedTxt, cutout, layout, tags, trackInfo }: Main_100LayoutCutoutProps) => {
+export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRewardsCollectedTxt, cutout, layout, recolorLight, recolorMedium, trackInfo }: Main_100LayoutCutoutProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cutout"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 245, top: 0, bottom: 0, ...layout }}
         >
             <Main_100LayoutCutout2 {...cutout} />
             <Border
                 variant="15"
                 name="profile"
-                tags={[ 'RECOLORABLE_LIGHT' ]}
-                tintColor="#ddebf9"
+                tintColor={recolorLight ?? '#ddebf9'}
                 layout={{ position: 'absolute', left: 0, width: 264, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <WidgetSlot
@@ -210,8 +197,7 @@ export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRe
                 <Border
                     variant="15"
                     name="points_total_border"
-                    tags={[ 'RECOLORABLE_MEDIUM' ]}
-                    tintColor="#cfe2f9"
+                    tintColor={recolorMedium ?? '#cfe2f9'}
                     layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 179, top: 122, height: 62, justifyContent: 'center' }}
                 >
                     <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 72, top: 11, height: 20, minHeight: 24, maxHeight: 24, flexDirection: 'row', gap: 4 }}>
@@ -235,8 +221,7 @@ export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRe
                 </Border>
                 <Shape
                     name="splitter"
-                    tags={[ 'RECOLORABLE_LIGHT' ]}
-                    color="#ddebf9"
+                    color={recolorLight ?? '#ddebf9'}
                     strokeThickness={1}
                     layout={{ position: 'absolute', left: 16, width: 231, top: 196, height: 2 }}
                 />
@@ -260,14 +245,12 @@ export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRe
 /** Named region `loading_bar` of Main_100Layout - configured through the parent's `loadingBar` prop. */
 export interface Main_100LayoutLoadingBar2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutLoadingBar2 = ({ layout, tags }: Main_100LayoutLoadingBar2Props) => {
+export const Main_100LayoutLoadingBar2 = ({ layout }: Main_100LayoutLoadingBar2Props) => {
     return (
         <Region
             name="loading_bar"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Shape
@@ -286,19 +269,17 @@ export const Main_100LayoutLoadingBar2 = ({ layout, tags }: Main_100LayoutLoadin
 export interface Main_100LayoutProgressProps {
     layout?: BoxLayout;
     loadingBar?: Main_100LayoutLoadingBar2Props;
-    tags?: string[];
 }
 
-export const Main_100LayoutProgress = ({ layout, loadingBar, tags }: Main_100LayoutProgressProps) => {
+export const Main_100LayoutProgress = ({ layout, loadingBar }: Main_100LayoutProgressProps) => {
     return (
         <Region
             name="progress"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 300, top: 0, bottom: 0, ...layout }}
         >
             <Main_100LayoutLoadingBar2 {...loadingBar} />
             <Region
-                tags={[ 'BLEND_ADD' ]}
+                blendMode="add"
                 layout={{ position: 'absolute', left: 1, right: 0, top: 1, bottom: 1 }}
             />
         </Region>
@@ -309,14 +290,12 @@ export const Main_100LayoutProgress = ({ layout, loadingBar, tags }: Main_100Lay
 export interface Main_100LayoutLoadingBarProps {
     layout?: BoxLayout;
     progress?: Main_100LayoutProgressProps;
-    tags?: string[];
 }
 
-export const Main_100LayoutLoadingBar = ({ layout, progress, tags }: Main_100LayoutLoadingBarProps) => {
+export const Main_100LayoutLoadingBar = ({ layout, progress }: Main_100LayoutLoadingBarProps) => {
     return (
         <Region
             name="loading_bar"
-            tags={tags}
             layout={{ position: 'absolute', left: 29, right: 29, top: 92, height: 13, ...layout }}
         >
             <Shape
@@ -336,14 +315,12 @@ export const Main_100LayoutLoadingBar = ({ layout, progress, tags }: Main_100Lay
 export interface Main_100LayoutTrackProps {
     layout?: BoxLayout;
     loadingBar?: Main_100LayoutLoadingBarProps;
-    tags?: string[];
 }
 
-export const Main_100LayoutTrack = ({ layout, loadingBar, tags }: Main_100LayoutTrackProps) => {
+export const Main_100LayoutTrack = ({ layout, loadingBar }: Main_100LayoutTrackProps) => {
     return (
         <Region
             name="track"
-            tags={tags}
             layout={{ position: 'absolute', left: 165, right: 22, top: 2, bottom: 2, ...layout }}
         >
             <Main_100LayoutLoadingBar {...loadingBar} />
@@ -355,15 +332,14 @@ export const Main_100LayoutTrack = ({ layout, loadingBar, tags }: Main_100Layout
 export interface Main_100LayoutPointIndicatorTemplateProps {
     captionPointsTxt?: string;
     layout?: BoxLayout;
+    recolorMedium?: string;
     srcAvailableIcon?: string;
-    tags?: string[];
 }
 
-export const Main_100LayoutPointIndicatorTemplate = ({ captionPointsTxt, layout, srcAvailableIcon, tags }: Main_100LayoutPointIndicatorTemplateProps) => {
+export const Main_100LayoutPointIndicatorTemplate = ({ captionPointsTxt, layout, recolorMedium, srcAvailableIcon }: Main_100LayoutPointIndicatorTemplateProps) => {
     return (
         <Region
             name="point_indicator_template"
-            tags={tags}
             layout={{ position: 'absolute', left: 9, width: 80, top: 82, height: 157, ...layout }}
         >
             <ThemeImage
@@ -372,22 +348,19 @@ export const Main_100LayoutPointIndicatorTemplate = ({ captionPointsTxt, layout,
                 layout={{ position: 'absolute', left: 30, width: 20, top: 7, height: 20 }}
             />
             <Shape
-                tags={[ 'RECOLORABLE_MEDIUM' ]}
                 shape="ellipse"
-                color="#cfe2f9"
+                color={recolorMedium ?? '#cfe2f9'}
                 strokeThickness={3}
                 layout={{ position: 'absolute', left: 37, width: 7, top: 121, height: 7 }}
             />
             <Shape
-                tags={[ 'RECOLORABLE_MEDIUM' ]}
-                color="#cfe2f9"
+                color={recolorMedium ?? '#cfe2f9'}
                 strokeThickness={3}
                 layout={{ position: 'absolute', left: 40, width: 1, top: 127, height: 8 }}
             />
             <Shape
                 name="connector"
-                tags={[ 'RECOLORABLE_MEDIUM' ]}
-                color="#cfe2f9"
+                color={recolorMedium ?? '#cfe2f9'}
                 strokeThickness={3}
                 layout={{ position: 'absolute', left: 40, width: 1, bottom: 35, height: 9 }}
             />
@@ -408,14 +381,12 @@ export const Main_100LayoutPointIndicatorTemplate = ({ captionPointsTxt, layout,
 export interface Main_100LayoutPointsIndicatorProps {
     layout?: BoxLayout;
     pointIndicatorTemplate?: Main_100LayoutPointIndicatorTemplateProps;
-    tags?: string[];
 }
 
-export const Main_100LayoutPointsIndicator = ({ layout, pointIndicatorTemplate, tags }: Main_100LayoutPointsIndicatorProps) => {
+export const Main_100LayoutPointsIndicator = ({ layout, pointIndicatorTemplate }: Main_100LayoutPointsIndicatorProps) => {
     return (
         <Region
             name="points_indicator"
-            tags={tags}
             layout={{ position: 'absolute', left: 194, right: 51, top: 0, bottom: 0, ...layout }}
         >
             <Main_100LayoutPointIndicatorTemplate {...pointIndicatorTemplate} />
@@ -427,25 +398,23 @@ export const Main_100LayoutPointsIndicator = ({ layout, pointIndicatorTemplate, 
 export interface Main_100LayoutPointsIndicatorContainerProps {
     layout?: BoxLayout;
     pointsIndicator?: Main_100LayoutPointsIndicatorProps;
-    tags?: string[];
+    recolorMedium?: string;
 }
 
-export const Main_100LayoutPointsIndicatorContainer = ({ layout, pointsIndicator, tags }: Main_100LayoutPointsIndicatorContainerProps) => {
+export const Main_100LayoutPointsIndicatorContainer = ({ layout, pointsIndicator, recolorMedium }: Main_100LayoutPointsIndicatorContainerProps) => {
     return (
         <Region
             name="points_indicator_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2, ...layout }}
         >
             <Border
                 variant="15"
-                tags={[ 'RECOLORABLE_MEDIUM' ]}
-                tintColor="#cfe2f9"
+                tintColor={recolorMedium ?? '#cfe2f9'}
                 blend={0.7}
                 layout={{ position: 'absolute', left: 6, width: 844, bottom: -11, height: 44 }}
             >
                 <Region
-                    tags={[ 'BLEND_ADD' ]}
+                    blendMode="add"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             </Border>
@@ -458,16 +427,14 @@ export const Main_100LayoutPointsIndicatorContainer = ({ layout, pointsIndicator
 export interface Main_100LayoutClickRegionProps {
     layout?: BoxLayout;
     onClickRegion?: () => void;
-    tags?: string[];
 }
 
-export const Main_100LayoutClickRegion = ({ layout, onClickRegion, tags }: Main_100LayoutClickRegionProps) => {
+export const Main_100LayoutClickRegion = ({ layout, onClickRegion }: Main_100LayoutClickRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="click_region"
-            tags={tags}
             tooltip={t('reward_track.rewards.reward_tooltip.claim')}
             dynamicStyle="reward_track_item"
             onPointerTap={onClickRegion}
@@ -477,14 +444,12 @@ export const Main_100LayoutClickRegion = ({ layout, onClickRegion, tags }: Main_
             <Border
                 variant="1"
                 name="shadow"
-                tags={[ 'INVIS_ON_DISABLE' ]}
                 blend={0.25}
                 layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 16 }}
             />
             <Border
                 variant="16"
                 name="border"
-                tags={[ '#icon' ]}
                 tintColor="#f9efe0"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 2, justifyContent: 'center' }}
             >
@@ -510,14 +475,12 @@ export const Main_100LayoutClickRegion = ({ layout, onClickRegion, tags }: Main_
 /** Named region `connector` of Main_100Layout - configured through the parent's `connector` prop. */
 export interface Main_100LayoutConnectorProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutConnector = ({ layout, tags }: Main_100LayoutConnectorProps) => {
+export const Main_100LayoutConnector = ({ layout }: Main_100LayoutConnectorProps) => {
     return (
         <Region
             name="connector"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 39, width: 2, top: 66, height: 19, ...layout }}
         />
@@ -531,14 +494,12 @@ export interface Main_100LayoutPrizeTemplateProps {
     layout?: BoxLayout;
     srcClaimedIcon?: string;
     srcLockedIcon?: string;
-    tags?: string[];
 }
 
-export const Main_100LayoutPrizeTemplate = ({ clickRegion, connector, layout, srcClaimedIcon, srcLockedIcon, tags }: Main_100LayoutPrizeTemplateProps) => {
+export const Main_100LayoutPrizeTemplate = ({ clickRegion, connector, layout, srcClaimedIcon, srcLockedIcon }: Main_100LayoutPrizeTemplateProps) => {
     return (
         <Region
             name="prize_template"
-            tags={tags}
             layout={{ position: 'absolute', left: 9, width: 80, top: 4, height: 105, ...layout }}
         >
             <Main_100LayoutClickRegion {...clickRegion} />
@@ -561,16 +522,14 @@ export const Main_100LayoutPrizeTemplate = ({ clickRegion, connector, layout, sr
 export interface Main_100LayoutClickRegion2Props {
     layout?: BoxLayout;
     onClickRegion?: () => void;
-    tags?: string[];
 }
 
-export const Main_100LayoutClickRegion2 = ({ layout, onClickRegion, tags }: Main_100LayoutClickRegion2Props) => {
+export const Main_100LayoutClickRegion2 = ({ layout, onClickRegion }: Main_100LayoutClickRegion2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="click_region"
-            tags={tags}
             tooltip={t('reward_track.rewards.reward_tooltip.premium')}
             dynamicStyle="reward_track_item"
             onPointerTap={onClickRegion}
@@ -580,14 +539,12 @@ export const Main_100LayoutClickRegion2 = ({ layout, onClickRegion, tags }: Main
             <Border
                 variant="1"
                 name="shadow"
-                tags={[ 'INVIS_ON_DISABLE' ]}
                 blend={0.25}
                 layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 16 }}
             />
             <Border
                 variant="16"
                 name="border"
-                tags={[ '#icon' ]}
                 tintColor="#f1def7"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 2, justifyContent: 'center' }}
             >
@@ -613,14 +570,12 @@ export const Main_100LayoutClickRegion2 = ({ layout, onClickRegion, tags }: Main
 /** Named region `connector` of Main_100Layout - configured through the parent's `connector` prop. */
 export interface Main_100LayoutConnector2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutConnector2 = ({ layout, tags }: Main_100LayoutConnector2Props) => {
+export const Main_100LayoutConnector2 = ({ layout }: Main_100LayoutConnector2Props) => {
     return (
         <Region
             name="connector"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 39, width: 2, bottom: 66, height: 19, ...layout }}
         />
@@ -634,14 +589,12 @@ export interface Main_100LayoutPrizeTemplatePremiumProps {
     layout?: BoxLayout;
     srcClaimedIcon?: string;
     srcLockedIcon?: string;
-    tags?: string[];
 }
 
-export const Main_100LayoutPrizeTemplatePremium = ({ clickRegion, connector, layout, srcClaimedIcon, srcLockedIcon, tags }: Main_100LayoutPrizeTemplatePremiumProps) => {
+export const Main_100LayoutPrizeTemplatePremium = ({ clickRegion, connector, layout, srcClaimedIcon, srcLockedIcon }: Main_100LayoutPrizeTemplatePremiumProps) => {
     return (
         <Region
             name="prize_template_premium"
-            tags={tags}
             layout={{ position: 'absolute', left: 9, width: 80, top: 89, height: 104, ...layout }}
         >
             <Main_100LayoutClickRegion2 {...clickRegion} />
@@ -665,14 +618,12 @@ export interface Main_100LayoutPrizeContentProps {
     layout?: BoxLayout;
     prizeTemplate?: Main_100LayoutPrizeTemplateProps;
     prizeTemplatePremium?: Main_100LayoutPrizeTemplatePremiumProps;
-    tags?: string[];
 }
 
-export const Main_100LayoutPrizeContent = ({ layout, prizeTemplate, prizeTemplatePremium, tags }: Main_100LayoutPrizeContentProps) => {
+export const Main_100LayoutPrizeContent = ({ layout, prizeTemplate, prizeTemplatePremium }: Main_100LayoutPrizeContentProps) => {
     return (
         <Region
             name="prize_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 196, right: 53, top: 2, bottom: 2, ...layout }}
         >
             <Main_100LayoutPrizeTemplate {...prizeTemplate} />
@@ -684,14 +635,12 @@ export const Main_100LayoutPrizeContent = ({ layout, prizeTemplate, prizeTemplat
 /** Named region `cut` of Main_100Layout - configured through the parent's `cut` prop. */
 export interface Main_100LayoutCutProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutCut = ({ layout, tags }: Main_100LayoutCutProps) => {
+export const Main_100LayoutCut = ({ layout }: Main_100LayoutCutProps) => {
     return (
         <Region
             name="cut"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 2, top: 0, bottom: 0, ...layout }}
         >
             <Border
@@ -708,14 +657,12 @@ export const Main_100LayoutCut = ({ layout, tags }: Main_100LayoutCutProps) => {
 /** Named region `splitter` of Main_100Layout - configured through the parent's `splitter` prop. */
 export interface Main_100LayoutSplitterProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutSplitter = ({ layout, tags }: Main_100LayoutSplitterProps) => {
+export const Main_100LayoutSplitter = ({ layout }: Main_100LayoutSplitterProps) => {
     return (
         <Region
             name="splitter"
-            tags={tags}
             layout={{ position: 'absolute', right: 0, width: 2, top: 0, height: 80, ...layout }}
         >
             <Border
@@ -736,16 +683,14 @@ export interface Main_100LayoutInformationProps {
     cut?: Main_100LayoutCutProps;
     layout?: BoxLayout;
     splitter?: Main_100LayoutSplitterProps;
-    tags?: string[];
 }
 
-export const Main_100LayoutInformation = ({ captionDesc, captionTitle, cut, layout, splitter, tags }: Main_100LayoutInformationProps) => {
+export const Main_100LayoutInformation = ({ captionDesc, captionTitle, cut, layout, splitter }: Main_100LayoutInformationProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="information"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 100, top: 0, bottom: 0, ...layout }}
         >
             <Main_100LayoutCut {...cut} />
@@ -781,14 +726,12 @@ export const Main_100LayoutInformation = ({ captionDesc, captionTitle, cut, layo
 /** Named region `cut` of Main_100Layout - configured through the parent's `cut` prop. */
 export interface Main_100LayoutCut2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutCut2 = ({ layout, tags }: Main_100LayoutCut2Props) => {
+export const Main_100LayoutCut2 = ({ layout }: Main_100LayoutCut2Props) => {
     return (
         <Region
             name="cut"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 2, top: 0, bottom: 0, ...layout }}
         >
             <Border
@@ -805,14 +748,12 @@ export const Main_100LayoutCut2 = ({ layout, tags }: Main_100LayoutCut2Props) =>
 /** Named region `splitter` of Main_100Layout - configured through the parent's `splitter` prop. */
 export interface Main_100LayoutSplitter2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutSplitter2 = ({ layout, tags }: Main_100LayoutSplitter2Props) => {
+export const Main_100LayoutSplitter2 = ({ layout }: Main_100LayoutSplitter2Props) => {
     return (
         <Region
             name="splitter"
-            tags={tags}
             layout={{ position: 'absolute', right: 0, width: 2, top: 0, height: 80, ...layout }}
         >
             <Border
@@ -833,16 +774,14 @@ export interface Main_100LayoutInformation2Props {
     cut?: Main_100LayoutCut2Props;
     layout?: BoxLayout;
     splitter?: Main_100LayoutSplitter2Props;
-    tags?: string[];
 }
 
-export const Main_100LayoutInformation2 = ({ captionDesc, captionTitle, cut, layout, splitter, tags }: Main_100LayoutInformation2Props) => {
+export const Main_100LayoutInformation2 = ({ captionDesc, captionTitle, cut, layout, splitter }: Main_100LayoutInformation2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="information"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 100, top: 0, bottom: 0, ...layout }}
         >
             <Main_100LayoutCut2 {...cut} />
@@ -875,21 +814,18 @@ export const Main_100LayoutInformation2 = ({ captionDesc, captionTitle, cut, lay
 export interface Main_100LayoutPreviousBtnProps {
     layout?: BoxLayout;
     onPreviousBtn?: () => void;
-    tags?: string[];
 }
 
-export const Main_100LayoutPreviousBtn = ({ layout, onPreviousBtn, tags }: Main_100LayoutPreviousBtnProps) => {
+export const Main_100LayoutPreviousBtn = ({ layout, onPreviousBtn }: Main_100LayoutPreviousBtnProps) => {
     return (
         <Region
             name="previous_btn"
-            tags={tags}
             dynamicStyle="button"
             onPointerTap={onPreviousBtn}
             cursor="pointer"
             layout={{ position: 'absolute', left: 54, width: 33, top: 84, height: 34, ...layout }}
         >
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('icons_back.png')}
                 layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
             />
@@ -901,21 +837,18 @@ export const Main_100LayoutPreviousBtn = ({ layout, onPreviousBtn, tags }: Main_
 export interface Main_100LayoutNextBtnProps {
     layout?: BoxLayout;
     onNextBtn?: () => void;
-    tags?: string[];
 }
 
-export const Main_100LayoutNextBtn = ({ layout, onNextBtn, tags }: Main_100LayoutNextBtnProps) => {
+export const Main_100LayoutNextBtn = ({ layout, onNextBtn }: Main_100LayoutNextBtnProps) => {
     return (
         <Region
             name="next_btn"
-            tags={tags}
             dynamicStyle="button"
             onPointerTap={onNextBtn}
             cursor="pointer"
             layout={{ position: 'absolute', left: 805, width: 33, top: 84, height: 34, ...layout }}
         >
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('icons_forward.png')}
                 layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
             />
@@ -935,36 +868,33 @@ export interface Main_100LayoutHeaderProps {
     pointsIndicatorContainer?: Main_100LayoutPointsIndicatorContainerProps;
     previousBtn?: Main_100LayoutPreviousBtnProps;
     prizeContent?: Main_100LayoutPrizeContentProps;
-    tags?: string[];
+    recolorDark?: string;
+    recolorLight?: string;
     track?: Main_100LayoutTrackProps;
     visibleNextUnclaimedIndicator?: boolean;
     visiblePreviousUnclaimedIndicator?: boolean;
 }
 
-export const Main_100LayoutHeader = ({ captionNextUnclaimedCount, captionPreviousUnclaimedCount, cutout, information, information2, layout, nextBtn, pointsIndicatorContainer, previousBtn, prizeContent, tags, track, visibleNextUnclaimedIndicator, visiblePreviousUnclaimedIndicator }: Main_100LayoutHeaderProps) => {
+export const Main_100LayoutHeader = ({ captionNextUnclaimedCount, captionPreviousUnclaimedCount, cutout, information, information2, layout, nextBtn, pointsIndicatorContainer, previousBtn, prizeContent, recolorDark, recolorLight, track, visibleNextUnclaimedIndicator, visiblePreviousUnclaimedIndicator }: Main_100LayoutHeaderProps) => {
     return (
         <Region
             name="header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 24, top: 0, height: 243, ...layout }}
         >
             <Main_100LayoutCutout {...cutout} />
             <Border
                 variant="15"
                 name="rewards"
-                tags={[ 'RECOLORABLE_LIGHT' ]}
-                tintColor="#ddebf9"
+                tintColor={recolorLight ?? '#ddebf9'}
                 layout={{ position: 'absolute', left: 232, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
-                    tags={[ 'RECOLORABLE_DARK' ]}
                     src={layoutImage('reward_track_prizes_background.png')}
-                    tint="#3576b9"
+                    tint={recolorDark ?? '#3576b9'}
                     layout={{ position: 'absolute', left: 2, right: 2, top: -2, height: 243 }}
                 />
                 <Region layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }} />
                 <ThemeImage
-                    tags={[ 'B' ]}
                     src={layoutImage('reward_track_prizes_background_stars.png')}
                     layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 243 }}
                 />
@@ -1048,16 +978,15 @@ export interface Main_100LayoutTabButtonTemplateItemProps {
     layout?: BoxLayout;
     onSelectedView?: () => void;
     onTabButtonTemplate?: () => void;
-    tags?: string[];
+    recolorDark?: string;
 }
 
-export const Main_100LayoutTabButtonTemplateItem = ({ captionButtonText, layout, onSelectedView, onTabButtonTemplate, tags }: Main_100LayoutTabButtonTemplateItemProps) => {
+export const Main_100LayoutTabButtonTemplateItem = ({ captionButtonText, layout, onSelectedView, onTabButtonTemplate, recolorDark }: Main_100LayoutTabButtonTemplateItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="tab_button_template"
-            tags={tags}
             onPointerTap={onTabButtonTemplate}
             cursor="pointer"
             layout={{ width: 88, height: 29, flexShrink: 0, justifyContent: 'center', ...layout }}
@@ -1065,8 +994,7 @@ export const Main_100LayoutTabButtonTemplateItem = ({ captionButtonText, layout,
             <Button
                 variant="3"
                 name="selected_view"
-                tags={[ 'RECOLORABLE_DARK' ]}
-                tintColor="#3576b9"
+                tintColor={recolorDark ?? '#3576b9'}
                 onPointerTap={onSelectedView}
                 textStyle="text-style-button-shiny-regular"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
@@ -1100,17 +1028,16 @@ export interface Main_100LayoutTabButtonTemplateItem2Props {
     layout?: BoxLayout;
     onSelectedView?: () => void;
     onTabButtonTemplate?: () => void;
-    tags?: string[];
+    recolorDark?: string;
     visibleSelectedView?: boolean;
 }
 
-export const Main_100LayoutTabButtonTemplateItem2 = ({ captionButtonText, layout, onSelectedView, onTabButtonTemplate, tags, visibleSelectedView }: Main_100LayoutTabButtonTemplateItem2Props) => {
+export const Main_100LayoutTabButtonTemplateItem2 = ({ captionButtonText, layout, onSelectedView, onTabButtonTemplate, recolorDark, visibleSelectedView }: Main_100LayoutTabButtonTemplateItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="tab_button_template"
-            tags={tags}
             onPointerTap={onTabButtonTemplate}
             cursor="pointer"
             layout={{ width: 88, height: 29, flexShrink: 0, justifyContent: 'center', ...layout }}
@@ -1122,8 +1049,7 @@ export const Main_100LayoutTabButtonTemplateItem2 = ({ captionButtonText, layout
                 <Button
                     variant="3"
                     name="selected_view"
-                    tags={[ 'RECOLORABLE_DARK' ]}
-                    tintColor="#3576b9"
+                    tintColor={recolorDark ?? '#3576b9'}
                     onPointerTap={onSelectedView}
                     textStyle="text-style-button-shiny-regular"
                     layout={{ width: '100%', height: '100%' }}
@@ -1157,17 +1083,16 @@ export interface Main_100LayoutTabButtonTemplateItem3Props {
     layout?: BoxLayout;
     onSelectedView?: () => void;
     onTabButtonTemplate?: () => void;
-    tags?: string[];
+    recolorDark?: string;
     visibleSelectedView?: boolean;
 }
 
-export const Main_100LayoutTabButtonTemplateItem3 = ({ captionButtonText, layout, onSelectedView, onTabButtonTemplate, tags, visibleSelectedView }: Main_100LayoutTabButtonTemplateItem3Props) => {
+export const Main_100LayoutTabButtonTemplateItem3 = ({ captionButtonText, layout, onSelectedView, onTabButtonTemplate, recolorDark, visibleSelectedView }: Main_100LayoutTabButtonTemplateItem3Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="tab_button_template"
-            tags={tags}
             onPointerTap={onTabButtonTemplate}
             cursor="pointer"
             layout={{ width: 88, height: 29, flexShrink: 0, justifyContent: 'center', ...layout }}
@@ -1179,8 +1104,7 @@ export const Main_100LayoutTabButtonTemplateItem3 = ({ captionButtonText, layout
                 <Button
                     variant="3"
                     name="selected_view"
-                    tags={[ 'RECOLORABLE_DARK' ]}
-                    tintColor="#3576b9"
+                    tintColor={recolorDark ?? '#3576b9'}
                     onPointerTap={onSelectedView}
                     textStyle="text-style-button-shiny-regular"
                     layout={{ width: '100%', height: '100%' }}
@@ -1212,14 +1136,12 @@ export const Main_100LayoutTabButtonTemplateItem3 = ({ captionButtonText, layout
 export interface Main_100LayoutTabSelectionProps {
     itemsTabSelection?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutTabSelection = ({ itemsTabSelection, layout, tags }: Main_100LayoutTabSelectionProps) => {
+export const Main_100LayoutTabSelection = ({ itemsTabSelection, layout }: Main_100LayoutTabSelectionProps) => {
     return (
         <Region
             name="tab_selection"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 278, top: 58, height: 30, flexDirection: 'row', gap: 7, ...layout }}
         >
             {itemsTabSelection ?? (
@@ -1238,16 +1160,14 @@ export interface Main_100LayoutHeader2Props {
     captionTasksCompletionTxt?: string;
     layout?: BoxLayout;
     tabSelection?: Main_100LayoutTabSelectionProps;
-    tags?: string[];
 }
 
-export const Main_100LayoutHeader2 = ({ captionTasksCompletionTxt, layout, tabSelection, tags }: Main_100LayoutHeader2Props) => {
+export const Main_100LayoutHeader2 = ({ captionTasksCompletionTxt, layout, tabSelection }: Main_100LayoutHeader2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 95, ...layout }}
         >
             <ThemeImage
@@ -1274,14 +1194,13 @@ export const Main_100LayoutHeader2 = ({ captionTasksCompletionTxt, layout, tabSe
 /** Named region `gradient` of Main_100Layout - configured through the parent's `gradient` prop. */
 export interface Main_100LayoutGradientProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutGradient = ({ layout, tags }: Main_100LayoutGradientProps) => {
+export const Main_100LayoutGradient = ({ layout }: Main_100LayoutGradientProps) => {
     return (
         <Region
             name="gradient"
-            tags={tags}
+            blendMode="add"
             layout={{ position: 'absolute', left: 1, right: 1, top: 1, height: 5, ...layout }}
         />
     );
@@ -1291,14 +1210,12 @@ export const Main_100LayoutGradient = ({ layout, tags }: Main_100LayoutGradientP
 export interface Main_100LayoutProgress2Props {
     gradient?: Main_100LayoutGradientProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutProgress2 = ({ gradient, layout, tags }: Main_100LayoutProgress2Props) => {
+export const Main_100LayoutProgress2 = ({ gradient, layout }: Main_100LayoutProgress2Props) => {
     return (
         <Region
             name="progress"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 7, ...layout }}
         >
             <Shape
@@ -1309,10 +1226,7 @@ export const Main_100LayoutProgress2 = ({ gradient, layout, tags }: Main_100Layo
                 radius={5}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
             />
-            <Main_100LayoutGradient
-                tags={[ 'BLEND_ADD' ]}
-                {...gradient}
-            />
+            <Main_100LayoutGradient {...gradient} />
         </Region>
     );
 };
@@ -1321,14 +1235,12 @@ export const Main_100LayoutProgress2 = ({ gradient, layout, tags }: Main_100Layo
 export interface Main_100LayoutLoadingBar3Props {
     layout?: BoxLayout;
     progress?: Main_100LayoutProgress2Props;
-    tags?: string[];
 }
 
-export const Main_100LayoutLoadingBar3 = ({ layout, progress, tags }: Main_100LayoutLoadingBar3Props) => {
+export const Main_100LayoutLoadingBar3 = ({ layout, progress }: Main_100LayoutLoadingBar3Props) => {
     return (
         <Region
             name="loading_bar"
-            tags={tags}
             layout={{ position: 'absolute', left: 68, width: 200, top: 44, height: 7, ...layout }}
         >
             <Shape
@@ -1356,14 +1268,12 @@ export interface Main_100LayoutTaskTemplateItemProps {
     onTaskTemplate?: () => void;
     srcTaskImage?: string;
     srcTrackRewardIcon?: string;
-    tags?: string[];
 }
 
-export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, captionTaskName, captionTaskProgressTxt, captionTrackRewardTxt, layout, loadingBar, onTaskTemplate, srcTaskImage, srcTrackRewardIcon, tags }: Main_100LayoutTaskTemplateItemProps) => {
+export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, captionTaskName, captionTaskProgressTxt, captionTrackRewardTxt, layout, loadingBar, onTaskTemplate, srcTaskImage, srcTrackRewardIcon }: Main_100LayoutTaskTemplateItemProps) => {
     return (
         <Region
             name="task_template"
-            tags={tags}
             onPointerTap={onTaskTemplate}
             cursor="pointer"
             layout={{ width: 406, height: 61, flexShrink: 0, ...layout }}
@@ -1426,10 +1336,9 @@ export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, caption
 export interface Main_100LayoutTasksProps {
     itemsTasks?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutTasks = ({ itemsTasks, layout, tags }: Main_100LayoutTasksProps) => {
+export const Main_100LayoutTasks = ({ itemsTasks, layout }: Main_100LayoutTasksProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -1437,7 +1346,6 @@ export const Main_100LayoutTasks = ({ itemsTasks, layout, tags }: Main_100Layout
         >
             <Region
                 name="tasks"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 5, width: '100%' }}
             >
                 {itemsTasks ?? (
@@ -1473,14 +1381,12 @@ export interface Main_100LayoutTaskInfoNameRegionProps {
     captionTaskInfoName?: string;
     layout?: BoxLayout;
     onTaskInfoNameRegion?: () => void;
-    tags?: string[];
 }
 
-export const Main_100LayoutTaskInfoNameRegion = ({ captionTaskInfoName, layout, onTaskInfoNameRegion, tags }: Main_100LayoutTaskInfoNameRegionProps) => {
+export const Main_100LayoutTaskInfoNameRegion = ({ captionTaskInfoName, layout, onTaskInfoNameRegion }: Main_100LayoutTaskInfoNameRegionProps) => {
     return (
         <Region
             name="task_info_name_region"
-            tags={tags}
             onPointerTap={onTaskInfoNameRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 137, width: 100, top: 35, height: 22, ...layout }}
@@ -1500,15 +1406,13 @@ export interface Main_100LayoutTaskInfoHeaderProps {
     captionTaskInfoDescription?: string;
     layout?: BoxLayout;
     srcTaskInfoImg?: string;
-    tags?: string[];
     taskInfoNameRegion?: Main_100LayoutTaskInfoNameRegionProps;
 }
 
-export const Main_100LayoutTaskInfoHeader = ({ captionTaskInfoDescription, layout, srcTaskInfoImg, tags, taskInfoNameRegion }: Main_100LayoutTaskInfoHeaderProps) => {
+export const Main_100LayoutTaskInfoHeader = ({ captionTaskInfoDescription, layout, srcTaskInfoImg, taskInfoNameRegion }: Main_100LayoutTaskInfoHeaderProps) => {
     return (
         <Region
             name="task_info_header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 128, ...layout }}
         >
             <ThemeImage
@@ -1533,14 +1437,12 @@ export const Main_100LayoutTaskInfoHeader = ({ captionTaskInfoDescription, layou
 /** Named region `spacer` of Main_100Layout - configured through the parent's `spacer` prop. */
 export interface Main_100LayoutSpacerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutSpacer = ({ layout, tags }: Main_100LayoutSpacerProps) => {
+export const Main_100LayoutSpacer = ({ layout }: Main_100LayoutSpacerProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             backgroundColor="#d6d5d3"
             layout={{ position: 'absolute', left: 22, width: 582, top: 20, height: 2, ...layout }}
         />
@@ -1550,16 +1452,14 @@ export const Main_100LayoutSpacer = ({ layout, tags }: Main_100LayoutSpacerProps
 /** Named region `levels_title_bg` of Main_100Layout - configured through the parent's `levelsTitleBg` prop. */
 export interface Main_100LayoutLevelsTitleBgProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutLevelsTitleBg = ({ layout, tags }: Main_100LayoutLevelsTitleBgProps) => {
+export const Main_100LayoutLevelsTitleBg = ({ layout }: Main_100LayoutLevelsTitleBgProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="levels_title_bg"
-            tags={tags}
             backgroundColor="#f0f0f0"
             layout={{ position: 'absolute', left: 37, width: 53, top: 7, height: 18, ...layout }}
         >
@@ -1576,14 +1476,13 @@ export const Main_100LayoutLevelsTitleBg = ({ layout, tags }: Main_100LayoutLeve
 /** Named region `gradient` of Main_100Layout - configured through the parent's `gradient` prop. */
 export interface Main_100LayoutGradient2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutGradient2 = ({ layout, tags }: Main_100LayoutGradient2Props) => {
+export const Main_100LayoutGradient2 = ({ layout }: Main_100LayoutGradient2Props) => {
     return (
         <Region
             name="gradient"
-            tags={tags}
+            blendMode="add"
             layout={{ position: 'absolute', left: 1, right: 1, top: 1, height: 5, ...layout }}
         />
     );
@@ -1593,14 +1492,12 @@ export const Main_100LayoutGradient2 = ({ layout, tags }: Main_100LayoutGradient
 export interface Main_100LayoutProgress3Props {
     gradient?: Main_100LayoutGradient2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutProgress3 = ({ gradient, layout, tags }: Main_100LayoutProgress3Props) => {
+export const Main_100LayoutProgress3 = ({ gradient, layout }: Main_100LayoutProgress3Props) => {
     return (
         <Region
             name="progress"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 7, ...layout }}
         >
             <Shape
@@ -1611,10 +1508,7 @@ export const Main_100LayoutProgress3 = ({ gradient, layout, tags }: Main_100Layo
                 radius={5}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
             />
-            <Main_100LayoutGradient2
-                tags={[ 'BLEND_ADD' ]}
-                {...gradient}
-            />
+            <Main_100LayoutGradient2 {...gradient} />
         </Region>
     );
 };
@@ -1623,14 +1517,12 @@ export const Main_100LayoutProgress3 = ({ gradient, layout, tags }: Main_100Layo
 export interface Main_100LayoutLoadingBar4Props {
     layout?: BoxLayout;
     progress?: Main_100LayoutProgress3Props;
-    tags?: string[];
 }
 
-export const Main_100LayoutLoadingBar4 = ({ layout, progress, tags }: Main_100LayoutLoadingBar4Props) => {
+export const Main_100LayoutLoadingBar4 = ({ layout, progress }: Main_100LayoutLoadingBar4Props) => {
     return (
         <Region
             name="loading_bar"
-            tags={tags}
             layout={{ position: 'absolute', left: 94, width: 260, top: 19, height: 7, ...layout }}
         >
             <Shape
@@ -1651,14 +1543,12 @@ export const Main_100LayoutLoadingBar4 = ({ layout, progress, tags }: Main_100La
 export interface Main_100LayoutLevelRewardTxtItemProps {
     captionLevelRewardTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutLevelRewardTxtItem = ({ captionLevelRewardTxt, layout, tags }: Main_100LayoutLevelRewardTxtItemProps) => {
+export const Main_100LayoutLevelRewardTxtItem = ({ captionLevelRewardTxt, layout }: Main_100LayoutLevelRewardTxtItemProps) => {
     return (
         <Region
             name="level_reward_txt"
-            tags={tags}
             layout={{ width: 20, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionLevelRewardTxt ?? '30'} />
@@ -1670,14 +1560,12 @@ export const Main_100LayoutLevelRewardTxtItem = ({ captionLevelRewardTxt, layout
 export interface Main_100LayoutLevelRewardIconItemProps {
     layout?: BoxLayout;
     srcLevelRewardIcon?: string;
-    tags?: string[];
 }
 
-export const Main_100LayoutLevelRewardIconItem = ({ layout, srcLevelRewardIcon, tags }: Main_100LayoutLevelRewardIconItemProps) => {
+export const Main_100LayoutLevelRewardIconItem = ({ layout, srcLevelRewardIcon }: Main_100LayoutLevelRewardIconItemProps) => {
     return (
         <ThemeImage
             name="level_reward_icon"
-            tags={tags}
             src={srcLevelRewardIcon ?? layoutImage('reward_track_point_small.png')}
             layout={{ width: 19, height: 14, flexShrink: 0, ...layout }}
         />
@@ -1688,14 +1576,12 @@ export const Main_100LayoutLevelRewardIconItem = ({ layout, srcLevelRewardIcon, 
 export interface Main_100LayoutRewardContainerProps {
     itemsRewardContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutRewardContainer = ({ itemsRewardContainer, layout, tags }: Main_100LayoutRewardContainerProps) => {
+export const Main_100LayoutRewardContainer = ({ itemsRewardContainer, layout }: Main_100LayoutRewardContainerProps) => {
     return (
         <Region
             name="reward_container"
-            tags={tags}
             layout={{ width: 44, height: 23, flexShrink: 0, flexDirection: 'row', gap: 5, ...layout }}
         >
             {itemsRewardContainer ?? (
@@ -1718,16 +1604,14 @@ export interface Main_100LayoutLevelTemplateItemProps {
     rewardContainer?: Main_100LayoutRewardContainerProps;
     srcCompletedIcon?: string;
     srcLockedIcon?: string;
-    tags?: string[];
 }
 
-export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevelProgressTxt, layout, loadingBar, onLevelTemplate, rewardContainer, srcCompletedIcon, srcLockedIcon, tags }: Main_100LayoutLevelTemplateItemProps) => {
+export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevelProgressTxt, layout, loadingBar, onLevelTemplate, rewardContainer, srcCompletedIcon, srcLockedIcon }: Main_100LayoutLevelTemplateItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="level_template"
-            tags={tags}
             onPointerTap={onLevelTemplate}
             cursor="pointer"
             layout={{ width: 582, height: 44, flexShrink: 0, ...layout }}
@@ -1773,10 +1657,9 @@ export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevel
 export interface Main_100LayoutLevelsProps {
     itemsLevels?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Main_100LayoutLevels = ({ itemsLevels, layout, tags }: Main_100LayoutLevelsProps) => {
+export const Main_100LayoutLevels = ({ itemsLevels, layout }: Main_100LayoutLevelsProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -1784,7 +1667,6 @@ export const Main_100LayoutLevels = ({ itemsLevels, layout, tags }: Main_100Layo
         >
             <Region
                 name="levels"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 9, width: '100%' }}
             >
                 {itemsLevels ?? (
@@ -1816,14 +1698,12 @@ export interface Main_100LayoutTaskLevelsProps {
     levels?: Main_100LayoutLevelsProps;
     levelsTitleBg?: Main_100LayoutLevelsTitleBgProps;
     spacer?: Main_100LayoutSpacerProps;
-    tags?: string[];
 }
 
-export const Main_100LayoutTaskLevels = ({ layout, levels, levelsTitleBg, spacer, tags }: Main_100LayoutTaskLevelsProps) => {
+export const Main_100LayoutTaskLevels = ({ layout, levels, levelsTitleBg, spacer }: Main_100LayoutTaskLevelsProps) => {
     return (
         <Region
             name="task_levels"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 127, height: 200, ...layout }}
         >
             <Main_100LayoutSpacer {...spacer} />
@@ -1840,19 +1720,17 @@ export interface Main_100LayoutBodyProps {
     layout?: BoxLayout;
     onGetPremiumBtn?: () => void;
     onHintRedirectBtn?: () => void;
-    tags?: string[];
     taskInfoHeader?: Main_100LayoutTaskInfoHeaderProps;
     taskLevels?: Main_100LayoutTaskLevelsProps;
     tasks?: Main_100LayoutTasksProps;
 }
 
-export const Main_100LayoutBody = ({ captionTaskHintText, header, layout, onGetPremiumBtn, onHintRedirectBtn, tags, taskInfoHeader, taskLevels, tasks }: Main_100LayoutBodyProps) => {
+export const Main_100LayoutBody = ({ captionTaskHintText, header, layout, onGetPremiumBtn, onHintRedirectBtn, taskInfoHeader, taskLevels, tasks }: Main_100LayoutBodyProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="body"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 24, top: 249, bottom: 55, ...layout }}
         >
             <Border

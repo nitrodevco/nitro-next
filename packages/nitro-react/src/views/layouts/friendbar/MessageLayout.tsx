@@ -11,10 +11,7 @@ export interface MessageLayoutProps {
 export const MessageLayout = ({ layout, message }: MessageLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 121, height: 37, ...layout }}>
-            <MessageLayoutMessage
-                tags={[ 'notification' ]}
-                {...message}
-            />
+            <MessageLayoutMessage {...message} />
         </Region>
     );
 };
@@ -23,14 +20,12 @@ export const MessageLayout = ({ layout, message }: MessageLayoutProps) => {
 export interface MessageLayoutTitleItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessageLayoutTitleItem = ({ captionTitle, layout, tags }: MessageLayoutTitleItemProps) => {
+export const MessageLayoutTitleItem = ({ captionTitle, layout }: MessageLayoutTitleItemProps) => {
     return (
         <Region
             name="title"
-            tags={tags}
             layout={{ width: 120, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -46,14 +41,12 @@ export const MessageLayoutTitleItem = ({ captionTitle, layout, tags }: MessageLa
 export interface MessageLayoutMessageItemProps {
     captionMessage?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessageLayoutMessageItem = ({ captionMessage, layout, tags }: MessageLayoutMessageItemProps) => {
+export const MessageLayoutMessageItem = ({ captionMessage, layout }: MessageLayoutMessageItemProps) => {
     return (
         <Region
             name="message"
-            tags={tags}
             layout={{ width: 121, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -69,14 +62,12 @@ export const MessageLayoutMessageItem = ({ captionMessage, layout, tags }: Messa
 export interface MessageLayoutItemsProps {
     itemsItems?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessageLayoutItems = ({ itemsItems, layout, tags }: MessageLayoutItemsProps) => {
+export const MessageLayoutItems = ({ itemsItems, layout }: MessageLayoutItemsProps) => {
     return (
         <Region
             name="items"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 31, flexDirection: 'column', gap: -1, ...layout }}
         >
             {itemsItems ?? (
@@ -93,14 +84,12 @@ export const MessageLayoutItems = ({ itemsItems, layout, tags }: MessageLayoutIt
 export interface MessageLayoutMessageProps {
     items?: MessageLayoutItemsProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessageLayoutMessage = ({ items, layout, tags }: MessageLayoutMessageProps) => {
+export const MessageLayoutMessage = ({ items, layout }: MessageLayoutMessageProps) => {
     return (
         <Region
             name="message"
-            tags={tags}
             backgroundColor="#4c5832"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 37, ...layout }}
         >

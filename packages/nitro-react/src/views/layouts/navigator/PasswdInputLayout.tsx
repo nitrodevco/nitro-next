@@ -73,16 +73,14 @@ export interface PasswdInputLayoutCancelRegionProps {
     captionCancel?: string;
     layout?: BoxLayout;
     onCancelRegion?: () => void;
-    tags?: string[];
 }
 
-export const PasswdInputLayoutCancelRegion = ({ captionCancel, layout, onCancelRegion, tags }: PasswdInputLayoutCancelRegionProps) => {
+export const PasswdInputLayoutCancelRegion = ({ captionCancel, layout, onCancelRegion }: PasswdInputLayoutCancelRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_region"
-            tags={tags}
             onPointerTap={onCancelRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 124, top: 5, height: 26, ...layout }}

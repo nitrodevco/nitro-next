@@ -19,14 +19,12 @@ export const MemenuEffectInactiveLayout = ({ layout, selectedBorder }: MemenuEff
 export interface MemenuEffectInactiveLayoutEffectAmountBg2Props {
     captionEffectAmount?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MemenuEffectInactiveLayoutEffectAmountBg2 = ({ captionEffectAmount, layout, tags }: MemenuEffectInactiveLayoutEffectAmountBg2Props) => {
+export const MemenuEffectInactiveLayoutEffectAmountBg2 = ({ captionEffectAmount, layout }: MemenuEffectInactiveLayoutEffectAmountBg2Props) => {
     return (
         <Region
             name="effect_amount_bg2"
-            tags={tags}
             backgroundColor="#666666"
             layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 13, ...layout }}
         >
@@ -47,14 +45,12 @@ export const MemenuEffectInactiveLayoutEffectAmountBg2 = ({ captionEffectAmount,
 export interface MemenuEffectInactiveLayoutEffectAmountBg1Props {
     effectAmountBg2?: MemenuEffectInactiveLayoutEffectAmountBg2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MemenuEffectInactiveLayoutEffectAmountBg1 = ({ effectAmountBg2, layout, tags }: MemenuEffectInactiveLayoutEffectAmountBg1Props) => {
+export const MemenuEffectInactiveLayoutEffectAmountBg1 = ({ effectAmountBg2, layout }: MemenuEffectInactiveLayoutEffectAmountBg1Props) => {
     return (
         <Region
             name="effect_amount_bg1"
-            tags={tags}
             backgroundColor="#dddddd"
             layout={{ position: 'absolute', left: 24, width: 20, top: 4, height: 15, ...layout }}
         >
@@ -72,16 +68,14 @@ export interface MemenuEffectInactiveLayoutSelectedBorderProps {
     onSelectedBorder?: () => void;
     srcEffectIcon?: string;
     srcEffectIconBg?: string;
-    tags?: string[];
 }
 
-export const MemenuEffectInactiveLayoutSelectedBorder = ({ captionEffectName, effectAmountBg1, layout, onActivateEffect, onSelectedBorder, srcEffectIcon, srcEffectIconBg, tags }: MemenuEffectInactiveLayoutSelectedBorderProps) => {
+export const MemenuEffectInactiveLayoutSelectedBorder = ({ captionEffectName, effectAmountBg1, layout, onActivateEffect, onSelectedBorder, srcEffectIcon, srcEffectIconBg }: MemenuEffectInactiveLayoutSelectedBorderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="selected_border"
-            tags={tags}
             onPointerTap={onSelectedBorder}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 154, top: 0, height: 52, ...layout }}

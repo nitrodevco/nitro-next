@@ -32,14 +32,12 @@ export const ChestUpgradeLayout = ({ content, layout, onClose }: ChestUpgradeLay
 export interface ChestUpgradeLayoutErrorTextItemProps {
     captionErrorText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChestUpgradeLayoutErrorTextItem = ({ captionErrorText, layout, tags }: ChestUpgradeLayoutErrorTextItemProps) => {
+export const ChestUpgradeLayoutErrorTextItem = ({ captionErrorText, layout }: ChestUpgradeLayoutErrorTextItemProps) => {
     return (
         <Region
             name="error_text"
-            tags={tags}
             layout={{ width: 327, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -54,17 +52,15 @@ export const ChestUpgradeLayoutErrorTextItem = ({ captionErrorText, layout, tags
 export interface ChestUpgradeLayoutCancelButtonItemProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
-    tags?: string[];
 }
 
-export const ChestUpgradeLayoutCancelButtonItem = ({ layout, onCancelButton, tags }: ChestUpgradeLayoutCancelButtonItemProps) => {
+export const ChestUpgradeLayoutCancelButtonItem = ({ layout, onCancelButton }: ChestUpgradeLayoutCancelButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="cancel_button"
-            tags={tags}
             onPointerTap={onCancelButton}
             layout={{ width: 110, height: 27, flexShrink: 0, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27, ...layout }}
         >
@@ -77,17 +73,15 @@ export const ChestUpgradeLayoutCancelButtonItem = ({ layout, onCancelButton, tag
 export interface ChestUpgradeLayoutBuyButtonItemProps {
     layout?: BoxLayout;
     onBuyButton?: () => void;
-    tags?: string[];
 }
 
-export const ChestUpgradeLayoutBuyButtonItem = ({ layout, onBuyButton, tags }: ChestUpgradeLayoutBuyButtonItemProps) => {
+export const ChestUpgradeLayoutBuyButtonItem = ({ layout, onBuyButton }: ChestUpgradeLayoutBuyButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="5"
             name="buy_button"
-            tags={tags}
             tintColor="#00aa00"
             onPointerTap={onBuyButton}
             layout={{ width: 110, height: 27, flexShrink: 0, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27, ...layout }}
@@ -101,14 +95,12 @@ export const ChestUpgradeLayoutBuyButtonItem = ({ layout, onBuyButton, tags }: C
 export interface ChestUpgradeLayoutButtonsItemProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChestUpgradeLayoutButtonsItem = ({ itemsButtons, layout, tags }: ChestUpgradeLayoutButtonsItemProps) => {
+export const ChestUpgradeLayoutButtonsItem = ({ itemsButtons, layout }: ChestUpgradeLayoutButtonsItemProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ minWidth: 341, minHeight: 27, flexShrink: 0, flexDirection: 'row', gap: 105, ...layout }}
         >
             {itemsButtons ?? (
@@ -125,16 +117,14 @@ export const ChestUpgradeLayoutButtonsItem = ({ itemsButtons, layout, tags }: Ch
 export interface ChestUpgradeLayoutProductNameItemProps {
     captionProductName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChestUpgradeLayoutProductNameItem = ({ captionProductName, layout, tags }: ChestUpgradeLayoutProductNameItemProps) => {
+export const ChestUpgradeLayoutProductNameItem = ({ captionProductName, layout }: ChestUpgradeLayoutProductNameItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="product_name"
-            tags={tags}
             layout={{ width: 197, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -150,16 +140,14 @@ export const ChestUpgradeLayoutProductNameItem = ({ captionProductName, layout, 
 export interface ChestUpgradeLayoutCurrentCapacityItemProps {
     captionCurrentCapacity?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChestUpgradeLayoutCurrentCapacityItem = ({ captionCurrentCapacity, layout, tags }: ChestUpgradeLayoutCurrentCapacityItemProps) => {
+export const ChestUpgradeLayoutCurrentCapacityItem = ({ captionCurrentCapacity, layout }: ChestUpgradeLayoutCurrentCapacityItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="current_capacity"
-            tags={tags}
             layout={{ width: 197, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -175,16 +163,14 @@ export const ChestUpgradeLayoutCurrentCapacityItem = ({ captionCurrentCapacity, 
 export interface ChestUpgradeLayoutNewCapacityItemProps {
     captionNewCapacity?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChestUpgradeLayoutNewCapacityItem = ({ captionNewCapacity, layout, tags }: ChestUpgradeLayoutNewCapacityItemProps) => {
+export const ChestUpgradeLayoutNewCapacityItem = ({ captionNewCapacity, layout }: ChestUpgradeLayoutNewCapacityItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="new_capacity"
-            tags={tags}
             layout={{ width: 197, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -201,16 +187,14 @@ export interface ChestUpgradeLayoutPropertiesItemlistProps {
     itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
     onAmountSelectionDropmenu?: () => void;
-    tags?: string[];
 }
 
-export const ChestUpgradeLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout, onAmountSelectionDropmenu, tags }: ChestUpgradeLayoutPropertiesItemlistProps) => {
+export const ChestUpgradeLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout, onAmountSelectionDropmenu }: ChestUpgradeLayoutPropertiesItemlistProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="properties_itemlist"
-            tags={tags}
             layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 132, flexDirection: 'column', gap: 4, ...layout }}
         >
             {itemsPropertiesItemlist ?? (
@@ -241,14 +225,12 @@ export interface ChestUpgradeLayoutPurchaseCostBoxProps {
     captionPriceCredits?: string;
     captionPriceDiamonds?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChestUpgradeLayoutPurchaseCostBox = ({ captionPlus, captionPriceCredits, captionPriceDiamonds, layout, tags }: ChestUpgradeLayoutPurchaseCostBoxProps) => {
+export const ChestUpgradeLayoutPurchaseCostBox = ({ captionPlus, captionPriceCredits, captionPriceDiamonds, layout }: ChestUpgradeLayoutPurchaseCostBoxProps) => {
     return (
         <Region
             name="purchase_cost_box"
-            tags={tags}
             layout={{ width: 88, height: 25, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 25, flexDirection: 'row', gap: 2 }}>
@@ -290,16 +272,14 @@ export interface ChestUpgradeLayoutContentProps {
     propertiesItemlist?: ChestUpgradeLayoutPropertiesItemlistProps;
     purchaseCostBox?: ChestUpgradeLayoutPurchaseCostBoxProps;
     srcProductImage?: string;
-    tags?: string[];
 }
 
-export const ChestUpgradeLayoutContent = ({ itemsContent, layout, propertiesItemlist, purchaseCostBox, srcProductImage, tags }: ChestUpgradeLayoutContentProps) => {
+export const ChestUpgradeLayoutContent = ({ itemsContent, layout, propertiesItemlist, purchaseCostBox, srcProductImage }: ChestUpgradeLayoutContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="content"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 38, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsContent ?? (

@@ -89,17 +89,15 @@ export interface GroupManagementWindowLayoutStepsHeaderContProps {
     srcGcreate40?: string;
     srcGcreate41?: string;
     srcGcreateIconCredit?: string;
-    tags?: string[];
     visibleStepsHeaderCont?: boolean;
 }
 
-export const GroupManagementWindowLayoutStepsHeaderCont = ({ captionStepTitle1, captionStepTitle2, captionStepTitle3, captionStepTitle4, layout, srcGcreate10, srcGcreate11, srcGcreate20, srcGcreate21, srcGcreate30, srcGcreate31, srcGcreate40, srcGcreate41, srcGcreateIconCredit, tags, visibleStepsHeaderCont }: GroupManagementWindowLayoutStepsHeaderContProps) => {
+export const GroupManagementWindowLayoutStepsHeaderCont = ({ captionStepTitle1, captionStepTitle2, captionStepTitle3, captionStepTitle4, layout, srcGcreate10, srcGcreate11, srcGcreate20, srcGcreate21, srcGcreate30, srcGcreate31, srcGcreate40, srcGcreate41, srcGcreateIconCredit, visibleStepsHeaderCont }: GroupManagementWindowLayoutStepsHeaderContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="steps_header_cont"
-            tags={tags}
             visible={visibleStepsHeaderCont ?? false}
             layout={{ position: 'absolute', left: 16, right: 15, top: 5, height: 33, ...layout }}
         >
@@ -204,16 +202,14 @@ export interface GroupManagementWindowLayoutHeaderContProps {
     srcHeaderPicBitmapStep5?: string;
     srcHeaderPicBitmapStep6?: string;
     stepsHeaderCont?: GroupManagementWindowLayoutStepsHeaderContProps;
-    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutHeaderCont = ({ captionHeaderCaptionTxt, captionHeaderDescTxt, layout, onEditTab1, onEditTab2, onEditTab3, onEditTab5, srcHeaderPicBitmapStep1, srcHeaderPicBitmapStep2, srcHeaderPicBitmapStep3, srcHeaderPicBitmapStep4, srcHeaderPicBitmapStep5, srcHeaderPicBitmapStep6, stepsHeaderCont, tags }: GroupManagementWindowLayoutHeaderContProps) => {
+export const GroupManagementWindowLayoutHeaderCont = ({ captionHeaderCaptionTxt, captionHeaderDescTxt, layout, onEditTab1, onEditTab2, onEditTab3, onEditTab5, srcHeaderPicBitmapStep1, srcHeaderPicBitmapStep2, srcHeaderPicBitmapStep3, srcHeaderPicBitmapStep4, srcHeaderPicBitmapStep5, srcHeaderPicBitmapStep6, stepsHeaderCont }: GroupManagementWindowLayoutHeaderContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 1, top: 0, height: 110, ...layout }}
         >
             <Region
@@ -316,14 +312,12 @@ export interface GroupManagementWindowLayoutStep1MembersRegionProps {
     captionStep1MembersTxt?: string;
     layout?: BoxLayout;
     onStep1MembersRegion?: () => void;
-    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutStep1MembersRegion = ({ captionStep1MembersTxt, layout, onStep1MembersRegion, tags }: GroupManagementWindowLayoutStep1MembersRegionProps) => {
+export const GroupManagementWindowLayoutStep1MembersRegion = ({ captionStep1MembersTxt, layout, onStep1MembersRegion }: GroupManagementWindowLayoutStep1MembersRegionProps) => {
     return (
         <Region
             name="step_1_members_region"
-            tags={tags}
             onPointerTap={onStep1MembersRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 17, width: 94, top: 110, height: 18, justifyContent: 'center', ...layout }}
@@ -346,16 +340,14 @@ export interface GroupManagementWindowLayoutCreateRoomLinkRegionProps {
     captionCreateRoomLinkTxt?: string;
     layout?: BoxLayout;
     onCreateRoomLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutCreateRoomLinkRegion = ({ captionCreateRoomLinkTxt, layout, onCreateRoomLinkRegion, tags }: GroupManagementWindowLayoutCreateRoomLinkRegionProps) => {
+export const GroupManagementWindowLayoutCreateRoomLinkRegion = ({ captionCreateRoomLinkTxt, layout, onCreateRoomLinkRegion }: GroupManagementWindowLayoutCreateRoomLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="create_room_link_region"
-            tags={tags}
             onPointerTap={onCreateRoomLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 126, width: 247, top: 252, height: 38, ...layout }}
@@ -384,10 +376,9 @@ export interface GroupManagementWindowLayoutStepCont1Props {
     layout?: BoxLayout;
     onBaseDropmenu?: () => void;
     step1MembersRegion?: GroupManagementWindowLayoutStep1MembersRegionProps;
-    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, captionBaseWarning, captionDescLabel, captionNameLabel, createRoomLinkRegion, layout, onBaseDropmenu, step1MembersRegion, tags }: GroupManagementWindowLayoutStepCont1Props) => {
+export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, captionBaseWarning, captionDescLabel, captionNameLabel, createRoomLinkRegion, layout, onBaseDropmenu, step1MembersRegion }: GroupManagementWindowLayoutStepCont1Props) => {
     const t = useTranslation();
     const [ nameTxtValue, setNameTxtValue ] = useState('');
     const [ descTxtValue, setDescTxtValue ] = useState('');
@@ -395,7 +386,6 @@ export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, caption
     return (
         <Region
             name="step_cont_1"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 19, top: 128, height: 310, ...layout }}
         >
             <Border
@@ -470,15 +460,13 @@ export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, caption
 /** Named region `step_cont_2` of GroupManagementWindowLayout - configured through the parent's `stepCont2` prop. */
 export interface GroupManagementWindowLayoutStepCont2Props {
     layout?: BoxLayout;
-    tags?: string[];
     visibleStepCont2?: boolean;
 }
 
-export const GroupManagementWindowLayoutStepCont2 = ({ layout, tags, visibleStepCont2 }: GroupManagementWindowLayoutStepCont2Props) => {
+export const GroupManagementWindowLayoutStepCont2 = ({ layout, visibleStepCont2 }: GroupManagementWindowLayoutStepCont2Props) => {
     return (
         <Region
             name="step_cont_2"
-            tags={tags}
             visible={visibleStepCont2 ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 110, height: 305, ...layout }}
         />
@@ -488,14 +476,12 @@ export const GroupManagementWindowLayoutStepCont2 = ({ layout, tags, visibleStep
 /** Named region `guild_primary_color_selector` of GroupManagementWindowLayout - configured through the parent's `guildPrimaryColorSelector` prop. */
 export interface GroupManagementWindowLayoutGuildPrimaryColorSelectorProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutGuildPrimaryColorSelector = ({ layout, tags }: GroupManagementWindowLayoutGuildPrimaryColorSelectorProps) => {
+export const GroupManagementWindowLayoutGuildPrimaryColorSelector = ({ layout }: GroupManagementWindowLayoutGuildPrimaryColorSelectorProps) => {
     return (
         <Region
             name="guild_primary_color_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 3, width: 138, top: 3, height: 273, flexDirection: 'row', flexWrap: 'wrap', ...layout }}
         />
     );
@@ -504,14 +490,12 @@ export const GroupManagementWindowLayoutGuildPrimaryColorSelector = ({ layout, t
 /** Named region `guild_secondary_color_selector` of GroupManagementWindowLayout - configured through the parent's `guildSecondaryColorSelector` prop. */
 export interface GroupManagementWindowLayoutGuildSecondaryColorSelectorProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutGuildSecondaryColorSelector = ({ layout, tags }: GroupManagementWindowLayoutGuildSecondaryColorSelectorProps) => {
+export const GroupManagementWindowLayoutGuildSecondaryColorSelector = ({ layout }: GroupManagementWindowLayoutGuildSecondaryColorSelectorProps) => {
     return (
         <Region
             name="guild_secondary_color_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 3, width: 94, top: 3, height: 273, flexDirection: 'row', flexWrap: 'wrap', ...layout }}
         />
     );
@@ -529,17 +513,15 @@ export interface GroupManagementWindowLayoutStepCont3Props {
     srcGuildColorPrimaryColorTop?: string;
     srcGuildColorSecondaryColorBtm?: string;
     srcGuildColorSecondaryColorTop?: string;
-    tags?: string[];
     visibleStepCont3?: boolean;
 }
 
-export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, captionLabelPrimary, captionLabelSecondary, guildPrimaryColorSelector, guildSecondaryColorSelector, layout, srcGuildColorPrimaryColorBtm, srcGuildColorPrimaryColorTop, srcGuildColorSecondaryColorBtm, srcGuildColorSecondaryColorTop, tags, visibleStepCont3 }: GroupManagementWindowLayoutStepCont3Props) => {
+export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, captionLabelPrimary, captionLabelSecondary, guildPrimaryColorSelector, guildSecondaryColorSelector, layout, srcGuildColorPrimaryColorBtm, srcGuildColorPrimaryColorTop, srcGuildColorSecondaryColorBtm, srcGuildColorSecondaryColorTop, visibleStepCont3 }: GroupManagementWindowLayoutStepCont3Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="step_cont_3"
-            tags={tags}
             visible={visibleStepCont3 ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 110, height: 305, ...layout }}
         >
@@ -628,14 +610,12 @@ export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, c
 export interface GroupManagementWindowLayoutVipRequiredRegionProps {
     layout?: BoxLayout;
     onVipRequiredRegion?: () => void;
-    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutVipRequiredRegion = ({ layout, onVipRequiredRegion, tags }: GroupManagementWindowLayoutVipRequiredRegionProps) => {
+export const GroupManagementWindowLayoutVipRequiredRegion = ({ layout, onVipRequiredRegion }: GroupManagementWindowLayoutVipRequiredRegionProps) => {
     return (
         <Region
             name="vip_required_region"
-            tags={tags}
             onPointerTap={onVipRequiredRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 248, top: 0, height: 39, ...layout }}
@@ -657,18 +637,16 @@ export interface GroupManagementWindowLayoutStepCont4Props {
     srcBadgePreviewPrimaryColorTop?: string;
     srcBadgePreviewSecondaryColorBtm?: string;
     srcBadgePreviewSecondaryColorTop?: string;
-    tags?: string[];
     vipRequiredRegion?: GroupManagementWindowLayoutVipRequiredRegionProps;
     visibleStepCont4?: boolean;
 }
 
-export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaption, captionConfirmationDesc, captionGetVipTxt, captionGuildBadgeTxt, captionGuildColorsTxt, captionVipRequiredTxt, layout, srcBadgePreviewImage, srcBadgePreviewPrimaryColorBtm, srcBadgePreviewPrimaryColorTop, srcBadgePreviewSecondaryColorBtm, srcBadgePreviewSecondaryColorTop, tags, vipRequiredRegion, visibleStepCont4 }: GroupManagementWindowLayoutStepCont4Props) => {
+export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaption, captionConfirmationDesc, captionGetVipTxt, captionGuildBadgeTxt, captionGuildColorsTxt, captionVipRequiredTxt, layout, srcBadgePreviewImage, srcBadgePreviewPrimaryColorBtm, srcBadgePreviewPrimaryColorTop, srcBadgePreviewSecondaryColorBtm, srcBadgePreviewSecondaryColorTop, vipRequiredRegion, visibleStepCont4 }: GroupManagementWindowLayoutStepCont4Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="step_cont_4"
-            tags={tags}
             visible={visibleStepCont4 ?? false}
             layout={{ position: 'absolute', left: 0, right: 3, top: 111, height: 360, ...layout }}
         >
@@ -797,16 +775,14 @@ export interface GroupManagementWindowLayoutCancelLinkRegionProps {
     captionCancelLink?: string;
     layout?: BoxLayout;
     onCancelLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion, tags }: GroupManagementWindowLayoutCancelLinkRegionProps) => {
+export const GroupManagementWindowLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion }: GroupManagementWindowLayoutCancelLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_link_region"
-            tags={tags}
             onPointerTap={onCancelLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 11, width: 120, top: 20, height: 18, ...layout }}
@@ -826,16 +802,14 @@ export interface GroupManagementWindowLayoutPreviousStepLinkRegionProps {
     captionPreviousStepLink?: string;
     layout?: BoxLayout;
     onPreviousStepLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutPreviousStepLinkRegion = ({ captionPreviousStepLink, layout, onPreviousStepLinkRegion, tags }: GroupManagementWindowLayoutPreviousStepLinkRegionProps) => {
+export const GroupManagementWindowLayoutPreviousStepLinkRegion = ({ captionPreviousStepLink, layout, onPreviousStepLinkRegion }: GroupManagementWindowLayoutPreviousStepLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="previous_step_link_region"
-            tags={tags}
             onPointerTap={onPreviousStepLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 11, width: 120, top: 20, height: 18, ...layout }}
@@ -859,17 +833,15 @@ export interface GroupManagementWindowLayoutFooterContProps {
     onNextStepButton?: () => void;
     previousStepLinkRegion?: GroupManagementWindowLayoutPreviousStepLinkRegionProps;
     srcBuyCreditIcon?: string;
-    tags?: string[];
     visibleFooterCont?: boolean;
 }
 
-export const GroupManagementWindowLayoutFooterCont = ({ cancelLinkRegion, captionBuyTxt, layout, onBuyButton, onNextStepButton, previousStepLinkRegion, srcBuyCreditIcon, tags, visibleFooterCont }: GroupManagementWindowLayoutFooterContProps) => {
+export const GroupManagementWindowLayoutFooterCont = ({ cancelLinkRegion, captionBuyTxt, layout, onBuyButton, onNextStepButton, previousStepLinkRegion, srcBuyCreditIcon, visibleFooterCont }: GroupManagementWindowLayoutFooterContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="footer_cont"
-            tags={tags}
             visible={visibleFooterCont ?? false}
             layout={{ position: 'absolute', left: 0, right: 2, bottom: 45, height: 42, ...layout }}
         >
@@ -921,16 +893,14 @@ export interface GroupManagementWindowLayoutGrouptypeRegion0Props {
     layout?: BoxLayout;
     onGrouptypeRegion0?: () => void;
     srcGrouptypeIcon0?: string;
-    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutGrouptypeRegion0 = ({ layout, onGrouptypeRegion0, srcGrouptypeIcon0, tags }: GroupManagementWindowLayoutGrouptypeRegion0Props) => {
+export const GroupManagementWindowLayoutGrouptypeRegion0 = ({ layout, onGrouptypeRegion0, srcGrouptypeIcon0 }: GroupManagementWindowLayoutGrouptypeRegion0Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="grouptype_region_0"
-            tags={tags}
             tooltip={t('group.edit.settings.type.regular.help')}
             onPointerTap={onGrouptypeRegion0}
             cursor="pointer"
@@ -950,16 +920,14 @@ export interface GroupManagementWindowLayoutGrouptypeRegion1Props {
     layout?: BoxLayout;
     onGrouptypeRegion1?: () => void;
     srcGrouptypeIcon1?: string;
-    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutGrouptypeRegion1 = ({ layout, onGrouptypeRegion1, srcGrouptypeIcon1, tags }: GroupManagementWindowLayoutGrouptypeRegion1Props) => {
+export const GroupManagementWindowLayoutGrouptypeRegion1 = ({ layout, onGrouptypeRegion1, srcGrouptypeIcon1 }: GroupManagementWindowLayoutGrouptypeRegion1Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="grouptype_region_1"
-            tags={tags}
             tooltip={t('group.edit.settings.type.exclusive.help')}
             onPointerTap={onGrouptypeRegion1}
             cursor="pointer"
@@ -979,16 +947,14 @@ export interface GroupManagementWindowLayoutGrouptypeRegion2Props {
     layout?: BoxLayout;
     onGrouptypeRegion2?: () => void;
     srcGrouptypeIcon2?: string;
-    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutGrouptypeRegion2 = ({ layout, onGrouptypeRegion2, srcGrouptypeIcon2, tags }: GroupManagementWindowLayoutGrouptypeRegion2Props) => {
+export const GroupManagementWindowLayoutGrouptypeRegion2 = ({ layout, onGrouptypeRegion2, srcGrouptypeIcon2 }: GroupManagementWindowLayoutGrouptypeRegion2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="grouptype_region_2"
-            tags={tags}
             tooltip={t('group.edit.settings.type.private.help')}
             onPointerTap={onGrouptypeRegion2}
             cursor="pointer"
@@ -1012,16 +978,14 @@ export interface GroupManagementWindowLayoutGroupTypeSelectorProps {
     onRbTypeExclusive?: () => void;
     onRbTypePrivate?: () => void;
     onRbTypeRegular?: () => void;
-    tags?: string[];
 }
 
-export const GroupManagementWindowLayoutGroupTypeSelector = ({ grouptypeRegion0, grouptypeRegion1, grouptypeRegion2, layout, onRbTypeExclusive, onRbTypePrivate, onRbTypeRegular, tags }: GroupManagementWindowLayoutGroupTypeSelectorProps) => {
+export const GroupManagementWindowLayoutGroupTypeSelector = ({ grouptypeRegion0, grouptypeRegion1, grouptypeRegion2, layout, onRbTypeExclusive, onRbTypePrivate, onRbTypeRegular }: GroupManagementWindowLayoutGroupTypeSelectorProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="group_type_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 152, top: 5, height: 191, ...layout }}
         >
             <RadioButton
@@ -1095,17 +1059,15 @@ export interface GroupManagementWindowLayoutStepCont5Props {
     groupTypeSelector?: GroupManagementWindowLayoutGroupTypeSelectorProps;
     layout?: BoxLayout;
     onCbMemberRights?: () => void;
-    tags?: string[];
     visibleStepCont5?: boolean;
 }
 
-export const GroupManagementWindowLayoutStepCont5 = ({ captionGuildRights, captionGuildType, groupTypeSelector, layout, onCbMemberRights, tags, visibleStepCont5 }: GroupManagementWindowLayoutStepCont5Props) => {
+export const GroupManagementWindowLayoutStepCont5 = ({ captionGuildRights, captionGuildType, groupTypeSelector, layout, onCbMemberRights, visibleStepCont5 }: GroupManagementWindowLayoutStepCont5Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="step_cont_5"
-            tags={tags}
             visible={visibleStepCont5 ?? false}
             layout={{ position: 'absolute', left: 0, right: 3, top: 111, height: 360, ...layout }}
         >

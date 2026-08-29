@@ -29,14 +29,12 @@ export const RoomtoolFrameLayout = ({ layout, listCont, onClose }: RoomtoolFrame
 export interface RoomtoolFrameLayoutTagsContProps {
     captionTagsTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutTagsCont = ({ captionTagsTxt, layout, tags }: RoomtoolFrameLayoutTagsContProps) => {
+export const RoomtoolFrameLayoutTagsCont = ({ captionTagsTxt, layout }: RoomtoolFrameLayoutTagsContProps) => {
     return (
         <Region
             name="tags_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 220, top: 60, height: 30, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -60,15 +58,13 @@ export interface RoomtoolFrameLayoutRoomDataProps {
     captionDesc?: string;
     captionName?: string;
     layout?: BoxLayout;
-    tags?: string[];
     tagsCont?: RoomtoolFrameLayoutTagsContProps;
 }
 
-export const RoomtoolFrameLayoutRoomData = ({ captionDesc, captionName, layout, tags, tagsCont }: RoomtoolFrameLayoutRoomDataProps) => {
+export const RoomtoolFrameLayoutRoomData = ({ captionDesc, captionName, layout, tagsCont }: RoomtoolFrameLayoutRoomDataProps) => {
     return (
         <Region
             name="room_data"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 220, top: 5, height: 90, ...layout }}
         >
             <Region
@@ -98,15 +94,13 @@ export const RoomtoolFrameLayoutRoomData = ({ captionDesc, captionName, layout, 
 export interface RoomtoolFrameLayoutRoomContItemProps {
     layout?: BoxLayout;
     roomData?: RoomtoolFrameLayoutRoomDataProps;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutRoomContItem = ({ layout, roomData, tags }: RoomtoolFrameLayoutRoomContItemProps) => {
+export const RoomtoolFrameLayoutRoomContItem = ({ layout, roomData }: RoomtoolFrameLayoutRoomContItemProps) => {
     return (
         <Border
             variant="0"
             name="room_cont"
-            tags={tags}
             layout={{ width: 230, height: 97, flexShrink: 0, ...layout }}
         >
             <RoomtoolFrameLayoutRoomData {...roomData} />
@@ -117,14 +111,12 @@ export const RoomtoolFrameLayoutRoomContItem = ({ layout, roomData, tags }: Room
 /** Row template `spacing` of RoomtoolFrameLayout - pass real rows through its `items…` slot. */
 export interface RoomtoolFrameLayoutSpacingItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutSpacingItem = ({ layout, tags }: RoomtoolFrameLayoutSpacingItemProps) => {
+export const RoomtoolFrameLayoutSpacingItem = ({ layout }: RoomtoolFrameLayoutSpacingItemProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 230, height: 5, flexShrink: 0, ...layout }}
         />
     );
@@ -140,15 +132,13 @@ export interface RoomtoolFrameLayoutInfoContItemProps {
     onChatlogBut?: () => void;
     onEditInHkBut?: () => void;
     onEnterRoomBut?: () => void;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutInfoContItem = ({ captionHasEventTxt, captionOwnerInRoomTxt, captionOwnerNameTxt, captionUserCountTxt, layout, onChatlogBut, onEditInHkBut, onEnterRoomBut, tags }: RoomtoolFrameLayoutInfoContItemProps) => {
+export const RoomtoolFrameLayoutInfoContItem = ({ captionHasEventTxt, captionOwnerInRoomTxt, captionOwnerNameTxt, captionUserCountTxt, layout, onChatlogBut, onEditInHkBut, onEnterRoomBut }: RoomtoolFrameLayoutInfoContItemProps) => {
     return (
         <Border
             variant="0"
             name="info_cont"
-            tags={tags}
             layout={{ width: 230, height: 74, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 5, width: 80, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -218,14 +208,12 @@ export const RoomtoolFrameLayoutInfoContItem = ({ captionHasEventTxt, captionOwn
 /** Row template `event_spacing` of RoomtoolFrameLayout - pass real rows through its `items…` slot. */
 export interface RoomtoolFrameLayoutEventSpacingItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutEventSpacingItem = ({ layout, tags }: RoomtoolFrameLayoutEventSpacingItemProps) => {
+export const RoomtoolFrameLayoutEventSpacingItem = ({ layout }: RoomtoolFrameLayoutEventSpacingItemProps) => {
     return (
         <Region
             name="event_spacing"
-            tags={tags}
             layout={{ width: 230, height: 5, flexShrink: 0, ...layout }}
         />
     );
@@ -234,15 +222,13 @@ export const RoomtoolFrameLayoutEventSpacingItem = ({ layout, tags }: RoomtoolFr
 /** Row template `event_cont` of RoomtoolFrameLayout - pass real rows through its `items…` slot. */
 export interface RoomtoolFrameLayoutEventContItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutEventContItem = ({ layout, tags }: RoomtoolFrameLayoutEventContItemProps) => {
+export const RoomtoolFrameLayoutEventContItem = ({ layout }: RoomtoolFrameLayoutEventContItemProps) => {
     return (
         <Border
             variant="0"
             name="event_cont"
-            tags={tags}
             layout={{ width: 230, height: 17, flexShrink: 0, ...layout }}
         />
     );
@@ -251,14 +237,12 @@ export const RoomtoolFrameLayoutEventContItem = ({ layout, tags }: RoomtoolFrame
 /** Row template `spacing` of RoomtoolFrameLayout - pass real rows through its `items…` slot. */
 export interface RoomtoolFrameLayoutSpacingItem2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutSpacingItem2 = ({ layout, tags }: RoomtoolFrameLayoutSpacingItem2Props) => {
+export const RoomtoolFrameLayoutSpacingItem2 = ({ layout }: RoomtoolFrameLayoutSpacingItem2Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 230, height: 5, flexShrink: 0, ...layout }}
         />
     );
@@ -270,15 +254,13 @@ export interface RoomtoolFrameLayoutActContItemProps {
     onChangenameCheck?: () => void;
     onKickCheck?: () => void;
     onLockCheck?: () => void;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutActContItem = ({ layout, onChangenameCheck, onKickCheck, onLockCheck, tags }: RoomtoolFrameLayoutActContItemProps) => {
+export const RoomtoolFrameLayoutActContItem = ({ layout, onChangenameCheck, onKickCheck, onLockCheck }: RoomtoolFrameLayoutActContItemProps) => {
     return (
         <Border
             variant="0"
             name="act_cont"
-            tags={tags}
             layout={{ width: 230, height: 76, flexShrink: 0, ...layout }}
         >
             <CheckBox
@@ -327,14 +309,12 @@ export const RoomtoolFrameLayoutActContItem = ({ layout, onChangenameCheck, onKi
 /** Row template `spacing` of RoomtoolFrameLayout - pass real rows through its `items…` slot. */
 export interface RoomtoolFrameLayoutSpacingItem3Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutSpacingItem3 = ({ layout, tags }: RoomtoolFrameLayoutSpacingItem3Props) => {
+export const RoomtoolFrameLayoutSpacingItem3 = ({ layout }: RoomtoolFrameLayoutSpacingItem3Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 230, height: 5, flexShrink: 0, ...layout }}
         />
     );
@@ -344,15 +324,13 @@ export const RoomtoolFrameLayoutSpacingItem3 = ({ layout, tags }: RoomtoolFrameL
 export interface RoomtoolFrameLayoutMsgTemplatesSelectItemProps {
     layout?: BoxLayout;
     onMsgTemplatesSelect?: () => void;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutMsgTemplatesSelectItem = ({ layout, onMsgTemplatesSelect, tags }: RoomtoolFrameLayoutMsgTemplatesSelectItemProps) => {
+export const RoomtoolFrameLayoutMsgTemplatesSelectItem = ({ layout, onMsgTemplatesSelect }: RoomtoolFrameLayoutMsgTemplatesSelectItemProps) => {
     return (
         <Dropmenu
             variant="0"
             name="msgTemplatesSelect"
-            tags={tags}
             onPointerTap={onMsgTemplatesSelect}
             layout={{ width: 227, height: 20, flexShrink: 0, ...layout }}
         >
@@ -364,14 +342,12 @@ export const RoomtoolFrameLayoutMsgTemplatesSelectItem = ({ layout, onMsgTemplat
 /** Row template `spacing` of RoomtoolFrameLayout - pass real rows through its `items…` slot. */
 export interface RoomtoolFrameLayoutSpacingItem4Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutSpacingItem4 = ({ layout, tags }: RoomtoolFrameLayoutSpacingItem4Props) => {
+export const RoomtoolFrameLayoutSpacingItem4 = ({ layout }: RoomtoolFrameLayoutSpacingItem4Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 230, height: 5, flexShrink: 0, ...layout }}
         />
     );
@@ -398,14 +374,12 @@ export const RoomtoolFrameLayoutMessageInputItem = ({ layout }: RoomtoolFrameLay
 /** Row template `spacing` of RoomtoolFrameLayout - pass real rows through its `items…` slot. */
 export interface RoomtoolFrameLayoutSpacingItem5Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutSpacingItem5 = ({ layout, tags }: RoomtoolFrameLayoutSpacingItem5Props) => {
+export const RoomtoolFrameLayoutSpacingItem5 = ({ layout }: RoomtoolFrameLayoutSpacingItem5Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 230, height: 5, flexShrink: 0, ...layout }}
         />
     );
@@ -414,14 +388,12 @@ export const RoomtoolFrameLayoutSpacingItem5 = ({ layout, tags }: RoomtoolFrameL
 /** Row template `spacing` of RoomtoolFrameLayout - pass real rows through its `items…` slot. */
 export interface RoomtoolFrameLayoutSpacingItem6Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutSpacingItem6 = ({ layout, tags }: RoomtoolFrameLayoutSpacingItem6Props) => {
+export const RoomtoolFrameLayoutSpacingItem6 = ({ layout }: RoomtoolFrameLayoutSpacingItem6Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 230, height: 5, flexShrink: 0, ...layout }}
         />
     );
@@ -432,14 +404,12 @@ export interface RoomtoolFrameLayoutFooterContItemProps {
     layout?: BoxLayout;
     onSendCautionBut?: () => void;
     onSendMessageBut?: () => void;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutFooterContItem = ({ layout, onSendCautionBut, onSendMessageBut, tags }: RoomtoolFrameLayoutFooterContItemProps) => {
+export const RoomtoolFrameLayoutFooterContItem = ({ layout, onSendCautionBut, onSendMessageBut }: RoomtoolFrameLayoutFooterContItemProps) => {
     return (
         <Region
             name="footer_cont"
-            tags={tags}
             layout={{ width: 230, height: 21, flexShrink: 0, ...layout }}
         >
             <Button
@@ -466,14 +436,12 @@ export const RoomtoolFrameLayoutFooterContItem = ({ layout, onSendCautionBut, on
 export interface RoomtoolFrameLayoutListContProps {
     itemsListCont?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomtoolFrameLayoutListCont = ({ itemsListCont, layout, tags }: RoomtoolFrameLayoutListContProps) => {
+export const RoomtoolFrameLayoutListCont = ({ itemsListCont, layout }: RoomtoolFrameLayoutListContProps) => {
     return (
         <Region
             name="list_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 405, flexDirection: 'column', ...layout }}
         >
             {itemsListCont ?? (

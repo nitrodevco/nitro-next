@@ -49,14 +49,12 @@ export const VipQuestsPromoLayout = ({ captionTitleTxt, contentItemlist, layout,
 export interface VipQuestsPromoLayoutMinimizeRegionProps {
     layout?: BoxLayout;
     onMinimizeRegion?: () => void;
-    tags?: string[];
 }
 
-export const VipQuestsPromoLayoutMinimizeRegion = ({ layout, onMinimizeRegion, tags }: VipQuestsPromoLayoutMinimizeRegionProps) => {
+export const VipQuestsPromoLayoutMinimizeRegion = ({ layout, onMinimizeRegion }: VipQuestsPromoLayoutMinimizeRegionProps) => {
     return (
         <Region
             name="minimize_region"
-            tags={tags}
             onPointerTap={onMinimizeRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 167, width: 20, top: 7, height: 20, ...layout }}
@@ -73,14 +71,12 @@ export const VipQuestsPromoLayoutMinimizeRegion = ({ layout, onMinimizeRegion, t
 export interface VipQuestsPromoLayoutMaximizeRegionProps {
     layout?: BoxLayout;
     onMaximizeRegion?: () => void;
-    tags?: string[];
 }
 
-export const VipQuestsPromoLayoutMaximizeRegion = ({ layout, onMaximizeRegion, tags }: VipQuestsPromoLayoutMaximizeRegionProps) => {
+export const VipQuestsPromoLayoutMaximizeRegion = ({ layout, onMaximizeRegion }: VipQuestsPromoLayoutMaximizeRegionProps) => {
     return (
         <Region
             name="maximize_region"
-            tags={tags}
             onPointerTap={onMaximizeRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 167, width: 20, top: 7, height: 20, ...layout }}
@@ -97,16 +93,14 @@ export const VipQuestsPromoLayoutMaximizeRegion = ({ layout, onMaximizeRegion, t
 export interface VipQuestsPromoLayoutCaptionTxtItemProps {
     captionCaptionTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VipQuestsPromoLayoutCaptionTxtItem = ({ captionCaptionTxt, layout, tags }: VipQuestsPromoLayoutCaptionTxtItemProps) => {
+export const VipQuestsPromoLayoutCaptionTxtItem = ({ captionCaptionTxt, layout }: VipQuestsPromoLayoutCaptionTxtItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="caption_txt"
-            tags={tags}
             layout={{ width: 170, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -121,16 +115,14 @@ export const VipQuestsPromoLayoutCaptionTxtItem = ({ captionCaptionTxt, layout, 
 export interface VipQuestsPromoLayoutInfoTxtItemProps {
     captionInfoTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VipQuestsPromoLayoutInfoTxtItem = ({ captionInfoTxt, layout, tags }: VipQuestsPromoLayoutInfoTxtItemProps) => {
+export const VipQuestsPromoLayoutInfoTxtItem = ({ captionInfoTxt, layout }: VipQuestsPromoLayoutInfoTxtItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="info_txt"
-            tags={tags}
             layout={{ width: 170, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -145,17 +137,15 @@ export const VipQuestsPromoLayoutInfoTxtItem = ({ captionInfoTxt, layout, tags }
 export interface VipQuestsPromoLayoutQuestsButtonItemProps {
     layout?: BoxLayout;
     onQuestsButton?: () => void;
-    tags?: string[];
 }
 
-export const VipQuestsPromoLayoutQuestsButtonItem = ({ layout, onQuestsButton, tags }: VipQuestsPromoLayoutQuestsButtonItemProps) => {
+export const VipQuestsPromoLayoutQuestsButtonItem = ({ layout, onQuestsButton }: VipQuestsPromoLayoutQuestsButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="100"
             name="quests_button"
-            tags={tags}
             onPointerTap={onQuestsButton}
             layout={{ width: 187, height: 50, flexShrink: 0, minWidth: 187, maxWidth: 187, ...layout }}
         >
@@ -168,14 +158,12 @@ export const VipQuestsPromoLayoutQuestsButtonItem = ({ layout, onQuestsButton, t
 export interface VipQuestsPromoLayoutContentItemlistProps {
     itemsContentItemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VipQuestsPromoLayoutContentItemlist = ({ itemsContentItemlist, layout, tags }: VipQuestsPromoLayoutContentItemlistProps) => {
+export const VipQuestsPromoLayoutContentItemlist = ({ itemsContentItemlist, layout }: VipQuestsPromoLayoutContentItemlistProps) => {
     return (
         <Region
             name="content_itemlist"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 30, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsContentItemlist ?? (

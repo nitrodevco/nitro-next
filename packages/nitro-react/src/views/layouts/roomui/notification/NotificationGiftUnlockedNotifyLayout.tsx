@@ -21,7 +21,6 @@ export const NotificationGiftUnlockedNotifyLayout = ({ captionHeader, captionOpe
             variant="1"
             id="widget_teaser_frame"
             name="widget_teaser_frame"
-            tags={[ 'room_widget_teaser' ]}
             caption={t('widget.furni.teaser.gift.title')}
             tintColor="#4c4c4c"
             onClose={onClose}

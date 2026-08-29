@@ -35,14 +35,12 @@ export interface MainView_1185LayoutHackyTitleProps {
     captionTitleTxtShadow2?: string;
     captionTitleTxtShadow3?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutHackyTitle = ({ captionTitleTxt, captionTitleTxtShadow0, captionTitleTxtShadow1, captionTitleTxtShadow2, captionTitleTxtShadow3, layout, tags }: MainView_1185LayoutHackyTitleProps) => {
+export const MainView_1185LayoutHackyTitle = ({ captionTitleTxt, captionTitleTxtShadow0, captionTitleTxtShadow1, captionTitleTxtShadow2, captionTitleTxtShadow3, layout }: MainView_1185LayoutHackyTitleProps) => {
     return (
         <Region
             name="hacky_title"
-            tags={tags}
             layout={{ width: 96, height: 27, flexShrink: 0, ...layout }}
         >
             <Region
@@ -88,14 +86,12 @@ export interface MainView_1185LayoutDropdownRegionProps {
     onDropdownRegion?: () => void;
     onHiddenDropdown?: () => void;
     srcDropdownOpener?: string;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutDropdownRegion = ({ layout, onDropdownRegion, onHiddenDropdown, srcDropdownOpener, tags }: MainView_1185LayoutDropdownRegionProps) => {
+export const MainView_1185LayoutDropdownRegion = ({ layout, onDropdownRegion, onHiddenDropdown, srcDropdownOpener }: MainView_1185LayoutDropdownRegionProps) => {
     return (
         <Region
             name="dropdown_region"
-            tags={tags}
             dynamicStyle="button"
             onPointerTap={onDropdownRegion}
             cursor="pointer"
@@ -103,7 +99,6 @@ export const MainView_1185LayoutDropdownRegion = ({ layout, onDropdownRegion, on
         >
             <ThemeImage
                 name="dropdown_opener"
-                tags={[ '#icon' ]}
                 src={srcDropdownOpener ?? layoutImage('badge_leaderboard_dropdown_opener.png')}
                 layout={{ position: 'absolute', left: 0, width: 13, top: 0, height: 8 }}
             />
@@ -122,14 +117,12 @@ export interface MainView_1185LayoutFrameHeaderOverrideProps {
     dropdownRegion?: MainView_1185LayoutDropdownRegionProps;
     hackyTitle?: MainView_1185LayoutHackyTitleProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutFrameHeaderOverride = ({ dropdownRegion, hackyTitle, layout, tags }: MainView_1185LayoutFrameHeaderOverrideProps) => {
+export const MainView_1185LayoutFrameHeaderOverride = ({ dropdownRegion, hackyTitle, layout }: MainView_1185LayoutFrameHeaderOverrideProps) => {
     return (
         <Region
             name="frame_header_override"
-            tags={tags}
             layout={{ position: 'absolute', left: 88, right: 113, top: 3, height: 32, justifyContent: 'center', ...layout }}
         >
             <Region layout={{ position: 'absolute', width: 115, top: 0, height: 32, flexDirection: 'row', gap: 6 }}>
@@ -146,14 +139,12 @@ export interface MainView_1185LayoutInfoContainerProps {
     layout?: BoxLayout;
     srcInfoBg?: string;
     srcRankTypeExtendedImg?: string;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutInfoContainer = ({ captionRankTypeInfo, layout, srcInfoBg, srcRankTypeExtendedImg, tags }: MainView_1185LayoutInfoContainerProps) => {
+export const MainView_1185LayoutInfoContainer = ({ captionRankTypeInfo, layout, srcInfoBg, srcRankTypeExtendedImg }: MainView_1185LayoutInfoContainerProps) => {
     return (
         <Region
             name="info_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 54, ...layout }}
         >
             <ThemeImage
@@ -183,14 +174,12 @@ export const MainView_1185LayoutInfoContainer = ({ captionRankTypeInfo, layout, 
 export interface MainView_1185LayoutRankContainerProps {
     captionRankNumber?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutRankContainer = ({ captionRankNumber, layout, tags }: MainView_1185LayoutRankContainerProps) => {
+export const MainView_1185LayoutRankContainer = ({ captionRankNumber, layout }: MainView_1185LayoutRankContainerProps) => {
     return (
         <Region
             name="rank_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 45, alignSelf: 'center', height: 39, justifyContent: 'center', ...layout }}
         >
             <Border
@@ -218,14 +207,12 @@ export interface MainView_1185LayoutRegionProfileProps {
     layout?: BoxLayout;
     onRegionProfile?: () => void;
     srcCanvas?: string;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutRegionProfile = ({ layout, onRegionProfile, srcCanvas, tags }: MainView_1185LayoutRegionProfileProps) => {
+export const MainView_1185LayoutRegionProfile = ({ layout, onRegionProfile, srcCanvas }: MainView_1185LayoutRegionProfileProps) => {
     return (
         <Region
             name="region_profile"
-            tags={tags}
             onPointerTap={onRegionProfile}
             cursor="pointer"
             layout={{ position: 'absolute', left: 51, right: 267, top: 3, height: 35, ...layout }}
@@ -245,14 +232,12 @@ export const MainView_1185LayoutRegionProfile = ({ layout, onRegionProfile, srcC
 export interface MainView_1185LayoutScoreTxtItemProps {
     captionScoreTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutScoreTxtItem = ({ captionScoreTxt, layout, tags }: MainView_1185LayoutScoreTxtItemProps) => {
+export const MainView_1185LayoutScoreTxtItem = ({ captionScoreTxt, layout }: MainView_1185LayoutScoreTxtItemProps) => {
     return (
         <Region
             name="score_txt"
-            tags={tags}
             layout={{ width: 31, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionScoreTxt ?? '7864'} />
@@ -264,14 +249,12 @@ export const MainView_1185LayoutScoreTxtItem = ({ captionScoreTxt, layout, tags 
 export interface MainView_1185LayoutRankTypeImgItemProps {
     layout?: BoxLayout;
     srcRankTypeImg?: string;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutRankTypeImgItem = ({ layout, srcRankTypeImg, tags }: MainView_1185LayoutRankTypeImgItemProps) => {
+export const MainView_1185LayoutRankTypeImgItem = ({ layout, srcRankTypeImg }: MainView_1185LayoutRankTypeImgItemProps) => {
     return (
         <ThemeImage
             name="rank_type_img"
-            tags={tags}
             src={srcRankTypeImg ?? layoutImage('badge_rarity_badges_emblem_unique.png')}
             layout={{ width: 25, height: 25, flexShrink: 0, ...layout }}
         />
@@ -282,14 +265,12 @@ export const MainView_1185LayoutRankTypeImgItem = ({ layout, srcRankTypeImg, tag
 export interface MainView_1185LayoutRightAlignedProps {
     itemsRightAligned?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutRightAligned = ({ itemsRightAligned, layout, tags }: MainView_1185LayoutRightAlignedProps) => {
+export const MainView_1185LayoutRightAligned = ({ itemsRightAligned, layout }: MainView_1185LayoutRightAlignedProps) => {
     return (
         <Region
             name="right_aligned"
-            tags={tags}
             layout={{ position: 'absolute', right: 11, width: 64, top: 7, height: 26, flexDirection: 'row', gap: 8, ...layout }}
         >
             {itemsRightAligned ?? (
@@ -311,14 +292,12 @@ export interface MainView_1185LayoutEntryTemplateItemProps {
     rightAligned?: MainView_1185LayoutRightAlignedProps;
     srcEntryBgEven?: string;
     srcEntryBgUneven?: string;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutEntryTemplateItem = ({ captionUsernameTxt, layout, rankContainer, regionProfile, rightAligned, srcEntryBgEven, srcEntryBgUneven, tags }: MainView_1185LayoutEntryTemplateItemProps) => {
+export const MainView_1185LayoutEntryTemplateItem = ({ captionUsernameTxt, layout, rankContainer, regionProfile, rightAligned, srcEntryBgEven, srcEntryBgUneven }: MainView_1185LayoutEntryTemplateItemProps) => {
     return (
         <Region
             name="entry_template"
-            tags={tags}
             layout={{ width: 362, height: 41, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -353,14 +332,12 @@ export const MainView_1185LayoutEntryTemplateItem = ({ captionUsernameTxt, layou
 export interface MainView_1185LayoutRankingListProps {
     itemsRankingList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutRankingList = ({ itemsRankingList, layout, tags }: MainView_1185LayoutRankingListProps) => {
+export const MainView_1185LayoutRankingList = ({ itemsRankingList, layout }: MainView_1185LayoutRankingListProps) => {
     return (
         <Region
             name="ranking_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, right: 7, top: 60, bottom: 86, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsRankingList ?? (
@@ -374,14 +351,12 @@ export const MainView_1185LayoutRankingList = ({ itemsRankingList, layout, tags 
 export interface MainView_1185LayoutRankContainer2Props {
     captionRankOwn?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutRankContainer2 = ({ captionRankOwn, layout, tags }: MainView_1185LayoutRankContainer2Props) => {
+export const MainView_1185LayoutRankContainer2 = ({ captionRankOwn, layout }: MainView_1185LayoutRankContainer2Props) => {
     return (
         <Region
             name="rank_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 45, alignSelf: 'center', height: 39, justifyContent: 'center', ...layout }}
         >
             <Border
@@ -409,14 +384,12 @@ export interface MainView_1185LayoutRegionProfile2Props {
     layout?: BoxLayout;
     onRegionProfile?: () => void;
     srcCanvas?: string;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutRegionProfile2 = ({ layout, onRegionProfile, srcCanvas, tags }: MainView_1185LayoutRegionProfile2Props) => {
+export const MainView_1185LayoutRegionProfile2 = ({ layout, onRegionProfile, srcCanvas }: MainView_1185LayoutRegionProfile2Props) => {
     return (
         <Region
             name="region_profile"
-            tags={tags}
             onPointerTap={onRegionProfile}
             cursor="pointer"
             layout={{ position: 'absolute', left: 51, right: 275, top: 4, height: 35, ...layout }}
@@ -436,14 +409,12 @@ export const MainView_1185LayoutRegionProfile2 = ({ layout, onRegionProfile, src
 export interface MainView_1185LayoutScoreTxtItem2Props {
     captionScoreTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutScoreTxtItem2 = ({ captionScoreTxt, layout, tags }: MainView_1185LayoutScoreTxtItem2Props) => {
+export const MainView_1185LayoutScoreTxtItem2 = ({ captionScoreTxt, layout }: MainView_1185LayoutScoreTxtItem2Props) => {
     return (
         <Region
             name="score_txt"
-            tags={tags}
             layout={{ width: 31, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionScoreTxt ?? '7864'} />
@@ -455,14 +426,12 @@ export const MainView_1185LayoutScoreTxtItem2 = ({ captionScoreTxt, layout, tags
 export interface MainView_1185LayoutRankTypeImgItem2Props {
     layout?: BoxLayout;
     srcRankTypeImg?: string;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutRankTypeImgItem2 = ({ layout, srcRankTypeImg, tags }: MainView_1185LayoutRankTypeImgItem2Props) => {
+export const MainView_1185LayoutRankTypeImgItem2 = ({ layout, srcRankTypeImg }: MainView_1185LayoutRankTypeImgItem2Props) => {
     return (
         <ThemeImage
             name="rank_type_img"
-            tags={tags}
             src={srcRankTypeImg ?? layoutImage('badge_rarity_badges_emblem_unique.png')}
             layout={{ width: 25, height: 25, flexShrink: 0, ...layout }}
         />
@@ -473,14 +442,12 @@ export const MainView_1185LayoutRankTypeImgItem2 = ({ layout, srcRankTypeImg, ta
 export interface MainView_1185LayoutRightAligned2Props {
     itemsRightAligned?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutRightAligned2 = ({ itemsRightAligned, layout, tags }: MainView_1185LayoutRightAligned2Props) => {
+export const MainView_1185LayoutRightAligned2 = ({ itemsRightAligned, layout }: MainView_1185LayoutRightAligned2Props) => {
     return (
         <Region
             name="right_aligned"
-            tags={tags}
             layout={{ position: 'absolute', right: 11, width: 64, top: 7, height: 26, flexDirection: 'row', gap: 8, ...layout }}
         >
             {itemsRightAligned ?? (
@@ -501,14 +468,12 @@ export interface MainView_1185LayoutOwnContainerProps {
     regionProfile?: MainView_1185LayoutRegionProfile2Props;
     rightAligned?: MainView_1185LayoutRightAligned2Props;
     srcOwnBg?: string;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutOwnContainer = ({ captionUsernameTxt, layout, rankContainer, regionProfile, rightAligned, srcOwnBg, tags }: MainView_1185LayoutOwnContainerProps) => {
+export const MainView_1185LayoutOwnContainer = ({ captionUsernameTxt, layout, rankContainer, regionProfile, rightAligned, srcOwnBg }: MainView_1185LayoutOwnContainerProps) => {
     return (
         <Region
             name="own_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 3, right: 3, bottom: 39, height: 43, ...layout }}
         >
             <ThemeImage
@@ -533,17 +498,15 @@ export const MainView_1185LayoutOwnContainer = ({ captionUsernameTxt, layout, ra
 export interface MainView_1185LayoutPreviousBtnItemProps {
     layout?: BoxLayout;
     onPreviousBtn?: () => void;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutPreviousBtnItem = ({ layout, onPreviousBtn, tags }: MainView_1185LayoutPreviousBtnItemProps) => {
+export const MainView_1185LayoutPreviousBtnItem = ({ layout, onPreviousBtn }: MainView_1185LayoutPreviousBtnItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="previous_btn"
-            tags={tags}
             onPointerTap={onPreviousBtn}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 100, height: 26, flexShrink: 0, minWidth: 100, maxWidth: 100, ...layout }}
@@ -557,17 +520,15 @@ export const MainView_1185LayoutPreviousBtnItem = ({ layout, onPreviousBtn, tags
 export interface MainView_1185LayoutNextBtnItemProps {
     layout?: BoxLayout;
     onNextBtn?: () => void;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutNextBtnItem = ({ layout, onNextBtn, tags }: MainView_1185LayoutNextBtnItemProps) => {
+export const MainView_1185LayoutNextBtnItem = ({ layout, onNextBtn }: MainView_1185LayoutNextBtnItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="next_btn"
-            tags={tags}
             onPointerTap={onNextBtn}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 100, height: 26, flexShrink: 0, minWidth: 100, maxWidth: 100, ...layout }}
@@ -581,14 +542,12 @@ export const MainView_1185LayoutNextBtnItem = ({ layout, onNextBtn, tags }: Main
 export interface MainView_1185LayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutButtons = ({ itemsButtons, layout, tags }: MainView_1185LayoutButtonsProps) => {
+export const MainView_1185LayoutButtons = ({ itemsButtons, layout }: MainView_1185LayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 279, bottom: 3, height: 26, flexDirection: 'row', gap: 79, ...layout }}
         >
             {itemsButtons ?? (
@@ -608,14 +567,12 @@ export interface MainView_1185LayoutBodyProps {
     layout?: BoxLayout;
     ownContainer?: MainView_1185LayoutOwnContainerProps;
     rankingList?: MainView_1185LayoutRankingListProps;
-    tags?: string[];
 }
 
-export const MainView_1185LayoutBody = ({ buttons, infoContainer, layout, ownContainer, rankingList, tags }: MainView_1185LayoutBodyProps) => {
+export const MainView_1185LayoutBody = ({ buttons, infoContainer, layout, ownContainer, rankingList }: MainView_1185LayoutBodyProps) => {
     return (
         <Region
             name="body"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, right: 30, top: 59, bottom: 17, justifyContent: 'center', ...layout }}
         >
             <MainView_1185LayoutInfoContainer {...infoContainer} />

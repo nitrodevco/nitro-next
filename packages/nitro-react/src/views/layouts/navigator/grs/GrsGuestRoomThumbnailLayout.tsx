@@ -17,14 +17,12 @@ export const GrsGuestRoomThumbnailLayout = ({ layout, thumbnail }: GrsGuestRoomT
 /** Named region `picframe` of GrsGuestRoomThumbnailLayout - configured through the parent's `picframe` prop. */
 export interface GrsGuestRoomThumbnailLayoutPicframeProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsGuestRoomThumbnailLayoutPicframe = ({ layout, tags }: GrsGuestRoomThumbnailLayoutPicframeProps) => {
+export const GrsGuestRoomThumbnailLayoutPicframe = ({ layout }: GrsGuestRoomThumbnailLayoutPicframeProps) => {
     return (
         <Region
             name="picframe"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 64, top: 3, height: 64, ...layout }}
         />
     );
@@ -35,14 +33,12 @@ export interface GrsGuestRoomThumbnailLayoutThumbnailProps {
     layout?: BoxLayout;
     picframe?: GrsGuestRoomThumbnailLayoutPicframeProps;
     srcEnterRoom?: string;
-    tags?: string[];
 }
 
-export const GrsGuestRoomThumbnailLayoutThumbnail = ({ layout, picframe, srcEnterRoom, tags }: GrsGuestRoomThumbnailLayoutThumbnailProps) => {
+export const GrsGuestRoomThumbnailLayoutThumbnail = ({ layout, picframe, srcEnterRoom }: GrsGuestRoomThumbnailLayoutThumbnailProps) => {
     return (
         <Region
             name="thumbnail"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 70, top: 0, height: 70, ...layout }}
         >
             <GrsGuestRoomThumbnailLayoutPicframe {...picframe} />

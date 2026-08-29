@@ -71,15 +71,13 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
 export interface NewFurniChooserViewLayoutClearButtonProps {
     layout?: BoxLayout;
     onClearButton?: () => void;
-    tags?: string[];
     visibleClearButton?: boolean;
 }
 
-export const NewFurniChooserViewLayoutClearButton = ({ layout, onClearButton, tags, visibleClearButton }: NewFurniChooserViewLayoutClearButtonProps) => {
+export const NewFurniChooserViewLayoutClearButton = ({ layout, onClearButton, visibleClearButton }: NewFurniChooserViewLayoutClearButtonProps) => {
     return (
         <Region
             name="clear_button"
-            tags={tags}
             visible={visibleClearButton ?? false}
             onPointerTap={onClearButton}
             cursor="pointer"
@@ -96,14 +94,12 @@ export const NewFurniChooserViewLayoutClearButton = ({ layout, onClearButton, ta
 /** Named region `table_container` of NewFurniChooserViewLayout - configured through the parent's `tableContainer` prop. */
 export interface NewFurniChooserViewLayoutTableContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewFurniChooserViewLayoutTableContainer = ({ layout, tags }: NewFurniChooserViewLayoutTableContainerProps) => {
+export const NewFurniChooserViewLayoutTableContainer = ({ layout }: NewFurniChooserViewLayoutTableContainerProps) => {
     return (
         <Region
             name="table_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, width: 389, top: 53, bottom: 61, ...layout }}
         />
     );

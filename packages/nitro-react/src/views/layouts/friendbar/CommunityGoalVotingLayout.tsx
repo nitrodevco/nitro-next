@@ -21,22 +21,22 @@ export const CommunityGoalVotingLayout = ({ communityGoal, layout }: CommunityGo
 /** Row template `goal_caption` of CommunityGoalVotingLayout - pass real rows through its `items…` slot. */
 export interface CommunityGoalVotingLayoutGoalCaptionItemProps {
     captionGoalCaption?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CommunityGoalVotingLayoutGoalCaptionItem = ({ captionGoalCaption, layout, tags }: CommunityGoalVotingLayoutGoalCaptionItemProps) => {
+export const CommunityGoalVotingLayoutGoalCaptionItem = ({ captionGoalCaption, colorableTextColor, layout }: CommunityGoalVotingLayoutGoalCaptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="goal_caption"
-            tags={tags}
             layout={{ width: 300, height: 24, flexShrink: 0, minWidth: 300, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionGoalCaption ?? t('landing.view.community.caption')}
                 textStyle="text-style-il-heading-1"
+                textOptions={{ fill: colorableTextColor }}
             />
         </Region>
     );
@@ -45,22 +45,21 @@ export const CommunityGoalVotingLayoutGoalCaptionItem = ({ captionGoalCaption, l
 /** Row template `goal_info` of CommunityGoalVotingLayout - pass real rows through its `items…` slot. */
 export interface CommunityGoalVotingLayoutGoalInfoItemProps {
     captionGoalInfo?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CommunityGoalVotingLayoutGoalInfoItem = ({ captionGoalInfo, layout, tags }: CommunityGoalVotingLayoutGoalInfoItemProps) => {
+export const CommunityGoalVotingLayoutGoalInfoItem = ({ captionGoalInfo, colorableTextColor, layout }: CommunityGoalVotingLayoutGoalInfoItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="goal_info"
-            tags={tags}
             layout={{ width: 300, height: 16, flexShrink: 0, minWidth: 300, maxWidth: 300, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionGoalInfo ?? t('landing.view.community.info')}
-                textOptions={{ wordWrap: true, wordWrapWidth: 300 }}
+                textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 300 }}
             />
         </Region>
     );
@@ -70,17 +69,15 @@ export const CommunityGoalVotingLayoutGoalInfoItem = ({ captionGoalInfo, layout,
 export interface CommunityGoalVotingLayoutCommunityVoteOneButtonItemProps {
     layout?: BoxLayout;
     onCommunityVoteOneButton?: () => void;
-    tags?: string[];
 }
 
-export const CommunityGoalVotingLayoutCommunityVoteOneButtonItem = ({ layout, onCommunityVoteOneButton, tags }: CommunityGoalVotingLayoutCommunityVoteOneButtonItemProps) => {
+export const CommunityGoalVotingLayoutCommunityVoteOneButtonItem = ({ layout, onCommunityVoteOneButton }: CommunityGoalVotingLayoutCommunityVoteOneButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="100"
             name="community_vote_one_button"
-            tags={tags}
             onPointerTap={onCommunityVoteOneButton}
             layout={{ width: 250, height: 45, flexShrink: 0, minWidth: 250, maxWidth: 250, ...layout }}
         >
@@ -93,17 +90,15 @@ export const CommunityGoalVotingLayoutCommunityVoteOneButtonItem = ({ layout, on
 export interface CommunityGoalVotingLayoutCommunityVoteTwoButtonItemProps {
     layout?: BoxLayout;
     onCommunityVoteTwoButton?: () => void;
-    tags?: string[];
 }
 
-export const CommunityGoalVotingLayoutCommunityVoteTwoButtonItem = ({ layout, onCommunityVoteTwoButton, tags }: CommunityGoalVotingLayoutCommunityVoteTwoButtonItemProps) => {
+export const CommunityGoalVotingLayoutCommunityVoteTwoButtonItem = ({ layout, onCommunityVoteTwoButton }: CommunityGoalVotingLayoutCommunityVoteTwoButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="100"
             name="community_vote_two_button"
-            tags={tags}
             onPointerTap={onCommunityVoteTwoButton}
             layout={{ width: 250, height: 45, flexShrink: 0, minWidth: 250, maxWidth: 250, ...layout }}
         >
@@ -116,20 +111,18 @@ export const CommunityGoalVotingLayoutCommunityVoteTwoButtonItem = ({ layout, on
 export interface CommunityGoalVotingLayoutInfoContainerProps {
     itemsInfoContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CommunityGoalVotingLayoutInfoContainer = ({ itemsInfoContainer, layout, tags }: CommunityGoalVotingLayoutInfoContainerProps) => {
+export const CommunityGoalVotingLayoutInfoContainer = ({ itemsInfoContainer, layout }: CommunityGoalVotingLayoutInfoContainerProps) => {
     return (
         <Region
             name="info_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 20, flexDirection: 'column', ...layout }}
         >
             {itemsInfoContainer ?? (
                 <>
-                    <CommunityGoalVotingLayoutGoalCaptionItem tags={[ 'COLORABLE' ]} />
-                    <CommunityGoalVotingLayoutGoalInfoItem tags={[ 'COLORABLE' ]} />
+                    <CommunityGoalVotingLayoutGoalCaptionItem />
+                    <CommunityGoalVotingLayoutGoalInfoItem />
                     <CommunityGoalVotingLayoutCommunityVoteOneButtonItem />
                     <CommunityGoalVotingLayoutCommunityVoteTwoButtonItem />
                 </>
@@ -141,6 +134,7 @@ export const CommunityGoalVotingLayoutInfoContainer = ({ itemsInfoContainer, lay
 /** Named region `meter_container` of CommunityGoalVotingLayout - configured through the parent's `meterContainer` prop. */
 export interface CommunityGoalVotingLayoutMeterContainerProps {
     captionCommunityTotalStatus?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     srcMeterLevel0?: string;
     srcMeterLevel1?: string;
@@ -153,26 +147,23 @@ export interface CommunityGoalVotingLayoutMeterContainerProps {
     srcMeterLevel3Icon?: string;
     srcMeterLevel3IconLocked?: string;
     srcMeterNeedle?: string;
-    tags?: string[];
 }
 
-export const CommunityGoalVotingLayoutMeterContainer = ({ captionCommunityTotalStatus, layout, srcMeterLevel0, srcMeterLevel1, srcMeterLevel1Icon, srcMeterLevel1IconLocked, srcMeterLevel2, srcMeterLevel2Icon, srcMeterLevel2IconLocked, srcMeterLevel3, srcMeterLevel3Icon, srcMeterLevel3IconLocked, srcMeterNeedle, tags }: CommunityGoalVotingLayoutMeterContainerProps) => {
+export const CommunityGoalVotingLayoutMeterContainer = ({ captionCommunityTotalStatus, colorableTextColor, layout, srcMeterLevel0, srcMeterLevel1, srcMeterLevel1Icon, srcMeterLevel1IconLocked, srcMeterLevel2, srcMeterLevel2Icon, srcMeterLevel2IconLocked, srcMeterLevel3, srcMeterLevel3Icon, srcMeterLevel3IconLocked, srcMeterNeedle }: CommunityGoalVotingLayoutMeterContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="meter_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 290, width: 226, top: 0, height: 200, ...layout }}
         >
             <Region
                 name="community_total_status"
-                tags={[ 'COLORABLE' ]}
                 layout={{ position: 'absolute', left: 10, width: 200, top: 145, height: 16, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionCommunityTotalStatus ?? t('landing.view.community.meter')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 200, align: 'center' }}
+                    textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 200, align: 'center' }}
                 />
             </Region>
             <ThemeImage
@@ -267,21 +258,20 @@ export const CommunityGoalVotingLayoutMeterContainer = ({ captionCommunityTotalS
 /** Named region `community_goal` of CommunityGoalVotingLayout - configured through the parent's `communityGoal` prop. */
 export interface CommunityGoalVotingLayoutCommunityGoalProps {
     captionCommunityTitle?: string;
+    colorableTextColor?: string;
     infoContainer?: CommunityGoalVotingLayoutInfoContainerProps;
     layout?: BoxLayout;
     meterContainer?: CommunityGoalVotingLayoutMeterContainerProps;
     srcBorderBar?: string;
     srcHdrLine?: string;
-    tags?: string[];
 }
 
-export const CommunityGoalVotingLayoutCommunityGoal = ({ captionCommunityTitle, infoContainer, layout, meterContainer, srcBorderBar, srcHdrLine, tags }: CommunityGoalVotingLayoutCommunityGoalProps) => {
+export const CommunityGoalVotingLayoutCommunityGoal = ({ captionCommunityTitle, colorableTextColor, infoContainer, layout, meterContainer, srcBorderBar, srcHdrLine }: CommunityGoalVotingLayoutCommunityGoalProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="community_goal"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 516, top: 0, height: 200, ...layout }}
         >
             <ThemeImage
@@ -291,12 +281,12 @@ export const CommunityGoalVotingLayoutCommunityGoal = ({ captionCommunityTitle, 
             />
             <Region
                 name="community_title"
-                tags={[ 'COLORABLE' ]}
                 layout={{ position: 'absolute', left: 24, width: 154, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCommunityTitle ?? t('landing.view.community.headline')}
                     textStyle="text-style-il-heading-3"
+                    textOptions={{ fill: colorableTextColor }}
                 />
             </Region>
             <ThemeImage

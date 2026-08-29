@@ -18,14 +18,12 @@ export const SearchEntryLayout = ({ entry, layout }: SearchEntryLayoutProps) => 
 export interface SearchEntryLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
-    tags?: string[];
 }
 
-export const SearchEntryLayoutBgRegion = ({ layout, onBgRegion, tags }: SearchEntryLayoutBgRegionProps) => {
+export const SearchEntryLayoutBgRegion = ({ layout, onBgRegion }: SearchEntryLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20, ...layout }}
@@ -36,14 +34,12 @@ export const SearchEntryLayoutBgRegion = ({ layout, onBgRegion, tags }: SearchEn
 /** Named region `user_info_region` of SearchEntryLayout - configured through the parent's `userInfoRegion` prop. */
 export interface SearchEntryLayoutUserInfoRegionProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SearchEntryLayoutUserInfoRegion = ({ layout, tags }: SearchEntryLayoutUserInfoRegionProps) => {
+export const SearchEntryLayoutUserInfoRegion = ({ layout }: SearchEntryLayoutUserInfoRegionProps) => {
     return (
         <Region
             name="user_info_region"
-            tags={tags}
             layout={{ position: 'absolute', left: 21, width: 15, top: 5, height: 11, ...layout }}
         >
             <Icon
@@ -70,15 +66,13 @@ export interface SearchEntryLayoutEntryProps {
     srcAskForFriend?: string;
     srcFace?: string;
     srcStartChat?: string;
-    tags?: string[];
     userInfoRegion?: SearchEntryLayoutUserInfoRegionProps;
 }
 
-export const SearchEntryLayoutEntry = ({ bgRegion, captionCaption, captionName, layout, onEntry, srcAskForFriend, srcFace, srcStartChat, tags, userInfoRegion }: SearchEntryLayoutEntryProps) => {
+export const SearchEntryLayoutEntry = ({ bgRegion, captionCaption, captionName, layout, onEntry, srcAskForFriend, srcFace, srcStartChat, userInfoRegion }: SearchEntryLayoutEntryProps) => {
     return (
         <Region
             name="entry"
-            tags={tags}
             backgroundColor="#eeeeff"
             onPointerTap={onEntry}
             cursor="pointer"

@@ -21,20 +21,17 @@ export interface PollAnswerRadiobuttonInputLayoutPollAnswerEntityItemProps {
     captionPollAnswerEntityText?: string;
     layout?: BoxLayout;
     onPollAnswerEntityRadiobutton?: () => void;
-    tags?: string[];
 }
 
-export const PollAnswerRadiobuttonInputLayoutPollAnswerEntityItem = ({ captionPollAnswerEntityText, layout, onPollAnswerEntityRadiobutton, tags }: PollAnswerRadiobuttonInputLayoutPollAnswerEntityItemProps) => {
+export const PollAnswerRadiobuttonInputLayoutPollAnswerEntityItem = ({ captionPollAnswerEntityText, layout, onPollAnswerEntityRadiobutton }: PollAnswerRadiobuttonInputLayoutPollAnswerEntityItemProps) => {
     return (
         <Region
             name="poll_answer_entity"
-            tags={tags}
             layout={{ width: 365, height: 32, flexShrink: 0, ...layout }}
         >
             <RadioButton
                 variant="0"
                 name="poll_answer_entity_radiobutton"
-                tags={[ 'POLL_SELECTABLE_ITEM' ]}
                 onPointerTap={onPollAnswerEntityRadiobutton}
                 layout={{ position: 'absolute', left: 0, width: 19, top: 4, height: 16 }}
             />
@@ -56,14 +53,12 @@ export const PollAnswerRadiobuttonInputLayoutPollAnswerEntityItem = ({ captionPo
 export interface PollAnswerRadiobuttonInputLayoutPollAnswerItemlistProps {
     itemsPollAnswerItemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PollAnswerRadiobuttonInputLayoutPollAnswerItemlist = ({ itemsPollAnswerItemlist, layout, tags }: PollAnswerRadiobuttonInputLayoutPollAnswerItemlistProps) => {
+export const PollAnswerRadiobuttonInputLayoutPollAnswerItemlist = ({ itemsPollAnswerItemlist, layout }: PollAnswerRadiobuttonInputLayoutPollAnswerItemlistProps) => {
     return (
         <Region
             name="poll_answer_itemlist"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 125, flexDirection: 'column', ...layout }}
         >
             {itemsPollAnswerItemlist ?? (
@@ -77,14 +72,12 @@ export const PollAnswerRadiobuttonInputLayoutPollAnswerItemlist = ({ itemsPollAn
 export interface PollAnswerRadiobuttonInputLayoutPollAnswerSelectorProps {
     layout?: BoxLayout;
     pollAnswerItemlist?: PollAnswerRadiobuttonInputLayoutPollAnswerItemlistProps;
-    tags?: string[];
 }
 
-export const PollAnswerRadiobuttonInputLayoutPollAnswerSelector = ({ layout, pollAnswerItemlist, tags }: PollAnswerRadiobuttonInputLayoutPollAnswerSelectorProps) => {
+export const PollAnswerRadiobuttonInputLayoutPollAnswerSelector = ({ layout, pollAnswerItemlist }: PollAnswerRadiobuttonInputLayoutPollAnswerSelectorProps) => {
     return (
         <Region
             name="poll_answer_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 125, ...layout }}
         >
             <PollAnswerRadiobuttonInputLayoutPollAnswerItemlist {...pollAnswerItemlist} />
@@ -97,14 +90,12 @@ export interface PollAnswerRadiobuttonInputLayoutPollAnswerContentProps {
     layout?: BoxLayout;
     onPollAnswerContent?: () => void;
     pollAnswerSelector?: PollAnswerRadiobuttonInputLayoutPollAnswerSelectorProps;
-    tags?: string[];
 }
 
-export const PollAnswerRadiobuttonInputLayoutPollAnswerContent = ({ layout, onPollAnswerContent, pollAnswerSelector, tags }: PollAnswerRadiobuttonInputLayoutPollAnswerContentProps) => {
+export const PollAnswerRadiobuttonInputLayoutPollAnswerContent = ({ layout, onPollAnswerContent, pollAnswerSelector }: PollAnswerRadiobuttonInputLayoutPollAnswerContentProps) => {
     return (
         <Region
             name="poll_answer_content"
-            tags={tags}
             onPointerTap={onPollAnswerContent}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 125, ...layout }}

@@ -90,14 +90,12 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
 /** Named region `spacing` of RoomHopperNetworkLayout - configured through the parent's `spacing` prop. */
 export interface RoomHopperNetworkLayoutSpacingProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomHopperNetworkLayoutSpacing = ({ layout, tags }: RoomHopperNetworkLayoutSpacingProps) => {
+export const RoomHopperNetworkLayoutSpacing = ({ layout }: RoomHopperNetworkLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 30, height: 6, flexShrink: 0, ...layout }}
         />
     );

@@ -18,7 +18,6 @@ export const PetCommandsLayout = ({ captionPetName, commandsContainer, imageCont
     return (
         <Frame
             variant="3"
-            tags={[ 'pet_commands' ]}
             caption={t('widgets.pet.commands.title')}
             tintColor="#67a3bf"
             onClose={onClose}
@@ -44,14 +43,12 @@ export interface PetCommandsLayoutImageContainerProps {
     layout?: BoxLayout;
     onImageContainer?: () => void;
     srcAvatarImage?: string;
-    tags?: string[];
 }
 
-export const PetCommandsLayoutImageContainer = ({ layout, onImageContainer, srcAvatarImage, tags }: PetCommandsLayoutImageContainerProps) => {
+export const PetCommandsLayoutImageContainer = ({ layout, onImageContainer, srcAvatarImage }: PetCommandsLayoutImageContainerProps) => {
     return (
         <Region
             name="image_container"
-            tags={tags}
             onPointerTap={onImageContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 5, width: 71, top: 7, height: 90, ...layout }}
@@ -69,14 +66,12 @@ export const PetCommandsLayoutImageContainer = ({ layout, onImageContainer, srcA
 export interface PetCommandsLayoutCommandsContainerProps {
     layout?: BoxLayout;
     onPetCommandTemplate?: () => void;
-    tags?: string[];
 }
 
-export const PetCommandsLayoutCommandsContainer = ({ layout, onPetCommandTemplate, tags }: PetCommandsLayoutCommandsContainerProps) => {
+export const PetCommandsLayoutCommandsContainer = ({ layout, onPetCommandTemplate }: PetCommandsLayoutCommandsContainerProps) => {
     return (
         <Region
             name="commands_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, width: 170, top: 103, height: 279, ...layout }}
         >
             <Button
@@ -97,16 +92,14 @@ export interface PetCommandsLayoutStatusSkillContainerProps {
     onStatusSkillContainer?: () => void;
     srcStatusSkillBitmap?: string;
     srcStatusSkillIcon?: string;
-    tags?: string[];
 }
 
-export const PetCommandsLayoutStatusSkillContainer = ({ captionStatusSkillText, captionStatusSkillValueText, layout, onStatusSkillContainer, srcStatusSkillBitmap, srcStatusSkillIcon, tags }: PetCommandsLayoutStatusSkillContainerProps) => {
+export const PetCommandsLayoutStatusSkillContainer = ({ captionStatusSkillText, captionStatusSkillValueText, layout, onStatusSkillContainer, srcStatusSkillBitmap, srcStatusSkillIcon }: PetCommandsLayoutStatusSkillContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="status_skill_container"
-            tags={tags}
             onPointerTap={onStatusSkillContainer}
             cursor="pointer"
             layout={{ position: 'absolute', marginLeft: -8, marginRight: 8, width: 169, bottom: 42, height: 20, justifyContent: 'center', ...layout }}

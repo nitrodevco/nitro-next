@@ -38,14 +38,12 @@ export interface ClubDiscountPromotionLayoutTextRegionProps {
     captionPromoTextShadow?: string;
     layout?: BoxLayout;
     onTextRegion?: () => void;
-    tags?: string[];
 }
 
-export const ClubDiscountPromotionLayoutTextRegion = ({ captionPromoText, captionPromoTextShadow, layout, onTextRegion, tags }: ClubDiscountPromotionLayoutTextRegionProps) => {
+export const ClubDiscountPromotionLayoutTextRegion = ({ captionPromoText, captionPromoTextShadow, layout, onTextRegion }: ClubDiscountPromotionLayoutTextRegionProps) => {
     return (
         <Region
             name="text_region"
-            tags={tags}
             onPointerTap={onTextRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 26, width: 161, top: 6, height: 30, ...layout }}

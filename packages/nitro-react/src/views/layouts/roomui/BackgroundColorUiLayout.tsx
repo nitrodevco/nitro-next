@@ -59,16 +59,14 @@ export interface BackgroundColorUiLayoutHeaderContainerItemProps {
     captionDimmerInfo?: string;
     layout?: BoxLayout;
     srcColorPreviewBitmap?: string;
-    tags?: string[];
 }
 
-export const BackgroundColorUiLayoutHeaderContainerItem = ({ captionDimmerInfo, layout, srcColorPreviewBitmap, tags }: BackgroundColorUiLayoutHeaderContainerItemProps) => {
+export const BackgroundColorUiLayoutHeaderContainerItem = ({ captionDimmerInfo, layout, srcColorPreviewBitmap }: BackgroundColorUiLayoutHeaderContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header_container"
-            tags={tags}
             layout={{ width: 270, height: 29, flexShrink: 0, ...layout }}
         >
             <Region
@@ -98,14 +96,12 @@ export const BackgroundColorUiLayoutHeaderContainerItem = ({ captionDimmerInfo, 
 /** Row template `spacer` of BackgroundColorUiLayout - pass real rows through its `items…` slot. */
 export interface BackgroundColorUiLayoutSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BackgroundColorUiLayoutSpacerItem = ({ layout, tags }: BackgroundColorUiLayoutSpacerItemProps) => {
+export const BackgroundColorUiLayoutSpacerItem = ({ layout }: BackgroundColorUiLayoutSpacerItemProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ width: 30, height: 5, flexShrink: 0, ...layout }}
         />
     );
@@ -115,14 +111,12 @@ export const BackgroundColorUiLayoutSpacerItem = ({ layout, tags }: BackgroundCo
 export interface BackgroundColorUiLayoutSliderMovementAreaProps {
     layout?: BoxLayout;
     srcSliderButton?: string;
-    tags?: string[];
 }
 
-export const BackgroundColorUiLayoutSliderMovementArea = ({ layout, srcSliderButton, tags }: BackgroundColorUiLayoutSliderMovementAreaProps) => {
+export const BackgroundColorUiLayoutSliderMovementArea = ({ layout, srcSliderButton }: BackgroundColorUiLayoutSliderMovementAreaProps) => {
     return (
         <Region
             name="slider_movement_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 206, top: 13, height: 17, ...layout }}
         >
             <ThemeImage
@@ -140,16 +134,14 @@ export interface BackgroundColorUiLayoutHueContainerItemProps {
     layout?: BoxLayout;
     sliderMovementArea?: BackgroundColorUiLayoutSliderMovementAreaProps;
     srcSliderBase?: string;
-    tags?: string[];
 }
 
-export const BackgroundColorUiLayoutHueContainerItem = ({ captionParameter, layout, sliderMovementArea, srcSliderBase, tags }: BackgroundColorUiLayoutHueContainerItemProps) => {
+export const BackgroundColorUiLayoutHueContainerItem = ({ captionParameter, layout, sliderMovementArea, srcSliderBase }: BackgroundColorUiLayoutHueContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="hue_container"
-            tags={tags}
             layout={{ width: 251, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -175,14 +167,12 @@ export const BackgroundColorUiLayoutHueContainerItem = ({ captionParameter, layo
 export interface BackgroundColorUiLayoutSliderMovementArea2Props {
     layout?: BoxLayout;
     srcSliderButton?: string;
-    tags?: string[];
 }
 
-export const BackgroundColorUiLayoutSliderMovementArea2 = ({ layout, srcSliderButton, tags }: BackgroundColorUiLayoutSliderMovementArea2Props) => {
+export const BackgroundColorUiLayoutSliderMovementArea2 = ({ layout, srcSliderButton }: BackgroundColorUiLayoutSliderMovementArea2Props) => {
     return (
         <Region
             name="slider_movement_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 206, top: 13, height: 17, ...layout }}
         >
             <ThemeImage
@@ -200,16 +190,14 @@ export interface BackgroundColorUiLayoutSaturationContainerItemProps {
     layout?: BoxLayout;
     sliderMovementArea?: BackgroundColorUiLayoutSliderMovementArea2Props;
     srcSliderBase?: string;
-    tags?: string[];
 }
 
-export const BackgroundColorUiLayoutSaturationContainerItem = ({ captionParameter, layout, sliderMovementArea, srcSliderBase, tags }: BackgroundColorUiLayoutSaturationContainerItemProps) => {
+export const BackgroundColorUiLayoutSaturationContainerItem = ({ captionParameter, layout, sliderMovementArea, srcSliderBase }: BackgroundColorUiLayoutSaturationContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="saturation_container"
-            tags={tags}
             layout={{ width: 251, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -235,14 +223,12 @@ export const BackgroundColorUiLayoutSaturationContainerItem = ({ captionParamete
 export interface BackgroundColorUiLayoutSliderMovementArea3Props {
     layout?: BoxLayout;
     srcSliderButton?: string;
-    tags?: string[];
 }
 
-export const BackgroundColorUiLayoutSliderMovementArea3 = ({ layout, srcSliderButton, tags }: BackgroundColorUiLayoutSliderMovementArea3Props) => {
+export const BackgroundColorUiLayoutSliderMovementArea3 = ({ layout, srcSliderButton }: BackgroundColorUiLayoutSliderMovementArea3Props) => {
     return (
         <Region
             name="slider_movement_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 206, top: 13, height: 17, ...layout }}
         >
             <ThemeImage
@@ -260,16 +246,14 @@ export interface BackgroundColorUiLayoutLightnessContainerItemProps {
     layout?: BoxLayout;
     sliderMovementArea?: BackgroundColorUiLayoutSliderMovementArea3Props;
     srcSliderBase?: string;
-    tags?: string[];
 }
 
-export const BackgroundColorUiLayoutLightnessContainerItem = ({ captionParameter, layout, sliderMovementArea, srcSliderBase, tags }: BackgroundColorUiLayoutLightnessContainerItemProps) => {
+export const BackgroundColorUiLayoutLightnessContainerItem = ({ captionParameter, layout, sliderMovementArea, srcSliderBase }: BackgroundColorUiLayoutLightnessContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="lightness_container"
-            tags={tags}
             layout={{ width: 251, height: 42, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -295,14 +279,12 @@ export const BackgroundColorUiLayoutLightnessContainerItem = ({ captionParameter
 export interface BackgroundColorUiLayoutTabContentProps {
     itemsTabContent?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BackgroundColorUiLayoutTabContent = ({ itemsTabContent, layout, tags }: BackgroundColorUiLayoutTabContentProps) => {
+export const BackgroundColorUiLayoutTabContent = ({ itemsTabContent, layout }: BackgroundColorUiLayoutTabContentProps) => {
     return (
         <Region
             name="tab_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 2, width: 270, top: 2, height: 166, flexDirection: 'column', ...layout }}
         >
             {itemsTabContent ?? (

@@ -17,14 +17,12 @@ export const CampaignLayout = ({ campaignContainer, layout }: CampaignLayoutProp
 /** Named region `bg` of CampaignLayout - configured through the parent's `bg` prop. */
 export interface CampaignLayoutBgProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CampaignLayoutBg = ({ layout, tags }: CampaignLayoutBgProps) => {
+export const CampaignLayoutBg = ({ layout }: CampaignLayoutBgProps) => {
     return (
         <Region
             name="bg"
-            tags={tags}
             backgroundColor="#646464"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         />
@@ -34,14 +32,12 @@ export const CampaignLayoutBg = ({ layout, tags }: CampaignLayoutBgProps) => {
 /** Named region `bg_top` of CampaignLayout - configured through the parent's `bgTop` prop. */
 export interface CampaignLayoutBgTopProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CampaignLayoutBgTop = ({ layout, tags }: CampaignLayoutBgTopProps) => {
+export const CampaignLayoutBgTop = ({ layout }: CampaignLayoutBgTopProps) => {
     return (
         <Region
             name="bg_top"
-            tags={tags}
             backgroundColor="#bbbbbb"
             layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2, ...layout }}
         />
@@ -51,14 +47,12 @@ export const CampaignLayoutBgTop = ({ layout, tags }: CampaignLayoutBgTopProps) 
 /** Named region `bg_bottom` of CampaignLayout - configured through the parent's `bgBottom` prop. */
 export interface CampaignLayoutBgBottomProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CampaignLayoutBgBottom = ({ layout, tags }: CampaignLayoutBgBottomProps) => {
+export const CampaignLayoutBgBottom = ({ layout }: CampaignLayoutBgBottomProps) => {
     return (
         <Region
             name="bg_bottom"
-            tags={tags}
             backgroundColor="#ababab"
             layout={{ position: 'absolute', left: 2, right: 2, bottom: 2, height: 54, ...layout }}
         />
@@ -77,14 +71,12 @@ export interface CampaignLayoutCampaignContainerProps {
     srcCompletionBgBlueBitmap?: string;
     srcCompletionBgGreenBitmap?: string;
     srcCompletionBgRedBitmap?: string;
-    tags?: string[];
 }
 
-export const CampaignLayoutCampaignContainer = ({ bg, bgBottom, bgTop, captionCampaignHeaderTxt, captionCompletionTxt, layout, srcCampaignPicBitmap, srcCompletionBgBlueBitmap, srcCompletionBgGreenBitmap, srcCompletionBgRedBitmap, tags }: CampaignLayoutCampaignContainerProps) => {
+export const CampaignLayoutCampaignContainer = ({ bg, bgBottom, bgTop, captionCampaignHeaderTxt, captionCompletionTxt, layout, srcCampaignPicBitmap, srcCompletionBgBlueBitmap, srcCompletionBgGreenBitmap, srcCompletionBgRedBitmap }: CampaignLayoutCampaignContainerProps) => {
     return (
         <Region
             name="campaign_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 103, top: 0, height: 114, justifyContent: 'center', ...layout }}
         >
             <CampaignLayoutBg {...bg} />

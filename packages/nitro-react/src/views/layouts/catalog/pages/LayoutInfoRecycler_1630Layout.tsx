@@ -21,16 +21,14 @@ export interface LayoutInfoRecycler_1630LayoutCtlgRecyclerInfoProps {
     captionCtlgSpecialTxt?: string;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const LayoutInfoRecycler_1630LayoutCtlgRecyclerInfo = ({ captionCtlgDescription, captionCtlgSpecialTxt, layout, srcCtlgTeaserimg1, tags }: LayoutInfoRecycler_1630LayoutCtlgRecyclerInfoProps) => {
+export const LayoutInfoRecycler_1630LayoutCtlgRecyclerInfo = ({ captionCtlgDescription, captionCtlgSpecialTxt, layout, srcCtlgTeaserimg1 }: LayoutInfoRecycler_1630LayoutCtlgRecyclerInfoProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_recycler_info"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
         >
             <Border

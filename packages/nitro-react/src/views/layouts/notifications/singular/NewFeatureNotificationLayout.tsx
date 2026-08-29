@@ -53,16 +53,14 @@ export interface NewFeatureNotificationLayoutCancelLinkRegionProps {
     captionCancelLink?: string;
     layout?: BoxLayout;
     onCancelLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const NewFeatureNotificationLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion, tags }: NewFeatureNotificationLayoutCancelLinkRegionProps) => {
+export const NewFeatureNotificationLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion }: NewFeatureNotificationLayoutCancelLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_link_region"
-            tags={tags}
             onPointerTap={onCancelLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 8, width: 155, bottom: 15, height: 17, ...layout }}

@@ -52,16 +52,14 @@ export interface NavPromoAlertLayoutPromoContainerProps {
     captionPromoText?: string;
     layout?: BoxLayout;
     onPromoContainer?: () => void;
-    tags?: string[];
 }
 
-export const NavPromoAlertLayoutPromoContainer = ({ captionPromoText, layout, onPromoContainer, tags }: NavPromoAlertLayoutPromoContainerProps) => {
+export const NavPromoAlertLayoutPromoContainer = ({ captionPromoText, layout, onPromoContainer }: NavPromoAlertLayoutPromoContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="promo_container"
-            tags={tags}
             onPointerTap={onPromoContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 7, width: 199, top: 72, height: 43, ...layout }}

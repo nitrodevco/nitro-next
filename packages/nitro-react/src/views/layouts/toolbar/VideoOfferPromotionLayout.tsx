@@ -39,14 +39,12 @@ export interface VideoOfferPromotionLayoutTextRegionProps {
     captionPromoTextShadow?: string;
     layout?: BoxLayout;
     onTextRegion?: () => void;
-    tags?: string[];
 }
 
-export const VideoOfferPromotionLayoutTextRegion = ({ captionPromoText, captionPromoTextShadow, layout, onTextRegion, tags }: VideoOfferPromotionLayoutTextRegionProps) => {
+export const VideoOfferPromotionLayoutTextRegion = ({ captionPromoText, captionPromoTextShadow, layout, onTextRegion }: VideoOfferPromotionLayoutTextRegionProps) => {
     return (
         <Region
             name="text_region"
-            tags={tags}
             onPointerTap={onTextRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 26, width: 145, top: 6, height: 30, ...layout }}

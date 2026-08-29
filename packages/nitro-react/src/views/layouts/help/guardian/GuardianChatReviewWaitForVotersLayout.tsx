@@ -124,16 +124,14 @@ export const GuardianChatReviewWaitForVotersLayout = ({ captionIncidentTime, clo
 export interface GuardianChatReviewWaitForVotersLayoutVoteOkProps {
     layout?: BoxLayout;
     onVoteOk?: () => void;
-    tags?: string[];
 }
 
-export const GuardianChatReviewWaitForVotersLayoutVoteOk = ({ layout, onVoteOk, tags }: GuardianChatReviewWaitForVotersLayoutVoteOkProps) => {
+export const GuardianChatReviewWaitForVotersLayoutVoteOk = ({ layout, onVoteOk }: GuardianChatReviewWaitForVotersLayoutVoteOkProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="vote_ok"
-            tags={tags}
             tooltip={t('guide.bully.request.guide.vote.ok.tooltip')}
             onPointerTap={onVoteOk}
             cursor="pointer"
@@ -151,16 +149,14 @@ export const GuardianChatReviewWaitForVotersLayoutVoteOk = ({ layout, onVoteOk, 
 export interface GuardianChatReviewWaitForVotersLayoutVoteBadProps {
     layout?: BoxLayout;
     onVoteBad?: () => void;
-    tags?: string[];
 }
 
-export const GuardianChatReviewWaitForVotersLayoutVoteBad = ({ layout, onVoteBad, tags }: GuardianChatReviewWaitForVotersLayoutVoteBadProps) => {
+export const GuardianChatReviewWaitForVotersLayoutVoteBad = ({ layout, onVoteBad }: GuardianChatReviewWaitForVotersLayoutVoteBadProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="vote_bad"
-            tags={tags}
             tooltip={t('guide.bully.request.guide.vote.ok.tooltip')}
             onPointerTap={onVoteBad}
             cursor="pointer"
@@ -178,16 +174,14 @@ export const GuardianChatReviewWaitForVotersLayoutVoteBad = ({ layout, onVoteBad
 export interface GuardianChatReviewWaitForVotersLayoutVoteVeryBadProps {
     layout?: BoxLayout;
     onVoteVeryBad?: () => void;
-    tags?: string[];
 }
 
-export const GuardianChatReviewWaitForVotersLayoutVoteVeryBad = ({ layout, onVoteVeryBad, tags }: GuardianChatReviewWaitForVotersLayoutVoteVeryBadProps) => {
+export const GuardianChatReviewWaitForVotersLayoutVoteVeryBad = ({ layout, onVoteVeryBad }: GuardianChatReviewWaitForVotersLayoutVoteVeryBadProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="vote_very_bad"
-            tags={tags}
             tooltip={t('guide.bully.request.guide.vote.ok.tooltip')}
             onPointerTap={onVoteVeryBad}
             cursor="pointer"
@@ -205,16 +199,14 @@ export const GuardianChatReviewWaitForVotersLayoutVoteVeryBad = ({ layout, onVot
 export interface GuardianChatReviewWaitForVotersLayoutCloseLinkProps {
     layout?: BoxLayout;
     onCloseLink?: () => void;
-    tags?: string[];
 }
 
-export const GuardianChatReviewWaitForVotersLayoutCloseLink = ({ layout, onCloseLink, tags }: GuardianChatReviewWaitForVotersLayoutCloseLinkProps) => {
+export const GuardianChatReviewWaitForVotersLayoutCloseLink = ({ layout, onCloseLink }: GuardianChatReviewWaitForVotersLayoutCloseLinkProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="close_link"
-            tags={tags}
             onPointerTap={onCloseLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 277, top: 149, height: 24, justifyContent: 'center', ...layout }}

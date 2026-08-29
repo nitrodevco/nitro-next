@@ -22,16 +22,14 @@ export interface SoldLtdItemsWidgetLayoutWidgetContainerProps {
     captionNotAvailableText?: string;
     layout?: BoxLayout;
     onCheckMarkeplaceLink?: () => void;
-    tags?: string[];
 }
 
-export const SoldLtdItemsWidgetLayoutWidgetContainer = ({ captionCheckMarkeplaceLink, captionNotAvailableText, layout, onCheckMarkeplaceLink, tags }: SoldLtdItemsWidgetLayoutWidgetContainerProps) => {
+export const SoldLtdItemsWidgetLayoutWidgetContainer = ({ captionCheckMarkeplaceLink, captionNotAvailableText, layout, onCheckMarkeplaceLink }: SoldLtdItemsWidgetLayoutWidgetContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="widgetContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 30, ...layout }}
         >
             <ThemeImage

@@ -24,16 +24,14 @@ export interface BadgeEditorLayoutGuildBadgeProps {
     srcLayer2?: string;
     srcLayer3?: string;
     srcLayer4?: string;
-    tags?: string[];
 }
 
-export const BadgeEditorLayoutGuildBadge = ({ captionGuildBadge, layout, srcLayer0, srcLayer1, srcLayer2, srcLayer3, srcLayer4, tags }: BadgeEditorLayoutGuildBadgeProps) => {
+export const BadgeEditorLayoutGuildBadge = ({ captionGuildBadge, layout, srcLayer0, srcLayer1, srcLayer2, srcLayer3, srcLayer4 }: BadgeEditorLayoutGuildBadgeProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guild_badge"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 128, top: 0, height: 305, ...layout }}
         >
             <Region
@@ -91,16 +89,14 @@ export interface BadgeEditorLayoutPartEditTopLabelsProps {
     captionLabelPosition?: string;
     captionLabelSymbol?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BadgeEditorLayoutPartEditTopLabels = ({ captionLabelColors, captionLabelPosition, captionLabelSymbol, layout, tags }: BadgeEditorLayoutPartEditTopLabelsProps) => {
+export const BadgeEditorLayoutPartEditTopLabels = ({ captionLabelColors, captionLabelPosition, captionLabelSymbol, layout }: BadgeEditorLayoutPartEditTopLabelsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="part_edit_top_labels"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 264, top: 0, height: 29, ...layout }}
         >
             <Region
@@ -138,16 +134,14 @@ export const BadgeEditorLayoutPartEditTopLabels = ({ captionLabelColors, caption
 export interface BadgeEditorLayoutPartEditListProps {
     captionLabelBase?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BadgeEditorLayoutPartEditList = ({ captionLabelBase, layout, tags }: BadgeEditorLayoutPartEditListProps) => {
+export const BadgeEditorLayoutPartEditList = ({ captionLabelBase, layout }: BadgeEditorLayoutPartEditListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="part_edit_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 29, bottom: 0, flexDirection: 'column', gap: 2, ...layout }}
         >
             <Region layout={{ width: 264, height: 19, flexShrink: 0 }}>
@@ -170,14 +164,12 @@ export interface BadgeEditorLayoutPartEditProps {
     layout?: BoxLayout;
     partEditList?: BadgeEditorLayoutPartEditListProps;
     partEditTopLabels?: BadgeEditorLayoutPartEditTopLabelsProps;
-    tags?: string[];
 }
 
-export const BadgeEditorLayoutPartEdit = ({ layout, partEditList, partEditTopLabels, tags }: BadgeEditorLayoutPartEditProps) => {
+export const BadgeEditorLayoutPartEdit = ({ layout, partEditList, partEditTopLabels }: BadgeEditorLayoutPartEditProps) => {
     return (
         <Region
             name="part_edit"
-            tags={tags}
             layout={{ position: 'absolute', left: 128, width: 264, top: 0, height: 305, ...layout }}
         >
             <BadgeEditorLayoutPartEditTopLabels {...partEditTopLabels} />
@@ -190,16 +182,14 @@ export const BadgeEditorLayoutPartEdit = ({ layout, partEditList, partEditTopLab
 export interface BadgeEditorLayoutPartEditTopLabels2Props {
     captionLabelSymbol?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BadgeEditorLayoutPartEditTopLabels2 = ({ captionLabelSymbol, layout, tags }: BadgeEditorLayoutPartEditTopLabels2Props) => {
+export const BadgeEditorLayoutPartEditTopLabels2 = ({ captionLabelSymbol, layout }: BadgeEditorLayoutPartEditTopLabels2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="part_edit_top_labels"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 264, top: 0, height: 29, ...layout }}
         >
             <Region
@@ -218,10 +208,9 @@ export const BadgeEditorLayoutPartEditTopLabels2 = ({ captionLabelSymbol, layout
 /** Named region `part_select_grid` of BadgeEditorLayout - configured through the parent's `partSelectGrid` prop. */
 export interface BadgeEditorLayoutPartSelectGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BadgeEditorLayoutPartSelectGrid = ({ layout, tags }: BadgeEditorLayoutPartSelectGridProps) => {
+export const BadgeEditorLayoutPartSelectGrid = ({ layout }: BadgeEditorLayoutPartSelectGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -229,7 +218,6 @@ export const BadgeEditorLayoutPartSelectGrid = ({ layout, tags }: BadgeEditorLay
         >
             <Region
                 name="part_select_grid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
             />
         </ScrollArea>
@@ -241,14 +229,12 @@ export interface BadgeEditorLayoutPartSelectProps {
     layout?: BoxLayout;
     partEditTopLabels?: BadgeEditorLayoutPartEditTopLabels2Props;
     partSelectGrid?: BadgeEditorLayoutPartSelectGridProps;
-    tags?: string[];
 }
 
-export const BadgeEditorLayoutPartSelect = ({ layout, partEditTopLabels, partSelectGrid, tags }: BadgeEditorLayoutPartSelectProps) => {
+export const BadgeEditorLayoutPartSelect = ({ layout, partEditTopLabels, partSelectGrid }: BadgeEditorLayoutPartSelectProps) => {
     return (
         <Region
             name="part_select"
-            tags={tags}
             layout={{ position: 'absolute', left: 128, width: 264, top: 0, height: 305, ...layout }}
         >
             <BadgeEditorLayoutPartEditTopLabels2 {...partEditTopLabels} />
@@ -277,14 +263,12 @@ export interface BadgeEditorLayoutBadgeEditorProps {
     layout?: BoxLayout;
     partEdit?: BadgeEditorLayoutPartEditProps;
     partSelect?: BadgeEditorLayoutPartSelectProps;
-    tags?: string[];
 }
 
-export const BadgeEditorLayoutBadgeEditor = ({ guildBadge, layout, partEdit, partSelect, tags }: BadgeEditorLayoutBadgeEditorProps) => {
+export const BadgeEditorLayoutBadgeEditor = ({ guildBadge, layout, partEdit, partSelect }: BadgeEditorLayoutBadgeEditorProps) => {
     return (
         <Region
             name="badge_editor"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 392, top: 0, height: 305, ...layout }}
         >
             <BadgeEditorLayoutGuildBadge {...guildBadge} />

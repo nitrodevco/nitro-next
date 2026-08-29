@@ -21,14 +21,12 @@ export interface BadgeColorItemLayoutContainerProps {
     srcBackground?: string;
     srcForeground?: string;
     srcSelected?: string;
-    tags?: string[];
 }
 
-export const BadgeColorItemLayoutContainer = ({ layout, onContainer, srcBackground, srcForeground, srcSelected, tags }: BadgeColorItemLayoutContainerProps) => {
+export const BadgeColorItemLayoutContainer = ({ layout, onContainer, srcBackground, srcForeground, srcSelected }: BadgeColorItemLayoutContainerProps) => {
     return (
         <Region
             name="container"
-            tags={tags}
             onPointerTap={onContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15, ...layout }}

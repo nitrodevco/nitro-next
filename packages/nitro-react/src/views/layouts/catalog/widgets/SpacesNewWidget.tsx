@@ -1,5 +1,6 @@
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, ButtonGroupCenter, ButtonGroupLeft, ButtonGroupRight, Region, ScrollArea } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `spacesNewWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -12,16 +13,14 @@ export interface SpacesNewWidgetGroupsProps {
     onGroupFloors?: () => void;
     onGroupViews?: () => void;
     onGroupWalls?: () => void;
-    tags?: string[];
 }
 
-export const SpacesNewWidgetGroups = ({ layout, onGroupFloors, onGroupViews, onGroupWalls, tags }: SpacesNewWidgetGroupsProps) => {
+export const SpacesNewWidgetGroups = ({ layout, onGroupFloors, onGroupViews, onGroupWalls }: SpacesNewWidgetGroupsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="groups"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 22, ...layout }}
         >
             <ButtonGroupLeft
@@ -55,10 +54,9 @@ export const SpacesNewWidgetGroups = ({ layout, onGroupFloors, onGroupViews, onG
 /** Named region `itemGrid` of SpacesNewWidget - configured through the parent's `itemGrid` prop. */
 export interface SpacesNewWidgetItemGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SpacesNewWidgetItemGrid = ({ layout, tags }: SpacesNewWidgetItemGridProps) => {
+export const SpacesNewWidgetItemGrid = ({ layout }: SpacesNewWidgetItemGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -66,7 +64,6 @@ export const SpacesNewWidgetItemGrid = ({ layout, tags }: SpacesNewWidgetItemGri
         >
             <Region
                 name="itemGrid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
             />
         </ScrollArea>
@@ -74,18 +71,16 @@ export const SpacesNewWidgetItemGrid = ({ layout, tags }: SpacesNewWidgetItemGri
 };
 
 /** Named region `spacesNewWidget` of SpacesNewWidget - configured through the parent's `spacesNewWidget` prop. */
-export interface SpacesNewWidgetProps {
+export interface SpacesNewWidgetProps extends CatalogWidgetFlags {
     groups?: SpacesNewWidgetGroupsProps;
     itemGrid?: SpacesNewWidgetItemGridProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SpacesNewWidget = ({ groups, itemGrid, layout, tags }: SpacesNewWidgetProps) => {
+export const SpacesNewWidget = ({ groups, itemGrid, layout }: SpacesNewWidgetProps) => {
     return (
         <Region
             name="spacesNewWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <SpacesNewWidgetGroups {...groups} />

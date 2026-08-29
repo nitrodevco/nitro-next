@@ -12,7 +12,6 @@ export const CounterLayout = ({ layout, srcCounterBitmap }: CounterLayoutProps) 
         <Region layout={{ position: 'relative', width: 164, height: 164, ...layout }}>
             <ThemeImage
                 name="counterBitmap"
-                tags={[ 'bitmap' ]}
                 src={srcCounterBitmap ?? layoutImage('explosion001.png')}
                 layout={{ position: 'absolute', marginLeft: 171, marginRight: -171, width: 164, alignSelf: 'center', marginTop: 131, marginBottom: -131, height: 164, minWidth: 164, minHeight: 164 }}
             />

@@ -18,14 +18,12 @@ export const ProgressBarLayout = ({ layout, progressBarCont }: ProgressBarLayout
 /** Named region `bar_a_bkg` of ProgressBarLayout - configured through the parent's `barABkg` prop. */
 export interface ProgressBarLayoutBarABkgProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ProgressBarLayoutBarABkg = ({ layout, tags }: ProgressBarLayoutBarABkgProps) => {
+export const ProgressBarLayoutBarABkg = ({ layout }: ProgressBarLayoutBarABkgProps) => {
     return (
         <Region
             name="bar_a_bkg"
-            tags={tags}
             backgroundColor="#ffff00"
             layout={{ position: 'absolute', left: 4, width: 1, top: 3, height: 17, ...layout }}
         />
@@ -42,14 +40,12 @@ export interface ProgressBarLayoutProgressBarContProps {
     srcBarC?: string;
     srcBarL?: string;
     srcBarR?: string;
-    tags?: string[];
 }
 
-export const ProgressBarLayoutProgressBarCont = ({ barABkg, captionProgressTxt, layout, srcBarAC, srcBarAR, srcBarC, srcBarL, srcBarR, tags }: ProgressBarLayoutProgressBarContProps) => {
+export const ProgressBarLayoutProgressBarCont = ({ barABkg, captionProgressTxt, layout, srcBarAC, srcBarAR, srcBarC, srcBarL, srcBarR }: ProgressBarLayoutProgressBarContProps) => {
     return (
         <Region
             name="progress_bar_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23, ...layout }}
         >
             <ThemeImage

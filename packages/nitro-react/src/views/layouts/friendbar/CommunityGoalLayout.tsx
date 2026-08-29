@@ -21,22 +21,22 @@ export const CommunityGoalLayout = ({ communityGoal, layout }: CommunityGoalLayo
 /** Row template `goal_caption` of CommunityGoalLayout - pass real rows through its `items…` slot. */
 export interface CommunityGoalLayoutGoalCaptionItemProps {
     captionGoalCaption?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CommunityGoalLayoutGoalCaptionItem = ({ captionGoalCaption, layout, tags }: CommunityGoalLayoutGoalCaptionItemProps) => {
+export const CommunityGoalLayoutGoalCaptionItem = ({ captionGoalCaption, colorableTextColor, layout }: CommunityGoalLayoutGoalCaptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="goal_caption"
-            tags={tags}
             layout={{ width: 300, height: 24, flexShrink: 0, minWidth: 300, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionGoalCaption ?? t('landing.view.community.caption')}
                 textStyle="text-style-il-heading-1"
+                textOptions={{ fill: colorableTextColor }}
             />
         </Region>
     );
@@ -45,22 +45,21 @@ export const CommunityGoalLayoutGoalCaptionItem = ({ captionGoalCaption, layout,
 /** Row template `goal_info` of CommunityGoalLayout - pass real rows through its `items…` slot. */
 export interface CommunityGoalLayoutGoalInfoItemProps {
     captionGoalInfo?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CommunityGoalLayoutGoalInfoItem = ({ captionGoalInfo, layout, tags }: CommunityGoalLayoutGoalInfoItemProps) => {
+export const CommunityGoalLayoutGoalInfoItem = ({ captionGoalInfo, colorableTextColor, layout }: CommunityGoalLayoutGoalInfoItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="goal_info"
-            tags={tags}
             layout={{ width: 300, height: 16, flexShrink: 0, minWidth: 300, maxWidth: 300, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionGoalInfo ?? t('landing.view.community.info')}
-                textOptions={{ wordWrap: true, wordWrapWidth: 300 }}
+                textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 300 }}
             />
         </Region>
     );
@@ -70,17 +69,15 @@ export const CommunityGoalLayoutGoalInfoItem = ({ captionGoalInfo, layout, tags 
 export interface CommunityGoalLayoutCommunityCatalogButtonItemProps {
     layout?: BoxLayout;
     onCommunityCatalogButton?: () => void;
-    tags?: string[];
 }
 
-export const CommunityGoalLayoutCommunityCatalogButtonItem = ({ layout, onCommunityCatalogButton, tags }: CommunityGoalLayoutCommunityCatalogButtonItemProps) => {
+export const CommunityGoalLayoutCommunityCatalogButtonItem = ({ layout, onCommunityCatalogButton }: CommunityGoalLayoutCommunityCatalogButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="100"
             name="community_catalog_button"
-            tags={tags}
             onPointerTap={onCommunityCatalogButton}
             layout={{ width: 250, height: 48, flexShrink: 0, minWidth: 250, maxWidth: 250, minHeight: 48, maxHeight: 48, ...layout }}
         >
@@ -93,20 +90,18 @@ export const CommunityGoalLayoutCommunityCatalogButtonItem = ({ layout, onCommun
 export interface CommunityGoalLayoutInfoContainerProps {
     itemsInfoContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CommunityGoalLayoutInfoContainer = ({ itemsInfoContainer, layout, tags }: CommunityGoalLayoutInfoContainerProps) => {
+export const CommunityGoalLayoutInfoContainer = ({ itemsInfoContainer, layout }: CommunityGoalLayoutInfoContainerProps) => {
     return (
         <Region
             name="info_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 30, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsInfoContainer ?? (
                 <>
-                    <CommunityGoalLayoutGoalCaptionItem tags={[ 'COLORABLE' ]} />
-                    <CommunityGoalLayoutGoalInfoItem tags={[ 'COLORABLE' ]} />
+                    <CommunityGoalLayoutGoalCaptionItem />
+                    <CommunityGoalLayoutGoalInfoItem />
                     <CommunityGoalLayoutCommunityCatalogButtonItem />
                 </>
             )}
@@ -117,6 +112,7 @@ export const CommunityGoalLayoutInfoContainer = ({ itemsInfoContainer, layout, t
 /** Named region `meter_container` of CommunityGoalLayout - configured through the parent's `meterContainer` prop. */
 export interface CommunityGoalLayoutMeterContainerProps {
     captionCommunityTotalStatus?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     srcMeterLevel0?: string;
     srcMeterLevel1?: string;
@@ -129,26 +125,23 @@ export interface CommunityGoalLayoutMeterContainerProps {
     srcMeterLevel3Icon?: string;
     srcMeterLevel3IconLocked?: string;
     srcMeterNeedle?: string;
-    tags?: string[];
 }
 
-export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus, layout, srcMeterLevel0, srcMeterLevel1, srcMeterLevel1Icon, srcMeterLevel1IconLocked, srcMeterLevel2, srcMeterLevel2Icon, srcMeterLevel2IconLocked, srcMeterLevel3, srcMeterLevel3Icon, srcMeterLevel3IconLocked, srcMeterNeedle, tags }: CommunityGoalLayoutMeterContainerProps) => {
+export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus, colorableTextColor, layout, srcMeterLevel0, srcMeterLevel1, srcMeterLevel1Icon, srcMeterLevel1IconLocked, srcMeterLevel2, srcMeterLevel2Icon, srcMeterLevel2IconLocked, srcMeterLevel3, srcMeterLevel3Icon, srcMeterLevel3IconLocked, srcMeterNeedle }: CommunityGoalLayoutMeterContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="meter_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 290, width: 226, top: 0, height: 200, ...layout }}
         >
             <Region
                 name="community_total_status"
-                tags={[ 'COLORABLE' ]}
                 layout={{ position: 'absolute', left: 10, width: 200, top: 145, height: 16, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionCommunityTotalStatus ?? t('landing.view.community.meter')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 200, align: 'center' }}
+                    textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 200, align: 'center' }}
                 />
             </Region>
             <ThemeImage
@@ -243,21 +236,20 @@ export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus,
 /** Named region `community_goal` of CommunityGoalLayout - configured through the parent's `communityGoal` prop. */
 export interface CommunityGoalLayoutCommunityGoalProps {
     captionCommunityTitle?: string;
+    colorableTextColor?: string;
     infoContainer?: CommunityGoalLayoutInfoContainerProps;
     layout?: BoxLayout;
     meterContainer?: CommunityGoalLayoutMeterContainerProps;
     srcBorderBar?: string;
     srcHdrLine?: string;
-    tags?: string[];
 }
 
-export const CommunityGoalLayoutCommunityGoal = ({ captionCommunityTitle, infoContainer, layout, meterContainer, srcBorderBar, srcHdrLine, tags }: CommunityGoalLayoutCommunityGoalProps) => {
+export const CommunityGoalLayoutCommunityGoal = ({ captionCommunityTitle, colorableTextColor, infoContainer, layout, meterContainer, srcBorderBar, srcHdrLine }: CommunityGoalLayoutCommunityGoalProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="community_goal"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 516, top: 0, height: 200, ...layout }}
         >
             <ThemeImage
@@ -267,12 +259,12 @@ export const CommunityGoalLayoutCommunityGoal = ({ captionCommunityTitle, infoCo
             />
             <Region
                 name="community_title"
-                tags={[ 'COLORABLE' ]}
                 layout={{ position: 'absolute', left: 24, width: 154, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCommunityTitle ?? t('landing.view.community.headline')}
                     textStyle="text-style-il-heading-3"
+                    textOptions={{ fill: colorableTextColor }}
                 />
             </Region>
             <ThemeImage

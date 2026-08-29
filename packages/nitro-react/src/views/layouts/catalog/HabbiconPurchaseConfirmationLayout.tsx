@@ -32,16 +32,14 @@ export const HabbiconPurchaseConfirmationLayout = ({ content, layout, onClose }:
 export interface HabbiconPurchaseConfirmationLayoutProductNameItemProps {
     captionProductName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutProductNameItem = ({ captionProductName, layout, tags }: HabbiconPurchaseConfirmationLayoutProductNameItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutProductNameItem = ({ captionProductName, layout }: HabbiconPurchaseConfirmationLayoutProductNameItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="product_name"
-            tags={tags}
             layout={{ width: 197, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -57,16 +55,14 @@ export const HabbiconPurchaseConfirmationLayoutProductNameItem = ({ captionProdu
 export interface HabbiconPurchaseConfirmationLayoutDescriptionTextItemProps {
     captionDescriptionText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutDescriptionTextItem = ({ captionDescriptionText, layout, tags }: HabbiconPurchaseConfirmationLayoutDescriptionTextItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutDescriptionTextItem = ({ captionDescriptionText, layout }: HabbiconPurchaseConfirmationLayoutDescriptionTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="description_text"
-            tags={tags}
             layout={{ width: 197, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -82,17 +78,15 @@ export const HabbiconPurchaseConfirmationLayoutDescriptionTextItem = ({ captionD
 export interface HabbiconPurchaseConfirmationLayoutReceiveRowItemProps {
     captionReceiveText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutReceiveRowItem = ({ captionReceiveText, layout, tags }: HabbiconPurchaseConfirmationLayoutReceiveRowItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutReceiveRowItem = ({ captionReceiveText, layout }: HabbiconPurchaseConfirmationLayoutReceiveRowItemProps) => {
     const t = useTranslation();
 
     return (
         <Border
             variant="0"
             name="receive_row"
-            tags={tags}
             tintColor="#f0e8cf"
             layout={{ width: 197, height: 28, flexShrink: 0, ...layout }}
         >
@@ -113,14 +107,12 @@ export const HabbiconPurchaseConfirmationLayoutReceiveRowItem = ({ captionReceiv
 export interface HabbiconPurchaseConfirmationLayoutPropertiesItemlistProps {
     itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout, tags }: HabbiconPurchaseConfirmationLayoutPropertiesItemlistProps) => {
+export const HabbiconPurchaseConfirmationLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout }: HabbiconPurchaseConfirmationLayoutPropertiesItemlistProps) => {
     return (
         <Region
             name="properties_itemlist"
-            tags={tags}
             layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 89, flexDirection: 'column', gap: 6, ...layout }}
         >
             {itemsPropertiesItemlist ?? (
@@ -138,16 +130,14 @@ export const HabbiconPurchaseConfirmationLayoutPropertiesItemlist = ({ itemsProp
 export interface HabbiconPurchaseConfirmationLayoutPriceLabelItemProps {
     captionPriceLabel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutPriceLabelItem = ({ captionPriceLabel, layout, tags }: HabbiconPurchaseConfirmationLayoutPriceLabelItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutPriceLabelItem = ({ captionPriceLabel, layout }: HabbiconPurchaseConfirmationLayoutPriceLabelItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="price_label"
-            tags={tags}
             layout={{ width: 237, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -162,14 +152,12 @@ export const HabbiconPurchaseConfirmationLayoutPriceLabelItem = ({ captionPriceL
 export interface HabbiconPurchaseConfirmationLayoutPriceAmountItemProps {
     captionPriceAmount?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutPriceAmountItem = ({ captionPriceAmount, layout, tags }: HabbiconPurchaseConfirmationLayoutPriceAmountItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutPriceAmountItem = ({ captionPriceAmount, layout }: HabbiconPurchaseConfirmationLayoutPriceAmountItemProps) => {
     return (
         <Region
             name="price_amount"
-            tags={tags}
             layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -183,15 +171,13 @@ export const HabbiconPurchaseConfirmationLayoutPriceAmountItem = ({ captionPrice
 /** Row template `price_icon` of HabbiconPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface HabbiconPurchaseConfirmationLayoutPriceIconItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutPriceIconItem = ({ layout, tags }: HabbiconPurchaseConfirmationLayoutPriceIconItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutPriceIconItem = ({ layout }: HabbiconPurchaseConfirmationLayoutPriceIconItemProps) => {
     return (
         <Icon
             variant="34"
             name="price_icon"
-            tags={tags}
             layout={{ width: 22, height: 22, flexShrink: 0, ...layout }}
         />
     );
@@ -201,14 +187,12 @@ export const HabbiconPurchaseConfirmationLayoutPriceIconItem = ({ layout, tags }
 export interface HabbiconPurchaseConfirmationLayoutPriceValueItemProps {
     itemsPriceValue?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutPriceValueItem = ({ itemsPriceValue, layout, tags }: HabbiconPurchaseConfirmationLayoutPriceValueItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutPriceValueItem = ({ itemsPriceValue, layout }: HabbiconPurchaseConfirmationLayoutPriceValueItemProps) => {
     return (
         <Region
             name="price_value"
-            tags={tags}
             layout={{ width: 37, height: 22, flexShrink: 0, flexDirection: 'row', gap: 3, ...layout }}
         >
             {itemsPriceValue ?? (
@@ -225,14 +209,12 @@ export const HabbiconPurchaseConfirmationLayoutPriceValueItem = ({ itemsPriceVal
 export interface HabbiconPurchaseConfirmationLayoutPriceLineProps {
     itemsPriceLine?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutPriceLine = ({ itemsPriceLine, layout, tags }: HabbiconPurchaseConfirmationLayoutPriceLineProps) => {
+export const HabbiconPurchaseConfirmationLayoutPriceLine = ({ itemsPriceLine, layout }: HabbiconPurchaseConfirmationLayoutPriceLineProps) => {
     return (
         <Region
             name="price_line"
-            tags={tags}
             layout={{ position: 'absolute', left: 144, width: 280, top: 134, height: 22, flexDirection: 'row', gap: 6, ...layout }}
         >
             {itemsPriceLine ?? (
@@ -252,16 +234,14 @@ export interface HabbiconPurchaseConfirmationLayoutTopBodyItemProps {
     priceLine?: HabbiconPurchaseConfirmationLayoutPriceLineProps;
     propertiesItemlist?: HabbiconPurchaseConfirmationLayoutPropertiesItemlistProps;
     srcProductImage?: string;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutTopBodyItem = ({ captionPreviewLabel, layout, priceLine, propertiesItemlist, srcProductImage, tags }: HabbiconPurchaseConfirmationLayoutTopBodyItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutTopBodyItem = ({ captionPreviewLabel, layout, priceLine, propertiesItemlist, srcProductImage }: HabbiconPurchaseConfirmationLayoutTopBodyItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="top_body"
-            tags={tags}
             layout={{ width: 349, height: 164, flexShrink: 0, ...layout }}
         >
             <Border
@@ -303,16 +283,14 @@ export interface HabbiconPurchaseConfirmationLayoutNormalPriceRowItemProps {
     captionNormalPriceAmount?: string;
     captionNormalPriceLabel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutNormalPriceRowItem = ({ captionNormalPriceAmount, captionNormalPriceLabel, layout, tags }: HabbiconPurchaseConfirmationLayoutNormalPriceRowItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutNormalPriceRowItem = ({ captionNormalPriceAmount, captionNormalPriceLabel, layout }: HabbiconPurchaseConfirmationLayoutNormalPriceRowItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="normal_price_row"
-            tags={tags}
             layout={{ width: 327, height: 17, flexShrink: 0, ...layout }}
         >
             <Region
@@ -343,16 +321,14 @@ export interface HabbiconPurchaseConfirmationLayoutDiscountRowItemProps {
     captionDiscountAmount?: string;
     captionDiscountLabel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutDiscountRowItem = ({ captionDiscountAmount, captionDiscountLabel, layout, tags }: HabbiconPurchaseConfirmationLayoutDiscountRowItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutDiscountRowItem = ({ captionDiscountAmount, captionDiscountLabel, layout }: HabbiconPurchaseConfirmationLayoutDiscountRowItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="discount_row"
-            tags={tags}
             layout={{ width: 327, height: 17, flexShrink: 0, ...layout }}
         >
             <Region
@@ -383,14 +359,12 @@ export const HabbiconPurchaseConfirmationLayoutDiscountRowItem = ({ captionDisco
 export interface HabbiconPurchaseConfirmationLayoutValueAreaItemProps {
     itemsValueArea?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutValueAreaItem = ({ itemsValueArea, layout, tags }: HabbiconPurchaseConfirmationLayoutValueAreaItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutValueAreaItem = ({ itemsValueArea, layout }: HabbiconPurchaseConfirmationLayoutValueAreaItemProps) => {
     return (
         <Region
             name="value_area"
-            tags={tags}
             layout={{ width: 327, height: 39, flexShrink: 0, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsValueArea ?? (
@@ -407,17 +381,15 @@ export const HabbiconPurchaseConfirmationLayoutValueAreaItem = ({ itemsValueArea
 export interface HabbiconPurchaseConfirmationLayoutCancelButtonItemProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutCancelButtonItem = ({ layout, onCancelButton, tags }: HabbiconPurchaseConfirmationLayoutCancelButtonItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutCancelButtonItem = ({ layout, onCancelButton }: HabbiconPurchaseConfirmationLayoutCancelButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="cancel_button"
-            tags={tags}
             onPointerTap={onCancelButton}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 110, height: 27, flexShrink: 0, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27, ...layout }}
@@ -431,17 +403,15 @@ export const HabbiconPurchaseConfirmationLayoutCancelButtonItem = ({ layout, onC
 export interface HabbiconPurchaseConfirmationLayoutConfirmButtonItemProps {
     layout?: BoxLayout;
     onConfirmButton?: () => void;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutConfirmButtonItem = ({ layout, onConfirmButton, tags }: HabbiconPurchaseConfirmationLayoutConfirmButtonItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutConfirmButtonItem = ({ layout, onConfirmButton }: HabbiconPurchaseConfirmationLayoutConfirmButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="5"
             name="confirm_button"
-            tags={tags}
             tintColor="#00aa00"
             onPointerTap={onConfirmButton}
             textStyle="text-style-button-shiny-bold"
@@ -456,14 +426,12 @@ export const HabbiconPurchaseConfirmationLayoutConfirmButtonItem = ({ layout, on
 export interface HabbiconPurchaseConfirmationLayoutButtonsItemProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutButtonsItem = ({ itemsButtons, layout, tags }: HabbiconPurchaseConfirmationLayoutButtonsItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutButtonsItem = ({ itemsButtons, layout }: HabbiconPurchaseConfirmationLayoutButtonsItemProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ minWidth: 341, minHeight: 27, flexShrink: 0, flexDirection: 'row', gap: 105, ...layout }}
         >
             {itemsButtons ?? (
@@ -480,14 +448,12 @@ export const HabbiconPurchaseConfirmationLayoutButtonsItem = ({ itemsButtons, la
 export interface HabbiconPurchaseConfirmationLayoutContentProps {
     itemsContent?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconPurchaseConfirmationLayoutContent = ({ itemsContent, layout, tags }: HabbiconPurchaseConfirmationLayoutContentProps) => {
+export const HabbiconPurchaseConfirmationLayoutContent = ({ itemsContent, layout }: HabbiconPurchaseConfirmationLayoutContentProps) => {
     return (
         <Region
             name="content"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 2, top: 8, height: 250, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsContent ?? (

@@ -31,14 +31,12 @@ export const BreedPetsResultLayout = ({ elementList, layout, onClose }: BreedPet
 /** Row template `separator` of BreedPetsResultLayout - pass real rows through its `items…` slot. */
 export interface BreedPetsResultLayoutSeparatorItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutSeparatorItem = ({ layout, tags }: BreedPetsResultLayoutSeparatorItemProps) => {
+export const BreedPetsResultLayoutSeparatorItem = ({ layout }: BreedPetsResultLayoutSeparatorItemProps) => {
     return (
         <Region
             name="separator"
-            tags={tags}
             layout={{ width: 274, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -48,14 +46,12 @@ export const BreedPetsResultLayoutSeparatorItem = ({ layout, tags }: BreedPetsRe
 export interface BreedPetsResultLayoutDescriptionItemProps {
     captionDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutDescriptionItem = ({ captionDescription, layout, tags }: BreedPetsResultLayoutDescriptionItemProps) => {
+export const BreedPetsResultLayoutDescriptionItem = ({ captionDescription, layout }: BreedPetsResultLayoutDescriptionItemProps) => {
     return (
         <Region
             name="description"
-            tags={tags}
             layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -70,16 +66,14 @@ export const BreedPetsResultLayoutDescriptionItem = ({ captionDescription, layou
 export interface BreedPetsResultLayoutDescriptionSorryItemProps {
     captionDescriptionSorry?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutDescriptionSorryItem = ({ captionDescriptionSorry, layout, tags }: BreedPetsResultLayoutDescriptionSorryItemProps) => {
+export const BreedPetsResultLayoutDescriptionSorryItem = ({ captionDescriptionSorry, layout }: BreedPetsResultLayoutDescriptionSorryItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="description_sorry"
-            tags={tags}
             visible={false}
             layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -95,16 +89,14 @@ export const BreedPetsResultLayoutDescriptionSorryItem = ({ captionDescriptionSo
 export interface BreedPetsResultLayoutInfoItemProps {
     captionInfo?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutInfoItem = ({ captionInfo, layout, tags }: BreedPetsResultLayoutInfoItemProps) => {
+export const BreedPetsResultLayoutInfoItem = ({ captionInfo, layout }: BreedPetsResultLayoutInfoItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="info"
-            tags={tags}
             layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -120,16 +112,14 @@ export const BreedPetsResultLayoutInfoItem = ({ captionInfo, layout, tags }: Bre
 export interface BreedPetsResultLayoutInfoSorryItemProps {
     captionInfoSorry?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutInfoSorryItem = ({ captionInfoSorry, layout, tags }: BreedPetsResultLayoutInfoSorryItemProps) => {
+export const BreedPetsResultLayoutInfoSorryItem = ({ captionInfoSorry, layout }: BreedPetsResultLayoutInfoSorryItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="info_sorry"
-            tags={tags}
             visible={false}
             layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -146,16 +136,14 @@ export const BreedPetsResultLayoutInfoSorryItem = ({ captionInfoSorry, layout, t
 export interface BreedPetsResultLayoutSeedNameItemProps {
     captionSeedName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutSeedNameItem = ({ captionSeedName, layout, tags }: BreedPetsResultLayoutSeedNameItemProps) => {
+export const BreedPetsResultLayoutSeedNameItem = ({ captionSeedName, layout }: BreedPetsResultLayoutSeedNameItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="seed_name"
-            tags={tags}
             layout={{ width: 122, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -171,14 +159,12 @@ export interface BreedPetsResultLayoutPreviewImageRegionItemProps {
     layout?: BoxLayout;
     onPreviewImageRegion?: () => void;
     srcPreviewImage?: string;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutPreviewImageRegionItem = ({ layout, onPreviewImageRegion, srcPreviewImage, tags }: BreedPetsResultLayoutPreviewImageRegionItemProps) => {
+export const BreedPetsResultLayoutPreviewImageRegionItem = ({ layout, onPreviewImageRegion, srcPreviewImage }: BreedPetsResultLayoutPreviewImageRegionItemProps) => {
     return (
         <Region
             name="preview_image_region"
-            tags={tags}
             onPointerTap={onPreviewImageRegion}
             cursor="pointer"
             layout={{ width: 122, height: 130, flexShrink: 0, minWidth: 122, maxWidth: 122, minHeight: 130, maxHeight: 130, ...layout }}
@@ -196,16 +182,14 @@ export const BreedPetsResultLayoutPreviewImageRegionItem = ({ layout, onPreviewI
 export interface BreedPetsResultLayoutSeedRarityLevelItemProps {
     captionSeedRarityLevel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutSeedRarityLevelItem = ({ captionSeedRarityLevel, layout, tags }: BreedPetsResultLayoutSeedRarityLevelItemProps) => {
+export const BreedPetsResultLayoutSeedRarityLevelItem = ({ captionSeedRarityLevel, layout }: BreedPetsResultLayoutSeedRarityLevelItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="seed_rarity_level"
-            tags={tags}
             layout={{ width: 134, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -220,16 +204,14 @@ export const BreedPetsResultLayoutSeedRarityLevelItem = ({ captionSeedRarityLeve
 export interface BreedPetsResultLayoutSeedDescriptionItemProps {
     captionSeedDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutSeedDescriptionItem = ({ captionSeedDescription, layout, tags }: BreedPetsResultLayoutSeedDescriptionItemProps) => {
+export const BreedPetsResultLayoutSeedDescriptionItem = ({ captionSeedDescription, layout }: BreedPetsResultLayoutSeedDescriptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="seed_description"
-            tags={tags}
             layout={{ width: 122, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -244,16 +226,14 @@ export const BreedPetsResultLayoutSeedDescriptionItem = ({ captionSeedDescriptio
 export interface BreedPetsResultLayoutInfoMutate1ItemProps {
     captionInfoMutate1?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutInfoMutate1Item = ({ captionInfoMutate1, layout, tags }: BreedPetsResultLayoutInfoMutate1ItemProps) => {
+export const BreedPetsResultLayoutInfoMutate1Item = ({ captionInfoMutate1, layout }: BreedPetsResultLayoutInfoMutate1ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="info_mutate1"
-            tags={tags}
             visible={false}
             layout={{ width: 122, height: 33, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
@@ -270,14 +250,12 @@ export const BreedPetsResultLayoutInfoMutate1Item = ({ captionInfoMutate1, layou
 export interface BreedPetsResultLayoutSeed1ItemlistItemProps {
     itemsSeed1Itemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutSeed1ItemlistItem = ({ itemsSeed1Itemlist, layout, tags }: BreedPetsResultLayoutSeed1ItemlistItemProps) => {
+export const BreedPetsResultLayoutSeed1ItemlistItem = ({ itemsSeed1Itemlist, layout }: BreedPetsResultLayoutSeed1ItemlistItemProps) => {
     return (
         <Region
             name="seed1_itemlist"
-            tags={tags}
             layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsSeed1Itemlist ?? (
@@ -297,16 +275,14 @@ export const BreedPetsResultLayoutSeed1ItemlistItem = ({ itemsSeed1Itemlist, lay
 export interface BreedPetsResultLayoutSeedNameItem2Props {
     captionSeedName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutSeedNameItem2 = ({ captionSeedName, layout, tags }: BreedPetsResultLayoutSeedNameItem2Props) => {
+export const BreedPetsResultLayoutSeedNameItem2 = ({ captionSeedName, layout }: BreedPetsResultLayoutSeedNameItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="seed_name"
-            tags={tags}
             layout={{ width: 122, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -322,14 +298,12 @@ export interface BreedPetsResultLayoutPreviewImageRegion2ItemProps {
     layout?: BoxLayout;
     onPreviewImageRegion2?: () => void;
     srcPreviewImage2?: string;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutPreviewImageRegion2Item = ({ layout, onPreviewImageRegion2, srcPreviewImage2, tags }: BreedPetsResultLayoutPreviewImageRegion2ItemProps) => {
+export const BreedPetsResultLayoutPreviewImageRegion2Item = ({ layout, onPreviewImageRegion2, srcPreviewImage2 }: BreedPetsResultLayoutPreviewImageRegion2ItemProps) => {
     return (
         <Region
             name="preview_image_region2"
-            tags={tags}
             onPointerTap={onPreviewImageRegion2}
             cursor="pointer"
             layout={{ width: 122, height: 130, flexShrink: 0, minWidth: 122, maxWidth: 122, minHeight: 130, maxHeight: 130, ...layout }}
@@ -347,16 +321,14 @@ export const BreedPetsResultLayoutPreviewImageRegion2Item = ({ layout, onPreview
 export interface BreedPetsResultLayoutSeedRarityLevelItem2Props {
     captionSeedRarityLevel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutSeedRarityLevelItem2 = ({ captionSeedRarityLevel, layout, tags }: BreedPetsResultLayoutSeedRarityLevelItem2Props) => {
+export const BreedPetsResultLayoutSeedRarityLevelItem2 = ({ captionSeedRarityLevel, layout }: BreedPetsResultLayoutSeedRarityLevelItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="seed_rarity_level"
-            tags={tags}
             layout={{ width: 134, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -371,16 +343,14 @@ export const BreedPetsResultLayoutSeedRarityLevelItem2 = ({ captionSeedRarityLev
 export interface BreedPetsResultLayoutSeedDescriptionItem2Props {
     captionSeedDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutSeedDescriptionItem2 = ({ captionSeedDescription, layout, tags }: BreedPetsResultLayoutSeedDescriptionItem2Props) => {
+export const BreedPetsResultLayoutSeedDescriptionItem2 = ({ captionSeedDescription, layout }: BreedPetsResultLayoutSeedDescriptionItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="seed_description"
-            tags={tags}
             layout={{ width: 122, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -395,16 +365,14 @@ export const BreedPetsResultLayoutSeedDescriptionItem2 = ({ captionSeedDescripti
 export interface BreedPetsResultLayoutInfoMutate2ItemProps {
     captionInfoMutate2?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutInfoMutate2Item = ({ captionInfoMutate2, layout, tags }: BreedPetsResultLayoutInfoMutate2ItemProps) => {
+export const BreedPetsResultLayoutInfoMutate2Item = ({ captionInfoMutate2, layout }: BreedPetsResultLayoutInfoMutate2ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="info_mutate2"
-            tags={tags}
             visible={false}
             layout={{ width: 122, height: 33, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
@@ -421,14 +389,12 @@ export const BreedPetsResultLayoutInfoMutate2Item = ({ captionInfoMutate2, layou
 export interface BreedPetsResultLayoutSeed2ItemlistItemProps {
     itemsSeed2Itemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutSeed2ItemlistItem = ({ itemsSeed2Itemlist, layout, tags }: BreedPetsResultLayoutSeed2ItemlistItemProps) => {
+export const BreedPetsResultLayoutSeed2ItemlistItem = ({ itemsSeed2Itemlist, layout }: BreedPetsResultLayoutSeed2ItemlistItemProps) => {
     return (
         <Region
             name="seed2_itemlist"
-            tags={tags}
             layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsSeed2Itemlist ?? (
@@ -448,14 +414,12 @@ export const BreedPetsResultLayoutSeed2ItemlistItem = ({ itemsSeed2Itemlist, lay
 export interface BreedPetsResultLayoutPreviewListItemProps {
     itemsPreviewList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutPreviewListItem = ({ itemsPreviewList, layout, tags }: BreedPetsResultLayoutPreviewListItemProps) => {
+export const BreedPetsResultLayoutPreviewListItem = ({ itemsPreviewList, layout }: BreedPetsResultLayoutPreviewListItemProps) => {
     return (
         <Region
             name="preview_list"
-            tags={tags}
             layout={{ flexShrink: 0, maxWidth: 254, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsPreviewList ?? (
@@ -472,11 +436,10 @@ export const BreedPetsResultLayoutPreviewListItem = ({ itemsPreviewList, layout,
 export interface BreedPetsResultLayoutPlaceButton1ItemProps {
     layout?: BoxLayout;
     onPlaceButton1?: () => void;
-    tags?: string[];
     visiblePlaceButton1?: boolean;
 }
 
-export const BreedPetsResultLayoutPlaceButton1Item = ({ layout, onPlaceButton1, tags, visiblePlaceButton1 }: BreedPetsResultLayoutPlaceButton1ItemProps) => {
+export const BreedPetsResultLayoutPlaceButton1Item = ({ layout, onPlaceButton1, visiblePlaceButton1 }: BreedPetsResultLayoutPlaceButton1ItemProps) => {
     const t = useTranslation();
 
     return (
@@ -487,7 +450,6 @@ export const BreedPetsResultLayoutPlaceButton1Item = ({ layout, onPlaceButton1, 
             <ButtonThick
                 variant="5"
                 name="place_button1"
-                tags={tags}
                 tintColor="#00aa00"
                 onPointerTap={onPlaceButton1}
                 layout={{ width: '100%', height: '100%' }}
@@ -502,11 +464,10 @@ export const BreedPetsResultLayoutPlaceButton1Item = ({ layout, onPlaceButton1, 
 export interface BreedPetsResultLayoutPickButton1ItemProps {
     layout?: BoxLayout;
     onPickButton1?: () => void;
-    tags?: string[];
     visiblePickButton1?: boolean;
 }
 
-export const BreedPetsResultLayoutPickButton1Item = ({ layout, onPickButton1, tags, visiblePickButton1 }: BreedPetsResultLayoutPickButton1ItemProps) => {
+export const BreedPetsResultLayoutPickButton1Item = ({ layout, onPickButton1, visiblePickButton1 }: BreedPetsResultLayoutPickButton1ItemProps) => {
     const t = useTranslation();
 
     return (
@@ -517,7 +478,6 @@ export const BreedPetsResultLayoutPickButton1Item = ({ layout, onPickButton1, ta
             <Button
                 variant="3"
                 name="pick_button1"
-                tags={tags}
                 onPointerTap={onPickButton1}
                 layout={{ width: '100%', height: '100%' }}
             >
@@ -531,14 +491,12 @@ export const BreedPetsResultLayoutPickButton1Item = ({ layout, onPickButton1, ta
 export interface BreedPetsResultLayoutSeed1ButtonlistItemProps {
     itemsSeed1Buttonlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutSeed1ButtonlistItem = ({ itemsSeed1Buttonlist, layout, tags }: BreedPetsResultLayoutSeed1ButtonlistItemProps) => {
+export const BreedPetsResultLayoutSeed1ButtonlistItem = ({ itemsSeed1Buttonlist, layout }: BreedPetsResultLayoutSeed1ButtonlistItemProps) => {
     return (
         <Region
             name="seed1_buttonlist"
-            tags={tags}
             layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsSeed1Buttonlist ?? (
@@ -555,11 +513,10 @@ export const BreedPetsResultLayoutSeed1ButtonlistItem = ({ itemsSeed1Buttonlist,
 export interface BreedPetsResultLayoutPlaceButton2ItemProps {
     layout?: BoxLayout;
     onPlaceButton2?: () => void;
-    tags?: string[];
     visiblePlaceButton2?: boolean;
 }
 
-export const BreedPetsResultLayoutPlaceButton2Item = ({ layout, onPlaceButton2, tags, visiblePlaceButton2 }: BreedPetsResultLayoutPlaceButton2ItemProps) => {
+export const BreedPetsResultLayoutPlaceButton2Item = ({ layout, onPlaceButton2, visiblePlaceButton2 }: BreedPetsResultLayoutPlaceButton2ItemProps) => {
     const t = useTranslation();
 
     return (
@@ -570,7 +527,6 @@ export const BreedPetsResultLayoutPlaceButton2Item = ({ layout, onPlaceButton2, 
             <ButtonThick
                 variant="5"
                 name="place_button2"
-                tags={tags}
                 tintColor="#00aa00"
                 onPointerTap={onPlaceButton2}
                 layout={{ width: '100%', height: '100%' }}
@@ -585,11 +541,10 @@ export const BreedPetsResultLayoutPlaceButton2Item = ({ layout, onPlaceButton2, 
 export interface BreedPetsResultLayoutPickButton2ItemProps {
     layout?: BoxLayout;
     onPickButton2?: () => void;
-    tags?: string[];
     visiblePickButton2?: boolean;
 }
 
-export const BreedPetsResultLayoutPickButton2Item = ({ layout, onPickButton2, tags, visiblePickButton2 }: BreedPetsResultLayoutPickButton2ItemProps) => {
+export const BreedPetsResultLayoutPickButton2Item = ({ layout, onPickButton2, visiblePickButton2 }: BreedPetsResultLayoutPickButton2ItemProps) => {
     const t = useTranslation();
 
     return (
@@ -600,7 +555,6 @@ export const BreedPetsResultLayoutPickButton2Item = ({ layout, onPickButton2, ta
             <Button
                 variant="3"
                 name="pick_button2"
-                tags={tags}
                 onPointerTap={onPickButton2}
                 layout={{ width: '100%', height: '100%' }}
             >
@@ -614,14 +568,12 @@ export const BreedPetsResultLayoutPickButton2Item = ({ layout, onPickButton2, ta
 export interface BreedPetsResultLayoutSeed2ButtonlistItemProps {
     itemsSeed2Buttonlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutSeed2ButtonlistItem = ({ itemsSeed2Buttonlist, layout, tags }: BreedPetsResultLayoutSeed2ButtonlistItemProps) => {
+export const BreedPetsResultLayoutSeed2ButtonlistItem = ({ itemsSeed2Buttonlist, layout }: BreedPetsResultLayoutSeed2ButtonlistItemProps) => {
     return (
         <Region
             name="seed2_buttonlist"
-            tags={tags}
             layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsSeed2Buttonlist ?? (
@@ -638,14 +590,12 @@ export const BreedPetsResultLayoutSeed2ButtonlistItem = ({ itemsSeed2Buttonlist,
 export interface BreedPetsResultLayoutPreviewButtonlistItemProps {
     itemsPreviewButtonlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutPreviewButtonlistItem = ({ itemsPreviewButtonlist, layout, tags }: BreedPetsResultLayoutPreviewButtonlistItemProps) => {
+export const BreedPetsResultLayoutPreviewButtonlistItem = ({ itemsPreviewButtonlist, layout }: BreedPetsResultLayoutPreviewButtonlistItemProps) => {
     return (
         <Region
             name="preview_buttonlist"
-            tags={tags}
             layout={{ flexShrink: 0, maxWidth: 254, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsPreviewButtonlist ?? (
@@ -662,17 +612,15 @@ export const BreedPetsResultLayoutPreviewButtonlistItem = ({ itemsPreviewButtonl
 export interface BreedPetsResultLayoutCloseButtonItemProps {
     layout?: BoxLayout;
     onCloseButton?: () => void;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutCloseButtonItem = ({ layout, onCloseButton, tags }: BreedPetsResultLayoutCloseButtonItemProps) => {
+export const BreedPetsResultLayoutCloseButtonItem = ({ layout, onCloseButton }: BreedPetsResultLayoutCloseButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="close_button"
-            tags={tags}
             onPointerTap={onCloseButton}
             layout={{ width: 122, height: 30, flexShrink: 0, minWidth: 122, maxWidth: 122, ...layout }}
         >
@@ -685,14 +633,12 @@ export const BreedPetsResultLayoutCloseButtonItem = ({ layout, onCloseButton, ta
 export interface BreedPetsResultLayoutButtonListItemProps {
     itemsButtonList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutButtonListItem = ({ itemsButtonList, layout, tags }: BreedPetsResultLayoutButtonListItemProps) => {
+export const BreedPetsResultLayoutButtonListItem = ({ itemsButtonList, layout }: BreedPetsResultLayoutButtonListItemProps) => {
     return (
         <Region
             name="button_list"
-            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsButtonList ?? (
@@ -705,14 +651,12 @@ export const BreedPetsResultLayoutButtonListItem = ({ itemsButtonList, layout, t
 /** Row template `separator` of BreedPetsResultLayout - pass real rows through its `items…` slot. */
 export interface BreedPetsResultLayoutSeparatorItem2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutSeparatorItem2 = ({ layout, tags }: BreedPetsResultLayoutSeparatorItem2Props) => {
+export const BreedPetsResultLayoutSeparatorItem2 = ({ layout }: BreedPetsResultLayoutSeparatorItem2Props) => {
     return (
         <Region
             name="separator"
-            tags={tags}
             layout={{ width: 274, height: 1, flexShrink: 0, minWidth: 274, minHeight: 1, ...layout }}
         />
     );
@@ -722,14 +666,12 @@ export const BreedPetsResultLayoutSeparatorItem2 = ({ layout, tags }: BreedPetsR
 export interface BreedPetsResultLayoutElementListProps {
     itemsElementList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsResultLayoutElementList = ({ itemsElementList, layout, tags }: BreedPetsResultLayoutElementListProps) => {
+export const BreedPetsResultLayoutElementList = ({ itemsElementList, layout }: BreedPetsResultLayoutElementListProps) => {
     return (
         <Region
             name="element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, minWidth: 274, maxWidth: 274, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsElementList ?? (

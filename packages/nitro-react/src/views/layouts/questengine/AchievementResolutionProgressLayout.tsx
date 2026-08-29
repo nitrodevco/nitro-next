@@ -37,14 +37,12 @@ export interface AchievementResolutionProgressLayoutProgressContainerProps {
     srcUnachievedLeft?: string;
     srcUnachievedMid?: string;
     srcUnachievedRight?: string;
-    tags?: string[];
 }
 
-export const AchievementResolutionProgressLayoutProgressContainer = ({ layout, srcAchievedLeft, srcAchievedMid, srcAchievedRight, srcUnachievedLeft, srcUnachievedMid, srcUnachievedRight, tags }: AchievementResolutionProgressLayoutProgressContainerProps) => {
+export const AchievementResolutionProgressLayoutProgressContainer = ({ layout, srcAchievedLeft, srcAchievedMid, srcAchievedRight, srcUnachievedLeft, srcUnachievedMid, srcUnachievedRight }: AchievementResolutionProgressLayoutProgressContainerProps) => {
     return (
         <Region
             name="progress_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 404, top: 0, height: 16, ...layout }}
         >
             <ThemeImage
@@ -86,16 +84,14 @@ export interface AchievementResolutionProgressLayoutProgressMainContainerItemPro
     captionProgressText?: string;
     layout?: BoxLayout;
     progressContainer?: AchievementResolutionProgressLayoutProgressContainerProps;
-    tags?: string[];
 }
 
-export const AchievementResolutionProgressLayoutProgressMainContainerItem = ({ captionProgressText, layout, progressContainer, tags }: AchievementResolutionProgressLayoutProgressMainContainerItemProps) => {
+export const AchievementResolutionProgressLayoutProgressMainContainerItem = ({ captionProgressText, layout, progressContainer }: AchievementResolutionProgressLayoutProgressMainContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="progress_main_container"
-            tags={tags}
             layout={{ width: 404, height: 42, flexShrink: 0, ...layout }}
         >
             <AchievementResolutionProgressLayoutProgressContainer {...progressContainer} />
@@ -120,16 +116,14 @@ export interface AchievementResolutionProgressLayoutElementListProps {
     itemsElementList?: ReactNode;
     layout?: BoxLayout;
     onResetButton?: () => void;
-    tags?: string[];
 }
 
-export const AchievementResolutionProgressLayoutElementList = ({ captionAchievementDesc, captionAchievementName, itemsElementList, layout, onResetButton, tags }: AchievementResolutionProgressLayoutElementListProps) => {
+export const AchievementResolutionProgressLayoutElementList = ({ captionAchievementDesc, captionAchievementName, itemsElementList, layout, onResetButton }: AchievementResolutionProgressLayoutElementListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsElementList ?? (

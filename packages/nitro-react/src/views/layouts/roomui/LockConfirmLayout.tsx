@@ -32,16 +32,14 @@ export const LockConfirmLayout = ({ layout, onClose, topList }: LockConfirmLayou
 export interface LockConfirmLayoutSubtitleItemProps {
     captionSubtitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LockConfirmLayoutSubtitleItem = ({ captionSubtitle, layout, tags }: LockConfirmLayoutSubtitleItemProps) => {
+export const LockConfirmLayoutSubtitleItem = ({ captionSubtitle, layout }: LockConfirmLayoutSubtitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="subtitle"
-            tags={tags}
             layout={{ width: 249, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -58,16 +56,14 @@ export interface LockConfirmLayoutOtherLockedContainerItemProps {
     captionMessage?: string;
     layout?: BoxLayout;
     srcLock?: string;
-    tags?: string[];
 }
 
-export const LockConfirmLayoutOtherLockedContainerItem = ({ captionMessage, layout, srcLock, tags }: LockConfirmLayoutOtherLockedContainerItemProps) => {
+export const LockConfirmLayoutOtherLockedContainerItem = ({ captionMessage, layout, srcLock }: LockConfirmLayoutOtherLockedContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="other_locked_container"
-            tags={tags}
             layout={{ width: 290, height: 65, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -94,16 +90,14 @@ export interface LockConfirmLayoutTopListProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
     onConfirmButton?: () => void;
-    tags?: string[];
 }
 
-export const LockConfirmLayoutTopList = ({ itemsTopList, layout, onCancelButton, onConfirmButton, tags }: LockConfirmLayoutTopListProps) => {
+export const LockConfirmLayoutTopList = ({ itemsTopList, layout, onCancelButton, onConfirmButton }: LockConfirmLayoutTopListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="top_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 9, top: 1, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsTopList ?? (

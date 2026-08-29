@@ -68,14 +68,12 @@ export const PetpackageNewLayout = ({ cancel, layout, onClose, onPickName, petpa
 /** Named region `petpackage.header.background.body` of PetpackageNewLayout - configured through the parent's `petpackageHeaderBackgroundBody` prop. */
 export interface PetpackageNewLayoutPetpackageHeaderBackgroundBodyProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetpackageNewLayoutPetpackageHeaderBackgroundBody = ({ layout, tags }: PetpackageNewLayoutPetpackageHeaderBackgroundBodyProps) => {
+export const PetpackageNewLayoutPetpackageHeaderBackgroundBody = ({ layout }: PetpackageNewLayoutPetpackageHeaderBackgroundBodyProps) => {
     return (
         <Region
             name="petpackage.header.background.body"
-            tags={tags}
             backgroundColor="#0e3f52"
             layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 95, ...layout }}
         />
@@ -87,16 +85,14 @@ export interface PetpackageNewLayoutPetpackageHeaderProps {
     captionPetpackageHeaderDescription?: string;
     captionPetpackageHeaderTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetpackageNewLayoutPetpackageHeader = ({ captionPetpackageHeaderDescription, captionPetpackageHeaderTitle, layout, tags }: PetpackageNewLayoutPetpackageHeaderProps) => {
+export const PetpackageNewLayoutPetpackageHeader = ({ captionPetpackageHeaderDescription, captionPetpackageHeaderTitle, layout }: PetpackageNewLayoutPetpackageHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="petpackage.header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 475, top: 0, height: 90, ...layout }}
         >
             <Region
@@ -128,14 +124,12 @@ export interface PetpackageNewLayoutPetpackageHeaderBackgroundBorderProps {
     petpackageHeader?: PetpackageNewLayoutPetpackageHeaderProps;
     petpackageHeaderBackgroundBody?: PetpackageNewLayoutPetpackageHeaderBackgroundBodyProps;
     srcPetpackageHeaderIcon?: string;
-    tags?: string[];
 }
 
-export const PetpackageNewLayoutPetpackageHeaderBackgroundBorder = ({ layout, petpackageHeader, petpackageHeaderBackgroundBody, srcPetpackageHeaderIcon, tags }: PetpackageNewLayoutPetpackageHeaderBackgroundBorderProps) => {
+export const PetpackageNewLayoutPetpackageHeaderBackgroundBorder = ({ layout, petpackageHeader, petpackageHeaderBackgroundBody, srcPetpackageHeaderIcon }: PetpackageNewLayoutPetpackageHeaderBackgroundBorderProps) => {
     return (
         <Region
             name="petpackage.header.background.border"
-            tags={tags}
             backgroundColor="#376275"
             layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 100, ...layout }}
         >
@@ -155,16 +149,14 @@ export interface PetpackageNewLayoutCancelProps {
     captionCancel?: string;
     layout?: BoxLayout;
     onCancel?: () => void;
-    tags?: string[];
 }
 
-export const PetpackageNewLayoutCancel = ({ captionCancel, layout, onCancel, tags }: PetpackageNewLayoutCancelProps) => {
+export const PetpackageNewLayoutCancel = ({ captionCancel, layout, onCancel }: PetpackageNewLayoutCancelProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel"
-            tags={tags}
             onPointerTap={onCancel}
             cursor="pointer"
             layout={{ position: 'absolute', left: 107, width: 101, bottom: 8, height: 32, justifyContent: 'center', ...layout }}

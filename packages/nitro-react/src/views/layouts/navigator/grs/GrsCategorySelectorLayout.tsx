@@ -20,16 +20,14 @@ export interface GrsCategorySelectorLayoutToggleOpenRegionProps {
     captionOpenTxt?: string;
     layout?: BoxLayout;
     onToggleOpenRegion?: () => void;
-    tags?: string[];
 }
 
-export const GrsCategorySelectorLayoutToggleOpenRegion = ({ captionOpenTxt, layout, onToggleOpenRegion, tags }: GrsCategorySelectorLayoutToggleOpenRegionProps) => {
+export const GrsCategorySelectorLayoutToggleOpenRegion = ({ captionOpenTxt, layout, onToggleOpenRegion }: GrsCategorySelectorLayoutToggleOpenRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="toggle_open_region"
-            tags={tags}
             onPointerTap={onToggleOpenRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 328, top: 30, height: 17, ...layout }}
@@ -56,15 +54,13 @@ export interface GrsCategorySelectorLayoutRowProps {
     layout?: BoxLayout;
     onEnterCategoryButton?: () => void;
     srcNaviRoomIcon?: string;
-    tags?: string[];
     toggleOpenRegion?: GrsCategorySelectorLayoutToggleOpenRegionProps;
 }
 
-export const GrsCategorySelectorLayoutRow = ({ captionCategoryNameTxt, layout, onEnterCategoryButton, srcNaviRoomIcon, tags, toggleOpenRegion }: GrsCategorySelectorLayoutRowProps) => {
+export const GrsCategorySelectorLayoutRow = ({ captionCategoryNameTxt, layout, onEnterCategoryButton, srcNaviRoomIcon, toggleOpenRegion }: GrsCategorySelectorLayoutRowProps) => {
     return (
         <Region
             name="row"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 345, top: 0, height: 55, ...layout }}
         >
             <ContainerButton

@@ -40,7 +40,6 @@ export const NuxOfferOldUserLayout = ({ captionTxtBody, layout, onClose, srcClub
                     </Region>
                     <ThemeImage
                         name="club_icon"
-                        tags={[ 'ICON' ]}
                         src={srcClubIcon ?? '${image.library.url}nux/nux_cropped_frank.png'}
                         layout={{ position: 'absolute', left: 12, width: 56, top: 5, height: 54 }}
                     />
@@ -69,16 +68,14 @@ export interface NuxOfferOldUserLayoutUserInputButtonsProps {
     layout?: BoxLayout;
     onBtnGo?: () => void;
     onBtnSkip?: () => void;
-    tags?: string[];
 }
 
-export const NuxOfferOldUserLayoutUserInputButtons = ({ captionBtnSkip, layout, onBtnGo, onBtnSkip, tags }: NuxOfferOldUserLayoutUserInputButtonsProps) => {
+export const NuxOfferOldUserLayoutUserInputButtons = ({ captionBtnSkip, layout, onBtnGo, onBtnSkip }: NuxOfferOldUserLayoutUserInputButtonsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_input_buttons"
-            tags={tags}
             layout={{ position: 'absolute', left: 138, right: 10, bottom: 6, height: 30, ...layout }}
         >
             <Region

@@ -1,4 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `simplePriceWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -6,16 +7,14 @@ import { BoxLayout, Region } from '#base/theme';
  * (LayoutGuildForumLayout); each passes its own placement through `layout`.
  */
 /** Named region `simplePriceWidget` of SimplePriceWidget2 - configured through the parent's `simplePriceWidget` prop. */
-export interface SimplePriceWidget2Props {
+export interface SimplePriceWidget2Props extends CatalogWidgetFlags {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SimplePriceWidget2 = ({ layout, tags }: SimplePriceWidget2Props) => {
+export const SimplePriceWidget2 = ({ layout }: SimplePriceWidget2Props) => {
     return (
         <Region
             name="simplePriceWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         />
     );

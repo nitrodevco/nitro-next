@@ -90,14 +90,12 @@ export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoT
 export interface WelcomeNameSelectionLayoutSuggestionsProps {
     layout?: BoxLayout;
     onSuggestions?: () => void;
-    tags?: string[];
 }
 
-export const WelcomeNameSelectionLayoutSuggestions = ({ layout, onSuggestions, tags }: WelcomeNameSelectionLayoutSuggestionsProps) => {
+export const WelcomeNameSelectionLayoutSuggestions = ({ layout, onSuggestions }: WelcomeNameSelectionLayoutSuggestionsProps) => {
     return (
         <Region
             name="suggestions"
-            tags={tags}
             onPointerTap={onSuggestions}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 280, top: 116, height: 31, ...layout }}

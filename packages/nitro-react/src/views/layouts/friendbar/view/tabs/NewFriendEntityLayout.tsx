@@ -100,14 +100,12 @@ export const NewFriendEntityLayout = ({ bubbleClickRegionReject, captionBubbleCa
 /** Named region `icons` of NewFriendEntityLayout - configured through the parent's `icons` prop. */
 export interface NewFriendEntityLayoutIconsProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewFriendEntityLayoutIcons = ({ layout, tags }: NewFriendEntityLayoutIconsProps) => {
+export const NewFriendEntityLayoutIcons = ({ layout }: NewFriendEntityLayoutIconsProps) => {
     return (
         <Region
             name="icons"
-            tags={tags}
             layout={{ position: 'absolute', right: 10, width: 0, top: -13, height: 25, flexDirection: 'row', gap: 2, ...layout }}
         />
     );
@@ -118,14 +116,12 @@ export interface NewFriendEntityLayoutRegionProfileProps {
     layout?: BoxLayout;
     onRegionProfile?: () => void;
     srcCanvas?: string;
-    tags?: string[];
 }
 
-export const NewFriendEntityLayoutRegionProfile = ({ layout, onRegionProfile, srcCanvas, tags }: NewFriendEntityLayoutRegionProfileProps) => {
+export const NewFriendEntityLayoutRegionProfile = ({ layout, onRegionProfile, srcCanvas }: NewFriendEntityLayoutRegionProfileProps) => {
     return (
         <Region
             name="region_profile"
-            tags={tags}
             onPointerTap={onRegionProfile}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 86, top: 0, height: 35, ...layout }}
@@ -147,21 +143,18 @@ export interface NewFriendEntityLayoutHeaderItemProps {
     layout?: BoxLayout;
     onHeader?: () => void;
     regionProfile?: NewFriendEntityLayoutRegionProfileProps;
-    tags?: string[];
 }
 
-export const NewFriendEntityLayoutHeaderItem = ({ captionName, layout, onHeader, regionProfile, tags }: NewFriendEntityLayoutHeaderItemProps) => {
+export const NewFriendEntityLayoutHeaderItem = ({ captionName, layout, onHeader, regionProfile }: NewFriendEntityLayoutHeaderItemProps) => {
     return (
         <Region
             name="header"
-            tags={tags}
             onPointerTap={onHeader}
             cursor="pointer"
             layout={{ width: 119, height: 35, flexShrink: 0, ...layout }}
         >
             <Region
                 name="name"
-                tags={[ 'label' ]}
                 layout={{ position: 'absolute', left: 33, width: 86, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -179,14 +172,12 @@ export const NewFriendEntityLayoutHeaderItem = ({ captionName, layout, onHeader,
 export interface NewFriendEntityLayoutPiecesProps {
     itemsPieces?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewFriendEntityLayoutPieces = ({ itemsPieces, layout, tags }: NewFriendEntityLayoutPiecesProps) => {
+export const NewFriendEntityLayoutPieces = ({ itemsPieces, layout }: NewFriendEntityLayoutPiecesProps) => {
     return (
         <Region
             name="pieces"
-            tags={tags}
             layout={{ position: 'absolute', left: 3, right: 3, top: 7, bottom: -6, minHeight: 30, flexDirection: 'column', ...layout }}
         >
             {itemsPieces ?? (
@@ -201,16 +192,14 @@ export interface NewFriendEntityLayoutBubbleClickRegionRejectProps {
     captionBubbleLinkReject?: string;
     layout?: BoxLayout;
     onBubbleClickRegionReject?: () => void;
-    tags?: string[];
 }
 
-export const NewFriendEntityLayoutBubbleClickRegionReject = ({ captionBubbleLinkReject, layout, onBubbleClickRegionReject, tags }: NewFriendEntityLayoutBubbleClickRegionRejectProps) => {
+export const NewFriendEntityLayoutBubbleClickRegionReject = ({ captionBubbleLinkReject, layout, onBubbleClickRegionReject }: NewFriendEntityLayoutBubbleClickRegionRejectProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bubble_click_region_reject"
-            tags={tags}
             onPointerTap={onBubbleClickRegionReject}
             cursor="pointer"
             layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 118, bottom: 26, height: 15, ...layout }}

@@ -45,10 +45,9 @@ export interface RocCreateRoomLayoutRoomSettingsContainerProps {
     onCreateButton?: () => void;
     onTradeSettingsList?: () => void;
     onVisitorsList?: () => void;
-    tags?: string[];
 }
 
-export const RocCreateRoomLayoutRoomSettingsContainer = ({ captionCreateCategoryCaption, captionCreateDescCaption, captionCreateRoomCaption, captionCreateTradeCaption, captionCreateVisitorsCaption, layout, onBackButton, onCategoriesList, onCreateButton, onTradeSettingsList, onVisitorsList, tags }: RocCreateRoomLayoutRoomSettingsContainerProps) => {
+export const RocCreateRoomLayoutRoomSettingsContainer = ({ captionCreateCategoryCaption, captionCreateDescCaption, captionCreateRoomCaption, captionCreateTradeCaption, captionCreateVisitorsCaption, layout, onBackButton, onCategoriesList, onCreateButton, onTradeSettingsList, onVisitorsList }: RocCreateRoomLayoutRoomSettingsContainerProps) => {
     const t = useTranslation();
     const [ roomNameInputValue, setRoomNameInputValue ] = useState('');
     const [ roomDescInputValue, setRoomDescInputValue ] = useState('');
@@ -56,7 +55,6 @@ export const RocCreateRoomLayoutRoomSettingsContainer = ({ captionCreateCategory
     return (
         <Region
             name="room_settings_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 255, top: 15, height: 315, ...layout }}
         >
             <Region
@@ -141,10 +139,9 @@ export const RocCreateRoomLayoutRoomSettingsContainer = ({ captionCreateCategory
 /** Named region `layout_item_list` of RocCreateRoomLayout - configured through the parent's `layoutItemList` prop. */
 export interface RocCreateRoomLayoutLayoutItemListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RocCreateRoomLayoutLayoutItemList = ({ layout, tags }: RocCreateRoomLayoutLayoutItemListProps) => {
+export const RocCreateRoomLayoutLayoutItemList = ({ layout }: RocCreateRoomLayoutLayoutItemListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -152,7 +149,6 @@ export const RocCreateRoomLayoutLayoutItemList = ({ layout, tags }: RocCreateRoo
         >
             <Region
                 name="layout_item_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -164,16 +160,14 @@ export interface RocCreateRoomLayoutRoomLayoutContainerProps {
     captionChooseLayoutCaption?: string;
     layout?: BoxLayout;
     layoutItemList?: RocCreateRoomLayoutLayoutItemListProps;
-    tags?: string[];
 }
 
-export const RocCreateRoomLayoutRoomLayoutContainer = ({ captionChooseLayoutCaption, layout, layoutItemList, tags }: RocCreateRoomLayoutRoomLayoutContainerProps) => {
+export const RocCreateRoomLayoutRoomLayoutContainer = ({ captionChooseLayoutCaption, layout, layoutItemList }: RocCreateRoomLayoutRoomLayoutContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_layout_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 270, width: 300, top: 15, height: 315, ...layout }}
         >
             <RocCreateRoomLayoutLayoutItemList {...layoutItemList} />

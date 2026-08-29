@@ -20,14 +20,12 @@ export const GroupEntryLayout = ({ groupEntryContainer, layout }: GroupEntryLayo
 export interface GroupEntryLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
-    tags?: string[];
 }
 
-export const GroupEntryLayoutBgRegion = ({ layout, onBgRegion, tags }: GroupEntryLayoutBgRegionProps) => {
+export const GroupEntryLayoutBgRegion = ({ layout, onBgRegion }: GroupEntryLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60, ...layout }}
@@ -40,16 +38,14 @@ export interface GroupEntryLayoutClearFavouriteProps {
     layout?: BoxLayout;
     onClearFavourite?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const GroupEntryLayoutClearFavourite = ({ layout, onClearFavourite, srcIcon, tags }: GroupEntryLayoutClearFavouriteProps) => {
+export const GroupEntryLayoutClearFavourite = ({ layout, onClearFavourite, srcIcon }: GroupEntryLayoutClearFavouriteProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="clear_favourite"
-            tags={tags}
             tooltip={t('group.clearfavourite')}
             onPointerTap={onClearFavourite}
             cursor="pointer"
@@ -69,16 +65,14 @@ export interface GroupEntryLayoutMakeFavouriteProps {
     layout?: BoxLayout;
     onMakeFavourite?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const GroupEntryLayoutMakeFavourite = ({ layout, onMakeFavourite, srcIcon, tags }: GroupEntryLayoutMakeFavouriteProps) => {
+export const GroupEntryLayoutMakeFavourite = ({ layout, onMakeFavourite, srcIcon }: GroupEntryLayoutMakeFavouriteProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="make_favourite"
-            tags={tags}
             tooltip={t('group.makefavourite')}
             onPointerTap={onMakeFavourite}
             cursor="pointer"
@@ -101,14 +95,12 @@ export interface GroupEntryLayoutGroupEntryContainerProps {
     makeFavourite?: GroupEntryLayoutMakeFavouriteProps;
     srcBgSelectedBitmap?: string;
     srcBgUnselectedBitmap?: string;
-    tags?: string[];
 }
 
-export const GroupEntryLayoutGroupEntryContainer = ({ bgRegion, clearFavourite, layout, makeFavourite, srcBgSelectedBitmap, srcBgUnselectedBitmap, tags }: GroupEntryLayoutGroupEntryContainerProps) => {
+export const GroupEntryLayoutGroupEntryContainer = ({ bgRegion, clearFavourite, layout, makeFavourite, srcBgSelectedBitmap, srcBgUnselectedBitmap }: GroupEntryLayoutGroupEntryContainerProps) => {
     return (
         <Region
             name="group_entry_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60, ...layout }}
         >
             <ThemeImage

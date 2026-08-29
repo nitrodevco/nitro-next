@@ -18,14 +18,12 @@ export const MotdNotificationItemLayout = ({ itemContainer, layout }: MotdNotifi
 export interface MotdNotificationItemLayoutItemContainerProps {
     captionMessageText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MotdNotificationItemLayoutItemContainer = ({ captionMessageText, layout, tags }: MotdNotificationItemLayoutItemContainerProps) => {
+export const MotdNotificationItemLayoutItemContainer = ({ captionMessageText, layout }: MotdNotificationItemLayoutItemContainerProps) => {
     return (
         <Region
             name="item_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 405, top: 0, bottom: 0, ...layout }}
         >
             <Region

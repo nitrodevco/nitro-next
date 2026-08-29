@@ -238,16 +238,14 @@ export const Main_2909Layout = ({ faqLink, habbowayLink, layout, onBullyButton, 
 export interface Main_2909LayoutSafetypolicyLinkProps {
     layout?: BoxLayout;
     onSafetypolicyLink?: () => void;
-    tags?: string[];
 }
 
-export const Main_2909LayoutSafetypolicyLink = ({ layout, onSafetypolicyLink, tags }: Main_2909LayoutSafetypolicyLinkProps) => {
+export const Main_2909LayoutSafetypolicyLink = ({ layout, onSafetypolicyLink }: Main_2909LayoutSafetypolicyLinkProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="safetypolicy_link"
-            tags={tags}
             onPointerTap={onSafetypolicyLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 191, top: 0, height: 68, justifyContent: 'center', ...layout }}
@@ -266,16 +264,14 @@ export const Main_2909LayoutSafetypolicyLink = ({ layout, onSafetypolicyLink, ta
 export interface Main_2909LayoutHabbowayLinkProps {
     layout?: BoxLayout;
     onHabbowayLink?: () => void;
-    tags?: string[];
 }
 
-export const Main_2909LayoutHabbowayLink = ({ layout, onHabbowayLink, tags }: Main_2909LayoutHabbowayLinkProps) => {
+export const Main_2909LayoutHabbowayLink = ({ layout, onHabbowayLink }: Main_2909LayoutHabbowayLinkProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="habboway_link"
-            tags={tags}
             onPointerTap={onHabbowayLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 191, width: 193, top: 0, height: 68, justifyContent: 'center', ...layout }}
@@ -294,16 +290,14 @@ export const Main_2909LayoutHabbowayLink = ({ layout, onHabbowayLink, tags }: Ma
 export interface Main_2909LayoutFaqLinkProps {
     layout?: BoxLayout;
     onFaqLink?: () => void;
-    tags?: string[];
 }
 
-export const Main_2909LayoutFaqLink = ({ layout, onFaqLink, tags }: Main_2909LayoutFaqLinkProps) => {
+export const Main_2909LayoutFaqLink = ({ layout, onFaqLink }: Main_2909LayoutFaqLinkProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="faq_link"
-            tags={tags}
             onPointerTap={onFaqLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 385, width: 190, top: 0, height: 68, justifyContent: 'center', ...layout }}
@@ -322,16 +316,14 @@ export const Main_2909LayoutFaqLink = ({ layout, onFaqLink, tags }: Main_2909Lay
 export interface Main_2909LayoutPaymentLinkProps {
     layout?: BoxLayout;
     onPaymentLink?: () => void;
-    tags?: string[];
 }
 
-export const Main_2909LayoutPaymentLink = ({ layout, onPaymentLink, tags }: Main_2909LayoutPaymentLinkProps) => {
+export const Main_2909LayoutPaymentLink = ({ layout, onPaymentLink }: Main_2909LayoutPaymentLinkProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="payment_link"
-            tags={tags}
             onPointerTap={onPaymentLink}
             cursor="pointer"
             layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 541, top: 463, height: 23, justifyContent: 'center', ...layout }}

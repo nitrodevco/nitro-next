@@ -23,14 +23,12 @@ export interface UniqueItemOverlayGriditemLayoutUniqueItemOverlayContainerIntern
     srcUniqueItemOverlayPlaqueNumberBitmap?: string;
     srcUniqueItemPlaqueForegroundBitmap?: string;
     srcUniqueItemPlaqueStudsBitmap?: string;
-    tags?: string[];
 }
 
-export const UniqueItemOverlayGriditemLayoutUniqueItemOverlayContainerInternal = ({ layout, srcUniqueItemOverlayGlazeBitmap, srcUniqueItemOverlayPlaqueBackgroundBitmap, srcUniqueItemOverlayPlaqueNumberBitmap, srcUniqueItemPlaqueForegroundBitmap, srcUniqueItemPlaqueStudsBitmap, tags }: UniqueItemOverlayGriditemLayoutUniqueItemOverlayContainerInternalProps) => {
+export const UniqueItemOverlayGriditemLayoutUniqueItemOverlayContainerInternal = ({ layout, srcUniqueItemOverlayGlazeBitmap, srcUniqueItemOverlayPlaqueBackgroundBitmap, srcUniqueItemOverlayPlaqueNumberBitmap, srcUniqueItemPlaqueForegroundBitmap, srcUniqueItemPlaqueStudsBitmap }: UniqueItemOverlayGriditemLayoutUniqueItemOverlayContainerInternalProps) => {
     return (
         <Region
             name="unique_item_overlay_container_internal"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36, ...layout }}
         >
             <ThemeImage

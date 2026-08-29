@@ -19,14 +19,12 @@ export interface SpacesLayoutDefault3x3Props {
     captionPageText?: string;
     layout?: BoxLayout;
     srcHeadline?: string;
-    tags?: string[];
 }
 
-export const SpacesLayoutDefault3x3 = ({ captionPageText, layout, srcHeadline, tags }: SpacesLayoutDefault3x3Props) => {
+export const SpacesLayoutDefault3x3 = ({ captionPageText, layout, srcHeadline }: SpacesLayoutDefault3x3Props) => {
     return (
         <Region
             name="default_3x3"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 339, top: 0, height: 416, ...layout }}
         >
             <ThemeImage

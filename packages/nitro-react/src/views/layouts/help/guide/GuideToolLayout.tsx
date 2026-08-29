@@ -33,14 +33,12 @@ export const GuideToolLayout = ({ layout, list, onClose }: GuideToolLayoutProps)
 /** Named region `disabled_screen` of GuideToolLayout - configured through the parent's `disabledScreen` prop. */
 export interface GuideToolLayoutDisabledScreenProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuideToolLayoutDisabledScreen = ({ layout, tags }: GuideToolLayoutDisabledScreenProps) => {
+export const GuideToolLayoutDisabledScreen = ({ layout }: GuideToolLayoutDisabledScreenProps) => {
     return (
         <Region
             name="disabled_screen"
-            tags={tags}
             backgroundColor="#e2e2e2"
             layout={{ position: 'absolute', left: 0, width: 227, top: 0, height: 90, ...layout }}
         />
@@ -55,16 +53,14 @@ export interface GuideToolLayoutHandleSelectionContainerItemProps {
     onHandleGuideTickets?: () => void;
     onHandleHelperTickets?: () => void;
     srcSelectionSeparator?: string;
-    tags?: string[];
 }
 
-export const GuideToolLayoutHandleSelectionContainerItem = ({ disabledScreen, layout, onHandleGuardianTickets, onHandleGuideTickets, onHandleHelperTickets, srcSelectionSeparator, tags }: GuideToolLayoutHandleSelectionContainerItemProps) => {
+export const GuideToolLayoutHandleSelectionContainerItem = ({ disabledScreen, layout, onHandleGuardianTickets, onHandleGuideTickets, onHandleHelperTickets, srcSelectionSeparator }: GuideToolLayoutHandleSelectionContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="handle_selection_container"
-            tags={tags}
             layout={{ width: 227, height: 97, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 14, width: 246, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -111,16 +107,14 @@ export const GuideToolLayoutHandleSelectionContainerItem = ({ disabledScreen, la
 export interface GuideToolLayoutOnlineCountsContainerItemProps {
     layout?: BoxLayout;
     srcInfoImg?: string;
-    tags?: string[];
 }
 
-export const GuideToolLayoutOnlineCountsContainerItem = ({ layout, srcInfoImg, tags }: GuideToolLayoutOnlineCountsContainerItemProps) => {
+export const GuideToolLayoutOnlineCountsContainerItem = ({ layout, srcInfoImg }: GuideToolLayoutOnlineCountsContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="online_counts_container"
-            tags={tags}
             layout={{ width: 227, height: 61, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -150,16 +144,14 @@ export interface GuideToolLayoutGuideToolTalentItemProps {
     captionGuideToolTalent?: string;
     layout?: BoxLayout;
     onGuideToolTalent?: () => void;
-    tags?: string[];
 }
 
-export const GuideToolLayoutGuideToolTalentItem = ({ captionGuideToolTalent, layout, onGuideToolTalent, tags }: GuideToolLayoutGuideToolTalentItemProps) => {
+export const GuideToolLayoutGuideToolTalentItem = ({ captionGuideToolTalent, layout, onGuideToolTalent }: GuideToolLayoutGuideToolTalentItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guide_tool_talent"
-            tags={tags}
             tooltip={t('guide.help.guide.tool.skill.tooltip')}
             layout={{ width: 226, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
             onPointerTap={onGuideToolTalent}
@@ -179,16 +171,14 @@ export interface GuideToolLayoutListProps {
     itemsList?: ReactNode;
     layout?: BoxLayout;
     onGuideToolDuty?: () => void;
-    tags?: string[];
 }
 
-export const GuideToolLayoutList = ({ captionStatusCaptionTxt, itemsList, layout, onGuideToolDuty, tags }: GuideToolLayoutListProps) => {
+export const GuideToolLayoutList = ({ captionStatusCaptionTxt, itemsList, layout, onGuideToolDuty }: GuideToolLayoutListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="list"
-            tags={tags}
             layout={{ position: 'absolute', left: 8, top: 0, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsList ?? (

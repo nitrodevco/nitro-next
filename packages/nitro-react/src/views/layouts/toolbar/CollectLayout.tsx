@@ -49,7 +49,6 @@ export const CollectLayout = ({ captionCollectSummary, layout, onClose, onOkButt
                     <Region layout={{ position: 'absolute', left: 8, right: 2, top: 8, bottom: 210 }}>
                         <ThemeImage
                             name="club_icon"
-                            tags={[ 'ICON' ]}
                             src={srcClubIcon ?? '${image.library.url}returnusergifting/phone_frank.png'}
                             layout={{ position: 'absolute', left: 6, width: 71, top: 0, height: 89 }}
                         />
@@ -81,17 +80,15 @@ export const CollectLayout = ({ captionCollectSummary, layout, onClose, onOkButt
 /** Named region `phone_number_input_border` of CollectLayout - configured through the parent's `phoneNumberInputBorder` prop. */
 export interface CollectLayoutPhoneNumberInputBorderProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectLayoutPhoneNumberInputBorder = ({ layout, tags }: CollectLayoutPhoneNumberInputBorderProps) => {
+export const CollectLayoutPhoneNumberInputBorder = ({ layout }: CollectLayoutPhoneNumberInputBorderProps) => {
     const t = useTranslation();
     const [ phoneNumberInputValue, setPhoneNumberInputValue ] = useState('');
 
     return (
         <Region
             name="phone_number_input_border"
-            tags={tags}
             layout={{ position: 'absolute', left: 8, right: -1, top: 200, height: 61, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 167, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -133,16 +130,14 @@ export interface CollectLayoutUserInputButtonsProps {
     layout?: BoxLayout;
     onNeverLink?: () => void;
     onSkipLink?: () => void;
-    tags?: string[];
 }
 
-export const CollectLayoutUserInputButtons = ({ captionNeverLink, captionSkipLink, layout, onNeverLink, onSkipLink, tags }: CollectLayoutUserInputButtonsProps) => {
+export const CollectLayoutUserInputButtons = ({ captionNeverLink, captionSkipLink, layout, onNeverLink, onSkipLink }: CollectLayoutUserInputButtonsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_input_buttons"
-            tags={tags}
             layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 460, top: 15, height: 64, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -175,15 +170,13 @@ export const CollectLayoutUserInputButtons = ({ captionNeverLink, captionSkipLin
 /** Named region `user_input_buttons_container` of CollectLayout - configured through the parent's `userInputButtonsContainer` prop. */
 export interface CollectLayoutUserInputButtonsContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
     userInputButtons?: CollectLayoutUserInputButtonsProps;
 }
 
-export const CollectLayoutUserInputButtonsContainer = ({ layout, tags, userInputButtons }: CollectLayoutUserInputButtonsContainerProps) => {
+export const CollectLayoutUserInputButtonsContainer = ({ layout, userInputButtons }: CollectLayoutUserInputButtonsContainerProps) => {
     return (
         <Region
             name="user_input_buttons_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 2, right: 7, top: 308, height: 87, justifyContent: 'center', ...layout }}
         >
             <Border

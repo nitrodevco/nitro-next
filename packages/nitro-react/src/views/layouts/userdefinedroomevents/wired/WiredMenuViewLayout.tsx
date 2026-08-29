@@ -96,14 +96,12 @@ export const WiredMenuViewLayout = ({ bodyContainer, headerContainer, layout, on
 /** Named region `header_inner` of WiredMenuViewLayout - configured through the parent's `headerInner` prop. */
 export interface WiredMenuViewLayoutHeaderInnerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutHeaderInner = ({ layout, tags }: WiredMenuViewLayoutHeaderInnerProps) => {
+export const WiredMenuViewLayoutHeaderInner = ({ layout }: WiredMenuViewLayoutHeaderInnerProps) => {
     return (
         <Region
             name="header_inner"
-            tags={tags}
             backgroundColor="#235061"
             layout={{ position: 'absolute', left: 2, width: 494, top: 2, height: 46, ...layout }}
         />
@@ -114,14 +112,12 @@ export const WiredMenuViewLayoutHeaderInner = ({ layout, tags }: WiredMenuViewLa
 export interface WiredMenuViewLayoutHeaderBorderProps {
     headerInner?: WiredMenuViewLayoutHeaderInnerProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutHeaderBorder = ({ headerInner, layout, tags }: WiredMenuViewLayoutHeaderBorderProps) => {
+export const WiredMenuViewLayoutHeaderBorder = ({ headerInner, layout }: WiredMenuViewLayoutHeaderBorderProps) => {
     return (
         <Region
             name="header_border"
-            tags={tags}
             backgroundColor="#486f81"
             layout={{ position: 'absolute', left: 0, width: 498, top: 0, height: 50, ...layout }}
         >
@@ -133,14 +129,12 @@ export const WiredMenuViewLayoutHeaderBorder = ({ headerInner, layout, tags }: W
 /** Named region `header_detail` of WiredMenuViewLayout - configured through the parent's `headerDetail` prop. */
 export interface WiredMenuViewLayoutHeaderDetailProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutHeaderDetail = ({ layout, tags }: WiredMenuViewLayoutHeaderDetailProps) => {
+export const WiredMenuViewLayoutHeaderDetail = ({ layout }: WiredMenuViewLayoutHeaderDetailProps) => {
     return (
         <Region
             name="header_detail"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 50, ...layout }}
         >
             <ThemeImage
@@ -179,16 +173,14 @@ export const WiredMenuViewLayoutHeaderDetail = ({ layout, tags }: WiredMenuViewL
 export interface WiredMenuViewLayoutDiscordRegionProps {
     layout?: BoxLayout;
     onDiscordRegion?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutDiscordRegion = ({ layout, onDiscordRegion, tags }: WiredMenuViewLayoutDiscordRegionProps) => {
+export const WiredMenuViewLayoutDiscordRegion = ({ layout, onDiscordRegion }: WiredMenuViewLayoutDiscordRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="discord_region"
-            tags={tags}
             tooltip={t('wiredmenu.discord_region.tooltip')}
             dynamicStyle="brightness_and_shadow_under_gentle"
             onPointerTap={onDiscordRegion}
@@ -196,7 +188,6 @@ export const WiredMenuViewLayoutDiscordRegion = ({ layout, onDiscordRegion, tags
             layout={{ position: 'absolute', left: 473, width: 22, top: 3, height: 25, ...layout }}
         >
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('icon_discord.png')}
                 layout={{ position: 'absolute', left: 0, width: 22, top: 1, height: 23 }}
             />
@@ -211,14 +202,12 @@ export interface WiredMenuViewLayoutHeaderContainerProps {
     headerBorder?: WiredMenuViewLayoutHeaderBorderProps;
     headerDetail?: WiredMenuViewLayoutHeaderDetailProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutHeaderContainer = ({ captionHeaderTitle, discordRegion, headerBorder, headerDetail, layout, tags }: WiredMenuViewLayoutHeaderContainerProps) => {
+export const WiredMenuViewLayoutHeaderContainer = ({ captionHeaderTitle, discordRegion, headerBorder, headerDetail, layout }: WiredMenuViewLayoutHeaderContainerProps) => {
     return (
         <Region
             name="header_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 498, top: 32, height: 50, ...layout }}
         >
             <WiredMenuViewLayoutHeaderBorder {...headerBorder} />
@@ -248,16 +237,14 @@ export interface WiredMenuViewLayoutStatisticsContainerProps {
     captionStatisticsWallfurniHtml?: string;
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutStatisticsContainer = ({ captionStatisticsFloorfurniHtml, captionStatisticsHeavyHtml, captionStatisticsPermVarsFurniHtml, captionStatisticsPermVarsGlobalHtml, captionStatisticsPermVarsUserHtml, captionStatisticsUsageHtml, captionStatisticsWallfurniHtml, captionTitle, layout, tags }: WiredMenuViewLayoutStatisticsContainerProps) => {
+export const WiredMenuViewLayoutStatisticsContainer = ({ captionStatisticsFloorfurniHtml, captionStatisticsHeavyHtml, captionStatisticsPermVarsFurniHtml, captionStatisticsPermVarsGlobalHtml, captionStatisticsPermVarsUserHtml, captionStatisticsUsageHtml, captionStatisticsWallfurniHtml, captionTitle, layout }: WiredMenuViewLayoutStatisticsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="statistics_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 215, top: 18, height: 123, ...layout }}
         >
             <Region
@@ -331,14 +318,12 @@ export interface WiredMenuViewLayoutImageContainerProps {
     layout?: BoxLayout;
     srcMonitorImage1?: string;
     srcMonitorImage2?: string;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutImageContainer = ({ layout, srcMonitorImage1, srcMonitorImage2, tags }: WiredMenuViewLayoutImageContainerProps) => {
+export const WiredMenuViewLayoutImageContainer = ({ layout, srcMonitorImage1, srcMonitorImage2 }: WiredMenuViewLayoutImageContainerProps) => {
     return (
         <Region
             name="image_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 230, width: 256, top: 4, height: 145, ...layout }}
         >
             <Region
@@ -363,14 +348,12 @@ export const WiredMenuViewLayoutImageContainer = ({ layout, srcMonitorImage1, sr
 /** Named region `log_table_container` of WiredMenuViewLayout - configured through the parent's `logTableContainer` prop. */
 export interface WiredMenuViewLayoutLogTableContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutLogTableContainer = ({ layout, tags }: WiredMenuViewLayoutLogTableContainerProps) => {
+export const WiredMenuViewLayoutLogTableContainer = ({ layout }: WiredMenuViewLayoutLogTableContainerProps) => {
     return (
         <Region
             name="log_table_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 472, top: 20, height: 156, ...layout }}
         />
     );
@@ -383,16 +366,14 @@ export interface WiredMenuViewLayoutLogContainerProps {
     logTableContainer?: WiredMenuViewLayoutLogTableContainerProps;
     onClearLogBtn?: () => void;
     onLogOverviewBtn?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutLogContainer = ({ captionTitle, layout, logTableContainer, onClearLogBtn, onLogOverviewBtn, tags }: WiredMenuViewLayoutLogContainerProps) => {
+export const WiredMenuViewLayoutLogContainer = ({ captionTitle, layout, logTableContainer, onClearLogBtn, onLogOverviewBtn }: WiredMenuViewLayoutLogContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="log_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 472, top: 152, height: 218, ...layout }}
         >
             <Region
@@ -431,14 +412,12 @@ export interface WiredMenuViewLayoutMonitorContainerProps {
     layout?: BoxLayout;
     logContainer?: WiredMenuViewLayoutLogContainerProps;
     statisticsContainer?: WiredMenuViewLayoutStatisticsContainerProps;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutMonitorContainer = ({ imageContainer, layout, logContainer, statisticsContainer, tags }: WiredMenuViewLayoutMonitorContainerProps) => {
+export const WiredMenuViewLayoutMonitorContainer = ({ imageContainer, layout, logContainer, statisticsContainer }: WiredMenuViewLayoutMonitorContainerProps) => {
     return (
         <Region
             name="monitor_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
         >
             <WiredMenuViewLayoutStatisticsContainer {...statisticsContainer} />
@@ -452,16 +431,14 @@ export const WiredMenuViewLayoutMonitorContainer = ({ imageContainer, layout, lo
 export interface WiredMenuViewLayoutFurniOptionItemProps {
     layout?: BoxLayout;
     onTypeFurniButton?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutFurniOptionItem = ({ layout, onTypeFurniButton, tags }: WiredMenuViewLayoutFurniOptionItemProps) => {
+export const WiredMenuViewLayoutFurniOptionItem = ({ layout, onTypeFurniButton }: WiredMenuViewLayoutFurniOptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="furni_option"
-            tags={tags}
             layout={{ width: 37, height: 37, flexShrink: 0, ...layout }}
         >
             <Button
@@ -484,16 +461,14 @@ export const WiredMenuViewLayoutFurniOptionItem = ({ layout, onTypeFurniButton, 
 export interface WiredMenuViewLayoutUserOptionItemProps {
     layout?: BoxLayout;
     onTypeUserButton?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutUserOptionItem = ({ layout, onTypeUserButton, tags }: WiredMenuViewLayoutUserOptionItemProps) => {
+export const WiredMenuViewLayoutUserOptionItem = ({ layout, onTypeUserButton }: WiredMenuViewLayoutUserOptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_option"
-            tags={tags}
             layout={{ width: 37, height: 37, flexShrink: 0, ...layout }}
         >
             <Button
@@ -516,16 +491,14 @@ export const WiredMenuViewLayoutUserOptionItem = ({ layout, onTypeUserButton, ta
 export interface WiredMenuViewLayoutGlobalOptionItemProps {
     layout?: BoxLayout;
     onTypeGlobalButton?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutGlobalOptionItem = ({ layout, onTypeGlobalButton, tags }: WiredMenuViewLayoutGlobalOptionItemProps) => {
+export const WiredMenuViewLayoutGlobalOptionItem = ({ layout, onTypeGlobalButton }: WiredMenuViewLayoutGlobalOptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="global_option"
-            tags={tags}
             layout={{ width: 37, height: 37, flexShrink: 0, ...layout }}
         >
             <Button
@@ -548,16 +521,14 @@ export const WiredMenuViewLayoutGlobalOptionItem = ({ layout, onTypeGlobalButton
 export interface WiredMenuViewLayoutContextOptionItemProps {
     layout?: BoxLayout;
     onTypeContextButton?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutContextOptionItem = ({ layout, onTypeContextButton, tags }: WiredMenuViewLayoutContextOptionItemProps) => {
+export const WiredMenuViewLayoutContextOptionItem = ({ layout, onTypeContextButton }: WiredMenuViewLayoutContextOptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="context_option"
-            tags={tags}
             layout={{ width: 37, height: 37, flexShrink: 0, ...layout }}
         >
             <Button
@@ -580,14 +551,12 @@ export const WiredMenuViewLayoutContextOptionItem = ({ layout, onTypeContextButt
 export interface WiredMenuViewLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutButtons = ({ itemsButtons, layout, tags }: WiredMenuViewLayoutButtonsProps) => {
+export const WiredMenuViewLayoutButtons = ({ itemsButtons, layout }: WiredMenuViewLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 183, top: 5, height: 37, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsButtons ?? (
@@ -607,16 +576,14 @@ export interface WiredMenuViewLayoutTypePickerContainerProps {
     buttons?: WiredMenuViewLayoutButtonsProps;
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutTypePickerContainer = ({ buttons, captionTitle, layout, tags }: WiredMenuViewLayoutTypePickerContainerProps) => {
+export const WiredMenuViewLayoutTypePickerContainer = ({ buttons, captionTitle, layout }: WiredMenuViewLayoutTypePickerContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="type_picker_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 197, top: 18, height: 70, ...layout }}
         >
             <Region
@@ -640,14 +607,12 @@ export const WiredMenuViewLayoutTypePickerContainer = ({ buttons, captionTitle, 
 /** Named region `variable_list_container` of WiredMenuViewLayout - configured through the parent's `variableListContainer` prop. */
 export interface WiredMenuViewLayoutVariableListContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutVariableListContainer = ({ layout, tags }: WiredMenuViewLayoutVariableListContainerProps) => {
+export const WiredMenuViewLayoutVariableListContainer = ({ layout }: WiredMenuViewLayoutVariableListContainerProps) => {
     return (
         <Region
             name="variable_list_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0, ...layout }}
         />
     );
@@ -657,17 +622,15 @@ export const WiredMenuViewLayoutVariableListContainer = ({ layout, tags }: Wired
 export interface WiredMenuViewLayoutVariablePickerContainerProps {
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
     variableListContainer?: WiredMenuViewLayoutVariableListContainerProps;
 }
 
-export const WiredMenuViewLayoutVariablePickerContainer = ({ captionTitle, layout, tags, variableListContainer }: WiredMenuViewLayoutVariablePickerContainerProps) => {
+export const WiredMenuViewLayoutVariablePickerContainer = ({ captionTitle, layout, variableListContainer }: WiredMenuViewLayoutVariablePickerContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="variable_picker_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, right: 298, top: 94, height: 239, ...layout }}
         >
             <Region
@@ -685,17 +648,15 @@ export const WiredMenuViewLayoutVariablePickerContainer = ({ captionTitle, layou
 export interface WiredMenuViewLayoutHighlightHoldersButtonItemProps {
     layout?: BoxLayout;
     onHighlightHoldersButton?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutHighlightHoldersButtonItem = ({ layout, onHighlightHoldersButton, tags }: WiredMenuViewLayoutHighlightHoldersButtonItemProps) => {
+export const WiredMenuViewLayoutHighlightHoldersButtonItem = ({ layout, onHighlightHoldersButton }: WiredMenuViewLayoutHighlightHoldersButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="highlight_holders_button"
-            tags={tags}
             tooltip={t('wiredmenu.variable_overview.highlight_holders.tooltip')}
             onPointerTap={onHighlightHoldersButton}
             textStyle="text-style-button-shiny-regular"
@@ -710,17 +671,15 @@ export const WiredMenuViewLayoutHighlightHoldersButtonItem = ({ layout, onHighli
 export interface WiredMenuViewLayoutManageButtonItemProps {
     layout?: BoxLayout;
     onManageButton?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutManageButtonItem = ({ layout, onManageButton, tags }: WiredMenuViewLayoutManageButtonItemProps) => {
+export const WiredMenuViewLayoutManageButtonItem = ({ layout, onManageButton }: WiredMenuViewLayoutManageButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="manage_button"
-            tags={tags}
             tooltip={t('wiredmenu.variable_overview.manage.tooltip')}
             onPointerTap={onManageButton}
             textStyle="text-style-button-shiny-regular"
@@ -735,14 +694,12 @@ export const WiredMenuViewLayoutManageButtonItem = ({ layout, onManageButton, ta
 export interface WiredMenuViewLayoutButtonRowProps {
     itemsButtonRow?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutButtonRow = ({ itemsButtonRow, layout, tags }: WiredMenuViewLayoutButtonRowProps) => {
+export const WiredMenuViewLayoutButtonRow = ({ itemsButtonRow, layout }: WiredMenuViewLayoutButtonRowProps) => {
     return (
         <Region
             name="button_row"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 188, top: 342, height: 25, minWidth: 188, maxWidth: 188, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsButtonRow ?? (
@@ -758,14 +715,12 @@ export const WiredMenuViewLayoutButtonRow = ({ itemsButtonRow, layout, tags }: W
 /** Named region `variable_properties_table_container` of WiredMenuViewLayout - configured through the parent's `variablePropertiesTableContainer` prop. */
 export interface WiredMenuViewLayoutVariablePropertiesTableContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutVariablePropertiesTableContainer = ({ layout, tags }: WiredMenuViewLayoutVariablePropertiesTableContainerProps) => {
+export const WiredMenuViewLayoutVariablePropertiesTableContainer = ({ layout }: WiredMenuViewLayoutVariablePropertiesTableContainerProps) => {
     return (
         <Region
             name="variable_properties_table_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0, ...layout }}
         />
     );
@@ -775,17 +730,15 @@ export const WiredMenuViewLayoutVariablePropertiesTableContainer = ({ layout, ta
 export interface WiredMenuViewLayoutVariablePropertiesContainerProps {
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
     variablePropertiesTableContainer?: WiredMenuViewLayoutVariablePropertiesTableContainerProps;
 }
 
-export const WiredMenuViewLayoutVariablePropertiesContainer = ({ captionTitle, layout, tags, variablePropertiesTableContainer }: WiredMenuViewLayoutVariablePropertiesContainerProps) => {
+export const WiredMenuViewLayoutVariablePropertiesContainer = ({ captionTitle, layout, variablePropertiesTableContainer }: WiredMenuViewLayoutVariablePropertiesContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="variable_properties_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 230, width: 256, top: 17, height: 208, ...layout }}
         >
             <Region
@@ -802,14 +755,12 @@ export const WiredMenuViewLayoutVariablePropertiesContainer = ({ captionTitle, l
 /** Named region `variable_texts_table_container` of WiredMenuViewLayout - configured through the parent's `variableTextsTableContainer` prop. */
 export interface WiredMenuViewLayoutVariableTextsTableContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutVariableTextsTableContainer = ({ layout, tags }: WiredMenuViewLayoutVariableTextsTableContainerProps) => {
+export const WiredMenuViewLayoutVariableTextsTableContainer = ({ layout }: WiredMenuViewLayoutVariableTextsTableContainerProps) => {
     return (
         <Region
             name="variable_texts_table_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0, ...layout }}
         />
     );
@@ -819,17 +770,15 @@ export const WiredMenuViewLayoutVariableTextsTableContainer = ({ layout, tags }:
 export interface WiredMenuViewLayoutVariableTextsContainerProps {
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
     variableTextsTableContainer?: WiredMenuViewLayoutVariableTextsTableContainerProps;
 }
 
-export const WiredMenuViewLayoutVariableTextsContainer = ({ captionTitle, layout, tags, variableTextsTableContainer }: WiredMenuViewLayoutVariableTextsContainerProps) => {
+export const WiredMenuViewLayoutVariableTextsContainer = ({ captionTitle, layout, variableTextsTableContainer }: WiredMenuViewLayoutVariableTextsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="variable_texts_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 230, width: 256, top: 233, height: 135, ...layout }}
         >
             <Region
@@ -847,7 +796,6 @@ export const WiredMenuViewLayoutVariableTextsContainer = ({ captionTitle, layout
 export interface WiredMenuViewLayoutVariableOverviewContainerProps {
     buttonRow?: WiredMenuViewLayoutButtonRowProps;
     layout?: BoxLayout;
-    tags?: string[];
     typePickerContainer?: WiredMenuViewLayoutTypePickerContainerProps;
     variablePickerContainer?: WiredMenuViewLayoutVariablePickerContainerProps;
     variablePropertiesContainer?: WiredMenuViewLayoutVariablePropertiesContainerProps;
@@ -855,11 +803,10 @@ export interface WiredMenuViewLayoutVariableOverviewContainerProps {
     visibleVariableOverviewContainer?: boolean;
 }
 
-export const WiredMenuViewLayoutVariableOverviewContainer = ({ buttonRow, layout, tags, typePickerContainer, variablePickerContainer, variablePropertiesContainer, variableTextsContainer, visibleVariableOverviewContainer }: WiredMenuViewLayoutVariableOverviewContainerProps) => {
+export const WiredMenuViewLayoutVariableOverviewContainer = ({ buttonRow, layout, typePickerContainer, variablePickerContainer, variablePropertiesContainer, variableTextsContainer, visibleVariableOverviewContainer }: WiredMenuViewLayoutVariableOverviewContainerProps) => {
     return (
         <Region
             name="variable_overview_container"
-            tags={tags}
             visible={visibleVariableOverviewContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
         >
@@ -876,16 +823,14 @@ export const WiredMenuViewLayoutVariableOverviewContainer = ({ buttonRow, layout
 export interface WiredMenuViewLayoutFurniOptionItem2Props {
     layout?: BoxLayout;
     onTypeFurniButton?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutFurniOptionItem2 = ({ layout, onTypeFurniButton, tags }: WiredMenuViewLayoutFurniOptionItem2Props) => {
+export const WiredMenuViewLayoutFurniOptionItem2 = ({ layout, onTypeFurniButton }: WiredMenuViewLayoutFurniOptionItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="furni_option"
-            tags={tags}
             layout={{ width: 37, height: 37, flexShrink: 0, ...layout }}
         >
             <Button
@@ -908,16 +853,14 @@ export const WiredMenuViewLayoutFurniOptionItem2 = ({ layout, onTypeFurniButton,
 export interface WiredMenuViewLayoutUserOptionItem2Props {
     layout?: BoxLayout;
     onTypeUserButton?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutUserOptionItem2 = ({ layout, onTypeUserButton, tags }: WiredMenuViewLayoutUserOptionItem2Props) => {
+export const WiredMenuViewLayoutUserOptionItem2 = ({ layout, onTypeUserButton }: WiredMenuViewLayoutUserOptionItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_option"
-            tags={tags}
             layout={{ width: 37, height: 37, flexShrink: 0, ...layout }}
         >
             <Button
@@ -940,16 +883,14 @@ export const WiredMenuViewLayoutUserOptionItem2 = ({ layout, onTypeUserButton, t
 export interface WiredMenuViewLayoutGlobalOptionItem2Props {
     layout?: BoxLayout;
     onTypeGlobalButton?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutGlobalOptionItem2 = ({ layout, onTypeGlobalButton, tags }: WiredMenuViewLayoutGlobalOptionItem2Props) => {
+export const WiredMenuViewLayoutGlobalOptionItem2 = ({ layout, onTypeGlobalButton }: WiredMenuViewLayoutGlobalOptionItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="global_option"
-            tags={tags}
             layout={{ width: 37, height: 37, flexShrink: 0, ...layout }}
         >
             <Button
@@ -972,14 +913,12 @@ export const WiredMenuViewLayoutGlobalOptionItem2 = ({ layout, onTypeGlobalButto
 export interface WiredMenuViewLayoutButtons2Props {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutButtons2 = ({ itemsButtons, layout, tags }: WiredMenuViewLayoutButtons2Props) => {
+export const WiredMenuViewLayoutButtons2 = ({ itemsButtons, layout }: WiredMenuViewLayoutButtons2Props) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 131, top: 5, height: 37, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsButtons ?? (
@@ -998,16 +937,14 @@ export interface WiredMenuViewLayoutTypePickerContainer2Props {
     buttons?: WiredMenuViewLayoutButtons2Props;
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutTypePickerContainer2 = ({ buttons, captionTitle, layout, tags }: WiredMenuViewLayoutTypePickerContainer2Props) => {
+export const WiredMenuViewLayoutTypePickerContainer2 = ({ buttons, captionTitle, layout }: WiredMenuViewLayoutTypePickerContainer2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="type_picker_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 150, top: 18, height: 70, ...layout }}
         >
             <Region
@@ -1031,14 +968,12 @@ export const WiredMenuViewLayoutTypePickerContainer2 = ({ buttons, captionTitle,
 /** Named region `variable_values_table_container` of WiredMenuViewLayout - configured through the parent's `variableValuesTableContainer` prop. */
 export interface WiredMenuViewLayoutVariableValuesTableContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutVariableValuesTableContainer = ({ layout, tags }: WiredMenuViewLayoutVariableValuesTableContainerProps) => {
+export const WiredMenuViewLayoutVariableValuesTableContainer = ({ layout }: WiredMenuViewLayoutVariableValuesTableContainerProps) => {
     return (
         <Region
             name="variable_values_table_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 34, ...layout }}
         />
     );
@@ -1047,14 +982,12 @@ export const WiredMenuViewLayoutVariableValuesTableContainer = ({ layout, tags }
 /** Named region `var_picker_container` of WiredMenuViewLayout - configured through the parent's `varPickerContainer` prop. */
 export interface WiredMenuViewLayoutVarPickerContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutVarPickerContainer = ({ layout, tags }: WiredMenuViewLayoutVarPickerContainerProps) => {
+export const WiredMenuViewLayoutVarPickerContainer = ({ layout }: WiredMenuViewLayoutVarPickerContainerProps) => {
     return (
         <Region
             name="var_picker_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 22, ...layout }}
         />
     );
@@ -1063,17 +996,15 @@ export const WiredMenuViewLayoutVarPickerContainer = ({ layout, tags }: WiredMen
 /** Named region `variable_setting` of WiredMenuViewLayout - configured through the parent's `variableSetting` prop. */
 export interface WiredMenuViewLayoutVariableSettingProps {
     layout?: BoxLayout;
-    tags?: string[];
     varPickerContainer?: WiredMenuViewLayoutVarPickerContainerProps;
 }
 
-export const WiredMenuViewLayoutVariableSetting = ({ layout, tags, varPickerContainer }: WiredMenuViewLayoutVariableSettingProps) => {
+export const WiredMenuViewLayoutVariableSetting = ({ layout, varPickerContainer }: WiredMenuViewLayoutVariableSettingProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="variable_setting"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, right: 22, top: 6, height: 42, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -1087,17 +1018,15 @@ export const WiredMenuViewLayoutVariableSetting = ({ layout, tags, varPickerCont
 /** Named region `value_setting` of WiredMenuViewLayout - configured through the parent's `valueSetting` prop. */
 export interface WiredMenuViewLayoutValueSettingProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutValueSetting = ({ layout, tags }: WiredMenuViewLayoutValueSettingProps) => {
+export const WiredMenuViewLayoutValueSetting = ({ layout }: WiredMenuViewLayoutValueSettingProps) => {
     const t = useTranslation();
     const [ valueInputValue, setValueInputValue ] = useState('');
 
     return (
         <Region
             name="value_setting"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, right: 22, top: 52, height: 42, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -1125,20 +1054,18 @@ export interface WiredMenuViewLayoutVariableValuesContainerProps {
     onAddVarBtn?: () => void;
     onCreateVarBtn?: () => void;
     onDeleteVarBtn?: () => void;
-    tags?: string[];
     valueSetting?: WiredMenuViewLayoutValueSettingProps;
     variableSetting?: WiredMenuViewLayoutVariableSettingProps;
     variableValuesTableContainer?: WiredMenuViewLayoutVariableValuesTableContainerProps;
     visibleCreateVarBubble?: boolean;
 }
 
-export const WiredMenuViewLayoutVariableValuesContainer = ({ captionTitle, layout, onAddVarBtn, onCreateVarBtn, onDeleteVarBtn, tags, valueSetting, variableSetting, variableValuesTableContainer, visibleCreateVarBubble }: WiredMenuViewLayoutVariableValuesContainerProps) => {
+export const WiredMenuViewLayoutVariableValuesContainer = ({ captionTitle, layout, onAddVarBtn, onCreateVarBtn, onDeleteVarBtn, valueSetting, variableSetting, variableValuesTableContainer, visibleCreateVarBubble }: WiredMenuViewLayoutVariableValuesContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="variable_values_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 183, width: 303, top: 17, height: 351, ...layout }}
         >
             <Region
@@ -1198,16 +1125,14 @@ export const WiredMenuViewLayoutVariableValuesContainer = ({ captionTitle, layou
 export interface WiredMenuViewLayoutPinOptionContainerProps {
     layout?: BoxLayout;
     onPinCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutPinOptionContainer = ({ layout, onPinCheckbox, tags }: WiredMenuViewLayoutPinOptionContainerProps) => {
+export const WiredMenuViewLayoutPinOptionContainer = ({ layout, onPinCheckbox }: WiredMenuViewLayoutPinOptionContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="pin_option_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 197, top: 254, height: 18, ...layout }}
         >
             <CheckBox
@@ -1233,16 +1158,14 @@ export interface WiredMenuViewLayoutPreviewContainerProps {
     pinOptionContainer?: WiredMenuViewLayoutPinOptionContainerProps;
     srcGlobalPlaceholder?: string;
     srcPreviewImageBitmap?: string;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutPreviewContainer = ({ captionPreviewInstructionFurni, captionPreviewInstructionUser, captionTitle, layout, onHighlightWiredBtn, pinOptionContainer, srcGlobalPlaceholder, srcPreviewImageBitmap, tags }: WiredMenuViewLayoutPreviewContainerProps) => {
+export const WiredMenuViewLayoutPreviewContainer = ({ captionPreviewInstructionFurni, captionPreviewInstructionUser, captionTitle, layout, onHighlightWiredBtn, pinOptionContainer, srcGlobalPlaceholder, srcPreviewImageBitmap }: WiredMenuViewLayoutPreviewContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="preview_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 150, top: 94, height: 274, ...layout }}
         >
             <Region
@@ -1333,17 +1256,15 @@ export interface WiredMenuViewLayoutInspectionContainerProps {
     layout?: BoxLayout;
     onInspectionContainer?: () => void;
     previewContainer?: WiredMenuViewLayoutPreviewContainerProps;
-    tags?: string[];
     typePickerContainer?: WiredMenuViewLayoutTypePickerContainer2Props;
     variableValuesContainer?: WiredMenuViewLayoutVariableValuesContainerProps;
     visibleInspectionContainer?: boolean;
 }
 
-export const WiredMenuViewLayoutInspectionContainer = ({ layout, onInspectionContainer, previewContainer, tags, typePickerContainer, variableValuesContainer, visibleInspectionContainer }: WiredMenuViewLayoutInspectionContainerProps) => {
+export const WiredMenuViewLayoutInspectionContainer = ({ layout, onInspectionContainer, previewContainer, typePickerContainer, variableValuesContainer, visibleInspectionContainer }: WiredMenuViewLayoutInspectionContainerProps) => {
     return (
         <Region
             name="inspection_container"
-            tags={tags}
             visible={visibleInspectionContainer ?? false}
             onPointerTap={onInspectionContainer}
             cursor="pointer"
@@ -1363,16 +1284,14 @@ export interface WiredMenuViewLayoutChestControlsContainerProps {
     onLockAllButton?: () => void;
     onLockOwnButton?: () => void;
     onUnlockOwnButton?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutChestControlsContainer = ({ captionTitle, layout, onLockAllButton, onLockOwnButton, onUnlockOwnButton, tags }: WiredMenuViewLayoutChestControlsContainerProps) => {
+export const WiredMenuViewLayoutChestControlsContainer = ({ captionTitle, layout, onLockAllButton, onLockOwnButton, onUnlockOwnButton }: WiredMenuViewLayoutChestControlsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="chest_controls_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 472, top: 18, height: 110, ...layout }}
         >
             <Region
@@ -1426,14 +1345,12 @@ export const WiredMenuViewLayoutChestControlsContainer = ({ captionTitle, layout
 /** Named region `logs_table_container` of WiredMenuViewLayout - configured through the parent's `logsTableContainer` prop. */
 export interface WiredMenuViewLayoutLogsTableContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutLogsTableContainer = ({ layout, tags }: WiredMenuViewLayoutLogsTableContainerProps) => {
+export const WiredMenuViewLayoutLogsTableContainer = ({ layout }: WiredMenuViewLayoutLogsTableContainerProps) => {
     return (
         <Region
             name="logs_table_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 40, ...layout }}
         />
     );
@@ -1446,16 +1363,14 @@ export interface WiredMenuViewLayoutLogsContainerProps {
     layout?: BoxLayout;
     logsTableContainer?: WiredMenuViewLayoutLogsTableContainerProps;
     onViewInDetailButton?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutLogsContainer = ({ captionTitle, captionTitleExtra, layout, logsTableContainer, onViewInDetailButton, tags }: WiredMenuViewLayoutLogsContainerProps) => {
+export const WiredMenuViewLayoutLogsContainer = ({ captionTitle, captionTitleExtra, layout, logsTableContainer, onViewInDetailButton }: WiredMenuViewLayoutLogsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="logs_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 472, top: 139, height: 228, ...layout }}
         >
             <Region
@@ -1489,15 +1404,13 @@ export interface WiredMenuViewLayoutChestsContainerProps {
     chestControlsContainer?: WiredMenuViewLayoutChestControlsContainerProps;
     layout?: BoxLayout;
     logsContainer?: WiredMenuViewLayoutLogsContainerProps;
-    tags?: string[];
     visibleChestsContainer?: boolean;
 }
 
-export const WiredMenuViewLayoutChestsContainer = ({ chestControlsContainer, layout, logsContainer, tags, visibleChestsContainer }: WiredMenuViewLayoutChestsContainerProps) => {
+export const WiredMenuViewLayoutChestsContainer = ({ chestControlsContainer, layout, logsContainer, visibleChestsContainer }: WiredMenuViewLayoutChestsContainerProps) => {
     return (
         <Region
             name="chests_container"
-            tags={tags}
             visible={visibleChestsContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
         >
@@ -1511,16 +1424,14 @@ export const WiredMenuViewLayoutChestsContainer = ({ chestControlsContainer, lay
 export interface WiredMenuViewLayoutOptionBoxProps {
     layout?: BoxLayout;
     onModify1Checkbox?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutOptionBox = ({ layout, onModify1Checkbox, tags }: WiredMenuViewLayoutOptionBoxProps) => {
+export const WiredMenuViewLayoutOptionBox = ({ layout, onModify1Checkbox }: WiredMenuViewLayoutOptionBoxProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="option_box"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 214, top: 20, height: 20, ...layout }}
         >
             <CheckBox
@@ -1540,16 +1451,14 @@ export const WiredMenuViewLayoutOptionBox = ({ layout, onModify1Checkbox, tags }
 export interface WiredMenuViewLayoutOptionBox2Props {
     layout?: BoxLayout;
     onModify2Checkbox?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutOptionBox2 = ({ layout, onModify2Checkbox, tags }: WiredMenuViewLayoutOptionBox2Props) => {
+export const WiredMenuViewLayoutOptionBox2 = ({ layout, onModify2Checkbox }: WiredMenuViewLayoutOptionBox2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="option_box"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 214, top: 39, height: 20, ...layout }}
         >
             <CheckBox
@@ -1569,16 +1478,14 @@ export const WiredMenuViewLayoutOptionBox2 = ({ layout, onModify2Checkbox, tags 
 export interface WiredMenuViewLayoutOptionBox3Props {
     layout?: BoxLayout;
     onModify3Checkbox?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutOptionBox3 = ({ layout, onModify3Checkbox, tags }: WiredMenuViewLayoutOptionBox3Props) => {
+export const WiredMenuViewLayoutOptionBox3 = ({ layout, onModify3Checkbox }: WiredMenuViewLayoutOptionBox3Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="option_box"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 214, top: 58, height: 20, ...layout }}
         >
             <CheckBox
@@ -1600,16 +1507,14 @@ export interface WiredMenuViewLayoutModifySettingsContainerProps {
     optionBox?: WiredMenuViewLayoutOptionBoxProps;
     optionBox2?: WiredMenuViewLayoutOptionBox2Props;
     optionBox3?: WiredMenuViewLayoutOptionBox3Props;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, optionBox, optionBox2, optionBox3, tags }: WiredMenuViewLayoutModifySettingsContainerProps) => {
+export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, optionBox, optionBox2, optionBox3 }: WiredMenuViewLayoutModifySettingsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="modify_settings_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 102, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -1626,16 +1531,14 @@ export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, optionBox, 
 export interface WiredMenuViewLayoutOptionBox4Props {
     layout?: BoxLayout;
     onRead0Checkbox?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutOptionBox4 = ({ layout, onRead0Checkbox, tags }: WiredMenuViewLayoutOptionBox4Props) => {
+export const WiredMenuViewLayoutOptionBox4 = ({ layout, onRead0Checkbox }: WiredMenuViewLayoutOptionBox4Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="option_box"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 214, top: 20, height: 20, ...layout }}
         >
             <CheckBox
@@ -1655,16 +1558,14 @@ export const WiredMenuViewLayoutOptionBox4 = ({ layout, onRead0Checkbox, tags }:
 export interface WiredMenuViewLayoutOptionBox5Props {
     layout?: BoxLayout;
     onRead1Checkbox?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutOptionBox5 = ({ layout, onRead1Checkbox, tags }: WiredMenuViewLayoutOptionBox5Props) => {
+export const WiredMenuViewLayoutOptionBox5 = ({ layout, onRead1Checkbox }: WiredMenuViewLayoutOptionBox5Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="option_box"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 214, top: 39, height: 20, ...layout }}
         >
             <CheckBox
@@ -1684,16 +1585,14 @@ export const WiredMenuViewLayoutOptionBox5 = ({ layout, onRead1Checkbox, tags }:
 export interface WiredMenuViewLayoutOptionBox6Props {
     layout?: BoxLayout;
     onRead2Checkbox?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutOptionBox6 = ({ layout, onRead2Checkbox, tags }: WiredMenuViewLayoutOptionBox6Props) => {
+export const WiredMenuViewLayoutOptionBox6 = ({ layout, onRead2Checkbox }: WiredMenuViewLayoutOptionBox6Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="option_box"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 214, top: 58, height: 20, ...layout }}
         >
             <CheckBox
@@ -1713,16 +1612,14 @@ export const WiredMenuViewLayoutOptionBox6 = ({ layout, onRead2Checkbox, tags }:
 export interface WiredMenuViewLayoutOptionBox7Props {
     layout?: BoxLayout;
     onRead3Checkbox?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutOptionBox7 = ({ layout, onRead3Checkbox, tags }: WiredMenuViewLayoutOptionBox7Props) => {
+export const WiredMenuViewLayoutOptionBox7 = ({ layout, onRead3Checkbox }: WiredMenuViewLayoutOptionBox7Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="option_box"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 214, top: 77, height: 20, ...layout }}
         >
             <CheckBox
@@ -1745,16 +1642,14 @@ export interface WiredMenuViewLayoutReadSettingsContainerProps {
     optionBox2?: WiredMenuViewLayoutOptionBox5Props;
     optionBox3?: WiredMenuViewLayoutOptionBox6Props;
     optionBox4?: WiredMenuViewLayoutOptionBox7Props;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutReadSettingsContainer = ({ layout, optionBox, optionBox2, optionBox3, optionBox4, tags }: WiredMenuViewLayoutReadSettingsContainerProps) => {
+export const WiredMenuViewLayoutReadSettingsContainer = ({ layout, optionBox, optionBox2, optionBox3, optionBox4 }: WiredMenuViewLayoutReadSettingsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="read_settings_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 233, top: 8, height: 102, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -1772,16 +1667,14 @@ export const WiredMenuViewLayoutReadSettingsContainer = ({ layout, optionBox, op
 export interface WiredMenuViewLayoutTimezoneContainerProps {
     layout?: BoxLayout;
     onTimezonePicker?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutTimezoneContainer = ({ layout, onTimezonePicker, tags }: WiredMenuViewLayoutTimezoneContainerProps) => {
+export const WiredMenuViewLayoutTimezoneContainer = ({ layout, onTimezonePicker }: WiredMenuViewLayoutTimezoneContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="timezone_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -1802,16 +1695,14 @@ export interface WiredMenuViewLayoutTimezoneContainer2Props {
     layout?: BoxLayout;
     onReloadRoomBtn?: () => void;
     onRollBackBtn?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutTimezoneContainer2 = ({ layout, onReloadRoomBtn, onRollBackBtn, tags }: WiredMenuViewLayoutTimezoneContainer2Props) => {
+export const WiredMenuViewLayoutTimezoneContainer2 = ({ layout, onReloadRoomBtn, onRollBackBtn }: WiredMenuViewLayoutTimezoneContainer2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="timezone_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -1846,16 +1737,14 @@ export interface WiredMenuViewLayoutRoomSettingsContainerProps {
     layout?: BoxLayout;
     modifySettingsContainer?: WiredMenuViewLayoutModifySettingsContainerProps;
     readSettingsContainer?: WiredMenuViewLayoutReadSettingsContainerProps;
-    tags?: string[];
     timezoneContainer?: WiredMenuViewLayoutTimezoneContainerProps;
     timezoneContainer2?: WiredMenuViewLayoutTimezoneContainer2Props;
 }
 
-export const WiredMenuViewLayoutRoomSettingsContainer = ({ captionTitle, layout, modifySettingsContainer, readSettingsContainer, tags, timezoneContainer, timezoneContainer2 }: WiredMenuViewLayoutRoomSettingsContainerProps) => {
+export const WiredMenuViewLayoutRoomSettingsContainer = ({ captionTitle, layout, modifySettingsContainer, readSettingsContainer, timezoneContainer, timezoneContainer2 }: WiredMenuViewLayoutRoomSettingsContainerProps) => {
     return (
         <Region
             name="room_settings_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 472, top: 18, height: 220, ...layout }}
         >
             <Region
@@ -1904,16 +1793,14 @@ export const WiredMenuViewLayoutRoomSettingsContainer = ({ captionTitle, layout,
 export interface WiredMenuViewLayoutOptionContainerProps {
     layout?: BoxLayout;
     onPreferenceToolbarCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutOptionContainer = ({ layout, onPreferenceToolbarCheckbox, tags }: WiredMenuViewLayoutOptionContainerProps) => {
+export const WiredMenuViewLayoutOptionContainer = ({ layout, onPreferenceToolbarCheckbox }: WiredMenuViewLayoutOptionContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="option_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 450, top: 20, height: 20, ...layout }}
         >
             <CheckBox
@@ -1933,16 +1820,14 @@ export const WiredMenuViewLayoutOptionContainer = ({ layout, onPreferenceToolbar
 export interface WiredMenuViewLayoutOptionContainer2Props {
     layout?: BoxLayout;
     onPreferenceInspectButtonCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutOptionContainer2 = ({ layout, onPreferenceInspectButtonCheckbox, tags }: WiredMenuViewLayoutOptionContainer2Props) => {
+export const WiredMenuViewLayoutOptionContainer2 = ({ layout, onPreferenceInspectButtonCheckbox }: WiredMenuViewLayoutOptionContainer2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="option_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 450, top: 39, height: 20, ...layout }}
         >
             <CheckBox
@@ -1962,16 +1847,14 @@ export const WiredMenuViewLayoutOptionContainer2 = ({ layout, onPreferenceInspec
 export interface WiredMenuViewLayoutOptionContainer3Props {
     layout?: BoxLayout;
     onPreferencePlaytestCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutOptionContainer3 = ({ layout, onPreferencePlaytestCheckbox, tags }: WiredMenuViewLayoutOptionContainer3Props) => {
+export const WiredMenuViewLayoutOptionContainer3 = ({ layout, onPreferencePlaytestCheckbox }: WiredMenuViewLayoutOptionContainer3Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="option_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 450, top: 58, height: 20, ...layout }}
         >
             <CheckBox
@@ -1991,16 +1874,14 @@ export const WiredMenuViewLayoutOptionContainer3 = ({ layout, onPreferencePlayte
 export interface WiredMenuViewLayoutOptionContainer4Props {
     layout?: BoxLayout;
     onPreferenceAllNotificationsCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutOptionContainer4 = ({ layout, onPreferenceAllNotificationsCheckbox, tags }: WiredMenuViewLayoutOptionContainer4Props) => {
+export const WiredMenuViewLayoutOptionContainer4 = ({ layout, onPreferenceAllNotificationsCheckbox }: WiredMenuViewLayoutOptionContainer4Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="option_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 450, top: 77, height: 20, ...layout }}
         >
             <CheckBox
@@ -2023,16 +1904,14 @@ export interface WiredMenuViewLayoutPreferencesContainer2Props {
     optionContainer2?: WiredMenuViewLayoutOptionContainer2Props;
     optionContainer3?: WiredMenuViewLayoutOptionContainer3Props;
     optionContainer4?: WiredMenuViewLayoutOptionContainer4Props;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, optionContainer, optionContainer2, optionContainer3, optionContainer4, tags }: WiredMenuViewLayoutPreferencesContainer2Props) => {
+export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, optionContainer, optionContainer2, optionContainer3, optionContainer4 }: WiredMenuViewLayoutPreferencesContainer2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="preferences_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 4, top: 8, bottom: 2, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -2050,16 +1929,14 @@ export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, optionContain
 export interface WiredMenuViewLayoutWoredStyleContainerProps {
     layout?: BoxLayout;
     onWiredStylePicker?: () => void;
-    tags?: string[];
 }
 
-export const WiredMenuViewLayoutWoredStyleContainer = ({ layout, onWiredStylePicker, tags }: WiredMenuViewLayoutWoredStyleContainerProps) => {
+export const WiredMenuViewLayoutWoredStyleContainer = ({ layout, onWiredStylePicker }: WiredMenuViewLayoutWoredStyleContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wored_style_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -2080,17 +1957,15 @@ export interface WiredMenuViewLayoutPreferencesContainerProps {
     captionTitle?: string;
     layout?: BoxLayout;
     preferencesContainer?: WiredMenuViewLayoutPreferencesContainer2Props;
-    tags?: string[];
     woredStyleContainer?: WiredMenuViewLayoutWoredStyleContainerProps;
 }
 
-export const WiredMenuViewLayoutPreferencesContainer = ({ captionTitle, layout, preferencesContainer, tags, woredStyleContainer }: WiredMenuViewLayoutPreferencesContainerProps) => {
+export const WiredMenuViewLayoutPreferencesContainer = ({ captionTitle, layout, preferencesContainer, woredStyleContainer }: WiredMenuViewLayoutPreferencesContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="preferences_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 472, top: 237, height: 131, ...layout }}
         >
             <Region
@@ -2124,15 +1999,13 @@ export interface WiredMenuViewLayoutSettingsContainerProps {
     layout?: BoxLayout;
     preferencesContainer?: WiredMenuViewLayoutPreferencesContainerProps;
     roomSettingsContainer?: WiredMenuViewLayoutRoomSettingsContainerProps;
-    tags?: string[];
     visibleSettingsContainer?: boolean;
 }
 
-export const WiredMenuViewLayoutSettingsContainer = ({ layout, preferencesContainer, roomSettingsContainer, tags, visibleSettingsContainer }: WiredMenuViewLayoutSettingsContainerProps) => {
+export const WiredMenuViewLayoutSettingsContainer = ({ layout, preferencesContainer, roomSettingsContainer, visibleSettingsContainer }: WiredMenuViewLayoutSettingsContainerProps) => {
     return (
         <Region
             name="settings_container"
-            tags={tags}
             visible={visibleSettingsContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
         >
@@ -2145,15 +2018,13 @@ export const WiredMenuViewLayoutSettingsContainer = ({ layout, preferencesContai
 /** Named region `info_container` of WiredMenuViewLayout - configured through the parent's `infoContainer` prop. */
 export interface WiredMenuViewLayoutInfoContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleInfoContainer?: boolean;
 }
 
-export const WiredMenuViewLayoutInfoContainer = ({ layout, tags, visibleInfoContainer }: WiredMenuViewLayoutInfoContainerProps) => {
+export const WiredMenuViewLayoutInfoContainer = ({ layout, visibleInfoContainer }: WiredMenuViewLayoutInfoContainerProps) => {
     return (
         <Region
             name="info_container"
-            tags={tags}
             visible={visibleInfoContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
         />
@@ -2164,15 +2035,13 @@ export const WiredMenuViewLayoutInfoContainer = ({ layout, tags, visibleInfoCont
 export interface WiredMenuViewLayoutLoadingViewProps {
     layout?: BoxLayout;
     onLoadingView?: () => void;
-    tags?: string[];
     visibleLoadingView?: boolean;
 }
 
-export const WiredMenuViewLayoutLoadingView = ({ layout, onLoadingView, tags, visibleLoadingView }: WiredMenuViewLayoutLoadingViewProps) => {
+export const WiredMenuViewLayoutLoadingView = ({ layout, onLoadingView, visibleLoadingView }: WiredMenuViewLayoutLoadingViewProps) => {
     return (
         <Region
             name="loading_view"
-            tags={tags}
             visible={visibleLoadingView ?? false}
             backgroundColor="#e9e9e1"
             onPointerTap={onLoadingView}
@@ -2191,15 +2060,13 @@ export interface WiredMenuViewLayoutBodyContainerProps {
     loadingView?: WiredMenuViewLayoutLoadingViewProps;
     monitorContainer?: WiredMenuViewLayoutMonitorContainerProps;
     settingsContainer?: WiredMenuViewLayoutSettingsContainerProps;
-    tags?: string[];
     variableOverviewContainer?: WiredMenuViewLayoutVariableOverviewContainerProps;
 }
 
-export const WiredMenuViewLayoutBodyContainer = ({ chestsContainer, infoContainer, inspectionContainer, layout, loadingView, monitorContainer, settingsContainer, tags, variableOverviewContainer }: WiredMenuViewLayoutBodyContainerProps) => {
+export const WiredMenuViewLayoutBodyContainer = ({ chestsContainer, infoContainer, inspectionContainer, layout, loadingView, monitorContainer, settingsContainer, variableOverviewContainer }: WiredMenuViewLayoutBodyContainerProps) => {
     return (
         <Region
             name="body_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 500, top: 82, height: 382, ...layout }}
         >
             <WiredMenuViewLayoutMonitorContainer {...monitorContainer} />

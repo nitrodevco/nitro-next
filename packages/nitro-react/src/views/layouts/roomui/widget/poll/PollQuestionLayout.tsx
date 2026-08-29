@@ -41,16 +41,14 @@ export interface PollQuestionLayoutHeaderRegionProps {
     layout?: BoxLayout;
     onHeaderRegion?: () => void;
     srcPollPromptImage?: string;
-    tags?: string[];
 }
 
-export const PollQuestionLayoutHeaderRegion = ({ captionPollQuestionHeadline, layout, onHeaderRegion, srcPollPromptImage, tags }: PollQuestionLayoutHeaderRegionProps) => {
+export const PollQuestionLayoutHeaderRegion = ({ captionPollQuestionHeadline, layout, onHeaderRegion, srcPollPromptImage }: PollQuestionLayoutHeaderRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header_region"
-            tags={tags}
             backgroundColor="#0e3f52"
             onPointerTap={onHeaderRegion}
             cursor="pointer"
@@ -78,14 +76,12 @@ export const PollQuestionLayoutHeaderRegion = ({ captionPollQuestionHeadline, la
 /** Named region `poll_question_answer_container` of PollQuestionLayout - configured through the parent's `pollQuestionAnswerContainer` prop. */
 export interface PollQuestionLayoutPollQuestionAnswerContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PollQuestionLayoutPollQuestionAnswerContainer = ({ layout, tags }: PollQuestionLayoutPollQuestionAnswerContainerProps) => {
+export const PollQuestionLayoutPollQuestionAnswerContainer = ({ layout }: PollQuestionLayoutPollQuestionAnswerContainerProps) => {
     return (
         <Region
             name="poll_question_answer_container"
-            tags={tags}
             layout={{ width: 363, height: 384, flexShrink: 0, ...layout }}
         />
     );
@@ -96,14 +92,12 @@ export interface PollQuestionLayoutPollContentWrapperProps {
     captionPollQuestionText?: string;
     layout?: BoxLayout;
     pollQuestionAnswerContainer?: PollQuestionLayoutPollQuestionAnswerContainerProps;
-    tags?: string[];
 }
 
-export const PollQuestionLayoutPollContentWrapper = ({ captionPollQuestionText, layout, pollQuestionAnswerContainer, tags }: PollQuestionLayoutPollContentWrapperProps) => {
+export const PollQuestionLayoutPollContentWrapper = ({ captionPollQuestionText, layout, pollQuestionAnswerContainer }: PollQuestionLayoutPollContentWrapperProps) => {
     return (
         <Region
             name="poll_content_wrapper"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, right: 0, top: 0, bottom: 0, flexDirection: 'column', ...layout }}
         >
             <ScrollArea
@@ -136,16 +130,14 @@ export interface PollQuestionLayoutFooterContainerProps {
     captionPollQuestionNumber?: string;
     layout?: BoxLayout;
     onPollQuestionButtonOk?: () => void;
-    tags?: string[];
 }
 
-export const PollQuestionLayoutFooterContainer = ({ captionPollQuestionCancel, captionPollQuestionNumber, layout, onPollQuestionButtonOk, tags }: PollQuestionLayoutFooterContainerProps) => {
+export const PollQuestionLayoutFooterContainer = ({ captionPollQuestionCancel, captionPollQuestionNumber, layout, onPollQuestionButtonOk }: PollQuestionLayoutFooterContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="footer_container"
-            tags={tags}
             layout={{ position: 'absolute', marginLeft: 5.5, marginRight: -5.5, width: 383, bottom: 30, height: 45, ...layout }}
         >
             <Region

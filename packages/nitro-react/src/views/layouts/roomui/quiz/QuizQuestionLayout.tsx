@@ -31,14 +31,12 @@ export const QuizQuestionLayout = ({ layout, uiContainer, uiContainer2 }: QuizQu
 export interface QuizQuestionLayoutUiContainer2Props {
     captionQuizTopic?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const QuizQuestionLayoutUiContainer2 = ({ captionQuizTopic, layout, tags }: QuizQuestionLayoutUiContainer2Props) => {
+export const QuizQuestionLayoutUiContainer2 = ({ captionQuizTopic, layout }: QuizQuestionLayoutUiContainer2Props) => {
     return (
         <Region
             name="ui_container2"
-            tags={tags}
             layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 203, top: 3, height: 70, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -59,14 +57,12 @@ export const QuizQuestionLayoutUiContainer2 = ({ captionQuizTopic, layout, tags 
 export interface QuizQuestionLayoutButtonDislikeProps {
     layout?: BoxLayout;
     onButtonDislike?: () => void;
-    tags?: string[];
 }
 
-export const QuizQuestionLayoutButtonDislike = ({ layout, onButtonDislike, tags }: QuizQuestionLayoutButtonDislikeProps) => {
+export const QuizQuestionLayoutButtonDislike = ({ layout, onButtonDislike }: QuizQuestionLayoutButtonDislikeProps) => {
     return (
         <Region
             name="button_dislike"
-            tags={tags}
             onPointerTap={onButtonDislike}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50, ...layout }}
@@ -90,14 +86,12 @@ export const QuizQuestionLayoutButtonDislike = ({ layout, onButtonDislike, tags 
 export interface QuizQuestionLayoutButtonLikeProps {
     layout?: BoxLayout;
     onButtonLike?: () => void;
-    tags?: string[];
 }
 
-export const QuizQuestionLayoutButtonLike = ({ layout, onButtonLike, tags }: QuizQuestionLayoutButtonLikeProps) => {
+export const QuizQuestionLayoutButtonLike = ({ layout, onButtonLike }: QuizQuestionLayoutButtonLikeProps) => {
     return (
         <Region
             name="button_like"
-            tags={tags}
             onPointerTap={onButtonLike}
             cursor="pointer"
             layout={{ position: 'absolute', left: 121, width: 50, top: 0, height: 50, ...layout }}
@@ -122,14 +116,12 @@ export interface QuizQuestionLayoutUiContainerProps {
     buttonDislike?: QuizQuestionLayoutButtonDislikeProps;
     buttonLike?: QuizQuestionLayoutButtonLikeProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const QuizQuestionLayoutUiContainer = ({ buttonDislike, buttonLike, layout, tags }: QuizQuestionLayoutUiContainerProps) => {
+export const QuizQuestionLayoutUiContainer = ({ buttonDislike, buttonLike, layout }: QuizQuestionLayoutUiContainerProps) => {
     return (
         <Region
             name="ui_container"
-            tags={tags}
             layout={{ position: 'absolute', width: 172, top: 74, height: 50, ...layout }}
         >
             <QuizQuestionLayoutButtonDislike {...buttonDislike} />

@@ -25,14 +25,12 @@ export const IlluminaBorderLayout = ({ children, layout, srcCanvas }: IlluminaBo
 /** Named region `children` of IlluminaBorderLayout - configured through the parent's `children` prop. */
 export interface IlluminaBorderLayoutChildrenProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IlluminaBorderLayoutChildren = ({ layout, tags }: IlluminaBorderLayoutChildrenProps) => {
+export const IlluminaBorderLayoutChildren = ({ layout }: IlluminaBorderLayoutChildrenProps) => {
     return (
         <Region
             name="children"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30, ...layout }}
         />
     );

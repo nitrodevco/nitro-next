@@ -32,14 +32,12 @@ export const MessengerHabbiconPickerLayout = ({ emptyView, habbiconSectionList, 
 export interface MessengerHabbiconPickerLayoutHabbiconSearchClearButtonProps {
     layout?: BoxLayout;
     onHabbiconSearchClearButton?: () => void;
-    tags?: string[];
 }
 
-export const MessengerHabbiconPickerLayoutHabbiconSearchClearButton = ({ layout, onHabbiconSearchClearButton, tags }: MessengerHabbiconPickerLayoutHabbiconSearchClearButtonProps) => {
+export const MessengerHabbiconPickerLayoutHabbiconSearchClearButton = ({ layout, onHabbiconSearchClearButton }: MessengerHabbiconPickerLayoutHabbiconSearchClearButtonProps) => {
     return (
         <Region
             name="habbicon_search_clear_button"
-            tags={tags}
             onPointerTap={onHabbiconSearchClearButton}
             cursor="pointer"
             layout={{ position: 'absolute', right: 6, width: 17, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, ...layout }}
@@ -57,10 +55,9 @@ export interface MessengerHabbiconPickerLayoutHabbiconSearchBorderItemProps {
     captionHabbiconSearchPlaceholder?: string;
     habbiconSearchClearButton?: MessengerHabbiconPickerLayoutHabbiconSearchClearButtonProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessengerHabbiconPickerLayoutHabbiconSearchBorderItem = ({ captionHabbiconSearchPlaceholder, habbiconSearchClearButton, layout, tags }: MessengerHabbiconPickerLayoutHabbiconSearchBorderItemProps) => {
+export const MessengerHabbiconPickerLayoutHabbiconSearchBorderItem = ({ captionHabbiconSearchPlaceholder, habbiconSearchClearButton, layout }: MessengerHabbiconPickerLayoutHabbiconSearchBorderItemProps) => {
     const t = useTranslation();
     const [ habbiconSearchInputValue, setHabbiconSearchInputValue ] = useState('');
 
@@ -68,7 +65,6 @@ export const MessengerHabbiconPickerLayoutHabbiconSearchBorderItem = ({ captionH
         <Border
             variant="105"
             name="habbicon_search_border"
-            tags={tags}
             layout={{ width: 143, height: 24, flexShrink: 0, ...layout }}
         >
             <TextInput
@@ -96,17 +92,15 @@ export const MessengerHabbiconPickerLayoutHabbiconSearchBorderItem = ({ captionH
 export interface MessengerHabbiconPickerLayoutHabbiconOpenHubButtonItemProps {
     layout?: BoxLayout;
     onHabbiconOpenHubButton?: () => void;
-    tags?: string[];
 }
 
-export const MessengerHabbiconPickerLayoutHabbiconOpenHubButtonItem = ({ layout, onHabbiconOpenHubButton, tags }: MessengerHabbiconPickerLayoutHabbiconOpenHubButtonItemProps) => {
+export const MessengerHabbiconPickerLayoutHabbiconOpenHubButtonItem = ({ layout, onHabbiconOpenHubButton }: MessengerHabbiconPickerLayoutHabbiconOpenHubButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="102"
             name="habbicon_open_hub_button"
-            tags={tags}
             onPointerTap={onHabbiconOpenHubButton}
             textStyle="text-style-il-button"
             layout={{ width: 90, height: 24, flexShrink: 0, minWidth: 90, maxWidth: 90, ...layout }}
@@ -120,14 +114,12 @@ export const MessengerHabbiconPickerLayoutHabbiconOpenHubButtonItem = ({ layout,
 export interface MessengerHabbiconPickerLayoutTopControlsProps {
     itemsTopControls?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessengerHabbiconPickerLayoutTopControls = ({ itemsTopControls, layout, tags }: MessengerHabbiconPickerLayoutTopControlsProps) => {
+export const MessengerHabbiconPickerLayoutTopControls = ({ itemsTopControls, layout }: MessengerHabbiconPickerLayoutTopControlsProps) => {
     return (
         <Region
             name="top_controls"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, width: 232, top: 8, height: 28, flexDirection: 'row', gap: 9, ...layout }}
         >
             {itemsTopControls ?? (
@@ -145,14 +137,12 @@ export interface MessengerHabbiconPickerLayoutHabbiconItemTemplateItemProps {
     layout?: BoxLayout;
     onHabbiconItemTemplate?: () => void;
     srcHabbiconIcon?: string;
-    tags?: string[];
 }
 
-export const MessengerHabbiconPickerLayoutHabbiconItemTemplateItem = ({ layout, onHabbiconItemTemplate, srcHabbiconIcon, tags }: MessengerHabbiconPickerLayoutHabbiconItemTemplateItemProps) => {
+export const MessengerHabbiconPickerLayoutHabbiconItemTemplateItem = ({ layout, onHabbiconItemTemplate, srcHabbiconIcon }: MessengerHabbiconPickerLayoutHabbiconItemTemplateItemProps) => {
     return (
         <Region
             name="habbicon_item_template"
-            tags={tags}
             onPointerTap={onHabbiconItemTemplate}
             cursor="pointer"
             layout={{ width: 44, height: 45, flexShrink: 0, ...layout }}
@@ -176,14 +166,12 @@ export const MessengerHabbiconPickerLayoutHabbiconItemTemplateItem = ({ layout, 
 export interface MessengerHabbiconPickerLayoutHabbiconGridProps {
     itemsHabbiconGrid?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessengerHabbiconPickerLayoutHabbiconGrid = ({ itemsHabbiconGrid, layout, tags }: MessengerHabbiconPickerLayoutHabbiconGridProps) => {
+export const MessengerHabbiconPickerLayoutHabbiconGrid = ({ itemsHabbiconGrid, layout }: MessengerHabbiconPickerLayoutHabbiconGridProps) => {
     return (
         <Region
             name="habbicon_grid"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 230, top: 20, height: 45, flexDirection: 'row', flexWrap: 'wrap', gap: 2, ...layout }}
         >
             {itemsHabbiconGrid ?? (
@@ -198,14 +186,12 @@ export interface MessengerHabbiconPickerLayoutHabbiconSectionTemplateItemProps {
     captionSectionTitle?: string;
     habbiconGrid?: MessengerHabbiconPickerLayoutHabbiconGridProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessengerHabbiconPickerLayoutHabbiconSectionTemplateItem = ({ captionSectionTitle, habbiconGrid, layout, tags }: MessengerHabbiconPickerLayoutHabbiconSectionTemplateItemProps) => {
+export const MessengerHabbiconPickerLayoutHabbiconSectionTemplateItem = ({ captionSectionTitle, habbiconGrid, layout }: MessengerHabbiconPickerLayoutHabbiconSectionTemplateItemProps) => {
     return (
         <Region
             name="habbicon_section_template"
-            tags={tags}
             layout={{ width: 230, height: 65, flexShrink: 0, ...layout }}
         >
             <Region
@@ -226,10 +212,9 @@ export const MessengerHabbiconPickerLayoutHabbiconSectionTemplateItem = ({ capti
 export interface MessengerHabbiconPickerLayoutHabbiconSectionListProps {
     itemsHabbiconSectionList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessengerHabbiconPickerLayoutHabbiconSectionList = ({ itemsHabbiconSectionList, layout, tags }: MessengerHabbiconPickerLayoutHabbiconSectionListProps) => {
+export const MessengerHabbiconPickerLayoutHabbiconSectionList = ({ itemsHabbiconSectionList, layout }: MessengerHabbiconPickerLayoutHabbiconSectionListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -237,7 +222,6 @@ export const MessengerHabbiconPickerLayoutHabbiconSectionList = ({ itemsHabbicon
         >
             <Region
                 name="habbicon_section_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 4, width: '100%' }}
             >
                 {itemsHabbiconSectionList ?? (
@@ -252,16 +236,14 @@ export const MessengerHabbiconPickerLayoutHabbiconSectionList = ({ itemsHabbicon
 export interface MessengerHabbiconPickerLayoutEmptyViewProps {
     captionEmptyText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessengerHabbiconPickerLayoutEmptyView = ({ captionEmptyText, layout, tags }: MessengerHabbiconPickerLayoutEmptyViewProps) => {
+export const MessengerHabbiconPickerLayoutEmptyView = ({ captionEmptyText, layout }: MessengerHabbiconPickerLayoutEmptyViewProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="empty_view"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 40, bottom: 2, justifyContent: 'center', ...layout }}
         >
             <Region

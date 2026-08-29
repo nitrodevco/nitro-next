@@ -31,14 +31,12 @@ export interface RoomvisitsFrameLayoutVisitrowItemProps {
     captionTimeTxt?: string;
     captionViewRoomTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomvisitsFrameLayoutVisitrowItem = ({ captionRoomNameTxt, captionTimeTxt, captionViewRoomTxt, layout, tags }: RoomvisitsFrameLayoutVisitrowItemProps) => {
+export const RoomvisitsFrameLayoutVisitrowItem = ({ captionRoomNameTxt, captionTimeTxt, captionViewRoomTxt, layout }: RoomvisitsFrameLayoutVisitrowItemProps) => {
     return (
         <Region
             name="visitrow"
-            tags={tags}
             layout={{ width: 263, height: 14, flexShrink: 0, ...layout }}
         >
             <Region
@@ -67,10 +65,9 @@ export const RoomvisitsFrameLayoutVisitrowItem = ({ captionRoomNameTxt, captionT
 export interface RoomvisitsFrameLayoutVisitsListProps {
     itemsVisitsList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomvisitsFrameLayoutVisitsList = ({ itemsVisitsList, layout, tags }: RoomvisitsFrameLayoutVisitsListProps) => {
+export const RoomvisitsFrameLayoutVisitsList = ({ itemsVisitsList, layout }: RoomvisitsFrameLayoutVisitsListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -78,7 +75,6 @@ export const RoomvisitsFrameLayoutVisitsList = ({ itemsVisitsList, layout, tags 
         >
             <Region
                 name="visits_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsVisitsList ?? (
@@ -92,15 +88,13 @@ export const RoomvisitsFrameLayoutVisitsList = ({ itemsVisitsList, layout, tags 
 /** Named region `visits_cont` of RoomvisitsFrameLayout - configured through the parent's `visitsCont` prop. */
 export interface RoomvisitsFrameLayoutVisitsContProps {
     layout?: BoxLayout;
-    tags?: string[];
     visitsList?: RoomvisitsFrameLayoutVisitsListProps;
 }
 
-export const RoomvisitsFrameLayoutVisitsCont = ({ layout, tags, visitsList }: RoomvisitsFrameLayoutVisitsContProps) => {
+export const RoomvisitsFrameLayoutVisitsCont = ({ layout, visitsList }: RoomvisitsFrameLayoutVisitsContProps) => {
     return (
         <Region
             name="visits_cont"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, ...layout }}
         >

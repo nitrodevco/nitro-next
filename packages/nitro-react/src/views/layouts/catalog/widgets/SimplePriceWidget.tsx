@@ -1,4 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `simplePriceWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -8,31 +9,27 @@ import { BoxLayout, Region } from '#base/theme';
 /** Named region `fake_productimage` of SimplePriceWidget - configured through the parent's `fakeProductimage` prop. */
 export interface SimplePriceWidgetFakeProductimageProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SimplePriceWidgetFakeProductimage = ({ layout, tags }: SimplePriceWidgetFakeProductimageProps) => {
+export const SimplePriceWidgetFakeProductimage = ({ layout }: SimplePriceWidgetFakeProductimageProps) => {
     return (
         <Region
             name="fake_productimage"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 30, ...layout }}
         />
     );
 };
 
 /** Named region `simplePriceWidget` of SimplePriceWidget - configured through the parent's `simplePriceWidget` prop. */
-export interface SimplePriceWidgetProps {
+export interface SimplePriceWidgetProps extends CatalogWidgetFlags {
     fakeProductimage?: SimplePriceWidgetFakeProductimageProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SimplePriceWidget = ({ fakeProductimage, layout, tags }: SimplePriceWidgetProps) => {
+export const SimplePriceWidget = ({ fakeProductimage, layout }: SimplePriceWidgetProps) => {
     return (
         <Region
             name="simplePriceWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <SimplePriceWidgetFakeProductimage {...fakeProductimage} />

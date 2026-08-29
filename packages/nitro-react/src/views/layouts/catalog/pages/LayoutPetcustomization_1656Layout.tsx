@@ -1,7 +1,7 @@
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeText } from '#base/theme';
 import { ItemGridWidget, ItemGridWidgetProps } from '#base/views/layouts/catalog/widgets/ItemGridWidget';
-import { PetPreviewWidget2, PetPreviewWidget2Props } from '#base/views/layouts/catalog/widgets/PetPreviewWidget2';
+import { PetPreviewWidget3, PetPreviewWidget3Props } from '#base/views/layouts/catalog/widgets/PetPreviewWidget3';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 
 /** Generated from `1656_layout_petcustomization_xml` (layout "ctlg_petcustomization", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -23,18 +23,16 @@ export interface LayoutPetcustomization_1656LayoutCtlgPetcustomizationProps {
     captionCtlgSelectproduct?: string;
     itemGridWidget?: ItemGridWidgetProps;
     layout?: BoxLayout;
-    petPreviewWidget?: PetPreviewWidget2Props;
+    petPreviewWidget?: PetPreviewWidget3Props;
     purchaseWidget?: PurchaseWidgetProps;
-    tags?: string[];
 }
 
-export const LayoutPetcustomization_1656LayoutCtlgPetcustomization = ({ captionCtlgSelectproduct, itemGridWidget, layout, petPreviewWidget, purchaseWidget, tags }: LayoutPetcustomization_1656LayoutCtlgPetcustomizationProps) => {
+export const LayoutPetcustomization_1656LayoutCtlgPetcustomization = ({ captionCtlgSelectproduct, itemGridWidget, layout, petPreviewWidget, purchaseWidget }: LayoutPetcustomization_1656LayoutCtlgPetcustomizationProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_petcustomization"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <Region
@@ -52,7 +50,7 @@ export const LayoutPetcustomization_1656LayoutCtlgPetcustomization = ({ captionC
                 layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 35 }}
                 {...itemGridWidget}
             />
-            <PetPreviewWidget2
+            <PetPreviewWidget3
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
                 {...petPreviewWidget}
             />

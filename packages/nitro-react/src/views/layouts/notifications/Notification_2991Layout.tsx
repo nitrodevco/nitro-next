@@ -10,20 +10,14 @@ export const Notification_2991Layout = ({ layout }: Notification_2991LayoutProps
         <Region layout={{ position: 'relative', width: 190, height: 66, ...layout }}>
             <Border
                 variant="1"
-                tags={[ 'border' ]}
                 layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 66 }}
             >
                 <ThemeImage
-                    tags={[ 'notification_icon' ]}
                     src={undefined}
                     layout={{ position: 'absolute', left: 8, width: 50, alignSelf: 'center', height: 50 }}
                 />
-                <Region
-                    tags={[ 'notification_text' ]}
-                    layout={{ position: 'absolute', left: 66, width: 116, top: 8, height: 50, minHeight: 22, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                />
+                <Region layout={{ position: 'absolute', left: 66, width: 116, top: 8, height: 50, minHeight: 22, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }} />
                 <ThemeImage
-                    tags={[ 'notification_icon_static' ]}
                     src={undefined}
                     layout={{ position: 'absolute', left: 8, width: 50, alignSelf: 'center', height: 50 }}
                 />

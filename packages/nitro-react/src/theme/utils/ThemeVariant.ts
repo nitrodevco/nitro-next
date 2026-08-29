@@ -8,8 +8,8 @@ import { TextStyleKey } from './textStyles';
 /**
  * Metadata every element in the original Flash layout XML carries alongside its `style`
  * (which maps to `variant`) - accepted on every themed component so a layout port can keep it
- * without inventing a place for it. None of it is interpreted yet: `tags` drive Flash-side
- * lookups/recoloring (`RECOLORABLE_*`, `_INTERNAL`, `#icon`, ...), `tooltip` is the
+ * without inventing a place for it (the Flash `tags` are not carried: the ones with behaviour
+ * become real props in the generator, the rest were lookup handles). `tooltip` is the
  * `tool_tip_caption` variable (the Flash `params` bit-field is applied by the generator - anchoring,
  * auto-sizing, clipping, click targets - and not carried), `dynamicStyle` the
  * hover/press effect name (`lifted_hover`, `brightness_and_shadow_under`, ...). Only `visible`
@@ -17,7 +17,6 @@ import { TextStyleKey } from './textStyles';
  */
 export type ThemeLayoutMeta = {
     name?: string;
-    tags?: string[];
     tooltip?: string;
     dynamicStyle?: string;
     visible?: boolean;

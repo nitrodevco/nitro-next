@@ -26,7 +26,6 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, lis
                 >
                     <Region
                         name="header"
-                        tags={[ 'header' ]}
                         layout={{ position: 'absolute', left: 26, right: 102, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText text={captionHeader ?? '...'} />
@@ -36,7 +35,6 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, lis
                         {/* <scrollbar_vertical> for list - rendered by that list's ScrollArea */}
                         <Region
                             name="footer"
-                            tags={[ 'footer' ]}
                             layout={{ position: 'absolute', left: 20, right: 382, bottom: 19, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText text={captionFooter ?? 'Info text'} />
@@ -69,10 +67,9 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, lis
 /** Named region `list` of ProfilerDialogLayout - configured through the parent's `list` prop. */
 export interface ProfilerDialogLayoutListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ProfilerDialogLayoutList = ({ layout, tags }: ProfilerDialogLayoutListProps) => {
+export const ProfilerDialogLayoutList = ({ layout }: ProfilerDialogLayoutListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -80,7 +77,6 @@ export const ProfilerDialogLayoutList = ({ layout, tags }: ProfilerDialogLayoutL
         >
             <Region
                 name="list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>

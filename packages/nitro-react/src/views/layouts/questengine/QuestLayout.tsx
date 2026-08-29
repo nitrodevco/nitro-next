@@ -65,7 +65,6 @@ export const QuestLayout = ({ cancelRegion, captionDelayDescTxt, captionDelayTxt
                 <ButtonThick
                     variant="3"
                     name="accept_button"
-                    tags={[ 'FIT:questsAcceptButton' ]}
                     onPointerTap={onAcceptButton}
                     layout={{ position: 'absolute', right: 8, width: 108, bottom: 9, height: 29, minWidth: 108, maxWidth: 108 }}
                 >
@@ -92,10 +91,7 @@ export const QuestLayout = ({ cancelRegion, captionDelayDescTxt, captionDelayTxt
                 >
                     <ThemeText text={captionRewardAmountTxt ?? '200'} />
                 </Region>
-                <QuestLayoutCancelRegion
-                    tags={[ 'FIT:questInfoCancel' ]}
-                    {...cancelRegion}
-                />
+                <QuestLayoutCancelRegion {...cancelRegion} />
                 <ThemeImage
                     name="quest_pic_bitmap"
                     src={srcQuestPicBitmap}
@@ -144,16 +140,14 @@ export interface QuestLayoutCancelRegionProps {
     captionCancelTxt?: string;
     layout?: BoxLayout;
     onCancelRegion?: () => void;
-    tags?: string[];
 }
 
-export const QuestLayoutCancelRegion = ({ captionCancelTxt, layout, onCancelRegion, tags }: QuestLayoutCancelRegionProps) => {
+export const QuestLayoutCancelRegion = ({ captionCancelTxt, layout, onCancelRegion }: QuestLayoutCancelRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_region"
-            tags={tags}
             onPointerTap={onCancelRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 271, width: 100, bottom: 15, height: 18, ...layout }}
@@ -175,17 +169,15 @@ export interface QuestLayoutLinkRegionProps {
     captionLinkRoom?: string;
     layout?: BoxLayout;
     onLinkRegion?: () => void;
-    tags?: string[];
     visibleLinkRegion?: boolean;
 }
 
-export const QuestLayoutLinkRegion = ({ captionLinkCatalog, captionLinkNavigator, captionLinkRoom, layout, onLinkRegion, tags, visibleLinkRegion }: QuestLayoutLinkRegionProps) => {
+export const QuestLayoutLinkRegion = ({ captionLinkCatalog, captionLinkNavigator, captionLinkRoom, layout, onLinkRegion, visibleLinkRegion }: QuestLayoutLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="link_region"
-            tags={tags}
             visible={visibleLinkRegion ?? false}
             onPointerTap={onLinkRegion}
             cursor="pointer"

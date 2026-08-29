@@ -35,14 +35,12 @@ export const ShareRoomLayout = ({ embedInfo, layout, onClose, thumbnailEdges }: 
 export interface ShareRoomLayoutThumbnailEdgesProps {
     layout?: BoxLayout;
     srcThumbnailImage?: string;
-    tags?: string[];
 }
 
-export const ShareRoomLayoutThumbnailEdges = ({ layout, srcThumbnailImage, tags }: ShareRoomLayoutThumbnailEdgesProps) => {
+export const ShareRoomLayoutThumbnailEdges = ({ layout, srcThumbnailImage }: ShareRoomLayoutThumbnailEdgesProps) => {
     return (
         <Region
             name="thumbnail_edges"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 18, width: 112, top: 19, height: 112, ...layout }}
         >
@@ -62,17 +60,15 @@ export interface ShareRoomLayoutEmbedInfoProps {
     captionEmbedInfoTxt?: string;
     captionEmbedSrcTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ShareRoomLayoutEmbedInfo = ({ captionEmbedInfoDirectTxt, captionEmbedInfoHdln, captionEmbedInfoTxt, captionEmbedSrcTxt, layout, tags }: ShareRoomLayoutEmbedInfoProps) => {
+export const ShareRoomLayoutEmbedInfo = ({ captionEmbedInfoDirectTxt, captionEmbedInfoHdln, captionEmbedInfoTxt, captionEmbedSrcTxt, layout }: ShareRoomLayoutEmbedInfoProps) => {
     const t = useTranslation();
     const [ embedSrcDirectTxtValue, setEmbedSrcDirectTxtValue ] = useState('');
 
     return (
         <Region
             name="embed_info"
-            tags={tags}
             layout={{ position: 'absolute', left: 150, width: 285, top: 10, height: 240, ...layout }}
         >
             <Region

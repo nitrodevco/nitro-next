@@ -1,5 +1,6 @@
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Region, ThemeText } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `traxPreviewWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -7,20 +8,18 @@ import { Border, BoxLayout, Button, Region, ThemeText } from '#base/theme';
  * (TraxPreviewWidgetLayout); each passes its own placement through `layout`.
  */
 /** Named region `traxPreviewWidget` of TraxPreviewWidget - configured through the parent's `traxPreviewWidget` prop. */
-export interface TraxPreviewWidgetProps {
+export interface TraxPreviewWidgetProps extends CatalogWidgetFlags {
     captionPlayPreviewText?: string;
     layout?: BoxLayout;
     onListen?: () => void;
-    tags?: string[];
 }
 
-export const TraxPreviewWidget = ({ captionPlayPreviewText, layout, onListen, tags }: TraxPreviewWidgetProps) => {
+export const TraxPreviewWidget = ({ captionPlayPreviewText, layout, onListen }: TraxPreviewWidgetProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="traxPreviewWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Border

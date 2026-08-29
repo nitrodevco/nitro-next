@@ -36,7 +36,6 @@ export const InventoryTradingLayout = ({ buttonContainer, captionHelpText, capti
                 >
                     <Region
                         name="help_text"
-                        tags={[ 'HELP_TEXT' ]}
                         layout={{ position: 'absolute', left: 8, width: 461, top: 7, height: 4, maxWidth: 461, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
@@ -141,16 +140,14 @@ export const InventoryTradingLayout = ({ buttonContainer, captionHelpText, capti
 export interface InventoryTradingLayoutBoldTextItemProps {
     captionBoldText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingLayoutBoldTextItem = ({ captionBoldText, layout, tags }: InventoryTradingLayoutBoldTextItemProps) => {
+export const InventoryTradingLayoutBoldTextItem = ({ captionBoldText, layout }: InventoryTradingLayoutBoldTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bold_text"
-            tags={tags}
             layout={{ width: 127, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionBoldText ?? t('inventory.trading.you')} />
@@ -162,16 +159,14 @@ export const InventoryTradingLayoutBoldTextItem = ({ captionBoldText, layout, ta
 export interface InventoryTradingLayoutPlainTextItemProps {
     captionPlainText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingLayoutPlainTextItem = ({ captionPlainText, layout, tags }: InventoryTradingLayoutPlainTextItemProps) => {
+export const InventoryTradingLayoutPlainTextItem = ({ captionPlainText, layout }: InventoryTradingLayoutPlainTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="plain_text"
-            tags={tags}
             layout={{ width: 167, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionPlainText ?? t('inventory.trading.areoffering')} />
@@ -183,19 +178,17 @@ export const InventoryTradingLayoutPlainTextItem = ({ captionPlainText, layout, 
 export interface InventoryTradingLayoutTextList0Props {
     itemsTextList0?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingLayoutTextList0 = ({ itemsTextList0, layout, tags }: InventoryTradingLayoutTextList0Props) => {
+export const InventoryTradingLayoutTextList0 = ({ itemsTextList0, layout }: InventoryTradingLayoutTextList0Props) => {
     return (
         <Region
             name="text_list_0"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row', ...layout }}
         >
             {itemsTextList0 ?? (
                 <>
-                    <InventoryTradingLayoutBoldTextItem tags={[ 'OWN_USER_NAME' ]} />
+                    <InventoryTradingLayoutBoldTextItem />
                     <InventoryTradingLayoutPlainTextItem />
                 </>
             )}
@@ -206,67 +199,56 @@ export const InventoryTradingLayoutTextList0 = ({ itemsTextList0, layout, tags }
 /** Named region `item_grid_0` of InventoryTradingLayout - configured through the parent's `itemGrid0` prop. */
 export interface InventoryTradingLayoutItemGrid0Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingLayoutItemGrid0 = ({ layout, tags }: InventoryTradingLayoutItemGrid0Props) => {
+export const InventoryTradingLayoutItemGrid0 = ({ layout }: InventoryTradingLayoutItemGrid0Props) => {
     return (
         <Region
             name="item_grid_0"
-            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 132, top: 4, height: 132, flexDirection: 'row', flexWrap: 'wrap', gap: 4, ...layout }}
         >
             <Border
                 variant="102"
-                tags={[ 'OWN_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OWN_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OWN_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OWN_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OWN_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OWN_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OWN_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OWN_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OWN_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
@@ -278,20 +260,15 @@ export const InventoryTradingLayoutItemGrid0 = ({ layout, tags }: InventoryTradi
 export interface InventoryTradingLayoutItemGridBorder0Props {
     itemGrid0?: InventoryTradingLayoutItemGrid0Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingLayoutItemGridBorder0 = ({ itemGrid0, layout, tags }: InventoryTradingLayoutItemGridBorder0Props) => {
+export const InventoryTradingLayoutItemGridBorder0 = ({ itemGrid0, layout }: InventoryTradingLayoutItemGridBorder0Props) => {
     return (
         <Region
             name="item_grid_border_0"
-            tags={tags}
             layout={{ position: 'absolute', left: 32, width: 136, top: 22, height: 136, ...layout }}
         >
-            <InventoryTradingLayoutItemGrid0
-                tags={[ 'OWN_USER_GRID' ]}
-                {...itemGrid0}
-            />
+            <InventoryTradingLayoutItemGrid0 {...itemGrid0} />
         </Region>
     );
 };
@@ -304,27 +281,21 @@ export interface InventoryTradingLayoutOffers0Props {
     itemGridBorder0?: InventoryTradingLayoutItemGridBorder0Props;
     layout?: BoxLayout;
     srcLock0?: string;
-    tags?: string[];
     textList0?: InventoryTradingLayoutTextList0Props;
 }
 
-export const InventoryTradingLayoutOffers0 = ({ captionContentText1A, captionContentText1B, captionInfoText0, itemGridBorder0, layout, srcLock0, tags, textList0 }: InventoryTradingLayoutOffers0Props) => {
+export const InventoryTradingLayoutOffers0 = ({ captionContentText1A, captionContentText1B, captionInfoText0, itemGridBorder0, layout, srcLock0, textList0 }: InventoryTradingLayoutOffers0Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="offers_0"
-            tags={tags}
             layout={{ position: 'absolute', left: 17, width: 200, top: 29, height: 200, ...layout }}
         >
             <InventoryTradingLayoutTextList0 {...textList0} />
-            <InventoryTradingLayoutItemGridBorder0
-                tags={[ 'OWN_USER_BORDER' ]}
-                {...itemGridBorder0}
-            />
+            <InventoryTradingLayoutItemGridBorder0 {...itemGridBorder0} />
             <Region
                 name="info_text_0"
-                tags={[ 'OTHER_USER_MESSAGE' ]}
                 visible={false}
                 layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
@@ -347,7 +318,6 @@ export const InventoryTradingLayoutOffers0 = ({ captionContentText1A, captionCon
             </Region>
             <ThemeImage
                 name="lock_0"
-                tags={[ 'OWN_USER_LOCK' ]}
                 src={srcLock0 ?? layoutImage('inventory_trading_trading_unlocked_icon.png')}
                 layout={{ position: 'absolute', left: 45, width: 32, top: 164, height: 34 }}
             />
@@ -359,16 +329,14 @@ export const InventoryTradingLayoutOffers0 = ({ captionContentText1A, captionCon
 export interface InventoryTradingLayoutBoldTextItem2Props {
     captionBoldText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingLayoutBoldTextItem2 = ({ captionBoldText, layout, tags }: InventoryTradingLayoutBoldTextItem2Props) => {
+export const InventoryTradingLayoutBoldTextItem2 = ({ captionBoldText, layout }: InventoryTradingLayoutBoldTextItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bold_text"
-            tags={tags}
             layout={{ width: 138, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionBoldText ?? t('inventory.trading.other')} />
@@ -380,16 +348,14 @@ export const InventoryTradingLayoutBoldTextItem2 = ({ captionBoldText, layout, t
 export interface InventoryTradingLayoutPlainTextItem2Props {
     captionPlainText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingLayoutPlainTextItem2 = ({ captionPlainText, layout, tags }: InventoryTradingLayoutPlainTextItem2Props) => {
+export const InventoryTradingLayoutPlainTextItem2 = ({ captionPlainText, layout }: InventoryTradingLayoutPlainTextItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="plain_text"
-            tags={tags}
             layout={{ width: 157, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionPlainText ?? t('inventory.trading.isoffering')} />
@@ -401,19 +367,17 @@ export const InventoryTradingLayoutPlainTextItem2 = ({ captionPlainText, layout,
 export interface InventoryTradingLayoutTextList1Props {
     itemsTextList1?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingLayoutTextList1 = ({ itemsTextList1, layout, tags }: InventoryTradingLayoutTextList1Props) => {
+export const InventoryTradingLayoutTextList1 = ({ itemsTextList1, layout }: InventoryTradingLayoutTextList1Props) => {
     return (
         <Region
             name="text_list_1"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row', ...layout }}
         >
             {itemsTextList1 ?? (
                 <>
-                    <InventoryTradingLayoutBoldTextItem2 tags={[ 'OTHER_USER_NAME' ]} />
+                    <InventoryTradingLayoutBoldTextItem2 />
                     <InventoryTradingLayoutPlainTextItem2 />
                 </>
             )}
@@ -424,67 +388,56 @@ export const InventoryTradingLayoutTextList1 = ({ itemsTextList1, layout, tags }
 /** Named region `item_grid_1` of InventoryTradingLayout - configured through the parent's `itemGrid1` prop. */
 export interface InventoryTradingLayoutItemGrid1Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingLayoutItemGrid1 = ({ layout, tags }: InventoryTradingLayoutItemGrid1Props) => {
+export const InventoryTradingLayoutItemGrid1 = ({ layout }: InventoryTradingLayoutItemGrid1Props) => {
     return (
         <Region
             name="item_grid_1"
-            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 132, top: 4, height: 132, flexDirection: 'row', flexWrap: 'wrap', gap: 4, ...layout }}
         >
             <Border
                 variant="102"
-                tags={[ 'OTHER_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OTHER_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OTHER_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OTHER_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OTHER_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OTHER_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OTHER_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OTHER_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
             <Border
                 variant="102"
-                tags={[ 'OTHER_USER_ITEM' ]}
                 tintColor="#cccccc"
                 layout={{ width: 40, height: 40, flexShrink: 0, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
@@ -496,20 +449,15 @@ export const InventoryTradingLayoutItemGrid1 = ({ layout, tags }: InventoryTradi
 export interface InventoryTradingLayoutItemGridBorder1Props {
     itemGrid1?: InventoryTradingLayoutItemGrid1Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingLayoutItemGridBorder1 = ({ itemGrid1, layout, tags }: InventoryTradingLayoutItemGridBorder1Props) => {
+export const InventoryTradingLayoutItemGridBorder1 = ({ itemGrid1, layout }: InventoryTradingLayoutItemGridBorder1Props) => {
     return (
         <Region
             name="item_grid_border_1"
-            tags={tags}
             layout={{ position: 'absolute', left: 32, width: 180, top: 22, height: 136, ...layout }}
         >
-            <InventoryTradingLayoutItemGrid1
-                tags={[ 'OTHER_USER_GRID' ]}
-                {...itemGrid1}
-            />
+            <InventoryTradingLayoutItemGrid1 {...itemGrid1} />
         </Region>
     );
 };
@@ -522,27 +470,21 @@ export interface InventoryTradingLayoutOffers1Props {
     itemGridBorder1?: InventoryTradingLayoutItemGridBorder1Props;
     layout?: BoxLayout;
     srcLock1?: string;
-    tags?: string[];
     textList1?: InventoryTradingLayoutTextList1Props;
 }
 
-export const InventoryTradingLayoutOffers1 = ({ captionContentText2A, captionContentText2B, captionInfoText1, itemGridBorder1, layout, srcLock1, tags, textList1 }: InventoryTradingLayoutOffers1Props) => {
+export const InventoryTradingLayoutOffers1 = ({ captionContentText2A, captionContentText2B, captionInfoText1, itemGridBorder1, layout, srcLock1, textList1 }: InventoryTradingLayoutOffers1Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="offers_1"
-            tags={tags}
             layout={{ position: 'absolute', left: 263, width: 200, top: 29, height: 200, ...layout }}
         >
             <InventoryTradingLayoutTextList1 {...textList1} />
-            <InventoryTradingLayoutItemGridBorder1
-                tags={[ 'OTHER_USER_BORDER' ]}
-                {...itemGridBorder1}
-            />
+            <InventoryTradingLayoutItemGridBorder1 {...itemGridBorder1} />
             <Region
                 name="info_text_1"
-                tags={[ 'OTHER_USER_MESSAGE' ]}
                 visible={false}
                 layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
@@ -565,7 +507,6 @@ export const InventoryTradingLayoutOffers1 = ({ captionContentText2A, captionCon
             </Region>
             <ThemeImage
                 name="lock_1"
-                tags={[ 'OTHER_USER_LOCK' ]}
                 src={srcLock1 ?? layoutImage('inventory_trading_trading_locked_icon.png')}
                 layout={{ position: 'absolute', left: 45, width: 32, top: 164, height: 34 }}
             />
@@ -577,14 +518,12 @@ export const InventoryTradingLayoutOffers1 = ({ captionContentText2A, captionCon
 export interface InventoryTradingLayoutSilverProgressHtmlItemProps {
     captionSilverProgressHtml?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingLayoutSilverProgressHtmlItem = ({ captionSilverProgressHtml, layout, tags }: InventoryTradingLayoutSilverProgressHtmlItemProps) => {
+export const InventoryTradingLayoutSilverProgressHtmlItem = ({ captionSilverProgressHtml, layout }: InventoryTradingLayoutSilverProgressHtmlItemProps) => {
     return (
         <Region
             name="silver_progress_html"
-            tags={tags}
             layout={{ width: 32, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionSilverProgressHtml ?? '<font color="#AC232A">0</font>/10'} />
@@ -596,14 +535,12 @@ export const InventoryTradingLayoutSilverProgressHtmlItem = ({ captionSilverProg
 export interface InventoryTradingLayoutRequirementContainerProps {
     itemsRequirementContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingLayoutRequirementContainer = ({ itemsRequirementContainer, layout, tags }: InventoryTradingLayoutRequirementContainerProps) => {
+export const InventoryTradingLayoutRequirementContainer = ({ itemsRequirementContainer, layout }: InventoryTradingLayoutRequirementContainerProps) => {
     return (
         <Region
             name="requirement_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 212, right: 205, top: 29, minHeight: 25, maxHeight: 25, flexDirection: 'row', gap: 5, ...layout }}
         >
             {itemsRequirementContainer ?? (
@@ -622,16 +559,14 @@ export interface InventoryTradingLayoutButtonContainerProps {
     layout?: BoxLayout;
     onButtonAccept?: () => void;
     onButtonCancel?: () => void;
-    tags?: string[];
 }
 
-export const InventoryTradingLayoutButtonContainer = ({ layout, onButtonAccept, onButtonCancel, tags }: InventoryTradingLayoutButtonContainerProps) => {
+export const InventoryTradingLayoutButtonContainer = ({ layout, onButtonAccept, onButtonCancel }: InventoryTradingLayoutButtonContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 478, top: 341, height: 32, ...layout }}
         >
             <Button

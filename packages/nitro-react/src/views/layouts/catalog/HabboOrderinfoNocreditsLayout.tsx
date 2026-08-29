@@ -22,16 +22,14 @@ export interface HabboOrderinfoNocreditsLayoutHabboOrderinfoNocreditsProps {
     layout?: BoxLayout;
     onButtonCancel?: () => void;
     onNobalanceOk?: () => void;
-    tags?: string[];
 }
 
-export const HabboOrderinfoNocreditsLayoutHabboOrderinfoNocredits = ({ captionHabboMessageTextA, captionHabboMessageTextB, layout, onButtonCancel, onNobalanceOk, tags }: HabboOrderinfoNocreditsLayoutHabboOrderinfoNocreditsProps) => {
+export const HabboOrderinfoNocreditsLayoutHabboOrderinfoNocredits = ({ captionHabboMessageTextA, captionHabboMessageTextB, layout, onButtonCancel, onNobalanceOk }: HabboOrderinfoNocreditsLayoutHabboOrderinfoNocreditsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="habbo_orderinfo_nocredits"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 125, ...layout }}
         >
             <Region

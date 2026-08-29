@@ -9,10 +9,7 @@ export interface Header3LayoutProps {
 export const Header3Layout = ({ headerContainer, layout }: Header3LayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 64, height: 33, ...layout }}>
-            <Header3LayoutHeaderContainer
-                tags={[ '_EXCLUDE', '_INTERNAL' ]}
-                {...headerContainer}
-            />
+            <Header3LayoutHeaderContainer {...headerContainer} />
         </Region>
     );
 };
@@ -23,19 +20,16 @@ export interface Header3LayoutHeaderContainerProps {
     layout?: BoxLayout;
     onHeaderButtonClose?: () => void;
     onHeaderButtonHelp?: () => void;
-    tags?: string[];
 }
 
-export const Header3LayoutHeaderContainer = ({ captionHeaderTitleText, layout, onHeaderButtonClose, onHeaderButtonHelp, tags }: Header3LayoutHeaderContainerProps) => {
+export const Header3LayoutHeaderContainer = ({ captionHeaderTitleText, layout, onHeaderButtonClose, onHeaderButtonHelp }: Header3LayoutHeaderContainerProps) => {
     return (
         <Region
             name="header_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 33, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="header_title_text"
-                tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL' ]}
                 layout={{ position: 'absolute', marginLeft: -22, marginRight: 22, width: 12, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -44,21 +38,16 @@ export const Header3LayoutHeaderContainer = ({ captionHeaderTitleText, layout, o
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Region>
-            <Region
-                tags={[ '_EXCLUDE', '_INTERNAL', '_COLORIZE', '_CONTROLS' ]}
-                layout={{ position: 'absolute', right: -1, width: 45, top: 2, height: 20, flexDirection: 'row', gap: 5 }}
-            >
+            <Region layout={{ position: 'absolute', right: -1, width: 45, top: 2, height: 20, flexDirection: 'row', gap: 5 }}>
                 <CloseButton
                     variant="4"
                     name="header_button_help"
-                    tags={[ '_EXCLUDE', '_INTERNAL', 'help' ]}
                     onPointerTap={onHeaderButtonHelp}
                     layout={{ width: 19, height: 20, flexShrink: 0 }}
                 />
                 <CloseButton
                     variant="3"
                     name="header_button_close"
-                    tags={[ '_EXCLUDE', '_INTERNAL', 'close' ]}
                     onPointerTap={onHeaderButtonClose}
                     layout={{ width: 21, height: 20, flexShrink: 0 }}
                 />

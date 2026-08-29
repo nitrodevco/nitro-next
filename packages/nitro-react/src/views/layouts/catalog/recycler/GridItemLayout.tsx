@@ -29,7 +29,6 @@ export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layo
                 </Region>
                 <Border
                     variant="2"
-                    tags={[ 'ITEM_HILIGHT' ]}
                     tintColor="#a1a19b"
                     layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
                 >
@@ -116,7 +115,6 @@ export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layo
                     layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
                 >
                     <ThemeImage
-                        tags={[ 'ITEM_HILIGHT_TOP' ]}
                         src={layoutImage('inventory_thumb_selected_outline.png')}
                         layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
                     />

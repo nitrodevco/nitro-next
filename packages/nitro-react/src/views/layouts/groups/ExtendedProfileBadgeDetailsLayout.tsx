@@ -26,14 +26,12 @@ export const ExtendedProfileBadgeDetailsLayout = ({ detailsList, layout }: Exten
 export interface ExtendedProfileBadgeDetailsLayoutNameItemProps {
     captionName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ExtendedProfileBadgeDetailsLayoutNameItem = ({ captionName, layout, tags }: ExtendedProfileBadgeDetailsLayoutNameItemProps) => {
+export const ExtendedProfileBadgeDetailsLayoutNameItem = ({ captionName, layout }: ExtendedProfileBadgeDetailsLayoutNameItemProps) => {
     return (
         <Region
             name="name"
-            tags={tags}
             layout={{ width: 250, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -48,14 +46,12 @@ export const ExtendedProfileBadgeDetailsLayoutNameItem = ({ captionName, layout,
 export interface ExtendedProfileBadgeDetailsLayoutDescriptionItemProps {
     captionDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ExtendedProfileBadgeDetailsLayoutDescriptionItem = ({ captionDescription, layout, tags }: ExtendedProfileBadgeDetailsLayoutDescriptionItemProps) => {
+export const ExtendedProfileBadgeDetailsLayoutDescriptionItem = ({ captionDescription, layout }: ExtendedProfileBadgeDetailsLayoutDescriptionItemProps) => {
     return (
         <Region
             name="description"
-            tags={tags}
             layout={{ width: 250, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -71,11 +67,10 @@ export interface ExtendedProfileBadgeDetailsLayoutRarityTagItemProps {
     captionRarity?: string;
     captionRarityBorder?: string;
     layout?: BoxLayout;
-    tags?: string[];
     visibleRarityTag?: boolean;
 }
 
-export const ExtendedProfileBadgeDetailsLayoutRarityTagItem = ({ captionRarity, captionRarityBorder, layout, tags, visibleRarityTag }: ExtendedProfileBadgeDetailsLayoutRarityTagItemProps) => {
+export const ExtendedProfileBadgeDetailsLayoutRarityTagItem = ({ captionRarity, captionRarityBorder, layout, visibleRarityTag }: ExtendedProfileBadgeDetailsLayoutRarityTagItemProps) => {
     return (
         <Region
             visible={visibleRarityTag ?? false}
@@ -84,13 +79,11 @@ export const ExtendedProfileBadgeDetailsLayoutRarityTagItem = ({ captionRarity, 
             <Border
                 variant="2"
                 name="rarity_tag"
-                tags={tags}
                 tintColor="#cccccc"
                 layout={{ width: '100%', height: '100%' }}
             >
                 <Region
                     name="rarity_border"
-                    tags={[ 'BLEND_SUBTRACT' ]}
                     layout={{ position: 'absolute', left: 5, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -100,7 +93,6 @@ export const ExtendedProfileBadgeDetailsLayoutRarityTagItem = ({ captionRarity, 
                 </Region>
                 <Region
                     name="rarity"
-                    tags={[ 'BLEND_INVERT' ]}
                     layout={{ position: 'absolute', left: 5, width: 81, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -117,14 +109,12 @@ export const ExtendedProfileBadgeDetailsLayoutRarityTagItem = ({ captionRarity, 
 export interface ExtendedProfileBadgeDetailsLayoutOwnerCountItemProps {
     captionOwnerCount?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ExtendedProfileBadgeDetailsLayoutOwnerCountItem = ({ captionOwnerCount, layout, tags }: ExtendedProfileBadgeDetailsLayoutOwnerCountItemProps) => {
+export const ExtendedProfileBadgeDetailsLayoutOwnerCountItem = ({ captionOwnerCount, layout }: ExtendedProfileBadgeDetailsLayoutOwnerCountItemProps) => {
     return (
         <Region
             name="owner_count"
-            tags={tags}
             visible={false}
             layout={{ width: 250, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -140,14 +130,12 @@ export const ExtendedProfileBadgeDetailsLayoutOwnerCountItem = ({ captionOwnerCo
 export interface ExtendedProfileBadgeDetailsLayoutDetailsListProps {
     itemsDetailsList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ExtendedProfileBadgeDetailsLayoutDetailsList = ({ itemsDetailsList, layout, tags }: ExtendedProfileBadgeDetailsLayoutDetailsListProps) => {
+export const ExtendedProfileBadgeDetailsLayoutDetailsList = ({ itemsDetailsList, layout }: ExtendedProfileBadgeDetailsLayoutDetailsListProps) => {
     return (
         <Region
             name="details_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 263, top: 6, height: 11, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsDetailsList ?? (

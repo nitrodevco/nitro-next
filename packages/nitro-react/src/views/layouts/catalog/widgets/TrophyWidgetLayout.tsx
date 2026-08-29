@@ -1,16 +1,16 @@
 import { BoxLayout, Region } from '#base/theme';
-import { TrophyWidget, TrophyWidgetProps } from '#base/views/layouts/catalog/widgets/TrophyWidget';
+import { TrophyWidget2, TrophyWidget2Props } from '#base/views/layouts/catalog/widgets/TrophyWidget2';
 
 /** Generated from `1623_trophyWidget_xml` (layout "trophyWidget", 110x127) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface TrophyWidgetLayoutProps {
     layout?: BoxLayout;
-    trophyWidget?: TrophyWidgetProps;
+    trophyWidget?: TrophyWidget2Props;
 }
 
 export const TrophyWidgetLayout = ({ layout, trophyWidget }: TrophyWidgetLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 110, height: 127, ...layout }}>
-            <TrophyWidget
+            <TrophyWidget2
                 layout={{ position: 'absolute', left: 28, width: 110, top: 75, height: 127 }}
                 {...trophyWidget}
             />

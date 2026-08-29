@@ -17,14 +17,12 @@ export const RoomPreviewerLayout = ({ layout, roomCanvasContainer }: RoomPreview
 /** Named region `room_canvas` of RoomPreviewerLayout - configured through the parent's `roomCanvas` prop. */
 export interface RoomPreviewerLayoutRoomCanvasProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomPreviewerLayoutRoomCanvas = ({ layout, tags }: RoomPreviewerLayoutRoomCanvasProps) => {
+export const RoomPreviewerLayoutRoomCanvas = ({ layout }: RoomPreviewerLayoutRoomCanvasProps) => {
     return (
         <Region
             name="room_canvas"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         />
     );
@@ -35,14 +33,12 @@ export interface RoomPreviewerLayoutRoomCanvasContainerProps {
     layout?: BoxLayout;
     onRoomCanvasContainer?: () => void;
     roomCanvas?: RoomPreviewerLayoutRoomCanvasProps;
-    tags?: string[];
 }
 
-export const RoomPreviewerLayoutRoomCanvasContainer = ({ layout, onRoomCanvasContainer, roomCanvas, tags }: RoomPreviewerLayoutRoomCanvasContainerProps) => {
+export const RoomPreviewerLayoutRoomCanvasContainer = ({ layout, onRoomCanvasContainer, roomCanvas }: RoomPreviewerLayoutRoomCanvasContainerProps) => {
     return (
         <Region
             name="room_canvas_container"
-            tags={tags}
             backgroundColor="#000000"
             onPointerTap={onRoomCanvasContainer}
             cursor="pointer"

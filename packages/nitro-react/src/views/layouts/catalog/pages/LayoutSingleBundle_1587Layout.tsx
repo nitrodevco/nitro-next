@@ -21,10 +21,9 @@ export const LayoutSingleBundle_1587Layout = ({ ctlgSingleBundle, layout }: Layo
 /** Named region `bundleGrid` of LayoutSingleBundle_1587Layout - configured through the parent's `bundleGrid` prop. */
 export interface LayoutSingleBundle_1587LayoutBundleGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LayoutSingleBundle_1587LayoutBundleGrid = ({ layout, tags }: LayoutSingleBundle_1587LayoutBundleGridProps) => {
+export const LayoutSingleBundle_1587LayoutBundleGrid = ({ layout }: LayoutSingleBundle_1587LayoutBundleGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -32,7 +31,6 @@ export const LayoutSingleBundle_1587LayoutBundleGrid = ({ layout, tags }: Layout
         >
             <Region
                 name="bundleGrid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
             />
         </ScrollArea>
@@ -51,16 +49,14 @@ export interface LayoutSingleBundle_1587LayoutCtlgSingleBundleProps {
     simplePriceWidget?: SimplePriceWidgetProps;
     srcCtlgSpecialImg?: string;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const LayoutSingleBundle_1587LayoutCtlgSingleBundle = ({ addOnBadgeViewWidget, bundleGrid, captionCtlgDescription, captionCtlgSpecialTxt, captionCtlgText1, layout, purchaseWidget, simplePriceWidget, srcCtlgSpecialImg, srcCtlgTeaserimg1, tags }: LayoutSingleBundle_1587LayoutCtlgSingleBundleProps) => {
+export const LayoutSingleBundle_1587LayoutCtlgSingleBundle = ({ addOnBadgeViewWidget, bundleGrid, captionCtlgDescription, captionCtlgSpecialTxt, captionCtlgText1, layout, purchaseWidget, simplePriceWidget, srcCtlgSpecialImg, srcCtlgTeaserimg1 }: LayoutSingleBundle_1587LayoutCtlgSingleBundleProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_single_bundle"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <Region
@@ -84,7 +80,6 @@ export const LayoutSingleBundle_1587LayoutCtlgSingleBundle = ({ addOnBadgeViewWi
             <Border
                 variant="6"
                 name="bundleGridScrollWidget"
-                tags={[ 'EMBEDDED' ]}
                 layout={{ position: 'absolute', left: 164, width: 186, top: 117, bottom: 96 }}
             >
                 <LayoutSingleBundle_1587LayoutBundleGrid {...bundleGrid} />

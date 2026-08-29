@@ -31,14 +31,12 @@ export const BreedPetsConfirmationLayout = ({ elementList, layout, onClose }: Br
 /** Row template `separator` of BreedPetsConfirmationLayout - pass real rows through its `items…` slot. */
 export interface BreedPetsConfirmationLayoutSeparatorItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutSeparatorItem = ({ layout, tags }: BreedPetsConfirmationLayoutSeparatorItemProps) => {
+export const BreedPetsConfirmationLayoutSeparatorItem = ({ layout }: BreedPetsConfirmationLayoutSeparatorItemProps) => {
     return (
         <Region
             name="separator"
-            tags={tags}
             layout={{ width: 274, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -48,16 +46,14 @@ export const BreedPetsConfirmationLayoutSeparatorItem = ({ layout, tags }: Breed
 export interface BreedPetsConfirmationLayoutDescriptionItemProps {
     captionDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutDescriptionItem = ({ captionDescription, layout, tags }: BreedPetsConfirmationLayoutDescriptionItemProps) => {
+export const BreedPetsConfirmationLayoutDescriptionItem = ({ captionDescription, layout }: BreedPetsConfirmationLayoutDescriptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="description"
-            tags={tags}
             layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -72,16 +68,14 @@ export const BreedPetsConfirmationLayoutDescriptionItem = ({ captionDescription,
 export interface BreedPetsConfirmationLayoutRequestItemProps {
     captionRequest?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutRequestItem = ({ captionRequest, layout, tags }: BreedPetsConfirmationLayoutRequestItemProps) => {
+export const BreedPetsConfirmationLayoutRequestItem = ({ captionRequest, layout }: BreedPetsConfirmationLayoutRequestItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="request"
-            tags={tags}
             layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -96,16 +90,14 @@ export const BreedPetsConfirmationLayoutRequestItem = ({ captionRequest, layout,
 export interface BreedPetsConfirmationLayoutInfoItemProps {
     captionInfo?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutInfoItem = ({ captionInfo, layout, tags }: BreedPetsConfirmationLayoutInfoItemProps) => {
+export const BreedPetsConfirmationLayoutInfoItem = ({ captionInfo, layout }: BreedPetsConfirmationLayoutInfoItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="info"
-            tags={tags}
             layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -121,16 +113,14 @@ export const BreedPetsConfirmationLayoutInfoItem = ({ captionInfo, layout, tags 
 export interface BreedPetsConfirmationLayoutPlantNameItemProps {
     captionPlantName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutPlantNameItem = ({ captionPlantName, layout, tags }: BreedPetsConfirmationLayoutPlantNameItemProps) => {
+export const BreedPetsConfirmationLayoutPlantNameItem = ({ captionPlantName, layout }: BreedPetsConfirmationLayoutPlantNameItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="plant_name"
-            tags={tags}
             layout={{ width: 122, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -145,14 +135,12 @@ export const BreedPetsConfirmationLayoutPlantNameItem = ({ captionPlantName, lay
 export interface BreedPetsConfirmationLayoutPreviewImageItemProps {
     layout?: BoxLayout;
     srcPreviewImage?: string;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutPreviewImageItem = ({ layout, srcPreviewImage, tags }: BreedPetsConfirmationLayoutPreviewImageItemProps) => {
+export const BreedPetsConfirmationLayoutPreviewImageItem = ({ layout, srcPreviewImage }: BreedPetsConfirmationLayoutPreviewImageItemProps) => {
     return (
         <ThemeImage
             name="preview_image"
-            tags={tags}
             src={srcPreviewImage}
             layout={{ width: 122, height: 130, flexShrink: 0, minWidth: 122, maxWidth: 122, minHeight: 130, maxHeight: 130, ...layout }}
         />
@@ -163,16 +151,14 @@ export const BreedPetsConfirmationLayoutPreviewImageItem = ({ layout, srcPreview
 export interface BreedPetsConfirmationLayoutPlantRarityLevelItemProps {
     captionPlantRarityLevel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutPlantRarityLevelItem = ({ captionPlantRarityLevel, layout, tags }: BreedPetsConfirmationLayoutPlantRarityLevelItemProps) => {
+export const BreedPetsConfirmationLayoutPlantRarityLevelItem = ({ captionPlantRarityLevel, layout }: BreedPetsConfirmationLayoutPlantRarityLevelItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="plant_rarity_level"
-            tags={tags}
             layout={{ width: 134, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -187,16 +173,14 @@ export const BreedPetsConfirmationLayoutPlantRarityLevelItem = ({ captionPlantRa
 export interface BreedPetsConfirmationLayoutPlantDescriptionItemProps {
     captionPlantDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutPlantDescriptionItem = ({ captionPlantDescription, layout, tags }: BreedPetsConfirmationLayoutPlantDescriptionItemProps) => {
+export const BreedPetsConfirmationLayoutPlantDescriptionItem = ({ captionPlantDescription, layout }: BreedPetsConfirmationLayoutPlantDescriptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="plant_description"
-            tags={tags}
             layout={{ width: 122, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -211,14 +195,12 @@ export const BreedPetsConfirmationLayoutPlantDescriptionItem = ({ captionPlantDe
 export interface BreedPetsConfirmationLayoutPlant1ItemlistItemProps {
     itemsPlant1Itemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutPlant1ItemlistItem = ({ itemsPlant1Itemlist, layout, tags }: BreedPetsConfirmationLayoutPlant1ItemlistItemProps) => {
+export const BreedPetsConfirmationLayoutPlant1ItemlistItem = ({ itemsPlant1Itemlist, layout }: BreedPetsConfirmationLayoutPlant1ItemlistItemProps) => {
     return (
         <Region
             name="plant1_itemlist"
-            tags={tags}
             layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsPlant1Itemlist ?? (
@@ -237,16 +219,14 @@ export const BreedPetsConfirmationLayoutPlant1ItemlistItem = ({ itemsPlant1Iteml
 export interface BreedPetsConfirmationLayoutPlantNameItem2Props {
     captionPlantName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutPlantNameItem2 = ({ captionPlantName, layout, tags }: BreedPetsConfirmationLayoutPlantNameItem2Props) => {
+export const BreedPetsConfirmationLayoutPlantNameItem2 = ({ captionPlantName, layout }: BreedPetsConfirmationLayoutPlantNameItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="plant_name"
-            tags={tags}
             layout={{ width: 122, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -261,14 +241,12 @@ export const BreedPetsConfirmationLayoutPlantNameItem2 = ({ captionPlantName, la
 export interface BreedPetsConfirmationLayoutPreviewImage2ItemProps {
     layout?: BoxLayout;
     srcPreviewImage2?: string;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutPreviewImage2Item = ({ layout, srcPreviewImage2, tags }: BreedPetsConfirmationLayoutPreviewImage2ItemProps) => {
+export const BreedPetsConfirmationLayoutPreviewImage2Item = ({ layout, srcPreviewImage2 }: BreedPetsConfirmationLayoutPreviewImage2ItemProps) => {
     return (
         <ThemeImage
             name="preview_image2"
-            tags={tags}
             src={srcPreviewImage2}
             layout={{ width: 122, height: 130, flexShrink: 0, minWidth: 122, maxWidth: 122, minHeight: 130, maxHeight: 130, ...layout }}
         />
@@ -279,16 +257,14 @@ export const BreedPetsConfirmationLayoutPreviewImage2Item = ({ layout, srcPrevie
 export interface BreedPetsConfirmationLayoutPlantRarityLevelItem2Props {
     captionPlantRarityLevel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutPlantRarityLevelItem2 = ({ captionPlantRarityLevel, layout, tags }: BreedPetsConfirmationLayoutPlantRarityLevelItem2Props) => {
+export const BreedPetsConfirmationLayoutPlantRarityLevelItem2 = ({ captionPlantRarityLevel, layout }: BreedPetsConfirmationLayoutPlantRarityLevelItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="plant_rarity_level"
-            tags={tags}
             layout={{ width: 134, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -303,16 +279,14 @@ export const BreedPetsConfirmationLayoutPlantRarityLevelItem2 = ({ captionPlantR
 export interface BreedPetsConfirmationLayoutPlantDescriptionItem2Props {
     captionPlantDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutPlantDescriptionItem2 = ({ captionPlantDescription, layout, tags }: BreedPetsConfirmationLayoutPlantDescriptionItem2Props) => {
+export const BreedPetsConfirmationLayoutPlantDescriptionItem2 = ({ captionPlantDescription, layout }: BreedPetsConfirmationLayoutPlantDescriptionItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="plant_description"
-            tags={tags}
             layout={{ width: 122, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -327,14 +301,12 @@ export const BreedPetsConfirmationLayoutPlantDescriptionItem2 = ({ captionPlantD
 export interface BreedPetsConfirmationLayoutPlant2ItemlistItemProps {
     itemsPlant2Itemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutPlant2ItemlistItem = ({ itemsPlant2Itemlist, layout, tags }: BreedPetsConfirmationLayoutPlant2ItemlistItemProps) => {
+export const BreedPetsConfirmationLayoutPlant2ItemlistItem = ({ itemsPlant2Itemlist, layout }: BreedPetsConfirmationLayoutPlant2ItemlistItemProps) => {
     return (
         <Region
             name="plant2_itemlist"
-            tags={tags}
             layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsPlant2Itemlist ?? (
@@ -353,14 +325,12 @@ export const BreedPetsConfirmationLayoutPlant2ItemlistItem = ({ itemsPlant2Iteml
 export interface BreedPetsConfirmationLayoutPreviewListItemProps {
     itemsPreviewList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutPreviewListItem = ({ itemsPreviewList, layout, tags }: BreedPetsConfirmationLayoutPreviewListItemProps) => {
+export const BreedPetsConfirmationLayoutPreviewListItem = ({ itemsPreviewList, layout }: BreedPetsConfirmationLayoutPreviewListItemProps) => {
     return (
         <Region
             name="preview_list"
-            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsPreviewList ?? (
@@ -376,14 +346,12 @@ export const BreedPetsConfirmationLayoutPreviewListItem = ({ itemsPreviewList, l
 /** Row template `separator` of BreedPetsConfirmationLayout - pass real rows through its `items…` slot. */
 export interface BreedPetsConfirmationLayoutSeparatorItem2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutSeparatorItem2 = ({ layout, tags }: BreedPetsConfirmationLayoutSeparatorItem2Props) => {
+export const BreedPetsConfirmationLayoutSeparatorItem2 = ({ layout }: BreedPetsConfirmationLayoutSeparatorItem2Props) => {
     return (
         <Region
             name="separator"
-            tags={tags}
             layout={{ width: 274, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -393,17 +361,15 @@ export const BreedPetsConfirmationLayoutSeparatorItem2 = ({ layout, tags }: Bree
 export interface BreedPetsConfirmationLayoutCancelButtonItemProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutCancelButtonItem = ({ layout, onCancelButton, tags }: BreedPetsConfirmationLayoutCancelButtonItemProps) => {
+export const BreedPetsConfirmationLayoutCancelButtonItem = ({ layout, onCancelButton }: BreedPetsConfirmationLayoutCancelButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="cancel_button"
-            tags={tags}
             onPointerTap={onCancelButton}
             layout={{ width: 122, height: 30, flexShrink: 0, minWidth: 122, maxWidth: 122, ...layout }}
         >
@@ -416,17 +382,15 @@ export const BreedPetsConfirmationLayoutCancelButtonItem = ({ layout, onCancelBu
 export interface BreedPetsConfirmationLayoutSaveButtonItemProps {
     layout?: BoxLayout;
     onSaveButton?: () => void;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutSaveButtonItem = ({ layout, onSaveButton, tags }: BreedPetsConfirmationLayoutSaveButtonItemProps) => {
+export const BreedPetsConfirmationLayoutSaveButtonItem = ({ layout, onSaveButton }: BreedPetsConfirmationLayoutSaveButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="5"
             name="save_button"
-            tags={tags}
             tintColor="#00aa00"
             onPointerTap={onSaveButton}
             layout={{ width: 122, height: 30, flexShrink: 0, minWidth: 122, maxWidth: 122, ...layout }}
@@ -440,17 +404,15 @@ export const BreedPetsConfirmationLayoutSaveButtonItem = ({ layout, onSaveButton
 export interface BreedPetsConfirmationLayoutAcceptButtonItemProps {
     layout?: BoxLayout;
     onAcceptButton?: () => void;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutAcceptButtonItem = ({ layout, onAcceptButton, tags }: BreedPetsConfirmationLayoutAcceptButtonItemProps) => {
+export const BreedPetsConfirmationLayoutAcceptButtonItem = ({ layout, onAcceptButton }: BreedPetsConfirmationLayoutAcceptButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="5"
             name="accept_button"
-            tags={tags}
             tintColor="#00aa00"
             onPointerTap={onAcceptButton}
             layout={{ width: 122, height: 30, flexShrink: 0, minWidth: 122, maxWidth: 122, ...layout }}
@@ -464,14 +426,12 @@ export const BreedPetsConfirmationLayoutAcceptButtonItem = ({ layout, onAcceptBu
 export interface BreedPetsConfirmationLayoutButtonListItemProps {
     itemsButtonList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutButtonListItem = ({ itemsButtonList, layout, tags }: BreedPetsConfirmationLayoutButtonListItemProps) => {
+export const BreedPetsConfirmationLayoutButtonListItem = ({ itemsButtonList, layout }: BreedPetsConfirmationLayoutButtonListItemProps) => {
     return (
         <Region
             name="button_list"
-            tags={tags}
             layout={{ flexShrink: 0, minWidth: 254, maxWidth: 254, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsButtonList ?? (
@@ -489,14 +449,12 @@ export const BreedPetsConfirmationLayoutButtonListItem = ({ itemsButtonList, lay
 export interface BreedPetsConfirmationLayoutElementListProps {
     itemsElementList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BreedPetsConfirmationLayoutElementList = ({ itemsElementList, layout, tags }: BreedPetsConfirmationLayoutElementListProps) => {
+export const BreedPetsConfirmationLayoutElementList = ({ itemsElementList, layout }: BreedPetsConfirmationLayoutElementListProps) => {
     return (
         <Region
             name="element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 272, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsElementList ?? (

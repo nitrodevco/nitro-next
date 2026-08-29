@@ -19,7 +19,6 @@ export const PurseIndicatorCreditsLayout = ({ captionChange, captionCredits, lay
             <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}>
                 <Border
                     variant="6"
-                    tags={[ 'BGCOLOR' ]}
                     tintColor="#55534e"
                     layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
                 />
@@ -36,7 +35,6 @@ export const PurseIndicatorCreditsLayout = ({ captionChange, captionCredits, lay
                 >
                     <ThemeImage
                         name="credit_icon"
-                        tags={[ 'ICON' ]}
                         src={srcCreditIcon ?? layoutImage('toolbar_credit_icon_0.png')}
                         layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                     />

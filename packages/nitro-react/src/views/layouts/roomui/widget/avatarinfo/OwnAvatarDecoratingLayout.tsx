@@ -28,37 +28,41 @@ export interface OwnAvatarDecoratingLayoutDecorateItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarDecoratingLayoutDecorateItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarDecoratingLayoutDecorateItemProps) => {
+export const OwnAvatarDecoratingLayoutDecorateItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarDecoratingLayoutDecorateItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="decorate"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.avatar.stop_decorating')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.avatar.stop_decorating')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -67,18 +71,16 @@ export const OwnAvatarDecoratingLayoutDecorateItem = ({ captionLabel, layout, on
 export interface OwnAvatarDecoratingLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const OwnAvatarDecoratingLayoutButtons = ({ itemsButtons, layout, tags }: OwnAvatarDecoratingLayoutButtonsProps) => {
+export const OwnAvatarDecoratingLayoutButtons = ({ itemsButtons, layout }: OwnAvatarDecoratingLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ position: 'absolute', minWidth: 103, top: 7, minHeight: 26, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsButtons ?? (
-                <OwnAvatarDecoratingLayoutDecorateItem tags={[ 'action' ]} />
+                <OwnAvatarDecoratingLayoutDecorateItem />
             )}
         </Region>
     );
@@ -88,14 +90,12 @@ export const OwnAvatarDecoratingLayoutButtons = ({ itemsButtons, layout, tags }:
 export interface OwnAvatarDecoratingLayoutBorderProps {
     buttons?: OwnAvatarDecoratingLayoutButtonsProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const OwnAvatarDecoratingLayoutBorder = ({ buttons, layout, tags }: OwnAvatarDecoratingLayoutBorderProps) => {
+export const OwnAvatarDecoratingLayoutBorder = ({ buttons, layout }: OwnAvatarDecoratingLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76, justifyContent: 'center', ...layout }}
         >
             <Region

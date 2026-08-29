@@ -28,14 +28,12 @@ export const RoomUsercountLayout = ({ layout, usercount }: RoomUsercountLayoutPr
 export interface RoomUsercountLayoutRoomUsercountIconItemProps {
     layout?: BoxLayout;
     srcRoomUsercountIcon?: string;
-    tags?: string[];
 }
 
-export const RoomUsercountLayoutRoomUsercountIconItem = ({ layout, srcRoomUsercountIcon, tags }: RoomUsercountLayoutRoomUsercountIconItemProps) => {
+export const RoomUsercountLayoutRoomUsercountIconItem = ({ layout, srcRoomUsercountIcon }: RoomUsercountLayoutRoomUsercountIconItemProps) => {
     return (
         <ThemeImage
             name="room_usercount_icon"
-            tags={tags}
             src={srcRoomUsercountIcon ?? layoutImage('newnavigator_icon_usercount.png')}
             layout={{ width: 13, height: 14, flexShrink: 0, ...layout }}
         />
@@ -46,14 +44,12 @@ export const RoomUsercountLayoutRoomUsercountIconItem = ({ layout, srcRoomUserco
 export interface RoomUsercountLayoutRoomUsercountItemProps {
     captionRoomUsercount?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomUsercountLayoutRoomUsercountItem = ({ captionRoomUsercount, layout, tags }: RoomUsercountLayoutRoomUsercountItemProps) => {
+export const RoomUsercountLayoutRoomUsercountItem = ({ captionRoomUsercount, layout }: RoomUsercountLayoutRoomUsercountItemProps) => {
     return (
         <Region
             name="room_usercount"
-            tags={tags}
             layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -69,14 +65,12 @@ export const RoomUsercountLayoutRoomUsercountItem = ({ captionRoomUsercount, lay
 export interface RoomUsercountLayoutUsercountProps {
     itemsUsercount?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomUsercountLayoutUsercount = ({ itemsUsercount, layout, tags }: RoomUsercountLayoutUsercountProps) => {
+export const RoomUsercountLayoutUsercount = ({ itemsUsercount, layout }: RoomUsercountLayoutUsercountProps) => {
     return (
         <Region
             name="usercount"
-            tags={tags}
             layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1, ...layout }}
         >
             {itemsUsercount ?? (

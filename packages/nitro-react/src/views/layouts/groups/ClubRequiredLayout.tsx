@@ -63,16 +63,14 @@ export interface ClubRequiredLayoutMoreInfoLinkRegionProps {
     captionMoreInfoLink?: string;
     layout?: BoxLayout;
     onMoreInfoLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const ClubRequiredLayoutMoreInfoLinkRegion = ({ captionMoreInfoLink, layout, onMoreInfoLinkRegion, tags }: ClubRequiredLayoutMoreInfoLinkRegionProps) => {
+export const ClubRequiredLayoutMoreInfoLinkRegion = ({ captionMoreInfoLink, layout, onMoreInfoLinkRegion }: ClubRequiredLayoutMoreInfoLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="more_info_link_region"
-            tags={tags}
             onPointerTap={onMoreInfoLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 131, width: 282, top: 83, height: 18, ...layout }}
@@ -96,16 +94,14 @@ export interface ClubRequiredLayoutCancelLinkRegionProps {
     captionCancelLink?: string;
     layout?: BoxLayout;
     onCancelLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const ClubRequiredLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion, tags }: ClubRequiredLayoutCancelLinkRegionProps) => {
+export const ClubRequiredLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion }: ClubRequiredLayoutCancelLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_link_region"
-            tags={tags}
             onPointerTap={onCancelLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 35, width: 152, top: 145, height: 18, ...layout }}

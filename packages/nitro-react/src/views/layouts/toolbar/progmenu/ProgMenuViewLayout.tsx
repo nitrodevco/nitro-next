@@ -44,16 +44,14 @@ export interface ProgMenuViewLayoutDailytasksProps {
     onDailytasks?: () => void;
     srcDailytasksIconColor?: string;
     srcDailytasksIconGrey?: string;
-    tags?: string[];
 }
 
-export const ProgMenuViewLayoutDailytasks = ({ captionFieldText, layout, onDailytasks, srcDailytasksIconColor, srcDailytasksIconGrey, tags }: ProgMenuViewLayoutDailytasksProps) => {
+export const ProgMenuViewLayoutDailytasks = ({ captionFieldText, layout, onDailytasks, srcDailytasksIconColor, srcDailytasksIconGrey }: ProgMenuViewLayoutDailytasksProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dailytasks"
-            tags={tags}
             onPointerTap={onDailytasks}
             cursor="pointer"
             layout={{ position: 'absolute', left: 12, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
@@ -89,16 +87,14 @@ export interface ProgMenuViewLayoutQuestsProps {
     onQuests?: () => void;
     srcQuestsIconColor?: string;
     srcQuestsIconGrey?: string;
-    tags?: string[];
 }
 
-export const ProgMenuViewLayoutQuests = ({ captionFieldText, layout, onQuests, srcQuestsIconColor, srcQuestsIconGrey, tags }: ProgMenuViewLayoutQuestsProps) => {
+export const ProgMenuViewLayoutQuests = ({ captionFieldText, layout, onQuests, srcQuestsIconColor, srcQuestsIconGrey }: ProgMenuViewLayoutQuestsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="quests"
-            tags={tags}
             onPointerTap={onQuests}
             cursor="pointer"
             layout={{ position: 'absolute', left: 80, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
@@ -134,16 +130,14 @@ export interface ProgMenuViewLayoutAchievementsProps {
     onAchievements?: () => void;
     srcAchievementsIconColor?: string;
     srcAchievementsIconGrey?: string;
-    tags?: string[];
 }
 
-export const ProgMenuViewLayoutAchievements = ({ captionFieldText, layout, onAchievements, srcAchievementsIconColor, srcAchievementsIconGrey, tags }: ProgMenuViewLayoutAchievementsProps) => {
+export const ProgMenuViewLayoutAchievements = ({ captionFieldText, layout, onAchievements, srcAchievementsIconColor, srcAchievementsIconGrey }: ProgMenuViewLayoutAchievementsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="achievements"
-            tags={tags}
             onPointerTap={onAchievements}
             cursor="pointer"
             layout={{ position: 'absolute', left: 148, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
@@ -179,16 +173,14 @@ export interface ProgMenuViewLayoutLeaderboardsProps {
     onLeaderboards?: () => void;
     srcLeaderboardsIconColor?: string;
     srcLeaderboardsIconGrey?: string;
-    tags?: string[];
 }
 
-export const ProgMenuViewLayoutLeaderboards = ({ captionFieldText, layout, onLeaderboards, srcLeaderboardsIconColor, srcLeaderboardsIconGrey, tags }: ProgMenuViewLayoutLeaderboardsProps) => {
+export const ProgMenuViewLayoutLeaderboards = ({ captionFieldText, layout, onLeaderboards, srcLeaderboardsIconColor, srcLeaderboardsIconGrey }: ProgMenuViewLayoutLeaderboardsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="leaderboards"
-            tags={tags}
             onPointerTap={onLeaderboards}
             cursor="pointer"
             layout={{ position: 'absolute', left: 216, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
@@ -224,16 +216,14 @@ export interface ProgMenuViewLayoutIntroductionProps {
     onIntroduction?: () => void;
     srcIntroductionIconColor?: string;
     srcIntroductionIconGrey?: string;
-    tags?: string[];
 }
 
-export const ProgMenuViewLayoutIntroduction = ({ captionFieldText, layout, onIntroduction, srcIntroductionIconColor, srcIntroductionIconGrey, tags }: ProgMenuViewLayoutIntroductionProps) => {
+export const ProgMenuViewLayoutIntroduction = ({ captionFieldText, layout, onIntroduction, srcIntroductionIconColor, srcIntroductionIconGrey }: ProgMenuViewLayoutIntroductionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="introduction"
-            tags={tags}
             onPointerTap={onIntroduction}
             cursor="pointer"
             layout={{ position: 'absolute', left: 284, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
@@ -265,14 +255,12 @@ export const ProgMenuViewLayoutIntroduction = ({ captionFieldText, layout, onInt
 /** Named region `spacer` of ProgMenuViewLayout - configured through the parent's `spacer` prop. */
 export interface ProgMenuViewLayoutSpacerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ProgMenuViewLayoutSpacer = ({ layout, tags }: ProgMenuViewLayoutSpacerProps) => {
+export const ProgMenuViewLayoutSpacer = ({ layout }: ProgMenuViewLayoutSpacerProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ position: 'absolute', left: 352, width: 7, top: 2, height: 30, ...layout }}
         />
     );

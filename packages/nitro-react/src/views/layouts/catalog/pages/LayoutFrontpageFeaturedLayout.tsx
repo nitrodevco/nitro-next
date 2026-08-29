@@ -23,20 +23,17 @@ export interface LayoutFrontpageFeaturedLayoutCtlgFrontpage5Props {
     featuredItemsWidget?: FeaturedItemsWidgetProps;
     layout?: BoxLayout;
     redeemItemCodeWidget?: RedeemItemCodeWidgetProps;
-    tags?: string[];
 }
 
-export const LayoutFrontpageFeaturedLayoutCtlgFrontpage5 = ({ captionCtlgTxt2, featuredItemsWidget, layout, redeemItemCodeWidget, tags }: LayoutFrontpageFeaturedLayoutCtlgFrontpage5Props) => {
+export const LayoutFrontpageFeaturedLayoutCtlgFrontpage5 = ({ captionCtlgTxt2, featuredItemsWidget, layout, redeemItemCodeWidget }: LayoutFrontpageFeaturedLayoutCtlgFrontpage5Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_frontpage5"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 552, top: 0, height: 460, ...layout }}
         >
             <FeaturedItemsWidget
-                tags={[ 'EMBEDDED' ]}
                 layout={{ position: 'absolute', left: 0, width: 552, top: 0, height: 460 }}
                 {...featuredItemsWidget}
             />

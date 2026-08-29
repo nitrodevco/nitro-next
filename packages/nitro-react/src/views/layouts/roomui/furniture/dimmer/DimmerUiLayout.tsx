@@ -70,14 +70,12 @@ export const DimmerUiLayout = ({ captionOffText, layout, onApplyButton, onClose,
 /** Named region `color_grid` of DimmerUiLayout - configured through the parent's `colorGrid` prop. */
 export interface DimmerUiLayoutColorGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const DimmerUiLayoutColorGrid = ({ layout, tags }: DimmerUiLayoutColorGridProps) => {
+export const DimmerUiLayoutColorGrid = ({ layout }: DimmerUiLayoutColorGridProps) => {
     return (
         <Region
             name="color_grid"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 210, top: 0, height: 30, flexDirection: 'row', flexWrap: 'wrap', gap: 2, ...layout }}
         />
     );
@@ -88,14 +86,12 @@ export interface DimmerUiLayoutColorGridContainerProps {
     colorGrid?: DimmerUiLayoutColorGridProps;
     layout?: BoxLayout;
     onColorGridContainer?: () => void;
-    tags?: string[];
 }
 
-export const DimmerUiLayoutColorGridContainer = ({ colorGrid, layout, onColorGridContainer, tags }: DimmerUiLayoutColorGridContainerProps) => {
+export const DimmerUiLayoutColorGridContainer = ({ colorGrid, layout, onColorGridContainer }: DimmerUiLayoutColorGridContainerProps) => {
     return (
         <Region
             name="color_grid_container"
-            tags={tags}
             onPointerTap={onColorGridContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 2, width: 210, top: 1, height: 30, ...layout }}
@@ -109,14 +105,12 @@ export const DimmerUiLayoutColorGridContainer = ({ colorGrid, layout, onColorGri
 export interface DimmerUiLayoutSliderMovementAreaProps {
     layout?: BoxLayout;
     srcSliderButton?: string;
-    tags?: string[];
 }
 
-export const DimmerUiLayoutSliderMovementArea = ({ layout, srcSliderButton, tags }: DimmerUiLayoutSliderMovementAreaProps) => {
+export const DimmerUiLayoutSliderMovementArea = ({ layout, srcSliderButton }: DimmerUiLayoutSliderMovementAreaProps) => {
     return (
         <Region
             name="slider_movement_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 206, top: 1, height: 17, ...layout }}
         >
             <ThemeImage
@@ -133,14 +127,12 @@ export interface DimmerUiLayoutBrightnessContainerProps {
     layout?: BoxLayout;
     sliderMovementArea?: DimmerUiLayoutSliderMovementAreaProps;
     srcSliderBase?: string;
-    tags?: string[];
 }
 
-export const DimmerUiLayoutBrightnessContainer = ({ layout, sliderMovementArea, srcSliderBase, tags }: DimmerUiLayoutBrightnessContainerProps) => {
+export const DimmerUiLayoutBrightnessContainer = ({ layout, sliderMovementArea, srcSliderBase }: DimmerUiLayoutBrightnessContainerProps) => {
     return (
         <Region
             name="brightness_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 206, top: 35, height: 18, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
@@ -161,16 +153,14 @@ export interface DimmerUiLayoutTabContentProps {
     colorGridContainer?: DimmerUiLayoutColorGridContainerProps;
     layout?: BoxLayout;
     onTypeCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const DimmerUiLayoutTabContent = ({ brightnessContainer, captionDimmerInfo, captionTypeText, colorGridContainer, layout, onTypeCheckbox, tags }: DimmerUiLayoutTabContentProps) => {
+export const DimmerUiLayoutTabContent = ({ brightnessContainer, captionDimmerInfo, captionTypeText, colorGridContainer, layout, onTypeCheckbox }: DimmerUiLayoutTabContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="tab_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 17, width: 228, top: 34, height: 118, ...layout }}
         >
             <DimmerUiLayoutColorGridContainer {...colorGridContainer} />
@@ -213,16 +203,14 @@ export interface DimmerUiLayoutTabbedviewProps {
     onTab3?: () => void;
     onTabbedview?: () => void;
     tabContent?: DimmerUiLayoutTabContentProps;
-    tags?: string[];
 }
 
-export const DimmerUiLayoutTabbedview = ({ layout, onTab1, onTab2, onTab3, onTabbedview, tabContent, tags }: DimmerUiLayoutTabbedviewProps) => {
+export const DimmerUiLayoutTabbedview = ({ layout, onTab1, onTab2, onTab3, onTabbedview, tabContent }: DimmerUiLayoutTabbedviewProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="tabbedview"
-            tags={tags}
             onPointerTap={onTabbedview}
             cursor="pointer"
             layout={{ position: 'absolute', left: 2, width: 266, top: -1, height: 166, ...layout }}

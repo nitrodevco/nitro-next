@@ -21,14 +21,12 @@ export interface UserEntryLayoutExtraLinkRegionProps {
     layout?: BoxLayout;
     onExtraLinkRegion?: () => void;
     srcExtraLinkIcon?: string;
-    tags?: string[];
 }
 
-export const UserEntryLayoutExtraLinkRegion = ({ layout, onExtraLinkRegion, srcExtraLinkIcon, tags }: UserEntryLayoutExtraLinkRegionProps) => {
+export const UserEntryLayoutExtraLinkRegion = ({ layout, onExtraLinkRegion, srcExtraLinkIcon }: UserEntryLayoutExtraLinkRegionProps) => {
     return (
         <Region
             name="extra_link_region"
-            tags={tags}
             onPointerTap={onExtraLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 12, width: 26, top: 112, height: 24, ...layout }}
@@ -47,16 +45,14 @@ export interface UserEntryLayoutBgRegionProps {
     extraLinkRegion?: UserEntryLayoutExtraLinkRegionProps;
     layout?: BoxLayout;
     onBgRegion?: () => void;
-    tags?: string[];
 }
 
-export const UserEntryLayoutBgRegion = ({ extraLinkRegion, layout, onBgRegion, tags }: UserEntryLayoutBgRegionProps) => {
+export const UserEntryLayoutBgRegion = ({ extraLinkRegion, layout, onBgRegion }: UserEntryLayoutBgRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bg_region"
-            tags={tags}
             tooltip={t('group.members.showinfo')}
             onPointerTap={onBgRegion}
             cursor="pointer"

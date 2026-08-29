@@ -78,17 +78,15 @@ export const WelcomeTourPopupLayout = ({ layout, onClose, onTakeTour, refuseTour
 export interface WelcomeTourPopupLayoutRefuseTourProps {
     layout?: BoxLayout;
     onRefuseTour?: () => void;
-    tags?: string[];
     visibleRefuseTour?: boolean;
 }
 
-export const WelcomeTourPopupLayoutRefuseTour = ({ layout, onRefuseTour, tags, visibleRefuseTour }: WelcomeTourPopupLayoutRefuseTourProps) => {
+export const WelcomeTourPopupLayoutRefuseTour = ({ layout, onRefuseTour, visibleRefuseTour }: WelcomeTourPopupLayoutRefuseTourProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="refuse_tour"
-            tags={tags}
             visible={visibleRefuseTour ?? false}
             onPointerTap={onRefuseTour}
             cursor="pointer"

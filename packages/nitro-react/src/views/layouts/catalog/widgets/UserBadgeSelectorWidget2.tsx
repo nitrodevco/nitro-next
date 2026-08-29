@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Region, ScrollArea, TextInput, ThemeImage, ThemeText } from '#base/theme';
-import { layoutImage } from '#base/views/layouts/layoutAssets';
+import { CatalogWidgetFlags, layoutImage } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `userBadgeSelectorWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -13,15 +13,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface UserBadgeSelectorWidget2CancelSearchBtnProps {
     layout?: BoxLayout;
     onCancelSearchBtn?: () => void;
-    tags?: string[];
     visibleCancelSearchBtn?: boolean;
 }
 
-export const UserBadgeSelectorWidget2CancelSearchBtn = ({ layout, onCancelSearchBtn, tags, visibleCancelSearchBtn }: UserBadgeSelectorWidget2CancelSearchBtnProps) => {
+export const UserBadgeSelectorWidget2CancelSearchBtn = ({ layout, onCancelSearchBtn, visibleCancelSearchBtn }: UserBadgeSelectorWidget2CancelSearchBtnProps) => {
     return (
         <Region
             name="cancel_search_btn"
-            tags={tags}
             visible={visibleCancelSearchBtn ?? false}
             onPointerTap={onCancelSearchBtn}
             cursor="pointer"
@@ -38,10 +36,9 @@ export const UserBadgeSelectorWidget2CancelSearchBtn = ({ layout, onCancelSearch
 /** Named region `badgeGrid` of UserBadgeSelectorWidget2 - configured through the parent's `badgeGrid` prop. */
 export interface UserBadgeSelectorWidget2BadgeGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserBadgeSelectorWidget2BadgeGrid = ({ layout, tags }: UserBadgeSelectorWidget2BadgeGridProps) => {
+export const UserBadgeSelectorWidget2BadgeGrid = ({ layout }: UserBadgeSelectorWidget2BadgeGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -49,7 +46,6 @@ export const UserBadgeSelectorWidget2BadgeGrid = ({ layout, tags }: UserBadgeSel
         >
             <Region
                 name="badgeGrid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}
             />
         </ScrollArea>
@@ -57,22 +53,20 @@ export const UserBadgeSelectorWidget2BadgeGrid = ({ layout, tags }: UserBadgeSel
 };
 
 /** Named region `userBadgeSelectorWidget` of UserBadgeSelectorWidget2 - configured through the parent's `userBadgeSelectorWidget` prop. */
-export interface UserBadgeSelectorWidget2Props {
+export interface UserBadgeSelectorWidget2Props extends CatalogWidgetFlags {
     badgeGrid?: UserBadgeSelectorWidget2BadgeGridProps;
     cancelSearchBtn?: UserBadgeSelectorWidget2CancelSearchBtnProps;
     captionSearchPlaceholder?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserBadgeSelectorWidget2 = ({ badgeGrid, cancelSearchBtn, captionSearchPlaceholder, layout, tags }: UserBadgeSelectorWidget2Props) => {
+export const UserBadgeSelectorWidget2 = ({ badgeGrid, cancelSearchBtn, captionSearchPlaceholder, layout }: UserBadgeSelectorWidget2Props) => {
     const t = useTranslation();
     const [ searchInputValue, setSearchInputValue ] = useState('');
 
     return (
         <Region
             name="userBadgeSelectorWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Border

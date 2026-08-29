@@ -33,7 +33,6 @@ export const HabboCrasherDialogLayout = ({ captionCrasherText, layout, onClose, 
                 <ButtonThick
                     variant="3"
                     name="crasher_button"
-                    tags={[ 'button' ]}
                     tooltip={'Pressing me is the last thing you\'ll do...'}
                     onPointerTap={onCrasherButton}
                     layout={{ position: 'absolute', left: 50, width: 79, top: 50, height: 34 }}

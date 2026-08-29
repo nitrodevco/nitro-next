@@ -1,4 +1,5 @@
 import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `textInputWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -6,17 +7,15 @@ import { BoxLayout, Region, ThemeText } from '#base/theme';
  * (TextInputWidgetLayout); each passes its own placement through `layout`.
  */
 /** Named region `textInputWidget` of TextInputWidget2 - configured through the parent's `textInputWidget` prop. */
-export interface TextInputWidget2Props {
+export interface TextInputWidget2Props extends CatalogWidgetFlags {
     captionInputText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TextInputWidget2 = ({ captionInputText, layout, tags }: TextInputWidget2Props) => {
+export const TextInputWidget2 = ({ captionInputText, layout }: TextInputWidget2Props) => {
     return (
         <Region
             name="textInputWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Region

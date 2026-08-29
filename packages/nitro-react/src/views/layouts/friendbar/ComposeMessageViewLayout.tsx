@@ -85,14 +85,12 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionSendMes
 export interface ComposeMessageViewLayoutTopClickAreaProps {
     layout?: BoxLayout;
     onTopClickArea?: () => void;
-    tags?: string[];
 }
 
-export const ComposeMessageViewLayoutTopClickArea = ({ layout, onTopClickArea, tags }: ComposeMessageViewLayoutTopClickAreaProps) => {
+export const ComposeMessageViewLayoutTopClickArea = ({ layout, onTopClickArea }: ComposeMessageViewLayoutTopClickAreaProps) => {
     return (
         <Region
             name="top_click_area"
-            tags={tags}
             onPointerTap={onTopClickArea}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80, ...layout }}
@@ -103,14 +101,12 @@ export const ComposeMessageViewLayoutTopClickArea = ({ layout, onTopClickArea, t
 /** Named region `icon_background` of ComposeMessageViewLayout - configured through the parent's `iconBackground` prop. */
 export interface ComposeMessageViewLayoutIconBackgroundProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ComposeMessageViewLayoutIconBackground = ({ layout, tags }: ComposeMessageViewLayoutIconBackgroundProps) => {
+export const ComposeMessageViewLayoutIconBackground = ({ layout }: ComposeMessageViewLayoutIconBackgroundProps) => {
     return (
         <Region
             name="icon_background"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80, ...layout }}
         >
@@ -131,15 +127,13 @@ export interface ComposeMessageViewLayoutTopPartProps {
     iconBackground?: ComposeMessageViewLayoutIconBackgroundProps;
     layout?: BoxLayout;
     onTopPart?: () => void;
-    tags?: string[];
     topClickArea?: ComposeMessageViewLayoutTopClickAreaProps;
 }
 
-export const ComposeMessageViewLayoutTopPart = ({ captionTopHeaderText, captionTopText, iconBackground, layout, onTopPart, tags, topClickArea }: ComposeMessageViewLayoutTopPartProps) => {
+export const ComposeMessageViewLayoutTopPart = ({ captionTopHeaderText, captionTopText, iconBackground, layout, onTopPart, topClickArea }: ComposeMessageViewLayoutTopPartProps) => {
     return (
         <Region
             name="top_part"
-            tags={tags}
             backgroundColor="#0e3f52"
             onPointerTap={onTopPart}
             cursor="pointer"
@@ -174,17 +168,15 @@ export const ComposeMessageViewLayoutTopPart = ({ captionTopHeaderText, captionT
 export interface ComposeMessageViewLayoutThreadSubjectContainerProps {
     captionThreadSubjectHeader?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ComposeMessageViewLayoutThreadSubjectContainer = ({ captionThreadSubjectHeader, layout, tags }: ComposeMessageViewLayoutThreadSubjectContainerProps) => {
+export const ComposeMessageViewLayoutThreadSubjectContainer = ({ captionThreadSubjectHeader, layout }: ComposeMessageViewLayoutThreadSubjectContainerProps) => {
     const t = useTranslation();
     const [ threadSubjectValue, setThreadSubjectValue ] = useState('');
 
     return (
         <Region
             name="thread_subject_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 11, top: 96, height: 48, ...layout }}
         >
             <Region
@@ -215,17 +207,15 @@ export interface ComposeMessageViewLayoutMessageTextContainerProps {
     captionMessageTextHeader?: string;
     layout?: BoxLayout;
     onMessageTextContainer?: () => void;
-    tags?: string[];
 }
 
-export const ComposeMessageViewLayoutMessageTextContainer = ({ captionFormattingHelp, captionMessageTextHeader, layout, onMessageTextContainer, tags }: ComposeMessageViewLayoutMessageTextContainerProps) => {
+export const ComposeMessageViewLayoutMessageTextContainer = ({ captionFormattingHelp, captionMessageTextHeader, layout, onMessageTextContainer }: ComposeMessageViewLayoutMessageTextContainerProps) => {
     const t = useTranslation();
     const [ messageTextValue, setMessageTextValue ] = useState('');
 
     return (
         <Region
             name="message_text_container"
-            tags={tags}
             onPointerTap={onMessageTextContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 11, top: 145, bottom: 105, ...layout }}

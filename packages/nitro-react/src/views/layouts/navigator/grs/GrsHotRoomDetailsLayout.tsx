@@ -24,14 +24,12 @@ export const GrsHotRoomDetailsLayout = ({ detailsContainer, layout }: GrsHotRoom
 /** Named region `details_container` of GrsHotRoomDetailsLayout - configured through the parent's `detailsContainer` prop. */
 export interface GrsHotRoomDetailsLayoutDetailsContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsHotRoomDetailsLayoutDetailsContainer = ({ layout, tags }: GrsHotRoomDetailsLayoutDetailsContainerProps) => {
+export const GrsHotRoomDetailsLayoutDetailsContainer = ({ layout }: GrsHotRoomDetailsLayoutDetailsContainerProps) => {
     return (
         <Region
             name="details_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 193, top: 5, height: 70, ...layout }}
         />
     );

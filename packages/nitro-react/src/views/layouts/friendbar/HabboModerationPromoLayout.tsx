@@ -116,14 +116,12 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
 /** Named region `spacing` of HabboModerationPromoLayout - configured through the parent's `spacing` prop. */
 export interface HabboModerationPromoLayoutSpacingProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabboModerationPromoLayoutSpacing = ({ layout, tags }: HabboModerationPromoLayoutSpacingProps) => {
+export const HabboModerationPromoLayoutSpacing = ({ layout }: HabboModerationPromoLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 250, height: 6, flexShrink: 0, ...layout }}
         />
@@ -133,14 +131,12 @@ export const HabboModerationPromoLayoutSpacing = ({ layout, tags }: HabboModerat
 /** Named region `spacing` of HabboModerationPromoLayout - configured through the parent's `spacing` prop. */
 export interface HabboModerationPromoLayoutSpacing2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabboModerationPromoLayoutSpacing2 = ({ layout, tags }: HabboModerationPromoLayoutSpacing2Props) => {
+export const HabboModerationPromoLayoutSpacing2 = ({ layout }: HabboModerationPromoLayoutSpacing2Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 250, height: 8, flexShrink: 0, ...layout }}
         />
@@ -150,14 +146,12 @@ export const HabboModerationPromoLayoutSpacing2 = ({ layout, tags }: HabboModera
 /** Named region `spacing` of HabboModerationPromoLayout - configured through the parent's `spacing` prop. */
 export interface HabboModerationPromoLayoutSpacing3Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabboModerationPromoLayoutSpacing3 = ({ layout, tags }: HabboModerationPromoLayoutSpacing3Props) => {
+export const HabboModerationPromoLayoutSpacing3 = ({ layout }: HabboModerationPromoLayoutSpacing3Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 250, height: 8, flexShrink: 0, ...layout }}
         />

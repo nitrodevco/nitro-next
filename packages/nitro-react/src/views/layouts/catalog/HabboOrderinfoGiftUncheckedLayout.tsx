@@ -19,16 +19,14 @@ export const HabboOrderinfoGiftUncheckedLayout = ({ checkBoxContainer, layout }:
 export interface HabboOrderinfoGiftUncheckedLayoutCheckBoxContainerProps {
     layout?: BoxLayout;
     onBuyAsGift?: () => void;
-    tags?: string[];
 }
 
-export const HabboOrderinfoGiftUncheckedLayoutCheckBoxContainer = ({ layout, onBuyAsGift, tags }: HabboOrderinfoGiftUncheckedLayoutCheckBoxContainerProps) => {
+export const HabboOrderinfoGiftUncheckedLayoutCheckBoxContainer = ({ layout, onBuyAsGift }: HabboOrderinfoGiftUncheckedLayoutCheckBoxContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="checkBoxContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 280, top: 80, height: 25, ...layout }}
         >
             <CheckBox

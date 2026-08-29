@@ -1,4 +1,5 @@
 import { BoxLayout, Region, WidgetSlot } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `limitedItemWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -6,16 +7,14 @@ import { BoxLayout, Region, WidgetSlot } from '#base/theme';
  * (LayoutBadgeDisplay_1641Layout, LayoutBadgeDisplay_1669Layout, LayoutDefault_1595Layout); each passes its own placement through `layout`.
  */
 /** Named region `limitedItemWidget` of LimitedItemWidget - configured through the parent's `limitedItemWidget` prop. */
-export interface LimitedItemWidgetProps {
+export interface LimitedItemWidgetProps extends CatalogWidgetFlags {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LimitedItemWidget = ({ layout, tags }: LimitedItemWidgetProps) => {
+export const LimitedItemWidget = ({ layout }: LimitedItemWidgetProps) => {
     return (
         <Region
             name="limitedItemWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <WidgetSlot

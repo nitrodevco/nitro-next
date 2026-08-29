@@ -27,25 +27,21 @@ export interface SnowwarLobbyPlayerTeam1LayoutPlayerImageContainerProps {
     layout?: BoxLayout;
     srcPlayerImage?: string;
     srcPlayerImageBackground?: string;
-    tags?: string[];
 }
 
-export const SnowwarLobbyPlayerTeam1LayoutPlayerImageContainer = ({ layout, srcPlayerImage, srcPlayerImageBackground, tags }: SnowwarLobbyPlayerTeam1LayoutPlayerImageContainerProps) => {
+export const SnowwarLobbyPlayerTeam1LayoutPlayerImageContainer = ({ layout, srcPlayerImage, srcPlayerImageBackground }: SnowwarLobbyPlayerTeam1LayoutPlayerImageContainerProps) => {
     return (
         <Region
             name="playerImageContainer"
-            tags={tags}
             layout={{ width: 64, height: 62, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="playerImageBackground"
-                tags={[ 'bitmap' ]}
                 src={srcPlayerImageBackground ?? layoutImage('gray_square.png')}
                 layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 62 }}
             />
             <ThemeImage
                 name="playerImage"
-                tags={[ 'bitmap' ]}
                 src={srcPlayerImage}
                 layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 62 }}
             />
@@ -64,26 +60,24 @@ export interface SnowwarLobbyPlayerTeam1LayoutPlayerStatsProps {
     captionPlayerKillsLabelStroke?: string;
     captionPlayerKillsStroke?: string;
     layout?: BoxLayout;
-    tags?: string[];
+    strokeTextColor?: string;
 }
 
-export const SnowwarLobbyPlayerTeam1LayoutPlayerStats = ({ captionPlayerHits, captionPlayerHitsLabel, captionPlayerHitsLabelStroke, captionPlayerHitsStroke, captionPlayerKills, captionPlayerKillsLabel, captionPlayerKillsLabelStroke, captionPlayerKillsStroke, layout, tags }: SnowwarLobbyPlayerTeam1LayoutPlayerStatsProps) => {
+export const SnowwarLobbyPlayerTeam1LayoutPlayerStats = ({ captionPlayerHits, captionPlayerHitsLabel, captionPlayerHitsLabelStroke, captionPlayerHitsStroke, captionPlayerKills, captionPlayerKillsLabel, captionPlayerKillsLabelStroke, captionPlayerKillsStroke, layout, strokeTextColor }: SnowwarLobbyPlayerTeam1LayoutPlayerStatsProps) => {
     return (
         <Region
             name="playerStats"
-            tags={tags}
             layout={{ position: 'absolute', left: 13, width: 140, top: 29, height: 20, flexDirection: 'row', ...layout }}
         >
             <Region layout={{ width: 33, height: 17, flexShrink: 0 }}>
                 <Region
                     name="playerHitsLabel_stroke"
-                    tags={[ 'stroke' ]}
                     layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 17, minWidth: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerHitsLabelStroke ?? 'HITS'}
                         textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#1077ac' }}
+                        textOptions={{ fill: strokeTextColor ?? '#1077ac' }}
                     />
                 </Region>
                 <Region
@@ -100,13 +94,12 @@ export const SnowwarLobbyPlayerTeam1LayoutPlayerStats = ({ captionPlayerHits, ca
             <Region layout={{ width: 54, height: 17, flexShrink: 0 }}>
                 <Region
                     name="playerHits_stroke"
-                    tags={[ 'stroke' ]}
                     layout={{ position: 'absolute', left: 0, width: 54, top: 0, height: 17, minWidth: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerHitsStroke ?? '20'}
                         textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#1077ac' }}
+                        textOptions={{ fill: strokeTextColor ?? '#1077ac' }}
                     />
                 </Region>
                 <Region
@@ -123,13 +116,12 @@ export const SnowwarLobbyPlayerTeam1LayoutPlayerStats = ({ captionPlayerHits, ca
             <Region layout={{ width: 40, height: 17, flexShrink: 0 }}>
                 <Region
                     name="playerKillsLabel_stroke"
-                    tags={[ 'stroke' ]}
                     layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, minWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerKillsLabelStroke ?? 'KILLS'}
                         textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#1077ac' }}
+                        textOptions={{ fill: strokeTextColor ?? '#1077ac' }}
                     />
                 </Region>
                 <Region
@@ -146,13 +138,12 @@ export const SnowwarLobbyPlayerTeam1LayoutPlayerStats = ({ captionPlayerHits, ca
             <Region layout={{ width: 50, height: 17, flexShrink: 0 }}>
                 <Region
                     name="playerKills_stroke"
-                    tags={[ 'stroke' ]}
                     layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 17, minWidth: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerKillsStroke ?? '5'}
                         textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#1077ac' }}
+                        textOptions={{ fill: strokeTextColor ?? '#1077ac' }}
                     />
                 </Region>
                 <Region
@@ -176,16 +167,15 @@ export interface SnowwarLobbyPlayerTeam1LayoutPlayerTotalStatsProps {
     captionTotalScoreLabel?: string;
     captionTotalScoreStroke?: string;
     layout?: BoxLayout;
-    tags?: string[];
+    strokeTextColor?: string;
 }
 
-export const SnowwarLobbyPlayerTeam1LayoutPlayerTotalStats = ({ captionTotalScore, captionTotalScoreLabel, captionTotalScoreStroke, layout, tags }: SnowwarLobbyPlayerTeam1LayoutPlayerTotalStatsProps) => {
+export const SnowwarLobbyPlayerTeam1LayoutPlayerTotalStats = ({ captionTotalScore, captionTotalScoreLabel, captionTotalScoreStroke, layout, strokeTextColor }: SnowwarLobbyPlayerTeam1LayoutPlayerTotalStatsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="playerTotalStats"
-            tags={tags}
             layout={{ position: 'absolute', left: 13, width: 140, top: 24, height: 35, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 50, top: 9, height: 17 }}>
@@ -203,13 +193,12 @@ export const SnowwarLobbyPlayerTeam1LayoutPlayerTotalStats = ({ captionTotalScor
             <Region layout={{ position: 'absolute', left: 100, width: 54, top: 9, height: 17 }}>
                 <Region
                     name="totalScore_stroke"
-                    tags={[ 'stroke' ]}
                     layout={{ position: 'absolute', left: 0, width: 54, top: 0, height: 17, minWidth: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTotalScoreStroke ?? '20'}
                         textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#1077ac' }}
+                        textOptions={{ fill: strokeTextColor ?? '#1077ac' }}
                     />
                 </Region>
                 <Region
@@ -232,15 +221,13 @@ export interface SnowwarLobbyPlayerTeam1LayoutScoreTooltipProps {
     layout?: BoxLayout;
     onScoreTooltip?: () => void;
     srcSkillLevel?: string;
-    tags?: string[];
     visibleScoreTooltip?: boolean;
 }
 
-export const SnowwarLobbyPlayerTeam1LayoutScoreTooltip = ({ layout, onScoreTooltip, srcSkillLevel, tags, visibleScoreTooltip }: SnowwarLobbyPlayerTeam1LayoutScoreTooltipProps) => {
+export const SnowwarLobbyPlayerTeam1LayoutScoreTooltip = ({ layout, onScoreTooltip, srcSkillLevel, visibleScoreTooltip }: SnowwarLobbyPlayerTeam1LayoutScoreTooltipProps) => {
     return (
         <Region
             name="scoreTooltip"
-            tags={tags}
             visible={visibleScoreTooltip ?? false}
             onPointerTap={onScoreTooltip}
             cursor="pointer"
@@ -248,7 +235,6 @@ export const SnowwarLobbyPlayerTeam1LayoutScoreTooltip = ({ layout, onScoreToolt
         >
             <ThemeImage
                 name="skillLevel"
-                tags={[ 'bitmap' ]}
                 src={srcSkillLevel}
                 layout={{ position: 'absolute', left: 0, width: 150, top: 0, height: 13 }}
             />
@@ -265,30 +251,27 @@ export interface SnowwarLobbyPlayerTeam1LayoutPlayerDataContainerProps {
     playerTotalStats?: SnowwarLobbyPlayerTeam1LayoutPlayerTotalStatsProps;
     scoreTooltip?: SnowwarLobbyPlayerTeam1LayoutScoreTooltipProps;
     srcPlayerDataBackground?: string;
-    tags?: string[];
+    strokeTextColor?: string;
 }
 
-export const SnowwarLobbyPlayerTeam1LayoutPlayerDataContainer = ({ captionPlayerName, captionPlayerNameStroke, layout, playerStats, playerTotalStats, scoreTooltip, srcPlayerDataBackground, tags }: SnowwarLobbyPlayerTeam1LayoutPlayerDataContainerProps) => {
+export const SnowwarLobbyPlayerTeam1LayoutPlayerDataContainer = ({ captionPlayerName, captionPlayerNameStroke, layout, playerStats, playerTotalStats, scoreTooltip, srcPlayerDataBackground, strokeTextColor }: SnowwarLobbyPlayerTeam1LayoutPlayerDataContainerProps) => {
     return (
         <Region
             name="playerDataContainer"
-            tags={tags}
             layout={{ width: 162, height: 62, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="playerDataBackground"
-                tags={[ 'bitmap' ]}
                 src={srcPlayerDataBackground ?? layoutImage('gray_infobox.png')}
                 layout={{ position: 'absolute', left: 0, width: 162, top: 0, height: 62 }}
             />
             <Region
                 name="playerName_stroke"
-                tags={[ 'stroke' ]}
                 layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 71, top: 3, height: 20, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionPlayerNameStroke ?? 'Painimies'}
-                    textOptions={{ fill: '#666666' }}
+                    textOptions={{ fill: strokeTextColor ?? '#666666' }}
                 />
             </Region>
             <Region
@@ -313,30 +296,27 @@ export interface SnowwarLobbyPlayerTeam1LayoutPlayerScoreContainerProps {
     captionPlayerScoreStroke?: string;
     layout?: BoxLayout;
     srcPlayerScoreBackground?: string;
-    tags?: string[];
+    strokeTextColor?: string;
 }
 
-export const SnowwarLobbyPlayerTeam1LayoutPlayerScoreContainer = ({ captionPlayerScore, captionPlayerScoreStroke, layout, srcPlayerScoreBackground, tags }: SnowwarLobbyPlayerTeam1LayoutPlayerScoreContainerProps) => {
+export const SnowwarLobbyPlayerTeam1LayoutPlayerScoreContainer = ({ captionPlayerScore, captionPlayerScoreStroke, layout, srcPlayerScoreBackground, strokeTextColor }: SnowwarLobbyPlayerTeam1LayoutPlayerScoreContainerProps) => {
     return (
         <Region
             name="playerScoreContainer"
-            tags={tags}
             layout={{ width: 61, height: 62, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="playerScoreBackground"
-                tags={[ 'bitmap' ]}
                 src={srcPlayerScoreBackground ?? layoutImage('gray_ball.png')}
                 layout={{ position: 'absolute', left: 0, width: 61, top: 0, height: 62 }}
             />
             <Region
                 name="playerScore_stroke"
-                tags={[ 'stroke' ]}
                 layout={{ position: 'absolute', left: 13, width: 40, top: 17, height: 24, minWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionPlayerScoreStroke ?? '102'}
-                    textOptions={{ fill: '#1077ac' }}
+                    textOptions={{ fill: strokeTextColor ?? '#1077ac' }}
                 />
             </Region>
             <Region

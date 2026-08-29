@@ -19,14 +19,12 @@ export interface GuildSelectorWidgetItemLayoutGuildItemProps {
     captionGuildName?: string;
     layout?: BoxLayout;
     srcGuildColors?: string;
-    tags?: string[];
 }
 
-export const GuildSelectorWidgetItemLayoutGuildItem = ({ captionGuildName, layout, srcGuildColors, tags }: GuildSelectorWidgetItemLayoutGuildItemProps) => {
+export const GuildSelectorWidgetItemLayoutGuildItem = ({ captionGuildName, layout, srcGuildColors }: GuildSelectorWidgetItemLayoutGuildItemProps) => {
     return (
         <Region
             name="guild_item"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 133, top: 0, height: 22, ...layout }}
         >
             <Region

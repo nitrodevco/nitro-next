@@ -27,15 +27,13 @@ export const FurnitureImageLayout = ({ layout, region, srcBitmap }: FurnitureIma
 export interface FurnitureImageLayoutRegionProps {
     layout?: BoxLayout;
     onRegion?: () => void;
-    tags?: string[];
     visibleRegion?: boolean;
 }
 
-export const FurnitureImageLayoutRegion = ({ layout, onRegion, tags, visibleRegion }: FurnitureImageLayoutRegionProps) => {
+export const FurnitureImageLayoutRegion = ({ layout, onRegion, visibleRegion }: FurnitureImageLayoutRegionProps) => {
     return (
         <Region
             name="region"
-            tags={tags}
             visible={visibleRegion ?? false}
             onPointerTap={onRegion}
             cursor="pointer"

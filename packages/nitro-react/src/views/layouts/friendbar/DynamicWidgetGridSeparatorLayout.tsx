@@ -4,12 +4,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `30_dynamic_widget_grid_separator_xml` (layout "dynamic_widget_grid_separator", 500x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface DynamicWidgetGridSeparatorLayoutProps {
     captionSeparatorTitle?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     srcBorderBar?: string;
     srcHdrLine?: string;
 }
 
-export const DynamicWidgetGridSeparatorLayout = ({ captionSeparatorTitle, layout, srcBorderBar, srcHdrLine }: DynamicWidgetGridSeparatorLayoutProps) => {
+export const DynamicWidgetGridSeparatorLayout = ({ captionSeparatorTitle, colorableTextColor, layout, srcBorderBar, srcHdrLine }: DynamicWidgetGridSeparatorLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 500, height: 20, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 20, flexDirection: 'row', gap: 6 }}>
@@ -20,12 +21,12 @@ export const DynamicWidgetGridSeparatorLayout = ({ captionSeparatorTitle, layout
                 />
                 <Region
                     name="separator_title"
-                    tags={[ 'COLORABLE' ]}
                     layout={{ width: 40, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionSeparatorTitle ?? 'Title PH'}
                         textStyle="text-style-il-heading-3"
+                        textOptions={{ fill: colorableTextColor }}
                     />
                 </Region>
                 <ThemeImage

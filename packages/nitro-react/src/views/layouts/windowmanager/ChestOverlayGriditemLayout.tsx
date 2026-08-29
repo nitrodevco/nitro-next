@@ -21,14 +21,12 @@ export interface ChestOverlayGriditemLayoutChestOverlayContainerInternalProps {
     srcChestOverlayGlazeBitmap?: string;
     srcChestPlaqueBitmap?: string;
     srcChestPlaqueNumberBitmap?: string;
-    tags?: string[];
 }
 
-export const ChestOverlayGriditemLayoutChestOverlayContainerInternal = ({ layout, srcChestOverlayGlazeBitmap, srcChestPlaqueBitmap, srcChestPlaqueNumberBitmap, tags }: ChestOverlayGriditemLayoutChestOverlayContainerInternalProps) => {
+export const ChestOverlayGriditemLayoutChestOverlayContainerInternal = ({ layout, srcChestOverlayGlazeBitmap, srcChestPlaqueBitmap, srcChestPlaqueNumberBitmap }: ChestOverlayGriditemLayoutChestOverlayContainerInternalProps) => {
     return (
         <Region
             name="chest_overlay_container_internal"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36, ...layout }}
         >
             <ThemeImage

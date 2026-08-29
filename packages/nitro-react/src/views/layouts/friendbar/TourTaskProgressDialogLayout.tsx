@@ -64,16 +64,14 @@ export const TourTaskProgressDialogLayout = ({ declineTourRegion, layout, onClos
 export interface TourTaskProgressDialogLayoutActionTitleItemProps {
     captionActionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TourTaskProgressDialogLayoutActionTitleItem = ({ captionActionTitle, layout, tags }: TourTaskProgressDialogLayoutActionTitleItemProps) => {
+export const TourTaskProgressDialogLayoutActionTitleItem = ({ captionActionTitle, layout }: TourTaskProgressDialogLayoutActionTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="action_title"
-            tags={tags}
             layout={{ width: 210, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -89,16 +87,14 @@ export const TourTaskProgressDialogLayoutActionTitleItem = ({ captionActionTitle
 export interface TourTaskProgressDialogLayoutActionDescriptionItemProps {
     captionActionDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TourTaskProgressDialogLayoutActionDescriptionItem = ({ captionActionDescription, layout, tags }: TourTaskProgressDialogLayoutActionDescriptionItemProps) => {
+export const TourTaskProgressDialogLayoutActionDescriptionItem = ({ captionActionDescription, layout }: TourTaskProgressDialogLayoutActionDescriptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="action_description"
-            tags={tags}
             layout={{ width: 210, height: 30, flexShrink: 0, minHeight: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -113,17 +109,15 @@ export const TourTaskProgressDialogLayoutActionDescriptionItem = ({ captionActio
 export interface TourTaskProgressDialogLayoutTakeTourButtonItemProps {
     layout?: BoxLayout;
     onTakeTourButton?: () => void;
-    tags?: string[];
 }
 
-export const TourTaskProgressDialogLayoutTakeTourButtonItem = ({ layout, onTakeTourButton, tags }: TourTaskProgressDialogLayoutTakeTourButtonItemProps) => {
+export const TourTaskProgressDialogLayoutTakeTourButtonItem = ({ layout, onTakeTourButton }: TourTaskProgressDialogLayoutTakeTourButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="101"
             name="take_tour_button"
-            tags={tags}
             tintColor="#bbbbbb"
             onPointerTap={onTakeTourButton}
             layout={{ width: 153, height: 55, flexShrink: 0, ...layout }}
@@ -137,14 +131,12 @@ export const TourTaskProgressDialogLayoutTakeTourButtonItem = ({ layout, onTakeT
 export interface TourTaskProgressDialogLayoutTopListProps {
     itemsTopList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TourTaskProgressDialogLayoutTopList = ({ itemsTopList, layout, tags }: TourTaskProgressDialogLayoutTopListProps) => {
+export const TourTaskProgressDialogLayoutTopList = ({ itemsTopList, layout }: TourTaskProgressDialogLayoutTopListProps) => {
     return (
         <Region
             name="top_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 118, top: 79, minHeight: 70, flexDirection: 'column', ...layout }}
         >
             {itemsTopList ?? (
@@ -162,16 +154,14 @@ export const TourTaskProgressDialogLayoutTopList = ({ itemsTopList, layout, tags
 export interface TourTaskProgressDialogLayoutDeclineTourRegionProps {
     layout?: BoxLayout;
     onDeclineTourRegion?: () => void;
-    tags?: string[];
 }
 
-export const TourTaskProgressDialogLayoutDeclineTourRegion = ({ layout, onDeclineTourRegion, tags }: TourTaskProgressDialogLayoutDeclineTourRegionProps) => {
+export const TourTaskProgressDialogLayoutDeclineTourRegion = ({ layout, onDeclineTourRegion }: TourTaskProgressDialogLayoutDeclineTourRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="decline_tour_region"
-            tags={tags}
             onPointerTap={onDeclineTourRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 16, width: 347, top: 211, height: 33, justifyContent: 'center', ...layout }}

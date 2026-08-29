@@ -20,14 +20,12 @@ export interface RarityItemOverlayGriditemLayoutRarityItemOverlayContainerIntern
     layout?: BoxLayout;
     srcRarityItemOverlayPlaqueNumberBitmap?: string;
     srcRarityItemPlaqueBitmap?: string;
-    tags?: string[];
 }
 
-export const RarityItemOverlayGriditemLayoutRarityItemOverlayContainerInternal = ({ layout, srcRarityItemOverlayPlaqueNumberBitmap, srcRarityItemPlaqueBitmap, tags }: RarityItemOverlayGriditemLayoutRarityItemOverlayContainerInternalProps) => {
+export const RarityItemOverlayGriditemLayoutRarityItemOverlayContainerInternal = ({ layout, srcRarityItemOverlayPlaqueNumberBitmap, srcRarityItemPlaqueBitmap }: RarityItemOverlayGriditemLayoutRarityItemOverlayContainerInternalProps) => {
     return (
         <Region
             name="rarity_item_overlay_container_internal"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36, ...layout }}
         >
             <ThemeImage

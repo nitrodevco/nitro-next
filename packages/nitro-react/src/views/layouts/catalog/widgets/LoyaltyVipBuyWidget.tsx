@@ -1,5 +1,6 @@
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `loyaltyVipBuyWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -9,43 +10,36 @@ import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 /** Named region `item_list_vip` of LoyaltyVipBuyWidget - configured through the parent's `itemListVip` prop. */
 export interface LoyaltyVipBuyWidgetItemListVipProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LoyaltyVipBuyWidgetItemListVip = ({ layout, tags }: LoyaltyVipBuyWidgetItemListVipProps) => {
+export const LoyaltyVipBuyWidgetItemListVip = ({ layout }: LoyaltyVipBuyWidgetItemListVipProps) => {
     return (
         <Region
             name="item_list_vip"
-            tags={tags}
             layout={{ position: 'absolute', left: 19, width: 286, top: 170, height: 157, minWidth: 286, maxWidth: 286, flexDirection: 'column', gap: 4, ...layout }}
         />
     );
 };
 
 /** Named region `loyaltyVipBuyWidget` of LoyaltyVipBuyWidget - configured through the parent's `loyaltyVipBuyWidget` prop. */
-export interface LoyaltyVipBuyWidgetProps {
+export interface LoyaltyVipBuyWidgetProps extends CatalogWidgetFlags {
     captionVipInfo?: string;
     captionVipLink?: string;
     captionVipTitle?: string;
     itemListVip?: LoyaltyVipBuyWidgetItemListVipProps;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const LoyaltyVipBuyWidget = ({ captionVipInfo, captionVipLink, captionVipTitle, itemListVip, layout, srcCtlgTeaserimg1, tags }: LoyaltyVipBuyWidgetProps) => {
+export const LoyaltyVipBuyWidget = ({ captionVipInfo, captionVipLink, captionVipTitle, itemListVip, layout, srcCtlgTeaserimg1 }: LoyaltyVipBuyWidgetProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="loyaltyVipBuyWidget"
-            tags={tags}
             layout={{ position: 'absolute', justifyContent: 'center', ...layout }}
         >
-            <Region
-                tags={[ 'own_items_grid' ]}
-                layout={{ position: 'absolute', left: 161, width: 158, top: 3, height: 165, minWidth: 158, maxWidth: 158, minHeight: 165, maxHeight: 165, flexDirection: 'column', gap: 4 }}
-            >
+            <Region layout={{ position: 'absolute', left: 161, width: 158, top: 3, height: 165, minWidth: 158, maxWidth: 158, minHeight: 165, maxHeight: 165, flexDirection: 'column', gap: 4 }}>
                 <Region
                     name="vip_title"
                     layout={{ width: 158, height: 17, flexShrink: 0, minWidth: 158, maxWidth: 158, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}

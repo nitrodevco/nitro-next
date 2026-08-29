@@ -108,17 +108,15 @@ export interface CraftingwidgetLayoutProgressBarProps {
     layout?: BoxLayout;
     onBtnCancel?: () => void;
     onProgressBar?: () => void;
-    tags?: string[];
     visibleProgressBar?: boolean;
 }
 
-export const CraftingwidgetLayoutProgressBar = ({ layout, onBtnCancel, onProgressBar, tags, visibleProgressBar }: CraftingwidgetLayoutProgressBarProps) => {
+export const CraftingwidgetLayoutProgressBar = ({ layout, onBtnCancel, onProgressBar, visibleProgressBar }: CraftingwidgetLayoutProgressBarProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="progress_bar"
-            tags={tags}
             visible={visibleProgressBar ?? false}
             onPointerTap={onProgressBar}
             cursor="pointer"
@@ -155,14 +153,12 @@ export const CraftingwidgetLayoutProgressBar = ({ layout, onBtnCancel, onProgres
 export interface CraftingwidgetLayoutTooltipProps {
     layout?: BoxLayout;
     onTooltip?: () => void;
-    tags?: string[];
 }
 
-export const CraftingwidgetLayoutTooltip = ({ layout, onTooltip, tags }: CraftingwidgetLayoutTooltipProps) => {
+export const CraftingwidgetLayoutTooltip = ({ layout, onTooltip }: CraftingwidgetLayoutTooltipProps) => {
     return (
         <Region
             name="tooltip"
-            tags={tags}
             onPointerTap={onTooltip}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, ...layout }}
@@ -175,15 +171,13 @@ export interface CraftingwidgetLayoutNumberContainerProps {
     captionNumber?: string;
     layout?: BoxLayout;
     onNumberContainer?: () => void;
-    tags?: string[];
     visibleNumberContainer?: boolean;
 }
 
-export const CraftingwidgetLayoutNumberContainer = ({ captionNumber, layout, onNumberContainer, tags, visibleNumberContainer }: CraftingwidgetLayoutNumberContainerProps) => {
+export const CraftingwidgetLayoutNumberContainer = ({ captionNumber, layout, onNumberContainer, visibleNumberContainer }: CraftingwidgetLayoutNumberContainerProps) => {
     return (
         <Region
             name="number_container"
-            tags={tags}
             visible={visibleNumberContainer ?? false}
             backgroundColor="#2f6982"
             onPointerTap={onNumberContainer}
@@ -192,7 +186,6 @@ export const CraftingwidgetLayoutNumberContainer = ({ captionNumber, layout, onN
         >
             <Region
                 name="number"
-                tags={[ 'NUMBER', 'COUNT' ]}
                 layout={{ position: 'absolute', left: 1, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -209,11 +202,10 @@ export interface CraftingwidgetLayoutItemgridProductsProps {
     layout?: BoxLayout;
     numberContainer?: CraftingwidgetLayoutNumberContainerProps;
     srcBitmap?: string;
-    tags?: string[];
     tooltip?: CraftingwidgetLayoutTooltipProps;
 }
 
-export const CraftingwidgetLayoutItemgridProducts = ({ layout, numberContainer, srcBitmap, tags, tooltip }: CraftingwidgetLayoutItemgridProductsProps) => {
+export const CraftingwidgetLayoutItemgridProducts = ({ layout, numberContainer, srcBitmap, tooltip }: CraftingwidgetLayoutItemgridProductsProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -221,21 +213,16 @@ export const CraftingwidgetLayoutItemgridProducts = ({ layout, numberContainer, 
         >
             <Region
                 name="itemgrid_products"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4, width: '100%' }}
             >
                 <Region layout={{ width: 40, height: 40, flexShrink: 0 }}>
                     <ThemeImage
                         name="bitmap"
-                        tags={[ 'BITMAP' ]}
                         src={srcBitmap}
                         layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
                     />
                     <CraftingwidgetLayoutTooltip {...tooltip} />
-                    <CraftingwidgetLayoutNumberContainer
-                        tags={[ 'COUNT' ]}
-                        {...numberContainer}
-                    />
+                    <CraftingwidgetLayoutNumberContainer {...numberContainer} />
                 </Region>
             </Region>
         </ScrollArea>
@@ -245,10 +232,9 @@ export const CraftingwidgetLayoutItemgridProducts = ({ layout, numberContainer, 
 /** Named region `itemgrid_inventory` of CraftingwidgetLayout - configured through the parent's `itemgridInventory` prop. */
 export interface CraftingwidgetLayoutItemgridInventoryProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CraftingwidgetLayoutItemgridInventory = ({ layout, tags }: CraftingwidgetLayoutItemgridInventoryProps) => {
+export const CraftingwidgetLayoutItemgridInventory = ({ layout }: CraftingwidgetLayoutItemgridInventoryProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -256,7 +242,6 @@ export const CraftingwidgetLayoutItemgridInventory = ({ layout, tags }: Crafting
         >
             <Region
                 name="itemgrid_inventory"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4, width: '100%' }}
             />
         </ScrollArea>
@@ -266,14 +251,12 @@ export const CraftingwidgetLayoutItemgridInventory = ({ layout, tags }: Crafting
 /** Named region `itemgrid_mixer` of CraftingwidgetLayout - configured through the parent's `itemgridMixer` prop. */
 export interface CraftingwidgetLayoutItemgridMixerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CraftingwidgetLayoutItemgridMixer = ({ layout, tags }: CraftingwidgetLayoutItemgridMixerProps) => {
+export const CraftingwidgetLayoutItemgridMixer = ({ layout }: CraftingwidgetLayoutItemgridMixerProps) => {
     return (
         <Region
             name="itemgrid_mixer"
-            tags={tags}
             layout={{ position: 'absolute', left: 294, width: 216, top: 71, height: 85, flexDirection: 'row', flexWrap: 'wrap', gap: 5, ...layout }}
         />
     );

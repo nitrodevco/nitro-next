@@ -18,14 +18,12 @@ export const MemenuEffectUnselectedLayout = ({ layout, selectedBorder }: MemenuE
 /** Named region `loader_highlight` of MemenuEffectUnselectedLayout - configured through the parent's `loaderHighlight` prop. */
 export interface MemenuEffectUnselectedLayoutLoaderHighlightProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MemenuEffectUnselectedLayoutLoaderHighlight = ({ layout, tags }: MemenuEffectUnselectedLayoutLoaderHighlightProps) => {
+export const MemenuEffectUnselectedLayoutLoaderHighlight = ({ layout }: MemenuEffectUnselectedLayoutLoaderHighlightProps) => {
     return (
         <Region
             name="loader_highlight"
-            tags={tags}
             backgroundColor="#999999"
             layout={{ position: 'absolute', left: 0, width: 94, top: 0, height: 2, ...layout }}
         />
@@ -36,14 +34,12 @@ export const MemenuEffectUnselectedLayoutLoaderHighlight = ({ layout, tags }: Me
 export interface MemenuEffectUnselectedLayoutLoaderBarProps {
     layout?: BoxLayout;
     loaderHighlight?: MemenuEffectUnselectedLayoutLoaderHighlightProps;
-    tags?: string[];
 }
 
-export const MemenuEffectUnselectedLayoutLoaderBar = ({ layout, loaderHighlight, tags }: MemenuEffectUnselectedLayoutLoaderBarProps) => {
+export const MemenuEffectUnselectedLayoutLoaderBar = ({ layout, loaderHighlight }: MemenuEffectUnselectedLayoutLoaderBarProps) => {
     return (
         <Region
             name="loader_bar"
-            tags={tags}
             backgroundColor="#666666"
             layout={{ position: 'absolute', left: 1, width: 94, top: 1, height: 18, ...layout }}
         >
@@ -56,14 +52,12 @@ export const MemenuEffectUnselectedLayoutLoaderBar = ({ layout, loaderHighlight,
 export interface MemenuEffectUnselectedLayoutLoaderBgProps {
     layout?: BoxLayout;
     loaderBar?: MemenuEffectUnselectedLayoutLoaderBarProps;
-    tags?: string[];
 }
 
-export const MemenuEffectUnselectedLayoutLoaderBg = ({ layout, loaderBar, tags }: MemenuEffectUnselectedLayoutLoaderBgProps) => {
+export const MemenuEffectUnselectedLayoutLoaderBg = ({ layout, loaderBar }: MemenuEffectUnselectedLayoutLoaderBgProps) => {
     return (
         <Region
             name="loader_bg"
-            tags={tags}
             backgroundColor="#3d3d3d"
             layout={{ position: 'absolute', left: 1, width: 96, top: 1, height: 20, ...layout }}
         >
@@ -76,14 +70,12 @@ export const MemenuEffectUnselectedLayoutLoaderBg = ({ layout, loaderBar, tags }
 export interface MemenuEffectUnselectedLayoutLoaderBorderProps {
     layout?: BoxLayout;
     loaderBg?: MemenuEffectUnselectedLayoutLoaderBgProps;
-    tags?: string[];
 }
 
-export const MemenuEffectUnselectedLayoutLoaderBorder = ({ layout, loaderBg, tags }: MemenuEffectUnselectedLayoutLoaderBorderProps) => {
+export const MemenuEffectUnselectedLayoutLoaderBorder = ({ layout, loaderBg }: MemenuEffectUnselectedLayoutLoaderBorderProps) => {
     return (
         <Region
             name="loader_border"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 50, width: 98, top: 20, height: 22, ...layout }}
         >
@@ -96,14 +88,12 @@ export const MemenuEffectUnselectedLayoutLoaderBorder = ({ layout, loaderBg, tag
 export interface MemenuEffectUnselectedLayoutEffectAmountBg2Props {
     captionEffectAmount?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MemenuEffectUnselectedLayoutEffectAmountBg2 = ({ captionEffectAmount, layout, tags }: MemenuEffectUnselectedLayoutEffectAmountBg2Props) => {
+export const MemenuEffectUnselectedLayoutEffectAmountBg2 = ({ captionEffectAmount, layout }: MemenuEffectUnselectedLayoutEffectAmountBg2Props) => {
     return (
         <Region
             name="effect_amount_bg2"
-            tags={tags}
             backgroundColor="#666666"
             layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 13, ...layout }}
         >
@@ -124,14 +114,12 @@ export const MemenuEffectUnselectedLayoutEffectAmountBg2 = ({ captionEffectAmoun
 export interface MemenuEffectUnselectedLayoutEffectAmountBg1Props {
     effectAmountBg2?: MemenuEffectUnselectedLayoutEffectAmountBg2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MemenuEffectUnselectedLayoutEffectAmountBg1 = ({ effectAmountBg2, layout, tags }: MemenuEffectUnselectedLayoutEffectAmountBg1Props) => {
+export const MemenuEffectUnselectedLayoutEffectAmountBg1 = ({ effectAmountBg2, layout }: MemenuEffectUnselectedLayoutEffectAmountBg1Props) => {
     return (
         <Region
             name="effect_amount_bg1"
-            tags={tags}
             backgroundColor="#dddddd"
             layout={{ position: 'absolute', left: 24, width: 20, top: 4, height: 15, ...layout }}
         >
@@ -151,16 +139,14 @@ export interface MemenuEffectUnselectedLayoutSelectedBorderProps {
     srcEffectHilite?: string;
     srcEffectIcon?: string;
     srcEffectIconBg?: string;
-    tags?: string[];
 }
 
-export const MemenuEffectUnselectedLayoutSelectedBorder = ({ captionEffectName, captionTimeLeft, effectAmountBg1, layout, loaderBorder, onSelectedBorder, srcEffectHilite, srcEffectIcon, srcEffectIconBg, tags }: MemenuEffectUnselectedLayoutSelectedBorderProps) => {
+export const MemenuEffectUnselectedLayoutSelectedBorder = ({ captionEffectName, captionTimeLeft, effectAmountBg1, layout, loaderBorder, onSelectedBorder, srcEffectHilite, srcEffectIcon, srcEffectIconBg }: MemenuEffectUnselectedLayoutSelectedBorderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="selected_border"
-            tags={tags}
             onPointerTap={onSelectedBorder}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 154, top: 0, height: 52, ...layout }}

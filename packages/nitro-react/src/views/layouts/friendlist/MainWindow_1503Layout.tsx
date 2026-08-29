@@ -33,14 +33,12 @@ export const MainWindow_1503Layout = ({ footer, layout, mainContent, onClose }: 
 /** Named region `bg` of MainWindow_1503Layout - configured through the parent's `bg` prop. */
 export interface MainWindow_1503LayoutBgProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainWindow_1503LayoutBg = ({ layout, tags }: MainWindow_1503LayoutBgProps) => {
+export const MainWindow_1503LayoutBg = ({ layout }: MainWindow_1503LayoutBgProps) => {
     return (
         <Region
             name="bg"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 273, top: 0, height: 10, ...layout }}
         />
@@ -58,16 +56,14 @@ export interface MainWindow_1503LayoutHeaderProps {
     srcArrowRightWhite?: string;
     srcHdrFriends?: string;
     srcHdrHilite?: string;
-    tags?: string[];
 }
 
-export const MainWindow_1503LayoutHeader = ({ captionCaptionText, layout, onHeader, srcArrowDownBlack, srcArrowDownWhite, srcArrowRightBlack, srcArrowRightWhite, srcHdrFriends, srcHdrHilite, tags }: MainWindow_1503LayoutHeaderProps) => {
+export const MainWindow_1503LayoutHeader = ({ captionCaptionText, layout, onHeader, srcArrowDownBlack, srcArrowDownWhite, srcArrowRightBlack, srcArrowRightWhite, srcHdrFriends, srcHdrHilite }: MainWindow_1503LayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             onPointerTap={onHeader}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 273, top: 0, height: 17, ...layout }}
@@ -120,14 +116,12 @@ export interface MainWindow_1503LayoutFlt1Props {
     header?: MainWindow_1503LayoutHeaderProps;
     layout?: BoxLayout;
     onFlt1?: () => void;
-    tags?: string[];
 }
 
-export const MainWindow_1503LayoutFlt1 = ({ header, layout, onFlt1, tags }: MainWindow_1503LayoutFlt1Props) => {
+export const MainWindow_1503LayoutFlt1 = ({ header, layout, onFlt1 }: MainWindow_1503LayoutFlt1Props) => {
     return (
         <Region
             name="flt_1"
-            tags={tags}
             onPointerTap={onFlt1}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 273, top: 0, height: 17, ...layout }}
@@ -148,16 +142,14 @@ export interface MainWindow_1503LayoutHeader2Props {
     srcArrowRightWhite?: string;
     srcHdrFriendRequests?: string;
     srcHdrHilite?: string;
-    tags?: string[];
 }
 
-export const MainWindow_1503LayoutHeader2 = ({ captionCaptionText, layout, onHeader, srcArrowDownBlack, srcArrowDownWhite, srcArrowRightBlack, srcArrowRightWhite, srcHdrFriendRequests, srcHdrHilite, tags }: MainWindow_1503LayoutHeader2Props) => {
+export const MainWindow_1503LayoutHeader2 = ({ captionCaptionText, layout, onHeader, srcArrowDownBlack, srcArrowDownWhite, srcArrowRightBlack, srcArrowRightWhite, srcHdrFriendRequests, srcHdrHilite }: MainWindow_1503LayoutHeader2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             onPointerTap={onHeader}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 273, top: 0, height: 17, ...layout }}
@@ -210,14 +202,12 @@ export interface MainWindow_1503LayoutFlt2Props {
     header?: MainWindow_1503LayoutHeader2Props;
     layout?: BoxLayout;
     onFlt2?: () => void;
-    tags?: string[];
 }
 
-export const MainWindow_1503LayoutFlt2 = ({ header, layout, onFlt2, tags }: MainWindow_1503LayoutFlt2Props) => {
+export const MainWindow_1503LayoutFlt2 = ({ header, layout, onFlt2 }: MainWindow_1503LayoutFlt2Props) => {
     return (
         <Region
             name="flt_2"
-            tags={tags}
             onPointerTap={onFlt2}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 273, top: 15, height: 17, ...layout }}
@@ -238,16 +228,14 @@ export interface MainWindow_1503LayoutHeader3Props {
     srcArrowRightWhite?: string;
     srcHdrHilite?: string;
     srcHdrSearch?: string;
-    tags?: string[];
 }
 
-export const MainWindow_1503LayoutHeader3 = ({ captionCaptionText, layout, onHeader, srcArrowDownBlack, srcArrowDownWhite, srcArrowRightBlack, srcArrowRightWhite, srcHdrHilite, srcHdrSearch, tags }: MainWindow_1503LayoutHeader3Props) => {
+export const MainWindow_1503LayoutHeader3 = ({ captionCaptionText, layout, onHeader, srcArrowDownBlack, srcArrowDownWhite, srcArrowRightBlack, srcArrowRightWhite, srcHdrHilite, srcHdrSearch }: MainWindow_1503LayoutHeader3Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             onPointerTap={onHeader}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 273, top: 0, height: 17, ...layout }}
@@ -300,14 +288,12 @@ export interface MainWindow_1503LayoutFlt3Props {
     header?: MainWindow_1503LayoutHeader3Props;
     layout?: BoxLayout;
     onFlt3?: () => void;
-    tags?: string[];
 }
 
-export const MainWindow_1503LayoutFlt3 = ({ header, layout, onFlt3, tags }: MainWindow_1503LayoutFlt3Props) => {
+export const MainWindow_1503LayoutFlt3 = ({ header, layout, onFlt3 }: MainWindow_1503LayoutFlt3Props) => {
     return (
         <Region
             name="flt_3"
-            tags={tags}
             onPointerTap={onFlt3}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 273, top: 30, height: 17, ...layout }}
@@ -324,14 +310,12 @@ export interface MainWindow_1503LayoutMainContentProps {
     flt2?: MainWindow_1503LayoutFlt2Props;
     flt3?: MainWindow_1503LayoutFlt3Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainWindow_1503LayoutMainContent = ({ bg, flt1, flt2, flt3, layout, tags }: MainWindow_1503LayoutMainContentProps) => {
+export const MainWindow_1503LayoutMainContent = ({ bg, flt1, flt2, flt3, layout }: MainWindow_1503LayoutMainContentProps) => {
     return (
         <Region
             name="main_content"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 1, width: 275, top: 0, height: 56, ...layout }}
         >
@@ -349,16 +333,14 @@ export interface MainWindow_1503LayoutFooterProps {
     layout?: BoxLayout;
     onOpenEditCtgsBut?: () => void;
     srcOpenEditCtgs?: string;
-    tags?: string[];
 }
 
-export const MainWindow_1503LayoutFooter = ({ captionInfoText, layout, onOpenEditCtgsBut, srcOpenEditCtgs, tags }: MainWindow_1503LayoutFooterProps) => {
+export const MainWindow_1503LayoutFooter = ({ captionInfoText, layout, onOpenEditCtgsBut, srcOpenEditCtgs }: MainWindow_1503LayoutFooterProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="footer"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 210, top: 44, height: 30, ...layout }}
         >
             <ContainerButton

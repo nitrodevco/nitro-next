@@ -25,7 +25,6 @@ export const FurniViewLayout = ({ buttonList, infostandElementList, layout, onCl
                 >
                     <CloseButton
                         variant="1"
-                        tags={[ 'close' ]}
                         onPointerTap={onClose}
                         layout={{ position: 'absolute', left: 168, width: 18, top: 6, height: 16 }}
                     />
@@ -63,14 +62,12 @@ export const FurniViewLayout = ({ buttonList, infostandElementList, layout, onCl
 export interface FurniViewLayoutNameTextItemProps {
     captionNameText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutNameTextItem = ({ captionNameText, layout, tags }: FurniViewLayoutNameTextItemProps) => {
+export const FurniViewLayoutNameTextItem = ({ captionNameText, layout }: FurniViewLayoutNameTextItemProps) => {
     return (
         <Region
             name="name_text"
-            tags={tags}
             layout={{ width: 159, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -85,14 +82,12 @@ export const FurniViewLayoutNameTextItem = ({ captionNameText, layout, tags }: F
 export interface FurniViewLayoutNameExtraTextItemProps {
     captionNameExtraText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutNameExtraTextItem = ({ captionNameExtraText, layout, tags }: FurniViewLayoutNameExtraTextItemProps) => {
+export const FurniViewLayoutNameExtraTextItem = ({ captionNameExtraText, layout }: FurniViewLayoutNameExtraTextItemProps) => {
     return (
         <Region
             name="name_extra_text"
-            tags={tags}
             visible={false}
             layout={{ width: 159, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -107,14 +102,12 @@ export const FurniViewLayoutNameExtraTextItem = ({ captionNameExtraText, layout,
 /** Row template `images_spacer` of FurniViewLayout - pass real rows through its `items…` slot. */
 export interface FurniViewLayoutImagesSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutImagesSpacerItem = ({ layout, tags }: FurniViewLayoutImagesSpacerItemProps) => {
+export const FurniViewLayoutImagesSpacerItem = ({ layout }: FurniViewLayoutImagesSpacerItemProps) => {
     return (
         <Region
             name="images_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -125,14 +118,12 @@ export const FurniViewLayoutImagesSpacerItem = ({ layout, tags }: FurniViewLayou
 export interface FurniViewLayoutLockedIconItemProps {
     layout?: BoxLayout;
     srcLockedIcon?: string;
-    tags?: string[];
 }
 
-export const FurniViewLayoutLockedIconItem = ({ layout, srcLockedIcon, tags }: FurniViewLayoutLockedIconItemProps) => {
+export const FurniViewLayoutLockedIconItem = ({ layout, srcLockedIcon }: FurniViewLayoutLockedIconItemProps) => {
     return (
         <ThemeImage
             name="locked_icon"
-            tags={tags}
             src={srcLockedIcon ?? layoutImage('forum_forum_locked.png')}
             layout={{ width: 13, height: 18, flexShrink: 0, ...layout }}
         />
@@ -143,14 +134,12 @@ export const FurniViewLayoutLockedIconItem = ({ layout, srcLockedIcon, tags }: F
 export interface FurniViewLayoutWiredIconItemProps {
     layout?: BoxLayout;
     srcWiredIcon?: string;
-    tags?: string[];
 }
 
-export const FurniViewLayoutWiredIconItem = ({ layout, srcWiredIcon, tags }: FurniViewLayoutWiredIconItemProps) => {
+export const FurniViewLayoutWiredIconItem = ({ layout, srcWiredIcon }: FurniViewLayoutWiredIconItemProps) => {
     return (
         <ThemeImage
             name="wired_icon"
-            tags={tags}
             src={srcWiredIcon ?? '${image.library.url}catalogue/icon_80.png'}
             layout={{ width: 15, height: 15, flexShrink: 0, ...layout }}
         />
@@ -161,14 +150,12 @@ export const FurniViewLayoutWiredIconItem = ({ layout, srcWiredIcon, tags }: Fur
 export interface FurniViewLayoutWiredChestElementsItemProps {
     itemsWiredChestElements?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutWiredChestElementsItem = ({ itemsWiredChestElements, layout, tags }: FurniViewLayoutWiredChestElementsItemProps) => {
+export const FurniViewLayoutWiredChestElementsItem = ({ itemsWiredChestElements, layout }: FurniViewLayoutWiredChestElementsItemProps) => {
     return (
         <Region
             name="wired_chest_elements"
-            tags={tags}
             layout={{ width: 31, height: 15, flexShrink: 0, flexDirection: 'row', gap: 3, ...layout }}
         >
             {itemsWiredChestElements ?? (
@@ -191,15 +178,13 @@ export interface FurniViewLayoutUniqueItemBackgroundContainerProps {
     srcUniqueItemBackgroundBottom5?: string;
     srcUniqueItemBackgroundMid?: string;
     srcUniqueItemBackgroundTop?: string;
-    tags?: string[];
     visibleUniqueItemBackgroundContainer?: boolean;
 }
 
-export const FurniViewLayoutUniqueItemBackgroundContainer = ({ layout, srcUniqueItemBackgroundBottom, srcUniqueItemBackgroundBottom2, srcUniqueItemBackgroundBottom3, srcUniqueItemBackgroundBottom4, srcUniqueItemBackgroundBottom5, srcUniqueItemBackgroundMid, srcUniqueItemBackgroundTop, tags, visibleUniqueItemBackgroundContainer }: FurniViewLayoutUniqueItemBackgroundContainerProps) => {
+export const FurniViewLayoutUniqueItemBackgroundContainer = ({ layout, srcUniqueItemBackgroundBottom, srcUniqueItemBackgroundBottom2, srcUniqueItemBackgroundBottom3, srcUniqueItemBackgroundBottom4, srcUniqueItemBackgroundBottom5, srcUniqueItemBackgroundMid, srcUniqueItemBackgroundTop, visibleUniqueItemBackgroundContainer }: FurniViewLayoutUniqueItemBackgroundContainerProps) => {
     return (
         <Region
             name="unique_item_background_container"
-            tags={tags}
             visible={visibleUniqueItemBackgroundContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, minHeight: 45, ...layout }}
         >
@@ -245,15 +230,13 @@ export const FurniViewLayoutUniqueItemBackgroundContainer = ({ layout, srcUnique
 /** Named region `unique_item_overlay_container` of FurniViewLayout - configured through the parent's `uniqueItemOverlayContainer` prop. */
 export interface FurniViewLayoutUniqueItemOverlayContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleUniqueItemOverlayContainer?: boolean;
 }
 
-export const FurniViewLayoutUniqueItemOverlayContainer = ({ layout, tags, visibleUniqueItemOverlayContainer }: FurniViewLayoutUniqueItemOverlayContainerProps) => {
+export const FurniViewLayoutUniqueItemOverlayContainer = ({ layout, visibleUniqueItemOverlayContainer }: FurniViewLayoutUniqueItemOverlayContainerProps) => {
     return (
         <Region
             name="unique_item_overlay_container"
-            tags={tags}
             visible={visibleUniqueItemOverlayContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, minHeight: 45, ...layout }}
         >
@@ -273,15 +256,13 @@ export const FurniViewLayoutUniqueItemOverlayContainer = ({ layout, tags, visibl
 /** Named region `rarity_item_overlay_container` of FurniViewLayout - configured through the parent's `rarityItemOverlayContainer` prop. */
 export interface FurniViewLayoutRarityItemOverlayContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleRarityItemOverlayContainer?: boolean;
 }
 
-export const FurniViewLayoutRarityItemOverlayContainer = ({ layout, tags, visibleRarityItemOverlayContainer }: FurniViewLayoutRarityItemOverlayContainerProps) => {
+export const FurniViewLayoutRarityItemOverlayContainer = ({ layout, visibleRarityItemOverlayContainer }: FurniViewLayoutRarityItemOverlayContainerProps) => {
     return (
         <Region
             name="rarity_item_overlay_container"
-            tags={tags}
             visible={visibleRarityItemOverlayContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, ...layout }}
         >
@@ -299,16 +280,14 @@ export interface FurniViewLayoutImageContainerItemProps {
     layout?: BoxLayout;
     rarityItemOverlayContainer?: FurniViewLayoutRarityItemOverlayContainerProps;
     srcImage?: string;
-    tags?: string[];
     uniqueItemBackgroundContainer?: FurniViewLayoutUniqueItemBackgroundContainerProps;
     uniqueItemOverlayContainer?: FurniViewLayoutUniqueItemOverlayContainerProps;
 }
 
-export const FurniViewLayoutImageContainerItem = ({ layout, rarityItemOverlayContainer, srcImage, tags, uniqueItemBackgroundContainer, uniqueItemOverlayContainer }: FurniViewLayoutImageContainerItemProps) => {
+export const FurniViewLayoutImageContainerItem = ({ layout, rarityItemOverlayContainer, srcImage, uniqueItemBackgroundContainer, uniqueItemOverlayContainer }: FurniViewLayoutImageContainerItemProps) => {
     return (
         <Region
             name="image_container"
-            tags={tags}
             layout={{ width: 170, height: 130, flexShrink: 0, minHeight: 45, ...layout }}
         >
             <FurniViewLayoutUniqueItemBackgroundContainer {...uniqueItemBackgroundContainer} />
@@ -327,14 +306,12 @@ export const FurniViewLayoutImageContainerItem = ({ layout, rarityItemOverlayCon
 export interface FurniViewLayoutNftIndicatorItemProps {
     layout?: BoxLayout;
     srcNftIcon?: string;
-    tags?: string[];
 }
 
-export const FurniViewLayoutNftIndicatorItem = ({ layout, srcNftIcon, tags }: FurniViewLayoutNftIndicatorItemProps) => {
+export const FurniViewLayoutNftIndicatorItem = ({ layout, srcNftIcon }: FurniViewLayoutNftIndicatorItemProps) => {
     return (
         <Region
             name="nft_indicator"
-            tags={tags}
             layout={{ width: 170, height: 18, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -349,14 +326,12 @@ export const FurniViewLayoutNftIndicatorItem = ({ layout, srcNftIcon, tags }: Fu
 /** Row template `owner_spacer` of FurniViewLayout - pass real rows through its `items…` slot. */
 export interface FurniViewLayoutOwnerSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutOwnerSpacerItem = ({ layout, tags }: FurniViewLayoutOwnerSpacerItemProps) => {
+export const FurniViewLayoutOwnerSpacerItem = ({ layout }: FurniViewLayoutOwnerSpacerItemProps) => {
     return (
         <Region
             name="owner_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -370,14 +345,12 @@ export interface FurniViewLayoutOwnerRegionItemProps {
     onOwnerRegion?: () => void;
     srcBcwIcon?: string;
     srcTempIcon?: string;
-    tags?: string[];
 }
 
-export const FurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwnerRegion, srcBcwIcon, srcTempIcon, tags }: FurniViewLayoutOwnerRegionItemProps) => {
+export const FurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwnerRegion, srcBcwIcon, srcTempIcon }: FurniViewLayoutOwnerRegionItemProps) => {
     return (
         <Region
             name="owner_region"
-            tags={tags}
             onPointerTap={onOwnerRegion}
             cursor="pointer"
             layout={{ width: 170, height: 17, flexShrink: 0, justifyContent: 'center', ...layout }}
@@ -423,14 +396,12 @@ export const FurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwn
 /** Row template `group_details_spacer` of FurniViewLayout - pass real rows through its `items…` slot. */
 export interface FurniViewLayoutGroupDetailsSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutGroupDetailsSpacerItem = ({ layout, tags }: FurniViewLayoutGroupDetailsSpacerItemProps) => {
+export const FurniViewLayoutGroupDetailsSpacerItem = ({ layout }: FurniViewLayoutGroupDetailsSpacerItemProps) => {
     return (
         <Region
             name="group_details_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -442,16 +413,14 @@ export interface FurniViewLayoutGroupDetailsContainerItemProps {
     captionGroupName?: string;
     layout?: BoxLayout;
     onGroupDetailsContainer?: () => void;
-    tags?: string[];
 }
 
-export const FurniViewLayoutGroupDetailsContainerItem = ({ captionGroupName, layout, onGroupDetailsContainer, tags }: FurniViewLayoutGroupDetailsContainerItemProps) => {
+export const FurniViewLayoutGroupDetailsContainerItem = ({ captionGroupName, layout, onGroupDetailsContainer }: FurniViewLayoutGroupDetailsContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="group_details_container"
-            tags={tags}
             tooltip={t('infostand.group.link.tooltip')}
             onPointerTap={onGroupDetailsContainer}
             cursor="pointer"
@@ -480,16 +449,14 @@ export const FurniViewLayoutGroupDetailsContainerItem = ({ captionGroupName, lay
 export interface FurniViewLayoutExpirationTextItemProps {
     captionExpirationText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutExpirationTextItem = ({ captionExpirationText, layout, tags }: FurniViewLayoutExpirationTextItemProps) => {
+export const FurniViewLayoutExpirationTextItem = ({ captionExpirationText, layout }: FurniViewLayoutExpirationTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="expiration_text"
-            tags={tags}
             layout={{ width: 170, height: 23, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -505,17 +472,15 @@ export interface FurniViewLayoutBcPlaceButtonItemProps {
     layout?: BoxLayout;
     onBcPlaceButton?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const FurniViewLayoutBcPlaceButtonItem = ({ layout, onBcPlaceButton, srcIcon, tags }: FurniViewLayoutBcPlaceButtonItemProps) => {
+export const FurniViewLayoutBcPlaceButtonItem = ({ layout, onBcPlaceButton, srcIcon }: FurniViewLayoutBcPlaceButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ContainerButton
             variant="0"
             name="bc_place_button"
-            tags={tags}
             tooltip={t('infostand.button.place_more.tooltip')}
             onPointerTap={onBcPlaceButton}
             layout={{ width: 90, height: 23, flexShrink: 0, ...layout }}
@@ -542,17 +507,15 @@ export interface FurniViewLayoutCatalogButtonItemProps {
     layout?: BoxLayout;
     onCatalogButton?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const FurniViewLayoutCatalogButtonItem = ({ layout, onCatalogButton, srcIcon, tags }: FurniViewLayoutCatalogButtonItemProps) => {
+export const FurniViewLayoutCatalogButtonItem = ({ layout, onCatalogButton, srcIcon }: FurniViewLayoutCatalogButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ContainerButton
             variant="0"
             name="catalog_button"
-            tags={tags}
             onPointerTap={onCatalogButton}
             layout={{ width: 72, height: 23, flexShrink: 0, ...layout }}
         >
@@ -577,17 +540,15 @@ export const FurniViewLayoutCatalogButtonItem = ({ layout, onCatalogButton, srcI
 export interface FurniViewLayoutRentButtonItemProps {
     layout?: BoxLayout;
     onRentButton?: () => void;
-    tags?: string[];
 }
 
-export const FurniViewLayoutRentButtonItem = ({ layout, onRentButton, tags }: FurniViewLayoutRentButtonItemProps) => {
+export const FurniViewLayoutRentButtonItem = ({ layout, onRentButton }: FurniViewLayoutRentButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="rent_button"
-            tags={tags}
             onPointerTap={onRentButton}
             layout={{ width: 130, height: 23, flexShrink: 0, ...layout }}
         >
@@ -600,17 +561,15 @@ export const FurniViewLayoutRentButtonItem = ({ layout, onRentButton, tags }: Fu
 export interface FurniViewLayoutExtendButtonItemProps {
     layout?: BoxLayout;
     onExtendButton?: () => void;
-    tags?: string[];
 }
 
-export const FurniViewLayoutExtendButtonItem = ({ layout, onExtendButton, tags }: FurniViewLayoutExtendButtonItemProps) => {
+export const FurniViewLayoutExtendButtonItem = ({ layout, onExtendButton }: FurniViewLayoutExtendButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="extend_button"
-            tags={tags}
             onPointerTap={onExtendButton}
             layout={{ width: 143, height: 23, flexShrink: 0, ...layout }}
         >
@@ -623,17 +582,15 @@ export const FurniViewLayoutExtendButtonItem = ({ layout, onExtendButton, tags }
 export interface FurniViewLayoutBuyoutButtonItemProps {
     layout?: BoxLayout;
     onBuyoutButton?: () => void;
-    tags?: string[];
 }
 
-export const FurniViewLayoutBuyoutButtonItem = ({ layout, onBuyoutButton, tags }: FurniViewLayoutBuyoutButtonItemProps) => {
+export const FurniViewLayoutBuyoutButtonItem = ({ layout, onBuyoutButton }: FurniViewLayoutBuyoutButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="buyout_button"
-            tags={tags}
             onPointerTap={onBuyoutButton}
             layout={{ width: 143, height: 23, flexShrink: 0, ...layout }}
         >
@@ -646,20 +603,18 @@ export const FurniViewLayoutBuyoutButtonItem = ({ layout, onBuyoutButton, tags }
 export interface FurniViewLayoutPurchaseButtonsItemProps {
     itemsPurchaseButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButtons, layout, tags }: FurniViewLayoutPurchaseButtonsItemProps) => {
+export const FurniViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButtons, layout }: FurniViewLayoutPurchaseButtonsItemProps) => {
     return (
         <Region
             name="purchase_buttons"
-            tags={tags}
             layout={{ width: 170, height: 23, flexShrink: 0, flexDirection: 'row', gap: 5, ...layout }}
         >
             {itemsPurchaseButtons ?? (
                 <>
                     <FurniViewLayoutBcPlaceButtonItem />
-                    <FurniViewLayoutCatalogButtonItem tags={[ 'catalog' ]} />
+                    <FurniViewLayoutCatalogButtonItem />
                     <FurniViewLayoutRentButtonItem />
                     <FurniViewLayoutExtendButtonItem />
                     <FurniViewLayoutBuyoutButtonItem />
@@ -672,14 +627,12 @@ export const FurniViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButtons, layou
 /** Row template `furni_details_spacer` of FurniViewLayout - pass real rows through its `items…` slot. */
 export interface FurniViewLayoutFurniDetailsSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutFurniDetailsSpacerItem = ({ layout, tags }: FurniViewLayoutFurniDetailsSpacerItemProps) => {
+export const FurniViewLayoutFurniDetailsSpacerItem = ({ layout }: FurniViewLayoutFurniDetailsSpacerItemProps) => {
     return (
         <Region
             name="furni_details_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -690,14 +643,12 @@ export const FurniViewLayoutFurniDetailsSpacerItem = ({ layout, tags }: FurniVie
 export interface FurniViewLayoutChestItemCountItemProps {
     captionChestItemCount?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutChestItemCountItem = ({ captionChestItemCount, layout, tags }: FurniViewLayoutChestItemCountItemProps) => {
+export const FurniViewLayoutChestItemCountItem = ({ captionChestItemCount, layout }: FurniViewLayoutChestItemCountItemProps) => {
     return (
         <Region
             name="chest_item_count"
-            tags={tags}
             visible={false}
             layout={{ width: 170, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -713,14 +664,12 @@ export const FurniViewLayoutChestItemCountItem = ({ captionChestItemCount, layou
 export interface FurniViewLayoutFurniDetailsTextItemProps {
     captionFurniDetailsText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutFurniDetailsTextItem = ({ captionFurniDetailsText, layout, tags }: FurniViewLayoutFurniDetailsTextItemProps) => {
+export const FurniViewLayoutFurniDetailsTextItem = ({ captionFurniDetailsText, layout }: FurniViewLayoutFurniDetailsTextItemProps) => {
     return (
         <Region
             name="furni_details_text"
-            tags={tags}
             layout={{ width: 170, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -735,14 +684,12 @@ export const FurniViewLayoutFurniDetailsTextItem = ({ captionFurniDetailsText, l
 export interface FurniViewLayoutInfostandElementListProps {
     itemsInfostandElementList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout, tags }: FurniViewLayoutInfostandElementListProps) => {
+export const FurniViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: FurniViewLayoutInfostandElementListProps) => {
     return (
         <Region
             name="infostand_element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 355, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsInfostandElementList ?? (
@@ -772,16 +719,14 @@ export const FurniViewLayoutInfostandElementList = ({ itemsInfostandElementList,
 export interface FurniViewLayoutVariableListProps {
     captionName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutVariableList = ({ captionName, layout, tags }: FurniViewLayoutVariableListProps) => {
+export const FurniViewLayoutVariableList = ({ captionName, layout }: FurniViewLayoutVariableListProps) => {
     const [ valueValue, setValueValue ] = useState('');
 
     return (
         <Region
             name="variable_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 32, flexDirection: 'column', ...layout }}
         >
             <Region layout={{ width: 183, height: 26, flexShrink: 0 }}>
@@ -813,17 +758,15 @@ export const FurniViewLayoutVariableList = ({ captionName, layout, tags }: Furni
 export interface FurniViewLayoutMoveItemProps {
     layout?: BoxLayout;
     onMove?: () => void;
-    tags?: string[];
 }
 
-export const FurniViewLayoutMoveItem = ({ layout, onMove, tags }: FurniViewLayoutMoveItemProps) => {
+export const FurniViewLayoutMoveItem = ({ layout, onMove }: FurniViewLayoutMoveItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="move"
-            tags={tags}
             onPointerTap={onMove}
             layout={{ width: 134, height: 25, flexShrink: 0, ...layout }}
         >
@@ -836,17 +779,15 @@ export const FurniViewLayoutMoveItem = ({ layout, onMove, tags }: FurniViewLayou
 export interface FurniViewLayoutRotateItemProps {
     layout?: BoxLayout;
     onRotate?: () => void;
-    tags?: string[];
 }
 
-export const FurniViewLayoutRotateItem = ({ layout, onRotate, tags }: FurniViewLayoutRotateItemProps) => {
+export const FurniViewLayoutRotateItem = ({ layout, onRotate }: FurniViewLayoutRotateItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="rotate"
-            tags={tags}
             onPointerTap={onRotate}
             layout={{ width: 141, height: 25, flexShrink: 0, ...layout }}
         >
@@ -859,17 +800,15 @@ export const FurniViewLayoutRotateItem = ({ layout, onRotate, tags }: FurniViewL
 export interface FurniViewLayoutPickupItemProps {
     layout?: BoxLayout;
     onPickup?: () => void;
-    tags?: string[];
 }
 
-export const FurniViewLayoutPickupItem = ({ layout, onPickup, tags }: FurniViewLayoutPickupItemProps) => {
+export const FurniViewLayoutPickupItem = ({ layout, onPickup }: FurniViewLayoutPickupItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="pickup"
-            tags={tags}
             onPointerTap={onPickup}
             layout={{ width: 139, height: 25, flexShrink: 0, ...layout }}
         >
@@ -882,17 +821,15 @@ export const FurniViewLayoutPickupItem = ({ layout, onPickup, tags }: FurniViewL
 export interface FurniViewLayoutSaveBrandingConfigurationItemProps {
     layout?: BoxLayout;
     onSaveBrandingConfiguration?: () => void;
-    tags?: string[];
 }
 
-export const FurniViewLayoutSaveBrandingConfigurationItem = ({ layout, onSaveBrandingConfiguration, tags }: FurniViewLayoutSaveBrandingConfigurationItemProps) => {
+export const FurniViewLayoutSaveBrandingConfigurationItem = ({ layout, onSaveBrandingConfiguration }: FurniViewLayoutSaveBrandingConfigurationItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="save_branding_configuration"
-            tags={tags}
             onPointerTap={onSaveBrandingConfiguration}
             layout={{ width: 175, height: 25, flexShrink: 0, ...layout }}
         >
@@ -905,17 +842,15 @@ export const FurniViewLayoutSaveBrandingConfigurationItem = ({ layout, onSaveBra
 export interface FurniViewLayoutUseItemProps {
     layout?: BoxLayout;
     onUse?: () => void;
-    tags?: string[];
 }
 
-export const FurniViewLayoutUseItem = ({ layout, onUse, tags }: FurniViewLayoutUseItemProps) => {
+export const FurniViewLayoutUseItem = ({ layout, onUse }: FurniViewLayoutUseItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="use"
-            tags={tags}
             onPointerTap={onUse}
             layout={{ width: 126, height: 25, flexShrink: 0, ...layout }}
         >
@@ -928,17 +863,15 @@ export const FurniViewLayoutUseItem = ({ layout, onUse, tags }: FurniViewLayoutU
 export interface FurniViewLayoutWiredInspectItemProps {
     layout?: BoxLayout;
     onWiredInspect?: () => void;
-    tags?: string[];
 }
 
-export const FurniViewLayoutWiredInspectItem = ({ layout, onWiredInspect, tags }: FurniViewLayoutWiredInspectItemProps) => {
+export const FurniViewLayoutWiredInspectItem = ({ layout, onWiredInspect }: FurniViewLayoutWiredInspectItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="wired_inspect"
-            tags={tags}
             onPointerTap={onWiredInspect}
             layout={{ width: 59, height: 25, flexShrink: 0, ...layout }}
         >
@@ -951,14 +884,12 @@ export const FurniViewLayoutWiredInspectItem = ({ layout, onWiredInspect, tags }
 export interface FurniViewLayoutButtonListProps {
     itemsButtonList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniViewLayoutButtonList = ({ itemsButtonList, layout, tags }: FurniViewLayoutButtonListProps) => {
+export const FurniViewLayoutButtonList = ({ itemsButtonList, layout }: FurniViewLayoutButtonListProps) => {
     return (
         <Region
             name="button_list"
-            tags={tags}
             layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsButtonList ?? (

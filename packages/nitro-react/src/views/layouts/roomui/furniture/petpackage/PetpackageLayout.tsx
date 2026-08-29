@@ -74,16 +74,14 @@ export interface PetpackageLayoutCancelProps {
     captionCancel?: string;
     layout?: BoxLayout;
     onCancel?: () => void;
-    tags?: string[];
 }
 
-export const PetpackageLayoutCancel = ({ captionCancel, layout, onCancel, tags }: PetpackageLayoutCancelProps) => {
+export const PetpackageLayoutCancel = ({ captionCancel, layout, onCancel }: PetpackageLayoutCancelProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel"
-            tags={tags}
             onPointerTap={onCancel}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 68, top: 90, height: 29, ...layout }}

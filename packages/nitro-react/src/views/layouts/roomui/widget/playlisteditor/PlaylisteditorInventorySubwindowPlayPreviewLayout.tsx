@@ -25,16 +25,14 @@ export interface PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayCon
     srcAuthorNameIconBitmap?: string;
     srcPreviewPlayBackgroundImage?: string;
     srcSongNameIconBitmap?: string;
-    tags?: string[];
 }
 
-export const PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayContainer = ({ captionPreviewPlayAuthorName, captionPreviewPlayTrackName, layout, onStopPreviewButton, srcAuthorNameIconBitmap, srcPreviewPlayBackgroundImage, srcSongNameIconBitmap, tags }: PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayContainerProps) => {
+export const PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayContainer = ({ captionPreviewPlayAuthorName, captionPreviewPlayTrackName, layout, onStopPreviewButton, srcAuthorNameIconBitmap, srcPreviewPlayBackgroundImage, srcSongNameIconBitmap }: PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="preview_play_container"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 110, ...layout }}
         >

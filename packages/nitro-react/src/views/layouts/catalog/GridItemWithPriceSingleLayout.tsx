@@ -29,7 +29,6 @@ export const GridItemWithPriceSingleLayout = ({ layout, smallContainer, srcBadge
                 </Region>
                 <Border
                     variant="2"
-                    tags={[ 'ITEM_HILIGHT' ]}
                     tintColor="#a1a19b"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 12 }}
                 >
@@ -62,14 +61,12 @@ export const GridItemWithPriceSingleLayout = ({ layout, smallContainer, srcBadge
 export interface GridItemWithPriceSingleLayoutWideContainerProps {
     layout?: BoxLayout;
     srcImageWide?: string;
-    tags?: string[];
 }
 
-export const GridItemWithPriceSingleLayoutWideContainer = ({ layout, srcImageWide, tags }: GridItemWithPriceSingleLayoutWideContainerProps) => {
+export const GridItemWithPriceSingleLayoutWideContainer = ({ layout, srcImageWide }: GridItemWithPriceSingleLayoutWideContainerProps) => {
     return (
         <Region
             name="wide_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, width: 60, top: 2, height: 36, ...layout }}
         >
             <ThemeImage
@@ -90,14 +87,12 @@ export interface GridItemWithPriceSingleLayoutSmallContainerProps {
     srcImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
     srcUniqueItemSoldOutBitmap?: string;
-    tags?: string[];
 }
 
-export const GridItemWithPriceSingleLayoutSmallContainer = ({ captionBundleCounter, captionMultiCounter, layout, onSmallContainer, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, tags }: GridItemWithPriceSingleLayoutSmallContainerProps) => {
+export const GridItemWithPriceSingleLayoutSmallContainer = ({ captionBundleCounter, captionMultiCounter, layout, onSmallContainer, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap }: GridItemWithPriceSingleLayoutSmallContainerProps) => {
     return (
         <Region
             name="small_container"
-            tags={tags}
             onPointerTap={onSmallContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 8, width: 36, top: 2, height: 36, ...layout }}
@@ -168,7 +163,6 @@ export const GridItemWithPriceSingleLayoutSmallContainer = ({ captionBundleCount
                 layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
             >
                 <ThemeImage
-                    tags={[ 'ITEM_HILIGHT_TOP' ]}
                     src={layoutImage('inventory_thumb_selected_outline.png')}
                     layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
                 />
@@ -181,14 +175,12 @@ export const GridItemWithPriceSingleLayoutSmallContainer = ({ captionBundleCount
 export interface GridItemWithPriceSingleLayoutAmountTextRightItemProps {
     captionAmountTextRight?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GridItemWithPriceSingleLayoutAmountTextRightItem = ({ captionAmountTextRight, layout, tags }: GridItemWithPriceSingleLayoutAmountTextRightItemProps) => {
+export const GridItemWithPriceSingleLayoutAmountTextRightItem = ({ captionAmountTextRight, layout }: GridItemWithPriceSingleLayoutAmountTextRightItemProps) => {
     return (
         <Region
             name="amount_text_right"
-            tags={tags}
             layout={{ width: 38, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionAmountTextRight ?? '00000'} />
@@ -199,15 +191,13 @@ export const GridItemWithPriceSingleLayoutAmountTextRightItem = ({ captionAmount
 /** Row template `currency_indicator_bitmap_right` of GridItemWithPriceSingleLayout - pass real rows through its `items…` slot. */
 export interface GridItemWithPriceSingleLayoutCurrencyIndicatorBitmapRightItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GridItemWithPriceSingleLayoutCurrencyIndicatorBitmapRightItem = ({ layout, tags }: GridItemWithPriceSingleLayoutCurrencyIndicatorBitmapRightItemProps) => {
+export const GridItemWithPriceSingleLayoutCurrencyIndicatorBitmapRightItem = ({ layout }: GridItemWithPriceSingleLayoutCurrencyIndicatorBitmapRightItemProps) => {
     return (
         <Icon
             variant="35"
             name="currency_indicator_bitmap_right"
-            tags={tags}
             layout={{ width: 15, height: 15, flexShrink: 0, ...layout }}
         />
     );
@@ -217,14 +207,12 @@ export const GridItemWithPriceSingleLayoutCurrencyIndicatorBitmapRightItem = ({ 
 export interface GridItemWithPriceSingleLayoutTotalpriceContainerProps {
     itemsTotalpriceContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GridItemWithPriceSingleLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout, tags }: GridItemWithPriceSingleLayoutTotalpriceContainerProps) => {
+export const GridItemWithPriceSingleLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout }: GridItemWithPriceSingleLayoutTotalpriceContainerProps) => {
     return (
         <Region
             name="totalprice_container"
-            tags={tags}
             layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1, ...layout }}
         >
             {itemsTotalpriceContainer ?? (

@@ -180,14 +180,12 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
 export interface ForumSettingsLayoutTopClickAreaProps {
     layout?: BoxLayout;
     onTopClickArea?: () => void;
-    tags?: string[];
 }
 
-export const ForumSettingsLayoutTopClickArea = ({ layout, onTopClickArea, tags }: ForumSettingsLayoutTopClickAreaProps) => {
+export const ForumSettingsLayoutTopClickArea = ({ layout, onTopClickArea }: ForumSettingsLayoutTopClickAreaProps) => {
     return (
         <Region
             name="top_click_area"
-            tags={tags}
             onPointerTap={onTopClickArea}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80, ...layout }}
@@ -198,14 +196,12 @@ export const ForumSettingsLayoutTopClickArea = ({ layout, onTopClickArea, tags }
 /** Named region `icon_background` of ForumSettingsLayout - configured through the parent's `iconBackground` prop. */
 export interface ForumSettingsLayoutIconBackgroundProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ForumSettingsLayoutIconBackground = ({ layout, tags }: ForumSettingsLayoutIconBackgroundProps) => {
+export const ForumSettingsLayoutIconBackground = ({ layout }: ForumSettingsLayoutIconBackgroundProps) => {
     return (
         <Region
             name="icon_background"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80, ...layout }}
         >
@@ -225,15 +221,13 @@ export interface ForumSettingsLayoutTopPartProps {
     iconBackground?: ForumSettingsLayoutIconBackgroundProps;
     layout?: BoxLayout;
     onTopPart?: () => void;
-    tags?: string[];
     topClickArea?: ForumSettingsLayoutTopClickAreaProps;
 }
 
-export const ForumSettingsLayoutTopPart = ({ captionTopHeaderText, captionTopText, iconBackground, layout, onTopPart, tags, topClickArea }: ForumSettingsLayoutTopPartProps) => {
+export const ForumSettingsLayoutTopPart = ({ captionTopHeaderText, captionTopText, iconBackground, layout, onTopPart, topClickArea }: ForumSettingsLayoutTopPartProps) => {
     return (
         <Region
             name="top_part"
-            tags={tags}
             backgroundColor="#0e3f52"
             onPointerTap={onTopPart}
             cursor="pointer"
@@ -270,14 +264,12 @@ export interface ForumSettingsLayoutReadSelectorProps {
     on_0?: () => void;
     on_1?: () => void;
     on_2?: () => void;
-    tags?: string[];
 }
 
-export const ForumSettingsLayoutReadSelector = ({ layout, on_0, on_1, on_2, tags }: ForumSettingsLayoutReadSelectorProps) => {
+export const ForumSettingsLayoutReadSelector = ({ layout, on_0, on_1, on_2 }: ForumSettingsLayoutReadSelectorProps) => {
     return (
         <Region
             name="read_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 60, ...layout }}
         >
             <RadioButton
@@ -309,14 +301,12 @@ export interface ForumSettingsLayoutPostMessageSelectorProps {
     on_1?: () => void;
     on_2?: () => void;
     on_3?: () => void;
-    tags?: string[];
 }
 
-export const ForumSettingsLayoutPostMessageSelector = ({ layout, on_0, on_1, on_2, on_3, tags }: ForumSettingsLayoutPostMessageSelectorProps) => {
+export const ForumSettingsLayoutPostMessageSelector = ({ layout, on_0, on_1, on_2, on_3 }: ForumSettingsLayoutPostMessageSelectorProps) => {
     return (
         <Region
             name="post_message_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 80, ...layout }}
         >
             <RadioButton
@@ -354,14 +344,12 @@ export interface ForumSettingsLayoutPostThreadSelectorProps {
     on_1?: () => void;
     on_2?: () => void;
     on_3?: () => void;
-    tags?: string[];
 }
 
-export const ForumSettingsLayoutPostThreadSelector = ({ layout, on_0, on_1, on_2, on_3, tags }: ForumSettingsLayoutPostThreadSelectorProps) => {
+export const ForumSettingsLayoutPostThreadSelector = ({ layout, on_0, on_1, on_2, on_3 }: ForumSettingsLayoutPostThreadSelectorProps) => {
     return (
         <Region
             name="post_thread_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 80, ...layout }}
         >
             <RadioButton
@@ -397,14 +385,12 @@ export interface ForumSettingsLayoutModerateSelectorProps {
     layout?: BoxLayout;
     on_2?: () => void;
     on_3?: () => void;
-    tags?: string[];
 }
 
-export const ForumSettingsLayoutModerateSelector = ({ layout, on_2, on_3, tags }: ForumSettingsLayoutModerateSelectorProps) => {
+export const ForumSettingsLayoutModerateSelector = ({ layout, on_2, on_3 }: ForumSettingsLayoutModerateSelectorProps) => {
     return (
         <Region
             name="moderate_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 40, ...layout }}
         >
             <RadioButton

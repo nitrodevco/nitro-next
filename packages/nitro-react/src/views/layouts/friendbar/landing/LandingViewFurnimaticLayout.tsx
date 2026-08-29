@@ -22,14 +22,12 @@ export const LandingViewFurnimaticLayout = ({ contentBackground, layout }: Landi
 /** Named region `moving_objects_container` of LandingViewFurnimaticLayout - configured through the parent's `movingObjectsContainer` prop. */
 export interface LandingViewFurnimaticLayoutMovingObjectsContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LandingViewFurnimaticLayoutMovingObjectsContainer = ({ layout, tags }: LandingViewFurnimaticLayoutMovingObjectsContainerProps) => {
+export const LandingViewFurnimaticLayoutMovingObjectsContainer = ({ layout }: LandingViewFurnimaticLayoutMovingObjectsContainerProps) => {
     return (
         <Region
             name="moving_objects_container"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         />
@@ -44,14 +42,12 @@ export interface LandingViewFurnimaticLayoutContentBackgroundProps {
     srcBackgroundLeft?: string;
     srcBackgroundRight?: string;
     srcLogo?: string;
-    tags?: string[];
 }
 
-export const LandingViewFurnimaticLayoutContentBackground = ({ layout, movingObjectsContainer, srcBackgroundHorizon, srcBackgroundLeft, srcBackgroundRight, srcLogo, tags }: LandingViewFurnimaticLayoutContentBackgroundProps) => {
+export const LandingViewFurnimaticLayoutContentBackground = ({ layout, movingObjectsContainer, srcBackgroundHorizon, srcBackgroundLeft, srcBackgroundRight, srcLogo }: LandingViewFurnimaticLayoutContentBackgroundProps) => {
     return (
         <Region
             name="content_background"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >

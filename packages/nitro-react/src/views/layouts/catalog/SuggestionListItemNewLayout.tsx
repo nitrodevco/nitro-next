@@ -20,16 +20,14 @@ export interface SuggestionListItemNewLayoutSuggestionListItemProps {
     captionNameText?: string;
     layout?: BoxLayout;
     onSuggestionListItem?: () => void;
-    tags?: string[];
 }
 
-export const SuggestionListItemNewLayoutSuggestionListItem = ({ captionNameText, layout, onSuggestionListItem, tags }: SuggestionListItemNewLayoutSuggestionListItemProps) => {
+export const SuggestionListItemNewLayoutSuggestionListItem = ({ captionNameText, layout, onSuggestionListItem }: SuggestionListItemNewLayoutSuggestionListItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="suggestion_list_item"
-            tags={tags}
             backgroundColor="#cceeff"
             onPointerTap={onSuggestionListItem}
             cursor="pointer"

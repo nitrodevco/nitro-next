@@ -20,16 +20,14 @@ export interface LayoutInfoDuckets_1601LayoutCtlgInfoDucketsProps {
     captionCtlgDescription?: string;
     layout?: BoxLayout;
     srcDucketsInfoIllustration?: string;
-    tags?: string[];
 }
 
-export const LayoutInfoDuckets_1601LayoutCtlgInfoDuckets = ({ captionCtlgDescription, layout, srcDucketsInfoIllustration, tags }: LayoutInfoDuckets_1601LayoutCtlgInfoDucketsProps) => {
+export const LayoutInfoDuckets_1601LayoutCtlgInfoDuckets = ({ captionCtlgDescription, layout, srcDucketsInfoIllustration }: LayoutInfoDuckets_1601LayoutCtlgInfoDucketsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_info_duckets"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
         >
             <Region
@@ -43,7 +41,6 @@ export const LayoutInfoDuckets_1601LayoutCtlgInfoDuckets = ({ captionCtlgDescrip
             </Region>
             <ThemeImage
                 name="duckets_info_illustration"
-                tags={[ 'S' ]}
                 src={srcDucketsInfoIllustration ?? '${image.library.url}catalogue/duckets_info_illustration.gif'}
                 layout={{ position: 'absolute', left: 236, width: 123, top: 80, height: 360 }}
             />

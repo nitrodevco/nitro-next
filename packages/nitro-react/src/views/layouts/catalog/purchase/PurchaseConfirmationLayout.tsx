@@ -33,16 +33,14 @@ export const PurchaseConfirmationLayout = ({ content, layout, onClose }: Purchas
 export interface PurchaseConfirmationLayoutDisclaimerItemProps {
     layout?: BoxLayout;
     onSpendingDisclaimer?: () => void;
-    tags?: string[];
 }
 
-export const PurchaseConfirmationLayoutDisclaimerItem = ({ layout, onSpendingDisclaimer, tags }: PurchaseConfirmationLayoutDisclaimerItemProps) => {
+export const PurchaseConfirmationLayoutDisclaimerItem = ({ layout, onSpendingDisclaimer }: PurchaseConfirmationLayoutDisclaimerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="disclaimer"
-            tags={tags}
             layout={{ width: 311, height: 17, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 33, width: 278, top: 0, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
@@ -65,16 +63,14 @@ export const PurchaseConfirmationLayoutDisclaimerItem = ({ layout, onSpendingDis
 export interface PurchaseConfirmationLayoutRaffleContainerItemProps {
     captionRaffleText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PurchaseConfirmationLayoutRaffleContainerItem = ({ captionRaffleText, layout, tags }: PurchaseConfirmationLayoutRaffleContainerItemProps) => {
+export const PurchaseConfirmationLayoutRaffleContainerItem = ({ captionRaffleText, layout }: PurchaseConfirmationLayoutRaffleContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="raffle_container"
-            tags={tags}
             layout={{ width: 304, height: 49, flexShrink: 0, ...layout }}
         >
             <Border
@@ -104,17 +100,15 @@ export const PurchaseConfirmationLayoutRaffleContainerItem = ({ captionRaffleTex
 export interface PurchaseConfirmationLayoutCancelButtonItemProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
-    tags?: string[];
 }
 
-export const PurchaseConfirmationLayoutCancelButtonItem = ({ layout, onCancelButton, tags }: PurchaseConfirmationLayoutCancelButtonItemProps) => {
+export const PurchaseConfirmationLayoutCancelButtonItem = ({ layout, onCancelButton }: PurchaseConfirmationLayoutCancelButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="cancel_button"
-            tags={tags}
             onPointerTap={onCancelButton}
             layout={{ width: 110, height: 27, flexShrink: 0, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27, ...layout }}
         >
@@ -127,17 +121,15 @@ export const PurchaseConfirmationLayoutCancelButtonItem = ({ layout, onCancelBut
 export interface PurchaseConfirmationLayoutBuyButtonItemProps {
     layout?: BoxLayout;
     onBuyButton?: () => void;
-    tags?: string[];
 }
 
-export const PurchaseConfirmationLayoutBuyButtonItem = ({ layout, onBuyButton, tags }: PurchaseConfirmationLayoutBuyButtonItemProps) => {
+export const PurchaseConfirmationLayoutBuyButtonItem = ({ layout, onBuyButton }: PurchaseConfirmationLayoutBuyButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="5"
             name="buy_button"
-            tags={tags}
             tintColor="#00aa00"
             onPointerTap={onBuyButton}
             layout={{ width: 110, height: 27, flexShrink: 0, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27, ...layout }}
@@ -151,14 +143,12 @@ export const PurchaseConfirmationLayoutBuyButtonItem = ({ layout, onBuyButton, t
 export interface PurchaseConfirmationLayoutButtonsItemProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PurchaseConfirmationLayoutButtonsItem = ({ itemsButtons, layout, tags }: PurchaseConfirmationLayoutButtonsItemProps) => {
+export const PurchaseConfirmationLayoutButtonsItem = ({ itemsButtons, layout }: PurchaseConfirmationLayoutButtonsItemProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ minWidth: 315, minHeight: 27, flexShrink: 0, flexDirection: 'row', gap: 76, ...layout }}
         >
             {itemsButtons ?? (
@@ -175,14 +165,12 @@ export const PurchaseConfirmationLayoutButtonsItem = ({ itemsButtons, layout, ta
 export interface PurchaseConfirmationLayoutProductNameItemProps {
     captionProductName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PurchaseConfirmationLayoutProductNameItem = ({ captionProductName, layout, tags }: PurchaseConfirmationLayoutProductNameItemProps) => {
+export const PurchaseConfirmationLayoutProductNameItem = ({ captionProductName, layout }: PurchaseConfirmationLayoutProductNameItemProps) => {
     return (
         <Region
             name="product_name"
-            tags={tags}
             layout={{ width: 177, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -198,14 +186,12 @@ export const PurchaseConfirmationLayoutProductNameItem = ({ captionProductName, 
 export interface PurchaseConfirmationLayoutQuantityItemProps {
     captionQuantity?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PurchaseConfirmationLayoutQuantityItem = ({ captionQuantity, layout, tags }: PurchaseConfirmationLayoutQuantityItemProps) => {
+export const PurchaseConfirmationLayoutQuantityItem = ({ captionQuantity, layout }: PurchaseConfirmationLayoutQuantityItemProps) => {
     return (
         <Region
             name="quantity"
-            tags={tags}
             layout={{ width: 41, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -220,16 +206,14 @@ export const PurchaseConfirmationLayoutQuantityItem = ({ captionQuantity, layout
 export interface PurchaseConfirmationLayoutFreeQuantityItemProps {
     captionFreeQuantity?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PurchaseConfirmationLayoutFreeQuantityItem = ({ captionFreeQuantity, layout, tags }: PurchaseConfirmationLayoutFreeQuantityItemProps) => {
+export const PurchaseConfirmationLayoutFreeQuantityItem = ({ captionFreeQuantity, layout }: PurchaseConfirmationLayoutFreeQuantityItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="freeQuantity"
-            tags={tags}
             layout={{ width: 161, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -243,14 +227,12 @@ export const PurchaseConfirmationLayoutFreeQuantityItem = ({ captionFreeQuantity
 /** Named region `purchase_cost_box` of PurchaseConfirmationLayout - configured through the parent's `purchaseCostBox` prop. */
 export interface PurchaseConfirmationLayoutPurchaseCostBoxProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PurchaseConfirmationLayoutPurchaseCostBox = ({ layout, tags }: PurchaseConfirmationLayoutPurchaseCostBoxProps) => {
+export const PurchaseConfirmationLayoutPurchaseCostBox = ({ layout }: PurchaseConfirmationLayoutPurchaseCostBoxProps) => {
     return (
         <Region
             name="purchase_cost_box"
-            tags={tags}
             layout={{ width: 20, height: 22, flexShrink: 0, ...layout }}
         />
     );
@@ -261,16 +243,14 @@ export interface PurchaseConfirmationLayoutPropertiesItemlistProps {
     itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
     purchaseCostBox?: PurchaseConfirmationLayoutPurchaseCostBoxProps;
-    tags?: string[];
 }
 
-export const PurchaseConfirmationLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout, purchaseCostBox, tags }: PurchaseConfirmationLayoutPropertiesItemlistProps) => {
+export const PurchaseConfirmationLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout, purchaseCostBox }: PurchaseConfirmationLayoutPropertiesItemlistProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="properties_itemlist"
-            tags={tags}
             layout={{ position: 'absolute', left: 143, width: 176, alignSelf: 'center', marginTop: -19.5, marginBottom: 19.5, height: 116, flexDirection: 'column', gap: 7, ...layout }}
         >
             {itemsPropertiesItemlist ?? (
@@ -299,14 +279,12 @@ export interface PurchaseConfirmationLayoutContentProps {
     layout?: BoxLayout;
     propertiesItemlist?: PurchaseConfirmationLayoutPropertiesItemlistProps;
     srcProductImage?: string;
-    tags?: string[];
 }
 
-export const PurchaseConfirmationLayoutContent = ({ itemsContent, layout, propertiesItemlist, srcProductImage, tags }: PurchaseConfirmationLayoutContentProps) => {
+export const PurchaseConfirmationLayoutContent = ({ itemsContent, layout, propertiesItemlist, srcProductImage }: PurchaseConfirmationLayoutContentProps) => {
     return (
         <Region
             name="content"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 37, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsContent ?? (

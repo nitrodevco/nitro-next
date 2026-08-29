@@ -26,15 +26,13 @@ export const BadgeImageLayout = ({ layout, region, srcBitmap }: BadgeImageLayout
 export interface BadgeImageLayoutRegionProps {
     layout?: BoxLayout;
     onRegion?: () => void;
-    tags?: string[];
     visibleRegion?: boolean;
 }
 
-export const BadgeImageLayoutRegion = ({ layout, onRegion, tags, visibleRegion }: BadgeImageLayoutRegionProps) => {
+export const BadgeImageLayoutRegion = ({ layout, onRegion, visibleRegion }: BadgeImageLayoutRegionProps) => {
     return (
         <Region
             name="region"
-            tags={tags}
             visible={visibleRegion ?? false}
             onPointerTap={onRegion}
             cursor="pointer"

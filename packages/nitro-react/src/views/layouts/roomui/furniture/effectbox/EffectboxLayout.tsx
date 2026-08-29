@@ -45,14 +45,12 @@ export const EffectboxLayout = ({ cancel, effectboxHeaderBackgroundBorder, layou
 /** Named region `effectbox.header.background.body` of EffectboxLayout - configured through the parent's `effectboxHeaderBackgroundBody` prop. */
 export interface EffectboxLayoutEffectboxHeaderBackgroundBodyProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EffectboxLayoutEffectboxHeaderBackgroundBody = ({ layout, tags }: EffectboxLayoutEffectboxHeaderBackgroundBodyProps) => {
+export const EffectboxLayoutEffectboxHeaderBackgroundBody = ({ layout }: EffectboxLayoutEffectboxHeaderBackgroundBodyProps) => {
     return (
         <Region
             name="effectbox.header.background.body"
-            tags={tags}
             backgroundColor="#0e3f52"
             layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 95, ...layout }}
         />
@@ -64,16 +62,14 @@ export interface EffectboxLayoutEffectboxHeaderProps {
     captionEffectboxHeaderDescription?: string;
     captionEffectboxHeaderTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EffectboxLayoutEffectboxHeader = ({ captionEffectboxHeaderDescription, captionEffectboxHeaderTitle, layout, tags }: EffectboxLayoutEffectboxHeaderProps) => {
+export const EffectboxLayoutEffectboxHeader = ({ captionEffectboxHeaderDescription, captionEffectboxHeaderTitle, layout }: EffectboxLayoutEffectboxHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="effectbox.header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 475, top: 0, height: 90, ...layout }}
         >
             <Region
@@ -105,14 +101,12 @@ export interface EffectboxLayoutEffectboxHeaderBackgroundBorderProps {
     effectboxHeaderBackgroundBody?: EffectboxLayoutEffectboxHeaderBackgroundBodyProps;
     layout?: BoxLayout;
     srcEffectboxHeaderIcon?: string;
-    tags?: string[];
 }
 
-export const EffectboxLayoutEffectboxHeaderBackgroundBorder = ({ effectboxHeader, effectboxHeaderBackgroundBody, layout, srcEffectboxHeaderIcon, tags }: EffectboxLayoutEffectboxHeaderBackgroundBorderProps) => {
+export const EffectboxLayoutEffectboxHeaderBackgroundBorder = ({ effectboxHeader, effectboxHeaderBackgroundBody, layout, srcEffectboxHeaderIcon }: EffectboxLayoutEffectboxHeaderBackgroundBorderProps) => {
     return (
         <Region
             name="effectbox.header.background.border"
-            tags={tags}
             backgroundColor="#376275"
             layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 100, ...layout }}
         >
@@ -132,16 +126,14 @@ export interface EffectboxLayoutCancelProps {
     captionCancel?: string;
     layout?: BoxLayout;
     onCancel?: () => void;
-    tags?: string[];
 }
 
-export const EffectboxLayoutCancel = ({ captionCancel, layout, onCancel, tags }: EffectboxLayoutCancelProps) => {
+export const EffectboxLayoutCancel = ({ captionCancel, layout, onCancel }: EffectboxLayoutCancelProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel"
-            tags={tags}
             onPointerTap={onCancel}
             cursor="pointer"
             layout={{ position: 'absolute', left: 177, width: 101, bottom: 8, height: 32, justifyContent: 'center', ...layout }}

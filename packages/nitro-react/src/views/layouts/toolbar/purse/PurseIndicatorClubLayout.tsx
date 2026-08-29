@@ -19,7 +19,6 @@ export const PurseIndicatorClubLayout = ({ captionChange, captionDays, layout, s
             <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}>
                 <Border
                     variant="6"
-                    tags={[ 'BGCOLOR' ]}
                     tintColor="#55534e"
                     layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
                 />
@@ -36,7 +35,6 @@ export const PurseIndicatorClubLayout = ({ captionChange, captionDays, layout, s
                 >
                     <ThemeImage
                         name="club_icon"
-                        tags={[ 'ICON' ]}
                         src={srcClubIcon ?? layoutImage('toolbar_hc_icon_0.png')}
                         layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                     />

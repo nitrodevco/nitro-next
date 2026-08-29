@@ -31,14 +31,12 @@ export const AvatareditorWardrobeBaseLayout = ({ layout, mainContainer, spacing,
 /** Named region `splitter` of AvatareditorWardrobeBaseLayout - configured through the parent's `splitter` prop. */
 export interface AvatareditorWardrobeBaseLayoutSplitterProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatareditorWardrobeBaseLayoutSplitter = ({ layout, tags }: AvatareditorWardrobeBaseLayoutSplitterProps) => {
+export const AvatareditorWardrobeBaseLayoutSplitter = ({ layout }: AvatareditorWardrobeBaseLayoutSplitterProps) => {
     return (
         <Region
             name="splitter"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 1, top: 0, height: 490, ...layout }}
         />
@@ -48,14 +46,12 @@ export const AvatareditorWardrobeBaseLayoutSplitter = ({ layout, tags }: Avatare
 /** Named region `spacing` of AvatareditorWardrobeBaseLayout - configured through the parent's `spacing` prop. */
 export interface AvatareditorWardrobeBaseLayoutSpacingProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatareditorWardrobeBaseLayoutSpacing = ({ layout, tags }: AvatareditorWardrobeBaseLayoutSpacingProps) => {
+export const AvatareditorWardrobeBaseLayoutSpacing = ({ layout }: AvatareditorWardrobeBaseLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 6, height: 30, flexShrink: 0, ...layout }}
         />
     );
@@ -64,15 +60,13 @@ export const AvatareditorWardrobeBaseLayoutSpacing = ({ layout, tags }: Avatared
 /** Row template `hc_icon` of AvatareditorWardrobeBaseLayout - pass real rows through its `items…` slot. */
 export interface AvatareditorWardrobeBaseLayoutHcIconItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatareditorWardrobeBaseLayoutHcIconItem = ({ layout, tags }: AvatareditorWardrobeBaseLayoutHcIconItemProps) => {
+export const AvatareditorWardrobeBaseLayoutHcIconItem = ({ layout }: AvatareditorWardrobeBaseLayoutHcIconItemProps) => {
     return (
         <Icon
             variant="13"
             name="hc_icon"
-            tags={tags}
             layout={{ width: 18, height: 15, flexShrink: 0, ...layout }}
         />
     );
@@ -82,16 +76,14 @@ export const AvatareditorWardrobeBaseLayoutHcIconItem = ({ layout, tags }: Avata
 export interface AvatareditorWardrobeBaseLayoutHeaderProps {
     itemsHeader?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatareditorWardrobeBaseLayoutHeader = ({ itemsHeader, layout, tags }: AvatareditorWardrobeBaseLayoutHeaderProps) => {
+export const AvatareditorWardrobeBaseLayoutHeader = ({ itemsHeader, layout }: AvatareditorWardrobeBaseLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             layout={{ position: 'absolute', marginLeft: 9, marginRight: -9, width: 186, top: 19, height: 23, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsHeader ?? (
@@ -112,14 +104,12 @@ export const AvatareditorWardrobeBaseLayoutHeader = ({ itemsHeader, layout, tags
 export interface AvatareditorWardrobeBaseLayoutSetButtonProps {
     layout?: BoxLayout;
     onSetButton?: () => void;
-    tags?: string[];
 }
 
-export const AvatareditorWardrobeBaseLayoutSetButton = ({ layout, onSetButton, tags }: AvatareditorWardrobeBaseLayoutSetButtonProps) => {
+export const AvatareditorWardrobeBaseLayoutSetButton = ({ layout, onSetButton }: AvatareditorWardrobeBaseLayoutSetButtonProps) => {
     return (
         <Region
             name="set_button"
-            tags={tags}
             onPointerTap={onSetButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 3, width: 22, top: 3, height: 26, ...layout }}
@@ -136,14 +126,12 @@ export const AvatareditorWardrobeBaseLayoutSetButton = ({ layout, onSetButton, t
 export interface AvatareditorWardrobeBaseLayoutGetButtonProps {
     layout?: BoxLayout;
     onGetButton?: () => void;
-    tags?: string[];
 }
 
-export const AvatareditorWardrobeBaseLayoutGetButton = ({ layout, onGetButton, tags }: AvatareditorWardrobeBaseLayoutGetButtonProps) => {
+export const AvatareditorWardrobeBaseLayoutGetButton = ({ layout, onGetButton }: AvatareditorWardrobeBaseLayoutGetButtonProps) => {
     return (
         <Region
             name="get_button"
-            tags={tags}
             onPointerTap={onGetButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 2, width: 22, top: 28, height: 26, ...layout }}
@@ -160,14 +148,12 @@ export const AvatareditorWardrobeBaseLayoutGetButton = ({ layout, onGetButton, t
 export interface AvatareditorWardrobeBaseLayoutGetFigureProps {
     layout?: BoxLayout;
     onGetFigure?: () => void;
-    tags?: string[];
 }
 
-export const AvatareditorWardrobeBaseLayoutGetFigure = ({ layout, onGetFigure, tags }: AvatareditorWardrobeBaseLayoutGetFigureProps) => {
+export const AvatareditorWardrobeBaseLayoutGetFigure = ({ layout, onGetFigure }: AvatareditorWardrobeBaseLayoutGetFigureProps) => {
     return (
         <Region
             name="get_figure"
-            tags={tags}
             onPointerTap={onGetFigure}
             cursor="pointer"
             layout={{ position: 'absolute', left: 29, width: 24, top: 3, height: 50, ...layout }}
@@ -182,14 +168,12 @@ export interface AvatareditorWardrobeBaseLayoutSlotTemplateItemProps {
     layout?: BoxLayout;
     setButton?: AvatareditorWardrobeBaseLayoutSetButtonProps;
     srcImage?: string;
-    tags?: string[];
 }
 
-export const AvatareditorWardrobeBaseLayoutSlotTemplateItem = ({ getButton, getFigure, layout, setButton, srcImage, tags }: AvatareditorWardrobeBaseLayoutSlotTemplateItemProps) => {
+export const AvatareditorWardrobeBaseLayoutSlotTemplateItem = ({ getButton, getFigure, layout, setButton, srcImage }: AvatareditorWardrobeBaseLayoutSlotTemplateItemProps) => {
     return (
         <Region
             name="slot_template"
-            tags={tags}
             layout={{ width: 56, height: 56, flexShrink: 0, ...layout }}
         >
             <Border
@@ -214,14 +198,12 @@ export const AvatareditorWardrobeBaseLayoutSlotTemplateItem = ({ getButton, getF
 export interface AvatareditorWardrobeBaseLayoutSlotsColumnTemplateItemProps {
     itemsSlotsColumnTemplate?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatareditorWardrobeBaseLayoutSlotsColumnTemplateItem = ({ itemsSlotsColumnTemplate, layout, tags }: AvatareditorWardrobeBaseLayoutSlotsColumnTemplateItemProps) => {
+export const AvatareditorWardrobeBaseLayoutSlotsColumnTemplateItem = ({ itemsSlotsColumnTemplate, layout }: AvatareditorWardrobeBaseLayoutSlotsColumnTemplateItemProps) => {
     return (
         <Region
             name="slots_column_template"
-            tags={tags}
             layout={{ width: 64, height: 412, flexShrink: 0, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsSlotsColumnTemplate ?? (
@@ -234,14 +216,12 @@ export const AvatareditorWardrobeBaseLayoutSlotsColumnTemplateItem = ({ itemsSlo
 /** Row template `another_column` of AvatareditorWardrobeBaseLayout - pass real rows through its `items…` slot. */
 export interface AvatareditorWardrobeBaseLayoutAnotherColumnItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatareditorWardrobeBaseLayoutAnotherColumnItem = ({ layout, tags }: AvatareditorWardrobeBaseLayoutAnotherColumnItemProps) => {
+export const AvatareditorWardrobeBaseLayoutAnotherColumnItem = ({ layout }: AvatareditorWardrobeBaseLayoutAnotherColumnItemProps) => {
     return (
         <Region
             name="another_column"
-            tags={tags}
             layout={{ width: 64, height: 412, flexShrink: 0, flexDirection: 'column', gap: 3, ...layout }}
         />
     );
@@ -251,14 +231,12 @@ export const AvatareditorWardrobeBaseLayoutAnotherColumnItem = ({ layout, tags }
 export interface AvatareditorWardrobeBaseLayoutSlotsColumnsListProps {
     itemsSlotsColumnsList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatareditorWardrobeBaseLayoutSlotsColumnsList = ({ itemsSlotsColumnsList, layout, tags }: AvatareditorWardrobeBaseLayoutSlotsColumnsListProps) => {
+export const AvatareditorWardrobeBaseLayoutSlotsColumnsList = ({ itemsSlotsColumnsList, layout }: AvatareditorWardrobeBaseLayoutSlotsColumnsListProps) => {
     return (
         <Region
             name="slots_columns_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 132, top: 0, height: 418, flexDirection: 'row', gap: 4, ...layout }}
         >
             {itemsSlotsColumnsList ?? (
@@ -276,14 +254,12 @@ export interface AvatareditorWardrobeBaseLayoutMainContainerProps {
     header?: AvatareditorWardrobeBaseLayoutHeaderProps;
     layout?: BoxLayout;
     slotsColumnsList?: AvatareditorWardrobeBaseLayoutSlotsColumnsListProps;
-    tags?: string[];
 }
 
-export const AvatareditorWardrobeBaseLayoutMainContainer = ({ header, layout, slotsColumnsList, tags }: AvatareditorWardrobeBaseLayoutMainContainerProps) => {
+export const AvatareditorWardrobeBaseLayoutMainContainer = ({ header, layout, slotsColumnsList }: AvatareditorWardrobeBaseLayoutMainContainerProps) => {
     return (
         <Region
             name="main_container"
-            tags={tags}
             layout={{ width: 168, height: 490, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <AvatareditorWardrobeBaseLayoutHeader {...header} />
@@ -301,14 +277,12 @@ export const AvatareditorWardrobeBaseLayoutMainContainer = ({ header, layout, sl
 /** Named region `spacing` of AvatareditorWardrobeBaseLayout - configured through the parent's `spacing` prop. */
 export interface AvatareditorWardrobeBaseLayoutSpacing2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatareditorWardrobeBaseLayoutSpacing2 = ({ layout, tags }: AvatareditorWardrobeBaseLayoutSpacing2Props) => {
+export const AvatareditorWardrobeBaseLayoutSpacing2 = ({ layout }: AvatareditorWardrobeBaseLayoutSpacing2Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 8, height: 30, flexShrink: 0, ...layout }}
         />
     );

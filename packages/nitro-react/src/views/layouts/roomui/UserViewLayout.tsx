@@ -29,7 +29,6 @@ export const UserViewLayout = ({ infostandElementList, layout, onClose, srcHomeI
                     />
                     <CloseButton
                         variant="1"
-                        tags={[ 'close' ]}
                         onPointerTap={onClose}
                         layout={{ position: 'absolute', left: 168, width: 18, top: 6, height: 16 }}
                     />
@@ -50,16 +49,14 @@ export interface UserViewLayoutProfileLinkItemProps {
     captionNameText?: string;
     layout?: BoxLayout;
     onProfileLink?: () => void;
-    tags?: string[];
 }
 
-export const UserViewLayoutProfileLinkItem = ({ captionNameText, layout, onProfileLink, tags }: UserViewLayoutProfileLinkItemProps) => {
+export const UserViewLayoutProfileLinkItem = ({ captionNameText, layout, onProfileLink }: UserViewLayoutProfileLinkItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="profile_link"
-            tags={tags}
             tooltip={t('infostand.profile.link.tooltip')}
             onPointerTap={onProfileLink}
             cursor="pointer"
@@ -82,14 +79,12 @@ export const UserViewLayoutProfileLinkItem = ({ captionNameText, layout, onProfi
 /** Row template `images_spacer` of UserViewLayout - pass real rows through its `items…` slot. */
 export interface UserViewLayoutImagesSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutImagesSpacerItem = ({ layout, tags }: UserViewLayoutImagesSpacerItemProps) => {
+export const UserViewLayoutImagesSpacerItem = ({ layout }: UserViewLayoutImagesSpacerItemProps) => {
     return (
         <Region
             name="images_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -100,16 +95,14 @@ export const UserViewLayoutImagesSpacerItem = ({ layout, tags }: UserViewLayoutI
 export interface UserViewLayoutAvatarImageProfileLinkProps {
     layout?: BoxLayout;
     onAvatarImageProfileLink?: () => void;
-    tags?: string[];
 }
 
-export const UserViewLayoutAvatarImageProfileLink = ({ layout, onAvatarImageProfileLink, tags }: UserViewLayoutAvatarImageProfileLinkProps) => {
+export const UserViewLayoutAvatarImageProfileLink = ({ layout, onAvatarImageProfileLink }: UserViewLayoutAvatarImageProfileLinkProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="avatar_image_profile_link"
-            tags={tags}
             tooltip={t('infostand.profile.link.tooltip')}
             onPointerTap={onAvatarImageProfileLink}
             cursor="pointer"
@@ -130,14 +123,12 @@ export const UserViewLayoutAvatarImageProfileLink = ({ layout, onAvatarImageProf
 export interface UserViewLayoutImageAndBadgesContainerItemProps {
     avatarImageProfileLink?: UserViewLayoutAvatarImageProfileLinkProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutImageAndBadgesContainerItem = ({ avatarImageProfileLink, layout, tags }: UserViewLayoutImageAndBadgesContainerItemProps) => {
+export const UserViewLayoutImageAndBadgesContainerItem = ({ avatarImageProfileLink, layout }: UserViewLayoutImageAndBadgesContainerItemProps) => {
     return (
         <Region
             name="image_and_badges_container"
-            tags={tags}
             backgroundColor="#6d6d6d"
             layout={{ width: 193, height: 132, flexShrink: 0, ...layout }}
         >
@@ -191,14 +182,12 @@ export const UserViewLayoutImageAndBadgesContainerItem = ({ avatarImageProfileLi
 /** Row template `motto_spacer` of UserViewLayout - pass real rows through its `items…` slot. */
 export interface UserViewLayoutMottoSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutMottoSpacerItem = ({ layout, tags }: UserViewLayoutMottoSpacerItemProps) => {
+export const UserViewLayoutMottoSpacerItem = ({ layout }: UserViewLayoutMottoSpacerItemProps) => {
     return (
         <Region
             name="motto_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -209,17 +198,15 @@ export const UserViewLayoutMottoSpacerItem = ({ layout, tags }: UserViewLayoutMo
 export interface UserViewLayoutMottoContainerItemProps {
     layout?: BoxLayout;
     srcChangemottoImage?: string;
-    tags?: string[];
 }
 
-export const UserViewLayoutMottoContainerItem = ({ layout, srcChangemottoImage, tags }: UserViewLayoutMottoContainerItemProps) => {
+export const UserViewLayoutMottoContainerItem = ({ layout, srcChangemottoImage }: UserViewLayoutMottoContainerItemProps) => {
     const [ mottoTextValue, setMottoTextValue ] = useState('');
 
     return (
         <Border
             variant="0"
             name="motto_container"
-            tags={tags}
             tintColor="#666666"
             layout={{ width: 170, height: 57, flexShrink: 0, ...layout }}
         >
@@ -242,15 +229,13 @@ export const UserViewLayoutMottoContainerItem = ({ layout, srcChangemottoImage, 
 /** Row template `badges_rank_spacer` of UserViewLayout - pass real rows through its `items…` slot. */
 export interface UserViewLayoutBadgesRankSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleBadgesRankSpacer?: boolean;
 }
 
-export const UserViewLayoutBadgesRankSpacerItem = ({ layout, tags, visibleBadgesRankSpacer }: UserViewLayoutBadgesRankSpacerItemProps) => {
+export const UserViewLayoutBadgesRankSpacerItem = ({ layout, visibleBadgesRankSpacer }: UserViewLayoutBadgesRankSpacerItemProps) => {
     return (
         <Region
             name="badges_rank_spacer"
-            tags={tags}
             visible={visibleBadgesRankSpacer ?? false}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
@@ -263,17 +248,15 @@ export interface UserViewLayoutBadgesRankRegionItemProps {
     captionBadgesRankText?: string;
     layout?: BoxLayout;
     onBadgesRankRegion?: () => void;
-    tags?: string[];
     visibleBadgesRankRegion?: boolean;
 }
 
-export const UserViewLayoutBadgesRankRegionItem = ({ captionBadgesRankText, layout, onBadgesRankRegion, tags, visibleBadgesRankRegion }: UserViewLayoutBadgesRankRegionItemProps) => {
+export const UserViewLayoutBadgesRankRegionItem = ({ captionBadgesRankText, layout, onBadgesRankRegion, visibleBadgesRankRegion }: UserViewLayoutBadgesRankRegionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="badges_rank_region"
-            tags={tags}
             visible={visibleBadgesRankRegion ?? false}
             onPointerTap={onBadgesRankRegion}
             cursor="pointer"
@@ -295,15 +278,13 @@ export const UserViewLayoutBadgesRankRegionItem = ({ captionBadgesRankText, layo
 /** Row template `score_spacer` of UserViewLayout - pass real rows through its `items…` slot. */
 export interface UserViewLayoutScoreSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleScoreSpacer?: boolean;
 }
 
-export const UserViewLayoutScoreSpacerItem = ({ layout, tags, visibleScoreSpacer }: UserViewLayoutScoreSpacerItemProps) => {
+export const UserViewLayoutScoreSpacerItem = ({ layout, visibleScoreSpacer }: UserViewLayoutScoreSpacerItemProps) => {
     return (
         <Region
             name="score_spacer"
-            tags={tags}
             visible={visibleScoreSpacer ?? false}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
@@ -315,16 +296,14 @@ export const UserViewLayoutScoreSpacerItem = ({ layout, tags, visibleScoreSpacer
 export interface UserViewLayoutScoreTextItemProps {
     captionScoreText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutScoreTextItem = ({ captionScoreText, layout, tags }: UserViewLayoutScoreTextItemProps) => {
+export const UserViewLayoutScoreTextItem = ({ captionScoreText, layout }: UserViewLayoutScoreTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="score_text"
-            tags={tags}
             visible={false}
             layout={{ width: 170, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -340,14 +319,12 @@ export const UserViewLayoutScoreTextItem = ({ captionScoreText, layout, tags }: 
 export interface UserViewLayoutScoreValueItemProps {
     captionScoreValue?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutScoreValueItem = ({ captionScoreValue, layout, tags }: UserViewLayoutScoreValueItemProps) => {
+export const UserViewLayoutScoreValueItem = ({ captionScoreValue, layout }: UserViewLayoutScoreValueItemProps) => {
     return (
         <Region
             name="score_value"
-            tags={tags}
             visible={false}
             layout={{ width: 170, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -362,15 +339,13 @@ export const UserViewLayoutScoreValueItem = ({ captionScoreValue, layout, tags }
 /** Row template `handitem_spacer` of UserViewLayout - pass real rows through its `items…` slot. */
 export interface UserViewLayoutHanditemSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleHanditemSpacer?: boolean;
 }
 
-export const UserViewLayoutHanditemSpacerItem = ({ layout, tags, visibleHanditemSpacer }: UserViewLayoutHanditemSpacerItemProps) => {
+export const UserViewLayoutHanditemSpacerItem = ({ layout, visibleHanditemSpacer }: UserViewLayoutHanditemSpacerItemProps) => {
     return (
         <Region
             name="handitem_spacer"
-            tags={tags}
             visible={visibleHanditemSpacer ?? false}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
@@ -382,16 +357,14 @@ export const UserViewLayoutHanditemSpacerItem = ({ layout, tags, visibleHanditem
 export interface UserViewLayoutHanditemTxtItemProps {
     captionHanditemTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutHanditemTxtItem = ({ captionHanditemTxt, layout, tags }: UserViewLayoutHanditemTxtItemProps) => {
+export const UserViewLayoutHanditemTxtItem = ({ captionHanditemTxt, layout }: UserViewLayoutHanditemTxtItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="handitem_txt"
-            tags={tags}
             visible={false}
             layout={{ width: 170, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -406,14 +379,12 @@ export const UserViewLayoutHanditemTxtItem = ({ captionHanditemTxt, layout, tags
 /** Row template `generic_spacer` of UserViewLayout - pass real rows through its `items…` slot. */
 export interface UserViewLayoutGenericSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutGenericSpacerItem = ({ layout, tags }: UserViewLayoutGenericSpacerItemProps) => {
+export const UserViewLayoutGenericSpacerItem = ({ layout }: UserViewLayoutGenericSpacerItemProps) => {
     return (
         <Region
             name="generic_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -425,14 +396,12 @@ export interface UserViewLayoutHeartRandomusernameItemProps {
     captionHeartRandomusername?: string;
     layout?: BoxLayout;
     onHeartRandomusername?: () => void;
-    tags?: string[];
 }
 
-export const UserViewLayoutHeartRandomusernameItem = ({ captionHeartRandomusername, layout, onHeartRandomusername, tags }: UserViewLayoutHeartRandomusernameItemProps) => {
+export const UserViewLayoutHeartRandomusernameItem = ({ captionHeartRandomusername, layout, onHeartRandomusername }: UserViewLayoutHeartRandomusernameItemProps) => {
     return (
         <Region
             name="heart_randomusername"
-            tags={tags}
             layout={{ width: 48, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onHeartRandomusername}
             cursor="pointer"
@@ -450,16 +419,14 @@ export const UserViewLayoutHeartRandomusernameItem = ({ captionHeartRandomuserna
 export interface UserViewLayoutHeartOthersItemProps {
     captionHeartOthers?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutHeartOthersItem = ({ captionHeartOthers, layout, tags }: UserViewLayoutHeartOthersItemProps) => {
+export const UserViewLayoutHeartOthersItem = ({ captionHeartOthers, layout }: UserViewLayoutHeartOthersItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="heart_others"
-            tags={tags}
             layout={{ width: 170, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -475,14 +442,12 @@ export const UserViewLayoutHeartOthersItem = ({ captionHeartOthers, layout, tags
 export interface UserViewLayoutRelationshipHeartItemProps {
     itemsRelationshipHeart?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutRelationshipHeartItem = ({ itemsRelationshipHeart, layout, tags }: UserViewLayoutRelationshipHeartItemProps) => {
+export const UserViewLayoutRelationshipHeartItem = ({ itemsRelationshipHeart, layout }: UserViewLayoutRelationshipHeartItemProps) => {
     return (
         <Region
             name="relationship_heart"
-            tags={tags}
             visible={false}
             layout={{ width: 172, height: 16, flexShrink: 0, flexDirection: 'row', ...layout }}
         >
@@ -505,14 +470,12 @@ export interface UserViewLayoutSmileRandomusernameItemProps {
     captionSmileRandomusername?: string;
     layout?: BoxLayout;
     onSmileRandomusername?: () => void;
-    tags?: string[];
 }
 
-export const UserViewLayoutSmileRandomusernameItem = ({ captionSmileRandomusername, layout, onSmileRandomusername, tags }: UserViewLayoutSmileRandomusernameItemProps) => {
+export const UserViewLayoutSmileRandomusernameItem = ({ captionSmileRandomusername, layout, onSmileRandomusername }: UserViewLayoutSmileRandomusernameItemProps) => {
     return (
         <Region
             name="smile_randomusername"
-            tags={tags}
             layout={{ width: 48, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onSmileRandomusername}
             cursor="pointer"
@@ -530,16 +493,14 @@ export const UserViewLayoutSmileRandomusernameItem = ({ captionSmileRandomuserna
 export interface UserViewLayoutSmileOthersItemProps {
     captionSmileOthers?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutSmileOthersItem = ({ captionSmileOthers, layout, tags }: UserViewLayoutSmileOthersItemProps) => {
+export const UserViewLayoutSmileOthersItem = ({ captionSmileOthers, layout }: UserViewLayoutSmileOthersItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="smile_others"
-            tags={tags}
             layout={{ width: 166, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -555,14 +516,12 @@ export const UserViewLayoutSmileOthersItem = ({ captionSmileOthers, layout, tags
 export interface UserViewLayoutRelationshipSmileItemProps {
     itemsRelationshipSmile?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutRelationshipSmileItem = ({ itemsRelationshipSmile, layout, tags }: UserViewLayoutRelationshipSmileItemProps) => {
+export const UserViewLayoutRelationshipSmileItem = ({ itemsRelationshipSmile, layout }: UserViewLayoutRelationshipSmileItemProps) => {
     return (
         <Region
             name="relationship_smile"
-            tags={tags}
             visible={false}
             layout={{ width: 172, height: 16, flexShrink: 0, flexDirection: 'row', ...layout }}
         >
@@ -585,14 +544,12 @@ export interface UserViewLayoutBobbaRandomusernameItemProps {
     captionBobbaRandomusername?: string;
     layout?: BoxLayout;
     onBobbaRandomusername?: () => void;
-    tags?: string[];
 }
 
-export const UserViewLayoutBobbaRandomusernameItem = ({ captionBobbaRandomusername, layout, onBobbaRandomusername, tags }: UserViewLayoutBobbaRandomusernameItemProps) => {
+export const UserViewLayoutBobbaRandomusernameItem = ({ captionBobbaRandomusername, layout, onBobbaRandomusername }: UserViewLayoutBobbaRandomusernameItemProps) => {
     return (
         <Region
             name="bobba_randomusername"
-            tags={tags}
             layout={{ width: 48, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onBobbaRandomusername}
             cursor="pointer"
@@ -610,16 +567,14 @@ export const UserViewLayoutBobbaRandomusernameItem = ({ captionBobbaRandomuserna
 export interface UserViewLayoutBobbaOthersItemProps {
     captionBobbaOthers?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutBobbaOthersItem = ({ captionBobbaOthers, layout, tags }: UserViewLayoutBobbaOthersItemProps) => {
+export const UserViewLayoutBobbaOthersItem = ({ captionBobbaOthers, layout }: UserViewLayoutBobbaOthersItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bobba_others"
-            tags={tags}
             layout={{ width: 172, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -635,14 +590,12 @@ export const UserViewLayoutBobbaOthersItem = ({ captionBobbaOthers, layout, tags
 export interface UserViewLayoutRelationshipBobbaItemProps {
     itemsRelationshipBobba?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutRelationshipBobbaItem = ({ itemsRelationshipBobba, layout, tags }: UserViewLayoutRelationshipBobbaItemProps) => {
+export const UserViewLayoutRelationshipBobbaItem = ({ itemsRelationshipBobba, layout }: UserViewLayoutRelationshipBobbaItemProps) => {
     return (
         <Region
             name="relationship_bobba"
-            tags={tags}
             visible={false}
             layout={{ width: 172, height: 16, flexShrink: 0, flexDirection: 'row', ...layout }}
         >
@@ -664,14 +617,12 @@ export const UserViewLayoutRelationshipBobbaItem = ({ itemsRelationshipBobba, la
 export interface UserViewLayoutRelationshipStatusContainerItemProps {
     itemsRelationshipStatusContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutRelationshipStatusContainerItem = ({ itemsRelationshipStatusContainer, layout, tags }: UserViewLayoutRelationshipStatusContainerItemProps) => {
+export const UserViewLayoutRelationshipStatusContainerItem = ({ itemsRelationshipStatusContainer, layout }: UserViewLayoutRelationshipStatusContainerItemProps) => {
     return (
         <Region
             name="relationship_status_container"
-            tags={tags}
             layout={{ width: 170, height: 55, flexShrink: 0, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsRelationshipStatusContainer ?? (
@@ -689,14 +640,12 @@ export const UserViewLayoutRelationshipStatusContainerItem = ({ itemsRelationshi
 export interface UserViewLayoutInfostandElementListProps {
     itemsInfostandElementList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout, tags }: UserViewLayoutInfostandElementListProps) => {
+export const UserViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: UserViewLayoutInfostandElementListProps) => {
     return (
         <Region
             name="infostand_element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 277, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsInfostandElementList ?? (

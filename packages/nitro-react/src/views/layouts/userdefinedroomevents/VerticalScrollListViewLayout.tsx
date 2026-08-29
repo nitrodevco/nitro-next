@@ -17,10 +17,9 @@ export const VerticalScrollListViewLayout = ({ layout, scrollView }: VerticalScr
 /** Named region `scroll_view` of VerticalScrollListViewLayout - configured through the parent's `scrollView` prop. */
 export interface VerticalScrollListViewLayoutScrollViewProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VerticalScrollListViewLayoutScrollView = ({ layout, tags }: VerticalScrollListViewLayoutScrollViewProps) => {
+export const VerticalScrollListViewLayoutScrollView = ({ layout }: VerticalScrollListViewLayoutScrollViewProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -28,7 +27,6 @@ export const VerticalScrollListViewLayoutScrollView = ({ layout, tags }: Vertica
         >
             <Region
                 name="scroll_view"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>

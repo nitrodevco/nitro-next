@@ -65,22 +65,19 @@ export const CreditRedeemLayout = ({ captionExchangeText, layout, link, onCancel
 export interface CreditRedeemLayoutLinkProps {
     layout?: BoxLayout;
     onLink?: () => void;
-    tags?: string[];
 }
 
-export const CreditRedeemLayoutLink = ({ layout, onLink, tags }: CreditRedeemLayoutLinkProps) => {
+export const CreditRedeemLayoutLink = ({ layout, onLink }: CreditRedeemLayoutLinkProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="link"
-            tags={tags}
             onPointerTap={onLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 20, width: 158, top: 60, height: 17, ...layout }}
         >
             <Region
-                tags={[ 'read_more' ]}
                 layout={{ position: 'absolute', left: 0, width: 153, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 backgroundColor="#ffffff"
             >

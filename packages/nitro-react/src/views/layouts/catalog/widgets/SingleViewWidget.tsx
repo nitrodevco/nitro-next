@@ -1,4 +1,5 @@
 import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `singleViewWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -6,19 +7,17 @@ import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
  * (SingleViewWidgetLayout); each passes its own placement through `layout`.
  */
 /** Named region `singleViewWidget` of SingleViewWidget - configured through the parent's `singleViewWidget` prop. */
-export interface SingleViewWidgetProps {
+export interface SingleViewWidgetProps extends CatalogWidgetFlags {
     captionCtlgDescription?: string;
     captionCtlgProductName?: string;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const SingleViewWidget = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1, tags }: SingleViewWidgetProps) => {
+export const SingleViewWidget = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1 }: SingleViewWidgetProps) => {
     return (
         <Region
             name="singleViewWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <ThemeImage

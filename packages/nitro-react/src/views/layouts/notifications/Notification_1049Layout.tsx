@@ -19,7 +19,6 @@ export const Notification_1049Layout = ({ captionTextDescription, captionTextTit
             variant="1"
             id="widget_notification_frame"
             name="widget_notification_frame"
-            tags={[ 'room_widget_teaser' ]}
             caption="widget.notification.header"
             tintColor="#4c4c4c"
             onClose={onClose}

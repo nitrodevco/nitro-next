@@ -1,36 +1,35 @@
 import { BoxLayout, ContainerButton, Icon, Region, ThemeImage } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `trophyWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
- * (LayoutTrophies_1695Layout); each passes its own placement through `layout`.
+ * (TrophyWidgetLayout); each passes its own placement through `layout`.
  */
 /** Named region `trophyWidget` of TrophyWidget2 - configured through the parent's `trophyWidget` prop. */
-export interface TrophyWidget2Props {
+export interface TrophyWidget2Props extends CatalogWidgetFlags {
     layout?: BoxLayout;
     onCtlgNextmodelButton?: () => void;
     onCtlgPrevmodelButton?: () => void;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const TrophyWidget2 = ({ layout, onCtlgNextmodelButton, onCtlgPrevmodelButton, srcCtlgTeaserimg1, tags }: TrophyWidget2Props) => {
+export const TrophyWidget2 = ({ layout, onCtlgNextmodelButton, onCtlgPrevmodelButton, srcCtlgTeaserimg1 }: TrophyWidget2Props) => {
     return (
         <Region
             name="trophyWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <ThemeImage
                 name="ctlg_teaserimg_1"
                 src={srcCtlgTeaserimg1}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 127 }}
+                layout={{ position: 'absolute', left: 4, width: 102, top: 0, height: 127 }}
             />
             <ContainerButton
                 variant="3"
                 name="ctlg_prevmodel_button"
                 onPointerTap={onCtlgPrevmodelButton}
-                layout={{ position: 'absolute', right: 200, width: 30, top: 96, height: 30, maxWidth: 100 }}
+                layout={{ position: 'absolute', left: 0, right: 80, top: 56, height: 30, maxWidth: 100 }}
             >
                 <Icon
                     variant="2"
@@ -43,7 +42,7 @@ export const TrophyWidget2 = ({ layout, onCtlgNextmodelButton, onCtlgPrevmodelBu
                 variant="3"
                 name="ctlg_nextmodel_button"
                 onPointerTap={onCtlgNextmodelButton}
-                layout={{ position: 'absolute', right: 140, width: 30, top: 96, height: 30, maxWidth: 100 }}
+                layout={{ position: 'absolute', left: 80, right: 0, top: 56, height: 30, maxWidth: 100 }}
             >
                 <Icon
                     variant="3"

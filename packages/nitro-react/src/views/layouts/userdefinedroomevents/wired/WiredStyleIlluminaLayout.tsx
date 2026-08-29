@@ -253,10 +253,7 @@ export const WiredStyleIlluminaLayout = ({ captionTextBoldView, captionTextHtml,
                         </Border>
                     </Border>
                 </Region>
-                <WiredStyleIlluminaLayoutSourcetypeSelectorView
-                    tags={[ 'NEW' ]}
-                    {...sourcetypeSelectorView}
-                />
+                <WiredStyleIlluminaLayoutSourcetypeSelectorView {...sourcetypeSelectorView} />
                 <WiredStyleIlluminaLayoutSlider {...slider} />
                 <WiredStyleIlluminaLayoutMiniButtonView {...miniButtonView} />
                 <Region
@@ -272,7 +269,6 @@ export const WiredStyleIlluminaLayout = ({ captionTextBoldView, captionTextHtml,
                     >
                         <ThemeImage
                             name="asset"
-                            tags={[ '#icon' ]}
                             src={srcAsset}
                             layout={{ position: 'absolute', left: 5, top: 5 }}
                         />
@@ -286,15 +282,13 @@ export const WiredStyleIlluminaLayout = ({ captionTextBoldView, captionTextHtml,
 /** Named region `ruler_view` of WiredStyleIlluminaLayout - configured through the parent's `rulerView` prop. */
 export interface WiredStyleIlluminaLayoutRulerViewProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleRulerView?: boolean;
 }
 
-export const WiredStyleIlluminaLayoutRulerView = ({ layout, tags, visibleRulerView }: WiredStyleIlluminaLayoutRulerViewProps) => {
+export const WiredStyleIlluminaLayoutRulerView = ({ layout, visibleRulerView }: WiredStyleIlluminaLayoutRulerViewProps) => {
     return (
         <Region
             name="ruler_view"
-            tags={tags}
             visible={visibleRulerView ?? false}
             layout={{ position: 'absolute', left: 0, width: 228, top: 0, height: 2, ...layout }}
         >
@@ -314,15 +308,13 @@ export const WiredStyleIlluminaLayoutRulerView = ({ layout, tags, visibleRulerVi
 export interface WiredStyleIlluminaLayoutCharLimitWarnProps {
     captionLimitText?: string;
     layout?: BoxLayout;
-    tags?: string[];
     visibleCharLimitWarn?: boolean;
 }
 
-export const WiredStyleIlluminaLayoutCharLimitWarn = ({ captionLimitText, layout, tags, visibleCharLimitWarn }: WiredStyleIlluminaLayoutCharLimitWarnProps) => {
+export const WiredStyleIlluminaLayoutCharLimitWarn = ({ captionLimitText, layout, visibleCharLimitWarn }: WiredStyleIlluminaLayoutCharLimitWarnProps) => {
     return (
         <Region
             name="char_limit_warn"
-            tags={tags}
             visible={visibleCharLimitWarn ?? false}
             layout={{ position: 'absolute', right: 0, width: 116, top: -30, height: 50, ...layout }}
         >
@@ -352,15 +344,13 @@ export interface WiredStyleIlluminaLayoutExpandCollapseRegionProps {
     onExpandCollapseRegion?: () => void;
     srcDownArrow?: string;
     srcUpArrow?: string;
-    tags?: string[];
     visibleExpandCollapseRegion?: boolean;
 }
 
-export const WiredStyleIlluminaLayoutExpandCollapseRegion = ({ layout, onExpandCollapseRegion, srcDownArrow, srcUpArrow, tags, visibleExpandCollapseRegion }: WiredStyleIlluminaLayoutExpandCollapseRegionProps) => {
+export const WiredStyleIlluminaLayoutExpandCollapseRegion = ({ layout, onExpandCollapseRegion, srcDownArrow, srcUpArrow, visibleExpandCollapseRegion }: WiredStyleIlluminaLayoutExpandCollapseRegionProps) => {
     return (
         <Region
             name="expand_collapse_region"
-            tags={tags}
             visible={visibleExpandCollapseRegion ?? false}
             onPointerTap={onExpandCollapseRegion}
             cursor="pointer"
@@ -393,15 +383,13 @@ export interface WiredStyleIlluminaLayoutMenuItemTemplateItemProps {
     layout?: BoxLayout;
     onCheckbox?: () => void;
     onMenuItemTemplate?: () => void;
-    tags?: string[];
     visibleCheckbox?: boolean;
 }
 
-export const WiredStyleIlluminaLayoutMenuItemTemplateItem = ({ captionText, layout, onCheckbox, onMenuItemTemplate, tags, visibleCheckbox }: WiredStyleIlluminaLayoutMenuItemTemplateItemProps) => {
+export const WiredStyleIlluminaLayoutMenuItemTemplateItem = ({ captionText, layout, onCheckbox, onMenuItemTemplate, visibleCheckbox }: WiredStyleIlluminaLayoutMenuItemTemplateItemProps) => {
     return (
         <Region
             name="menu_item_template"
-            tags={tags}
             onPointerTap={onMenuItemTemplate}
             cursor="pointer"
             layout={{ width: 141, height: 20, flexShrink: 0, ...layout }}
@@ -433,14 +421,12 @@ export const WiredStyleIlluminaLayoutMenuItemTemplateItem = ({ captionText, layo
 /** Row template `spacer_template` of WiredStyleIlluminaLayout - pass real rows through its `items…` slot. */
 export interface WiredStyleIlluminaLayoutSpacerTemplateItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleIlluminaLayoutSpacerTemplateItem = ({ layout, tags }: WiredStyleIlluminaLayoutSpacerTemplateItemProps) => {
+export const WiredStyleIlluminaLayoutSpacerTemplateItem = ({ layout }: WiredStyleIlluminaLayoutSpacerTemplateItemProps) => {
     return (
         <Region
             name="spacer_template"
-            tags={tags}
             layout={{ width: 141, height: 3, flexShrink: 0, ...layout }}
         >
             <Region
@@ -455,14 +441,12 @@ export const WiredStyleIlluminaLayoutSpacerTemplateItem = ({ layout, tags }: Wir
 export interface WiredStyleIlluminaLayoutMenuListProps {
     itemsMenuList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleIlluminaLayoutMenuList = ({ itemsMenuList, layout, tags }: WiredStyleIlluminaLayoutMenuListProps) => {
+export const WiredStyleIlluminaLayoutMenuList = ({ itemsMenuList, layout }: WiredStyleIlluminaLayoutMenuListProps) => {
     return (
         <Region
             name="menu_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23, flexDirection: 'column', ...layout }}
         >
             {itemsMenuList ?? (
@@ -480,22 +464,19 @@ export interface WiredStyleIlluminaLayoutLeftButtonTemplateItemProps {
     layout?: BoxLayout;
     onLeftButtonTemplate?: () => void;
     srcTypeImage?: string;
-    tags?: string[];
 }
 
-export const WiredStyleIlluminaLayoutLeftButtonTemplateItem = ({ layout, onLeftButtonTemplate, srcTypeImage, tags }: WiredStyleIlluminaLayoutLeftButtonTemplateItemProps) => {
+export const WiredStyleIlluminaLayoutLeftButtonTemplateItem = ({ layout, onLeftButtonTemplate, srcTypeImage }: WiredStyleIlluminaLayoutLeftButtonTemplateItemProps) => {
     return (
         <ContainerButton
             variant="104"
             name="left_button_template"
-            tags={tags}
             dynamicStyle="button"
             onPointerTap={onLeftButtonTemplate}
             layout={{ width: 17, height: 19, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="type_image"
-                tags={[ '#icon' ]}
                 src={srcTypeImage ?? layoutImage('wired_styles_illumina_icon_source_furni.png')}
                 layout={{ position: 'absolute', left: 6, top: 4, height: 11 }}
             />
@@ -506,14 +487,12 @@ export const WiredStyleIlluminaLayoutLeftButtonTemplateItem = ({ layout, onLeftB
 /** Row template `splitter_template` of WiredStyleIlluminaLayout - pass real rows through its `items…` slot. */
 export interface WiredStyleIlluminaLayoutSplitterTemplateItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleIlluminaLayoutSplitterTemplateItem = ({ layout, tags }: WiredStyleIlluminaLayoutSplitterTemplateItemProps) => {
+export const WiredStyleIlluminaLayoutSplitterTemplateItem = ({ layout }: WiredStyleIlluminaLayoutSplitterTemplateItemProps) => {
     return (
         <Region
             name="splitter_template"
-            tags={tags}
             layout={{ width: 1, height: 19, flexShrink: 0, ...layout }}
         >
             <Region
@@ -533,22 +512,19 @@ export interface WiredStyleIlluminaLayoutMiddleButtonTemplateItemProps {
     layout?: BoxLayout;
     onMiddleButtonTemplate?: () => void;
     srcTypeImage?: string;
-    tags?: string[];
 }
 
-export const WiredStyleIlluminaLayoutMiddleButtonTemplateItem = ({ layout, onMiddleButtonTemplate, srcTypeImage, tags }: WiredStyleIlluminaLayoutMiddleButtonTemplateItemProps) => {
+export const WiredStyleIlluminaLayoutMiddleButtonTemplateItem = ({ layout, onMiddleButtonTemplate, srcTypeImage }: WiredStyleIlluminaLayoutMiddleButtonTemplateItemProps) => {
     return (
         <ContainerButton
             variant="106"
             name="middle_button_template"
-            tags={tags}
             dynamicStyle="button"
             onPointerTap={onMiddleButtonTemplate}
             layout={{ width: 14, height: 19, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="type_image"
-                tags={[ '#icon' ]}
                 src={srcTypeImage ?? layoutImage('wired_styles_illumina_icon_source_users.png')}
                 layout={{ position: 'absolute', left: 3, top: 5, height: 10 }}
             />
@@ -559,14 +535,12 @@ export const WiredStyleIlluminaLayoutMiddleButtonTemplateItem = ({ layout, onMid
 /** Row template `splitter_template` of WiredStyleIlluminaLayout - pass real rows through its `items…` slot. */
 export interface WiredStyleIlluminaLayoutSplitterTemplateItem2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleIlluminaLayoutSplitterTemplateItem2 = ({ layout, tags }: WiredStyleIlluminaLayoutSplitterTemplateItem2Props) => {
+export const WiredStyleIlluminaLayoutSplitterTemplateItem2 = ({ layout }: WiredStyleIlluminaLayoutSplitterTemplateItem2Props) => {
     return (
         <Region
             name="splitter_template"
-            tags={tags}
             layout={{ width: 1, height: 19, flexShrink: 0, ...layout }}
         >
             <Region
@@ -586,22 +560,19 @@ export interface WiredStyleIlluminaLayoutRightButtonTemplateItemProps {
     layout?: BoxLayout;
     onRightButtonTemplate?: () => void;
     srcTypeImage?: string;
-    tags?: string[];
 }
 
-export const WiredStyleIlluminaLayoutRightButtonTemplateItem = ({ layout, onRightButtonTemplate, srcTypeImage, tags }: WiredStyleIlluminaLayoutRightButtonTemplateItemProps) => {
+export const WiredStyleIlluminaLayoutRightButtonTemplateItem = ({ layout, onRightButtonTemplate, srcTypeImage }: WiredStyleIlluminaLayoutRightButtonTemplateItemProps) => {
     return (
         <ContainerButton
             variant="105"
             name="right_button_template"
-            tags={tags}
             dynamicStyle="button"
             onPointerTap={onRightButtonTemplate}
             layout={{ width: 17, height: 19, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="type_image"
-                tags={[ '#icon' ]}
                 src={srcTypeImage ?? layoutImage('wired_styles_illumina_icon_source_global.png')}
                 layout={{ position: 'absolute', left: 4, top: 6, height: 7 }}
             />
@@ -613,14 +584,12 @@ export const WiredStyleIlluminaLayoutRightButtonTemplateItem = ({ layout, onRigh
 export interface WiredStyleIlluminaLayoutSourcetypeSelectorViewProps {
     itemsSourcetypeSelectorView?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleIlluminaLayoutSourcetypeSelectorView = ({ itemsSourcetypeSelectorView, layout, tags }: WiredStyleIlluminaLayoutSourcetypeSelectorViewProps) => {
+export const WiredStyleIlluminaLayoutSourcetypeSelectorView = ({ itemsSourcetypeSelectorView, layout }: WiredStyleIlluminaLayoutSourcetypeSelectorViewProps) => {
     return (
         <Region
             name="sourcetype_selector_view"
-            tags={tags}
             visible={false}
             layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 19, flexDirection: 'row', ...layout }}
         >
@@ -641,14 +610,12 @@ export const WiredStyleIlluminaLayoutSourcetypeSelectorView = ({ itemsSourcetype
 export interface WiredStyleIlluminaLayoutSliderMovementAreaProps {
     layout?: BoxLayout;
     srcSliderButton?: string;
-    tags?: string[];
 }
 
-export const WiredStyleIlluminaLayoutSliderMovementArea = ({ layout, srcSliderButton, tags }: WiredStyleIlluminaLayoutSliderMovementAreaProps) => {
+export const WiredStyleIlluminaLayoutSliderMovementArea = ({ layout, srcSliderButton }: WiredStyleIlluminaLayoutSliderMovementAreaProps) => {
     return (
         <Region
             name="slider_movement_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17, ...layout }}
         >
             <ThemeImage
@@ -665,15 +632,13 @@ export interface WiredStyleIlluminaLayoutSliderProps {
     layout?: BoxLayout;
     sliderMovementArea?: WiredStyleIlluminaLayoutSliderMovementAreaProps;
     srcSliderBase?: string;
-    tags?: string[];
     visibleSlider?: boolean;
 }
 
-export const WiredStyleIlluminaLayoutSlider = ({ layout, sliderMovementArea, srcSliderBase, tags, visibleSlider }: WiredStyleIlluminaLayoutSliderProps) => {
+export const WiredStyleIlluminaLayoutSlider = ({ layout, sliderMovementArea, srcSliderBase, visibleSlider }: WiredStyleIlluminaLayoutSliderProps) => {
     return (
         <Region
             name="slider"
-            tags={tags}
             visible={visibleSlider ?? false}
             layout={{ position: 'absolute', left: 0, width: 148, top: 0, height: 18, ...layout }}
         >
@@ -693,14 +658,12 @@ export interface WiredStyleIlluminaLayoutMiniButtonViewProps {
     layout?: BoxLayout;
     onMiniButtonClick?: () => void;
     srcMiniButtonIcon?: string;
-    tags?: string[];
 }
 
-export const WiredStyleIlluminaLayoutMiniButtonView = ({ layout, onMiniButtonClick, srcMiniButtonIcon, tags }: WiredStyleIlluminaLayoutMiniButtonViewProps) => {
+export const WiredStyleIlluminaLayoutMiniButtonView = ({ layout, onMiniButtonClick, srcMiniButtonIcon }: WiredStyleIlluminaLayoutMiniButtonViewProps) => {
     return (
         <Region
             name="mini_button_view"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19, ...layout }}
         >
             <ContainerButton

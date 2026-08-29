@@ -39,15 +39,13 @@ export interface StartPanelLayoutRoomToolButProps {
     captionOffenceName?: string;
     layout?: BoxLayout;
     onRoomToolBut?: () => void;
-    tags?: string[];
     visibleMouseover?: boolean;
 }
 
-export const StartPanelLayoutRoomToolBut = ({ captionOffenceName, layout, onRoomToolBut, tags, visibleMouseover }: StartPanelLayoutRoomToolButProps) => {
+export const StartPanelLayoutRoomToolBut = ({ captionOffenceName, layout, onRoomToolBut, visibleMouseover }: StartPanelLayoutRoomToolButProps) => {
     return (
         <Region
             name="room_tool_but"
-            tags={tags}
             onPointerTap={onRoomToolBut}
             cursor="pointer"
             layout={{ width: 155, height: 30, flexShrink: 0, ...layout }}
@@ -84,15 +82,13 @@ export interface StartPanelLayoutChatlogButProps {
     captionOffenceName?: string;
     layout?: BoxLayout;
     onChatlogBut?: () => void;
-    tags?: string[];
     visibleMouseover?: boolean;
 }
 
-export const StartPanelLayoutChatlogBut = ({ captionOffenceName, layout, onChatlogBut, tags, visibleMouseover }: StartPanelLayoutChatlogButProps) => {
+export const StartPanelLayoutChatlogBut = ({ captionOffenceName, layout, onChatlogBut, visibleMouseover }: StartPanelLayoutChatlogButProps) => {
     return (
         <Region
             name="chatlog_but"
-            tags={tags}
             onPointerTap={onChatlogBut}
             cursor="pointer"
             layout={{ width: 155, height: 30, flexShrink: 0, ...layout }}
@@ -129,15 +125,13 @@ export interface StartPanelLayoutUserinfoButProps {
     captionOffenceName?: string;
     layout?: BoxLayout;
     onUserinfoBut?: () => void;
-    tags?: string[];
     visibleMouseover?: boolean;
 }
 
-export const StartPanelLayoutUserinfoBut = ({ captionOffenceName, layout, onUserinfoBut, tags, visibleMouseover }: StartPanelLayoutUserinfoButProps) => {
+export const StartPanelLayoutUserinfoBut = ({ captionOffenceName, layout, onUserinfoBut, visibleMouseover }: StartPanelLayoutUserinfoButProps) => {
     return (
         <Region
             name="userinfo_but"
-            tags={tags}
             onPointerTap={onUserinfoBut}
             cursor="pointer"
             layout={{ width: 155, height: 30, flexShrink: 0, ...layout }}
@@ -174,15 +168,13 @@ export interface StartPanelLayoutTicketQueueButProps {
     captionOffenceName?: string;
     layout?: BoxLayout;
     onTicketQueueBut?: () => void;
-    tags?: string[];
     visibleMouseover?: boolean;
 }
 
-export const StartPanelLayoutTicketQueueBut = ({ captionOffenceName, layout, onTicketQueueBut, tags, visibleMouseover }: StartPanelLayoutTicketQueueButProps) => {
+export const StartPanelLayoutTicketQueueBut = ({ captionOffenceName, layout, onTicketQueueBut, visibleMouseover }: StartPanelLayoutTicketQueueButProps) => {
     return (
         <Region
             name="ticket_queue_but"
-            tags={tags}
             onPointerTap={onTicketQueueBut}
             cursor="pointer"
             layout={{ width: 155, height: 30, flexShrink: 0, ...layout }}

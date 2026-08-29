@@ -20,16 +20,14 @@ export interface LayoutInfoLoyalty_1567LayoutCtlgInfoLoyaltyProps {
     captionCtlgDescription?: string;
     layout?: BoxLayout;
     srcLoyaltyInfoIllustration?: string;
-    tags?: string[];
 }
 
-export const LayoutInfoLoyalty_1567LayoutCtlgInfoLoyalty = ({ captionCtlgDescription, layout, srcLoyaltyInfoIllustration, tags }: LayoutInfoLoyalty_1567LayoutCtlgInfoLoyaltyProps) => {
+export const LayoutInfoLoyalty_1567LayoutCtlgInfoLoyalty = ({ captionCtlgDescription, layout, srcLoyaltyInfoIllustration }: LayoutInfoLoyalty_1567LayoutCtlgInfoLoyaltyProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_info_loyalty"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <Region
@@ -43,7 +41,6 @@ export const LayoutInfoLoyalty_1567LayoutCtlgInfoLoyalty = ({ captionCtlgDescrip
             </Region>
             <ThemeImage
                 name="loyalty_info_illustration"
-                tags={[ 'S' ]}
                 src={srcLoyaltyInfoIllustration ?? '${image.library.url}catalogue/diamond_info_illustration.gif'}
                 layout={{ position: 'absolute', left: 237, width: 123, top: 39, height: 350 }}
             />

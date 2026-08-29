@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 import { Border, BoxLayout, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `featuredItemsWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -11,14 +12,12 @@ import { Border, BoxLayout, Region, ScrollArea, ThemeImage, ThemeText } from '#b
 export interface FeaturedItemsWidgetEventCatcherRegionProps {
     layout?: BoxLayout;
     onEventCatcherRegion?: () => void;
-    tags?: string[];
 }
 
-export const FeaturedItemsWidgetEventCatcherRegion = ({ layout, onEventCatcherRegion, tags }: FeaturedItemsWidgetEventCatcherRegionProps) => {
+export const FeaturedItemsWidgetEventCatcherRegion = ({ layout, onEventCatcherRegion }: FeaturedItemsWidgetEventCatcherRegionProps) => {
     return (
         <Region
             name="event_catcher_region"
-            tags={tags}
             onPointerTap={onEventCatcherRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 126, ...layout }}
@@ -32,14 +31,12 @@ export interface FeaturedItemsWidgetFeaturedItemTemplateItemProps {
     eventCatcherRegion?: FeaturedItemsWidgetEventCatcherRegionProps;
     layout?: BoxLayout;
     srcItemImage?: string;
-    tags?: string[];
 }
 
-export const FeaturedItemsWidgetFeaturedItemTemplateItem = ({ captionItemTitle, eventCatcherRegion, layout, srcItemImage, tags }: FeaturedItemsWidgetFeaturedItemTemplateItemProps) => {
+export const FeaturedItemsWidgetFeaturedItemTemplateItem = ({ captionItemTitle, eventCatcherRegion, layout, srcItemImage }: FeaturedItemsWidgetFeaturedItemTemplateItemProps) => {
     return (
         <Region
             name="featured_item_template"
-            tags={tags}
             layout={{ width: 360, height: 126, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -74,10 +71,9 @@ export const FeaturedItemsWidgetFeaturedItemTemplateItem = ({ captionItemTitle, 
 export interface FeaturedItemsWidgetItemlistFeaturedProps {
     itemsItemlistFeatured?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FeaturedItemsWidgetItemlistFeatured = ({ itemsItemlistFeatured, layout, tags }: FeaturedItemsWidgetItemlistFeaturedProps) => {
+export const FeaturedItemsWidgetItemlistFeatured = ({ itemsItemlistFeatured, layout }: FeaturedItemsWidgetItemlistFeaturedProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -85,7 +81,6 @@ export const FeaturedItemsWidgetItemlistFeatured = ({ itemsItemlistFeatured, lay
         >
             <Region
                 name="itemlist_featured"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 7, width: '100%' }}
             >
                 {itemsItemlistFeatured ?? (
@@ -100,14 +95,12 @@ export const FeaturedItemsWidgetItemlistFeatured = ({ itemsItemlistFeatured, lay
 export interface FeaturedItemsWidgetEventCatcherRegion2Props {
     layout?: BoxLayout;
     onEventCatcherRegion?: () => void;
-    tags?: string[];
 }
 
-export const FeaturedItemsWidgetEventCatcherRegion2 = ({ layout, onEventCatcherRegion, tags }: FeaturedItemsWidgetEventCatcherRegion2Props) => {
+export const FeaturedItemsWidgetEventCatcherRegion2 = ({ layout, onEventCatcherRegion }: FeaturedItemsWidgetEventCatcherRegion2Props) => {
     return (
         <Region
             name="event_catcher_region"
-            tags={tags}
             onPointerTap={onEventCatcherRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 422, ...layout }}
@@ -122,14 +115,12 @@ export interface FeaturedItemsWidgetFirstitemProps {
     layout?: BoxLayout;
     onFirstitem?: () => void;
     srcItemImage?: string;
-    tags?: string[];
 }
 
-export const FeaturedItemsWidgetFirstitem = ({ captionItemTitle, eventCatcherRegion, layout, onFirstitem, srcItemImage, tags }: FeaturedItemsWidgetFirstitemProps) => {
+export const FeaturedItemsWidgetFirstitem = ({ captionItemTitle, eventCatcherRegion, layout, onFirstitem, srcItemImage }: FeaturedItemsWidgetFirstitemProps) => {
     return (
         <Region
             name="firstitem"
-            tags={tags}
             onPointerTap={onFirstitem}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 460, ...layout }}
@@ -163,18 +154,16 @@ export const FeaturedItemsWidgetFirstitem = ({ captionItemTitle, eventCatcherReg
 };
 
 /** Named region `featuredItemsWidget` of FeaturedItemsWidget - configured through the parent's `featuredItemsWidget` prop. */
-export interface FeaturedItemsWidgetProps {
+export interface FeaturedItemsWidgetProps extends CatalogWidgetFlags {
     firstitem?: FeaturedItemsWidgetFirstitemProps;
     itemlistFeatured?: FeaturedItemsWidgetItemlistFeaturedProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FeaturedItemsWidget = ({ firstitem, itemlistFeatured, layout, tags }: FeaturedItemsWidgetProps) => {
+export const FeaturedItemsWidget = ({ firstitem, itemlistFeatured, layout }: FeaturedItemsWidgetProps) => {
     return (
         <Region
             name="featuredItemsWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <FeaturedItemsWidgetItemlistFeatured {...itemlistFeatured} />

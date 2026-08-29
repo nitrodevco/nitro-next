@@ -59,14 +59,12 @@ export interface UseProductControllerCustomPartShampooLayoutPreviewImageRegionPr
     layout?: BoxLayout;
     onPreviewImageRegion?: () => void;
     srcPreviewImage?: string;
-    tags?: string[];
 }
 
-export const UseProductControllerCustomPartShampooLayoutPreviewImageRegion = ({ layout, onPreviewImageRegion, srcPreviewImage, tags }: UseProductControllerCustomPartShampooLayoutPreviewImageRegionProps) => {
+export const UseProductControllerCustomPartShampooLayoutPreviewImageRegion = ({ layout, onPreviewImageRegion, srcPreviewImage }: UseProductControllerCustomPartShampooLayoutPreviewImageRegionProps) => {
     return (
         <Region
             name="preview_image_region"
-            tags={tags}
             onPointerTap={onPreviewImageRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 122, top: 10, height: 130, ...layout }}
@@ -84,14 +82,12 @@ export const UseProductControllerCustomPartShampooLayoutPreviewImageRegion = ({ 
 export interface UseProductControllerCustomPartShampooLayoutCancelTextProps {
     layout?: BoxLayout;
     onCancelText?: () => void;
-    tags?: string[];
 }
 
-export const UseProductControllerCustomPartShampooLayoutCancelText = ({ layout, onCancelText, tags }: UseProductControllerCustomPartShampooLayoutCancelTextProps) => {
+export const UseProductControllerCustomPartShampooLayoutCancelText = ({ layout, onCancelText }: UseProductControllerCustomPartShampooLayoutCancelTextProps) => {
     return (
         <Region
             name="cancel_text"
-            tags={tags}
             onPointerTap={onCancelText}
             cursor="pointer"
             layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25, ...layout }}

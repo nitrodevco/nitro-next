@@ -17,14 +17,12 @@ export const NotificationTreasurehuntLayout = ({ captionDescription, header, lay
         <Region layout={{ position: 'relative', width: 190, height: 87, ...layout }}>
             <Border
                 variant="2"
-                tags={[ 'border' ]}
                 tintColor="#664e16"
                 layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 87 }}
             >
                 <NotificationTreasurehuntLayoutHeader {...header} />
                 <Region
                     name="description"
-                    tags={[ 'notification_text' ]}
                     layout={{ position: 'absolute', left: 58, width: 119, top: 29, height: 52, minHeight: 52, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -33,7 +31,6 @@ export const NotificationTreasurehuntLayout = ({ captionDescription, header, lay
                     />
                 </Region>
                 <ThemeImage
-                    tags={[ 'notification_icon' ]}
                     src={undefined}
                     layout={{ position: 'absolute', left: 7, width: 50, top: 30, height: 50 }}
                 />
@@ -46,16 +43,14 @@ export const NotificationTreasurehuntLayout = ({ captionDescription, header, lay
 /** Named region `header` of NotificationTreasurehuntLayout - configured through the parent's `header` prop. */
 export interface NotificationTreasurehuntLayoutHeaderProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NotificationTreasurehuntLayoutHeader = ({ layout, tags }: NotificationTreasurehuntLayoutHeaderProps) => {
+export const NotificationTreasurehuntLayoutHeader = ({ layout }: NotificationTreasurehuntLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24, ...layout }}
         >
             <Border
@@ -80,14 +75,12 @@ export const NotificationTreasurehuntLayoutHeader = ({ layout, tags }: Notificat
 /** Named region `treasure_hunt_image` of NotificationTreasurehuntLayout - configured through the parent's `treasureHuntImage` prop. */
 export interface NotificationTreasurehuntLayoutTreasureHuntImageProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NotificationTreasurehuntLayoutTreasureHuntImage = ({ layout, tags }: NotificationTreasurehuntLayoutTreasureHuntImageProps) => {
+export const NotificationTreasurehuntLayoutTreasureHuntImage = ({ layout }: NotificationTreasurehuntLayoutTreasureHuntImageProps) => {
     return (
         <Region
             name="treasure_hunt_image"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 39, top: 33, height: 39, ...layout }}
         >
             <ThemeImage

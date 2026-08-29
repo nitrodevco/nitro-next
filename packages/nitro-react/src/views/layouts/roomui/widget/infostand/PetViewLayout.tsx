@@ -23,7 +23,6 @@ export const PetViewLayout = ({ buttonList, infostandElementList, layout, onClos
                 >
                     <CloseButton
                         variant="1"
-                        tags={[ 'close' ]}
                         onPointerTap={onClose}
                         layout={{ position: 'absolute', left: 170, width: 18, top: 6, height: 16 }}
                     />
@@ -39,14 +38,12 @@ export const PetViewLayout = ({ buttonList, infostandElementList, layout, onClos
 export interface PetViewLayoutNameTextItemProps {
     captionNameText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetViewLayoutNameTextItem = ({ captionNameText, layout, tags }: PetViewLayoutNameTextItemProps) => {
+export const PetViewLayoutNameTextItem = ({ captionNameText, layout }: PetViewLayoutNameTextItemProps) => {
     return (
         <Region
             name="name_text"
-            tags={tags}
             layout={{ width: 4, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -61,14 +58,12 @@ export const PetViewLayoutNameTextItem = ({ captionNameText, layout, tags }: Pet
 export interface PetViewLayoutBreedTextItemProps {
     captionBreedText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetViewLayoutBreedTextItem = ({ captionBreedText, layout, tags }: PetViewLayoutBreedTextItemProps) => {
+export const PetViewLayoutBreedTextItem = ({ captionBreedText, layout }: PetViewLayoutBreedTextItemProps) => {
     return (
         <Region
             name="breed_text"
-            tags={tags}
             layout={{ width: 4, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -85,16 +80,14 @@ export interface PetViewLayoutLevelContainerProps {
     captionStatusSkillText?: string;
     layout?: BoxLayout;
     srcSkillLevelIndicator?: string;
-    tags?: string[];
 }
 
-export const PetViewLayoutLevelContainer = ({ captionLevelText, captionStatusSkillText, layout, srcSkillLevelIndicator, tags }: PetViewLayoutLevelContainerProps) => {
+export const PetViewLayoutLevelContainer = ({ captionLevelText, captionStatusSkillText, layout, srcSkillLevelIndicator }: PetViewLayoutLevelContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="level_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 76, width: 95, top: 0, height: 78, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -129,14 +122,12 @@ export interface PetViewLayoutImageContainerItemProps {
     layout?: BoxLayout;
     levelContainer?: PetViewLayoutLevelContainerProps;
     srcAvatarImage?: string;
-    tags?: string[];
 }
 
-export const PetViewLayoutImageContainerItem = ({ layout, levelContainer, srcAvatarImage, tags }: PetViewLayoutImageContainerItemProps) => {
+export const PetViewLayoutImageContainerItem = ({ layout, levelContainer, srcAvatarImage }: PetViewLayoutImageContainerItemProps) => {
     return (
         <Region
             name="image_container"
-            tags={tags}
             layout={{ width: 163, height: 83, flexShrink: 0, maxWidth: 163, ...layout }}
         >
             <ThemeImage
@@ -156,16 +147,14 @@ export interface PetViewLayoutStatusHappinessContainerItemProps {
     layout?: BoxLayout;
     srcStatusHappinessBitmap?: string;
     srcStatusHappinessIcon?: string;
-    tags?: string[];
 }
 
-export const PetViewLayoutStatusHappinessContainerItem = ({ captionStatusHappinessText, captionStatusHappinessValueText, layout, srcStatusHappinessBitmap, srcStatusHappinessIcon, tags }: PetViewLayoutStatusHappinessContainerItemProps) => {
+export const PetViewLayoutStatusHappinessContainerItem = ({ captionStatusHappinessText, captionStatusHappinessValueText, layout, srcStatusHappinessBitmap, srcStatusHappinessIcon }: PetViewLayoutStatusHappinessContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="status_happiness_container"
-            tags={tags}
             layout={{ width: 169, height: 34, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -207,16 +196,14 @@ export interface PetViewLayoutStatusExperienceContainerItemProps {
     layout?: BoxLayout;
     srcStatusExperienceBitmap?: string;
     srcStatusExperienceIcon?: string;
-    tags?: string[];
 }
 
-export const PetViewLayoutStatusExperienceContainerItem = ({ captionStatusExperienceText, captionStatusExperienceValueText, layout, srcStatusExperienceBitmap, srcStatusExperienceIcon, tags }: PetViewLayoutStatusExperienceContainerItemProps) => {
+export const PetViewLayoutStatusExperienceContainerItem = ({ captionStatusExperienceText, captionStatusExperienceValueText, layout, srcStatusExperienceBitmap, srcStatusExperienceIcon }: PetViewLayoutStatusExperienceContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="status_experience_container"
-            tags={tags}
             layout={{ width: 169, height: 34, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -258,16 +245,14 @@ export interface PetViewLayoutStatusEnergyContainerItemProps {
     layout?: BoxLayout;
     srcStatusEnergyBitmap?: string;
     srcStatusEnergyIcon?: string;
-    tags?: string[];
 }
 
-export const PetViewLayoutStatusEnergyContainerItem = ({ captionStatusEnergyText, captionStatusEnergyValueText, layout, srcStatusEnergyBitmap, srcStatusEnergyIcon, tags }: PetViewLayoutStatusEnergyContainerItemProps) => {
+export const PetViewLayoutStatusEnergyContainerItem = ({ captionStatusEnergyText, captionStatusEnergyValueText, layout, srcStatusEnergyBitmap, srcStatusEnergyIcon }: PetViewLayoutStatusEnergyContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="status_energy_container"
-            tags={tags}
             layout={{ width: 169, height: 34, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -306,16 +291,14 @@ export const PetViewLayoutStatusEnergyContainerItem = ({ captionStatusEnergyText
 export interface PetViewLayoutStatusRarityLevelItemProps {
     captionStatusRarityLevel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetViewLayoutStatusRarityLevelItem = ({ captionStatusRarityLevel, layout, tags }: PetViewLayoutStatusRarityLevelItemProps) => {
+export const PetViewLayoutStatusRarityLevelItem = ({ captionStatusRarityLevel, layout }: PetViewLayoutStatusRarityLevelItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="status_rarity_level"
-            tags={tags}
             layout={{ width: 151, height: 18, flexShrink: 0, minHeight: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -330,14 +313,12 @@ export const PetViewLayoutStatusRarityLevelItem = ({ captionStatusRarityLevel, l
 export interface PetViewLayoutStatusItemListDefaultProps {
     itemsStatusItemListDefault?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetViewLayoutStatusItemListDefault = ({ itemsStatusItemListDefault, layout, tags }: PetViewLayoutStatusItemListDefaultProps) => {
+export const PetViewLayoutStatusItemListDefault = ({ itemsStatusItemListDefault, layout }: PetViewLayoutStatusItemListDefaultProps) => {
     return (
         <Region
             name="status_item_list_default"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 142, flexDirection: 'column', ...layout }}
         >
             {itemsStatusItemListDefault ?? (
@@ -359,16 +340,14 @@ export interface PetViewLayoutStatusWellbeingContainerItemProps {
     layout?: BoxLayout;
     srcStatusWellbeingBitmap?: string;
     srcStatusWellbeingIcon?: string;
-    tags?: string[];
 }
 
-export const PetViewLayoutStatusWellbeingContainerItem = ({ captionStatusWellbeingText, captionStatusWellbeingValueText, layout, srcStatusWellbeingBitmap, srcStatusWellbeingIcon, tags }: PetViewLayoutStatusWellbeingContainerItemProps) => {
+export const PetViewLayoutStatusWellbeingContainerItem = ({ captionStatusWellbeingText, captionStatusWellbeingValueText, layout, srcStatusWellbeingBitmap, srcStatusWellbeingIcon }: PetViewLayoutStatusWellbeingContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="status_wellbeing_container"
-            tags={tags}
             layout={{ width: 169, height: 34, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -407,16 +386,14 @@ export const PetViewLayoutStatusWellbeingContainerItem = ({ captionStatusWellbei
 export interface PetViewLayoutGrowthStatusTextItemProps {
     captionGrowthStatusText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetViewLayoutGrowthStatusTextItem = ({ captionGrowthStatusText, layout, tags }: PetViewLayoutGrowthStatusTextItemProps) => {
+export const PetViewLayoutGrowthStatusTextItem = ({ captionGrowthStatusText, layout }: PetViewLayoutGrowthStatusTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="growth_status_text"
-            tags={tags}
             layout={{ width: 136, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -430,15 +407,13 @@ export const PetViewLayoutGrowthStatusTextItem = ({ captionGrowthStatusText, lay
 /** Row template `growth_status_widget` of PetViewLayout - pass real rows through its `items…` slot. */
 export interface PetViewLayoutGrowthStatusWidgetItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetViewLayoutGrowthStatusWidgetItem = ({ layout, tags }: PetViewLayoutGrowthStatusWidgetItemProps) => {
+export const PetViewLayoutGrowthStatusWidgetItem = ({ layout }: PetViewLayoutGrowthStatusWidgetItemProps) => {
     return (
         <WidgetSlot
             widgetType="countdown"
             name="growth_status_widget"
-            tags={tags}
             options={{ 'countdown:seconds': '12054' }}
             layout={{ width: 99, height: 37, flexShrink: 0, ...layout }}
         />
@@ -449,16 +424,14 @@ export const PetViewLayoutGrowthStatusWidgetItem = ({ layout, tags }: PetViewLay
 export interface PetViewLayoutStatusRarityLevelItem2Props {
     captionStatusRarityLevel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetViewLayoutStatusRarityLevelItem2 = ({ captionStatusRarityLevel, layout, tags }: PetViewLayoutStatusRarityLevelItem2Props) => {
+export const PetViewLayoutStatusRarityLevelItem2 = ({ captionStatusRarityLevel, layout }: PetViewLayoutStatusRarityLevelItem2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="status_rarity_level"
-            tags={tags}
             layout={{ width: 151, height: 15, flexShrink: 0, minHeight: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -472,15 +445,13 @@ export const PetViewLayoutStatusRarityLevelItem2 = ({ captionStatusRarityLevel, 
 /** Row template `rarity_item_overlay_widget` of PetViewLayout - pass real rows through its `items…` slot. */
 export interface PetViewLayoutRarityItemOverlayWidgetItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetViewLayoutRarityItemOverlayWidgetItem = ({ layout, tags }: PetViewLayoutRarityItemOverlayWidgetItemProps) => {
+export const PetViewLayoutRarityItemOverlayWidgetItem = ({ layout }: PetViewLayoutRarityItemOverlayWidgetItemProps) => {
     return (
         <WidgetSlot
             widgetType="rarity_item_overlay_preview"
             name="rarity_item_overlay_widget"
-            tags={tags}
             layout={{ width: 40, height: 28, flexShrink: 0, ...layout }}
         />
     );
@@ -490,14 +461,12 @@ export const PetViewLayoutRarityItemOverlayWidgetItem = ({ layout, tags }: PetVi
 export interface PetViewLayoutStatusItemListMonsterplantProps {
     itemsStatusItemListMonsterplant?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetViewLayoutStatusItemListMonsterplant = ({ itemsStatusItemListMonsterplant, layout, tags }: PetViewLayoutStatusItemListMonsterplantProps) => {
+export const PetViewLayoutStatusItemListMonsterplant = ({ itemsStatusItemListMonsterplant, layout }: PetViewLayoutStatusItemListMonsterplantProps) => {
     return (
         <Region
             name="status_item_list_monsterplant"
-            tags={tags}
             visible={false}
             layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 137, flexDirection: 'column', gap: 2, ...layout }}
         >
@@ -519,14 +488,12 @@ export interface PetViewLayoutStatusContainerItemProps {
     layout?: BoxLayout;
     statusItemListDefault?: PetViewLayoutStatusItemListDefaultProps;
     statusItemListMonsterplant?: PetViewLayoutStatusItemListMonsterplantProps;
-    tags?: string[];
 }
 
-export const PetViewLayoutStatusContainerItem = ({ layout, statusItemListDefault, statusItemListMonsterplant, tags }: PetViewLayoutStatusContainerItemProps) => {
+export const PetViewLayoutStatusContainerItem = ({ layout, statusItemListDefault, statusItemListMonsterplant }: PetViewLayoutStatusContainerItemProps) => {
     return (
         <Region
             name="status_container"
-            tags={tags}
             layout={{ width: 170, height: 140, flexShrink: 0, ...layout }}
         >
             <PetViewLayoutStatusItemListDefault {...statusItemListDefault} />
@@ -540,16 +507,14 @@ export interface PetViewLayoutPetrespectContainerItemProps {
     captionPetrespectText?: string;
     layout?: BoxLayout;
     srcPetrespectIcon?: string;
-    tags?: string[];
 }
 
-export const PetViewLayoutPetrespectContainerItem = ({ captionPetrespectText, layout, srcPetrespectIcon, tags }: PetViewLayoutPetrespectContainerItemProps) => {
+export const PetViewLayoutPetrespectContainerItem = ({ captionPetrespectText, layout, srcPetrespectIcon }: PetViewLayoutPetrespectContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="petrespect_container"
-            tags={tags}
             layout={{ width: 164, height: 21, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -574,16 +539,14 @@ export const PetViewLayoutPetrespectContainerItem = ({ captionPetrespectText, la
 export interface PetViewLayoutAgeTextItemProps {
     captionAgeText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetViewLayoutAgeTextItem = ({ captionAgeText, layout, tags }: PetViewLayoutAgeTextItemProps) => {
+export const PetViewLayoutAgeTextItem = ({ captionAgeText, layout }: PetViewLayoutAgeTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="age_text"
-            tags={tags}
             layout={{ width: 42, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -598,16 +561,14 @@ export const PetViewLayoutAgeTextItem = ({ captionAgeText, layout, tags }: PetVi
 export interface PetViewLayoutOwnerTextItemProps {
     captionOwnerText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetViewLayoutOwnerTextItem = ({ captionOwnerText, layout, tags }: PetViewLayoutOwnerTextItemProps) => {
+export const PetViewLayoutOwnerTextItem = ({ captionOwnerText, layout }: PetViewLayoutOwnerTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="owner_text"
-            tags={tags}
             layout={{ width: 128, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -622,14 +583,12 @@ export const PetViewLayoutOwnerTextItem = ({ captionOwnerText, layout, tags }: P
 export interface PetViewLayoutInfostandElementListProps {
     itemsInfostandElementList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PetViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout, tags }: PetViewLayoutInfostandElementListProps) => {
+export const PetViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: PetViewLayoutInfostandElementListProps) => {
     return (
         <Region
             name="infostand_element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 173, top: 10, height: 270, flexDirection: 'column', ...layout }}
         >
             {itemsInfostandElementList ?? (
@@ -652,16 +611,14 @@ export interface PetViewLayoutPickProps {
     layout?: BoxLayout;
     onBtnPick?: () => void;
     onPick?: () => void;
-    tags?: string[];
 }
 
-export const PetViewLayoutPick = ({ layout, onBtnPick, onPick, tags }: PetViewLayoutPickProps) => {
+export const PetViewLayoutPick = ({ layout, onBtnPick, onPick }: PetViewLayoutPickProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="pick"
-            tags={tags}
             onPointerTap={onPick}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 54, top: 0, height: 25, ...layout }}
@@ -669,7 +626,6 @@ export const PetViewLayoutPick = ({ layout, onBtnPick, onPick, tags }: PetViewLa
             <Button
                 variant="1"
                 name="btn_pick"
-                tags={[ 'CMD_BUTTON' ]}
                 onPointerTap={onBtnPick}
                 textStyle="text-style-button-regular"
                 layout={{ position: 'absolute', left: 0, width: 139, top: 0, height: 25 }}
@@ -685,16 +641,14 @@ export interface PetViewLayoutTrainProps {
     layout?: BoxLayout;
     onBtnTrain?: () => void;
     onTrain?: () => void;
-    tags?: string[];
 }
 
-export const PetViewLayoutTrain = ({ layout, onBtnTrain, onTrain, tags }: PetViewLayoutTrainProps) => {
+export const PetViewLayoutTrain = ({ layout, onBtnTrain, onTrain }: PetViewLayoutTrainProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="train"
-            tags={tags}
             onPointerTap={onTrain}
             cursor="pointer"
             layout={{ position: 'absolute', left: 64, width: 44, top: 0, height: 25, ...layout }}
@@ -702,7 +656,6 @@ export const PetViewLayoutTrain = ({ layout, onBtnTrain, onTrain, tags }: PetVie
             <Button
                 variant="1"
                 name="btn_train"
-                tags={[ 'CMD_BUTTON' ]}
                 onPointerTap={onBtnTrain}
                 textStyle="text-style-button-regular"
                 layout={{ position: 'absolute', left: 0, width: 132, top: 0, height: 25 }}
@@ -718,16 +671,14 @@ export interface PetViewLayoutBuyFoodProps {
     layout?: BoxLayout;
     onBtnBuyFood?: () => void;
     onBuyFood?: () => void;
-    tags?: string[];
 }
 
-export const PetViewLayoutBuyFood = ({ layout, onBtnBuyFood, onBuyFood, tags }: PetViewLayoutBuyFoodProps) => {
+export const PetViewLayoutBuyFood = ({ layout, onBtnBuyFood, onBuyFood }: PetViewLayoutBuyFoodProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="buy_food"
-            tags={tags}
             onPointerTap={onBuyFood}
             cursor="pointer"
             layout={{ position: 'absolute', left: 118, width: 147, top: 0, height: 25, ...layout }}
@@ -735,7 +686,6 @@ export const PetViewLayoutBuyFood = ({ layout, onBtnBuyFood, onBuyFood, tags }: 
             <Button
                 variant="1"
                 name="btn_buy_food"
-                tags={[ 'CMD_BUTTON' ]}
                 onPointerTap={onBtnBuyFood}
                 textStyle="text-style-button-regular"
                 layout={{ position: 'absolute', left: 0, width: 149, top: 0, height: 25 }}
@@ -751,16 +701,14 @@ export interface PetViewLayoutPetrespectProps {
     layout?: BoxLayout;
     onBtnPetrespect?: () => void;
     onPetrespect?: () => void;
-    tags?: string[];
 }
 
-export const PetViewLayoutPetrespect = ({ layout, onBtnPetrespect, onPetrespect, tags }: PetViewLayoutPetrespectProps) => {
+export const PetViewLayoutPetrespect = ({ layout, onBtnPetrespect, onPetrespect }: PetViewLayoutPetrespectProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="petrespect"
-            tags={tags}
             onPointerTap={onPetrespect}
             cursor="pointer"
             layout={{ position: 'absolute', left: 275, width: 163, top: 0, height: 25, ...layout }}
@@ -768,7 +716,6 @@ export const PetViewLayoutPetrespect = ({ layout, onBtnPetrespect, onPetrespect,
             <Button
                 variant="1"
                 name="btn_petrespect"
-                tags={[ 'CMD_BUTTON' ]}
                 onPointerTap={onBtnPetrespect}
                 textStyle="text-style-button-regular"
                 layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 25 }}
@@ -784,16 +731,14 @@ export interface PetViewLayoutPettreatProps {
     layout?: BoxLayout;
     onBtnPettreat?: () => void;
     onPettreat?: () => void;
-    tags?: string[];
 }
 
-export const PetViewLayoutPettreat = ({ layout, onBtnPettreat, onPettreat, tags }: PetViewLayoutPettreatProps) => {
+export const PetViewLayoutPettreat = ({ layout, onBtnPettreat, onPettreat }: PetViewLayoutPettreatProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="pettreat"
-            tags={tags}
             onPointerTap={onPettreat}
             cursor="pointer"
             layout={{ position: 'absolute', left: 275, width: 163, top: 0, height: 25, ...layout }}
@@ -801,7 +746,6 @@ export const PetViewLayoutPettreat = ({ layout, onBtnPettreat, onPettreat, tags 
             <Button
                 variant="1"
                 name="btn_pettreat"
-                tags={[ 'CMD_BUTTON' ]}
                 onPointerTap={onBtnPettreat}
                 textStyle="text-style-button-regular"
                 layout={{ position: 'absolute', left: 0, width: 152, top: 0, height: 25 }}
@@ -817,16 +761,14 @@ export interface PetViewLayoutKickProps {
     layout?: BoxLayout;
     onBtnKick?: () => void;
     onKick?: () => void;
-    tags?: string[];
 }
 
-export const PetViewLayoutKick = ({ layout, onBtnKick, onKick, tags }: PetViewLayoutKickProps) => {
+export const PetViewLayoutKick = ({ layout, onBtnKick, onKick }: PetViewLayoutKickProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="kick"
-            tags={tags}
             onPointerTap={onKick}
             cursor="pointer"
             layout={{ position: 'absolute', left: 448, width: 141, top: 0, height: 25, ...layout }}
@@ -834,7 +776,6 @@ export const PetViewLayoutKick = ({ layout, onBtnKick, onKick, tags }: PetViewLa
             <Button
                 variant="1"
                 name="btn_kick"
-                tags={[ 'CMD_BUTTON' ]}
                 onPointerTap={onBtnKick}
                 textStyle="text-style-button-regular"
                 layout={{ position: 'absolute', left: 0, width: 143, top: 0, height: 25 }}
@@ -850,16 +791,14 @@ export interface PetViewLayoutRotateProps {
     layout?: BoxLayout;
     onBtnRotate?: () => void;
     onRotate?: () => void;
-    tags?: string[];
 }
 
-export const PetViewLayoutRotate = ({ layout, onBtnRotate, onRotate, tags }: PetViewLayoutRotateProps) => {
+export const PetViewLayoutRotate = ({ layout, onBtnRotate, onRotate }: PetViewLayoutRotateProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rotate"
-            tags={tags}
             onPointerTap={onRotate}
             cursor="pointer"
             layout={{ position: 'absolute', left: 600, width: 132, top: 0, height: 25, ...layout }}
@@ -867,7 +806,6 @@ export const PetViewLayoutRotate = ({ layout, onBtnRotate, onRotate, tags }: Pet
             <Button
                 variant="1"
                 name="btn_rotate"
-                tags={[ 'CMD_BUTTON' ]}
                 onPointerTap={onBtnRotate}
                 textStyle="text-style-button-regular"
                 layout={{ position: 'absolute', left: 0, width: 141, top: 0, height: 25 }}
@@ -883,16 +821,14 @@ export interface PetViewLayoutMoveProps {
     layout?: BoxLayout;
     onBtnMove?: () => void;
     onMove?: () => void;
-    tags?: string[];
 }
 
-export const PetViewLayoutMove = ({ layout, onBtnMove, onMove, tags }: PetViewLayoutMoveProps) => {
+export const PetViewLayoutMove = ({ layout, onBtnMove, onMove }: PetViewLayoutMoveProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="move"
-            tags={tags}
             onPointerTap={onMove}
             cursor="pointer"
             layout={{ position: 'absolute', left: 589, width: 132, top: 0, height: 25, ...layout }}
@@ -900,7 +836,6 @@ export const PetViewLayoutMove = ({ layout, onBtnMove, onMove, tags }: PetViewLa
             <Button
                 variant="1"
                 name="btn_move"
-                tags={[ 'CMD_BUTTON' ]}
                 onPointerTap={onBtnMove}
                 textStyle="text-style-button-regular"
                 layout={{ position: 'absolute', left: 0, width: 134, top: 0, height: 25 }}
@@ -921,49 +856,23 @@ export interface PetViewLayoutButtonListProps {
     pettreat?: PetViewLayoutPettreatProps;
     pick?: PetViewLayoutPickProps;
     rotate?: PetViewLayoutRotateProps;
-    tags?: string[];
     train?: PetViewLayoutTrainProps;
 }
 
-export const PetViewLayoutButtonList = ({ buyFood, kick, layout, move, petrespect, pettreat, pick, rotate, tags, train }: PetViewLayoutButtonListProps) => {
+export const PetViewLayoutButtonList = ({ buyFood, kick, layout, move, petrespect, pettreat, pick, rotate, train }: PetViewLayoutButtonListProps) => {
     return (
         <Region
             name="button_list"
-            tags={tags}
             layout={{ width: 1000, height: 25, flexShrink: 0, ...layout }}
         >
-            <PetViewLayoutPick
-                tags={[ 'CMD_BUTTON_REGION' ]}
-                {...pick}
-            />
-            <PetViewLayoutTrain
-                tags={[ 'CMD_BUTTON_REGION' ]}
-                {...train}
-            />
-            <PetViewLayoutBuyFood
-                tags={[ 'CMD_BUTTON_REGION' ]}
-                {...buyFood}
-            />
-            <PetViewLayoutPetrespect
-                tags={[ 'CMD_BUTTON_REGION' ]}
-                {...petrespect}
-            />
-            <PetViewLayoutPettreat
-                tags={[ 'CMD_BUTTON_REGION' ]}
-                {...pettreat}
-            />
-            <PetViewLayoutKick
-                tags={[ 'CMD_BUTTON_REGION' ]}
-                {...kick}
-            />
-            <PetViewLayoutRotate
-                tags={[ 'CMD_BUTTON_REGION' ]}
-                {...rotate}
-            />
-            <PetViewLayoutMove
-                tags={[ 'CMD_BUTTON_REGION' ]}
-                {...move}
-            />
+            <PetViewLayoutPick {...pick} />
+            <PetViewLayoutTrain {...train} />
+            <PetViewLayoutBuyFood {...buyFood} />
+            <PetViewLayoutPetrespect {...petrespect} />
+            <PetViewLayoutPettreat {...pettreat} />
+            <PetViewLayoutKick {...kick} />
+            <PetViewLayoutRotate {...rotate} />
+            <PetViewLayoutMove {...move} />
         </Region>
     );
 };

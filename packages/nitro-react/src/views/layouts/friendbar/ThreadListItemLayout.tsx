@@ -22,14 +22,12 @@ export interface ThreadListItemLayoutThreadLockItemProps {
     layout?: BoxLayout;
     onThreadLock?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const ThreadListItemLayoutThreadLockItem = ({ layout, onThreadLock, srcIcon, tags }: ThreadListItemLayoutThreadLockItemProps) => {
+export const ThreadListItemLayoutThreadLockItem = ({ layout, onThreadLock, srcIcon }: ThreadListItemLayoutThreadLockItemProps) => {
     return (
         <Region
             name="thread_lock"
-            tags={tags}
             onPointerTap={onThreadLock}
             cursor="pointer"
             layout={{ width: 20, height: 20, flexShrink: 0, ...layout }}
@@ -48,14 +46,12 @@ export interface ThreadListItemLayoutThreadPinItemProps {
     layout?: BoxLayout;
     onThreadPin?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const ThreadListItemLayoutThreadPinItem = ({ layout, onThreadPin, srcIcon, tags }: ThreadListItemLayoutThreadPinItemProps) => {
+export const ThreadListItemLayoutThreadPinItem = ({ layout, onThreadPin, srcIcon }: ThreadListItemLayoutThreadPinItemProps) => {
     return (
         <Region
             name="thread_pin"
-            tags={tags}
             onPointerTap={onThreadPin}
             cursor="pointer"
             layout={{ width: 20, height: 20, flexShrink: 0, ...layout }}
@@ -73,14 +69,12 @@ export const ThreadListItemLayoutThreadPinItem = ({ layout, onThreadPin, srcIcon
 export interface ThreadListItemLayoutInfoButtonsProps {
     itemsInfoButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ThreadListItemLayoutInfoButtons = ({ itemsInfoButtons, layout, tags }: ThreadListItemLayoutInfoButtonsProps) => {
+export const ThreadListItemLayoutInfoButtons = ({ itemsInfoButtons, layout }: ThreadListItemLayoutInfoButtonsProps) => {
     return (
         <Region
             name="info_buttons"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 40, flexDirection: 'column', ...layout }}
         >
             {itemsInfoButtons ?? (
@@ -97,14 +91,12 @@ export const ThreadListItemLayoutInfoButtons = ({ itemsInfoButtons, layout, tags
 export interface ThreadListItemLayoutLeftButtonContainerProps {
     infoButtons?: ThreadListItemLayoutInfoButtonsProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ThreadListItemLayoutLeftButtonContainer = ({ infoButtons, layout, tags }: ThreadListItemLayoutLeftButtonContainerProps) => {
+export const ThreadListItemLayoutLeftButtonContainer = ({ infoButtons, layout }: ThreadListItemLayoutLeftButtonContainerProps) => {
     return (
         <Region
             name="left_button_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 40, ...layout }}
         >
             <ThreadListItemLayoutInfoButtons {...infoButtons} />
@@ -117,14 +109,12 @@ export interface ThreadListItemLayoutHeaderRegionProps {
     captionHeader?: string;
     layout?: BoxLayout;
     onHeaderRegion?: () => void;
-    tags?: string[];
 }
 
-export const ThreadListItemLayoutHeaderRegion = ({ captionHeader, layout, onHeaderRegion, tags }: ThreadListItemLayoutHeaderRegionProps) => {
+export const ThreadListItemLayoutHeaderRegion = ({ captionHeader, layout, onHeaderRegion }: ThreadListItemLayoutHeaderRegionProps) => {
     return (
         <Region
             name="header_region"
-            tags={tags}
             onPointerTap={onHeaderRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 17, ...layout }}
@@ -144,14 +134,12 @@ export interface ThreadListItemLayoutTextsContainerProps {
     captionDetails?: string;
     headerRegion?: ThreadListItemLayoutHeaderRegionProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ThreadListItemLayoutTextsContainer = ({ captionDetails, headerRegion, layout, tags }: ThreadListItemLayoutTextsContainerProps) => {
+export const ThreadListItemLayoutTextsContainer = ({ captionDetails, headerRegion, layout }: ThreadListItemLayoutTextsContainerProps) => {
     return (
         <Region
             name="texts_container"
-            tags={tags}
             backgroundColor="#eefeff"
             layout={{ position: 'absolute', left: 21, width: 387, top: 0, height: 40, ...layout }}
         >
@@ -170,14 +158,12 @@ export const ThreadListItemLayoutTextsContainer = ({ captionDetails, headerRegio
 export interface ThreadListItemLayoutUnreadRegionProps {
     layout?: BoxLayout;
     onUnreadRegion?: () => void;
-    tags?: string[];
 }
 
-export const ThreadListItemLayoutUnreadRegion = ({ layout, onUnreadRegion, tags }: ThreadListItemLayoutUnreadRegionProps) => {
+export const ThreadListItemLayoutUnreadRegion = ({ layout, onUnreadRegion }: ThreadListItemLayoutUnreadRegionProps) => {
     return (
         <Region
             name="unread_region"
-            tags={tags}
             onPointerTap={onUnreadRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 40, ...layout }}
@@ -190,15 +176,13 @@ export interface ThreadListItemLayoutUnreadTextsContainerProps {
     captionMessages1?: string;
     captionMessages2?: string;
     layout?: BoxLayout;
-    tags?: string[];
     unreadRegion?: ThreadListItemLayoutUnreadRegionProps;
 }
 
-export const ThreadListItemLayoutUnreadTextsContainer = ({ captionMessages1, captionMessages2, layout, tags, unreadRegion }: ThreadListItemLayoutUnreadTextsContainerProps) => {
+export const ThreadListItemLayoutUnreadTextsContainer = ({ captionMessages1, captionMessages2, layout, unreadRegion }: ThreadListItemLayoutUnreadTextsContainerProps) => {
     return (
         <Region
             name="unread_texts_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 409, width: 140, top: 0, height: 40, ...layout }}
         >
             <ThreadListItemLayoutUnreadRegion {...unreadRegion} />
@@ -229,14 +213,12 @@ export interface ThreadListItemLayoutDeleteThreadItemProps {
     layout?: BoxLayout;
     onDeleteThread?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const ThreadListItemLayoutDeleteThreadItem = ({ layout, onDeleteThread, srcIcon, tags }: ThreadListItemLayoutDeleteThreadItemProps) => {
+export const ThreadListItemLayoutDeleteThreadItem = ({ layout, onDeleteThread, srcIcon }: ThreadListItemLayoutDeleteThreadItemProps) => {
     return (
         <Region
             name="delete_thread"
-            tags={tags}
             backgroundColor="#de4537"
             onPointerTap={onDeleteThread}
             cursor="pointer"
@@ -256,14 +238,12 @@ export interface ThreadListItemLayoutReportThreadItemProps {
     layout?: BoxLayout;
     onReportThread?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const ThreadListItemLayoutReportThreadItem = ({ layout, onReportThread, srcIcon, tags }: ThreadListItemLayoutReportThreadItemProps) => {
+export const ThreadListItemLayoutReportThreadItem = ({ layout, onReportThread, srcIcon }: ThreadListItemLayoutReportThreadItemProps) => {
     return (
         <Region
             name="report_thread"
-            tags={tags}
             backgroundColor="#ff9c65"
             onPointerTap={onReportThread}
             cursor="pointer"
@@ -282,14 +262,12 @@ export const ThreadListItemLayoutReportThreadItem = ({ layout, onReportThread, s
 export interface ThreadListItemLayoutModButtonsProps {
     itemsModButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ThreadListItemLayoutModButtons = ({ itemsModButtons, layout, tags }: ThreadListItemLayoutModButtonsProps) => {
+export const ThreadListItemLayoutModButtons = ({ itemsModButtons, layout }: ThreadListItemLayoutModButtonsProps) => {
     return (
         <Region
             name="mod_buttons"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 40, flexDirection: 'row', ...layout }}
         >
             {itemsModButtons ?? (
@@ -307,14 +285,12 @@ export interface ThreadListItemLayoutButtonContainerProps {
     layout?: BoxLayout;
     modButtons?: ThreadListItemLayoutModButtonsProps;
     onButtonContainer?: () => void;
-    tags?: string[];
 }
 
-export const ThreadListItemLayoutButtonContainer = ({ layout, modButtons, onButtonContainer, tags }: ThreadListItemLayoutButtonContainerProps) => {
+export const ThreadListItemLayoutButtonContainer = ({ layout, modButtons, onButtonContainer }: ThreadListItemLayoutButtonContainerProps) => {
     return (
         <Region
             name="button_container"
-            tags={tags}
             onPointerTap={onButtonContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 550, width: 50, top: 0, height: 40, ...layout }}
@@ -329,23 +305,18 @@ export interface ThreadListItemLayoutMainBoxProps {
     buttonContainer?: ThreadListItemLayoutButtonContainerProps;
     layout?: BoxLayout;
     leftButtonContainer?: ThreadListItemLayoutLeftButtonContainerProps;
-    tags?: string[];
     textsContainer?: ThreadListItemLayoutTextsContainerProps;
     unreadTextsContainer?: ThreadListItemLayoutUnreadTextsContainerProps;
 }
 
-export const ThreadListItemLayoutMainBox = ({ buttonContainer, layout, leftButtonContainer, tags, textsContainer, unreadTextsContainer }: ThreadListItemLayoutMainBoxProps) => {
+export const ThreadListItemLayoutMainBox = ({ buttonContainer, layout, leftButtonContainer, textsContainer, unreadTextsContainer }: ThreadListItemLayoutMainBoxProps) => {
     return (
         <Region
             name="main_box"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 600, top: 0, height: 40, ...layout }}
         >
             <ThreadListItemLayoutLeftButtonContainer {...leftButtonContainer} />
-            <ThreadListItemLayoutTextsContainer
-                tags={[ 'relative(1)' ]}
-                {...textsContainer}
-            />
+            <ThreadListItemLayoutTextsContainer {...textsContainer} />
             <ThreadListItemLayoutUnreadTextsContainer {...unreadTextsContainer} />
             <ThreadListItemLayoutButtonContainer {...buttonContainer} />
         </Region>

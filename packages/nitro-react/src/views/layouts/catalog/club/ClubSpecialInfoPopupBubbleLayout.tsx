@@ -31,16 +31,14 @@ export interface ClubSpecialInfoPopupBubbleLayoutMainContentProps {
     captionSpecialInfolink?: string;
     layout?: BoxLayout;
     onSpecialInfolink?: () => void;
-    tags?: string[];
 }
 
-export const ClubSpecialInfoPopupBubbleLayoutMainContent = ({ caption_247BhccenterBreakdownTitle7D, captionInfoCreditsspent, captionInfoFactor, captionInfoStreakbonus, captionInfoTotal, captionSpecialInfolink, layout, onSpecialInfolink, tags }: ClubSpecialInfoPopupBubbleLayoutMainContentProps) => {
+export const ClubSpecialInfoPopupBubbleLayoutMainContent = ({ caption_247BhccenterBreakdownTitle7D, captionInfoCreditsspent, captionInfoFactor, captionInfoStreakbonus, captionInfoTotal, captionSpecialInfolink, layout, onSpecialInfolink }: ClubSpecialInfoPopupBubbleLayoutMainContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="main_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 11, width: 345, top: -21, height: 120, flexDirection: 'column', gap: 3, ...layout }}
         >
             <Border

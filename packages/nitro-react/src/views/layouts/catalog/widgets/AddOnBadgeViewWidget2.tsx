@@ -1,4 +1,5 @@
 import { BoxLayout, Region, WidgetSlot } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `addOnBadgeViewWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -6,16 +7,14 @@ import { BoxLayout, Region, WidgetSlot } from '#base/theme';
  * (AddOnBadgeViewWidgetLayout); each passes its own placement through `layout`.
  */
 /** Named region `addOnBadgeViewWidget` of AddOnBadgeViewWidget2 - configured through the parent's `addOnBadgeViewWidget` prop. */
-export interface AddOnBadgeViewWidget2Props {
+export interface AddOnBadgeViewWidget2Props extends CatalogWidgetFlags {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AddOnBadgeViewWidget2 = ({ layout, tags }: AddOnBadgeViewWidget2Props) => {
+export const AddOnBadgeViewWidget2 = ({ layout }: AddOnBadgeViewWidget2Props) => {
     return (
         <Region
             name="addOnBadgeViewWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <WidgetSlot

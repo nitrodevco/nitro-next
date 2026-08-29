@@ -44,10 +44,9 @@ export interface OfferCenterLayoutRewardListProps {
     captionRewardName?: string;
     layout?: BoxLayout;
     srcRewardIcon?: string;
-    tags?: string[];
 }
 
-export const OfferCenterLayoutRewardList = ({ captionRewardDate, captionRewardName, layout, srcRewardIcon, tags }: OfferCenterLayoutRewardListProps) => {
+export const OfferCenterLayoutRewardList = ({ captionRewardDate, captionRewardName, layout, srcRewardIcon }: OfferCenterLayoutRewardListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -55,7 +54,6 @@ export const OfferCenterLayoutRewardList = ({ captionRewardDate, captionRewardNa
         >
             <Region
                 name="reward_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 <Border

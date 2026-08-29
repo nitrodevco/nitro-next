@@ -33,16 +33,14 @@ export const ReportWindowLayout = ({ layout, list, onClose }: ReportWindowLayout
 export interface ReportWindowLayoutReportErrorItemProps {
     captionReportError?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ReportWindowLayoutReportErrorItem = ({ captionReportError, layout, tags }: ReportWindowLayoutReportErrorItemProps) => {
+export const ReportWindowLayoutReportErrorItem = ({ captionReportError, layout }: ReportWindowLayoutReportErrorItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="report_error"
-            tags={tags}
             visible={false}
             layout={{ width: 264, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -57,15 +55,13 @@ export const ReportWindowLayoutReportErrorItem = ({ captionReportError, layout, 
 /** Row template `input_widget` of ReportWindowLayout - pass real rows through its `items…` slot. */
 export interface ReportWindowLayoutInputWidgetItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ReportWindowLayoutInputWidgetItem = ({ layout, tags }: ReportWindowLayoutInputWidgetItemProps) => {
+export const ReportWindowLayoutInputWidgetItem = ({ layout }: ReportWindowLayoutInputWidgetItemProps) => {
     return (
         <WidgetSlot
             widgetType="illumina_input"
             name="input_widget"
-            tags={tags}
             options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${guide.help.request.emergency.input.empty}', 'illumina_input:multiline': 'true' }}
             layout={{ width: 270, height: 100, flexShrink: 0, ...layout }}
         />
@@ -77,16 +73,14 @@ export interface ReportWindowLayoutCancelLinkItemProps {
     captionCancelLink?: string;
     layout?: BoxLayout;
     onCancelLink?: () => void;
-    tags?: string[];
 }
 
-export const ReportWindowLayoutCancelLinkItem = ({ captionCancelLink, layout, onCancelLink, tags }: ReportWindowLayoutCancelLinkItemProps) => {
+export const ReportWindowLayoutCancelLinkItem = ({ captionCancelLink, layout, onCancelLink }: ReportWindowLayoutCancelLinkItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_link"
-            tags={tags}
             layout={{ width: 270, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
             onPointerTap={onCancelLink}
             cursor="pointer"
@@ -106,16 +100,14 @@ export interface ReportWindowLayoutListProps {
     layout?: BoxLayout;
     onSubmitButton?: () => void;
     onUrgentHelpLink?: () => void;
-    tags?: string[];
 }
 
-export const ReportWindowLayoutList = ({ captionUrgentHelpLink, itemsList, layout, onSubmitButton, onUrgentHelpLink, tags }: ReportWindowLayoutListProps) => {
+export const ReportWindowLayoutList = ({ captionUrgentHelpLink, itemsList, layout, onSubmitButton, onUrgentHelpLink }: ReportWindowLayoutListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="list"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, top: 0, minWidth: 270, maxWidth: 270, flexDirection: 'column', ...layout }}
         >
             {itemsList ?? (

@@ -55,16 +55,14 @@ export const GuardianChatReviewAcceptLayout = ({ itemlist, layout, onClose }: Gu
 export interface GuardianChatReviewAcceptLayoutRequestTitleItemProps {
     captionRequestTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuardianChatReviewAcceptLayoutRequestTitleItem = ({ captionRequestTitle, layout, tags }: GuardianChatReviewAcceptLayoutRequestTitleItemProps) => {
+export const GuardianChatReviewAcceptLayoutRequestTitleItem = ({ captionRequestTitle, layout }: GuardianChatReviewAcceptLayoutRequestTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="request_title"
-            tags={tags}
             layout={{ width: 170, height: 47, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -79,16 +77,14 @@ export const GuardianChatReviewAcceptLayoutRequestTitleItem = ({ captionRequestT
 export interface GuardianChatReviewAcceptLayoutRequestTypeItemProps {
     captionRequestType?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuardianChatReviewAcceptLayoutRequestTypeItem = ({ captionRequestType, layout, tags }: GuardianChatReviewAcceptLayoutRequestTypeItemProps) => {
+export const GuardianChatReviewAcceptLayoutRequestTypeItem = ({ captionRequestType, layout }: GuardianChatReviewAcceptLayoutRequestTypeItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="request_type"
-            tags={tags}
             layout={{ width: 170, height: 16, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionRequestType ?? t('guide.bully.request.guide.accept.request.type')} />
@@ -100,16 +96,14 @@ export const GuardianChatReviewAcceptLayoutRequestTypeItem = ({ captionRequestTy
 export interface GuardianChatReviewAcceptLayoutRequestDescriptionItemProps {
     captionRequestDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuardianChatReviewAcceptLayoutRequestDescriptionItem = ({ captionRequestDescription, layout, tags }: GuardianChatReviewAcceptLayoutRequestDescriptionItemProps) => {
+export const GuardianChatReviewAcceptLayoutRequestDescriptionItem = ({ captionRequestDescription, layout }: GuardianChatReviewAcceptLayoutRequestDescriptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="request_description"
-            tags={tags}
             layout={{ width: 195, height: 38, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -124,10 +118,9 @@ export const GuardianChatReviewAcceptLayoutRequestDescriptionItem = ({ captionRe
 export interface GuardianChatReviewAcceptLayoutRequestDescriptionWrapperItemProps {
     itemsRequestDescriptionWrapper?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuardianChatReviewAcceptLayoutRequestDescriptionWrapperItem = ({ itemsRequestDescriptionWrapper, layout, tags }: GuardianChatReviewAcceptLayoutRequestDescriptionWrapperItemProps) => {
+export const GuardianChatReviewAcceptLayoutRequestDescriptionWrapperItem = ({ itemsRequestDescriptionWrapper, layout }: GuardianChatReviewAcceptLayoutRequestDescriptionWrapperItemProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -135,7 +128,6 @@ export const GuardianChatReviewAcceptLayoutRequestDescriptionWrapperItem = ({ it
         >
             <Region
                 name="request_description_wrapper"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsRequestDescriptionWrapper ?? (
@@ -150,17 +142,15 @@ export const GuardianChatReviewAcceptLayoutRequestDescriptionWrapperItem = ({ it
 export interface GuardianChatReviewAcceptLayoutAcceptButtonItemProps {
     layout?: BoxLayout;
     onAcceptButton?: () => void;
-    tags?: string[];
 }
 
-export const GuardianChatReviewAcceptLayoutAcceptButtonItem = ({ layout, onAcceptButton, tags }: GuardianChatReviewAcceptLayoutAcceptButtonItemProps) => {
+export const GuardianChatReviewAcceptLayoutAcceptButtonItem = ({ layout, onAcceptButton }: GuardianChatReviewAcceptLayoutAcceptButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ContainerButton
             variant="101"
             name="accept_button"
-            tags={tags}
             tintColor="#bbbbbb"
             onPointerTap={onAcceptButton}
             layout={{ width: 200, height: 48, flexShrink: 0, maxWidth: 200, minHeight: 48, maxHeight: 48, ...layout }}
@@ -185,16 +175,14 @@ export const GuardianChatReviewAcceptLayoutAcceptButtonItem = ({ layout, onAccep
 export interface GuardianChatReviewAcceptLayoutSkipLinkItemProps {
     layout?: BoxLayout;
     onSkipLink?: () => void;
-    tags?: string[];
 }
 
-export const GuardianChatReviewAcceptLayoutSkipLinkItem = ({ layout, onSkipLink, tags }: GuardianChatReviewAcceptLayoutSkipLinkItemProps) => {
+export const GuardianChatReviewAcceptLayoutSkipLinkItem = ({ layout, onSkipLink }: GuardianChatReviewAcceptLayoutSkipLinkItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="skip_link"
-            tags={tags}
             onPointerTap={onSkipLink}
             cursor="pointer"
             layout={{ width: 215, height: 30, flexShrink: 0, ...layout }}
@@ -213,14 +201,12 @@ export const GuardianChatReviewAcceptLayoutSkipLinkItem = ({ layout, onSkipLink,
 export interface GuardianChatReviewAcceptLayoutItemlistProps {
     itemsItemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuardianChatReviewAcceptLayoutItemlist = ({ itemsItemlist, layout, tags }: GuardianChatReviewAcceptLayoutItemlistProps) => {
+export const GuardianChatReviewAcceptLayoutItemlist = ({ itemsItemlist, layout }: GuardianChatReviewAcceptLayoutItemlistProps) => {
     return (
         <Region
             name="itemlist"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 221, flexDirection: 'column', ...layout }}
         >
             {itemsItemlist ?? (

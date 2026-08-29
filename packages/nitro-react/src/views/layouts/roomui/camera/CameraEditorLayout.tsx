@@ -98,14 +98,12 @@ export const CameraEditorLayout = ({ buttonSeparator, itemGrid, layout, onCancel
 /** Named region `purchase_display_object` of CameraEditorLayout - configured through the parent's `purchaseDisplayObject` prop. */
 export interface CameraEditorLayoutPurchaseDisplayObjectProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CameraEditorLayoutPurchaseDisplayObject = ({ layout, tags }: CameraEditorLayoutPurchaseDisplayObjectProps) => {
+export const CameraEditorLayoutPurchaseDisplayObject = ({ layout }: CameraEditorLayoutPurchaseDisplayObjectProps) => {
     return (
         <Region
             name="purchase_display_object"
-            tags={tags}
             layout={{ position: 'absolute', left: 413, width: 150, top: 426, height: 28, ...layout }}
         />
     );
@@ -114,10 +112,9 @@ export const CameraEditorLayoutPurchaseDisplayObject = ({ layout, tags }: Camera
 /** Named region `item_grid` of CameraEditorLayout - configured through the parent's `itemGrid` prop. */
 export interface CameraEditorLayoutItemGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CameraEditorLayoutItemGrid = ({ layout, tags }: CameraEditorLayoutItemGridProps) => {
+export const CameraEditorLayoutItemGrid = ({ layout }: CameraEditorLayoutItemGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -125,7 +122,6 @@ export const CameraEditorLayoutItemGrid = ({ layout, tags }: CameraEditorLayoutI
         >
             <Region
                 name="item_grid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
             />
         </ScrollArea>
@@ -135,14 +131,12 @@ export const CameraEditorLayoutItemGrid = ({ layout, tags }: CameraEditorLayoutI
 /** Named region `button_separator` of CameraEditorLayout - configured through the parent's `buttonSeparator` prop. */
 export interface CameraEditorLayoutButtonSeparatorProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CameraEditorLayoutButtonSeparator = ({ layout, tags }: CameraEditorLayoutButtonSeparatorProps) => {
+export const CameraEditorLayoutButtonSeparator = ({ layout }: CameraEditorLayoutButtonSeparatorProps) => {
     return (
         <Region
             name="button_separator"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 249, width: 320, top: 415, height: 1, ...layout }}
         />
@@ -153,14 +147,12 @@ export const CameraEditorLayoutButtonSeparator = ({ layout, tags }: CameraEditor
 export interface CameraEditorLayoutShaftClickAreaProps {
     layout?: BoxLayout;
     onShaftClickArea?: () => void;
-    tags?: string[];
 }
 
-export const CameraEditorLayoutShaftClickArea = ({ layout, onShaftClickArea, tags }: CameraEditorLayoutShaftClickAreaProps) => {
+export const CameraEditorLayoutShaftClickArea = ({ layout, onShaftClickArea }: CameraEditorLayoutShaftClickAreaProps) => {
     return (
         <Region
             name="shaft_click_area"
-            tags={tags}
             onPointerTap={onShaftClickArea}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 292, top: 0, height: 8, ...layout }}
@@ -172,14 +164,12 @@ export const CameraEditorLayoutShaftClickArea = ({ layout, onShaftClickArea, tag
 export interface CameraEditorLayoutSliderMovementAreaProps {
     layout?: BoxLayout;
     srcSliderButton?: string;
-    tags?: string[];
 }
 
-export const CameraEditorLayoutSliderMovementArea = ({ layout, srcSliderButton, tags }: CameraEditorLayoutSliderMovementAreaProps) => {
+export const CameraEditorLayoutSliderMovementArea = ({ layout, srcSliderButton }: CameraEditorLayoutSliderMovementAreaProps) => {
     return (
         <Region
             name="slider_movement_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 312, top: 27, height: 24, ...layout }}
         >
             <ThemeImage
@@ -199,14 +189,12 @@ export interface CameraEditorLayoutSliderContainerProps {
     shaftClickArea?: CameraEditorLayoutShaftClickAreaProps;
     sliderMovementArea?: CameraEditorLayoutSliderMovementAreaProps;
     srcSliderBase?: string;
-    tags?: string[];
 }
 
-export const CameraEditorLayoutSliderContainer = ({ captionSliderEffectInfo, layout, onSliderContainer, shaftClickArea, sliderMovementArea, srcSliderBase, tags }: CameraEditorLayoutSliderContainerProps) => {
+export const CameraEditorLayoutSliderContainer = ({ captionSliderEffectInfo, layout, onSliderContainer, shaftClickArea, sliderMovementArea, srcSliderBase }: CameraEditorLayoutSliderContainerProps) => {
     return (
         <Region
             name="slider_container"
-            tags={tags}
             onPointerTap={onSliderContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 249, width: 320, top: 271, height: 59, justifyContent: 'center', ...layout }}
@@ -251,16 +239,14 @@ export interface CameraEditorLayoutZoomButtonProps {
     layout?: BoxLayout;
     onZoomButton?: () => void;
     srcMagnifier?: string;
-    tags?: string[];
 }
 
-export const CameraEditorLayoutZoomButton = ({ captionZoomText, layout, onZoomButton, srcMagnifier, tags }: CameraEditorLayoutZoomButtonProps) => {
+export const CameraEditorLayoutZoomButton = ({ captionZoomText, layout, onZoomButton, srcMagnifier }: CameraEditorLayoutZoomButtonProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="zoom_button"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onZoomButton}
             cursor="pointer"
@@ -303,16 +289,14 @@ export interface CameraEditorLayoutSaveButtonProps {
     layout?: BoxLayout;
     onSaveButton?: () => void;
     srcDownloadImage?: string;
-    tags?: string[];
 }
 
-export const CameraEditorLayoutSaveButton = ({ captionSaveText, layout, onSaveButton, srcDownloadImage, tags }: CameraEditorLayoutSaveButtonProps) => {
+export const CameraEditorLayoutSaveButton = ({ captionSaveText, layout, onSaveButton, srcDownloadImage }: CameraEditorLayoutSaveButtonProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="save_button"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onSaveButton}
             cursor="pointer"
@@ -352,14 +336,12 @@ export const CameraEditorLayoutSaveButton = ({ captionSaveText, layout, onSaveBu
 /** Named region `save_click_catcher` of CameraEditorLayout - configured through the parent's `saveClickCatcher` prop. */
 export interface CameraEditorLayoutSaveClickCatcherProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CameraEditorLayoutSaveClickCatcher = ({ layout, tags }: CameraEditorLayoutSaveClickCatcherProps) => {
+export const CameraEditorLayoutSaveClickCatcher = ({ layout }: CameraEditorLayoutSaveClickCatcherProps) => {
     return (
         <Region
             name="save_click_catcher"
-            tags={tags}
             layout={{ position: 'absolute', left: 326, width: 120, top: 333, height: 24, ...layout }}
         />
     );

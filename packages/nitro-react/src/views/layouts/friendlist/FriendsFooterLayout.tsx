@@ -21,15 +21,13 @@ export const FriendsFooterLayout = ({ footer, layout }: FriendsFooterLayoutProps
 export interface FriendsFooterLayoutClearInputRegionProps {
     layout?: BoxLayout;
     onClearInputRegion?: () => void;
-    tags?: string[];
     visibleClearInputRegion?: boolean;
 }
 
-export const FriendsFooterLayoutClearInputRegion = ({ layout, onClearInputRegion, tags, visibleClearInputRegion }: FriendsFooterLayoutClearInputRegionProps) => {
+export const FriendsFooterLayoutClearInputRegion = ({ layout, onClearInputRegion, visibleClearInputRegion }: FriendsFooterLayoutClearInputRegionProps) => {
     return (
         <Region
             name="clear_input_region"
-            tags={tags}
             visible={visibleClearInputRegion ?? false}
             onPointerTap={onClearInputRegion}
             cursor="pointer"
@@ -61,17 +59,15 @@ export interface FriendsFooterLayoutFooterProps {
     srcIcon3?: string;
     srcIcon4?: string;
     srcIcon5?: string;
-    tags?: string[];
     visibleButtonOpenMinimail?: boolean;
 }
 
-export const FriendsFooterLayoutFooter = ({ clearInputRegion, layout, onButtonOpenHomepage, onButtonOpenMinimail, onButtonRemoveFriend, onButtonRoomInvite, onButtonSearch, srcIcon, srcIcon2, srcIcon3, srcIcon4, srcIcon5, tags, visibleButtonOpenMinimail }: FriendsFooterLayoutFooterProps) => {
+export const FriendsFooterLayoutFooter = ({ clearInputRegion, layout, onButtonOpenHomepage, onButtonOpenMinimail, onButtonRemoveFriend, onButtonRoomInvite, onButtonSearch, srcIcon, srcIcon2, srcIcon3, srcIcon4, srcIcon5, visibleButtonOpenMinimail }: FriendsFooterLayoutFooterProps) => {
     const [ friendSearchValue, setFriendSearchValue ] = useState('');
 
     return (
         <Region
             name="footer"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 223, top: 0, height: 41, ...layout }}
         >

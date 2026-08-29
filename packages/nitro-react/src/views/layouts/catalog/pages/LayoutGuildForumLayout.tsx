@@ -31,17 +31,15 @@ export interface LayoutGuildForumLayoutCtlgDefault3x3Props {
     layout?: BoxLayout;
     purchaseWidget?: PurchaseWidgetProps;
     simplePriceWidget?: SimplePriceWidget2Props;
-    tags?: string[];
     warningWidget?: WarningWidgetProps;
 }
 
-export const LayoutGuildForumLayoutCtlgDefault3x3 = ({ captionCtlgDescription, captionCtlgSelectproduct, firstProductAutoSelectorWidget, guildBadgeViewWidget, guildForumSelectorWidget, layout, purchaseWidget, simplePriceWidget, tags, warningWidget }: LayoutGuildForumLayoutCtlgDefault3x3Props) => {
+export const LayoutGuildForumLayoutCtlgDefault3x3 = ({ captionCtlgDescription, captionCtlgSelectproduct, firstProductAutoSelectorWidget, guildBadgeViewWidget, guildForumSelectorWidget, layout, purchaseWidget, simplePriceWidget, warningWidget }: LayoutGuildForumLayoutCtlgDefault3x3Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_default_3x3"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <FirstProductAutoSelectorWidget
@@ -61,7 +59,6 @@ export const LayoutGuildForumLayoutCtlgDefault3x3 = ({ captionCtlgDescription, c
             </Region>
             <Region
                 name="ctlg_description"
-                tags={[ 'E' ]}
                 layout={{ position: 'absolute', left: 0, width: 260, top: 10, bottom: 124, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -91,7 +88,7 @@ export const LayoutGuildForumLayoutCtlgDefault3x3 = ({ captionCtlgDescription, c
                 {...warningWidget}
             />
             <PurchaseWidget
-                tags={[ 'NO_GIFT_OPTION' ]}
+                noGiftOption
                 layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
                 {...purchaseWidget}
             />

@@ -20,14 +20,12 @@ export interface BadgeDisplayWidgetLayoutContainerProps {
     layout?: BoxLayout;
     srcAssetImage?: string;
     srcChatStyle?: string;
-    tags?: string[];
 }
 
-export const BadgeDisplayWidgetLayoutContainer = ({ layout, srcAssetImage, srcChatStyle, tags }: BadgeDisplayWidgetLayoutContainerProps) => {
+export const BadgeDisplayWidgetLayoutContainer = ({ layout, srcAssetImage, srcChatStyle }: BadgeDisplayWidgetLayoutContainerProps) => {
     return (
         <Region
             name="container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42, ...layout }}
         >
             <ThemeImage

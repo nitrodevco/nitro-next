@@ -79,16 +79,14 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, entr
 /** Named region `title` of HighScoreDisplayLayout - configured through the parent's `title` prop. */
 export interface HighScoreDisplayLayoutTitleProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HighScoreDisplayLayoutTitle = ({ layout, tags }: HighScoreDisplayLayoutTitleProps) => {
+export const HighScoreDisplayLayoutTitle = ({ layout }: HighScoreDisplayLayoutTitleProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="title"
-            tags={tags}
             backgroundColor="#3f3f3f"
             layout={{ position: 'absolute', left: 9, width: 256, top: 8, height: 20, justifyContent: 'center', ...layout }}
         >
@@ -108,14 +106,12 @@ export interface HighScoreDisplayLayoutEntryTemplateItemProps {
     captionScore?: string;
     captionUsernames?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HighScoreDisplayLayoutEntryTemplateItem = ({ captionScore, captionUsernames, layout, tags }: HighScoreDisplayLayoutEntryTemplateItemProps) => {
+export const HighScoreDisplayLayoutEntryTemplateItem = ({ captionScore, captionUsernames, layout }: HighScoreDisplayLayoutEntryTemplateItemProps) => {
     return (
         <Region
             name="entry_template"
-            tags={tags}
             layout={{ width: 258, height: 20, flexShrink: 0, ...layout }}
         >
             <Region
@@ -144,10 +140,9 @@ export const HighScoreDisplayLayoutEntryTemplateItem = ({ captionScore, captionU
 export interface HighScoreDisplayLayoutEntriesProps {
     itemsEntries?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HighScoreDisplayLayoutEntries = ({ itemsEntries, layout, tags }: HighScoreDisplayLayoutEntriesProps) => {
+export const HighScoreDisplayLayoutEntries = ({ itemsEntries, layout }: HighScoreDisplayLayoutEntriesProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -155,7 +150,6 @@ export const HighScoreDisplayLayoutEntries = ({ itemsEntries, layout, tags }: Hi
         >
             <Region
                 name="entries"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsEntries ?? (

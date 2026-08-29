@@ -85,14 +85,12 @@ export const WildwestEngravingLayout = ({ captionDate, captionHeader, captionNam
 export interface WildwestEngravingLayoutHeaderButtonCloseProps {
     layout?: BoxLayout;
     onHeaderButtonClose?: () => void;
-    tags?: string[];
 }
 
-export const WildwestEngravingLayoutHeaderButtonClose = ({ layout, onHeaderButtonClose, tags }: WildwestEngravingLayoutHeaderButtonCloseProps) => {
+export const WildwestEngravingLayoutHeaderButtonClose = ({ layout, onHeaderButtonClose }: WildwestEngravingLayoutHeaderButtonCloseProps) => {
     return (
         <Region
             name="header_button_close"
-            tags={tags}
             onPointerTap={onHeaderButtonClose}
             cursor="pointer"
             layout={{ position: 'absolute', left: 330, width: 21, top: 33, height: 17, ...layout }}

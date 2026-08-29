@@ -19,14 +19,12 @@ export const RosFlatControllerLayout = ({ layout, userContainer }: RosFlatContro
 export interface RosFlatControllerLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
-    tags?: string[];
 }
 
-export const RosFlatControllerLayoutBgRegion = ({ layout, onBgRegion, tags }: RosFlatControllerLayoutBgRegionProps) => {
+export const RosFlatControllerLayoutBgRegion = ({ layout, onBgRegion }: RosFlatControllerLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 111, top: 0, height: 20, ...layout }}
@@ -38,16 +36,14 @@ export const RosFlatControllerLayoutBgRegion = ({ layout, onBgRegion, tags }: Ro
 export interface RosFlatControllerLayoutUserInfoRegionProps {
     layout?: BoxLayout;
     onUserInfoRegion?: () => void;
-    tags?: string[];
 }
 
-export const RosFlatControllerLayoutUserInfoRegion = ({ layout, onUserInfoRegion, tags }: RosFlatControllerLayoutUserInfoRegionProps) => {
+export const RosFlatControllerLayoutUserInfoRegion = ({ layout, onUserInfoRegion }: RosFlatControllerLayoutUserInfoRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_info_region"
-            tags={tags}
             tooltip={t('group.members.showinfo')}
             onPointerTap={onUserInfoRegion}
             cursor="pointer"
@@ -73,15 +69,13 @@ export interface RosFlatControllerLayoutUserContainerProps {
     captionUserNameTxt?: string;
     layout?: BoxLayout;
     srcArrowIcon?: string;
-    tags?: string[];
     userInfoRegion?: RosFlatControllerLayoutUserInfoRegionProps;
 }
 
-export const RosFlatControllerLayoutUserContainer = ({ bgRegion, captionUserNameTxt, layout, srcArrowIcon, tags, userInfoRegion }: RosFlatControllerLayoutUserContainerProps) => {
+export const RosFlatControllerLayoutUserContainer = ({ bgRegion, captionUserNameTxt, layout, srcArrowIcon, userInfoRegion }: RosFlatControllerLayoutUserContainerProps) => {
     return (
         <Region
             name="user_container"
-            tags={tags}
             backgroundColor="#cc0000"
             layout={{ position: 'absolute', left: 0, width: 111, top: 0, height: 20, ...layout }}
         >

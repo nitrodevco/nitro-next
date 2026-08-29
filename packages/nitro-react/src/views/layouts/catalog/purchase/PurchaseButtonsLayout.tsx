@@ -23,16 +23,14 @@ export interface PurchaseButtonsLayoutDefaultButtonsProps {
     layout?: BoxLayout;
     onBuyButton?: () => void;
     onGiftButton?: () => void;
-    tags?: string[];
 }
 
-export const PurchaseButtonsLayoutDefaultButtons = ({ captionPurchaseLabel, layout, onBuyButton, onGiftButton, tags }: PurchaseButtonsLayoutDefaultButtonsProps) => {
+export const PurchaseButtonsLayoutDefaultButtons = ({ captionPurchaseLabel, layout, onBuyButton, onGiftButton }: PurchaseButtonsLayoutDefaultButtonsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="default_buttons"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 51, ...layout }}
         >
             <ContainerButton

@@ -57,10 +57,7 @@ export const PurseLayout = ({ earningsButton, hcJoinButton, layout, onHelpButton
                     backgroundColor="#444444"
                     layout={{ position: 'absolute', left: 169, width: 1, top: 11, height: 55, minHeight: 23 }}
                 />
-                <Region
-                    tags={[ 'relative(1)' ]}
-                    layout={{ position: 'absolute', left: 174, width: 63, top: 8, height: 62, flexDirection: 'column', gap: 2 }}
-                >
+                <Region layout={{ position: 'absolute', left: 174, width: 63, top: 8, height: 62, flexDirection: 'column', gap: 2 }}>
                     <ContainerButton
                         variant="0"
                         name="help_button"
@@ -126,16 +123,14 @@ export interface PurseLayoutDiamondCountButtonItemProps {
     captionDiamondCount?: string;
     layout?: BoxLayout;
     onDiamondCountButton?: () => void;
-    tags?: string[];
 }
 
-export const PurseLayoutDiamondCountButtonItem = ({ captionDiamondCount, layout, onDiamondCountButton, tags }: PurseLayoutDiamondCountButtonItemProps) => {
+export const PurseLayoutDiamondCountButtonItem = ({ captionDiamondCount, layout, onDiamondCountButton }: PurseLayoutDiamondCountButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="diamond_count_button"
-            tags={tags}
             tooltip={t('achievements.activitypoint.5')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onDiamondCountButton}
@@ -144,7 +139,6 @@ export const PurseLayoutDiamondCountButtonItem = ({ captionDiamondCount, layout,
         >
             <Region
                 name="diamond_count"
-                tags={[ '#icon' ]}
                 layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -154,7 +148,6 @@ export const PurseLayoutDiamondCountButtonItem = ({ captionDiamondCount, layout,
                 />
             </Region>
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('pursearea_diamond_icon.png')}
                 layout={{ position: 'absolute', left: 36, width: 15, top: 2, height: 15 }}
             />
@@ -167,16 +160,14 @@ export interface PurseLayoutCreditCountButtonItemProps {
     captionCreditCount?: string;
     layout?: BoxLayout;
     onCreditCountButton?: () => void;
-    tags?: string[];
 }
 
-export const PurseLayoutCreditCountButtonItem = ({ captionCreditCount, layout, onCreditCountButton, tags }: PurseLayoutCreditCountButtonItemProps) => {
+export const PurseLayoutCreditCountButtonItem = ({ captionCreditCount, layout, onCreditCountButton }: PurseLayoutCreditCountButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="credit_count_button"
-            tags={tags}
             tooltip={t('purse_coins')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onCreditCountButton}
@@ -185,7 +176,6 @@ export const PurseLayoutCreditCountButtonItem = ({ captionCreditCount, layout, o
         >
             <Region
                 name="credit_count"
-                tags={[ '#icon' ]}
                 layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -195,7 +185,6 @@ export const PurseLayoutCreditCountButtonItem = ({ captionCreditCount, layout, o
                 />
             </Region>
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('pursearea_credits_icon.png')}
                 layout={{ position: 'absolute', left: 36, width: 15, top: 2, height: 15 }}
             />
@@ -208,16 +197,14 @@ export interface PurseLayoutDucketCountButtonItemProps {
     captionDucketCount?: string;
     layout?: BoxLayout;
     onDucketCountButton?: () => void;
-    tags?: string[];
 }
 
-export const PurseLayoutDucketCountButtonItem = ({ captionDucketCount, layout, onDucketCountButton, tags }: PurseLayoutDucketCountButtonItemProps) => {
+export const PurseLayoutDucketCountButtonItem = ({ captionDucketCount, layout, onDucketCountButton }: PurseLayoutDucketCountButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ducket_count_button"
-            tags={tags}
             tooltip={t('achievements.activitypoint.0')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onDucketCountButton}
@@ -226,7 +213,6 @@ export const PurseLayoutDucketCountButtonItem = ({ captionDucketCount, layout, o
         >
             <Region
                 name="ducket_count"
-                tags={[ '#icon' ]}
                 layout={{ position: 'absolute', right: 17, width: 10, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -236,7 +222,6 @@ export const PurseLayoutDucketCountButtonItem = ({ captionDucketCount, layout, o
                 />
             </Region>
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('pursearea_duckets_icon.png')}
                 layout={{ position: 'absolute', left: 36, width: 15, top: 2, height: 15 }}
             />
@@ -248,14 +233,12 @@ export const PurseLayoutDucketCountButtonItem = ({ captionDucketCount, layout, o
 export interface PurseLayoutPurseItemlistProps {
     itemsPurseItemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PurseLayoutPurseItemlist = ({ itemsPurseItemlist, layout, tags }: PurseLayoutPurseItemlistProps) => {
+export const PurseLayoutPurseItemlist = ({ itemsPurseItemlist, layout }: PurseLayoutPurseItemlistProps) => {
     return (
         <Region
             name="purse_itemlist"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 52, top: 9, height: 55, maxHeight: 62, flexDirection: 'column', ...layout }}
         >
             {itemsPurseItemlist ?? (
@@ -275,16 +258,14 @@ export interface PurseLayoutHcJoinButtonProps {
     captionJoin?: string;
     layout?: BoxLayout;
     onHcJoinButton?: () => void;
-    tags?: string[];
 }
 
-export const PurseLayoutHcJoinButton = ({ captionDays, captionJoin, layout, onHcJoinButton, tags }: PurseLayoutHcJoinButtonProps) => {
+export const PurseLayoutHcJoinButton = ({ captionDays, captionJoin, layout, onHcJoinButton }: PurseLayoutHcJoinButtonProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="hc_join_button"
-            tags={tags}
             tooltip={t('catalog.club.hc')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onHcJoinButton}
@@ -293,7 +274,6 @@ export const PurseLayoutHcJoinButton = ({ captionDays, captionJoin, layout, onHc
         >
             <Region
                 name="join"
-                tags={[ '#icon' ]}
                 visible={false}
                 layout={{ position: 'absolute', width: 25, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
@@ -305,7 +285,6 @@ export const PurseLayoutHcJoinButton = ({ captionDays, captionJoin, layout, onHc
             </Region>
             <Region
                 name="days"
-                tags={[ '#icon' ]}
                 layout={{ position: 'absolute', left: 25, width: 50, top: 4, height: 28, maxWidth: 50, minHeight: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -315,7 +294,6 @@ export const PurseLayoutHcJoinButton = ({ captionDays, captionJoin, layout, onHc
                 />
             </Region>
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('pursearea_hc_icon.png')}
                 layout={{ position: 'absolute', left: 5, width: 20, top: 4, height: 18 }}
             />
@@ -329,16 +307,14 @@ export interface PurseLayoutEarningsButtonProps {
     layout?: BoxLayout;
     onEarningsButton?: () => void;
     srcEarningsUnseenIndicator?: string;
-    tags?: string[];
 }
 
-export const PurseLayoutEarningsButton = ({ captionEarnings, layout, onEarningsButton, srcEarningsUnseenIndicator, tags }: PurseLayoutEarningsButtonProps) => {
+export const PurseLayoutEarningsButton = ({ captionEarnings, layout, onEarningsButton, srcEarningsUnseenIndicator }: PurseLayoutEarningsButtonProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="earnings_button"
-            tags={tags}
             tooltip={t('earnings.title')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onEarningsButton}
@@ -347,7 +323,6 @@ export const PurseLayoutEarningsButton = ({ captionEarnings, layout, onEarningsB
         >
             <Region
                 name="earnings"
-                tags={[ '#icon' ]}
                 layout={{ position: 'absolute', left: 25, width: 79, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -357,7 +332,6 @@ export const PurseLayoutEarningsButton = ({ captionEarnings, layout, onEarningsB
                 />
             </Region>
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('pursearea_icon_earnings.png')}
                 layout={{ position: 'absolute', left: 5, width: 20, top: 4, height: 18 }}
             />
@@ -367,7 +341,6 @@ export const PurseLayoutEarningsButton = ({ captionEarnings, layout, onEarningsB
             >
                 <ThemeImage
                     name="earnings_unseen_indicator"
-                    tags={[ '#icon' ]}
                     src={srcEarningsUnseenIndicator ?? layoutImage('pursearea_unseen_indicator.png')}
                     layout={{ position: 'absolute', left: 1, width: 10, top: 0, height: 11 }}
                 />

@@ -24,14 +24,12 @@ export const GrsGuestRoomDetailsLongLayout = ({ detailsContainer, layout }: GrsG
 /** Named region `user_info_region` of GrsGuestRoomDetailsLongLayout - configured through the parent's `userInfoRegion` prop. */
 export interface GrsGuestRoomDetailsLongLayoutUserInfoRegionProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsLongLayoutUserInfoRegion = ({ layout, tags }: GrsGuestRoomDetailsLongLayoutUserInfoRegionProps) => {
+export const GrsGuestRoomDetailsLongLayoutUserInfoRegion = ({ layout }: GrsGuestRoomDetailsLongLayoutUserInfoRegionProps) => {
     return (
         <Region
             name="user_info_region"
-            tags={tags}
             layout={{ position: 'absolute', right: 170, width: 15, top: 0, height: 13, ...layout }}
         >
             <Icon
@@ -54,17 +52,15 @@ export interface GrsGuestRoomDetailsLongLayoutRoomownerContProps {
     captionRoomownerCaption?: string;
     layout?: BoxLayout;
     onRoomownerCont?: () => void;
-    tags?: string[];
     userInfoRegion?: GrsGuestRoomDetailsLongLayoutUserInfoRegionProps;
 }
 
-export const GrsGuestRoomDetailsLongLayoutRoomownerCont = ({ captionRoomowner, captionRoomownerCaption, layout, onRoomownerCont, tags, userInfoRegion }: GrsGuestRoomDetailsLongLayoutRoomownerContProps) => {
+export const GrsGuestRoomDetailsLongLayoutRoomownerCont = ({ captionRoomowner, captionRoomownerCaption, layout, onRoomownerCont, userInfoRegion }: GrsGuestRoomDetailsLongLayoutRoomownerContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="roomowner_cont"
-            tags={tags}
             tooltip={t('infostand.profile.link.tooltip')}
             onPointerTap={onRoomownerCont}
             cursor="pointer"
@@ -92,16 +88,14 @@ export interface GrsGuestRoomDetailsLongLayoutRoomctgContProps {
     captionRoomctg?: string;
     captionRoomctgCaption?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsLongLayoutRoomctgCont = ({ captionRoomctg, captionRoomctgCaption, layout, tags }: GrsGuestRoomDetailsLongLayoutRoomctgContProps) => {
+export const GrsGuestRoomDetailsLongLayoutRoomctgCont = ({ captionRoomctg, captionRoomctgCaption, layout }: GrsGuestRoomDetailsLongLayoutRoomctgContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="roomctg_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 180, top: 50, height: 12, ...layout }}
         >
             <Region
@@ -124,14 +118,12 @@ export const GrsGuestRoomDetailsLongLayoutRoomctgCont = ({ captionRoomctg, capti
 export interface GrsGuestRoomDetailsLongLayoutTagsProps {
     layout?: BoxLayout;
     onTags?: () => void;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsLongLayoutTags = ({ layout, onTags, tags }: GrsGuestRoomDetailsLongLayoutTagsProps) => {
+export const GrsGuestRoomDetailsLongLayoutTags = ({ layout, onTags }: GrsGuestRoomDetailsLongLayoutTagsProps) => {
     return (
         <Region
             name="tags"
-            tags={tags}
             onPointerTap={onTags}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 233, top: 0, height: 40, ...layout }}
@@ -144,16 +136,14 @@ export interface GrsGuestRoomDetailsLongLayoutStartedatContProps {
     captionStartedat?: string;
     captionStartedatCaption?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsLongLayoutStartedatCont = ({ captionStartedat, captionStartedatCaption, layout, tags }: GrsGuestRoomDetailsLongLayoutStartedatContProps) => {
+export const GrsGuestRoomDetailsLongLayoutStartedatCont = ({ captionStartedat, captionStartedatCaption, layout }: GrsGuestRoomDetailsLongLayoutStartedatContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="startedat_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 233, top: 0, height: 12, ...layout }}
         >
             <Region
@@ -177,16 +167,14 @@ export interface GrsGuestRoomDetailsLongLayoutRatingContProps {
     captionRating?: string;
     captionRatingCaption?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsLongLayoutRatingCont = ({ captionRating, captionRatingCaption, layout, tags }: GrsGuestRoomDetailsLongLayoutRatingContProps) => {
+export const GrsGuestRoomDetailsLongLayoutRatingCont = ({ captionRating, captionRatingCaption, layout }: GrsGuestRoomDetailsLongLayoutRatingContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rating_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 233, top: 0, height: 12, ...layout }}
         >
             <Region
@@ -210,18 +198,16 @@ export interface GrsGuestRoomDetailsLongLayoutExtraContProps {
     layout?: BoxLayout;
     ratingCont?: GrsGuestRoomDetailsLongLayoutRatingContProps;
     startedatCont?: GrsGuestRoomDetailsLongLayoutStartedatContProps;
-    tags?: string[];
-    tags2?: GrsGuestRoomDetailsLongLayoutTagsProps;
+    tags?: GrsGuestRoomDetailsLongLayoutTagsProps;
 }
 
-export const GrsGuestRoomDetailsLongLayoutExtraCont = ({ layout, ratingCont, startedatCont, tags, tags2 }: GrsGuestRoomDetailsLongLayoutExtraContProps) => {
+export const GrsGuestRoomDetailsLongLayoutExtraCont = ({ layout, ratingCont, startedatCont, tags }: GrsGuestRoomDetailsLongLayoutExtraContProps) => {
     return (
         <Region
             name="extra_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 233, top: 90, height: 70, ...layout }}
         >
-            <GrsGuestRoomDetailsLongLayoutTags {...tags2} />
+            <GrsGuestRoomDetailsLongLayoutTags {...tags} />
             <GrsGuestRoomDetailsLongLayoutStartedatCont {...startedatCont} />
             <GrsGuestRoomDetailsLongLayoutRatingCont {...ratingCont} />
         </Region>
@@ -233,16 +219,14 @@ export interface GrsGuestRoomDetailsLongLayoutDoormodeDoorbellProps {
     captionInfotxt?: string;
     layout?: BoxLayout;
     srcDoormodeDoorbell?: string;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsLongLayoutDoormodeDoorbell = ({ captionInfotxt, layout, srcDoormodeDoorbell, tags }: GrsGuestRoomDetailsLongLayoutDoormodeDoorbellProps) => {
+export const GrsGuestRoomDetailsLongLayoutDoormodeDoorbell = ({ captionInfotxt, layout, srcDoormodeDoorbell }: GrsGuestRoomDetailsLongLayoutDoormodeDoorbellProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="doormode_doorbell"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 233, top: 125, height: 31, ...layout }}
         >
             <ThemeImage
@@ -268,16 +252,14 @@ export interface GrsGuestRoomDetailsLongLayoutDoormodeInvisibleProps {
     captionInfotxt?: string;
     layout?: BoxLayout;
     srcDoormodeInvisible?: string;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsLongLayoutDoormodeInvisible = ({ captionInfotxt, layout, srcDoormodeInvisible, tags }: GrsGuestRoomDetailsLongLayoutDoormodeInvisibleProps) => {
+export const GrsGuestRoomDetailsLongLayoutDoormodeInvisible = ({ captionInfotxt, layout, srcDoormodeInvisible }: GrsGuestRoomDetailsLongLayoutDoormodeInvisibleProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="doormode_invisible"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 233, top: 160, height: 31, ...layout }}
         >
             <ThemeImage
@@ -303,16 +285,14 @@ export interface GrsGuestRoomDetailsLongLayoutDoormodePasswordProps {
     captionInfotxt?: string;
     layout?: BoxLayout;
     srcDoormodePassword?: string;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsLongLayoutDoormodePassword = ({ captionInfotxt, layout, srcDoormodePassword, tags }: GrsGuestRoomDetailsLongLayoutDoormodePasswordProps) => {
+export const GrsGuestRoomDetailsLongLayoutDoormodePassword = ({ captionInfotxt, layout, srcDoormodePassword }: GrsGuestRoomDetailsLongLayoutDoormodePasswordProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="doormode_password"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 233, top: 190, height: 31, ...layout }}
         >
             <ThemeImage
@@ -338,16 +318,14 @@ export interface GrsGuestRoomDetailsLongLayoutTradingAllowedProps {
     captionInfotxt?: string;
     layout?: BoxLayout;
     srcTradingAllowed?: string;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsLongLayoutTradingAllowed = ({ captionInfotxt, layout, srcTradingAllowed, tags }: GrsGuestRoomDetailsLongLayoutTradingAllowedProps) => {
+export const GrsGuestRoomDetailsLongLayoutTradingAllowed = ({ captionInfotxt, layout, srcTradingAllowed }: GrsGuestRoomDetailsLongLayoutTradingAllowedProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="trading_allowed"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 233, top: 215, height: 20, ...layout }}
         >
             <ThemeImage
@@ -374,14 +352,12 @@ export interface GrsGuestRoomDetailsLongLayoutEventinfoChildContainerProps {
     captionEventinfoExpirationtime?: string;
     captionEventinfoName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsLongLayoutEventinfoChildContainer = ({ captionEventinfoDesc, captionEventinfoExpirationtime, captionEventinfoName, layout, tags }: GrsGuestRoomDetailsLongLayoutEventinfoChildContainerProps) => {
+export const GrsGuestRoomDetailsLongLayoutEventinfoChildContainer = ({ captionEventinfoDesc, captionEventinfoExpirationtime, captionEventinfoName, layout }: GrsGuestRoomDetailsLongLayoutEventinfoChildContainerProps) => {
     return (
         <Region
             name="eventinfo_child_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 60, width: 183, top: 0, height: 78, ...layout }}
         >
             <Region
@@ -420,16 +396,14 @@ export interface GrsGuestRoomDetailsLongLayoutEventinfoContProps {
     captionEventinfoCaption?: string;
     eventinfoChildContainer?: GrsGuestRoomDetailsLongLayoutEventinfoChildContainerProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsLongLayoutEventinfoCont = ({ captionEventinfoCaption, eventinfoChildContainer, layout, tags }: GrsGuestRoomDetailsLongLayoutEventinfoContProps) => {
+export const GrsGuestRoomDetailsLongLayoutEventinfoCont = ({ captionEventinfoCaption, eventinfoChildContainer, layout }: GrsGuestRoomDetailsLongLayoutEventinfoContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="eventinfo_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 239, top: 242, height: 66, ...layout }}
         >
             <Region
@@ -451,16 +425,14 @@ export interface GrsGuestRoomDetailsLongLayoutRoomsettingsContProps {
     captionRoomsettings?: string;
     layout?: BoxLayout;
     onRoomsettingsCont?: () => void;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsLongLayoutRoomsettingsCont = ({ captionRoomsettings, layout, onRoomsettingsCont, tags }: GrsGuestRoomDetailsLongLayoutRoomsettingsContProps) => {
+export const GrsGuestRoomDetailsLongLayoutRoomsettingsCont = ({ captionRoomsettings, layout, onRoomsettingsCont }: GrsGuestRoomDetailsLongLayoutRoomsettingsContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="roomsettings_cont"
-            tags={tags}
             onPointerTap={onRoomsettingsCont}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 233, top: 305, height: 20, ...layout }}
@@ -489,15 +461,13 @@ export interface GrsGuestRoomDetailsLongLayoutDetailsContainerProps {
     roomctgCont?: GrsGuestRoomDetailsLongLayoutRoomctgContProps;
     roomownerCont?: GrsGuestRoomDetailsLongLayoutRoomownerContProps;
     roomsettingsCont?: GrsGuestRoomDetailsLongLayoutRoomsettingsContProps;
-    tags?: string[];
     tradingAllowed?: GrsGuestRoomDetailsLongLayoutTradingAllowedProps;
 }
 
-export const GrsGuestRoomDetailsLongLayoutDetailsContainer = ({ captionRoomdesc, captionRoomname, doormodeDoorbell, doormodeInvisible, doormodePassword, eventinfoCont, extraCont, layout, onDetailsContainer, roomctgCont, roomownerCont, roomsettingsCont, tags, tradingAllowed }: GrsGuestRoomDetailsLongLayoutDetailsContainerProps) => {
+export const GrsGuestRoomDetailsLongLayoutDetailsContainer = ({ captionRoomdesc, captionRoomname, doormodeDoorbell, doormodeInvisible, doormodePassword, eventinfoCont, extraCont, layout, onDetailsContainer, roomctgCont, roomownerCont, roomsettingsCont, tradingAllowed }: GrsGuestRoomDetailsLongLayoutDetailsContainerProps) => {
     return (
         <Region
             name="details_container"
-            tags={tags}
             onPointerTap={onDetailsContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, right: 13, top: 10, height: 326, ...layout }}

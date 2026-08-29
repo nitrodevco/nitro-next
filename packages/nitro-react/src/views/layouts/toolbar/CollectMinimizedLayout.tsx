@@ -20,23 +20,20 @@ export interface CollectMinimizedLayoutCollectMinimizedProps {
     layout?: BoxLayout;
     onCollectMinimized?: () => void;
     srcClubIcon?: string;
-    tags?: string[];
 }
 
-export const CollectMinimizedLayoutCollectMinimized = ({ layout, onCollectMinimized, srcClubIcon, tags }: CollectMinimizedLayoutCollectMinimizedProps) => {
+export const CollectMinimizedLayoutCollectMinimized = ({ layout, onCollectMinimized, srcClubIcon }: CollectMinimizedLayoutCollectMinimizedProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="collect_minimized"
-            tags={tags}
             onPointerTap={onCollectMinimized}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29, ...layout }}
         >
             <Border
                 variant="6"
-                tags={[ 'BGCOLOR' ]}
                 tintColor="#686661"
                 blend={1}
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
@@ -60,7 +57,6 @@ export const CollectMinimizedLayoutCollectMinimized = ({ layout, onCollectMinimi
             >
                 <ThemeImage
                     name="club_icon"
-                    tags={[ 'ICON' ]}
                     src={srcClubIcon ?? '${image.library.url}returnusergifting/phone_smaller.png'}
                     layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                 />

@@ -62,16 +62,14 @@ export interface Doorbell_3013LayoutCancelRegionProps {
     captionCancel?: string;
     layout?: BoxLayout;
     onCancelRegion?: () => void;
-    tags?: string[];
 }
 
-export const Doorbell_3013LayoutCancelRegion = ({ captionCancel, layout, onCancelRegion, tags }: Doorbell_3013LayoutCancelRegionProps) => {
+export const Doorbell_3013LayoutCancelRegion = ({ captionCancel, layout, onCancelRegion }: Doorbell_3013LayoutCancelRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_region"
-            tags={tags}
             onPointerTap={onCancelRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 154, top: 0, height: 36, ...layout }}

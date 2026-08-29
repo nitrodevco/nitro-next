@@ -11,7 +11,6 @@ export const TooltipLayout = ({ captionBTNTEXT, layout }: TooltipLayoutProps) =>
         <Region layout={{ position: 'relative', width: 20, height: 22, ...layout }}>
             <Region
                 name="_BTN_TEXT"
-                tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
                 layout={{ position: 'absolute', width: 20, alignSelf: 'center', marginTop: 6, marginBottom: -6, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

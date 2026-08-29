@@ -17,14 +17,12 @@ export const VerticalListViewLayout = ({ layout, verticalListView }: VerticalLis
 /** Named region `vertical_list_view` of VerticalListViewLayout - configured through the parent's `verticalListView` prop. */
 export interface VerticalListViewLayoutVerticalListViewProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VerticalListViewLayoutVerticalListView = ({ layout, tags }: VerticalListViewLayoutVerticalListViewProps) => {
+export const VerticalListViewLayoutVerticalListView = ({ layout }: VerticalListViewLayoutVerticalListViewProps) => {
     return (
         <Region
             name="vertical_list_view"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', ...layout }}
         />
     );

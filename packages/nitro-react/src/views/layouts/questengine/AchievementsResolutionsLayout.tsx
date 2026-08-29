@@ -62,16 +62,14 @@ export const AchievementsResolutionsLayout = ({ captionDisabledReason, elementLi
 export interface AchievementsResolutionsLayoutTitleItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AchievementsResolutionsLayoutTitleItem = ({ captionTitle, layout, tags }: AchievementsResolutionsLayoutTitleItemProps) => {
+export const AchievementsResolutionsLayoutTitleItem = ({ captionTitle, layout }: AchievementsResolutionsLayoutTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="title"
-            tags={tags}
             layout={{ width: 264, height: 50, flexShrink: 0, minHeight: 50, maxHeight: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -85,14 +83,12 @@ export const AchievementsResolutionsLayoutTitleItem = ({ captionTitle, layout, t
 /** Row template `achievements` of AchievementsResolutionsLayout - pass real rows through its `items…` slot. */
 export interface AchievementsResolutionsLayoutAchievementsItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AchievementsResolutionsLayoutAchievementsItem = ({ layout, tags }: AchievementsResolutionsLayoutAchievementsItemProps) => {
+export const AchievementsResolutionsLayoutAchievementsItem = ({ layout }: AchievementsResolutionsLayoutAchievementsItemProps) => {
     return (
         <Region
             name="achievements"
-            tags={tags}
             layout={{ width: 290, height: 230, flexShrink: 0, flexDirection: 'row', flexWrap: 'wrap', gap: 6, ...layout }}
         />
     );
@@ -105,16 +101,14 @@ export interface AchievementsResolutionsLayoutElementListProps {
     captionAchievementName?: string;
     itemsElementList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AchievementsResolutionsLayoutElementList = ({ captionAchievementDescription, captionAchievementLevel, captionAchievementName, itemsElementList, layout, tags }: AchievementsResolutionsLayoutElementListProps) => {
+export const AchievementsResolutionsLayoutElementList = ({ captionAchievementDescription, captionAchievementLevel, captionAchievementName, itemsElementList, layout }: AchievementsResolutionsLayoutElementListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 310, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsElementList ?? (

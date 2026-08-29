@@ -20,14 +20,12 @@ export interface FacebookLayoutFacebookProps {
     captionName?: string;
     layout?: BoxLayout;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const FacebookLayoutFacebook = ({ captionName, layout, srcIcon, tags }: FacebookLayoutFacebookProps) => {
+export const FacebookLayoutFacebook = ({ captionName, layout, srcIcon }: FacebookLayoutFacebookProps) => {
     return (
         <Region
             name="facebook"
-            tags={tags}
             backgroundColor="#72893f"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 19, ...layout }}
         >

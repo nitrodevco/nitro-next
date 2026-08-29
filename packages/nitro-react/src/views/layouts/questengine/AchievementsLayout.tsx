@@ -27,7 +27,6 @@ export const AchievementsLayout = ({ achievementsHeaderCont, achievementsList, c
             variant="3"
             id="quest_main_window"
             name="quest_main_window"
-            tags={[ 'FIT:achievements' ]}
             caption={t('inventory.achievements')}
             tintColor="#418db0"
             onClose={onClose}
@@ -103,14 +102,12 @@ export const AchievementsLayout = ({ achievementsHeaderCont, achievementsList, c
 /** Named region `categories_cont` of AchievementsLayout - configured through the parent's `categoriesCont` prop. */
 export interface AchievementsLayoutCategoriesContProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AchievementsLayoutCategoriesCont = ({ layout, tags }: AchievementsLayoutCategoriesContProps) => {
+export const AchievementsLayoutCategoriesCont = ({ layout }: AchievementsLayoutCategoriesContProps) => {
     return (
         <Region
             name="categories_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 19, right: -1, top: 0, height: 10, ...layout }}
         />
     );
@@ -120,16 +117,14 @@ export const AchievementsLayoutCategoriesCont = ({ layout, tags }: AchievementsL
 export interface AchievementsLayoutCategoriesFooterContProps {
     captionAchievementScoreTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AchievementsLayoutCategoriesFooterCont = ({ captionAchievementScoreTxt, layout, tags }: AchievementsLayoutCategoriesFooterContProps) => {
+export const AchievementsLayoutCategoriesFooterCont = ({ captionAchievementScoreTxt, layout }: AchievementsLayoutCategoriesFooterContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="categories_footer_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 37, ...layout }}
         >
             <Region
@@ -149,14 +144,12 @@ export const AchievementsLayoutCategoriesFooterCont = ({ captionAchievementScore
 export interface AchievementsLayoutBackButtonProps {
     layout?: BoxLayout;
     onBackButton?: () => void;
-    tags?: string[];
 }
 
-export const AchievementsLayoutBackButton = ({ layout, onBackButton, tags }: AchievementsLayoutBackButtonProps) => {
+export const AchievementsLayoutBackButton = ({ layout, onBackButton }: AchievementsLayoutBackButtonProps) => {
     return (
         <Region
             name="back_button"
-            tags={tags}
             onPointerTap={onBackButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 14, width: 33, top: 21, height: 34, ...layout }}
@@ -176,16 +169,14 @@ export interface AchievementsLayoutAchievementsHeaderContProps {
     captionCategoryProgressTxt?: string;
     layout?: BoxLayout;
     srcCategoryPicBitmap?: string;
-    tags?: string[];
 }
 
-export const AchievementsLayoutAchievementsHeaderCont = ({ backButton, captionCategoryNameTxt, captionCategoryProgressTxt, layout, srcCategoryPicBitmap, tags }: AchievementsLayoutAchievementsHeaderContProps) => {
+export const AchievementsLayoutAchievementsHeaderCont = ({ backButton, captionCategoryNameTxt, captionCategoryProgressTxt, layout, srcCategoryPicBitmap }: AchievementsLayoutAchievementsHeaderContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="achievements_header_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 75, ...layout }}
         >
             <Region
@@ -227,14 +218,12 @@ export const AchievementsLayoutAchievementsHeaderCont = ({ backButton, captionCa
 /** Row template `achievements_cont` of AchievementsLayout - pass real rows through its `items…` slot. */
 export interface AchievementsLayoutAchievementsContItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AchievementsLayoutAchievementsContItem = ({ layout, tags }: AchievementsLayoutAchievementsContItemProps) => {
+export const AchievementsLayoutAchievementsContItem = ({ layout }: AchievementsLayoutAchievementsContItemProps) => {
     return (
         <Region
             name="achievements_cont"
-            tags={tags}
             layout={{ width: 367, height: 10, flexShrink: 0, ...layout }}
         />
     );
@@ -244,10 +233,9 @@ export const AchievementsLayoutAchievementsContItem = ({ layout, tags }: Achieve
 export interface AchievementsLayoutAchievementsScrollareaProps {
     itemsAchievementsScrollarea?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AchievementsLayoutAchievementsScrollarea = ({ itemsAchievementsScrollarea, layout, tags }: AchievementsLayoutAchievementsScrollareaProps) => {
+export const AchievementsLayoutAchievementsScrollarea = ({ itemsAchievementsScrollarea, layout }: AchievementsLayoutAchievementsScrollareaProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -255,7 +243,6 @@ export const AchievementsLayoutAchievementsScrollarea = ({ itemsAchievementsScro
         >
             <Region
                 name="achievements_scrollarea"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsAchievementsScrollarea ?? (
@@ -270,14 +257,12 @@ export const AchievementsLayoutAchievementsScrollarea = ({ itemsAchievementsScro
 export interface AchievementsLayoutAchievementsListProps {
     achievementsScrollarea?: AchievementsLayoutAchievementsScrollareaProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AchievementsLayoutAchievementsList = ({ achievementsScrollarea, layout, tags }: AchievementsLayoutAchievementsListProps) => {
+export const AchievementsLayoutAchievementsList = ({ achievementsScrollarea, layout }: AchievementsLayoutAchievementsListProps) => {
     return (
         <Region
             name="achievements_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 367, top: 0, height: 100, minWidth: 367, maxHeight: 245, ...layout }}
         >
             <AchievementsLayoutAchievementsScrollarea {...achievementsScrollarea} />

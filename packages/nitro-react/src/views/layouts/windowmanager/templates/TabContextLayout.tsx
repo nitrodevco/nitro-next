@@ -10,12 +10,10 @@ export const TabContextLayout = ({ layout }: TabContextLayoutProps) => {
         <Region layout={{ position: 'relative', width: 100, height: 100, ...layout }}>
             <TabContent
                 name="content"
-                tags={[ '_CONTENT', '_EXCLUDE', '_INTERNAL' ]}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0 }}
             />
             <Region
                 name="selector"
-                tags={[ '_SELECTOR', '_EXCLUDE', '_INTERNAL' ]}
                 layout={{ position: 'absolute', left: 6, right: 6, top: 0, height: 21 }}
             />
         </Region>

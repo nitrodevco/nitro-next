@@ -7,8 +7,8 @@ import { ProductViewWidget, ProductViewWidgetProps } from '#base/views/layouts/c
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 import { SoldLtdItemsWidget, SoldLtdItemsWidgetProps } from '#base/views/layouts/catalog/widgets/SoldLtdItemsWidget';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
-import { SpinnerWidget2, SpinnerWidget2Props } from '#base/views/layouts/catalog/widgets/SpinnerWidget2';
-import { TotalPriceWidget, TotalPriceWidgetProps } from '#base/views/layouts/catalog/widgets/TotalPriceWidget';
+import { SpinnerWidget, SpinnerWidgetProps } from '#base/views/layouts/catalog/widgets/SpinnerWidget';
+import { TotalPriceWidget2, TotalPriceWidget2Props } from '#base/views/layouts/catalog/widgets/TotalPriceWidget2';
 
 /** Generated from `1725_layout_default_xml` (layout "ctlg_default_3x3", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutDefault_1725LayoutProps {
@@ -21,8 +21,8 @@ export interface LayoutDefault_1725LayoutProps {
     purchaseWidget?: PurchaseWidgetProps;
     soldLtdItemsWidget?: SoldLtdItemsWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
-    spinnerWidget?: SpinnerWidget2Props;
-    totalPriceWidget?: TotalPriceWidgetProps;
+    spinnerWidget?: SpinnerWidgetProps;
+    totalPriceWidget?: TotalPriceWidget2Props;
 }
 
 export const LayoutDefault_1725Layout = ({ activityPointDisplayWidget, bundlePurchaseExtraInfoWidget, itemGridWidget, layout, limitedItemWidget, productViewWidget, purchaseWidget, soldLtdItemsWidget, specialInfoWidget, spinnerWidget, totalPriceWidget }: LayoutDefault_1725LayoutProps) => {
@@ -53,11 +53,11 @@ export const LayoutDefault_1725Layout = ({ activityPointDisplayWidget, bundlePur
                     layout={{ position: 'absolute', left: 0, width: 360, top: 120, height: 155 }}
                     {...bundlePurchaseExtraInfoWidget}
                 />
-                <SpinnerWidget2
+                <SpinnerWidget
                     layout={{ position: 'absolute', left: 0, width: 180, top: 275, height: 25 }}
                     {...spinnerWidget}
                 />
-                <TotalPriceWidget
+                <TotalPriceWidget2
                     layout={{ position: 'absolute', left: 180, width: 180, top: 275, height: 25 }}
                     {...totalPriceWidget}
                 />

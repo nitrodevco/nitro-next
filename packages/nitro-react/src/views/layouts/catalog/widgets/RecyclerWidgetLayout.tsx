@@ -75,14 +75,12 @@ export const RecyclerWidgetLayout = ({ layout, normal, onPatFrankBtn, srcEmoji1,
 /** Named region `spacer` of RecyclerWidgetLayout - configured through the parent's `spacer` prop. */
 export interface RecyclerWidgetLayoutSpacerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RecyclerWidgetLayoutSpacer = ({ layout, tags }: RecyclerWidgetLayoutSpacerProps) => {
+export const RecyclerWidgetLayoutSpacer = ({ layout }: RecyclerWidgetLayoutSpacerProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ width: 2, height: 30, flexShrink: 0, ...layout }}
         />
     );
@@ -91,15 +89,13 @@ export const RecyclerWidgetLayoutSpacer = ({ layout, tags }: RecyclerWidgetLayou
 /** Named region `spacer` of RecyclerWidgetLayout - configured through the parent's `spacer` prop. */
 export interface RecyclerWidgetLayoutSpacer2Props {
     layout?: BoxLayout;
-    tags?: string[];
     visibleSpacer?: boolean;
 }
 
-export const RecyclerWidgetLayoutSpacer2 = ({ layout, tags, visibleSpacer }: RecyclerWidgetLayoutSpacer2Props) => {
+export const RecyclerWidgetLayoutSpacer2 = ({ layout, visibleSpacer }: RecyclerWidgetLayoutSpacer2Props) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             visible={visibleSpacer ?? false}
             layout={{ width: 10, height: 30, flexShrink: 0, ...layout }}
         />
@@ -109,14 +105,12 @@ export const RecyclerWidgetLayoutSpacer2 = ({ layout, tags, visibleSpacer }: Rec
 /** Named region `layout` of RecyclerWidgetLayout - configured through the parent's `layout` prop. */
 export interface RecyclerWidgetLayoutLayoutProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RecyclerWidgetLayoutLayout = ({ layout, tags }: RecyclerWidgetLayoutLayoutProps) => {
+export const RecyclerWidgetLayoutLayout = ({ layout }: RecyclerWidgetLayoutLayoutProps) => {
     return (
         <Region
             name="layout"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 115, ...layout }}
         >
             <ThemeImage
@@ -162,14 +156,12 @@ export interface RecyclerWidgetLayoutSlotsProps {
     srcSlotImg7?: string;
     srcSlotImg8?: string;
     srcSlotImg9?: string;
-    tags?: string[];
 }
 
-export const RecyclerWidgetLayoutSlots = ({ layout, srcSlotBg1, srcSlotBg10, srcSlotBg11, srcSlotBg12, srcSlotBg2, srcSlotBg3, srcSlotBg4, srcSlotBg5, srcSlotBg6, srcSlotBg7, srcSlotBg8, srcSlotBg9, srcSlotImg1, srcSlotImg10, srcSlotImg11, srcSlotImg12, srcSlotImg2, srcSlotImg3, srcSlotImg4, srcSlotImg5, srcSlotImg6, srcSlotImg7, srcSlotImg8, srcSlotImg9, tags }: RecyclerWidgetLayoutSlotsProps) => {
+export const RecyclerWidgetLayoutSlots = ({ layout, srcSlotBg1, srcSlotBg10, srcSlotBg11, srcSlotBg12, srcSlotBg2, srcSlotBg3, srcSlotBg4, srcSlotBg5, srcSlotBg6, srcSlotBg7, srcSlotBg8, srcSlotBg9, srcSlotImg1, srcSlotImg10, srcSlotImg11, srcSlotImg12, srcSlotImg2, srcSlotImg3, srcSlotImg4, srcSlotImg5, srcSlotImg6, srcSlotImg7, srcSlotImg8, srcSlotImg9 }: RecyclerWidgetLayoutSlotsProps) => {
     return (
         <Region
             name="slots"
-            tags={tags}
             layout={{ position: 'absolute', left: 21, width: 145, top: 16, height: 124, ...layout }}
         >
             <ThemeImage
@@ -301,14 +293,12 @@ export interface RecyclerWidgetLayoutSlotsWrapperProps {
     layout?: BoxLayout;
     layout2?: RecyclerWidgetLayoutLayoutProps;
     slots?: RecyclerWidgetLayoutSlotsProps;
-    tags?: string[];
 }
 
-export const RecyclerWidgetLayoutSlotsWrapper = ({ layout, layout2, slots, tags }: RecyclerWidgetLayoutSlotsWrapperProps) => {
+export const RecyclerWidgetLayoutSlotsWrapper = ({ layout, layout2, slots }: RecyclerWidgetLayoutSlotsWrapperProps) => {
     return (
         <Region
             name="slots_wrapper"
-            tags={tags}
             layout={{ position: 'absolute', left: 16, right: 159, bottom: -33, height: 156, ...layout }}
         >
             <RecyclerWidgetLayoutLayout {...layout2} />
@@ -320,14 +310,12 @@ export const RecyclerWidgetLayoutSlotsWrapper = ({ layout, layout2, slots, tags 
 /** Named region `layout` of RecyclerWidgetLayout - configured through the parent's `layout` prop. */
 export interface RecyclerWidgetLayoutLayout2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RecyclerWidgetLayoutLayout2 = ({ layout, tags }: RecyclerWidgetLayoutLayout2Props) => {
+export const RecyclerWidgetLayoutLayout2 = ({ layout }: RecyclerWidgetLayoutLayout2Props) => {
     return (
         <Region
             name="layout"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 115, ...layout }}
         >
             <ThemeImage
@@ -351,14 +339,12 @@ export interface RecyclerWidgetLayoutIndicatorPointerProps {
     layout?: BoxLayout;
     srcPointerArrow?: string;
     srcPointerBase?: string;
-    tags?: string[];
 }
 
-export const RecyclerWidgetLayoutIndicatorPointer = ({ layout, srcPointerArrow, srcPointerBase, tags }: RecyclerWidgetLayoutIndicatorPointerProps) => {
+export const RecyclerWidgetLayoutIndicatorPointer = ({ layout, srcPointerArrow, srcPointerBase }: RecyclerWidgetLayoutIndicatorPointerProps) => {
     return (
         <Region
             name="indicator_pointer"
-            tags={tags}
             layout={{ position: 'absolute', left: 37, width: 50, top: 43, height: 50, ...layout }}
         >
             <ThemeImage
@@ -379,17 +365,15 @@ export const RecyclerWidgetLayoutIndicatorPointer = ({ layout, srcPointerArrow, 
 export interface RecyclerWidgetLayoutAbortRegionProps {
     layout?: BoxLayout;
     onAbortRegion?: () => void;
-    tags?: string[];
     visibleAbortRegion?: boolean;
 }
 
-export const RecyclerWidgetLayoutAbortRegion = ({ layout, onAbortRegion, tags, visibleAbortRegion }: RecyclerWidgetLayoutAbortRegionProps) => {
+export const RecyclerWidgetLayoutAbortRegion = ({ layout, onAbortRegion, visibleAbortRegion }: RecyclerWidgetLayoutAbortRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="abort_region"
-            tags={tags}
             visible={visibleAbortRegion ?? false}
             onPointerTap={onAbortRegion}
             cursor="pointer"
@@ -408,14 +392,12 @@ export interface RecyclerWidgetLayoutIndicatorProps {
     indicatorPointer?: RecyclerWidgetLayoutIndicatorPointerProps;
     layout?: BoxLayout;
     srcIndicator?: string;
-    tags?: string[];
 }
 
-export const RecyclerWidgetLayoutIndicator = ({ abortRegion, indicatorPointer, layout, srcIndicator, tags }: RecyclerWidgetLayoutIndicatorProps) => {
+export const RecyclerWidgetLayoutIndicator = ({ abortRegion, indicatorPointer, layout, srcIndicator }: RecyclerWidgetLayoutIndicatorProps) => {
     return (
         <Region
             name="indicator"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 123, top: 0, height: 115, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
@@ -434,14 +416,12 @@ export interface RecyclerWidgetLayoutIndicatorWrapperProps {
     indicator?: RecyclerWidgetLayoutIndicatorProps;
     layout?: BoxLayout;
     layout2?: RecyclerWidgetLayoutLayout2Props;
-    tags?: string[];
 }
 
-export const RecyclerWidgetLayoutIndicatorWrapper = ({ indicator, layout, layout2, tags }: RecyclerWidgetLayoutIndicatorWrapperProps) => {
+export const RecyclerWidgetLayoutIndicatorWrapper = ({ indicator, layout, layout2 }: RecyclerWidgetLayoutIndicatorWrapperProps) => {
     return (
         <Region
             name="indicator_wrapper"
-            tags={tags}
             layout={{ position: 'absolute', left: 214, right: 23, bottom: 8, height: 115, minWidth: 123, maxWidth: 123, minHeight: 115, maxHeight: 115, ...layout }}
         >
             <RecyclerWidgetLayoutLayout2 {...layout2} />
@@ -459,16 +439,14 @@ export interface RecyclerWidgetLayoutNormalProps {
     slotsWrapper?: RecyclerWidgetLayoutSlotsWrapperProps;
     spacer?: RecyclerWidgetLayoutSpacerProps;
     spacer2?: RecyclerWidgetLayoutSpacer2Props;
-    tags?: string[];
 }
 
-export const RecyclerWidgetLayoutNormal = ({ captionDucketCost, indicatorWrapper, layout, onRecyclerRecycle, slotsWrapper, spacer, spacer2, tags }: RecyclerWidgetLayoutNormalProps) => {
+export const RecyclerWidgetLayoutNormal = ({ captionDucketCost, indicatorWrapper, layout, onRecyclerRecycle, slotsWrapper, spacer, spacer2 }: RecyclerWidgetLayoutNormalProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="normal"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
             <Region layout={{ position: 'absolute', marginLeft: -140, marginRight: 140, width: 42, top: 7, height: 30, flexDirection: 'row' }}>

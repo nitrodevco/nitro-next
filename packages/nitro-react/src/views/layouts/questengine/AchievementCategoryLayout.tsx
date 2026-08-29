@@ -20,14 +20,12 @@ export interface AchievementCategoryLayoutHoverContainerProps {
     captionHeaderTxt?: string;
     layout?: BoxLayout;
     srcCategoryPicBitmap?: string;
-    tags?: string[];
 }
 
-export const AchievementCategoryLayoutHoverContainer = ({ captionCompletionTxt, captionHeaderTxt, layout, srcCategoryPicBitmap, tags }: AchievementCategoryLayoutHoverContainerProps) => {
+export const AchievementCategoryLayoutHoverContainer = ({ captionCompletionTxt, captionHeaderTxt, layout, srcCategoryPicBitmap }: AchievementCategoryLayoutHoverContainerProps) => {
     return (
         <Region
             name="hover_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 115, top: 1, height: 104, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -58,14 +56,12 @@ export const AchievementCategoryLayoutHoverContainer = ({ captionCompletionTxt, 
 export interface AchievementCategoryLayoutCategoryRegionProps {
     layout?: BoxLayout;
     onCategoryRegion?: () => void;
-    tags?: string[];
 }
 
-export const AchievementCategoryLayoutCategoryRegion = ({ layout, onCategoryRegion, tags }: AchievementCategoryLayoutCategoryRegionProps) => {
+export const AchievementCategoryLayoutCategoryRegion = ({ layout, onCategoryRegion }: AchievementCategoryLayoutCategoryRegionProps) => {
     return (
         <Region
             name="category_region"
-            tags={tags}
             onPointerTap={onCategoryRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 103, ...layout }}
@@ -82,14 +78,12 @@ export interface AchievementCategoryLayoutAchievementCategoryContainerProps {
     srcCategoryBgAct?: string;
     srcCategoryBgActHover?: string;
     srcCategoryBgInact?: string;
-    tags?: string[];
 }
 
-export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionUnseenCount, categoryRegion, hoverContainer, layout, srcCategoryBgAct, srcCategoryBgActHover, srcCategoryBgInact, tags }: AchievementCategoryLayoutAchievementCategoryContainerProps) => {
+export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionUnseenCount, categoryRegion, hoverContainer, layout, srcCategoryBgAct, srcCategoryBgActHover, srcCategoryBgInact }: AchievementCategoryLayoutAchievementCategoryContainerProps) => {
     return (
         <Region
             name="achievement_category_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 105, ...layout }}
         >
             <Region
@@ -123,10 +117,7 @@ export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionU
                 />
             </Region>
             <AchievementCategoryLayoutHoverContainer {...hoverContainer} />
-            <AchievementCategoryLayoutCategoryRegion
-                tags={[ 'FIT:achievementsSelectCategory' ]}
-                {...categoryRegion}
-            />
+            <AchievementCategoryLayoutCategoryRegion {...categoryRegion} />
             <Border
                 variant="7"
                 name="unseen_count_border"

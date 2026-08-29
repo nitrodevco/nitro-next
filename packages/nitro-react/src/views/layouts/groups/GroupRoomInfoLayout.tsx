@@ -37,14 +37,12 @@ export const GroupRoomInfoLayout = ({ contentCont, infoRegion, layout, srcBgCont
 export interface GroupRoomInfoLayoutTitleRegionProps {
     layout?: BoxLayout;
     onTitleRegion?: () => void;
-    tags?: string[];
 }
 
-export const GroupRoomInfoLayoutTitleRegion = ({ layout, onTitleRegion, tags }: GroupRoomInfoLayoutTitleRegionProps) => {
+export const GroupRoomInfoLayoutTitleRegion = ({ layout, onTitleRegion }: GroupRoomInfoLayoutTitleRegionProps) => {
     return (
         <Region
             name="title_region"
-            tags={tags}
             onPointerTap={onTitleRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25, ...layout }}
@@ -56,14 +54,12 @@ export const GroupRoomInfoLayoutTitleRegion = ({ layout, onTitleRegion, tags }: 
 export interface GroupRoomInfoLayoutInfoRegionProps {
     layout?: BoxLayout;
     onInfoRegion?: () => void;
-    tags?: string[];
 }
 
-export const GroupRoomInfoLayoutInfoRegion = ({ layout, onInfoRegion, tags }: GroupRoomInfoLayoutInfoRegionProps) => {
+export const GroupRoomInfoLayoutInfoRegion = ({ layout, onInfoRegion }: GroupRoomInfoLayoutInfoRegionProps) => {
     return (
         <Region
             name="info_region"
-            tags={tags}
             onPointerTap={onInfoRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 28, height: 47, ...layout }}
@@ -81,16 +77,14 @@ export interface GroupRoomInfoLayoutContentContProps {
     onRequestMembershipButton?: () => void;
     srcGroupBaseIcon?: string;
     srcGroupIcon?: string;
-    tags?: string[];
 }
 
-export const GroupRoomInfoLayoutContentCont = ({ captionGroupNameTxt, captionHeaderTxt, layout, onJoinButton, onManageButton, onRequestMembershipButton, srcGroupBaseIcon, srcGroupIcon, tags }: GroupRoomInfoLayoutContentContProps) => {
+export const GroupRoomInfoLayoutContentCont = ({ captionGroupNameTxt, captionHeaderTxt, layout, onJoinButton, onManageButton, onRequestMembershipButton, srcGroupBaseIcon, srcGroupIcon }: GroupRoomInfoLayoutContentContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="content_cont"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 119, justifyContent: 'center', ...layout }}
         >

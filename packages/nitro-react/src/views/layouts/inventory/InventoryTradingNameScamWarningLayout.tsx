@@ -34,16 +34,14 @@ export const InventoryTradingNameScamWarningLayout = ({ contentList, layout, onC
 export interface InventoryTradingNameScamWarningLayoutWarningTextItemProps {
     captionWarningText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingNameScamWarningLayoutWarningTextItem = ({ captionWarningText, layout, tags }: InventoryTradingNameScamWarningLayoutWarningTextItemProps) => {
+export const InventoryTradingNameScamWarningLayoutWarningTextItem = ({ captionWarningText, layout }: InventoryTradingNameScamWarningLayoutWarningTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="warning_text"
-            tags={tags}
             layout={{ width: 330, height: 44, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -60,17 +58,15 @@ export interface InventoryTradingNameScamWarningLayoutTraderSectionItemProps {
     captionTraderNameText?: string;
     layout?: BoxLayout;
     onOpenProfileButton?: () => void;
-    tags?: string[];
 }
 
-export const InventoryTradingNameScamWarningLayoutTraderSectionItem = ({ captionTraderLabel, captionTraderNameText, layout, onOpenProfileButton, tags }: InventoryTradingNameScamWarningLayoutTraderSectionItemProps) => {
+export const InventoryTradingNameScamWarningLayoutTraderSectionItem = ({ captionTraderLabel, captionTraderNameText, layout, onOpenProfileButton }: InventoryTradingNameScamWarningLayoutTraderSectionItemProps) => {
     const t = useTranslation();
 
     return (
         <Border
             variant="4"
             name="trader_section"
-            tags={tags}
             tintColor="#f1f1f1"
             layout={{ width: 330, height: 58, flexShrink: 0, ...layout }}
         >
@@ -113,16 +109,14 @@ export interface InventoryTradingNameScamWarningLayoutRoomMatchesSectionItemProp
     captionRoomMatchesHeader?: string;
     captionRoomMatchesText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingNameScamWarningLayoutRoomMatchesSectionItem = ({ captionRoomMatchesHeader, captionRoomMatchesText, layout, tags }: InventoryTradingNameScamWarningLayoutRoomMatchesSectionItemProps) => {
+export const InventoryTradingNameScamWarningLayoutRoomMatchesSectionItem = ({ captionRoomMatchesHeader, captionRoomMatchesText, layout }: InventoryTradingNameScamWarningLayoutRoomMatchesSectionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_matches_section"
-            tags={tags}
             layout={{ width: 330, height: 58, flexShrink: 0, ...layout }}
         >
             <Region
@@ -149,16 +143,14 @@ export interface InventoryTradingNameScamWarningLayoutFriendMatchesSectionItemPr
     captionFriendMatchesHeader?: string;
     captionFriendMatchesText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingNameScamWarningLayoutFriendMatchesSectionItem = ({ captionFriendMatchesHeader, captionFriendMatchesText, layout, tags }: InventoryTradingNameScamWarningLayoutFriendMatchesSectionItemProps) => {
+export const InventoryTradingNameScamWarningLayoutFriendMatchesSectionItem = ({ captionFriendMatchesHeader, captionFriendMatchesText, layout }: InventoryTradingNameScamWarningLayoutFriendMatchesSectionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="friend_matches_section"
-            tags={tags}
             layout={{ width: 330, height: 58, flexShrink: 0, ...layout }}
         >
             <Region
@@ -184,17 +176,15 @@ export const InventoryTradingNameScamWarningLayoutFriendMatchesSectionItem = ({ 
 export interface InventoryTradingNameScamWarningLayoutCloseButtonItemProps {
     layout?: BoxLayout;
     onCloseButton?: () => void;
-    tags?: string[];
 }
 
-export const InventoryTradingNameScamWarningLayoutCloseButtonItem = ({ layout, onCloseButton, tags }: InventoryTradingNameScamWarningLayoutCloseButtonItemProps) => {
+export const InventoryTradingNameScamWarningLayoutCloseButtonItem = ({ layout, onCloseButton }: InventoryTradingNameScamWarningLayoutCloseButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="close_button"
-            tags={tags}
             onPointerTap={onCloseButton}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 50, height: 26, flexShrink: 0, ...layout }}
@@ -208,14 +198,12 @@ export const InventoryTradingNameScamWarningLayoutCloseButtonItem = ({ layout, o
 export interface InventoryTradingNameScamWarningLayoutCloseCountdownTextItemProps {
     captionCloseCountdownText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingNameScamWarningLayoutCloseCountdownTextItem = ({ captionCloseCountdownText, layout, tags }: InventoryTradingNameScamWarningLayoutCloseCountdownTextItemProps) => {
+export const InventoryTradingNameScamWarningLayoutCloseCountdownTextItem = ({ captionCloseCountdownText, layout }: InventoryTradingNameScamWarningLayoutCloseCountdownTextItemProps) => {
     return (
         <Region
             name="close_countdown_text"
-            tags={tags}
             layout={{ width: 16, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -230,14 +218,12 @@ export const InventoryTradingNameScamWarningLayoutCloseCountdownTextItem = ({ ca
 export interface InventoryTradingNameScamWarningLayoutButtonContainerItemProps {
     itemsButtonContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingNameScamWarningLayoutButtonContainerItem = ({ itemsButtonContainer, layout, tags }: InventoryTradingNameScamWarningLayoutButtonContainerItemProps) => {
+export const InventoryTradingNameScamWarningLayoutButtonContainerItem = ({ itemsButtonContainer, layout }: InventoryTradingNameScamWarningLayoutButtonContainerItemProps) => {
     return (
         <Region
             name="button_container"
-            tags={tags}
             layout={{ width: 73, height: 30, flexShrink: 0, flexDirection: 'row', gap: 7, ...layout }}
         >
             {itemsButtonContainer ?? (
@@ -254,14 +240,12 @@ export const InventoryTradingNameScamWarningLayoutButtonContainerItem = ({ items
 export interface InventoryTradingNameScamWarningLayoutContentListProps {
     itemsContentList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryTradingNameScamWarningLayoutContentList = ({ itemsContentList, layout, tags }: InventoryTradingNameScamWarningLayoutContentListProps) => {
+export const InventoryTradingNameScamWarningLayoutContentList = ({ itemsContentList, layout }: InventoryTradingNameScamWarningLayoutContentListProps) => {
     return (
         <Region
             name="content_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 16, top: 8, height: 280, flexDirection: 'column', gap: 8, ...layout }}
         >
             {itemsContentList ?? (

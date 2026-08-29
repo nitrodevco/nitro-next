@@ -21,16 +21,14 @@ export interface MemenuMainSimpleLayoutProfileProps {
     layout?: BoxLayout;
     onProfile?: () => void;
     srcProfileIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainSimpleLayoutProfile = ({ captionProfileText, layout, onProfile, srcProfileIcon, tags }: MemenuMainSimpleLayoutProfileProps) => {
+export const MemenuMainSimpleLayoutProfile = ({ captionProfileText, layout, onProfile, srcProfileIcon }: MemenuMainSimpleLayoutProfileProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="profile"
-            tags={tags}
             onPointerTap={onProfile}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 79, top: 0, height: 79, justifyContent: 'center', ...layout }}
@@ -59,16 +57,14 @@ export interface MemenuMainSimpleLayoutMinimailProps {
     layout?: BoxLayout;
     onMinimail?: () => void;
     srcMinimailIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainSimpleLayoutMinimail = ({ captionMinimailText, layout, onMinimail, srcMinimailIcon, tags }: MemenuMainSimpleLayoutMinimailProps) => {
+export const MemenuMainSimpleLayoutMinimail = ({ captionMinimailText, layout, onMinimail, srcMinimailIcon }: MemenuMainSimpleLayoutMinimailProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="minimail"
-            tags={tags}
             onPointerTap={onMinimail}
             cursor="pointer"
             layout={{ position: 'absolute', left: 86, width: 79, top: 0, height: 79, justifyContent: 'center', ...layout }}
@@ -97,16 +93,14 @@ export interface MemenuMainSimpleLayoutRoomsProps {
     layout?: BoxLayout;
     onRooms?: () => void;
     srcRoomsIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainSimpleLayoutRooms = ({ captionRoomsText, layout, onRooms, srcRoomsIcon, tags }: MemenuMainSimpleLayoutRoomsProps) => {
+export const MemenuMainSimpleLayoutRooms = ({ captionRoomsText, layout, onRooms, srcRoomsIcon }: MemenuMainSimpleLayoutRoomsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rooms"
-            tags={tags}
             onPointerTap={onRooms}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 79, top: 79, height: 79, justifyContent: 'center', ...layout }}
@@ -135,16 +129,14 @@ export interface MemenuMainSimpleLayoutSettingsProps {
     layout?: BoxLayout;
     onSettings?: () => void;
     srcSettingsIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainSimpleLayoutSettings = ({ captionSettingsText, layout, onSettings, srcSettingsIcon, tags }: MemenuMainSimpleLayoutSettingsProps) => {
+export const MemenuMainSimpleLayoutSettings = ({ captionSettingsText, layout, onSettings, srcSettingsIcon }: MemenuMainSimpleLayoutSettingsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="settings"
-            tags={tags}
             onPointerTap={onSettings}
             cursor="pointer"
             layout={{ position: 'absolute', left: 86, width: 79, top: 79, height: 79, justifyContent: 'center', ...layout }}
@@ -173,16 +165,14 @@ export interface MemenuMainSimpleLayoutAchievementsProps {
     layout?: BoxLayout;
     onAchievements?: () => void;
     srcAchievementsIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainSimpleLayoutAchievements = ({ captionAchievementsText, layout, onAchievements, srcAchievementsIcon, tags }: MemenuMainSimpleLayoutAchievementsProps) => {
+export const MemenuMainSimpleLayoutAchievements = ({ captionAchievementsText, layout, onAchievements, srcAchievementsIcon }: MemenuMainSimpleLayoutAchievementsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="achievements"
-            tags={tags}
             onPointerTap={onAchievements}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 79, top: 158, height: 79, justifyContent: 'center', ...layout }}
@@ -211,16 +201,14 @@ export interface MemenuMainSimpleLayoutTalentsProps {
     layout?: BoxLayout;
     onTalents?: () => void;
     srcTalentsIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainSimpleLayoutTalents = ({ captionTalentsText, layout, onTalents, srcTalentsIcon, tags }: MemenuMainSimpleLayoutTalentsProps) => {
+export const MemenuMainSimpleLayoutTalents = ({ captionTalentsText, layout, onTalents, srcTalentsIcon }: MemenuMainSimpleLayoutTalentsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="talents"
-            tags={tags}
             onPointerTap={onTalents}
             cursor="pointer"
             layout={{ position: 'absolute', left: 86, width: 79, top: 158, height: 79, justifyContent: 'center', ...layout }}
@@ -249,17 +237,15 @@ export interface MemenuMainSimpleLayoutGuideProps {
     layout?: BoxLayout;
     onGuide?: () => void;
     srcGuideIcon?: string;
-    tags?: string[];
     visibleGuide?: boolean;
 }
 
-export const MemenuMainSimpleLayoutGuide = ({ captionGuideText, layout, onGuide, srcGuideIcon, tags, visibleGuide }: MemenuMainSimpleLayoutGuideProps) => {
+export const MemenuMainSimpleLayoutGuide = ({ captionGuideText, layout, onGuide, srcGuideIcon, visibleGuide }: MemenuMainSimpleLayoutGuideProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guide"
-            tags={tags}
             visible={visibleGuide ?? false}
             onPointerTap={onGuide}
             cursor="pointer"
@@ -293,15 +279,13 @@ export interface MemenuMainSimpleLayoutButtonsProps {
     profile?: MemenuMainSimpleLayoutProfileProps;
     rooms?: MemenuMainSimpleLayoutRoomsProps;
     settings?: MemenuMainSimpleLayoutSettingsProps;
-    tags?: string[];
     talents?: MemenuMainSimpleLayoutTalentsProps;
 }
 
-export const MemenuMainSimpleLayoutButtons = ({ achievements, guide, layout, minimail, onButtons, profile, rooms, settings, tags, talents }: MemenuMainSimpleLayoutButtonsProps) => {
+export const MemenuMainSimpleLayoutButtons = ({ achievements, guide, layout, minimail, onButtons, profile, rooms, settings, talents }: MemenuMainSimpleLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             onPointerTap={onButtons}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 245, ...layout }}

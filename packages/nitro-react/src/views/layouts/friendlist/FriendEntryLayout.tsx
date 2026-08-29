@@ -20,21 +20,18 @@ export interface FriendEntryLayoutStartChatProps {
     layout?: BoxLayout;
     onStartChat?: () => void;
     srcStartChat?: string;
-    tags?: string[];
 }
 
-export const FriendEntryLayoutStartChat = ({ layout, onStartChat, srcStartChat, tags }: FriendEntryLayoutStartChatProps) => {
+export const FriendEntryLayoutStartChat = ({ layout, onStartChat, srcStartChat }: FriendEntryLayoutStartChatProps) => {
     return (
         <Region
             name="start_chat"
-            tags={tags}
             onPointerTap={onStartChat}
             cursor="pointer"
             layout={{ position: 'absolute', right: 3, width: 16, top: 2, height: 14, ...layout }}
         >
             <ThemeImage
                 name="start_chat"
-                tags={[ 'bitmap' ]}
                 src={srcStartChat}
                 layout={{ position: 'absolute', right: 0, width: 16, top: 0, height: 14 }}
             />
@@ -47,21 +44,18 @@ export interface FriendEntryLayoutFollowFriendProps {
     layout?: BoxLayout;
     onFollowFriend?: () => void;
     srcFollowFriend?: string;
-    tags?: string[];
 }
 
-export const FriendEntryLayoutFollowFriend = ({ layout, onFollowFriend, srcFollowFriend, tags }: FriendEntryLayoutFollowFriendProps) => {
+export const FriendEntryLayoutFollowFriend = ({ layout, onFollowFriend, srcFollowFriend }: FriendEntryLayoutFollowFriendProps) => {
     return (
         <Region
             name="follow_friend"
-            tags={tags}
             onPointerTap={onFollowFriend}
             cursor="pointer"
             layout={{ position: 'absolute', right: 20, width: 16, top: 2, height: 14, ...layout }}
         >
             <ThemeImage
                 name="follow_friend"
-                tags={[ 'bitmap' ]}
                 src={srcFollowFriend}
                 layout={{ position: 'absolute', right: 0, width: 16, top: 0, height: 14 }}
             />
@@ -74,28 +68,24 @@ export interface FriendEntryLayoutRelationshipStatusProps {
     layout?: BoxLayout;
     onRelationshipStatus?: () => void;
     srcStatus?: string;
-    tags?: string[];
 }
 
-export const FriendEntryLayoutRelationshipStatus = ({ layout, onRelationshipStatus, srcStatus, tags }: FriendEntryLayoutRelationshipStatusProps) => {
+export const FriendEntryLayoutRelationshipStatus = ({ layout, onRelationshipStatus, srcStatus }: FriendEntryLayoutRelationshipStatusProps) => {
     return (
         <Region
             name="relationship_status"
-            tags={tags}
             onPointerTap={onRelationshipStatus}
             cursor="pointer"
             layout={{ position: 'absolute', right: 39, width: 26, top: 2, height: 16, ...layout }}
         >
             <ThemeImage
                 name="status"
-                tags={[ 'bitmap' ]}
                 src={srcStatus}
                 layout={{ position: 'absolute', right: 10, width: 16, top: 1, height: 14 }}
             />
             <Icon
                 variant="7"
                 name="drop"
-                tags={[ 'drop' ]}
                 tintColor="#000000"
                 layout={{ position: 'absolute', right: 0, width: 10, top: 5, height: 5 }}
             />
@@ -107,14 +97,12 @@ export const FriendEntryLayoutRelationshipStatus = ({ layout, onRelationshipStat
 export interface FriendEntryLayoutUserInfoRegionProps {
     layout?: BoxLayout;
     onUserInfoRegion?: () => void;
-    tags?: string[];
 }
 
-export const FriendEntryLayoutUserInfoRegion = ({ layout, onUserInfoRegion, tags }: FriendEntryLayoutUserInfoRegionProps) => {
+export const FriendEntryLayoutUserInfoRegion = ({ layout, onUserInfoRegion }: FriendEntryLayoutUserInfoRegionProps) => {
     return (
         <Region
             name="user_info_region"
-            tags={tags}
             onPointerTap={onUserInfoRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 20, width: 15, top: 5, height: 11, ...layout }}
@@ -137,14 +125,12 @@ export const FriendEntryLayoutUserInfoRegion = ({ layout, onUserInfoRegion, tags
 export interface FriendEntryLayoutPagerProps {
     layout?: BoxLayout;
     onPager?: () => void;
-    tags?: string[];
 }
 
-export const FriendEntryLayoutPager = ({ layout, onPager, tags }: FriendEntryLayoutPagerProps) => {
+export const FriendEntryLayoutPager = ({ layout, onPager }: FriendEntryLayoutPagerProps) => {
     return (
         <Region
             name="pager"
-            tags={tags}
             onPointerTap={onPager}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 190, top: 20, height: 20, ...layout }}
@@ -157,16 +143,14 @@ export interface FriendEntryLayoutSelectAllRegionProps {
     captionSelectAllText?: string;
     layout?: BoxLayout;
     onSelectAllRegion?: () => void;
-    tags?: string[];
 }
 
-export const FriendEntryLayoutSelectAllRegion = ({ captionSelectAllText, layout, onSelectAllRegion, tags }: FriendEntryLayoutSelectAllRegionProps) => {
+export const FriendEntryLayoutSelectAllRegion = ({ captionSelectAllText, layout, onSelectAllRegion }: FriendEntryLayoutSelectAllRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="select_all_region"
-            tags={tags}
             onPointerTap={onSelectAllRegion}
             cursor="pointer"
             layout={{ position: 'absolute', right: 6, width: 49, top: 0, height: 16, ...layout }}
@@ -198,15 +182,13 @@ export interface FriendEntryLayoutBgProps {
     srcArrowRightBlack?: string;
     srcFace?: string;
     startChat?: FriendEntryLayoutStartChatProps;
-    tags?: string[];
     userInfoRegion?: FriendEntryLayoutUserInfoRegionProps;
 }
 
-export const FriendEntryLayoutBg = ({ captionCaption, captionName, followFriend, layout, onBg, pager, relationshipStatus, selectAllRegion, srcArrowDownBlack, srcArrowRightBlack, srcFace, startChat, tags, userInfoRegion }: FriendEntryLayoutBgProps) => {
+export const FriendEntryLayoutBg = ({ captionCaption, captionName, followFriend, layout, onBg, pager, relationshipStatus, selectAllRegion, srcArrowDownBlack, srcArrowRightBlack, srcFace, startChat, userInfoRegion }: FriendEntryLayoutBgProps) => {
     return (
         <Region
             name="bg"
-            tags={tags}
             backgroundColor="#ffffcc"
             onPointerTap={onBg}
             cursor="pointer"

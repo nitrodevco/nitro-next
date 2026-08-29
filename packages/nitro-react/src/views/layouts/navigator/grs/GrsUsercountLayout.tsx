@@ -20,14 +20,12 @@ export interface GrsUsercountLayoutUsercountProps {
     layout?: BoxLayout;
     onUsercount?: () => void;
     srcUsercountBg?: string;
-    tags?: string[];
 }
 
-export const GrsUsercountLayoutUsercount = ({ captionTxt, layout, onUsercount, srcUsercountBg, tags }: GrsUsercountLayoutUsercountProps) => {
+export const GrsUsercountLayoutUsercount = ({ captionTxt, layout, onUsercount, srcUsercountBg }: GrsUsercountLayoutUsercountProps) => {
     return (
         <Region
             name="usercount"
-            tags={tags}
             onPointerTap={onUsercount}
             cursor="pointer"
             layout={{ position: 'absolute', right: 0, width: 34, top: 0, height: 13, justifyContent: 'center', ...layout }}

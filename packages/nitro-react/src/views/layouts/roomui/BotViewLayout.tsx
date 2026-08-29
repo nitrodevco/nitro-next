@@ -21,7 +21,6 @@ export const BotViewLayout = ({ infostandElementList, layout, onClose }: BotView
                 >
                     <CloseButton
                         variant="1"
-                        tags={[ 'close' ]}
                         onPointerTap={onClose}
                         layout={{ position: 'absolute', left: 168, width: 18, top: 6, height: 16 }}
                     />
@@ -36,14 +35,12 @@ export const BotViewLayout = ({ infostandElementList, layout, onClose }: BotView
 export interface BotViewLayoutNameTextItemProps {
     captionNameText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BotViewLayoutNameTextItem = ({ captionNameText, layout, tags }: BotViewLayoutNameTextItemProps) => {
+export const BotViewLayoutNameTextItem = ({ captionNameText, layout }: BotViewLayoutNameTextItemProps) => {
     return (
         <Region
             name="name_text"
-            tags={tags}
             layout={{ width: 4, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             backgroundColor="#3d3d3d"
         >
@@ -58,14 +55,12 @@ export const BotViewLayoutNameTextItem = ({ captionNameText, layout, tags }: Bot
 /** Row template `images_spacer` of BotViewLayout - pass real rows through its `items…` slot. */
 export interface BotViewLayoutImagesSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BotViewLayoutImagesSpacerItem = ({ layout, tags }: BotViewLayoutImagesSpacerItemProps) => {
+export const BotViewLayoutImagesSpacerItem = ({ layout }: BotViewLayoutImagesSpacerItemProps) => {
     return (
         <Region
             name="images_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -75,14 +70,12 @@ export const BotViewLayoutImagesSpacerItem = ({ layout, tags }: BotViewLayoutIma
 /** Row template `image_and_badges_container` of BotViewLayout - pass real rows through its `items…` slot. */
 export interface BotViewLayoutImageAndBadgesContainerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BotViewLayoutImageAndBadgesContainerItem = ({ layout, tags }: BotViewLayoutImageAndBadgesContainerItemProps) => {
+export const BotViewLayoutImageAndBadgesContainerItem = ({ layout }: BotViewLayoutImageAndBadgesContainerItemProps) => {
     return (
         <Region
             name="image_and_badges_container"
-            tags={tags}
             backgroundColor="#6d6d6d"
             layout={{ width: 193, height: 132, flexShrink: 0, ...layout }}
         >
@@ -142,14 +135,12 @@ export const BotViewLayoutImageAndBadgesContainerItem = ({ layout, tags }: BotVi
 /** Row template `motto_spacer` of BotViewLayout - pass real rows through its `items…` slot. */
 export interface BotViewLayoutMottoSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BotViewLayoutMottoSpacerItem = ({ layout, tags }: BotViewLayoutMottoSpacerItemProps) => {
+export const BotViewLayoutMottoSpacerItem = ({ layout }: BotViewLayoutMottoSpacerItemProps) => {
     return (
         <Region
             name="motto_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -159,17 +150,15 @@ export const BotViewLayoutMottoSpacerItem = ({ layout, tags }: BotViewLayoutMott
 /** Row template `motto_container` of BotViewLayout - pass real rows through its `items…` slot. */
 export interface BotViewLayoutMottoContainerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BotViewLayoutMottoContainerItem = ({ layout, tags }: BotViewLayoutMottoContainerItemProps) => {
+export const BotViewLayoutMottoContainerItem = ({ layout }: BotViewLayoutMottoContainerItemProps) => {
     const [ mottoTextValue, setMottoTextValue ] = useState('');
 
     return (
         <Border
             variant="0"
             name="motto_container"
-            tags={tags}
             tintColor="#666666"
             layout={{ width: 170, height: 57, flexShrink: 0, ...layout }}
         >
@@ -187,14 +176,12 @@ export const BotViewLayoutMottoContainerItem = ({ layout, tags }: BotViewLayoutM
 /** Row template `handitem_spacer` of BotViewLayout - pass real rows through its `items…` slot. */
 export interface BotViewLayoutHanditemSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BotViewLayoutHanditemSpacerItem = ({ layout, tags }: BotViewLayoutHanditemSpacerItemProps) => {
+export const BotViewLayoutHanditemSpacerItem = ({ layout }: BotViewLayoutHanditemSpacerItemProps) => {
     return (
         <Region
             name="handitem_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -205,16 +192,14 @@ export const BotViewLayoutHanditemSpacerItem = ({ layout, tags }: BotViewLayoutH
 export interface BotViewLayoutHanditemTxtItemProps {
     captionHanditemTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BotViewLayoutHanditemTxtItem = ({ captionHanditemTxt, layout, tags }: BotViewLayoutHanditemTxtItemProps) => {
+export const BotViewLayoutHanditemTxtItem = ({ captionHanditemTxt, layout }: BotViewLayoutHanditemTxtItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="handitem_txt"
-            tags={tags}
             layout={{ width: 170, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -229,14 +214,12 @@ export const BotViewLayoutHanditemTxtItem = ({ captionHanditemTxt, layout, tags 
 export interface BotViewLayoutInfostandElementListProps {
     itemsInfostandElementList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BotViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout, tags }: BotViewLayoutInfostandElementListProps) => {
+export const BotViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: BotViewLayoutInfostandElementListProps) => {
     return (
         <Region
             name="infostand_element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 330, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsInfostandElementList ?? (

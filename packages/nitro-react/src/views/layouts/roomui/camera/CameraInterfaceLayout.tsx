@@ -21,14 +21,12 @@ export interface CameraInterfaceLayoutCameraButton0Props {
     layout?: BoxLayout;
     onCameraButton0?: () => void;
     srcCameraSlot0?: string;
-    tags?: string[];
 }
 
-export const CameraInterfaceLayoutCameraButton0 = ({ layout, onCameraButton0, srcCameraSlot0, tags }: CameraInterfaceLayoutCameraButton0Props) => {
+export const CameraInterfaceLayoutCameraButton0 = ({ layout, onCameraButton0, srcCameraSlot0 }: CameraInterfaceLayoutCameraButton0Props) => {
     return (
         <Region
             name="cameraButton_0"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onCameraButton0}
             cursor="pointer"
@@ -48,14 +46,12 @@ export interface CameraInterfaceLayoutCameraButton1Props {
     layout?: BoxLayout;
     onCameraButton1?: () => void;
     srcCameraSlot1?: string;
-    tags?: string[];
 }
 
-export const CameraInterfaceLayoutCameraButton1 = ({ layout, onCameraButton1, srcCameraSlot1, tags }: CameraInterfaceLayoutCameraButton1Props) => {
+export const CameraInterfaceLayoutCameraButton1 = ({ layout, onCameraButton1, srcCameraSlot1 }: CameraInterfaceLayoutCameraButton1Props) => {
     return (
         <Region
             name="cameraButton_1"
-            tags={tags}
             onPointerTap={onCameraButton1}
             cursor="pointer"
             layout={{ position: 'absolute', left: 64, width: 58, top: 0, height: 58, ...layout }}
@@ -74,14 +70,12 @@ export interface CameraInterfaceLayoutCameraButton2Props {
     layout?: BoxLayout;
     onCameraButton2?: () => void;
     srcCameraSlot2?: string;
-    tags?: string[];
 }
 
-export const CameraInterfaceLayoutCameraButton2 = ({ layout, onCameraButton2, srcCameraSlot2, tags }: CameraInterfaceLayoutCameraButton2Props) => {
+export const CameraInterfaceLayoutCameraButton2 = ({ layout, onCameraButton2, srcCameraSlot2 }: CameraInterfaceLayoutCameraButton2Props) => {
     return (
         <Region
             name="cameraButton_2"
-            tags={tags}
             onPointerTap={onCameraButton2}
             cursor="pointer"
             layout={{ position: 'absolute', left: 128, width: 58, top: 0, height: 58, ...layout }}
@@ -100,14 +94,12 @@ export interface CameraInterfaceLayoutCameraButton3Props {
     layout?: BoxLayout;
     onCameraButton3?: () => void;
     srcCameraSlot3?: string;
-    tags?: string[];
 }
 
-export const CameraInterfaceLayoutCameraButton3 = ({ layout, onCameraButton3, srcCameraSlot3, tags }: CameraInterfaceLayoutCameraButton3Props) => {
+export const CameraInterfaceLayoutCameraButton3 = ({ layout, onCameraButton3, srcCameraSlot3 }: CameraInterfaceLayoutCameraButton3Props) => {
     return (
         <Region
             name="cameraButton_3"
-            tags={tags}
             onPointerTap={onCameraButton3}
             cursor="pointer"
             layout={{ position: 'absolute', left: 192, width: 58, top: 0, height: 58, ...layout }}
@@ -126,14 +118,12 @@ export interface CameraInterfaceLayoutCameraButton4Props {
     layout?: BoxLayout;
     onCameraButton4?: () => void;
     srcCameraSlot4?: string;
-    tags?: string[];
 }
 
-export const CameraInterfaceLayoutCameraButton4 = ({ layout, onCameraButton4, srcCameraSlot4, tags }: CameraInterfaceLayoutCameraButton4Props) => {
+export const CameraInterfaceLayoutCameraButton4 = ({ layout, onCameraButton4, srcCameraSlot4 }: CameraInterfaceLayoutCameraButton4Props) => {
     return (
         <Region
             name="cameraButton_4"
-            tags={tags}
             onPointerTap={onCameraButton4}
             cursor="pointer"
             layout={{ position: 'absolute', left: 256, width: 58, top: 0, height: 58, ...layout }}
@@ -151,15 +141,13 @@ export const CameraInterfaceLayoutCameraButton4 = ({ layout, onCameraButton4, sr
 export interface CameraInterfaceLayoutDeletePhotoButtonProps {
     layout?: BoxLayout;
     onDeletePhotoButton?: () => void;
-    tags?: string[];
     visibleDeletePhotoButton?: boolean;
 }
 
-export const CameraInterfaceLayoutDeletePhotoButton = ({ layout, onDeletePhotoButton, tags, visibleDeletePhotoButton }: CameraInterfaceLayoutDeletePhotoButtonProps) => {
+export const CameraInterfaceLayoutDeletePhotoButton = ({ layout, onDeletePhotoButton, visibleDeletePhotoButton }: CameraInterfaceLayoutDeletePhotoButtonProps) => {
     return (
         <Region
             name="delete_photo_button"
-            tags={tags}
             visible={visibleDeletePhotoButton ?? false}
             onPointerTap={onDeletePhotoButton}
             cursor="pointer"
@@ -178,16 +166,14 @@ export interface CameraInterfaceLayoutButtonReleaseProps {
     layout?: BoxLayout;
     onButtonRelease?: () => void;
     srcReleaseBitmap?: string;
-    tags?: string[];
 }
 
-export const CameraInterfaceLayoutButtonRelease = ({ layout, onButtonRelease, srcReleaseBitmap, tags }: CameraInterfaceLayoutButtonReleaseProps) => {
+export const CameraInterfaceLayoutButtonRelease = ({ layout, onButtonRelease, srcReleaseBitmap }: CameraInterfaceLayoutButtonReleaseProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_release"
-            tags={tags}
             tooltip={t('camera.take.photo.button.tooltip')}
             onPointerTap={onButtonRelease}
             cursor="pointer"
@@ -195,7 +181,6 @@ export const CameraInterfaceLayoutButtonRelease = ({ layout, onButtonRelease, sr
         >
             <ThemeImage
                 name="release_bitmap"
-                tags={[ '#bg' ]}
                 src={srcReleaseBitmap ?? layoutImage('camera_camera_btn.png')}
                 layout={{ position: 'absolute', left: 3, width: 94, top: 1, height: 94 }}
             />
@@ -208,14 +193,12 @@ export interface CameraInterfaceLayoutChooseSlotButton0Props {
     layout?: BoxLayout;
     onChooseSlotButton0?: () => void;
     srcSlotImage0?: string;
-    tags?: string[];
 }
 
-export const CameraInterfaceLayoutChooseSlotButton0 = ({ layout, onChooseSlotButton0, srcSlotImage0, tags }: CameraInterfaceLayoutChooseSlotButton0Props) => {
+export const CameraInterfaceLayoutChooseSlotButton0 = ({ layout, onChooseSlotButton0, srcSlotImage0 }: CameraInterfaceLayoutChooseSlotButton0Props) => {
     return (
         <Region
             name="chooseSlotButton_0"
-            tags={tags}
             onPointerTap={onChooseSlotButton0}
             cursor="pointer"
             layout={{ position: 'absolute', left: 350, width: 9, top: 42, height: 10, ...layout }}
@@ -234,14 +217,12 @@ export interface CameraInterfaceLayoutChooseSlotButton1Props {
     layout?: BoxLayout;
     onChooseSlotButton1?: () => void;
     srcSlotImage1?: string;
-    tags?: string[];
 }
 
-export const CameraInterfaceLayoutChooseSlotButton1 = ({ layout, onChooseSlotButton1, srcSlotImage1, tags }: CameraInterfaceLayoutChooseSlotButton1Props) => {
+export const CameraInterfaceLayoutChooseSlotButton1 = ({ layout, onChooseSlotButton1, srcSlotImage1 }: CameraInterfaceLayoutChooseSlotButton1Props) => {
     return (
         <Region
             name="chooseSlotButton_1"
-            tags={tags}
             onPointerTap={onChooseSlotButton1}
             cursor="pointer"
             layout={{ position: 'absolute', left: 350, width: 9, top: 109, height: 10, ...layout }}
@@ -260,14 +241,12 @@ export interface CameraInterfaceLayoutChooseSlotButton2Props {
     layout?: BoxLayout;
     onChooseSlotButton2?: () => void;
     srcSlotImage2?: string;
-    tags?: string[];
 }
 
-export const CameraInterfaceLayoutChooseSlotButton2 = ({ layout, onChooseSlotButton2, srcSlotImage2, tags }: CameraInterfaceLayoutChooseSlotButton2Props) => {
+export const CameraInterfaceLayoutChooseSlotButton2 = ({ layout, onChooseSlotButton2, srcSlotImage2 }: CameraInterfaceLayoutChooseSlotButton2Props) => {
     return (
         <Region
             name="chooseSlotButton_2"
-            tags={tags}
             onPointerTap={onChooseSlotButton2}
             cursor="pointer"
             layout={{ position: 'absolute', left: 350, width: 9, top: 177, height: 10, ...layout }}
@@ -286,14 +265,12 @@ export interface CameraInterfaceLayoutChooseSlotButton3Props {
     layout?: BoxLayout;
     onChooseSlotButton3?: () => void;
     srcSlotImage3?: string;
-    tags?: string[];
 }
 
-export const CameraInterfaceLayoutChooseSlotButton3 = ({ layout, onChooseSlotButton3, srcSlotImage3, tags }: CameraInterfaceLayoutChooseSlotButton3Props) => {
+export const CameraInterfaceLayoutChooseSlotButton3 = ({ layout, onChooseSlotButton3, srcSlotImage3 }: CameraInterfaceLayoutChooseSlotButton3Props) => {
     return (
         <Region
             name="chooseSlotButton_3"
-            tags={tags}
             onPointerTap={onChooseSlotButton3}
             cursor="pointer"
             layout={{ position: 'absolute', left: 350, width: 9, top: 244, height: 10, ...layout }}
@@ -312,14 +289,12 @@ export interface CameraInterfaceLayoutChooseSlotButton4Props {
     layout?: BoxLayout;
     onChooseSlotButton4?: () => void;
     srcSlotImage4?: string;
-    tags?: string[];
 }
 
-export const CameraInterfaceLayoutChooseSlotButton4 = ({ layout, onChooseSlotButton4, srcSlotImage4, tags }: CameraInterfaceLayoutChooseSlotButton4Props) => {
+export const CameraInterfaceLayoutChooseSlotButton4 = ({ layout, onChooseSlotButton4, srcSlotImage4 }: CameraInterfaceLayoutChooseSlotButton4Props) => {
     return (
         <Region
             name="chooseSlotButton_4"
-            tags={tags}
             onPointerTap={onChooseSlotButton4}
             cursor="pointer"
             layout={{ position: 'absolute', left: 350, width: 9, top: 310, height: 10, ...layout }}
@@ -358,17 +333,15 @@ export interface CameraInterfaceLayoutBgBorderProps {
     srcFlash?: string;
     srcImage?: string;
     srcPhotoBorder?: string;
-    tags?: string[];
     visibleSlotContainer?: boolean;
 }
 
-export const CameraInterfaceLayoutBgBorder = ({ buttonRelease, cameraButton0, cameraButton1, cameraButton2, cameraButton3, cameraButton4, captionPhotoDate, captionPhotoRoomname, chooseSlotButton0, chooseSlotButton1, chooseSlotButton2, chooseSlotButton3, chooseSlotButton4, deletePhotoButton, layout, onBgBorder, onButtonEditor, srcBuyButtonBg, srcCameraCrosshair, srcCustomFrame, srcFlash, srcImage, srcPhotoBorder, tags, visibleSlotContainer }: CameraInterfaceLayoutBgBorderProps) => {
+export const CameraInterfaceLayoutBgBorder = ({ buttonRelease, cameraButton0, cameraButton1, cameraButton2, cameraButton3, cameraButton4, captionPhotoDate, captionPhotoRoomname, chooseSlotButton0, chooseSlotButton1, chooseSlotButton2, chooseSlotButton3, chooseSlotButton4, deletePhotoButton, layout, onBgBorder, onButtonEditor, srcBuyButtonBg, srcCameraCrosshair, srcCustomFrame, srcFlash, srcImage, srcPhotoBorder, visibleSlotContainer }: CameraInterfaceLayoutBgBorderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bgBorder"
-            tags={tags}
             onPointerTap={onBgBorder}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 536, justifyContent: 'center', ...layout }}

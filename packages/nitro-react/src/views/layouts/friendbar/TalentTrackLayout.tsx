@@ -105,16 +105,14 @@ export const TalentTrackLayout = ({ captionFrameSubtitle, captionFrameTitle, lay
 export interface TalentTrackLayoutBeginHelperItemProps {
     layout?: BoxLayout;
     onCitizenshipButton?: () => void;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutBeginHelperItem = ({ layout, onCitizenshipButton, tags }: TalentTrackLayoutBeginHelperItemProps) => {
+export const TalentTrackLayoutBeginHelperItem = ({ layout, onCitizenshipButton }: TalentTrackLayoutBeginHelperItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="begin_helper"
-            tags={tags}
             layout={{ width: 250, height: 280, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 20, width: 311, top: 20, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -155,16 +153,14 @@ export const TalentTrackLayoutBeginHelperItem = ({ layout, onCitizenshipButton, 
 /** Row template `begin_helper_no_citizenship` of TalentTrackLayout - pass real rows through its `items…` slot. */
 export interface TalentTrackLayoutBeginHelperNoCitizenshipItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutBeginHelperNoCitizenshipItem = ({ layout, tags }: TalentTrackLayoutBeginHelperNoCitizenshipItemProps) => {
+export const TalentTrackLayoutBeginHelperNoCitizenshipItem = ({ layout }: TalentTrackLayoutBeginHelperNoCitizenshipItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="begin_helper_no_citizenship"
-            tags={tags}
             layout={{ width: 250, height: 280, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 20, width: 259, top: 20, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -202,16 +198,14 @@ export const TalentTrackLayoutBeginHelperNoCitizenshipItem = ({ layout, tags }: 
 /** Row template `begin_citizenship` of TalentTrackLayout - pass real rows through its `items…` slot. */
 export interface TalentTrackLayoutBeginCitizenshipItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutBeginCitizenshipItem = ({ layout, tags }: TalentTrackLayoutBeginCitizenshipItemProps) => {
+export const TalentTrackLayoutBeginCitizenshipItem = ({ layout }: TalentTrackLayoutBeginCitizenshipItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="begin_citizenship"
-            tags={tags}
             layout={{ width: 250, height: 280, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 20, minWidth: 228, top: 20, minHeight: 66, flexDirection: 'column', gap: 6 }}>
@@ -253,15 +247,13 @@ export const TalentTrackLayoutBeginCitizenshipItem = ({ layout, tags }: TalentTr
 export interface TalentTrackLayoutRewardProductItemProps {
     layout?: BoxLayout;
     srcProductIcon?: string;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutRewardProductItem = ({ layout, srcProductIcon, tags }: TalentTrackLayoutRewardProductItemProps) => {
+export const TalentTrackLayoutRewardProductItem = ({ layout, srcProductIcon }: TalentTrackLayoutRewardProductItemProps) => {
     return (
         <Border
             variant="104"
             name="reward_product"
-            tags={tags}
             blend={0.3}
             layout={{ width: 61, height: 60, flexShrink: 0, ...layout }}
         >
@@ -284,15 +276,13 @@ export const TalentTrackLayoutRewardProductItem = ({ layout, srcProductIcon, tag
 export interface TalentTrackLayoutRewardVipItemProps {
     captionVipLength?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutRewardVipItem = ({ captionVipLength, layout, tags }: TalentTrackLayoutRewardVipItemProps) => {
+export const TalentTrackLayoutRewardVipItem = ({ captionVipLength, layout }: TalentTrackLayoutRewardVipItemProps) => {
     return (
         <Border
             variant="104"
             name="reward_vip"
-            tags={tags}
             blend={0.3}
             layout={{ width: 69, height: 60, flexShrink: 0, minHeight: 60, maxHeight: 60, ...layout }}
         >
@@ -318,15 +308,13 @@ export interface TalentTrackLayoutRewardAchievedItemProps {
     captionDescription?: string;
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutRewardAchievedItem = ({ captionDescription, captionTitle, layout, tags }: TalentTrackLayoutRewardAchievedItemProps) => {
+export const TalentTrackLayoutRewardAchievedItem = ({ captionDescription, captionTitle, layout }: TalentTrackLayoutRewardAchievedItemProps) => {
     return (
         <Border
             variant="104"
             name="reward_achieved"
-            tags={tags}
             blend={0.3}
             layout={{ width: 200, height: 60, flexShrink: 0, ...layout }}
         >
@@ -366,15 +354,13 @@ export interface TalentTrackLayoutRewardLockedItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
     srcLocked?: string;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutRewardLockedItem = ({ captionDescription, captionTitle, layout, srcLocked, tags }: TalentTrackLayoutRewardLockedItemProps) => {
+export const TalentTrackLayoutRewardLockedItem = ({ captionDescription, captionTitle, layout, srcLocked }: TalentTrackLayoutRewardLockedItemProps) => {
     return (
         <Border
             variant="104"
             name="reward_locked"
-            tags={tags}
             tintColor="#979797"
             blend={0.6}
             layout={{ width: 200, height: 60, flexShrink: 0, ...layout }}
@@ -412,14 +398,12 @@ export const TalentTrackLayoutRewardLockedItem = ({ captionDescription, captionT
 export interface TalentTrackLayoutRewardListProps {
     itemsRewardList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutRewardList = ({ itemsRewardList, layout, tags }: TalentTrackLayoutRewardListProps) => {
+export const TalentTrackLayoutRewardList = ({ itemsRewardList, layout }: TalentTrackLayoutRewardListProps) => {
     return (
         <Region
             name="reward_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, top: 80, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsRewardList ?? (
@@ -445,16 +429,14 @@ export interface TalentTrackLayoutLevelRewardItemProps {
     rewardList?: TalentTrackLayoutRewardListProps;
     srcAchieved?: string;
     srcLocked?: string;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutLevelRewardItem = ({ captionDescriptionAchieved, captionDescriptionLocked, captionTitleAchieved, captionTitleLocked, captionUnlocked, layout, rewardList, srcAchieved, srcLocked, tags }: TalentTrackLayoutLevelRewardItemProps) => {
+export const TalentTrackLayoutLevelRewardItem = ({ captionDescriptionAchieved, captionDescriptionLocked, captionTitleAchieved, captionTitleLocked, captionUnlocked, layout, rewardList, srcAchieved, srcLocked }: TalentTrackLayoutLevelRewardItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="level_reward"
-            tags={tags}
             layout={{ width: 350, height: 180, flexShrink: 0, ...layout }}
         >
             <Border
@@ -534,14 +516,12 @@ export interface TalentTrackLayoutTaskAchievedItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
     srcAchieved?: string;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutTaskAchievedItem = ({ captionDescription, captionTitle, layout, srcAchieved, tags }: TalentTrackLayoutTaskAchievedItemProps) => {
+export const TalentTrackLayoutTaskAchievedItem = ({ captionDescription, captionTitle, layout, srcAchieved }: TalentTrackLayoutTaskAchievedItemProps) => {
     return (
         <Region
             name="task_achieved"
-            tags={tags}
             layout={{ width: 210, height: 80, flexShrink: 0, ...layout }}
         >
             <Border
@@ -591,14 +571,12 @@ export interface TalentTrackLayoutTaskProgressProps {
     srcTaskProgressFg?: string;
     srcTaskProgressLeft?: string;
     srcTaskProgressRight?: string;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutTaskProgress = ({ layout, srcTaskProgressBg, srcTaskProgressFg, srcTaskProgressLeft, srcTaskProgressRight, tags }: TalentTrackLayoutTaskProgressProps) => {
+export const TalentTrackLayoutTaskProgress = ({ layout, srcTaskProgressBg, srcTaskProgressFg, srcTaskProgressLeft, srcTaskProgressRight }: TalentTrackLayoutTaskProgressProps) => {
     return (
         <Region
             name="task_progress"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 50, top: 48, height: 6, ...layout }}
         >
             <ThemeImage
@@ -629,16 +607,14 @@ export const TalentTrackLayoutTaskProgress = ({ layout, srcTaskProgressBg, srcTa
 export interface TalentTrackLayoutTaskOngoingRegionProps {
     layout?: BoxLayout;
     onTaskOngoingRegion?: () => void;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutTaskOngoingRegion = ({ layout, onTaskOngoingRegion, tags }: TalentTrackLayoutTaskOngoingRegionProps) => {
+export const TalentTrackLayoutTaskOngoingRegion = ({ layout, onTaskOngoingRegion }: TalentTrackLayoutTaskOngoingRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="task_ongoing_region"
-            tags={tags}
             tooltip={t('talent.track.common.view.progress.tooltip')}
             onPointerTap={onTaskOngoingRegion}
             cursor="pointer"
@@ -652,16 +628,14 @@ export interface TalentTrackLayoutTaskOngoingItemProps {
     captionDescription?: string;
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
     taskOngoingRegion?: TalentTrackLayoutTaskOngoingRegionProps;
     taskProgress?: TalentTrackLayoutTaskProgressProps;
 }
 
-export const TalentTrackLayoutTaskOngoingItem = ({ captionDescription, captionTitle, layout, tags, taskOngoingRegion, taskProgress }: TalentTrackLayoutTaskOngoingItemProps) => {
+export const TalentTrackLayoutTaskOngoingItem = ({ captionDescription, captionTitle, layout, taskOngoingRegion, taskProgress }: TalentTrackLayoutTaskOngoingItemProps) => {
     return (
         <Region
             name="task_ongoing"
-            tags={tags}
             layout={{ width: 210, height: 80, flexShrink: 0, ...layout }}
         >
             <Border
@@ -707,14 +681,12 @@ export interface TalentTrackLayoutTaskLockedItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
     srcLocked?: string;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutTaskLockedItem = ({ captionDescription, captionTitle, layout, srcLocked, tags }: TalentTrackLayoutTaskLockedItemProps) => {
+export const TalentTrackLayoutTaskLockedItem = ({ captionDescription, captionTitle, layout, srcLocked }: TalentTrackLayoutTaskLockedItemProps) => {
     return (
         <Region
             name="task_locked"
-            tags={tags}
             layout={{ width: 210, height: 80, flexShrink: 0, ...layout }}
         >
             <Border
@@ -756,14 +728,12 @@ export const TalentTrackLayoutTaskLockedItem = ({ captionDescription, captionTit
 export interface TalentTrackLayoutTaskListTopProps {
     itemsTaskListTop?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutTaskListTop = ({ itemsTaskListTop, layout, tags }: TalentTrackLayoutTaskListTopProps) => {
+export const TalentTrackLayoutTaskListTop = ({ itemsTaskListTop, layout }: TalentTrackLayoutTaskListTopProps) => {
     return (
         <Region
             name="task_list_top"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsTaskListTop ?? (
@@ -780,14 +750,12 @@ export const TalentTrackLayoutTaskListTop = ({ itemsTaskListTop, layout, tags }:
 /** Named region `task_list_bottom` of TalentTrackLayout - configured through the parent's `taskListBottom` prop. */
 export interface TalentTrackLayoutTaskListBottomProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutTaskListBottom = ({ layout, tags }: TalentTrackLayoutTaskListBottomProps) => {
+export const TalentTrackLayoutTaskListBottom = ({ layout }: TalentTrackLayoutTaskListBottomProps) => {
     return (
         <Region
             name="task_list_bottom"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 80, flexDirection: 'row', gap: 10, ...layout }}
         />
     );
@@ -796,16 +764,14 @@ export const TalentTrackLayoutTaskListBottom = ({ layout, tags }: TalentTrackLay
 /** Row template `level_task` of TalentTrackLayout - pass real rows through its `items…` slot. */
 export interface TalentTrackLayoutLevelTaskItemProps {
     layout?: BoxLayout;
-    tags?: string[];
     taskListBottom?: TalentTrackLayoutTaskListBottomProps;
     taskListTop?: TalentTrackLayoutTaskListTopProps;
 }
 
-export const TalentTrackLayoutLevelTaskItem = ({ layout, tags, taskListBottom, taskListTop }: TalentTrackLayoutLevelTaskItemProps) => {
+export const TalentTrackLayoutLevelTaskItem = ({ layout, taskListBottom, taskListTop }: TalentTrackLayoutLevelTaskItemProps) => {
     return (
         <Region
             name="level_task"
-            tags={tags}
             layout={{ width: 600, height: 180, flexShrink: 0, ...layout }}
         >
             <TalentTrackLayoutTaskListTop {...taskListTop} />
@@ -818,14 +784,12 @@ export const TalentTrackLayoutLevelTaskItem = ({ layout, tags, taskListBottom, t
 export interface TalentTrackLayoutStatusListProps {
     itemsStatusList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutStatusList = ({ itemsStatusList, layout, tags }: TalentTrackLayoutStatusListProps) => {
+export const TalentTrackLayoutStatusList = ({ itemsStatusList, layout }: TalentTrackLayoutStatusListProps) => {
     return (
         <Region
             name="status_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 1000, top: 100, height: 180, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsStatusList ?? (
@@ -841,17 +805,15 @@ export const TalentTrackLayoutStatusList = ({ itemsStatusList, layout, tags }: T
 /** Named region `action_overlay` of TalentTrackLayout - configured through the parent's `actionOverlay` prop. */
 export interface TalentTrackLayoutActionOverlayProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleActionOverlay?: boolean;
 }
 
-export const TalentTrackLayoutActionOverlay = ({ layout, tags, visibleActionOverlay }: TalentTrackLayoutActionOverlayProps) => {
+export const TalentTrackLayoutActionOverlay = ({ layout, visibleActionOverlay }: TalentTrackLayoutActionOverlayProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="action_overlay"
-            tags={tags}
             visible={visibleActionOverlay ?? false}
             layout={{ position: 'absolute', left: -2, width: 214, top: -1, height: 84, justifyContent: 'center', ...layout }}
         >
@@ -877,14 +839,12 @@ export interface TalentTrackLayoutLevelPaneItemProps {
     layout?: BoxLayout;
     srcLevelIllustration?: string;
     statusList?: TalentTrackLayoutStatusListProps;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutLevelPaneItem = ({ actionOverlay, captionLevelDescription, captionLevelTitle, layout, srcLevelIllustration, statusList, tags }: TalentTrackLayoutLevelPaneItemProps) => {
+export const TalentTrackLayoutLevelPaneItem = ({ actionOverlay, captionLevelDescription, captionLevelTitle, layout, srcLevelIllustration, statusList }: TalentTrackLayoutLevelPaneItemProps) => {
     return (
         <Region
             name="level_pane"
-            tags={tags}
             layout={{ width: 1000, height: 280, flexShrink: 0, minWidth: 320, ...layout }}
         >
             <WidgetSlot
@@ -925,14 +885,12 @@ export const TalentTrackLayoutLevelPaneItem = ({ actionOverlay, captionLevelDesc
 /** Row template `end_padding` of TalentTrackLayout - pass real rows through its `items…` slot. */
 export interface TalentTrackLayoutEndPaddingItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutEndPaddingItem = ({ layout, tags }: TalentTrackLayoutEndPaddingItemProps) => {
+export const TalentTrackLayoutEndPaddingItem = ({ layout }: TalentTrackLayoutEndPaddingItemProps) => {
     return (
         <Region
             name="end_padding"
-            tags={tags}
             layout={{ width: 100, height: 280, flexShrink: 0, ...layout }}
         />
     );
@@ -942,10 +900,9 @@ export const TalentTrackLayoutEndPaddingItem = ({ layout, tags }: TalentTrackLay
 export interface TalentTrackLayoutPanoramaProps {
     itemsPanorama?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutPanorama = ({ itemsPanorama, layout, tags }: TalentTrackLayoutPanoramaProps) => {
+export const TalentTrackLayoutPanorama = ({ itemsPanorama, layout }: TalentTrackLayoutPanoramaProps) => {
     return (
         <ScrollArea
             orientation="horizontal"
@@ -953,7 +910,6 @@ export const TalentTrackLayoutPanorama = ({ itemsPanorama, layout, tags }: Talen
         >
             <Region
                 name="panorama"
-                tags={tags}
                 layout={{ flexDirection: 'row', width: '100%' }}
             >
                 {itemsPanorama ?? (
@@ -979,16 +935,14 @@ export interface TalentTrackLayoutProgressContainerProps {
     srcAvatarGlow?: string;
     srcProgressLevelDivider?: string;
     srcUnachievedMid?: string;
-    tags?: string[];
 }
 
-export const TalentTrackLayoutProgressContainer = ({ captionProgressText, layout, onProgressContainer, srcAchievedMid, srcAvatarGlow, srcProgressLevelDivider, srcUnachievedMid, tags }: TalentTrackLayoutProgressContainerProps) => {
+export const TalentTrackLayoutProgressContainer = ({ captionProgressText, layout, onProgressContainer, srcAchievedMid, srcAvatarGlow, srcProgressLevelDivider, srcUnachievedMid }: TalentTrackLayoutProgressContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="progress_container"
-            tags={tags}
             onPointerTap={onProgressContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 998, top: 309, height: 80, ...layout }}

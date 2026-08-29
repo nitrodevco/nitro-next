@@ -21,14 +21,12 @@ export const AvatarEditorContentLayout = ({ avatarEditorContent, layout }: Avata
 /** Named region `name_background` of AvatarEditorContentLayout - configured through the parent's `nameBackground` prop. */
 export interface AvatarEditorContentLayoutNameBackgroundProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutNameBackground = ({ layout, tags }: AvatarEditorContentLayoutNameBackgroundProps) => {
+export const AvatarEditorContentLayoutNameBackground = ({ layout }: AvatarEditorContentLayoutNameBackgroundProps) => {
     return (
         <Region
             name="name_background"
-            tags={tags}
             backgroundColor="#0e3f52"
             layout={{ position: 'absolute', left: 0, width: 486, top: 0, height: 110, ...layout }}
         />
@@ -41,16 +39,14 @@ export interface AvatarEditorContentLayoutAvatarNameEditorProps {
     captionAvatarNameChange?: string;
     layout?: BoxLayout;
     nameBackground?: AvatarEditorContentLayoutNameBackgroundProps;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutAvatarNameEditor = ({ captionAvatarName, captionAvatarNameChange, layout, nameBackground, tags }: AvatarEditorContentLayoutAvatarNameEditorProps) => {
+export const AvatarEditorContentLayoutAvatarNameEditor = ({ captionAvatarName, captionAvatarNameChange, layout, nameBackground }: AvatarEditorContentLayoutAvatarNameEditorProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="avatarNameEditor"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 489, top: 0, height: 110, justifyContent: 'center', ...layout }}
         >
             <AvatarEditorContentLayoutNameBackground {...nameBackground} />
@@ -83,14 +79,12 @@ export interface AvatarEditorContentLayoutWardrobeButtonContainerProps {
     layout?: BoxLayout;
     onWardrobe?: () => void;
     srcWardrobeIcon?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutWardrobeButtonContainer = ({ layout, onWardrobe, srcWardrobeIcon, tags }: AvatarEditorContentLayoutWardrobeButtonContainerProps) => {
+export const AvatarEditorContentLayoutWardrobeButtonContainer = ({ layout, onWardrobe, srcWardrobeIcon }: AvatarEditorContentLayoutWardrobeButtonContainerProps) => {
     return (
         <Region
             name="wardrobeButtonContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 424, width: 55, top: 9, height: 30, ...layout }}
         >
             <Button
@@ -102,7 +96,6 @@ export const AvatarEditorContentLayoutWardrobeButtonContainer = ({ layout, onWar
             />
             <ThemeImage
                 name="wardrobe_icon"
-                tags={[ 'BITMAP' ]}
                 src={srcWardrobeIcon ?? layoutImage('avatar_editor_tabs_ae_tabs_wardrobe.png')}
                 layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 30 }}
             />
@@ -115,21 +108,18 @@ export interface AvatarEditorContentLayoutTabBoyProps {
     layout?: BoxLayout;
     onTabBoy?: () => void;
     srcTabBoy?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabBoy = ({ layout, onTabBoy, srcTabBoy, tags }: AvatarEditorContentLayoutTabBoyProps) => {
+export const AvatarEditorContentLayoutTabBoy = ({ layout, onTabBoy, srcTabBoy }: AvatarEditorContentLayoutTabBoyProps) => {
     return (
         <Region
             name="tab_boy"
-            tags={tags}
             onPointerTap={onTabBoy}
             cursor="pointer"
             layout={{ position: 'absolute', left: 6, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_boy"
-                tags={[ 'BITMAP' ]}
                 src={srcTabBoy ?? layoutImage('avatar_editor_tabs_gender_male_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -142,21 +132,18 @@ export interface AvatarEditorContentLayoutTabGirlProps {
     layout?: BoxLayout;
     onTabGirl?: () => void;
     srcTabGirl?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabGirl = ({ layout, onTabGirl, srcTabGirl, tags }: AvatarEditorContentLayoutTabGirlProps) => {
+export const AvatarEditorContentLayoutTabGirl = ({ layout, onTabGirl, srcTabGirl }: AvatarEditorContentLayoutTabGirlProps) => {
     return (
         <Region
             name="tab_girl"
-            tags={tags}
             onPointerTap={onTabGirl}
             cursor="pointer"
             layout={{ position: 'absolute', left: 100, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_girl"
-                tags={[ 'BITMAP' ]}
                 src={srcTabGirl ?? layoutImage('avatar_editor_tabs_gender_female_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 48, top: 0, height: 35 }}
             />
@@ -171,17 +158,15 @@ export interface AvatarEditorContentLayoutGenericContentProps {
     layout?: BoxLayout;
     tabBoy?: AvatarEditorContentLayoutTabBoyProps;
     tabGirl?: AvatarEditorContentLayoutTabGirlProps;
-    tags?: string[];
     visibleGenericContent?: boolean;
 }
 
-export const AvatarEditorContentLayoutGenericContent = ({ captionTabBoyTitle, captionTabGirlTitle, layout, tabBoy, tabGirl, tags, visibleGenericContent }: AvatarEditorContentLayoutGenericContentProps) => {
+export const AvatarEditorContentLayoutGenericContent = ({ captionTabBoyTitle, captionTabGirlTitle, layout, tabBoy, tabGirl, visibleGenericContent }: AvatarEditorContentLayoutGenericContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="generic_content"
-            tags={tags}
             visible={visibleGenericContent ?? false}
             layout={{ position: 'absolute', left: 20, width: 250, top: 10, height: 35, ...layout }}
         >
@@ -208,21 +193,18 @@ export interface AvatarEditorContentLayoutTabHairProps {
     layout?: BoxLayout;
     onTabHair?: () => void;
     srcTabHair?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabHair = ({ layout, onTabHair, srcTabHair, tags }: AvatarEditorContentLayoutTabHairProps) => {
+export const AvatarEditorContentLayoutTabHair = ({ layout, onTabHair, srcTabHair }: AvatarEditorContentLayoutTabHairProps) => {
     return (
         <Region
             name="tab_hair"
-            tags={tags}
             onPointerTap={onTabHair}
             cursor="pointer"
             layout={{ position: 'absolute', left: 6, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_hair"
-                tags={[ 'BITMAP' ]}
                 src={srcTabHair ?? layoutImage('avatar_editor_tabs_head_hair_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -235,21 +217,18 @@ export interface AvatarEditorContentLayoutTabHatProps {
     layout?: BoxLayout;
     onTabHat?: () => void;
     srcTabHat?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabHat = ({ layout, onTabHat, srcTabHat, tags }: AvatarEditorContentLayoutTabHatProps) => {
+export const AvatarEditorContentLayoutTabHat = ({ layout, onTabHat, srcTabHat }: AvatarEditorContentLayoutTabHatProps) => {
     return (
         <Region
             name="tab_hat"
-            tags={tags}
             onPointerTap={onTabHat}
             cursor="pointer"
             layout={{ position: 'absolute', left: 58, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_hat"
-                tags={[ 'BITMAP' ]}
                 src={srcTabHat ?? layoutImage('avatar_editor_tabs_head_hats_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -262,21 +241,18 @@ export interface AvatarEditorContentLayoutTabAccessoriesProps {
     layout?: BoxLayout;
     onTabAccessories?: () => void;
     srcTabAccessories?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabAccessories = ({ layout, onTabAccessories, srcTabAccessories, tags }: AvatarEditorContentLayoutTabAccessoriesProps) => {
+export const AvatarEditorContentLayoutTabAccessories = ({ layout, onTabAccessories, srcTabAccessories }: AvatarEditorContentLayoutTabAccessoriesProps) => {
     return (
         <Region
             name="tab_accessories"
-            tags={tags}
             onPointerTap={onTabAccessories}
             cursor="pointer"
             layout={{ position: 'absolute', left: 110, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_accessories"
-                tags={[ 'BITMAP' ]}
                 src={srcTabAccessories ?? layoutImage('avatar_editor_tabs_head_accessories_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -289,21 +265,18 @@ export interface AvatarEditorContentLayoutTabEyewearProps {
     layout?: BoxLayout;
     onTabEyewear?: () => void;
     srcTabEyewear?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabEyewear = ({ layout, onTabEyewear, srcTabEyewear, tags }: AvatarEditorContentLayoutTabEyewearProps) => {
+export const AvatarEditorContentLayoutTabEyewear = ({ layout, onTabEyewear, srcTabEyewear }: AvatarEditorContentLayoutTabEyewearProps) => {
     return (
         <Region
             name="tab_eyewear"
-            tags={tags}
             onPointerTap={onTabEyewear}
             cursor="pointer"
             layout={{ position: 'absolute', left: 162, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_eyewear"
-                tags={[ 'BITMAP' ]}
                 src={srcTabEyewear ?? layoutImage('avatar_editor_tabs_head_eyewear_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -316,21 +289,18 @@ export interface AvatarEditorContentLayoutTabMasksProps {
     layout?: BoxLayout;
     onTabMasks?: () => void;
     srcTabMasks?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabMasks = ({ layout, onTabMasks, srcTabMasks, tags }: AvatarEditorContentLayoutTabMasksProps) => {
+export const AvatarEditorContentLayoutTabMasks = ({ layout, onTabMasks, srcTabMasks }: AvatarEditorContentLayoutTabMasksProps) => {
     return (
         <Region
             name="tab_masks"
-            tags={tags}
             onPointerTap={onTabMasks}
             cursor="pointer"
             layout={{ position: 'absolute', left: 214, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_masks"
-                tags={[ 'BITMAP' ]}
                 src={srcTabMasks ?? layoutImage('avatar_editor_tabs_head_face_accessories_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -346,15 +316,13 @@ export interface AvatarEditorContentLayoutHeadContentProps {
     tabHair?: AvatarEditorContentLayoutTabHairProps;
     tabHat?: AvatarEditorContentLayoutTabHatProps;
     tabMasks?: AvatarEditorContentLayoutTabMasksProps;
-    tags?: string[];
     visibleHeadContent?: boolean;
 }
 
-export const AvatarEditorContentLayoutHeadContent = ({ layout, tabAccessories, tabEyewear, tabHair, tabHat, tabMasks, tags, visibleHeadContent }: AvatarEditorContentLayoutHeadContentProps) => {
+export const AvatarEditorContentLayoutHeadContent = ({ layout, tabAccessories, tabEyewear, tabHair, tabHat, tabMasks, visibleHeadContent }: AvatarEditorContentLayoutHeadContentProps) => {
     return (
         <Region
             name="head_content"
-            tags={tags}
             visible={visibleHeadContent ?? false}
             layout={{ position: 'absolute', left: 20, width: 280, top: 10, height: 35, ...layout }}
         >
@@ -372,21 +340,18 @@ export interface AvatarEditorContentLayoutTabShirtProps {
     layout?: BoxLayout;
     onTabShirt?: () => void;
     srcTabShirt?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabShirt = ({ layout, onTabShirt, srcTabShirt, tags }: AvatarEditorContentLayoutTabShirtProps) => {
+export const AvatarEditorContentLayoutTabShirt = ({ layout, onTabShirt, srcTabShirt }: AvatarEditorContentLayoutTabShirtProps) => {
     return (
         <Region
             name="tab_shirt"
-            tags={tags}
             onPointerTap={onTabShirt}
             cursor="pointer"
             layout={{ position: 'absolute', left: 6, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_shirt"
-                tags={[ 'BITMAP' ]}
                 src={srcTabShirt ?? layoutImage('avatar_editor_tabs_top_shirt_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -399,21 +364,18 @@ export interface AvatarEditorContentLayoutTabPrintsProps {
     layout?: BoxLayout;
     onTabPrints?: () => void;
     srcTabPrints?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabPrints = ({ layout, onTabPrints, srcTabPrints, tags }: AvatarEditorContentLayoutTabPrintsProps) => {
+export const AvatarEditorContentLayoutTabPrints = ({ layout, onTabPrints, srcTabPrints }: AvatarEditorContentLayoutTabPrintsProps) => {
     return (
         <Region
             name="tab_prints"
-            tags={tags}
             onPointerTap={onTabPrints}
             cursor="pointer"
             layout={{ position: 'absolute', left: 58, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_prints"
-                tags={[ 'BITMAP' ]}
                 src={srcTabPrints ?? layoutImage('avatar_editor_tabs_top_prints_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -426,21 +388,18 @@ export interface AvatarEditorContentLayoutTabJacketProps {
     layout?: BoxLayout;
     onTabJacket?: () => void;
     srcTabJacket?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabJacket = ({ layout, onTabJacket, srcTabJacket, tags }: AvatarEditorContentLayoutTabJacketProps) => {
+export const AvatarEditorContentLayoutTabJacket = ({ layout, onTabJacket, srcTabJacket }: AvatarEditorContentLayoutTabJacketProps) => {
     return (
         <Region
             name="tab_jacket"
-            tags={tags}
             onPointerTap={onTabJacket}
             cursor="pointer"
             layout={{ position: 'absolute', left: 110, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_jacket"
-                tags={[ 'BITMAP' ]}
                 src={srcTabJacket ?? layoutImage('avatar_editor_tabs_top_jacket_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -453,21 +412,18 @@ export interface AvatarEditorContentLayoutTabAccessories2Props {
     layout?: BoxLayout;
     onTabAccessories?: () => void;
     srcTabAccessories?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabAccessories2 = ({ layout, onTabAccessories, srcTabAccessories, tags }: AvatarEditorContentLayoutTabAccessories2Props) => {
+export const AvatarEditorContentLayoutTabAccessories2 = ({ layout, onTabAccessories, srcTabAccessories }: AvatarEditorContentLayoutTabAccessories2Props) => {
     return (
         <Region
             name="tab_accessories"
-            tags={tags}
             onPointerTap={onTabAccessories}
             cursor="pointer"
             layout={{ position: 'absolute', left: 162, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_accessories"
-                tags={[ 'BITMAP' ]}
                 src={srcTabAccessories ?? layoutImage('avatar_editor_tabs_top_accessories_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -482,15 +438,13 @@ export interface AvatarEditorContentLayoutTorsoContentProps {
     tabJacket?: AvatarEditorContentLayoutTabJacketProps;
     tabPrints?: AvatarEditorContentLayoutTabPrintsProps;
     tabShirt?: AvatarEditorContentLayoutTabShirtProps;
-    tags?: string[];
     visibleTorsoContent?: boolean;
 }
 
-export const AvatarEditorContentLayoutTorsoContent = ({ layout, tabAccessories, tabJacket, tabPrints, tabShirt, tags, visibleTorsoContent }: AvatarEditorContentLayoutTorsoContentProps) => {
+export const AvatarEditorContentLayoutTorsoContent = ({ layout, tabAccessories, tabJacket, tabPrints, tabShirt, visibleTorsoContent }: AvatarEditorContentLayoutTorsoContentProps) => {
     return (
         <Region
             name="torso_content"
-            tags={tags}
             visible={visibleTorsoContent ?? false}
             layout={{ position: 'absolute', left: 20, width: 210, top: 10, height: 35, ...layout }}
         >
@@ -507,21 +461,18 @@ export interface AvatarEditorContentLayoutTabPantsProps {
     layout?: BoxLayout;
     onTabPants?: () => void;
     srcTabPants?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabPants = ({ layout, onTabPants, srcTabPants, tags }: AvatarEditorContentLayoutTabPantsProps) => {
+export const AvatarEditorContentLayoutTabPants = ({ layout, onTabPants, srcTabPants }: AvatarEditorContentLayoutTabPantsProps) => {
     return (
         <Region
             name="tab_pants"
-            tags={tags}
             onPointerTap={onTabPants}
             cursor="pointer"
             layout={{ position: 'absolute', left: 6, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_pants"
-                tags={[ 'BITMAP' ]}
                 src={srcTabPants ?? layoutImage('avatar_editor_tabs_bottom_trousers_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -534,21 +485,18 @@ export interface AvatarEditorContentLayoutTabShoesProps {
     layout?: BoxLayout;
     onTabShoes?: () => void;
     srcTabShoes?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabShoes = ({ layout, onTabShoes, srcTabShoes, tags }: AvatarEditorContentLayoutTabShoesProps) => {
+export const AvatarEditorContentLayoutTabShoes = ({ layout, onTabShoes, srcTabShoes }: AvatarEditorContentLayoutTabShoesProps) => {
     return (
         <Region
             name="tab_shoes"
-            tags={tags}
             onPointerTap={onTabShoes}
             cursor="pointer"
             layout={{ position: 'absolute', left: 58, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_shoes"
-                tags={[ 'BITMAP' ]}
                 src={srcTabShoes ?? layoutImage('avatar_editor_tabs_bottom_shoes_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -561,21 +509,18 @@ export interface AvatarEditorContentLayoutTabBeltsProps {
     layout?: BoxLayout;
     onTabBelts?: () => void;
     srcTabBelts?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabBelts = ({ layout, onTabBelts, srcTabBelts, tags }: AvatarEditorContentLayoutTabBeltsProps) => {
+export const AvatarEditorContentLayoutTabBelts = ({ layout, onTabBelts, srcTabBelts }: AvatarEditorContentLayoutTabBeltsProps) => {
     return (
         <Region
             name="tab_belts"
-            tags={tags}
             onPointerTap={onTabBelts}
             cursor="pointer"
             layout={{ position: 'absolute', left: 110, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_belts"
-                tags={[ 'BITMAP' ]}
                 src={srcTabBelts ?? layoutImage('avatar_editor_tabs_bottom_accessories_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -589,15 +534,13 @@ export interface AvatarEditorContentLayoutLegsContentProps {
     tabBelts?: AvatarEditorContentLayoutTabBeltsProps;
     tabPants?: AvatarEditorContentLayoutTabPantsProps;
     tabShoes?: AvatarEditorContentLayoutTabShoesProps;
-    tags?: string[];
     visibleLegsContent?: boolean;
 }
 
-export const AvatarEditorContentLayoutLegsContent = ({ layout, tabBelts, tabPants, tabShoes, tags, visibleLegsContent }: AvatarEditorContentLayoutLegsContentProps) => {
+export const AvatarEditorContentLayoutLegsContent = ({ layout, tabBelts, tabPants, tabShoes, visibleLegsContent }: AvatarEditorContentLayoutLegsContentProps) => {
     return (
         <Region
             name="legs_content"
-            tags={tags}
             visible={visibleLegsContent ?? false}
             layout={{ position: 'absolute', left: 20, width: 170, top: 10, height: 35, ...layout }}
         >
@@ -611,14 +554,12 @@ export const AvatarEditorContentLayoutLegsContent = ({ layout, tabBelts, tabPant
 /** Named region `hotlooks` of AvatarEditorContentLayout - configured through the parent's `hotlooks` prop. */
 export interface AvatarEditorContentLayoutHotlooksProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutHotlooks = ({ layout, tags }: AvatarEditorContentLayoutHotlooksProps) => {
+export const AvatarEditorContentLayoutHotlooks = ({ layout }: AvatarEditorContentLayoutHotlooksProps) => {
     return (
         <Region
             name="hotlooks"
-            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 299, top: 65, height: 220, flexDirection: 'row', flexWrap: 'wrap', gap: 7, ...layout }}
         />
     );
@@ -630,17 +571,15 @@ export interface AvatarEditorContentLayoutHotlooksContentProps {
     captionHotlooksTitle?: string;
     hotlooks?: AvatarEditorContentLayoutHotlooksProps;
     layout?: BoxLayout;
-    tags?: string[];
     visibleHotlooksContent?: boolean;
 }
 
-export const AvatarEditorContentLayoutHotlooksContent = ({ captionHotlooksChoose, captionHotlooksTitle, hotlooks, layout, tags, visibleHotlooksContent }: AvatarEditorContentLayoutHotlooksContentProps) => {
+export const AvatarEditorContentLayoutHotlooksContent = ({ captionHotlooksChoose, captionHotlooksTitle, hotlooks, layout, visibleHotlooksContent }: AvatarEditorContentLayoutHotlooksContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="hotlooks_content"
-            tags={tags}
             visible={visibleHotlooksContent ?? false}
             layout={{ position: 'absolute', left: 20, width: 310, top: 10, height: 290, ...layout }}
         >
@@ -656,10 +595,7 @@ export const AvatarEditorContentLayoutHotlooksContent = ({ captionHotlooksChoose
             >
                 <ThemeText text={captionHotlooksChoose ?? t('avatareditor.hotlooks.choose')} />
             </Region>
-            <AvatarEditorContentLayoutHotlooks
-                tags={[ 'WARDROBE_HOTLOOKS_ITEM_GRID' ]}
-                {...hotlooks}
-            />
+            <AvatarEditorContentLayoutHotlooks {...hotlooks} />
         </Region>
     );
 };
@@ -667,10 +603,9 @@ export const AvatarEditorContentLayoutHotlooksContent = ({ captionHotlooksChoose
 /** Named region `nfts` of AvatarEditorContentLayout - configured through the parent's `nfts` prop. */
 export interface AvatarEditorContentLayoutNftsProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutNfts = ({ layout, tags }: AvatarEditorContentLayoutNftsProps) => {
+export const AvatarEditorContentLayoutNfts = ({ layout }: AvatarEditorContentLayoutNftsProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -678,7 +613,6 @@ export const AvatarEditorContentLayoutNfts = ({ layout, tags }: AvatarEditorCont
         >
             <Region
                 name="nfts"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4, width: '100%' }}
             />
         </ScrollArea>
@@ -691,17 +625,15 @@ export interface AvatarEditorContentLayoutNftsContentProps {
     captionNftsTitle?: string;
     layout?: BoxLayout;
     nfts?: AvatarEditorContentLayoutNftsProps;
-    tags?: string[];
     visibleNftsContent?: boolean;
 }
 
-export const AvatarEditorContentLayoutNftsContent = ({ captionNftsChoose, captionNftsTitle, layout, nfts, tags, visibleNftsContent }: AvatarEditorContentLayoutNftsContentProps) => {
+export const AvatarEditorContentLayoutNftsContent = ({ captionNftsChoose, captionNftsTitle, layout, nfts, visibleNftsContent }: AvatarEditorContentLayoutNftsContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="nfts_content"
-            tags={tags}
             visible={visibleNftsContent ?? false}
             layout={{ position: 'absolute', left: 20, width: 310, top: 10, height: 290, ...layout }}
         >
@@ -717,10 +649,7 @@ export const AvatarEditorContentLayoutNftsContent = ({ captionNftsChoose, captio
             >
                 <ThemeText text={captionNftsChoose ?? t('avatareditor.nfts.choose')} />
             </Region>
-            <AvatarEditorContentLayoutNfts
-                tags={[ 'WARDROBE_NFTS_ITEM_GRID' ]}
-                {...nfts}
-            />
+            <AvatarEditorContentLayoutNfts {...nfts} />
         </Region>
     );
 };
@@ -729,14 +658,12 @@ export const AvatarEditorContentLayoutNftsContent = ({ captionNftsChoose, captio
 export interface AvatarEditorContentLayoutTabEffectsProps {
     layout?: BoxLayout;
     onTabEffects?: () => void;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabEffects = ({ layout, onTabEffects, tags }: AvatarEditorContentLayoutTabEffectsProps) => {
+export const AvatarEditorContentLayoutTabEffects = ({ layout, onTabEffects }: AvatarEditorContentLayoutTabEffectsProps) => {
     return (
         <Region
             name="tab_effects"
-            tags={tags}
             onPointerTap={onTabEffects}
             cursor="pointer"
             layout={{ position: 'absolute', left: 6, width: 47, top: 0, height: 35, ...layout }}
@@ -750,23 +677,20 @@ export interface AvatarEditorContentLayoutEffectsContentProps {
     layout?: BoxLayout;
     srcTabEffects?: string;
     tabEffects?: AvatarEditorContentLayoutTabEffectsProps;
-    tags?: string[];
     visibleEffectsContent?: boolean;
 }
 
-export const AvatarEditorContentLayoutEffectsContent = ({ captionEffectsTitle, layout, srcTabEffects, tabEffects, tags, visibleEffectsContent }: AvatarEditorContentLayoutEffectsContentProps) => {
+export const AvatarEditorContentLayoutEffectsContent = ({ captionEffectsTitle, layout, srcTabEffects, tabEffects, visibleEffectsContent }: AvatarEditorContentLayoutEffectsContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="effects_content"
-            tags={tags}
             visible={visibleEffectsContent ?? false}
             layout={{ position: 'absolute', left: 20, width: 140, top: 10, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_effects"
-                tags={[ 'BITMAP' ]}
                 src={srcTabEffects ?? layoutImage('avatar_editor_tabs_effects_fx.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -786,21 +710,18 @@ export interface AvatarEditorContentLayoutTabPetsProps {
     layout?: BoxLayout;
     onTabPets?: () => void;
     srcTabPets?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabPets = ({ layout, onTabPets, srcTabPets, tags }: AvatarEditorContentLayoutTabPetsProps) => {
+export const AvatarEditorContentLayoutTabPets = ({ layout, onTabPets, srcTabPets }: AvatarEditorContentLayoutTabPetsProps) => {
     return (
         <Region
             name="tab_pets"
-            tags={tags}
             onPointerTap={onTabPets}
             cursor="pointer"
             layout={{ position: 'absolute', left: 6, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_pets"
-                tags={[ 'BITMAP' ]}
                 src={srcTabPets ?? layoutImage('avatar_editor_tabs_icon_misc_pets_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 35 }}
             />
@@ -813,21 +734,18 @@ export interface AvatarEditorContentLayoutTabMiscProps {
     layout?: BoxLayout;
     onTabMisc?: () => void;
     srcTabMisc?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabMisc = ({ layout, onTabMisc, srcTabMisc, tags }: AvatarEditorContentLayoutTabMiscProps) => {
+export const AvatarEditorContentLayoutTabMisc = ({ layout, onTabMisc, srcTabMisc }: AvatarEditorContentLayoutTabMiscProps) => {
     return (
         <Region
             name="tab_misc"
-            tags={tags}
             onPointerTap={onTabMisc}
             cursor="pointer"
             layout={{ position: 'absolute', left: 58, width: 47, top: 0, height: 35, ...layout }}
         >
             <ThemeImage
                 name="tab_misc"
-                tags={[ 'BITMAP' ]}
                 src={srcTabMisc ?? layoutImage('avatar_editor_tabs_icon_misc_misc_off.png')}
                 layout={{ position: 'absolute', left: 0, width: 48, top: 0, height: 35 }}
             />
@@ -840,15 +758,13 @@ export interface AvatarEditorContentLayoutMiscContentProps {
     layout?: BoxLayout;
     tabMisc?: AvatarEditorContentLayoutTabMiscProps;
     tabPets?: AvatarEditorContentLayoutTabPetsProps;
-    tags?: string[];
     visibleMiscContent?: boolean;
 }
 
-export const AvatarEditorContentLayoutMiscContent = ({ layout, tabMisc, tabPets, tags, visibleMiscContent }: AvatarEditorContentLayoutMiscContentProps) => {
+export const AvatarEditorContentLayoutMiscContent = ({ layout, tabMisc, tabPets, visibleMiscContent }: AvatarEditorContentLayoutMiscContentProps) => {
     return (
         <Region
             name="misc_content"
-            tags={tags}
             visible={visibleMiscContent ?? false}
             layout={{ position: 'absolute', left: 20, width: 250, top: 10, height: 35, ...layout }}
         >
@@ -868,15 +784,13 @@ export interface AvatarEditorContentLayoutContentAreaProps {
     legsContent?: AvatarEditorContentLayoutLegsContentProps;
     miscContent?: AvatarEditorContentLayoutMiscContentProps;
     nftsContent?: AvatarEditorContentLayoutNftsContentProps;
-    tags?: string[];
     torsoContent?: AvatarEditorContentLayoutTorsoContentProps;
 }
 
-export const AvatarEditorContentLayoutContentArea = ({ effectsContent, genericContent, headContent, hotlooksContent, layout, legsContent, miscContent, nftsContent, tags, torsoContent }: AvatarEditorContentLayoutContentAreaProps) => {
+export const AvatarEditorContentLayoutContentArea = ({ effectsContent, genericContent, headContent, hotlooksContent, layout, legsContent, miscContent, nftsContent, torsoContent }: AvatarEditorContentLayoutContentAreaProps) => {
     return (
         <Region
             name="contentArea"
-            tags={tags}
             layout={{ position: 'absolute', left: 2, width: 486, top: 36, height: 365, ...layout }}
         >
             <AvatarEditorContentLayoutGenericContent {...genericContent} />
@@ -894,14 +808,12 @@ export const AvatarEditorContentLayoutContentArea = ({ effectsContent, genericCo
 /** Named region `action_container` of AvatarEditorContentLayout - configured through the parent's `actionContainer` prop. */
 export interface AvatarEditorContentLayoutActionContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutActionContainer = ({ layout, tags }: AvatarEditorContentLayoutActionContainerProps) => {
+export const AvatarEditorContentLayoutActionContainer = ({ layout }: AvatarEditorContentLayoutActionContainerProps) => {
     return (
         <Region
             name="action_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 335, width: 122, top: 90, height: 210, ...layout }}
         />
     );
@@ -915,39 +827,33 @@ export interface AvatarEditorContentLayoutThumbTemplateItemProps {
     srcClubIcon?: string;
     srcHover?: string;
     srcSellableIcon?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutThumbTemplateItem = ({ layout, onThumbTemplate, srcBitmap, srcClubIcon, srcHover, srcSellableIcon, tags }: AvatarEditorContentLayoutThumbTemplateItemProps) => {
+export const AvatarEditorContentLayoutThumbTemplateItem = ({ layout, onThumbTemplate, srcBitmap, srcClubIcon, srcHover, srcSellableIcon }: AvatarEditorContentLayoutThumbTemplateItemProps) => {
     return (
         <Region
             name="thumb_template"
-            tags={tags}
             onPointerTap={onThumbTemplate}
             cursor="pointer"
             layout={{ width: 50, height: 50, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="hover"
-                tags={[ 'BG_COLOR' ]}
                 src={srcHover ?? layoutImage('avatar_editor_parts_hilite.png')}
                 layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
             />
             <ThemeImage
                 name="bitmap"
-                tags={[ 'BITMAP' ]}
                 src={srcBitmap}
                 layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50, minWidth: 50, maxWidth: 50 }}
             />
             <ThemeImage
                 name="club_icon"
-                tags={[ 'CLUB_ICON' ]}
                 src={srcClubIcon ?? layoutImage('icons_hc_icon_small.png')}
                 layout={{ position: 'absolute', left: 40, width: 10, top: 40, height: 9 }}
             />
             <ThemeImage
                 name="sellable_icon"
-                tags={[ 'SELLABLE_ICON' ]}
                 src={srcSellableIcon ?? layoutImage('icons_wearable.png')}
                 layout={{ position: 'absolute', left: 0, width: 17, top: 30, height: 20 }}
             />
@@ -959,10 +865,9 @@ export const AvatarEditorContentLayoutThumbTemplateItem = ({ layout, onThumbTemp
 export interface AvatarEditorContentLayoutThumbsProps {
     itemsThumbs?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutThumbs = ({ itemsThumbs, layout, tags }: AvatarEditorContentLayoutThumbsProps) => {
+export const AvatarEditorContentLayoutThumbs = ({ itemsThumbs, layout }: AvatarEditorContentLayoutThumbsProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -970,7 +875,6 @@ export const AvatarEditorContentLayoutThumbs = ({ itemsThumbs, layout, tags }: A
         >
             <Region
                 name="thumbs"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
             >
                 {itemsThumbs ?? (
@@ -988,33 +892,28 @@ export interface AvatarEditorContentLayoutPaletteTemplateItemProps {
     srcBorder?: string;
     srcClubIcon?: string;
     srcColor?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutPaletteTemplateItem = ({ layout, onPaletteTemplate, srcBorder, srcClubIcon, srcColor, tags }: AvatarEditorContentLayoutPaletteTemplateItemProps) => {
+export const AvatarEditorContentLayoutPaletteTemplateItem = ({ layout, onPaletteTemplate, srcBorder, srcClubIcon, srcColor }: AvatarEditorContentLayoutPaletteTemplateItemProps) => {
     return (
         <Region
             name="palette_template"
-            tags={tags}
             onPointerTap={onPaletteTemplate}
             cursor="pointer"
             layout={{ width: 15, height: 23, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="color"
-                tags={[ 'COLOR_IMAGE' ]}
                 src={srcColor}
                 layout={{ position: 'absolute', left: 1, width: 13, top: 0, height: 21 }}
             />
             <ThemeImage
                 name="border"
-                tags={[ 'BORDER' ]}
                 src={srcBorder ?? layoutImage('avatar_editor_editor_clr_13x21_1.png')}
                 layout={{ position: 'absolute', left: 1, width: 13, top: 0, height: 21 }}
             />
             <ThemeImage
                 name="club_icon"
-                tags={[ 'CLUB_ICON' ]}
                 src={srcClubIcon ?? layoutImage('icons_hc_icon_small.png')}
                 layout={{ position: 'absolute', left: 3, width: 10, top: 10, height: 9 }}
             />
@@ -1026,10 +925,9 @@ export const AvatarEditorContentLayoutPaletteTemplateItem = ({ layout, onPalette
 export interface AvatarEditorContentLayoutPalette0Props {
     itemsPalette0?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutPalette0 = ({ itemsPalette0, layout, tags }: AvatarEditorContentLayoutPalette0Props) => {
+export const AvatarEditorContentLayoutPalette0 = ({ itemsPalette0, layout }: AvatarEditorContentLayoutPalette0Props) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -1037,7 +935,6 @@ export const AvatarEditorContentLayoutPalette0 = ({ itemsPalette0, layout, tags 
         >
             <Region
                 name="palette0"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
             >
                 {itemsPalette0 ?? (
@@ -1051,10 +948,9 @@ export const AvatarEditorContentLayoutPalette0 = ({ itemsPalette0, layout, tags 
 /** Named region `palette1` of AvatarEditorContentLayout - configured through the parent's `palette1` prop. */
 export interface AvatarEditorContentLayoutPalette1Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutPalette1 = ({ layout, tags }: AvatarEditorContentLayoutPalette1Props) => {
+export const AvatarEditorContentLayoutPalette1 = ({ layout }: AvatarEditorContentLayoutPalette1Props) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -1062,7 +958,6 @@ export const AvatarEditorContentLayoutPalette1 = ({ layout, tags }: AvatarEditor
         >
             <Region
                 name="palette1"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
             />
         </ScrollArea>
@@ -1076,31 +971,20 @@ export interface AvatarEditorContentLayoutGridContainerProps {
     layout?: BoxLayout;
     palette0?: AvatarEditorContentLayoutPalette0Props;
     palette1?: AvatarEditorContentLayoutPalette1Props;
-    tags?: string[];
     thumbs?: AvatarEditorContentLayoutThumbsProps;
 }
 
-export const AvatarEditorContentLayoutGridContainer = ({ captionContentNotification, captionContentTitle, layout, palette0, palette1, tags, thumbs }: AvatarEditorContentLayoutGridContainerProps) => {
+export const AvatarEditorContentLayoutGridContainer = ({ captionContentNotification, captionContentTitle, layout, palette0, palette1, thumbs }: AvatarEditorContentLayoutGridContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="grid_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 20, width: 330, top: 94, height: 302, ...layout }}
         >
-            <AvatarEditorContentLayoutThumbs
-                tags={[ 'CATEGORYNAME_ITEM_GRID' ]}
-                {...thumbs}
-            />
-            <AvatarEditorContentLayoutPalette0
-                tags={[ 'CATEGORY_COLOUR_ITEM_GRID' ]}
-                {...palette0}
-            />
-            <AvatarEditorContentLayoutPalette1
-                tags={[ 'CATEGORY_COLOUR_ITEM_GRID' ]}
-                {...palette1}
-            />
+            <AvatarEditorContentLayoutThumbs {...thumbs} />
+            <AvatarEditorContentLayoutPalette0 {...palette0} />
+            <AvatarEditorContentLayoutPalette1 {...palette1} />
             <Region
                 name="content_notification"
                 layout={{ position: 'absolute', left: 0, width: 298, top: 30, height: 128, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -1142,14 +1026,12 @@ export interface AvatarEditorContentLayoutTabbedViewProps {
     srcBitmap6?: string;
     srcBitmap7?: string;
     srcBitmap8?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTabbedView = ({ actionContainer, contentArea, gridContainer, layout, onEffects, onGeneric, onHead, onHotlooks, onLegs, onMisc, onNfts, onTorso, srcBitmap, srcBitmap2, srcBitmap3, srcBitmap4, srcBitmap5, srcBitmap6, srcBitmap7, srcBitmap8, tags }: AvatarEditorContentLayoutTabbedViewProps) => {
+export const AvatarEditorContentLayoutTabbedView = ({ actionContainer, contentArea, gridContainer, layout, onEffects, onGeneric, onHead, onHotlooks, onLegs, onMisc, onNfts, onTorso, srcBitmap, srcBitmap2, srcBitmap3, srcBitmap4, srcBitmap5, srcBitmap6, srcBitmap7, srcBitmap8 }: AvatarEditorContentLayoutTabbedViewProps) => {
     return (
         <Region
             name="tabbedView"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 486, top: 4, height: 410, ...layout }}
         >
             <TabContext
@@ -1165,7 +1047,6 @@ export const AvatarEditorContentLayoutTabbedView = ({ actionContainer, contentAr
                 >
                     <ThemeImage
                         name="bitmap"
-                        tags={[ 'BITMAP' ]}
                         src={srcBitmap ?? layoutImage('avatar_editor_tabs_ae_tabs_generic.png')}
                         layout={{ position: 'absolute', left: 1, width: 52, top: -5, height: 42 }}
                     />
@@ -1178,7 +1059,6 @@ export const AvatarEditorContentLayoutTabbedView = ({ actionContainer, contentAr
                 >
                     <ThemeImage
                         name="bitmap"
-                        tags={[ 'BITMAP' ]}
                         src={srcBitmap2 ?? layoutImage('avatar_editor_tabs_ae_tabs_head.png')}
                         layout={{ position: 'absolute', left: 0, width: 52, top: -6, height: 42 }}
                     />
@@ -1191,7 +1071,6 @@ export const AvatarEditorContentLayoutTabbedView = ({ actionContainer, contentAr
                 >
                     <ThemeImage
                         name="bitmap"
-                        tags={[ 'BITMAP' ]}
                         src={srcBitmap3 ?? layoutImage('avatar_editor_tabs_ae_tabs_torso.png')}
                         layout={{ position: 'absolute', left: 0, width: 52, top: -6, height: 42 }}
                     />
@@ -1204,7 +1083,6 @@ export const AvatarEditorContentLayoutTabbedView = ({ actionContainer, contentAr
                 >
                     <ThemeImage
                         name="bitmap"
-                        tags={[ 'BITMAP' ]}
                         src={srcBitmap4 ?? layoutImage('avatar_editor_tabs_ae_tabs_legs.png')}
                         layout={{ position: 'absolute', left: 0, width: 52, top: -6, height: 42 }}
                     />
@@ -1217,7 +1095,6 @@ export const AvatarEditorContentLayoutTabbedView = ({ actionContainer, contentAr
                 >
                     <ThemeImage
                         name="bitmap"
-                        tags={[ 'BITMAP' ]}
                         src={srcBitmap5 ?? layoutImage('avatar_editor_tabs_ae_tabs_misc.png')}
                         layout={{ position: 'absolute', left: 0, width: 52, top: -4, height: 42 }}
                     />
@@ -1230,7 +1107,6 @@ export const AvatarEditorContentLayoutTabbedView = ({ actionContainer, contentAr
                 >
                     <ThemeImage
                         name="bitmap"
-                        tags={[ 'BITMAP' ]}
                         src={srcBitmap6 ?? layoutImage('avatar_editor_tabs_ae_tabs_hotlooks.png')}
                         layout={{ position: 'absolute', left: 0, width: 52, top: -7, height: 42 }}
                     />
@@ -1243,7 +1119,6 @@ export const AvatarEditorContentLayoutTabbedView = ({ actionContainer, contentAr
                 >
                     <ThemeImage
                         name="bitmap"
-                        tags={[ 'BITMAP' ]}
                         src={srcBitmap7 ?? layoutImage('avatar_editor_tabs_ae_tabs_effects.png')}
                         layout={{ position: 'absolute', left: 0, width: 52, top: -5, height: 42 }}
                     />
@@ -1256,7 +1131,6 @@ export const AvatarEditorContentLayoutTabbedView = ({ actionContainer, contentAr
                 >
                     <ThemeImage
                         name="bitmap"
-                        tags={[ 'BITMAP' ]}
                         src={srcBitmap8 ?? layoutImage('nft_icon_24x24.png')}
                         layout={{ position: 'absolute', left: 0, width: 52, top: -5, height: 42 }}
                     />
@@ -1274,14 +1148,12 @@ export interface AvatarEditorContentLayoutTimeLeftBgProps {
     captionEffectTimeLeft?: string;
     layout?: BoxLayout;
     srcProgressBarBitmap?: string;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutTimeLeftBg = ({ captionEffectTimeLeft, layout, srcProgressBarBitmap, tags }: AvatarEditorContentLayoutTimeLeftBgProps) => {
+export const AvatarEditorContentLayoutTimeLeftBg = ({ captionEffectTimeLeft, layout, srcProgressBarBitmap }: AvatarEditorContentLayoutTimeLeftBgProps) => {
     return (
         <Region
             name="time_left_bg"
-            tags={tags}
             layout={{ position: 'absolute', left: 345, width: 120, top: 301, height: 18, ...layout }}
         >
             <ThemeImage
@@ -1308,17 +1180,15 @@ export interface AvatarEditorContentLayoutEffectParamsContainerProps {
     captionSaveToActivate?: string;
     layout?: BoxLayout;
     onGetMoreButton?: () => void;
-    tags?: string[];
     timeLeftBg?: AvatarEditorContentLayoutTimeLeftBgProps;
 }
 
-export const AvatarEditorContentLayoutEffectParamsContainer = ({ captionEffectName, captionSaveToActivate, layout, onGetMoreButton, tags, timeLeftBg }: AvatarEditorContentLayoutEffectParamsContainerProps) => {
+export const AvatarEditorContentLayoutEffectParamsContainer = ({ captionEffectName, captionSaveToActivate, layout, onGetMoreButton, timeLeftBg }: AvatarEditorContentLayoutEffectParamsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="effectParamsContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 11, width: 468, top: 46, height: 352, ...layout }}
         >
             <Region
@@ -1358,14 +1228,12 @@ export const AvatarEditorContentLayoutEffectParamsContainer = ({ captionEffectNa
 /** Named region `collectible_avatar_info_background` of AvatarEditorContentLayout - configured through the parent's `collectibleAvatarInfoBackground` prop. */
 export interface AvatarEditorContentLayoutCollectibleAvatarInfoBackgroundProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutCollectibleAvatarInfoBackground = ({ layout, tags }: AvatarEditorContentLayoutCollectibleAvatarInfoBackgroundProps) => {
+export const AvatarEditorContentLayoutCollectibleAvatarInfoBackground = ({ layout }: AvatarEditorContentLayoutCollectibleAvatarInfoBackgroundProps) => {
     return (
         <Region
             name="collectible_avatar_info_background"
-            tags={tags}
             backgroundColor="#454545"
             layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 20, ...layout }}
         />
@@ -1377,15 +1245,13 @@ export interface AvatarEditorContentLayoutCollectibleAvatarInfoProps {
     captionAvatarInfoText?: string;
     collectibleAvatarInfoBackground?: AvatarEditorContentLayoutCollectibleAvatarInfoBackgroundProps;
     layout?: BoxLayout;
-    tags?: string[];
     visibleCollectibleAvatarInfo?: boolean;
 }
 
-export const AvatarEditorContentLayoutCollectibleAvatarInfo = ({ captionAvatarInfoText, collectibleAvatarInfoBackground, layout, tags, visibleCollectibleAvatarInfo }: AvatarEditorContentLayoutCollectibleAvatarInfoProps) => {
+export const AvatarEditorContentLayoutCollectibleAvatarInfo = ({ captionAvatarInfoText, collectibleAvatarInfoBackground, layout, visibleCollectibleAvatarInfo }: AvatarEditorContentLayoutCollectibleAvatarInfoProps) => {
     return (
         <Region
             name="collectible_avatar_info"
-            tags={tags}
             visible={visibleCollectibleAvatarInfo ?? false}
             backgroundColor="#454545"
             layout={{ position: 'absolute', left: 356, width: 122, top: 345, height: 20, ...layout }}
@@ -1408,14 +1274,12 @@ export const AvatarEditorContentLayoutCollectibleAvatarInfo = ({ captionAvatarIn
 export interface AvatarEditorContentLayoutRotateAvatarProps {
     layout?: BoxLayout;
     onRotateAvatar?: () => void;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutRotateAvatar = ({ layout, onRotateAvatar, tags }: AvatarEditorContentLayoutRotateAvatarProps) => {
+export const AvatarEditorContentLayoutRotateAvatar = ({ layout, onRotateAvatar }: AvatarEditorContentLayoutRotateAvatarProps) => {
     return (
         <Region
             name="rotate_avatar"
-            tags={tags}
             onPointerTap={onRotateAvatar}
             cursor="pointer"
             layout={{ position: 'absolute', left: 389, width: 50, top: 295, height: 31, ...layout }}
@@ -1436,23 +1300,20 @@ export interface AvatarEditorContentLayoutAvatarEditorProps {
     onSave?: () => void;
     rotateAvatar?: AvatarEditorContentLayoutRotateAvatarProps;
     tabbedView?: AvatarEditorContentLayoutTabbedViewProps;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutAvatarEditor = ({ collectibleAvatarInfo, effectParamsContainer, layout, onSave, rotateAvatar, tabbedView, tags }: AvatarEditorContentLayoutAvatarEditorProps) => {
+export const AvatarEditorContentLayoutAvatarEditor = ({ collectibleAvatarInfo, effectParamsContainer, layout, onSave, rotateAvatar, tabbedView }: AvatarEditorContentLayoutAvatarEditorProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="avatarEditor"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 489, top: 70, height: 414, justifyContent: 'center', ...layout }}
         >
             <AvatarEditorContentLayoutTabbedView {...tabbedView} />
             <WidgetSlot
                 widgetType="room_previewer"
                 name="avatarWidget"
-                tags={[ 'AVATAR' ]}
                 options={{ 'room_previewer:offsetx': '-65', 'room_previewer:offsety': '-30', 'room_previewer:zoom': '2' }}
                 layout={{ position: 'absolute', left: 351, width: 125, top: 88, height: 210 }}
             />
@@ -1475,14 +1336,12 @@ export const AvatarEditorContentLayoutAvatarEditor = ({ collectibleAvatarInfo, e
 /** Named region `sideContainer` of AvatarEditorContentLayout - configured through the parent's `sideContainer` prop. */
 export interface AvatarEditorContentLayoutSideContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatarEditorContentLayoutSideContainer = ({ layout, tags }: AvatarEditorContentLayoutSideContainerProps) => {
+export const AvatarEditorContentLayoutSideContainer = ({ layout }: AvatarEditorContentLayoutSideContainerProps) => {
     return (
         <Region
             name="sideContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 487, width: 0, top: 0, height: 490, ...layout }}
         />
     );
@@ -1494,15 +1353,13 @@ export interface AvatarEditorContentLayoutAvatarEditorContentProps {
     avatarNameEditor?: AvatarEditorContentLayoutAvatarNameEditorProps;
     layout?: BoxLayout;
     sideContainer?: AvatarEditorContentLayoutSideContainerProps;
-    tags?: string[];
     wardrobeButtonContainer?: AvatarEditorContentLayoutWardrobeButtonContainerProps;
 }
 
-export const AvatarEditorContentLayoutAvatarEditorContent = ({ avatarEditor, avatarNameEditor, layout, sideContainer, tags, wardrobeButtonContainer }: AvatarEditorContentLayoutAvatarEditorContentProps) => {
+export const AvatarEditorContentLayoutAvatarEditorContent = ({ avatarEditor, avatarNameEditor, layout, sideContainer, wardrobeButtonContainer }: AvatarEditorContentLayoutAvatarEditorContentProps) => {
     return (
         <Region
             name="avatarEditorContent"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 490, ...layout }}
         >
             <AvatarEditorContentLayoutAvatarNameEditor {...avatarNameEditor} />

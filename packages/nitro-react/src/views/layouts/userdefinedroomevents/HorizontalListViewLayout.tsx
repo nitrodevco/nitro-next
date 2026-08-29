@@ -17,14 +17,12 @@ export const HorizontalListViewLayout = ({ horizontalListView, layout }: Horizon
 /** Named region `horizontal_list_view` of HorizontalListViewLayout - configured through the parent's `horizontalListView` prop. */
 export interface HorizontalListViewLayoutHorizontalListViewProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HorizontalListViewLayoutHorizontalListView = ({ layout, tags }: HorizontalListViewLayoutHorizontalListViewProps) => {
+export const HorizontalListViewLayoutHorizontalListView = ({ layout }: HorizontalListViewLayoutHorizontalListViewProps) => {
     return (
         <Region
             name="horizontal_list_view"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, minHeight: 0, flexDirection: 'row', ...layout }}
         />
     );

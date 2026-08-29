@@ -44,7 +44,6 @@ export const VipBuyItemLayout = ({ captionItemHeader, itemPrice, layout, onItemB
                     </Region>
                     <ThemeImage
                         name="vip_icon"
-                        tags={[ 'bitmap' ]}
                         src={srcVipIcon ?? layoutImage('vip_icon_medium.gif')}
                         layout={{ position: 'absolute', left: 6, width: 33, top: 4, height: 17 }}
                     />
@@ -76,14 +75,12 @@ export const VipBuyItemLayout = ({ captionItemHeader, itemPrice, layout, onItemB
 /** Named region `item_price` of VipBuyItemLayout - configured through the parent's `itemPrice` prop. */
 export interface VipBuyItemLayoutItemPriceProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VipBuyItemLayoutItemPrice = ({ layout, tags }: VipBuyItemLayoutItemPriceProps) => {
+export const VipBuyItemLayoutItemPrice = ({ layout }: VipBuyItemLayoutItemPriceProps) => {
     return (
         <Region
             name="item_price"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 112, top: 41, height: 26, ...layout }}
         />
     );

@@ -1,5 +1,6 @@
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `petPreviewWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -7,22 +8,20 @@ import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
  * (LayoutPetcustomization_1713Layout); each passes its own placement through `layout`.
  */
 /** Named region `petPreviewWidget` of PetPreviewWidget - configured through the parent's `petPreviewWidget` prop. */
-export interface PetPreviewWidgetProps {
+export interface PetPreviewWidgetProps extends CatalogWidgetFlags {
     captionCtlgDescription?: string;
     captionCtlgProductName?: string;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
     visiblePetPreviewBackground?: boolean;
 }
 
-export const PetPreviewWidget = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1, tags, visiblePetPreviewBackground }: PetPreviewWidgetProps) => {
+export const PetPreviewWidget = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1, visiblePetPreviewBackground }: PetPreviewWidgetProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="petPreviewWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Region

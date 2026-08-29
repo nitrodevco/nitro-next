@@ -2,7 +2,7 @@ import { BoxLayout, Region } from '#base/theme';
 import { ActivityPointDisplayWidget, ActivityPointDisplayWidgetProps } from '#base/views/layouts/catalog/widgets/ActivityPointDisplayWidget';
 import { ProductViewWidget, ProductViewWidgetProps } from '#base/views/layouts/catalog/widgets/ProductViewWidget';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
-import { RoomPreviewWidget, RoomPreviewWidgetProps } from '#base/views/layouts/catalog/widgets/RoomPreviewWidget';
+import { RoomPreviewWidget2, RoomPreviewWidget2Props } from '#base/views/layouts/catalog/widgets/RoomPreviewWidget2';
 import { SpacesNewWidget2, SpacesNewWidget2Props } from '#base/views/layouts/catalog/widgets/SpacesNewWidget2';
 
 /** Generated from `1657_layout_spaces_new_xml` (layout "ctlg_spaces_new", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -25,24 +25,22 @@ export interface LayoutSpacesNew_1657LayoutCtlgSpacesNewProps {
     layout?: BoxLayout;
     productViewWidget?: ProductViewWidgetProps;
     purchaseWidget?: PurchaseWidgetProps;
-    roomPreviewWidget?: RoomPreviewWidgetProps;
+    roomPreviewWidget?: RoomPreviewWidget2Props;
     spacesNewWidget?: SpacesNewWidget2Props;
-    tags?: string[];
 }
 
-export const LayoutSpacesNew_1657LayoutCtlgSpacesNew = ({ activityPointDisplayWidget, layout, productViewWidget, purchaseWidget, roomPreviewWidget, spacesNewWidget, tags }: LayoutSpacesNew_1657LayoutCtlgSpacesNewProps) => {
+export const LayoutSpacesNew_1657LayoutCtlgSpacesNew = ({ activityPointDisplayWidget, layout, productViewWidget, purchaseWidget, roomPreviewWidget, spacesNewWidget }: LayoutSpacesNew_1657LayoutCtlgSpacesNewProps) => {
     return (
         <Region
             name="ctlg_spaces_new"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
         >
             <ProductViewWidget
-                tags={[ 'NO_ROOM_CANVAS' ]}
+                noRoomCanvas
                 layout={{ position: 'absolute', left: 180, width: 170, top: 150, height: 245 }}
                 {...productViewWidget}
             />
-            <RoomPreviewWidget
+            <RoomPreviewWidget2
                 layout={{ position: 'absolute', left: 180, width: 180, top: 150, height: 275 }}
                 {...roomPreviewWidget}
             />
@@ -51,7 +49,7 @@ export const LayoutSpacesNew_1657LayoutCtlgSpacesNew = ({ activityPointDisplayWi
                 {...purchaseWidget}
             />
             <SpacesNewWidget2
-                tags={[ 'EMBEDDED', 'FIXED' ]}
+                fixed
                 layout={{ position: 'absolute', left: 5, width: 170, top: 150, height: 292 }}
                 {...spacesNewWidget}
             />

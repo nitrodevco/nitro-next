@@ -59,14 +59,12 @@ export interface UseProductControllerCustomPartLayoutPreviewImageRegionProps {
     layout?: BoxLayout;
     onPreviewImageRegion?: () => void;
     srcPreviewImage?: string;
-    tags?: string[];
 }
 
-export const UseProductControllerCustomPartLayoutPreviewImageRegion = ({ layout, onPreviewImageRegion, srcPreviewImage, tags }: UseProductControllerCustomPartLayoutPreviewImageRegionProps) => {
+export const UseProductControllerCustomPartLayoutPreviewImageRegion = ({ layout, onPreviewImageRegion, srcPreviewImage }: UseProductControllerCustomPartLayoutPreviewImageRegionProps) => {
     return (
         <Region
             name="preview_image_region"
-            tags={tags}
             onPointerTap={onPreviewImageRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 122, top: 10, height: 130, ...layout }}
@@ -84,14 +82,12 @@ export const UseProductControllerCustomPartLayoutPreviewImageRegion = ({ layout,
 export interface UseProductControllerCustomPartLayoutCancelTextProps {
     layout?: BoxLayout;
     onCancelText?: () => void;
-    tags?: string[];
 }
 
-export const UseProductControllerCustomPartLayoutCancelText = ({ layout, onCancelText, tags }: UseProductControllerCustomPartLayoutCancelTextProps) => {
+export const UseProductControllerCustomPartLayoutCancelText = ({ layout, onCancelText }: UseProductControllerCustomPartLayoutCancelTextProps) => {
     return (
         <Region
             name="cancel_text"
-            tags={tags}
             onPointerTap={onCancelText}
             cursor="pointer"
             layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25, ...layout }}

@@ -31,17 +31,15 @@ export interface LayoutBadgeDisplay_1669LayoutCtlgBadgedisplayProps {
     productViewWidget?: ProductViewWidgetProps;
     purchaseWidget?: PurchaseWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
-    tags?: string[];
     userBadgeSelectorWidget?: UserBadgeSelectorWidget2Props;
 }
 
-export const LayoutBadgeDisplay_1669LayoutCtlgBadgedisplay = ({ captionCtlgSelectbadge, captionCtlgSelectproduct, itemGridWidget, layout, limitedItemWidget, productViewWidget, purchaseWidget, specialInfoWidget, tags, userBadgeSelectorWidget }: LayoutBadgeDisplay_1669LayoutCtlgBadgedisplayProps) => {
+export const LayoutBadgeDisplay_1669LayoutCtlgBadgedisplay = ({ captionCtlgSelectbadge, captionCtlgSelectproduct, itemGridWidget, layout, limitedItemWidget, productViewWidget, purchaseWidget, specialInfoWidget, userBadgeSelectorWidget }: LayoutBadgeDisplay_1669LayoutCtlgBadgedisplayProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_badgedisplay"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <Region

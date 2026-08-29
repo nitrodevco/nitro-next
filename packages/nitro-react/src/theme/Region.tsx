@@ -1,4 +1,4 @@
-import { Container as PixiContainer } from 'pixi.js';
+import { BLEND_MODES, Container as PixiContainer } from 'pixi.js';
 import { DropShadowFilter } from 'pixi-filters';
 import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes, useMemo } from 'react';
 
@@ -27,6 +27,8 @@ export interface RegionProps extends ThemeProps<RegionVariant> {
     /** The Flash `background="true"` + `color` pair: a flat fill behind the children. */
     backgroundColor?: string;
     cursor?: string;
+    /** The Flash `BLEND_<mode>` tag (`BLEND_ADD` on glow bitmaps, ...). */
+    blendMode?: BLEND_MODES;
     children?: ReactNode;
 }
 
@@ -41,7 +43,7 @@ export interface RegionProps extends ThemeProps<RegionVariant> {
  */
 export const Region: ForwardRefExoticComponent<RegionProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, RegionProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, zIndex, visible, dropShadow, backgroundColor, cursor, children,
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, zIndex, visible, dropShadow, backgroundColor, cursor, blendMode, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
@@ -56,6 +58,7 @@ export const Region: ForwardRefExoticComponent<RegionProps & RefAttributes<PixiC
                 zIndex={zIndex}
                 visible={visible}
                 cursor={cursor}
+                blendMode={blendMode}
                 filters={filters}
                 layout={{ ...config.layout, ...layout }}
                 {...handlers}

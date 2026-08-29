@@ -23,16 +23,14 @@ export interface LayoutGuildFrontpage_1668LayoutCtlgGuildFrontpageProps {
     captionCtlgSpecialTxt?: string;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const LayoutGuildFrontpage_1668LayoutCtlgGuildFrontpage = ({ buyGuildWidget, captionCtlgDescription, captionCtlgSpecialTxt, layout, srcCtlgTeaserimg1, tags }: LayoutGuildFrontpage_1668LayoutCtlgGuildFrontpageProps) => {
+export const LayoutGuildFrontpage_1668LayoutCtlgGuildFrontpage = ({ buyGuildWidget, captionCtlgDescription, captionCtlgSpecialTxt, layout, srcCtlgTeaserimg1 }: LayoutGuildFrontpage_1668LayoutCtlgGuildFrontpageProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_guild_frontpage"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <ThemeImage

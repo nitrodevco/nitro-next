@@ -26,14 +26,12 @@ export const PriceDisplayWidgetLayout = ({ layout, priceBoxNew }: PriceDisplayWi
 /** Named region `price_box_new` of PriceDisplayWidgetLayout - configured through the parent's `priceBoxNew` prop. */
 export interface PriceDisplayWidgetLayoutPriceBoxNewProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PriceDisplayWidgetLayoutPriceBoxNew = ({ layout, tags }: PriceDisplayWidgetLayoutPriceBoxNewProps) => {
+export const PriceDisplayWidgetLayoutPriceBoxNew = ({ layout }: PriceDisplayWidgetLayoutPriceBoxNewProps) => {
     return (
         <Region
             name="price_box_new"
-            tags={tags}
             layout={{ width: 9, height: 26, flexShrink: 0, ...layout }}
         />
     );

@@ -39,7 +39,6 @@ export const InventoryTradingMinimizedLayout = ({ captionHelpText, layout, onBut
                 </Button>
                 <Region
                     name="help_text"
-                    tags={[ 'HELP_TEXT' ]}
                     layout={{ position: 'absolute', left: 42, width: 421, top: 8, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

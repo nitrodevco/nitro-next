@@ -9,10 +9,7 @@ export interface ScrollableItemlistVerticalUbuntuLayoutProps {
 export const ScrollableItemlistVerticalUbuntuLayout = ({ iTEMLIST, layout }: ScrollableItemlistVerticalUbuntuLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 40, height: 40, ...layout }}>
-            <ScrollableItemlistVerticalUbuntuLayoutITEMLIST
-                tags={[ '_ITEMLIST', '_EXCLUDE', '_INTERNAL' ]}
-                {...iTEMLIST}
-            />
+            <ScrollableItemlistVerticalUbuntuLayoutITEMLIST {...iTEMLIST} />
             {/* <scrollbar_vertical> for ? - rendered by that list's ScrollArea */}
         </Region>
     );
@@ -21,14 +18,12 @@ export const ScrollableItemlistVerticalUbuntuLayout = ({ iTEMLIST, layout }: Scr
 /** Named region `_ITEMLIST` of ScrollableItemlistVerticalUbuntuLayout - configured through the parent's `iTEMLIST` prop. */
 export interface ScrollableItemlistVerticalUbuntuLayoutITEMLISTProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ScrollableItemlistVerticalUbuntuLayoutITEMLIST = ({ layout, tags }: ScrollableItemlistVerticalUbuntuLayoutITEMLISTProps) => {
+export const ScrollableItemlistVerticalUbuntuLayoutITEMLIST = ({ layout }: ScrollableItemlistVerticalUbuntuLayoutITEMLISTProps) => {
     return (
         <Region
             name="_ITEMLIST"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0, flexDirection: 'column', ...layout }}
         />
     );

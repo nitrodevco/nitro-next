@@ -28,7 +28,6 @@ export const SnowwarEndingLayout = ({ buttonsContainer, headerContainer, layout,
             >
                 <ThemeImage
                     name="snowwar_logo"
-                    tags={[ 'bitmap' ]}
                     src={srcSnowwarLogo ?? layoutImage('snowstorm_logo.png')}
                     layout={{ position: 'absolute', width: 308, top: 0, height: 83 }}
                 />
@@ -51,14 +50,12 @@ export const SnowwarEndingLayout = ({ buttonsContainer, headerContainer, layout,
 /** Named region `team1PlayersList` of SnowwarEndingLayout - configured through the parent's `team1PlayersList` prop. */
 export interface SnowwarEndingLayoutTeam1PlayersListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SnowwarEndingLayoutTeam1PlayersList = ({ layout, tags }: SnowwarEndingLayoutTeam1PlayersListProps) => {
+export const SnowwarEndingLayoutTeam1PlayersList = ({ layout }: SnowwarEndingLayoutTeam1PlayersListProps) => {
     return (
         <Region
             name="team1PlayersList"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 289, top: 115, height: 318, flexDirection: 'column', gap: 2, ...layout }}
         />
     );
@@ -67,14 +64,12 @@ export const SnowwarEndingLayoutTeam1PlayersList = ({ layout, tags }: SnowwarEnd
 /** Named region `team2PlayersList` of SnowwarEndingLayout - configured through the parent's `team2PlayersList` prop. */
 export interface SnowwarEndingLayoutTeam2PlayersListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SnowwarEndingLayoutTeam2PlayersList = ({ layout, tags }: SnowwarEndingLayoutTeam2PlayersListProps) => {
+export const SnowwarEndingLayoutTeam2PlayersList = ({ layout }: SnowwarEndingLayoutTeam2PlayersListProps) => {
     return (
         <Region
             name="team2PlayersList"
-            tags={tags}
             layout={{ position: 'absolute', right: 0, width: 289, top: 115, height: 318, flexDirection: 'column', gap: 2, ...layout }}
         />
     );
@@ -88,16 +83,14 @@ export interface SnowwarEndingLayoutStatusContainerProps {
     captionStatusTextGetVip?: string;
     layout?: BoxLayout;
     onStatusContainer?: () => void;
-    tags?: string[];
 }
 
-export const SnowwarEndingLayoutStatusContainer = ({ captionGamesLeft, captionGamesLeftStroke, captionStatusTextGetMoreGames, captionStatusTextGetVip, layout, onStatusContainer, tags }: SnowwarEndingLayoutStatusContainerProps) => {
+export const SnowwarEndingLayoutStatusContainer = ({ captionGamesLeft, captionGamesLeftStroke, captionStatusTextGetMoreGames, captionStatusTextGetVip, layout, onStatusContainer }: SnowwarEndingLayoutStatusContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="statusContainer"
-            tags={tags}
             onPointerTap={onStatusContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 293, width: 297, top: 321, height: 61, justifyContent: 'center', ...layout }}
@@ -156,19 +149,17 @@ export interface SnowwarEndingLayoutButtonsContainerProps {
     onButtonBuyGames?: () => void;
     onButtonPlayAgain?: () => void;
     onButtonRematch?: () => void;
-    tags?: string[];
     visibleButtonBuyGames?: boolean;
     visibleButtonPlayAgain?: boolean;
     visibleButtonsContainer?: boolean;
 }
 
-export const SnowwarEndingLayoutButtonsContainer = ({ layout, onButtonBuyGames, onButtonPlayAgain, onButtonRematch, tags, visibleButtonBuyGames, visibleButtonPlayAgain, visibleButtonsContainer }: SnowwarEndingLayoutButtonsContainerProps) => {
+export const SnowwarEndingLayoutButtonsContainer = ({ layout, onButtonBuyGames, onButtonPlayAgain, onButtonRematch, visibleButtonBuyGames, visibleButtonPlayAgain, visibleButtonsContainer }: SnowwarEndingLayoutButtonsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="buttonsContainer"
-            tags={tags}
             visible={visibleButtonsContainer ?? false}
             layout={{ position: 'absolute', width: 180, top: 430, height: 50, justifyContent: 'center', ...layout }}
         >
@@ -218,16 +209,14 @@ export interface SnowwarEndingLayoutLeaveLinkRegionProps {
     captionLeaveLink?: string;
     layout?: BoxLayout;
     onLeaveLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const SnowwarEndingLayoutLeaveLinkRegion = ({ captionLeaveLink, layout, onLeaveLinkRegion, tags }: SnowwarEndingLayoutLeaveLinkRegionProps) => {
+export const SnowwarEndingLayoutLeaveLinkRegion = ({ captionLeaveLink, layout, onLeaveLinkRegion }: SnowwarEndingLayoutLeaveLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="leave_link_region"
-            tags={tags}
             onPointerTap={onLeaveLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 127, top: 405, height: 17, ...layout }}
@@ -258,33 +247,30 @@ export interface SnowwarEndingLayoutMostKillsContainerProps {
     layout?: BoxLayout;
     srcBackgroundImage?: string;
     srcPlayerImage?: string;
-    tags?: string[];
+    strokeTextColor?: string;
 }
 
-export const SnowwarEndingLayoutMostKillsContainer = ({ captionMostKillsLabel, captionMostKillsLabelStroke, captionPlayerName, layout, srcBackgroundImage, srcPlayerImage, tags }: SnowwarEndingLayoutMostKillsContainerProps) => {
+export const SnowwarEndingLayoutMostKillsContainer = ({ captionMostKillsLabel, captionMostKillsLabelStroke, captionPlayerName, layout, srcBackgroundImage, srcPlayerImage, strokeTextColor }: SnowwarEndingLayoutMostKillsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mostKillsContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 300, width: 130, top: 180, height: 117, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="backgroundImage"
-                tags={[ 'bitmap' ]}
                 src={srcBackgroundImage ?? layoutImage('blue_square.png')}
                 layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
             />
             <Region
                 name="mostKillsLabel_stroke"
-                tags={[ 'stroke' ]}
                 layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionMostKillsLabelStroke ?? t('snowwar.most_kills')}
                     textStyle="text-style-u-bold"
-                    textOptions={{ align: 'center' }}
+                    textOptions={{ fill: strokeTextColor, align: 'center' }}
                 />
             </Region>
             <Region
@@ -299,18 +285,16 @@ export const SnowwarEndingLayoutMostKillsContainer = ({ captionMostKillsLabel, c
             </Region>
             <Region
                 name="playerName"
-                tags={[ 'stroke' ]}
                 layout={{ position: 'absolute', width: 130, top: 92, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionPlayerName ?? 'yyyy yyyyyy'}
                     textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                    textOptions={{ fill: strokeTextColor ?? '#ffffff', align: 'center' }}
                 />
             </Region>
             <ThemeImage
                 name="playerImage"
-                tags={[ 'bitmap' ]}
                 src={srcPlayerImage}
                 layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
             />
@@ -326,32 +310,29 @@ export interface SnowwarEndingLayoutMostHitsContainerProps {
     layout?: BoxLayout;
     srcBackgroundImage?: string;
     srcPlayerImage?: string;
-    tags?: string[];
+    strokeTextColor?: string;
 }
 
-export const SnowwarEndingLayoutMostHitsContainer = ({ captionMostHitsLabel, captionMostHitsLabelStroke, captionPlayerName, layout, srcBackgroundImage, srcPlayerImage, tags }: SnowwarEndingLayoutMostHitsContainerProps) => {
+export const SnowwarEndingLayoutMostHitsContainer = ({ captionMostHitsLabel, captionMostHitsLabelStroke, captionPlayerName, layout, srcBackgroundImage, srcPlayerImage, strokeTextColor }: SnowwarEndingLayoutMostHitsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mostHitsContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 450, width: 130, top: 180, height: 117, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="backgroundImage"
-                tags={[ 'bitmap' ]}
                 src={srcBackgroundImage ?? layoutImage('red_square.png')}
                 layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
             />
             <Region
                 name="mostHitsLabel_stroke"
-                tags={[ 'stroke' ]}
                 layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionMostHitsLabelStroke ?? t('snowwar.most_hits')}
-                    textOptions={{ align: 'center' }}
+                    textOptions={{ fill: strokeTextColor, align: 'center' }}
                 />
             </Region>
             <Region
@@ -365,12 +346,11 @@ export const SnowwarEndingLayoutMostHitsContainer = ({ captionMostHitsLabel, cap
             </Region>
             <Region
                 name="playerName"
-                tags={[ 'stroke' ]}
                 layout={{ position: 'absolute', width: 130, top: 92, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionPlayerName ?? 'xxxxx xxxxx'}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                    textOptions={{ fill: strokeTextColor ?? '#ffffff', align: 'center' }}
                 />
             </Region>
             <ThemeImage
@@ -388,30 +368,27 @@ export interface SnowwarEndingLayoutTeam1ScoreContainerProps {
     captionTeam1ScoreStroke?: string;
     layout?: BoxLayout;
     srcTeam1ScoreBackground?: string;
-    tags?: string[];
+    strokeTextColor?: string;
 }
 
-export const SnowwarEndingLayoutTeam1ScoreContainer = ({ captionTeam1Score, captionTeam1ScoreStroke, layout, srcTeam1ScoreBackground, tags }: SnowwarEndingLayoutTeam1ScoreContainerProps) => {
+export const SnowwarEndingLayoutTeam1ScoreContainer = ({ captionTeam1Score, captionTeam1ScoreStroke, layout, srcTeam1ScoreBackground, strokeTextColor }: SnowwarEndingLayoutTeam1ScoreContainerProps) => {
     return (
         <Region
             name="team1ScoreContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 203, width: 80, top: 10, height: 101, ...layout }}
         >
             <ThemeImage
                 name="team1ScoreBackground"
-                tags={[ 'bitmap' ]}
                 src={srcTeam1ScoreBackground ?? layoutImage('blue_glove.png')}
                 layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 101 }}
             />
             <Region
                 name="team1Score_stroke"
-                tags={[ 'stroke' ]}
                 layout={{ position: 'absolute', left: 13, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionTeam1ScoreStroke ?? '245'}
-                    textOptions={{ fill: '#1077ac', align: 'center' }}
+                    textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
                 />
             </Region>
             <Region
@@ -433,30 +410,27 @@ export interface SnowwarEndingLayoutTeam2ScoreContainerProps {
     captionTeam2ScoreStroke?: string;
     layout?: BoxLayout;
     srcTeam2ScoreBackground?: string;
-    tags?: string[];
+    strokeTextColor?: string;
 }
 
-export const SnowwarEndingLayoutTeam2ScoreContainer = ({ captionTeam2Score, captionTeam2ScoreStroke, layout, srcTeam2ScoreBackground, tags }: SnowwarEndingLayoutTeam2ScoreContainerProps) => {
+export const SnowwarEndingLayoutTeam2ScoreContainer = ({ captionTeam2Score, captionTeam2ScoreStroke, layout, srcTeam2ScoreBackground, strokeTextColor }: SnowwarEndingLayoutTeam2ScoreContainerProps) => {
     return (
         <Region
             name="team2ScoreContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 598, width: 80, top: 10, height: 101, ...layout }}
         >
             <ThemeImage
                 name="team2ScoreBackground"
-                tags={[ 'bitmap' ]}
                 src={srcTeam2ScoreBackground ?? layoutImage('red_glove.png')}
                 layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 101 }}
             />
             <Region
                 name="team2Score_stroke"
-                tags={[ 'stroke' ]}
                 layout={{ position: 'absolute', left: 20, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionTeam2ScoreStroke ?? '245'}
-                    textOptions={{ fill: '#fd6859', align: 'center' }}
+                    textOptions={{ fill: strokeTextColor ?? '#fd6859', align: 'center' }}
                 />
             </Region>
             <Region
@@ -477,24 +451,22 @@ export interface SnowwarEndingLayoutHeaderContainerProps {
     captionEndingInformation?: string;
     captionEndingInformationStroke?: string;
     layout?: BoxLayout;
-    tags?: string[];
+    strokeTextColor?: string;
 }
 
-export const SnowwarEndingLayoutHeaderContainer = ({ captionEndingInformation, captionEndingInformationStroke, layout, tags }: SnowwarEndingLayoutHeaderContainerProps) => {
+export const SnowwarEndingLayoutHeaderContainer = ({ captionEndingInformation, captionEndingInformationStroke, layout, strokeTextColor }: SnowwarEndingLayoutHeaderContainerProps) => {
     return (
         <Region
             name="headerContainer"
-            tags={tags}
             layout={{ position: 'absolute', width: 450, top: 118, height: 35, ...layout }}
         >
             <Region
                 name="endingInformation_stroke"
-                tags={[ 'stroke' ]}
                 layout={{ position: 'absolute', left: 0, width: 450, top: 0, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionEndingInformationStroke ?? 'Blue team wins!'}
-                    textOptions={{ fill: '#1077ac', align: 'center' }}
+                    textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
                 />
             </Region>
             <Region
@@ -518,28 +490,26 @@ export interface SnowwarEndingLayoutLoadingContainerProps {
     layout?: BoxLayout;
     srcArenaPreview?: string;
     srcMainLoadingIcon?: string;
-    tags?: string[];
+    strokeTextColor?: string;
     visibleLoadingContainer?: boolean;
 }
 
-export const SnowwarEndingLayoutLoadingContainer = ({ captionArenaName, captionLoadingText, captionLoadingTextStroke, layout, srcArenaPreview, srcMainLoadingIcon, tags, visibleLoadingContainer }: SnowwarEndingLayoutLoadingContainerProps) => {
+export const SnowwarEndingLayoutLoadingContainer = ({ captionArenaName, captionLoadingText, captionLoadingTextStroke, layout, srcArenaPreview, srcMainLoadingIcon, strokeTextColor, visibleLoadingContainer }: SnowwarEndingLayoutLoadingContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="loadingContainer"
-            tags={tags}
             visible={visibleLoadingContainer ?? false}
             layout={{ position: 'absolute', left: 337, width: 208, top: 167, height: 235, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="loadingText_stroke"
-                tags={[ 'stroke' ]}
                 layout={{ position: 'absolute', width: 208, top: 0, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionLoadingTextStroke ?? t('snowwar.waiting_players')}
-                    textOptions={{ fill: '#1077ac', align: 'center' }}
+                    textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
                 />
             </Region>
             <Region
@@ -553,7 +523,6 @@ export const SnowwarEndingLayoutLoadingContainer = ({ captionArenaName, captionL
             </Region>
             <ThemeImage
                 name="arenaPreview"
-                tags={[ 'bitmap' ]}
                 src={srcArenaPreview}
                 layout={{ position: 'absolute', left: 0, width: 208, top: 35, height: 100 }}
             />
@@ -568,7 +537,6 @@ export const SnowwarEndingLayoutLoadingContainer = ({ captionArenaName, captionL
             </Region>
             <ThemeImage
                 name="mainLoadingIcon"
-                tags={[ 'bitmap' ]}
                 src={srcMainLoadingIcon}
                 layout={{ position: 'absolute', width: 50, top: 180, height: 50 }}
             />

@@ -22,16 +22,14 @@ export interface ControlsLayoutControlsProps {
     onBtnMessage?: () => void;
     onBtnVisit?: () => void;
     onButtonProfile?: () => void;
-    tags?: string[];
 }
 
-export const ControlsLayoutControls = ({ layout, onBtnGame, onBtnMessage, onBtnVisit, onButtonProfile, tags }: ControlsLayoutControlsProps) => {
+export const ControlsLayoutControls = ({ layout, onBtnGame, onBtnMessage, onBtnVisit, onButtonProfile }: ControlsLayoutControlsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="controls"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 120, ...layout }}
         >
             <Button

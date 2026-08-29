@@ -62,14 +62,12 @@ export const ToolbarChatSettingsLayout = ({ captionChatSettingsInfo, captionSett
 /** Named region `line` of ToolbarChatSettingsLayout - configured through the parent's `line` prop. */
 export interface ToolbarChatSettingsLayoutLineProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ToolbarChatSettingsLayoutLine = ({ layout, tags }: ToolbarChatSettingsLayoutLineProps) => {
+export const ToolbarChatSettingsLayoutLine = ({ layout }: ToolbarChatSettingsLayoutLineProps) => {
     return (
         <Region
             name="line"
-            tags={tags}
             backgroundColor="#2f2f2f"
             layout={{ position: 'absolute', left: 10, right: 10, top: 24, height: 1, ...layout }}
         />
@@ -80,16 +78,14 @@ export const ToolbarChatSettingsLayoutLine = ({ layout, tags }: ToolbarChatSetti
 export interface ToolbarChatSettingsLayoutChatModeLabelItemProps {
     captionChatModeLabel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ToolbarChatSettingsLayoutChatModeLabelItem = ({ captionChatModeLabel, layout, tags }: ToolbarChatSettingsLayoutChatModeLabelItemProps) => {
+export const ToolbarChatSettingsLayoutChatModeLabelItem = ({ captionChatModeLabel, layout }: ToolbarChatSettingsLayoutChatModeLabelItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="chat_mode_label"
-            tags={tags}
             layout={{ width: 237, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -105,15 +101,13 @@ export const ToolbarChatSettingsLayoutChatModeLabelItem = ({ captionChatModeLabe
 export interface ToolbarChatSettingsLayoutChatModeItemProps {
     layout?: BoxLayout;
     onChatMode?: () => void;
-    tags?: string[];
 }
 
-export const ToolbarChatSettingsLayoutChatModeItem = ({ layout, onChatMode, tags }: ToolbarChatSettingsLayoutChatModeItemProps) => {
+export const ToolbarChatSettingsLayoutChatModeItem = ({ layout, onChatMode }: ToolbarChatSettingsLayoutChatModeItemProps) => {
     return (
         <Dropmenu
             variant="0"
             name="chat_mode"
-            tags={tags}
             onPointerTap={onChatMode}
             layout={{ width: 237, height: 24, flexShrink: 0, ...layout }}
         />
@@ -124,16 +118,14 @@ export const ToolbarChatSettingsLayoutChatModeItem = ({ layout, onChatMode, tags
 export interface ToolbarChatSettingsLayoutChatBubbleWidthLabelItemProps {
     captionChatBubbleWidthLabel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ToolbarChatSettingsLayoutChatBubbleWidthLabelItem = ({ captionChatBubbleWidthLabel, layout, tags }: ToolbarChatSettingsLayoutChatBubbleWidthLabelItemProps) => {
+export const ToolbarChatSettingsLayoutChatBubbleWidthLabelItem = ({ captionChatBubbleWidthLabel, layout }: ToolbarChatSettingsLayoutChatBubbleWidthLabelItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="chat_bubble_width_label"
-            tags={tags}
             layout={{ width: 237, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -149,15 +141,13 @@ export const ToolbarChatSettingsLayoutChatBubbleWidthLabelItem = ({ captionChatB
 export interface ToolbarChatSettingsLayoutChatBubbleWidthItemProps {
     layout?: BoxLayout;
     onChatBubbleWidth?: () => void;
-    tags?: string[];
 }
 
-export const ToolbarChatSettingsLayoutChatBubbleWidthItem = ({ layout, onChatBubbleWidth, tags }: ToolbarChatSettingsLayoutChatBubbleWidthItemProps) => {
+export const ToolbarChatSettingsLayoutChatBubbleWidthItem = ({ layout, onChatBubbleWidth }: ToolbarChatSettingsLayoutChatBubbleWidthItemProps) => {
     return (
         <Dropmenu
             variant="0"
             name="chat_bubble_width"
-            tags={tags}
             onPointerTap={onChatBubbleWidth}
             layout={{ width: 237, height: 24, flexShrink: 0, ...layout }}
         />
@@ -168,16 +158,14 @@ export const ToolbarChatSettingsLayoutChatBubbleWidthItem = ({ layout, onChatBub
 export interface ToolbarChatSettingsLayoutChatScrollSpeedLabelItemProps {
     captionChatScrollSpeedLabel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ToolbarChatSettingsLayoutChatScrollSpeedLabelItem = ({ captionChatScrollSpeedLabel, layout, tags }: ToolbarChatSettingsLayoutChatScrollSpeedLabelItemProps) => {
+export const ToolbarChatSettingsLayoutChatScrollSpeedLabelItem = ({ captionChatScrollSpeedLabel, layout }: ToolbarChatSettingsLayoutChatScrollSpeedLabelItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="chat_scroll_speed_label"
-            tags={tags}
             layout={{ width: 237, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -193,15 +181,13 @@ export const ToolbarChatSettingsLayoutChatScrollSpeedLabelItem = ({ captionChatS
 export interface ToolbarChatSettingsLayoutChatScrollSpeedItemProps {
     layout?: BoxLayout;
     onChatScrollSpeed?: () => void;
-    tags?: string[];
 }
 
-export const ToolbarChatSettingsLayoutChatScrollSpeedItem = ({ layout, onChatScrollSpeed, tags }: ToolbarChatSettingsLayoutChatScrollSpeedItemProps) => {
+export const ToolbarChatSettingsLayoutChatScrollSpeedItem = ({ layout, onChatScrollSpeed }: ToolbarChatSettingsLayoutChatScrollSpeedItemProps) => {
     return (
         <Dropmenu
             variant="0"
             name="chat_scroll_speed"
-            tags={tags}
             onPointerTap={onChatScrollSpeed}
             layout={{ width: 237, height: 24, flexShrink: 0, ...layout }}
         />
@@ -212,14 +198,12 @@ export const ToolbarChatSettingsLayoutChatScrollSpeedItem = ({ layout, onChatScr
 export interface ToolbarChatSettingsLayoutChatSettingsListProps {
     itemsChatSettingsList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ToolbarChatSettingsLayoutChatSettingsList = ({ itemsChatSettingsList, layout, tags }: ToolbarChatSettingsLayoutChatSettingsListProps) => {
+export const ToolbarChatSettingsLayoutChatSettingsList = ({ itemsChatSettingsList, layout }: ToolbarChatSettingsLayoutChatSettingsListProps) => {
     return (
         <Region
             name="chat_settings_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 10, top: 70, height: 143, flexDirection: 'column', gap: 4, ...layout }}
         >
             {itemsChatSettingsList ?? (

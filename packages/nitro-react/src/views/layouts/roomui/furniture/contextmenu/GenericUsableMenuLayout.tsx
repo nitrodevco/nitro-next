@@ -28,37 +28,41 @@ export interface GenericUsableMenuLayoutUseItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const GenericUsableMenuLayoutUseItem = ({ captionLabel, layout, onButton, tags }: GenericUsableMenuLayoutUseItemProps) => {
+export const GenericUsableMenuLayoutUseItem = ({ captionLabel, layout, onButton, visibleGroups }: GenericUsableMenuLayoutUseItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="use"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.generic_usable.button.use')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.generic_usable.button.use')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -67,18 +71,16 @@ export const GenericUsableMenuLayoutUseItem = ({ captionLabel, layout, onButton,
 export interface GenericUsableMenuLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GenericUsableMenuLayoutButtons = ({ itemsButtons, layout, tags }: GenericUsableMenuLayoutButtonsProps) => {
+export const GenericUsableMenuLayoutButtons = ({ itemsButtons, layout }: GenericUsableMenuLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 26, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsButtons ?? (
-                <GenericUsableMenuLayoutUseItem tags={[ 'action' ]} />
+                <GenericUsableMenuLayoutUseItem />
             )}
         </Region>
     );
@@ -88,14 +90,12 @@ export const GenericUsableMenuLayoutButtons = ({ itemsButtons, layout, tags }: G
 export interface GenericUsableMenuLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
-    tags?: string[];
 }
 
-export const GenericUsableMenuLayoutMinimize = ({ layout, onMinimize, tags }: GenericUsableMenuLayoutMinimizeProps) => {
+export const GenericUsableMenuLayoutMinimize = ({ layout, onMinimize }: GenericUsableMenuLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 4, width: 100, bottom: 3, height: 18, ...layout }}
@@ -115,14 +115,12 @@ export interface GenericUsableMenuLayoutBorderProps {
     captionFurniName?: string;
     layout?: BoxLayout;
     minimize?: GenericUsableMenuLayoutMinimizeProps;
-    tags?: string[];
 }
 
-export const GenericUsableMenuLayoutBorder = ({ buttons, captionFurniName, layout, minimize, tags }: GenericUsableMenuLayoutBorderProps) => {
+export const GenericUsableMenuLayoutBorder = ({ buttons, captionFurniName, layout, minimize }: GenericUsableMenuLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76, justifyContent: 'center', ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center' }}>

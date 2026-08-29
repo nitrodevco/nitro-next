@@ -61,16 +61,14 @@ export const ChatterConfigurationLayoutChatTextItem = ({ layout }: ChatterConfig
 export interface ChatterConfigurationLayoutAutoChatContainerItemProps {
     layout?: BoxLayout;
     onAutoChatCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const ChatterConfigurationLayoutAutoChatContainerItem = ({ layout, onAutoChatCheckbox, tags }: ChatterConfigurationLayoutAutoChatContainerItemProps) => {
+export const ChatterConfigurationLayoutAutoChatContainerItem = ({ layout, onAutoChatCheckbox }: ChatterConfigurationLayoutAutoChatContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="auto_chat_container"
-            tags={tags}
             layout={{ width: 248, height: 22, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 207, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -94,16 +92,14 @@ export const ChatterConfigurationLayoutAutoChatContainerItem = ({ layout, onAuto
 export interface ChatterConfigurationLayoutMarkovContainerItemProps {
     layout?: BoxLayout;
     onMarkovCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const ChatterConfigurationLayoutMarkovContainerItem = ({ layout, onMarkovCheckbox, tags }: ChatterConfigurationLayoutMarkovContainerItemProps) => {
+export const ChatterConfigurationLayoutMarkovContainerItem = ({ layout, onMarkovCheckbox }: ChatterConfigurationLayoutMarkovContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="markov_container"
-            tags={tags}
             layout={{ width: 248, height: 22, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 175, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -126,17 +122,15 @@ export const ChatterConfigurationLayoutMarkovContainerItem = ({ layout, onMarkov
 /** Row template `chat_delay_container` of ChatterConfigurationLayout - pass real rows through its `items…` slot. */
 export interface ChatterConfigurationLayoutChatDelayContainerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChatterConfigurationLayoutChatDelayContainerItem = ({ layout, tags }: ChatterConfigurationLayoutChatDelayContainerItemProps) => {
+export const ChatterConfigurationLayoutChatDelayContainerItem = ({ layout }: ChatterConfigurationLayoutChatDelayContainerItemProps) => {
     const t = useTranslation();
     const [ chatDelayTextValue, setChatDelayTextValue ] = useState('');
 
     return (
         <Region
             name="chat_delay_container"
-            tags={tags}
             layout={{ width: 248, height: 22, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 188, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -161,16 +155,14 @@ export interface ChatterConfigurationLayoutHelpLinkItemProps {
     captionHelpLink?: string;
     layout?: BoxLayout;
     onHelpLink?: () => void;
-    tags?: string[];
 }
 
-export const ChatterConfigurationLayoutHelpLinkItem = ({ captionHelpLink, layout, onHelpLink, tags }: ChatterConfigurationLayoutHelpLinkItemProps) => {
+export const ChatterConfigurationLayoutHelpLinkItem = ({ captionHelpLink, layout, onHelpLink }: ChatterConfigurationLayoutHelpLinkItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="help_link"
-            tags={tags}
             layout={{ width: 250, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onHelpLink}
             cursor="pointer"
@@ -190,16 +182,14 @@ export interface ChatterConfigurationLayoutConfigurationItemsProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
     onSaveButton?: () => void;
-    tags?: string[];
 }
 
-export const ChatterConfigurationLayoutConfigurationItems = ({ itemsConfigurationItems, layout, onCancelButton, onSaveButton, tags }: ChatterConfigurationLayoutConfigurationItemsProps) => {
+export const ChatterConfigurationLayoutConfigurationItems = ({ itemsConfigurationItems, layout, onCancelButton, onSaveButton }: ChatterConfigurationLayoutConfigurationItemsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="configuration_items"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 247, top: 25, height: 321, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsConfigurationItems ?? (

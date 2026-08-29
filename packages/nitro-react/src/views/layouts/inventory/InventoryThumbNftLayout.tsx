@@ -15,7 +15,6 @@ export const InventoryThumbNftLayout = ({ layout, numberContainer, srcOutline, s
             <Region layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}>
                 <Border
                     variant="5"
-                    tags={[ 'BG_COLOR' ]}
                     tintColor="#cacaca"
                     layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
                 >
@@ -34,10 +33,7 @@ export const InventoryThumbNftLayout = ({ layout, numberContainer, srcOutline, s
                         name="nft_icon"
                         layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
                     />
-                    <InventoryThumbNftLayoutNumberContainer
-                        tags={[ 'COUNT' ]}
-                        {...numberContainer}
-                    />
+                    <InventoryThumbNftLayoutNumberContainer {...numberContainer} />
                 </Border>
                 <Region
                     visible={false}
@@ -58,22 +54,19 @@ export const InventoryThumbNftLayout = ({ layout, numberContainer, srcOutline, s
 export interface InventoryThumbNftLayoutNumberContainerProps {
     captionNumber?: string;
     layout?: BoxLayout;
-    tags?: string[];
     visibleNumberContainer?: boolean;
 }
 
-export const InventoryThumbNftLayoutNumberContainer = ({ captionNumber, layout, tags, visibleNumberContainer }: InventoryThumbNftLayoutNumberContainerProps) => {
+export const InventoryThumbNftLayoutNumberContainer = ({ captionNumber, layout, visibleNumberContainer }: InventoryThumbNftLayoutNumberContainerProps) => {
     return (
         <Region
             name="number_container"
-            tags={tags}
             visible={visibleNumberContainer ?? false}
             backgroundColor="#2f6982"
             layout={{ position: 'absolute', left: 33, right: 1, top: 2, height: 15, ...layout }}
         >
             <Region
                 name="number"
-                tags={[ 'NUMBER', 'COUNT' ]}
                 layout={{ position: 'absolute', left: 1, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

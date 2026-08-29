@@ -96,10 +96,9 @@ export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, chatLi
 /** Named region `chat_list` of GuideOngoingLayout - configured through the parent's `chatList` prop. */
 export interface GuideOngoingLayoutChatListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuideOngoingLayoutChatList = ({ layout, tags }: GuideOngoingLayoutChatListProps) => {
+export const GuideOngoingLayoutChatList = ({ layout }: GuideOngoingLayoutChatListProps) => {
     const t = useTranslation();
 
     return (
@@ -109,7 +108,6 @@ export const GuideOngoingLayoutChatList = ({ layout, tags }: GuideOngoingLayoutC
         >
             <Region
                 name="chat_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 <Region layout={{ width: 140, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>

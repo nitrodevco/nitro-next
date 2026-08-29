@@ -21,16 +21,14 @@ export interface MemenuMainLayoutHcProps {
     layout?: BoxLayout;
     onHc?: () => void;
     srcHcIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainLayoutHc = ({ captionHcText, layout, onHc, srcHcIcon, tags }: MemenuMainLayoutHcProps) => {
+export const MemenuMainLayoutHc = ({ captionHcText, layout, onHc, srcHcIcon }: MemenuMainLayoutHcProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="hc"
-            tags={tags}
             onPointerTap={onHc}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 79, top: 0, height: 79, justifyContent: 'center', ...layout }}
@@ -59,16 +57,14 @@ export interface MemenuMainLayoutRoomsProps {
     layout?: BoxLayout;
     onRooms?: () => void;
     srcRoomsIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainLayoutRooms = ({ captionRoomsText, layout, onRooms, srcRoomsIcon, tags }: MemenuMainLayoutRoomsProps) => {
+export const MemenuMainLayoutRooms = ({ captionRoomsText, layout, onRooms, srcRoomsIcon }: MemenuMainLayoutRoomsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rooms"
-            tags={tags}
             onPointerTap={onRooms}
             cursor="pointer"
             layout={{ position: 'absolute', left: 83, width: 79, top: 83, height: 79, justifyContent: 'center', ...layout }}
@@ -97,16 +93,14 @@ export interface MemenuMainLayoutClothesProps {
     layout?: BoxLayout;
     onClothes?: () => void;
     srcClothesIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainLayoutClothes = ({ captionClothesText, layout, onClothes, srcClothesIcon, tags }: MemenuMainLayoutClothesProps) => {
+export const MemenuMainLayoutClothes = ({ captionClothesText, layout, onClothes, srcClothesIcon }: MemenuMainLayoutClothesProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="clothes"
-            tags={tags}
             onPointerTap={onClothes}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 79, top: 83, height: 79, justifyContent: 'center', ...layout }}
@@ -135,16 +129,14 @@ export interface MemenuMainLayoutEffectsProps {
     layout?: BoxLayout;
     onEffects?: () => void;
     srcEffectsIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainLayoutEffects = ({ captionEffectsText, layout, onEffects, srcEffectsIcon, tags }: MemenuMainLayoutEffectsProps) => {
+export const MemenuMainLayoutEffects = ({ captionEffectsText, layout, onEffects, srcEffectsIcon }: MemenuMainLayoutEffectsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="effects"
-            tags={tags}
             onPointerTap={onEffects}
             cursor="pointer"
             layout={{ position: 'absolute', left: 166, width: 79, top: 83, height: 79, justifyContent: 'center', ...layout }}
@@ -173,16 +165,14 @@ export interface MemenuMainLayoutDanceProps {
     layout?: BoxLayout;
     onDance?: () => void;
     srcDanceIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainLayoutDance = ({ captionDanceText, layout, onDance, srcDanceIcon, tags }: MemenuMainLayoutDanceProps) => {
+export const MemenuMainLayoutDance = ({ captionDanceText, layout, onDance, srcDanceIcon }: MemenuMainLayoutDanceProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance"
-            tags={tags}
             onPointerTap={onDance}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 79, top: 165, height: 79, justifyContent: 'center', ...layout }}
@@ -211,16 +201,14 @@ export interface MemenuMainLayoutWaveProps {
     layout?: BoxLayout;
     onWave?: () => void;
     srcWaveIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainLayoutWave = ({ captionWaveText, layout, onWave, srcWaveIcon, tags }: MemenuMainLayoutWaveProps) => {
+export const MemenuMainLayoutWave = ({ captionWaveText, layout, onWave, srcWaveIcon }: MemenuMainLayoutWaveProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wave"
-            tags={tags}
             onPointerTap={onWave}
             cursor="pointer"
             layout={{ position: 'absolute', left: 83, width: 79, top: 165, height: 79, justifyContent: 'center', ...layout }}
@@ -249,16 +237,14 @@ export interface MemenuMainLayoutSettingsProps {
     layout?: BoxLayout;
     onSettings?: () => void;
     srcSettingsIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainLayoutSettings = ({ captionSettingsText, layout, onSettings, srcSettingsIcon, tags }: MemenuMainLayoutSettingsProps) => {
+export const MemenuMainLayoutSettings = ({ captionSettingsText, layout, onSettings, srcSettingsIcon }: MemenuMainLayoutSettingsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="settings"
-            tags={tags}
             onPointerTap={onSettings}
             cursor="pointer"
             layout={{ position: 'absolute', left: 166, width: 79, top: 165, height: 79, justifyContent: 'center', ...layout }}
@@ -287,16 +273,14 @@ export interface MemenuMainLayoutCreditsProps {
     layout?: BoxLayout;
     onCredits?: () => void;
     srcCreditsIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainLayoutCredits = ({ captionCreditsText, layout, onCredits, srcCreditsIcon, tags }: MemenuMainLayoutCreditsProps) => {
+export const MemenuMainLayoutCredits = ({ captionCreditsText, layout, onCredits, srcCreditsIcon }: MemenuMainLayoutCreditsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="credits"
-            tags={tags}
             onPointerTap={onCredits}
             cursor="pointer"
             layout={{ position: 'absolute', left: 83, width: 79, top: 1, height: 79, justifyContent: 'center', ...layout }}
@@ -325,16 +309,14 @@ export interface MemenuMainLayoutMinimailProps {
     layout?: BoxLayout;
     onMinimail?: () => void;
     srcMinimailIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuMainLayoutMinimail = ({ captionMinimailText, layout, onMinimail, srcMinimailIcon, tags }: MemenuMainLayoutMinimailProps) => {
+export const MemenuMainLayoutMinimail = ({ captionMinimailText, layout, onMinimail, srcMinimailIcon }: MemenuMainLayoutMinimailProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="minimail"
-            tags={tags}
             onPointerTap={onMinimail}
             cursor="pointer"
             layout={{ position: 'absolute', left: 166, width: 79, top: 1, height: 79, justifyContent: 'center', ...layout }}
@@ -369,15 +351,13 @@ export interface MemenuMainLayoutButtonsProps {
     onButtons?: () => void;
     rooms?: MemenuMainLayoutRoomsProps;
     settings?: MemenuMainLayoutSettingsProps;
-    tags?: string[];
     wave?: MemenuMainLayoutWaveProps;
 }
 
-export const MemenuMainLayoutButtons = ({ clothes, credits, dance, effects, hc, layout, minimail, onButtons, rooms, settings, tags, wave }: MemenuMainLayoutButtonsProps) => {
+export const MemenuMainLayoutButtons = ({ clothes, credits, dance, effects, hc, layout, minimail, onButtons, rooms, settings, wave }: MemenuMainLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             onPointerTap={onButtons}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 245, top: 0, height: 249, ...layout }}

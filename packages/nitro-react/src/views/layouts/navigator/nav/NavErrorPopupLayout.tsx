@@ -20,14 +20,12 @@ export interface NavErrorPopupLayoutPopupContainerProps {
     layout?: BoxLayout;
     onPopupContainer?: () => void;
     srcPopupArrowDown?: string;
-    tags?: string[];
 }
 
-export const NavErrorPopupLayoutPopupContainer = ({ captionErrorText, layout, onPopupContainer, srcPopupArrowDown, tags }: NavErrorPopupLayoutPopupContainerProps) => {
+export const NavErrorPopupLayoutPopupContainer = ({ captionErrorText, layout, onPopupContainer, srcPopupArrowDown }: NavErrorPopupLayoutPopupContainerProps) => {
     return (
         <Region
             name="popup_container"
-            tags={tags}
             onPointerTap={onPopupContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 33, ...layout }}

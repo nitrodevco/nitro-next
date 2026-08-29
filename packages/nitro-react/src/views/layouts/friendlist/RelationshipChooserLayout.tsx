@@ -28,14 +28,12 @@ export interface RelationshipChooserLayoutItemNoneItemProps {
     layout?: BoxLayout;
     onItemNone?: () => void;
     srcImage?: string;
-    tags?: string[];
 }
 
-export const RelationshipChooserLayoutItemNoneItem = ({ layout, onItemNone, srcImage, tags }: RelationshipChooserLayoutItemNoneItemProps) => {
+export const RelationshipChooserLayoutItemNoneItem = ({ layout, onItemNone, srcImage }: RelationshipChooserLayoutItemNoneItemProps) => {
     return (
         <Region
             name="item_none"
-            tags={tags}
             backgroundColor="#ececec"
             onPointerTap={onItemNone}
             cursor="pointer"
@@ -55,14 +53,12 @@ export interface RelationshipChooserLayoutItemHeartItemProps {
     layout?: BoxLayout;
     onItemHeart?: () => void;
     srcImage?: string;
-    tags?: string[];
 }
 
-export const RelationshipChooserLayoutItemHeartItem = ({ layout, onItemHeart, srcImage, tags }: RelationshipChooserLayoutItemHeartItemProps) => {
+export const RelationshipChooserLayoutItemHeartItem = ({ layout, onItemHeart, srcImage }: RelationshipChooserLayoutItemHeartItemProps) => {
     return (
         <Region
             name="item_heart"
-            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onItemHeart}
             cursor="pointer"
@@ -82,14 +78,12 @@ export interface RelationshipChooserLayoutItemSmileItemProps {
     layout?: BoxLayout;
     onItemSmile?: () => void;
     srcImage?: string;
-    tags?: string[];
 }
 
-export const RelationshipChooserLayoutItemSmileItem = ({ layout, onItemSmile, srcImage, tags }: RelationshipChooserLayoutItemSmileItemProps) => {
+export const RelationshipChooserLayoutItemSmileItem = ({ layout, onItemSmile, srcImage }: RelationshipChooserLayoutItemSmileItemProps) => {
     return (
         <Region
             name="item_smile"
-            tags={tags}
             backgroundColor="#ececec"
             onPointerTap={onItemSmile}
             cursor="pointer"
@@ -109,14 +103,12 @@ export interface RelationshipChooserLayoutItemBobbaItemProps {
     layout?: BoxLayout;
     onItemBobba?: () => void;
     srcImage?: string;
-    tags?: string[];
 }
 
-export const RelationshipChooserLayoutItemBobbaItem = ({ layout, onItemBobba, srcImage, tags }: RelationshipChooserLayoutItemBobbaItemProps) => {
+export const RelationshipChooserLayoutItemBobbaItem = ({ layout, onItemBobba, srcImage }: RelationshipChooserLayoutItemBobbaItemProps) => {
     return (
         <Region
             name="item_bobba"
-            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onItemBobba}
             cursor="pointer"
@@ -135,14 +127,12 @@ export const RelationshipChooserLayoutItemBobbaItem = ({ layout, onItemBobba, sr
 export interface RelationshipChooserLayoutItemsProps {
     itemsItems?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RelationshipChooserLayoutItems = ({ itemsItems, layout, tags }: RelationshipChooserLayoutItemsProps) => {
+export const RelationshipChooserLayoutItems = ({ itemsItems, layout }: RelationshipChooserLayoutItemsProps) => {
     return (
         <Region
             name="items"
-            tags={tags}
             layout={{ position: 'absolute', left: 2, width: 25, top: 2, height: 63, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsItems ?? (

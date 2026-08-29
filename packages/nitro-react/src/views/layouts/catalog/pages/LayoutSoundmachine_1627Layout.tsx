@@ -2,7 +2,7 @@ import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeText } from '#base/theme';
 import { ItemGridWidget, ItemGridWidgetProps } from '#base/views/layouts/catalog/widgets/ItemGridWidget';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
-import { SongDiskProductViewWidget2, SongDiskProductViewWidget2Props } from '#base/views/layouts/catalog/widgets/SongDiskProductViewWidget2';
+import { SongDiskProductViewWidget, SongDiskProductViewWidgetProps } from '#base/views/layouts/catalog/widgets/SongDiskProductViewWidget';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
 
 /** Generated from `1627_layout_soundmachine_xml` (layout "ctlg_soundmachine", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -25,18 +25,16 @@ export interface LayoutSoundmachine_1627LayoutCtlgSoundmachineProps {
     itemGridWidget?: ItemGridWidgetProps;
     layout?: BoxLayout;
     purchaseWidget?: PurchaseWidgetProps;
-    songDiskProductViewWidget?: SongDiskProductViewWidget2Props;
+    songDiskProductViewWidget?: SongDiskProductViewWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
-    tags?: string[];
 }
 
-export const LayoutSoundmachine_1627LayoutCtlgSoundmachine = ({ captionCtlgSelectproduct, itemGridWidget, layout, purchaseWidget, songDiskProductViewWidget, specialInfoWidget, tags }: LayoutSoundmachine_1627LayoutCtlgSoundmachineProps) => {
+export const LayoutSoundmachine_1627LayoutCtlgSoundmachine = ({ captionCtlgSelectproduct, itemGridWidget, layout, purchaseWidget, songDiskProductViewWidget, specialInfoWidget }: LayoutSoundmachine_1627LayoutCtlgSoundmachineProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_soundmachine"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <Region
@@ -54,8 +52,7 @@ export const LayoutSoundmachine_1627LayoutCtlgSoundmachine = ({ captionCtlgSelec
                 layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 35 }}
                 {...itemGridWidget}
             />
-            <SongDiskProductViewWidget2
-                tags={[ 'EMBEDDED' ]}
+            <SongDiskProductViewWidget
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
                 {...songDiskProductViewWidget}
             />

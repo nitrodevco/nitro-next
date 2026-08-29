@@ -90,14 +90,12 @@ export const MessengerLayout = ({ avatarList, avatarsScrollLeft, avatarsScrollRi
 export interface MessengerLayoutAvatarClickRegionProps {
     layout?: BoxLayout;
     onAvatarClickRegion?: () => void;
-    tags?: string[];
 }
 
-export const MessengerLayoutAvatarClickRegion = ({ layout, onAvatarClickRegion, tags }: MessengerLayoutAvatarClickRegionProps) => {
+export const MessengerLayoutAvatarClickRegion = ({ layout, onAvatarClickRegion }: MessengerLayoutAvatarClickRegionProps) => {
     return (
         <Region
             name="avatar_click_region"
-            tags={tags}
             onPointerTap={onAvatarClickRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 35, ...layout }}
@@ -110,14 +108,12 @@ export interface MessengerLayoutAvatarListProps {
     avatarClickRegion?: MessengerLayoutAvatarClickRegionProps;
     layout?: BoxLayout;
     srcChatIndicator?: string;
-    tags?: string[];
 }
 
-export const MessengerLayoutAvatarList = ({ avatarClickRegion, layout, srcChatIndicator, tags }: MessengerLayoutAvatarListProps) => {
+export const MessengerLayoutAvatarList = ({ avatarClickRegion, layout, srcChatIndicator }: MessengerLayoutAvatarListProps) => {
     return (
         <Region
             name="avatar_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 16, right: 18, top: 0, height: 40, ...layout }}
         >
             <Border
@@ -157,14 +153,12 @@ export const MessengerLayoutAvatarList = ({ avatarClickRegion, layout, srcChatIn
 export interface MessengerLayoutAvatarsScrollLeftProps {
     layout?: BoxLayout;
     onAvatarsScrollLeft?: () => void;
-    tags?: string[];
 }
 
-export const MessengerLayoutAvatarsScrollLeft = ({ layout, onAvatarsScrollLeft, tags }: MessengerLayoutAvatarsScrollLeftProps) => {
+export const MessengerLayoutAvatarsScrollLeft = ({ layout, onAvatarsScrollLeft }: MessengerLayoutAvatarsScrollLeftProps) => {
     return (
         <Region
             name="avatars_scroll_left"
-            tags={tags}
             onPointerTap={onAvatarsScrollLeft}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 35, ...layout }}
@@ -181,14 +175,12 @@ export const MessengerLayoutAvatarsScrollLeft = ({ layout, onAvatarsScrollLeft, 
 export interface MessengerLayoutAvatarsScrollRightProps {
     layout?: BoxLayout;
     onAvatarsScrollRight?: () => void;
-    tags?: string[];
 }
 
-export const MessengerLayoutAvatarsScrollRight = ({ layout, onAvatarsScrollRight, tags }: MessengerLayoutAvatarsScrollRightProps) => {
+export const MessengerLayoutAvatarsScrollRight = ({ layout, onAvatarsScrollRight }: MessengerLayoutAvatarsScrollRightProps) => {
     return (
         <Region
             name="avatars_scroll_right"
-            tags={tags}
             onPointerTap={onAvatarsScrollRight}
             cursor="pointer"
             layout={{ position: 'absolute', right: 2, width: 15, top: 0, height: 35, ...layout }}
@@ -205,17 +197,15 @@ export const MessengerLayoutAvatarsScrollRight = ({ layout, onAvatarsScrollRight
 export interface MessengerLayoutFollowButtonItemProps {
     layout?: BoxLayout;
     onFollowButton?: () => void;
-    tags?: string[];
 }
 
-export const MessengerLayoutFollowButtonItem = ({ layout, onFollowButton, tags }: MessengerLayoutFollowButtonItemProps) => {
+export const MessengerLayoutFollowButtonItem = ({ layout, onFollowButton }: MessengerLayoutFollowButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ContainerButton
             variant="102"
             name="follow_button"
-            tags={tags}
             tooltip={t('messenger.followfriend.tooltip')}
             onPointerTap={onFollowButton}
             layout={{ width: 21, height: 20, flexShrink: 0, maxHeight: 20, ...layout }}
@@ -233,17 +223,15 @@ export const MessengerLayoutFollowButtonItem = ({ layout, onFollowButton, tags }
 export interface MessengerLayoutProfileButtonItemProps {
     layout?: BoxLayout;
     onProfileButton?: () => void;
-    tags?: string[];
 }
 
-export const MessengerLayoutProfileButtonItem = ({ layout, onProfileButton, tags }: MessengerLayoutProfileButtonItemProps) => {
+export const MessengerLayoutProfileButtonItem = ({ layout, onProfileButton }: MessengerLayoutProfileButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ContainerButton
             variant="102"
             name="profile_button"
-            tags={tags}
             tooltip={t('infostand.profile.link.tooltip')}
             onPointerTap={onProfileButton}
             layout={{ width: 30, height: 20, flexShrink: 0, maxHeight: 20, ...layout }}
@@ -261,17 +249,15 @@ export const MessengerLayoutProfileButtonItem = ({ layout, onProfileButton, tags
 export interface MessengerLayoutReportButtonItemProps {
     layout?: BoxLayout;
     onReportButton?: () => void;
-    tags?: string[];
 }
 
-export const MessengerLayoutReportButtonItem = ({ layout, onReportButton, tags }: MessengerLayoutReportButtonItemProps) => {
+export const MessengerLayoutReportButtonItem = ({ layout, onReportButton }: MessengerLayoutReportButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="102"
             name="report_button"
-            tags={tags}
             tooltip={t('messenger.window.button.report.tooltip')}
             onPointerTap={onReportButton}
             textStyle="text-style-il-button"
@@ -286,14 +272,12 @@ export const MessengerLayoutReportButtonItem = ({ layout, onReportButton, tags }
 export interface MessengerLayoutButtonStripProps {
     itemsButtonStrip?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessengerLayoutButtonStrip = ({ itemsButtonStrip, layout, tags }: MessengerLayoutButtonStripProps) => {
+export const MessengerLayoutButtonStrip = ({ itemsButtonStrip, layout }: MessengerLayoutButtonStripProps) => {
     return (
         <Region
             name="button_strip"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, right: 9, top: 57, height: 21, flexDirection: 'row', gap: 4, ...layout }}
         >
             {itemsButtonStrip ?? (
@@ -310,15 +294,13 @@ export const MessengerLayoutButtonStrip = ({ itemsButtonStrip, layout, tags }: M
 /** Row template `msg_normal` of MessengerLayout - pass real rows through its `items…` slot. */
 export interface MessengerLayoutMsgNormalItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessengerLayoutMsgNormalItem = ({ layout, tags }: MessengerLayoutMsgNormalItemProps) => {
+export const MessengerLayoutMsgNormalItem = ({ layout }: MessengerLayoutMsgNormalItemProps) => {
     return (
         <WidgetSlot
             widgetType="illumina_chat_bubble"
             name="msg_normal"
-            tags={tags}
             options={{ 'illumina_chat_bubble:figure': 'hd-180-1.ch-210-66.lg-270-82.sh-290-81' }}
             layout={{ width: 259, height: 60, flexShrink: 0, ...layout }}
         />
@@ -329,15 +311,13 @@ export const MessengerLayoutMsgNormalItem = ({ layout, tags }: MessengerLayoutMs
 export interface MessengerLayoutMsgNotificationItemProps {
     captionContent?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessengerLayoutMsgNotificationItem = ({ captionContent, layout, tags }: MessengerLayoutMsgNotificationItemProps) => {
+export const MessengerLayoutMsgNotificationItem = ({ captionContent, layout }: MessengerLayoutMsgNotificationItemProps) => {
     return (
         <Border
             variant="105"
             name="msg_notification"
-            tags={tags}
             layout={{ width: 255, height: 50, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -361,15 +341,13 @@ export const MessengerLayoutMsgNotificationItem = ({ captionContent, layout, tag
 export interface MessengerLayoutMsgInvitationItemProps {
     captionContent?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessengerLayoutMsgInvitationItem = ({ captionContent, layout, tags }: MessengerLayoutMsgInvitationItemProps) => {
+export const MessengerLayoutMsgInvitationItem = ({ captionContent, layout }: MessengerLayoutMsgInvitationItemProps) => {
     return (
         <Border
             variant="105"
             name="msg_invitation"
-            tags={tags}
             tintColor="#d1efde"
             layout={{ width: 255, height: 50, flexShrink: 0, ...layout }}
         >
@@ -394,14 +372,12 @@ export const MessengerLayoutMsgInvitationItem = ({ captionContent, layout, tags 
 export interface MessengerLayoutMsgInfoItemProps {
     captionContent?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessengerLayoutMsgInfoItem = ({ captionContent, layout, tags }: MessengerLayoutMsgInfoItemProps) => {
+export const MessengerLayoutMsgInfoItem = ({ captionContent, layout }: MessengerLayoutMsgInfoItemProps) => {
     return (
         <Region
             name="msg_info"
-            tags={tags}
             layout={{ width: 255, height: 24, flexShrink: 0, ...layout }}
         >
             <Region
@@ -421,10 +397,9 @@ export const MessengerLayoutMsgInfoItem = ({ captionContent, layout, tags }: Mes
 export interface MessengerLayoutConversationProps {
     itemsConversation?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessengerLayoutConversation = ({ itemsConversation, layout, tags }: MessengerLayoutConversationProps) => {
+export const MessengerLayoutConversation = ({ itemsConversation, layout }: MessengerLayoutConversationProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -432,7 +407,6 @@ export const MessengerLayoutConversation = ({ itemsConversation, layout, tags }:
         >
             <Region
                 name="conversation"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsConversation ?? (

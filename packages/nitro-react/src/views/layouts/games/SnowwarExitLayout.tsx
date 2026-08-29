@@ -20,21 +20,18 @@ export interface SnowwarExitLayoutExitButtonProps {
     layout?: BoxLayout;
     onExitButton?: () => void;
     srcBackgroundImage?: string;
-    tags?: string[];
 }
 
-export const SnowwarExitLayoutExitButton = ({ layout, onExitButton, srcBackgroundImage, tags }: SnowwarExitLayoutExitButtonProps) => {
+export const SnowwarExitLayoutExitButton = ({ layout, onExitButton, srcBackgroundImage }: SnowwarExitLayoutExitButtonProps) => {
     return (
         <Region
             name="exitButton"
-            tags={tags}
             onPointerTap={onExitButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 68, top: 0, height: 50, ...layout }}
         >
             <ThemeImage
                 name="backgroundImage"
-                tags={[ 'bitmap' ]}
                 src={srcBackgroundImage ?? layoutImage('ui_exit_down.png')}
                 layout={{ position: 'absolute', left: 0, width: 68, top: 0, height: 50 }}
             />

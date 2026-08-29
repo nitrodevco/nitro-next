@@ -17,10 +17,9 @@ export const ClubGiftWidgetLayout = ({ layout, widgetMainContainer }: ClubGiftWi
 /** Named region `gift_list` of ClubGiftWidgetLayout - configured through the parent's `giftList` prop. */
 export interface ClubGiftWidgetLayoutGiftListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubGiftWidgetLayoutGiftList = ({ layout, tags }: ClubGiftWidgetLayoutGiftListProps) => {
+export const ClubGiftWidgetLayoutGiftList = ({ layout }: ClubGiftWidgetLayoutGiftListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -28,7 +27,6 @@ export const ClubGiftWidgetLayoutGiftList = ({ layout, tags }: ClubGiftWidgetLay
         >
             <Region
                 name="gift_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 1, width: '100%' }}
             />
         </ScrollArea>
@@ -42,14 +40,12 @@ export interface ClubGiftWidgetLayoutWidgetMainContainerProps {
     captionPastVipDays?: string;
     giftList?: ClubGiftWidgetLayoutGiftListProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubGiftWidgetLayoutWidgetMainContainer = ({ captionInfoText, captionPastClubDays, captionPastVipDays, giftList, layout, tags }: ClubGiftWidgetLayoutWidgetMainContainerProps) => {
+export const ClubGiftWidgetLayoutWidgetMainContainer = ({ captionInfoText, captionPastClubDays, captionPastVipDays, giftList, layout }: ClubGiftWidgetLayoutWidgetMainContainerProps) => {
     return (
         <Region
             name="widget_main_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 320, ...layout }}
         >
             <ClubGiftWidgetLayoutGiftList {...giftList} />

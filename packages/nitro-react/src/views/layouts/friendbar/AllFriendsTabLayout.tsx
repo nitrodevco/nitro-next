@@ -31,16 +31,14 @@ export interface AllFriendsTabLayoutHeaderItemProps {
     layout?: BoxLayout;
     onHeader?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const AllFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeader, srcIcon, tags }: AllFriendsTabLayoutHeaderItemProps) => {
+export const AllFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeader, srcIcon }: AllFriendsTabLayoutHeaderItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             onPointerTap={onHeader}
             cursor="pointer"
             layout={{ width: 112, height: 31, flexShrink: 0, ...layout }}
@@ -52,7 +50,6 @@ export const AllFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeader, 
             />
             <Region
                 name="title"
-                tags={[ 'label' ]}
                 layout={{ position: 'absolute', left: 33, width: 77, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -69,14 +66,12 @@ export const AllFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeader, 
 export interface AllFriendsTabLayoutTabContentProps {
     itemsTabContent?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AllFriendsTabLayoutTabContent = ({ itemsTabContent, layout, tags }: AllFriendsTabLayoutTabContentProps) => {
+export const AllFriendsTabLayoutTabContent = ({ itemsTabContent, layout }: AllFriendsTabLayoutTabContentProps) => {
     return (
         <Region
             name="tab_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 31, minHeight: 30, flexDirection: 'column', ...layout }}
         >
             {itemsTabContent ?? (

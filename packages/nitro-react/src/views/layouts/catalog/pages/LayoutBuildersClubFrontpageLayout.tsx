@@ -20,14 +20,12 @@ export interface LayoutBuildersClubFrontpageLayoutCtlgBuildersClubFrontpageProps
     builderSubscriptionWidget?: BuilderSubscriptionWidgetProps;
     captionCtlgDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LayoutBuildersClubFrontpageLayoutCtlgBuildersClubFrontpage = ({ builderSubscriptionWidget, captionCtlgDescription, layout, tags }: LayoutBuildersClubFrontpageLayoutCtlgBuildersClubFrontpageProps) => {
+export const LayoutBuildersClubFrontpageLayoutCtlgBuildersClubFrontpage = ({ builderSubscriptionWidget, captionCtlgDescription, layout }: LayoutBuildersClubFrontpageLayoutCtlgBuildersClubFrontpageProps) => {
     return (
         <Region
             name="ctlg_builders_club_frontpage"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <Region

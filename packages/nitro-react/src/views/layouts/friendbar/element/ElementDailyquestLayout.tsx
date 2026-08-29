@@ -26,17 +26,16 @@ export const ElementDailyquestLayout = ({ difficultyContainer, layout, questdata
 /** Named region `next_quest_region` of ElementDailyquestLayout - configured through the parent's `nextQuestRegion` prop. */
 export interface ElementDailyquestLayoutNextQuestRegionProps {
     captionNextQuestTxt?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     onNextQuestRegion?: () => void;
-    tags?: string[];
     visibleNextQuestRegion?: boolean;
 }
 
-export const ElementDailyquestLayoutNextQuestRegion = ({ captionNextQuestTxt, layout, onNextQuestRegion, tags, visibleNextQuestRegion }: ElementDailyquestLayoutNextQuestRegionProps) => {
+export const ElementDailyquestLayoutNextQuestRegion = ({ captionNextQuestTxt, colorableTextColor, layout, onNextQuestRegion, visibleNextQuestRegion }: ElementDailyquestLayoutNextQuestRegionProps) => {
     return (
         <Region
             name="next_quest_region"
-            tags={tags}
             visible={visibleNextQuestRegion ?? false}
             onPointerTap={onNextQuestRegion}
             cursor="pointer"
@@ -44,10 +43,12 @@ export const ElementDailyquestLayoutNextQuestRegion = ({ captionNextQuestTxt, la
         >
             <Region
                 name="next_quest_txt"
-                tags={[ 'COLORABLE' ]}
                 layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionNextQuestTxt ?? 'PH: Show me another easy quest'} />
+                <ThemeText
+                    text={captionNextQuestTxt ?? 'PH: Show me another easy quest'}
+                    textOptions={{ fill: colorableTextColor }}
+                />
             </Region>
         </Region>
     );
@@ -56,28 +57,29 @@ export const ElementDailyquestLayoutNextQuestRegion = ({ captionNextQuestTxt, la
 /** Named region `cancel_quest_region` of ElementDailyquestLayout - configured through the parent's `cancelQuestRegion` prop. */
 export interface ElementDailyquestLayoutCancelQuestRegionProps {
     captionCancelQuestTxt?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     onCancelQuestRegion?: () => void;
-    tags?: string[];
 }
 
-export const ElementDailyquestLayoutCancelQuestRegion = ({ captionCancelQuestTxt, layout, onCancelQuestRegion, tags }: ElementDailyquestLayoutCancelQuestRegionProps) => {
+export const ElementDailyquestLayoutCancelQuestRegion = ({ captionCancelQuestTxt, colorableTextColor, layout, onCancelQuestRegion }: ElementDailyquestLayoutCancelQuestRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_quest_region"
-            tags={tags}
             onPointerTap={onCancelQuestRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 250, top: 55, height: 14, ...layout }}
         >
             <Region
                 name="cancel_quest_txt"
-                tags={[ 'COLORABLE' ]}
                 layout={{ position: 'absolute', left: 0, width: 105, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionCancelQuestTxt ?? t('landing.view.quest.cancel')} />
+                <ThemeText
+                    text={captionCancelQuestTxt ?? t('landing.view.quest.cancel')}
+                    textOptions={{ fill: colorableTextColor }}
+                />
             </Region>
         </Region>
     );
@@ -89,21 +91,20 @@ export interface ElementDailyquestLayoutQuestdataContainerProps {
     captionAcceptText?: string;
     captionCaptionTxt?: string;
     captionCurrentQuestTxt?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     nextQuestRegion?: ElementDailyquestLayoutNextQuestRegionProps;
     onAcceptButton?: () => void;
     onGoButton?: () => void;
-    tags?: string[];
     visibleAcceptButton?: boolean;
 }
 
-export const ElementDailyquestLayoutQuestdataContainer = ({ cancelQuestRegion, captionAcceptText, captionCaptionTxt, captionCurrentQuestTxt, layout, nextQuestRegion, onAcceptButton, onGoButton, tags, visibleAcceptButton }: ElementDailyquestLayoutQuestdataContainerProps) => {
+export const ElementDailyquestLayoutQuestdataContainer = ({ cancelQuestRegion, captionAcceptText, captionCaptionTxt, captionCurrentQuestTxt, colorableTextColor, layout, nextQuestRegion, onAcceptButton, onGoButton, visibleAcceptButton }: ElementDailyquestLayoutQuestdataContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="questdata_container"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 70, ...layout }}
         >
@@ -150,12 +151,11 @@ export const ElementDailyquestLayoutQuestdataContainer = ({ cancelQuestRegion, c
                 </Button>
                 <Region
                     name="current_quest_txt"
-                    tags={[ 'COLORABLE' ]}
                     layout={{ position: 'absolute', left: 13, width: 157, top: 10, height: 43, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionCurrentQuestTxt ?? t('landing.view.quest.currenttask')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 157 }}
+                        textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 157 }}
                     />
                 </Region>
             </Border>
@@ -166,28 +166,29 @@ export const ElementDailyquestLayoutQuestdataContainer = ({ cancelQuestRegion, c
 /** Named region `easy_region` of ElementDailyquestLayout - configured through the parent's `easyRegion` prop. */
 export interface ElementDailyquestLayoutEasyRegionProps {
     captionLabelTxt?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     onEasyRegion?: () => void;
-    tags?: string[];
 }
 
-export const ElementDailyquestLayoutEasyRegion = ({ captionLabelTxt, layout, onEasyRegion, tags }: ElementDailyquestLayoutEasyRegionProps) => {
+export const ElementDailyquestLayoutEasyRegion = ({ captionLabelTxt, colorableTextColor, layout, onEasyRegion }: ElementDailyquestLayoutEasyRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="easy_region"
-            tags={tags}
             onPointerTap={onEasyRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 18, ...layout }}
         >
             <Region
                 name="label_txt"
-                tags={[ 'COLORABLE' ]}
                 layout={{ position: 'absolute', left: 0, width: 98, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionLabelTxt ?? t('landing.view.quest.easy')} />
+                <ThemeText
+                    text={captionLabelTxt ?? t('landing.view.quest.easy')}
+                    textOptions={{ fill: colorableTextColor }}
+                />
             </Region>
         </Region>
     );
@@ -196,28 +197,29 @@ export const ElementDailyquestLayoutEasyRegion = ({ captionLabelTxt, layout, onE
 /** Named region `hard_region` of ElementDailyquestLayout - configured through the parent's `hardRegion` prop. */
 export interface ElementDailyquestLayoutHardRegionProps {
     captionLabelTxt?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     onHardRegion?: () => void;
-    tags?: string[];
 }
 
-export const ElementDailyquestLayoutHardRegion = ({ captionLabelTxt, layout, onHardRegion, tags }: ElementDailyquestLayoutHardRegionProps) => {
+export const ElementDailyquestLayoutHardRegion = ({ captionLabelTxt, colorableTextColor, layout, onHardRegion }: ElementDailyquestLayoutHardRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="hard_region"
-            tags={tags}
             onPointerTap={onHardRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 112, width: 99, top: 0, height: 18, ...layout }}
         >
             <Region
                 name="label_txt"
-                tags={[ 'COLORABLE' ]}
                 layout={{ position: 'absolute', left: 0, width: 99, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionLabelTxt ?? t('landing.view.quest.hard')} />
+                <ThemeText
+                    text={captionLabelTxt ?? t('landing.view.quest.hard')}
+                    textOptions={{ fill: colorableTextColor }}
+                />
             </Region>
         </Region>
     );
@@ -229,15 +231,13 @@ export interface ElementDailyquestLayoutDifficultyContainerProps {
     hardRegion?: ElementDailyquestLayoutHardRegionProps;
     layout?: BoxLayout;
     srcDivider?: string;
-    tags?: string[];
     visibleDifficultyContainer?: boolean;
 }
 
-export const ElementDailyquestLayoutDifficultyContainer = ({ easyRegion, hardRegion, layout, srcDivider, tags, visibleDifficultyContainer }: ElementDailyquestLayoutDifficultyContainerProps) => {
+export const ElementDailyquestLayoutDifficultyContainer = ({ easyRegion, hardRegion, layout, srcDivider, visibleDifficultyContainer }: ElementDailyquestLayoutDifficultyContainerProps) => {
     return (
         <Region
             name="difficulty_container"
-            tags={tags}
             visible={visibleDifficultyContainer ?? false}
             layout={{ position: 'absolute', left: 39, width: 211, top: 45, height: 17, ...layout }}
         >

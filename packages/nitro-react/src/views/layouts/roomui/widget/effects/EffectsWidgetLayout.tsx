@@ -51,10 +51,9 @@ export const EffectsWidgetLayout = ({ captionTitle, layout, list, noEffects, onC
 /** Named region `list` of EffectsWidgetLayout - configured through the parent's `list` prop. */
 export interface EffectsWidgetLayoutListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EffectsWidgetLayoutList = ({ layout, tags }: EffectsWidgetLayoutListProps) => {
+export const EffectsWidgetLayoutList = ({ layout }: EffectsWidgetLayoutListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -62,7 +61,6 @@ export const EffectsWidgetLayoutList = ({ layout, tags }: EffectsWidgetLayoutLis
         >
             <Region
                 name="list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -72,16 +70,14 @@ export const EffectsWidgetLayoutList = ({ layout, tags }: EffectsWidgetLayoutLis
 /** Named region `no_effects` of EffectsWidgetLayout - configured through the parent's `noEffects` prop. */
 export interface EffectsWidgetLayoutNoEffectsProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EffectsWidgetLayoutNoEffects = ({ layout, tags }: EffectsWidgetLayoutNoEffectsProps) => {
+export const EffectsWidgetLayoutNoEffects = ({ layout }: EffectsWidgetLayoutNoEffectsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="no_effects"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 190, top: 30, height: 48, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 190, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>

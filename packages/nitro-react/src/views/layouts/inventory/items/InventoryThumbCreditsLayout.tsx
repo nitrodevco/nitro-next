@@ -18,7 +18,6 @@ export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap
             <Region layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}>
                 <Border
                     variant="5"
-                    tags={[ 'BG_COLOR' ]}
                     tintColor="#cacaca"
                     layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
                 >
@@ -34,7 +33,6 @@ export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap
                     </Region>
                     <ThemeImage
                         name="bitmap"
-                        tags={[ 'BITMAP' ]}
                         src={srcBitmap}
                         layout={{ position: 'absolute', left: 1, width: 38, top: 18, height: 35, minWidth: 40, maxWidth: 38 }}
                     />
@@ -67,10 +65,7 @@ export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap
                         visible={false}
                         layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                     />
-                    <InventoryThumbCreditsLayoutNumberContainer
-                        tags={[ 'COUNT' ]}
-                        {...numberContainer}
-                    />
+                    <InventoryThumbCreditsLayoutNumberContainer {...numberContainer} />
                     <Region
                         visible={false}
                         layout={{ position: 'absolute', left: 4, width: 10, top: 4, height: 10 }}
@@ -96,19 +91,16 @@ export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap
 export interface InventoryThumbCreditsLayoutNumberContainerProps {
     captionNumber?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const InventoryThumbCreditsLayoutNumberContainer = ({ captionNumber, layout, tags }: InventoryThumbCreditsLayoutNumberContainerProps) => {
+export const InventoryThumbCreditsLayoutNumberContainer = ({ captionNumber, layout }: InventoryThumbCreditsLayoutNumberContainerProps) => {
     return (
         <Region
             name="number_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 2, top: 1, height: 20, ...layout }}
         >
             <Region
                 name="number"
-                tags={[ 'NUMBER', 'COUNT' ]}
                 layout={{ position: 'absolute', left: 0, width: 38, top: 0, height: 17, maxWidth: 38, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText

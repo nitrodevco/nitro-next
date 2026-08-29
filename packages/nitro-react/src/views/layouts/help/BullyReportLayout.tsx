@@ -44,10 +44,9 @@ export interface BullyReportLayoutUserListItemProps {
     captionRoomName?: string;
     captionUserName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BullyReportLayoutUserListItem = ({ captionRoomName, captionUserName, layout, tags }: BullyReportLayoutUserListItemProps) => {
+export const BullyReportLayoutUserListItem = ({ captionRoomName, captionUserName, layout }: BullyReportLayoutUserListItemProps) => {
     const t = useTranslation();
 
     return (
@@ -57,7 +56,6 @@ export const BullyReportLayoutUserListItem = ({ captionRoomName, captionUserName
         >
             <Region
                 name="user_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 <Border
@@ -98,16 +96,14 @@ export const BullyReportLayoutUserListItem = ({ captionRoomName, captionUserName
 export interface BullyReportLayoutUserPanelProps {
     itemsUserPanel?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BullyReportLayoutUserPanel = ({ itemsUserPanel, layout, tags }: BullyReportLayoutUserPanelProps) => {
+export const BullyReportLayoutUserPanel = ({ itemsUserPanel, layout }: BullyReportLayoutUserPanelProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_panel"
-            tags={tags}
             layout={{ position: 'absolute', left: 9, minWidth: 282, top: 8, minHeight: 388, flexDirection: 'column', gap: 8, ...layout }}
         >
             {itemsUserPanel ?? (

@@ -41,14 +41,12 @@ export interface RoomToolsInfoLayoutTag1RegionProps {
     captionTag1?: string;
     layout?: BoxLayout;
     onTag1Region?: () => void;
-    tags?: string[];
 }
 
-export const RoomToolsInfoLayoutTag1Region = ({ captionTag1, layout, onTag1Region, tags }: RoomToolsInfoLayoutTag1RegionProps) => {
+export const RoomToolsInfoLayoutTag1Region = ({ captionTag1, layout, onTag1Region }: RoomToolsInfoLayoutTag1RegionProps) => {
     return (
         <Region
             name="tag1_region"
-            tags={tags}
             onPointerTap={onTag1Region}
             cursor="pointer"
             layout={{ position: 'absolute', left: 1, width: 29, top: -1, height: 15, ...layout }}
@@ -70,15 +68,13 @@ export const RoomToolsInfoLayoutTag1Region = ({ captionTag1, layout, onTag1Regio
 export interface RoomToolsInfoLayoutTag1BorderItemProps {
     layout?: BoxLayout;
     tag1Region?: RoomToolsInfoLayoutTag1RegionProps;
-    tags?: string[];
 }
 
-export const RoomToolsInfoLayoutTag1BorderItem = ({ layout, tag1Region, tags }: RoomToolsInfoLayoutTag1BorderItemProps) => {
+export const RoomToolsInfoLayoutTag1BorderItem = ({ layout, tag1Region }: RoomToolsInfoLayoutTag1BorderItemProps) => {
     return (
         <Border
             variant="3"
             name="tag1_border"
-            tags={tags}
             tintColor="#1c2935"
             layout={{ width: 30, height: 13, flexShrink: 0, ...layout }}
         >
@@ -92,14 +88,12 @@ export interface RoomToolsInfoLayoutTag2RegionProps {
     captionTag2?: string;
     layout?: BoxLayout;
     onTag2Region?: () => void;
-    tags?: string[];
 }
 
-export const RoomToolsInfoLayoutTag2Region = ({ captionTag2, layout, onTag2Region, tags }: RoomToolsInfoLayoutTag2RegionProps) => {
+export const RoomToolsInfoLayoutTag2Region = ({ captionTag2, layout, onTag2Region }: RoomToolsInfoLayoutTag2RegionProps) => {
     return (
         <Region
             name="tag2_region"
-            tags={tags}
             onPointerTap={onTag2Region}
             cursor="pointer"
             layout={{ position: 'absolute', left: 1, width: 34, top: -1, height: 15, ...layout }}
@@ -121,15 +115,13 @@ export const RoomToolsInfoLayoutTag2Region = ({ captionTag2, layout, onTag2Regio
 export interface RoomToolsInfoLayoutTag2BorderItemProps {
     layout?: BoxLayout;
     tag2Region?: RoomToolsInfoLayoutTag2RegionProps;
-    tags?: string[];
 }
 
-export const RoomToolsInfoLayoutTag2BorderItem = ({ layout, tag2Region, tags }: RoomToolsInfoLayoutTag2BorderItemProps) => {
+export const RoomToolsInfoLayoutTag2BorderItem = ({ layout, tag2Region }: RoomToolsInfoLayoutTag2BorderItemProps) => {
     return (
         <Border
             variant="3"
             name="tag2_border"
-            tags={tags}
             tintColor="#1c2935"
             layout={{ width: 35, height: 13, flexShrink: 0, ...layout }}
         >
@@ -142,14 +134,12 @@ export const RoomToolsInfoLayoutTag2BorderItem = ({ layout, tag2Region, tags }: 
 export interface RoomToolsInfoLayoutTagsProps {
     itemsTags?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomToolsInfoLayoutTags = ({ itemsTags, layout, tags }: RoomToolsInfoLayoutTagsProps) => {
+export const RoomToolsInfoLayoutTags = ({ itemsTags, layout }: RoomToolsInfoLayoutTagsProps) => {
     return (
         <Region
             name="tags"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 25, maxWidth: 230, flexDirection: 'row', gap: 4, ...layout }}
         >
             {itemsTags ?? (
@@ -166,15 +156,13 @@ export const RoomToolsInfoLayoutTags = ({ itemsTags, layout, tags }: RoomToolsIn
 export interface RoomToolsInfoLayoutOwnerNameAndTagsProps {
     captionRoomOwner?: string;
     layout?: BoxLayout;
-    tags?: string[];
-    tags2?: RoomToolsInfoLayoutTagsProps;
+    tags?: RoomToolsInfoLayoutTagsProps;
 }
 
-export const RoomToolsInfoLayoutOwnerNameAndTags = ({ captionRoomOwner, layout, tags, tags2 }: RoomToolsInfoLayoutOwnerNameAndTagsProps) => {
+export const RoomToolsInfoLayoutOwnerNameAndTags = ({ captionRoomOwner, layout, tags }: RoomToolsInfoLayoutOwnerNameAndTagsProps) => {
     return (
         <Region
             name="owner_name_and_tags"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 126, top: 33, height: 44, maxWidth: 300, ...layout }}
         >
             <Region
@@ -187,7 +175,7 @@ export const RoomToolsInfoLayoutOwnerNameAndTags = ({ captionRoomOwner, layout, 
                     textOptions={{ fill: '#999999' }}
                 />
             </Region>
-            <RoomToolsInfoLayoutTags {...tags2} />
+            <RoomToolsInfoLayoutTags {...tags} />
         </Region>
     );
 };

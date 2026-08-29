@@ -37,14 +37,12 @@ export const RoomLoadingBarLayout = ({ captionLoadingText, image, layout, region
 /** Named region `image` of RoomLoadingBarLayout - configured through the parent's `image` prop. */
 export interface RoomLoadingBarLayoutImageProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomLoadingBarLayoutImage = ({ layout, tags }: RoomLoadingBarLayoutImageProps) => {
+export const RoomLoadingBarLayoutImage = ({ layout }: RoomLoadingBarLayoutImageProps) => {
     return (
         <Region
             name="image"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 10, top: 10, bottom: 45, ...layout }}
         />
     );
@@ -54,16 +52,14 @@ export const RoomLoadingBarLayoutImage = ({ layout, tags }: RoomLoadingBarLayout
 export interface RoomLoadingBarLayoutRegionProps {
     layout?: BoxLayout;
     onRegion?: () => void;
-    tags?: string[];
 }
 
-export const RoomLoadingBarLayoutRegion = ({ layout, onRegion, tags }: RoomLoadingBarLayoutRegionProps) => {
+export const RoomLoadingBarLayoutRegion = ({ layout, onRegion }: RoomLoadingBarLayoutRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="region"
-            tags={tags}
             tooltip={t('ads.interstitial.tooltip')}
             onPointerTap={onRegion}
             cursor="pointer"

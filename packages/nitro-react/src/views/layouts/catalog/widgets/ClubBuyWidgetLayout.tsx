@@ -18,14 +18,12 @@ export const ClubBuyWidgetLayout = ({ clubBuyContent, layout }: ClubBuyWidgetLay
 /** Named region `item_list_hc` of ClubBuyWidgetLayout - configured through the parent's `itemListHc` prop. */
 export interface ClubBuyWidgetLayoutItemListHcProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubBuyWidgetLayoutItemListHc = ({ layout, tags }: ClubBuyWidgetLayoutItemListHcProps) => {
+export const ClubBuyWidgetLayoutItemListHc = ({ layout }: ClubBuyWidgetLayoutItemListHcProps) => {
     return (
         <Region
             name="item_list_hc"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 151, top: 155, height: 140, flexDirection: 'column', gap: 4, ...layout }}
         />
     );
@@ -34,14 +32,12 @@ export const ClubBuyWidgetLayoutItemListHc = ({ layout, tags }: ClubBuyWidgetLay
 /** Named region `item_list_vip` of ClubBuyWidgetLayout - configured through the parent's `itemListVip` prop. */
 export interface ClubBuyWidgetLayoutItemListVipProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubBuyWidgetLayoutItemListVip = ({ layout, tags }: ClubBuyWidgetLayoutItemListVipProps) => {
+export const ClubBuyWidgetLayoutItemListVip = ({ layout }: ClubBuyWidgetLayoutItemListVipProps) => {
     return (
         <Region
             name="item_list_vip"
-            tags={tags}
             layout={{ position: 'absolute', left: 155, width: 151, top: 155, height: 140, flexDirection: 'column', gap: 4, ...layout }}
         />
     );
@@ -56,16 +52,14 @@ export interface ClubBuyWidgetLayoutClubBuyContentProps {
     itemListHc?: ClubBuyWidgetLayoutItemListHcProps;
     itemListVip?: ClubBuyWidgetLayoutItemListVipProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubBuyWidgetLayoutClubBuyContent = ({ captionClubHeader, captionClubInfo, captionClubLink, captionClubRemaining, itemListHc, itemListVip, layout, tags }: ClubBuyWidgetLayoutClubBuyContentProps) => {
+export const ClubBuyWidgetLayoutClubBuyContent = ({ captionClubHeader, captionClubInfo, captionClubLink, captionClubRemaining, itemListHc, itemListVip, layout }: ClubBuyWidgetLayoutClubBuyContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="club_buy_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 345, justifyContent: 'center', ...layout }}
         >
             <Border
@@ -109,14 +103,8 @@ export const ClubBuyWidgetLayoutClubBuyContent = ({ captionClubHeader, captionCl
             >
                 <ThemeText text={captionClubRemaining ?? t('catalog.club.buy.remaining')} />
             </Region>
-            <ClubBuyWidgetLayoutItemListHc
-                tags={[ 'own_items_grid' ]}
-                {...itemListHc}
-            />
-            <ClubBuyWidgetLayoutItemListVip
-                tags={[ 'own_items_grid' ]}
-                {...itemListVip}
-            />
+            <ClubBuyWidgetLayoutItemListHc {...itemListHc} />
+            <ClubBuyWidgetLayoutItemListVip {...itemListVip} />
             <Region
                 name="club_link"
                 layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 307, top: 330, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}

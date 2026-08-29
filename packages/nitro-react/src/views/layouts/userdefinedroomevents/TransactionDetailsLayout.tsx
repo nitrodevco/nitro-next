@@ -32,16 +32,14 @@ export const TransactionDetailsLayout = ({ keyValuePairs, layout, onClose }: Tra
 /** Row template `transaction_type_pair` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutTransactionTypePairItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutTransactionTypePairItem = ({ layout, tags }: TransactionDetailsLayoutTransactionTypePairItemProps) => {
+export const TransactionDetailsLayoutTransactionTypePairItem = ({ layout }: TransactionDetailsLayoutTransactionTypePairItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="transaction_type_pair"
-            tags={tags}
             layout={{ width: 111, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 101, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -57,16 +55,14 @@ export const TransactionDetailsLayoutTransactionTypePairItem = ({ layout, tags }
 /** Row template `timestamp_pair` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutTimestampPairItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutTimestampPairItem = ({ layout, tags }: TransactionDetailsLayoutTimestampPairItemProps) => {
+export const TransactionDetailsLayoutTimestampPairItem = ({ layout }: TransactionDetailsLayoutTimestampPairItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="timestamp_pair"
-            tags={tags}
             layout={{ width: 77, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 67, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -82,16 +78,14 @@ export const TransactionDetailsLayoutTimestampPairItem = ({ layout, tags }: Tran
 /** Row template `room_id_pair` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutRoomIdPairItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutRoomIdPairItem = ({ layout, tags }: TransactionDetailsLayoutRoomIdPairItemProps) => {
+export const TransactionDetailsLayoutRoomIdPairItem = ({ layout }: TransactionDetailsLayoutRoomIdPairItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_id_pair"
-            tags={tags}
             layout={{ width: 61, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 51, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -107,16 +101,14 @@ export const TransactionDetailsLayoutRoomIdPairItem = ({ layout, tags }: Transac
 /** Row template `chest_ids_pair` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutChestIdsPairItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutChestIdsPairItem = ({ layout, tags }: TransactionDetailsLayoutChestIdsPairItemProps) => {
+export const TransactionDetailsLayoutChestIdsPairItem = ({ layout }: TransactionDetailsLayoutChestIdsPairItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="chest_ids_pair"
-            tags={tags}
             layout={{ width: 78, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 68, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -132,16 +124,14 @@ export const TransactionDetailsLayoutChestIdsPairItem = ({ layout, tags }: Trans
 /** Row template `username_pair` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutUsernamePairItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutUsernamePairItem = ({ layout, tags }: TransactionDetailsLayoutUsernamePairItemProps) => {
+export const TransactionDetailsLayoutUsernamePairItem = ({ layout }: TransactionDetailsLayoutUsernamePairItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="username_pair"
-            tags={tags}
             layout={{ width: 74, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 64, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -157,16 +147,14 @@ export const TransactionDetailsLayoutUsernamePairItem = ({ layout, tags }: Trans
 /** Row template `furni_transactions_pair` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutFurniTransactionsPairItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutFurniTransactionsPairItem = ({ layout, tags }: TransactionDetailsLayoutFurniTransactionsPairItemProps) => {
+export const TransactionDetailsLayoutFurniTransactionsPairItem = ({ layout }: TransactionDetailsLayoutFurniTransactionsPairItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="furni_transactions_pair"
-            tags={tags}
             layout={{ width: 89, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 79, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -183,14 +171,12 @@ export const TransactionDetailsLayoutFurniTransactionsPairItem = ({ layout, tags
 export interface TransactionDetailsLayoutNumberContainerInnerBorderProps {
     captionFurniQuantity?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutNumberContainerInnerBorder = ({ captionFurniQuantity, layout, tags }: TransactionDetailsLayoutNumberContainerInnerBorderProps) => {
+export const TransactionDetailsLayoutNumberContainerInnerBorder = ({ captionFurniQuantity, layout }: TransactionDetailsLayoutNumberContainerInnerBorderProps) => {
     return (
         <Region
             name="number_container_inner_border"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14, ...layout }}
         >
@@ -212,15 +198,13 @@ export const TransactionDetailsLayoutNumberContainerInnerBorder = ({ captionFurn
 export interface TransactionDetailsLayoutNumberContainerProps {
     layout?: BoxLayout;
     numberContainerInnerBorder?: TransactionDetailsLayoutNumberContainerInnerBorderProps;
-    tags?: string[];
     visibleNumberContainer?: boolean;
 }
 
-export const TransactionDetailsLayoutNumberContainer = ({ layout, numberContainerInnerBorder, tags, visibleNumberContainer }: TransactionDetailsLayoutNumberContainerProps) => {
+export const TransactionDetailsLayoutNumberContainer = ({ layout, numberContainerInnerBorder, visibleNumberContainer }: TransactionDetailsLayoutNumberContainerProps) => {
     return (
         <Region
             name="number_container"
-            tags={tags}
             visible={visibleNumberContainer ?? false}
             backgroundColor="#2f6982"
             layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16, ...layout }}
@@ -239,14 +223,12 @@ export interface TransactionDetailsLayoutFurniTemplateItemProps {
     srcCoinsIcon?: string;
     srcOutlineFocus?: string;
     srcUniqueItemBackgroundBitmap?: string;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteText, layout, numberContainer, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap, tags }: TransactionDetailsLayoutFurniTemplateItemProps) => {
+export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteText, layout, numberContainer, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap }: TransactionDetailsLayoutFurniTemplateItemProps) => {
     return (
         <Region
             name="furni_template"
-            tags={tags}
             onPointerTap={onFurniTemplate}
             cursor="pointer"
             layout={{ width: 42, height: 42, flexShrink: 0, ...layout }}
@@ -324,10 +306,9 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteTex
 export interface TransactionDetailsLayoutItemGridProps {
     itemsItemGrid?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutItemGrid = ({ itemsItemGrid, layout, tags }: TransactionDetailsLayoutItemGridProps) => {
+export const TransactionDetailsLayoutItemGrid = ({ itemsItemGrid, layout }: TransactionDetailsLayoutItemGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -335,7 +316,6 @@ export const TransactionDetailsLayoutItemGrid = ({ itemsItemGrid, layout, tags }
         >
             <Region
                 name="item_grid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 3, width: '100%' }}
             >
                 {itemsItemGrid ?? (
@@ -351,16 +331,14 @@ export interface TransactionDetailsLayoutWithdrawalsContainerProps {
     captionEmptyText?: string;
     itemGrid?: TransactionDetailsLayoutItemGridProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutWithdrawalsContainer = ({ captionEmptyText, itemGrid, layout, tags }: TransactionDetailsLayoutWithdrawalsContainerProps) => {
+export const TransactionDetailsLayoutWithdrawalsContainer = ({ captionEmptyText, itemGrid, layout }: TransactionDetailsLayoutWithdrawalsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="withdrawals_container"
-            tags={tags}
             layout={{ width: 165, height: 161, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -393,14 +371,12 @@ export const TransactionDetailsLayoutWithdrawalsContainer = ({ captionEmptyText,
 export interface TransactionDetailsLayoutNumberContainerInnerBorder2Props {
     captionFurniQuantity?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutNumberContainerInnerBorder2 = ({ captionFurniQuantity, layout, tags }: TransactionDetailsLayoutNumberContainerInnerBorder2Props) => {
+export const TransactionDetailsLayoutNumberContainerInnerBorder2 = ({ captionFurniQuantity, layout }: TransactionDetailsLayoutNumberContainerInnerBorder2Props) => {
     return (
         <Region
             name="number_container_inner_border"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14, ...layout }}
         >
@@ -422,15 +398,13 @@ export const TransactionDetailsLayoutNumberContainerInnerBorder2 = ({ captionFur
 export interface TransactionDetailsLayoutNumberContainer2Props {
     layout?: BoxLayout;
     numberContainerInnerBorder?: TransactionDetailsLayoutNumberContainerInnerBorder2Props;
-    tags?: string[];
     visibleNumberContainer?: boolean;
 }
 
-export const TransactionDetailsLayoutNumberContainer2 = ({ layout, numberContainerInnerBorder, tags, visibleNumberContainer }: TransactionDetailsLayoutNumberContainer2Props) => {
+export const TransactionDetailsLayoutNumberContainer2 = ({ layout, numberContainerInnerBorder, visibleNumberContainer }: TransactionDetailsLayoutNumberContainer2Props) => {
     return (
         <Region
             name="number_container"
-            tags={tags}
             visible={visibleNumberContainer ?? false}
             backgroundColor="#2f6982"
             layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16, ...layout }}
@@ -449,14 +423,12 @@ export interface TransactionDetailsLayoutFurniTemplateItem2Props {
     srcCoinsIcon?: string;
     srcOutlineFocus?: string;
     srcUniqueItemBackgroundBitmap?: string;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteText, layout, numberContainer, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap, tags }: TransactionDetailsLayoutFurniTemplateItem2Props) => {
+export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteText, layout, numberContainer, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap }: TransactionDetailsLayoutFurniTemplateItem2Props) => {
     return (
         <Region
             name="furni_template"
-            tags={tags}
             onPointerTap={onFurniTemplate}
             cursor="pointer"
             layout={{ width: 42, height: 42, flexShrink: 0, ...layout }}
@@ -534,10 +506,9 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteTe
 export interface TransactionDetailsLayoutItemGrid2Props {
     itemsItemGrid?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutItemGrid2 = ({ itemsItemGrid, layout, tags }: TransactionDetailsLayoutItemGrid2Props) => {
+export const TransactionDetailsLayoutItemGrid2 = ({ itemsItemGrid, layout }: TransactionDetailsLayoutItemGrid2Props) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -545,7 +516,6 @@ export const TransactionDetailsLayoutItemGrid2 = ({ itemsItemGrid, layout, tags 
         >
             <Region
                 name="item_grid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 3, width: '100%' }}
             >
                 {itemsItemGrid ?? (
@@ -561,16 +531,14 @@ export interface TransactionDetailsLayoutDepositsContainerProps {
     captionEmptyText?: string;
     itemGrid?: TransactionDetailsLayoutItemGrid2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutDepositsContainer = ({ captionEmptyText, itemGrid, layout, tags }: TransactionDetailsLayoutDepositsContainerProps) => {
+export const TransactionDetailsLayoutDepositsContainer = ({ captionEmptyText, itemGrid, layout }: TransactionDetailsLayoutDepositsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="deposits_container"
-            tags={tags}
             layout={{ width: 165, height: 161, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -604,15 +572,13 @@ export const TransactionDetailsLayoutDepositsContainer = ({ captionEmptyText, it
 export interface TransactionDetailsLayoutFurniDetailsItemProps {
     depositsContainer?: TransactionDetailsLayoutDepositsContainerProps;
     layout?: BoxLayout;
-    tags?: string[];
     withdrawalsContainer?: TransactionDetailsLayoutWithdrawalsContainerProps;
 }
 
-export const TransactionDetailsLayoutFurniDetailsItem = ({ depositsContainer, layout, tags, withdrawalsContainer }: TransactionDetailsLayoutFurniDetailsItemProps) => {
+export const TransactionDetailsLayoutFurniDetailsItem = ({ depositsContainer, layout, withdrawalsContainer }: TransactionDetailsLayoutFurniDetailsItemProps) => {
     return (
         <Region
             name="furni_details"
-            tags={tags}
             layout={{ width: 380, height: 161, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 345, top: 0, height: 161, flexDirection: 'row', gap: 15 }}>
@@ -626,14 +592,12 @@ export const TransactionDetailsLayoutFurniDetailsItem = ({ depositsContainer, la
 /** Row template `spacing` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutSpacingItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutSpacingItem = ({ layout, tags }: TransactionDetailsLayoutSpacingItemProps) => {
+export const TransactionDetailsLayoutSpacingItem = ({ layout }: TransactionDetailsLayoutSpacingItemProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 380, height: 5, flexShrink: 0, ...layout }}
         />
     );
@@ -642,16 +606,14 @@ export const TransactionDetailsLayoutSpacingItem = ({ layout, tags }: Transactio
 /** Named region `extra_pair` of TransactionDetailsLayout - configured through the parent's `extraPair` prop. */
 export interface TransactionDetailsLayoutExtraPairProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutExtraPair = ({ layout, tags }: TransactionDetailsLayoutExtraPairProps) => {
+export const TransactionDetailsLayoutExtraPair = ({ layout }: TransactionDetailsLayoutExtraPairProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="extra_pair"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 20, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 37, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -668,14 +630,12 @@ export const TransactionDetailsLayoutExtraPair = ({ layout, tags }: TransactionD
 export interface TransactionDetailsLayoutExtraInfoButtonProps {
     layout?: BoxLayout;
     onExtraInfoButton?: () => void;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutExtraInfoButton = ({ layout, onExtraInfoButton, tags }: TransactionDetailsLayoutExtraInfoButtonProps) => {
+export const TransactionDetailsLayoutExtraInfoButton = ({ layout, onExtraInfoButton }: TransactionDetailsLayoutExtraInfoButtonProps) => {
     return (
         <Region
             name="extra_info_button"
-            tags={tags}
             onPointerTap={onExtraInfoButton}
             cursor="pointer"
             layout={{ position: 'absolute', right: 3, width: 20, top: 0, height: 20, ...layout }}
@@ -692,16 +652,14 @@ export const TransactionDetailsLayoutExtraInfoButton = ({ layout, onExtraInfoBut
 export interface TransactionDetailsLayoutTitleItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutTitleItem = ({ captionTitle, layout, tags }: TransactionDetailsLayoutTitleItemProps) => {
+export const TransactionDetailsLayoutTitleItem = ({ captionTitle, layout }: TransactionDetailsLayoutTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="title"
-            tags={tags}
             layout={{ width: 123, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -715,14 +673,12 @@ export const TransactionDetailsLayoutTitleItem = ({ captionTitle, layout, tags }
 /** Row template `spacer` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutSpacerItem = ({ layout, tags }: TransactionDetailsLayoutSpacerItemProps) => {
+export const TransactionDetailsLayoutSpacerItem = ({ layout }: TransactionDetailsLayoutSpacerItemProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ width: 30, height: 7, flexShrink: 0, ...layout }}
         />
     );
@@ -732,16 +688,14 @@ export const TransactionDetailsLayoutSpacerItem = ({ layout, tags }: Transaction
 export interface TransactionDetailsLayoutDesc1ItemProps {
     captionDesc1?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutDesc1Item = ({ captionDesc1, layout, tags }: TransactionDetailsLayoutDesc1ItemProps) => {
+export const TransactionDetailsLayoutDesc1Item = ({ captionDesc1, layout }: TransactionDetailsLayoutDesc1ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="desc1"
-            tags={tags}
             layout={{ width: 293, height: 30, flexShrink: 0, minWidth: 293, maxWidth: 293, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -756,16 +710,14 @@ export const TransactionDetailsLayoutDesc1Item = ({ captionDesc1, layout, tags }
 export interface TransactionDetailsLayoutDesc2ItemProps {
     captionDesc2?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutDesc2Item = ({ captionDesc2, layout, tags }: TransactionDetailsLayoutDesc2ItemProps) => {
+export const TransactionDetailsLayoutDesc2Item = ({ captionDesc2, layout }: TransactionDetailsLayoutDesc2ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="desc2"
-            tags={tags}
             layout={{ width: 293, height: 57, flexShrink: 0, minWidth: 293, maxWidth: 293, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -780,16 +732,14 @@ export const TransactionDetailsLayoutDesc2Item = ({ captionDesc2, layout, tags }
 export interface TransactionDetailsLayoutDesc3ItemProps {
     captionDesc3?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutDesc3Item = ({ captionDesc3, layout, tags }: TransactionDetailsLayoutDesc3ItemProps) => {
+export const TransactionDetailsLayoutDesc3Item = ({ captionDesc3, layout }: TransactionDetailsLayoutDesc3ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="desc3"
-            tags={tags}
             layout={{ width: 293, height: 30, flexShrink: 0, minWidth: 293, maxWidth: 293, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -804,14 +754,12 @@ export const TransactionDetailsLayoutDesc3Item = ({ captionDesc3, layout, tags }
 export interface TransactionDetailsLayoutExtraInfoBubbleTextsProps {
     itemsExtraInfoBubbleTexts?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutExtraInfoBubbleTexts = ({ itemsExtraInfoBubbleTexts, layout, tags }: TransactionDetailsLayoutExtraInfoBubbleTextsProps) => {
+export const TransactionDetailsLayoutExtraInfoBubbleTexts = ({ itemsExtraInfoBubbleTexts, layout }: TransactionDetailsLayoutExtraInfoBubbleTextsProps) => {
     return (
         <Region
             name="extra_info_bubble_texts"
-            tags={tags}
             layout={{ position: 'absolute', left: 8, right: 24, top: 8, height: 147, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsExtraInfoBubbleTexts ?? (
@@ -833,15 +781,13 @@ export interface TransactionDetailsLayoutExtraContainerItemProps {
     extraInfoButton?: TransactionDetailsLayoutExtraInfoButtonProps;
     extraPair?: TransactionDetailsLayoutExtraPairProps;
     layout?: BoxLayout;
-    tags?: string[];
     visibleExtraInfoBubble?: boolean;
 }
 
-export const TransactionDetailsLayoutExtraContainerItem = ({ extraInfoBubbleTexts, extraInfoButton, extraPair, layout, tags, visibleExtraInfoBubble }: TransactionDetailsLayoutExtraContainerItemProps) => {
+export const TransactionDetailsLayoutExtraContainerItem = ({ extraInfoBubbleTexts, extraInfoButton, extraPair, layout, visibleExtraInfoBubble }: TransactionDetailsLayoutExtraContainerItemProps) => {
     return (
         <Region
             name="extra_container"
-            tags={tags}
             layout={{ width: 380, height: 20, flexShrink: 0, ...layout }}
         >
             <TransactionDetailsLayoutExtraPair {...extraPair} />
@@ -867,14 +813,12 @@ export const TransactionDetailsLayoutExtraContainerItem = ({ extraInfoBubbleText
 export interface TransactionDetailsLayoutKeyValuePairsProps {
     itemsKeyValuePairs?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TransactionDetailsLayoutKeyValuePairs = ({ itemsKeyValuePairs, layout, tags }: TransactionDetailsLayoutKeyValuePairsProps) => {
+export const TransactionDetailsLayoutKeyValuePairs = ({ itemsKeyValuePairs, layout }: TransactionDetailsLayoutKeyValuePairsProps) => {
     return (
         <Region
             name="key_value_pairs"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 10, top: 13, height: 336, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsKeyValuePairs ?? (

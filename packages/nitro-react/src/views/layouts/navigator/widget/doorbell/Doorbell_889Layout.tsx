@@ -14,7 +14,6 @@ export const Doorbell_889Layout = ({ layout, onClose, userListContainer }: Doorb
     return (
         <Frame
             variant="3"
-            tags={[ 'room_widget_doorbell' ]}
             caption={t('widgets.doorbell.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -36,10 +35,9 @@ export const Doorbell_889Layout = ({ layout, onClose, userListContainer }: Doorb
 /** Named region `user_list` of Doorbell_889Layout - configured through the parent's `userList` prop. */
 export interface Doorbell_889LayoutUserListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const Doorbell_889LayoutUserList = ({ layout, tags }: Doorbell_889LayoutUserListProps) => {
+export const Doorbell_889LayoutUserList = ({ layout }: Doorbell_889LayoutUserListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -47,7 +45,6 @@ export const Doorbell_889LayoutUserList = ({ layout, tags }: Doorbell_889LayoutU
         >
             <Region
                 name="user_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -57,15 +54,13 @@ export const Doorbell_889LayoutUserList = ({ layout, tags }: Doorbell_889LayoutU
 /** Named region `user_list_container` of Doorbell_889Layout - configured through the parent's `userListContainer` prop. */
 export interface Doorbell_889LayoutUserListContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
     userList?: Doorbell_889LayoutUserListProps;
 }
 
-export const Doorbell_889LayoutUserListContainer = ({ layout, tags, userList }: Doorbell_889LayoutUserListContainerProps) => {
+export const Doorbell_889LayoutUserListContainer = ({ layout, userList }: Doorbell_889LayoutUserListContainerProps) => {
     return (
         <Region
             name="user_list_container"
-            tags={tags}
             backgroundColor="#eaece8"
             layout={{ position: 'absolute', left: 10, width: 217, top: 48, height: 82, ...layout }}
         >

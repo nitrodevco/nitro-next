@@ -1,5 +1,6 @@
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, ButtonThick, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `builderLoyaltyWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -9,14 +10,12 @@ import { Border, BoxLayout, ButtonThick, Region, ScrollArea, ThemeImage, ThemeTe
 /** Named region `item_cost_box` of BuilderLoyaltyWidget - configured through the parent's `itemCostBox` prop. */
 export interface BuilderLoyaltyWidgetItemCostBoxProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BuilderLoyaltyWidgetItemCostBox = ({ layout, tags }: BuilderLoyaltyWidgetItemCostBoxProps) => {
+export const BuilderLoyaltyWidgetItemCostBox = ({ layout }: BuilderLoyaltyWidgetItemCostBoxProps) => {
     return (
         <Region
             name="item_cost_box"
-            tags={tags}
             layout={{ width: 20, height: 22, flexShrink: 0, ...layout }}
         />
     );
@@ -28,10 +27,9 @@ export interface BuilderLoyaltyWidgetLoyaltyListProps {
     itemCostBox?: BuilderLoyaltyWidgetItemCostBoxProps;
     layout?: BoxLayout;
     onItemBuy?: () => void;
-    tags?: string[];
 }
 
-export const BuilderLoyaltyWidgetLoyaltyList = ({ captionItemHeader, itemCostBox, layout, onItemBuy, tags }: BuilderLoyaltyWidgetLoyaltyListProps) => {
+export const BuilderLoyaltyWidgetLoyaltyList = ({ captionItemHeader, itemCostBox, layout, onItemBuy }: BuilderLoyaltyWidgetLoyaltyListProps) => {
     const t = useTranslation();
 
     return (
@@ -41,7 +39,6 @@ export const BuilderLoyaltyWidgetLoyaltyList = ({ captionItemHeader, itemCostBox
         >
             <Region
                 name="loyalty_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 12, width: '100%' }}
             >
                 <Border
@@ -88,17 +85,15 @@ export const BuilderLoyaltyWidgetLoyaltyList = ({ captionItemHeader, itemCostBox
 };
 
 /** Named region `builderLoyaltyWidget` of BuilderLoyaltyWidget - configured through the parent's `builderLoyaltyWidget` prop. */
-export interface BuilderLoyaltyWidgetProps {
+export interface BuilderLoyaltyWidgetProps extends CatalogWidgetFlags {
     layout?: BoxLayout;
     loyaltyList?: BuilderLoyaltyWidgetLoyaltyListProps;
-    tags?: string[];
 }
 
-export const BuilderLoyaltyWidget = ({ layout, loyaltyList, tags }: BuilderLoyaltyWidgetProps) => {
+export const BuilderLoyaltyWidget = ({ layout, loyaltyList }: BuilderLoyaltyWidgetProps) => {
     return (
         <Region
             name="builderLoyaltyWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <BuilderLoyaltyWidgetLoyaltyList {...loyaltyList} />

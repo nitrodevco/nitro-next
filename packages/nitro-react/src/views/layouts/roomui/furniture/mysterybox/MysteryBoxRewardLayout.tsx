@@ -43,14 +43,12 @@ export const MysteryBoxRewardLayout = ({ bitmapContainer, layout, onClose, onClo
 export interface MysteryBoxRewardLayoutBitmapContainerProps {
     layout?: BoxLayout;
     srcRewardImage?: string;
-    tags?: string[];
 }
 
-export const MysteryBoxRewardLayoutBitmapContainer = ({ layout, srcRewardImage, tags }: MysteryBoxRewardLayoutBitmapContainerProps) => {
+export const MysteryBoxRewardLayoutBitmapContainer = ({ layout, srcRewardImage }: MysteryBoxRewardLayoutBitmapContainerProps) => {
     return (
         <Region
             name="bitmap_container"
-            tags={tags}
             layout={{ width: 109, height: 109, flexShrink: 0, minWidth: 109, minHeight: 109, justifyContent: 'center', ...layout }}
         >
             <ThemeImage

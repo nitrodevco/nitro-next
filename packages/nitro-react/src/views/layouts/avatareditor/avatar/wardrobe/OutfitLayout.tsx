@@ -16,7 +16,6 @@ export const OutfitLayout = ({ layout, onButton, srcBitmap, srcOutfitGradient }:
                 <Button
                     variant="3"
                     name="button"
-                    tags={[ 'BUTTON' ]}
                     onPointerTap={onButton}
                     layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 60, overflow: 'hidden' }}
                 />
@@ -32,7 +31,6 @@ export const OutfitLayout = ({ layout, onButton, srcBitmap, srcOutfitGradient }:
                 </Region>
                 <ThemeImage
                     name="bitmap"
-                    tags={[ 'BITMAP' ]}
                     src={srcBitmap}
                     layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 60 }}
                 />

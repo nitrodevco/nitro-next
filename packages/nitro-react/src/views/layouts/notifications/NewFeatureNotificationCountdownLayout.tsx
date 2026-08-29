@@ -21,15 +21,13 @@ export interface NewFeatureNotificationCountdownLayoutCancelLinkRegionProps {
     onCancelLinkRegion?: () => void;
     srcCancelImg?: string;
     srcCancelImg2?: string;
-    tags?: string[];
     visibleCancelLinkRegion?: boolean;
 }
 
-export const NewFeatureNotificationCountdownLayoutCancelLinkRegion = ({ layout, onCancelLinkRegion, srcCancelImg, srcCancelImg2, tags, visibleCancelLinkRegion }: NewFeatureNotificationCountdownLayoutCancelLinkRegionProps) => {
+export const NewFeatureNotificationCountdownLayoutCancelLinkRegion = ({ layout, onCancelLinkRegion, srcCancelImg, srcCancelImg2, visibleCancelLinkRegion }: NewFeatureNotificationCountdownLayoutCancelLinkRegionProps) => {
     return (
         <Region
             name="cancel_link_region"
-            tags={tags}
             visible={visibleCancelLinkRegion ?? false}
             onPointerTap={onCancelLinkRegion}
             cursor="pointer"
@@ -62,14 +60,12 @@ export interface NewFeatureNotificationCountdownLayoutMainRegionProps {
     layout?: BoxLayout;
     onMainRegion?: () => void;
     srcStaticBitmap?: string;
-    tags?: string[];
 }
 
-export const NewFeatureNotificationCountdownLayoutMainRegion = ({ cancelLinkRegion, captionDesc, layout, onMainRegion, srcStaticBitmap, tags }: NewFeatureNotificationCountdownLayoutMainRegionProps) => {
+export const NewFeatureNotificationCountdownLayoutMainRegion = ({ cancelLinkRegion, captionDesc, layout, onMainRegion, srcStaticBitmap }: NewFeatureNotificationCountdownLayoutMainRegionProps) => {
     return (
         <Region
             name="main_region"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under_gentle"
             onPointerTap={onMainRegion}
             cursor="pointer"
@@ -78,19 +74,16 @@ export const NewFeatureNotificationCountdownLayoutMainRegion = ({ cancelLinkRegi
             <Border
                 variant="9"
                 name="border"
-                tags={[ '#bg' ]}
                 tintColor="#686661"
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 76 }}
             >
                 <ThemeImage
                     name="static_bitmap"
-                    tags={[ '#icon' ]}
                     src={srcStaticBitmap}
                     layout={{ position: 'absolute', left: 8, width: 20, top: 7, height: 20 }}
                 />
                 <Region
                     name="desc"
-                    tags={[ '#icon' ]}
                     layout={{ position: 'absolute', left: 14, width: 154, top: 7, minWidth: 154, maxWidth: 154, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

@@ -19,14 +19,12 @@ export const AchievementSimpleLayout = ({ achievementContainer, layout }: Achiev
 export interface AchievementSimpleLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
-    tags?: string[];
 }
 
-export const AchievementSimpleLayoutBgRegion = ({ layout, onBgRegion, tags }: AchievementSimpleLayoutBgRegionProps) => {
+export const AchievementSimpleLayoutBgRegion = ({ layout, onBgRegion }: AchievementSimpleLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 50, ...layout }}
@@ -40,14 +38,12 @@ export interface AchievementSimpleLayoutAchievementContainerProps {
     layout?: BoxLayout;
     srcBgSelectedBitmap?: string;
     srcBgUnselectedBitmap?: string;
-    tags?: string[];
 }
 
-export const AchievementSimpleLayoutAchievementContainer = ({ bgRegion, layout, srcBgSelectedBitmap, srcBgUnselectedBitmap, tags }: AchievementSimpleLayoutAchievementContainerProps) => {
+export const AchievementSimpleLayoutAchievementContainer = ({ bgRegion, layout, srcBgSelectedBitmap, srcBgUnselectedBitmap }: AchievementSimpleLayoutAchievementContainerProps) => {
     return (
         <Region
             name="achievement_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 50, ...layout }}
         >
             <ThemeImage
@@ -71,10 +67,7 @@ export const AchievementSimpleLayoutAchievementContainer = ({ bgRegion, layout, 
                 options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 6, width: 40, top: 5, height: 40 }}
             />
-            <AchievementSimpleLayoutBgRegion
-                tags={[ 'FIT:achievementsSelectSpecific' ]}
-                {...bgRegion}
-            />
+            <AchievementSimpleLayoutBgRegion {...bgRegion} />
         </Region>
     );
 };

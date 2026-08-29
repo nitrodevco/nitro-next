@@ -26,13 +26,11 @@ export const StickieLayout = ({ blue, cyan, green, layout, orange, purple, red, 
             <Region layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 178 }}>
                 <ThemeImage
                     name="bg"
-                    tags={[ 'bg' ]}
                     src={srcBg}
                     layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 178 }}
                 />
                 <ThemeImage
                     name="delete"
-                    tags={[ 'delete_button' ]}
                     src={srcDelete}
                     layout={{ position: 'absolute', left: 9, width: 10, top: 4, height: 10 }}
                 />
@@ -46,7 +44,6 @@ export const StickieLayout = ({ blue, cyan, green, layout, orange, purple, red, 
                 <StickieLayoutCyan {...cyan} />
                 <ThemeImage
                     name="close"
-                    tags={[ 'close_button' ]}
                     src={srcClose}
                     layout={{ position: 'absolute', left: 168, width: 10, top: 5, height: 10 }}
                 />
@@ -66,14 +63,12 @@ export const StickieLayout = ({ blue, cyan, green, layout, orange, purple, red, 
 export interface StickieLayoutBlueProps {
     layout?: BoxLayout;
     onBlue?: () => void;
-    tags?: string[];
 }
 
-export const StickieLayoutBlue = ({ layout, onBlue, tags }: StickieLayoutBlueProps) => {
+export const StickieLayoutBlue = ({ layout, onBlue }: StickieLayoutBlueProps) => {
     return (
         <Region
             name="blue"
-            tags={tags}
             backgroundColor="#9cceff"
             onPointerTap={onBlue}
             cursor="pointer"
@@ -86,14 +81,12 @@ export const StickieLayoutBlue = ({ layout, onBlue, tags }: StickieLayoutBluePro
 export interface StickieLayoutPurpleProps {
     layout?: BoxLayout;
     onPurple?: () => void;
-    tags?: string[];
 }
 
-export const StickieLayoutPurple = ({ layout, onPurple, tags }: StickieLayoutPurpleProps) => {
+export const StickieLayoutPurple = ({ layout, onPurple }: StickieLayoutPurpleProps) => {
     return (
         <Region
             name="purple"
-            tags={tags}
             backgroundColor="#ff9cff"
             onPointerTap={onPurple}
             cursor="pointer"
@@ -106,14 +99,12 @@ export const StickieLayoutPurple = ({ layout, onPurple, tags }: StickieLayoutPur
 export interface StickieLayoutGreenProps {
     layout?: BoxLayout;
     onGreen?: () => void;
-    tags?: string[];
 }
 
-export const StickieLayoutGreen = ({ layout, onGreen, tags }: StickieLayoutGreenProps) => {
+export const StickieLayoutGreen = ({ layout, onGreen }: StickieLayoutGreenProps) => {
     return (
         <Region
             name="green"
-            tags={tags}
             backgroundColor="#9cff9c"
             onPointerTap={onGreen}
             cursor="pointer"
@@ -126,14 +117,12 @@ export const StickieLayoutGreen = ({ layout, onGreen, tags }: StickieLayoutGreen
 export interface StickieLayoutYellowProps {
     layout?: BoxLayout;
     onYellow?: () => void;
-    tags?: string[];
 }
 
-export const StickieLayoutYellow = ({ layout, onYellow, tags }: StickieLayoutYellowProps) => {
+export const StickieLayoutYellow = ({ layout, onYellow }: StickieLayoutYellowProps) => {
     return (
         <Region
             name="yellow"
-            tags={tags}
             backgroundColor="#ffff33"
             onPointerTap={onYellow}
             cursor="pointer"
@@ -146,14 +135,12 @@ export const StickieLayoutYellow = ({ layout, onYellow, tags }: StickieLayoutYel
 export interface StickieLayoutWhiteProps {
     layout?: BoxLayout;
     onWhite?: () => void;
-    tags?: string[];
 }
 
-export const StickieLayoutWhite = ({ layout, onWhite, tags }: StickieLayoutWhiteProps) => {
+export const StickieLayoutWhite = ({ layout, onWhite }: StickieLayoutWhiteProps) => {
     return (
         <Region
             name="white"
-            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onWhite}
             cursor="pointer"
@@ -166,14 +153,12 @@ export const StickieLayoutWhite = ({ layout, onWhite, tags }: StickieLayoutWhite
 export interface StickieLayoutRedProps {
     layout?: BoxLayout;
     onRed?: () => void;
-    tags?: string[];
 }
 
-export const StickieLayoutRed = ({ layout, onRed, tags }: StickieLayoutRedProps) => {
+export const StickieLayoutRed = ({ layout, onRed }: StickieLayoutRedProps) => {
     return (
         <Region
             name="red"
-            tags={tags}
             backgroundColor="#ff9c9c"
             onPointerTap={onRed}
             cursor="pointer"
@@ -186,14 +171,12 @@ export const StickieLayoutRed = ({ layout, onRed, tags }: StickieLayoutRedProps)
 export interface StickieLayoutOrangeProps {
     layout?: BoxLayout;
     onOrange?: () => void;
-    tags?: string[];
 }
 
-export const StickieLayoutOrange = ({ layout, onOrange, tags }: StickieLayoutOrangeProps) => {
+export const StickieLayoutOrange = ({ layout, onOrange }: StickieLayoutOrangeProps) => {
     return (
         <Region
             name="orange"
-            tags={tags}
             backgroundColor="#ffcc66"
             onPointerTap={onOrange}
             cursor="pointer"
@@ -206,14 +189,12 @@ export const StickieLayoutOrange = ({ layout, onOrange, tags }: StickieLayoutOra
 export interface StickieLayoutCyanProps {
     layout?: BoxLayout;
     onCyan?: () => void;
-    tags?: string[];
 }
 
-export const StickieLayoutCyan = ({ layout, onCyan, tags }: StickieLayoutCyanProps) => {
+export const StickieLayoutCyan = ({ layout, onCyan }: StickieLayoutCyanProps) => {
     return (
         <Region
             name="cyan"
-            tags={tags}
             backgroundColor="#9cffff"
             onPointerTap={onCyan}
             cursor="pointer"

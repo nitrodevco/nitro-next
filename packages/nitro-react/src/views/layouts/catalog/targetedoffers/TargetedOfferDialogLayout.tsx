@@ -177,17 +177,15 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
 /** Row template `cnt_quantity` of TargetedOfferDialogLayout - pass real rows through its `items…` slot. */
 export interface TargetedOfferDialogLayoutCntQuantityItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TargetedOfferDialogLayoutCntQuantityItem = ({ layout, tags }: TargetedOfferDialogLayoutCntQuantityItemProps) => {
+export const TargetedOfferDialogLayoutCntQuantityItem = ({ layout }: TargetedOfferDialogLayoutCntQuantityItemProps) => {
     const t = useTranslation();
     const [ quantityInputValue, setQuantityInputValue ] = useState('');
 
     return (
         <Region
             name="cnt_quantity"
-            tags={tags}
             layout={{ width: 100, height: 30, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 100, top: 4, height: 17, maxWidth: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -214,17 +212,15 @@ export const TargetedOfferDialogLayoutCntQuantityItem = ({ layout, tags }: Targe
 export interface TargetedOfferDialogLayoutBtnGetCreditsItemProps {
     layout?: BoxLayout;
     onBtnGetCredits?: () => void;
-    tags?: string[];
 }
 
-export const TargetedOfferDialogLayoutBtnGetCreditsItem = ({ layout, onBtnGetCredits, tags }: TargetedOfferDialogLayoutBtnGetCreditsItemProps) => {
+export const TargetedOfferDialogLayoutBtnGetCreditsItem = ({ layout, onBtnGetCredits }: TargetedOfferDialogLayoutBtnGetCreditsItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="6"
             name="btn_get_credits"
-            tags={tags}
             tintColor="#4faf4f"
             onPointerTap={onBtnGetCredits}
             layout={{ width: 189, height: 30, flexShrink: 0, ...layout }}
@@ -238,17 +234,15 @@ export const TargetedOfferDialogLayoutBtnGetCreditsItem = ({ layout, onBtnGetCre
 export interface TargetedOfferDialogLayoutBtnBuyItemProps {
     layout?: BoxLayout;
     onBtnBuy?: () => void;
-    tags?: string[];
 }
 
-export const TargetedOfferDialogLayoutBtnBuyItem = ({ layout, onBtnBuy, tags }: TargetedOfferDialogLayoutBtnBuyItemProps) => {
+export const TargetedOfferDialogLayoutBtnBuyItem = ({ layout, onBtnBuy }: TargetedOfferDialogLayoutBtnBuyItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="6"
             name="btn_buy"
-            tags={tags}
             tintColor="#4faf4f"
             onPointerTap={onBtnBuy}
             layout={{ width: 172, height: 30, flexShrink: 0, ...layout }}
@@ -262,14 +256,12 @@ export const TargetedOfferDialogLayoutBtnBuyItem = ({ layout, onBtnBuy, tags }: 
 export interface TargetedOfferDialogLayoutItemlistButtonbarProps {
     itemsItemlistButtonbar?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TargetedOfferDialogLayoutItemlistButtonbar = ({ itemsItemlistButtonbar, layout, tags }: TargetedOfferDialogLayoutItemlistButtonbarProps) => {
+export const TargetedOfferDialogLayoutItemlistButtonbar = ({ itemsItemlistButtonbar, layout }: TargetedOfferDialogLayoutItemlistButtonbarProps) => {
     return (
         <Region
             name="itemlist_buttonbar"
-            tags={tags}
             layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, top: 38, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsItemlistButtonbar ?? (

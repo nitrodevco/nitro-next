@@ -1,4 +1,5 @@
 import { BoxLayout, Region, ScrollArea } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `bundleGridScrollWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -8,10 +9,9 @@ import { BoxLayout, Region, ScrollArea } from '#base/theme';
 /** Named region `bundleGrid` of BundleGridScrollWidget - configured through the parent's `bundleGrid` prop. */
 export interface BundleGridScrollWidgetBundleGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BundleGridScrollWidgetBundleGrid = ({ layout, tags }: BundleGridScrollWidgetBundleGridProps) => {
+export const BundleGridScrollWidgetBundleGrid = ({ layout }: BundleGridScrollWidgetBundleGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -19,7 +19,6 @@ export const BundleGridScrollWidgetBundleGrid = ({ layout, tags }: BundleGridScr
         >
             <Region
                 name="bundleGrid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
             />
         </ScrollArea>
@@ -27,17 +26,15 @@ export const BundleGridScrollWidgetBundleGrid = ({ layout, tags }: BundleGridScr
 };
 
 /** Named region `bundleGridScrollWidget` of BundleGridScrollWidget - configured through the parent's `bundleGridScrollWidget` prop. */
-export interface BundleGridScrollWidgetProps {
+export interface BundleGridScrollWidgetProps extends CatalogWidgetFlags {
     bundleGrid?: BundleGridScrollWidgetBundleGridProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BundleGridScrollWidget = ({ bundleGrid, layout, tags }: BundleGridScrollWidgetProps) => {
+export const BundleGridScrollWidget = ({ bundleGrid, layout }: BundleGridScrollWidgetProps) => {
     return (
         <Region
             name="bundleGridScrollWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <BundleGridScrollWidgetBundleGrid {...bundleGrid} />

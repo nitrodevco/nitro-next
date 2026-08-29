@@ -33,16 +33,14 @@ export const QuizUnlikeLayout = ({ buttonLike, layout }: QuizUnlikeLayoutProps) 
 export interface QuizUnlikeLayoutButtonLikeProps {
     layout?: BoxLayout;
     onButtonLike?: () => void;
-    tags?: string[];
 }
 
-export const QuizUnlikeLayoutButtonLike = ({ layout, onButtonLike, tags }: QuizUnlikeLayoutButtonLikeProps) => {
+export const QuizUnlikeLayoutButtonLike = ({ layout, onButtonLike }: QuizUnlikeLayoutButtonLikeProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_like"
-            tags={tags}
             tooltip={t('quizz.like.button.tooltip')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onButtonLike}
@@ -50,7 +48,6 @@ export const QuizUnlikeLayoutButtonLike = ({ layout, onButtonLike, tags }: QuizU
             layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32, minWidth: 32, maxWidth: 32, ...layout }}
         >
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('word_quiz_thum_down.png')}
                 layout={{ position: 'absolute', left: 5, width: 22, top: 8, height: 22 }}
             />

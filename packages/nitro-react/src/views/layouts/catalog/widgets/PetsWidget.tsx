@@ -5,6 +5,7 @@ import { Border, BoxLayout, Dropmenu, Region, TextInput, ThemeImage, ThemeText }
 import { AddOnBadgeViewWidget, AddOnBadgeViewWidgetProps } from '#base/views/layouts/catalog/widgets/AddOnBadgeViewWidget';
 import { ColourGridWidget, ColourGridWidgetProps } from '#base/views/layouts/catalog/widgets/ColourGridWidget';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `petsWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -12,7 +13,7 @@ import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog
  * (LayoutPets_1592Layout); each passes its own placement through `layout`.
  */
 /** Named region `petsWidget` of PetsWidget - configured through the parent's `petsWidget` prop. */
-export interface PetsWidgetProps {
+export interface PetsWidgetProps extends CatalogWidgetFlags {
     addOnBadgeViewWidget?: AddOnBadgeViewWidgetProps;
     captionCtlgText1?: string;
     captionCtlgText2?: string;
@@ -22,17 +23,15 @@ export interface PetsWidgetProps {
     onTypeDropMenu?: () => void;
     purchaseWidget?: PurchaseWidgetProps;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const PetsWidget = ({ addOnBadgeViewWidget, captionCtlgText1, captionCtlgText2, captionCtlgText3, colourGridWidget, layout, onTypeDropMenu, purchaseWidget, srcCtlgTeaserimg1, tags }: PetsWidgetProps) => {
+export const PetsWidget = ({ addOnBadgeViewWidget, captionCtlgText1, captionCtlgText2, captionCtlgText3, colourGridWidget, layout, onTypeDropMenu, purchaseWidget, srcCtlgTeaserimg1 }: PetsWidgetProps) => {
     const t = useTranslation();
     const [ nameInputTextValue, setNameInputTextValue ] = useState('');
 
     return (
         <Region
             name="petsWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <ThemeImage

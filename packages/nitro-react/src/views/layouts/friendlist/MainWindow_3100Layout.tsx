@@ -41,14 +41,12 @@ export const MainWindow_3100Layout = ({ content, layout, onClose }: MainWindow_3
 export interface MainWindow_3100LayoutConversationstabProps {
     layout?: BoxLayout;
     onConversationstab?: () => void;
-    tags?: string[];
 }
 
-export const MainWindow_3100LayoutConversationstab = ({ layout, onConversationstab, tags }: MainWindow_3100LayoutConversationstabProps) => {
+export const MainWindow_3100LayoutConversationstab = ({ layout, onConversationstab }: MainWindow_3100LayoutConversationstabProps) => {
     return (
         <Region
             name="conversationstab"
-            tags={tags}
             onPointerTap={onConversationstab}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 600, ...layout }}
@@ -65,16 +63,14 @@ export interface MainWindow_3100LayoutHdrProps {
     srcClose?: string;
     srcIcon?: string;
     srcIcon2?: string;
-    tags?: string[];
 }
 
-export const MainWindow_3100LayoutHdr = ({ layout, onButtonExtendedProfile, onButtonFollowFriend, onButtonMinimail, srcClose, srcIcon, srcIcon2, tags }: MainWindow_3100LayoutHdrProps) => {
+export const MainWindow_3100LayoutHdr = ({ layout, onButtonExtendedProfile, onButtonFollowFriend, onButtonMinimail, srcClose, srcIcon, srcIcon2 }: MainWindow_3100LayoutHdrProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="hdr"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 32, ...layout }}
         >
@@ -129,14 +125,12 @@ export const MainWindow_3100LayoutHdr = ({ layout, onButtonExtendedProfile, onBu
 /** Named region `msg_list` of MainWindow_3100Layout - configured through the parent's `msgList` prop. */
 export interface MainWindow_3100LayoutMsgListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainWindow_3100LayoutMsgList = ({ layout, tags }: MainWindow_3100LayoutMsgListProps) => {
+export const MainWindow_3100LayoutMsgList = ({ layout }: MainWindow_3100LayoutMsgListProps) => {
     return (
         <Region
             name="msg_list"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 22, top: 0, bottom: 0, flexDirection: 'column', ...layout }}
         />
@@ -147,14 +141,12 @@ export const MainWindow_3100LayoutMsgList = ({ layout, tags }: MainWindow_3100La
 export interface MainWindow_3100LayoutListProps {
     layout?: BoxLayout;
     msgList?: MainWindow_3100LayoutMsgListProps;
-    tags?: string[];
 }
 
-export const MainWindow_3100LayoutList = ({ layout, msgList, tags }: MainWindow_3100LayoutListProps) => {
+export const MainWindow_3100LayoutList = ({ layout, msgList }: MainWindow_3100LayoutListProps) => {
     return (
         <Region
             name="list"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 0, top: 32, bottom: 1, ...layout }}
         >
@@ -169,14 +161,12 @@ export interface MainWindow_3100LayoutConversationProps {
     hdr?: MainWindow_3100LayoutHdrProps;
     layout?: BoxLayout;
     list?: MainWindow_3100LayoutListProps;
-    tags?: string[];
 }
 
-export const MainWindow_3100LayoutConversation = ({ hdr, layout, list, tags }: MainWindow_3100LayoutConversationProps) => {
+export const MainWindow_3100LayoutConversation = ({ hdr, layout, list }: MainWindow_3100LayoutConversationProps) => {
     return (
         <Region
             name="conversation"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 5, right: 5, top: 31, bottom: 5, ...layout }}
         >
@@ -189,14 +179,12 @@ export const MainWindow_3100LayoutConversation = ({ hdr, layout, list, tags }: M
 /** Named region `bg` of MainWindow_3100Layout - configured through the parent's `bg` prop. */
 export interface MainWindow_3100LayoutBgProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainWindow_3100LayoutBg = ({ layout, tags }: MainWindow_3100LayoutBgProps) => {
+export const MainWindow_3100LayoutBg = ({ layout }: MainWindow_3100LayoutBgProps) => {
     return (
         <Region
             name="bg"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 1, ...layout }}
         />
@@ -211,14 +199,12 @@ export interface MainWindow_3100LayoutContentProps {
     layout?: BoxLayout;
     onContent?: () => void;
     srcConvoBg?: string;
-    tags?: string[];
 }
 
-export const MainWindow_3100LayoutContent = ({ bg, conversation, conversationstab, layout, onContent, srcConvoBg, tags }: MainWindow_3100LayoutContentProps) => {
+export const MainWindow_3100LayoutContent = ({ bg, conversation, conversationstab, layout, onContent, srcConvoBg }: MainWindow_3100LayoutContentProps) => {
     return (
         <Region
             name="content"
-            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onContent}
             cursor="pointer"

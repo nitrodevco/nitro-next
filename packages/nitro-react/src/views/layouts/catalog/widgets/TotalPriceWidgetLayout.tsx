@@ -33,14 +33,12 @@ export const TotalPriceWidgetLayout = ({ captionHeaderText, layout, totalpriceCo
 export interface TotalPriceWidgetLayoutAmountTextLeftItemProps {
     captionAmountTextLeft?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TotalPriceWidgetLayoutAmountTextLeftItem = ({ captionAmountTextLeft, layout, tags }: TotalPriceWidgetLayoutAmountTextLeftItemProps) => {
+export const TotalPriceWidgetLayoutAmountTextLeftItem = ({ captionAmountTextLeft, layout }: TotalPriceWidgetLayoutAmountTextLeftItemProps) => {
     return (
         <Region
             name="amount_text_left"
-            tags={tags}
             layout={{ width: 38, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionAmountTextLeft ?? '00000'} />
@@ -51,15 +49,13 @@ export const TotalPriceWidgetLayoutAmountTextLeftItem = ({ captionAmountTextLeft
 /** Row template `currency_indicator_bitmap_left` of TotalPriceWidgetLayout - pass real rows through its `items…` slot. */
 export interface TotalPriceWidgetLayoutCurrencyIndicatorBitmapLeftItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TotalPriceWidgetLayoutCurrencyIndicatorBitmapLeftItem = ({ layout, tags }: TotalPriceWidgetLayoutCurrencyIndicatorBitmapLeftItemProps) => {
+export const TotalPriceWidgetLayoutCurrencyIndicatorBitmapLeftItem = ({ layout }: TotalPriceWidgetLayoutCurrencyIndicatorBitmapLeftItemProps) => {
     return (
         <Icon
             variant="34"
             name="currency_indicator_bitmap_left"
-            tags={tags}
             layout={{ width: 22, height: 22, flexShrink: 0, ...layout }}
         />
     );
@@ -69,14 +65,12 @@ export const TotalPriceWidgetLayoutCurrencyIndicatorBitmapLeftItem = ({ layout, 
 export interface TotalPriceWidgetLayoutPlusItemProps {
     captionPlus?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TotalPriceWidgetLayoutPlusItem = ({ captionPlus, layout, tags }: TotalPriceWidgetLayoutPlusItemProps) => {
+export const TotalPriceWidgetLayoutPlusItem = ({ captionPlus, layout }: TotalPriceWidgetLayoutPlusItemProps) => {
     return (
         <Region
             name="plus"
-            tags={tags}
             layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionPlus ?? ' '} />
@@ -88,14 +82,12 @@ export const TotalPriceWidgetLayoutPlusItem = ({ captionPlus, layout, tags }: To
 export interface TotalPriceWidgetLayoutAmountTextRightItemProps {
     captionAmountTextRight?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TotalPriceWidgetLayoutAmountTextRightItem = ({ captionAmountTextRight, layout, tags }: TotalPriceWidgetLayoutAmountTextRightItemProps) => {
+export const TotalPriceWidgetLayoutAmountTextRightItem = ({ captionAmountTextRight, layout }: TotalPriceWidgetLayoutAmountTextRightItemProps) => {
     return (
         <Region
             name="amount_text_right"
-            tags={tags}
             layout={{ width: 38, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionAmountTextRight ?? '00000'} />
@@ -106,15 +98,13 @@ export const TotalPriceWidgetLayoutAmountTextRightItem = ({ captionAmountTextRig
 /** Row template `currency_indicator_bitmap_right` of TotalPriceWidgetLayout - pass real rows through its `items…` slot. */
 export interface TotalPriceWidgetLayoutCurrencyIndicatorBitmapRightItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TotalPriceWidgetLayoutCurrencyIndicatorBitmapRightItem = ({ layout, tags }: TotalPriceWidgetLayoutCurrencyIndicatorBitmapRightItemProps) => {
+export const TotalPriceWidgetLayoutCurrencyIndicatorBitmapRightItem = ({ layout }: TotalPriceWidgetLayoutCurrencyIndicatorBitmapRightItemProps) => {
     return (
         <Icon
             variant="34"
             name="currency_indicator_bitmap_right"
-            tags={tags}
             layout={{ width: 22, height: 22, flexShrink: 0, ...layout }}
         />
     );
@@ -124,14 +114,12 @@ export const TotalPriceWidgetLayoutCurrencyIndicatorBitmapRightItem = ({ layout,
 export interface TotalPriceWidgetLayoutTotalpriceContainerProps {
     itemsTotalpriceContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TotalPriceWidgetLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout, tags }: TotalPriceWidgetLayoutTotalpriceContainerProps) => {
+export const TotalPriceWidgetLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout }: TotalPriceWidgetLayoutTotalpriceContainerProps) => {
     return (
         <Region
             name="totalprice_container"
-            tags={tags}
             layout={{ position: 'absolute', right: 3, top: 1, flexDirection: 'row', ...layout }}
         >
             {itemsTotalpriceContainer ?? (

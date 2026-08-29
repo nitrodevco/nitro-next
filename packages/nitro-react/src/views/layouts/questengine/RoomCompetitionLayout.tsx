@@ -11,6 +11,7 @@ export interface RoomCompetitionLayoutProps {
     captionDontShowAgainTxt?: string;
     captionDontShowInfoTxt?: string;
     closeRegion?: RoomCompetitionLayoutCloseRegionProps;
+    colorableTextColor?: string;
     dontShowAgainRegion?: RoomCompetitionLayoutDontShowAgainRegionProps;
     infoRegion?: RoomCompetitionLayoutInfoRegionProps;
     layout?: BoxLayout;
@@ -20,7 +21,7 @@ export interface RoomCompetitionLayoutProps {
     srcVoteImage?: string;
 }
 
-export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt, captionDontShowAgainTxt, captionDontShowInfoTxt, closeRegion, dontShowAgainRegion, infoRegion, layout, onActionButton, requiredFurnisItemgrid, srcSubmitImage, srcVoteImage }: RoomCompetitionLayoutProps) => {
+export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt, captionDontShowAgainTxt, captionDontShowInfoTxt, closeRegion, colorableTextColor, dontShowAgainRegion, infoRegion, layout, onActionButton, requiredFurnisItemgrid, srcSubmitImage, srcVoteImage }: RoomCompetitionLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -33,24 +34,22 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
                 >
                     <Region
                         name="dont_show_info_txt"
-                        tags={[ 'COLORABLE' ]}
                         layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 205, top: 24, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionDontShowInfoTxt ?? 'You will see this again adad adada ad'}
                             textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#bbbbbb' }}
+                            textOptions={{ fill: colorableTextColor ?? '#bbbbbb' }}
                         />
                     </Region>
                     <Region
                         name="dont_show_again_txt"
-                        tags={[ 'COLORABLE' ]}
                         layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 247, alignSelf: 'center', marginTop: 5.5, marginBottom: -5.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionDontShowAgainTxt ?? t('roomcompetition.dontshowagain.dontshow')}
                             textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff' }}
+                            textOptions={{ fill: colorableTextColor ?? '#ffffff' }}
                         />
                     </Region>
                     <RoomCompetitionLayoutDontShowAgainRegion {...dontShowAgainRegion} />
@@ -110,14 +109,12 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
 export interface RoomCompetitionLayoutDontShowAgainRegionProps {
     layout?: BoxLayout;
     onDontShowAgainRegion?: () => void;
-    tags?: string[];
 }
 
-export const RoomCompetitionLayoutDontShowAgainRegion = ({ layout, onDontShowAgainRegion, tags }: RoomCompetitionLayoutDontShowAgainRegionProps) => {
+export const RoomCompetitionLayoutDontShowAgainRegion = ({ layout, onDontShowAgainRegion }: RoomCompetitionLayoutDontShowAgainRegionProps) => {
     return (
         <Region
             name="dont_show_again_region"
-            tags={tags}
             onPointerTap={onDontShowAgainRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 46, height: 21, ...layout }}
@@ -128,28 +125,26 @@ export const RoomCompetitionLayoutDontShowAgainRegion = ({ layout, onDontShowAga
 /** Named region `info_region` of RoomCompetitionLayout - configured through the parent's `infoRegion` prop. */
 export interface RoomCompetitionLayoutInfoRegionProps {
     captionInfoTxt?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     onInfoRegion?: () => void;
-    tags?: string[];
 }
 
-export const RoomCompetitionLayoutInfoRegion = ({ captionInfoTxt, layout, onInfoRegion, tags }: RoomCompetitionLayoutInfoRegionProps) => {
+export const RoomCompetitionLayoutInfoRegion = ({ captionInfoTxt, colorableTextColor, layout, onInfoRegion }: RoomCompetitionLayoutInfoRegionProps) => {
     return (
         <Region
             name="info_region"
-            tags={tags}
             onPointerTap={onInfoRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 57, width: 250, top: 46, height: 50, ...layout }}
         >
             <Region
                 name="info_txt"
-                tags={[ 'COLORABLE' ]}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionInfoTxt ?? 'Link text ph'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
+                    textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 250 }}
                 />
             </Region>
         </Region>
@@ -161,14 +156,12 @@ export interface RoomCompetitionLayoutCloseRegionProps {
     layout?: BoxLayout;
     onCloseRegion?: () => void;
     srcCloseIcon?: string;
-    tags?: string[];
 }
 
-export const RoomCompetitionLayoutCloseRegion = ({ layout, onCloseRegion, srcCloseIcon, tags }: RoomCompetitionLayoutCloseRegionProps) => {
+export const RoomCompetitionLayoutCloseRegion = ({ layout, onCloseRegion, srcCloseIcon }: RoomCompetitionLayoutCloseRegionProps) => {
     return (
         <Region
             name="close_region"
-            tags={tags}
             onPointerTap={onCloseRegion}
             cursor="pointer"
             layout={{ position: 'absolute', right: 6, width: 11, top: 5, height: 12, ...layout }}
@@ -187,14 +180,12 @@ export interface RoomCompetitionLayoutFurniContainerItemProps {
     layout?: BoxLayout;
     srcFurniIcon?: string;
     srcTickIcon?: string;
-    tags?: string[];
 }
 
-export const RoomCompetitionLayoutFurniContainerItem = ({ layout, srcFurniIcon, srcTickIcon, tags }: RoomCompetitionLayoutFurniContainerItemProps) => {
+export const RoomCompetitionLayoutFurniContainerItem = ({ layout, srcFurniIcon, srcTickIcon }: RoomCompetitionLayoutFurniContainerItemProps) => {
     return (
         <Region
             name="furni_container"
-            tags={tags}
             layout={{ width: 32, height: 35, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -219,14 +210,12 @@ export const RoomCompetitionLayoutFurniContainerItem = ({ layout, srcFurniIcon, 
 export interface RoomCompetitionLayoutRequiredFurnisItemgridProps {
     itemsRequiredFurnisItemgrid?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomCompetitionLayoutRequiredFurnisItemgrid = ({ itemsRequiredFurnisItemgrid, layout, tags }: RoomCompetitionLayoutRequiredFurnisItemgridProps) => {
+export const RoomCompetitionLayoutRequiredFurnisItemgrid = ({ itemsRequiredFurnisItemgrid, layout }: RoomCompetitionLayoutRequiredFurnisItemgridProps) => {
     return (
         <Region
             name="required_furnis_itemgrid"
-            tags={tags}
             layout={{ position: 'absolute', right: 18, minWidth: 115, top: 32, minHeight: 36, flexDirection: 'row', flexWrap: 'wrap', gap: 5, ...layout }}
         >
             {itemsRequiredFurnisItemgrid ?? (

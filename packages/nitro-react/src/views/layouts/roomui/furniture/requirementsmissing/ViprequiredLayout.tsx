@@ -40,16 +40,14 @@ export const ViprequiredLayout = ({ layout, list, onClose, srcIllustration }: Vi
 export interface ViprequiredLayoutTitleItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ViprequiredLayoutTitleItem = ({ captionTitle, layout, tags }: ViprequiredLayoutTitleItemProps) => {
+export const ViprequiredLayoutTitleItem = ({ captionTitle, layout }: ViprequiredLayoutTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="title"
-            tags={tags}
             layout={{ width: 114, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -65,16 +63,14 @@ export const ViprequiredLayoutTitleItem = ({ captionTitle, layout, tags }: Vipre
 export interface ViprequiredLayoutBodytextItemProps {
     captionBodytext?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ViprequiredLayoutBodytextItem = ({ captionBodytext, layout, tags }: ViprequiredLayoutBodytextItemProps) => {
+export const ViprequiredLayoutBodytextItem = ({ captionBodytext, layout }: ViprequiredLayoutBodytextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bodytext"
-            tags={tags}
             layout={{ width: 291, height: 24, flexShrink: 0, minWidth: 291, maxWidth: 291, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -89,14 +85,12 @@ export const ViprequiredLayoutBodytextItem = ({ captionBodytext, layout, tags }:
 export interface ViprequiredLayoutListTopItemProps {
     itemsListTop?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ViprequiredLayoutListTopItem = ({ itemsListTop, layout, tags }: ViprequiredLayoutListTopItemProps) => {
+export const ViprequiredLayoutListTopItem = ({ itemsListTop, layout }: ViprequiredLayoutListTopItemProps) => {
     return (
         <Region
             name="list_top"
-            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsListTop ?? (
@@ -113,14 +107,12 @@ export const ViprequiredLayoutListTopItem = ({ itemsListTop, layout, tags }: Vip
 export interface ViprequiredLayoutSpacerItemProps {
     layout?: BoxLayout;
     srcSpacer?: string;
-    tags?: string[];
 }
 
-export const ViprequiredLayoutSpacerItem = ({ layout, srcSpacer, tags }: ViprequiredLayoutSpacerItemProps) => {
+export const ViprequiredLayoutSpacerItem = ({ layout, srcSpacer }: ViprequiredLayoutSpacerItemProps) => {
     return (
         <ThemeImage
             name="spacer"
-            tags={tags}
             src={srcSpacer}
             layout={{ width: 291, height: 4, flexShrink: 0, ...layout }}
         />
@@ -131,17 +123,15 @@ export const ViprequiredLayoutSpacerItem = ({ layout, srcSpacer, tags }: Viprequ
 export interface ViprequiredLayoutBuyVipItemProps {
     layout?: BoxLayout;
     onBuyVip?: () => void;
-    tags?: string[];
 }
 
-export const ViprequiredLayoutBuyVipItem = ({ layout, onBuyVip, tags }: ViprequiredLayoutBuyVipItemProps) => {
+export const ViprequiredLayoutBuyVipItem = ({ layout, onBuyVip }: ViprequiredLayoutBuyVipItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="5"
             name="buy_vip"
-            tags={tags}
             tintColor="#00aa00"
             onPointerTap={onBuyVip}
             layout={{ width: 133, height: 32, flexShrink: 0, ...layout }}
@@ -156,16 +146,14 @@ export interface ViprequiredLayoutVipBenefitsItemProps {
     captionVipBenefits?: string;
     layout?: BoxLayout;
     onVipBenefits?: () => void;
-    tags?: string[];
 }
 
-export const ViprequiredLayoutVipBenefitsItem = ({ captionVipBenefits, layout, onVipBenefits, tags }: ViprequiredLayoutVipBenefitsItemProps) => {
+export const ViprequiredLayoutVipBenefitsItem = ({ captionVipBenefits, layout, onVipBenefits }: ViprequiredLayoutVipBenefitsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="vip_benefits"
-            tags={tags}
             layout={{ width: 262, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
             onPointerTap={onVipBenefits}
             cursor="pointer"
@@ -182,14 +170,12 @@ export const ViprequiredLayoutVipBenefitsItem = ({ captionVipBenefits, layout, o
 export interface ViprequiredLayoutListBottomItemProps {
     itemsListBottom?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ViprequiredLayoutListBottomItem = ({ itemsListBottom, layout, tags }: ViprequiredLayoutListBottomItemProps) => {
+export const ViprequiredLayoutListBottomItem = ({ itemsListBottom, layout }: ViprequiredLayoutListBottomItemProps) => {
     return (
         <Region
             name="list_bottom"
-            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsListBottom ?? (
@@ -211,14 +197,12 @@ export const ViprequiredLayoutListBottomItem = ({ itemsListBottom, layout, tags 
 export interface ViprequiredLayoutListProps {
     itemsList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ViprequiredLayoutList = ({ itemsList, layout, tags }: ViprequiredLayoutListProps) => {
+export const ViprequiredLayoutList = ({ itemsList, layout }: ViprequiredLayoutListProps) => {
     return (
         <Region
             name="list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, top: 0, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsList ?? (

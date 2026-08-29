@@ -50,17 +50,15 @@ export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckb
 /** Named region `text_search_container` of MarketplaceSearchAdvancedLayout - configured through the parent's `textSearchContainer` prop. */
 export interface MarketplaceSearchAdvancedLayoutTextSearchContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MarketplaceSearchAdvancedLayoutTextSearchContainer = ({ layout, tags }: MarketplaceSearchAdvancedLayoutTextSearchContainerProps) => {
+export const MarketplaceSearchAdvancedLayoutTextSearchContainer = ({ layout }: MarketplaceSearchAdvancedLayoutTextSearchContainerProps) => {
     const t = useTranslation();
     const [ searchInputValue, setSearchInputValue ] = useState('');
 
     return (
         <Region
             name="text_search_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 340, top: 10, height: 20, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -86,10 +84,9 @@ export const MarketplaceSearchAdvancedLayoutTextSearchContainer = ({ layout, tag
 /** Named region `price_container` of MarketplaceSearchAdvancedLayout - configured through the parent's `priceContainer` prop. */
 export interface MarketplaceSearchAdvancedLayoutPriceContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MarketplaceSearchAdvancedLayoutPriceContainer = ({ layout, tags }: MarketplaceSearchAdvancedLayoutPriceContainerProps) => {
+export const MarketplaceSearchAdvancedLayoutPriceContainer = ({ layout }: MarketplaceSearchAdvancedLayoutPriceContainerProps) => {
     const t = useTranslation();
     const [ minPriceInputValue, setMinPriceInputValue ] = useState('');
     const [ maxPriceInputValue, setMaxPriceInputValue ] = useState('');
@@ -97,7 +94,6 @@ export const MarketplaceSearchAdvancedLayoutPriceContainer = ({ layout, tags }: 
     return (
         <Region
             name="price_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 340, top: 35, height: 20, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -134,16 +130,14 @@ export const MarketplaceSearchAdvancedLayoutPriceContainer = ({ layout, tags }: 
 export interface MarketplaceSearchAdvancedLayoutSortContainerProps {
     layout?: BoxLayout;
     onSortDropmenu?: () => void;
-    tags?: string[];
 }
 
-export const MarketplaceSearchAdvancedLayoutSortContainer = ({ layout, onSortDropmenu, tags }: MarketplaceSearchAdvancedLayoutSortContainerProps) => {
+export const MarketplaceSearchAdvancedLayoutSortContainer = ({ layout, onSortDropmenu }: MarketplaceSearchAdvancedLayoutSortContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="sort_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 340, top: 60, height: 24, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>

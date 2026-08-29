@@ -20,16 +20,14 @@ export interface FriendRequestsFooterLayoutFooterProps {
     layout?: BoxLayout;
     onAcceptAllBut?: () => void;
     onRejectAllBut?: () => void;
-    tags?: string[];
 }
 
-export const FriendRequestsFooterLayoutFooter = ({ layout, onAcceptAllBut, onRejectAllBut, tags }: FriendRequestsFooterLayoutFooterProps) => {
+export const FriendRequestsFooterLayoutFooter = ({ layout, onAcceptAllBut, onRejectAllBut }: FriendRequestsFooterLayoutFooterProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="footer"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 223, top: 0, height: 67, ...layout }}
         >

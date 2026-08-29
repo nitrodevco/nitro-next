@@ -315,8 +315,6 @@ interface FileContext {
 
 interface EmitContext {
     file: FileContext;
-    /** Set while the root of an extracted sub-component is being emitted: its `tags` come from a prop, not the XML. */
-    rootTagsAsProp?: boolean;
     imports: Set<string>;
     usesTranslation: boolean;
     props: Map<string, string>;
@@ -575,42 +573,112 @@ const metaProps = (ctx: EmitContext, el: Element, includeVisible = true): string
 
     if (el.attrs.name) props.push(`name=${jsxStr(el.attrs.name)}`);
 
-    if (ctx.rootTagsAsProp) {
-        // The tags differ per page for a shared/extracted region (`RECOLORABLE_DARK` here, `#icon`
-        // there) - the caller passes them, so one component serves every use.
-        ctx.rootTagsAsProp = false;
-        ctx.props.set('tags', 'string[]');
-        props.push('tags={tags}');
-    } else if (el.attrs.tags) {
-        const tags = decode(el.attrs.tags).split(',').map(tag => tag.trim()).filter(Boolean);
-
-        if (tags.length) props.push(`tags={[ ${tags.map(quote).join(', ')} ]}`);
-    }
-
     const tooltip = captionExpr(ctx, el.vars.tool_tip_caption);
 
     if (tooltip) props.push(`tooltip={${tooltip}}`);
     if (el.attrs.dynamic_style) props.push(`dynamicStyle=${jsxStr(el.attrs.dynamic_style)}`);
-    if (includeVisible && el.attrs.visible === 'false') props.push('visible={false}');
+
+    if (includeVisible) {
+        const visible = visibilityExpr(ctx, el, { defaultHidden: el.attrs.visible === 'false' });
+
+        if (visible) props.push(`visible={${visible}}`);
+    }
 
     return props;
 };
 
-/** The `tags` a caller hands to an extracted sub-component (whose root reads them from the `tags` prop). */
-const tagsProp = (el: Element): string[] => {
-    const tags = el.attrs.tags ? decode(el.attrs.tags).split(',').map(tag => tag.trim()).filter(Boolean) : [];
+// ---------------------------------------------------------------------------------------------
+// Tags. The Flash `tags` attribute was mostly a lookup handle (`findChildByTag("close")`) or a
+// window-framework marker (`_INTERNAL`, `_EXCLUDE`, `_HEADER`, ...) - none of which means
+// anything to a React tree, so tags are never emitted as data. The handful that changed
+// behaviour in the client are turned into real props here:
+//   - `VISIBLE_HOTEL/ROOM/GAME_CENTER/NOOB/COLLAPSED` (ToolbarView.as / BottomBarLeft.as): an
+//     element shows only in the listed toolbar context  -> `context` prop
+//   - `action` / `moderate` / `ambassador` (AvatarMenuView.showButton): a menu group toggled
+//     as a whole                                          -> `visibleGroups` prop
+//   - `RECOLORABLE_LIGHT/MEDIUM/DARK` (RewardTrackTheme.applyColor): colour comes from the
+//     active theme                                        -> `recolorLight/Medium/Dark` props
+//   - `COLORABLE` (landing view WidgetContainerLayout) / `stroke` (snow war WindowUtils
+//     .colorStrokes): text colour set by the owner        -> `colorableTextColor` / `strokeTextColor`
+//   - `BLEND_<mode>` (WindowRendererItem): a blend mode    -> `blendMode` prop
+//   - `FIXED`, `2X`, `NO_GIFT_OPTION`, ... on a catalog widget slot (the *CatalogWidget classes
+//     read them as configuration)                         -> boolean flags on the shared widget
+// ---------------------------------------------------------------------------------------------
 
-    return tags.length ? [ `tags={[ ${tags.map(quote).join(', ')} ]}` ] : [];
+const tagSet = (el: Element): Set<string> => new Set(el.attrs.tags ? decode(el.attrs.tags).split(',').map(tag => tag.trim()).filter(Boolean) : []);
+
+const TOOLBAR_CONTEXTS: Record<string, string> = { VISIBLE_HOTEL: 'hotel', VISIBLE_ROOM: 'room', VISIBLE_GAME_CENTER: 'gameCenter', VISIBLE_NOOB: 'noob', VISIBLE_COLLAPSED: 'collapsed' };
+const TOOLBAR_CONTEXT_TYPE = '\'hotel\' | \'room\' | \'gameCenter\' | \'noob\' | \'collapsed\'';
+const MENU_GROUPS = [ 'action', 'moderate', 'ambassador' ];
+const MENU_GROUPS_TYPE = '{ action?: boolean; moderate?: boolean; ambassador?: boolean }';
+const RECOLORABLE: Record<string, string> = { RECOLORABLE_LIGHT: 'recolorLight', RECOLORABLE_MEDIUM: 'recolorMedium', RECOLORABLE_DARK: 'recolorDark' };
+const TEXT_COLOR_TAGS: Record<string, string> = { COLORABLE: 'colorableTextColor', stroke: 'strokeTextColor' };
+const WIDGET_FLAGS: Record<string, string> = { FIXED: 'fixed', '2X': 'doubleSize', NO_ROOM_CANVAS: 'noRoomCanvas', ROOM_INITIATE_PURCHASE: 'roomInitiatePurchase', NO_GIFT_OPTION: 'noGiftOption', TOP_STORY: 'topStory', NEW: 'isNew' };
+
+/** The `visible={...}` expression for an element, or undefined when it's unconditionally visible. */
+const visibilityExpr = (ctx: EmitContext, el: Element, { defaultHidden, override }: { defaultHidden: boolean; override?: string }): string | undefined => {
+    const tags = tagSet(el);
+    const conditions: string[] = [];
+    const contexts = [ ...tags ].filter(tag => TOOLBAR_CONTEXTS[tag]).map(tag => TOOLBAR_CONTEXTS[tag]);
+
+    if (contexts.length) {
+        ctx.props.set('context', TOOLBAR_CONTEXT_TYPE);
+        conditions.push(`(context === undefined || [ ${contexts.map(quote).join(', ')} ].includes(context))`);
+    }
+
+    for (const group of MENU_GROUPS.filter(group => tags.has(group))) {
+        ctx.props.set('visibleGroups', MENU_GROUPS_TYPE);
+        conditions.push(`(visibleGroups?.${group} ?? true)`);
+    }
+
+    if (override) conditions.push(`(${override} ?? ${!defaultHidden})`);
+    else if (defaultHidden) conditions.push('false');
+
+    if (!conditions.length) return undefined;
+    if (conditions.length === 1) return conditions[0].replace(/^\((.*)\)$/, '$1');
+
+    return conditions.join(' && ');
 };
+
+/** A colour that a `RECOLORABLE_*` tag lets the theme override: `recolorDark ?? '#3576b9'`. */
+const recolorExpr = (ctx: EmitContext, el: Element, own: string | undefined): string | undefined => {
+    const prop = [ ...tagSet(el) ].map(tag => RECOLORABLE[tag]).find(Boolean);
+
+    if (!prop) return own ? quote(own) : undefined;
+
+    ctx.props.set(prop, 'string');
+
+    return own ? `${prop} ?? ${quote(own)}` : prop;
+};
+
+/** A text colour that a `COLORABLE`/`stroke` (or `RECOLORABLE_*`) tag lets the owner override. */
+const textColorExpr = (ctx: EmitContext, el: Element, own: string | undefined): string | undefined => {
+    const prop = [ ...tagSet(el) ].map(tag => TEXT_COLOR_TAGS[tag] ?? RECOLORABLE[tag]).find(Boolean);
+
+    if (!prop) return own ? quote(own) : undefined;
+
+    ctx.props.set(prop, 'string');
+
+    return own ? `${prop} ?? ${quote(own)}` : prop;
+};
+
+const blendProp = (el: Element): string[] => {
+    const mode = [ ...tagSet(el) ].find(tag => tag.startsWith('BLEND_'))?.slice(6).toLowerCase();
+
+    return mode ? [ `blendMode="${mode}"` ] : [];
+};
+
+/** Boolean configuration flags a page puts on a catalog widget slot. */
+const widgetFlagProps = (el: Element): string[] => [ ...tagSet(el) ].map(tag => WIDGET_FLAGS[tag]).filter(Boolean);
 
 const dropShadowProp = (el: Element): string[] => (el.dropShadow ? [ `dropShadow={${layoutLiteral({ ...el.dropShadow, color: el.dropShadow.color ? quote(el.dropShadow.color) : undefined })}}` ] : []);
 
 const variantProp = (el: Element): string[] => (el.attrs.style !== undefined ? [ `variant="${el.attrs.style}"` ] : []);
 
-const tintProp = (el: Element): string[] => {
-    const color = hexColor(el.attrs.color);
+const tintProp = (ctx: EmitContext, el: Element): string[] => {
+    const expr = recolorExpr(ctx, el, hexColor(el.attrs.color));
 
-    return color ? [ `tintColor="${color}"` ] : [];
+    return expr ? [ `tintColor={${expr}}` ] : [];
 };
 
 const openTag = (name: string, props: string[], indent: string, selfClose: boolean): string[] => {
@@ -680,7 +748,7 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
     const wordWrap = bool(el.vars.word_wrap) || bool(el.vars.multiline);
     const autoSize = el.vars.auto_size && AUTO_SIZE_JUSTIFY[el.vars.auto_size] ? el.vars.auto_size : 'left';
     const textOptions: Record<string, string | number | undefined> = {
-        fill: fill ? quote(fill) : undefined,
+        fill: textColorExpr(ctx, el, fill),
         wordWrap: wordWrap ? 'true' : undefined,
         wordWrapWidth: wordWrap && !(el.params & PARAM.REFLECT_H) ? num(el.attrs.width) : undefined,
         align: autoSize !== 'left' ? quote(autoSize) : undefined,
@@ -746,19 +814,23 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
 
     const tint = hexColor(el.attrs.color);
 
-    if (tint && tint !== '#ffffff') props.push(`tint="${tint}"`);
+    const tintExpr = recolorExpr(ctx, el, tint && tint !== '#ffffff' ? tint : undefined);
+
+    if (tintExpr) props.push(`tint={${tintExpr}}`);
+    props.push(...blendProp(el));
 
     ctx.imports.add('ThemeImage');
     props.push(`layout={${boxLayout(el, parent, {}, { autoSize: true })}}`);
 
-    const needsWrapper = el.attrs.visible === 'false' || !!el.dropShadow;
+    const visible = visibilityExpr(ctx, el, { defaultHidden: el.attrs.visible === 'false' });
+    const needsWrapper = !!visible || !!el.dropShadow;
     const image = openTag('ThemeImage', props, needsWrapper ? indent + INDENT : indent, true);
 
     if (!needsWrapper) return image;
 
     ctx.imports.add('Region');
 
-    return wrap('Region', [ ...(el.attrs.visible === 'false' ? [ 'visible={false}' ] : []), ...dropShadowProp(el), `layout={${boxLayout(el, parent)}}` ], indent, image);
+    return wrap('Region', [ ...(visible ? [ `visible={${visible}}` ] : []), ...dropShadowProp(el), `layout={${boxLayout(el, parent)}}` ], indent, image);
 };
 
 const emitList = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
@@ -812,7 +884,7 @@ const emitListChildren = (ctx: EmitContext, list: Element, parent: ParentBox, in
     ctx.imports.add('ReactNode');
 
     const templates = named.map(child => generateSubComponent(ctx.file, child, parent));
-    const fallback = templates.map((name, index) => { const tags = tagsProp(named[index]); return tags.length ? `${indent}${INDENT}<${name} ${tags[0]} />` : `${indent}${INDENT}<${name} />`; });
+    const fallback = templates.map(name => `${indent}${INDENT}<${name} />`);
     const rest = list.children.filter(child => !named.includes(child)).flatMap(child => emit(ctx, child, parent, indent));
 
     return [ `${indent}{${slot} ?? (`, ...(fallback.length === 1 ? fallback : [ `${indent}${INDENT}<>`, ...fallback.map(line => INDENT + line), `${indent}${INDENT}</>` ]), `${indent})}`, ...rest ];
@@ -827,7 +899,7 @@ const emitFrame = (ctx: EmitContext, el: Element, parent: ParentBox | undefined,
 
     if (caption) props.push(`caption=${caption.startsWith('\'') ? jsxStr(decode(el.attrs.caption ?? '')) : `{${caption}}`}`);
 
-    props.push(...tintProp(el));
+    props.push(...tintProp(ctx, el));
 
     if (!parent) {
         ctx.props.set('onClose', '() => void');
@@ -878,12 +950,14 @@ const emitThemed = (ctx: EmitContext, component: string, el: Element, parent: Pa
     ctx.imports.add(component);
 
     const hidden = el.attrs.visible === 'false';
-    const props = [ ...variantProp(el), ...metaProps(ctx, el, false), ...tintProp(el), ...extraProps ];
+    const props = [ ...variantProp(el), ...metaProps(ctx, el, false), ...tintProp(ctx, el), ...extraProps ];
     // Elements the Flash code toggled at runtime (anything hidden by default, plus every named
     // bubble - see FriendRequestsTab.as showing its `bubble` on select) get a `visible<Name>` prop.
     const visibleOverride = el.attrs.name && (hidden || el.tag === 'bubble') ? overrideProp(ctx, el, 'visible', 'boolean') : undefined;
+    const visible = visibilityExpr(ctx, el, { defaultHidden: hidden, override: visibleOverride });
+    const blend = blendProp(el);
 
-    if (!hidden && !visibleOverride && !el.dropShadow) return wrap(component, [ ...props, `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, children(indent + INDENT));
+    if (!visible && !el.dropShadow && !blend.length) return wrap(component, [ ...props, `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, children(indent + INDENT));
 
     // Components that don't forward `visible`/`dropShadow` to their Box get a Region wrapper carrying them instead.
     ctx.imports.add('Region');
@@ -891,10 +965,9 @@ const emitThemed = (ctx: EmitContext, component: string, el: Element, parent: Pa
     // The children render inside the component, not the wrapper - a centred child's
     // `justifyContent` belongs on the inner layout here, never on the wrapper's.
     const inner = wrap(component, [ ...props, `layout={${layoutLiteral({ width: '\'100%\'', height: '\'100%\'', ...centerExtra(el) })}}` ], indent + INDENT, children(indent + INDENT + INDENT));
-    const wrapperProps = [ ...dropShadowProp(el) ];
+    const wrapperProps = [ ...dropShadowProp(el), ...blend ];
 
-    if (visibleOverride) wrapperProps.push(`visible={${visibleOverride} ?? ${!hidden}}`);
-    else if (hidden) wrapperProps.push('visible={false}');
+    if (visible) wrapperProps.push(`visible={${visible}}`);
 
     return wrap('Region', [ ...wrapperProps, `layout={${boxLayout(el, parent)}}` ], indent, inner);
 };
@@ -966,12 +1039,13 @@ const sharedWidget = (page: FileContext, el: Element, parent: ParentBox): string
 
         file.imports.add('Region');
         file.imports.add('BoxLayout');
+        file.imports.add('CatalogWidgetFlags');
         file.subComponents.push([
-            `export type ${draft}Props = Omit<${wraps.componentName}Props, 'layout' | 'tags'> & { layout?: BoxLayout; tags?: string[] };`,
+            `export type ${draft}Props = Omit<${wraps.componentName}Props, 'layout'> & CatalogWidgetFlags & { layout?: BoxLayout };`,
             '',
-            `export const ${draft} = ({ layout, tags, ...widget }: ${draft}Props) => {`,
+            `export const ${draft} = ({ layout, ...widget }: ${draft}Props) => {`,
             `${INDENT}return (`,
-            ...wrap('Region', [ ...(() => { ctx.rootTagsAsProp = true; return metaProps(ctx, el, false); })(), ...dropShadowProp(el), 'layout={{ position: \'absolute\', ...layout }}' ], INDENT + INDENT, [
+            ...wrap('Region', [ ...metaProps(ctx, el, false), ...dropShadowProp(el), 'layout={{ position: \'absolute\', ...layout }}' ], INDENT + INDENT, [
                 `${INDENT}${INDENT}${INDENT}<${wraps.componentName}`,
                 `${INDENT}${INDENT}${INDENT}${INDENT}{...widget}`,
                 `${INDENT}${INDENT}${INDENT}${INDENT}layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}`,
@@ -982,7 +1056,8 @@ const sharedWidget = (page: FileContext, el: Element, parent: ParentBox): string
             '',
         ].join('\n'));
     } else {
-        generateSubComponent(file, el, { ...parent, omitPlacement: true }, 'region', draft);
+        file.imports.add('CatalogWidgetFlags');
+        generateSubComponent(file, el, { ...parent, omitPlacement: true }, 'region', draft, 'CatalogWidgetFlags');
     }
 
     const code = file.subComponents.join('\n');
@@ -1028,7 +1103,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         ctx.props.set(prop, `${token}Props`);
         ctx.file.sharedImports.add(token);
 
-        return [ `${indent}<${token}`, ...tagsProp(el).map(tag => `${indent}${INDENT}${tag}`), `${indent}${INDENT}layout={${boxLayout(el, parent)}}`, `${indent}${INDENT}{...${prop}}`, `${indent}/>` ];
+        return [ `${indent}<${token}`, ...widgetFlagProps(el).map(flag => `${indent}${INDENT}${flag}`), `${indent}${INDENT}layout={${boxLayout(el, parent)}}`, `${indent}${INDENT}{...${prop}}`, `${indent}/>` ];
     }
 
     if (!asRoot && el.attrs.name && (REGION_TAGS.has(tag) || LIST_TAGS[tag])) {
@@ -1037,9 +1112,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
 
         ctx.props.set(prop, `${component}Props`);
 
-        const tags = tagsProp(el);
-
-        return tags.length ? [ `${indent}<${component}`, `${indent}${INDENT}${tags[0]}`, `${indent}${INDENT}{...${prop}}`, `${indent}/>` ] : [ `${indent}<${component} {...${prop}} />` ];
+        return [ `${indent}<${component} {...${prop}} />` ];
     }
 
     if (SKIPPED_TAGS.has(tag)) return [ `${indent}{/* <${tag}> for ${el.vars.scrollable ?? '?'} - rendered by that list's ScrollArea */}` ];
@@ -1052,7 +1125,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         // Not every chrome component takes the full ThemeProps surface (the horizontal slider
         // pieces and the buttons are plain PointerHandlerProps + variant/layout) - `meta` marks
         // the ones that do, so name/tags/params are only passed where they type-check.
-        const props = [ ...variantProp(el), ...(meta ? [ ...metaProps(ctx, el, false), ...tintProp(el) ] : []), ...(chromeProps ?? []) ];
+        const props = [ ...variantProp(el), ...(meta ? [ ...metaProps(ctx, el, false), ...tintProp(ctx, el) ] : []), ...(chromeProps ?? []) ];
 
         if (tag === 'header' && el.attrs.caption) props.push(`caption=${jsxStr(decode(el.attrs.caption))}`);
 
@@ -1089,16 +1162,15 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         case 'gradient': {
             ctx.imports.add('Region');
 
-            const props = [ ...metaProps(ctx, el, false), ...dropShadowProp(el) ];
+            const props = [ ...metaProps(ctx, el, false), ...dropShadowProp(el), ...blendProp(el) ];
             const color = hexColor(el.attrs.color);
+            const hidden = el.attrs.visible === 'false';
+            const visibleOverride = hidden && el.attrs.name ? overrideProp(ctx, el, 'visible', 'boolean') : undefined;
+            const visible = visibilityExpr(ctx, el, { defaultHidden: hidden, override: visibleOverride });
 
-            if (el.attrs.visible === 'false') {
-                const visibleOverride = el.attrs.name ? overrideProp(ctx, el, 'visible', 'boolean') : undefined;
+            if (visible) props.push(`visible={${visible}}`);
 
-                props.push(visibleOverride ? `visible={${visibleOverride} ?? false}` : 'visible={false}');
-            }
-
-            if (color && (el.attrs.background === 'true' || tag === 'background' || tag === 'gradient')) props.push(`backgroundColor="${color}"`);
+            if (color && (el.attrs.background === 'true' || tag === 'background' || tag === 'gradient')) props.push(`backgroundColor={${recolorExpr(ctx, el, color)}}`);
 
             // A named `region` with the low `params` bit set is a click target in the Flash client
             // (the me-menu tiles, `click_area_discard`, `region_profile`, ...) - see e.g.
@@ -1176,7 +1248,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
             const color = hexColor(el.attrs.color);
             const stroke = hexColor(el.vars.stroke_color);
 
-            if (color) props.push(`color="${color}"`);
+            if (color) props.push(`color={${recolorExpr(ctx, el, color)}}`);
             if (stroke) props.push(`strokeColor="${stroke}"`);
             if (el.vars.stroke_thickness) props.push(`strokeThickness={${num(el.vars.stroke_thickness)}}`);
             if (el.vars.radius) props.push(`radius={${num(el.vars.radius)}}`);
@@ -1222,7 +1294,7 @@ interface AssembledComponent {
 }
 
 /** The `export interface XProps` + `export const X = (...) => {...}` pair for one emitted body. */
-const assembleComponent = (ctx: EmitContext, componentName: string, doc: string, body: string[]): AssembledComponent => {
+const assembleComponent = (ctx: EmitContext, componentName: string, doc: string, body: string[], extendsType?: string): AssembledComponent => {
     // A caption may be decoded for an element that ends up not rendering it (a Border's own
     // caption, say) - only import `t` when the emitted body actually calls it.
     ctx.usesTranslation = body.some(line => line.includes('t('));
@@ -1234,8 +1306,8 @@ const assembleComponent = (ctx: EmitContext, componentName: string, doc: string,
     const propEntries = [ ...ctx.props.entries() ].sort(([ a ], [ b ]) => a.localeCompare(b));
     const lines: string[] = [ doc ];
 
-    if (propEntries.length) {
-        lines.push(`export interface ${propsName} {`);
+    if (propEntries.length || extendsType) {
+        lines.push(`export interface ${propsName}${extendsType ? ` extends ${extendsType}` : ''} {`);
         for (const [ name, type ] of propEntries) lines.push(`${INDENT}${name}?: ${type};`);
         lines.push('}', '');
     }
@@ -1257,7 +1329,7 @@ const assembleComponent = (ctx: EmitContext, componentName: string, doc: string,
     return { lines, props: propEntries.map(([ name ]) => name), nested };
 };
 
-const generateSubComponent = (file: FileContext, el: Element, parent: ParentBox, kind: 'item' | 'region' = 'item', rootName?: string): string => {
+const generateSubComponent = (file: FileContext, el: Element, parent: ParentBox, kind: 'item' | 'region' = 'item', rootName?: string, extendsType?: string): string => {
     const base = rootName ?? `${file.componentName}${pascal(el.attrs.name ?? el.tag)}${kind === 'item' ? 'Item' : ''}`;
     let name = base;
 
@@ -1270,14 +1342,12 @@ const generateSubComponent = (file: FileContext, el: Element, parent: ParentBox,
     ctx.props.set('layout', 'BoxLayout');
     ctx.imports.add('BoxLayout');
 
-    ctx.rootTagsAsProp = true;
-
     const body = emit(ctx, el, { ...parent, spreadLayout: true }, INDENT + INDENT, true);
     const doc = kind === 'item'
         ? `/** Row template \`${el.attrs.name ?? el.tag}\` of ${file.componentName} - pass real rows through its \`items…\` slot. */`
         : `/** Named region \`${el.attrs.name}\` of ${file.componentName} - configured through the parent's \`${camel(el.attrs.name ?? '')}\` prop. */`;
 
-    const assembled = assembleComponent(ctx, name, doc, body);
+    const assembled = assembleComponent(ctx, name, doc, body, extendsType);
 
     file.subComponents.push(assembled.lines.join('\n'));
     file.subComponentProps[name] = { props: assembled.props, nested: assembled.nested };
@@ -1306,7 +1376,9 @@ const assembleImports = (imports: Set<string>, sharedImports: Set<string>): stri
     const themeImports = [ ...imports ].filter(name => THEME_IMPORTS.has(name)).sort();
 
     if (themeImports.length) lines.push(`import { ${themeImports.join(', ')} } from '#base/theme';`);
-    if (imports.has('layoutImage')) lines.push('import { layoutImage } from \'#base/views/layouts/layoutAssets\';');
+    const assetImports = [ 'CatalogWidgetFlags', 'layoutImage' ].filter(name => imports.has(name));
+
+    if (assetImports.length) lines.push(`import { ${assetImports.join(', ')} } from '#base/views/layouts/layoutAssets';`);
     for (const token of [ ...sharedImports ].sort()) lines.push(`import { ${token}, ${token}Props } from '#base/views/layouts/${WIDGETS_FOLDER}/${token}';`);
 
     return lines;
@@ -1630,6 +1702,22 @@ exports.push(...widgetExports);
 writeFileSync(join(OUT_DIR, 'layoutAssets.ts'), [
     '/** Bitmaps referenced by the generated layouts - copied out of `scripts/images` by scripts/generate-layout-views.ts. */',
     'export const layoutImage = (file: string): string => `./assets/images/layouts/${file}`;',
+    '',
+    '/**',
+    ' * Configuration a catalog page put on a widget slot as tags, read by the widget classes',
+    ' * (`ItemGridCatalogWidget` -> `FIXED`, `ProductViewCatalogWidget` -> `2X`/`NO_ROOM_CANVAS`,',
+    ' * `PurchaseCatalogWidget` -> `ROOM_INITIATE_PURCHASE`/`NO_GIFT_OPTION`, `LocalizationCatalogWidget`',
+    ' * -> `TOP_STORY`, `SourceTypeSelectorPreset` -> `NEW`). Carried as props for the widget logic to act on.',
+    ' */',
+    'export interface CatalogWidgetFlags {',
+    '    fixed?: boolean;',
+    '    doubleSize?: boolean;',
+    '    noRoomCanvas?: boolean;',
+    '    roomInitiatePurchase?: boolean;',
+    '    noGiftOption?: boolean;',
+    '    topStory?: boolean;',
+    '    isNew?: boolean;',
+    '}',
     '',
 ].join('\n'));
 

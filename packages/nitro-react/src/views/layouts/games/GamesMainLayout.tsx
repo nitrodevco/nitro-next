@@ -27,7 +27,6 @@ export const GamesMainLayout = ({ layout, onClose, quickPlayContainer, snowwarLo
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <ThemeImage
                     name="quick_play_background"
-                    tags={[ 'bitmap' ]}
                     src={srcQuickPlayBackground ?? layoutImage('quick_play_background.png')}
                     layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 355 }}
                 />
@@ -44,16 +43,14 @@ export interface GamesMainLayoutHeaderTextContainerProps {
     captionHeader2?: string;
     captionHeaderStroke?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GamesMainLayoutHeaderTextContainer = ({ captionHeader, captionHeader2, captionHeaderStroke, layout, tags }: GamesMainLayoutHeaderTextContainerProps) => {
+export const GamesMainLayoutHeaderTextContainer = ({ captionHeader, captionHeader2, captionHeaderStroke, layout }: GamesMainLayoutHeaderTextContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header_text_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 70, width: 279, top: 107, height: 165, ...layout }}
         >
             <Region
@@ -96,21 +93,18 @@ export interface GamesMainLayoutTeaserContainerProps {
     onInstructionsLink?: () => void;
     onLeaderboardLink?: () => void;
     srcQuickPlayTeaser?: string;
-    tags?: string[];
 }
 
-export const GamesMainLayoutTeaserContainer = ({ captionInstructionsLink, captionLeaderboardLink, headerTextContainer, layout, onInstructionsLink, onLeaderboardLink, srcQuickPlayTeaser, tags }: GamesMainLayoutTeaserContainerProps) => {
+export const GamesMainLayoutTeaserContainer = ({ captionInstructionsLink, captionLeaderboardLink, headerTextContainer, layout, onInstructionsLink, onLeaderboardLink, srcQuickPlayTeaser }: GamesMainLayoutTeaserContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="teaser_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 436, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="quick_play_teaser"
-                tags={[ 'bitmap' ]}
                 src={srcQuickPlayTeaser ?? layoutImage('quick_play_teaser.png')}
                 layout={{ position: 'absolute', left: 0, width: 407, top: 160, height: 130 }}
             />
@@ -145,20 +139,17 @@ export const GamesMainLayoutTeaserContainer = ({ captionInstructionsLink, captio
 export interface GamesMainLayoutInstructionsPrevProps {
     layout?: BoxLayout;
     onInstructionsPrev?: () => void;
-    tags?: string[];
 }
 
-export const GamesMainLayoutInstructionsPrev = ({ layout, onInstructionsPrev, tags }: GamesMainLayoutInstructionsPrevProps) => {
+export const GamesMainLayoutInstructionsPrev = ({ layout, onInstructionsPrev }: GamesMainLayoutInstructionsPrevProps) => {
     return (
         <Region
             name="instructions_prev"
-            tags={tags}
             onPointerTap={onInstructionsPrev}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 50, top: 140, height: 50, ...layout }}
         >
             <ThemeImage
-                tags={[ 'bitmap' ]}
                 src={layoutImage('scroll_left.png')}
                 layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
             />
@@ -170,20 +161,17 @@ export const GamesMainLayoutInstructionsPrev = ({ layout, onInstructionsPrev, ta
 export interface GamesMainLayoutInstructionsNextProps {
     layout?: BoxLayout;
     onInstructionsNext?: () => void;
-    tags?: string[];
 }
 
-export const GamesMainLayoutInstructionsNext = ({ layout, onInstructionsNext, tags }: GamesMainLayoutInstructionsNextProps) => {
+export const GamesMainLayoutInstructionsNext = ({ layout, onInstructionsNext }: GamesMainLayoutInstructionsNextProps) => {
     return (
         <Region
             name="instructions_next"
-            tags={tags}
             onPointerTap={onInstructionsNext}
             cursor="pointer"
             layout={{ position: 'absolute', left: 345, width: 50, top: 140, height: 50, ...layout }}
         >
             <ThemeImage
-                tags={[ 'bitmap' ]}
                 src={layoutImage('scroll_right.png')}
                 layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
             />
@@ -195,14 +183,12 @@ export const GamesMainLayoutInstructionsNext = ({ layout, onInstructionsNext, ta
 export interface GamesMainLayoutPage0ItemProps {
     layout?: BoxLayout;
     onPage0?: () => void;
-    tags?: string[];
 }
 
-export const GamesMainLayoutPage0Item = ({ layout, onPage0, tags }: GamesMainLayoutPage0ItemProps) => {
+export const GamesMainLayoutPage0Item = ({ layout, onPage0 }: GamesMainLayoutPage0ItemProps) => {
     return (
         <Region
             name="page_0"
-            tags={tags}
             onPointerTap={onPage0}
             cursor="pointer"
             layout={{ width: 25, height: 25, flexShrink: 0, ...layout }}
@@ -219,14 +205,12 @@ export const GamesMainLayoutPage0Item = ({ layout, onPage0, tags }: GamesMainLay
 export interface GamesMainLayoutPage1ItemProps {
     layout?: BoxLayout;
     onPage1?: () => void;
-    tags?: string[];
 }
 
-export const GamesMainLayoutPage1Item = ({ layout, onPage1, tags }: GamesMainLayoutPage1ItemProps) => {
+export const GamesMainLayoutPage1Item = ({ layout, onPage1 }: GamesMainLayoutPage1ItemProps) => {
     return (
         <Region
             name="page_1"
-            tags={tags}
             onPointerTap={onPage1}
             cursor="pointer"
             layout={{ width: 25, height: 25, flexShrink: 0, ...layout }}
@@ -243,14 +227,12 @@ export const GamesMainLayoutPage1Item = ({ layout, onPage1, tags }: GamesMainLay
 export interface GamesMainLayoutPage2ItemProps {
     layout?: BoxLayout;
     onPage2?: () => void;
-    tags?: string[];
 }
 
-export const GamesMainLayoutPage2Item = ({ layout, onPage2, tags }: GamesMainLayoutPage2ItemProps) => {
+export const GamesMainLayoutPage2Item = ({ layout, onPage2 }: GamesMainLayoutPage2ItemProps) => {
     return (
         <Region
             name="page_2"
-            tags={tags}
             onPointerTap={onPage2}
             cursor="pointer"
             layout={{ width: 25, height: 25, flexShrink: 0, ...layout }}
@@ -267,14 +249,12 @@ export const GamesMainLayoutPage2Item = ({ layout, onPage2, tags }: GamesMainLay
 export interface GamesMainLayoutPage3ItemProps {
     layout?: BoxLayout;
     onPage3?: () => void;
-    tags?: string[];
 }
 
-export const GamesMainLayoutPage3Item = ({ layout, onPage3, tags }: GamesMainLayoutPage3ItemProps) => {
+export const GamesMainLayoutPage3Item = ({ layout, onPage3 }: GamesMainLayoutPage3ItemProps) => {
     return (
         <Region
             name="page_3"
-            tags={tags}
             onPointerTap={onPage3}
             cursor="pointer"
             layout={{ width: 25, height: 25, flexShrink: 0, ...layout }}
@@ -291,14 +271,12 @@ export const GamesMainLayoutPage3Item = ({ layout, onPage3, tags }: GamesMainLay
 export interface GamesMainLayoutPage4ItemProps {
     layout?: BoxLayout;
     onPage4?: () => void;
-    tags?: string[];
 }
 
-export const GamesMainLayoutPage4Item = ({ layout, onPage4, tags }: GamesMainLayoutPage4ItemProps) => {
+export const GamesMainLayoutPage4Item = ({ layout, onPage4 }: GamesMainLayoutPage4ItemProps) => {
     return (
         <Region
             name="page_4"
-            tags={tags}
             onPointerTap={onPage4}
             cursor="pointer"
             layout={{ width: 25, height: 25, flexShrink: 0, ...layout }}
@@ -315,14 +293,12 @@ export const GamesMainLayoutPage4Item = ({ layout, onPage4, tags }: GamesMainLay
 export interface GamesMainLayoutPageListProps {
     itemsPageList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GamesMainLayoutPageList = ({ itemsPageList, layout, tags }: GamesMainLayoutPageListProps) => {
+export const GamesMainLayoutPageList = ({ itemsPageList, layout }: GamesMainLayoutPageListProps) => {
     return (
         <Region
             name="page_list"
-            tags={tags}
             layout={{ position: 'absolute', width: 125, top: 239, height: 25, flexDirection: 'row', ...layout }}
         >
             {itemsPageList ?? (
@@ -348,23 +324,20 @@ export interface GamesMainLayoutInstructionsContainerProps {
     onInstructionsBack?: () => void;
     pageList?: GamesMainLayoutPageListProps;
     srcInstructionsImage?: string;
-    tags?: string[];
     visibleInstructionsContainer?: boolean;
 }
 
-export const GamesMainLayoutInstructionsContainer = ({ captionInstructionsBack, captionInstructionText, instructionsNext, instructionsPrev, layout, onInstructionsBack, pageList, srcInstructionsImage, tags, visibleInstructionsContainer }: GamesMainLayoutInstructionsContainerProps) => {
+export const GamesMainLayoutInstructionsContainer = ({ captionInstructionsBack, captionInstructionText, instructionsNext, instructionsPrev, layout, onInstructionsBack, pageList, srcInstructionsImage, visibleInstructionsContainer }: GamesMainLayoutInstructionsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="instructions_container"
-            tags={tags}
             visible={visibleInstructionsContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 436, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="instructions_image"
-                tags={[ 'bitmap' ]}
                 src={srcInstructionsImage}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 250, top: 80, height: 166 }}
             />
@@ -405,16 +378,14 @@ export interface GamesMainLayoutGamesLeftRegionProps {
     srcBtnMoreGames10?: string;
     srcBtnMoreGames100?: string;
     srcBtnMoreGames300?: string;
-    tags?: string[];
 }
 
-export const GamesMainLayoutGamesLeftRegion = ({ captionGamesLeft, captionGamesLeftStroke, captionGamesLobbyGetGames, layout, onGamesLeftRegion, srcBtnMoreGames10, srcBtnMoreGames100, srcBtnMoreGames300, tags }: GamesMainLayoutGamesLeftRegionProps) => {
+export const GamesMainLayoutGamesLeftRegion = ({ captionGamesLeft, captionGamesLeftStroke, captionGamesLobbyGetGames, layout, onGamesLeftRegion, srcBtnMoreGames10, srcBtnMoreGames100, srcBtnMoreGames300 }: GamesMainLayoutGamesLeftRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="games_left_region"
-            tags={tags}
             onPointerTap={onGamesLeftRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 11, width: 229, top: 0, height: 121, ...layout }}
@@ -456,19 +427,16 @@ export const GamesMainLayoutGamesLeftRegion = ({ captionGamesLeft, captionGamesL
             <Region layout={{ position: 'absolute', left: 0, width: 220, top: 52, height: 70, flexDirection: 'row', gap: 8 }}>
                 <ThemeImage
                     name="btn_more_games_10"
-                    tags={[ 'bitmap' ]}
                     src={srcBtnMoreGames10 ?? layoutImage('btn_more_games_10.png')}
                     layout={{ width: 52, height: 62, flexShrink: 0 }}
                 />
                 <ThemeImage
                     name="btn_more_games_100"
-                    tags={[ 'bitmap' ]}
                     src={srcBtnMoreGames100 ?? layoutImage('btn_more_games_100.png')}
                     layout={{ width: 52, height: 62, flexShrink: 0 }}
                 />
                 <ThemeImage
                     name="btn_more_games_300"
-                    tags={[ 'bitmap' ]}
                     src={srcBtnMoreGames300 ?? layoutImage('btn_more_games_300.png')}
                     layout={{ width: 52, height: 62, flexShrink: 0 }}
                 />
@@ -483,23 +451,20 @@ export interface GamesMainLayoutGamesVipRegionProps {
     layout?: BoxLayout;
     onGamesVipRegion?: () => void;
     srcHcIcon?: string;
-    tags?: string[];
 }
 
-export const GamesMainLayoutGamesVipRegion = ({ captionGamesLobbyGetVip, layout, onGamesVipRegion, srcHcIcon, tags }: GamesMainLayoutGamesVipRegionProps) => {
+export const GamesMainLayoutGamesVipRegion = ({ captionGamesLobbyGetVip, layout, onGamesVipRegion, srcHcIcon }: GamesMainLayoutGamesVipRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="games_vip_region"
-            tags={tags}
             onPointerTap={onGamesVipRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 202, width: 187, top: -2, height: 44, maxWidth: 200, ...layout }}
         >
             <ThemeImage
                 name="hc_icon"
-                tags={[ 'bitmap' ]}
                 src={srcHcIcon ?? layoutImage('hc_icon.png')}
                 layout={{ position: 'absolute', left: 0, width: 24, top: 6, height: 24 }}
             />
@@ -523,16 +488,14 @@ export interface GamesMainLayoutFooterContainerProps {
     gamesVipRegion?: GamesMainLayoutGamesVipRegionProps;
     layout?: BoxLayout;
     onPlayButton?: () => void;
-    tags?: string[];
 }
 
-export const GamesMainLayoutFooterContainer = ({ captionPlayText, gamesLeftRegion, gamesVipRegion, layout, onPlayButton, tags }: GamesMainLayoutFooterContainerProps) => {
+export const GamesMainLayoutFooterContainer = ({ captionPlayText, gamesLeftRegion, gamesVipRegion, layout, onPlayButton }: GamesMainLayoutFooterContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="footer_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 407, top: 364, height: 124, ...layout }}
         >
             <GamesMainLayoutGamesLeftRegion {...gamesLeftRegion} />
@@ -563,15 +526,13 @@ export interface GamesMainLayoutQuickPlayContainerProps {
     footerContainer?: GamesMainLayoutFooterContainerProps;
     instructionsContainer?: GamesMainLayoutInstructionsContainerProps;
     layout?: BoxLayout;
-    tags?: string[];
     teaserContainer?: GamesMainLayoutTeaserContainerProps;
 }
 
-export const GamesMainLayoutQuickPlayContainer = ({ footerContainer, instructionsContainer, layout, tags, teaserContainer }: GamesMainLayoutQuickPlayContainerProps) => {
+export const GamesMainLayoutQuickPlayContainer = ({ footerContainer, instructionsContainer, layout, teaserContainer }: GamesMainLayoutQuickPlayContainerProps) => {
     return (
         <Region
             name="quick_play_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 6, top: 0, height: 485, ...layout }}
         >
             <GamesMainLayoutTeaserContainer {...teaserContainer} />
@@ -584,14 +545,12 @@ export const GamesMainLayoutQuickPlayContainer = ({ footerContainer, instruction
 /** Named region `players_grid` of GamesMainLayout - configured through the parent's `playersGrid` prop. */
 export interface GamesMainLayoutPlayersGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GamesMainLayoutPlayersGrid = ({ layout, tags }: GamesMainLayoutPlayersGridProps) => {
+export const GamesMainLayoutPlayersGrid = ({ layout }: GamesMainLayoutPlayersGridProps) => {
     return (
         <Region
             name="players_grid"
-            tags={tags}
             layout={{ position: 'absolute', left: 40, width: 335, top: 178, height: 130, flexDirection: 'row', flexWrap: 'wrap', gap: 3, ...layout }}
         />
     );
@@ -602,16 +561,14 @@ export interface GamesMainLayoutCancelLinkRegionProps {
     captionCancelLink?: string;
     layout?: BoxLayout;
     onCancelLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const GamesMainLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion, tags }: GamesMainLayoutCancelLinkRegionProps) => {
+export const GamesMainLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion }: GamesMainLayoutCancelLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_link_region"
-            tags={tags}
             onPointerTap={onCancelLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 178, width: 63, top: 385, height: 23, ...layout }}
@@ -633,15 +590,13 @@ export interface GamesMainLayoutSnowwarLobbyContProps {
     captionWaitTextStroke?: string;
     layout?: BoxLayout;
     playersGrid?: GamesMainLayoutPlayersGridProps;
-    tags?: string[];
     visibleSnowwarLobbyCont?: boolean;
 }
 
-export const GamesMainLayoutSnowwarLobbyCont = ({ cancelLinkRegion, captionWaitText, captionWaitTextStroke, layout, playersGrid, tags, visibleSnowwarLobbyCont }: GamesMainLayoutSnowwarLobbyContProps) => {
+export const GamesMainLayoutSnowwarLobbyCont = ({ cancelLinkRegion, captionWaitText, captionWaitTextStroke, layout, playersGrid, visibleSnowwarLobbyCont }: GamesMainLayoutSnowwarLobbyContProps) => {
     return (
         <Region
             name="snowwar_lobby_cont"
-            tags={tags}
             visible={visibleSnowwarLobbyCont ?? false}
             layout={{ position: 'absolute', left: 0, right: 6, top: 0, height: 436, ...layout }}
         >

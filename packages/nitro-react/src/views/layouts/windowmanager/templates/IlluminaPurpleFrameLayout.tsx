@@ -15,17 +15,10 @@ export const IlluminaPurpleFrameLayout = ({ captionHeaderTitleText, contentArea,
             dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.35, blur: 20 }}
             layout={{ position: 'relative', width: 50, height: 50, ...layout }}
         >
-            <IlluminaPurpleFrameLayoutContentArea
-                tags={[ '_CONTENT', '_INTERNAL', '_EXCLUDE' ]}
-                {...contentArea}
-            />
-            <IlluminaPurpleFrameLayoutTitlebar
-                tags={[ '_EXCLUDE', '_INTERNAL' ]}
-                {...titlebar}
-            />
+            <IlluminaPurpleFrameLayoutContentArea {...contentArea} />
+            <IlluminaPurpleFrameLayoutTitlebar {...titlebar} />
             <Region
                 name="header_title_text"
-                tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL' ]}
                 layout={{ position: 'absolute', left: 8, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -37,13 +30,11 @@ export const IlluminaPurpleFrameLayout = ({ captionHeaderTitleText, contentArea,
             <CloseButton
                 variant="103"
                 name="header_button_close"
-                tags={[ '_EXCLUDE', '_INTERNAL', 'close' ]}
                 onPointerTap={onHeaderButtonClose}
                 layout={{ position: 'absolute', right: 8, width: 20, top: 9, height: 20 }}
             />
             <Scaler
                 name="_FRAME_SCALER"
-                tags={[ '_SCALER', '_EXCLUDE', '_INTERNAL' ]}
                 layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 10 }}
             />
         </Region>
@@ -53,14 +44,12 @@ export const IlluminaPurpleFrameLayout = ({ captionHeaderTitleText, contentArea,
 /** Named region `content_area` of IlluminaPurpleFrameLayout - configured through the parent's `contentArea` prop. */
 export interface IlluminaPurpleFrameLayoutContentAreaProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IlluminaPurpleFrameLayoutContentArea = ({ layout, tags }: IlluminaPurpleFrameLayoutContentAreaProps) => {
+export const IlluminaPurpleFrameLayoutContentArea = ({ layout }: IlluminaPurpleFrameLayoutContentAreaProps) => {
     return (
         <Region
             name="content_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, right: 1, top: 30, bottom: 1, ...layout }}
         />
     );
@@ -70,14 +59,12 @@ export const IlluminaPurpleFrameLayoutContentArea = ({ layout, tags }: IlluminaP
 export interface IlluminaPurpleFrameLayoutTitlebarProps {
     layout?: BoxLayout;
     onTitlebar?: () => void;
-    tags?: string[];
 }
 
-export const IlluminaPurpleFrameLayoutTitlebar = ({ layout, onTitlebar, tags }: IlluminaPurpleFrameLayoutTitlebarProps) => {
+export const IlluminaPurpleFrameLayoutTitlebar = ({ layout, onTitlebar }: IlluminaPurpleFrameLayoutTitlebarProps) => {
     return (
         <Region
             name="titlebar"
-            tags={tags}
             onPointerTap={onTitlebar}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30, ...layout }}

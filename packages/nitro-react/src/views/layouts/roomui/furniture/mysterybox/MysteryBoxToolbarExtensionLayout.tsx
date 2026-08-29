@@ -99,14 +99,12 @@ export interface MysteryBoxToolbarExtensionLayoutBoxRegionProps {
     onBoxRegion?: () => void;
     srcBoxColour?: string;
     srcBoxOverlay?: string;
-    tags?: string[];
 }
 
-export const MysteryBoxToolbarExtensionLayoutBoxRegion = ({ layout, onBoxRegion, srcBoxColour, srcBoxOverlay, tags }: MysteryBoxToolbarExtensionLayoutBoxRegionProps) => {
+export const MysteryBoxToolbarExtensionLayoutBoxRegion = ({ layout, onBoxRegion, srcBoxColour, srcBoxOverlay }: MysteryBoxToolbarExtensionLayoutBoxRegionProps) => {
     return (
         <Region
             name="box_region"
-            tags={tags}
             onPointerTap={onBoxRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39, ...layout }}
@@ -136,14 +134,12 @@ export interface MysteryBoxToolbarExtensionLayoutKeyRegionProps {
     onKeyRegion?: () => void;
     srcKeyColour?: string;
     srcKeyOverlay?: string;
-    tags?: string[];
 }
 
-export const MysteryBoxToolbarExtensionLayoutKeyRegion = ({ layout, onKeyRegion, srcKeyColour, srcKeyOverlay, tags }: MysteryBoxToolbarExtensionLayoutKeyRegionProps) => {
+export const MysteryBoxToolbarExtensionLayoutKeyRegion = ({ layout, onKeyRegion, srcKeyColour, srcKeyOverlay }: MysteryBoxToolbarExtensionLayoutKeyRegionProps) => {
     return (
         <Region
             name="key_region"
-            tags={tags}
             onPointerTap={onKeyRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 50, width: 39, top: 0, height: 39, ...layout }}
@@ -171,14 +167,12 @@ export const MysteryBoxToolbarExtensionLayoutKeyRegion = ({ layout, onKeyRegion,
 export interface MysteryBoxToolbarExtensionLayoutMinimizeRegionProps {
     layout?: BoxLayout;
     onMinimizeRegion?: () => void;
-    tags?: string[];
 }
 
-export const MysteryBoxToolbarExtensionLayoutMinimizeRegion = ({ layout, onMinimizeRegion, tags }: MysteryBoxToolbarExtensionLayoutMinimizeRegionProps) => {
+export const MysteryBoxToolbarExtensionLayoutMinimizeRegion = ({ layout, onMinimizeRegion }: MysteryBoxToolbarExtensionLayoutMinimizeRegionProps) => {
     return (
         <Region
             name="minimize_region"
-            tags={tags}
             onPointerTap={onMinimizeRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 168, width: 20, top: 2, height: 20, ...layout }}
@@ -195,15 +189,13 @@ export const MysteryBoxToolbarExtensionLayoutMinimizeRegion = ({ layout, onMinim
 export interface MysteryBoxToolbarExtensionLayoutMaximizeRegionProps {
     layout?: BoxLayout;
     onMaximizeRegion?: () => void;
-    tags?: string[];
     visibleMaximizeRegion?: boolean;
 }
 
-export const MysteryBoxToolbarExtensionLayoutMaximizeRegion = ({ layout, onMaximizeRegion, tags, visibleMaximizeRegion }: MysteryBoxToolbarExtensionLayoutMaximizeRegionProps) => {
+export const MysteryBoxToolbarExtensionLayoutMaximizeRegion = ({ layout, onMaximizeRegion, visibleMaximizeRegion }: MysteryBoxToolbarExtensionLayoutMaximizeRegionProps) => {
     return (
         <Region
             name="maximize_region"
-            tags={tags}
             visible={visibleMaximizeRegion ?? false}
             onPointerTap={onMaximizeRegion}
             cursor="pointer"

@@ -34,10 +34,9 @@ export interface IroEventSettingsLayoutInputsContProps {
     captionDescLabel?: string;
     captionNameLabel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IroEventSettingsLayoutInputsCont = ({ captionDescLabel, captionNameLabel, layout, tags }: IroEventSettingsLayoutInputsContProps) => {
+export const IroEventSettingsLayoutInputsCont = ({ captionDescLabel, captionNameLabel, layout }: IroEventSettingsLayoutInputsContProps) => {
     const t = useTranslation();
     const [ eventNameValue, setEventNameValue ] = useState('');
     const [ eventDescValue, setEventDescValue ] = useState('');
@@ -45,7 +44,6 @@ export const IroEventSettingsLayoutInputsCont = ({ captionDescLabel, captionName
     return (
         <Region
             name="inputs_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 11, right: 12, top: 4, height: 192, ...layout }}
         >
             <Region
@@ -85,14 +83,12 @@ export const IroEventSettingsLayoutInputsCont = ({ captionDescLabel, captionName
 export interface IroEventSettingsLayoutButtonsProps {
     layout?: BoxLayout;
     onButtons?: () => void;
-    tags?: string[];
 }
 
-export const IroEventSettingsLayoutButtons = ({ layout, onButtons, tags }: IroEventSettingsLayoutButtonsProps) => {
+export const IroEventSettingsLayoutButtons = ({ layout, onButtons }: IroEventSettingsLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             onPointerTap={onButtons}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 220, top: 200, height: 29, ...layout }}

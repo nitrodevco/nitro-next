@@ -21,14 +21,12 @@ export const RecyclerPrizesWidgetLevelItemLayout = ({ bg, layout }: RecyclerPriz
 export interface RecyclerPrizesWidgetLevelItemLayoutStarIconItemProps {
     layout?: BoxLayout;
     srcStarIcon?: string;
-    tags?: string[];
 }
 
-export const RecyclerPrizesWidgetLevelItemLayoutStarIconItem = ({ layout, srcStarIcon, tags }: RecyclerPrizesWidgetLevelItemLayoutStarIconItemProps) => {
+export const RecyclerPrizesWidgetLevelItemLayoutStarIconItem = ({ layout, srcStarIcon }: RecyclerPrizesWidgetLevelItemLayoutStarIconItemProps) => {
     return (
         <ThemeImage
             name="star_icon"
-            tags={tags}
             src={srcStarIcon ?? layoutImage('star_small_gold.png')}
             layout={{ width: 18, height: 17, flexShrink: 0, ...layout }}
         />
@@ -39,14 +37,12 @@ export const RecyclerPrizesWidgetLevelItemLayoutStarIconItem = ({ layout, srcSta
 export interface RecyclerPrizesWidgetLevelItemLayoutLevelTitleItemProps {
     captionLevelTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RecyclerPrizesWidgetLevelItemLayoutLevelTitleItem = ({ captionLevelTitle, layout, tags }: RecyclerPrizesWidgetLevelItemLayoutLevelTitleItemProps) => {
+export const RecyclerPrizesWidgetLevelItemLayoutLevelTitleItem = ({ captionLevelTitle, layout }: RecyclerPrizesWidgetLevelItemLayoutLevelTitleItemProps) => {
     return (
         <Region
             name="level_title"
-            tags={tags}
             layout={{ width: 28, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionLevelTitle ?? 'Title'} />
@@ -58,14 +54,12 @@ export const RecyclerPrizesWidgetLevelItemLayoutLevelTitleItem = ({ captionLevel
 export interface RecyclerPrizesWidgetLevelItemLayoutLevelSplitterItemProps {
     captionLevelSplitter?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RecyclerPrizesWidgetLevelItemLayoutLevelSplitterItem = ({ captionLevelSplitter, layout, tags }: RecyclerPrizesWidgetLevelItemLayoutLevelSplitterItemProps) => {
+export const RecyclerPrizesWidgetLevelItemLayoutLevelSplitterItem = ({ captionLevelSplitter, layout }: RecyclerPrizesWidgetLevelItemLayoutLevelSplitterItemProps) => {
     return (
         <Region
             name="level_splitter"
-            tags={tags}
             layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionLevelSplitter ?? ' -'} />
@@ -77,14 +71,12 @@ export const RecyclerPrizesWidgetLevelItemLayoutLevelSplitterItem = ({ captionLe
 export interface RecyclerPrizesWidgetLevelItemLayoutLevelChancesItemProps {
     captionLevelChances?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RecyclerPrizesWidgetLevelItemLayoutLevelChancesItem = ({ captionLevelChances, layout, tags }: RecyclerPrizesWidgetLevelItemLayoutLevelChancesItemProps) => {
+export const RecyclerPrizesWidgetLevelItemLayoutLevelChancesItem = ({ captionLevelChances, layout }: RecyclerPrizesWidgetLevelItemLayoutLevelChancesItemProps) => {
     return (
         <Region
             name="level_chances"
-            tags={tags}
             layout={{ width: 50, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionLevelChances ?? 'Chances'} />
@@ -96,14 +88,12 @@ export const RecyclerPrizesWidgetLevelItemLayoutLevelChancesItem = ({ captionLev
 export interface RecyclerPrizesWidgetLevelItemLayoutHeaderBarItemProps {
     itemsHeaderBar?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RecyclerPrizesWidgetLevelItemLayoutHeaderBarItem = ({ itemsHeaderBar, layout, tags }: RecyclerPrizesWidgetLevelItemLayoutHeaderBarItemProps) => {
+export const RecyclerPrizesWidgetLevelItemLayoutHeaderBarItem = ({ itemsHeaderBar, layout }: RecyclerPrizesWidgetLevelItemLayoutHeaderBarItemProps) => {
     return (
         <Region
             name="header_bar"
-            tags={tags}
             layout={{ width: 106, height: 23, flexShrink: 0, minHeight: 23, maxHeight: 23, flexDirection: 'row', ...layout }}
         >
             {itemsHeaderBar ?? (
@@ -121,14 +111,12 @@ export const RecyclerPrizesWidgetLevelItemLayoutHeaderBarItem = ({ itemsHeaderBa
 /** Named region `itemGrid` of RecyclerPrizesWidgetLevelItemLayout - configured through the parent's `itemGrid` prop. */
 export interface RecyclerPrizesWidgetLevelItemLayoutItemGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RecyclerPrizesWidgetLevelItemLayoutItemGrid = ({ layout, tags }: RecyclerPrizesWidgetLevelItemLayoutItemGridProps) => {
+export const RecyclerPrizesWidgetLevelItemLayoutItemGrid = ({ layout }: RecyclerPrizesWidgetLevelItemLayoutItemGridProps) => {
     return (
         <Region
             name="itemGrid"
-            tags={tags}
             backgroundColor="#eaeaea"
             layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 36, flexDirection: 'row', flexWrap: 'wrap', gap: 2, ...layout }}
         />
@@ -140,14 +128,12 @@ export interface RecyclerPrizesWidgetLevelItemLayoutContentProps {
     itemGrid?: RecyclerPrizesWidgetLevelItemLayoutItemGridProps;
     itemsContent?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RecyclerPrizesWidgetLevelItemLayoutContent = ({ itemGrid, itemsContent, layout, tags }: RecyclerPrizesWidgetLevelItemLayoutContentProps) => {
+export const RecyclerPrizesWidgetLevelItemLayoutContent = ({ itemGrid, itemsContent, layout }: RecyclerPrizesWidgetLevelItemLayoutContentProps) => {
     return (
         <Region
             name="content"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 68, flexDirection: 'column', ...layout }}
         >
             {itemsContent ?? (
@@ -171,14 +157,12 @@ export const RecyclerPrizesWidgetLevelItemLayoutContent = ({ itemGrid, itemsCont
 export interface RecyclerPrizesWidgetLevelItemLayoutBgProps {
     content?: RecyclerPrizesWidgetLevelItemLayoutContentProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RecyclerPrizesWidgetLevelItemLayoutBg = ({ content, layout, tags }: RecyclerPrizesWidgetLevelItemLayoutBgProps) => {
+export const RecyclerPrizesWidgetLevelItemLayoutBg = ({ content, layout }: RecyclerPrizesWidgetLevelItemLayoutBgProps) => {
     return (
         <Region
             name="bg"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 348, top: 0, height: 78, ...layout }}
         >
             <Border

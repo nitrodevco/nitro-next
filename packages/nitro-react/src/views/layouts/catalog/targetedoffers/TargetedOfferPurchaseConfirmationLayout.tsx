@@ -32,16 +32,14 @@ export const TargetedOfferPurchaseConfirmationLayout = ({ content, layout, onClo
 export interface TargetedOfferPurchaseConfirmationLayoutDisclaimerItemProps {
     layout?: BoxLayout;
     onSpendingDisclaimer?: () => void;
-    tags?: string[];
 }
 
-export const TargetedOfferPurchaseConfirmationLayoutDisclaimerItem = ({ layout, onSpendingDisclaimer, tags }: TargetedOfferPurchaseConfirmationLayoutDisclaimerItemProps) => {
+export const TargetedOfferPurchaseConfirmationLayoutDisclaimerItem = ({ layout, onSpendingDisclaimer }: TargetedOfferPurchaseConfirmationLayoutDisclaimerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="disclaimer"
-            tags={tags}
             layout={{ width: 311, height: 17, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 33, width: 278, top: 0, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
@@ -64,17 +62,15 @@ export const TargetedOfferPurchaseConfirmationLayoutDisclaimerItem = ({ layout, 
 export interface TargetedOfferPurchaseConfirmationLayoutCancelButtonItemProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
-    tags?: string[];
 }
 
-export const TargetedOfferPurchaseConfirmationLayoutCancelButtonItem = ({ layout, onCancelButton, tags }: TargetedOfferPurchaseConfirmationLayoutCancelButtonItemProps) => {
+export const TargetedOfferPurchaseConfirmationLayoutCancelButtonItem = ({ layout, onCancelButton }: TargetedOfferPurchaseConfirmationLayoutCancelButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="cancel_button"
-            tags={tags}
             onPointerTap={onCancelButton}
             layout={{ width: 110, height: 27, flexShrink: 0, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27, ...layout }}
         >
@@ -87,17 +83,15 @@ export const TargetedOfferPurchaseConfirmationLayoutCancelButtonItem = ({ layout
 export interface TargetedOfferPurchaseConfirmationLayoutBuyButtonItemProps {
     layout?: BoxLayout;
     onBuyButton?: () => void;
-    tags?: string[];
 }
 
-export const TargetedOfferPurchaseConfirmationLayoutBuyButtonItem = ({ layout, onBuyButton, tags }: TargetedOfferPurchaseConfirmationLayoutBuyButtonItemProps) => {
+export const TargetedOfferPurchaseConfirmationLayoutBuyButtonItem = ({ layout, onBuyButton }: TargetedOfferPurchaseConfirmationLayoutBuyButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="5"
             name="buy_button"
-            tags={tags}
             tintColor="#00aa00"
             onPointerTap={onBuyButton}
             layout={{ width: 110, height: 27, flexShrink: 0, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27, ...layout }}
@@ -111,14 +105,12 @@ export const TargetedOfferPurchaseConfirmationLayoutBuyButtonItem = ({ layout, o
 export interface TargetedOfferPurchaseConfirmationLayoutButtonsItemProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TargetedOfferPurchaseConfirmationLayoutButtonsItem = ({ itemsButtons, layout, tags }: TargetedOfferPurchaseConfirmationLayoutButtonsItemProps) => {
+export const TargetedOfferPurchaseConfirmationLayoutButtonsItem = ({ itemsButtons, layout }: TargetedOfferPurchaseConfirmationLayoutButtonsItemProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ minWidth: 315, minHeight: 27, flexShrink: 0, flexDirection: 'row', gap: 76, ...layout }}
         >
             {itemsButtons ?? (
@@ -135,14 +127,12 @@ export const TargetedOfferPurchaseConfirmationLayoutButtonsItem = ({ itemsButton
 export interface TargetedOfferPurchaseConfirmationLayoutProductNameItemProps {
     captionProductName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TargetedOfferPurchaseConfirmationLayoutProductNameItem = ({ captionProductName, layout, tags }: TargetedOfferPurchaseConfirmationLayoutProductNameItemProps) => {
+export const TargetedOfferPurchaseConfirmationLayoutProductNameItem = ({ captionProductName, layout }: TargetedOfferPurchaseConfirmationLayoutProductNameItemProps) => {
     return (
         <Region
             name="product_name"
-            tags={tags}
             layout={{ width: 177, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -158,14 +148,12 @@ export const TargetedOfferPurchaseConfirmationLayoutProductNameItem = ({ caption
 export interface TargetedOfferPurchaseConfirmationLayoutQuantityItemProps {
     captionQuantity?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TargetedOfferPurchaseConfirmationLayoutQuantityItem = ({ captionQuantity, layout, tags }: TargetedOfferPurchaseConfirmationLayoutQuantityItemProps) => {
+export const TargetedOfferPurchaseConfirmationLayoutQuantityItem = ({ captionQuantity, layout }: TargetedOfferPurchaseConfirmationLayoutQuantityItemProps) => {
     return (
         <Region
             name="quantity"
-            tags={tags}
             layout={{ width: 41, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -179,14 +167,12 @@ export const TargetedOfferPurchaseConfirmationLayoutQuantityItem = ({ captionQua
 /** Named region `purchase_cost_box` of TargetedOfferPurchaseConfirmationLayout - configured through the parent's `purchaseCostBox` prop. */
 export interface TargetedOfferPurchaseConfirmationLayoutPurchaseCostBoxProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TargetedOfferPurchaseConfirmationLayoutPurchaseCostBox = ({ layout, tags }: TargetedOfferPurchaseConfirmationLayoutPurchaseCostBoxProps) => {
+export const TargetedOfferPurchaseConfirmationLayoutPurchaseCostBox = ({ layout }: TargetedOfferPurchaseConfirmationLayoutPurchaseCostBoxProps) => {
     return (
         <Region
             name="purchase_cost_box"
-            tags={tags}
             layout={{ width: 20, height: 22, flexShrink: 0, ...layout }}
         />
     );
@@ -197,16 +183,14 @@ export interface TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItemPr
     itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
     purchaseCostBox?: TargetedOfferPurchaseConfirmationLayoutPurchaseCostBoxProps;
-    tags?: string[];
 }
 
-export const TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItem = ({ itemsPropertiesItemlist, layout, purchaseCostBox, tags }: TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItemProps) => {
+export const TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItem = ({ itemsPropertiesItemlist, layout, purchaseCostBox }: TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="properties_itemlist"
-            tags={tags}
             layout={{ width: 176, height: 90, flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsPropertiesItemlist ?? (
@@ -232,14 +216,12 @@ export const TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItem = ({ 
 export interface TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistProps {
     itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TargetedOfferPurchaseConfirmationLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout, tags }: TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistProps) => {
+export const TargetedOfferPurchaseConfirmationLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout }: TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistProps) => {
     return (
         <Region
             name="properties_itemlist"
-            tags={tags}
             layout={{ position: 'absolute', left: 102, width: 176, top: 24, height: 64, flexDirection: 'column', gap: 7, ...layout }}
         >
             {itemsPropertiesItemlist ?? (
@@ -254,14 +236,12 @@ export interface TargetedOfferPurchaseConfirmationLayoutContentProps {
     itemsContent?: ReactNode;
     layout?: BoxLayout;
     propertiesItemlist?: TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistProps;
-    tags?: string[];
 }
 
-export const TargetedOfferPurchaseConfirmationLayoutContent = ({ itemsContent, layout, propertiesItemlist, tags }: TargetedOfferPurchaseConfirmationLayoutContentProps) => {
+export const TargetedOfferPurchaseConfirmationLayoutContent = ({ itemsContent, layout, propertiesItemlist }: TargetedOfferPurchaseConfirmationLayoutContentProps) => {
     return (
         <Region
             name="content"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 48, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsContent ?? (

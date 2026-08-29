@@ -27,7 +27,6 @@ export const HabboWindowAlertLinkLayout = ({ captionAlertButtonOk, captionAlertD
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     name="_alert_description"
-                    tags={[ 'DESCRIPTION' ]}
                     layout={{ position: 'absolute', left: 27, width: 210, top: 13, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -39,7 +38,6 @@ export const HabboWindowAlertLinkLayout = ({ captionAlertButtonOk, captionAlertD
                 <ButtonThick
                     variant="3"
                     name="_alert_button_link"
-                    tags={[ 'LINK' ]}
                     onPointerTap={onAlertButtonLink}
                     layout={{ position: 'absolute', marginLeft: 58.5, marginRight: -58.5, width: 81, bottom: 39, height: 24, minWidth: 50 }}
                 >
@@ -47,7 +45,6 @@ export const HabboWindowAlertLinkLayout = ({ captionAlertButtonOk, captionAlertD
                 </ButtonThick>
                 <Region
                     name="_alert_button_ok"
-                    tags={[ 'OK' ]}
                     layout={{ position: 'absolute', marginLeft: -77, marginRight: 77, width: 82, bottom: 43, height: 17, minWidth: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     onPointerTap={onAlertButtonOk}
                     cursor="pointer"

@@ -42,14 +42,12 @@ export const ClubExtendConfirmationLayout = ({ backgroundContainer, itemlistVert
 /** Named region `background_container` of ClubExtendConfirmationLayout - configured through the parent's `backgroundContainer` prop. */
 export interface ClubExtendConfirmationLayoutBackgroundContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubExtendConfirmationLayoutBackgroundContainer = ({ layout, tags }: ClubExtendConfirmationLayoutBackgroundContainerProps) => {
+export const ClubExtendConfirmationLayoutBackgroundContainer = ({ layout }: ClubExtendConfirmationLayoutBackgroundContainerProps) => {
     return (
         <Region
             name="background_container"
-            tags={tags}
             backgroundColor="#bcbdbc"
             layout={{ position: 'absolute', left: 1, width: 448, top: 0, height: 25, ...layout }}
         />
@@ -60,14 +58,12 @@ export const ClubExtendConfirmationLayoutBackgroundContainer = ({ layout, tags }
 export interface ClubExtendConfirmationLayoutExtendTitleItemProps {
     captionExtendTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubExtendConfirmationLayoutExtendTitleItem = ({ captionExtendTitle, layout, tags }: ClubExtendConfirmationLayoutExtendTitleItemProps) => {
+export const ClubExtendConfirmationLayoutExtendTitleItem = ({ captionExtendTitle, layout }: ClubExtendConfirmationLayoutExtendTitleItemProps) => {
     return (
         <Region
             name="extend_title"
-            tags={tags}
             layout={{ width: 266, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -87,14 +83,12 @@ export interface ClubExtendConfirmationLayoutNormalPriceContainerItemProps {
     captionPlus?: string;
     layout?: BoxLayout;
     srcNormalPriceIconLeft?: string;
-    tags?: string[];
 }
 
-export const ClubExtendConfirmationLayoutNormalPriceContainerItem = ({ captionNormalPriceLabel, captionNormalPricePriceLeft, captionNormalPricePriceRight, captionPlus, layout, srcNormalPriceIconLeft, tags }: ClubExtendConfirmationLayoutNormalPriceContainerItemProps) => {
+export const ClubExtendConfirmationLayoutNormalPriceContainerItem = ({ captionNormalPriceLabel, captionNormalPricePriceLeft, captionNormalPricePriceRight, captionPlus, layout, srcNormalPriceIconLeft }: ClubExtendConfirmationLayoutNormalPriceContainerItemProps) => {
     return (
         <Region
             name="normal_price_container"
-            tags={tags}
             layout={{ width: 285, height: 30, flexShrink: 0, ...layout }}
         >
             <Region
@@ -158,14 +152,12 @@ export interface ClubExtendConfirmationLayoutYouSaveContainerItemProps {
     captionYouSavePriceRight?: string;
     layout?: BoxLayout;
     srcYouSaveIconLeft?: string;
-    tags?: string[];
 }
 
-export const ClubExtendConfirmationLayoutYouSaveContainerItem = ({ captionPlus, captionYouSaveLabel, captionYouSavePriceLeft, captionYouSavePriceRight, layout, srcYouSaveIconLeft, tags }: ClubExtendConfirmationLayoutYouSaveContainerItemProps) => {
+export const ClubExtendConfirmationLayoutYouSaveContainerItem = ({ captionPlus, captionYouSaveLabel, captionYouSavePriceLeft, captionYouSavePriceRight, layout, srcYouSaveIconLeft }: ClubExtendConfirmationLayoutYouSaveContainerItemProps) => {
     return (
         <Region
             name="you_save_container"
-            tags={tags}
             layout={{ width: 285, height: 30, flexShrink: 0, ...layout }}
         >
             <Region
@@ -224,14 +216,12 @@ export const ClubExtendConfirmationLayoutYouSaveContainerItem = ({ captionPlus, 
 /** Row template `total_amount_line` of ClubExtendConfirmationLayout - pass real rows through its `items…` slot. */
 export interface ClubExtendConfirmationLayoutTotalAmountLineItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubExtendConfirmationLayoutTotalAmountLineItem = ({ layout, tags }: ClubExtendConfirmationLayoutTotalAmountLineItemProps) => {
+export const ClubExtendConfirmationLayoutTotalAmountLineItem = ({ layout }: ClubExtendConfirmationLayoutTotalAmountLineItemProps) => {
     return (
         <Region
             name="total_amount_line"
-            tags={tags}
             backgroundColor="#007a98"
             layout={{ width: 285, height: 3, flexShrink: 0, ...layout }}
         />
@@ -241,14 +231,12 @@ export const ClubExtendConfirmationLayoutTotalAmountLineItem = ({ layout, tags }
 /** Row template `spacer` of ClubExtendConfirmationLayout - pass real rows through its `items…` slot. */
 export interface ClubExtendConfirmationLayoutSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubExtendConfirmationLayoutSpacerItem = ({ layout, tags }: ClubExtendConfirmationLayoutSpacerItemProps) => {
+export const ClubExtendConfirmationLayoutSpacerItem = ({ layout }: ClubExtendConfirmationLayoutSpacerItemProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ width: 100, height: 8, flexShrink: 0, ...layout }}
         />
     );
@@ -262,14 +250,12 @@ export interface ClubExtendConfirmationLayoutYourPriceContainerItemProps {
     captionYourPricePriceRight?: string;
     layout?: BoxLayout;
     srcYourPriceIconLeft?: string;
-    tags?: string[];
 }
 
-export const ClubExtendConfirmationLayoutYourPriceContainerItem = ({ captionPlus, captionYourPriceLabel, captionYourPricePriceLeft, captionYourPricePriceRight, layout, srcYourPriceIconLeft, tags }: ClubExtendConfirmationLayoutYourPriceContainerItemProps) => {
+export const ClubExtendConfirmationLayoutYourPriceContainerItem = ({ captionPlus, captionYourPriceLabel, captionYourPricePriceLeft, captionYourPricePriceRight, layout, srcYourPriceIconLeft }: ClubExtendConfirmationLayoutYourPriceContainerItemProps) => {
     return (
         <Region
             name="your_price_container"
-            tags={tags}
             layout={{ width: 285, height: 31, flexShrink: 0, ...layout }}
         >
             <Region
@@ -329,14 +315,12 @@ export const ClubExtendConfirmationLayoutYourPriceContainerItem = ({ captionPlus
 export interface ClubExtendConfirmationLayoutOfferExpirationItemProps {
     captionOfferExpiration?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubExtendConfirmationLayoutOfferExpirationItem = ({ captionOfferExpiration, layout, tags }: ClubExtendConfirmationLayoutOfferExpirationItemProps) => {
+export const ClubExtendConfirmationLayoutOfferExpirationItem = ({ captionOfferExpiration, layout }: ClubExtendConfirmationLayoutOfferExpirationItemProps) => {
     return (
         <Region
             name="offer_expiration"
-            tags={tags}
             layout={{ width: 244, height: 9, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -353,14 +337,12 @@ export interface ClubExtendConfirmationLayoutMaybeLaterRegionProps {
     captionMaybeLaterLink?: string;
     layout?: BoxLayout;
     onMaybeLaterRegion?: () => void;
-    tags?: string[];
 }
 
-export const ClubExtendConfirmationLayoutMaybeLaterRegion = ({ captionMaybeLaterLink, layout, onMaybeLaterRegion, tags }: ClubExtendConfirmationLayoutMaybeLaterRegionProps) => {
+export const ClubExtendConfirmationLayoutMaybeLaterRegion = ({ captionMaybeLaterLink, layout, onMaybeLaterRegion }: ClubExtendConfirmationLayoutMaybeLaterRegionProps) => {
     return (
         <Region
             name="maybe_later_region"
-            tags={tags}
             onPointerTap={onMaybeLaterRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 5, top: 0, height: 32, ...layout }}
@@ -383,14 +365,12 @@ export interface ClubExtendConfirmationLayoutActionContainerItemProps {
     layout?: BoxLayout;
     maybeLaterRegion?: ClubExtendConfirmationLayoutMaybeLaterRegionProps;
     onBuyNowButton?: () => void;
-    tags?: string[];
 }
 
-export const ClubExtendConfirmationLayoutActionContainerItem = ({ layout, maybeLaterRegion, onBuyNowButton, tags }: ClubExtendConfirmationLayoutActionContainerItemProps) => {
+export const ClubExtendConfirmationLayoutActionContainerItem = ({ layout, maybeLaterRegion, onBuyNowButton }: ClubExtendConfirmationLayoutActionContainerItemProps) => {
     return (
         <Region
             name="action_container"
-            tags={tags}
             layout={{ width: 285, height: 40, flexShrink: 0, maxWidth: 285, ...layout }}
         >
             <ButtonThick
@@ -408,14 +388,12 @@ export const ClubExtendConfirmationLayoutActionContainerItem = ({ layout, maybeL
 export interface ClubExtendConfirmationLayoutItemlistVerticalProps {
     itemsItemlistVertical?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubExtendConfirmationLayoutItemlistVertical = ({ itemsItemlistVertical, layout, tags }: ClubExtendConfirmationLayoutItemlistVerticalProps) => {
+export const ClubExtendConfirmationLayoutItemlistVertical = ({ itemsItemlistVertical, layout }: ClubExtendConfirmationLayoutItemlistVerticalProps) => {
     return (
         <Region
             name="itemlist_vertical"
-            tags={tags}
             layout={{ position: 'absolute', left: 140, width: 285, top: 25, height: 175, flexDirection: 'column', ...layout }}
         >
             {itemsItemlistVertical ?? (

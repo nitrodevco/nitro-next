@@ -1,5 +1,5 @@
 import { BoxLayout, Region, ThemeText } from '#base/theme';
-import { RoomAdsCatalogWidget, RoomAdsCatalogWidgetProps } from '#base/views/layouts/catalog/widgets/RoomAdsCatalogWidget';
+import { RoomAdsCatalogWidget2, RoomAdsCatalogWidget2Props } from '#base/views/layouts/catalog/widgets/RoomAdsCatalogWidget2';
 
 /** Generated from `1548_layout_roomads_xml` (layout "ctlg_roomads", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutRoomads_1548LayoutProps {
@@ -19,15 +19,13 @@ export const LayoutRoomads_1548Layout = ({ layout, roomads }: LayoutRoomads_1548
 export interface LayoutRoomads_1548LayoutRoomadsProps {
     captionCtlgPrice1?: string;
     layout?: BoxLayout;
-    roomAdsCatalogWidget?: RoomAdsCatalogWidgetProps;
-    tags?: string[];
+    roomAdsCatalogWidget?: RoomAdsCatalogWidget2Props;
 }
 
-export const LayoutRoomads_1548LayoutRoomads = ({ captionCtlgPrice1, layout, roomAdsCatalogWidget, tags }: LayoutRoomads_1548LayoutRoomadsProps) => {
+export const LayoutRoomads_1548LayoutRoomads = ({ captionCtlgPrice1, layout, roomAdsCatalogWidget }: LayoutRoomads_1548LayoutRoomadsProps) => {
     return (
         <Region
             name="roomads"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <Region
@@ -39,7 +37,7 @@ export const LayoutRoomads_1548LayoutRoomads = ({ captionCtlgPrice1, layout, roo
                     textOptions={{ wordWrap: true, wordWrapWidth: 78 }}
                 />
             </Region>
-            <RoomAdsCatalogWidget
+            <RoomAdsCatalogWidget2
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 {...roomAdsCatalogWidget}
             />

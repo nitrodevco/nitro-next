@@ -1,5 +1,6 @@
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button, Region } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `buyGuildWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -7,19 +8,17 @@ import { BoxLayout, Button, Region } from '#base/theme';
  * (LayoutGuildFrontpage_1668Layout); each passes its own placement through `layout`.
  */
 /** Named region `buyGuildWidget` of BuyGuildWidget2 - configured through the parent's `buyGuildWidget` prop. */
-export interface BuyGuildWidget2Props {
+export interface BuyGuildWidget2Props extends CatalogWidgetFlags {
     layout?: BoxLayout;
     onStartGuildPurchase?: () => void;
-    tags?: string[];
 }
 
-export const BuyGuildWidget2 = ({ layout, onStartGuildPurchase, tags }: BuyGuildWidget2Props) => {
+export const BuyGuildWidget2 = ({ layout, onStartGuildPurchase }: BuyGuildWidget2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="buyGuildWidget"
-            tags={tags}
             layout={{ position: 'absolute', justifyContent: 'center', ...layout }}
         >
             <Button

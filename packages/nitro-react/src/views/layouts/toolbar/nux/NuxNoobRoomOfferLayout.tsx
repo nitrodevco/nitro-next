@@ -22,7 +22,6 @@ export const NuxNoobRoomOfferLayout = ({ captionTxtBody, layout, onBtnGo, onClos
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
                 <ThemeImage
-                    tags={[ 'ICON' ]}
                     src="${image.library.url}nux/NUXroom_prompt.png"
                     layout={{ position: 'absolute', left: 0, width: 380, top: 23, height: 95 }}
                 />

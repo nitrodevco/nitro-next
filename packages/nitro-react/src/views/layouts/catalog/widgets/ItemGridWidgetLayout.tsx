@@ -24,10 +24,9 @@ export const ItemGridWidgetLayout = ({ itemGrid, layout }: ItemGridWidgetLayoutP
 /** Named region `itemGrid` of ItemGridWidgetLayout - configured through the parent's `itemGrid` prop. */
 export interface ItemGridWidgetLayoutItemGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ItemGridWidgetLayoutItemGrid = ({ layout, tags }: ItemGridWidgetLayoutItemGridProps) => {
+export const ItemGridWidgetLayoutItemGrid = ({ layout }: ItemGridWidgetLayoutItemGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -35,7 +34,6 @@ export const ItemGridWidgetLayoutItemGrid = ({ layout, tags }: ItemGridWidgetLay
         >
             <Region
                 name="itemGrid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 3, width: '100%' }}
             />
         </ScrollArea>

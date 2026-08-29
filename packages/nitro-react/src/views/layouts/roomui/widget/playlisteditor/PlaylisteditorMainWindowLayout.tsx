@@ -21,7 +21,6 @@ export const PlaylisteditorMainWindowLayout = ({ layout, musicInventoryItemgrid,
             variant="0"
             id="playlist.editor"
             name="playlist.editor"
-            tags={[ 'PLAYLIST_EDITOR' ]}
             caption={t('playlist.editor.title')}
             tintColor="#418caf"
             onClose={onClose}
@@ -33,10 +32,7 @@ export const PlaylisteditorMainWindowLayout = ({ layout, musicInventoryItemgrid,
                     name="my_music_border"
                     layout={{ position: 'absolute', left: 0, width: 303, top: 0, height: 407 }}
                 >
-                    <PlaylisteditorMainWindowLayoutMusicInventoryItemgrid
-                        tags={[ 'MUSICINVENTORY' ]}
-                        {...musicInventoryItemgrid}
-                    />
+                    <PlaylisteditorMainWindowLayoutMusicInventoryItemgrid {...musicInventoryItemgrid} />
                     {/* <scrollbar_vertical> for music_inventory_itemgrid - rendered by that list's ScrollArea */}
                     <Border
                         variant="2"
@@ -91,10 +87,9 @@ export const PlaylisteditorMainWindowLayout = ({ layout, musicInventoryItemgrid,
 /** Named region `music_inventory_itemgrid` of PlaylisteditorMainWindowLayout - configured through the parent's `musicInventoryItemgrid` prop. */
 export interface PlaylisteditorMainWindowLayoutMusicInventoryItemgridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PlaylisteditorMainWindowLayoutMusicInventoryItemgrid = ({ layout, tags }: PlaylisteditorMainWindowLayoutMusicInventoryItemgridProps) => {
+export const PlaylisteditorMainWindowLayoutMusicInventoryItemgrid = ({ layout }: PlaylisteditorMainWindowLayoutMusicInventoryItemgridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -102,7 +97,6 @@ export const PlaylisteditorMainWindowLayoutMusicInventoryItemgrid = ({ layout, t
         >
             <Region
                 name="music_inventory_itemgrid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
             />
         </ScrollArea>
@@ -112,14 +106,12 @@ export const PlaylisteditorMainWindowLayoutMusicInventoryItemgrid = ({ layout, t
 /** Named region `preview_play_container` of PlaylisteditorMainWindowLayout - configured through the parent's `previewPlayContainer` prop. */
 export interface PlaylisteditorMainWindowLayoutPreviewPlayContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PlaylisteditorMainWindowLayoutPreviewPlayContainer = ({ layout, tags }: PlaylisteditorMainWindowLayoutPreviewPlayContainerProps) => {
+export const PlaylisteditorMainWindowLayoutPreviewPlayContainer = ({ layout }: PlaylisteditorMainWindowLayoutPreviewPlayContainerProps) => {
     return (
         <Region
             name="preview_play_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 278, top: 295, height: 110, ...layout }}
         />
     );
@@ -128,10 +120,9 @@ export const PlaylisteditorMainWindowLayoutPreviewPlayContainer = ({ layout, tag
 /** Named region `playlist_editor_itemlist` of PlaylisteditorMainWindowLayout - configured through the parent's `playlistEditorItemlist` prop. */
 export interface PlaylisteditorMainWindowLayoutPlaylistEditorItemlistProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PlaylisteditorMainWindowLayoutPlaylistEditorItemlist = ({ layout, tags }: PlaylisteditorMainWindowLayoutPlaylistEditorItemlistProps) => {
+export const PlaylisteditorMainWindowLayoutPlaylistEditorItemlist = ({ layout }: PlaylisteditorMainWindowLayoutPlaylistEditorItemlistProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -139,7 +130,6 @@ export const PlaylisteditorMainWindowLayoutPlaylistEditorItemlist = ({ layout, t
         >
             <Region
                 name="playlist_editor_itemlist"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -149,14 +139,12 @@ export const PlaylisteditorMainWindowLayoutPlaylistEditorItemlist = ({ layout, t
 /** Named region `now_playing_container` of PlaylisteditorMainWindowLayout - configured through the parent's `nowPlayingContainer` prop. */
 export interface PlaylisteditorMainWindowLayoutNowPlayingContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PlaylisteditorMainWindowLayoutNowPlayingContainer = ({ layout, tags }: PlaylisteditorMainWindowLayoutNowPlayingContainerProps) => {
+export const PlaylisteditorMainWindowLayoutNowPlayingContainer = ({ layout }: PlaylisteditorMainWindowLayoutNowPlayingContainerProps) => {
     return (
         <Region
             name="now_playing_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 261, top: 350, height: 56, ...layout }}
         />
     );

@@ -70,14 +70,12 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
 export interface PixelRemovalPromoLayoutCol1Props {
     layout?: BoxLayout;
     srcTeaserImage?: string;
-    tags?: string[];
 }
 
-export const PixelRemovalPromoLayoutCol1 = ({ layout, srcTeaserImage, tags }: PixelRemovalPromoLayoutCol1Props) => {
+export const PixelRemovalPromoLayoutCol1 = ({ layout, srcTeaserImage }: PixelRemovalPromoLayoutCol1Props) => {
     return (
         <Region
             name="col1"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 245, ...layout }}
         >
@@ -93,14 +91,12 @@ export const PixelRemovalPromoLayoutCol1 = ({ layout, srcTeaserImage, tags }: Pi
 /** Named region `spacing` of PixelRemovalPromoLayout - configured through the parent's `spacing` prop. */
 export interface PixelRemovalPromoLayoutSpacingProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PixelRemovalPromoLayoutSpacing = ({ layout, tags }: PixelRemovalPromoLayoutSpacingProps) => {
+export const PixelRemovalPromoLayoutSpacing = ({ layout }: PixelRemovalPromoLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 250, height: 6, flexShrink: 0, ...layout }}
         />

@@ -34,14 +34,12 @@ export const PremiumPurchaseConfirmationLayout = ({ buttons, content, layout, on
 /** Row template `spacing` of PremiumPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface PremiumPurchaseConfirmationLayoutSpacingItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutSpacingItem = ({ layout, tags }: PremiumPurchaseConfirmationLayoutSpacingItemProps) => {
+export const PremiumPurchaseConfirmationLayoutSpacingItem = ({ layout }: PremiumPurchaseConfirmationLayoutSpacingItemProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 30, height: 10, flexShrink: 0, ...layout }}
         />
     );
@@ -51,16 +49,14 @@ export const PremiumPurchaseConfirmationLayoutSpacingItem = ({ layout, tags }: P
 export interface PremiumPurchaseConfirmationLayoutDescriptionTxtItemProps {
     captionDescriptionTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutDescriptionTxtItem = ({ captionDescriptionTxt, layout, tags }: PremiumPurchaseConfirmationLayoutDescriptionTxtItemProps) => {
+export const PremiumPurchaseConfirmationLayoutDescriptionTxtItem = ({ captionDescriptionTxt, layout }: PremiumPurchaseConfirmationLayoutDescriptionTxtItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="description_txt"
-            tags={tags}
             layout={{ width: 220, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -74,14 +70,12 @@ export const PremiumPurchaseConfirmationLayoutDescriptionTxtItem = ({ captionDes
 /** Row template `spacing` of PremiumPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface PremiumPurchaseConfirmationLayoutSpacingItem2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutSpacingItem2 = ({ layout, tags }: PremiumPurchaseConfirmationLayoutSpacingItem2Props) => {
+export const PremiumPurchaseConfirmationLayoutSpacingItem2 = ({ layout }: PremiumPurchaseConfirmationLayoutSpacingItem2Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 30, height: 10, flexShrink: 0, ...layout }}
         />
     );
@@ -91,15 +85,13 @@ export const PremiumPurchaseConfirmationLayoutSpacingItem2 = ({ layout, tags }: 
 export interface PremiumPurchaseConfirmationLayoutBenefitBoostRowItemProps {
     captionBenefitBoostTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutBenefitBoostRowItem = ({ captionBenefitBoostTxt, layout, tags }: PremiumPurchaseConfirmationLayoutBenefitBoostRowItemProps) => {
+export const PremiumPurchaseConfirmationLayoutBenefitBoostRowItem = ({ captionBenefitBoostTxt, layout }: PremiumPurchaseConfirmationLayoutBenefitBoostRowItemProps) => {
     return (
         <Border
             variant="15"
             name="benefit_boost_row"
-            tags={tags}
             tintColor="#f3dcf7"
             layout={{ width: 220, height: 24, flexShrink: 0, ...layout }}
         >
@@ -121,17 +113,15 @@ export const PremiumPurchaseConfirmationLayoutBenefitBoostRowItem = ({ captionBe
 export interface PremiumPurchaseConfirmationLayoutBenefitRewardsRowItemProps {
     captionBenefitRewardsTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutBenefitRewardsRowItem = ({ captionBenefitRewardsTxt, layout, tags }: PremiumPurchaseConfirmationLayoutBenefitRewardsRowItemProps) => {
+export const PremiumPurchaseConfirmationLayoutBenefitRewardsRowItem = ({ captionBenefitRewardsTxt, layout }: PremiumPurchaseConfirmationLayoutBenefitRewardsRowItemProps) => {
     const t = useTranslation();
 
     return (
         <Border
             variant="15"
             name="benefit_rewards_row"
-            tags={tags}
             tintColor="#f3dcf7"
             layout={{ width: 220, height: 24, flexShrink: 0, ...layout }}
         >
@@ -153,15 +143,13 @@ export const PremiumPurchaseConfirmationLayoutBenefitRewardsRowItem = ({ caption
 export interface PremiumPurchaseConfirmationLayoutBenefitInstantPointsRowItemProps {
     captionBenefitInstantPointsTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutBenefitInstantPointsRowItem = ({ captionBenefitInstantPointsTxt, layout, tags }: PremiumPurchaseConfirmationLayoutBenefitInstantPointsRowItemProps) => {
+export const PremiumPurchaseConfirmationLayoutBenefitInstantPointsRowItem = ({ captionBenefitInstantPointsTxt, layout }: PremiumPurchaseConfirmationLayoutBenefitInstantPointsRowItemProps) => {
     return (
         <Border
             variant="15"
             name="benefit_instant_points_row"
-            tags={tags}
             tintColor="#f3dcf7"
             layout={{ width: 220, height: 24, flexShrink: 0, ...layout }}
         >
@@ -183,17 +171,15 @@ export const PremiumPurchaseConfirmationLayoutBenefitInstantPointsRowItem = ({ c
 export interface PremiumPurchaseConfirmationLayoutBenefitTasksRowItemProps {
     captionBenefitTasksTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutBenefitTasksRowItem = ({ captionBenefitTasksTxt, layout, tags }: PremiumPurchaseConfirmationLayoutBenefitTasksRowItemProps) => {
+export const PremiumPurchaseConfirmationLayoutBenefitTasksRowItem = ({ captionBenefitTasksTxt, layout }: PremiumPurchaseConfirmationLayoutBenefitTasksRowItemProps) => {
     const t = useTranslation();
 
     return (
         <Border
             variant="15"
             name="benefit_tasks_row"
-            tags={tags}
             tintColor="#f3dcf7"
             layout={{ width: 220, height: 24, flexShrink: 0, ...layout }}
         >
@@ -215,17 +201,15 @@ export const PremiumPurchaseConfirmationLayoutBenefitTasksRowItem = ({ captionBe
 export interface PremiumPurchaseConfirmationLayoutBenefitLevelsRowItemProps {
     captionBenefitLevelsTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutBenefitLevelsRowItem = ({ captionBenefitLevelsTxt, layout, tags }: PremiumPurchaseConfirmationLayoutBenefitLevelsRowItemProps) => {
+export const PremiumPurchaseConfirmationLayoutBenefitLevelsRowItem = ({ captionBenefitLevelsTxt, layout }: PremiumPurchaseConfirmationLayoutBenefitLevelsRowItemProps) => {
     const t = useTranslation();
 
     return (
         <Border
             variant="15"
             name="benefit_levels_row"
-            tags={tags}
             tintColor="#f3dcf7"
             layout={{ width: 220, height: 24, flexShrink: 0, ...layout }}
         >
@@ -247,14 +231,12 @@ export const PremiumPurchaseConfirmationLayoutBenefitLevelsRowItem = ({ captionB
 export interface PremiumPurchaseConfirmationLayoutBenefitsProps {
     itemsBenefits?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutBenefits = ({ itemsBenefits, layout, tags }: PremiumPurchaseConfirmationLayoutBenefitsProps) => {
+export const PremiumPurchaseConfirmationLayoutBenefits = ({ itemsBenefits, layout }: PremiumPurchaseConfirmationLayoutBenefitsProps) => {
     return (
         <Region
             name="benefits"
-            tags={tags}
             layout={{ position: 'absolute', left: 146, right: 0, top: 3, height: 205, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsBenefits ?? (
@@ -278,16 +260,14 @@ export interface PremiumPurchaseConfirmationLayoutTopBodyProps {
     benefits?: PremiumPurchaseConfirmationLayoutBenefitsProps;
     layout?: BoxLayout;
     srcPremiumIcon?: string;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutTopBody = ({ benefits, layout, srcPremiumIcon, tags }: PremiumPurchaseConfirmationLayoutTopBodyProps) => {
+export const PremiumPurchaseConfirmationLayoutTopBody = ({ benefits, layout, srcPremiumIcon }: PremiumPurchaseConfirmationLayoutTopBodyProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="top_body"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 366, top: 0, height: 208, ...layout }}
         >
             <Border
@@ -334,14 +314,12 @@ export const PremiumPurchaseConfirmationLayoutTopBody = ({ benefits, layout, src
 export interface PremiumPurchaseConfirmationLayoutPriceCreditsItemProps {
     captionPriceCredits?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutPriceCreditsItem = ({ captionPriceCredits, layout, tags }: PremiumPurchaseConfirmationLayoutPriceCreditsItemProps) => {
+export const PremiumPurchaseConfirmationLayoutPriceCreditsItem = ({ captionPriceCredits, layout }: PremiumPurchaseConfirmationLayoutPriceCreditsItemProps) => {
     return (
         <Region
             name="price_credits"
-            tags={tags}
             layout={{ width: 10, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionPriceCredits ?? '0'} />
@@ -352,15 +330,13 @@ export const PremiumPurchaseConfirmationLayoutPriceCreditsItem = ({ captionPrice
 /** Row template `credits_icon` of PremiumPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface PremiumPurchaseConfirmationLayoutCreditsIconItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutCreditsIconItem = ({ layout, tags }: PremiumPurchaseConfirmationLayoutCreditsIconItemProps) => {
+export const PremiumPurchaseConfirmationLayoutCreditsIconItem = ({ layout }: PremiumPurchaseConfirmationLayoutCreditsIconItemProps) => {
     return (
         <Icon
             variant="34"
             name="credits_icon"
-            tags={tags}
             layout={{ width: 22, height: 22, flexShrink: 0, ...layout }}
         />
     );
@@ -370,14 +346,12 @@ export const PremiumPurchaseConfirmationLayoutCreditsIconItem = ({ layout, tags 
 export interface PremiumPurchaseConfirmationLayoutPlusTxtItemProps {
     captionPlusTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutPlusTxtItem = ({ captionPlusTxt, layout, tags }: PremiumPurchaseConfirmationLayoutPlusTxtItemProps) => {
+export const PremiumPurchaseConfirmationLayoutPlusTxtItem = ({ captionPlusTxt, layout }: PremiumPurchaseConfirmationLayoutPlusTxtItemProps) => {
     return (
         <Region
             name="plus_txt"
-            tags={tags}
             layout={{ width: 11, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionPlusTxt ?? ' '} />
@@ -389,14 +363,12 @@ export const PremiumPurchaseConfirmationLayoutPlusTxtItem = ({ captionPlusTxt, l
 export interface PremiumPurchaseConfirmationLayoutPriceDiamondsItemProps {
     captionPriceDiamonds?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutPriceDiamondsItem = ({ captionPriceDiamonds, layout, tags }: PremiumPurchaseConfirmationLayoutPriceDiamondsItemProps) => {
+export const PremiumPurchaseConfirmationLayoutPriceDiamondsItem = ({ captionPriceDiamonds, layout }: PremiumPurchaseConfirmationLayoutPriceDiamondsItemProps) => {
     return (
         <Region
             name="price_diamonds"
-            tags={tags}
             layout={{ width: 10, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionPriceDiamonds ?? '0'} />
@@ -407,15 +379,13 @@ export const PremiumPurchaseConfirmationLayoutPriceDiamondsItem = ({ captionPric
 /** Row template `diamonds_icon` of PremiumPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface PremiumPurchaseConfirmationLayoutDiamondsIconItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutDiamondsIconItem = ({ layout, tags }: PremiumPurchaseConfirmationLayoutDiamondsIconItemProps) => {
+export const PremiumPurchaseConfirmationLayoutDiamondsIconItem = ({ layout }: PremiumPurchaseConfirmationLayoutDiamondsIconItemProps) => {
     return (
         <Icon
             variant="41"
             name="diamonds_icon"
-            tags={tags}
             layout={{ width: 22, height: 22, flexShrink: 0, ...layout }}
         />
     );
@@ -425,14 +395,12 @@ export const PremiumPurchaseConfirmationLayoutDiamondsIconItem = ({ layout, tags
 export interface PremiumPurchaseConfirmationLayoutPriceProps {
     itemsPrice?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutPrice = ({ itemsPrice, layout, tags }: PremiumPurchaseConfirmationLayoutPriceProps) => {
+export const PremiumPurchaseConfirmationLayoutPrice = ({ itemsPrice, layout }: PremiumPurchaseConfirmationLayoutPriceProps) => {
     return (
         <Region
             name="price"
-            tags={tags}
             layout={{ position: 'absolute', right: 15, width: 87, top: 8, height: 22, flexDirection: 'row', gap: 3, ...layout }}
         >
             {itemsPrice ?? (
@@ -452,17 +420,15 @@ export const PremiumPurchaseConfirmationLayoutPrice = ({ itemsPrice, layout, tag
 export interface PremiumPurchaseConfirmationLayoutContentProps {
     layout?: BoxLayout;
     price?: PremiumPurchaseConfirmationLayoutPriceProps;
-    tags?: string[];
     topBody?: PremiumPurchaseConfirmationLayoutTopBodyProps;
 }
 
-export const PremiumPurchaseConfirmationLayoutContent = ({ layout, price, tags, topBody }: PremiumPurchaseConfirmationLayoutContentProps) => {
+export const PremiumPurchaseConfirmationLayoutContent = ({ layout, price, topBody }: PremiumPurchaseConfirmationLayoutContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="content"
-            tags={tags}
             layout={{ position: 'absolute', left: 12, right: 12, top: 20, height: 268, ...layout }}
         >
             <PremiumPurchaseConfirmationLayoutTopBody {...topBody} />
@@ -488,17 +454,15 @@ export const PremiumPurchaseConfirmationLayoutContent = ({ layout, price, tags, 
 export interface PremiumPurchaseConfirmationLayoutCancelButtonItemProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutCancelButtonItem = ({ layout, onCancelButton, tags }: PremiumPurchaseConfirmationLayoutCancelButtonItemProps) => {
+export const PremiumPurchaseConfirmationLayoutCancelButtonItem = ({ layout, onCancelButton }: PremiumPurchaseConfirmationLayoutCancelButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="cancel_button"
-            tags={tags}
             onPointerTap={onCancelButton}
             textStyle="text-style-button-shiny-regular"
             layout={{ width: 110, height: 27, flexShrink: 0, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27, ...layout }}
@@ -512,17 +476,15 @@ export const PremiumPurchaseConfirmationLayoutCancelButtonItem = ({ layout, onCa
 export interface PremiumPurchaseConfirmationLayoutConfirmButtonItemProps {
     layout?: BoxLayout;
     onConfirmButton?: () => void;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutConfirmButtonItem = ({ layout, onConfirmButton, tags }: PremiumPurchaseConfirmationLayoutConfirmButtonItemProps) => {
+export const PremiumPurchaseConfirmationLayoutConfirmButtonItem = ({ layout, onConfirmButton }: PremiumPurchaseConfirmationLayoutConfirmButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="5"
             name="confirm_button"
-            tags={tags}
             tintColor="#b265ce"
             onPointerTap={onConfirmButton}
             textStyle="text-style-button-shiny-bold"
@@ -537,14 +499,12 @@ export const PremiumPurchaseConfirmationLayoutConfirmButtonItem = ({ layout, onC
 export interface PremiumPurchaseConfirmationLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PremiumPurchaseConfirmationLayoutButtons = ({ itemsButtons, layout, tags }: PremiumPurchaseConfirmationLayoutButtonsProps) => {
+export const PremiumPurchaseConfirmationLayoutButtons = ({ itemsButtons, layout }: PremiumPurchaseConfirmationLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ position: 'absolute', left: 12, right: 12, bottom: 36, minHeight: 27, flexDirection: 'row', gap: 146, ...layout }}
         >
             {itemsButtons ?? (

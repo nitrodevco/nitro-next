@@ -120,14 +120,12 @@ export const ClubCenterLayout = ({ basic, captionGiftInfo, captionGiftTitle, foo
 export interface ClubCenterLayoutHcBadgeContainerProps {
     layout?: BoxLayout;
     srcHcBadge?: string;
-    tags?: string[];
 }
 
-export const ClubCenterLayoutHcBadgeContainer = ({ layout, srcHcBadge, tags }: ClubCenterLayoutHcBadgeContainerProps) => {
+export const ClubCenterLayoutHcBadgeContainer = ({ layout, srcHcBadge }: ClubCenterLayoutHcBadgeContainerProps) => {
     return (
         <Region
             name="hc_badge_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 19, width: 50, top: 11, height: 50, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
@@ -145,14 +143,12 @@ export interface ClubCenterLayoutBasicProps {
     captionStatusTitle?: string;
     hcBadgeContainer?: ClubCenterLayoutHcBadgeContainerProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubCenterLayoutBasic = ({ captionStatusInfo, captionStatusTitle, hcBadgeContainer, layout, tags }: ClubCenterLayoutBasicProps) => {
+export const ClubCenterLayoutBasic = ({ captionStatusInfo, captionStatusTitle, hcBadgeContainer, layout }: ClubCenterLayoutBasicProps) => {
     return (
         <Region
             name="basic"
-            tags={tags}
             layout={{ width: 460, height: 75, flexShrink: 0, ...layout }}
         >
             <ClubCenterLayoutHcBadgeContainer {...hcBadgeContainer} />
@@ -187,16 +183,14 @@ export interface ClubCenterLayoutSpecialContentProps {
     captionSpecialTitle?: string;
     layout?: BoxLayout;
     onSpecialInfolink?: () => void;
-    tags?: string[];
 }
 
-export const ClubCenterLayoutSpecialContent = ({ captionSpecialInfo, captionSpecialInfolink, captionSpecialTitle, layout, onSpecialInfolink, tags }: ClubCenterLayoutSpecialContentProps) => {
+export const ClubCenterLayoutSpecialContent = ({ captionSpecialInfo, captionSpecialInfolink, captionSpecialTitle, layout, onSpecialInfolink }: ClubCenterLayoutSpecialContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="special_content"
-            tags={tags}
             layout={{ width: 420, height: 134, flexShrink: 0, ...layout }}
         >
             <Border
@@ -247,16 +241,14 @@ export interface ClubCenterLayoutFooterProps {
     layout?: BoxLayout;
     onGeneralInfolink?: () => void;
     srcHcCenterIllustration?: string;
-    tags?: string[];
 }
 
-export const ClubCenterLayoutFooter = ({ captionGeneralInfo, captionGeneralInfolink, captionGeneralTitle, layout, onGeneralInfolink, srcHcCenterIllustration, tags }: ClubCenterLayoutFooterProps) => {
+export const ClubCenterLayoutFooter = ({ captionGeneralInfo, captionGeneralInfolink, captionGeneralTitle, layout, onGeneralInfolink, srcHcCenterIllustration }: ClubCenterLayoutFooterProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="footer"
-            tags={tags}
             layout={{ width: 460, height: 139, flexShrink: 0, ...layout }}
         >
             <Region
@@ -310,16 +302,14 @@ export interface ClubCenterLayoutSpecialContentPostitProps {
     srcHcPostitBg?: string;
     srcSpecialAmountIcon?: string;
     srcSpecialTimeIcon?: string;
-    tags?: string[];
 }
 
-export const ClubCenterLayoutSpecialContentPostit = ({ captionSpecialAmountContent, captionSpecialAmountTitle, captionSpecialBreakdownLink, captionSpecialTimeContent, captionSpecialTimeTitle, layout, onSpecialBreakdownLink, srcHcPostitBg, srcSpecialAmountIcon, srcSpecialTimeIcon, tags }: ClubCenterLayoutSpecialContentPostitProps) => {
+export const ClubCenterLayoutSpecialContentPostit = ({ captionSpecialAmountContent, captionSpecialAmountTitle, captionSpecialBreakdownLink, captionSpecialTimeContent, captionSpecialTimeTitle, layout, onSpecialBreakdownLink, srcHcPostitBg, srcSpecialAmountIcon, srcSpecialTimeIcon }: ClubCenterLayoutSpecialContentPostitProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="special_content_postit"
-            tags={tags}
             layout={{ position: 'absolute', left: 218, width: 222, top: 204, height: 150, ...layout }}
         >
             <ThemeImage

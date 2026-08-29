@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Region, TextInput } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `redeemItemCodeWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -9,20 +10,18 @@ import { Border, BoxLayout, Button, Region, TextInput } from '#base/theme';
  * (LayoutFrontpageFeaturedLayout, LayoutFrontpage_1554Layout, LayoutFrontpage_1597Layout); each passes its own placement through `layout`.
  */
 /** Named region `redeemItemCodeWidget` of RedeemItemCodeWidget - configured through the parent's `redeemItemCodeWidget` prop. */
-export interface RedeemItemCodeWidgetProps {
+export interface RedeemItemCodeWidgetProps extends CatalogWidgetFlags {
     layout?: BoxLayout;
     onRedeem?: () => void;
-    tags?: string[];
 }
 
-export const RedeemItemCodeWidget = ({ layout, onRedeem, tags }: RedeemItemCodeWidgetProps) => {
+export const RedeemItemCodeWidget = ({ layout, onRedeem }: RedeemItemCodeWidgetProps) => {
     const t = useTranslation();
     const [ voucherCodeValue, setVoucherCodeValue ] = useState('');
 
     return (
         <Region
             name="redeemItemCodeWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Border

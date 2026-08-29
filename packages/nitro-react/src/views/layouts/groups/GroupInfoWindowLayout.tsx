@@ -31,14 +31,12 @@ export const GroupInfoWindowLayout = ({ groupCont, layout, onClose }: GroupInfoW
 /** Named region `group_cont` of GroupInfoWindowLayout - configured through the parent's `groupCont` prop. */
 export interface GroupInfoWindowLayoutGroupContProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GroupInfoWindowLayoutGroupCont = ({ layout, tags }: GroupInfoWindowLayoutGroupContProps) => {
+export const GroupInfoWindowLayoutGroupCont = ({ layout }: GroupInfoWindowLayoutGroupContProps) => {
     return (
         <Region
             name="group_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 343, top: 10, height: 214, ...layout }}
         />
     );

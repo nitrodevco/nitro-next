@@ -21,7 +21,6 @@ export const PlaylisteditorPlaylistSubwindowAddSongsLayout = ({ layout, srcAddSo
                 />
                 <ThemeImage
                     name="add_songs_icon_image"
-                    tags={[ 'ICON' ]}
                     src={srcAddSongsIconImage}
                     layout={{ position: 'absolute', left: 8, width: 46, top: 3, height: 46 }}
                 />

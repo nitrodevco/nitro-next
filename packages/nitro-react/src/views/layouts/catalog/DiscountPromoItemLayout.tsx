@@ -17,14 +17,12 @@ export const DiscountPromoItemLayout = ({ layout, promoContainer }: DiscountProm
 /** Named region `background` of DiscountPromoItemLayout - configured through the parent's `background` prop. */
 export interface DiscountPromoItemLayoutBackgroundProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const DiscountPromoItemLayoutBackground = ({ layout, tags }: DiscountPromoItemLayoutBackgroundProps) => {
+export const DiscountPromoItemLayoutBackground = ({ layout }: DiscountPromoItemLayoutBackgroundProps) => {
     return (
         <Region
             name="background"
-            tags={tags}
             backgroundColor="#009100"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20, ...layout }}
         />
@@ -35,14 +33,12 @@ export const DiscountPromoItemLayoutBackground = ({ layout, tags }: DiscountProm
 export interface DiscountPromoItemLayoutClickRegionProps {
     layout?: BoxLayout;
     onClickRegion?: () => void;
-    tags?: string[];
 }
 
-export const DiscountPromoItemLayoutClickRegion = ({ layout, onClickRegion, tags }: DiscountPromoItemLayoutClickRegionProps) => {
+export const DiscountPromoItemLayoutClickRegion = ({ layout, onClickRegion }: DiscountPromoItemLayoutClickRegionProps) => {
     return (
         <Region
             name="click_region"
-            tags={tags}
             onPointerTap={onClickRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 25, width: 152, top: 0, height: 20, ...layout }}
@@ -58,14 +54,12 @@ export interface DiscountPromoItemLayoutPromoContainerProps {
     clickRegion?: DiscountPromoItemLayoutClickRegionProps;
     layout?: BoxLayout;
     srcIconBitmap?: string;
-    tags?: string[];
 }
 
-export const DiscountPromoItemLayoutPromoContainer = ({ background, captionPromoText, captionPromoTextEffect, clickRegion, layout, srcIconBitmap, tags }: DiscountPromoItemLayoutPromoContainerProps) => {
+export const DiscountPromoItemLayoutPromoContainer = ({ background, captionPromoText, captionPromoTextEffect, clickRegion, layout, srcIconBitmap }: DiscountPromoItemLayoutPromoContainerProps) => {
     return (
         <Region
             name="promo_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 20, minHeight: 20, maxHeight: 20, ...layout }}
         >
             <DiscountPromoItemLayoutBackground {...background} />

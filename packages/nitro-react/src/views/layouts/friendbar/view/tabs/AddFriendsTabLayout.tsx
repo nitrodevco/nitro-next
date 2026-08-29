@@ -31,16 +31,14 @@ export interface AddFriendsTabLayoutHeaderItemProps {
     layout?: BoxLayout;
     onHeader?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const AddFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeader, srcIcon, tags }: AddFriendsTabLayoutHeaderItemProps) => {
+export const AddFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeader, srcIcon }: AddFriendsTabLayoutHeaderItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             onPointerTap={onHeader}
             cursor="pointer"
             layout={{ width: 112, height: 31, flexShrink: 0, ...layout }}
@@ -52,7 +50,6 @@ export const AddFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeader, 
             />
             <Region
                 name="title"
-                tags={[ 'label' ]}
                 layout={{ position: 'absolute', left: 29, width: 77, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -69,16 +66,14 @@ export const AddFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeader, 
 export interface AddFriendsTabLayoutTextItemProps {
     captionText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AddFriendsTabLayoutTextItem = ({ captionText, layout, tags }: AddFriendsTabLayoutTextItemProps) => {
+export const AddFriendsTabLayoutTextItem = ({ captionText, layout }: AddFriendsTabLayoutTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="text"
-            tags={tags}
             layout={{ width: 112, height: 62, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
             backgroundColor="#ffffff"
         >
@@ -93,14 +88,12 @@ export const AddFriendsTabLayoutTextItem = ({ captionText, layout, tags }: AddFr
 /** Row template `spacer` of AddFriendsTabLayout - pass real rows through its `items…` slot. */
 export interface AddFriendsTabLayoutSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AddFriendsTabLayoutSpacerItem = ({ layout, tags }: AddFriendsTabLayoutSpacerItemProps) => {
+export const AddFriendsTabLayoutSpacerItem = ({ layout }: AddFriendsTabLayoutSpacerItemProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ width: 1, height: 6, flexShrink: 0, ...layout }}
         />
     );
@@ -110,17 +103,15 @@ export const AddFriendsTabLayoutSpacerItem = ({ layout, tags }: AddFriendsTabLay
 export interface AddFriendsTabLayoutButtonItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const AddFriendsTabLayoutButtonItem = ({ layout, onButton, tags }: AddFriendsTabLayoutButtonItemProps) => {
+export const AddFriendsTabLayoutButtonItem = ({ layout, onButton }: AddFriendsTabLayoutButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="3"
             name="button"
-            tags={tags}
             onPointerTap={onButton}
             layout={{ width: 111, height: 32, flexShrink: 0, minWidth: 111, maxWidth: 111, ...layout }}
         >
@@ -133,14 +124,12 @@ export const AddFriendsTabLayoutButtonItem = ({ layout, onButton, tags }: AddFri
 export interface AddFriendsTabLayoutTabContentProps {
     itemsTabContent?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AddFriendsTabLayoutTabContent = ({ itemsTabContent, layout, tags }: AddFriendsTabLayoutTabContentProps) => {
+export const AddFriendsTabLayoutTabContent = ({ itemsTabContent, layout }: AddFriendsTabLayoutTabContentProps) => {
     return (
         <Region
             name="tab_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 140, minHeight: 40, flexDirection: 'column', ...layout }}
         >
             {itemsTabContent ?? (

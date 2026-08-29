@@ -17,20 +17,12 @@ export const IlluminaLightFrameModalLayout = ({ captionHeaderTitleText, contentA
         >
             <Border
                 variant="101"
-                tags={[ '_INTERNAL', '_EXCLUDE' ]}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 40, bottom: 0 }}
             />
-            <IlluminaLightFrameModalLayoutContentArea
-                tags={[ '_CONTENT', '_INTERNAL', '_EXCLUDE' ]}
-                {...contentArea}
-            />
-            <IlluminaLightFrameModalLayoutTitlebar
-                tags={[ '_EXCLUDE', '_INTERNAL' ]}
-                {...titlebar}
-            />
+            <IlluminaLightFrameModalLayoutContentArea {...contentArea} />
+            <IlluminaLightFrameModalLayoutTitlebar {...titlebar} />
             <Region
                 name="header_title_text"
-                tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL' ]}
                 layout={{ position: 'absolute', left: 8, width: 20, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -41,13 +33,11 @@ export const IlluminaLightFrameModalLayout = ({ captionHeaderTitleText, contentA
             <CloseButton
                 variant="100"
                 name="header_button_close"
-                tags={[ '_EXCLUDE', '_INTERNAL', 'close' ]}
                 onPointerTap={onHeaderButtonClose}
                 layout={{ position: 'absolute', right: 8, width: 20, top: 49, height: 20 }}
             />
             <Scaler
                 name="_FRAME_SCALER"
-                tags={[ '_SCALER', '_EXCLUDE', '_INTERNAL' ]}
                 layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 10 }}
             />
         </Region>
@@ -57,14 +47,12 @@ export const IlluminaLightFrameModalLayout = ({ captionHeaderTitleText, contentA
 /** Named region `content_area` of IlluminaLightFrameModalLayout - configured through the parent's `contentArea` prop. */
 export interface IlluminaLightFrameModalLayoutContentAreaProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IlluminaLightFrameModalLayoutContentArea = ({ layout, tags }: IlluminaLightFrameModalLayoutContentAreaProps) => {
+export const IlluminaLightFrameModalLayoutContentArea = ({ layout }: IlluminaLightFrameModalLayoutContentAreaProps) => {
     return (
         <Region
             name="content_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, right: 1, top: 70, bottom: -9, ...layout }}
         />
     );
@@ -74,14 +62,12 @@ export const IlluminaLightFrameModalLayoutContentArea = ({ layout, tags }: Illum
 export interface IlluminaLightFrameModalLayoutTitlebarProps {
     layout?: BoxLayout;
     onTitlebar?: () => void;
-    tags?: string[];
 }
 
-export const IlluminaLightFrameModalLayoutTitlebar = ({ layout, onTitlebar, tags }: IlluminaLightFrameModalLayoutTitlebarProps) => {
+export const IlluminaLightFrameModalLayoutTitlebar = ({ layout, onTitlebar }: IlluminaLightFrameModalLayoutTitlebarProps) => {
     return (
         <Region
             name="titlebar"
-            tags={tags}
             onPointerTap={onTitlebar}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 40, height: 30, ...layout }}

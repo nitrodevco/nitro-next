@@ -31,14 +31,12 @@ export const AvatarEditorFrameLayout = ({ layout, maincontent, onClose }: Avatar
 /** Named region `maincontent` of AvatarEditorFrameLayout - configured through the parent's `maincontent` prop. */
 export interface AvatarEditorFrameLayoutMaincontentProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AvatarEditorFrameLayoutMaincontent = ({ layout, tags }: AvatarEditorFrameLayoutMaincontentProps) => {
+export const AvatarEditorFrameLayoutMaincontent = ({ layout }: AvatarEditorFrameLayoutMaincontentProps) => {
     return (
         <Region
             name="maincontent"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 33, bottom: 2, ...layout }}
         />
     );

@@ -1,4 +1,5 @@
 import { BoxLayout, ContainerButton, Icon, Region, ThemeImage } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `trophyWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -6,19 +7,17 @@ import { BoxLayout, ContainerButton, Icon, Region, ThemeImage } from '#base/them
  * (LayoutTrophies_1610Layout); each passes its own placement through `layout`.
  */
 /** Named region `trophyWidget` of TrophyWidget3 - configured through the parent's `trophyWidget` prop. */
-export interface TrophyWidget3Props {
+export interface TrophyWidget3Props extends CatalogWidgetFlags {
     layout?: BoxLayout;
     onCtlgNextmodelButton?: () => void;
     onCtlgPrevmodelButton?: () => void;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const TrophyWidget3 = ({ layout, onCtlgNextmodelButton, onCtlgPrevmodelButton, srcCtlgTeaserimg1, tags }: TrophyWidget3Props) => {
+export const TrophyWidget3 = ({ layout, onCtlgNextmodelButton, onCtlgPrevmodelButton, srcCtlgTeaserimg1 }: TrophyWidget3Props) => {
     return (
         <Region
             name="trophyWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <ThemeImage

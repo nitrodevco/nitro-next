@@ -75,14 +75,12 @@ export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSett
 /** Named region `line` of MeMenuSettingsMenu_1256Layout - configured through the parent's `line` prop. */
 export interface MeMenuSettingsMenu_1256LayoutLineProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MeMenuSettingsMenu_1256LayoutLine = ({ layout, tags }: MeMenuSettingsMenu_1256LayoutLineProps) => {
+export const MeMenuSettingsMenu_1256LayoutLine = ({ layout }: MeMenuSettingsMenu_1256LayoutLineProps) => {
     return (
         <Region
             name="line"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 160, top: 22, height: 1, ...layout }}
         />
     );

@@ -13,7 +13,6 @@ export const IlluminaLightDropmenuLayout = ({ captionDROPLISTTITLETEXT, dROPLIST
         <Region layout={{ position: 'relative', width: 40, height: 22, ...layout }}>
             <Region
                 name="_DROPLIST_TITLETEXT"
-                tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
                 layout={{ position: 'absolute', left: 10, right: 20, top: 3, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -21,14 +20,8 @@ export const IlluminaLightDropmenuLayout = ({ captionDROPLISTTITLETEXT, dROPLIST
                     textStyle="text-style-il-regular"
                 />
             </Region>
-            <IlluminaLightDropmenuLayoutDROPLISTITEMLIST
-                tags={[ '_EXCLUDE', 'list' ]}
-                {...dROPLISTITEMLIST}
-            />
-            <IlluminaLightDropmenuLayoutDROPLISTREGION
-                tags={[ '_EXCLUDE', '_INTERNAL' ]}
-                {...dROPLISTREGION}
-            />
+            <IlluminaLightDropmenuLayoutDROPLISTITEMLIST {...dROPLISTITEMLIST} />
+            <IlluminaLightDropmenuLayoutDROPLISTREGION {...dROPLISTREGION} />
         </Region>
     );
 };
@@ -36,10 +29,9 @@ export const IlluminaLightDropmenuLayout = ({ captionDROPLISTTITLETEXT, dROPLIST
 /** Named region `_DROPLIST_ITEMLIST` of IlluminaLightDropmenuLayout - configured through the parent's `dROPLISTITEMLIST` prop. */
 export interface IlluminaLightDropmenuLayoutDROPLISTITEMLISTProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IlluminaLightDropmenuLayoutDROPLISTITEMLIST = ({ layout, tags }: IlluminaLightDropmenuLayoutDROPLISTITEMLISTProps) => {
+export const IlluminaLightDropmenuLayoutDROPLISTITEMLIST = ({ layout }: IlluminaLightDropmenuLayoutDROPLISTITEMLISTProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -47,7 +39,6 @@ export const IlluminaLightDropmenuLayoutDROPLISTITEMLIST = ({ layout, tags }: Il
         >
             <Region
                 name="_DROPLIST_ITEMLIST"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -58,14 +49,12 @@ export const IlluminaLightDropmenuLayoutDROPLISTITEMLIST = ({ layout, tags }: Il
 export interface IlluminaLightDropmenuLayoutDROPLISTREGIONProps {
     layout?: BoxLayout;
     onDROPLISTREGION?: () => void;
-    tags?: string[];
 }
 
-export const IlluminaLightDropmenuLayoutDROPLISTREGION = ({ layout, onDROPLISTREGION, tags }: IlluminaLightDropmenuLayoutDROPLISTREGIONProps) => {
+export const IlluminaLightDropmenuLayoutDROPLISTREGION = ({ layout, onDROPLISTREGION }: IlluminaLightDropmenuLayoutDROPLISTREGIONProps) => {
     return (
         <Region
             name="_DROPLIST_REGION"
-            tags={tags}
             onPointerTap={onDROPLISTREGION}
             cursor="pointer"
             layout={{ position: 'absolute', left: 6, right: 6, top: 2, height: 18, ...layout }}

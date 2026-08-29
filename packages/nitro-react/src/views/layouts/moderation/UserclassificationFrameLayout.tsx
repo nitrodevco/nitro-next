@@ -31,14 +31,12 @@ export interface UserclassificationFrameLayoutClassificationrowItemProps {
     captionUserNameTxt?: string;
     captionVisitRoomTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserclassificationFrameLayoutClassificationrowItem = ({ captionUserClassificationTxt, captionUserNameTxt, captionVisitRoomTxt, layout, tags }: UserclassificationFrameLayoutClassificationrowItemProps) => {
+export const UserclassificationFrameLayoutClassificationrowItem = ({ captionUserClassificationTxt, captionUserNameTxt, captionVisitRoomTxt, layout }: UserclassificationFrameLayoutClassificationrowItemProps) => {
     return (
         <Region
             name="classificationrow"
-            tags={tags}
             layout={{ width: 263, height: 14, flexShrink: 0, ...layout }}
         >
             <Region
@@ -67,10 +65,9 @@ export const UserclassificationFrameLayoutClassificationrowItem = ({ captionUser
 export interface UserclassificationFrameLayoutUserclassificationListProps {
     itemsUserclassificationList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserclassificationFrameLayoutUserclassificationList = ({ itemsUserclassificationList, layout, tags }: UserclassificationFrameLayoutUserclassificationListProps) => {
+export const UserclassificationFrameLayoutUserclassificationList = ({ itemsUserclassificationList, layout }: UserclassificationFrameLayoutUserclassificationListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -78,7 +75,6 @@ export const UserclassificationFrameLayoutUserclassificationList = ({ itemsUserc
         >
             <Region
                 name="userclassification_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsUserclassificationList ?? (
@@ -92,15 +88,13 @@ export const UserclassificationFrameLayoutUserclassificationList = ({ itemsUserc
 /** Named region `classifications_cont` of UserclassificationFrameLayout - configured through the parent's `classificationsCont` prop. */
 export interface UserclassificationFrameLayoutClassificationsContProps {
     layout?: BoxLayout;
-    tags?: string[];
     userclassificationList?: UserclassificationFrameLayoutUserclassificationListProps;
 }
 
-export const UserclassificationFrameLayoutClassificationsCont = ({ layout, tags, userclassificationList }: UserclassificationFrameLayoutClassificationsContProps) => {
+export const UserclassificationFrameLayoutClassificationsCont = ({ layout, userclassificationList }: UserclassificationFrameLayoutClassificationsContProps) => {
     return (
         <Region
             name="classifications_cont"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, ...layout }}
         >

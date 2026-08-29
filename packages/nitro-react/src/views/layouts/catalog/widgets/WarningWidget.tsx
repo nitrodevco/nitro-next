@@ -1,5 +1,6 @@
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `warningWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -7,19 +8,17 @@ import { BoxLayout, Region, ThemeText } from '#base/theme';
  * (LayoutGuildForumLayout); each passes its own placement through `layout`.
  */
 /** Named region `warningWidget` of WarningWidget - configured through the parent's `warningWidget` prop. */
-export interface WarningWidgetProps {
+export interface WarningWidgetProps extends CatalogWidgetFlags {
     captionWarningText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WarningWidget = ({ captionWarningText, layout, tags }: WarningWidgetProps) => {
+export const WarningWidget = ({ captionWarningText, layout }: WarningWidgetProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="warningWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Region

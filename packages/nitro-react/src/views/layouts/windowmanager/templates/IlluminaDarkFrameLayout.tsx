@@ -15,17 +15,10 @@ export const IlluminaDarkFrameLayout = ({ captionHeaderTitleText, contentArea, l
             dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.35, blur: 20 }}
             layout={{ position: 'relative', width: 50, height: 50, ...layout }}
         >
-            <IlluminaDarkFrameLayoutContentArea
-                tags={[ '_CONTENT', '_INTERNAL', '_EXCLUDE' ]}
-                {...contentArea}
-            />
-            <IlluminaDarkFrameLayoutTitlebar
-                tags={[ '_EXCLUDE', '_INTERNAL' ]}
-                {...titlebar}
-            />
+            <IlluminaDarkFrameLayoutContentArea {...contentArea} />
+            <IlluminaDarkFrameLayoutTitlebar {...titlebar} />
             <Region
                 name="header_title_text"
-                tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL' ]}
                 layout={{ position: 'absolute', left: 8, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -36,13 +29,11 @@ export const IlluminaDarkFrameLayout = ({ captionHeaderTitleText, contentArea, l
             <CloseButton
                 variant="100"
                 name="header_button_close"
-                tags={[ '_EXCLUDE', '_INTERNAL', 'close' ]}
                 onPointerTap={onHeaderButtonClose}
                 layout={{ position: 'absolute', right: 8, width: 20, top: 9, height: 20 }}
             />
             <Scaler
                 name="_FRAME_SCALER"
-                tags={[ '_SCALER', '_EXCLUDE', '_INTERNAL' ]}
                 layout={{ position: 'absolute', right: -5, width: 20, bottom: 5, height: 10 }}
             />
         </Region>
@@ -52,14 +43,12 @@ export const IlluminaDarkFrameLayout = ({ captionHeaderTitleText, contentArea, l
 /** Named region `content_area` of IlluminaDarkFrameLayout - configured through the parent's `contentArea` prop. */
 export interface IlluminaDarkFrameLayoutContentAreaProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IlluminaDarkFrameLayoutContentArea = ({ layout, tags }: IlluminaDarkFrameLayoutContentAreaProps) => {
+export const IlluminaDarkFrameLayoutContentArea = ({ layout }: IlluminaDarkFrameLayoutContentAreaProps) => {
     return (
         <Region
             name="content_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, right: 1, top: 30, bottom: 1, ...layout }}
         />
     );
@@ -69,14 +58,12 @@ export const IlluminaDarkFrameLayoutContentArea = ({ layout, tags }: IlluminaDar
 export interface IlluminaDarkFrameLayoutTitlebarProps {
     layout?: BoxLayout;
     onTitlebar?: () => void;
-    tags?: string[];
 }
 
-export const IlluminaDarkFrameLayoutTitlebar = ({ layout, onTitlebar, tags }: IlluminaDarkFrameLayoutTitlebarProps) => {
+export const IlluminaDarkFrameLayoutTitlebar = ({ layout, onTitlebar }: IlluminaDarkFrameLayoutTitlebarProps) => {
     return (
         <Region
             name="titlebar"
-            tags={tags}
             onPointerTap={onTitlebar}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30, ...layout }}

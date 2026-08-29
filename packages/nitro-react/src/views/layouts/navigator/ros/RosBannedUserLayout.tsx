@@ -19,14 +19,12 @@ export const RosBannedUserLayout = ({ layout, userContainer }: RosBannedUserLayo
 export interface RosBannedUserLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
-    tags?: string[];
 }
 
-export const RosBannedUserLayoutBgRegion = ({ layout, onBgRegion, tags }: RosBannedUserLayoutBgRegionProps) => {
+export const RosBannedUserLayoutBgRegion = ({ layout, onBgRegion }: RosBannedUserLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 111, top: 0, height: 20, ...layout }}
@@ -38,16 +36,14 @@ export const RosBannedUserLayoutBgRegion = ({ layout, onBgRegion, tags }: RosBan
 export interface RosBannedUserLayoutUserInfoRegionProps {
     layout?: BoxLayout;
     onUserInfoRegion?: () => void;
-    tags?: string[];
 }
 
-export const RosBannedUserLayoutUserInfoRegion = ({ layout, onUserInfoRegion, tags }: RosBannedUserLayoutUserInfoRegionProps) => {
+export const RosBannedUserLayoutUserInfoRegion = ({ layout, onUserInfoRegion }: RosBannedUserLayoutUserInfoRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_info_region"
-            tags={tags}
             tooltip={t('group.members.showinfo')}
             onPointerTap={onUserInfoRegion}
             cursor="pointer"
@@ -72,15 +68,13 @@ export interface RosBannedUserLayoutUserContainerProps {
     bgRegion?: RosBannedUserLayoutBgRegionProps;
     captionUserNameTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
     userInfoRegion?: RosBannedUserLayoutUserInfoRegionProps;
 }
 
-export const RosBannedUserLayoutUserContainer = ({ bgRegion, captionUserNameTxt, layout, tags, userInfoRegion }: RosBannedUserLayoutUserContainerProps) => {
+export const RosBannedUserLayoutUserContainer = ({ bgRegion, captionUserNameTxt, layout, userInfoRegion }: RosBannedUserLayoutUserContainerProps) => {
     return (
         <Region
             name="user_container"
-            tags={tags}
             backgroundColor="#cc0000"
             layout={{ position: 'absolute', left: 0, width: 111, top: 0, height: 20, ...layout }}
         >

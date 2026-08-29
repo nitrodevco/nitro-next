@@ -15,7 +15,6 @@ export const RoomToolsHistoryItemLayout = ({ captionRoomName, layout }: RoomTool
             >
                 <Region
                     name="room_name"
-                    tags={[ '#icon' ]}
                     layout={{ position: 'absolute', left: 3, width: 145, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText

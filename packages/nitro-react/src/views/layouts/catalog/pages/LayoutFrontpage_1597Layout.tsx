@@ -23,16 +23,14 @@ export interface LayoutFrontpage_1597LayoutCtlgFrontpage4Props {
     layout?: BoxLayout;
     redeemItemCodeWidget?: RedeemItemCodeWidgetProps;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const LayoutFrontpage_1597LayoutCtlgFrontpage4 = ({ captionCtlgTxt1, captionCtlgTxt2, layout, redeemItemCodeWidget, srcCtlgTeaserimg1, tags }: LayoutFrontpage_1597LayoutCtlgFrontpage4Props) => {
+export const LayoutFrontpage_1597LayoutCtlgFrontpage4 = ({ captionCtlgTxt1, captionCtlgTxt2, layout, redeemItemCodeWidget, srcCtlgTeaserimg1 }: LayoutFrontpage_1597LayoutCtlgFrontpage4Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_frontpage4"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <ThemeImage

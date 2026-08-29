@@ -51,14 +51,12 @@ export interface BuilderWidgetLayoutErrorContainerProps {
     captionErrorMessage?: string;
     layout?: BoxLayout;
     srcErrorIcon?: string;
-    tags?: string[];
 }
 
-export const BuilderWidgetLayoutErrorContainer = ({ captionErrorMessage, layout, srcErrorIcon, tags }: BuilderWidgetLayoutErrorContainerProps) => {
+export const BuilderWidgetLayoutErrorContainer = ({ captionErrorMessage, layout, srcErrorIcon }: BuilderWidgetLayoutErrorContainerProps) => {
     return (
         <Region
             name="error_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 25, ...layout }}
         >
             <Border

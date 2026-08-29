@@ -19,14 +19,12 @@ export const MessageListItemLayout = ({ containerLayer, layout }: MessageListIte
 export interface MessageListItemLayoutMessageTextContainerProps {
     captionMessageText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MessageListItemLayoutMessageTextContainer = ({ captionMessageText, layout, tags }: MessageListItemLayoutMessageTextContainerProps) => {
+export const MessageListItemLayoutMessageTextContainer = ({ captionMessageText, layout }: MessageListItemLayoutMessageTextContainerProps) => {
     return (
         <Region
             name="message_text_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 130, right: 0, top: 0, height: 100, minHeight: 100, ...layout }}
         >
             <Region
@@ -48,14 +46,12 @@ export interface MessageListItemLayoutAvatarImageProps {
     captionAuthorPostCount?: string;
     layout?: BoxLayout;
     onAvatarImage?: () => void;
-    tags?: string[];
 }
 
-export const MessageListItemLayoutAvatarImage = ({ captionAuthor, captionAuthorPostCount, layout, onAvatarImage, tags }: MessageListItemLayoutAvatarImageProps) => {
+export const MessageListItemLayoutAvatarImage = ({ captionAuthor, captionAuthorPostCount, layout, onAvatarImage }: MessageListItemLayoutAvatarImageProps) => {
     return (
         <Region
             name="avatar_image"
-            tags={tags}
             backgroundColor="#c7eff8"
             onPointerTap={onAvatarImage}
             cursor="pointer"
@@ -96,14 +92,12 @@ export interface MessageListItemLayoutMsgContainerProps {
     avatarImage?: MessageListItemLayoutAvatarImageProps;
     layout?: BoxLayout;
     messageTextContainer?: MessageListItemLayoutMessageTextContainerProps;
-    tags?: string[];
 }
 
-export const MessageListItemLayoutMsgContainer = ({ avatarImage, layout, messageTextContainer, tags }: MessageListItemLayoutMsgContainerProps) => {
+export const MessageListItemLayoutMsgContainer = ({ avatarImage, layout, messageTextContainer }: MessageListItemLayoutMsgContainerProps) => {
     return (
         <Region
             name="msg_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 26, bottom: 0, ...layout }}
         >
             <MessageListItemLayoutMessageTextContainer {...messageTextContainer} />
@@ -117,14 +111,12 @@ export interface MessageListItemLayoutDeleteMessageProps {
     layout?: BoxLayout;
     onDeleteMessage?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const MessageListItemLayoutDeleteMessage = ({ layout, onDeleteMessage, srcIcon, tags }: MessageListItemLayoutDeleteMessageProps) => {
+export const MessageListItemLayoutDeleteMessage = ({ layout, onDeleteMessage, srcIcon }: MessageListItemLayoutDeleteMessageProps) => {
     return (
         <Region
             name="delete_message"
-            tags={tags}
             backgroundColor="#de4537"
             onPointerTap={onDeleteMessage}
             cursor="pointer"
@@ -144,14 +136,12 @@ export interface MessageListItemLayoutReportMessageProps {
     layout?: BoxLayout;
     onReportMessage?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const MessageListItemLayoutReportMessage = ({ layout, onReportMessage, srcIcon, tags }: MessageListItemLayoutReportMessageProps) => {
+export const MessageListItemLayoutReportMessage = ({ layout, onReportMessage, srcIcon }: MessageListItemLayoutReportMessageProps) => {
     return (
         <Region
             name="report_message"
-            tags={tags}
             backgroundColor="#ff9c65"
             onPointerTap={onReportMessage}
             cursor="pointer"
@@ -171,14 +161,12 @@ export interface MessageListItemLayoutReplyMessageProps {
     layout?: BoxLayout;
     onReplyMessage?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const MessageListItemLayoutReplyMessage = ({ layout, onReplyMessage, srcIcon, tags }: MessageListItemLayoutReplyMessageProps) => {
+export const MessageListItemLayoutReplyMessage = ({ layout, onReplyMessage, srcIcon }: MessageListItemLayoutReplyMessageProps) => {
     return (
         <Region
             name="reply_message"
-            tags={tags}
             backgroundColor="#45a3d9"
             onPointerTap={onReplyMessage}
             cursor="pointer"
@@ -201,14 +189,12 @@ export interface MessageListItemLayoutTextsContainerProps {
     layout?: BoxLayout;
     replyMessage?: MessageListItemLayoutReplyMessageProps;
     reportMessage?: MessageListItemLayoutReportMessageProps;
-    tags?: string[];
 }
 
-export const MessageListItemLayoutTextsContainer = ({ captionDate, captionReplyNum, deleteMessage, layout, replyMessage, reportMessage, tags }: MessageListItemLayoutTextsContainerProps) => {
+export const MessageListItemLayoutTextsContainer = ({ captionDate, captionReplyNum, deleteMessage, layout, replyMessage, reportMessage }: MessageListItemLayoutTextsContainerProps) => {
     return (
         <Region
             name="texts_container"
-            tags={tags}
             backgroundColor="#227aad"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26, ...layout }}
         >
@@ -243,15 +229,13 @@ export const MessageListItemLayoutTextsContainer = ({ captionDate, captionReplyN
 export interface MessageListItemLayoutContainerLayerProps {
     layout?: BoxLayout;
     msgContainer?: MessageListItemLayoutMsgContainerProps;
-    tags?: string[];
     textsContainer?: MessageListItemLayoutTextsContainerProps;
 }
 
-export const MessageListItemLayoutContainerLayer = ({ layout, msgContainer, tags, textsContainer }: MessageListItemLayoutContainerLayerProps) => {
+export const MessageListItemLayoutContainerLayer = ({ layout, msgContainer, textsContainer }: MessageListItemLayoutContainerLayerProps) => {
     return (
         <Region
             name="container_layer"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 670, top: 0, height: 126, minWidth: 0, minHeight: 0, ...layout }}
         >
             <MessageListItemLayoutMsgContainer {...msgContainer} />

@@ -69,14 +69,12 @@ export const UseProductControllerPlantSeedLayout = ({ cancelText, captionDescrip
 export interface UseProductControllerPlantSeedLayoutCancelTextProps {
     layout?: BoxLayout;
     onCancelText?: () => void;
-    tags?: string[];
 }
 
-export const UseProductControllerPlantSeedLayoutCancelText = ({ layout, onCancelText, tags }: UseProductControllerPlantSeedLayoutCancelTextProps) => {
+export const UseProductControllerPlantSeedLayoutCancelText = ({ layout, onCancelText }: UseProductControllerPlantSeedLayoutCancelTextProps) => {
     return (
         <Region
             name="cancel_text"
-            tags={tags}
             onPointerTap={onCancelText}
             cursor="pointer"
             layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25, ...layout }}

@@ -17,7 +17,6 @@ export const NotificationWiredLayout = ({ captionDescription, header, layout, on
         <Region layout={{ position: 'relative', width: 190, height: 60, ...layout }}>
             <Border
                 variant="2"
-                tags={[ 'border' ]}
                 tintColor="#355477"
                 layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 60 }}
             >
@@ -29,7 +28,6 @@ export const NotificationWiredLayout = ({ captionDescription, header, layout, on
                 <Region layout={{ position: 'absolute', left: 0, width: 190, top: 31, height: 23, flexDirection: 'column' }}>
                     <Region
                         name="description"
-                        tags={[ 'notification_text' ]}
                         layout={{ width: 174, height: 16, flexShrink: 0, minWidth: 174, maxWidth: 174, minHeight: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
@@ -45,7 +43,6 @@ export const NotificationWiredLayout = ({ captionDescription, header, layout, on
                         <Button
                             variant="106"
                             name="button"
-                            tags={[ 'button' ]}
                             tintColor="#6e8cb7"
                             onPointerTap={onButton}
                             textStyle="text-style-il-button"
@@ -56,7 +53,6 @@ export const NotificationWiredLayout = ({ captionDescription, header, layout, on
                     </Region>
                 </Region>
                 <ThemeImage
-                    tags={[ 'notification_icon' ]}
                     src={undefined}
                     layout={{ position: 'absolute', left: 7, width: 50, top: 30, height: 50 }}
                 />
@@ -68,16 +64,14 @@ export const NotificationWiredLayout = ({ captionDescription, header, layout, on
 /** Named region `header` of NotificationWiredLayout - configured through the parent's `header` prop. */
 export interface NotificationWiredLayoutHeaderProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NotificationWiredLayoutHeader = ({ layout, tags }: NotificationWiredLayoutHeaderProps) => {
+export const NotificationWiredLayoutHeader = ({ layout }: NotificationWiredLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24, ...layout }}
         >
             <Border
@@ -102,14 +96,12 @@ export const NotificationWiredLayoutHeader = ({ layout, tags }: NotificationWire
 /** Named region `spacing` of NotificationWiredLayout - configured through the parent's `spacing` prop. */
 export interface NotificationWiredLayoutSpacingProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NotificationWiredLayoutSpacing = ({ layout, tags }: NotificationWiredLayoutSpacingProps) => {
+export const NotificationWiredLayoutSpacing = ({ layout }: NotificationWiredLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 30, height: 7, flexShrink: 0, flexDirection: 'column', ...layout }}
         />
     );

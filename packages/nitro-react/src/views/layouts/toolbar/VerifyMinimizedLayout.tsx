@@ -20,23 +20,20 @@ export interface VerifyMinimizedLayoutVerifyMinimizedProps {
     layout?: BoxLayout;
     onVerifyMinimized?: () => void;
     srcClubIcon?: string;
-    tags?: string[];
 }
 
-export const VerifyMinimizedLayoutVerifyMinimized = ({ layout, onVerifyMinimized, srcClubIcon, tags }: VerifyMinimizedLayoutVerifyMinimizedProps) => {
+export const VerifyMinimizedLayoutVerifyMinimized = ({ layout, onVerifyMinimized, srcClubIcon }: VerifyMinimizedLayoutVerifyMinimizedProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="verify_minimized"
-            tags={tags}
             onPointerTap={onVerifyMinimized}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29, ...layout }}
         >
             <Border
                 variant="6"
-                tags={[ 'BGCOLOR' ]}
                 tintColor="#686661"
                 blend={0.8}
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
@@ -60,7 +57,6 @@ export const VerifyMinimizedLayoutVerifyMinimized = ({ layout, onVerifyMinimized
             >
                 <ThemeImage
                     name="club_icon"
-                    tags={[ 'ICON' ]}
                     src={srcClubIcon ?? '${image.library.url}returnusergifting/phone_smaller.png'}
                     layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                 />

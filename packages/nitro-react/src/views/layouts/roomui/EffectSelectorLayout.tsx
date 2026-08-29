@@ -33,14 +33,12 @@ export const EffectSelectorLayout = ({ effectList, layout, onClose }: EffectSele
 export interface EffectSelectorLayout_0ItemProps {
     caption_0?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EffectSelectorLayout_0Item = ({ caption_0, layout, tags }: EffectSelectorLayout_0ItemProps) => {
+export const EffectSelectorLayout_0Item = ({ caption_0, layout }: EffectSelectorLayout_0ItemProps) => {
     return (
         <Region
             name="0"
-            tags={tags}
             layout={{ width: 256, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -55,10 +53,9 @@ export const EffectSelectorLayout_0Item = ({ caption_0, layout, tags }: EffectSe
 export interface EffectSelectorLayoutEffectListProps {
     itemsEffectList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EffectSelectorLayoutEffectList = ({ itemsEffectList, layout, tags }: EffectSelectorLayoutEffectListProps) => {
+export const EffectSelectorLayoutEffectList = ({ itemsEffectList, layout }: EffectSelectorLayoutEffectListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -66,7 +63,6 @@ export const EffectSelectorLayoutEffectList = ({ itemsEffectList, layout, tags }
         >
             <Region
                 name="effect_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsEffectList ?? (

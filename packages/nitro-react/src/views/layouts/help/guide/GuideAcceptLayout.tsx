@@ -66,16 +66,14 @@ export const GuideAcceptLayout = ({ itemlist, layout, onClose, srcFrankGreeting 
 export interface GuideAcceptLayoutRequestTitleItemProps {
     captionRequestTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuideAcceptLayoutRequestTitleItem = ({ captionRequestTitle, layout, tags }: GuideAcceptLayoutRequestTitleItemProps) => {
+export const GuideAcceptLayoutRequestTitleItem = ({ captionRequestTitle, layout }: GuideAcceptLayoutRequestTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="request_title"
-            tags={tags}
             layout={{ width: 170, height: 47, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -90,14 +88,12 @@ export const GuideAcceptLayoutRequestTitleItem = ({ captionRequestTitle, layout,
 export interface GuideAcceptLayoutRequestTypeItemProps {
     captionRequestType?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuideAcceptLayoutRequestTypeItem = ({ captionRequestType, layout, tags }: GuideAcceptLayoutRequestTypeItemProps) => {
+export const GuideAcceptLayoutRequestTypeItem = ({ captionRequestType, layout }: GuideAcceptLayoutRequestTypeItemProps) => {
     return (
         <Region
             name="request_type"
-            tags={tags}
             layout={{ width: 73, height: 16, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionRequestType ?? 'Request type'} />
@@ -109,14 +105,12 @@ export const GuideAcceptLayoutRequestTypeItem = ({ captionRequestType, layout, t
 export interface GuideAcceptLayoutRequestDescriptionItemProps {
     captionRequestDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuideAcceptLayoutRequestDescriptionItem = ({ captionRequestDescription, layout, tags }: GuideAcceptLayoutRequestDescriptionItemProps) => {
+export const GuideAcceptLayoutRequestDescriptionItem = ({ captionRequestDescription, layout }: GuideAcceptLayoutRequestDescriptionItemProps) => {
     return (
         <Region
             name="request_description"
-            tags={tags}
             layout={{ width: 195, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -131,10 +125,9 @@ export const GuideAcceptLayoutRequestDescriptionItem = ({ captionRequestDescript
 export interface GuideAcceptLayoutRequestDescriptionWrapperItemProps {
     itemsRequestDescriptionWrapper?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuideAcceptLayoutRequestDescriptionWrapperItem = ({ itemsRequestDescriptionWrapper, layout, tags }: GuideAcceptLayoutRequestDescriptionWrapperItemProps) => {
+export const GuideAcceptLayoutRequestDescriptionWrapperItem = ({ itemsRequestDescriptionWrapper, layout }: GuideAcceptLayoutRequestDescriptionWrapperItemProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -142,7 +135,6 @@ export const GuideAcceptLayoutRequestDescriptionWrapperItem = ({ itemsRequestDes
         >
             <Region
                 name="request_description_wrapper"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsRequestDescriptionWrapper ?? (
@@ -157,17 +149,15 @@ export const GuideAcceptLayoutRequestDescriptionWrapperItem = ({ itemsRequestDes
 export interface GuideAcceptLayoutAcceptButtonItemProps {
     layout?: BoxLayout;
     onAcceptButton?: () => void;
-    tags?: string[];
 }
 
-export const GuideAcceptLayoutAcceptButtonItem = ({ layout, onAcceptButton, tags }: GuideAcceptLayoutAcceptButtonItemProps) => {
+export const GuideAcceptLayoutAcceptButtonItem = ({ layout, onAcceptButton }: GuideAcceptLayoutAcceptButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ContainerButton
             variant="101"
             name="accept_button"
-            tags={tags}
             tintColor="#bbbbbb"
             onPointerTap={onAcceptButton}
             layout={{ width: 200, height: 48, flexShrink: 0, maxWidth: 200, minHeight: 48, maxHeight: 48, ...layout }}
@@ -194,16 +184,14 @@ export interface GuideAcceptLayoutSkipLinkItemProps {
     captionSkipLink?: string;
     layout?: BoxLayout;
     onSkipLink?: () => void;
-    tags?: string[];
 }
 
-export const GuideAcceptLayoutSkipLinkItem = ({ captionSkipLink, layout, onSkipLink, tags }: GuideAcceptLayoutSkipLinkItemProps) => {
+export const GuideAcceptLayoutSkipLinkItem = ({ captionSkipLink, layout, onSkipLink }: GuideAcceptLayoutSkipLinkItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="skip_link"
-            tags={tags}
             layout={{ width: 212, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onSkipLink}
             cursor="pointer"
@@ -217,14 +205,12 @@ export const GuideAcceptLayoutSkipLinkItem = ({ captionSkipLink, layout, onSkipL
 export interface GuideAcceptLayoutItemlistProps {
     itemsItemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuideAcceptLayoutItemlist = ({ itemsItemlist, layout, tags }: GuideAcceptLayoutItemlistProps) => {
+export const GuideAcceptLayoutItemlist = ({ itemsItemlist, layout }: GuideAcceptLayoutItemlistProps) => {
     return (
         <Region
             name="itemlist"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 221, flexDirection: 'column', ...layout }}
         >
             {itemsItemlist ?? (

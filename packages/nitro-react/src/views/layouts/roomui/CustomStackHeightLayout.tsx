@@ -86,7 +86,6 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
                 >
                     <Icon
                         variant="0"
-                        tags={[ '#icon' ]}
                         tintColor="#7f7f7f"
                         layout={{ position: 'absolute', left: 5, width: 12, top: 5, height: 12 }}
                     />
@@ -101,7 +100,6 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
                 >
                     <Icon
                         variant="1"
-                        tags={[ '#icon' ]}
                         tintColor="#7f7f7f"
                         layout={{ position: 'absolute', left: 5, width: 12, top: 4, height: 12 }}
                     />
@@ -115,16 +113,14 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
 export interface CustomStackHeightLayoutWalktileContainerProps {
     layout?: BoxLayout;
     onMultiwalkCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const CustomStackHeightLayoutWalktileContainer = ({ layout, onMultiwalkCheckbox, tags }: CustomStackHeightLayoutWalktileContainerProps) => {
+export const CustomStackHeightLayoutWalktileContainer = ({ layout, onMultiwalkCheckbox }: CustomStackHeightLayoutWalktileContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="walktile_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 318, top: 149, height: 24, ...layout }}
         >
             <CheckBox

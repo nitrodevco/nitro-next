@@ -68,14 +68,12 @@ export interface LoginWindowLayoutOptionsContainerProps {
     layout?: BoxLayout;
     onUseExistingSession?: () => void;
     onUseTicket?: () => void;
-    tags?: string[];
 }
 
-export const LoginWindowLayoutOptionsContainer = ({ captionText002, layout, onUseExistingSession, onUseTicket, tags }: LoginWindowLayoutOptionsContainerProps) => {
+export const LoginWindowLayoutOptionsContainer = ({ captionText002, layout, onUseExistingSession, onUseTicket }: LoginWindowLayoutOptionsContainerProps) => {
     return (
         <Region
             name="options_container"
-            tags={tags}
             layout={{ width: 198, height: 46, flexShrink: 0, ...layout }}
         >
             <Region
@@ -107,14 +105,12 @@ export const LoginWindowLayoutOptionsContainer = ({ captionText002, layout, onUs
 /** Named region `environment_container` of LoginWindowLayout - configured through the parent's `environmentContainer` prop. */
 export interface LoginWindowLayoutEnvironmentContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LoginWindowLayoutEnvironmentContainer = ({ layout, tags }: LoginWindowLayoutEnvironmentContainerProps) => {
+export const LoginWindowLayoutEnvironmentContainer = ({ layout }: LoginWindowLayoutEnvironmentContainerProps) => {
     return (
         <Region
             name="environment_container"
-            tags={tags}
             layout={{ width: 296, height: 28, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 72, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -133,16 +129,14 @@ export const LoginWindowLayoutEnvironmentContainer = ({ layout, tags }: LoginWin
 export interface LoginWindowLayoutNameContainerProps {
     captionLabelName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LoginWindowLayoutNameContainer = ({ captionLabelName, layout, tags }: LoginWindowLayoutNameContainerProps) => {
+export const LoginWindowLayoutNameContainer = ({ captionLabelName, layout }: LoginWindowLayoutNameContainerProps) => {
     const [ nameFieldValue, setNameFieldValue ] = useState('');
 
     return (
         <Region
             name="name_container"
-            tags={tags}
             layout={{ width: 298, height: 30, flexShrink: 0, ...layout }}
         >
             <Region
@@ -174,16 +168,14 @@ export const LoginWindowLayoutNameContainer = ({ captionLabelName, layout, tags 
 export interface LoginWindowLayoutPasswordContainerProps {
     captionLabelPassword?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LoginWindowLayoutPasswordContainer = ({ captionLabelPassword, layout, tags }: LoginWindowLayoutPasswordContainerProps) => {
+export const LoginWindowLayoutPasswordContainer = ({ captionLabelPassword, layout }: LoginWindowLayoutPasswordContainerProps) => {
     const [ pwdFieldValue, setPwdFieldValue ] = useState('');
 
     return (
         <Region
             name="password_container"
-            tags={tags}
             layout={{ width: 306, height: 30, flexShrink: 0, ...layout }}
         >
             <Region
@@ -214,15 +206,13 @@ export const LoginWindowLayoutPasswordContainer = ({ captionLabelPassword, layou
 export interface LoginWindowLayoutUserlistItemItemProps {
     layout?: BoxLayout;
     onUserlistItem?: () => void;
-    tags?: string[];
 }
 
-export const LoginWindowLayoutUserlistItemItem = ({ layout, onUserlistItem, tags }: LoginWindowLayoutUserlistItemItemProps) => {
+export const LoginWindowLayoutUserlistItemItem = ({ layout, onUserlistItem }: LoginWindowLayoutUserlistItemItemProps) => {
     return (
         <Button
             variant="102"
             name="userlist_item"
-            tags={tags}
             onPointerTap={onUserlistItem}
             layout={{ width: 196, height: 28, flexShrink: 0, minWidth: 196, maxWidth: 196, ...layout }}
         >
@@ -235,10 +225,9 @@ export const LoginWindowLayoutUserlistItemItem = ({ layout, onUserlistItem, tags
 export interface LoginWindowLayoutListProps {
     itemsList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LoginWindowLayoutList = ({ itemsList, layout, tags }: LoginWindowLayoutListProps) => {
+export const LoginWindowLayoutList = ({ itemsList, layout }: LoginWindowLayoutListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -246,7 +235,6 @@ export const LoginWindowLayoutList = ({ itemsList, layout, tags }: LoginWindowLa
         >
             <Region
                 name="list"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 1, width: '100%' }}
             >
                 {itemsList ?? (

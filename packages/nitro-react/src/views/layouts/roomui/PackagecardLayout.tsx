@@ -67,16 +67,14 @@ export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, 
 export interface PackagecardLayoutCloseProps {
     layout?: BoxLayout;
     onClose?: () => void;
-    tags?: string[];
 }
 
-export const PackagecardLayoutClose = ({ layout, onClose, tags }: PackagecardLayoutCloseProps) => {
+export const PackagecardLayoutClose = ({ layout, onClose }: PackagecardLayoutCloseProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="close"
-            tags={tags}
             onPointerTap={onClose}
             cursor="pointer"
             layout={{ position: 'absolute', left: 14, width: 100, bottom: 9, height: 33, ...layout }}
@@ -96,16 +94,14 @@ export interface PackagecardLayoutStateContentProps {
     close?: PackagecardLayoutCloseProps;
     layout?: BoxLayout;
     onOpen?: () => void;
-    tags?: string[];
 }
 
-export const PackagecardLayoutStateContent = ({ close, layout, onOpen, tags }: PackagecardLayoutStateContentProps) => {
+export const PackagecardLayoutStateContent = ({ close, layout, onOpen }: PackagecardLayoutStateContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="state_content"
-            tags={tags}
             backgroundColor="#eaece8"
             layout={{ position: 'absolute', left: 6, width: 350, top: 156, height: 50, ...layout }}
         >

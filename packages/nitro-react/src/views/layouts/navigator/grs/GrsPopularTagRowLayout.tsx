@@ -17,14 +17,12 @@ export const GrsPopularTagRowLayout = ({ layout, row }: GrsPopularTagRowLayoutPr
 /** Named region `row` of GrsPopularTagRowLayout - configured through the parent's `row` prop. */
 export interface GrsPopularTagRowLayoutRowProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsPopularTagRowLayoutRow = ({ layout, tags }: GrsPopularTagRowLayoutRowProps) => {
+export const GrsPopularTagRowLayoutRow = ({ layout }: GrsPopularTagRowLayoutRowProps) => {
     return (
         <Region
             name="row"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 20, ...layout }}
         />

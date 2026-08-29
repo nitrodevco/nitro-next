@@ -19,7 +19,6 @@ export const GrsMainWindowLayout = ({ captionLoadingText, layout, onClose, tabbe
             variant="0"
             id="grs_main_window"
             name="grs_main_window"
-            tags={[ 'FIT:navigator' ]}
             caption={t('navigator.title')}
             tintColor="#418db0"
             onClose={onClose}
@@ -42,10 +41,9 @@ export const GrsMainWindowLayout = ({ captionLoadingText, layout, onClose, tabbe
 /** Named region `item_list` of GrsMainWindowLayout - configured through the parent's `itemList` prop. */
 export interface GrsMainWindowLayoutItemListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutItemList = ({ layout, tags }: GrsMainWindowLayoutItemListProps) => {
+export const GrsMainWindowLayoutItemList = ({ layout }: GrsMainWindowLayoutItemListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -53,7 +51,6 @@ export const GrsMainWindowLayoutItemList = ({ layout, tags }: GrsMainWindowLayou
         >
             <Region
                 name="item_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -65,16 +62,14 @@ export interface GrsMainWindowLayoutGuestRoomsProps {
     captionNoRoomsFound?: string;
     itemList?: GrsMainWindowLayoutItemListProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutGuestRooms = ({ captionNoRoomsFound, itemList, layout, tags }: GrsMainWindowLayoutGuestRoomsProps) => {
+export const GrsMainWindowLayoutGuestRooms = ({ captionNoRoomsFound, itemList, layout }: GrsMainWindowLayoutGuestRoomsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guest_rooms"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
@@ -96,10 +91,9 @@ export const GrsMainWindowLayoutGuestRooms = ({ captionNoRoomsFound, itemList, l
 /** Named region `item_list` of GrsMainWindowLayout - configured through the parent's `itemList` prop. */
 export interface GrsMainWindowLayoutItemList2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutItemList2 = ({ layout, tags }: GrsMainWindowLayoutItemList2Props) => {
+export const GrsMainWindowLayoutItemList2 = ({ layout }: GrsMainWindowLayoutItemList2Props) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -107,7 +101,6 @@ export const GrsMainWindowLayoutItemList2 = ({ layout, tags }: GrsMainWindowLayo
         >
             <Region
                 name="item_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -119,16 +112,14 @@ export interface GrsMainWindowLayoutRoomAdsProps {
     captionNoRoomsFound?: string;
     itemList?: GrsMainWindowLayoutItemList2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutRoomAds = ({ captionNoRoomsFound, itemList, layout, tags }: GrsMainWindowLayoutRoomAdsProps) => {
+export const GrsMainWindowLayoutRoomAds = ({ captionNoRoomsFound, itemList, layout }: GrsMainWindowLayoutRoomAdsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_ads"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
@@ -150,10 +141,9 @@ export const GrsMainWindowLayoutRoomAds = ({ captionNoRoomsFound, itemList, layo
 /** Named region `item_list` of GrsMainWindowLayout - configured through the parent's `itemList` prop. */
 export interface GrsMainWindowLayoutItemList3Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutItemList3 = ({ layout, tags }: GrsMainWindowLayoutItemList3Props) => {
+export const GrsMainWindowLayoutItemList3 = ({ layout }: GrsMainWindowLayoutItemList3Props) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -161,7 +151,6 @@ export const GrsMainWindowLayoutItemList3 = ({ layout, tags }: GrsMainWindowLayo
         >
             <Region
                 name="item_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -173,16 +162,14 @@ export interface GrsMainWindowLayoutPopularTagsProps {
     captionNoTagsFound?: string;
     itemList?: GrsMainWindowLayoutItemList3Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutPopularTags = ({ captionNoTagsFound, itemList, layout, tags }: GrsMainWindowLayoutPopularTagsProps) => {
+export const GrsMainWindowLayoutPopularTags = ({ captionNoTagsFound, itemList, layout }: GrsMainWindowLayoutPopularTagsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="popular_tags"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
@@ -204,14 +191,12 @@ export const GrsMainWindowLayoutPopularTags = ({ captionNoTagsFound, itemList, l
 /** Row template `promoted_rooms` of GrsMainWindowLayout - pass real rows through its `items…` slot. */
 export interface GrsMainWindowLayoutPromotedRoomsItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutPromotedRoomsItem = ({ layout, tags }: GrsMainWindowLayoutPromotedRoomsItemProps) => {
+export const GrsMainWindowLayoutPromotedRoomsItem = ({ layout }: GrsMainWindowLayoutPromotedRoomsItemProps) => {
     return (
         <Region
             name="promoted_rooms"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ width: 278, height: 1, flexShrink: 0, ...layout }}
         />
@@ -222,10 +207,9 @@ export const GrsMainWindowLayoutPromotedRoomsItem = ({ layout, tags }: GrsMainWi
 export interface GrsMainWindowLayoutItemListOfficialProps {
     itemsItemListOfficial?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutItemListOfficial = ({ itemsItemListOfficial, layout, tags }: GrsMainWindowLayoutItemListOfficialProps) => {
+export const GrsMainWindowLayoutItemListOfficial = ({ itemsItemListOfficial, layout }: GrsMainWindowLayoutItemListOfficialProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -233,7 +217,6 @@ export const GrsMainWindowLayoutItemListOfficial = ({ itemsItemListOfficial, lay
         >
             <Region
                 name="item_list_official"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsItemListOfficial ?? (
@@ -248,14 +231,12 @@ export const GrsMainWindowLayoutItemListOfficial = ({ itemsItemListOfficial, lay
 export interface GrsMainWindowLayoutOfficialRoomsProps {
     itemListOfficial?: GrsMainWindowLayoutItemListOfficialProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutOfficialRooms = ({ itemListOfficial, layout, tags }: GrsMainWindowLayoutOfficialRoomsProps) => {
+export const GrsMainWindowLayoutOfficialRooms = ({ itemListOfficial, layout }: GrsMainWindowLayoutOfficialRoomsProps) => {
     return (
         <Region
             name="official_rooms"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, ...layout }}
         >
@@ -272,14 +253,12 @@ export interface GrsMainWindowLayoutListContentProps {
     officialRooms?: GrsMainWindowLayoutOfficialRoomsProps;
     popularTags?: GrsMainWindowLayoutPopularTagsProps;
     roomAds?: GrsMainWindowLayoutRoomAdsProps;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutListContent = ({ guestRooms, layout, officialRooms, popularTags, roomAds, tags }: GrsMainWindowLayoutListContentProps) => {
+export const GrsMainWindowLayoutListContent = ({ guestRooms, layout, officialRooms, popularTags, roomAds }: GrsMainWindowLayoutListContentProps) => {
     return (
         <Region
             name="list_content"
-            tags={tags}
             backgroundColor="#ffff00"
             layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 288, ...layout }}
         >
@@ -296,15 +275,13 @@ export interface GrsMainWindowLayoutMeHeaderProps {
     layout?: BoxLayout;
     onMeHeader?: () => void;
     onMeSubNavi?: () => void;
-    tags?: string[];
     visibleMeHeader?: boolean;
 }
 
-export const GrsMainWindowLayoutMeHeader = ({ layout, onMeHeader, onMeSubNavi, tags, visibleMeHeader }: GrsMainWindowLayoutMeHeaderProps) => {
+export const GrsMainWindowLayoutMeHeader = ({ layout, onMeHeader, onMeSubNavi, visibleMeHeader }: GrsMainWindowLayoutMeHeaderProps) => {
     return (
         <Region
             name="me_header"
-            tags={tags}
             visible={visibleMeHeader ?? false}
             onPointerTap={onMeHeader}
             cursor="pointer"
@@ -325,15 +302,13 @@ export interface GrsMainWindowLayoutRoomsHeaderProps {
     layout?: BoxLayout;
     onRoomCtgFilter?: () => void;
     onRoomsHeader?: () => void;
-    tags?: string[];
     visibleRoomsHeader?: boolean;
 }
 
-export const GrsMainWindowLayoutRoomsHeader = ({ layout, onRoomCtgFilter, onRoomsHeader, tags, visibleRoomsHeader }: GrsMainWindowLayoutRoomsHeaderProps) => {
+export const GrsMainWindowLayoutRoomsHeader = ({ layout, onRoomCtgFilter, onRoomsHeader, visibleRoomsHeader }: GrsMainWindowLayoutRoomsHeaderProps) => {
     return (
         <Region
             name="rooms_header"
-            tags={tags}
             visible={visibleRoomsHeader ?? false}
             onPointerTap={onRoomsHeader}
             cursor="pointer"
@@ -354,15 +329,13 @@ export interface GrsMainWindowLayoutRoomAdHeaderProps {
     layout?: BoxLayout;
     onRoomAdFilter?: () => void;
     onRoomAdHeader?: () => void;
-    tags?: string[];
     visibleRoomAdHeader?: boolean;
 }
 
-export const GrsMainWindowLayoutRoomAdHeader = ({ layout, onRoomAdFilter, onRoomAdHeader, tags, visibleRoomAdHeader }: GrsMainWindowLayoutRoomAdHeaderProps) => {
+export const GrsMainWindowLayoutRoomAdHeader = ({ layout, onRoomAdFilter, onRoomAdHeader, visibleRoomAdHeader }: GrsMainWindowLayoutRoomAdHeaderProps) => {
     return (
         <Region
             name="room_ad_header"
-            tags={tags}
             visible={visibleRoomAdHeader ?? false}
             onPointerTap={onRoomAdHeader}
             cursor="pointer"
@@ -384,16 +357,14 @@ export interface GrsMainWindowLayoutRoomCompetitionsHeaderProps {
     onNextButton?: () => void;
     onPrevButton?: () => void;
     onRoomCompetitionsHeader?: () => void;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutRoomCompetitionsHeader = ({ layout, onNextButton, onPrevButton, onRoomCompetitionsHeader, tags }: GrsMainWindowLayoutRoomCompetitionsHeaderProps) => {
+export const GrsMainWindowLayoutRoomCompetitionsHeader = ({ layout, onNextButton, onPrevButton, onRoomCompetitionsHeader }: GrsMainWindowLayoutRoomCompetitionsHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_competitions_header"
-            tags={tags}
             onPointerTap={onRoomCompetitionsHeader}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 33, justifyContent: 'center', ...layout }}
@@ -440,14 +411,12 @@ export interface GrsMainWindowLayoutCustomContentProps {
     roomAdHeader?: GrsMainWindowLayoutRoomAdHeaderProps;
     roomCompetitionsHeader?: GrsMainWindowLayoutRoomCompetitionsHeaderProps;
     roomsHeader?: GrsMainWindowLayoutRoomsHeaderProps;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutCustomContent = ({ layout, meHeader, onCustomContent, roomAdHeader, roomCompetitionsHeader, roomsHeader, tags }: GrsMainWindowLayoutCustomContentProps) => {
+export const GrsMainWindowLayoutCustomContent = ({ layout, meHeader, onCustomContent, roomAdHeader, roomCompetitionsHeader, roomsHeader }: GrsMainWindowLayoutCustomContentProps) => {
     return (
         <Region
             name="custom_content"
-            tags={tags}
             onPointerTap={onCustomContent}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 50, ...layout }}
@@ -467,16 +436,14 @@ export interface GrsMainWindowLayoutMeFooterProps {
     onCreateRoomBut?: () => void;
     onMeFooter?: () => void;
     srcCreateRoom?: string;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutMeFooter = ({ captionMoreRoomsCaption, layout, onCreateRoomBut, onMeFooter, srcCreateRoom, tags }: GrsMainWindowLayoutMeFooterProps) => {
+export const GrsMainWindowLayoutMeFooter = ({ captionMoreRoomsCaption, layout, onCreateRoomBut, onMeFooter, srcCreateRoom }: GrsMainWindowLayoutMeFooterProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="me_footer"
-            tags={tags}
             onPointerTap={onMeFooter}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 37, ...layout }}
@@ -515,14 +482,12 @@ export const GrsMainWindowLayoutMeFooter = ({ captionMoreRoomsCaption, layout, o
 export interface GrsMainWindowLayoutAdContProps {
     layout?: BoxLayout;
     onAdCont?: () => void;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutAdCont = ({ layout, onAdCont, tags }: GrsMainWindowLayoutAdContProps) => {
+export const GrsMainWindowLayoutAdCont = ({ layout, onAdCont }: GrsMainWindowLayoutAdContProps) => {
     return (
         <Region
             name="ad_cont"
-            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onAdCont}
             cursor="pointer"
@@ -537,16 +502,14 @@ export interface GrsMainWindowLayoutAdFooterProps {
     captionAdCaption?: string;
     layout?: BoxLayout;
     onAdFooter?: () => void;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutAdFooter = ({ adCont, captionAdCaption, layout, onAdFooter, tags }: GrsMainWindowLayoutAdFooterProps) => {
+export const GrsMainWindowLayoutAdFooter = ({ adCont, captionAdCaption, layout, onAdFooter }: GrsMainWindowLayoutAdFooterProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ad_footer"
-            tags={tags}
             onPointerTap={onAdFooter}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 85, ...layout }}
@@ -568,16 +531,14 @@ export interface GrsMainWindowLayoutRoomAdsFooterProps {
     layout?: BoxLayout;
     onGetEventBut?: () => void;
     onRoomAdsFooter?: () => void;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutRoomAdsFooter = ({ captionGetEventCaption, layout, onGetEventBut, onRoomAdsFooter, tags }: GrsMainWindowLayoutRoomAdsFooterProps) => {
+export const GrsMainWindowLayoutRoomAdsFooter = ({ captionGetEventCaption, layout, onGetEventBut, onRoomAdsFooter }: GrsMainWindowLayoutRoomAdsFooterProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_ads_footer"
-            tags={tags}
             onPointerTap={onRoomAdsFooter}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 37, ...layout }}
@@ -617,14 +578,12 @@ export interface GrsMainWindowLayoutCustomFooterProps {
     meFooter?: GrsMainWindowLayoutMeFooterProps;
     onCustomFooter?: () => void;
     roomAdsFooter?: GrsMainWindowLayoutRoomAdsFooterProps;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutCustomFooter = ({ adFooter, layout, meFooter, onCustomFooter, roomAdsFooter, tags }: GrsMainWindowLayoutCustomFooterProps) => {
+export const GrsMainWindowLayoutCustomFooter = ({ adFooter, layout, meFooter, onCustomFooter, roomAdsFooter }: GrsMainWindowLayoutCustomFooterProps) => {
     return (
         <Region
             name="custom_footer"
-            tags={tags}
             onPointerTap={onCustomFooter}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 307, bottom: 668, height: 0, ...layout }}
@@ -643,14 +602,12 @@ export interface GrsMainWindowLayoutTabContentProps {
     layout?: BoxLayout;
     listContent?: GrsMainWindowLayoutListContentProps;
     onTabContent?: () => void;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutTabContent = ({ customContent, customFooter, layout, listContent, onTabContent, tags }: GrsMainWindowLayoutTabContentProps) => {
+export const GrsMainWindowLayoutTabContent = ({ customContent, customFooter, layout, listContent, onTabContent }: GrsMainWindowLayoutTabContentProps) => {
     return (
         <Region
             name="tab_content"
-            tags={tags}
             onPointerTap={onTabContent}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 313, top: 60, bottom: -286, ...layout }}
@@ -673,17 +630,15 @@ export interface GrsMainWindowLayoutTabbedviewProps {
     onSearchBut?: () => void;
     onTabbedview?: () => void;
     tabContent?: GrsMainWindowLayoutTabContentProps;
-    tags?: string[];
 }
 
-export const GrsMainWindowLayoutTabbedview = ({ layout, onNavigatorTab1, onNavigatorTab2, onNavigatorTab3, onNavigatorTab4, onNavigatorTab5, onSearchBut, onTabbedview, tabContent, tags }: GrsMainWindowLayoutTabbedviewProps) => {
+export const GrsMainWindowLayoutTabbedview = ({ layout, onNavigatorTab1, onNavigatorTab2, onNavigatorTab3, onNavigatorTab4, onNavigatorTab5, onSearchBut, onTabbedview, tabContent }: GrsMainWindowLayoutTabbedviewProps) => {
     const t = useTranslation();
     const [ searchStrValue, setSearchStrValue ] = useState('');
 
     return (
         <Region
             name="tabbedview"
-            tags={tags}
             onPointerTap={onTabbedview}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 313, top: 0, bottom: 32, ...layout }}
@@ -696,7 +651,6 @@ export const GrsMainWindowLayoutTabbedview = ({ layout, onNavigatorTab1, onNavig
                 <TabButton
                     variant="0"
                     name="navigator_tab_4"
-                    tags={[ 'FIT:navigatorSpecialTab' ]}
                     onPointerTap={onNavigatorTab4}
                     layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 22 }}
                 >
@@ -705,7 +659,6 @@ export const GrsMainWindowLayoutTabbedview = ({ layout, onNavigatorTab1, onNavig
                 <TabButton
                     variant="0"
                     name="navigator_tab_2"
-                    tags={[ 'FIT:navigatorRoomsTab' ]}
                     onPointerTap={onNavigatorTab2}
                     layout={{ position: 'absolute', left: 123, width: 20, top: 0, height: 22 }}
                 >
@@ -714,7 +667,6 @@ export const GrsMainWindowLayoutTabbedview = ({ layout, onNavigatorTab1, onNavig
                 <TabButton
                     variant="0"
                     name="navigator_tab_1"
-                    tags={[ 'FIT:navigatorEventsTab' ]}
                     onPointerTap={onNavigatorTab1}
                     layout={{ position: 'absolute', left: 244, width: 20, top: 0, height: 22 }}
                 >
@@ -723,7 +675,6 @@ export const GrsMainWindowLayoutTabbedview = ({ layout, onNavigatorTab1, onNavig
                 <TabButton
                     variant="0"
                     name="navigator_tab_3"
-                    tags={[ 'FIT:navigatorMeTab' ]}
                     onPointerTap={onNavigatorTab3}
                     layout={{ position: 'absolute', left: 369, width: 20, top: 0, height: 22 }}
                 >
@@ -732,7 +683,6 @@ export const GrsMainWindowLayoutTabbedview = ({ layout, onNavigatorTab1, onNavig
                 <TabButton
                     variant="0"
                     name="navigator_tab_5"
-                    tags={[ 'FIT:navigatorSearchTab' ]}
                     onPointerTap={onNavigatorTab5}
                     layout={{ position: 'absolute', left: 473, width: 20, top: 0, height: 22 }}
                 >
@@ -754,7 +704,6 @@ export const GrsMainWindowLayoutTabbedview = ({ layout, onNavigatorTab1, onNavig
                 <Button
                     variant="0"
                     name="search_but"
-                    tags={[ 'FIT:navigatorSearchButton' ]}
                     onPointerTap={onSearchBut}
                     layout={{ position: 'absolute', left: 225, width: 65, top: 3, height: 21, minWidth: 65, maxWidth: 65 }}
                 >

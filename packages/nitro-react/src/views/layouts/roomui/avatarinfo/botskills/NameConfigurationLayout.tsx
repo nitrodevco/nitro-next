@@ -61,16 +61,14 @@ export interface NameConfigurationLayoutConfigurationItemsProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
     onSaveButton?: () => void;
-    tags?: string[];
 }
 
-export const NameConfigurationLayoutConfigurationItems = ({ itemsConfigurationItems, layout, onCancelButton, onSaveButton, tags }: NameConfigurationLayoutConfigurationItemsProps) => {
+export const NameConfigurationLayoutConfigurationItems = ({ itemsConfigurationItems, layout, onCancelButton, onSaveButton }: NameConfigurationLayoutConfigurationItemsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="configuration_items"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 183, top: 25, height: 81, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsConfigurationItems ?? (

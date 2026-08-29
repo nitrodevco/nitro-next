@@ -31,11 +31,10 @@ export const OfferExtensionLayout = ({ layout, list }: OfferExtensionLayoutProps
 export interface OfferExtensionLayoutStartVideoItemProps {
     layout?: BoxLayout;
     onStartVideo?: () => void;
-    tags?: string[];
     visibleStartVideo?: boolean;
 }
 
-export const OfferExtensionLayoutStartVideoItem = ({ layout, onStartVideo, tags, visibleStartVideo }: OfferExtensionLayoutStartVideoItemProps) => {
+export const OfferExtensionLayoutStartVideoItem = ({ layout, onStartVideo, visibleStartVideo }: OfferExtensionLayoutStartVideoItemProps) => {
     const t = useTranslation();
 
     return (
@@ -46,7 +45,6 @@ export const OfferExtensionLayoutStartVideoItem = ({ layout, onStartVideo, tags,
             <ContainerButton
                 variant="5"
                 name="start_video"
-                tags={tags}
                 tintColor="#c55541"
                 onPointerTap={onStartVideo}
                 layout={{ width: '100%', height: '100%' }}
@@ -70,17 +68,15 @@ export const OfferExtensionLayoutStartVideoItem = ({ layout, onStartVideo, tags,
 export interface OfferExtensionLayoutCheckRewardsItemProps {
     layout?: BoxLayout;
     onCheckRewards?: () => void;
-    tags?: string[];
     visibleCheckRewards?: boolean;
 }
 
-export const OfferExtensionLayoutCheckRewardsItem = ({ layout, onCheckRewards, tags, visibleCheckRewards }: OfferExtensionLayoutCheckRewardsItemProps) => {
+export const OfferExtensionLayoutCheckRewardsItem = ({ layout, onCheckRewards, visibleCheckRewards }: OfferExtensionLayoutCheckRewardsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="check_rewards"
-            tags={tags}
             visible={visibleCheckRewards ?? false}
             onPointerTap={onCheckRewards}
             cursor="pointer"
@@ -100,14 +96,12 @@ export const OfferExtensionLayoutCheckRewardsItem = ({ layout, onCheckRewards, t
 export interface OfferExtensionLayoutListProps {
     itemsList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const OfferExtensionLayoutList = ({ itemsList, layout, tags }: OfferExtensionLayoutListProps) => {
+export const OfferExtensionLayoutList = ({ itemsList, layout }: OfferExtensionLayoutListProps) => {
     return (
         <Region
             name="list"
-            tags={tags}
             layout={{ position: 'absolute', left: 3, top: 3, flexDirection: 'column', ...layout }}
         >
             {itemsList ?? (

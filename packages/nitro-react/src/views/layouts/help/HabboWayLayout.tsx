@@ -71,17 +71,15 @@ export interface HabboWayLayoutPageContainerProps {
     srcCorrectTitleIcon?: string;
     srcIllustration?: string;
     srcWrongTitleIcon?: string;
-    tags?: string[];
     visiblePageContainer?: boolean;
 }
 
-export const HabboWayLayoutPageContainer = ({ captionCorrectDescription, captionCorrectTitle, captionWrongDescription, captionWrongTitle, layout, onNextButton, onPreviousButton, srcCorrectTitleIcon, srcIllustration, srcWrongTitleIcon, tags, visiblePageContainer }: HabboWayLayoutPageContainerProps) => {
+export const HabboWayLayoutPageContainer = ({ captionCorrectDescription, captionCorrectTitle, captionWrongDescription, captionWrongTitle, layout, onNextButton, onPreviousButton, srcCorrectTitleIcon, srcIllustration, srcWrongTitleIcon, visiblePageContainer }: HabboWayLayoutPageContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="page_container"
-            tags={tags}
             visible={visiblePageContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 420, ...layout }}
         >
@@ -205,17 +203,15 @@ export interface HabboWayLayoutFinalPageProps {
     onBackButton?: () => void;
     onQuizButton?: () => void;
     srcIllustration?: string;
-    tags?: string[];
     visibleFinalPage?: boolean;
 }
 
-export const HabboWayLayoutFinalPage = ({ layout, onBackButton, onQuizButton, srcIllustration, tags, visibleFinalPage }: HabboWayLayoutFinalPageProps) => {
+export const HabboWayLayoutFinalPage = ({ layout, onBackButton, onQuizButton, srcIllustration, visibleFinalPage }: HabboWayLayoutFinalPageProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="final_page"
-            tags={tags}
             visible={visibleFinalPage ?? false}
             layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 420, ...layout }}
         >

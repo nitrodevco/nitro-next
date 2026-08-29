@@ -32,14 +32,12 @@ export const UserInfoLayout = ({ captionLoadingTxt, fields, layout }: UserInfoLa
 /** Named region `shade1` of UserInfoLayout - configured through the parent's `shade1` prop. */
 export interface UserInfoLayoutShade1Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserInfoLayoutShade1 = ({ layout, tags }: UserInfoLayoutShade1Props) => {
+export const UserInfoLayoutShade1 = ({ layout }: UserInfoLayoutShade1Props) => {
     return (
         <Region
             name="shade1"
-            tags={tags}
             backgroundColor="#a2d6ea"
             layout={{ position: 'absolute', left: 0, width: 187, top: 0, height: 13, ...layout }}
         />
@@ -49,14 +47,12 @@ export const UserInfoLayoutShade1 = ({ layout, tags }: UserInfoLayoutShade1Props
 /** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
 export interface UserInfoLayoutShade2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserInfoLayoutShade2 = ({ layout, tags }: UserInfoLayoutShade2Props) => {
+export const UserInfoLayoutShade2 = ({ layout }: UserInfoLayoutShade2Props) => {
     return (
         <Region
             name="shade2"
-            tags={tags}
             backgroundColor="#a2d6ea"
             layout={{ position: 'absolute', left: 0, width: 187, top: 26, height: 13, ...layout }}
         />
@@ -66,14 +62,12 @@ export const UserInfoLayoutShade2 = ({ layout, tags }: UserInfoLayoutShade2Props
 /** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
 export interface UserInfoLayoutShade22Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserInfoLayoutShade22 = ({ layout, tags }: UserInfoLayoutShade22Props) => {
+export const UserInfoLayoutShade22 = ({ layout }: UserInfoLayoutShade22Props) => {
     return (
         <Region
             name="shade2"
-            tags={tags}
             backgroundColor="#a2d6ea"
             layout={{ position: 'absolute', left: 0, width: 187, top: 52, height: 13, ...layout }}
         />
@@ -83,14 +77,12 @@ export const UserInfoLayoutShade22 = ({ layout, tags }: UserInfoLayoutShade22Pro
 /** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
 export interface UserInfoLayoutShade23Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserInfoLayoutShade23 = ({ layout, tags }: UserInfoLayoutShade23Props) => {
+export const UserInfoLayoutShade23 = ({ layout }: UserInfoLayoutShade23Props) => {
     return (
         <Region
             name="shade2"
-            tags={tags}
             backgroundColor="#a2d6ea"
             layout={{ position: 'absolute', left: 0, width: 187, top: 78, height: 13, ...layout }}
         />
@@ -100,14 +92,12 @@ export const UserInfoLayoutShade23 = ({ layout, tags }: UserInfoLayoutShade23Pro
 /** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
 export interface UserInfoLayoutShade24Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserInfoLayoutShade24 = ({ layout, tags }: UserInfoLayoutShade24Props) => {
+export const UserInfoLayoutShade24 = ({ layout }: UserInfoLayoutShade24Props) => {
     return (
         <Region
             name="shade2"
-            tags={tags}
             backgroundColor="#a2d6ea"
             layout={{ position: 'absolute', left: 0, width: 187, top: 104, height: 13, ...layout }}
         />
@@ -117,14 +107,12 @@ export const UserInfoLayoutShade24 = ({ layout, tags }: UserInfoLayoutShade24Pro
 /** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
 export interface UserInfoLayoutShade25Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserInfoLayoutShade25 = ({ layout, tags }: UserInfoLayoutShade25Props) => {
+export const UserInfoLayoutShade25 = ({ layout }: UserInfoLayoutShade25Props) => {
     return (
         <Region
             name="shade2"
-            tags={tags}
             backgroundColor="#a2d6ea"
             layout={{ position: 'absolute', left: 0, width: 187, top: 130, height: 13, ...layout }}
         />
@@ -134,14 +122,12 @@ export const UserInfoLayoutShade25 = ({ layout, tags }: UserInfoLayoutShade25Pro
 /** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
 export interface UserInfoLayoutShade26Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserInfoLayoutShade26 = ({ layout, tags }: UserInfoLayoutShade26Props) => {
+export const UserInfoLayoutShade26 = ({ layout }: UserInfoLayoutShade26Props) => {
     return (
         <Region
             name="shade2"
-            tags={tags}
             backgroundColor="#a2d6ea"
             layout={{ position: 'absolute', left: 0, width: 187, top: 156, height: 13, ...layout }}
         />
@@ -151,14 +137,12 @@ export const UserInfoLayoutShade26 = ({ layout, tags }: UserInfoLayoutShade26Pro
 /** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
 export interface UserInfoLayoutShade27Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserInfoLayoutShade27 = ({ layout, tags }: UserInfoLayoutShade27Props) => {
+export const UserInfoLayoutShade27 = ({ layout }: UserInfoLayoutShade27Props) => {
     return (
         <Region
             name="shade2"
-            tags={tags}
             backgroundColor="#a2d6ea"
             layout={{ position: 'absolute', left: 0, width: 187, top: 182, height: 13, ...layout }}
         />
@@ -174,14 +158,12 @@ export interface UserInfoLayoutButtonsProps {
     onMessageBut?: () => void;
     onModactionBut?: () => void;
     onRoomvisitsBut?: () => void;
-    tags?: string[];
 }
 
-export const UserInfoLayoutButtons = ({ layout, onButtons, onChatlogBut, onHabboinfotoolBut, onMessageBut, onModactionBut, onRoomvisitsBut, tags }: UserInfoLayoutButtonsProps) => {
+export const UserInfoLayoutButtons = ({ layout, onButtons, onChatlogBut, onHabboinfotoolBut, onMessageBut, onModactionBut, onRoomvisitsBut }: UserInfoLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             onPointerTap={onButtons}
             cursor="pointer"
             layout={{ position: 'absolute', left: 190, width: 80, top: 0, height: 122, ...layout }}
@@ -262,14 +244,12 @@ export interface UserInfoLayoutFieldsProps {
     shade25?: UserInfoLayoutShade25Props;
     shade26?: UserInfoLayoutShade26Props;
     shade27?: UserInfoLayoutShade27Props;
-    tags?: string[];
 }
 
-export const UserInfoLayoutFields = ({ buttons, captionAbusiveCfhCountTxt, captionBanCountTxt, captionCautionCountTxt, captionCfhCountTxt, captionEmailAddressTxt, captionIdBansTxt, captionLastLoginTxt, captionLastPurchaseTxt, captionLastSanctionTimeTxt, captionNameTxt, captionOnlineTxt, captionRegisteredTxt, captionTradingLockCountTxt, captionTradingLockExpiryTxt, captionUserClassTxt, captionViewBanCountTxt, captionViewCautionCountTxt, captionViewIdBansTxt, captionViewTradingLockCountTxt, layout, onFields, shade1, shade2, shade22, shade23, shade24, shade25, shade26, shade27, tags }: UserInfoLayoutFieldsProps) => {
+export const UserInfoLayoutFields = ({ buttons, captionAbusiveCfhCountTxt, captionBanCountTxt, captionCautionCountTxt, captionCfhCountTxt, captionEmailAddressTxt, captionIdBansTxt, captionLastLoginTxt, captionLastPurchaseTxt, captionLastSanctionTimeTxt, captionNameTxt, captionOnlineTxt, captionRegisteredTxt, captionTradingLockCountTxt, captionTradingLockExpiryTxt, captionUserClassTxt, captionViewBanCountTxt, captionViewCautionCountTxt, captionViewIdBansTxt, captionViewTradingLockCountTxt, layout, onFields, shade1, shade2, shade22, shade23, shade24, shade25, shade26, shade27 }: UserInfoLayoutFieldsProps) => {
     return (
         <Region
             name="fields"
-            tags={tags}
             onPointerTap={onFields}
             cursor="pointer"
             layout={{ position: 'absolute', left: 5, width: 270, top: 5, height: 194, ...layout }}

@@ -35,14 +35,12 @@ export interface BonusRarePromoLayoutTeaserImageContainerProps {
     layout?: BoxLayout;
     srcPreview?: string;
     srcPromoImage?: string;
-    tags?: string[];
 }
 
-export const BonusRarePromoLayoutTeaserImageContainer = ({ layout, srcPreview, srcPromoImage, tags }: BonusRarePromoLayoutTeaserImageContainerProps) => {
+export const BonusRarePromoLayoutTeaserImageContainer = ({ layout, srcPreview, srcPromoImage }: BonusRarePromoLayoutTeaserImageContainerProps) => {
     return (
         <Region
             name="teaser_image_container"
-            tags={tags}
             layout={{ width: 96, height: 63, flexShrink: 0, ...layout }}
         >
             <Region
@@ -67,15 +65,13 @@ export const BonusRarePromoLayoutTeaserImageContainer = ({ layout, srcPreview, s
 /** Named region `bar_a_bkg` of BonusRarePromoLayout - configured through the parent's `barABkg` prop. */
 export interface BonusRarePromoLayoutBarABkgProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleBarABkg?: boolean;
 }
 
-export const BonusRarePromoLayoutBarABkg = ({ layout, tags, visibleBarABkg }: BonusRarePromoLayoutBarABkgProps) => {
+export const BonusRarePromoLayoutBarABkg = ({ layout, visibleBarABkg }: BonusRarePromoLayoutBarABkgProps) => {
     return (
         <Region
             name="bar_a_bkg"
-            tags={tags}
             visible={visibleBarABkg ?? false}
             backgroundColor="#ffff00"
             layout={{ position: 'absolute', left: 4, right: 6, top: 3, height: 17, ...layout }}
@@ -93,16 +89,14 @@ export interface BonusRarePromoLayoutProgressBarContProps {
     srcBarC?: string;
     srcBarL?: string;
     srcBarR?: string;
-    tags?: string[];
 }
 
-export const BonusRarePromoLayoutProgressBarCont = ({ barABkg, captionStatus, layout, srcBarAC, srcBarAR, srcBarC, srcBarL, srcBarR, tags }: BonusRarePromoLayoutProgressBarContProps) => {
+export const BonusRarePromoLayoutProgressBarCont = ({ barABkg, captionStatus, layout, srcBarAC, srcBarAR, srcBarC, srcBarL, srcBarR }: BonusRarePromoLayoutProgressBarContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="progress_bar_cont"
-            tags={tags}
             layout={{ position: 'absolute', right: 0, width: 302, top: 30, height: 23, ...layout }}
         >
             <ThemeImage
@@ -147,28 +141,27 @@ export const BonusRarePromoLayoutProgressBarCont = ({ barABkg, captionStatus, la
 /** Named region `mid_container` of BonusRarePromoLayout - configured through the parent's `midContainer` prop. */
 export interface BonusRarePromoLayoutMidContainerProps {
     captionHeader?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     progressBarCont?: BonusRarePromoLayoutProgressBarContProps;
-    tags?: string[];
 }
 
-export const BonusRarePromoLayoutMidContainer = ({ captionHeader, layout, progressBarCont, tags }: BonusRarePromoLayoutMidContainerProps) => {
+export const BonusRarePromoLayoutMidContainer = ({ captionHeader, colorableTextColor, layout, progressBarCont }: BonusRarePromoLayoutMidContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mid_container"
-            tags={tags}
             layout={{ width: 304, height: 53, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="header"
-                tags={[ 'COLORABLE' ]}
                 layout={{ position: 'absolute', width: 246, top: 5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionHeader ?? t('landing.view.bonus.rare.header')}
                     textStyle="text-style-u-headline-medium"
+                    textOptions={{ fill: colorableTextColor }}
                 />
             </Region>
             <BonusRarePromoLayoutProgressBarCont {...progressBarCont} />
@@ -180,16 +173,14 @@ export const BonusRarePromoLayoutMidContainer = ({ captionHeader, layout, progre
 export interface BonusRarePromoLayoutButtonContainerProps {
     layout?: BoxLayout;
     onBuyButton?: () => void;
-    tags?: string[];
 }
 
-export const BonusRarePromoLayoutButtonContainer = ({ layout, onBuyButton, tags }: BonusRarePromoLayoutButtonContainerProps) => {
+export const BonusRarePromoLayoutButtonContainer = ({ layout, onBuyButton }: BonusRarePromoLayoutButtonContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_container"
-            tags={tags}
             layout={{ width: 200, height: 56, flexShrink: 0, ...layout }}
         >
             <Button

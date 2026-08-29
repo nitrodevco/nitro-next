@@ -19,14 +19,12 @@ export const NewSearchFriendsTabLayout = ({ container, layout }: NewSearchFriend
 export interface NewSearchFriendsTabLayoutContainerProps {
     layout?: BoxLayout;
     onContainer?: () => void;
-    tags?: string[];
 }
 
-export const NewSearchFriendsTabLayoutContainer = ({ layout, onContainer, tags }: NewSearchFriendsTabLayoutContainerProps) => {
+export const NewSearchFriendsTabLayoutContainer = ({ layout, onContainer }: NewSearchFriendsTabLayoutContainerProps) => {
     return (
         <Region
             name="container"
-            tags={tags}
             onPointerTap={onContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30, ...layout }}

@@ -20,16 +20,14 @@ export interface GrsGuestRoomDetailsShortLayoutFavouriteProps {
     layout?: BoxLayout;
     onFavourite?: () => void;
     srcFavourite?: string;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsShortLayoutFavourite = ({ layout, onFavourite, srcFavourite, tags }: GrsGuestRoomDetailsShortLayoutFavouriteProps) => {
+export const GrsGuestRoomDetailsShortLayoutFavourite = ({ layout, onFavourite, srcFavourite }: GrsGuestRoomDetailsShortLayoutFavouriteProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="favourite"
-            tags={tags}
             tooltip={t('navigator.favourite.tooltip')}
             onPointerTap={onFavourite}
             cursor="pointer"
@@ -49,16 +47,14 @@ export interface GrsGuestRoomDetailsShortLayoutMakeFavouriteProps {
     layout?: BoxLayout;
     onMakeFavourite?: () => void;
     srcMakeFavourite?: string;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsShortLayoutMakeFavourite = ({ layout, onMakeFavourite, srcMakeFavourite, tags }: GrsGuestRoomDetailsShortLayoutMakeFavouriteProps) => {
+export const GrsGuestRoomDetailsShortLayoutMakeFavourite = ({ layout, onMakeFavourite, srcMakeFavourite }: GrsGuestRoomDetailsShortLayoutMakeFavouriteProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="make_favourite"
-            tags={tags}
             tooltip={t('navigator.makefavourite.tooltip')}
             onPointerTap={onMakeFavourite}
             cursor="pointer"
@@ -87,14 +83,12 @@ export interface GrsGuestRoomDetailsShortLayoutDetailsProps {
     srcGroupBaseIcon?: string;
     srcGroupBaseIconNoDoormode?: string;
     srcHome?: string;
-    tags?: string[];
 }
 
-export const GrsGuestRoomDetailsShortLayoutDetails = ({ captionRoomname, captionRoomNumber, favourite, layout, makeFavourite, onDetails, srcDoormodeDoorbellSmall, srcDoormodeInvisibleSmall, srcDoormodePasswordSmall, srcGroupBaseIcon, srcGroupBaseIconNoDoormode, srcHome, tags }: GrsGuestRoomDetailsShortLayoutDetailsProps) => {
+export const GrsGuestRoomDetailsShortLayoutDetails = ({ captionRoomname, captionRoomNumber, favourite, layout, makeFavourite, onDetails, srcDoormodeDoorbellSmall, srcDoormodeInvisibleSmall, srcDoormodePasswordSmall, srcGroupBaseIcon, srcGroupBaseIconNoDoormode, srcHome }: GrsGuestRoomDetailsShortLayoutDetailsProps) => {
     return (
         <Region
             name="details"
-            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onDetails}
             cursor="pointer"

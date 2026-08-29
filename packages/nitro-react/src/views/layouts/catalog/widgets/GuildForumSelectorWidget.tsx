@@ -1,4 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `guildForumSelectorWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -6,16 +7,14 @@ import { BoxLayout, Region } from '#base/theme';
  * (LayoutGuildForumLayout); each passes its own placement through `layout`.
  */
 /** Named region `guildForumSelectorWidget` of GuildForumSelectorWidget - configured through the parent's `guildForumSelectorWidget` prop. */
-export interface GuildForumSelectorWidgetProps {
+export interface GuildForumSelectorWidgetProps extends CatalogWidgetFlags {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuildForumSelectorWidget = ({ layout, tags }: GuildForumSelectorWidgetProps) => {
+export const GuildForumSelectorWidget = ({ layout }: GuildForumSelectorWidgetProps) => {
     return (
         <Region
             name="guildForumSelectorWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         />
     );

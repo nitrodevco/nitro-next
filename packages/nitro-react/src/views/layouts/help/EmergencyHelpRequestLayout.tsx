@@ -137,17 +137,15 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, layout, onCl
 export interface EmergencyHelpRequestLayout_121ItemProps {
     layout?: BoxLayout;
     on_121?: () => void;
-    tags?: string[];
 }
 
-export const EmergencyHelpRequestLayout_121Item = ({ layout, on_121, tags }: EmergencyHelpRequestLayout_121ItemProps) => {
+export const EmergencyHelpRequestLayout_121Item = ({ layout, on_121 }: EmergencyHelpRequestLayout_121ItemProps) => {
     const t = useTranslation();
 
     return (
         <RadioButton
             variant="100"
             name="121"
-            tags={tags}
             onPointerTap={on_121}
             layout={{ width: 270, height: 16, flexShrink: 0, minHeight: 0, maxHeight: 100, ...layout }}
         >
@@ -160,17 +158,15 @@ export const EmergencyHelpRequestLayout_121Item = ({ layout, on_121, tags }: Eme
 export interface EmergencyHelpRequestLayout_122ItemProps {
     layout?: BoxLayout;
     on_122?: () => void;
-    tags?: string[];
 }
 
-export const EmergencyHelpRequestLayout_122Item = ({ layout, on_122, tags }: EmergencyHelpRequestLayout_122ItemProps) => {
+export const EmergencyHelpRequestLayout_122Item = ({ layout, on_122 }: EmergencyHelpRequestLayout_122ItemProps) => {
     const t = useTranslation();
 
     return (
         <RadioButton
             variant="100"
             name="122"
-            tags={tags}
             onPointerTap={on_122}
             layout={{ width: 270, height: 16, flexShrink: 0, minHeight: 0, maxHeight: 100, ...layout }}
         >
@@ -183,17 +179,15 @@ export const EmergencyHelpRequestLayout_122Item = ({ layout, on_122, tags }: Eme
 export interface EmergencyHelpRequestLayout_124ItemProps {
     layout?: BoxLayout;
     on_124?: () => void;
-    tags?: string[];
 }
 
-export const EmergencyHelpRequestLayout_124Item = ({ layout, on_124, tags }: EmergencyHelpRequestLayout_124ItemProps) => {
+export const EmergencyHelpRequestLayout_124Item = ({ layout, on_124 }: EmergencyHelpRequestLayout_124ItemProps) => {
     const t = useTranslation();
 
     return (
         <RadioButton
             variant="100"
             name="124"
-            tags={tags}
             onPointerTap={on_124}
             layout={{ width: 270, height: 16, flexShrink: 0, minHeight: 0, maxHeight: 100, ...layout }}
         >
@@ -206,17 +200,15 @@ export const EmergencyHelpRequestLayout_124Item = ({ layout, on_124, tags }: Eme
 export interface EmergencyHelpRequestLayout_123ItemProps {
     layout?: BoxLayout;
     on_123?: () => void;
-    tags?: string[];
 }
 
-export const EmergencyHelpRequestLayout_123Item = ({ layout, on_123, tags }: EmergencyHelpRequestLayout_123ItemProps) => {
+export const EmergencyHelpRequestLayout_123Item = ({ layout, on_123 }: EmergencyHelpRequestLayout_123ItemProps) => {
     const t = useTranslation();
 
     return (
         <RadioButton
             variant="100"
             name="123"
-            tags={tags}
             onPointerTap={on_123}
             layout={{ width: 270, height: 16, flexShrink: 0, minHeight: 0, maxHeight: 100, ...layout }}
         >
@@ -229,14 +221,12 @@ export const EmergencyHelpRequestLayout_123Item = ({ layout, on_123, tags }: Eme
 export interface EmergencyHelpRequestLayoutTopicSelectorProps {
     itemsTopicSelector?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EmergencyHelpRequestLayoutTopicSelector = ({ itemsTopicSelector, layout, tags }: EmergencyHelpRequestLayoutTopicSelectorProps) => {
+export const EmergencyHelpRequestLayoutTopicSelector = ({ itemsTopicSelector, layout }: EmergencyHelpRequestLayoutTopicSelectorProps) => {
     return (
         <Region
             name="topic_selector"
-            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsTopicSelector ?? (
@@ -256,10 +246,9 @@ export interface EmergencyHelpRequestLayoutUserListItemProps {
     captionRoomName?: string;
     captionUserName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EmergencyHelpRequestLayoutUserListItem = ({ captionRoomName, captionUserName, layout, tags }: EmergencyHelpRequestLayoutUserListItemProps) => {
+export const EmergencyHelpRequestLayoutUserListItem = ({ captionRoomName, captionUserName, layout }: EmergencyHelpRequestLayoutUserListItemProps) => {
     const t = useTranslation();
 
     return (
@@ -269,7 +258,6 @@ export const EmergencyHelpRequestLayoutUserListItem = ({ captionRoomName, captio
         >
             <Region
                 name="user_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 <Border
@@ -310,16 +298,14 @@ export const EmergencyHelpRequestLayoutUserListItem = ({ captionRoomName, captio
 export interface EmergencyHelpRequestLayoutUserPanelProps {
     itemsUserPanel?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EmergencyHelpRequestLayoutUserPanel = ({ itemsUserPanel, layout, tags }: EmergencyHelpRequestLayoutUserPanelProps) => {
+export const EmergencyHelpRequestLayoutUserPanel = ({ itemsUserPanel, layout }: EmergencyHelpRequestLayoutUserPanelProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_panel"
-            tags={tags}
             visible={false}
             layout={{ position: 'absolute', left: 309, minWidth: 282, top: 8, minHeight: 378, flexDirection: 'column', gap: 8, ...layout }}
         >
@@ -347,16 +333,14 @@ export const EmergencyHelpRequestLayoutUserPanel = ({ itemsUserPanel, layout, ta
 export interface EmergencyHelpRequestLayoutRoomPanelTitleItemProps {
     captionRoomPanelTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EmergencyHelpRequestLayoutRoomPanelTitleItem = ({ captionRoomPanelTitle, layout, tags }: EmergencyHelpRequestLayoutRoomPanelTitleItemProps) => {
+export const EmergencyHelpRequestLayoutRoomPanelTitleItem = ({ captionRoomPanelTitle, layout }: EmergencyHelpRequestLayoutRoomPanelTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_panel_title"
-            tags={tags}
             layout={{ width: 227, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -372,16 +356,14 @@ export const EmergencyHelpRequestLayoutRoomPanelTitleItem = ({ captionRoomPanelT
 export interface EmergencyHelpRequestLayoutRoomReportInfoItemProps {
     captionRoomReportInfo?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EmergencyHelpRequestLayoutRoomReportInfoItem = ({ captionRoomReportInfo, layout, tags }: EmergencyHelpRequestLayoutRoomReportInfoItemProps) => {
+export const EmergencyHelpRequestLayoutRoomReportInfoItem = ({ captionRoomReportInfo, layout }: EmergencyHelpRequestLayoutRoomReportInfoItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_report_info"
-            tags={tags}
             layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -396,14 +378,12 @@ export const EmergencyHelpRequestLayoutRoomReportInfoItem = ({ captionRoomReport
 export interface EmergencyHelpRequestLayoutRoomNameItemProps {
     captionRoomName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EmergencyHelpRequestLayoutRoomNameItem = ({ captionRoomName, layout, tags }: EmergencyHelpRequestLayoutRoomNameItemProps) => {
+export const EmergencyHelpRequestLayoutRoomNameItem = ({ captionRoomName, layout }: EmergencyHelpRequestLayoutRoomNameItemProps) => {
     return (
         <Region
             name="room_name"
-            tags={tags}
             layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -418,14 +398,12 @@ export const EmergencyHelpRequestLayoutRoomNameItem = ({ captionRoomName, layout
 export interface EmergencyHelpRequestLayoutRoomDescriptionItemProps {
     captionRoomDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EmergencyHelpRequestLayoutRoomDescriptionItem = ({ captionRoomDescription, layout, tags }: EmergencyHelpRequestLayoutRoomDescriptionItemProps) => {
+export const EmergencyHelpRequestLayoutRoomDescriptionItem = ({ captionRoomDescription, layout }: EmergencyHelpRequestLayoutRoomDescriptionItemProps) => {
     return (
         <Region
             name="room_description"
-            tags={tags}
             layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -440,14 +418,12 @@ export const EmergencyHelpRequestLayoutRoomDescriptionItem = ({ captionRoomDescr
 export interface EmergencyHelpRequestLayoutRoomPanelProps {
     itemsRoomPanel?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EmergencyHelpRequestLayoutRoomPanel = ({ itemsRoomPanel, layout, tags }: EmergencyHelpRequestLayoutRoomPanelProps) => {
+export const EmergencyHelpRequestLayoutRoomPanel = ({ itemsRoomPanel, layout }: EmergencyHelpRequestLayoutRoomPanelProps) => {
     return (
         <Region
             name="room_panel"
-            tags={tags}
             layout={{ position: 'absolute', left: 309, minWidth: 282, top: 8, minHeight: 378, flexDirection: 'column', gap: 8, ...layout }}
         >
             {itemsRoomPanel ?? (

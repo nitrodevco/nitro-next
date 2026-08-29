@@ -97,14 +97,12 @@ export interface GuardianChatReviewResultsLayoutResultsProps {
     layout?: BoxLayout;
     srcVoteImage?: string;
     srcVoteSeparator?: string;
-    tags?: string[];
 }
 
-export const GuardianChatReviewResultsLayoutResults = ({ captionVoteText, layout, srcVoteImage, srcVoteSeparator, tags }: GuardianChatReviewResultsLayoutResultsProps) => {
+export const GuardianChatReviewResultsLayoutResults = ({ captionVoteText, layout, srcVoteImage, srcVoteSeparator }: GuardianChatReviewResultsLayoutResultsProps) => {
     return (
         <Region
             name="results"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', ...layout }}
         >
             <Region layout={{ width: 232, height: 46, flexShrink: 0 }}>

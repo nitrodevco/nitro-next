@@ -59,14 +59,12 @@ export interface UseProductControllerSaddleLayoutPreviewImageRegionProps {
     layout?: BoxLayout;
     onPreviewImageRegion?: () => void;
     srcPreviewImage?: string;
-    tags?: string[];
 }
 
-export const UseProductControllerSaddleLayoutPreviewImageRegion = ({ layout, onPreviewImageRegion, srcPreviewImage, tags }: UseProductControllerSaddleLayoutPreviewImageRegionProps) => {
+export const UseProductControllerSaddleLayoutPreviewImageRegion = ({ layout, onPreviewImageRegion, srcPreviewImage }: UseProductControllerSaddleLayoutPreviewImageRegionProps) => {
     return (
         <Region
             name="preview_image_region"
-            tags={tags}
             onPointerTap={onPreviewImageRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 122, top: 10, height: 130, ...layout }}
@@ -84,14 +82,12 @@ export const UseProductControllerSaddleLayoutPreviewImageRegion = ({ layout, onP
 export interface UseProductControllerSaddleLayoutCancelTextProps {
     layout?: BoxLayout;
     onCancelText?: () => void;
-    tags?: string[];
 }
 
-export const UseProductControllerSaddleLayoutCancelText = ({ layout, onCancelText, tags }: UseProductControllerSaddleLayoutCancelTextProps) => {
+export const UseProductControllerSaddleLayoutCancelText = ({ layout, onCancelText }: UseProductControllerSaddleLayoutCancelTextProps) => {
     return (
         <Region
             name="cancel_text"
-            tags={tags}
             onPointerTap={onCancelText}
             cursor="pointer"
             layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25, ...layout }}

@@ -5,12 +5,13 @@ import { Border, BoxLayout, Button, Region, ThemeImage, ThemeText, WidgetSlot } 
 export interface NextLtdAvailableLayoutProps {
     buttonContainer?: NextLtdAvailableLayoutButtonContainerProps;
     captionHeader?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     onGet?: () => void;
     visibleGet?: boolean;
 }
 
-export const NextLtdAvailableLayout = ({ buttonContainer, captionHeader, layout, onGet, visibleGet }: NextLtdAvailableLayoutProps) => {
+export const NextLtdAvailableLayout = ({ buttonContainer, captionHeader, colorableTextColor, layout, onGet, visibleGet }: NextLtdAvailableLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -30,12 +31,12 @@ export const NextLtdAvailableLayout = ({ buttonContainer, captionHeader, layout,
                 />
                 <Region
                     name="header"
-                    tags={[ 'COLORABLE' ]}
                     layout={{ position: 'absolute', left: 73, width: 151, top: 5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionHeader ?? t('landing.view.next.ltd.header')}
                         textStyle="text-style-u-bold"
+                        textOptions={{ fill: colorableTextColor }}
                     />
                 </Region>
                 <Region
@@ -61,16 +62,14 @@ export const NextLtdAvailableLayout = ({ buttonContainer, captionHeader, layout,
 export interface NextLtdAvailableLayoutButtonContainerProps {
     layout?: BoxLayout;
     onCatalogueButton?: () => void;
-    tags?: string[];
 }
 
-export const NextLtdAvailableLayoutButtonContainer = ({ layout, onCatalogueButton, tags }: NextLtdAvailableLayoutButtonContainerProps) => {
+export const NextLtdAvailableLayoutButtonContainer = ({ layout, onCatalogueButton }: NextLtdAvailableLayoutButtonContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 60, width: 230, top: 20, height: 38, ...layout }}
         >
             <Button

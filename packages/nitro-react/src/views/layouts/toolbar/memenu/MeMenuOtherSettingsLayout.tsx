@@ -68,14 +68,12 @@ export const MeMenuOtherSettingsLayout = ({ captionSettingsTitle, disableRoomCam
 /** Named region `line` of MeMenuOtherSettingsLayout - configured through the parent's `line` prop. */
 export interface MeMenuOtherSettingsLayoutLineProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MeMenuOtherSettingsLayoutLine = ({ layout, tags }: MeMenuOtherSettingsLayoutLineProps) => {
+export const MeMenuOtherSettingsLayoutLine = ({ layout }: MeMenuOtherSettingsLayoutLineProps) => {
     return (
         <Region
             name="line"
-            tags={tags}
             backgroundColor="#2f2f2f"
             layout={{ position: 'absolute', width: 162, top: 24, height: 1, ...layout }}
         />
@@ -86,15 +84,13 @@ export const MeMenuOtherSettingsLayoutLine = ({ layout, tags }: MeMenuOtherSetti
 export interface MeMenuOtherSettingsLayoutIgnoreRoomInvitesCheckboxItemProps {
     layout?: BoxLayout;
     onIgnoreRoomInvitesCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const MeMenuOtherSettingsLayoutIgnoreRoomInvitesCheckboxItem = ({ layout, onIgnoreRoomInvitesCheckbox, tags }: MeMenuOtherSettingsLayoutIgnoreRoomInvitesCheckboxItemProps) => {
+export const MeMenuOtherSettingsLayoutIgnoreRoomInvitesCheckboxItem = ({ layout, onIgnoreRoomInvitesCheckbox }: MeMenuOtherSettingsLayoutIgnoreRoomInvitesCheckboxItemProps) => {
     return (
         <CheckBox
             variant="3"
             name="ignore_room_invites_checkbox"
-            tags={tags}
             onPointerTap={onIgnoreRoomInvitesCheckbox}
             layout={{ width: 15, height: 15, flexShrink: 0, ...layout }}
         />
@@ -105,16 +101,14 @@ export const MeMenuOtherSettingsLayoutIgnoreRoomInvitesCheckboxItem = ({ layout,
 export interface MeMenuOtherSettingsLayoutIgnoreRoomInvitesProps {
     itemsIgnoreRoomInvites?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MeMenuOtherSettingsLayoutIgnoreRoomInvites = ({ itemsIgnoreRoomInvites, layout, tags }: MeMenuOtherSettingsLayoutIgnoreRoomInvitesProps) => {
+export const MeMenuOtherSettingsLayoutIgnoreRoomInvites = ({ itemsIgnoreRoomInvites, layout }: MeMenuOtherSettingsLayoutIgnoreRoomInvitesProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ignore_room_invites"
-            tags={tags}
             layout={{ width: 267, height: 16, flexShrink: 0, flexDirection: 'row', gap: 5, ...layout }}
         >
             {itemsIgnoreRoomInvites ?? (
@@ -135,15 +129,13 @@ export const MeMenuOtherSettingsLayoutIgnoreRoomInvites = ({ itemsIgnoreRoomInvi
 export interface MeMenuOtherSettingsLayoutDisableRoomCameraFollowCheckboxItemProps {
     layout?: BoxLayout;
     onDisableRoomCameraFollowCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const MeMenuOtherSettingsLayoutDisableRoomCameraFollowCheckboxItem = ({ layout, onDisableRoomCameraFollowCheckbox, tags }: MeMenuOtherSettingsLayoutDisableRoomCameraFollowCheckboxItemProps) => {
+export const MeMenuOtherSettingsLayoutDisableRoomCameraFollowCheckboxItem = ({ layout, onDisableRoomCameraFollowCheckbox }: MeMenuOtherSettingsLayoutDisableRoomCameraFollowCheckboxItemProps) => {
     return (
         <CheckBox
             variant="3"
             name="disable_room_camera_follow_checkbox"
-            tags={tags}
             onPointerTap={onDisableRoomCameraFollowCheckbox}
             layout={{ width: 15, height: 15, flexShrink: 0, ...layout }}
         />
@@ -154,16 +146,14 @@ export const MeMenuOtherSettingsLayoutDisableRoomCameraFollowCheckboxItem = ({ l
 export interface MeMenuOtherSettingsLayoutDisableRoomCameraFollowProps {
     itemsDisableRoomCameraFollow?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MeMenuOtherSettingsLayoutDisableRoomCameraFollow = ({ itemsDisableRoomCameraFollow, layout, tags }: MeMenuOtherSettingsLayoutDisableRoomCameraFollowProps) => {
+export const MeMenuOtherSettingsLayoutDisableRoomCameraFollow = ({ itemsDisableRoomCameraFollow, layout }: MeMenuOtherSettingsLayoutDisableRoomCameraFollowProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="disable_room_camera_follow"
-            tags={tags}
             layout={{ width: 313, height: 16, flexShrink: 0, flexDirection: 'row', gap: 5, ...layout }}
         >
             {itemsDisableRoomCameraFollow ?? (
@@ -184,15 +174,13 @@ export const MeMenuOtherSettingsLayoutDisableRoomCameraFollow = ({ itemsDisableR
 export interface MeMenuOtherSettingsLayoutDisableWiredWhisperCheckboxItemProps {
     layout?: BoxLayout;
     onDisableWiredWhisperCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const MeMenuOtherSettingsLayoutDisableWiredWhisperCheckboxItem = ({ layout, onDisableWiredWhisperCheckbox, tags }: MeMenuOtherSettingsLayoutDisableWiredWhisperCheckboxItemProps) => {
+export const MeMenuOtherSettingsLayoutDisableWiredWhisperCheckboxItem = ({ layout, onDisableWiredWhisperCheckbox }: MeMenuOtherSettingsLayoutDisableWiredWhisperCheckboxItemProps) => {
     return (
         <CheckBox
             variant="3"
             name="disable_wired_whisper_checkbox"
-            tags={tags}
             onPointerTap={onDisableWiredWhisperCheckbox}
             layout={{ width: 15, height: 15, flexShrink: 0, ...layout }}
         />
@@ -203,16 +191,14 @@ export const MeMenuOtherSettingsLayoutDisableWiredWhisperCheckboxItem = ({ layou
 export interface MeMenuOtherSettingsLayoutDisableWiredWhisperProps {
     itemsDisableWiredWhisper?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MeMenuOtherSettingsLayoutDisableWiredWhisper = ({ itemsDisableWiredWhisper, layout, tags }: MeMenuOtherSettingsLayoutDisableWiredWhisperProps) => {
+export const MeMenuOtherSettingsLayoutDisableWiredWhisper = ({ itemsDisableWiredWhisper, layout }: MeMenuOtherSettingsLayoutDisableWiredWhisperProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="disable_wired_whisper"
-            tags={tags}
             layout={{ width: 179, height: 16, flexShrink: 0, flexDirection: 'row', gap: 5, ...layout }}
         >
             {itemsDisableWiredWhisper ?? (

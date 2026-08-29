@@ -103,10 +103,9 @@ export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionG
 /** Named region `chat_list` of UserOngoingLayout - configured through the parent's `chatList` prop. */
 export interface UserOngoingLayoutChatListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserOngoingLayoutChatList = ({ layout, tags }: UserOngoingLayoutChatListProps) => {
+export const UserOngoingLayoutChatList = ({ layout }: UserOngoingLayoutChatListProps) => {
     const t = useTranslation();
 
     return (
@@ -116,7 +115,6 @@ export const UserOngoingLayoutChatList = ({ layout, tags }: UserOngoingLayoutCha
         >
             <Region
                 name="chat_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 <Region layout={{ width: 140, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>

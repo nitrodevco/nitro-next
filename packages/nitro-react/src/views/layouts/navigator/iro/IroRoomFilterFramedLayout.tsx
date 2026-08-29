@@ -70,10 +70,9 @@ export const IroRoomFilterFramedLayout = ({ badwordsItemlist, layout, onBadwordA
 /** Named region `badwords_itemlist` of IroRoomFilterFramedLayout - configured through the parent's `badwordsItemlist` prop. */
 export interface IroRoomFilterFramedLayoutBadwordsItemlistProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IroRoomFilterFramedLayoutBadwordsItemlist = ({ layout, tags }: IroRoomFilterFramedLayoutBadwordsItemlistProps) => {
+export const IroRoomFilterFramedLayoutBadwordsItemlist = ({ layout }: IroRoomFilterFramedLayoutBadwordsItemlistProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -81,7 +80,6 @@ export const IroRoomFilterFramedLayoutBadwordsItemlist = ({ layout, tags }: IroR
         >
             <Region
                 name="badwords_itemlist"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>

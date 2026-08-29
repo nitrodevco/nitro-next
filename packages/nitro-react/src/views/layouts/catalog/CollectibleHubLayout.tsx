@@ -125,38 +125,14 @@ export const CollectibleHubLayout = ({ collectionsContainer, collectorHubHeader,
                         </TabButton>
                     </Region>
                 </TabContext>
-                <CollectibleHubLayoutMintingContainer
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    {...mintingContainer}
-                />
-                <CollectibleHubLayoutCollectorProfileContainer
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    {...collectorProfileContainer}
-                />
-                <CollectibleHubLayoutCollectionsContainer
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    {...collectionsContainer}
-                />
-                <CollectibleHubLayoutShopContainer
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    {...shopContainer}
-                />
-                <CollectibleHubLayoutTransferContainer
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    {...transferContainer}
-                />
-                <CollectibleHubLayoutLevelsContainer
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    {...levelsContainer}
-                />
-                <CollectibleHubLayoutInfoContainer
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    {...infoContainer}
-                />
-                <CollectibleHubLayoutRewardsContainer
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    {...rewardsContainer}
-                />
+                <CollectibleHubLayoutMintingContainer {...mintingContainer} />
+                <CollectibleHubLayoutCollectorProfileContainer {...collectorProfileContainer} />
+                <CollectibleHubLayoutCollectionsContainer {...collectionsContainer} />
+                <CollectibleHubLayoutShopContainer {...shopContainer} />
+                <CollectibleHubLayoutTransferContainer {...transferContainer} />
+                <CollectibleHubLayoutLevelsContainer {...levelsContainer} />
+                <CollectibleHubLayoutInfoContainer {...infoContainer} />
+                <CollectibleHubLayoutRewardsContainer {...rewardsContainer} />
                 <Region
                     visible={false}
                     layout={{ position: 'absolute', left: -8, width: 410, top: 56, height: 1 }}
@@ -180,16 +156,14 @@ export interface CollectibleHubLayoutScoreContainerProps {
     captionCurrentScoreKey?: string;
     captionCurrentScoreValue?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutScoreContainer = ({ captionCaptionAllTimeHighScore, captionCaptionCurrentScore, captionCurrentHiscoreKey, captionCurrentHiscoreValue, captionCurrentScoreKey, captionCurrentScoreValue, layout, tags }: CollectibleHubLayoutScoreContainerProps) => {
+export const CollectibleHubLayoutScoreContainer = ({ captionCaptionAllTimeHighScore, captionCaptionCurrentScore, captionCurrentHiscoreKey, captionCurrentHiscoreValue, captionCurrentScoreKey, captionCurrentScoreValue, layout }: CollectibleHubLayoutScoreContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="score_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 116, width: 220, top: 21, height: 45, ...layout }}
         >
             <Region
@@ -263,14 +237,12 @@ export interface CollectibleHubLayoutLevelContainerProps {
     captionCollectorLevel?: string;
     captionLevelTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutLevelContainer = ({ captionCollectorLevel, captionLevelTitle, layout, tags }: CollectibleHubLayoutLevelContainerProps) => {
+export const CollectibleHubLayoutLevelContainer = ({ captionCollectorLevel, captionLevelTitle, layout }: CollectibleHubLayoutLevelContainerProps) => {
     return (
         <Region
             name="level_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 344, width: 45, top: 16, height: 35, ...layout }}
         >
             <Region
@@ -310,15 +282,13 @@ export interface CollectibleHubLayoutCollectorHubHeaderProps {
     srcCollectorLevelBg2?: string;
     srcEmeraldCurrencyIcon?: string;
     srcSilverCurrencyIcon?: string;
-    tags?: string[];
     visibleTabBg?: boolean;
 }
 
-export const CollectibleHubLayoutCollectorHubHeader = ({ captionEmeraldCurrencyValue, captionSilverCurrencyValue, layout, levelContainer, scoreContainer, srcCollectableBgLeft, srcCollectableBgRight, srcCollectorLevelBg, srcCollectorLevelBg2, srcEmeraldCurrencyIcon, srcSilverCurrencyIcon, tags, visibleTabBg }: CollectibleHubLayoutCollectorHubHeaderProps) => {
+export const CollectibleHubLayoutCollectorHubHeader = ({ captionEmeraldCurrencyValue, captionSilverCurrencyValue, layout, levelContainer, scoreContainer, srcCollectableBgLeft, srcCollectableBgRight, srcCollectorLevelBg, srcCollectorLevelBg2, srcEmeraldCurrencyIcon, srcSilverCurrencyIcon, visibleTabBg }: CollectibleHubLayoutCollectorHubHeaderProps) => {
     return (
         <Region
             name="collector_hub_header"
-            tags={tags}
             backgroundColor="#0b162d"
             layout={{ position: 'absolute', left: -5, width: 500, top: -2, height: 122, ...layout }}
         >
@@ -445,16 +415,14 @@ export interface CollectibleHubLayoutCategoryNameRegionProps {
     captionMintingHeader?: string;
     layout?: BoxLayout;
     onCategoryNameRegion?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryNameRegion = ({ captionMintingHeader, layout, onCategoryNameRegion, tags }: CollectibleHubLayoutCategoryNameRegionProps) => {
+export const CollectibleHubLayoutCategoryNameRegion = ({ captionMintingHeader, layout, onCategoryNameRegion }: CollectibleHubLayoutCategoryNameRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="category_name_region"
-            tags={tags}
             onPointerTap={onCategoryNameRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17, ...layout }}
@@ -477,16 +445,14 @@ export interface CollectibleHubLayoutCategoryMintingDescriptionRegionProps {
     captionMintingDescription?: string;
     layout?: BoxLayout;
     onCategoryMintingDescriptionRegion?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryMintingDescriptionRegion = ({ captionMintingDescription, layout, onCategoryMintingDescriptionRegion, tags }: CollectibleHubLayoutCategoryMintingDescriptionRegionProps) => {
+export const CollectibleHubLayoutCategoryMintingDescriptionRegion = ({ captionMintingDescription, layout, onCategoryMintingDescriptionRegion }: CollectibleHubLayoutCategoryMintingDescriptionRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="category_minting_description_region"
-            tags={tags}
             onPointerTap={onCategoryMintingDescriptionRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 480, top: 22, height: 35, ...layout }}
@@ -510,14 +476,12 @@ export interface CollectibleHubLayoutCategoryMintingHeaderRegionProps {
     categoryMintingDescriptionRegion?: CollectibleHubLayoutCategoryMintingDescriptionRegionProps;
     categoryNameRegion?: CollectibleHubLayoutCategoryNameRegionProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryMintingHeaderRegion = ({ categoryMintingDescriptionRegion, categoryNameRegion, layout, tags }: CollectibleHubLayoutCategoryMintingHeaderRegionProps) => {
+export const CollectibleHubLayoutCategoryMintingHeaderRegion = ({ categoryMintingDescriptionRegion, categoryNameRegion, layout }: CollectibleHubLayoutCategoryMintingHeaderRegionProps) => {
     return (
         <Region
             name="category_minting_header_region"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 58, overflow: 'hidden', ...layout }}
         >
             <CollectibleHubLayoutCategoryNameRegion {...categoryNameRegion} />
@@ -530,14 +494,12 @@ export const CollectibleHubLayoutCategoryMintingHeaderRegion = ({ categoryMintin
 export interface CollectibleHubLayoutNumberContainerProps {
     captionNumber?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutNumberContainer = ({ captionNumber, layout, tags }: CollectibleHubLayoutNumberContainerProps) => {
+export const CollectibleHubLayoutNumberContainer = ({ captionNumber, layout }: CollectibleHubLayoutNumberContainerProps) => {
     return (
         <Region
             name="number_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 50, top: 45, height: 16, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Border
@@ -567,21 +529,18 @@ export interface CollectibleHubLayoutItemTemplateItemProps {
     srcBitmap?: string;
     srcCheckmarkIcon?: string;
     srcUnknownImage?: string;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemTemplateItem = ({ layout, numberContainer, onItemTemplate, srcBitmap, srcCheckmarkIcon, srcUnknownImage, tags }: CollectibleHubLayoutItemTemplateItemProps) => {
+export const CollectibleHubLayoutItemTemplateItem = ({ layout, numberContainer, onItemTemplate, srcBitmap, srcCheckmarkIcon, srcUnknownImage }: CollectibleHubLayoutItemTemplateItemProps) => {
     return (
         <Region
             name="item_template"
-            tags={tags}
             onPointerTap={onItemTemplate}
             cursor="pointer"
             layout={{ width: 52, height: 61, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Border
                 variant="2"
-                tags={[ 'ITEM_HILIGHT' ]}
                 tintColor="#a1a19b"
                 layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 60 }}
             >
@@ -605,7 +564,6 @@ export const CollectibleHubLayoutItemTemplateItem = ({ layout, numberContainer, 
             >
                 <ThemeImage
                     name="bitmap"
-                    tags={[ 'BITMAP' ]}
                     src={srcBitmap}
                     layout={{ position: 'absolute', left: 2, width: 46, top: 4, height: 40, minWidth: 46, maxWidth: 46 }}
                 />
@@ -653,10 +611,9 @@ export const CollectibleHubLayoutItemTemplateItem = ({ layout, numberContainer, 
 export interface CollectibleHubLayoutItemgridInventoryProps {
     itemsItemgridInventory?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemgridInventory = ({ itemsItemgridInventory, layout, tags }: CollectibleHubLayoutItemgridInventoryProps) => {
+export const CollectibleHubLayoutItemgridInventory = ({ itemsItemgridInventory, layout }: CollectibleHubLayoutItemgridInventoryProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -664,7 +621,6 @@ export const CollectibleHubLayoutItemgridInventory = ({ itemsItemgridInventory, 
         >
             <Region
                 name="itemgrid_inventory"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}
             >
                 {itemsItemgridInventory ?? (
@@ -680,14 +636,12 @@ export interface CollectibleHubLayoutProductNameContainerProps {
     captionPreviewFurniName?: string;
     layout?: BoxLayout;
     onProductNameContainer?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProductNameContainer = ({ captionPreviewFurniName, layout, onProductNameContainer, tags }: CollectibleHubLayoutProductNameContainerProps) => {
+export const CollectibleHubLayoutProductNameContainer = ({ captionPreviewFurniName, layout, onProductNameContainer }: CollectibleHubLayoutProductNameContainerProps) => {
     return (
         <Region
             name="product_name_container"
-            tags={tags}
             backgroundColor="#000000"
             onPointerTap={onProductNameContainer}
             cursor="pointer"
@@ -709,14 +663,12 @@ export const CollectibleHubLayoutProductNameContainer = ({ captionPreviewFurniNa
 /** Named region `spacing` of CollectibleHubLayout - configured through the parent's `spacing` prop. */
 export interface CollectibleHubLayoutSpacingProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutSpacing = ({ layout, tags }: CollectibleHubLayoutSpacingProps) => {
+export const CollectibleHubLayoutSpacing = ({ layout }: CollectibleHubLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 3, height: 30, flexShrink: 0, ...layout }}
         />
     );
@@ -725,14 +677,12 @@ export const CollectibleHubLayoutSpacing = ({ layout, tags }: CollectibleHubLayo
 /** Named region `spacing` of CollectibleHubLayout - configured through the parent's `spacing` prop. */
 export interface CollectibleHubLayoutSpacing2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutSpacing2 = ({ layout, tags }: CollectibleHubLayoutSpacing2Props) => {
+export const CollectibleHubLayoutSpacing2 = ({ layout }: CollectibleHubLayoutSpacing2Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 7, height: 30, flexShrink: 0, ...layout }}
         />
     );
@@ -745,16 +695,14 @@ export interface CollectibleHubLayoutCollectContainerProps {
     onCollectButton?: () => void;
     spacing?: CollectibleHubLayoutSpacingProps;
     spacing2?: CollectibleHubLayoutSpacing2Props;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCollectContainer = ({ captionStampPricing, layout, onCollectButton, spacing, spacing2, tags }: CollectibleHubLayoutCollectContainerProps) => {
+export const CollectibleHubLayoutCollectContainer = ({ captionStampPricing, layout, onCollectButton, spacing, spacing2 }: CollectibleHubLayoutCollectContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="collect_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 82, width: 200, top: 180, height: 30, ...layout }}
         >
             <Region layout={{ position: 'absolute', right: 0, top: 0, flexDirection: 'row' }}>
@@ -790,14 +738,12 @@ export const CollectibleHubLayoutCollectContainer = ({ captionStampPricing, layo
 /** Named region `progress_bar_top` of CollectibleHubLayout - configured through the parent's `progressBarTop` prop. */
 export interface CollectibleHubLayoutProgressBarTopProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProgressBarTop = ({ layout, tags }: CollectibleHubLayoutProgressBarTopProps) => {
+export const CollectibleHubLayoutProgressBarTop = ({ layout }: CollectibleHubLayoutProgressBarTopProps) => {
     return (
         <Region
             name="progress_bar_top"
-            tags={tags}
             backgroundColor="#00910a"
             layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 8, ...layout }}
         />
@@ -807,14 +753,12 @@ export const CollectibleHubLayoutProgressBarTop = ({ layout, tags }: Collectible
 /** Named region `progress_bar_bottom` of CollectibleHubLayout - configured through the parent's `progressBarBottom` prop. */
 export interface CollectibleHubLayoutProgressBarBottomProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProgressBarBottom = ({ layout, tags }: CollectibleHubLayoutProgressBarBottomProps) => {
+export const CollectibleHubLayoutProgressBarBottom = ({ layout }: CollectibleHubLayoutProgressBarBottomProps) => {
     return (
         <Region
             name="progress_bar_bottom"
-            tags={tags}
             backgroundColor="#037c00"
             layout={{ position: 'absolute', left: 0, width: 120, top: 8, height: 8, ...layout }}
         />
@@ -826,14 +770,12 @@ export interface CollectibleHubLayoutProgressPaddedBarProps {
     layout?: BoxLayout;
     progressBarBottom?: CollectibleHubLayoutProgressBarBottomProps;
     progressBarTop?: CollectibleHubLayoutProgressBarTopProps;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProgressPaddedBar = ({ layout, progressBarBottom, progressBarTop, tags }: CollectibleHubLayoutProgressPaddedBarProps) => {
+export const CollectibleHubLayoutProgressPaddedBar = ({ layout, progressBarBottom, progressBarTop }: CollectibleHubLayoutProgressPaddedBarProps) => {
     return (
         <Region
             name="progress_padded_bar"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 220, top: 1, height: 16, ...layout }}
         >
             <CollectibleHubLayoutProgressBarTop {...progressBarTop} />
@@ -847,16 +789,14 @@ export interface CollectibleHubLayoutProgressBarProps {
     captionProgressBarText?: string;
     layout?: BoxLayout;
     progressPaddedBar?: CollectibleHubLayoutProgressPaddedBarProps;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProgressBar = ({ captionProgressBarText, layout, progressPaddedBar, tags }: CollectibleHubLayoutProgressBarProps) => {
+export const CollectibleHubLayoutProgressBar = ({ captionProgressBarText, layout, progressPaddedBar }: CollectibleHubLayoutProgressBarProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="progress_bar"
-            tags={tags}
             backgroundColor="#112e31"
             layout={{ position: 'absolute', left: 0, width: 220, top: 24, height: 18, ...layout }}
         >
@@ -879,16 +819,14 @@ export interface CollectibleHubLayoutRightBoxProps {
     captionMintLockText?: string;
     layout?: BoxLayout;
     progressBar?: CollectibleHubLayoutProgressBarProps;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutRightBox = ({ captionMintLockText, layout, progressBar, tags }: CollectibleHubLayoutRightBoxProps) => {
+export const CollectibleHubLayoutRightBox = ({ captionMintLockText, layout, progressBar }: CollectibleHubLayoutRightBoxProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="right_box"
-            tags={tags}
             layout={{ position: 'absolute', left: 64, width: 226, top: 0, height: 46, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -909,14 +847,12 @@ export const CollectibleHubLayoutRightBox = ({ captionMintLockText, layout, prog
 export interface CollectibleHubLayoutMintInfoContainerProps {
     layout?: BoxLayout;
     rightBox?: CollectibleHubLayoutRightBoxProps;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutMintInfoContainer = ({ layout, rightBox, tags }: CollectibleHubLayoutMintInfoContainerProps) => {
+export const CollectibleHubLayoutMintInfoContainer = ({ layout, rightBox }: CollectibleHubLayoutMintInfoContainerProps) => {
     return (
         <Region
             name="mint_info_container"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 290, top: 214, height: 46, ...layout }}
         >
@@ -937,16 +873,14 @@ export interface CollectibleHubLayoutPreviewContainerProps {
     srcPlaceholderImage?: string;
     srcProductPreview?: string;
     srcUnknownImage?: string;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutPreviewContainer = ({ collectContainer, layout, mintInfoContainer, productNameContainer, srcBgStar, srcMintLockClosedIcon, srcMintLockOpenIcon, srcPlaceholderImage, srcProductPreview, srcUnknownImage, tags }: CollectibleHubLayoutPreviewContainerProps) => {
+export const CollectibleHubLayoutPreviewContainer = ({ collectContainer, layout, mintInfoContainer, productNameContainer, srcBgStar, srcMintLockClosedIcon, srcMintLockOpenIcon, srcPlaceholderImage, srcProductPreview, srcUnknownImage }: CollectibleHubLayoutPreviewContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="preview_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 191, width: 290, top: 0, height: 260, ...layout }}
         >
             <Border
@@ -1072,20 +1006,15 @@ export interface CollectibleHubLayoutFurnitureContainerProps {
     itemgridInventory?: CollectibleHubLayoutItemgridInventoryProps;
     layout?: BoxLayout;
     previewContainer?: CollectibleHubLayoutPreviewContainerProps;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutFurnitureContainer = ({ itemgridInventory, layout, previewContainer, tags }: CollectibleHubLayoutFurnitureContainerProps) => {
+export const CollectibleHubLayoutFurnitureContainer = ({ itemgridInventory, layout, previewContainer }: CollectibleHubLayoutFurnitureContainerProps) => {
     return (
         <Region
             name="furniture_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 480, top: 60, height: 262, ...layout }}
         >
-            <CollectibleHubLayoutItemgridInventory
-                tags={[ 'FURNI_ITEM_GRID' ]}
-                {...itemgridInventory}
-            />
+            <CollectibleHubLayoutItemgridInventory {...itemgridInventory} />
             <CollectibleHubLayoutPreviewContainer {...previewContainer} />
         </Region>
     );
@@ -1094,14 +1023,12 @@ export const CollectibleHubLayoutFurnitureContainer = ({ itemgridInventory, layo
 /** Named region `spacing` of CollectibleHubLayout - configured through the parent's `spacing` prop. */
 export interface CollectibleHubLayoutSpacing3Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutSpacing3 = ({ layout, tags }: CollectibleHubLayoutSpacing3Props) => {
+export const CollectibleHubLayoutSpacing3 = ({ layout }: CollectibleHubLayoutSpacing3Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 4, height: 30, flexShrink: 0, ...layout }}
         />
     );
@@ -1110,14 +1037,12 @@ export const CollectibleHubLayoutSpacing3 = ({ layout, tags }: CollectibleHubLay
 /** Named region `spacing` of CollectibleHubLayout - configured through the parent's `spacing` prop. */
 export interface CollectibleHubLayoutSpacing4Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutSpacing4 = ({ layout, tags }: CollectibleHubLayoutSpacing4Props) => {
+export const CollectibleHubLayoutSpacing4 = ({ layout }: CollectibleHubLayoutSpacing4Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 6, height: 30, flexShrink: 0, ...layout }}
         />
     );
@@ -1134,17 +1059,15 @@ export interface CollectibleHubLayoutStampPurchasingContainerProps {
     onStampsPurchaseDropdown?: () => void;
     spacing?: CollectibleHubLayoutSpacing3Props;
     spacing2?: CollectibleHubLayoutSpacing4Props;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutStampPurchasingContainer = ({ captionMintTokenBalance, captionSilverCostText, captionStampsHeader, captionStampsHeader2, layout, onSilverBuyButton, onStampsPurchaseDropdown, spacing, spacing2, tags }: CollectibleHubLayoutStampPurchasingContainerProps) => {
+export const CollectibleHubLayoutStampPurchasingContainer = ({ captionMintTokenBalance, captionSilverCostText, captionStampsHeader, captionStampsHeader2, layout, onSilverBuyButton, onStampsPurchaseDropdown, spacing, spacing2 }: CollectibleHubLayoutStampPurchasingContainerProps) => {
     const t = useTranslation();
     const [ stampsPurchaseInputValue, setStampsPurchaseInputValue ] = useState('');
 
     return (
         <Region
             name="stamp_purchasing_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 488, top: 0, height: 100, ...layout }}
         >
             <Border
@@ -1253,17 +1176,15 @@ export interface CollectibleHubLayoutNoWalletContainerProps {
     layout?: BoxLayout;
     onCreateWalletButton?: () => void;
     onMoreInfoButton?: () => void;
-    tags?: string[];
     visibleNoWalletContainer?: boolean;
 }
 
-export const CollectibleHubLayoutNoWalletContainer = ({ captionNoWalletText, layout, onCreateWalletButton, onMoreInfoButton, tags, visibleNoWalletContainer }: CollectibleHubLayoutNoWalletContainerProps) => {
+export const CollectibleHubLayoutNoWalletContainer = ({ captionNoWalletText, layout, onCreateWalletButton, onMoreInfoButton, visibleNoWalletContainer }: CollectibleHubLayoutNoWalletContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="no_wallet_container"
-            tags={tags}
             visible={visibleNoWalletContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 488, top: 0, height: 100, ...layout }}
         >
@@ -1307,14 +1228,12 @@ export interface CollectibleHubLayoutCategoryFooterProps {
     layout?: BoxLayout;
     noWalletContainer?: CollectibleHubLayoutNoWalletContainerProps;
     stampPurchasingContainer?: CollectibleHubLayoutStampPurchasingContainerProps;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryFooter = ({ layout, noWalletContainer, stampPurchasingContainer, tags }: CollectibleHubLayoutCategoryFooterProps) => {
+export const CollectibleHubLayoutCategoryFooter = ({ layout, noWalletContainer, stampPurchasingContainer }: CollectibleHubLayoutCategoryFooterProps) => {
     return (
         <Region
             name="category_footer"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 488, top: 330, height: 100, overflow: 'hidden', ...layout }}
         >
             <Border
@@ -1336,26 +1255,18 @@ export interface CollectibleHubLayoutLoadedContentProps {
     categoryMintingHeaderRegion?: CollectibleHubLayoutCategoryMintingHeaderRegionProps;
     furnitureContainer?: CollectibleHubLayoutFurnitureContainerProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutLoadedContent = ({ categoryFooter, categoryMintingHeaderRegion, furnitureContainer, layout, tags }: CollectibleHubLayoutLoadedContentProps) => {
+export const CollectibleHubLayoutLoadedContent = ({ categoryFooter, categoryMintingHeaderRegion, furnitureContainer, layout }: CollectibleHubLayoutLoadedContentProps) => {
     return (
         <Region
             name="loaded_content"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 430, overflow: 'hidden', ...layout }}
         >
-            <CollectibleHubLayoutCategoryMintingHeaderRegion
-                tags={[ 'category_header' ]}
-                {...categoryMintingHeaderRegion}
-            />
+            <CollectibleHubLayoutCategoryMintingHeaderRegion {...categoryMintingHeaderRegion} />
             <CollectibleHubLayoutFurnitureContainer {...furnitureContainer} />
-            <CollectibleHubLayoutCategoryFooter
-                tags={[ 'category_header' ]}
-                {...categoryFooter}
-            />
+            <CollectibleHubLayoutCategoryFooter {...categoryFooter} />
         </Region>
     );
 };
@@ -1364,15 +1275,13 @@ export const CollectibleHubLayoutLoadedContent = ({ categoryFooter, categoryMint
 export interface CollectibleHubLayoutLoadingContentsProps {
     layout?: BoxLayout;
     srcLoadingIcon?: string;
-    tags?: string[];
     visibleLoadingContents?: boolean;
 }
 
-export const CollectibleHubLayoutLoadingContents = ({ layout, srcLoadingIcon, tags, visibleLoadingContents }: CollectibleHubLayoutLoadingContentsProps) => {
+export const CollectibleHubLayoutLoadingContents = ({ layout, srcLoadingIcon, visibleLoadingContents }: CollectibleHubLayoutLoadingContentsProps) => {
     return (
         <Region
             name="loading_contents"
-            tags={tags}
             visible={visibleLoadingContents ?? false}
             layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
         >
@@ -1395,15 +1304,13 @@ export interface CollectibleHubLayoutMintingContainerProps {
     layout?: BoxLayout;
     loadedContent?: CollectibleHubLayoutLoadedContentProps;
     loadingContents?: CollectibleHubLayoutLoadingContentsProps;
-    tags?: string[];
     visibleMintingContainer?: boolean;
 }
 
-export const CollectibleHubLayoutMintingContainer = ({ layout, loadedContent, loadingContents, tags, visibleMintingContainer }: CollectibleHubLayoutMintingContainerProps) => {
+export const CollectibleHubLayoutMintingContainer = ({ layout, loadedContent, loadingContents, visibleMintingContainer }: CollectibleHubLayoutMintingContainerProps) => {
     return (
         <Region
             name="mintingContainer"
-            tags={tags}
             visible={visibleMintingContainer ?? false}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 10, top: 125, height: 430, overflow: 'hidden', ...layout }}
@@ -1419,15 +1326,13 @@ export interface CollectibleHubLayoutCategoryNameRegion2Props {
     captionCollectorProfileHeader?: string;
     layout?: BoxLayout;
     onCategoryNameRegion?: () => void;
-    tags?: string[];
     visibleCategoryNameRegion?: boolean;
 }
 
-export const CollectibleHubLayoutCategoryNameRegion2 = ({ captionCollectorProfileHeader, layout, onCategoryNameRegion, tags, visibleCategoryNameRegion }: CollectibleHubLayoutCategoryNameRegion2Props) => {
+export const CollectibleHubLayoutCategoryNameRegion2 = ({ captionCollectorProfileHeader, layout, onCategoryNameRegion, visibleCategoryNameRegion }: CollectibleHubLayoutCategoryNameRegion2Props) => {
     return (
         <Region
             name="category_name_region"
-            tags={tags}
             visible={visibleCategoryNameRegion ?? false}
             onPointerTap={onCategoryNameRegion}
             cursor="pointer"
@@ -1452,14 +1357,12 @@ export interface CollectibleHubLayoutCategoryMintingDescriptionRegion2Props {
     captionCollectorProfileDescription?: string;
     layout?: BoxLayout;
     onCategoryMintingDescriptionRegion?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryMintingDescriptionRegion2 = ({ captionCollectorProfileDescription, layout, onCategoryMintingDescriptionRegion, tags }: CollectibleHubLayoutCategoryMintingDescriptionRegion2Props) => {
+export const CollectibleHubLayoutCategoryMintingDescriptionRegion2 = ({ captionCollectorProfileDescription, layout, onCategoryMintingDescriptionRegion }: CollectibleHubLayoutCategoryMintingDescriptionRegion2Props) => {
     return (
         <Region
             name="category_minting_description_region"
-            tags={tags}
             onPointerTap={onCategoryMintingDescriptionRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 380, top: 22, height: 30, ...layout }}
@@ -1483,14 +1386,12 @@ export interface CollectibleHubLayoutCategoryCollectorHeaderRegionProps {
     categoryMintingDescriptionRegion?: CollectibleHubLayoutCategoryMintingDescriptionRegion2Props;
     categoryNameRegion?: CollectibleHubLayoutCategoryNameRegion2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryCollectorHeaderRegion = ({ categoryMintingDescriptionRegion, categoryNameRegion, layout, tags }: CollectibleHubLayoutCategoryCollectorHeaderRegionProps) => {
+export const CollectibleHubLayoutCategoryCollectorHeaderRegion = ({ categoryMintingDescriptionRegion, categoryNameRegion, layout }: CollectibleHubLayoutCategoryCollectorHeaderRegionProps) => {
     return (
         <Region
             name="category_collector_header_region"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 56, overflow: 'hidden', ...layout }}
         >
             <CollectibleHubLayoutCategoryNameRegion2 {...categoryNameRegion} />
@@ -1503,21 +1404,16 @@ export const CollectibleHubLayoutCategoryCollectorHeaderRegion = ({ categoryMint
 export interface CollectibleHubLayoutCategoryContentBackgroundProps {
     categoryCollectorHeaderRegion?: CollectibleHubLayoutCategoryCollectorHeaderRegionProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryContentBackground = ({ categoryCollectorHeaderRegion, layout, tags }: CollectibleHubLayoutCategoryContentBackgroundProps) => {
+export const CollectibleHubLayoutCategoryContentBackground = ({ categoryCollectorHeaderRegion, layout }: CollectibleHubLayoutCategoryContentBackgroundProps) => {
     return (
         <Region
             name="category_content_background"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400, overflow: 'hidden', ...layout }}
         >
-            <CollectibleHubLayoutCategoryCollectorHeaderRegion
-                tags={[ 'category_header' ]}
-                {...categoryCollectorHeaderRegion}
-            />
+            <CollectibleHubLayoutCategoryCollectorHeaderRegion {...categoryCollectorHeaderRegion} />
         </Region>
     );
 };
@@ -1526,15 +1422,13 @@ export const CollectibleHubLayoutCategoryContentBackground = ({ categoryCollecto
 export interface CollectibleHubLayoutCollectorProfileContainerProps {
     categoryContentBackground?: CollectibleHubLayoutCategoryContentBackgroundProps;
     layout?: BoxLayout;
-    tags?: string[];
     visibleCollectorProfileContainer?: boolean;
 }
 
-export const CollectibleHubLayoutCollectorProfileContainer = ({ categoryContentBackground, layout, tags, visibleCollectorProfileContainer }: CollectibleHubLayoutCollectorProfileContainerProps) => {
+export const CollectibleHubLayoutCollectorProfileContainer = ({ categoryContentBackground, layout, visibleCollectorProfileContainer }: CollectibleHubLayoutCollectorProfileContainerProps) => {
     return (
         <Region
             name="collectorProfileContainer"
-            tags={tags}
             visible={visibleCollectorProfileContainer ?? false}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 110, top: 125, height: 400, overflow: 'hidden', ...layout }}
@@ -1549,14 +1443,12 @@ export interface CollectibleHubLayoutButtonContainerProps {
     layout?: BoxLayout;
     onSearchClearButton?: () => void;
     srcSearchIcon?: string;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutButtonContainer = ({ layout, onSearchClearButton, srcSearchIcon, tags }: CollectibleHubLayoutButtonContainerProps) => {
+export const CollectibleHubLayoutButtonContainer = ({ layout, onSearchClearButton, srcSearchIcon }: CollectibleHubLayoutButtonContainerProps) => {
     return (
         <Region
             name="buttonContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 160, width: 24, top: 0, height: 24, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
@@ -1578,14 +1470,12 @@ export const CollectibleHubLayoutButtonContainer = ({ layout, onSearchClearButto
 /** Named region `item_hilight_inner` of CollectibleHubLayout - configured through the parent's `itemHilightInner` prop. */
 export interface CollectibleHubLayoutItemHilightInnerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemHilightInner = ({ layout, tags }: CollectibleHubLayoutItemHilightInnerProps) => {
+export const CollectibleHubLayoutItemHilightInner = ({ layout }: CollectibleHubLayoutItemHilightInnerProps) => {
     return (
         <Region
             name="item_hilight_inner"
-            tags={tags}
             backgroundColor="#63c5e9"
             layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16, ...layout }}
         />
@@ -1596,14 +1486,12 @@ export const CollectibleHubLayoutItemHilightInner = ({ layout, tags }: Collectib
 export interface CollectibleHubLayoutItemHilightOuterProps {
     itemHilightInner?: CollectibleHubLayoutItemHilightInnerProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemHilightOuter = ({ itemHilightInner, layout, tags }: CollectibleHubLayoutItemHilightOuterProps) => {
+export const CollectibleHubLayoutItemHilightOuter = ({ itemHilightInner, layout }: CollectibleHubLayoutItemHilightOuterProps) => {
     return (
         <Region
             name="item_hilight_outer"
-            tags={tags}
             backgroundColor="#82d1ed"
             layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20, ...layout }}
         >
@@ -1616,14 +1504,12 @@ export const CollectibleHubLayoutItemHilightOuter = ({ itemHilightInner, layout,
 export interface CollectibleHubLayoutProgressContainerProps {
     captionProgressText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProgressContainer = ({ captionProgressText, layout, tags }: CollectibleHubLayoutProgressContainerProps) => {
+export const CollectibleHubLayoutProgressContainer = ({ captionProgressText, layout }: CollectibleHubLayoutProgressContainerProps) => {
     return (
         <Region
             name="progress_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 120, width: 36, top: 3, height: 15, minWidth: 36, maxWidth: 36, ...layout }}
         >
             <Border
@@ -1648,14 +1534,12 @@ export const CollectibleHubLayoutProgressContainer = ({ captionProgressText, lay
 /** Named region `progress_color_hint` of CollectibleHubLayout - configured through the parent's `progressColorHint` prop. */
 export interface CollectibleHubLayoutProgressColorHintProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProgressColorHint = ({ layout, tags }: CollectibleHubLayoutProgressColorHintProps) => {
+export const CollectibleHubLayoutProgressColorHint = ({ layout }: CollectibleHubLayoutProgressColorHintProps) => {
     return (
         <Region
             name="progress_color_hint"
-            tags={tags}
             backgroundColor="#00910a"
             layout={{ position: 'absolute', left: 0, width: 4, top: 1, height: 19, minWidth: 4, maxWidth: 4, minHeight: 19, maxHeight: 19, ...layout }}
         />
@@ -1670,20 +1554,17 @@ export interface CollectibleHubLayoutItemTemplateItem2Props {
     onItemTemplate?: () => void;
     progressColorHint?: CollectibleHubLayoutProgressColorHintProps;
     progressContainer?: CollectibleHubLayoutProgressContainerProps;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemTemplateItem2 = ({ captionItemTitle, itemHilightOuter, layout, onItemTemplate, progressColorHint, progressContainer, tags }: CollectibleHubLayoutItemTemplateItem2Props) => {
+export const CollectibleHubLayoutItemTemplateItem2 = ({ captionItemTitle, itemHilightOuter, layout, onItemTemplate, progressColorHint, progressContainer }: CollectibleHubLayoutItemTemplateItem2Props) => {
     return (
         <Region
             name="item_template"
-            tags={tags}
             onPointerTap={onItemTemplate}
             cursor="pointer"
             layout={{ width: 180, height: 22, flexShrink: 0, ...layout }}
         >
             <Region
-                tags={[ 'SELECTION_HILIGHT' ]}
                 backgroundColor="#b4b4ae"
                 layout={{ position: 'absolute', left: 1, width: 178, top: 0, height: 21 }}
             >
@@ -1691,7 +1572,6 @@ export const CollectibleHubLayoutItemTemplateItem2 = ({ captionItemTitle, itemHi
             </Region>
             <Region
                 name="item_title"
-                tags={[ 'ITEM_TITLE', 'SELECTION_COLOR' ]}
                 layout={{ position: 'absolute', left: 7, right: 146, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -1710,10 +1590,9 @@ export const CollectibleHubLayoutItemTemplateItem2 = ({ captionItemTitle, itemHi
 export interface CollectibleHubLayoutNavigationListProps {
     itemsNavigationList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutNavigationList = ({ itemsNavigationList, layout, tags }: CollectibleHubLayoutNavigationListProps) => {
+export const CollectibleHubLayoutNavigationList = ({ itemsNavigationList, layout }: CollectibleHubLayoutNavigationListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -1721,7 +1600,6 @@ export const CollectibleHubLayoutNavigationList = ({ itemsNavigationList, layout
         >
             <Region
                 name="navigationList"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsNavigationList ?? (
@@ -1736,14 +1614,12 @@ export const CollectibleHubLayoutNavigationList = ({ itemsNavigationList, layout
 export interface CollectibleHubLayoutNavigationContainerProps {
     layout?: BoxLayout;
     navigationList?: CollectibleHubLayoutNavigationListProps;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutNavigationContainer = ({ layout, navigationList, tags }: CollectibleHubLayoutNavigationContainerProps) => {
+export const CollectibleHubLayoutNavigationContainer = ({ layout, navigationList }: CollectibleHubLayoutNavigationContainerProps) => {
     return (
         <Region
             name="navigationContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 184, top: 88, bottom: 0, ...layout }}
         >
             <Border
@@ -1760,14 +1636,12 @@ export const CollectibleHubLayoutNavigationContainer = ({ layout, navigationList
 export interface CollectibleHubLayoutProgressHeaderContainerProps {
     captionProgressText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProgressHeaderContainer = ({ captionProgressText, layout, tags }: CollectibleHubLayoutProgressHeaderContainerProps) => {
+export const CollectibleHubLayoutProgressHeaderContainer = ({ captionProgressText, layout }: CollectibleHubLayoutProgressHeaderContainerProps) => {
     return (
         <Region
             name="progress_header_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 248, width: 40, top: 2, height: 26, minWidth: 40, maxWidth: 40, ...layout }}
         >
             <Border
@@ -1794,15 +1668,13 @@ export interface CollectibleHubLayoutProductNameContainer2Props {
     captionPreviewFurniName?: string;
     layout?: BoxLayout;
     onProductNameContainer?: () => void;
-    tags?: string[];
     visibleProductNameContainer?: boolean;
 }
 
-export const CollectibleHubLayoutProductNameContainer2 = ({ captionPreviewFurniName, layout, onProductNameContainer, tags, visibleProductNameContainer }: CollectibleHubLayoutProductNameContainer2Props) => {
+export const CollectibleHubLayoutProductNameContainer2 = ({ captionPreviewFurniName, layout, onProductNameContainer, visibleProductNameContainer }: CollectibleHubLayoutProductNameContainer2Props) => {
     return (
         <Region
             name="product_name_container"
-            tags={tags}
             visible={visibleProductNameContainer ?? false}
             backgroundColor="#000000"
             onPointerTap={onProductNameContainer}
@@ -1827,14 +1699,12 @@ export interface CollectibleHubLayoutProductInfoEntryTemplateItemProps {
     captionProductInfoKey?: string;
     captionProductInfoValue?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProductInfoEntryTemplateItem = ({ captionProductInfoKey, captionProductInfoValue, layout, tags }: CollectibleHubLayoutProductInfoEntryTemplateItemProps) => {
+export const CollectibleHubLayoutProductInfoEntryTemplateItem = ({ captionProductInfoKey, captionProductInfoValue, layout }: CollectibleHubLayoutProductInfoEntryTemplateItemProps) => {
     return (
         <Region
             name="product_info_entry_template"
-            tags={tags}
             backgroundColor="#110b14"
             layout={{ width: 242, height: 20, flexShrink: 0, ...layout }}
         >
@@ -1864,14 +1734,12 @@ export const CollectibleHubLayoutProductInfoEntryTemplateItem = ({ captionProduc
 export interface CollectibleHubLayoutProductInfoListProps {
     itemsProductInfoList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProductInfoList = ({ itemsProductInfoList, layout, tags }: CollectibleHubLayoutProductInfoListProps) => {
+export const CollectibleHubLayoutProductInfoList = ({ itemsProductInfoList, layout }: CollectibleHubLayoutProductInfoListProps) => {
     return (
         <Region
             name="product_info_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 24, width: 242, top: 24, height: 140, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsProductInfoList ?? (
@@ -1885,15 +1753,13 @@ export const CollectibleHubLayoutProductInfoList = ({ itemsProductInfoList, layo
 export interface CollectibleHubLayoutProductInfoContainerProps {
     layout?: BoxLayout;
     productInfoList?: CollectibleHubLayoutProductInfoListProps;
-    tags?: string[];
     visibleProductInfoContainer?: boolean;
 }
 
-export const CollectibleHubLayoutProductInfoContainer = ({ layout, productInfoList, tags, visibleProductInfoContainer }: CollectibleHubLayoutProductInfoContainerProps) => {
+export const CollectibleHubLayoutProductInfoContainer = ({ layout, productInfoList, visibleProductInfoContainer }: CollectibleHubLayoutProductInfoContainerProps) => {
     return (
         <Region
             name="product_info_container"
-            tags={tags}
             visible={visibleProductInfoContainer ?? false}
             backgroundColor="#3b1829"
             layout={{ position: 'absolute', left: 0, width: 290, top: 26, height: 194, ...layout }}
@@ -1906,14 +1772,12 @@ export const CollectibleHubLayoutProductInfoContainer = ({ layout, productInfoLi
 /** Named region `progress_bar_top` of CollectibleHubLayout - configured through the parent's `progressBarTop` prop. */
 export interface CollectibleHubLayoutProgressBarTop2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProgressBarTop2 = ({ layout, tags }: CollectibleHubLayoutProgressBarTop2Props) => {
+export const CollectibleHubLayoutProgressBarTop2 = ({ layout }: CollectibleHubLayoutProgressBarTop2Props) => {
     return (
         <Region
             name="progress_bar_top"
-            tags={tags}
             backgroundColor="#00910a"
             layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 8, ...layout }}
         />
@@ -1923,14 +1787,12 @@ export const CollectibleHubLayoutProgressBarTop2 = ({ layout, tags }: Collectibl
 /** Named region `progress_bar_bottom` of CollectibleHubLayout - configured through the parent's `progressBarBottom` prop. */
 export interface CollectibleHubLayoutProgressBarBottom2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProgressBarBottom2 = ({ layout, tags }: CollectibleHubLayoutProgressBarBottom2Props) => {
+export const CollectibleHubLayoutProgressBarBottom2 = ({ layout }: CollectibleHubLayoutProgressBarBottom2Props) => {
     return (
         <Region
             name="progress_bar_bottom"
-            tags={tags}
             backgroundColor="#037c00"
             layout={{ position: 'absolute', left: 0, width: 120, top: 8, height: 8, ...layout }}
         />
@@ -1942,14 +1804,12 @@ export interface CollectibleHubLayoutProgressPaddedBar2Props {
     layout?: BoxLayout;
     progressBarBottom?: CollectibleHubLayoutProgressBarBottom2Props;
     progressBarTop?: CollectibleHubLayoutProgressBarTop2Props;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProgressPaddedBar2 = ({ layout, progressBarBottom, progressBarTop, tags }: CollectibleHubLayoutProgressPaddedBar2Props) => {
+export const CollectibleHubLayoutProgressPaddedBar2 = ({ layout, progressBarBottom, progressBarTop }: CollectibleHubLayoutProgressPaddedBar2Props) => {
     return (
         <Region
             name="progress_padded_bar"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 280, top: 1, height: 16, ...layout }}
         >
             <CollectibleHubLayoutProgressBarTop2 {...progressBarTop} />
@@ -1963,16 +1823,14 @@ export interface CollectibleHubLayoutProgressBar2Props {
     captionProgressBarText?: string;
     layout?: BoxLayout;
     progressPaddedBar?: CollectibleHubLayoutProgressPaddedBar2Props;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProgressBar2 = ({ captionProgressBarText, layout, progressPaddedBar, tags }: CollectibleHubLayoutProgressBar2Props) => {
+export const CollectibleHubLayoutProgressBar2 = ({ captionProgressBarText, layout, progressPaddedBar }: CollectibleHubLayoutProgressBar2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="progress_bar"
-            tags={tags}
             backgroundColor="#112e31"
             layout={{ position: 'absolute', left: 0, width: 282, top: 34, height: 18, ...layout }}
         >
@@ -1995,16 +1853,14 @@ export interface CollectibleHubLayoutPaddedContProps {
     captionRewardFurniName?: string;
     layout?: BoxLayout;
     progressBar?: CollectibleHubLayoutProgressBar2Props;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutPaddedCont = ({ captionRewardFurniName, layout, progressBar, tags }: CollectibleHubLayoutPaddedContProps) => {
+export const CollectibleHubLayoutPaddedCont = ({ captionRewardFurniName, layout, progressBar }: CollectibleHubLayoutPaddedContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="padded_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 282, top: 4, height: 52, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 282, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -2031,14 +1887,12 @@ export const CollectibleHubLayoutPaddedCont = ({ captionRewardFurniName, layout,
 export interface CollectibleHubLayoutCompletionHeaderContainerProps {
     layout?: BoxLayout;
     paddedCont?: CollectibleHubLayoutPaddedContProps;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCompletionHeaderContainer = ({ layout, paddedCont, tags }: CollectibleHubLayoutCompletionHeaderContainerProps) => {
+export const CollectibleHubLayoutCompletionHeaderContainer = ({ layout, paddedCont }: CollectibleHubLayoutCompletionHeaderContainerProps) => {
     return (
         <Region
             name="completion_header_container"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 60, ...layout }}
         >
@@ -2052,16 +1906,14 @@ export interface CollectibleHubLayoutBonusOrRewardContainerProps {
     completionHeaderContainer?: CollectibleHubLayoutCompletionHeaderContainerProps;
     layout?: BoxLayout;
     onClaimButton?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutBonusOrRewardContainer = ({ completionHeaderContainer, layout, onClaimButton, tags }: CollectibleHubLayoutBonusOrRewardContainerProps) => {
+export const CollectibleHubLayoutBonusOrRewardContainer = ({ completionHeaderContainer, layout, onClaimButton }: CollectibleHubLayoutBonusOrRewardContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bonus_or_reward_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 200, ...layout }}
         >
             <CollectibleHubLayoutCompletionHeaderContainer {...completionHeaderContainer} />
@@ -2083,17 +1935,15 @@ export interface CollectibleHubLayoutCollectionProgressContainerProps {
     captionPreviewRewardText?: string;
     captionPreviewScoreText?: string;
     layout?: BoxLayout;
-    tags?: string[];
     visibleCollectionProgressContainer?: boolean;
 }
 
-export const CollectibleHubLayoutCollectionProgressContainer = ({ captionPreviewRewardText, captionPreviewScoreText, layout, tags, visibleCollectionProgressContainer }: CollectibleHubLayoutCollectionProgressContainerProps) => {
+export const CollectibleHubLayoutCollectionProgressContainer = ({ captionPreviewRewardText, captionPreviewScoreText, layout, visibleCollectionProgressContainer }: CollectibleHubLayoutCollectionProgressContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="collection_progress_container"
-            tags={tags}
             visible={visibleCollectionProgressContainer ?? false}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 290, top: 200, height: 60, justifyContent: 'center', ...layout }}
@@ -2130,16 +1980,14 @@ export const CollectibleHubLayoutCollectionProgressContainer = ({ captionPreview
 export interface CollectibleHubLayoutProductProgressContainerProps {
     captionProcuctScoreText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProductProgressContainer = ({ captionProcuctScoreText, layout, tags }: CollectibleHubLayoutProductProgressContainerProps) => {
+export const CollectibleHubLayoutProductProgressContainer = ({ captionProcuctScoreText, layout }: CollectibleHubLayoutProductProgressContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="product_progress_container"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 290, top: 220, height: 40, ...layout }}
         >
@@ -2174,14 +2022,12 @@ export interface CollectibleHubLayoutPreviewContainer2Props {
     srcPlaceholderImage?: string;
     srcProductPreview?: string;
     srcUnknownImage?: string;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutPreviewContainer2 = ({ bonusOrRewardContainer, collectionProgressContainer, layout, productInfoContainer, productNameContainer, productProgressContainer, srcBgStar, srcPlaceholderImage, srcProductPreview, srcUnknownImage, tags }: CollectibleHubLayoutPreviewContainer2Props) => {
+export const CollectibleHubLayoutPreviewContainer2 = ({ bonusOrRewardContainer, collectionProgressContainer, layout, productInfoContainer, productNameContainer, productProgressContainer, srcBgStar, srcPlaceholderImage, srcProductPreview, srcUnknownImage }: CollectibleHubLayoutPreviewContainer2Props) => {
     return (
         <Region
             name="preview_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 290, top: 34, height: 260, ...layout }}
         >
             <Border
@@ -2274,14 +2120,12 @@ export const CollectibleHubLayoutPreviewContainer2 = ({ bonusOrRewardContainer, 
 export interface CollectibleHubLayoutNumberContainer2Props {
     captionNumber?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutNumberContainer2 = ({ captionNumber, layout, tags }: CollectibleHubLayoutNumberContainer2Props) => {
+export const CollectibleHubLayoutNumberContainer2 = ({ captionNumber, layout }: CollectibleHubLayoutNumberContainer2Props) => {
     return (
         <Region
             name="number_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 50, top: 45, height: 16, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Border
@@ -2311,21 +2155,18 @@ export interface CollectibleHubLayoutItemTemplateItem3Props {
     srcBitmap?: string;
     srcCheckmarkIcon?: string;
     srcUnknownImage?: string;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemTemplateItem3 = ({ layout, numberContainer, onItemTemplate, srcBitmap, srcCheckmarkIcon, srcUnknownImage, tags }: CollectibleHubLayoutItemTemplateItem3Props) => {
+export const CollectibleHubLayoutItemTemplateItem3 = ({ layout, numberContainer, onItemTemplate, srcBitmap, srcCheckmarkIcon, srcUnknownImage }: CollectibleHubLayoutItemTemplateItem3Props) => {
     return (
         <Region
             name="item_template"
-            tags={tags}
             onPointerTap={onItemTemplate}
             cursor="pointer"
             layout={{ width: 52, height: 61, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Border
                 variant="2"
-                tags={[ 'ITEM_HILIGHT' ]}
                 tintColor="#a1a19b"
                 layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 60 }}
             >
@@ -2345,7 +2186,6 @@ export const CollectibleHubLayoutItemTemplateItem3 = ({ layout, numberContainer,
             </Border>
             <ThemeImage
                 name="bitmap"
-                tags={[ 'BITMAP' ]}
                 src={srcBitmap}
                 layout={{ position: 'absolute', left: 2, width: 46, top: 4, height: 40, minWidth: 46, maxWidth: 46 }}
             />
@@ -2381,10 +2221,9 @@ export const CollectibleHubLayoutItemTemplateItem3 = ({ layout, numberContainer,
 export interface CollectibleHubLayoutItemgridCollectionProps {
     itemsItemgridCollection?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemgridCollection = ({ itemsItemgridCollection, layout, tags }: CollectibleHubLayoutItemgridCollectionProps) => {
+export const CollectibleHubLayoutItemgridCollection = ({ itemsItemgridCollection, layout }: CollectibleHubLayoutItemgridCollectionProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -2392,7 +2231,6 @@ export const CollectibleHubLayoutItemgridCollection = ({ itemsItemgridCollection
         >
             <Region
                 name="itemgrid_collection"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}
             >
                 {itemsItemgridCollection ?? (
@@ -2407,20 +2245,15 @@ export const CollectibleHubLayoutItemgridCollection = ({ itemsItemgridCollection
 export interface CollectibleHubLayoutItemContainerProps {
     itemgridCollection?: CollectibleHubLayoutItemgridCollectionProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemContainer = ({ itemgridCollection, layout, tags }: CollectibleHubLayoutItemContainerProps) => {
+export const CollectibleHubLayoutItemContainer = ({ itemgridCollection, layout }: CollectibleHubLayoutItemContainerProps) => {
     return (
         <Region
             name="item_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 290, top: 300, height: 123, ...layout }}
         >
-            <CollectibleHubLayoutItemgridCollection
-                tags={[ 'FURNI_ITEM_GRID' ]}
-                {...itemgridCollection}
-            />
+            <CollectibleHubLayoutItemgridCollection {...itemgridCollection} />
         </Region>
     );
 };
@@ -2432,14 +2265,12 @@ export interface CollectibleHubLayoutCollectionContentProps {
     layout?: BoxLayout;
     previewContainer?: CollectibleHubLayoutPreviewContainer2Props;
     progressHeaderContainer?: CollectibleHubLayoutProgressHeaderContainerProps;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCollectionContent = ({ captionCollectionName, itemContainer, layout, previewContainer, progressHeaderContainer, tags }: CollectibleHubLayoutCollectionContentProps) => {
+export const CollectibleHubLayoutCollectionContent = ({ captionCollectionName, itemContainer, layout, previewContainer, progressHeaderContainer }: CollectibleHubLayoutCollectionContentProps) => {
     return (
         <Region
             name="collection_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 195, width: 290, top: 3, height: 425, ...layout }}
         >
             <Border
@@ -2471,17 +2302,15 @@ export interface CollectibleHubLayoutLoadedContent2Props {
     navigationContainer?: CollectibleHubLayoutNavigationContainerProps;
     onSortSelection?: () => void;
     onWalletSelection?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutLoadedContent2 = ({ buttonContainer, captionSearchPlaceholder, collectionContent, layout, navigationContainer, onSortSelection, onWalletSelection, tags }: CollectibleHubLayoutLoadedContent2Props) => {
+export const CollectibleHubLayoutLoadedContent2 = ({ buttonContainer, captionSearchPlaceholder, collectionContent, layout, navigationContainer, onSortSelection, onWalletSelection }: CollectibleHubLayoutLoadedContent2Props) => {
     const t = useTranslation();
     const [ searchInputValue, setSearchInputValue ] = useState('');
 
     return (
         <Region
             name="loaded_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
         >
             <Dropmenu
@@ -2528,15 +2357,13 @@ export const CollectibleHubLayoutLoadedContent2 = ({ buttonContainer, captionSea
 export interface CollectibleHubLayoutLoadingContents2Props {
     layout?: BoxLayout;
     srcLoadingIcon?: string;
-    tags?: string[];
     visibleLoadingContents?: boolean;
 }
 
-export const CollectibleHubLayoutLoadingContents2 = ({ layout, srcLoadingIcon, tags, visibleLoadingContents }: CollectibleHubLayoutLoadingContents2Props) => {
+export const CollectibleHubLayoutLoadingContents2 = ({ layout, srcLoadingIcon, visibleLoadingContents }: CollectibleHubLayoutLoadingContents2Props) => {
     return (
         <Region
             name="loading_contents"
-            tags={tags}
             visible={visibleLoadingContents ?? false}
             layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
         >
@@ -2559,14 +2386,12 @@ export interface CollectibleHubLayoutCollectionsContainerProps {
     layout?: BoxLayout;
     loadedContent?: CollectibleHubLayoutLoadedContent2Props;
     loadingContents?: CollectibleHubLayoutLoadingContents2Props;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCollectionsContainer = ({ layout, loadedContent, loadingContents, tags }: CollectibleHubLayoutCollectionsContainerProps) => {
+export const CollectibleHubLayoutCollectionsContainer = ({ layout, loadedContent, loadingContents }: CollectibleHubLayoutCollectionsContainerProps) => {
     return (
         <Region
             name="collectionsContainer"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden', ...layout }}
         >
@@ -2579,14 +2404,12 @@ export const CollectibleHubLayoutCollectionsContainer = ({ layout, loadedContent
 /** Named region `item_hilight_inner` of CollectibleHubLayout - configured through the parent's `itemHilightInner` prop. */
 export interface CollectibleHubLayoutItemHilightInner2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemHilightInner2 = ({ layout, tags }: CollectibleHubLayoutItemHilightInner2Props) => {
+export const CollectibleHubLayoutItemHilightInner2 = ({ layout }: CollectibleHubLayoutItemHilightInner2Props) => {
     return (
         <Region
             name="item_hilight_inner"
-            tags={tags}
             backgroundColor="#63c5e9"
             layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16, ...layout }}
         />
@@ -2597,15 +2420,13 @@ export const CollectibleHubLayoutItemHilightInner2 = ({ layout, tags }: Collecti
 export interface CollectibleHubLayoutItemHilightOuter2Props {
     itemHilightInner?: CollectibleHubLayoutItemHilightInner2Props;
     layout?: BoxLayout;
-    tags?: string[];
     visibleItemHilightOuter?: boolean;
 }
 
-export const CollectibleHubLayoutItemHilightOuter2 = ({ itemHilightInner, layout, tags, visibleItemHilightOuter }: CollectibleHubLayoutItemHilightOuter2Props) => {
+export const CollectibleHubLayoutItemHilightOuter2 = ({ itemHilightInner, layout, visibleItemHilightOuter }: CollectibleHubLayoutItemHilightOuter2Props) => {
     return (
         <Region
             name="item_hilight_outer"
-            tags={tags}
             visible={visibleItemHilightOuter ?? false}
             backgroundColor="#82d1ed"
             layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20, ...layout }}
@@ -2621,20 +2442,17 @@ export interface CollectibleHubLayoutItemTemplateItem4Props {
     itemHilightOuter?: CollectibleHubLayoutItemHilightOuter2Props;
     layout?: BoxLayout;
     onItemTemplate?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemTemplateItem4 = ({ captionItemTitle, itemHilightOuter, layout, onItemTemplate, tags }: CollectibleHubLayoutItemTemplateItem4Props) => {
+export const CollectibleHubLayoutItemTemplateItem4 = ({ captionItemTitle, itemHilightOuter, layout, onItemTemplate }: CollectibleHubLayoutItemTemplateItem4Props) => {
     return (
         <Region
             name="item_template"
-            tags={tags}
             onPointerTap={onItemTemplate}
             cursor="pointer"
             layout={{ width: 180, height: 22, flexShrink: 0, ...layout }}
         >
             <Region
-                tags={[ 'SELECTION_HILIGHT' ]}
                 backgroundColor="#b4b4ae"
                 layout={{ position: 'absolute', left: 1, width: 178, top: 0, height: 21 }}
             >
@@ -2642,7 +2460,6 @@ export const CollectibleHubLayoutItemTemplateItem4 = ({ captionItemTitle, itemHi
             </Region>
             <Region
                 name="item_title"
-                tags={[ 'ITEM_TITLE', 'SELECTION_COLOR' ]}
                 layout={{ position: 'absolute', left: 7, right: 146, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -2659,10 +2476,9 @@ export const CollectibleHubLayoutItemTemplateItem4 = ({ captionItemTitle, itemHi
 export interface CollectibleHubLayoutNavigationList2Props {
     itemsNavigationList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutNavigationList2 = ({ itemsNavigationList, layout, tags }: CollectibleHubLayoutNavigationList2Props) => {
+export const CollectibleHubLayoutNavigationList2 = ({ itemsNavigationList, layout }: CollectibleHubLayoutNavigationList2Props) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -2670,7 +2486,6 @@ export const CollectibleHubLayoutNavigationList2 = ({ itemsNavigationList, layou
         >
             <Region
                 name="navigationList"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsNavigationList ?? (
@@ -2685,14 +2500,12 @@ export const CollectibleHubLayoutNavigationList2 = ({ itemsNavigationList, layou
 export interface CollectibleHubLayoutNavigationContainer2Props {
     layout?: BoxLayout;
     navigationList?: CollectibleHubLayoutNavigationList2Props;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutNavigationContainer2 = ({ layout, navigationList, tags }: CollectibleHubLayoutNavigationContainer2Props) => {
+export const CollectibleHubLayoutNavigationContainer2 = ({ layout, navigationList }: CollectibleHubLayoutNavigationContainer2Props) => {
     return (
         <Region
             name="navigationContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 8, width: 184, top: 3, bottom: 0, ...layout }}
         >
             <Border
@@ -2710,14 +2523,12 @@ export interface CollectibleHubLayoutProductNameContainer3Props {
     captionPreviewFurniName?: string;
     layout?: BoxLayout;
     onProductNameContainer?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProductNameContainer3 = ({ captionPreviewFurniName, layout, onProductNameContainer, tags }: CollectibleHubLayoutProductNameContainer3Props) => {
+export const CollectibleHubLayoutProductNameContainer3 = ({ captionPreviewFurniName, layout, onProductNameContainer }: CollectibleHubLayoutProductNameContainer3Props) => {
     return (
         <Region
             name="product_name_container"
-            tags={tags}
             backgroundColor="#000000"
             onPointerTap={onProductNameContainer}
             cursor="pointer"
@@ -2741,14 +2552,12 @@ export interface CollectibleHubLayoutProductInfoEntryTemplateItem2Props {
     captionProductInfoKey?: string;
     captionProductInfoValue?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProductInfoEntryTemplateItem2 = ({ captionProductInfoKey, captionProductInfoValue, layout, tags }: CollectibleHubLayoutProductInfoEntryTemplateItem2Props) => {
+export const CollectibleHubLayoutProductInfoEntryTemplateItem2 = ({ captionProductInfoKey, captionProductInfoValue, layout }: CollectibleHubLayoutProductInfoEntryTemplateItem2Props) => {
     return (
         <Region
             name="product_info_entry_template"
-            tags={tags}
             backgroundColor="#110b14"
             layout={{ width: 242, height: 20, flexShrink: 0, ...layout }}
         >
@@ -2778,14 +2587,12 @@ export const CollectibleHubLayoutProductInfoEntryTemplateItem2 = ({ captionProdu
 export interface CollectibleHubLayoutProductInfoList2Props {
     itemsProductInfoList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutProductInfoList2 = ({ itemsProductInfoList, layout, tags }: CollectibleHubLayoutProductInfoList2Props) => {
+export const CollectibleHubLayoutProductInfoList2 = ({ itemsProductInfoList, layout }: CollectibleHubLayoutProductInfoList2Props) => {
     return (
         <Region
             name="product_info_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 24, width: 242, top: 24, height: 140, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsProductInfoList ?? (
@@ -2799,15 +2606,13 @@ export const CollectibleHubLayoutProductInfoList2 = ({ itemsProductInfoList, lay
 export interface CollectibleHubLayoutProductInfoContainer2Props {
     layout?: BoxLayout;
     productInfoList?: CollectibleHubLayoutProductInfoList2Props;
-    tags?: string[];
     visibleProductInfoContainer?: boolean;
 }
 
-export const CollectibleHubLayoutProductInfoContainer2 = ({ layout, productInfoList, tags, visibleProductInfoContainer }: CollectibleHubLayoutProductInfoContainer2Props) => {
+export const CollectibleHubLayoutProductInfoContainer2 = ({ layout, productInfoList, visibleProductInfoContainer }: CollectibleHubLayoutProductInfoContainer2Props) => {
     return (
         <Region
             name="product_info_container"
-            tags={tags}
             visible={visibleProductInfoContainer ?? false}
             backgroundColor="#3b1829"
             layout={{ position: 'absolute', left: 0, width: 290, top: 26, height: 194, ...layout }}
@@ -2821,14 +2626,12 @@ export const CollectibleHubLayoutProductInfoContainer2 = ({ layout, productInfoL
 export interface CollectibleHubLayoutMintlimitTextItemProps {
     captionMintlimitText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutMintlimitTextItem = ({ captionMintlimitText, layout, tags }: CollectibleHubLayoutMintlimitTextItemProps) => {
+export const CollectibleHubLayoutMintlimitTextItem = ({ captionMintlimitText, layout }: CollectibleHubLayoutMintlimitTextItemProps) => {
     return (
         <Region
             name="mintlimit_text"
-            tags={tags}
             layout={{ width: 80, height: 25, flexShrink: 0, minHeight: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', ...layout }}
         >
             <ThemeText
@@ -2844,14 +2647,12 @@ export const CollectibleHubLayoutMintlimitTextItem = ({ captionMintlimitText, la
 export interface CollectibleHubLayoutMintlimitContainerProps {
     itemsMintlimitContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutMintlimitContainer = ({ itemsMintlimitContainer, layout, tags }: CollectibleHubLayoutMintlimitContainerProps) => {
+export const CollectibleHubLayoutMintlimitContainer = ({ itemsMintlimitContainer, layout }: CollectibleHubLayoutMintlimitContainerProps) => {
     return (
         <Region
             name="mintlimit_container"
-            tags={tags}
             layout={{ position: 'absolute', right: 10, top: 196, flexDirection: 'row', gap: 4, ...layout }}
         >
             {itemsMintlimitContainer ?? (
@@ -2877,16 +2678,14 @@ export interface CollectibleHubLayoutPreviewContainer3Props {
     srcPlaceholderImage?: string;
     srcProductPreview?: string;
     srcUnknownImage?: string;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutPreviewContainer3 = ({ captionPriceText, layout, mintlimitContainer, onBuyButton, productInfoContainer, productNameContainer, srcBgStar, srcPlaceholderImage, srcProductPreview, srcUnknownImage, tags }: CollectibleHubLayoutPreviewContainer3Props) => {
+export const CollectibleHubLayoutPreviewContainer3 = ({ captionPriceText, layout, mintlimitContainer, onBuyButton, productInfoContainer, productNameContainer, srcBgStar, srcPlaceholderImage, srcProductPreview, srcUnknownImage }: CollectibleHubLayoutPreviewContainer3Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="preview_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260, ...layout }}
         >
             <Border
@@ -3004,15 +2803,13 @@ export interface CollectibleHubLayoutNumberContainer3Props {
     captionNumber?: string;
     layout?: BoxLayout;
     srcEmeraldIcon?: string;
-    tags?: string[];
     visibleTextBorder?: boolean;
 }
 
-export const CollectibleHubLayoutNumberContainer3 = ({ captionNumber, layout, srcEmeraldIcon, tags, visibleTextBorder }: CollectibleHubLayoutNumberContainer3Props) => {
+export const CollectibleHubLayoutNumberContainer3 = ({ captionNumber, layout, srcEmeraldIcon, visibleTextBorder }: CollectibleHubLayoutNumberContainer3Props) => {
     return (
         <Region
             name="number_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 50, top: 40, height: 20, minWidth: 50, maxWidth: 50, ...layout }}
         >
             <Region
@@ -3052,21 +2849,18 @@ export interface CollectibleHubLayoutItemTemplateItem5Props {
     onItemTemplate?: () => void;
     srcBitmap?: string;
     srcUnknownImage?: string;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemTemplateItem5 = ({ layout, numberContainer, onItemTemplate, srcBitmap, srcUnknownImage, tags }: CollectibleHubLayoutItemTemplateItem5Props) => {
+export const CollectibleHubLayoutItemTemplateItem5 = ({ layout, numberContainer, onItemTemplate, srcBitmap, srcUnknownImage }: CollectibleHubLayoutItemTemplateItem5Props) => {
     return (
         <Region
             name="item_template"
-            tags={tags}
             onPointerTap={onItemTemplate}
             cursor="pointer"
             layout={{ width: 52, height: 62, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Border
                 variant="2"
-                tags={[ 'ITEM_HILIGHT' ]}
                 tintColor="#a1a19b"
                 layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 60 }}
             >
@@ -3086,7 +2880,6 @@ export const CollectibleHubLayoutItemTemplateItem5 = ({ layout, numberContainer,
             </Border>
             <ThemeImage
                 name="bitmap"
-                tags={[ 'BITMAP' ]}
                 src={srcBitmap}
                 layout={{ position: 'absolute', left: 2, width: 46, top: 4, height: 40, minWidth: 46, maxWidth: 46 }}
             />
@@ -3117,10 +2910,9 @@ export const CollectibleHubLayoutItemTemplateItem5 = ({ layout, numberContainer,
 export interface CollectibleHubLayoutItemgridShopProps {
     itemsItemgridShop?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemgridShop = ({ itemsItemgridShop, layout, tags }: CollectibleHubLayoutItemgridShopProps) => {
+export const CollectibleHubLayoutItemgridShop = ({ itemsItemgridShop, layout }: CollectibleHubLayoutItemgridShopProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -3128,7 +2920,6 @@ export const CollectibleHubLayoutItemgridShop = ({ itemsItemgridShop, layout, ta
         >
             <Region
                 name="itemgrid_shop"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}
             >
                 {itemsItemgridShop ?? (
@@ -3143,20 +2934,15 @@ export const CollectibleHubLayoutItemgridShop = ({ itemsItemgridShop, layout, ta
 export interface CollectibleHubLayoutItemContainer2Props {
     itemgridShop?: CollectibleHubLayoutItemgridShopProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemContainer2 = ({ itemgridShop, layout, tags }: CollectibleHubLayoutItemContainer2Props) => {
+export const CollectibleHubLayoutItemContainer2 = ({ itemgridShop, layout }: CollectibleHubLayoutItemContainer2Props) => {
     return (
         <Region
             name="item_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 290, top: 270, height: 153, ...layout }}
         >
-            <CollectibleHubLayoutItemgridShop
-                tags={[ 'FURNI_ITEM_GRID' ]}
-                {...itemgridShop}
-            />
+            <CollectibleHubLayoutItemgridShop {...itemgridShop} />
         </Region>
     );
 };
@@ -3166,14 +2952,12 @@ export interface CollectibleHubLayoutCollectionContent2Props {
     itemContainer?: CollectibleHubLayoutItemContainer2Props;
     layout?: BoxLayout;
     previewContainer?: CollectibleHubLayoutPreviewContainer3Props;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCollectionContent2 = ({ itemContainer, layout, previewContainer, tags }: CollectibleHubLayoutCollectionContent2Props) => {
+export const CollectibleHubLayoutCollectionContent2 = ({ itemContainer, layout, previewContainer }: CollectibleHubLayoutCollectionContent2Props) => {
     return (
         <Region
             name="collection_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 200, width: 290, top: 3, height: 425, ...layout }}
         >
             <CollectibleHubLayoutPreviewContainer3 {...previewContainer} />
@@ -3187,14 +2971,12 @@ export interface CollectibleHubLayoutLoadedContent3Props {
     collectionContent?: CollectibleHubLayoutCollectionContent2Props;
     layout?: BoxLayout;
     navigationContainer?: CollectibleHubLayoutNavigationContainer2Props;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutLoadedContent3 = ({ collectionContent, layout, navigationContainer, tags }: CollectibleHubLayoutLoadedContent3Props) => {
+export const CollectibleHubLayoutLoadedContent3 = ({ collectionContent, layout, navigationContainer }: CollectibleHubLayoutLoadedContent3Props) => {
     return (
         <Region
             name="loaded_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 428, ...layout }}
         >
             <CollectibleHubLayoutNavigationContainer2 {...navigationContainer} />
@@ -3207,15 +2989,13 @@ export const CollectibleHubLayoutLoadedContent3 = ({ collectionContent, layout, 
 export interface CollectibleHubLayoutLoadingContents3Props {
     layout?: BoxLayout;
     srcLoadingIcon?: string;
-    tags?: string[];
     visibleLoadingContents?: boolean;
 }
 
-export const CollectibleHubLayoutLoadingContents3 = ({ layout, srcLoadingIcon, tags, visibleLoadingContents }: CollectibleHubLayoutLoadingContents3Props) => {
+export const CollectibleHubLayoutLoadingContents3 = ({ layout, srcLoadingIcon, visibleLoadingContents }: CollectibleHubLayoutLoadingContents3Props) => {
     return (
         <Region
             name="loading_contents"
-            tags={tags}
             visible={visibleLoadingContents ?? false}
             layout={{ position: 'absolute', left: 5, width: 485, top: 0, height: 429, ...layout }}
         >
@@ -3238,15 +3018,13 @@ export interface CollectibleHubLayoutShopContainerProps {
     layout?: BoxLayout;
     loadedContent?: CollectibleHubLayoutLoadedContent3Props;
     loadingContents?: CollectibleHubLayoutLoadingContents3Props;
-    tags?: string[];
     visibleShopContainer?: boolean;
 }
 
-export const CollectibleHubLayoutShopContainer = ({ layout, loadedContent, loadingContents, tags, visibleShopContainer }: CollectibleHubLayoutShopContainerProps) => {
+export const CollectibleHubLayoutShopContainer = ({ layout, loadedContent, loadingContents, visibleShopContainer }: CollectibleHubLayoutShopContainerProps) => {
     return (
         <Region
             name="shopContainer"
-            tags={tags}
             visible={visibleShopContainer ?? false}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: -5, right: 15, top: 125, height: 428, overflow: 'hidden', ...layout }}
@@ -3260,16 +3038,14 @@ export const CollectibleHubLayoutShopContainer = ({ layout, loadedContent, loadi
 /** Named region `headercontainer` of CollectibleHubLayout - configured through the parent's `headercontainer` prop. */
 export interface CollectibleHubLayoutHeadercontainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutHeadercontainer = ({ layout, tags }: CollectibleHubLayoutHeadercontainerProps) => {
+export const CollectibleHubLayoutHeadercontainer = ({ layout }: CollectibleHubLayoutHeadercontainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="headercontainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 50, justifyContent: 'center', ...layout }}
         >
             <Region layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 450, alignSelf: 'center', height: 30, minWidth: 450, maxWidth: 450, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
@@ -3285,14 +3061,12 @@ export const CollectibleHubLayoutHeadercontainer = ({ layout, tags }: Collectibl
 /** Named region `spacing` of CollectibleHubLayout - configured through the parent's `spacing` prop. */
 export interface CollectibleHubLayoutSpacing5Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutSpacing5 = ({ layout, tags }: CollectibleHubLayoutSpacing5Props) => {
+export const CollectibleHubLayoutSpacing5 = ({ layout }: CollectibleHubLayoutSpacing5Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 4, height: 30, flexShrink: 0, ...layout }}
         />
     );
@@ -3301,14 +3075,12 @@ export const CollectibleHubLayoutSpacing5 = ({ layout, tags }: CollectibleHubLay
 /** Named region `spacing` of CollectibleHubLayout - configured through the parent's `spacing` prop. */
 export interface CollectibleHubLayoutSpacing6Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutSpacing6 = ({ layout, tags }: CollectibleHubLayoutSpacing6Props) => {
+export const CollectibleHubLayoutSpacing6 = ({ layout }: CollectibleHubLayoutSpacing6Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 6, height: 30, flexShrink: 0, ...layout }}
         />
     );
@@ -3324,16 +3096,14 @@ export interface CollectibleHubLayoutLoadedContent4Props {
     spacing?: CollectibleHubLayoutSpacing5Props;
     spacing2?: CollectibleHubLayoutSpacing6Props;
     srcTransferFeeIcon?: string;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutLoadedContent4 = ({ captionTransferFeeText, headercontainer, layout, onTransferButton, onTransferWalletSelection, spacing, spacing2, srcTransferFeeIcon, tags }: CollectibleHubLayoutLoadedContent4Props) => {
+export const CollectibleHubLayoutLoadedContent4 = ({ captionTransferFeeText, headercontainer, layout, onTransferButton, onTransferWalletSelection, spacing, spacing2, srcTransferFeeIcon }: CollectibleHubLayoutLoadedContent4Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="loaded_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
         >
             <CollectibleHubLayoutHeadercontainer {...headercontainer} />
@@ -3396,15 +3166,13 @@ export const CollectibleHubLayoutLoadedContent4 = ({ captionTransferFeeText, hea
 export interface CollectibleHubLayoutLoadingContents4Props {
     layout?: BoxLayout;
     srcLoadingIcon?: string;
-    tags?: string[];
     visibleLoadingContents?: boolean;
 }
 
-export const CollectibleHubLayoutLoadingContents4 = ({ layout, srcLoadingIcon, tags, visibleLoadingContents }: CollectibleHubLayoutLoadingContents4Props) => {
+export const CollectibleHubLayoutLoadingContents4 = ({ layout, srcLoadingIcon, visibleLoadingContents }: CollectibleHubLayoutLoadingContents4Props) => {
     return (
         <Region
             name="loading_contents"
-            tags={tags}
             visible={visibleLoadingContents ?? false}
             layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
         >
@@ -3427,15 +3195,13 @@ export interface CollectibleHubLayoutTransferContainerProps {
     layout?: BoxLayout;
     loadedContent?: CollectibleHubLayoutLoadedContent4Props;
     loadingContents?: CollectibleHubLayoutLoadingContents4Props;
-    tags?: string[];
     visibleTransferContainer?: boolean;
 }
 
-export const CollectibleHubLayoutTransferContainer = ({ layout, loadedContent, loadingContents, tags, visibleTransferContainer }: CollectibleHubLayoutTransferContainerProps) => {
+export const CollectibleHubLayoutTransferContainer = ({ layout, loadedContent, loadingContents, visibleTransferContainer }: CollectibleHubLayoutTransferContainerProps) => {
     return (
         <Region
             name="transferContainer"
-            tags={tags}
             visible={visibleTransferContainer ?? false}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden', ...layout }}
@@ -3451,14 +3217,12 @@ export interface CollectibleHubLayoutCategoryNameRegion3Props {
     captionCollectorLevelHeader?: string;
     layout?: BoxLayout;
     onCategoryNameRegion?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryNameRegion3 = ({ captionCollectorLevelHeader, layout, onCategoryNameRegion, tags }: CollectibleHubLayoutCategoryNameRegion3Props) => {
+export const CollectibleHubLayoutCategoryNameRegion3 = ({ captionCollectorLevelHeader, layout, onCategoryNameRegion }: CollectibleHubLayoutCategoryNameRegion3Props) => {
     return (
         <Region
             name="category_name_region"
-            tags={tags}
             onPointerTap={onCategoryNameRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17, ...layout }}
@@ -3481,14 +3245,12 @@ export interface CollectibleHubLayoutCategoryMintingDescriptionRegion3Props {
     captionCollectorLevelDescription?: string;
     layout?: BoxLayout;
     onCategoryMintingDescriptionRegion?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryMintingDescriptionRegion3 = ({ captionCollectorLevelDescription, layout, onCategoryMintingDescriptionRegion, tags }: CollectibleHubLayoutCategoryMintingDescriptionRegion3Props) => {
+export const CollectibleHubLayoutCategoryMintingDescriptionRegion3 = ({ captionCollectorLevelDescription, layout, onCategoryMintingDescriptionRegion }: CollectibleHubLayoutCategoryMintingDescriptionRegion3Props) => {
     return (
         <Region
             name="category_minting_description_region"
-            tags={tags}
             onPointerTap={onCategoryMintingDescriptionRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 380, top: 22, height: 30, ...layout }}
@@ -3512,14 +3274,12 @@ export interface CollectibleHubLayoutCategoryCollectorHeaderRegion2Props {
     categoryMintingDescriptionRegion?: CollectibleHubLayoutCategoryMintingDescriptionRegion3Props;
     categoryNameRegion?: CollectibleHubLayoutCategoryNameRegion3Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryCollectorHeaderRegion2 = ({ categoryMintingDescriptionRegion, categoryNameRegion, layout, tags }: CollectibleHubLayoutCategoryCollectorHeaderRegion2Props) => {
+export const CollectibleHubLayoutCategoryCollectorHeaderRegion2 = ({ categoryMintingDescriptionRegion, categoryNameRegion, layout }: CollectibleHubLayoutCategoryCollectorHeaderRegion2Props) => {
     return (
         <Region
             name="category_collector_header_region"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 80, overflow: 'hidden', ...layout }}
         >
             <CollectibleHubLayoutCategoryNameRegion3 {...categoryNameRegion} />
@@ -3532,21 +3292,16 @@ export const CollectibleHubLayoutCategoryCollectorHeaderRegion2 = ({ categoryMin
 export interface CollectibleHubLayoutCategoryContentBackground2Props {
     categoryCollectorHeaderRegion?: CollectibleHubLayoutCategoryCollectorHeaderRegion2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryContentBackground2 = ({ categoryCollectorHeaderRegion, layout, tags }: CollectibleHubLayoutCategoryContentBackground2Props) => {
+export const CollectibleHubLayoutCategoryContentBackground2 = ({ categoryCollectorHeaderRegion, layout }: CollectibleHubLayoutCategoryContentBackground2Props) => {
     return (
         <Region
             name="category_content_background"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, overflow: 'hidden', ...layout }}
         >
-            <CollectibleHubLayoutCategoryCollectorHeaderRegion2
-                tags={[ 'category_header' ]}
-                {...categoryCollectorHeaderRegion}
-            />
+            <CollectibleHubLayoutCategoryCollectorHeaderRegion2 {...categoryCollectorHeaderRegion} />
         </Region>
     );
 };
@@ -3555,15 +3310,13 @@ export const CollectibleHubLayoutCategoryContentBackground2 = ({ categoryCollect
 export interface CollectibleHubLayoutLevelsContainerProps {
     categoryContentBackground?: CollectibleHubLayoutCategoryContentBackground2Props;
     layout?: BoxLayout;
-    tags?: string[];
     visibleLevelsContainer?: boolean;
 }
 
-export const CollectibleHubLayoutLevelsContainer = ({ categoryContentBackground, layout, tags, visibleLevelsContainer }: CollectibleHubLayoutLevelsContainerProps) => {
+export const CollectibleHubLayoutLevelsContainer = ({ categoryContentBackground, layout, visibleLevelsContainer }: CollectibleHubLayoutLevelsContainerProps) => {
     return (
         <Region
             name="levelsContainer"
-            tags={tags}
             visible={visibleLevelsContainer ?? false}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden', ...layout }}
@@ -3578,16 +3331,14 @@ export interface CollectibleHubLayoutCategoryInfoHeaderRegionProps {
     captionCollectorCollectionsHeader?: string;
     layout?: BoxLayout;
     onCategoryInfoHeaderRegion?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryInfoHeaderRegion = ({ captionCollectorCollectionsHeader, layout, onCategoryInfoHeaderRegion, tags }: CollectibleHubLayoutCategoryInfoHeaderRegionProps) => {
+export const CollectibleHubLayoutCategoryInfoHeaderRegion = ({ captionCollectorCollectionsHeader, layout, onCategoryInfoHeaderRegion }: CollectibleHubLayoutCategoryInfoHeaderRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="category_info_header_region"
-            tags={tags}
             onPointerTap={onCategoryInfoHeaderRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17, ...layout }}
@@ -3611,16 +3362,14 @@ export interface CollectibleHubLayoutCategoryInfoDescriptionRegionProps {
     captionInfoDesc?: string;
     layout?: BoxLayout;
     onCategoryInfoDescriptionRegion?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryInfoDescriptionRegion = ({ captionCollectorProfileDescription, captionInfoDesc, layout, onCategoryInfoDescriptionRegion, tags }: CollectibleHubLayoutCategoryInfoDescriptionRegionProps) => {
+export const CollectibleHubLayoutCategoryInfoDescriptionRegion = ({ captionCollectorProfileDescription, captionInfoDesc, layout, onCategoryInfoDescriptionRegion }: CollectibleHubLayoutCategoryInfoDescriptionRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="category_info_description_region"
-            tags={tags}
             onPointerTap={onCategoryInfoDescriptionRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 480, top: 22, height: 50, ...layout }}
@@ -3655,16 +3404,14 @@ export interface CollectibleHubLayoutCategoryInfoTransferRegionProps {
     captionTransferDesc?: string;
     layout?: BoxLayout;
     onCategoryInfoTransferRegion?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryInfoTransferRegion = ({ captionCollectorProfileDescription, captionTransferDesc, layout, onCategoryInfoTransferRegion, tags }: CollectibleHubLayoutCategoryInfoTransferRegionProps) => {
+export const CollectibleHubLayoutCategoryInfoTransferRegion = ({ captionCollectorProfileDescription, captionTransferDesc, layout, onCategoryInfoTransferRegion }: CollectibleHubLayoutCategoryInfoTransferRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="category_info_transfer_region"
-            tags={tags}
             onPointerTap={onCategoryInfoTransferRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 480, top: 75, height: 60, ...layout }}
@@ -3699,14 +3446,12 @@ export interface CollectibleHubLayoutCategoryCollectorHeaderRegion3Props {
     categoryInfoHeaderRegion?: CollectibleHubLayoutCategoryInfoHeaderRegionProps;
     categoryInfoTransferRegion?: CollectibleHubLayoutCategoryInfoTransferRegionProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryCollectorHeaderRegion3 = ({ categoryInfoDescriptionRegion, categoryInfoHeaderRegion, categoryInfoTransferRegion, layout, tags }: CollectibleHubLayoutCategoryCollectorHeaderRegion3Props) => {
+export const CollectibleHubLayoutCategoryCollectorHeaderRegion3 = ({ categoryInfoDescriptionRegion, categoryInfoHeaderRegion, categoryInfoTransferRegion, layout }: CollectibleHubLayoutCategoryCollectorHeaderRegion3Props) => {
     return (
         <Region
             name="category_collector_header_region"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 135, overflow: 'hidden', ...layout }}
         >
             <CollectibleHubLayoutCategoryInfoHeaderRegion {...categoryInfoHeaderRegion} />
@@ -3720,21 +3465,16 @@ export const CollectibleHubLayoutCategoryCollectorHeaderRegion3 = ({ categoryInf
 export interface CollectibleHubLayoutCategoryContentBackground3Props {
     categoryCollectorHeaderRegion?: CollectibleHubLayoutCategoryCollectorHeaderRegion3Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutCategoryContentBackground3 = ({ categoryCollectorHeaderRegion, layout, tags }: CollectibleHubLayoutCategoryContentBackground3Props) => {
+export const CollectibleHubLayoutCategoryContentBackground3 = ({ categoryCollectorHeaderRegion, layout }: CollectibleHubLayoutCategoryContentBackground3Props) => {
     return (
         <Region
             name="category_content_background"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400, overflow: 'hidden', ...layout }}
         >
-            <CollectibleHubLayoutCategoryCollectorHeaderRegion3
-                tags={[ 'category_header' ]}
-                {...categoryCollectorHeaderRegion}
-            />
+            <CollectibleHubLayoutCategoryCollectorHeaderRegion3 {...categoryCollectorHeaderRegion} />
         </Region>
     );
 };
@@ -3743,15 +3483,13 @@ export const CollectibleHubLayoutCategoryContentBackground3 = ({ categoryCollect
 export interface CollectibleHubLayoutInfoContainerProps {
     categoryContentBackground?: CollectibleHubLayoutCategoryContentBackground3Props;
     layout?: BoxLayout;
-    tags?: string[];
     visibleInfoContainer?: boolean;
 }
 
-export const CollectibleHubLayoutInfoContainer = ({ categoryContentBackground, layout, tags, visibleInfoContainer }: CollectibleHubLayoutInfoContainerProps) => {
+export const CollectibleHubLayoutInfoContainer = ({ categoryContentBackground, layout, visibleInfoContainer }: CollectibleHubLayoutInfoContainerProps) => {
     return (
         <Region
             name="infoContainer"
-            tags={tags}
             visible={visibleInfoContainer ?? false}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 110, top: 125, height: 419, overflow: 'hidden', ...layout }}
@@ -3769,14 +3507,12 @@ export const CollectibleHubLayoutInfoContainer = ({ categoryContentBackground, l
 export interface CollectibleHubLayoutAmountContainerProps {
     captionAmountText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutAmountContainer = ({ captionAmountText, layout, tags }: CollectibleHubLayoutAmountContainerProps) => {
+export const CollectibleHubLayoutAmountContainer = ({ captionAmountText, layout }: CollectibleHubLayoutAmountContainerProps) => {
     return (
         <Region
             name="amount_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 27, width: 20, top: 34, height: 16, ...layout }}
         >
             <Border
@@ -3786,7 +3522,6 @@ export const CollectibleHubLayoutAmountContainer = ({ captionAmountText, layout,
             />
             <Region
                 name="amount_text"
-                tags={[ 'AMOUNT_TITLE' ]}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
@@ -3810,21 +3545,18 @@ export interface CollectibleHubLayoutItemTemplateItem6Props {
     onItemTemplate?: () => void;
     srcBitmap?: string;
     srcUnknownImage?: string;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemTemplateItem6 = ({ amountContainer, captionCollectionText, captionExpiresText, captionItemName, captionWalletText, layout, onItemTemplate, srcBitmap, srcUnknownImage, tags }: CollectibleHubLayoutItemTemplateItem6Props) => {
+export const CollectibleHubLayoutItemTemplateItem6 = ({ amountContainer, captionCollectionText, captionExpiresText, captionItemName, captionWalletText, layout, onItemTemplate, srcBitmap, srcUnknownImage }: CollectibleHubLayoutItemTemplateItem6Props) => {
     return (
         <Region
             name="item_template"
-            tags={tags}
             onPointerTap={onItemTemplate}
             cursor="pointer"
             layout={{ width: 466, height: 50, flexShrink: 0, ...layout }}
         >
             <Border
                 variant="2"
-                tags={[ 'ITEM_HILIGHT' ]}
                 tintColor="#a1a19b"
                 layout={{ position: 'absolute', left: 0, width: 466, top: 0, height: 50 }}
             >
@@ -3862,7 +3594,6 @@ export const CollectibleHubLayoutItemTemplateItem6 = ({ amountContainer, caption
             >
                 <Region
                     name="item_name"
-                    tags={[ 'NAME_TITLE' ]}
                     layout={{ position: 'absolute', left: 1, width: 405, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -3874,7 +3605,6 @@ export const CollectibleHubLayoutItemTemplateItem6 = ({ amountContainer, caption
             </Border>
             <ThemeImage
                 name="bitmap"
-                tags={[ 'BITMAP' ]}
                 src={srcBitmap}
                 layout={{ position: 'absolute', left: 10, width: 32, top: 9, height: 32 }}
             />
@@ -3927,10 +3657,9 @@ export const CollectibleHubLayoutItemTemplateItem6 = ({ amountContainer, caption
 export interface CollectibleHubLayoutItemlistProps {
     itemsItemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemlist = ({ itemsItemlist, layout, tags }: CollectibleHubLayoutItemlistProps) => {
+export const CollectibleHubLayoutItemlist = ({ itemsItemlist, layout }: CollectibleHubLayoutItemlistProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -3938,7 +3667,6 @@ export const CollectibleHubLayoutItemlist = ({ itemsItemlist, layout, tags }: Co
         >
             <Region
                 name="itemlist"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 2, width: '100%' }}
             >
                 {itemsItemlist ?? (
@@ -3953,14 +3681,12 @@ export const CollectibleHubLayoutItemlist = ({ itemsItemlist, layout, tags }: Co
 export interface CollectibleHubLayoutItemContainer3Props {
     itemlist?: CollectibleHubLayoutItemlistProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutItemContainer3 = ({ itemlist, layout, tags }: CollectibleHubLayoutItemContainer3Props) => {
+export const CollectibleHubLayoutItemContainer3 = ({ itemlist, layout }: CollectibleHubLayoutItemContainer3Props) => {
     return (
         <Region
             name="item_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 374, ...layout }}
         >
             <CollectibleHubLayoutItemlist {...itemlist} />
@@ -3973,17 +3699,15 @@ export interface CollectibleHubLayoutLoadedContent5Props {
     itemContainer?: CollectibleHubLayoutItemContainer3Props;
     layout?: BoxLayout;
     onClaimButton?: () => void;
-    tags?: string[];
     visibleLoadedContent?: boolean;
 }
 
-export const CollectibleHubLayoutLoadedContent5 = ({ itemContainer, layout, onClaimButton, tags, visibleLoadedContent }: CollectibleHubLayoutLoadedContent5Props) => {
+export const CollectibleHubLayoutLoadedContent5 = ({ itemContainer, layout, onClaimButton, visibleLoadedContent }: CollectibleHubLayoutLoadedContent5Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="loaded_content"
-            tags={tags}
             visible={visibleLoadedContent ?? false}
             layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
         >
@@ -4011,16 +3735,14 @@ export const CollectibleHubLayoutLoadedContent5 = ({ itemContainer, layout, onCl
 /** Named region `headercontainer` of CollectibleHubLayout - configured through the parent's `headercontainer` prop. */
 export interface CollectibleHubLayoutHeadercontainer2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutHeadercontainer2 = ({ layout, tags }: CollectibleHubLayoutHeadercontainer2Props) => {
+export const CollectibleHubLayoutHeadercontainer2 = ({ layout }: CollectibleHubLayoutHeadercontainer2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="headercontainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 100, justifyContent: 'center', ...layout }}
         >
             <Region layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 450, top: 28, bottom: 55, minWidth: 450, maxWidth: 450, minHeight: 17, maxHeight: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
@@ -4036,14 +3758,12 @@ export const CollectibleHubLayoutHeadercontainer2 = ({ layout, tags }: Collectib
 /** Named region `image_container` of CollectibleHubLayout - configured through the parent's `imageContainer` prop. */
 export interface CollectibleHubLayoutImageContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutImageContainer = ({ layout, tags }: CollectibleHubLayoutImageContainerProps) => {
+export const CollectibleHubLayoutImageContainer = ({ layout }: CollectibleHubLayoutImageContainerProps) => {
     return (
         <Region
             name="image_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 485, top: 100, height: 332, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
@@ -4059,14 +3779,12 @@ export interface CollectibleHubLayoutNoContentContainerProps {
     headercontainer?: CollectibleHubLayoutHeadercontainer2Props;
     imageContainer?: CollectibleHubLayoutImageContainerProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleHubLayoutNoContentContainer = ({ headercontainer, imageContainer, layout, tags }: CollectibleHubLayoutNoContentContainerProps) => {
+export const CollectibleHubLayoutNoContentContainer = ({ headercontainer, imageContainer, layout }: CollectibleHubLayoutNoContentContainerProps) => {
     return (
         <Region
             name="no_content_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
         >
             <CollectibleHubLayoutHeadercontainer2 {...headercontainer} />
@@ -4079,15 +3797,13 @@ export const CollectibleHubLayoutNoContentContainer = ({ headercontainer, imageC
 export interface CollectibleHubLayoutLoadingContents5Props {
     layout?: BoxLayout;
     srcLoadingIcon?: string;
-    tags?: string[];
     visibleLoadingContents?: boolean;
 }
 
-export const CollectibleHubLayoutLoadingContents5 = ({ layout, srcLoadingIcon, tags, visibleLoadingContents }: CollectibleHubLayoutLoadingContents5Props) => {
+export const CollectibleHubLayoutLoadingContents5 = ({ layout, srcLoadingIcon, visibleLoadingContents }: CollectibleHubLayoutLoadingContents5Props) => {
     return (
         <Region
             name="loading_contents"
-            tags={tags}
             visible={visibleLoadingContents ?? false}
             layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
         >
@@ -4111,15 +3827,13 @@ export interface CollectibleHubLayoutRewardsContainerProps {
     loadedContent?: CollectibleHubLayoutLoadedContent5Props;
     loadingContents?: CollectibleHubLayoutLoadingContents5Props;
     noContentContainer?: CollectibleHubLayoutNoContentContainerProps;
-    tags?: string[];
     visibleRewardsContainer?: boolean;
 }
 
-export const CollectibleHubLayoutRewardsContainer = ({ layout, loadedContent, loadingContents, noContentContainer, tags, visibleRewardsContainer }: CollectibleHubLayoutRewardsContainerProps) => {
+export const CollectibleHubLayoutRewardsContainer = ({ layout, loadedContent, loadingContents, noContentContainer, visibleRewardsContainer }: CollectibleHubLayoutRewardsContainerProps) => {
     return (
         <Region
             name="rewardsContainer"
-            tags={tags}
             visible={visibleRewardsContainer ?? false}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden', ...layout }}

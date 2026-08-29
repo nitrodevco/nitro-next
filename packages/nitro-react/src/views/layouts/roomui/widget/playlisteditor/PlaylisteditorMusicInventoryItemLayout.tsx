@@ -17,13 +17,11 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ actionButtons, captionS
                 <Border
                     variant="0"
                     name="selected"
-                    tags={[ 'SELECTED' ]}
                     layout={{ position: 'absolute', left: 0, width: 91, top: 0, height: 104 }}
                 />
                 <Border
                     variant="2"
                     name="background"
-                    tags={[ 'BG_COLOR' ]}
                     tintColor="#f1f1f1"
                     layout={{ position: 'absolute', left: 3, width: 85, top: 3, height: 98 }}
                 />
@@ -34,7 +32,6 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ actionButtons, captionS
                 />
                 <Region
                     name="song_title_text"
-                    tags={[ 'SONG_TITLE' ]}
                     layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 85, height: 18, maxWidth: 80, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText text={captionSongTitleText ?? ''} />
@@ -44,10 +41,7 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ actionButtons, captionS
                     src={srcTitleFaderBitmap ?? layoutImage('jb_fader.png')}
                     layout={{ position: 'absolute', left: 81, width: 6, top: 86, height: 12 }}
                 />
-                <PlaylisteditorMusicInventoryItemLayoutActionButtons
-                    tags={[ 'BUTTONS' ]}
-                    {...actionButtons}
-                />
+                <PlaylisteditorMusicInventoryItemLayoutActionButtons {...actionButtons} />
             </Region>
         </Region>
     );
@@ -60,14 +54,12 @@ export interface PlaylisteditorMusicInventoryItemLayoutActionButtonsProps {
     onButtonToPlaylist?: () => void;
     srcImageButtonPlayPause?: string;
     srcImageButtonToPlaylist?: string;
-    tags?: string[];
 }
 
-export const PlaylisteditorMusicInventoryItemLayoutActionButtons = ({ layout, onButtonPlayPause, onButtonToPlaylist, srcImageButtonPlayPause, srcImageButtonToPlaylist, tags }: PlaylisteditorMusicInventoryItemLayoutActionButtonsProps) => {
+export const PlaylisteditorMusicInventoryItemLayoutActionButtons = ({ layout, onButtonPlayPause, onButtonToPlaylist, srcImageButtonPlayPause, srcImageButtonToPlaylist }: PlaylisteditorMusicInventoryItemLayoutActionButtonsProps) => {
     return (
         <Region
             name="action_buttons"
-            tags={tags}
             layout={{ position: 'absolute', left: 3, width: 84, top: 57, height: 44, ...layout }}
         >
             <Border
@@ -78,7 +70,6 @@ export const PlaylisteditorMusicInventoryItemLayoutActionButtons = ({ layout, on
             <ContainerButton
                 variant="0"
                 name="button_play_pause"
-                tags={[ 'PLAY_PAUSE' ]}
                 onPointerTap={onButtonPlayPause}
                 layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 36 }}
             >
@@ -91,7 +82,6 @@ export const PlaylisteditorMusicInventoryItemLayoutActionButtons = ({ layout, on
             <ContainerButton
                 variant="0"
                 name="button_to_playlist"
-                tags={[ 'TOPLAYLIST' ]}
                 onPointerTap={onButtonToPlaylist}
                 layout={{ position: 'absolute', left: 44, width: 36, top: 4, height: 36 }}
             >

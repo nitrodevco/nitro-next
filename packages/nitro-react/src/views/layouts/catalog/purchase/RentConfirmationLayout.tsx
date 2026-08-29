@@ -63,16 +63,14 @@ export const RentConfirmationLayout = ({ contentList, layout, onCancelButton, on
 export interface RentConfirmationLayoutRentalDescriptionItemProps {
     captionRentalDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RentConfirmationLayoutRentalDescriptionItem = ({ captionRentalDescription, layout, tags }: RentConfirmationLayoutRentalDescriptionItemProps) => {
+export const RentConfirmationLayoutRentalDescriptionItem = ({ captionRentalDescription, layout }: RentConfirmationLayoutRentalDescriptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rental_description"
-            tags={tags}
             layout={{ width: 150, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -87,14 +85,12 @@ export const RentConfirmationLayoutRentalDescriptionItem = ({ captionRentalDescr
 export interface RentConfirmationLayoutFurniNameItemProps {
     captionFurniName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RentConfirmationLayoutFurniNameItem = ({ captionFurniName, layout, tags }: RentConfirmationLayoutFurniNameItemProps) => {
+export const RentConfirmationLayoutFurniNameItem = ({ captionFurniName, layout }: RentConfirmationLayoutFurniNameItemProps) => {
     return (
         <Region
             name="furni_name"
-            tags={tags}
             layout={{ width: 150, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -112,16 +108,14 @@ export interface RentConfirmationLayoutContentListProps {
     itemsContentList?: ReactNode;
     layout?: BoxLayout;
     srcPriceType?: string;
-    tags?: string[];
 }
 
-export const RentConfirmationLayoutContentList = ({ captionPriceAmount, itemsContentList, layout, srcPriceType, tags }: RentConfirmationLayoutContentListProps) => {
+export const RentConfirmationLayoutContentList = ({ captionPriceAmount, itemsContentList, layout, srcPriceType }: RentConfirmationLayoutContentListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="content_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 200, alignSelf: 'center', marginTop: -40.5, marginBottom: 40.5, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsContentList ?? (

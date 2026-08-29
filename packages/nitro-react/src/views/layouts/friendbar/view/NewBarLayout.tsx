@@ -21,14 +21,12 @@ export interface NewBarLayoutCollapseLeftProps {
     layout?: BoxLayout;
     onCollapseLeft?: () => void;
     srcIconsToolbarCollapseLeft?: string;
-    tags?: string[];
 }
 
-export const NewBarLayoutCollapseLeft = ({ layout, onCollapseLeft, srcIconsToolbarCollapseLeft, tags }: NewBarLayoutCollapseLeftProps) => {
+export const NewBarLayoutCollapseLeft = ({ layout, onCollapseLeft, srcIconsToolbarCollapseLeft }: NewBarLayoutCollapseLeftProps) => {
     return (
         <Region
             name="collapse_left"
-            tags={tags}
             onPointerTap={onCollapseLeft}
             cursor="pointer"
             layout={{ position: 'absolute', left: 135, width: 15, top: 0, height: 46, justifyContent: 'center', ...layout }}
@@ -40,7 +38,6 @@ export const NewBarLayoutCollapseLeft = ({ layout, onCollapseLeft, srcIconsToolb
             />
             <ThemeImage
                 name="icons_toolbar_collapse_left"
-                tags={[ 'ICON_BMP', '#icon' ]}
                 src={srcIconsToolbarCollapseLeft ?? layoutImage('roomtools_minimizebutton.png')}
                 layout={{ position: 'absolute', width: 13, top: 0, height: 45 }}
             />
@@ -52,14 +49,12 @@ export const NewBarLayoutCollapseLeft = ({ layout, onCollapseLeft, srcIconsToolb
 export interface NewBarLayoutIconAllFriendsProps {
     layout?: BoxLayout;
     onIconAllFriends?: () => void;
-    tags?: string[];
 }
 
-export const NewBarLayoutIconAllFriends = ({ layout, onIconAllFriends, tags }: NewBarLayoutIconAllFriendsProps) => {
+export const NewBarLayoutIconAllFriends = ({ layout, onIconAllFriends }: NewBarLayoutIconAllFriendsProps) => {
     return (
         <Region
             name="icon_all_friends"
-            tags={tags}
             tooltip="${friend.bar.friends.title)"
             dynamicStyle="lifted_hover"
             onPointerTap={onIconAllFriends}
@@ -67,7 +62,6 @@ export const NewBarLayoutIconAllFriends = ({ layout, onIconAllFriends, tags }: N
             layout={{ position: 'absolute', left: 18, width: 45, top: 5, height: 41, ...layout }}
         >
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('friend_bar_all_friends.png')}
                 layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 33 }}
             />
@@ -79,16 +73,14 @@ export const NewBarLayoutIconAllFriends = ({ layout, onIconAllFriends, tags }: N
 export interface NewBarLayoutIconFindFriendsProps {
     layout?: BoxLayout;
     onIconFindFriends?: () => void;
-    tags?: string[];
 }
 
-export const NewBarLayoutIconFindFriends = ({ layout, onIconFindFriends, tags }: NewBarLayoutIconFindFriendsProps) => {
+export const NewBarLayoutIconFindFriends = ({ layout, onIconFindFriends }: NewBarLayoutIconFindFriendsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="icon_find_friends"
-            tags={tags}
             tooltip={t('friend.bar.search.title')}
             dynamicStyle="lifted_hover"
             onPointerTap={onIconFindFriends}
@@ -96,7 +88,6 @@ export const NewBarLayoutIconFindFriends = ({ layout, onIconFindFriends, tags }:
             layout={{ position: 'absolute', left: 64, width: 45, top: 5, height: 41, ...layout }}
         >
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('friend_bar_search_habbos.png')}
                 layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 33 }}
             />
@@ -111,14 +102,12 @@ export interface NewBarLayoutIconMessengerProps {
     srcIcon?: string;
     srcIcon1?: string;
     srcIcon2?: string;
-    tags?: string[];
 }
 
-export const NewBarLayoutIconMessenger = ({ layout, onIconMessenger, srcIcon, srcIcon1, srcIcon2, tags }: NewBarLayoutIconMessengerProps) => {
+export const NewBarLayoutIconMessenger = ({ layout, onIconMessenger, srcIcon, srcIcon1, srcIcon2 }: NewBarLayoutIconMessengerProps) => {
     return (
         <Region
             name="icon_messenger"
-            tags={tags}
             dynamicStyle="lifted_hover"
             onPointerTap={onIconMessenger}
             cursor="pointer"
@@ -126,7 +115,6 @@ export const NewBarLayoutIconMessenger = ({ layout, onIconMessenger, srcIcon, sr
         >
             <ThemeImage
                 name="icon"
-                tags={[ '#icon' ]}
                 src={srcIcon ?? layoutImage('friend_bar_friendlist_messenger.png')}
                 layout={{ position: 'absolute', left: 0, width: 26, top: 0, height: 32 }}
             />
@@ -152,14 +140,12 @@ export interface NewBarLayoutFriendtoolsProps {
     iconMessenger?: NewBarLayoutIconMessengerProps;
     layout?: BoxLayout;
     srcLine?: string;
-    tags?: string[];
 }
 
-export const NewBarLayoutFriendtools = ({ collapseLeft, iconAllFriends, iconFindFriends, iconMessenger, layout, srcLine, tags }: NewBarLayoutFriendtoolsProps) => {
+export const NewBarLayoutFriendtools = ({ collapseLeft, iconAllFriends, iconFindFriends, iconMessenger, layout, srcLine }: NewBarLayoutFriendtoolsProps) => {
     return (
         <Region
             name="friendtools"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 150, top: 2, height: 46, ...layout }}
         >
             <ThemeImage
@@ -179,28 +165,24 @@ export const NewBarLayoutFriendtools = ({ collapseLeft, iconAllFriends, iconFind
 export interface NewBarLayoutButtonLeftPageProps {
     layout?: BoxLayout;
     onButtonLeftPage?: () => void;
-    tags?: string[];
 }
 
-export const NewBarLayoutButtonLeftPage = ({ layout, onButtonLeftPage, tags }: NewBarLayoutButtonLeftPageProps) => {
+export const NewBarLayoutButtonLeftPage = ({ layout, onButtonLeftPage }: NewBarLayoutButtonLeftPageProps) => {
     return (
         <Region
             name="button_left_page"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onButtonLeftPage}
             cursor="pointer"
             layout={{ position: 'absolute', left: 145, width: 28, top: 4, height: 40, ...layout }}
         >
             <ThemeImage
-                tags={[ '#bg' ]}
                 src={layoutImage('friend_bar_friends_browse_bg.png')}
                 tint="#3b3933"
                 layout={{ position: 'absolute', left: 0, width: 29, top: 4, height: 31 }}
             />
             <Icon
                 variant="4"
-                tags={[ '#icon' ]}
                 tintColor="#9c9791"
                 layout={{ position: 'absolute', left: 12, width: 10, top: 15, height: 10 }}
             />
@@ -211,14 +193,12 @@ export const NewBarLayoutButtonLeftPage = ({ layout, onButtonLeftPage, tags }: N
 /** Named region `list` of NewBarLayout - configured through the parent's `list` prop. */
 export interface NewBarLayoutListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewBarLayoutList = ({ layout, tags }: NewBarLayoutListProps) => {
+export const NewBarLayoutList = ({ layout }: NewBarLayoutListProps) => {
     return (
         <Region
             name="list"
-            tags={tags}
             layout={{ position: 'absolute', left: 173, top: 6, flexDirection: 'row', gap: 3, ...layout }}
         />
     );
@@ -228,28 +208,24 @@ export const NewBarLayoutList = ({ layout, tags }: NewBarLayoutListProps) => {
 export interface NewBarLayoutButtonRightPageProps {
     layout?: BoxLayout;
     onButtonRightPage?: () => void;
-    tags?: string[];
 }
 
-export const NewBarLayoutButtonRightPage = ({ layout, onButtonRightPage, tags }: NewBarLayoutButtonRightPageProps) => {
+export const NewBarLayoutButtonRightPage = ({ layout, onButtonRightPage }: NewBarLayoutButtonRightPageProps) => {
     return (
         <Region
             name="button_right_page"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onButtonRightPage}
             cursor="pointer"
             layout={{ position: 'absolute', left: 248, width: 29, top: 4, height: 40, ...layout }}
         >
             <ThemeImage
-                tags={[ '#bg' ]}
                 src={layoutImage('friend_bar_friends_browse_bg.png')}
                 tint="#3b3933"
                 layout={{ position: 'absolute', left: 0, width: 29, top: 5, height: 31 }}
             />
             <Icon
                 variant="5"
-                tags={[ '#icon' ]}
                 tintColor="#9c9791"
                 layout={{ position: 'absolute', left: 11, width: 10, top: 15, height: 10 }}
             />
@@ -262,14 +238,12 @@ export interface NewBarLayoutCollapseRightProps {
     layout?: BoxLayout;
     onCollapseRight?: () => void;
     srcIconsToolbarCollapseRight?: string;
-    tags?: string[];
 }
 
-export const NewBarLayoutCollapseRight = ({ layout, onCollapseRight, srcIconsToolbarCollapseRight, tags }: NewBarLayoutCollapseRightProps) => {
+export const NewBarLayoutCollapseRight = ({ layout, onCollapseRight, srcIconsToolbarCollapseRight }: NewBarLayoutCollapseRightProps) => {
     return (
         <Region
             name="collapse_right"
-            tags={tags}
             onPointerTap={onCollapseRight}
             cursor="pointer"
             layout={{ position: 'absolute', left: 282, width: 15, top: 2, height: 46, justifyContent: 'center', ...layout }}
@@ -281,7 +255,6 @@ export const NewBarLayoutCollapseRight = ({ layout, onCollapseRight, srcIconsToo
             />
             <ThemeImage
                 name="icons_toolbar_collapse_right"
-                tags={[ 'ICON_BMP', '#icon' ]}
                 src={srcIconsToolbarCollapseRight ?? layoutImage('roomtools_minimizebutton.png')}
                 layout={{ position: 'absolute', width: 13, top: 0, height: 45 }}
             />
@@ -298,28 +271,20 @@ export interface NewBarLayoutBorderProps {
     layout?: BoxLayout;
     list?: NewBarLayoutListProps;
     onBorder?: () => void;
-    tags?: string[];
 }
 
-export const NewBarLayoutBorder = ({ buttonLeftPage, buttonRightPage, collapseRight, friendtools, layout, list, onBorder, tags }: NewBarLayoutBorderProps) => {
+export const NewBarLayoutBorder = ({ buttonLeftPage, buttonRightPage, collapseRight, friendtools, layout, list, onBorder }: NewBarLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            tags={tags}
             onPointerTap={onBorder}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 300, top: 0, height: 48, ...layout }}
         >
             <NewBarLayoutFriendtools {...friendtools} />
-            <NewBarLayoutButtonLeftPage
-                tags={[ 'arrow', 'left' ]}
-                {...buttonLeftPage}
-            />
+            <NewBarLayoutButtonLeftPage {...buttonLeftPage} />
             <NewBarLayoutList {...list} />
-            <NewBarLayoutButtonRightPage
-                tags={[ 'arrow', 'right' ]}
-                {...buttonRightPage}
-            />
+            <NewBarLayoutButtonRightPage {...buttonRightPage} />
             <NewBarLayoutCollapseRight {...collapseRight} />
         </Region>
     );

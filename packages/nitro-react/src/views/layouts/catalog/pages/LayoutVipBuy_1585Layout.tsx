@@ -1,5 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
-import { VipBuyWidget2, VipBuyWidget2Props } from '#base/views/layouts/catalog/widgets/VipBuyWidget2';
+import { VipBuyWidget, VipBuyWidgetProps } from '#base/views/layouts/catalog/widgets/VipBuyWidget';
 
 /** Generated from `1585_layout_vip_buy_xml` (layout "ctlg_vip_buy", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutVipBuy_1585LayoutProps {
@@ -18,19 +18,17 @@ export const LayoutVipBuy_1585Layout = ({ ctlgVipBuy, layout }: LayoutVipBuy_158
 /** Named region `ctlg_vip_buy` of LayoutVipBuy_1585Layout - configured through the parent's `ctlgVipBuy` prop. */
 export interface LayoutVipBuy_1585LayoutCtlgVipBuyProps {
     layout?: BoxLayout;
-    tags?: string[];
-    vipBuyWidget?: VipBuyWidget2Props;
+    vipBuyWidget?: VipBuyWidgetProps;
 }
 
-export const LayoutVipBuy_1585LayoutCtlgVipBuy = ({ layout, tags, vipBuyWidget }: LayoutVipBuy_1585LayoutCtlgVipBuyProps) => {
+export const LayoutVipBuy_1585LayoutCtlgVipBuy = ({ layout, vipBuyWidget }: LayoutVipBuy_1585LayoutCtlgVipBuyProps) => {
     return (
         <Region
             name="ctlg_vip_buy"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
         >
-            <VipBuyWidget2
+            <VipBuyWidget
                 layout={{ position: 'absolute', left: 10, width: 340, top: 80, height: 380 }}
                 {...vipBuyWidget}
             />

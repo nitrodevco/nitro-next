@@ -21,14 +21,12 @@ export interface GrsOfficialRoomRowPhaseOneLayoutEnterRoomProps {
     srcEnterRoomL?: string;
     srcEnterRoomM?: string;
     srcEnterRoomR?: string;
-    tags?: string[];
 }
 
-export const GrsOfficialRoomRowPhaseOneLayoutEnterRoom = ({ layout, srcEnterRoomA, srcEnterRoomL, srcEnterRoomM, srcEnterRoomR, tags }: GrsOfficialRoomRowPhaseOneLayoutEnterRoomProps) => {
+export const GrsOfficialRoomRowPhaseOneLayoutEnterRoom = ({ layout, srcEnterRoomA, srcEnterRoomL, srcEnterRoomM, srcEnterRoomR }: GrsOfficialRoomRowPhaseOneLayoutEnterRoomProps) => {
     return (
         <Region
             name="enter_room"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 64, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
@@ -66,14 +64,12 @@ export interface GrsOfficialRoomRowPhaseOneLayoutImageContProps {
     srcRicoRndR?: string;
     srcRicoRndRB?: string;
     srcRoomImage?: string;
-    tags?: string[];
 }
 
-export const GrsOfficialRoomRowPhaseOneLayoutImageCont = ({ captionPicText, enterRoom, layout, srcRicoRndL, srcRicoRndLB, srcRicoRndM, srcRicoRndR, srcRicoRndRB, srcRoomImage, tags }: GrsOfficialRoomRowPhaseOneLayoutImageContProps) => {
+export const GrsOfficialRoomRowPhaseOneLayoutImageCont = ({ captionPicText, enterRoom, layout, srcRicoRndL, srcRicoRndLB, srcRicoRndM, srcRicoRndR, srcRicoRndRB, srcRoomImage }: GrsOfficialRoomRowPhaseOneLayoutImageContProps) => {
     return (
         <Region
             name="image_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 43, right: 36, top: 2, height: 64, ...layout }}
         >
             <ThemeImage
@@ -133,14 +129,12 @@ export interface GrsOfficialRoomRowPhaseOneLayoutDetailsContainerProps {
     captionEntryCaption?: string;
     captionEntryDesc?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsOfficialRoomRowPhaseOneLayoutDetailsContainer = ({ captionEntryCaption, captionEntryDesc, layout, tags }: GrsOfficialRoomRowPhaseOneLayoutDetailsContainerProps) => {
+export const GrsOfficialRoomRowPhaseOneLayoutDetailsContainer = ({ captionEntryCaption, captionEntryDesc, layout }: GrsOfficialRoomRowPhaseOneLayoutDetailsContainerProps) => {
     return (
         <Region
             name="details_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 115, right: 41, top: 0, height: 66, ...layout }}
         >
             <Region
@@ -178,14 +172,12 @@ export interface GrsOfficialRoomRowPhaseOneLayoutContProps {
     srcRicoRndM?: string;
     srcRicoRndR?: string;
     srcRicoRndRB?: string;
-    tags?: string[];
 }
 
-export const GrsOfficialRoomRowPhaseOneLayoutCont = ({ captionArrowLabel, captionFolderNameText, detailsContainer, imageCont, layout, onCont, srcArrowDownWhite, srcArrowRightWhite, srcFolderImage, srcRicoRndL, srcRicoRndLB, srcRicoRndM, srcRicoRndR, srcRicoRndRB, tags }: GrsOfficialRoomRowPhaseOneLayoutContProps) => {
+export const GrsOfficialRoomRowPhaseOneLayoutCont = ({ captionArrowLabel, captionFolderNameText, detailsContainer, imageCont, layout, onCont, srcArrowDownWhite, srcArrowRightWhite, srcFolderImage, srcRicoRndL, srcRicoRndLB, srcRicoRndM, srcRicoRndR, srcRicoRndRB }: GrsOfficialRoomRowPhaseOneLayoutContProps) => {
     return (
         <Region
             name="cont"
-            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onCont}
             cursor="pointer"

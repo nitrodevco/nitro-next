@@ -24,14 +24,12 @@ export const MinimizedMenuLayout = ({ layout, minimize }: MinimizedMenuLayoutPro
 export interface MinimizedMenuLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
-    tags?: string[];
 }
 
-export const MinimizedMenuLayoutMinimize = ({ layout, onMinimize, tags }: MinimizedMenuLayoutMinimizeProps) => {
+export const MinimizedMenuLayoutMinimize = ({ layout, onMinimize }: MinimizedMenuLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 38, top: 0, height: 30, ...layout }}

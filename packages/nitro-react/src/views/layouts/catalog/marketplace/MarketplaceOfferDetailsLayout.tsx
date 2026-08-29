@@ -23,16 +23,14 @@ export interface MarketplaceOfferDetailsLayoutTextContainerProps {
     captionItemPrice?: string;
     captionOfferCount?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MarketplaceOfferDetailsLayoutTextContainer = ({ captionAveragePrice, captionItemDescription, captionItemName, captionItemPrice, captionOfferCount, layout, tags }: MarketplaceOfferDetailsLayoutTextContainerProps) => {
+export const MarketplaceOfferDetailsLayoutTextContainer = ({ captionAveragePrice, captionItemDescription, captionItemName, captionItemPrice, captionOfferCount, layout }: MarketplaceOfferDetailsLayoutTextContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="text_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 73, width: 267, top: 28, height: 80, ...layout }}
         >
             <Region
@@ -89,16 +87,14 @@ export interface MarketplaceOfferDetailsLayoutChartSelectorProps {
     layout?: BoxLayout;
     onPriceDevelopment?: () => void;
     onTradeVolume?: () => void;
-    tags?: string[];
 }
 
-export const MarketplaceOfferDetailsLayoutChartSelector = ({ layout, onPriceDevelopment, onTradeVolume, tags }: MarketplaceOfferDetailsLayoutChartSelectorProps) => {
+export const MarketplaceOfferDetailsLayoutChartSelector = ({ layout, onPriceDevelopment, onTradeVolume }: MarketplaceOfferDetailsLayoutChartSelectorProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="chart_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 340, top: 116, height: 34, ...layout }}
         >
             <ButtonGroupLeft
@@ -130,17 +126,15 @@ export interface MarketplaceOfferDetailsLayoutDetailsContainerProps {
     onBuyButton?: () => void;
     srcChartBitmap?: string;
     srcItemImage?: string;
-    tags?: string[];
     textContainer?: MarketplaceOfferDetailsLayoutTextContainerProps;
 }
 
-export const MarketplaceOfferDetailsLayoutDetailsContainer = ({ captionChartTitle, chartSelector, layout, onBackButton, onBuyButton, srcChartBitmap, srcItemImage, tags, textContainer }: MarketplaceOfferDetailsLayoutDetailsContainerProps) => {
+export const MarketplaceOfferDetailsLayoutDetailsContainer = ({ captionChartTitle, chartSelector, layout, onBackButton, onBuyButton, srcChartBitmap, srcItemImage, textContainer }: MarketplaceOfferDetailsLayoutDetailsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="details_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 460, ...layout }}
         >
             <Button

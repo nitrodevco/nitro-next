@@ -35,14 +35,12 @@ export const SanctionInfoLayout = ({ bottom, layout, mainContentsList, onClose }
 export interface SanctionInfoLayoutSanctionInfoItemProps {
     captionSanctionInfo?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SanctionInfoLayoutSanctionInfoItem = ({ captionSanctionInfo, layout, tags }: SanctionInfoLayoutSanctionInfoItemProps) => {
+export const SanctionInfoLayoutSanctionInfoItem = ({ captionSanctionInfo, layout }: SanctionInfoLayoutSanctionInfoItemProps) => {
     return (
         <Region
             name="sanction_info"
-            tags={tags}
             layout={{ width: 404, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -56,15 +54,13 @@ export const SanctionInfoLayoutSanctionInfoItem = ({ captionSanctionInfo, layout
 /** Row template `divider` of SanctionInfoLayout - pass real rows through its `items…` slot. */
 export interface SanctionInfoLayoutDividerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SanctionInfoLayoutDividerItem = ({ layout, tags }: SanctionInfoLayoutDividerItemProps) => {
+export const SanctionInfoLayoutDividerItem = ({ layout }: SanctionInfoLayoutDividerItemProps) => {
     return (
         <Border
             variant="3"
             name="divider"
-            tags={tags}
             tintColor="#000000"
             layout={{ width: 404, height: 1, flexShrink: 0, ...layout }}
         />
@@ -75,10 +71,9 @@ export const SanctionInfoLayoutDividerItem = ({ layout, tags }: SanctionInfoLayo
 export interface SanctionInfoLayoutMainContentsListProps {
     itemsMainContentsList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SanctionInfoLayoutMainContentsList = ({ itemsMainContentsList, layout, tags }: SanctionInfoLayoutMainContentsListProps) => {
+export const SanctionInfoLayoutMainContentsList = ({ itemsMainContentsList, layout }: SanctionInfoLayoutMainContentsListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -86,7 +81,6 @@ export const SanctionInfoLayoutMainContentsList = ({ itemsMainContentsList, layo
         >
             <Region
                 name="main_contents_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsMainContentsList ?? (
@@ -107,16 +101,14 @@ export interface SanctionInfoLayoutBottomProps {
     layout?: BoxLayout;
     onFaqLink?: () => void;
     onOkButton?: () => void;
-    tags?: string[];
 }
 
-export const SanctionInfoLayoutBottom = ({ captionFaqLink, captionSanctionInfoDisclaimer, layout, onFaqLink, onOkButton, tags }: SanctionInfoLayoutBottomProps) => {
+export const SanctionInfoLayoutBottom = ({ captionFaqLink, captionSanctionInfoDisclaimer, layout, onFaqLink, onOkButton }: SanctionInfoLayoutBottomProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bottom"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 426, top: 270, height: 40, ...layout }}
         >
             <Region

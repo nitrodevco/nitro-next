@@ -32,14 +32,12 @@ export const ChestWiredUpgradeLayout = ({ content, layout, onClose }: ChestWired
 export interface ChestWiredUpgradeLayoutErrorTextItemProps {
     captionErrorText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChestWiredUpgradeLayoutErrorTextItem = ({ captionErrorText, layout, tags }: ChestWiredUpgradeLayoutErrorTextItemProps) => {
+export const ChestWiredUpgradeLayoutErrorTextItem = ({ captionErrorText, layout }: ChestWiredUpgradeLayoutErrorTextItemProps) => {
     return (
         <Region
             name="error_text"
-            tags={tags}
             layout={{ width: 327, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -54,17 +52,15 @@ export const ChestWiredUpgradeLayoutErrorTextItem = ({ captionErrorText, layout,
 export interface ChestWiredUpgradeLayoutCancelButtonItemProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
-    tags?: string[];
 }
 
-export const ChestWiredUpgradeLayoutCancelButtonItem = ({ layout, onCancelButton, tags }: ChestWiredUpgradeLayoutCancelButtonItemProps) => {
+export const ChestWiredUpgradeLayoutCancelButtonItem = ({ layout, onCancelButton }: ChestWiredUpgradeLayoutCancelButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="cancel_button"
-            tags={tags}
             onPointerTap={onCancelButton}
             layout={{ width: 110, height: 27, flexShrink: 0, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27, ...layout }}
         >
@@ -77,17 +73,15 @@ export const ChestWiredUpgradeLayoutCancelButtonItem = ({ layout, onCancelButton
 export interface ChestWiredUpgradeLayoutBuyButtonItemProps {
     layout?: BoxLayout;
     onBuyButton?: () => void;
-    tags?: string[];
 }
 
-export const ChestWiredUpgradeLayoutBuyButtonItem = ({ layout, onBuyButton, tags }: ChestWiredUpgradeLayoutBuyButtonItemProps) => {
+export const ChestWiredUpgradeLayoutBuyButtonItem = ({ layout, onBuyButton }: ChestWiredUpgradeLayoutBuyButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="5"
             name="buy_button"
-            tags={tags}
             tintColor="#00aa00"
             onPointerTap={onBuyButton}
             layout={{ width: 110, height: 27, flexShrink: 0, minWidth: 110, maxWidth: 110, minHeight: 27, maxHeight: 27, ...layout }}
@@ -101,14 +95,12 @@ export const ChestWiredUpgradeLayoutBuyButtonItem = ({ layout, onBuyButton, tags
 export interface ChestWiredUpgradeLayoutButtonsItemProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChestWiredUpgradeLayoutButtonsItem = ({ itemsButtons, layout, tags }: ChestWiredUpgradeLayoutButtonsItemProps) => {
+export const ChestWiredUpgradeLayoutButtonsItem = ({ itemsButtons, layout }: ChestWiredUpgradeLayoutButtonsItemProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ minWidth: 341, minHeight: 27, flexShrink: 0, flexDirection: 'row', gap: 105, ...layout }}
         >
             {itemsButtons ?? (
@@ -125,16 +117,14 @@ export const ChestWiredUpgradeLayoutButtonsItem = ({ itemsButtons, layout, tags 
 export interface ChestWiredUpgradeLayoutProductNameItemProps {
     captionProductName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChestWiredUpgradeLayoutProductNameItem = ({ captionProductName, layout, tags }: ChestWiredUpgradeLayoutProductNameItemProps) => {
+export const ChestWiredUpgradeLayoutProductNameItem = ({ captionProductName, layout }: ChestWiredUpgradeLayoutProductNameItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="product_name"
-            tags={tags}
             layout={{ width: 197, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -150,16 +140,14 @@ export const ChestWiredUpgradeLayoutProductNameItem = ({ captionProductName, lay
 export interface ChestWiredUpgradeLayoutWarningItemProps {
     captionWarning?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChestWiredUpgradeLayoutWarningItem = ({ captionWarning, layout, tags }: ChestWiredUpgradeLayoutWarningItemProps) => {
+export const ChestWiredUpgradeLayoutWarningItem = ({ captionWarning, layout }: ChestWiredUpgradeLayoutWarningItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="warning"
-            tags={tags}
             layout={{ width: 197, height: 44, flexShrink: 0, minWidth: 197, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -174,14 +162,12 @@ export const ChestWiredUpgradeLayoutWarningItem = ({ captionWarning, layout, tag
 export interface ChestWiredUpgradeLayoutPropertiesItemlistProps {
     itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChestWiredUpgradeLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout, tags }: ChestWiredUpgradeLayoutPropertiesItemlistProps) => {
+export const ChestWiredUpgradeLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout }: ChestWiredUpgradeLayoutPropertiesItemlistProps) => {
     return (
         <Region
             name="properties_itemlist"
-            tags={tags}
             layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 67, flexDirection: 'column', gap: 4, ...layout }}
         >
             {itemsPropertiesItemlist ?? (
@@ -202,16 +188,14 @@ export interface ChestWiredUpgradeLayoutContentProps {
     propertiesItemlist?: ChestWiredUpgradeLayoutPropertiesItemlistProps;
     srcProductImage?: string;
     srcWiredIcon?: string;
-    tags?: string[];
 }
 
-export const ChestWiredUpgradeLayoutContent = ({ captionFree, itemsContent, layout, propertiesItemlist, srcProductImage, srcWiredIcon, tags }: ChestWiredUpgradeLayoutContentProps) => {
+export const ChestWiredUpgradeLayoutContent = ({ captionFree, itemsContent, layout, propertiesItemlist, srcProductImage, srcWiredIcon }: ChestWiredUpgradeLayoutContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="content"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 38, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsContent ?? (

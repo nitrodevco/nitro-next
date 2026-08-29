@@ -9,13 +9,9 @@ export interface TabButton3LayoutProps {
 export const TabButton3Layout = ({ captionTitle, layout }: TabButton3LayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 32, ...layout }}>
-            <Region
-                tags={[ '_EXCLUDE', '_INTERNAL' ]}
-                layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 32 }}
-            />
+            <Region layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 32 }} />
             <Region
                 name="title"
-                tags={[ 'title', 'TAB_BUTTON_TITLE', '_EXCLUDE', '_INTERNAL' ]}
                 layout={{ position: 'absolute', width: 20, alignSelf: 'center', marginTop: 3, marginBottom: -3, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

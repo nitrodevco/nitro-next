@@ -114,14 +114,12 @@ export interface MarketplacePurchaseConfirmationLayoutImageContainerProps {
     layout?: BoxLayout;
     srcItemImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
-    tags?: string[];
 }
 
-export const MarketplacePurchaseConfirmationLayoutImageContainer = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap, tags }: MarketplacePurchaseConfirmationLayoutImageContainerProps) => {
+export const MarketplacePurchaseConfirmationLayoutImageContainer = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap }: MarketplacePurchaseConfirmationLayoutImageContainerProps) => {
     return (
         <Region
             name="image_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 40, top: 4, height: 40, ...layout }}
         >
             <Region
@@ -136,7 +134,6 @@ export const MarketplacePurchaseConfirmationLayoutImageContainer = ({ layout, sr
             </Region>
             <ThemeImage
                 name="item_image"
-                tags={[ 'BITMAP' ]}
                 src={srcItemImage}
                 layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
             />
@@ -160,16 +157,14 @@ export const MarketplacePurchaseConfirmationLayoutImageContainer = ({ layout, sr
 export interface MarketplacePurchaseConfirmationLayoutDisclaimerProps {
     layout?: BoxLayout;
     onSpendingDisclaimer?: () => void;
-    tags?: string[];
 }
 
-export const MarketplacePurchaseConfirmationLayoutDisclaimer = ({ layout, onSpendingDisclaimer, tags }: MarketplacePurchaseConfirmationLayoutDisclaimerProps) => {
+export const MarketplacePurchaseConfirmationLayoutDisclaimer = ({ layout, onSpendingDisclaimer }: MarketplacePurchaseConfirmationLayoutDisclaimerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="disclaimer"
-            tags={tags}
             layout={{ position: 'absolute', left: 9, width: 252, top: 163, height: 24, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 17, width: 231, top: 1, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>

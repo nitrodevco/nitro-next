@@ -1,4 +1,5 @@
 import { BoxLayout, Region, ScrollArea } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `userBadgeSelectorWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -8,10 +9,9 @@ import { BoxLayout, Region, ScrollArea } from '#base/theme';
 /** Named region `badgeGrid` of UserBadgeSelectorWidget - configured through the parent's `badgeGrid` prop. */
 export interface UserBadgeSelectorWidgetBadgeGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserBadgeSelectorWidgetBadgeGrid = ({ layout, tags }: UserBadgeSelectorWidgetBadgeGridProps) => {
+export const UserBadgeSelectorWidgetBadgeGrid = ({ layout }: UserBadgeSelectorWidgetBadgeGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -19,7 +19,6 @@ export const UserBadgeSelectorWidgetBadgeGrid = ({ layout, tags }: UserBadgeSele
         >
             <Region
                 name="badgeGrid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}
             />
         </ScrollArea>
@@ -27,17 +26,15 @@ export const UserBadgeSelectorWidgetBadgeGrid = ({ layout, tags }: UserBadgeSele
 };
 
 /** Named region `userBadgeSelectorWidget` of UserBadgeSelectorWidget - configured through the parent's `userBadgeSelectorWidget` prop. */
-export interface UserBadgeSelectorWidgetProps {
+export interface UserBadgeSelectorWidgetProps extends CatalogWidgetFlags {
     badgeGrid?: UserBadgeSelectorWidgetBadgeGridProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserBadgeSelectorWidget = ({ badgeGrid, layout, tags }: UserBadgeSelectorWidgetProps) => {
+export const UserBadgeSelectorWidget = ({ badgeGrid, layout }: UserBadgeSelectorWidgetProps) => {
     return (
         <Region
             name="userBadgeSelectorWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <UserBadgeSelectorWidgetBadgeGrid {...badgeGrid} />

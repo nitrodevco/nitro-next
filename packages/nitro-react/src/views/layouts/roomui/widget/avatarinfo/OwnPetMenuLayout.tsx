@@ -28,14 +28,12 @@ export interface OwnPetMenuLayoutProfileLinkProps {
     captionName?: string;
     layout?: BoxLayout;
     onProfileLink?: () => void;
-    tags?: string[];
 }
 
-export const OwnPetMenuLayoutProfileLink = ({ captionName, layout, onProfileLink, tags }: OwnPetMenuLayoutProfileLinkProps) => {
+export const OwnPetMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: OwnPetMenuLayoutProfileLinkProps) => {
     return (
         <Region
             name="profile_link"
-            tags={tags}
             onPointerTap={onProfileLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 107, top: -1, height: 28, maxHeight: 28, justifyContent: 'center', ...layout }}
@@ -59,37 +57,41 @@ export interface OwnPetMenuLayoutBuySaddleItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutBuySaddleItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutBuySaddleItemProps) => {
+export const OwnPetMenuLayoutBuySaddleItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutBuySaddleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="buy_saddle"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.buy_saddle')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.buy_saddle')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -99,37 +101,41 @@ export interface OwnPetMenuLayoutMountItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutMountItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutMountItemProps) => {
+export const OwnPetMenuLayoutMountItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutMountItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="mount"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.mount')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.mount')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -140,43 +146,47 @@ export interface OwnPetMenuLayoutToggleRidingPermissionItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     onToggleRidingPermissionCheckbox?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutToggleRidingPermissionItem = ({ captionLabel, layout, onButton, onToggleRidingPermissionCheckbox, tags }: OwnPetMenuLayoutToggleRidingPermissionItemProps) => {
+export const OwnPetMenuLayoutToggleRidingPermissionItem = ({ captionLabel, layout, onButton, onToggleRidingPermissionCheckbox, visibleGroups }: OwnPetMenuLayoutToggleRidingPermissionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="toggle_riding_permission"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 40, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -2 }}
             >
-                <CheckBox
-                    variant="1"
-                    name="toggle_riding_permission_checkbox"
-                    onPointerTap={onToggleRidingPermissionCheckbox}
-                    layout={{ position: 'absolute', left: 9, width: 20, top: 17, height: 20 }}
-                />
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 26, width: 78, alignSelf: 'center', height: 40, maxWidth: 78, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.toggle_riding_permission')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 78 }}
+                    <CheckBox
+                        variant="1"
+                        name="toggle_riding_permission_checkbox"
+                        onPointerTap={onToggleRidingPermissionCheckbox}
+                        layout={{ position: 'absolute', left: 9, width: 20, top: 17, height: 20 }}
                     />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 26, width: 78, alignSelf: 'center', height: 40, maxWidth: 78, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.toggle_riding_permission')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 78 }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -186,37 +196,41 @@ export interface OwnPetMenuLayoutDismountItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutDismountItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutDismountItemProps) => {
+export const OwnPetMenuLayoutDismountItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutDismountItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dismount"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.dismount')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.dismount')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -226,37 +240,41 @@ export interface OwnPetMenuLayoutRespectItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutRespectItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutRespectItemProps) => {
+export const OwnPetMenuLayoutRespectItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutRespectItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="respect"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.petrespect')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.petrespect')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -266,37 +284,41 @@ export interface OwnPetMenuLayoutTreatItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutTreatItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutTreatItemProps) => {
+export const OwnPetMenuLayoutTreatItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutTreatItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="treat"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.pettreat')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, width: 101, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.pettreat')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -306,37 +328,41 @@ export interface OwnPetMenuLayoutPassHanditemItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutPassHanditemItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutPassHanditemItemProps) => {
+export const OwnPetMenuLayoutPassHanditemItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutPassHanditemItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="pass_handitem"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.give_handitem_to_pet')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.give_handitem_to_pet')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -346,37 +372,41 @@ export interface OwnPetMenuLayoutTrainItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutTrainItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutTrainItemProps) => {
+export const OwnPetMenuLayoutTrainItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutTrainItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="train"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.train')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.train')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -386,37 +416,41 @@ export interface OwnPetMenuLayoutPickUpItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutPickUpItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutPickUpItemProps) => {
+export const OwnPetMenuLayoutPickUpItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutPickUpItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="pick_up"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.pickup')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.pickup')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -426,37 +460,41 @@ export interface OwnPetMenuLayoutSaddleOffItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutSaddleOffItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutSaddleOffItemProps) => {
+export const OwnPetMenuLayoutSaddleOffItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutSaddleOffItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="saddle_off"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.saddleoff')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.saddleoff')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -466,37 +504,41 @@ export interface OwnPetMenuLayoutGiveWaterItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutGiveWaterItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutGiveWaterItemProps) => {
+export const OwnPetMenuLayoutGiveWaterItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutGiveWaterItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="give_water"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.givewater')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.givewater')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -506,37 +548,41 @@ export interface OwnPetMenuLayoutGiveLightItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutGiveLightItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutGiveLightItemProps) => {
+export const OwnPetMenuLayoutGiveLightItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutGiveLightItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="give_light"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.givelight')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.givelight')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -546,37 +592,41 @@ export interface OwnPetMenuLayoutBreedItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutBreedItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutBreedItemProps) => {
+export const OwnPetMenuLayoutBreedItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutBreedItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="breed"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.breed')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.breed')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -586,37 +636,41 @@ export interface OwnPetMenuLayoutHarvestItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutHarvestItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutHarvestItemProps) => {
+export const OwnPetMenuLayoutHarvestItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutHarvestItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="harvest"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.harvest')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.harvest')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -626,37 +680,41 @@ export interface OwnPetMenuLayoutReviveItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutReviveItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutReviveItemProps) => {
+export const OwnPetMenuLayoutReviveItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutReviveItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="revive"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.revive')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.revive')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -666,37 +724,41 @@ export interface OwnPetMenuLayoutCompostItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutCompostItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutCompostItemProps) => {
+export const OwnPetMenuLayoutCompostItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutCompostItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="compost"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.compost')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.compost')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -706,43 +768,46 @@ export interface OwnPetMenuLayoutMoreItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutMoreItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutMoreItemProps) => {
+export const OwnPetMenuLayoutMoreItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutMoreItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="more"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.link.more')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.link.more')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="5"
+                        name="icon"
+                        layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
                     />
-                </Region>
-                <Icon
-                    variant="5"
-                    name="icon"
-                    tags={[ 'arrow_right' ]}
-                    layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -753,43 +818,47 @@ export interface OwnPetMenuLayoutToggleBreedingPermissionItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     onToggleBreedingPermissionCheckbox?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutToggleBreedingPermissionItem = ({ captionLabel, layout, onButton, onToggleBreedingPermissionCheckbox, tags }: OwnPetMenuLayoutToggleBreedingPermissionItemProps) => {
+export const OwnPetMenuLayoutToggleBreedingPermissionItem = ({ captionLabel, layout, onButton, onToggleBreedingPermissionCheckbox, visibleGroups }: OwnPetMenuLayoutToggleBreedingPermissionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="toggle_breeding_permission"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 40, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -2 }}
             >
-                <CheckBox
-                    variant="1"
-                    name="toggle_breeding_permission_checkbox"
-                    onPointerTap={onToggleBreedingPermissionCheckbox}
-                    layout={{ position: 'absolute', left: 9, width: 20, top: 17, height: 20 }}
-                />
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 26, width: 78, alignSelf: 'center', height: 46, maxWidth: 78, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.toggle_breeding_permission')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 78 }}
+                    <CheckBox
+                        variant="1"
+                        name="toggle_breeding_permission_checkbox"
+                        onPointerTap={onToggleBreedingPermissionCheckbox}
+                        layout={{ position: 'absolute', left: 9, width: 20, top: 17, height: 20 }}
                     />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 26, width: 78, alignSelf: 'center', height: 46, maxWidth: 78, maxHeight: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.toggle_breeding_permission')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 78 }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -799,37 +868,41 @@ export interface OwnPetMenuLayoutWiredInspectItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnPetMenuLayoutWiredInspectItem = ({ captionLabel, layout, onButton, tags }: OwnPetMenuLayoutWiredInspectItemProps) => {
+export const OwnPetMenuLayoutWiredInspectItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnPetMenuLayoutWiredInspectItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wired_inspect"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.wired_inspect')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.wired_inspect')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -838,37 +911,35 @@ export const OwnPetMenuLayoutWiredInspectItem = ({ captionLabel, layout, onButto
 export interface OwnPetMenuLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const OwnPetMenuLayoutButtons = ({ itemsButtons, layout, tags }: OwnPetMenuLayoutButtonsProps) => {
+export const OwnPetMenuLayoutButtons = ({ itemsButtons, layout }: OwnPetMenuLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 540, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsButtons ?? (
                 <>
-                    <OwnPetMenuLayoutBuySaddleItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutMountItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutToggleRidingPermissionItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutDismountItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutRespectItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutTreatItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutPassHanditemItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutTrainItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutPickUpItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutSaddleOffItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutGiveWaterItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutGiveLightItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutBreedItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutHarvestItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutReviveItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutCompostItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutMoreItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutToggleBreedingPermissionItem tags={[ 'action' ]} />
-                    <OwnPetMenuLayoutWiredInspectItem tags={[ 'action' ]} />
+                    <OwnPetMenuLayoutBuySaddleItem />
+                    <OwnPetMenuLayoutMountItem />
+                    <OwnPetMenuLayoutToggleRidingPermissionItem />
+                    <OwnPetMenuLayoutDismountItem />
+                    <OwnPetMenuLayoutRespectItem />
+                    <OwnPetMenuLayoutTreatItem />
+                    <OwnPetMenuLayoutPassHanditemItem />
+                    <OwnPetMenuLayoutTrainItem />
+                    <OwnPetMenuLayoutPickUpItem />
+                    <OwnPetMenuLayoutSaddleOffItem />
+                    <OwnPetMenuLayoutGiveWaterItem />
+                    <OwnPetMenuLayoutGiveLightItem />
+                    <OwnPetMenuLayoutBreedItem />
+                    <OwnPetMenuLayoutHarvestItem />
+                    <OwnPetMenuLayoutReviveItem />
+                    <OwnPetMenuLayoutCompostItem />
+                    <OwnPetMenuLayoutMoreItem />
+                    <OwnPetMenuLayoutToggleBreedingPermissionItem />
+                    <OwnPetMenuLayoutWiredInspectItem />
                 </>
             )}
         </Region>
@@ -879,14 +950,12 @@ export const OwnPetMenuLayoutButtons = ({ itemsButtons, layout, tags }: OwnPetMe
 export interface OwnPetMenuLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
-    tags?: string[];
 }
 
-export const OwnPetMenuLayoutMinimize = ({ layout, onMinimize, tags }: OwnPetMenuLayoutMinimizeProps) => {
+export const OwnPetMenuLayoutMinimize = ({ layout, onMinimize }: OwnPetMenuLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 4, width: 100, bottom: 4, height: 19, ...layout }}
@@ -906,14 +975,12 @@ export interface OwnPetMenuLayoutBorderProps {
     layout?: BoxLayout;
     minimize?: OwnPetMenuLayoutMinimizeProps;
     profileLink?: OwnPetMenuLayoutProfileLinkProps;
-    tags?: string[];
 }
 
-export const OwnPetMenuLayoutBorder = ({ buttons, layout, minimize, profileLink, tags }: OwnPetMenuLayoutBorderProps) => {
+export const OwnPetMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: OwnPetMenuLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 590, justifyContent: 'center', ...layout }}
         >
             <OwnPetMenuLayoutProfileLink {...profileLink} />

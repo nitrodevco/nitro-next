@@ -20,14 +20,12 @@ export interface ListTesterItemLayoutChatlineProps {
     captionMsgTxt?: string;
     captionTimeTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ListTesterItemLayoutChatline = ({ captionChatterTxt, captionMsgTxt, captionTimeTxt, layout, tags }: ListTesterItemLayoutChatlineProps) => {
+export const ListTesterItemLayoutChatline = ({ captionChatterTxt, captionMsgTxt, captionTimeTxt, layout }: ListTesterItemLayoutChatlineProps) => {
     return (
         <Region
             name="chatline"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 41, ...layout }}
         >
             <Region

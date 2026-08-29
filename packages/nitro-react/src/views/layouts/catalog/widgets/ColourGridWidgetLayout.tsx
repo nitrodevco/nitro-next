@@ -24,10 +24,9 @@ export const ColourGridWidgetLayout = ({ colourGrid, layout }: ColourGridWidgetL
 /** Named region `colourGrid` of ColourGridWidgetLayout - configured through the parent's `colourGrid` prop. */
 export interface ColourGridWidgetLayoutColourGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ColourGridWidgetLayoutColourGrid = ({ layout, tags }: ColourGridWidgetLayoutColourGridProps) => {
+export const ColourGridWidgetLayoutColourGrid = ({ layout }: ColourGridWidgetLayoutColourGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -35,7 +34,6 @@ export const ColourGridWidgetLayoutColourGrid = ({ layout, tags }: ColourGridWid
         >
             <Region
                 name="colourGrid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
             />
         </ScrollArea>

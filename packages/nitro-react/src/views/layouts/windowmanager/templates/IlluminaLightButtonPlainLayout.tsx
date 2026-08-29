@@ -11,7 +11,6 @@ export const IlluminaLightButtonPlainLayout = ({ captionBTNTEXT, layout }: Illum
         <Region layout={{ position: 'relative', width: 28, height: 28, ...layout }}>
             <Region
                 name="_BTN_TEXT"
-                tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
                 layout={{ position: 'absolute', width: 28, alignSelf: 'center', height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

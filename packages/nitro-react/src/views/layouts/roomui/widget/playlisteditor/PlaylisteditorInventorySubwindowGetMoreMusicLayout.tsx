@@ -20,16 +20,14 @@ export interface PlaylisteditorInventorySubwindowGetMoreMusicLayoutGetMoreMusicC
     layout?: BoxLayout;
     onOpenCatalogButton?: () => void;
     srcGetMoreMusicBackgroundImage?: string;
-    tags?: string[];
 }
 
-export const PlaylisteditorInventorySubwindowGetMoreMusicLayoutGetMoreMusicContainer = ({ layout, onOpenCatalogButton, srcGetMoreMusicBackgroundImage, tags }: PlaylisteditorInventorySubwindowGetMoreMusicLayoutGetMoreMusicContainerProps) => {
+export const PlaylisteditorInventorySubwindowGetMoreMusicLayoutGetMoreMusicContainer = ({ layout, onOpenCatalogButton, srcGetMoreMusicBackgroundImage }: PlaylisteditorInventorySubwindowGetMoreMusicLayoutGetMoreMusicContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="get_more_music_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 110, ...layout }}
         >
             <ThemeImage

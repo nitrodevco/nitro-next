@@ -50,16 +50,14 @@ export interface AvatarInfoWidgetLayoutChangeNameContainerProps {
     layout?: BoxLayout;
     onChangeNameContainer?: () => void;
     srcPenIcon?: string;
-    tags?: string[];
 }
 
-export const AvatarInfoWidgetLayoutChangeNameContainer = ({ layout, onChangeNameContainer, srcPenIcon, tags }: AvatarInfoWidgetLayoutChangeNameContainerProps) => {
+export const AvatarInfoWidgetLayoutChangeNameContainer = ({ layout, onChangeNameContainer, srcPenIcon }: AvatarInfoWidgetLayoutChangeNameContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="change_name_container"
-            tags={tags}
             onPointerTap={onChangeNameContainer}
             cursor="pointer"
             layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 123, top: 19, height: 18, ...layout }}

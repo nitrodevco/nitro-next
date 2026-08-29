@@ -23,14 +23,12 @@ export const LandingViewDefaultDynamicLayoutLayout = ({ contentBackground, layou
 /** Named region `moving_objects_container` of LandingViewDefaultDynamicLayoutLayout - configured through the parent's `movingObjectsContainer` prop. */
 export interface LandingViewDefaultDynamicLayoutLayoutMovingObjectsContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LandingViewDefaultDynamicLayoutLayoutMovingObjectsContainer = ({ layout, tags }: LandingViewDefaultDynamicLayoutLayoutMovingObjectsContainerProps) => {
+export const LandingViewDefaultDynamicLayoutLayoutMovingObjectsContainer = ({ layout }: LandingViewDefaultDynamicLayoutLayoutMovingObjectsContainerProps) => {
     return (
         <Region
             name="moving_objects_container"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         />
@@ -50,14 +48,12 @@ export interface LandingViewDefaultDynamicLayoutLayoutContentBackgroundProps {
     srcBackgroundRight?: string;
     srcLeftRightDivider?: string;
     srcLogo?: string;
-    tags?: string[];
 }
 
-export const LandingViewDefaultDynamicLayoutLayoutContentBackground = ({ captionWarning, layout, movingObjectsContainer, srcBackgroundGradient, srcBackgroundGradientTop, srcBackgroundHorizon, srcBackgroundHotelTop, srcBackgroundLeft, srcBackgroundRight, srcLeftRightDivider, srcLogo, tags }: LandingViewDefaultDynamicLayoutLayoutContentBackgroundProps) => {
+export const LandingViewDefaultDynamicLayoutLayoutContentBackground = ({ captionWarning, layout, movingObjectsContainer, srcBackgroundGradient, srcBackgroundGradientTop, srcBackgroundHorizon, srcBackgroundHotelTop, srcBackgroundLeft, srcBackgroundRight, srcLeftRightDivider, srcLogo }: LandingViewDefaultDynamicLayoutLayoutContentBackgroundProps) => {
     return (
         <Region
             name="content_background"
-            tags={tags}
             backgroundColor="#aae0f0"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >

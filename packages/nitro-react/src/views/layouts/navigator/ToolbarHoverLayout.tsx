@@ -21,10 +21,7 @@ export const ToolbarHoverLayout = ({ itemList, layout }: ToolbarHoverLayoutProps
                     tintColor="#79756e"
                     layout={{ width: '100%', height: '100%' }}
                 >
-                    <ToolbarHoverLayoutItemList
-                        tags={[ 'SIMPLE_ITEM' ]}
-                        {...itemList}
-                    />
+                    <ToolbarHoverLayoutItemList {...itemList} />
                 </Border>
             </Region>
         </Region>
@@ -36,14 +33,12 @@ export interface ToolbarHoverLayoutItemBasicItemProps {
     captionText?: string;
     layout?: BoxLayout;
     onItemBasic?: () => void;
-    tags?: string[];
 }
 
-export const ToolbarHoverLayoutItemBasicItem = ({ captionText, layout, onItemBasic, tags }: ToolbarHoverLayoutItemBasicItemProps) => {
+export const ToolbarHoverLayoutItemBasicItem = ({ captionText, layout, onItemBasic }: ToolbarHoverLayoutItemBasicItemProps) => {
     return (
         <Region
             name="item_basic"
-            tags={tags}
             onPointerTap={onItemBasic}
             cursor="pointer"
             layout={{ width: 238, height: 25, flexShrink: 0, ...layout }}
@@ -72,18 +67,16 @@ export const ToolbarHoverLayoutItemBasicItem = ({ captionText, layout, onItemBas
 export interface ToolbarHoverLayoutItemListProps {
     itemsItemList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ToolbarHoverLayoutItemList = ({ itemsItemList, layout, tags }: ToolbarHoverLayoutItemListProps) => {
+export const ToolbarHoverLayoutItemList = ({ itemsItemList, layout }: ToolbarHoverLayoutItemListProps) => {
     return (
         <Region
             name="item_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, minWidth: 245, top: 7, minHeight: 25, flexDirection: 'column', ...layout }}
         >
             {itemsItemList ?? (
-                <ToolbarHoverLayoutItemBasicItem tags={[ 'SIMPLE_ITEM' ]} />
+                <ToolbarHoverLayoutItemBasicItem />
             )}
         </Region>
     );

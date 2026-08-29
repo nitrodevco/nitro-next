@@ -22,17 +22,15 @@ export interface SearchFooterLayoutFooterProps {
     layout?: BoxLayout;
     onSearchBut?: () => void;
     srcSearch?: string;
-    tags?: string[];
 }
 
-export const SearchFooterLayoutFooter = ({ layout, onSearchBut, srcSearch, tags }: SearchFooterLayoutFooterProps) => {
+export const SearchFooterLayoutFooter = ({ layout, onSearchBut, srcSearch }: SearchFooterLayoutFooterProps) => {
     const t = useTranslation();
     const [ searchStrValue, setSearchStrValue ] = useState('');
 
     return (
         <Region
             name="footer"
-            tags={tags}
             backgroundColor="#b6b6b6"
             layout={{ position: 'absolute', left: 0, width: 223, top: 0, height: 41, ...layout }}
         >

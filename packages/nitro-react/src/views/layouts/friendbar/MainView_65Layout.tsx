@@ -177,14 +177,12 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
 export interface MainView_65LayoutTopClickAreaProps {
     layout?: BoxLayout;
     onTopClickArea?: () => void;
-    tags?: string[];
 }
 
-export const MainView_65LayoutTopClickArea = ({ layout, onTopClickArea, tags }: MainView_65LayoutTopClickAreaProps) => {
+export const MainView_65LayoutTopClickArea = ({ layout, onTopClickArea }: MainView_65LayoutTopClickAreaProps) => {
     return (
         <Region
             name="top_click_area"
-            tags={tags}
             onPointerTap={onTopClickArea}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80, ...layout }}
@@ -196,14 +194,12 @@ export const MainView_65LayoutTopClickArea = ({ layout, onTopClickArea, tags }: 
 export interface MainView_65LayoutIconBackgroundProps {
     layout?: BoxLayout;
     srcHeaderIcon?: string;
-    tags?: string[];
 }
 
-export const MainView_65LayoutIconBackground = ({ layout, srcHeaderIcon, tags }: MainView_65LayoutIconBackgroundProps) => {
+export const MainView_65LayoutIconBackground = ({ layout, srcHeaderIcon }: MainView_65LayoutIconBackgroundProps) => {
     return (
         <Region
             name="icon_background"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80, ...layout }}
         >
@@ -228,17 +224,15 @@ export interface MainView_65LayoutTopPartProps {
     iconBackground?: MainView_65LayoutIconBackgroundProps;
     layout?: BoxLayout;
     onTopPart?: () => void;
-    tags?: string[];
     topClickArea?: MainView_65LayoutTopClickAreaProps;
 }
 
-export const MainView_65LayoutTopPart = ({ captionTopHeaderText, captionTopText, iconBackground, layout, onTopPart, tags, topClickArea }: MainView_65LayoutTopPartProps) => {
+export const MainView_65LayoutTopPart = ({ captionTopHeaderText, captionTopText, iconBackground, layout, onTopPart, topClickArea }: MainView_65LayoutTopPartProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="top_part"
-            tags={tags}
             backgroundColor="#0e3f52"
             onPointerTap={onTopPart}
             cursor="pointer"
@@ -291,16 +285,14 @@ export const MainView_65LayoutTopPart = ({ captionTopHeaderText, captionTopText,
 export interface MainView_65LayoutHeaderItemProps {
     captionHeader?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_65LayoutHeaderItem = ({ captionHeader, layout, tags }: MainView_65LayoutHeaderItemProps) => {
+export const MainView_65LayoutHeaderItem = ({ captionHeader, layout }: MainView_65LayoutHeaderItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             layout={{ width: 191, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionHeader ?? t('groupforum.view.shortcuts.header')} />
@@ -312,16 +304,14 @@ export const MainView_65LayoutHeaderItem = ({ captionHeader, layout, tags }: Mai
 export interface MainView_65LayoutMyItemProps {
     captionMy?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_65LayoutMyItem = ({ captionMy, layout, tags }: MainView_65LayoutMyItemProps) => {
+export const MainView_65LayoutMyItem = ({ captionMy, layout }: MainView_65LayoutMyItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="my"
-            tags={tags}
             layout={{ width: 159, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -336,16 +326,14 @@ export const MainView_65LayoutMyItem = ({ captionMy, layout, tags }: MainView_65
 export interface MainView_65LayoutActiveItemProps {
     captionActive?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_65LayoutActiveItem = ({ captionActive, layout, tags }: MainView_65LayoutActiveItemProps) => {
+export const MainView_65LayoutActiveItem = ({ captionActive, layout }: MainView_65LayoutActiveItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="active"
-            tags={tags}
             layout={{ width: 174, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -360,16 +348,14 @@ export const MainView_65LayoutActiveItem = ({ captionActive, layout, tags }: Mai
 export interface MainView_65LayoutPopularItemProps {
     captionPopular?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_65LayoutPopularItem = ({ captionPopular, layout, tags }: MainView_65LayoutPopularItemProps) => {
+export const MainView_65LayoutPopularItem = ({ captionPopular, layout }: MainView_65LayoutPopularItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="popular"
-            tags={tags}
             layout={{ width: 183, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -384,14 +370,12 @@ export const MainView_65LayoutPopularItem = ({ captionPopular, layout, tags }: M
 export interface MainView_65LayoutShortcutsProps {
     itemsShortcuts?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_65LayoutShortcuts = ({ itemsShortcuts, layout, tags }: MainView_65LayoutShortcutsProps) => {
+export const MainView_65LayoutShortcuts = ({ itemsShortcuts, layout }: MainView_65LayoutShortcutsProps) => {
     return (
         <Region
             name="shortcuts"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: -5, right: 7, top: 88, height: 25, flexDirection: 'row', gap: 5, ...layout }}
         >
@@ -410,10 +394,9 @@ export const MainView_65LayoutShortcuts = ({ itemsShortcuts, layout, tags }: Mai
 /** Named region `scrollable_message_list` of MainView_65Layout - configured through the parent's `scrollableMessageList` prop. */
 export interface MainView_65LayoutScrollableMessageListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MainView_65LayoutScrollableMessageList = ({ layout, tags }: MainView_65LayoutScrollableMessageListProps) => {
+export const MainView_65LayoutScrollableMessageList = ({ layout }: MainView_65LayoutScrollableMessageListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -421,7 +404,6 @@ export const MainView_65LayoutScrollableMessageList = ({ layout, tags }: MainVie
         >
             <Region
                 name="scrollable_message_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 1, width: '100%' }}
             />
         </ScrollArea>

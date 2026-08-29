@@ -1,27 +1,26 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ScrollArea, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
+import { BoxLayout, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `recyclerPrizesWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
- * (LayoutRecyclerPrizes_1537Layout); each passes its own placement through `layout`.
+ * (LayoutRecyclerPrizes_1543Layout); each passes its own placement through `layout`.
  */
 /** Named region `itemList` of RecyclerPrizesWidget2 - configured through the parent's `itemList` prop. */
 export interface RecyclerPrizesWidget2ItemListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RecyclerPrizesWidget2ItemList = ({ layout, tags }: RecyclerPrizesWidget2ItemListProps) => {
+export const RecyclerPrizesWidget2ItemList = ({ layout }: RecyclerPrizesWidget2ItemListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 237, bottom: 0, ...layout }}
+            layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 314, ...layout }}
         >
             <Region
                 name="itemList"
-                tags={tags}
-                layout={{ flexDirection: 'column', gap: 11, width: '100%' }}
+                layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
     );
@@ -30,18 +29,16 @@ export const RecyclerPrizesWidget2ItemList = ({ layout, tags }: RecyclerPrizesWi
 /** Named region `bundleGrid` of RecyclerPrizesWidget2 - configured through the parent's `bundleGrid` prop. */
 export interface RecyclerPrizesWidget2BundleGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RecyclerPrizesWidget2BundleGrid = ({ layout, tags }: RecyclerPrizesWidget2BundleGridProps) => {
+export const RecyclerPrizesWidget2BundleGrid = ({ layout }: RecyclerPrizesWidget2BundleGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
-            layout={{ position: 'absolute', left: 18, width: 142, top: 147, height: 76, ...layout }}
+            layout={{ position: 'absolute', left: 18, width: 142, top: 87, height: 76, ...layout }}
         >
             <Region
                 name="bundleGrid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
             />
         </ScrollArea>
@@ -55,36 +52,24 @@ export interface RecyclerPrizesWidget2ProductViewProps {
     captionCtlgProductName?: string;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const RecyclerPrizesWidget2ProductView = ({ bundleGrid, captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1, tags }: RecyclerPrizesWidget2ProductViewProps) => {
+export const RecyclerPrizesWidget2ProductView = ({ bundleGrid, captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1 }: RecyclerPrizesWidget2ProductViewProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="productView"
-            tags={tags}
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240, ...layout }}
+            layout={{ position: 'absolute', left: 180, width: 180, top: 0, height: 277, ...layout }}
         >
-            <WidgetSlot
-                widgetType="product_image"
-                name="product_viewer"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
+            <ThemeImage
+                name="ctlg_teaserimg_1"
+                src={srcCtlgTeaserimg1}
+                layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 162 }}
             />
             <Region
-                visible={false}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
-            >
-                <ThemeImage
-                    name="ctlg_teaserimg_1"
-                    src={srcCtlgTeaserimg1}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
-                />
-            </Region>
-            <Region
                 name="ctlg_product_name"
-                layout={{ position: 'absolute', left: 10, width: 74, top: 16, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, width: 74, top: 166, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCtlgProductName ?? t('lorem.title')}
@@ -93,7 +78,7 @@ export const RecyclerPrizesWidget2ProductView = ({ bundleGrid, captionCtlgDescri
             </Region>
             <Region
                 name="ctlg_description"
-                layout={{ position: 'absolute', left: 10, width: 162, top: 33, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, width: 162, top: 183, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCtlgDescription ?? t('lorem.title')}
@@ -107,18 +92,16 @@ export const RecyclerPrizesWidget2ProductView = ({ bundleGrid, captionCtlgDescri
 };
 
 /** Named region `recyclerPrizesWidget` of RecyclerPrizesWidget2 - configured through the parent's `recyclerPrizesWidget` prop. */
-export interface RecyclerPrizesWidget2Props {
+export interface RecyclerPrizesWidget2Props extends CatalogWidgetFlags {
     itemList?: RecyclerPrizesWidget2ItemListProps;
     layout?: BoxLayout;
     productView?: RecyclerPrizesWidget2ProductViewProps;
-    tags?: string[];
 }
 
-export const RecyclerPrizesWidget2 = ({ itemList, layout, productView, tags }: RecyclerPrizesWidget2Props) => {
+export const RecyclerPrizesWidget2 = ({ itemList, layout, productView }: RecyclerPrizesWidget2Props) => {
     return (
         <Region
             name="recyclerPrizesWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <RecyclerPrizesWidget2ItemList {...itemList} />

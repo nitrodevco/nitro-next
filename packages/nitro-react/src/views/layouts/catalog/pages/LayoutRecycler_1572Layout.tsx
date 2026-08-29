@@ -21,14 +21,12 @@ export interface LayoutRecycler_1572LayoutCtlgRecyclerProps {
     layout?: BoxLayout;
     recyclerWidget?: RecyclerWidgetProps;
     srcRecycleMachine?: string;
-    tags?: string[];
 }
 
-export const LayoutRecycler_1572LayoutCtlgRecycler = ({ layout, recyclerWidget, srcRecycleMachine, tags }: LayoutRecycler_1572LayoutCtlgRecyclerProps) => {
+export const LayoutRecycler_1572LayoutCtlgRecycler = ({ layout, recyclerWidget, srcRecycleMachine }: LayoutRecycler_1572LayoutCtlgRecyclerProps) => {
     return (
         <Region
             name="ctlg_recycler"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
@@ -42,7 +40,6 @@ export const LayoutRecycler_1572LayoutCtlgRecycler = ({ layout, recyclerWidget, 
                 layout={{ position: 'absolute', left: 51, width: 258, top: 5, height: 55 }}
             />
             <RecyclerWidget
-                tags={[ 'E' ]}
                 layout={{ position: 'absolute', left: 0, width: 360, bottom: -6, height: 208 }}
                 {...recyclerWidget}
             />

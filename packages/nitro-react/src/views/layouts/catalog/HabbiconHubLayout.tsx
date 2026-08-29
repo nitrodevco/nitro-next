@@ -82,14 +82,13 @@ export const HabbiconHubLayout = ({ albumHeader, allSetsContainer, habbiconPopup
 /** Named region `highlight` of HabbiconHubLayout - configured through the parent's `highlight` prop. */
 export interface HabbiconHubLayoutHighlightProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutHighlight = ({ layout, tags }: HabbiconHubLayoutHighlightProps) => {
+export const HabbiconHubLayoutHighlight = ({ layout }: HabbiconHubLayoutHighlightProps) => {
     return (
         <Region
             name="highlight"
-            tags={tags}
+            blendMode="add"
             layout={{ position: 'absolute', left: 1, right: -302, top: 1, height: 6, ...layout }}
         />
     );
@@ -99,14 +98,12 @@ export const HabbiconHubLayoutHighlight = ({ layout, tags }: HabbiconHubLayoutHi
 export interface HabbiconHubLayoutProgressProps {
     highlight?: HabbiconHubLayoutHighlightProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutProgress = ({ highlight, layout, tags }: HabbiconHubLayoutProgressProps) => {
+export const HabbiconHubLayoutProgress = ({ highlight, layout }: HabbiconHubLayoutProgressProps) => {
     return (
         <Region
             name="progress"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 20, top: 0, bottom: 0, ...layout }}
         >
             <Shape
@@ -117,10 +114,7 @@ export const HabbiconHubLayoutProgress = ({ highlight, layout, tags }: HabbiconH
                 radius={6}
                 layout={{ position: 'absolute', left: 0, right: -303, top: 0, bottom: 0 }}
             />
-            <HabbiconHubLayoutHighlight
-                tags={[ 'BLEND_ADD' ]}
-                {...highlight}
-            />
+            <HabbiconHubLayoutHighlight {...highlight} />
         </Region>
     );
 };
@@ -129,14 +123,12 @@ export const HabbiconHubLayoutProgress = ({ highlight, layout, tags }: HabbiconH
 export interface HabbiconHubLayoutAlbumProgressBarProps {
     layout?: BoxLayout;
     progress?: HabbiconHubLayoutProgressProps;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutAlbumProgressBar = ({ layout, progress, tags }: HabbiconHubLayoutAlbumProgressBarProps) => {
+export const HabbiconHubLayoutAlbumProgressBar = ({ layout, progress }: HabbiconHubLayoutAlbumProgressBarProps) => {
     return (
         <Region
             name="album_progress_bar"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 304, top: 3, height: 18, ...layout }}
         >
             <Shape
@@ -157,14 +149,12 @@ export interface HabbiconHubLayoutAlbumProgressContainerProps {
     albumProgressBar?: HabbiconHubLayoutAlbumProgressBarProps;
     captionAlbumProgressText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutAlbumProgressContainer = ({ albumProgressBar, captionAlbumProgressText, layout, tags }: HabbiconHubLayoutAlbumProgressContainerProps) => {
+export const HabbiconHubLayoutAlbumProgressContainer = ({ albumProgressBar, captionAlbumProgressText, layout }: HabbiconHubLayoutAlbumProgressContainerProps) => {
     return (
         <Region
             name="album_progress_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 102, width: 452, top: 76, height: 24, ...layout }}
         >
             <HabbiconHubLayoutAlbumProgressBar {...albumProgressBar} />
@@ -194,16 +184,14 @@ export interface HabbiconHubLayoutAlbumHeaderProps {
     layout?: BoxLayout;
     srcAlbumHeaderPattern?: string;
     srcAlbumLogo?: string;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutAlbumHeader = ({ albumProgressContainer, captionAlbumSubtitle, captionAlbumTitle, captionOwnedHabbiconsLabel, captionOwnedHabbiconsValue, captionSetsCompletedLabel, captionSetsCompletedValue, layout, srcAlbumHeaderPattern, srcAlbumLogo, tags }: HabbiconHubLayoutAlbumHeaderProps) => {
+export const HabbiconHubLayoutAlbumHeader = ({ albumProgressContainer, captionAlbumSubtitle, captionAlbumTitle, captionOwnedHabbiconsLabel, captionOwnedHabbiconsValue, captionSetsCompletedLabel, captionSetsCompletedValue, layout, srcAlbumHeaderPattern, srcAlbumLogo }: HabbiconHubLayoutAlbumHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="album_header"
-            tags={tags}
             backgroundColor="#2b7aa0"
             layout={{ position: 'absolute', left: -2, right: 4, top: -3, height: 110, ...layout }}
         >
@@ -303,14 +291,12 @@ export const HabbiconHubLayoutAlbumHeader = ({ albumProgressContainer, captionAl
 /** Named region `tabs_bg` of HabbiconHubLayout - configured through the parent's `tabsBg` prop. */
 export interface HabbiconHubLayoutTabsBgProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutTabsBg = ({ layout, tags }: HabbiconHubLayoutTabsBgProps) => {
+export const HabbiconHubLayoutTabsBg = ({ layout }: HabbiconHubLayoutTabsBgProps) => {
     return (
         <Region
             name="tabs_bg"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 7, width: 540, top: 144, height: 1, ...layout }}
         />
@@ -320,14 +306,13 @@ export const HabbiconHubLayoutTabsBg = ({ layout, tags }: HabbiconHubLayoutTabsB
 /** Named region `highlight` of HabbiconHubLayout - configured through the parent's `highlight` prop. */
 export interface HabbiconHubLayoutHighlight2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutHighlight2 = ({ layout, tags }: HabbiconHubLayoutHighlight2Props) => {
+export const HabbiconHubLayoutHighlight2 = ({ layout }: HabbiconHubLayoutHighlight2Props) => {
     return (
         <Region
             name="highlight"
-            tags={tags}
+            blendMode="add"
             layout={{ position: 'absolute', left: 1, right: -67, top: 1, height: 4, ...layout }}
         />
     );
@@ -337,14 +322,12 @@ export const HabbiconHubLayoutHighlight2 = ({ layout, tags }: HabbiconHubLayoutH
 export interface HabbiconHubLayoutProgress2Props {
     highlight?: HabbiconHubLayoutHighlight2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutProgress2 = ({ highlight, layout, tags }: HabbiconHubLayoutProgress2Props) => {
+export const HabbiconHubLayoutProgress2 = ({ highlight, layout }: HabbiconHubLayoutProgress2Props) => {
     return (
         <Region
             name="progress"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 1, top: 0, bottom: 0, ...layout }}
         >
             <Shape
@@ -355,10 +338,7 @@ export const HabbiconHubLayoutProgress2 = ({ highlight, layout, tags }: Habbicon
                 radius={4}
                 layout={{ position: 'absolute', left: 0, right: -68, top: 0, height: 12 }}
             />
-            <HabbiconHubLayoutHighlight2
-                tags={[ 'BLEND_ADD' ]}
-                {...highlight}
-            />
+            <HabbiconHubLayoutHighlight2 {...highlight} />
         </Region>
     );
 };
@@ -367,14 +347,12 @@ export const HabbiconHubLayoutProgress2 = ({ highlight, layout, tags }: Habbicon
 export interface HabbiconHubLayoutSetRowProgressBarProps {
     layout?: BoxLayout;
     progress?: HabbiconHubLayoutProgress2Props;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutSetRowProgressBar = ({ layout, progress, tags }: HabbiconHubLayoutSetRowProgressBarProps) => {
+export const HabbiconHubLayoutSetRowProgressBar = ({ layout, progress }: HabbiconHubLayoutSetRowProgressBarProps) => {
     return (
         <Region
             name="set_row_progress_bar"
-            tags={tags}
             layout={{ position: 'absolute', left: 53, right: 23, top: 28, height: 12, ...layout }}
         >
             <Shape
@@ -398,16 +376,14 @@ export interface HabbiconHubLayoutSetRowTemplateItemProps {
     onSetRowTemplate?: () => void;
     setRowProgressBar?: HabbiconHubLayoutSetRowProgressBarProps;
     srcSetIcon?: string;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutSetRowTemplateItem = ({ captionSetRowProgressText, captionSetRowTitle, layout, onSetRowTemplate, setRowProgressBar, srcSetIcon, tags }: HabbiconHubLayoutSetRowTemplateItemProps) => {
+export const HabbiconHubLayoutSetRowTemplateItem = ({ captionSetRowProgressText, captionSetRowTitle, layout, onSetRowTemplate, setRowProgressBar, srcSetIcon }: HabbiconHubLayoutSetRowTemplateItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="set_row_template"
-            tags={tags}
             onPointerTap={onSetRowTemplate}
             cursor="pointer"
             layout={{ width: 145, height: 50, flexShrink: 0, ...layout }}
@@ -452,10 +428,9 @@ export const HabbiconHubLayoutSetRowTemplateItem = ({ captionSetRowProgressText,
 export interface HabbiconHubLayoutSetRailListProps {
     itemsSetRailList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutSetRailList = ({ itemsSetRailList, layout, tags }: HabbiconHubLayoutSetRailListProps) => {
+export const HabbiconHubLayoutSetRailList = ({ itemsSetRailList, layout }: HabbiconHubLayoutSetRailListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -463,7 +438,6 @@ export const HabbiconHubLayoutSetRailList = ({ itemsSetRailList, layout, tags }:
         >
             <Region
                 name="set_rail_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 1, width: '100%' }}
             >
                 {itemsSetRailList ?? (
@@ -477,14 +451,13 @@ export const HabbiconHubLayoutSetRailList = ({ itemsSetRailList, layout, tags }:
 /** Named region `highlight` of HabbiconHubLayout - configured through the parent's `highlight` prop. */
 export interface HabbiconHubLayoutHighlight3Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutHighlight3 = ({ layout, tags }: HabbiconHubLayoutHighlight3Props) => {
+export const HabbiconHubLayoutHighlight3 = ({ layout }: HabbiconHubLayoutHighlight3Props) => {
     return (
         <Region
             name="highlight"
-            tags={tags}
+            blendMode="add"
             layout={{ position: 'absolute', left: 1, right: -152, top: 1, height: 5, ...layout }}
         />
     );
@@ -494,14 +467,12 @@ export const HabbiconHubLayoutHighlight3 = ({ layout, tags }: HabbiconHubLayoutH
 export interface HabbiconHubLayoutProgress3Props {
     highlight?: HabbiconHubLayoutHighlight3Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutProgress3 = ({ highlight, layout, tags }: HabbiconHubLayoutProgress3Props) => {
+export const HabbiconHubLayoutProgress3 = ({ highlight, layout }: HabbiconHubLayoutProgress3Props) => {
     return (
         <Region
             name="progress"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 1, top: 0, bottom: 0, ...layout }}
         >
             <Shape
@@ -512,10 +483,7 @@ export const HabbiconHubLayoutProgress3 = ({ highlight, layout, tags }: Habbicon
                 radius={6}
                 layout={{ position: 'absolute', left: 0, right: -153, top: 0, height: 16 }}
             />
-            <HabbiconHubLayoutHighlight3
-                tags={[ 'BLEND_ADD' ]}
-                {...highlight}
-            />
+            <HabbiconHubLayoutHighlight3 {...highlight} />
         </Region>
     );
 };
@@ -524,14 +492,12 @@ export const HabbiconHubLayoutProgress3 = ({ highlight, layout, tags }: Habbicon
 export interface HabbiconHubLayoutSetProgressBarProps {
     layout?: BoxLayout;
     progress?: HabbiconHubLayoutProgress3Props;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutSetProgressBar = ({ layout, progress, tags }: HabbiconHubLayoutSetProgressBarProps) => {
+export const HabbiconHubLayoutSetProgressBar = ({ layout, progress }: HabbiconHubLayoutSetProgressBarProps) => {
     return (
         <Region
             name="set_progress_bar"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 154, top: 3, height: 16, ...layout }}
         >
             <Shape
@@ -552,14 +518,12 @@ export interface HabbiconHubLayoutSetProgressContainerProps {
     captionSetProgressText?: string;
     layout?: BoxLayout;
     setProgressBar?: HabbiconHubLayoutSetProgressBarProps;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutSetProgressContainer = ({ captionSetProgressText, layout, setProgressBar, tags }: HabbiconHubLayoutSetProgressContainerProps) => {
+export const HabbiconHubLayoutSetProgressContainer = ({ captionSetProgressText, layout, setProgressBar }: HabbiconHubLayoutSetProgressContainerProps) => {
     return (
         <Region
             name="set_progress_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, right: 136, top: 62, height: 22, ...layout }}
         >
             <HabbiconHubLayoutSetProgressBar {...setProgressBar} />
@@ -583,14 +547,12 @@ export interface HabbiconHubLayoutHeaderProps {
     captionSetTitle?: string;
     layout?: BoxLayout;
     setProgressContainer?: HabbiconHubLayoutSetProgressContainerProps;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutHeader = ({ captionSetDescription, captionSetTitle, layout, setProgressContainer, tags }: HabbiconHubLayoutHeaderProps) => {
+export const HabbiconHubLayoutHeader = ({ captionSetDescription, captionSetTitle, layout, setProgressContainer }: HabbiconHubLayoutHeaderProps) => {
     return (
         <Region
             name="header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 92, ...layout }}
         >
             <Border
@@ -626,14 +588,12 @@ export const HabbiconHubLayoutHeader = ({ captionSetDescription, captionSetTitle
 /** Named region `tile_background` of HabbiconHubLayout - configured through the parent's `tileBackground` prop. */
 export interface HabbiconHubLayoutTileBackgroundProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutTileBackground = ({ layout, tags }: HabbiconHubLayoutTileBackgroundProps) => {
+export const HabbiconHubLayoutTileBackground = ({ layout }: HabbiconHubLayoutTileBackgroundProps) => {
     return (
         <Region
             name="tile_background"
-            tags={tags}
             backgroundColor="#f8ebd6"
             layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1, ...layout }}
         />
@@ -643,15 +603,13 @@ export const HabbiconHubLayoutTileBackground = ({ layout, tags }: HabbiconHubLay
 /** Named region `locked_overlay` of HabbiconHubLayout - configured through the parent's `lockedOverlay` prop. */
 export interface HabbiconHubLayoutLockedOverlayProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleLockedOverlay?: boolean;
 }
 
-export const HabbiconHubLayoutLockedOverlay = ({ layout, tags, visibleLockedOverlay }: HabbiconHubLayoutLockedOverlayProps) => {
+export const HabbiconHubLayoutLockedOverlay = ({ layout, visibleLockedOverlay }: HabbiconHubLayoutLockedOverlayProps) => {
     return (
         <Region
             name="locked_overlay"
-            tags={tags}
             visible={visibleLockedOverlay ?? false}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
@@ -667,15 +625,13 @@ export interface HabbiconHubLayoutTileTemplateItemProps {
     srcBitmap?: string;
     srcClaimableIcon?: string;
     srcFavoriteIcon?: string;
-    tags?: string[];
     tileBackground?: HabbiconHubLayoutTileBackgroundProps;
 }
 
-export const HabbiconHubLayoutTileTemplateItem = ({ layout, lockedOverlay, onTileTemplate, srcBitmap, srcClaimableIcon, srcFavoriteIcon, tags, tileBackground }: HabbiconHubLayoutTileTemplateItemProps) => {
+export const HabbiconHubLayoutTileTemplateItem = ({ layout, lockedOverlay, onTileTemplate, srcBitmap, srcClaimableIcon, srcFavoriteIcon, tileBackground }: HabbiconHubLayoutTileTemplateItemProps) => {
     return (
         <Region
             name="tile_template"
-            tags={tags}
             onPointerTap={onTileTemplate}
             cursor="pointer"
             layout={{ width: 50, height: 50, flexShrink: 0, ...layout }}
@@ -684,13 +640,11 @@ export const HabbiconHubLayoutTileTemplateItem = ({ layout, lockedOverlay, onTil
             <Border
                 variant="2"
                 name="tile_border"
-                tags={[ 'ITEM_HILIGHT' ]}
                 tintColor="#c8be8d"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <ThemeImage
                 name="bitmap"
-                tags={[ 'BITMAP' ]}
                 src={srcBitmap}
                 layout={{ position: 'absolute', left: 5, width: 40, top: 5, height: 40, minWidth: 40, maxWidth: 40 }}
             />
@@ -723,14 +677,12 @@ export const HabbiconHubLayoutTileTemplateItem = ({ layout, lockedOverlay, onTil
 export interface HabbiconHubLayoutEmptyTileTemplateItemProps {
     layout?: BoxLayout;
     onEmptyTileTemplate?: () => void;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutEmptyTileTemplateItem = ({ layout, onEmptyTileTemplate, tags }: HabbiconHubLayoutEmptyTileTemplateItemProps) => {
+export const HabbiconHubLayoutEmptyTileTemplateItem = ({ layout, onEmptyTileTemplate }: HabbiconHubLayoutEmptyTileTemplateItemProps) => {
     return (
         <Region
             name="empty_tile_template"
-            tags={tags}
             onPointerTap={onEmptyTileTemplate}
             cursor="pointer"
             layout={{ width: 50, height: 50, flexShrink: 0, ...layout }}
@@ -738,7 +690,6 @@ export const HabbiconHubLayoutEmptyTileTemplateItem = ({ layout, onEmptyTileTemp
             <Border
                 variant="2"
                 name="tile_border"
-                tags={[ 'ITEM_HILIGHT' ]}
                 tintColor="#c8be8d"
                 blend={0.2}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
@@ -751,10 +702,9 @@ export const HabbiconHubLayoutEmptyTileTemplateItem = ({ layout, onEmptyTileTemp
 export interface HabbiconHubLayoutSetGridProps {
     itemsSetGrid?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutSetGrid = ({ itemsSetGrid, layout, tags }: HabbiconHubLayoutSetGridProps) => {
+export const HabbiconHubLayoutSetGrid = ({ itemsSetGrid, layout }: HabbiconHubLayoutSetGridProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -762,7 +712,6 @@ export const HabbiconHubLayoutSetGrid = ({ itemsSetGrid, layout, tags }: Habbico
         >
             <Region
                 name="set_grid"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4, width: '100%' }}
             >
                 {itemsSetGrid ?? (
@@ -788,16 +737,14 @@ export interface HabbiconHubLayoutSetPageContainerProps {
     onRewardBuyButton?: () => void;
     setGrid?: HabbiconHubLayoutSetGridProps;
     srcRewardHabbicon?: string;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutSetPageContainer = ({ captionRewardBuyDescription, captionRewardBuyPrice, captionRewardDescription, captionRewardTitle, header, layout, onRewardActionButton, onRewardBuyButton, setGrid, srcRewardHabbicon, tags }: HabbiconHubLayoutSetPageContainerProps) => {
+export const HabbiconHubLayoutSetPageContainer = ({ captionRewardBuyDescription, captionRewardBuyPrice, captionRewardDescription, captionRewardTitle, header, layout, onRewardActionButton, onRewardBuyButton, setGrid, srcRewardHabbicon }: HabbiconHubLayoutSetPageContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="set_page_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 160, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
@@ -913,14 +860,12 @@ export interface HabbiconHubLayoutAllSetsContainerProps {
     layout?: BoxLayout;
     setPageContainer?: HabbiconHubLayoutSetPageContainerProps;
     setRailList?: HabbiconHubLayoutSetRailListProps;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutAllSetsContainer = ({ layout, setPageContainer, setRailList, tags }: HabbiconHubLayoutAllSetsContainerProps) => {
+export const HabbiconHubLayoutAllSetsContainer = ({ layout, setPageContainer, setRailList }: HabbiconHubLayoutAllSetsContainerProps) => {
     return (
         <Region
             name="all_sets_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 540, top: 146, bottom: 44, ...layout }}
         >
             <Border
@@ -937,14 +882,12 @@ export const HabbiconHubLayoutAllSetsContainer = ({ layout, setPageContainer, se
 /** Named region `tile_background` of HabbiconHubLayout - configured through the parent's `tileBackground` prop. */
 export interface HabbiconHubLayoutTileBackground2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutTileBackground2 = ({ layout, tags }: HabbiconHubLayoutTileBackground2Props) => {
+export const HabbiconHubLayoutTileBackground2 = ({ layout }: HabbiconHubLayoutTileBackground2Props) => {
     return (
         <Region
             name="tile_background"
-            tags={tags}
             backgroundColor="#f8ebd6"
             layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1, ...layout }}
         />
@@ -954,15 +897,13 @@ export const HabbiconHubLayoutTileBackground2 = ({ layout, tags }: HabbiconHubLa
 /** Named region `locked_overlay` of HabbiconHubLayout - configured through the parent's `lockedOverlay` prop. */
 export interface HabbiconHubLayoutLockedOverlay2Props {
     layout?: BoxLayout;
-    tags?: string[];
     visibleLockedOverlay?: boolean;
 }
 
-export const HabbiconHubLayoutLockedOverlay2 = ({ layout, tags, visibleLockedOverlay }: HabbiconHubLayoutLockedOverlay2Props) => {
+export const HabbiconHubLayoutLockedOverlay2 = ({ layout, visibleLockedOverlay }: HabbiconHubLayoutLockedOverlay2Props) => {
     return (
         <Region
             name="locked_overlay"
-            tags={tags}
             visible={visibleLockedOverlay ?? false}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
@@ -978,15 +919,13 @@ export interface HabbiconHubLayoutTrayTileTemplateItemProps {
     srcBitmap?: string;
     srcClaimableIcon?: string;
     srcFavoriteIcon?: string;
-    tags?: string[];
     tileBackground?: HabbiconHubLayoutTileBackground2Props;
 }
 
-export const HabbiconHubLayoutTrayTileTemplateItem = ({ layout, lockedOverlay, onTrayTileTemplate, srcBitmap, srcClaimableIcon, srcFavoriteIcon, tags, tileBackground }: HabbiconHubLayoutTrayTileTemplateItemProps) => {
+export const HabbiconHubLayoutTrayTileTemplateItem = ({ layout, lockedOverlay, onTrayTileTemplate, srcBitmap, srcClaimableIcon, srcFavoriteIcon, tileBackground }: HabbiconHubLayoutTrayTileTemplateItemProps) => {
     return (
         <Region
             name="tray_tile_template"
-            tags={tags}
             onPointerTap={onTrayTileTemplate}
             cursor="pointer"
             layout={{ width: 50, height: 50, flexShrink: 0, ...layout }}
@@ -995,13 +934,11 @@ export const HabbiconHubLayoutTrayTileTemplateItem = ({ layout, lockedOverlay, o
             <Border
                 variant="2"
                 name="tile_border"
-                tags={[ 'ITEM_HILIGHT' ]}
                 tintColor="#c8be8d"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <ThemeImage
                 name="bitmap"
-                tags={[ 'BITMAP' ]}
                 src={srcBitmap}
                 layout={{ position: 'absolute', left: 5, width: 40, top: 5, height: 40, minWidth: 40, maxWidth: 40 }}
             />
@@ -1034,14 +971,12 @@ export const HabbiconHubLayoutTrayTileTemplateItem = ({ layout, lockedOverlay, o
 export interface HabbiconHubLayoutTrayGroupGridProps {
     itemsTrayGroupGrid?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutTrayGroupGrid = ({ itemsTrayGroupGrid, layout, tags }: HabbiconHubLayoutTrayGroupGridProps) => {
+export const HabbiconHubLayoutTrayGroupGrid = ({ itemsTrayGroupGrid, layout }: HabbiconHubLayoutTrayGroupGridProps) => {
     return (
         <Region
             name="tray_group_grid"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 10, top: 30, height: 50, flexDirection: 'row', flexWrap: 'wrap', gap: 4, ...layout }}
         >
             {itemsTrayGroupGrid ?? (
@@ -1055,18 +990,16 @@ export const HabbiconHubLayoutTrayGroupGrid = ({ itemsTrayGroupGrid, layout, tag
 export interface HabbiconHubLayoutTrayGroupTemplateItemProps {
     captionTrayGroupTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
     trayGroupGrid?: HabbiconHubLayoutTrayGroupGridProps;
 }
 
-export const HabbiconHubLayoutTrayGroupTemplateItem = ({ captionTrayGroupTitle, layout, tags, trayGroupGrid }: HabbiconHubLayoutTrayGroupTemplateItemProps) => {
+export const HabbiconHubLayoutTrayGroupTemplateItem = ({ captionTrayGroupTitle, layout, trayGroupGrid }: HabbiconHubLayoutTrayGroupTemplateItemProps) => {
     const t = useTranslation();
 
     return (
         <Border
             variant="10"
             name="tray_group_template"
-            tags={tags}
             tintColor="#efe1c4"
             layout={{ width: 506, height: 89, flexShrink: 0, ...layout }}
         >
@@ -1089,10 +1022,9 @@ export const HabbiconHubLayoutTrayGroupTemplateItem = ({ captionTrayGroupTitle, 
 export interface HabbiconHubLayoutTrayGroupListProps {
     itemsTrayGroupList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutTrayGroupList = ({ itemsTrayGroupList, layout, tags }: HabbiconHubLayoutTrayGroupListProps) => {
+export const HabbiconHubLayoutTrayGroupList = ({ itemsTrayGroupList, layout }: HabbiconHubLayoutTrayGroupListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -1100,7 +1032,6 @@ export const HabbiconHubLayoutTrayGroupList = ({ itemsTrayGroupList, layout, tag
         >
             <Region
                 name="tray_group_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 6, width: '100%' }}
             >
                 {itemsTrayGroupList ?? (
@@ -1116,18 +1047,16 @@ export interface HabbiconHubLayoutTrayContainerProps {
     captionTraySummary?: string;
     captionTrayTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
     trayGroupList?: HabbiconHubLayoutTrayGroupListProps;
     visibleTrayContainer?: boolean;
 }
 
-export const HabbiconHubLayoutTrayContainer = ({ captionTraySummary, captionTrayTitle, layout, tags, trayGroupList, visibleTrayContainer }: HabbiconHubLayoutTrayContainerProps) => {
+export const HabbiconHubLayoutTrayContainer = ({ captionTraySummary, captionTrayTitle, layout, trayGroupList, visibleTrayContainer }: HabbiconHubLayoutTrayContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="tray_container"
-            tags={tags}
             visible={visibleTrayContainer ?? false}
             layout={{ position: 'absolute', left: 7, width: 540, top: 146, bottom: 44, ...layout }}
         >
@@ -1165,14 +1094,12 @@ export const HabbiconHubLayoutTrayContainer = ({ captionTraySummary, captionTray
 export interface HabbiconHubLayoutHabbiconPopupTitleItemProps {
     captionHabbiconPopupTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutHabbiconPopupTitleItem = ({ captionHabbiconPopupTitle, layout, tags }: HabbiconHubLayoutHabbiconPopupTitleItemProps) => {
+export const HabbiconHubLayoutHabbiconPopupTitleItem = ({ captionHabbiconPopupTitle, layout }: HabbiconHubLayoutHabbiconPopupTitleItemProps) => {
     return (
         <Region
             name="habbicon_popup_title"
-            tags={tags}
             layout={{ width: 164, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -1188,16 +1115,14 @@ export const HabbiconHubLayoutHabbiconPopupTitleItem = ({ captionHabbiconPopupTi
 export interface HabbiconHubLayoutHabbiconPopupDescriptionItemProps {
     captionHabbiconPopupDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutHabbiconPopupDescriptionItem = ({ captionHabbiconPopupDescription, layout, tags }: HabbiconHubLayoutHabbiconPopupDescriptionItemProps) => {
+export const HabbiconHubLayoutHabbiconPopupDescriptionItem = ({ captionHabbiconPopupDescription, layout }: HabbiconHubLayoutHabbiconPopupDescriptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="habbicon_popup_description"
-            tags={tags}
             layout={{ width: 156, height: 20, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -1212,16 +1137,14 @@ export const HabbiconHubLayoutHabbiconPopupDescriptionItem = ({ captionHabbiconP
 export interface HabbiconHubLayoutHabbiconPopupActionRowItemProps {
     layout?: BoxLayout;
     onHabbiconPopupActionButton?: () => void;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutHabbiconPopupActionRowItem = ({ layout, onHabbiconPopupActionButton, tags }: HabbiconHubLayoutHabbiconPopupActionRowItemProps) => {
+export const HabbiconHubLayoutHabbiconPopupActionRowItem = ({ layout, onHabbiconPopupActionButton }: HabbiconHubLayoutHabbiconPopupActionRowItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="habbicon_popup_action_row"
-            tags={tags}
             layout={{ width: 180, height: 28, flexShrink: 0, ...layout }}
         >
             <Button
@@ -1243,17 +1166,15 @@ export interface HabbiconHubLayoutHabbiconPopupBottomBarItemProps {
     captionHabbiconPopupPrice?: string;
     layout?: BoxLayout;
     onHabbiconPopupBuyButton?: () => void;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutHabbiconPopupBottomBarItem = ({ captionHabbiconPopupPrice, layout, onHabbiconPopupBuyButton, tags }: HabbiconHubLayoutHabbiconPopupBottomBarItemProps) => {
+export const HabbiconHubLayoutHabbiconPopupBottomBarItem = ({ captionHabbiconPopupPrice, layout, onHabbiconPopupBuyButton }: HabbiconHubLayoutHabbiconPopupBottomBarItemProps) => {
     const t = useTranslation();
 
     return (
         <Border
             variant="3"
             name="habbicon_popup_bottom_bar"
-            tags={tags}
             tintColor="#efefef"
             blend={0}
             layout={{ width: 180, height: 28, flexShrink: 0, ...layout }}
@@ -1292,14 +1213,12 @@ export const HabbiconHubLayoutHabbiconPopupBottomBarItem = ({ captionHabbiconPop
 export interface HabbiconHubLayoutHabbiconPopupContentListProps {
     itemsHabbiconPopupContentList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutHabbiconPopupContentList = ({ itemsHabbiconPopupContentList, layout, tags }: HabbiconHubLayoutHabbiconPopupContentListProps) => {
+export const HabbiconHubLayoutHabbiconPopupContentList = ({ itemsHabbiconPopupContentList, layout }: HabbiconHubLayoutHabbiconPopupContentListProps) => {
     return (
         <Region
             name="habbicon_popup_content_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 6, height: 108, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsHabbiconPopupContentList ?? (
@@ -1317,14 +1236,12 @@ export const HabbiconHubLayoutHabbiconPopupContentList = ({ itemsHabbiconPopupCo
 /** Named region `pointer_crossover` of HabbiconHubLayout - configured through the parent's `pointerCrossover` prop. */
 export interface HabbiconHubLayoutPointerCrossoverProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutPointerCrossover = ({ layout, tags }: HabbiconHubLayoutPointerCrossoverProps) => {
+export const HabbiconHubLayoutPointerCrossover = ({ layout }: HabbiconHubLayoutPointerCrossoverProps) => {
     return (
         <Region
             name="pointer_crossover"
-            tags={tags}
             backgroundColor="#efefef"
             layout={{ position: 'absolute', left: 84, width: 13, bottom: 0, height: 2, ...layout }}
         />
@@ -1336,15 +1253,13 @@ export interface HabbiconHubLayoutHabbiconPopupBackgroundItemProps {
     habbiconPopupContentList?: HabbiconHubLayoutHabbiconPopupContentListProps;
     layout?: BoxLayout;
     pointerCrossover?: HabbiconHubLayoutPointerCrossoverProps;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutHabbiconPopupBackgroundItem = ({ habbiconPopupContentList, layout, pointerCrossover, tags }: HabbiconHubLayoutHabbiconPopupBackgroundItemProps) => {
+export const HabbiconHubLayoutHabbiconPopupBackgroundItem = ({ habbiconPopupContentList, layout, pointerCrossover }: HabbiconHubLayoutHabbiconPopupBackgroundItemProps) => {
     return (
         <Border
             variant="4"
             name="habbicon_popup_background"
-            tags={tags}
             tintColor="#efefef"
             layout={{ width: 180, height: 121, flexShrink: 0, ...layout }}
         >
@@ -1357,14 +1272,12 @@ export const HabbiconHubLayoutHabbiconPopupBackgroundItem = ({ habbiconPopupCont
 /** Row template `habbicon_popup_pointer` of HabbiconHubLayout - pass real rows through its `items…` slot. */
 export interface HabbiconHubLayoutHabbiconPopupPointerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutHabbiconPopupPointerItem = ({ layout, tags }: HabbiconHubLayoutHabbiconPopupPointerItemProps) => {
+export const HabbiconHubLayoutHabbiconPopupPointerItem = ({ layout }: HabbiconHubLayoutHabbiconPopupPointerItemProps) => {
     return (
         <Region
             name="habbicon_popup_pointer"
-            tags={tags}
             layout={{ width: 15, height: 15, flexShrink: 0, ...layout }}
         >
             <Shape
@@ -1381,14 +1294,12 @@ export const HabbiconHubLayoutHabbiconPopupPointerItem = ({ layout, tags }: Habb
 export interface HabbiconHubLayoutHabbiconItemPopupProps {
     itemsHabbiconItemPopup?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutHabbiconItemPopup = ({ itemsHabbiconItemPopup, layout, tags }: HabbiconHubLayoutHabbiconItemPopupProps) => {
+export const HabbiconHubLayoutHabbiconItemPopup = ({ itemsHabbiconItemPopup, layout }: HabbiconHubLayoutHabbiconItemPopupProps) => {
     return (
         <Region
             name="habbicon_item_popup"
-            tags={tags}
             layout={{ position: 'absolute', left: 190, width: 180, top: 210, height: 136, flexDirection: 'column', ...layout }}
         >
             {itemsHabbiconItemPopup ?? (
@@ -1405,14 +1316,12 @@ export const HabbiconHubLayoutHabbiconItemPopup = ({ itemsHabbiconItemPopup, lay
 export interface HabbiconHubLayoutHabbiconPopupLayerProps {
     habbiconItemPopup?: HabbiconHubLayoutHabbiconItemPopupProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabbiconHubLayoutHabbiconPopupLayer = ({ habbiconItemPopup, layout, tags }: HabbiconHubLayoutHabbiconPopupLayerProps) => {
+export const HabbiconHubLayoutHabbiconPopupLayer = ({ habbiconItemPopup, layout }: HabbiconHubLayoutHabbiconPopupLayerProps) => {
     return (
         <Region
             name="habbicon_popup_layer"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 102, bottom: 40, ...layout }}
         >
             <HabbiconHubLayoutHabbiconItemPopup {...habbiconItemPopup} />

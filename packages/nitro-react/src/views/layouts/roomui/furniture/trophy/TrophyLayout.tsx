@@ -18,14 +18,12 @@ export const TrophyLayout = ({ layout, trophyContainer }: TrophyLayoutProps) => 
 export interface TrophyLayoutCloseProps {
     layout?: BoxLayout;
     onClose?: () => void;
-    tags?: string[];
 }
 
-export const TrophyLayoutClose = ({ layout, onClose, tags }: TrophyLayoutCloseProps) => {
+export const TrophyLayoutClose = ({ layout, onClose }: TrophyLayoutCloseProps) => {
     return (
         <Region
             name="close"
-            tags={tags}
             onPointerTap={onClose}
             cursor="pointer"
             layout={{ position: 'absolute', left: 318, width: 18, top: 3, height: 20, ...layout }}
@@ -37,14 +35,12 @@ export const TrophyLayoutClose = ({ layout, onClose, tags }: TrophyLayoutClosePr
 export interface TrophyLayoutTitleBgProps {
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const TrophyLayoutTitleBg = ({ captionTitle, layout, tags }: TrophyLayoutTitleBgProps) => {
+export const TrophyLayoutTitleBg = ({ captionTitle, layout }: TrophyLayoutTitleBgProps) => {
     return (
         <Region
             name="title_bg"
-            tags={tags}
             backgroundColor="#ff0000"
             layout={{ position: 'absolute', left: 110, width: 120, top: 4, height: 18, justifyContent: 'center', ...layout }}
         >
@@ -70,15 +66,13 @@ export interface TrophyLayoutTrophyContainerProps {
     layout?: BoxLayout;
     onTrophyContainer?: () => void;
     srcTrophyBg?: string;
-    tags?: string[];
     titleBg?: TrophyLayoutTitleBgProps;
 }
 
-export const TrophyLayoutTrophyContainer = ({ captionDate, captionGreeting, captionName, close, layout, onTrophyContainer, srcTrophyBg, tags, titleBg }: TrophyLayoutTrophyContainerProps) => {
+export const TrophyLayoutTrophyContainer = ({ captionDate, captionGreeting, captionName, close, layout, onTrophyContainer, srcTrophyBg, titleBg }: TrophyLayoutTrophyContainerProps) => {
     return (
         <Region
             name="trophy_container"
-            tags={tags}
             onPointerTap={onTrophyContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 173, ...layout }}

@@ -25,16 +25,14 @@ export interface EcotronboxCardFurnimaticLayoutEcotronboxContainerProps {
     onEcotronboxContainer?: () => void;
     srcEcotronboxCardBg?: string;
     srcEcotronboxCardPreview?: string;
-    tags?: string[];
 }
 
-export const EcotronboxCardFurnimaticLayoutEcotronboxContainer = ({ captionEcotronboxCardDate, captionEcotronboxCardMsg, layout, onEcotronboxCardBtnClose, onEcotronboxCardBtnOpen, onEcotronboxContainer, srcEcotronboxCardBg, srcEcotronboxCardPreview, tags }: EcotronboxCardFurnimaticLayoutEcotronboxContainerProps) => {
+export const EcotronboxCardFurnimaticLayoutEcotronboxContainer = ({ captionEcotronboxCardDate, captionEcotronboxCardMsg, layout, onEcotronboxCardBtnClose, onEcotronboxCardBtnOpen, onEcotronboxContainer, srcEcotronboxCardBg, srcEcotronboxCardPreview }: EcotronboxCardFurnimaticLayoutEcotronboxContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ecotronbox_container"
-            tags={tags}
             onPointerTap={onEcotronboxContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 257, top: 0, height: 114, ...layout }}

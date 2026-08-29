@@ -51,17 +51,15 @@ export interface RoomToolsToolbarLayoutButtonZoomItemProps {
     captionTextZoom?: string;
     layout?: BoxLayout;
     onButtonZoom?: () => void;
-    tags?: string[];
     visibleButtonZoom?: boolean;
 }
 
-export const RoomToolsToolbarLayoutButtonZoomItem = ({ captionTextZoom, layout, onButtonZoom, tags, visibleButtonZoom }: RoomToolsToolbarLayoutButtonZoomItemProps) => {
+export const RoomToolsToolbarLayoutButtonZoomItem = ({ captionTextZoom, layout, onButtonZoom, visibleButtonZoom }: RoomToolsToolbarLayoutButtonZoomItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_zoom"
-            tags={tags}
             tooltip={t('toolbar.icon.tooltip.zoom')}
             dynamicStyle="brightness_and_shadow_under"
             visible={visibleButtonZoom ?? false}
@@ -71,7 +69,6 @@ export const RoomToolsToolbarLayoutButtonZoomItem = ({ captionTextZoom, layout, 
         >
             <Region layout={{ position: 'absolute', left: 0, width: 28, top: 0, height: 25 }} />
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('roomtools_magnifier.png')}
                 layout={{ position: 'absolute', left: 3, width: 25, top: 0, height: 25 }}
             />
@@ -94,16 +91,14 @@ export interface RoomToolsToolbarLayoutButtonAchievementsItemProps {
     captionTextSettings?: string;
     layout?: BoxLayout;
     onButtonAchievements?: () => void;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutButtonAchievementsItem = ({ captionTextSettings, layout, onButtonAchievements, tags }: RoomToolsToolbarLayoutButtonAchievementsItemProps) => {
+export const RoomToolsToolbarLayoutButtonAchievementsItem = ({ captionTextSettings, layout, onButtonAchievements }: RoomToolsToolbarLayoutButtonAchievementsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_achievements"
-            tags={tags}
             tooltip={t('room.settings.button.tooltip')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onButtonAchievements}
@@ -112,7 +107,6 @@ export const RoomToolsToolbarLayoutButtonAchievementsItem = ({ captionTextSettin
         >
             <Region layout={{ position: 'absolute', left: 0, width: 28, top: 0, height: 25 }} />
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('roomtools_achievements.png')}
                 layout={{ position: 'absolute', left: 3, width: 25, top: 0, height: 25 }}
             />
@@ -134,16 +128,14 @@ export interface RoomToolsToolbarLayoutButtonSettingsItemProps {
     captionTextSettings?: string;
     layout?: BoxLayout;
     onButtonSettings?: () => void;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutButtonSettingsItem = ({ captionTextSettings, layout, onButtonSettings, tags }: RoomToolsToolbarLayoutButtonSettingsItemProps) => {
+export const RoomToolsToolbarLayoutButtonSettingsItem = ({ captionTextSettings, layout, onButtonSettings }: RoomToolsToolbarLayoutButtonSettingsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_settings"
-            tags={tags}
             tooltip={t('room.settings.button.tooltip')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onButtonSettings}
@@ -152,7 +144,6 @@ export const RoomToolsToolbarLayoutButtonSettingsItem = ({ captionTextSettings, 
         >
             <Region layout={{ position: 'absolute', left: 0, width: 28, top: 0, height: 25 }} />
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('roomtools_gear.png')}
                 layout={{ position: 'absolute', left: 3, width: 25, top: 0, height: 25 }}
             />
@@ -174,16 +165,14 @@ export interface RoomToolsToolbarLayoutButtonChatHistoryItemProps {
     captionTextChatHistory?: string;
     layout?: BoxLayout;
     onButtonChatHistory?: () => void;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutButtonChatHistoryItem = ({ captionTextChatHistory, layout, onButtonChatHistory, tags }: RoomToolsToolbarLayoutButtonChatHistoryItemProps) => {
+export const RoomToolsToolbarLayoutButtonChatHistoryItem = ({ captionTextChatHistory, layout, onButtonChatHistory }: RoomToolsToolbarLayoutButtonChatHistoryItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_chat_history"
-            tags={tags}
             tooltip={t('chat.history.button.tooltip')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onButtonChatHistory}
@@ -195,7 +184,6 @@ export const RoomToolsToolbarLayoutButtonChatHistoryItem = ({ captionTextChatHis
                 layout={{ position: 'absolute', left: 0, width: 28, top: 0, height: 25 }}
             />
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('roomtools_chat_history.png')}
                 layout={{ position: 'absolute', left: 3, width: 25, top: 0, height: 25 }}
             />
@@ -218,16 +206,14 @@ export interface RoomToolsToolbarLayoutButtonLikeItemProps {
     captionTextLike?: string;
     layout?: BoxLayout;
     onButtonLike?: () => void;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutButtonLikeItem = ({ captionTextLike, layout, onButtonLike, tags }: RoomToolsToolbarLayoutButtonLikeItemProps) => {
+export const RoomToolsToolbarLayoutButtonLikeItem = ({ captionTextLike, layout, onButtonLike }: RoomToolsToolbarLayoutButtonLikeItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_like"
-            tags={tags}
             tooltip={t('room.like.button.tooltip')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onButtonLike}
@@ -236,7 +222,6 @@ export const RoomToolsToolbarLayoutButtonLikeItem = ({ captionTextLike, layout, 
         >
             <Region layout={{ position: 'absolute', left: 0, width: 28, top: 0, height: 25 }} />
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('roomtools_like.png')}
                 layout={{ position: 'absolute', left: 2, width: 27, top: 0, height: 25 }}
             />
@@ -259,16 +244,14 @@ export interface RoomToolsToolbarLayoutButtonCameraItemProps {
     captionTextCamera?: string;
     layout?: BoxLayout;
     onButtonCamera?: () => void;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutButtonCameraItem = ({ captionTextCamera, layout, onButtonCamera, tags }: RoomToolsToolbarLayoutButtonCameraItemProps) => {
+export const RoomToolsToolbarLayoutButtonCameraItem = ({ captionTextCamera, layout, onButtonCamera }: RoomToolsToolbarLayoutButtonCameraItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_camera"
-            tags={tags}
             tooltip={t('room.camera.button.tooltip')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onButtonCamera}
@@ -277,7 +260,6 @@ export const RoomToolsToolbarLayoutButtonCameraItem = ({ captionTextCamera, layo
         >
             <Region layout={{ position: 'absolute', left: 0, width: 28, top: 5, height: 2 }} />
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('roomtools_camera.png')}
                 layout={{ position: 'absolute', left: 2, width: 27, top: 0, height: 25 }}
             />
@@ -300,16 +282,14 @@ export interface RoomToolsToolbarLayoutButtonShareItemProps {
     captionTextShare?: string;
     layout?: BoxLayout;
     onButtonShare?: () => void;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutButtonShareItem = ({ captionTextShare, layout, onButtonShare, tags }: RoomToolsToolbarLayoutButtonShareItemProps) => {
+export const RoomToolsToolbarLayoutButtonShareItem = ({ captionTextShare, layout, onButtonShare }: RoomToolsToolbarLayoutButtonShareItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_share"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onButtonShare}
             cursor="pointer"
@@ -317,7 +297,6 @@ export const RoomToolsToolbarLayoutButtonShareItem = ({ captionTextShare, layout
         >
             <Region layout={{ position: 'absolute', left: 0, width: 28, top: 5, height: 2 }} />
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('navigation_icon_weblink.png')}
                 layout={{ position: 'absolute', left: 2, width: 27, top: 0, height: 25 }}
             />
@@ -339,16 +318,14 @@ export const RoomToolsToolbarLayoutButtonShareItem = ({ captionTextShare, layout
 export interface RoomToolsToolbarLayoutButtonHistoryBackProps {
     layout?: BoxLayout;
     onButtonHistoryBack?: () => void;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutButtonHistoryBack = ({ layout, onButtonHistoryBack, tags }: RoomToolsToolbarLayoutButtonHistoryBackProps) => {
+export const RoomToolsToolbarLayoutButtonHistoryBack = ({ layout, onButtonHistoryBack }: RoomToolsToolbarLayoutButtonHistoryBackProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_history_back"
-            tags={tags}
             tooltip={t('room.history.button.back.tooltip')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onButtonHistoryBack}
@@ -356,13 +333,11 @@ export const RoomToolsToolbarLayoutButtonHistoryBack = ({ layout, onButtonHistor
             layout={{ position: 'absolute', left: 0, width: 37, top: 3, height: 34, ...layout }}
         >
             <ThemeImage
-                tags={[ '#bg' ]}
                 src={layoutImage('roomtools_history_forward_bg.png')}
                 tint="#44a88d"
                 layout={{ position: 'absolute', left: 3, width: 34, top: 2, height: 31 }}
             />
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('roomtools_history_back_icon.png')}
                 layout={{ position: 'absolute', left: 4, width: 30, top: 3, height: 30 }}
             />
@@ -374,16 +349,14 @@ export const RoomToolsToolbarLayoutButtonHistoryBack = ({ layout, onButtonHistor
 export interface RoomToolsToolbarLayoutButtonHistoryProps {
     layout?: BoxLayout;
     onButtonHistory?: () => void;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutButtonHistory = ({ layout, onButtonHistory, tags }: RoomToolsToolbarLayoutButtonHistoryProps) => {
+export const RoomToolsToolbarLayoutButtonHistory = ({ layout, onButtonHistory }: RoomToolsToolbarLayoutButtonHistoryProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_history"
-            tags={tags}
             tooltip={t('room.history.button.tooltip')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onButtonHistory}
@@ -391,13 +364,11 @@ export const RoomToolsToolbarLayoutButtonHistory = ({ layout, onButtonHistory, t
             layout={{ position: 'absolute', left: 38, width: 35, top: 0, height: 38, ...layout }}
         >
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('roomtools_history_open_bg.png')}
                 tint="#44a88d"
                 layout={{ position: 'absolute', left: 1, width: 33, top: 1, height: 35 }}
             />
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('roomtools_history_open_icon.png')}
                 layout={{ position: 'absolute', left: 2, width: 32, top: 3, height: 35 }}
             />
@@ -409,16 +380,14 @@ export const RoomToolsToolbarLayoutButtonHistory = ({ layout, onButtonHistory, t
 export interface RoomToolsToolbarLayoutButtonHistoryForwardProps {
     layout?: BoxLayout;
     onButtonHistoryForward?: () => void;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutButtonHistoryForward = ({ layout, onButtonHistoryForward, tags }: RoomToolsToolbarLayoutButtonHistoryForwardProps) => {
+export const RoomToolsToolbarLayoutButtonHistoryForward = ({ layout, onButtonHistoryForward }: RoomToolsToolbarLayoutButtonHistoryForwardProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="button_history_forward"
-            tags={tags}
             tooltip={t('room.history.button.forward.tooltip')}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onButtonHistoryForward}
@@ -426,13 +395,11 @@ export const RoomToolsToolbarLayoutButtonHistoryForward = ({ layout, onButtonHis
             layout={{ position: 'absolute', left: 74, width: 34, top: 5, height: 32, ...layout }}
         >
             <ThemeImage
-                tags={[ '#bg' ]}
                 src={layoutImage('roomtools_history_forward_bg.png')}
                 tint="#44a88d"
                 layout={{ position: 'absolute', left: 0, width: 34, top: 0, height: 31 }}
             />
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('roomtools_history_back_icon.png')}
                 layout={{ position: 'absolute', left: 3, width: 30, top: 1, height: 30 }}
             />
@@ -446,14 +413,12 @@ export interface RoomToolsToolbarLayoutCntHistoryItemProps {
     buttonHistoryBack?: RoomToolsToolbarLayoutButtonHistoryBackProps;
     buttonHistoryForward?: RoomToolsToolbarLayoutButtonHistoryForwardProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutCntHistoryItem = ({ buttonHistory, buttonHistoryBack, buttonHistoryForward, layout, tags }: RoomToolsToolbarLayoutCntHistoryItemProps) => {
+export const RoomToolsToolbarLayoutCntHistoryItem = ({ buttonHistory, buttonHistoryBack, buttonHistoryForward, layout }: RoomToolsToolbarLayoutCntHistoryItemProps) => {
     return (
         <Region
             name="cnt_history"
-            tags={tags}
             layout={{ width: 115, height: 43, flexShrink: 0, ...layout }}
         >
             <RoomToolsToolbarLayoutButtonHistoryBack {...buttonHistoryBack} />
@@ -467,16 +432,14 @@ export const RoomToolsToolbarLayoutCntHistoryItem = ({ buttonHistory, buttonHist
 export interface RoomToolsToolbarLayoutZoomInBtnProps {
     layout?: BoxLayout;
     onZoomInBtn?: () => void;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutZoomInBtn = ({ layout, onZoomInBtn, tags }: RoomToolsToolbarLayoutZoomInBtnProps) => {
+export const RoomToolsToolbarLayoutZoomInBtn = ({ layout, onZoomInBtn }: RoomToolsToolbarLayoutZoomInBtnProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="zoom_in_btn"
-            tags={tags}
             tooltip={t('room.zoom.zoom_in.tooltip')}
             dynamicStyle="button"
             onPointerTap={onZoomInBtn}
@@ -484,7 +447,6 @@ export const RoomToolsToolbarLayoutZoomInBtn = ({ layout, onZoomInBtn, tags }: R
             layout={{ position: 'absolute', left: 87, width: 18, top: 3, height: 19, ...layout }}
         >
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('roomtools_zoom_in.png')}
                 layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
             />
@@ -496,16 +458,14 @@ export const RoomToolsToolbarLayoutZoomInBtn = ({ layout, onZoomInBtn, tags }: R
 export interface RoomToolsToolbarLayoutZoomOutBtnProps {
     layout?: BoxLayout;
     onZoomOutBtn?: () => void;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutZoomOutBtn = ({ layout, onZoomOutBtn, tags }: RoomToolsToolbarLayoutZoomOutBtnProps) => {
+export const RoomToolsToolbarLayoutZoomOutBtn = ({ layout, onZoomOutBtn }: RoomToolsToolbarLayoutZoomOutBtnProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="zoom_out_btn"
-            tags={tags}
             tooltip={t('room.zoom.zoom_out.tooltip')}
             dynamicStyle="button"
             onPointerTap={onZoomOutBtn}
@@ -513,7 +473,6 @@ export const RoomToolsToolbarLayoutZoomOutBtn = ({ layout, onZoomOutBtn, tags }:
             layout={{ position: 'absolute', left: 107, width: 18, top: 3, height: 19, ...layout }}
         >
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('roomtools_zoom_out.png')}
                 layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
             />
@@ -526,18 +485,16 @@ export interface RoomToolsToolbarLayoutItemlistButtonsProps {
     captionZoomText?: string;
     itemsItemlistButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
     zoomInBtn?: RoomToolsToolbarLayoutZoomInBtnProps;
     zoomOutBtn?: RoomToolsToolbarLayoutZoomOutBtnProps;
 }
 
-export const RoomToolsToolbarLayoutItemlistButtons = ({ captionZoomText, itemsItemlistButtons, layout, tags, zoomInBtn, zoomOutBtn }: RoomToolsToolbarLayoutItemlistButtonsProps) => {
+export const RoomToolsToolbarLayoutItemlistButtons = ({ captionZoomText, itemsItemlistButtons, layout, zoomInBtn, zoomOutBtn }: RoomToolsToolbarLayoutItemlistButtonsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="itemlist_buttons"
-            tags={tags}
             layout={{ position: 'absolute', left: 24, top: 6, minWidth: 140, flexDirection: 'column', ...layout }}
         >
             {itemsItemlistButtons ?? (
@@ -578,21 +535,18 @@ export interface RoomToolsToolbarLayoutButtonCollapseProps {
     layout?: BoxLayout;
     onButtonCollapse?: () => void;
     srcArrowCollapse?: string;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutButtonCollapse = ({ layout, onButtonCollapse, srcArrowCollapse, tags }: RoomToolsToolbarLayoutButtonCollapseProps) => {
+export const RoomToolsToolbarLayoutButtonCollapse = ({ layout, onButtonCollapse, srcArrowCollapse }: RoomToolsToolbarLayoutButtonCollapseProps) => {
     return (
         <Region
             name="button_collapse"
-            tags={tags}
             onPointerTap={onButtonCollapse}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 172, ...layout }}
         >
             <ThemeImage
                 name="arrow_collapse"
-                tags={[ '#icon' ]}
                 src={srcArrowCollapse ?? layoutImage('roomtools_minimizebutton.png')}
                 layout={{ position: 'absolute', left: 9, width: 6, alignSelf: 'center', marginTop: 17, marginBottom: -17, height: 8 }}
             />
@@ -605,14 +559,12 @@ export interface RoomToolsToolbarLayoutButtonExpandProps {
     layout?: BoxLayout;
     onButtonExpand?: () => void;
     srcArrowExpand?: string;
-    tags?: string[];
 }
 
-export const RoomToolsToolbarLayoutButtonExpand = ({ layout, onButtonExpand, srcArrowExpand, tags }: RoomToolsToolbarLayoutButtonExpandProps) => {
+export const RoomToolsToolbarLayoutButtonExpand = ({ layout, onButtonExpand, srcArrowExpand }: RoomToolsToolbarLayoutButtonExpandProps) => {
     return (
         <Region
             name="button_expand"
-            tags={tags}
             onPointerTap={onButtonExpand}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 19, top: 0, bottom: 0, ...layout }}

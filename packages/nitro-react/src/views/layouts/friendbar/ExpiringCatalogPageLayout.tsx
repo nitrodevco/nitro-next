@@ -7,6 +7,7 @@ export interface ExpiringCatalogPageLayoutProps {
     captionPageDescTxt?: string;
     captionPageExpiryTitle?: string;
     captionPageHeaderTxt?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     onOpenCatalogButton?: () => void;
     spacing?: ExpiringCatalogPageLayoutSpacingProps;
@@ -15,7 +16,7 @@ export interface ExpiringCatalogPageLayoutProps {
     srcPromoBitmap?: string;
 }
 
-export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpiryTitle, captionPageHeaderTxt, layout, onOpenCatalogButton, spacing, srcBorderBar, srcHdrLine, srcPromoBitmap }: ExpiringCatalogPageLayoutProps) => {
+export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpiryTitle, captionPageHeaderTxt, colorableTextColor, layout, onOpenCatalogButton, spacing, srcBorderBar, srcHdrLine, srcPromoBitmap }: ExpiringCatalogPageLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -31,12 +32,12 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                 />
                 <Region
                     name="page_expiry_title"
-                    tags={[ 'COLORABLE' ]}
                     layout={{ position: 'absolute', left: 24, width: 133, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPageExpiryTitle ?? t('landing.view.pageexpiry.title')}
                         textStyle="text-style-il-heading-3"
+                        textOptions={{ fill: colorableTextColor }}
                     />
                 </Region>
                 <ThemeImage
@@ -54,22 +55,21 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                     <ExpiringCatalogPageLayoutSpacing {...spacing} />
                     <Region
                         name="page_header_txt"
-                        tags={[ 'COLORABLE' ]}
                         layout={{ width: 183, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPageHeaderTxt ?? 'Get your Executive on!'}
                             textStyle="text-style-il-heading-1"
+                            textOptions={{ fill: colorableTextColor }}
                         />
                     </Region>
                     <Region
                         name="page_desc_txt"
-                        tags={[ 'COLORABLE' ]}
                         layout={{ width: 260, height: 40, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPageDescTxt ?? '...and everything must go, so get yourself some of the sweet, sweet plastic fantastic while you still can! You don\'t want to miss out on the classics!'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                            textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 260 }}
                         />
                     </Region>
                     <Button
@@ -94,14 +94,12 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
 /** Named region `spacing` of ExpiringCatalogPageLayout - configured through the parent's `spacing` prop. */
 export interface ExpiringCatalogPageLayoutSpacingProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ExpiringCatalogPageLayoutSpacing = ({ layout, tags }: ExpiringCatalogPageLayoutSpacingProps) => {
+export const ExpiringCatalogPageLayoutSpacing = ({ layout }: ExpiringCatalogPageLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 30, height: 6, flexShrink: 0, ...layout }}
         />
     );

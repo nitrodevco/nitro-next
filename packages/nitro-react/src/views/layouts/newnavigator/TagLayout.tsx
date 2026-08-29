@@ -19,14 +19,12 @@ export interface TagLayoutTagRegionProps {
     captionTagText?: string;
     layout?: BoxLayout;
     onTagRegion?: () => void;
-    tags?: string[];
 }
 
-export const TagLayoutTagRegion = ({ captionTagText, layout, onTagRegion, tags }: TagLayoutTagRegionProps) => {
+export const TagLayoutTagRegion = ({ captionTagText, layout, onTagRegion }: TagLayoutTagRegionProps) => {
     return (
         <Region
             name="tag_region"
-            tags={tags}
             backgroundColor="#f1a700"
             onPointerTap={onTagRegion}
             cursor="pointer"
@@ -50,14 +48,12 @@ export const TagLayoutTagRegion = ({ captionTagText, layout, onTagRegion, tags }
 export interface TagLayoutTagContainerProps {
     layout?: BoxLayout;
     tagRegion?: TagLayoutTagRegionProps;
-    tags?: string[];
 }
 
-export const TagLayoutTagContainer = ({ layout, tagRegion, tags }: TagLayoutTagContainerProps) => {
+export const TagLayoutTagContainer = ({ layout, tagRegion }: TagLayoutTagContainerProps) => {
     return (
         <Region
             name="tag_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 19, ...layout }}
         >
             <TagLayoutTagRegion {...tagRegion} />

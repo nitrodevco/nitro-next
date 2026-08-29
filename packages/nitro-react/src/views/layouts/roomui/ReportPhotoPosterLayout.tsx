@@ -79,16 +79,14 @@ export interface ReportPhotoPosterLayoutReportingReasonProps {
     on_134?: () => void;
     on_135?: () => void;
     on_136?: () => void;
-    tags?: string[];
 }
 
-export const ReportPhotoPosterLayoutReportingReason = ({ layout, on_130, on_131, on_132, on_133, on_134, on_135, on_136, tags }: ReportPhotoPosterLayoutReportingReasonProps) => {
+export const ReportPhotoPosterLayoutReportingReason = ({ layout, on_130, on_131, on_132, on_133, on_134, on_135, on_136 }: ReportPhotoPosterLayoutReportingReasonProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="reporting_reason"
-            tags={tags}
             layout={{ position: 'absolute', left: 20, width: 550, top: 445, height: 136, ...layout }}
         >
             <RadioButton

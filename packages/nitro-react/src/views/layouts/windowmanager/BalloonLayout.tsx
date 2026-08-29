@@ -13,12 +13,10 @@ export const BalloonLayout = ({ layout, srcBitmap }: BalloonLayoutProps) => {
                 <Border
                     variant="107"
                     name="border"
-                    tags={[ '_COLORIZE' ]}
                     layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
                 />
                 <ThemeImage
                     name="bitmap"
-                    tags={[ '_COLORIZE' ]}
                     src={srcBitmap}
                     layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
                 />

@@ -91,17 +91,15 @@ export interface SafetyBookletLayoutPageContainerProps {
     onNextButton?: () => void;
     onPreviousButton?: () => void;
     srcIllustration?: string;
-    tags?: string[];
     visiblePageContainer?: boolean;
 }
 
-export const SafetyBookletLayoutPageContainer = ({ captionDescription, captionTitle, layout, onNextButton, onPreviousButton, srcIllustration, tags, visiblePageContainer }: SafetyBookletLayoutPageContainerProps) => {
+export const SafetyBookletLayoutPageContainer = ({ captionDescription, captionTitle, layout, onNextButton, onPreviousButton, srcIllustration, visiblePageContainer }: SafetyBookletLayoutPageContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="page_container"
-            tags={tags}
             visible={visiblePageContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 500, top: 60, height: 420, ...layout }}
         >
@@ -200,17 +198,15 @@ export interface SafetyBookletLayoutFinalPageProps {
     onBackButton?: () => void;
     onQuizButton?: () => void;
     srcIllustration?: string;
-    tags?: string[];
     visibleFinalPage?: boolean;
 }
 
-export const SafetyBookletLayoutFinalPage = ({ layout, onBackButton, onQuizButton, srcIllustration, tags, visibleFinalPage }: SafetyBookletLayoutFinalPageProps) => {
+export const SafetyBookletLayoutFinalPage = ({ layout, onBackButton, onQuizButton, srcIllustration, visibleFinalPage }: SafetyBookletLayoutFinalPageProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="final_page"
-            tags={tags}
             visible={visibleFinalPage ?? false}
             layout={{ position: 'absolute', left: 0, width: 500, top: 60, height: 420, ...layout }}
         >
@@ -282,17 +278,15 @@ export interface SafetyBookletLayoutFinalPageNoQuestionsProps {
     onBackButton?: () => void;
     onOkButton?: () => void;
     srcIllustration?: string;
-    tags?: string[];
     visibleFinalPageNoQuestions?: boolean;
 }
 
-export const SafetyBookletLayoutFinalPageNoQuestions = ({ layout, onBackButton, onOkButton, srcIllustration, tags, visibleFinalPageNoQuestions }: SafetyBookletLayoutFinalPageNoQuestionsProps) => {
+export const SafetyBookletLayoutFinalPageNoQuestions = ({ layout, onBackButton, onOkButton, srcIllustration, visibleFinalPageNoQuestions }: SafetyBookletLayoutFinalPageNoQuestionsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="final_page_no_questions"
-            tags={tags}
             visible={visibleFinalPageNoQuestions ?? false}
             layout={{ position: 'absolute', left: 0, width: 500, top: 60, height: 420, ...layout }}
         >

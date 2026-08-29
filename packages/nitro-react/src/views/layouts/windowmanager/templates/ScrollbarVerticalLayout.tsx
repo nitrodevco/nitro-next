@@ -11,7 +11,6 @@ export const ScrollbarVerticalLayout = ({ layout }: ScrollbarVerticalLayoutProps
             <ScrollbarSliderButtonUp layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 16 }} />
             <ScrollbarSliderTrackVertical
                 name="slider_track"
-                tags={[ '_EXCLUDE', '_INTERNAL', 'slider_track' ]}
                 layout={{ position: 'absolute', left: 0, width: 17, top: 16, bottom: 16 }}
             />
             <ScrollbarSliderButtonDown layout={{ position: 'absolute', left: 0, width: 17, bottom: 0, height: 16 }} />

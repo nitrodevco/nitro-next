@@ -130,14 +130,12 @@ export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoTex
 export interface AvatarEditorNameChangeLayoutSuggestionsProps {
     layout?: BoxLayout;
     onSuggestions?: () => void;
-    tags?: string[];
 }
 
-export const AvatarEditorNameChangeLayoutSuggestions = ({ layout, onSuggestions, tags }: AvatarEditorNameChangeLayoutSuggestionsProps) => {
+export const AvatarEditorNameChangeLayoutSuggestions = ({ layout, onSuggestions }: AvatarEditorNameChangeLayoutSuggestionsProps) => {
     return (
         <Region
             name="suggestions"
-            tags={tags}
             onPointerTap={onSuggestions}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 280, top: 150, height: 31, ...layout }}

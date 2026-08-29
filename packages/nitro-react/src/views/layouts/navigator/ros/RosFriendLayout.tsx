@@ -19,14 +19,12 @@ export const RosFriendLayout = ({ layout, userContainer }: RosFriendLayoutProps)
 export interface RosFriendLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
-    tags?: string[];
 }
 
-export const RosFriendLayoutBgRegion = ({ layout, onBgRegion, tags }: RosFriendLayoutBgRegionProps) => {
+export const RosFriendLayoutBgRegion = ({ layout, onBgRegion }: RosFriendLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 111, top: 0, height: 20, ...layout }}
@@ -38,16 +36,14 @@ export const RosFriendLayoutBgRegion = ({ layout, onBgRegion, tags }: RosFriendL
 export interface RosFriendLayoutUserInfoRegionProps {
     layout?: BoxLayout;
     onUserInfoRegion?: () => void;
-    tags?: string[];
 }
 
-export const RosFriendLayoutUserInfoRegion = ({ layout, onUserInfoRegion, tags }: RosFriendLayoutUserInfoRegionProps) => {
+export const RosFriendLayoutUserInfoRegion = ({ layout, onUserInfoRegion }: RosFriendLayoutUserInfoRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_info_region"
-            tags={tags}
             tooltip={t('group.members.showinfo')}
             onPointerTap={onUserInfoRegion}
             cursor="pointer"
@@ -73,15 +69,13 @@ export interface RosFriendLayoutUserContainerProps {
     captionUserNameTxt?: string;
     layout?: BoxLayout;
     srcArrowIcon?: string;
-    tags?: string[];
     userInfoRegion?: RosFriendLayoutUserInfoRegionProps;
 }
 
-export const RosFriendLayoutUserContainer = ({ bgRegion, captionUserNameTxt, layout, srcArrowIcon, tags, userInfoRegion }: RosFriendLayoutUserContainerProps) => {
+export const RosFriendLayoutUserContainer = ({ bgRegion, captionUserNameTxt, layout, srcArrowIcon, userInfoRegion }: RosFriendLayoutUserContainerProps) => {
     return (
         <Region
             name="user_container"
-            tags={tags}
             backgroundColor="#cc0000"
             layout={{ position: 'absolute', left: 0, width: 111, top: 0, height: 20, ...layout }}
         >

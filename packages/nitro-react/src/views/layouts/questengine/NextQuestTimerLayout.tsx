@@ -19,14 +19,12 @@ export const NextQuestTimerLayout = ({ layout, nextQuestTimer }: NextQuestTimerL
 export interface NextQuestTimerLayoutMoreInfoRegionProps {
     layout?: BoxLayout;
     onMoreInfoRegion?: () => void;
-    tags?: string[];
 }
 
-export const NextQuestTimerLayoutMoreInfoRegion = ({ layout, onMoreInfoRegion, tags }: NextQuestTimerLayoutMoreInfoRegionProps) => {
+export const NextQuestTimerLayoutMoreInfoRegion = ({ layout, onMoreInfoRegion }: NextQuestTimerLayoutMoreInfoRegionProps) => {
     return (
         <Region
             name="more_info_region"
-            tags={tags}
             onPointerTap={onMoreInfoRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 15, width: 162, top: 86, height: 18, ...layout }}
@@ -42,16 +40,14 @@ export interface NextQuestTimerLayoutContentContProps {
     layout?: BoxLayout;
     moreInfoRegion?: NextQuestTimerLayoutMoreInfoRegionProps;
     srcQuestPicBitmap?: string;
-    tags?: string[];
 }
 
-export const NextQuestTimerLayoutContentCont = ({ captionDescTxt, captionMoreInfoTxt, captionQuestHeaderTxt, layout, moreInfoRegion, srcQuestPicBitmap, tags }: NextQuestTimerLayoutContentContProps) => {
+export const NextQuestTimerLayoutContentCont = ({ captionDescTxt, captionMoreInfoTxt, captionQuestHeaderTxt, layout, moreInfoRegion, srcQuestPicBitmap }: NextQuestTimerLayoutContentContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="content_cont"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
@@ -99,14 +95,12 @@ export interface NextQuestTimerLayoutNextQuestTimerProps {
     onNextQuestTimer?: () => void;
     srcQuestTimerContracted?: string;
     srcQuestTimerExpanded?: string;
-    tags?: string[];
 }
 
-export const NextQuestTimerLayoutNextQuestTimer = ({ contentCont, layout, onNextQuestTimer, srcQuestTimerContracted, srcQuestTimerExpanded, tags }: NextQuestTimerLayoutNextQuestTimerProps) => {
+export const NextQuestTimerLayoutNextQuestTimer = ({ contentCont, layout, onNextQuestTimer, srcQuestTimerContracted, srcQuestTimerExpanded }: NextQuestTimerLayoutNextQuestTimerProps) => {
     return (
         <Region
             name="next_quest_timer"
-            tags={tags}
             onPointerTap={onNextQuestTimer}
             cursor="pointer"
             layout={{ position: 'absolute', right: 0, width: 195, top: 0, height: 116, ...layout }}

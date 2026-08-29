@@ -23,16 +23,14 @@ export interface NoGroupsLayoutNoGroupsContProps {
     onViewGroupsButton?: () => void;
     srcExtProfileGrouppic?: string;
     srcGroupBaseIcon?: string;
-    tags?: string[];
 }
 
-export const NoGroupsLayoutNoGroupsCont = ({ captionNoGroupsCaption, captionNoGroupsInfo, layout, onViewGroupsButton, srcExtProfileGrouppic, srcGroupBaseIcon, tags }: NoGroupsLayoutNoGroupsContProps) => {
+export const NoGroupsLayoutNoGroupsCont = ({ captionNoGroupsCaption, captionNoGroupsInfo, layout, onViewGroupsButton, srcExtProfileGrouppic, srcGroupBaseIcon }: NoGroupsLayoutNoGroupsContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="no_groups_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 343, top: 0, height: 214, ...layout }}
         >
             <Region

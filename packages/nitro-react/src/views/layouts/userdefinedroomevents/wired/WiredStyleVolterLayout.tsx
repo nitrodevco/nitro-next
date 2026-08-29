@@ -248,7 +248,6 @@ export const WiredStyleVolterLayout = ({ captionTextBoldView, captionTextHtml, c
                 >
                     <ThemeImage
                         name="asset"
-                        tags={[ '#icon' ]}
                         src={srcAsset}
                         layout={{ position: 'absolute', left: 5, top: 5 }}
                     />
@@ -261,15 +260,13 @@ export const WiredStyleVolterLayout = ({ captionTextBoldView, captionTextHtml, c
 /** Named region `ruler_view` of WiredStyleVolterLayout - configured through the parent's `rulerView` prop. */
 export interface WiredStyleVolterLayoutRulerViewProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleRulerView?: boolean;
 }
 
-export const WiredStyleVolterLayoutRulerView = ({ layout, tags, visibleRulerView }: WiredStyleVolterLayoutRulerViewProps) => {
+export const WiredStyleVolterLayoutRulerView = ({ layout, visibleRulerView }: WiredStyleVolterLayoutRulerViewProps) => {
     return (
         <Region
             name="ruler_view"
-            tags={tags}
             visible={visibleRulerView ?? false}
             layout={{ position: 'absolute', left: 0, width: 228, top: 0, height: 1, ...layout }}
         >
@@ -284,17 +281,15 @@ export const WiredStyleVolterLayoutRulerView = ({ layout, tags, visibleRulerView
 /** Named region `input_template` of WiredStyleVolterLayout - configured through the parent's `inputTemplate` prop. */
 export interface WiredStyleVolterLayoutInputTemplateProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleInputTemplate?: boolean;
 }
 
-export const WiredStyleVolterLayoutInputTemplate = ({ layout, tags, visibleInputTemplate }: WiredStyleVolterLayoutInputTemplateProps) => {
+export const WiredStyleVolterLayoutInputTemplate = ({ layout, visibleInputTemplate }: WiredStyleVolterLayoutInputTemplateProps) => {
     const [ fieldValue, setFieldValue ] = useState('');
 
     return (
         <Region
             name="input_template"
-            tags={tags}
             visible={visibleInputTemplate ?? false}
             layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 15, ...layout }}
         >
@@ -314,15 +309,13 @@ export interface WiredStyleVolterLayoutExpandCollapseRegionProps {
     onExpandCollapseRegion?: () => void;
     srcDownArrow?: string;
     srcUpArrow?: string;
-    tags?: string[];
     visibleExpandCollapseRegion?: boolean;
 }
 
-export const WiredStyleVolterLayoutExpandCollapseRegion = ({ layout, onExpandCollapseRegion, srcDownArrow, srcUpArrow, tags, visibleExpandCollapseRegion }: WiredStyleVolterLayoutExpandCollapseRegionProps) => {
+export const WiredStyleVolterLayoutExpandCollapseRegion = ({ layout, onExpandCollapseRegion, srcDownArrow, srcUpArrow, visibleExpandCollapseRegion }: WiredStyleVolterLayoutExpandCollapseRegionProps) => {
     return (
         <Region
             name="expand_collapse_region"
-            tags={tags}
             visible={visibleExpandCollapseRegion ?? false}
             backgroundColor="#3d3d3d"
             onPointerTap={onExpandCollapseRegion}
@@ -356,14 +349,12 @@ export const WiredStyleVolterLayoutExpandCollapseRegion = ({ layout, onExpandCol
 /** Named region `border` of WiredStyleVolterLayout - configured through the parent's `border` prop. */
 export interface WiredStyleVolterLayoutBorderProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutBorder = ({ layout, tags }: WiredStyleVolterLayoutBorderProps) => {
+export const WiredStyleVolterLayoutBorder = ({ layout }: WiredStyleVolterLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 1, top: 2, height: 13, minWidth: 1, maxWidth: 1, ...layout }}
         />
@@ -373,14 +364,12 @@ export const WiredStyleVolterLayoutBorder = ({ layout, tags }: WiredStyleVolterL
 /** Named region `margin_item_color_left` of WiredStyleVolterLayout - configured through the parent's `marginItemColorLeft` prop. */
 export interface WiredStyleVolterLayoutMarginItemColorLeftProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutMarginItemColorLeft = ({ layout, tags }: WiredStyleVolterLayoutMarginItemColorLeftProps) => {
+export const WiredStyleVolterLayoutMarginItemColorLeft = ({ layout }: WiredStyleVolterLayoutMarginItemColorLeftProps) => {
     return (
         <Region
             name="margin_item_color_left"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 13, minWidth: 1, maxWidth: 1, minHeight: 13, maxHeight: 13, ...layout }}
         />
@@ -391,14 +380,12 @@ export const WiredStyleVolterLayoutMarginItemColorLeft = ({ layout, tags }: Wire
 export interface WiredStyleVolterLayoutBorder2Props {
     layout?: BoxLayout;
     marginItemColorLeft?: WiredStyleVolterLayoutMarginItemColorLeftProps;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutBorder2 = ({ layout, marginItemColorLeft, tags }: WiredStyleVolterLayoutBorder2Props) => {
+export const WiredStyleVolterLayoutBorder2 = ({ layout, marginItemColorLeft }: WiredStyleVolterLayoutBorder2Props) => {
     return (
         <Region
             name="border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 1, width: 1, top: 1, height: 15, minWidth: 1, maxWidth: 1, minHeight: 15, maxHeight: 15, ...layout }}
         >
@@ -412,14 +399,12 @@ export interface WiredStyleVolterLayoutLeftPaddingItemProps {
     border?: WiredStyleVolterLayoutBorderProps;
     border2?: WiredStyleVolterLayoutBorder2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutLeftPaddingItem = ({ border, border2, layout, tags }: WiredStyleVolterLayoutLeftPaddingItemProps) => {
+export const WiredStyleVolterLayoutLeftPaddingItem = ({ border, border2, layout }: WiredStyleVolterLayoutLeftPaddingItemProps) => {
     return (
         <Region
             name="left_padding"
-            tags={tags}
             layout={{ width: 2, height: 17, flexShrink: 0, minWidth: 2, maxWidth: 2, minHeight: 17, maxHeight: 17, ...layout }}
         >
             <WiredStyleVolterLayoutBorder {...border} />
@@ -431,14 +416,12 @@ export const WiredStyleVolterLayoutLeftPaddingItem = ({ border, border2, layout,
 /** Row template `left_pad` of WiredStyleVolterLayout - pass real rows through its `items…` slot. */
 export interface WiredStyleVolterLayoutLeftPadItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutLeftPadItem = ({ layout, tags }: WiredStyleVolterLayoutLeftPadItemProps) => {
+export const WiredStyleVolterLayoutLeftPadItem = ({ layout }: WiredStyleVolterLayoutLeftPadItemProps) => {
     return (
         <Region
             name="left_pad"
-            tags={tags}
             layout={{ width: 2, height: 15, flexShrink: 0, minWidth: 2, maxWidth: 2, minHeight: 15, maxHeight: 15, ...layout }}
         />
     );
@@ -448,14 +431,12 @@ export const WiredStyleVolterLayoutLeftPadItem = ({ layout, tags }: WiredStyleVo
 export interface WiredStyleVolterLayoutTypeIconBitmapItemProps {
     layout?: BoxLayout;
     srcTypeIconBitmap?: string;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutTypeIconBitmapItem = ({ layout, srcTypeIconBitmap, tags }: WiredStyleVolterLayoutTypeIconBitmapItemProps) => {
+export const WiredStyleVolterLayoutTypeIconBitmapItem = ({ layout, srcTypeIconBitmap }: WiredStyleVolterLayoutTypeIconBitmapItemProps) => {
     return (
         <ThemeImage
             name="type_icon_bitmap"
-            tags={tags}
             src={srcTypeIconBitmap}
             layout={{ width: 9, height: 11, flexShrink: 0, minHeight: 11, maxHeight: 11, ...layout }}
         />
@@ -465,14 +446,12 @@ export const WiredStyleVolterLayoutTypeIconBitmapItem = ({ layout, srcTypeIconBi
 /** Row template `right_pad` of WiredStyleVolterLayout - pass real rows through its `items…` slot. */
 export interface WiredStyleVolterLayoutRightPadItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutRightPadItem = ({ layout, tags }: WiredStyleVolterLayoutRightPadItemProps) => {
+export const WiredStyleVolterLayoutRightPadItem = ({ layout }: WiredStyleVolterLayoutRightPadItemProps) => {
     return (
         <Region
             name="right_pad"
-            tags={tags}
             layout={{ width: 2, height: 15, flexShrink: 0, minWidth: 2, maxWidth: 2, minHeight: 15, maxHeight: 15, ...layout }}
         />
     );
@@ -482,14 +461,12 @@ export const WiredStyleVolterLayoutRightPadItem = ({ layout, tags }: WiredStyleV
 export interface WiredStyleVolterLayoutSourceElementsProps {
     itemsSourceElements?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutSourceElements = ({ itemsSourceElements, layout, tags }: WiredStyleVolterLayoutSourceElementsProps) => {
+export const WiredStyleVolterLayoutSourceElements = ({ itemsSourceElements, layout }: WiredStyleVolterLayoutSourceElementsProps) => {
     return (
         <Region
             name="source_elements"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row', ...layout }}
         >
@@ -509,14 +486,12 @@ export interface WiredStyleVolterLayoutSourceBtnItemProps {
     layout?: BoxLayout;
     onSourceBtn?: () => void;
     sourceElements?: WiredStyleVolterLayoutSourceElementsProps;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutSourceBtnItem = ({ layout, onSourceBtn, sourceElements, tags }: WiredStyleVolterLayoutSourceBtnItemProps) => {
+export const WiredStyleVolterLayoutSourceBtnItem = ({ layout, onSourceBtn, sourceElements }: WiredStyleVolterLayoutSourceBtnItemProps) => {
     return (
         <Region
             name="source_btn"
-            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onSourceBtn}
             cursor="pointer"
@@ -531,14 +506,12 @@ export const WiredStyleVolterLayoutSourceBtnItem = ({ layout, onSourceBtn, sourc
 export interface WiredStyleVolterLayoutSourceOptionsListProps {
     itemsSourceOptionsList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutSourceOptionsList = ({ itemsSourceOptionsList, layout, tags }: WiredStyleVolterLayoutSourceOptionsListProps) => {
+export const WiredStyleVolterLayoutSourceOptionsList = ({ itemsSourceOptionsList, layout }: WiredStyleVolterLayoutSourceOptionsListProps) => {
     return (
         <Region
             name="source_options_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row', gap: 1, ...layout }}
         >
             {itemsSourceOptionsList ?? (
@@ -552,14 +525,12 @@ export const WiredStyleVolterLayoutSourceOptionsList = ({ itemsSourceOptionsList
 export interface WiredStyleVolterLayoutSourceOptionsContProps {
     layout?: BoxLayout;
     sourceOptionsList?: WiredStyleVolterLayoutSourceOptionsListProps;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutSourceOptionsCont = ({ layout, sourceOptionsList, tags }: WiredStyleVolterLayoutSourceOptionsContProps) => {
+export const WiredStyleVolterLayoutSourceOptionsCont = ({ layout, sourceOptionsList }: WiredStyleVolterLayoutSourceOptionsContProps) => {
     return (
         <Region
             name="source_options_cont"
-            tags={tags}
             backgroundColor="#181818"
             layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 15, minHeight: 15, maxHeight: 15, ...layout }}
         >
@@ -572,14 +543,12 @@ export const WiredStyleVolterLayoutSourceOptionsCont = ({ layout, sourceOptionsL
 export interface WiredStyleVolterLayoutSourceOptionsBorderItemProps {
     layout?: BoxLayout;
     sourceOptionsCont?: WiredStyleVolterLayoutSourceOptionsContProps;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutSourceOptionsBorderItem = ({ layout, sourceOptionsCont, tags }: WiredStyleVolterLayoutSourceOptionsBorderItemProps) => {
+export const WiredStyleVolterLayoutSourceOptionsBorderItem = ({ layout, sourceOptionsCont }: WiredStyleVolterLayoutSourceOptionsBorderItemProps) => {
     return (
         <Region
             name="source_options_border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 13, height: 17, flexShrink: 0, minHeight: 17, maxHeight: 17, ...layout }}
         >
@@ -591,14 +560,12 @@ export const WiredStyleVolterLayoutSourceOptionsBorderItem = ({ layout, sourceOp
 /** Named region `margin_item_color_right` of WiredStyleVolterLayout - configured through the parent's `marginItemColorRight` prop. */
 export interface WiredStyleVolterLayoutMarginItemColorRightProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutMarginItemColorRight = ({ layout, tags }: WiredStyleVolterLayoutMarginItemColorRightProps) => {
+export const WiredStyleVolterLayoutMarginItemColorRight = ({ layout }: WiredStyleVolterLayoutMarginItemColorRightProps) => {
     return (
         <Region
             name="margin_item_color_right"
-            tags={tags}
             backgroundColor="#222222"
             layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 13, minWidth: 1, maxWidth: 1, minHeight: 13, maxHeight: 13, ...layout }}
         />
@@ -609,14 +576,12 @@ export const WiredStyleVolterLayoutMarginItemColorRight = ({ layout, tags }: Wir
 export interface WiredStyleVolterLayoutBorder3Props {
     layout?: BoxLayout;
     marginItemColorRight?: WiredStyleVolterLayoutMarginItemColorRightProps;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutBorder3 = ({ layout, marginItemColorRight, tags }: WiredStyleVolterLayoutBorder3Props) => {
+export const WiredStyleVolterLayoutBorder3 = ({ layout, marginItemColorRight }: WiredStyleVolterLayoutBorder3Props) => {
     return (
         <Region
             name="border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 15, minWidth: 1, maxWidth: 1, minHeight: 15, maxHeight: 15, ...layout }}
         >
@@ -628,14 +593,12 @@ export const WiredStyleVolterLayoutBorder3 = ({ layout, marginItemColorRight, ta
 /** Named region `border` of WiredStyleVolterLayout - configured through the parent's `border` prop. */
 export interface WiredStyleVolterLayoutBorder4Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutBorder4 = ({ layout, tags }: WiredStyleVolterLayoutBorder4Props) => {
+export const WiredStyleVolterLayoutBorder4 = ({ layout }: WiredStyleVolterLayoutBorder4Props) => {
     return (
         <Region
             name="border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 1, width: 1, top: 2, height: 13, minWidth: 1, maxWidth: 1, ...layout }}
         />
@@ -647,14 +610,12 @@ export interface WiredStyleVolterLayoutRightPaddingItemProps {
     border?: WiredStyleVolterLayoutBorder3Props;
     border2?: WiredStyleVolterLayoutBorder4Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutRightPaddingItem = ({ border, border2, layout, tags }: WiredStyleVolterLayoutRightPaddingItemProps) => {
+export const WiredStyleVolterLayoutRightPaddingItem = ({ border, border2, layout }: WiredStyleVolterLayoutRightPaddingItemProps) => {
     return (
         <Region
             name="right_padding"
-            tags={tags}
             layout={{ width: 2, height: 17, flexShrink: 0, minWidth: 2, maxWidth: 2, minHeight: 17, maxHeight: 17, ...layout }}
         >
             <WiredStyleVolterLayoutBorder3 {...border} />
@@ -667,14 +628,12 @@ export const WiredStyleVolterLayoutRightPaddingItem = ({ border, border2, layout
 export interface WiredStyleVolterLayoutSourcetypeSelectorViewProps {
     itemsSourcetypeSelectorView?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutSourcetypeSelectorView = ({ itemsSourcetypeSelectorView, layout, tags }: WiredStyleVolterLayoutSourcetypeSelectorViewProps) => {
+export const WiredStyleVolterLayoutSourcetypeSelectorView = ({ itemsSourcetypeSelectorView, layout }: WiredStyleVolterLayoutSourcetypeSelectorViewProps) => {
     return (
         <Region
             name="sourcetype_selector_view"
-            tags={tags}
             visible={false}
             layout={{ position: 'absolute', left: 0, top: -2, minHeight: 17, maxHeight: 17, flexDirection: 'row', ...layout }}
         >
@@ -693,14 +652,12 @@ export const WiredStyleVolterLayoutSourcetypeSelectorView = ({ itemsSourcetypeSe
 export interface WiredStyleVolterLayoutSliderMovementAreaProps {
     layout?: BoxLayout;
     srcSliderButton?: string;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutSliderMovementArea = ({ layout, srcSliderButton, tags }: WiredStyleVolterLayoutSliderMovementAreaProps) => {
+export const WiredStyleVolterLayoutSliderMovementArea = ({ layout, srcSliderButton }: WiredStyleVolterLayoutSliderMovementAreaProps) => {
     return (
         <Region
             name="slider_movement_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 15, ...layout }}
         >
             <ThemeImage
@@ -717,15 +674,13 @@ export interface WiredStyleVolterLayoutSliderProps {
     layout?: BoxLayout;
     sliderMovementArea?: WiredStyleVolterLayoutSliderMovementAreaProps;
     srcSliderBase?: string;
-    tags?: string[];
     visibleSlider?: boolean;
 }
 
-export const WiredStyleVolterLayoutSlider = ({ layout, sliderMovementArea, srcSliderBase, tags, visibleSlider }: WiredStyleVolterLayoutSliderProps) => {
+export const WiredStyleVolterLayoutSlider = ({ layout, sliderMovementArea, srcSliderBase, visibleSlider }: WiredStyleVolterLayoutSliderProps) => {
     return (
         <Region
             name="slider"
-            tags={tags}
             visible={visibleSlider ?? false}
             layout={{ position: 'absolute', left: 0, width: 148, top: 0, height: 17, ...layout }}
         >
@@ -742,14 +697,12 @@ export const WiredStyleVolterLayoutSlider = ({ layout, sliderMovementArea, srcSl
 /** Named region `border` of WiredStyleVolterLayout - configured through the parent's `border` prop. */
 export interface WiredStyleVolterLayoutBorder5Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutBorder5 = ({ layout, tags }: WiredStyleVolterLayoutBorder5Props) => {
+export const WiredStyleVolterLayoutBorder5 = ({ layout }: WiredStyleVolterLayoutBorder5Props) => {
     return (
         <Region
             name="border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 1, top: 2, height: 13, minWidth: 1, maxWidth: 1, ...layout }}
         />
@@ -759,14 +712,12 @@ export const WiredStyleVolterLayoutBorder5 = ({ layout, tags }: WiredStyleVolter
 /** Named region `margin_item_color_left` of WiredStyleVolterLayout - configured through the parent's `marginItemColorLeft` prop. */
 export interface WiredStyleVolterLayoutMarginItemColorLeft2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutMarginItemColorLeft2 = ({ layout, tags }: WiredStyleVolterLayoutMarginItemColorLeft2Props) => {
+export const WiredStyleVolterLayoutMarginItemColorLeft2 = ({ layout }: WiredStyleVolterLayoutMarginItemColorLeft2Props) => {
     return (
         <Region
             name="margin_item_color_left"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 13, minWidth: 1, maxWidth: 1, minHeight: 13, maxHeight: 13, ...layout }}
         />
@@ -777,14 +728,12 @@ export const WiredStyleVolterLayoutMarginItemColorLeft2 = ({ layout, tags }: Wir
 export interface WiredStyleVolterLayoutBorder6Props {
     layout?: BoxLayout;
     marginItemColorLeft?: WiredStyleVolterLayoutMarginItemColorLeft2Props;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutBorder6 = ({ layout, marginItemColorLeft, tags }: WiredStyleVolterLayoutBorder6Props) => {
+export const WiredStyleVolterLayoutBorder6 = ({ layout, marginItemColorLeft }: WiredStyleVolterLayoutBorder6Props) => {
     return (
         <Region
             name="border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 1, width: 1, top: 1, height: 15, minWidth: 1, maxWidth: 1, minHeight: 15, maxHeight: 15, ...layout }}
         >
@@ -798,14 +747,12 @@ export interface WiredStyleVolterLayoutLeftPaddingItem2Props {
     border?: WiredStyleVolterLayoutBorder5Props;
     border2?: WiredStyleVolterLayoutBorder6Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutLeftPaddingItem2 = ({ border, border2, layout, tags }: WiredStyleVolterLayoutLeftPaddingItem2Props) => {
+export const WiredStyleVolterLayoutLeftPaddingItem2 = ({ border, border2, layout }: WiredStyleVolterLayoutLeftPaddingItem2Props) => {
     return (
         <Region
             name="left_padding"
-            tags={tags}
             layout={{ width: 2, height: 17, flexShrink: 0, minWidth: 2, maxWidth: 2, minHeight: 17, maxHeight: 17, ...layout }}
         >
             <WiredStyleVolterLayoutBorder5 {...border} />
@@ -819,14 +766,12 @@ export interface WiredStyleVolterLayoutMiniButtonClickProps {
     layout?: BoxLayout;
     onMiniButtonClick?: () => void;
     srcMiniButtonIcon?: string;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutMiniButtonClick = ({ layout, onMiniButtonClick, srcMiniButtonIcon, tags }: WiredStyleVolterLayoutMiniButtonClickProps) => {
+export const WiredStyleVolterLayoutMiniButtonClick = ({ layout, onMiniButtonClick, srcMiniButtonIcon }: WiredStyleVolterLayoutMiniButtonClickProps) => {
     return (
         <Region
             name="mini_button_click"
-            tags={tags}
             backgroundColor="#333333"
             onPointerTap={onMiniButtonClick}
             cursor="pointer"
@@ -845,14 +790,12 @@ export const WiredStyleVolterLayoutMiniButtonClick = ({ layout, onMiniButtonClic
 export interface WiredStyleVolterLayoutMiniButtonBgItemProps {
     layout?: BoxLayout;
     miniButtonClick?: WiredStyleVolterLayoutMiniButtonClickProps;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutMiniButtonBgItem = ({ layout, miniButtonClick, tags }: WiredStyleVolterLayoutMiniButtonBgItemProps) => {
+export const WiredStyleVolterLayoutMiniButtonBgItem = ({ layout, miniButtonClick }: WiredStyleVolterLayoutMiniButtonBgItemProps) => {
     return (
         <Region
             name="mini_button_bg"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 13, height: 17, flexShrink: 0, minHeight: 17, maxHeight: 17, ...layout }}
         >
@@ -864,14 +807,12 @@ export const WiredStyleVolterLayoutMiniButtonBgItem = ({ layout, miniButtonClick
 /** Named region `margin_item_color_right` of WiredStyleVolterLayout - configured through the parent's `marginItemColorRight` prop. */
 export interface WiredStyleVolterLayoutMarginItemColorRight2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutMarginItemColorRight2 = ({ layout, tags }: WiredStyleVolterLayoutMarginItemColorRight2Props) => {
+export const WiredStyleVolterLayoutMarginItemColorRight2 = ({ layout }: WiredStyleVolterLayoutMarginItemColorRight2Props) => {
     return (
         <Region
             name="margin_item_color_right"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 13, minWidth: 1, maxWidth: 1, minHeight: 13, maxHeight: 13, ...layout }}
         />
@@ -882,14 +823,12 @@ export const WiredStyleVolterLayoutMarginItemColorRight2 = ({ layout, tags }: Wi
 export interface WiredStyleVolterLayoutBorder7Props {
     layout?: BoxLayout;
     marginItemColorRight?: WiredStyleVolterLayoutMarginItemColorRight2Props;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutBorder7 = ({ layout, marginItemColorRight, tags }: WiredStyleVolterLayoutBorder7Props) => {
+export const WiredStyleVolterLayoutBorder7 = ({ layout, marginItemColorRight }: WiredStyleVolterLayoutBorder7Props) => {
     return (
         <Region
             name="border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 15, minWidth: 1, maxWidth: 1, minHeight: 15, maxHeight: 15, ...layout }}
         >
@@ -901,14 +840,12 @@ export const WiredStyleVolterLayoutBorder7 = ({ layout, marginItemColorRight, ta
 /** Named region `border` of WiredStyleVolterLayout - configured through the parent's `border` prop. */
 export interface WiredStyleVolterLayoutBorder8Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutBorder8 = ({ layout, tags }: WiredStyleVolterLayoutBorder8Props) => {
+export const WiredStyleVolterLayoutBorder8 = ({ layout }: WiredStyleVolterLayoutBorder8Props) => {
     return (
         <Region
             name="border"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 1, width: 1, top: 2, height: 13, minWidth: 1, maxWidth: 1, ...layout }}
         />
@@ -920,14 +857,12 @@ export interface WiredStyleVolterLayoutRightPaddingItem2Props {
     border?: WiredStyleVolterLayoutBorder7Props;
     border2?: WiredStyleVolterLayoutBorder8Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutRightPaddingItem2 = ({ border, border2, layout, tags }: WiredStyleVolterLayoutRightPaddingItem2Props) => {
+export const WiredStyleVolterLayoutRightPaddingItem2 = ({ border, border2, layout }: WiredStyleVolterLayoutRightPaddingItem2Props) => {
     return (
         <Region
             name="right_padding"
-            tags={tags}
             layout={{ width: 2, height: 17, flexShrink: 0, minWidth: 2, maxWidth: 2, minHeight: 17, maxHeight: 17, ...layout }}
         >
             <WiredStyleVolterLayoutBorder7 {...border} />
@@ -940,14 +875,12 @@ export const WiredStyleVolterLayoutRightPaddingItem2 = ({ border, border2, layou
 export interface WiredStyleVolterLayoutMiniButtonViewProps {
     itemsMiniButtonView?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutMiniButtonView = ({ itemsMiniButtonView, layout, tags }: WiredStyleVolterLayoutMiniButtonViewProps) => {
+export const WiredStyleVolterLayoutMiniButtonView = ({ itemsMiniButtonView, layout }: WiredStyleVolterLayoutMiniButtonViewProps) => {
     return (
         <Region
             name="mini_button_view"
-            tags={tags}
             visible={false}
             layout={{ position: 'absolute', left: 0, top: -2, minHeight: 17, maxHeight: 17, flexDirection: 'row', ...layout }}
         >
@@ -968,14 +901,12 @@ export interface WiredStyleVolterLayoutMenuItemTemplateItemProps {
     layout?: BoxLayout;
     onCheckbox?: () => void;
     onMenuItemTemplate?: () => void;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutMenuItemTemplateItem = ({ captionText, layout, onCheckbox, onMenuItemTemplate, tags }: WiredStyleVolterLayoutMenuItemTemplateItemProps) => {
+export const WiredStyleVolterLayoutMenuItemTemplateItem = ({ captionText, layout, onCheckbox, onMenuItemTemplate }: WiredStyleVolterLayoutMenuItemTemplateItemProps) => {
     return (
         <Region
             name="menu_item_template"
-            tags={tags}
             onPointerTap={onMenuItemTemplate}
             cursor="pointer"
             layout={{ width: 141, height: 20, flexShrink: 0, ...layout }}
@@ -1003,14 +934,12 @@ export const WiredStyleVolterLayoutMenuItemTemplateItem = ({ captionText, layout
 /** Row template `spacer_template` of WiredStyleVolterLayout - pass real rows through its `items…` slot. */
 export interface WiredStyleVolterLayoutSpacerTemplateItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutSpacerTemplateItem = ({ layout, tags }: WiredStyleVolterLayoutSpacerTemplateItemProps) => {
+export const WiredStyleVolterLayoutSpacerTemplateItem = ({ layout }: WiredStyleVolterLayoutSpacerTemplateItemProps) => {
     return (
         <Region
             name="spacer_template"
-            tags={tags}
             layout={{ width: 141, height: 3, flexShrink: 0, ...layout }}
         >
             <Region
@@ -1025,14 +954,12 @@ export const WiredStyleVolterLayoutSpacerTemplateItem = ({ layout, tags }: Wired
 export interface WiredStyleVolterLayoutMenuListProps {
     itemsMenuList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const WiredStyleVolterLayoutMenuList = ({ itemsMenuList, layout, tags }: WiredStyleVolterLayoutMenuListProps) => {
+export const WiredStyleVolterLayoutMenuList = ({ itemsMenuList, layout }: WiredStyleVolterLayoutMenuListProps) => {
     return (
         <Region
             name="menu_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23, flexDirection: 'column', ...layout }}
         >
             {itemsMenuList ?? (

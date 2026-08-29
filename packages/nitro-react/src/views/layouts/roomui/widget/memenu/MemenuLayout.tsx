@@ -11,7 +11,6 @@ export const MemenuLayout = ({ layout }: MemenuLayoutProps) => {
             <Border
                 variant="6"
                 name="main_content"
-                tags={[ 'MAIN_CONTENT' ]}
                 tintColor="#5b5953"
                 layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 260 }}
             />

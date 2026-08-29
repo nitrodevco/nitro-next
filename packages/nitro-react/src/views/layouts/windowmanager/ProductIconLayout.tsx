@@ -15,7 +15,6 @@ export const ProductIconLayout = ({ layout, srcBitmap, srcUnknownImage, visibleI
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}>
                 <ThemeImage
                     name="bitmap"
-                    tags={[ 'BITMAP' ]}
                     src={srcBitmap}
                     layout={{ position: 'absolute', width: 46, alignSelf: 'center', height: 40, minWidth: 46, maxWidth: 46 }}
                 />

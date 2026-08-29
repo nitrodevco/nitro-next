@@ -5,12 +5,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `79_element_title_xml` (layout "element_title", 250x18) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ElementTitleLayoutProps {
     captionTitleTxt?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     srcBorderBar?: string;
     srcHdrLine?: string;
 }
 
-export const ElementTitleLayout = ({ captionTitleTxt, layout, srcBorderBar, srcHdrLine }: ElementTitleLayoutProps) => {
+export const ElementTitleLayout = ({ captionTitleTxt, colorableTextColor, layout, srcBorderBar, srcHdrLine }: ElementTitleLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -26,12 +27,12 @@ export const ElementTitleLayout = ({ captionTitleTxt, layout, srcBorderBar, srcH
                 />
                 <Region
                     name="title_txt"
-                    tags={[ 'COLORABLE' ]}
                     layout={{ position: 'absolute', left: 18, width: 133, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTitleTxt ?? t('landing.view.pageexpiry.title')}
                         textStyle="text-style-il-heading-3"
+                        textOptions={{ fill: colorableTextColor }}
                     />
                 </Region>
                 <ThemeImage

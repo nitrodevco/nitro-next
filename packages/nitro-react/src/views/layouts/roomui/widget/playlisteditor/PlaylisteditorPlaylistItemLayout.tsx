@@ -20,14 +20,12 @@ export interface PlaylisteditorPlaylistItemLayoutActionButtonsProps {
     layout?: BoxLayout;
     onButtonRemoveFromPlaylist?: () => void;
     srcButtonRemoveFromPlaylistImage?: string;
-    tags?: string[];
 }
 
-export const PlaylisteditorPlaylistItemLayoutActionButtons = ({ layout, onButtonRemoveFromPlaylist, srcButtonRemoveFromPlaylistImage, tags }: PlaylisteditorPlaylistItemLayoutActionButtonsProps) => {
+export const PlaylisteditorPlaylistItemLayoutActionButtons = ({ layout, onButtonRemoveFromPlaylist, srcButtonRemoveFromPlaylistImage }: PlaylisteditorPlaylistItemLayoutActionButtonsProps) => {
     return (
         <Region
             name="action_buttons"
-            tags={tags}
             layout={{ position: 'absolute', left: 4, width: 44, top: 4, height: 44, ...layout }}
         >
             <Border
@@ -39,7 +37,6 @@ export const PlaylisteditorPlaylistItemLayoutActionButtons = ({ layout, onButton
                 <ContainerButton
                     variant="0"
                     name="button_remove_from_playlist"
-                    tags={[ 'REMOVE_FROM_PLAYLIST' ]}
                     onPointerTap={onButtonRemoveFromPlaylist}
                     layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 36 }}
                 >
@@ -64,14 +61,12 @@ export interface PlaylisteditorPlaylistItemLayoutPlaylistItemProps {
     srcAuthorNameIconBitmap?: string;
     srcDiskImage?: string;
     srcSongNameIconBitmap?: string;
-    tags?: string[];
 }
 
-export const PlaylisteditorPlaylistItemLayoutPlaylistItem = ({ actionButtons, captionSongAuthorText, captionSongTitleText, layout, onPlaylistItem, srcAuthorNameIconBitmap, srcDiskImage, srcSongNameIconBitmap, tags }: PlaylisteditorPlaylistItemLayoutPlaylistItemProps) => {
+export const PlaylisteditorPlaylistItemLayoutPlaylistItem = ({ actionButtons, captionSongAuthorText, captionSongTitleText, layout, onPlaylistItem, srcAuthorNameIconBitmap, srcDiskImage, srcSongNameIconBitmap }: PlaylisteditorPlaylistItemLayoutPlaylistItemProps) => {
     return (
         <Region
             name="playlist_item"
-            tags={tags}
             onPointerTap={onPlaylistItem}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 229, top: 0, height: 52, ...layout }}
@@ -79,36 +74,28 @@ export const PlaylisteditorPlaylistItemLayoutPlaylistItem = ({ actionButtons, ca
             <Border
                 variant="0"
                 name="selected"
-                tags={[ 'SELECTED' ]}
                 layout={{ position: 'absolute', left: 0, width: 229, top: 0, height: 52 }}
             />
             <Border
                 variant="2"
                 name="background"
-                tags={[ 'BG_COLOR' ]}
                 tintColor="#f1f1f1"
                 layout={{ position: 'absolute', left: 3, width: 223, top: 3, height: 46 }}
             />
             <ThemeImage
                 name="disk_image"
-                tags={[ 'ICON' ]}
                 src={srcDiskImage}
                 layout={{ position: 'absolute', left: 7, width: 38, top: 7, height: 38 }}
             />
-            <PlaylisteditorPlaylistItemLayoutActionButtons
-                tags={[ 'BUTTONS' ]}
-                {...actionButtons}
-            />
+            <PlaylisteditorPlaylistItemLayoutActionButtons {...actionButtons} />
             <Region
                 name="song_title_text"
-                tags={[ 'SONG_TITLE' ]}
                 layout={{ position: 'absolute', left: 70, width: 4, top: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionSongTitleText ?? ''} />
             </Region>
             <Region
                 name="song_author_text"
-                tags={[ 'SONG_AUTHOR' ]}
                 layout={{ position: 'absolute', left: 70, width: 4, top: 27, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionSongAuthorText ?? ''} />

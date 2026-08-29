@@ -47,14 +47,12 @@ export const PromoDucketsLayout = ({ closeButton, layout }: PromoDucketsLayoutPr
 export interface PromoDucketsLayoutCloseButtonProps {
     layout?: BoxLayout;
     onCloseButton?: () => void;
-    tags?: string[];
 }
 
-export const PromoDucketsLayoutCloseButton = ({ layout, onCloseButton, tags }: PromoDucketsLayoutCloseButtonProps) => {
+export const PromoDucketsLayoutCloseButton = ({ layout, onCloseButton }: PromoDucketsLayoutCloseButtonProps) => {
     return (
         <Region
             name="close_button"
-            tags={tags}
             onPointerTap={onCloseButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 22, top: 0, height: 22, ...layout }}

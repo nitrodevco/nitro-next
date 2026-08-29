@@ -39,17 +39,15 @@ export interface PurchaseWidgetLayoutDefaultButtonsProps {
     layout?: BoxLayout;
     onBuyButton?: () => void;
     onGiftButton?: () => void;
-    tags?: string[];
     visibleDefaultButtons?: boolean;
 }
 
-export const PurchaseWidgetLayoutDefaultButtons = ({ captionPurchaseLabel, layout, onBuyButton, onGiftButton, tags, visibleDefaultButtons }: PurchaseWidgetLayoutDefaultButtonsProps) => {
+export const PurchaseWidgetLayoutDefaultButtons = ({ captionPurchaseLabel, layout, onBuyButton, onGiftButton, visibleDefaultButtons }: PurchaseWidgetLayoutDefaultButtonsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="default_buttons"
-            tags={tags}
             visible={visibleDefaultButtons ?? false}
             layout={{ position: 'absolute', left: 0, width: 360, top: 3, height: 25, ...layout }}
         >

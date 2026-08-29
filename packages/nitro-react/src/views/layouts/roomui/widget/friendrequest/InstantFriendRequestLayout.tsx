@@ -20,14 +20,12 @@ export interface InstantFriendRequestLayoutProfileRegionProps {
     captionText?: string;
     layout?: BoxLayout;
     onProfileRegion?: () => void;
-    tags?: string[];
 }
 
-export const InstantFriendRequestLayoutProfileRegion = ({ captionText, layout, onProfileRegion, tags }: InstantFriendRequestLayoutProfileRegionProps) => {
+export const InstantFriendRequestLayoutProfileRegion = ({ captionText, layout, onProfileRegion }: InstantFriendRequestLayoutProfileRegionProps) => {
     return (
         <Region
             name="profile_region"
-            tags={tags}
             onPointerTap={onProfileRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 25, width: 142, top: 5, height: 32, ...layout }}
@@ -50,16 +48,14 @@ export const InstantFriendRequestLayoutProfileRegion = ({ captionText, layout, o
 export interface InstantFriendRequestLayoutDeclineButtonProps {
     layout?: BoxLayout;
     onDeclineButton?: () => void;
-    tags?: string[];
 }
 
-export const InstantFriendRequestLayoutDeclineButton = ({ layout, onDeclineButton, tags }: InstantFriendRequestLayoutDeclineButtonProps) => {
+export const InstantFriendRequestLayoutDeclineButton = ({ layout, onDeclineButton }: InstantFriendRequestLayoutDeclineButtonProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="decline_button"
-            tags={tags}
             onPointerTap={onDeclineButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 8, width: 152, bottom: 27, height: 16, minWidth: 1, ...layout }}
@@ -83,16 +79,14 @@ export interface InstantFriendRequestLayoutMasterContainerProps {
     onCloseButton?: () => void;
     onMasterContainer?: () => void;
     profileRegion?: InstantFriendRequestLayoutProfileRegionProps;
-    tags?: string[];
 }
 
-export const InstantFriendRequestLayoutMasterContainer = ({ declineButton, layout, onAcceptButton, onCloseButton, onMasterContainer, profileRegion, tags }: InstantFriendRequestLayoutMasterContainerProps) => {
+export const InstantFriendRequestLayoutMasterContainer = ({ declineButton, layout, onAcceptButton, onCloseButton, onMasterContainer, profileRegion }: InstantFriendRequestLayoutMasterContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="master_container"
-            tags={tags}
             backgroundColor="#000000"
             onPointerTap={onMasterContainer}
             cursor="pointer"

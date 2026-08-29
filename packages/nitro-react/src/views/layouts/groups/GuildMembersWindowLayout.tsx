@@ -38,16 +38,14 @@ export const GuildMembersWindowLayout = ({ footerCont, headerCont, layout, membe
 export interface GuildMembersWindowLayoutHeaderContProps {
     layout?: BoxLayout;
     onTypeDropMenu?: () => void;
-    tags?: string[];
 }
 
-export const GuildMembersWindowLayoutHeaderCont = ({ layout, onTypeDropMenu, tags }: GuildMembersWindowLayoutHeaderContProps) => {
+export const GuildMembersWindowLayoutHeaderCont = ({ layout, onTypeDropMenu }: GuildMembersWindowLayoutHeaderContProps) => {
     const [ filterMembersInputValue, setFilterMembersInputValue ] = useState('');
 
     return (
         <Region
             name="header_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 9, top: 0, height: 77, ...layout }}
         >
             <WidgetSlot
@@ -79,14 +77,12 @@ export const GuildMembersWindowLayoutHeaderCont = ({ layout, onTypeDropMenu, tag
 /** Named region `members_cont` of GuildMembersWindowLayout - configured through the parent's `membersCont` prop. */
 export interface GuildMembersWindowLayoutMembersContProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuildMembersWindowLayoutMembersCont = ({ layout, tags }: GuildMembersWindowLayoutMembersContProps) => {
+export const GuildMembersWindowLayoutMembersCont = ({ layout }: GuildMembersWindowLayoutMembersContProps) => {
     return (
         <Region
             name="members_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 9, top: 82, bottom: 72, ...layout }}
         />
     );
@@ -100,17 +96,15 @@ export interface GuildMembersWindowLayoutFooterContProps {
     layout?: BoxLayout;
     onNextPageButton?: () => void;
     onPreviousPageButton?: () => void;
-    tags?: string[];
 }
 
-export const GuildMembersWindowLayoutFooterCont = ({ captionFooterInfoTxt, captionPaginaTextEnd, captionPaginaTextStart, layout, onNextPageButton, onPreviousPageButton, tags }: GuildMembersWindowLayoutFooterContProps) => {
+export const GuildMembersWindowLayoutFooterCont = ({ captionFooterInfoTxt, captionPaginaTextEnd, captionPaginaTextStart, layout, onNextPageButton, onPreviousPageButton }: GuildMembersWindowLayoutFooterContProps) => {
     const t = useTranslation();
     const [ paginaNumberInputValue, setPaginaNumberInputValue ] = useState('');
 
     return (
         <Region
             name="footer_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 9, bottom: 43, height: 25, justifyContent: 'center', ...layout }}
         >
             <ContainerButton

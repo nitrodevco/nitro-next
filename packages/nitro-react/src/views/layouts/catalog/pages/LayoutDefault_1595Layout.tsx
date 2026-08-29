@@ -9,8 +9,8 @@ import { ProductViewWidget, ProductViewWidgetProps } from '#base/views/layouts/c
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 import { SoldLtdItemsWidget, SoldLtdItemsWidgetProps } from '#base/views/layouts/catalog/widgets/SoldLtdItemsWidget';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
-import { SpinnerWidget, SpinnerWidgetProps } from '#base/views/layouts/catalog/widgets/SpinnerWidget';
-import { TotalPriceWidget2, TotalPriceWidget2Props } from '#base/views/layouts/catalog/widgets/TotalPriceWidget2';
+import { SpinnerWidget2, SpinnerWidget2Props } from '#base/views/layouts/catalog/widgets/SpinnerWidget2';
+import { TotalPriceWidget, TotalPriceWidgetProps } from '#base/views/layouts/catalog/widgets/TotalPriceWidget';
 
 /** Generated from `1595_layout_default_xml` (layout "layout_default_ubuntu", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutDefault_1595LayoutProps {
@@ -38,18 +38,16 @@ export interface LayoutDefault_1595LayoutContainerProps {
     purchaseWidget?: PurchaseWidgetProps;
     soldLtdItemsWidget?: SoldLtdItemsWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
-    spinnerWidget?: SpinnerWidgetProps;
-    tags?: string[];
-    totalPriceWidget?: TotalPriceWidget2Props;
+    spinnerWidget?: SpinnerWidget2Props;
+    totalPriceWidget?: TotalPriceWidgetProps;
 }
 
-export const LayoutDefault_1595LayoutContainer = ({ activityPointDisplayWidget, builderWidget, colourGridWidget, itemGridWidget, layout, limitedItemWidget, productViewWidget, purchaseWidget, soldLtdItemsWidget, specialInfoWidget, spinnerWidget, tags, totalPriceWidget }: LayoutDefault_1595LayoutContainerProps) => {
+export const LayoutDefault_1595LayoutContainer = ({ activityPointDisplayWidget, builderWidget, colourGridWidget, itemGridWidget, layout, limitedItemWidget, productViewWidget, purchaseWidget, soldLtdItemsWidget, specialInfoWidget, spinnerWidget, totalPriceWidget }: LayoutDefault_1595LayoutContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <Region
@@ -63,17 +61,14 @@ export const LayoutDefault_1595LayoutContainer = ({ activityPointDisplayWidget, 
                 />
             </Region>
             <ProductViewWidget
-                tags={[ 'E' ]}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
                 {...productViewWidget}
             />
             <ItemGridWidget
-                tags={[ 'E' ]}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 60 }}
                 {...itemGridWidget}
             />
             <ColourGridWidget
-                tags={[ 'E' ]}
                 layout={{ position: 'absolute', left: 182, width: 176, bottom: 60, height: 155 }}
                 {...colourGridWidget}
             />
@@ -97,13 +92,11 @@ export const LayoutDefault_1595LayoutContainer = ({ activityPointDisplayWidget, 
                 layout={{ position: 'absolute', left: 0, width: 360, bottom: 5, height: 30 }}
                 {...soldLtdItemsWidget}
             />
-            <SpinnerWidget
-                tags={[ 'EMBEDDED' ]}
+            <SpinnerWidget2
                 layout={{ position: 'absolute', left: 0, width: 200, bottom: 30, height: 25 }}
                 {...spinnerWidget}
             />
-            <TotalPriceWidget2
-                tags={[ 'EMBEDDED' ]}
+            <TotalPriceWidget
                 layout={{ position: 'absolute', left: 180, width: 180, bottom: 30, height: 25 }}
                 {...totalPriceWidget}
             />

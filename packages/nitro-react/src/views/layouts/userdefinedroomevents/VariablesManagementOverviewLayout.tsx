@@ -36,16 +36,14 @@ export const VariablesManagementOverviewLayout = ({ footer, header, layout, midd
 export interface VariablesManagementOverviewLayoutVariableNameKeyItemProps {
     captionVariableNameKey?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutVariableNameKeyItem = ({ captionVariableNameKey, layout, tags }: VariablesManagementOverviewLayoutVariableNameKeyItemProps) => {
+export const VariablesManagementOverviewLayoutVariableNameKeyItem = ({ captionVariableNameKey, layout }: VariablesManagementOverviewLayoutVariableNameKeyItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="variable_name_key"
-            tags={tags}
             layout={{ width: 88, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionVariableNameKey ?? t('wiredmenu.variable_management.variable_name')} />
@@ -57,14 +55,12 @@ export const VariablesManagementOverviewLayoutVariableNameKeyItem = ({ captionVa
 export interface VariablesManagementOverviewLayoutVariableNameValueItemProps {
     captionVariableNameValue?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutVariableNameValueItem = ({ captionVariableNameValue, layout, tags }: VariablesManagementOverviewLayoutVariableNameValueItemProps) => {
+export const VariablesManagementOverviewLayoutVariableNameValueItem = ({ captionVariableNameValue, layout }: VariablesManagementOverviewLayoutVariableNameValueItemProps) => {
     return (
         <Region
             name="variable_name_value"
-            tags={tags}
             layout={{ width: 35, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionVariableNameValue ?? 'name'} />
@@ -76,14 +72,12 @@ export const VariablesManagementOverviewLayoutVariableNameValueItem = ({ caption
 export interface VariablesManagementOverviewLayoutPairItemProps {
     itemsPair?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutPairItem = ({ itemsPair, layout, tags }: VariablesManagementOverviewLayoutPairItemProps) => {
+export const VariablesManagementOverviewLayoutPairItem = ({ itemsPair, layout }: VariablesManagementOverviewLayoutPairItemProps) => {
     return (
         <Region
             name="pair"
-            tags={tags}
             layout={{ width: 125, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             {itemsPair ?? (
@@ -100,14 +94,12 @@ export const VariablesManagementOverviewLayoutPairItem = ({ itemsPair, layout, t
 export interface VariablesManagementOverviewLayoutKeyValuePairsProps {
     itemsKeyValuePairs?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutKeyValuePairs = ({ itemsKeyValuePairs, layout, tags }: VariablesManagementOverviewLayoutKeyValuePairsProps) => {
+export const VariablesManagementOverviewLayoutKeyValuePairs = ({ itemsKeyValuePairs, layout }: VariablesManagementOverviewLayoutKeyValuePairsProps) => {
     return (
         <Region
             name="key_value_pairs"
-            tags={tags}
             layout={{ position: 'absolute', left: 15, width: 400, top: 55, height: 20, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsKeyValuePairs ?? (
@@ -122,16 +114,14 @@ export interface VariablesManagementOverviewLayoutUserTypeContProps {
     captionUserTypeKey?: string;
     layout?: BoxLayout;
     onUserTypeMenu?: () => void;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutUserTypeCont = ({ captionUserTypeKey, layout, onUserTypeMenu, tags }: VariablesManagementOverviewLayoutUserTypeContProps) => {
+export const VariablesManagementOverviewLayoutUserTypeCont = ({ captionUserTypeKey, layout, onUserTypeMenu }: VariablesManagementOverviewLayoutUserTypeContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_type_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 15, width: 217, top: 80, height: 25, ...layout }}
         >
             <Region
@@ -155,16 +145,14 @@ export interface VariablesManagementOverviewLayoutSortTypeContProps {
     captionSortTypeKey?: string;
     layout?: BoxLayout;
     onSortTypeMenu?: () => void;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutSortTypeCont = ({ captionSortTypeKey, layout, onSortTypeMenu, tags }: VariablesManagementOverviewLayoutSortTypeContProps) => {
+export const VariablesManagementOverviewLayoutSortTypeCont = ({ captionSortTypeKey, layout, onSortTypeMenu }: VariablesManagementOverviewLayoutSortTypeContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="sort_type_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 247, width: 217, top: 80, height: 25, ...layout }}
         >
             <Region
@@ -190,18 +178,16 @@ export interface VariablesManagementOverviewLayoutHeaderProps {
     layout?: BoxLayout;
     onRefreshBtn?: () => void;
     sortTypeCont?: VariablesManagementOverviewLayoutSortTypeContProps;
-    tags?: string[];
     userTypeCont?: VariablesManagementOverviewLayoutUserTypeContProps;
     visibleSearchingIcon?: boolean;
 }
 
-export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, keyValuePairs, layout, onRefreshBtn, sortTypeCont, tags, userTypeCont, visibleSearchingIcon }: VariablesManagementOverviewLayoutHeaderProps) => {
+export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, keyValuePairs, layout, onRefreshBtn, sortTypeCont, userTypeCont, visibleSearchingIcon }: VariablesManagementOverviewLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 117, ...layout }}
         >
             <Border
@@ -246,14 +232,12 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, keyVa
 /** Named region `table_view` of VariablesManagementOverviewLayout - configured through the parent's `tableView` prop. */
 export interface VariablesManagementOverviewLayoutTableViewProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutTableView = ({ layout, tags }: VariablesManagementOverviewLayoutTableViewProps) => {
+export const VariablesManagementOverviewLayoutTableView = ({ layout }: VariablesManagementOverviewLayoutTableViewProps) => {
     return (
         <Region
             name="table_view"
-            tags={tags}
             layout={{ position: 'absolute', left: 13, right: 13, top: 0, bottom: 0, ...layout }}
         />
     );
@@ -263,14 +247,12 @@ export const VariablesManagementOverviewLayoutTableView = ({ layout, tags }: Var
 export interface VariablesManagementOverviewLayoutMiddleProps {
     layout?: BoxLayout;
     tableView?: VariablesManagementOverviewLayoutTableViewProps;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutMiddle = ({ layout, tableView, tags }: VariablesManagementOverviewLayoutMiddleProps) => {
+export const VariablesManagementOverviewLayoutMiddle = ({ layout, tableView }: VariablesManagementOverviewLayoutMiddleProps) => {
     return (
         <Region
             name="middle"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, right: 1, top: 117, bottom: 95, ...layout }}
         >
             <VariablesManagementOverviewLayoutTableView {...tableView} />
@@ -282,15 +264,13 @@ export const VariablesManagementOverviewLayoutMiddle = ({ layout, tableView, tag
 export interface VariablesManagementOverviewLayoutFirstPageBtnItemProps {
     layout?: BoxLayout;
     onFirstPageBtn?: () => void;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutFirstPageBtnItem = ({ layout, onFirstPageBtn, tags }: VariablesManagementOverviewLayoutFirstPageBtnItemProps) => {
+export const VariablesManagementOverviewLayoutFirstPageBtnItem = ({ layout, onFirstPageBtn }: VariablesManagementOverviewLayoutFirstPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="first_page_btn"
-            tags={tags}
             onPointerTap={onFirstPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
@@ -312,15 +292,13 @@ export const VariablesManagementOverviewLayoutFirstPageBtnItem = ({ layout, onFi
 export interface VariablesManagementOverviewLayoutPrevPageBtnItemProps {
     layout?: BoxLayout;
     onPrevPageBtn?: () => void;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn, tags }: VariablesManagementOverviewLayoutPrevPageBtnItemProps) => {
+export const VariablesManagementOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn }: VariablesManagementOverviewLayoutPrevPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="prev_page_btn"
-            tags={tags}
             onPointerTap={onPrevPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
@@ -337,14 +315,12 @@ export const VariablesManagementOverviewLayoutPrevPageBtnItem = ({ layout, onPre
 export interface VariablesManagementOverviewLayoutFooterButtonsLeftProps {
     itemsFooterButtonsLeft?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout, tags }: VariablesManagementOverviewLayoutFooterButtonsLeftProps) => {
+export const VariablesManagementOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout }: VariablesManagementOverviewLayoutFooterButtonsLeftProps) => {
     return (
         <Region
             name="footer_buttons_left"
-            tags={tags}
             layout={{ position: 'absolute', left: 17, width: 113, top: 0, height: 30, flexDirection: 'row', gap: 13, ...layout }}
         >
             {itemsFooterButtonsLeft ?? (
@@ -361,15 +337,13 @@ export const VariablesManagementOverviewLayoutFooterButtonsLeft = ({ itemsFooter
 export interface VariablesManagementOverviewLayoutNextPageBtnItemProps {
     layout?: BoxLayout;
     onNextPageBtn?: () => void;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutNextPageBtnItem = ({ layout, onNextPageBtn, tags }: VariablesManagementOverviewLayoutNextPageBtnItemProps) => {
+export const VariablesManagementOverviewLayoutNextPageBtnItem = ({ layout, onNextPageBtn }: VariablesManagementOverviewLayoutNextPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="next_page_btn"
-            tags={tags}
             onPointerTap={onNextPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
@@ -386,15 +360,13 @@ export const VariablesManagementOverviewLayoutNextPageBtnItem = ({ layout, onNex
 export interface VariablesManagementOverviewLayoutLastPageBtnItemProps {
     layout?: BoxLayout;
     onLastPageBtn?: () => void;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn, tags }: VariablesManagementOverviewLayoutLastPageBtnItemProps) => {
+export const VariablesManagementOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn }: VariablesManagementOverviewLayoutLastPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="last_page_btn"
-            tags={tags}
             onPointerTap={onLastPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
@@ -416,14 +388,12 @@ export const VariablesManagementOverviewLayoutLastPageBtnItem = ({ layout, onLas
 export interface VariablesManagementOverviewLayoutFooterButtonsRightProps {
     itemsFooterButtonsRight?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutFooterButtonsRight = ({ itemsFooterButtonsRight, layout, tags }: VariablesManagementOverviewLayoutFooterButtonsRightProps) => {
+export const VariablesManagementOverviewLayoutFooterButtonsRight = ({ itemsFooterButtonsRight, layout }: VariablesManagementOverviewLayoutFooterButtonsRightProps) => {
     return (
         <Region
             name="footer_buttons_right"
-            tags={tags}
             layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsFooterButtonsRight ?? (
@@ -443,16 +413,14 @@ export interface VariablesManagementOverviewLayoutPaginationProps {
     footerButtonsLeft?: VariablesManagementOverviewLayoutFooterButtonsLeftProps;
     footerButtonsRight?: VariablesManagementOverviewLayoutFooterButtonsRightProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, footerButtonsLeft, footerButtonsRight, layout, tags }: VariablesManagementOverviewLayoutPaginationProps) => {
+export const VariablesManagementOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, footerButtonsLeft, footerButtonsRight, layout }: VariablesManagementOverviewLayoutPaginationProps) => {
     const [ paginaNumberInputValue, setPaginaNumberInputValue ] = useState('');
 
     return (
         <Region
             name="pagination"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 14, height: 30, justifyContent: 'center', ...layout }}
         >
             <VariablesManagementOverviewLayoutFooterButtonsLeft {...footerButtonsLeft} />
@@ -484,14 +452,12 @@ export const VariablesManagementOverviewLayoutPagination = ({ captionPaginaTextE
 export interface VariablesManagementOverviewLayoutFooterProps {
     layout?: BoxLayout;
     pagination?: VariablesManagementOverviewLayoutPaginationProps;
-    tags?: string[];
 }
 
-export const VariablesManagementOverviewLayoutFooter = ({ layout, pagination, tags }: VariablesManagementOverviewLayoutFooterProps) => {
+export const VariablesManagementOverviewLayoutFooter = ({ layout, pagination }: VariablesManagementOverviewLayoutFooterProps) => {
     return (
         <Region
             name="footer"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 35, height: 60, ...layout }}
         >
             <VariablesManagementOverviewLayoutPagination {...pagination} />

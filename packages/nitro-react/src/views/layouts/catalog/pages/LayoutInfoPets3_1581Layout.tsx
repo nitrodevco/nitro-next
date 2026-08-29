@@ -22,16 +22,14 @@ export interface LayoutInfoPets3_1581LayoutCtlgPets2Props {
     captionCtlgText3?: string;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const LayoutInfoPets3_1581LayoutCtlgPets2 = ({ captionCtlgText1, captionCtlgText2, captionCtlgText3, layout, srcCtlgTeaserimg1, tags }: LayoutInfoPets3_1581LayoutCtlgPets2Props) => {
+export const LayoutInfoPets3_1581LayoutCtlgPets2 = ({ captionCtlgText1, captionCtlgText2, captionCtlgText3, layout, srcCtlgTeaserimg1 }: LayoutInfoPets3_1581LayoutCtlgPets2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_pets2"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <Border

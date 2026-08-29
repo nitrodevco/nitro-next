@@ -27,7 +27,6 @@ export const HabboWindowConfirmLayout = ({ captionAlertButtonCancel, captionAler
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     name="_alert_description"
-                    tags={[ 'DESCRIPTION' ]}
                     layout={{ position: 'absolute', left: 16, width: 253, top: 14, minHeight: 72, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -50,7 +49,6 @@ export const HabboWindowConfirmLayout = ({ captionAlertButtonCancel, captionAler
                 <ButtonThick
                     variant="3"
                     name="_alert_button_ok"
-                    tags={[ 'OK' ]}
                     tintColor="#efefef"
                     onPointerTap={onAlertButtonOk}
                     layout={{ position: 'absolute', marginLeft: 71, marginRight: -71, width: 50, bottom: 39, height: 28, minWidth: 50 }}

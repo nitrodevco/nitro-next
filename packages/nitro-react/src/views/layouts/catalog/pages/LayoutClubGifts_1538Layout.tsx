@@ -1,5 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
-import { ClubGiftWidget, ClubGiftWidgetProps } from '#base/views/layouts/catalog/widgets/ClubGiftWidget';
+import { ClubGiftWidget2, ClubGiftWidget2Props } from '#base/views/layouts/catalog/widgets/ClubGiftWidget2';
 
 /** Generated from `1538_layout_club_gifts_xml` (layout "ctlg_presents", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutClubGifts_1538LayoutProps {
@@ -17,19 +17,17 @@ export const LayoutClubGifts_1538Layout = ({ ctlgPresents, layout }: LayoutClubG
 
 /** Named region `ctlg_presents` of LayoutClubGifts_1538Layout - configured through the parent's `ctlgPresents` prop. */
 export interface LayoutClubGifts_1538LayoutCtlgPresentsProps {
-    clubGiftWidget?: ClubGiftWidgetProps;
+    clubGiftWidget?: ClubGiftWidget2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LayoutClubGifts_1538LayoutCtlgPresents = ({ clubGiftWidget, layout, tags }: LayoutClubGifts_1538LayoutCtlgPresentsProps) => {
+export const LayoutClubGifts_1538LayoutCtlgPresents = ({ clubGiftWidget, layout }: LayoutClubGifts_1538LayoutCtlgPresentsProps) => {
     return (
         <Region
             name="ctlg_presents"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
         >
-            <ClubGiftWidget
+            <ClubGiftWidget2
                 layout={{ position: 'absolute', left: 10, width: 340, top: 140, height: 320 }}
                 {...clubGiftWidget}
             />

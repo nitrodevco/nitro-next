@@ -28,14 +28,12 @@ export const RoomInfoPopupBubbleLayout = ({ layout, mainContent }: RoomInfoPopup
 export interface RoomInfoPopupBubbleLayoutRoomThumbnailContainerItemProps {
     layout?: BoxLayout;
     srcRoomThumbnail?: string;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutRoomThumbnailContainerItem = ({ layout, srcRoomThumbnail, tags }: RoomInfoPopupBubbleLayoutRoomThumbnailContainerItemProps) => {
+export const RoomInfoPopupBubbleLayoutRoomThumbnailContainerItem = ({ layout, srcRoomThumbnail }: RoomInfoPopupBubbleLayoutRoomThumbnailContainerItemProps) => {
     return (
         <Region
             name="room_thumbnail_container"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 112, height: 112, flexShrink: 0, ...layout }}
         >
@@ -59,14 +57,12 @@ export interface RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItemProps {
     captionRoomDesc?: string;
     captionRoomName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItem = ({ captionRoomDesc, captionRoomName, layout, tags }: RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItemProps) => {
+export const RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItem = ({ captionRoomDesc, captionRoomName, layout }: RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItemProps) => {
     return (
         <Region
             name="room_name_desc_owner_container"
-            tags={tags}
             layout={{ width: 219, height: 112, flexShrink: 0, ...layout }}
         >
             <Region
@@ -96,14 +92,12 @@ export const RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItem = ({ captio
 export interface RoomInfoPopupBubbleLayoutHeaderTopItemProps {
     itemsHeaderTop?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutHeaderTopItem = ({ itemsHeaderTop, layout, tags }: RoomInfoPopupBubbleLayoutHeaderTopItemProps) => {
+export const RoomInfoPopupBubbleLayoutHeaderTopItem = ({ itemsHeaderTop, layout }: RoomInfoPopupBubbleLayoutHeaderTopItemProps) => {
     return (
         <Region
             name="header_top"
-            tags={tags}
             layout={{ width: 329, height: 112, flexShrink: 0, flexDirection: 'row', ...layout }}
         >
             {itemsHeaderTop ?? (
@@ -120,14 +114,12 @@ export const RoomInfoPopupBubbleLayoutHeaderTopItem = ({ itemsHeaderTop, layout,
 export interface RoomInfoPopupBubbleLayoutHeaderContentProps {
     itemsHeaderContent?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutHeaderContent = ({ itemsHeaderContent, layout, tags }: RoomInfoPopupBubbleLayoutHeaderContentProps) => {
+export const RoomInfoPopupBubbleLayoutHeaderContent = ({ itemsHeaderContent, layout }: RoomInfoPopupBubbleLayoutHeaderContentProps) => {
     return (
         <Region
             name="header_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 331, top: 6, height: 112, flexDirection: 'column', gap: 7, ...layout }}
         >
             {itemsHeaderContent ?? (
@@ -141,15 +133,13 @@ export const RoomInfoPopupBubbleLayoutHeaderContent = ({ itemsHeaderContent, lay
 export interface RoomInfoPopupBubbleLayoutHeaderItemProps {
     headerContent?: RoomInfoPopupBubbleLayoutHeaderContentProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutHeaderItem = ({ headerContent, layout, tags }: RoomInfoPopupBubbleLayoutHeaderItemProps) => {
+export const RoomInfoPopupBubbleLayoutHeaderItem = ({ headerContent, layout }: RoomInfoPopupBubbleLayoutHeaderItemProps) => {
     return (
         <Border
             variant="2"
             name="header"
-            tags={tags}
             layout={{ width: 345, height: 125, flexShrink: 0, minHeight: 125, maxHeight: 125, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutHeaderContent {...headerContent} />
@@ -162,16 +152,14 @@ export interface RoomInfoPopupBubbleLayoutRoomGroupRegionProps {
     captionGroupName?: string;
     layout?: BoxLayout;
     onRoomGroupRegion?: () => void;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutRoomGroupRegion = ({ captionGroupName, layout, onRoomGroupRegion, tags }: RoomInfoPopupBubbleLayoutRoomGroupRegionProps) => {
+export const RoomInfoPopupBubbleLayoutRoomGroupRegion = ({ captionGroupName, layout, onRoomGroupRegion }: RoomInfoPopupBubbleLayoutRoomGroupRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_group_region"
-            tags={tags}
             tooltip={t('navigator.tooltip.groupinfo.owner')}
             onPointerTap={onRoomGroupRegion}
             cursor="pointer"
@@ -200,16 +188,14 @@ export interface RoomInfoPopupBubbleLayoutRoomOwnerRegionProps {
     captionOwnerName?: string;
     layout?: BoxLayout;
     onRoomOwnerRegion?: () => void;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutRoomOwnerRegion = ({ captionOwnerName, layout, onRoomOwnerRegion, tags }: RoomInfoPopupBubbleLayoutRoomOwnerRegionProps) => {
+export const RoomInfoPopupBubbleLayoutRoomOwnerRegion = ({ captionOwnerName, layout, onRoomOwnerRegion }: RoomInfoPopupBubbleLayoutRoomOwnerRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="room_owner_region"
-            tags={tags}
             tooltip={t('navigator.tooltip.roominfo.owner')}
             onPointerTap={onRoomOwnerRegion}
             cursor="pointer"
@@ -238,14 +224,12 @@ export interface RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItemProps {
     layout?: BoxLayout;
     roomGroupRegion?: RoomInfoPopupBubbleLayoutRoomGroupRegionProps;
     roomOwnerRegion?: RoomInfoPopupBubbleLayoutRoomOwnerRegionProps;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItem = ({ layout, roomGroupRegion, roomOwnerRegion, tags }: RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItemProps) => {
+export const RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItem = ({ layout, roomGroupRegion, roomOwnerRegion }: RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItemProps) => {
     return (
         <Region
             name="room_group_owner_container"
-            tags={tags}
             layout={{ width: 344, height: 30, flexShrink: 0, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutRoomGroupRegion {...roomGroupRegion} />
@@ -257,14 +241,12 @@ export const RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItem = ({ layout, r
 /** Named region `properties` of RoomInfoPopupBubbleLayout - configured through the parent's `properties` prop. */
 export interface RoomInfoPopupBubbleLayoutPropertiesProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutProperties = ({ layout, tags }: RoomInfoPopupBubbleLayoutPropertiesProps) => {
+export const RoomInfoPopupBubbleLayoutProperties = ({ layout }: RoomInfoPopupBubbleLayoutPropertiesProps) => {
     return (
         <Region
             name="properties"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 263, top: 0, height: 65, flexDirection: 'column', ...layout }}
         />
     );
@@ -274,14 +256,12 @@ export const RoomInfoPopupBubbleLayoutProperties = ({ layout, tags }: RoomInfoPo
 export interface RoomInfoPopupBubbleLayoutMidProps {
     layout?: BoxLayout;
     properties?: RoomInfoPopupBubbleLayoutPropertiesProps;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutMid = ({ layout, properties, tags }: RoomInfoPopupBubbleLayoutMidProps) => {
+export const RoomInfoPopupBubbleLayoutMid = ({ layout, properties }: RoomInfoPopupBubbleLayoutMidProps) => {
     return (
         <Region
             name="mid"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 174, top: 0, height: 65, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutProperties {...properties} />
@@ -294,14 +274,12 @@ export interface RoomInfoPopupBubbleLayoutSettingsRegionProps {
     layout?: BoxLayout;
     onSettingsRegion?: () => void;
     srcSettingsIcon?: string;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutSettingsRegion = ({ layout, onSettingsRegion, srcSettingsIcon, tags }: RoomInfoPopupBubbleLayoutSettingsRegionProps) => {
+export const RoomInfoPopupBubbleLayoutSettingsRegion = ({ layout, onSettingsRegion, srcSettingsIcon }: RoomInfoPopupBubbleLayoutSettingsRegionProps) => {
     return (
         <Region
             name="settings_region"
-            tags={tags}
             onPointerTap={onSettingsRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20, ...layout }}
@@ -319,16 +297,14 @@ export const RoomInfoPopupBubbleLayoutSettingsRegion = ({ layout, onSettingsRegi
 export interface RoomInfoPopupBubbleLayoutSettingsContainerItemProps {
     layout?: BoxLayout;
     settingsRegion?: RoomInfoPopupBubbleLayoutSettingsRegionProps;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutSettingsContainerItem = ({ layout, settingsRegion, tags }: RoomInfoPopupBubbleLayoutSettingsContainerItemProps) => {
+export const RoomInfoPopupBubbleLayoutSettingsContainerItem = ({ layout, settingsRegion }: RoomInfoPopupBubbleLayoutSettingsContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="settings_container"
-            tags={tags}
             layout={{ width: 170, height: 20, flexShrink: 0, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutSettingsRegion {...settingsRegion} />
@@ -344,14 +320,12 @@ export interface RoomInfoPopupBubbleLayoutReportRegionProps {
     layout?: BoxLayout;
     onReportRegion?: () => void;
     srcReportIcon?: string;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutReportRegion = ({ layout, onReportRegion, srcReportIcon, tags }: RoomInfoPopupBubbleLayoutReportRegionProps) => {
+export const RoomInfoPopupBubbleLayoutReportRegion = ({ layout, onReportRegion, srcReportIcon }: RoomInfoPopupBubbleLayoutReportRegionProps) => {
     return (
         <Region
             name="report_region"
-            tags={tags}
             onPointerTap={onReportRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20, ...layout }}
@@ -369,16 +343,14 @@ export const RoomInfoPopupBubbleLayoutReportRegion = ({ layout, onReportRegion, 
 export interface RoomInfoPopupBubbleLayoutReportContainerItemProps {
     layout?: BoxLayout;
     reportRegion?: RoomInfoPopupBubbleLayoutReportRegionProps;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutReportContainerItem = ({ layout, reportRegion, tags }: RoomInfoPopupBubbleLayoutReportContainerItemProps) => {
+export const RoomInfoPopupBubbleLayoutReportContainerItem = ({ layout, reportRegion }: RoomInfoPopupBubbleLayoutReportContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="report_container"
-            tags={tags}
             layout={{ width: 170, height: 20, flexShrink: 0, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutReportRegion {...reportRegion} />
@@ -394,14 +366,12 @@ export interface RoomInfoPopupBubbleLayoutFavoriteRegionProps {
     layout?: BoxLayout;
     onFavoriteRegion?: () => void;
     srcFavoriteIcon?: string;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutFavoriteRegion = ({ layout, onFavoriteRegion, srcFavoriteIcon, tags }: RoomInfoPopupBubbleLayoutFavoriteRegionProps) => {
+export const RoomInfoPopupBubbleLayoutFavoriteRegion = ({ layout, onFavoriteRegion, srcFavoriteIcon }: RoomInfoPopupBubbleLayoutFavoriteRegionProps) => {
     return (
         <Region
             name="favorite_region"
-            tags={tags}
             onPointerTap={onFavoriteRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20, ...layout }}
@@ -420,14 +390,12 @@ export interface RoomInfoPopupBubbleLayoutHomeRegionProps {
     layout?: BoxLayout;
     onHomeRegion?: () => void;
     srcHomeIcon?: string;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutHomeRegion = ({ layout, onHomeRegion, srcHomeIcon, tags }: RoomInfoPopupBubbleLayoutHomeRegionProps) => {
+export const RoomInfoPopupBubbleLayoutHomeRegion = ({ layout, onHomeRegion, srcHomeIcon }: RoomInfoPopupBubbleLayoutHomeRegionProps) => {
     return (
         <Region
             name="home_region"
-            tags={tags}
             onPointerTap={onHomeRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20, ...layout }}
@@ -447,16 +415,14 @@ export interface RoomInfoPopupBubbleLayoutMidBottomItemlistProps {
     homeRegion?: RoomInfoPopupBubbleLayoutHomeRegionProps;
     itemsMidBottomItemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ favoriteRegion, homeRegion, itemsMidBottomItemlist, layout, tags }: RoomInfoPopupBubbleLayoutMidBottomItemlistProps) => {
+export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ favoriteRegion, homeRegion, itemsMidBottomItemlist, layout }: RoomInfoPopupBubbleLayoutMidBottomItemlistProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="midBottom_itemlist"
-            tags={tags}
             layout={{ position: 'absolute', left: 12, width: 170, top: 0, height: 80, flexDirection: 'column', ...layout }}
         >
             {itemsMidBottomItemlist ?? (
@@ -485,14 +451,12 @@ export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ favoriteRegion, hom
 export interface RoomInfoPopupBubbleLayoutMidBottomProps {
     layout?: BoxLayout;
     midBottomItemlist?: RoomInfoPopupBubbleLayoutMidBottomItemlistProps;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutMidBottom = ({ layout, midBottomItemlist, tags }: RoomInfoPopupBubbleLayoutMidBottomProps) => {
+export const RoomInfoPopupBubbleLayoutMidBottom = ({ layout, midBottomItemlist }: RoomInfoPopupBubbleLayoutMidBottomProps) => {
     return (
         <Region
             name="midBottom"
-            tags={tags}
             layout={{ position: 'absolute', left: 166, width: 170, top: 0, height: 80, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutMidBottomItemlist {...midBottomItemlist} />
@@ -505,14 +469,12 @@ export interface RoomInfoPopupBubbleLayoutNewMidItemProps {
     layout?: BoxLayout;
     mid?: RoomInfoPopupBubbleLayoutMidProps;
     midBottom?: RoomInfoPopupBubbleLayoutMidBottomProps;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutNewMidItem = ({ layout, mid, midBottom, tags }: RoomInfoPopupBubbleLayoutNewMidItemProps) => {
+export const RoomInfoPopupBubbleLayoutNewMidItem = ({ layout, mid, midBottom }: RoomInfoPopupBubbleLayoutNewMidItemProps) => {
     return (
         <Region
             name="newMid"
-            tags={tags}
             layout={{ width: 344, height: 80, flexShrink: 0, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutMid {...mid} />
@@ -524,14 +486,12 @@ export const RoomInfoPopupBubbleLayoutNewMidItem = ({ layout, mid, midBottom, ta
 /** Named region `tag_list` of RoomInfoPopupBubbleLayout - configured through the parent's `tagList` prop. */
 export interface RoomInfoPopupBubbleLayoutTagListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutTagList = ({ layout, tags }: RoomInfoPopupBubbleLayoutTagListProps) => {
+export const RoomInfoPopupBubbleLayoutTagList = ({ layout }: RoomInfoPopupBubbleLayoutTagListProps) => {
     return (
         <Region
             name="tag_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 20, flexDirection: 'row', gap: 2, ...layout }}
         />
     );
@@ -544,14 +504,12 @@ export interface RoomInfoPopupBubbleLayoutTagAndGroupInfoItemProps {
     srcGroupModeFurnish?: string;
     srcGroupModeSize?: string;
     tagList?: RoomInfoPopupBubbleLayoutTagListProps;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutTagAndGroupInfoItem = ({ layout, srcGroupModeAdmin, srcGroupModeFurnish, srcGroupModeSize, tagList, tags }: RoomInfoPopupBubbleLayoutTagAndGroupInfoItemProps) => {
+export const RoomInfoPopupBubbleLayoutTagAndGroupInfoItem = ({ layout, srcGroupModeAdmin, srcGroupModeFurnish, srcGroupModeSize, tagList }: RoomInfoPopupBubbleLayoutTagAndGroupInfoItemProps) => {
     return (
         <Region
             name="tag_and_group_info"
-            tags={tags}
             layout={{ width: 345, height: 23, flexShrink: 0, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutTagList {...tagList} />
@@ -579,15 +537,13 @@ export interface RoomInfoPopupBubbleLayoutEventInfoItemProps {
     captionEventDesc?: string;
     captionEventName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutEventInfoItem = ({ captionEventDesc, captionEventName, layout, tags }: RoomInfoPopupBubbleLayoutEventInfoItemProps) => {
+export const RoomInfoPopupBubbleLayoutEventInfoItem = ({ captionEventDesc, captionEventName, layout }: RoomInfoPopupBubbleLayoutEventInfoItemProps) => {
     return (
         <Border
             variant="3"
             name="event_info"
-            tags={tags}
             tintColor="#f1a700"
             blend={0.7}
             layout={{ width: 331, height: 55, flexShrink: 0, ...layout }}
@@ -624,14 +580,12 @@ export const RoomInfoPopupBubbleLayoutEventInfoItem = ({ captionEventDesc, capti
 export interface RoomInfoPopupBubbleLayoutBottomItemlistItemProps {
     itemsBottomItemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutBottomItemlistItem = ({ itemsBottomItemlist, layout, tags }: RoomInfoPopupBubbleLayoutBottomItemlistItemProps) => {
+export const RoomInfoPopupBubbleLayoutBottomItemlistItem = ({ itemsBottomItemlist, layout }: RoomInfoPopupBubbleLayoutBottomItemlistItemProps) => {
     return (
         <Region
             name="bottom_itemlist"
-            tags={tags}
             layout={{ width: 345, height: 80, flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsBottomItemlist ?? (
@@ -648,14 +602,12 @@ export const RoomInfoPopupBubbleLayoutBottomItemlistItem = ({ itemsBottomItemlis
 export interface RoomInfoPopupBubbleLayoutMainContentProps {
     itemsMainContent?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RoomInfoPopupBubbleLayoutMainContent = ({ itemsMainContent, layout, tags }: RoomInfoPopupBubbleLayoutMainContentProps) => {
+export const RoomInfoPopupBubbleLayoutMainContent = ({ itemsMainContent, layout }: RoomInfoPopupBubbleLayoutMainContentProps) => {
     return (
         <Region
             name="main_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 11, width: 345, top: -21, height: 324, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsMainContent ?? (

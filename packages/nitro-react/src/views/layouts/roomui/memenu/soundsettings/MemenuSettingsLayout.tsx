@@ -67,14 +67,12 @@ export const MemenuSettingsLayout = ({ captionSettingsTitle, captionVolumeText, 
 /** Named region `line` of MemenuSettingsLayout - configured through the parent's `line` prop. */
 export interface MemenuSettingsLayoutLineProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutLine = ({ layout, tags }: MemenuSettingsLayoutLineProps) => {
+export const MemenuSettingsLayoutLine = ({ layout }: MemenuSettingsLayoutLineProps) => {
     return (
         <Region
             name="line"
-            tags={tags}
             backgroundColor="#2f2f2f"
             layout={{ position: 'absolute', width: 292, top: 22, height: 1, ...layout }}
         />
@@ -86,14 +84,12 @@ export interface MemenuSettingsLayoutSliderButtonProps {
     layout?: BoxLayout;
     onSliderButton?: () => void;
     srcSliderBitmap?: string;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutSliderButton = ({ layout, onSliderButton, srcSliderBitmap, tags }: MemenuSettingsLayoutSliderButtonProps) => {
+export const MemenuSettingsLayoutSliderButton = ({ layout, onSliderButton, srcSliderBitmap }: MemenuSettingsLayoutSliderButtonProps) => {
     return (
         <Region
             name="slider_button"
-            tags={tags}
             onPointerTap={onSliderButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 132, width: 12, top: 0, height: 15, ...layout }}
@@ -111,14 +107,12 @@ export const MemenuSettingsLayoutSliderButton = ({ layout, onSliderButton, srcSl
 export interface MemenuSettingsLayoutSliderMovementAreaProps {
     layout?: BoxLayout;
     sliderButton?: MemenuSettingsLayoutSliderButtonProps;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutSliderMovementArea = ({ layout, sliderButton, tags }: MemenuSettingsLayoutSliderMovementAreaProps) => {
+export const MemenuSettingsLayoutSliderMovementArea = ({ layout, sliderButton }: MemenuSettingsLayoutSliderMovementAreaProps) => {
     return (
         <Region
             name="slider_movement_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 144, top: 9, height: 15, ...layout }}
         >
             <MemenuSettingsLayoutSliderButton {...sliderButton} />
@@ -131,14 +125,12 @@ export interface MemenuSettingsLayoutVolumeContainerProps {
     layout?: BoxLayout;
     sliderMovementArea?: MemenuSettingsLayoutSliderMovementAreaProps;
     srcSliderBase?: string;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutVolumeContainer = ({ layout, sliderMovementArea, srcSliderBase, tags }: MemenuSettingsLayoutVolumeContainerProps) => {
+export const MemenuSettingsLayoutVolumeContainer = ({ layout, sliderMovementArea, srcSliderBase }: MemenuSettingsLayoutVolumeContainerProps) => {
     return (
         <Region
             name="volume_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 98, width: 144, top: 0, height: 24, ...layout }}
         >
             <ThemeImage
@@ -156,14 +148,12 @@ export interface MemenuSettingsLayoutSoundsOffProps {
     layout?: BoxLayout;
     onSoundsOff?: () => void;
     srcSoundsOffIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutSoundsOff = ({ layout, onSoundsOff, srcSoundsOffIcon, tags }: MemenuSettingsLayoutSoundsOffProps) => {
+export const MemenuSettingsLayoutSoundsOff = ({ layout, onSoundsOff, srcSoundsOffIcon }: MemenuSettingsLayoutSoundsOffProps) => {
     return (
         <Region
             name="sounds_off"
-            tags={tags}
             onPointerTap={onSoundsOff}
             cursor="pointer"
             layout={{ position: 'absolute', left: 60, width: 29, top: 0, height: 30, ...layout }}
@@ -182,14 +172,12 @@ export interface MemenuSettingsLayoutSoundsOnProps {
     layout?: BoxLayout;
     onSoundsOn?: () => void;
     srcSoundsOnIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutSoundsOn = ({ layout, onSoundsOn, srcSoundsOnIcon, tags }: MemenuSettingsLayoutSoundsOnProps) => {
+export const MemenuSettingsLayoutSoundsOn = ({ layout, onSoundsOn, srcSoundsOnIcon }: MemenuSettingsLayoutSoundsOnProps) => {
     return (
         <Region
             name="sounds_on"
-            tags={tags}
             onPointerTap={onSoundsOn}
             cursor="pointer"
             layout={{ position: 'absolute', left: 251, width: 29, top: 0, height: 30, ...layout }}
@@ -209,17 +197,15 @@ export interface MemenuSettingsLayoutUiVolumeContainerProps {
     layout?: BoxLayout;
     soundsOff?: MemenuSettingsLayoutSoundsOffProps;
     soundsOn?: MemenuSettingsLayoutSoundsOnProps;
-    tags?: string[];
     volumeContainer?: MemenuSettingsLayoutVolumeContainerProps;
 }
 
-export const MemenuSettingsLayoutUiVolumeContainer = ({ captionTitle, layout, soundsOff, soundsOn, tags, volumeContainer }: MemenuSettingsLayoutUiVolumeContainerProps) => {
+export const MemenuSettingsLayoutUiVolumeContainer = ({ captionTitle, layout, soundsOff, soundsOn, volumeContainer }: MemenuSettingsLayoutUiVolumeContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ui_volume_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 275, top: 48, height: 28, ...layout }}
         >
             <Region
@@ -243,14 +229,12 @@ export interface MemenuSettingsLayoutSliderButton2Props {
     layout?: BoxLayout;
     onSliderButton?: () => void;
     srcSliderBitmap?: string;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutSliderButton2 = ({ layout, onSliderButton, srcSliderBitmap, tags }: MemenuSettingsLayoutSliderButton2Props) => {
+export const MemenuSettingsLayoutSliderButton2 = ({ layout, onSliderButton, srcSliderBitmap }: MemenuSettingsLayoutSliderButton2Props) => {
     return (
         <Region
             name="slider_button"
-            tags={tags}
             onPointerTap={onSliderButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 132, width: 12, top: 0, height: 15, ...layout }}
@@ -268,14 +252,12 @@ export const MemenuSettingsLayoutSliderButton2 = ({ layout, onSliderButton, srcS
 export interface MemenuSettingsLayoutSliderMovementArea2Props {
     layout?: BoxLayout;
     sliderButton?: MemenuSettingsLayoutSliderButton2Props;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutSliderMovementArea2 = ({ layout, sliderButton, tags }: MemenuSettingsLayoutSliderMovementArea2Props) => {
+export const MemenuSettingsLayoutSliderMovementArea2 = ({ layout, sliderButton }: MemenuSettingsLayoutSliderMovementArea2Props) => {
     return (
         <Region
             name="slider_movement_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 144, top: 9, height: 15, ...layout }}
         >
             <MemenuSettingsLayoutSliderButton2 {...sliderButton} />
@@ -288,14 +270,12 @@ export interface MemenuSettingsLayoutVolumeContainer2Props {
     layout?: BoxLayout;
     sliderMovementArea?: MemenuSettingsLayoutSliderMovementArea2Props;
     srcSliderBase?: string;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutVolumeContainer2 = ({ layout, sliderMovementArea, srcSliderBase, tags }: MemenuSettingsLayoutVolumeContainer2Props) => {
+export const MemenuSettingsLayoutVolumeContainer2 = ({ layout, sliderMovementArea, srcSliderBase }: MemenuSettingsLayoutVolumeContainer2Props) => {
     return (
         <Region
             name="volume_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 98, width: 144, top: 0, height: 24, ...layout }}
         >
             <ThemeImage
@@ -313,14 +293,12 @@ export interface MemenuSettingsLayoutSoundsOff2Props {
     layout?: BoxLayout;
     onSoundsOff?: () => void;
     srcSoundsOffIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutSoundsOff2 = ({ layout, onSoundsOff, srcSoundsOffIcon, tags }: MemenuSettingsLayoutSoundsOff2Props) => {
+export const MemenuSettingsLayoutSoundsOff2 = ({ layout, onSoundsOff, srcSoundsOffIcon }: MemenuSettingsLayoutSoundsOff2Props) => {
     return (
         <Region
             name="sounds_off"
-            tags={tags}
             onPointerTap={onSoundsOff}
             cursor="pointer"
             layout={{ position: 'absolute', left: 60, width: 29, top: 0, height: 30, ...layout }}
@@ -339,14 +317,12 @@ export interface MemenuSettingsLayoutSoundsOn2Props {
     layout?: BoxLayout;
     onSoundsOn?: () => void;
     srcSoundsOnIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutSoundsOn2 = ({ layout, onSoundsOn, srcSoundsOnIcon, tags }: MemenuSettingsLayoutSoundsOn2Props) => {
+export const MemenuSettingsLayoutSoundsOn2 = ({ layout, onSoundsOn, srcSoundsOnIcon }: MemenuSettingsLayoutSoundsOn2Props) => {
     return (
         <Region
             name="sounds_on"
-            tags={tags}
             onPointerTap={onSoundsOn}
             cursor="pointer"
             layout={{ position: 'absolute', left: 251, width: 29, top: 0, height: 30, ...layout }}
@@ -366,17 +342,15 @@ export interface MemenuSettingsLayoutFurniVolumeContainerProps {
     layout?: BoxLayout;
     soundsOff?: MemenuSettingsLayoutSoundsOff2Props;
     soundsOn?: MemenuSettingsLayoutSoundsOn2Props;
-    tags?: string[];
     volumeContainer?: MemenuSettingsLayoutVolumeContainer2Props;
 }
 
-export const MemenuSettingsLayoutFurniVolumeContainer = ({ captionTitle, layout, soundsOff, soundsOn, tags, volumeContainer }: MemenuSettingsLayoutFurniVolumeContainerProps) => {
+export const MemenuSettingsLayoutFurniVolumeContainer = ({ captionTitle, layout, soundsOff, soundsOn, volumeContainer }: MemenuSettingsLayoutFurniVolumeContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="furni_volume_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 275, top: 76, height: 28, ...layout }}
         >
             <Region
@@ -400,14 +374,12 @@ export interface MemenuSettingsLayoutSliderButton3Props {
     layout?: BoxLayout;
     onSliderButton?: () => void;
     srcSliderBitmap?: string;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutSliderButton3 = ({ layout, onSliderButton, srcSliderBitmap, tags }: MemenuSettingsLayoutSliderButton3Props) => {
+export const MemenuSettingsLayoutSliderButton3 = ({ layout, onSliderButton, srcSliderBitmap }: MemenuSettingsLayoutSliderButton3Props) => {
     return (
         <Region
             name="slider_button"
-            tags={tags}
             onPointerTap={onSliderButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 132, width: 12, top: 0, height: 15, ...layout }}
@@ -425,14 +397,12 @@ export const MemenuSettingsLayoutSliderButton3 = ({ layout, onSliderButton, srcS
 export interface MemenuSettingsLayoutSliderMovementArea3Props {
     layout?: BoxLayout;
     sliderButton?: MemenuSettingsLayoutSliderButton3Props;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutSliderMovementArea3 = ({ layout, sliderButton, tags }: MemenuSettingsLayoutSliderMovementArea3Props) => {
+export const MemenuSettingsLayoutSliderMovementArea3 = ({ layout, sliderButton }: MemenuSettingsLayoutSliderMovementArea3Props) => {
     return (
         <Region
             name="slider_movement_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 144, top: 9, height: 15, ...layout }}
         >
             <MemenuSettingsLayoutSliderButton3 {...sliderButton} />
@@ -445,14 +415,12 @@ export interface MemenuSettingsLayoutVolumeContainer3Props {
     layout?: BoxLayout;
     sliderMovementArea?: MemenuSettingsLayoutSliderMovementArea3Props;
     srcSliderBase?: string;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutVolumeContainer3 = ({ layout, sliderMovementArea, srcSliderBase, tags }: MemenuSettingsLayoutVolumeContainer3Props) => {
+export const MemenuSettingsLayoutVolumeContainer3 = ({ layout, sliderMovementArea, srcSliderBase }: MemenuSettingsLayoutVolumeContainer3Props) => {
     return (
         <Region
             name="volume_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 98, width: 144, top: 0, height: 24, ...layout }}
         >
             <ThemeImage
@@ -470,14 +438,12 @@ export interface MemenuSettingsLayoutSoundsOff3Props {
     layout?: BoxLayout;
     onSoundsOff?: () => void;
     srcSoundsOffIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutSoundsOff3 = ({ layout, onSoundsOff, srcSoundsOffIcon, tags }: MemenuSettingsLayoutSoundsOff3Props) => {
+export const MemenuSettingsLayoutSoundsOff3 = ({ layout, onSoundsOff, srcSoundsOffIcon }: MemenuSettingsLayoutSoundsOff3Props) => {
     return (
         <Region
             name="sounds_off"
-            tags={tags}
             onPointerTap={onSoundsOff}
             cursor="pointer"
             layout={{ position: 'absolute', left: 60, width: 29, top: 0, height: 30, ...layout }}
@@ -496,14 +462,12 @@ export interface MemenuSettingsLayoutSoundsOn3Props {
     layout?: BoxLayout;
     onSoundsOn?: () => void;
     srcSoundsOnIcon?: string;
-    tags?: string[];
 }
 
-export const MemenuSettingsLayoutSoundsOn3 = ({ layout, onSoundsOn, srcSoundsOnIcon, tags }: MemenuSettingsLayoutSoundsOn3Props) => {
+export const MemenuSettingsLayoutSoundsOn3 = ({ layout, onSoundsOn, srcSoundsOnIcon }: MemenuSettingsLayoutSoundsOn3Props) => {
     return (
         <Region
             name="sounds_on"
-            tags={tags}
             onPointerTap={onSoundsOn}
             cursor="pointer"
             layout={{ position: 'absolute', left: 251, width: 29, top: 0, height: 30, ...layout }}
@@ -523,17 +487,15 @@ export interface MemenuSettingsLayoutTraxVolumeContainerProps {
     layout?: BoxLayout;
     soundsOff?: MemenuSettingsLayoutSoundsOff3Props;
     soundsOn?: MemenuSettingsLayoutSoundsOn3Props;
-    tags?: string[];
     volumeContainer?: MemenuSettingsLayoutVolumeContainer3Props;
 }
 
-export const MemenuSettingsLayoutTraxVolumeContainer = ({ captionTitle, layout, soundsOff, soundsOn, tags, volumeContainer }: MemenuSettingsLayoutTraxVolumeContainerProps) => {
+export const MemenuSettingsLayoutTraxVolumeContainer = ({ captionTitle, layout, soundsOff, soundsOn, volumeContainer }: MemenuSettingsLayoutTraxVolumeContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="trax_volume_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 14, width: 275, top: 104, height: 28, ...layout }}
         >
             <Region

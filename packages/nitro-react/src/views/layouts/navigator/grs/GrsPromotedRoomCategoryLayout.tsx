@@ -21,16 +21,14 @@ export interface GrsPromotedRoomCategoryLayoutLeaderRegionProps {
     captionLeaderNameTxt?: string;
     layout?: BoxLayout;
     onLeaderRegion?: () => void;
-    tags?: string[];
 }
 
-export const GrsPromotedRoomCategoryLayoutLeaderRegion = ({ captionLeaderNameCaptionTxt, captionLeaderNameTxt, layout, onLeaderRegion, tags }: GrsPromotedRoomCategoryLayoutLeaderRegionProps) => {
+export const GrsPromotedRoomCategoryLayoutLeaderRegion = ({ captionLeaderNameCaptionTxt, captionLeaderNameTxt, layout, onLeaderRegion }: GrsPromotedRoomCategoryLayoutLeaderRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="leader_region"
-            tags={tags}
             onPointerTap={onLeaderRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 61, width: 201, bottom: 6, height: 19, ...layout }}
@@ -57,16 +55,14 @@ export interface GrsPromotedRoomCategoryLayoutToggleOpenRegionProps {
     captionOpenTxt?: string;
     layout?: BoxLayout;
     onToggleOpenRegion?: () => void;
-    tags?: string[];
 }
 
-export const GrsPromotedRoomCategoryLayoutToggleOpenRegion = ({ captionCloseTxt, captionOpenTxt, layout, onToggleOpenRegion, tags }: GrsPromotedRoomCategoryLayoutToggleOpenRegionProps) => {
+export const GrsPromotedRoomCategoryLayoutToggleOpenRegion = ({ captionCloseTxt, captionOpenTxt, layout, onToggleOpenRegion }: GrsPromotedRoomCategoryLayoutToggleOpenRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="toggle_open_region"
-            tags={tags}
             onPointerTap={onToggleOpenRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 4, width: 263, top: 74, height: 17, ...layout }}
@@ -102,14 +98,12 @@ export const GrsPromotedRoomCategoryLayoutToggleOpenRegion = ({ captionCloseTxt,
 /** Named region `item_list` of GrsPromotedRoomCategoryLayout - configured through the parent's `itemList` prop. */
 export interface GrsPromotedRoomCategoryLayoutItemListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GrsPromotedRoomCategoryLayoutItemList = ({ layout, tags }: GrsPromotedRoomCategoryLayoutItemListProps) => {
+export const GrsPromotedRoomCategoryLayoutItemList = ({ layout }: GrsPromotedRoomCategoryLayoutItemListProps) => {
     return (
         <Region
             name="item_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 3, right: 3, top: 97, bottom: -223, flexDirection: 'column', ...layout }}
         />
     );
@@ -124,15 +118,13 @@ export interface GrsPromotedRoomCategoryLayoutRowProps {
     leaderRegion?: GrsPromotedRoomCategoryLayoutLeaderRegionProps;
     onEnterRoomButton?: () => void;
     srcNaviRoomIcon?: string;
-    tags?: string[];
     toggleOpenRegion?: GrsPromotedRoomCategoryLayoutToggleOpenRegionProps;
 }
 
-export const GrsPromotedRoomCategoryLayoutRow = ({ captionCategoryNameTxt, captionRoomNameTxt, itemList, layout, leaderRegion, onEnterRoomButton, srcNaviRoomIcon, tags, toggleOpenRegion }: GrsPromotedRoomCategoryLayoutRowProps) => {
+export const GrsPromotedRoomCategoryLayoutRow = ({ captionCategoryNameTxt, captionRoomNameTxt, itemList, layout, leaderRegion, onEnterRoomButton, srcNaviRoomIcon, toggleOpenRegion }: GrsPromotedRoomCategoryLayoutRowProps) => {
     return (
         <Region
             name="row"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 90, ...layout }}
         >
             <Border

@@ -36,7 +36,6 @@ export const SnowwarLeaderboardLayout = ({ allTimeRegion, borderContainer, capti
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <ThemeImage
                     name="background"
-                    tags={[ 'bitmap' ]}
                     src={srcBackground ?? layoutImage('leaderboard_bg.png')}
                     layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 39 }}
                 />
@@ -108,16 +107,14 @@ export interface SnowwarLeaderboardLayoutThisWeekRegionProps {
     layout?: BoxLayout;
     onThisWeekRegion?: () => void;
     srcThisWeekImage?: string;
-    tags?: string[];
 }
 
-export const SnowwarLeaderboardLayoutThisWeekRegion = ({ captionThisWeekText, layout, onThisWeekRegion, srcThisWeekImage, tags }: SnowwarLeaderboardLayoutThisWeekRegionProps) => {
+export const SnowwarLeaderboardLayoutThisWeekRegion = ({ captionThisWeekText, layout, onThisWeekRegion, srcThisWeekImage }: SnowwarLeaderboardLayoutThisWeekRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="this_week_region"
-            tags={tags}
             backgroundColor="#000000"
             onPointerTap={onThisWeekRegion}
             cursor="pointer"
@@ -125,7 +122,6 @@ export const SnowwarLeaderboardLayoutThisWeekRegion = ({ captionThisWeekText, la
         >
             <ThemeImage
                 name="this_week_image"
-                tags={[ 'bitmap' ]}
                 src={srcThisWeekImage ?? layoutImage('left_black.png')}
                 layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 28 }}
             />
@@ -148,16 +144,14 @@ export interface SnowwarLeaderboardLayoutAllTimeRegionProps {
     layout?: BoxLayout;
     onAllTimeRegion?: () => void;
     srcAllTimeImage?: string;
-    tags?: string[];
 }
 
-export const SnowwarLeaderboardLayoutAllTimeRegion = ({ captionAllTimeText, layout, onAllTimeRegion, srcAllTimeImage, tags }: SnowwarLeaderboardLayoutAllTimeRegionProps) => {
+export const SnowwarLeaderboardLayoutAllTimeRegion = ({ captionAllTimeText, layout, onAllTimeRegion, srcAllTimeImage }: SnowwarLeaderboardLayoutAllTimeRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="all_time_region"
-            tags={tags}
             backgroundColor="#000000"
             onPointerTap={onAllTimeRegion}
             cursor="pointer"
@@ -165,7 +159,6 @@ export const SnowwarLeaderboardLayoutAllTimeRegion = ({ captionAllTimeText, layo
         >
             <ThemeImage
                 name="all_time_image"
-                tags={[ 'bitmap' ]}
                 src={srcAllTimeImage ?? layoutImage('right_blue.png')}
                 layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 28 }}
             />
@@ -186,14 +179,12 @@ export const SnowwarLeaderboardLayoutAllTimeRegion = ({ captionAllTimeText, layo
 export interface SnowwarLeaderboardLayoutScrollUpProps {
     layout?: BoxLayout;
     onScrollUp?: () => void;
-    tags?: string[];
 }
 
-export const SnowwarLeaderboardLayoutScrollUp = ({ layout, onScrollUp, tags }: SnowwarLeaderboardLayoutScrollUpProps) => {
+export const SnowwarLeaderboardLayoutScrollUp = ({ layout, onScrollUp }: SnowwarLeaderboardLayoutScrollUpProps) => {
     return (
         <Region
             name="scrollUp"
-            tags={tags}
             onPointerTap={onScrollUp}
             cursor="pointer"
             layout={{ position: 'absolute', width: 58, top: 1, height: 28, ...layout }}
@@ -210,14 +201,12 @@ export const SnowwarLeaderboardLayoutScrollUp = ({ layout, onScrollUp, tags }: S
 export interface SnowwarLeaderboardLayoutScrollDownProps {
     layout?: BoxLayout;
     onScrollDown?: () => void;
-    tags?: string[];
 }
 
-export const SnowwarLeaderboardLayoutScrollDown = ({ layout, onScrollDown, tags }: SnowwarLeaderboardLayoutScrollDownProps) => {
+export const SnowwarLeaderboardLayoutScrollDown = ({ layout, onScrollDown }: SnowwarLeaderboardLayoutScrollDownProps) => {
     return (
         <Region
             name="scrollDown"
-            tags={tags}
             onPointerTap={onScrollDown}
             cursor="pointer"
             layout={{ position: 'absolute', width: 58, bottom: 0, height: 28, ...layout }}
@@ -235,14 +224,12 @@ export interface SnowwarLeaderboardLayoutBorderContainerProps {
     layout?: BoxLayout;
     scrollDown?: SnowwarLeaderboardLayoutScrollDownProps;
     scrollUp?: SnowwarLeaderboardLayoutScrollUpProps;
-    tags?: string[];
 }
 
-export const SnowwarLeaderboardLayoutBorderContainer = ({ layout, scrollDown, scrollUp, tags }: SnowwarLeaderboardLayoutBorderContainerProps) => {
+export const SnowwarLeaderboardLayoutBorderContainer = ({ layout, scrollDown, scrollUp }: SnowwarLeaderboardLayoutBorderContainerProps) => {
     return (
         <Region
             name="borderContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 40, width: 350, alignSelf: 'center', marginTop: -31, marginBottom: 31, height: 389, justifyContent: 'center', ...layout }}
         >
             <Border
@@ -260,14 +247,12 @@ export const SnowwarLeaderboardLayoutBorderContainer = ({ layout, scrollDown, sc
 /** Named region `list` of SnowwarLeaderboardLayout - configured through the parent's `list` prop. */
 export interface SnowwarLeaderboardLayoutListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SnowwarLeaderboardLayoutList = ({ layout, tags }: SnowwarLeaderboardLayoutListProps) => {
+export const SnowwarLeaderboardLayoutList = ({ layout }: SnowwarLeaderboardLayoutListProps) => {
     return (
         <Region
             name="list"
-            tags={tags}
             layout={{ position: 'absolute', marginLeft: -3.5, marginRight: 3.5, width: 356, alignSelf: 'center', marginTop: -29.5, marginBottom: 29.5, height: 336, flexDirection: 'column', ...layout }}
         />
     );
@@ -277,20 +262,17 @@ export const SnowwarLeaderboardLayoutList = ({ layout, tags }: SnowwarLeaderboar
 export interface SnowwarLeaderboardLayoutPreviousWeekProps {
     layout?: BoxLayout;
     onPreviousWeek?: () => void;
-    tags?: string[];
 }
 
-export const SnowwarLeaderboardLayoutPreviousWeek = ({ layout, onPreviousWeek, tags }: SnowwarLeaderboardLayoutPreviousWeekProps) => {
+export const SnowwarLeaderboardLayoutPreviousWeek = ({ layout, onPreviousWeek }: SnowwarLeaderboardLayoutPreviousWeekProps) => {
     return (
         <Region
             name="previousWeek"
-            tags={tags}
             onPointerTap={onPreviousWeek}
             cursor="pointer"
             layout={{ position: 'absolute', left: 17, width: 14, top: 199, height: 18, ...layout }}
         >
             <ThemeImage
-                tags={[ 'bitmap' ]}
                 src={layoutImage('scroll_left.png')}
                 layout={{ position: 'absolute', left: 0, width: 14, top: 0, height: 18 }}
             />
@@ -302,20 +284,17 @@ export const SnowwarLeaderboardLayoutPreviousWeek = ({ layout, onPreviousWeek, t
 export interface SnowwarLeaderboardLayoutNextWeekProps {
     layout?: BoxLayout;
     onNextWeek?: () => void;
-    tags?: string[];
 }
 
-export const SnowwarLeaderboardLayoutNextWeek = ({ layout, onNextWeek, tags }: SnowwarLeaderboardLayoutNextWeekProps) => {
+export const SnowwarLeaderboardLayoutNextWeek = ({ layout, onNextWeek }: SnowwarLeaderboardLayoutNextWeekProps) => {
     return (
         <Region
             name="nextWeek"
-            tags={tags}
             onPointerTap={onNextWeek}
             cursor="pointer"
             layout={{ position: 'absolute', left: 400, width: 14, top: 199, height: 18, ...layout }}
         >
             <ThemeImage
-                tags={[ 'bitmap' ]}
                 src={layoutImage('scroll_right.png')}
                 layout={{ position: 'absolute', left: 0, width: 14, top: 0, height: 18 }}
             />

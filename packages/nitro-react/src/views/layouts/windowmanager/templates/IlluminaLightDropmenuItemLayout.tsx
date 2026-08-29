@@ -11,7 +11,6 @@ export const IlluminaLightDropmenuItemLayout = ({ captionBTNTEXT, layout }: Illu
         <Region layout={{ position: 'relative', width: 8, height: 12, ...layout }}>
             <Region
                 name="_BTN_TEXT"
-                tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
                 layout={{ position: 'absolute', left: 0, width: 8, alignSelf: 'center', height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

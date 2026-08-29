@@ -19,14 +19,12 @@ export const QuestTrackerLayout = ({ layout, questTracker }: QuestTrackerLayoutP
 export interface QuestTrackerLayoutMoreInfoRegionProps {
     layout?: BoxLayout;
     onMoreInfoRegion?: () => void;
-    tags?: string[];
 }
 
-export const QuestTrackerLayoutMoreInfoRegion = ({ layout, onMoreInfoRegion, tags }: QuestTrackerLayoutMoreInfoRegionProps) => {
+export const QuestTrackerLayoutMoreInfoRegion = ({ layout, onMoreInfoRegion }: QuestTrackerLayoutMoreInfoRegionProps) => {
     return (
         <Region
             name="more_info_region"
-            tags={tags}
             onPointerTap={onMoreInfoRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 15, width: 162, top: 106, height: 18, ...layout }}
@@ -52,16 +50,14 @@ export interface QuestTrackerLayoutContentContProps {
     srcSuccessPic4?: string;
     srcSuccessPic5?: string;
     srcSuccessPic6?: string;
-    tags?: string[];
 }
 
-export const QuestTrackerLayoutContentCont = ({ captionDescTxt, captionMoreInfoTxt, captionQuestHeaderTxt, layout, moreInfoRegion, srcPromptPicA, srcPromptPicB, srcPromptPicC, srcPromptPicD, srcQuestPicBitmap, srcSuccessPic1, srcSuccessPic2, srcSuccessPic3, srcSuccessPic4, srcSuccessPic5, srcSuccessPic6, tags }: QuestTrackerLayoutContentContProps) => {
+export const QuestTrackerLayoutContentCont = ({ captionDescTxt, captionMoreInfoTxt, captionQuestHeaderTxt, layout, moreInfoRegion, srcPromptPicA, srcPromptPicB, srcPromptPicC, srcPromptPicD, srcQuestPicBitmap, srcSuccessPic1, srcSuccessPic2, srcSuccessPic3, srcSuccessPic4, srcSuccessPic5, srcSuccessPic6 }: QuestTrackerLayoutContentContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="content_cont"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
@@ -92,10 +88,7 @@ export const QuestTrackerLayoutContentCont = ({ captionDescTxt, captionMoreInfoT
                     textOptions={{ fill: '#23c5ff' }}
                 />
             </Region>
-            <QuestTrackerLayoutMoreInfoRegion
-                tags={[ 'FIT:questTrackerMoreInfo' ]}
-                {...moreInfoRegion}
-            />
+            <QuestTrackerLayoutMoreInfoRegion {...moreInfoRegion} />
             <ThemeImage
                 name="quest_pic_bitmap"
                 src={srcQuestPicBitmap}
@@ -161,14 +154,12 @@ export interface QuestTrackerLayoutQuestTrackerProps {
     layout?: BoxLayout;
     onQuestTracker?: () => void;
     srcQuestTrackerBg?: string;
-    tags?: string[];
 }
 
-export const QuestTrackerLayoutQuestTracker = ({ contentCont, layout, onQuestTracker, srcQuestTrackerBg, tags }: QuestTrackerLayoutQuestTrackerProps) => {
+export const QuestTrackerLayoutQuestTracker = ({ contentCont, layout, onQuestTracker, srcQuestTrackerBg }: QuestTrackerLayoutQuestTrackerProps) => {
     return (
         <Region
             name="quest_tracker"
-            tags={tags}
             onPointerTap={onQuestTracker}
             cursor="pointer"
             layout={{ position: 'absolute', right: 0, width: 192, top: 0, height: 132, ...layout }}

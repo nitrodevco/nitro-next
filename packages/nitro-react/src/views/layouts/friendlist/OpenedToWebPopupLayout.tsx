@@ -18,14 +18,12 @@ export const OpenedToWebPopupLayout = ({ layout, openedToWebMain }: OpenedToWebP
 /** Named region `cont` of OpenedToWebPopupLayout - configured through the parent's `cont` prop. */
 export interface OpenedToWebPopupLayoutContProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const OpenedToWebPopupLayoutCont = ({ layout, tags }: OpenedToWebPopupLayoutContProps) => {
+export const OpenedToWebPopupLayoutCont = ({ layout }: OpenedToWebPopupLayoutContProps) => {
     return (
         <Region
             name="cont"
-            tags={tags}
             backgroundColor="#ffcc66"
             layout={{ position: 'absolute', left: 2, width: 185, top: 2, height: 41, ...layout }}
         />
@@ -38,16 +36,14 @@ export interface OpenedToWebPopupLayoutOpenedToWebMainProps {
     cont?: OpenedToWebPopupLayoutContProps;
     layout?: BoxLayout;
     srcOpenedToWeb?: string;
-    tags?: string[];
 }
 
-export const OpenedToWebPopupLayoutOpenedToWebMain = ({ captionInfoText, cont, layout, srcOpenedToWeb, tags }: OpenedToWebPopupLayoutOpenedToWebMainProps) => {
+export const OpenedToWebPopupLayoutOpenedToWebMain = ({ captionInfoText, cont, layout, srcOpenedToWeb }: OpenedToWebPopupLayoutOpenedToWebMainProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="opened_to_web_main"
-            tags={tags}
             backgroundColor="#cc6600"
             layout={{ position: 'absolute', left: 0, width: 189, top: 0, height: 45, ...layout }}
         >

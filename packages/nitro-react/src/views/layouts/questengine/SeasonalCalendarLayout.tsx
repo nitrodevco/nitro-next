@@ -30,14 +30,12 @@ export const SeasonalCalendarLayout = ({ calendarCont, footerCont, layout, onClo
 export interface SeasonalCalendarLayoutEntityMouseRegionProps {
     layout?: BoxLayout;
     onEntityMouseRegion?: () => void;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutEntityMouseRegion = ({ layout, onEntityMouseRegion, tags }: SeasonalCalendarLayoutEntityMouseRegionProps) => {
+export const SeasonalCalendarLayoutEntityMouseRegion = ({ layout, onEntityMouseRegion }: SeasonalCalendarLayoutEntityMouseRegionProps) => {
     return (
         <Region
             name="entity_mouse_region"
-            tags={tags}
             onPointerTap={onEntityMouseRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 79, top: 0, height: 313, ...layout }}
@@ -53,14 +51,12 @@ export interface SeasonalCalendarLayoutEntityTemplateProps {
     srcEntityBitmap?: string;
     srcEntityIndicatorStatus?: string;
     srcEntityMouseover?: string;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutEntityTemplate = ({ captionEntityIndicatorText, entityMouseRegion, layout, srcEntityBitmap, srcEntityIndicatorStatus, srcEntityMouseover, tags }: SeasonalCalendarLayoutEntityTemplateProps) => {
+export const SeasonalCalendarLayoutEntityTemplate = ({ captionEntityIndicatorText, entityMouseRegion, layout, srcEntityBitmap, srcEntityIndicatorStatus, srcEntityMouseover }: SeasonalCalendarLayoutEntityTemplateProps) => {
     return (
         <Region
             name="entity_template"
-            tags={tags}
             layout={{ position: 'absolute', left: 29, width: 79, top: 0, height: 312, ...layout }}
         >
             <ThemeImage
@@ -114,14 +110,12 @@ export interface SeasonalCalendarLayoutCalendarContProps {
     srcButtonRight?: string;
     srcStripeMaskLeft?: string;
     srcStripeMaskRight?: string;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutCalendarCont = ({ entityTemplate, layout, srcBackgroundSlice, srcButtonLeft, srcButtonRight, srcStripeMaskLeft, srcStripeMaskRight, tags }: SeasonalCalendarLayoutCalendarContProps) => {
+export const SeasonalCalendarLayoutCalendarCont = ({ entityTemplate, layout, srcBackgroundSlice, srcButtonLeft, srcButtonRight, srcStripeMaskLeft, srcStripeMaskRight }: SeasonalCalendarLayoutCalendarContProps) => {
     return (
         <Region
             name="calendar_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: -2, width: 640, top: -3, height: 320, ...layout }}
         >
             <ThemeImage
@@ -157,14 +151,12 @@ export const SeasonalCalendarLayoutCalendarCont = ({ entityTemplate, layout, src
 /** Named region `bg` of SeasonalCalendarLayout - configured through the parent's `bg` prop. */
 export interface SeasonalCalendarLayoutBgProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutBg = ({ layout, tags }: SeasonalCalendarLayoutBgProps) => {
+export const SeasonalCalendarLayoutBg = ({ layout }: SeasonalCalendarLayoutBgProps) => {
     return (
         <Region
             name="bg"
-            tags={tags}
             backgroundColor="#04bdc8"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         />
@@ -174,14 +166,12 @@ export const SeasonalCalendarLayoutBg = ({ layout, tags }: SeasonalCalendarLayou
 /** Named region `top` of SeasonalCalendarLayout - configured through the parent's `top` prop. */
 export interface SeasonalCalendarLayoutTopProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutTop = ({ layout, tags }: SeasonalCalendarLayoutTopProps) => {
+export const SeasonalCalendarLayoutTop = ({ layout }: SeasonalCalendarLayoutTopProps) => {
     return (
         <Region
             name="top"
-            tags={tags}
             backgroundColor="#95dfe4"
             layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2, ...layout }}
         />
@@ -191,14 +181,12 @@ export const SeasonalCalendarLayoutTop = ({ layout, tags }: SeasonalCalendarLayo
 /** Named region `bottom` of SeasonalCalendarLayout - configured through the parent's `bottom` prop. */
 export interface SeasonalCalendarLayoutBottomProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutBottom = ({ layout, tags }: SeasonalCalendarLayoutBottomProps) => {
+export const SeasonalCalendarLayoutBottom = ({ layout }: SeasonalCalendarLayoutBottomProps) => {
     return (
         <Region
             name="bottom"
-            tags={tags}
             backgroundColor="#70d7dd"
             layout={{ position: 'absolute', left: 2, right: 2, top: 48, height: 47, ...layout }}
         />
@@ -208,14 +196,12 @@ export const SeasonalCalendarLayoutBottom = ({ layout, tags }: SeasonalCalendarL
 /** Named region `currency_icon_cont` of SeasonalCalendarLayout - configured through the parent's `currencyIconCont` prop. */
 export interface SeasonalCalendarLayoutCurrencyIconContProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutCurrencyIconCont = ({ layout, tags }: SeasonalCalendarLayoutCurrencyIconContProps) => {
+export const SeasonalCalendarLayoutCurrencyIconCont = ({ layout }: SeasonalCalendarLayoutCurrencyIconContProps) => {
     return (
         <Region
             name="currency_icon_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 77, width: 30, top: 71, height: 30, ...layout }}
         >
             <Icon
@@ -245,16 +231,14 @@ export interface SeasonalCalendarLayoutPromoInfoContProps {
     currencyIconCont?: SeasonalCalendarLayoutCurrencyIconContProps;
     layout?: BoxLayout;
     onBuyButton?: () => void;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutPromoInfoCont = ({ captionPromoHeader, captionPromoInfo, captionYourBalanceTxt, currencyIconCont, layout, onBuyButton, tags }: SeasonalCalendarLayoutPromoInfoContProps) => {
+export const SeasonalCalendarLayoutPromoInfoCont = ({ captionPromoHeader, captionPromoInfo, captionYourBalanceTxt, currencyIconCont, layout, onBuyButton }: SeasonalCalendarLayoutPromoInfoContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="promo_info_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 106, width: 276, top: 0, height: 97, ...layout }}
         >
             <Region
@@ -305,15 +289,13 @@ export interface SeasonalCalendarLayoutCatalogPromoContProps {
     promoInfoCont?: SeasonalCalendarLayoutPromoInfoContProps;
     srcFurniPreview?: string;
     srcFurniPreviewBackground?: string;
-    tags?: string[];
     top?: SeasonalCalendarLayoutTopProps;
 }
 
-export const SeasonalCalendarLayoutCatalogPromoCont = ({ bg, bottom, layout, promoInfoCont, srcFurniPreview, srcFurniPreviewBackground, tags, top }: SeasonalCalendarLayoutCatalogPromoContProps) => {
+export const SeasonalCalendarLayoutCatalogPromoCont = ({ bg, bottom, layout, promoInfoCont, srcFurniPreview, srcFurniPreviewBackground, top }: SeasonalCalendarLayoutCatalogPromoContProps) => {
     return (
         <Region
             name="catalog_promo_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 384, top: 1, height: 97, ...layout }}
         >
             <SeasonalCalendarLayoutBg {...bg} />
@@ -337,14 +319,12 @@ export const SeasonalCalendarLayoutCatalogPromoCont = ({ bg, bottom, layout, pro
 /** Named region `bg` of SeasonalCalendarLayout - configured through the parent's `bg` prop. */
 export interface SeasonalCalendarLayoutBg2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutBg2 = ({ layout, tags }: SeasonalCalendarLayoutBg2Props) => {
+export const SeasonalCalendarLayoutBg2 = ({ layout }: SeasonalCalendarLayoutBg2Props) => {
     return (
         <Region
             name="bg"
-            tags={tags}
             backgroundColor="#9cb0b6"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         />
@@ -354,14 +334,12 @@ export const SeasonalCalendarLayoutBg2 = ({ layout, tags }: SeasonalCalendarLayo
 /** Named region `top` of SeasonalCalendarLayout - configured through the parent's `top` prop. */
 export interface SeasonalCalendarLayoutTop2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutTop2 = ({ layout, tags }: SeasonalCalendarLayoutTop2Props) => {
+export const SeasonalCalendarLayoutTop2 = ({ layout }: SeasonalCalendarLayoutTop2Props) => {
     return (
         <Region
             name="top"
-            tags={tags}
             backgroundColor="#d4e4e8"
             layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2, ...layout }}
         />
@@ -371,14 +349,12 @@ export const SeasonalCalendarLayoutTop2 = ({ layout, tags }: SeasonalCalendarLay
 /** Named region `bottom` of SeasonalCalendarLayout - configured through the parent's `bottom` prop. */
 export interface SeasonalCalendarLayoutBottom2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutBottom2 = ({ layout, tags }: SeasonalCalendarLayoutBottom2Props) => {
+export const SeasonalCalendarLayoutBottom2 = ({ layout }: SeasonalCalendarLayoutBottom2Props) => {
     return (
         <Region
             name="bottom"
-            tags={tags}
             backgroundColor="#c6d7dd"
             layout={{ position: 'absolute', left: 2, right: 2, top: 48, height: 47, ...layout }}
         />
@@ -389,14 +365,12 @@ export const SeasonalCalendarLayoutBottom2 = ({ layout, tags }: SeasonalCalendar
 export interface SeasonalCalendarLayoutClickRegionProps {
     layout?: BoxLayout;
     onClickRegion?: () => void;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutClickRegion = ({ layout, onClickRegion, tags }: SeasonalCalendarLayoutClickRegionProps) => {
+export const SeasonalCalendarLayoutClickRegion = ({ layout, onClickRegion }: SeasonalCalendarLayoutClickRegionProps) => {
     return (
         <Region
             name="click_region"
-            tags={tags}
             onPointerTap={onClickRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36, ...layout }}
@@ -409,14 +383,12 @@ export interface SeasonalCalendarLayoutRareCont1Props {
     clickRegion?: SeasonalCalendarLayoutClickRegionProps;
     layout?: BoxLayout;
     srcFurniPic?: string;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutRareCont1 = ({ clickRegion, layout, srcFurniPic, tags }: SeasonalCalendarLayoutRareCont1Props) => {
+export const SeasonalCalendarLayoutRareCont1 = ({ clickRegion, layout, srcFurniPic }: SeasonalCalendarLayoutRareCont1Props) => {
     return (
         <Region
             name="rare_cont_1"
-            tags={tags}
             layout={{ position: 'absolute', left: 57, width: 36, top: 28, height: 36, ...layout }}
         >
             <Border
@@ -449,14 +421,12 @@ export const SeasonalCalendarLayoutRareCont1 = ({ clickRegion, layout, srcFurniP
 export interface SeasonalCalendarLayoutClickRegion2Props {
     layout?: BoxLayout;
     onClickRegion?: () => void;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutClickRegion2 = ({ layout, onClickRegion, tags }: SeasonalCalendarLayoutClickRegion2Props) => {
+export const SeasonalCalendarLayoutClickRegion2 = ({ layout, onClickRegion }: SeasonalCalendarLayoutClickRegion2Props) => {
     return (
         <Region
             name="click_region"
-            tags={tags}
             onPointerTap={onClickRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36, ...layout }}
@@ -469,14 +439,12 @@ export interface SeasonalCalendarLayoutRareCont2Props {
     clickRegion?: SeasonalCalendarLayoutClickRegion2Props;
     layout?: BoxLayout;
     srcFurniPic?: string;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutRareCont2 = ({ clickRegion, layout, srcFurniPic, tags }: SeasonalCalendarLayoutRareCont2Props) => {
+export const SeasonalCalendarLayoutRareCont2 = ({ clickRegion, layout, srcFurniPic }: SeasonalCalendarLayoutRareCont2Props) => {
     return (
         <Region
             name="rare_cont_2"
-            tags={tags}
             layout={{ position: 'absolute', left: 99, width: 36, top: 28, height: 36, ...layout }}
         >
             <Border
@@ -509,14 +477,12 @@ export const SeasonalCalendarLayoutRareCont2 = ({ clickRegion, layout, srcFurniP
 export interface SeasonalCalendarLayoutClickRegion3Props {
     layout?: BoxLayout;
     onClickRegion?: () => void;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutClickRegion3 = ({ layout, onClickRegion, tags }: SeasonalCalendarLayoutClickRegion3Props) => {
+export const SeasonalCalendarLayoutClickRegion3 = ({ layout, onClickRegion }: SeasonalCalendarLayoutClickRegion3Props) => {
     return (
         <Region
             name="click_region"
-            tags={tags}
             onPointerTap={onClickRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36, ...layout }}
@@ -529,14 +495,12 @@ export interface SeasonalCalendarLayoutRareCont3Props {
     clickRegion?: SeasonalCalendarLayoutClickRegion3Props;
     layout?: BoxLayout;
     srcFurniPic?: string;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutRareCont3 = ({ clickRegion, layout, srcFurniPic, tags }: SeasonalCalendarLayoutRareCont3Props) => {
+export const SeasonalCalendarLayoutRareCont3 = ({ clickRegion, layout, srcFurniPic }: SeasonalCalendarLayoutRareCont3Props) => {
     return (
         <Region
             name="rare_cont_3"
-            tags={tags}
             layout={{ position: 'absolute', left: 141, width: 36, top: 28, height: 36, ...layout }}
         >
             <Border
@@ -576,17 +540,15 @@ export interface SeasonalCalendarLayoutRareTeaserContProps {
     rareCont1?: SeasonalCalendarLayoutRareCont1Props;
     rareCont2?: SeasonalCalendarLayoutRareCont2Props;
     rareCont3?: SeasonalCalendarLayoutRareCont3Props;
-    tags?: string[];
     top?: SeasonalCalendarLayoutTop2Props;
 }
 
-export const SeasonalCalendarLayoutRareTeaserCont = ({ bg, bottom, captionTeaserHeader, captionTeaserInfo, layout, onRareTeaserCont, rareCont1, rareCont2, rareCont3, tags, top }: SeasonalCalendarLayoutRareTeaserContProps) => {
+export const SeasonalCalendarLayoutRareTeaserCont = ({ bg, bottom, captionTeaserHeader, captionTeaserInfo, layout, onRareTeaserCont, rareCont1, rareCont2, rareCont3, top }: SeasonalCalendarLayoutRareTeaserContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rare_teaser_cont"
-            tags={tags}
             onPointerTap={onRareTeaserCont}
             cursor="pointer"
             layout={{ position: 'absolute', left: 395, width: 235, top: 1, height: 97, justifyContent: 'center', ...layout }}
@@ -624,14 +586,12 @@ export interface SeasonalCalendarLayoutFooterContProps {
     catalogPromoCont?: SeasonalCalendarLayoutCatalogPromoContProps;
     layout?: BoxLayout;
     rareTeaserCont?: SeasonalCalendarLayoutRareTeaserContProps;
-    tags?: string[];
 }
 
-export const SeasonalCalendarLayoutFooterCont = ({ catalogPromoCont, layout, rareTeaserCont, tags }: SeasonalCalendarLayoutFooterContProps) => {
+export const SeasonalCalendarLayoutFooterCont = ({ catalogPromoCont, layout, rareTeaserCont }: SeasonalCalendarLayoutFooterContProps) => {
     return (
         <Region
             name="footer_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 636, top: 320, height: 135, ...layout }}
         >
             <SeasonalCalendarLayoutCatalogPromoCont {...catalogPromoCont} />

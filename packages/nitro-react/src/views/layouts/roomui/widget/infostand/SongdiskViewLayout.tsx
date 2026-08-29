@@ -24,7 +24,6 @@ export const SongdiskViewLayout = ({ buttonList, infostandElementList, layout, o
                 >
                     <CloseButton
                         variant="1"
-                        tags={[ 'close' ]}
                         onPointerTap={onClose}
                         layout={{ position: 'absolute', left: 168, width: 18, top: 6, height: 16 }}
                     />
@@ -40,14 +39,12 @@ export const SongdiskViewLayout = ({ buttonList, infostandElementList, layout, o
 export interface SongdiskViewLayoutNameTextItemProps {
     captionNameText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutNameTextItem = ({ captionNameText, layout, tags }: SongdiskViewLayoutNameTextItemProps) => {
+export const SongdiskViewLayoutNameTextItem = ({ captionNameText, layout }: SongdiskViewLayoutNameTextItemProps) => {
     return (
         <Region
             name="name_text"
-            tags={tags}
             layout={{ width: 154, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -61,14 +58,12 @@ export const SongdiskViewLayoutNameTextItem = ({ captionNameText, layout, tags }
 /** Row template `images_spacer` of SongdiskViewLayout - pass real rows through its `items…` slot. */
 export interface SongdiskViewLayoutImagesSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutImagesSpacerItem = ({ layout, tags }: SongdiskViewLayoutImagesSpacerItemProps) => {
+export const SongdiskViewLayoutImagesSpacerItem = ({ layout }: SongdiskViewLayoutImagesSpacerItemProps) => {
     return (
         <Region
             name="images_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -79,14 +74,12 @@ export const SongdiskViewLayoutImagesSpacerItem = ({ layout, tags }: SongdiskVie
 export interface SongdiskViewLayoutImageItemProps {
     layout?: BoxLayout;
     srcImage?: string;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutImageItem = ({ layout, srcImage, tags }: SongdiskViewLayoutImageItemProps) => {
+export const SongdiskViewLayoutImageItem = ({ layout, srcImage }: SongdiskViewLayoutImageItemProps) => {
     return (
         <ThemeImage
             name="image"
-            tags={tags}
             src={srcImage}
             layout={{ width: 140, height: 120, flexShrink: 0, ...layout }}
         />
@@ -96,14 +89,12 @@ export const SongdiskViewLayoutImageItem = ({ layout, srcImage, tags }: Songdisk
 /** Row template `owner_spacer` of SongdiskViewLayout - pass real rows through its `items…` slot. */
 export interface SongdiskViewLayoutOwnerSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutOwnerSpacerItem = ({ layout, tags }: SongdiskViewLayoutOwnerSpacerItemProps) => {
+export const SongdiskViewLayoutOwnerSpacerItem = ({ layout }: SongdiskViewLayoutOwnerSpacerItemProps) => {
     return (
         <Region
             name="owner_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -115,14 +106,12 @@ export interface SongdiskViewLayoutOwnerRegionItemProps {
     captionOwnerName?: string;
     layout?: BoxLayout;
     onOwnerRegion?: () => void;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwnerRegion, tags }: SongdiskViewLayoutOwnerRegionItemProps) => {
+export const SongdiskViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwnerRegion }: SongdiskViewLayoutOwnerRegionItemProps) => {
     return (
         <Region
             name="owner_region"
-            tags={tags}
             onPointerTap={onOwnerRegion}
             cursor="pointer"
             layout={{ width: 170, height: 17, flexShrink: 0, ...layout }}
@@ -148,14 +137,12 @@ export const SongdiskViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, on
 /** Row template `description_spacer` of SongdiskViewLayout - pass real rows through its `items…` slot. */
 export interface SongdiskViewLayoutDescriptionSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutDescriptionSpacerItem = ({ layout, tags }: SongdiskViewLayoutDescriptionSpacerItemProps) => {
+export const SongdiskViewLayoutDescriptionSpacerItem = ({ layout }: SongdiskViewLayoutDescriptionSpacerItemProps) => {
     return (
         <Region
             name="description_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -167,14 +154,12 @@ export interface SongdiskViewLayoutTracknameContainerItemProps {
     captionTrackNameText?: string;
     layout?: BoxLayout;
     srcIconDisc?: string;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutTracknameContainerItem = ({ captionTrackNameText, layout, srcIconDisc, tags }: SongdiskViewLayoutTracknameContainerItemProps) => {
+export const SongdiskViewLayoutTracknameContainerItem = ({ captionTrackNameText, layout, srcIconDisc }: SongdiskViewLayoutTracknameContainerItemProps) => {
     return (
         <Region
             name="trackname_container"
-            tags={tags}
             layout={{ width: 170, height: 14, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -201,14 +186,12 @@ export interface SongdiskViewLayoutCreatornameContainerItemProps {
     captionTrackCreatorText?: string;
     layout?: BoxLayout;
     srcIconComposer?: string;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutCreatornameContainerItem = ({ captionTrackCreatorText, layout, srcIconComposer, tags }: SongdiskViewLayoutCreatornameContainerItemProps) => {
+export const SongdiskViewLayoutCreatornameContainerItem = ({ captionTrackCreatorText, layout, srcIconComposer }: SongdiskViewLayoutCreatornameContainerItemProps) => {
     return (
         <Region
             name="creatorname_container"
-            tags={tags}
             layout={{ width: 170, height: 15, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -233,16 +216,14 @@ export const SongdiskViewLayoutCreatornameContainerItem = ({ captionTrackCreator
 export interface SongdiskViewLayoutExpirationTextItemProps {
     captionExpirationText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutExpirationTextItem = ({ captionExpirationText, layout, tags }: SongdiskViewLayoutExpirationTextItemProps) => {
+export const SongdiskViewLayoutExpirationTextItem = ({ captionExpirationText, layout }: SongdiskViewLayoutExpirationTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="expiration_text"
-            tags={tags}
             layout={{ width: 170, height: 23, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -257,17 +238,15 @@ export const SongdiskViewLayoutExpirationTextItem = ({ captionExpirationText, la
 export interface SongdiskViewLayoutCatalogButtonItemProps {
     layout?: BoxLayout;
     onCatalogButton?: () => void;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutCatalogButtonItem = ({ layout, onCatalogButton, tags }: SongdiskViewLayoutCatalogButtonItemProps) => {
+export const SongdiskViewLayoutCatalogButtonItem = ({ layout, onCatalogButton }: SongdiskViewLayoutCatalogButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="catalog_button"
-            tags={tags}
             onPointerTap={onCatalogButton}
             textStyle="text-style-button-regular"
             layout={{ width: 60, height: 22, flexShrink: 0, ...layout }}
@@ -281,17 +260,15 @@ export const SongdiskViewLayoutCatalogButtonItem = ({ layout, onCatalogButton, t
 export interface SongdiskViewLayoutRentButtonItemProps {
     layout?: BoxLayout;
     onRentButton?: () => void;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutRentButtonItem = ({ layout, onRentButton, tags }: SongdiskViewLayoutRentButtonItemProps) => {
+export const SongdiskViewLayoutRentButtonItem = ({ layout, onRentButton }: SongdiskViewLayoutRentButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="rent_button"
-            tags={tags}
             onPointerTap={onRentButton}
             textStyle="text-style-button-regular"
             layout={{ width: 130, height: 22, flexShrink: 0, ...layout }}
@@ -305,17 +282,15 @@ export const SongdiskViewLayoutRentButtonItem = ({ layout, onRentButton, tags }:
 export interface SongdiskViewLayoutExtendButtonItemProps {
     layout?: BoxLayout;
     onExtendButton?: () => void;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutExtendButtonItem = ({ layout, onExtendButton, tags }: SongdiskViewLayoutExtendButtonItemProps) => {
+export const SongdiskViewLayoutExtendButtonItem = ({ layout, onExtendButton }: SongdiskViewLayoutExtendButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="extend_button"
-            tags={tags}
             onPointerTap={onExtendButton}
             textStyle="text-style-button-regular"
             layout={{ width: 143, height: 22, flexShrink: 0, ...layout }}
@@ -329,17 +304,15 @@ export const SongdiskViewLayoutExtendButtonItem = ({ layout, onExtendButton, tag
 export interface SongdiskViewLayoutBuyoutButtonItemProps {
     layout?: BoxLayout;
     onBuyoutButton?: () => void;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutBuyoutButtonItem = ({ layout, onBuyoutButton, tags }: SongdiskViewLayoutBuyoutButtonItemProps) => {
+export const SongdiskViewLayoutBuyoutButtonItem = ({ layout, onBuyoutButton }: SongdiskViewLayoutBuyoutButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="buyout_button"
-            tags={tags}
             onPointerTap={onBuyoutButton}
             textStyle="text-style-button-regular"
             layout={{ width: 143, height: 22, flexShrink: 0, ...layout }}
@@ -353,19 +326,17 @@ export const SongdiskViewLayoutBuyoutButtonItem = ({ layout, onBuyoutButton, tag
 export interface SongdiskViewLayoutPurchaseButtonsItemProps {
     itemsPurchaseButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButtons, layout, tags }: SongdiskViewLayoutPurchaseButtonsItemProps) => {
+export const SongdiskViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButtons, layout }: SongdiskViewLayoutPurchaseButtonsItemProps) => {
     return (
         <Region
             name="purchase_buttons"
-            tags={tags}
             layout={{ width: 170, height: 22, flexShrink: 0, flexDirection: 'row', gap: 5, ...layout }}
         >
             {itemsPurchaseButtons ?? (
                 <>
-                    <SongdiskViewLayoutCatalogButtonItem tags={[ 'catalog' ]} />
+                    <SongdiskViewLayoutCatalogButtonItem />
                     <SongdiskViewLayoutRentButtonItem />
                     <SongdiskViewLayoutExtendButtonItem />
                     <SongdiskViewLayoutBuyoutButtonItem />
@@ -379,14 +350,12 @@ export const SongdiskViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButtons, la
 export interface SongdiskViewLayoutInfostandElementListProps {
     itemsInfostandElementList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout, tags }: SongdiskViewLayoutInfostandElementListProps) => {
+export const SongdiskViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: SongdiskViewLayoutInfostandElementListProps) => {
     return (
         <Region
             name="infostand_element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 271, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsInfostandElementList ?? (
@@ -411,17 +380,15 @@ export const SongdiskViewLayoutInfostandElementList = ({ itemsInfostandElementLi
 export interface SongdiskViewLayoutMoveItemProps {
     layout?: BoxLayout;
     onMove?: () => void;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutMoveItem = ({ layout, onMove, tags }: SongdiskViewLayoutMoveItemProps) => {
+export const SongdiskViewLayoutMoveItem = ({ layout, onMove }: SongdiskViewLayoutMoveItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="move"
-            tags={tags}
             onPointerTap={onMove}
             textStyle="text-style-button-regular"
             layout={{ width: 134, height: 25, flexShrink: 0, ...layout }}
@@ -435,17 +402,15 @@ export const SongdiskViewLayoutMoveItem = ({ layout, onMove, tags }: SongdiskVie
 export interface SongdiskViewLayoutRotateItemProps {
     layout?: BoxLayout;
     onRotate?: () => void;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutRotateItem = ({ layout, onRotate, tags }: SongdiskViewLayoutRotateItemProps) => {
+export const SongdiskViewLayoutRotateItem = ({ layout, onRotate }: SongdiskViewLayoutRotateItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="rotate"
-            tags={tags}
             onPointerTap={onRotate}
             textStyle="text-style-button-regular"
             layout={{ width: 141, height: 25, flexShrink: 0, ...layout }}
@@ -459,17 +424,15 @@ export const SongdiskViewLayoutRotateItem = ({ layout, onRotate, tags }: Songdis
 export interface SongdiskViewLayoutPickupItemProps {
     layout?: BoxLayout;
     onPickup?: () => void;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutPickupItem = ({ layout, onPickup, tags }: SongdiskViewLayoutPickupItemProps) => {
+export const SongdiskViewLayoutPickupItem = ({ layout, onPickup }: SongdiskViewLayoutPickupItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="pickup"
-            tags={tags}
             onPointerTap={onPickup}
             textStyle="text-style-button-regular"
             layout={{ width: 139, height: 25, flexShrink: 0, ...layout }}
@@ -483,14 +446,12 @@ export const SongdiskViewLayoutPickupItem = ({ layout, onPickup, tags }: Songdis
 export interface SongdiskViewLayoutButtonListProps {
     itemsButtonList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SongdiskViewLayoutButtonList = ({ itemsButtonList, layout, tags }: SongdiskViewLayoutButtonListProps) => {
+export const SongdiskViewLayoutButtonList = ({ itemsButtonList, layout }: SongdiskViewLayoutButtonListProps) => {
     return (
         <Region
             name="button_list"
-            tags={tags}
             layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsButtonList ?? (

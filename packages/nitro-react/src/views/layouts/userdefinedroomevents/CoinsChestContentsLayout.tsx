@@ -22,14 +22,12 @@ export const CoinsChestContentsLayout = ({ coinsChest, layout }: CoinsChestConte
 export interface CoinsChestContentsLayoutCoinsAmountTxtItemProps {
     captionCoinsAmountTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CoinsChestContentsLayoutCoinsAmountTxtItem = ({ captionCoinsAmountTxt, layout, tags }: CoinsChestContentsLayoutCoinsAmountTxtItemProps) => {
+export const CoinsChestContentsLayoutCoinsAmountTxtItem = ({ captionCoinsAmountTxt, layout }: CoinsChestContentsLayoutCoinsAmountTxtItemProps) => {
     return (
         <Region
             name="coins_amount_txt"
-            tags={tags}
             layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionCoinsAmountTxt ?? '0'} />
@@ -40,15 +38,13 @@ export const CoinsChestContentsLayoutCoinsAmountTxtItem = ({ captionCoinsAmountT
 /** Row template `coin_icon` of CoinsChestContentsLayout - pass real rows through its `items…` slot. */
 export interface CoinsChestContentsLayoutCoinIconItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CoinsChestContentsLayoutCoinIconItem = ({ layout, tags }: CoinsChestContentsLayoutCoinIconItemProps) => {
+export const CoinsChestContentsLayoutCoinIconItem = ({ layout }: CoinsChestContentsLayoutCoinIconItemProps) => {
     return (
         <Icon
             variant="35"
             name="coin_icon"
-            tags={tags}
             layout={{ width: 13, height: 15, flexShrink: 0, ...layout }}
         />
     );
@@ -58,14 +54,12 @@ export const CoinsChestContentsLayoutCoinIconItem = ({ layout, tags }: CoinsChes
 export interface CoinsChestContentsLayoutBalanceContainerProps {
     itemsBalanceContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CoinsChestContentsLayoutBalanceContainer = ({ itemsBalanceContainer, layout, tags }: CoinsChestContentsLayoutBalanceContainerProps) => {
+export const CoinsChestContentsLayoutBalanceContainer = ({ itemsBalanceContainer, layout }: CoinsChestContentsLayoutBalanceContainerProps) => {
     return (
         <Region
             name="balance_container"
-            tags={tags}
             layout={{ position: 'absolute', width: 24, top: 22, height: 15, flexDirection: 'row', gap: 1, ...layout }}
         >
             {itemsBalanceContainer ?? (
@@ -83,16 +77,14 @@ export interface CoinsChestContentsLayoutBalanceContProps {
     balanceContainer?: CoinsChestContentsLayoutBalanceContainerProps;
     captionBalanceTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CoinsChestContentsLayoutBalanceCont = ({ balanceContainer, captionBalanceTxt, layout, tags }: CoinsChestContentsLayoutBalanceContProps) => {
+export const CoinsChestContentsLayoutBalanceCont = ({ balanceContainer, captionBalanceTxt, layout }: CoinsChestContentsLayoutBalanceContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="balance_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 9, width: 54, top: 68, height: 47, justifyContent: 'center', ...layout }}
         >
             <Region
@@ -127,17 +119,15 @@ export const CoinsChestContentsLayoutWithdrawInputItem = ({ layout }: CoinsChest
 export interface CoinsChestContentsLayoutWithdrawBtnItemProps {
     layout?: BoxLayout;
     onWithdrawBtn?: () => void;
-    tags?: string[];
 }
 
-export const CoinsChestContentsLayoutWithdrawBtnItem = ({ layout, onWithdrawBtn, tags }: CoinsChestContentsLayoutWithdrawBtnItemProps) => {
+export const CoinsChestContentsLayoutWithdrawBtnItem = ({ layout, onWithdrawBtn }: CoinsChestContentsLayoutWithdrawBtnItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="withdraw_btn"
-            tags={tags}
             onPointerTap={onWithdrawBtn}
             layout={{ width: 73, height: 22, flexShrink: 0, minWidth: 60, ...layout }}
         >
@@ -150,14 +140,12 @@ export const CoinsChestContentsLayoutWithdrawBtnItem = ({ layout, onWithdrawBtn,
 export interface CoinsChestContentsLayoutWithdrawContProps {
     itemsWithdrawCont?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CoinsChestContentsLayoutWithdrawCont = ({ itemsWithdrawCont, layout, tags }: CoinsChestContentsLayoutWithdrawContProps) => {
+export const CoinsChestContentsLayoutWithdrawCont = ({ itemsWithdrawCont, layout }: CoinsChestContentsLayoutWithdrawContProps) => {
     return (
         <Region
             name="withdraw_cont"
-            tags={tags}
             layout={{ position: 'absolute', right: 59, bottom: 182, flexDirection: 'row', gap: 5, ...layout }}
         >
             {itemsWithdrawCont ?? (
@@ -175,15 +163,13 @@ export interface CoinsChestContentsLayoutMovingContainerProps {
     balanceCont?: CoinsChestContentsLayoutBalanceContProps;
     layout?: BoxLayout;
     srcBgImg?: string;
-    tags?: string[];
     withdrawCont?: CoinsChestContentsLayoutWithdrawContProps;
 }
 
-export const CoinsChestContentsLayoutMovingContainer = ({ balanceCont, layout, srcBgImg, tags, withdrawCont }: CoinsChestContentsLayoutMovingContainerProps) => {
+export const CoinsChestContentsLayoutMovingContainer = ({ balanceCont, layout, srcBgImg, withdrawCont }: CoinsChestContentsLayoutMovingContainerProps) => {
     return (
         <Region
             name="moving_container"
-            tags={tags}
             layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 324, alignSelf: 'center', marginTop: 6.5, marginBottom: -6.5, height: 228, ...layout }}
         >
             <ThemeImage
@@ -201,14 +187,12 @@ export const CoinsChestContentsLayoutMovingContainer = ({ balanceCont, layout, s
 export interface CoinsChestContentsLayoutCoinsChestProps {
     layout?: BoxLayout;
     movingContainer?: CoinsChestContentsLayoutMovingContainerProps;
-    tags?: string[];
 }
 
-export const CoinsChestContentsLayoutCoinsChest = ({ layout, movingContainer, tags }: CoinsChestContentsLayoutCoinsChestProps) => {
+export const CoinsChestContentsLayoutCoinsChest = ({ layout, movingContainer }: CoinsChestContentsLayoutCoinsChestProps) => {
     return (
         <Region
             name="coins_chest"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 413, top: 0, height: 263, justifyContent: 'center', ...layout }}
         >
             <CoinsChestContentsLayoutMovingContainer {...movingContainer} />

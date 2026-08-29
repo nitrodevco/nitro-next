@@ -17,7 +17,6 @@ export const TrackPromoLayout = ({ captionTitleTxt, layout, srcPixelIcon }: Trac
             <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}>
                 <Border
                     variant="9"
-                    tags={[ 'BGCOLOR' ]}
                     tintColor="#686661"
                     layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
                 />
@@ -39,7 +38,6 @@ export const TrackPromoLayout = ({ captionTitleTxt, layout, srcPixelIcon }: Trac
                 >
                     <ThemeImage
                         name="pixel_icon"
-                        tags={[ 'ICON' ]}
                         src={srcPixelIcon ?? layoutImage('toolbar_citizenship_icon.png')}
                         layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                     />

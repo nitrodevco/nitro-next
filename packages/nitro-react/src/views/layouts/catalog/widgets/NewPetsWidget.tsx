@@ -5,6 +5,7 @@ import { Border, BoxLayout, Region, TextInput, ThemeImage, ThemeText } from '#ba
 import { AddOnBadgeViewWidget, AddOnBadgeViewWidgetProps } from '#base/views/layouts/catalog/widgets/AddOnBadgeViewWidget';
 import { ColourGridWidget, ColourGridWidgetProps } from '#base/views/layouts/catalog/widgets/ColourGridWidget';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `newPetsWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -12,7 +13,7 @@ import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog
  * (LayoutPets_1697Layout); each passes its own placement through `layout`.
  */
 /** Named region `newPetsWidget` of NewPetsWidget - configured through the parent's `newPetsWidget` prop. */
-export interface NewPetsWidgetProps {
+export interface NewPetsWidgetProps extends CatalogWidgetFlags {
     addOnBadgeViewWidget?: AddOnBadgeViewWidgetProps;
     captionCtlgText2?: string;
     captionCtlgText3?: string;
@@ -21,17 +22,15 @@ export interface NewPetsWidgetProps {
     layout?: BoxLayout;
     purchaseWidget?: PurchaseWidgetProps;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionCtlgText3, captionPetBreedText, colourGridWidget, layout, purchaseWidget, srcCtlgTeaserimg1, tags }: NewPetsWidgetProps) => {
+export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionCtlgText3, captionPetBreedText, colourGridWidget, layout, purchaseWidget, srcCtlgTeaserimg1 }: NewPetsWidgetProps) => {
     const t = useTranslation();
     const [ nameInputTextValue, setNameInputTextValue ] = useState('');
 
     return (
         <Region
             name="newPetsWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <ThemeImage

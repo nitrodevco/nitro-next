@@ -29,16 +29,14 @@ export interface LayoutInfoRentables_1599LayoutCtlgInfoRentablesProps {
     srcRentablesRulepic3?: string;
     srcRentablesRulepic4?: string;
     srcRentablesRulepic5?: string;
-    tags?: string[];
 }
 
-export const LayoutInfoRentables_1599LayoutCtlgInfoRentables = ({ captionCtlgText1, captionCtlgText2, captionCtlgText3, captionCtlgText4, captionCtlgText5, layout, srcRentablesRulepic1, srcRentablesRulepic2, srcRentablesRulepic3, srcRentablesRulepic4, srcRentablesRulepic5, tags }: LayoutInfoRentables_1599LayoutCtlgInfoRentablesProps) => {
+export const LayoutInfoRentables_1599LayoutCtlgInfoRentables = ({ captionCtlgText1, captionCtlgText2, captionCtlgText3, captionCtlgText4, captionCtlgText5, layout, srcRentablesRulepic1, srcRentablesRulepic2, srcRentablesRulepic3, srcRentablesRulepic4, srcRentablesRulepic5 }: LayoutInfoRentables_1599LayoutCtlgInfoRentablesProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_info_rentables"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <Border
@@ -63,7 +61,6 @@ export const LayoutInfoRentables_1599LayoutCtlgInfoRentables = ({ captionCtlgTex
                         </Region>
                         <ThemeImage
                             name="rentables_rulepic1"
-                            tags={[ 'S' ]}
                             src={srcRentablesRulepic1 ?? '${image.library.url}catalogue/rentables_rulepic1.gif'}
                             layout={{ position: 'absolute', left: 266, width: 40, top: 1, height: 40 }}
                         />
@@ -84,7 +81,6 @@ export const LayoutInfoRentables_1599LayoutCtlgInfoRentables = ({ captionCtlgTex
                         </Region>
                         <ThemeImage
                             name="rentables_rulepic2"
-                            tags={[ 'S' ]}
                             src={srcRentablesRulepic2 ?? '${image.library.url}catalogue/rentables_rulepic2.gif'}
                             layout={{ position: 'absolute', left: 266, width: 40, top: 1, height: 40 }}
                         />
@@ -105,7 +101,6 @@ export const LayoutInfoRentables_1599LayoutCtlgInfoRentables = ({ captionCtlgTex
                         </Region>
                         <ThemeImage
                             name="rentables_rulepic3"
-                            tags={[ 'S' ]}
                             src={srcRentablesRulepic3 ?? '${image.library.url}catalogue/rentables_rulepic3.gif'}
                             layout={{ position: 'absolute', left: 266, width: 40, top: 1, height: 40 }}
                         />
@@ -126,7 +121,6 @@ export const LayoutInfoRentables_1599LayoutCtlgInfoRentables = ({ captionCtlgTex
                         </Region>
                         <ThemeImage
                             name="rentables_rulepic4"
-                            tags={[ 'S' ]}
                             src={srcRentablesRulepic4 ?? '${image.library.url}catalogue/rentables_rulepic4.gif'}
                             layout={{ position: 'absolute', left: 266, width: 40, top: 1, height: 46 }}
                         />
@@ -147,7 +141,6 @@ export const LayoutInfoRentables_1599LayoutCtlgInfoRentables = ({ captionCtlgTex
                         </Region>
                         <ThemeImage
                             name="rentables_rulepic5"
-                            tags={[ 'S' ]}
                             src={srcRentablesRulepic5 ?? '${image.library.url}catalogue/rentables_rulepic5.gif'}
                             layout={{ position: 'absolute', left: 266, width: 40, top: 1, height: 40 }}
                         />

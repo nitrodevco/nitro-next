@@ -20,16 +20,14 @@ export interface GuildInfoLayoutGuildInfoProps {
     captionGuildBaseTxt?: string;
     layout?: BoxLayout;
     onGuildInfo?: () => void;
-    tags?: string[];
 }
 
-export const GuildInfoLayoutGuildInfo = ({ captionGuildBaseTxt, layout, onGuildInfo, tags }: GuildInfoLayoutGuildInfoProps) => {
+export const GuildInfoLayoutGuildInfo = ({ captionGuildBaseTxt, layout, onGuildInfo }: GuildInfoLayoutGuildInfoProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guild_info"
-            tags={tags}
             onPointerTap={onGuildInfo}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 49, ...layout }}

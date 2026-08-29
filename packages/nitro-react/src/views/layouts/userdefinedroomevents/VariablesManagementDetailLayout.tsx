@@ -39,17 +39,15 @@ export interface VariablesManagementDetailLayoutHeaderProps {
     captionInfoText?: string;
     layout?: BoxLayout;
     onRefreshBtn?: () => void;
-    tags?: string[];
     visibleSearchingIcon?: boolean;
 }
 
-export const VariablesManagementDetailLayoutHeader = ({ captionInfoText, layout, onRefreshBtn, tags, visibleSearchingIcon }: VariablesManagementDetailLayoutHeaderProps) => {
+export const VariablesManagementDetailLayoutHeader = ({ captionInfoText, layout, onRefreshBtn, visibleSearchingIcon }: VariablesManagementDetailLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             layout={{ position: 'absolute', left: 18, width: 303, top: 7, height: 57, ...layout }}
         >
             <Border
@@ -92,15 +90,13 @@ export const VariablesManagementDetailLayoutHeader = ({ captionInfoText, layout,
 export interface VariablesManagementDetailLayoutAvatarPreviewRegionProps {
     layout?: BoxLayout;
     onAvatarPreviewRegion?: () => void;
-    tags?: string[];
     visibleAvatarPreviewRegion?: boolean;
 }
 
-export const VariablesManagementDetailLayoutAvatarPreviewRegion = ({ layout, onAvatarPreviewRegion, tags, visibleAvatarPreviewRegion }: VariablesManagementDetailLayoutAvatarPreviewRegionProps) => {
+export const VariablesManagementDetailLayoutAvatarPreviewRegion = ({ layout, onAvatarPreviewRegion, visibleAvatarPreviewRegion }: VariablesManagementDetailLayoutAvatarPreviewRegionProps) => {
     return (
         <Region
             name="avatar_preview_region"
-            tags={tags}
             visible={visibleAvatarPreviewRegion ?? false}
             onPointerTap={onAvatarPreviewRegion}
             cursor="pointer"
@@ -114,17 +110,15 @@ export interface VariablesManagementDetailLayoutInfoBoxProps {
     avatarPreviewRegion?: VariablesManagementDetailLayoutAvatarPreviewRegionProps;
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VariablesManagementDetailLayoutInfoBox = ({ avatarPreviewRegion, captionTitle, layout, tags }: VariablesManagementDetailLayoutInfoBoxProps) => {
+export const VariablesManagementDetailLayoutInfoBox = ({ avatarPreviewRegion, captionTitle, layout }: VariablesManagementDetailLayoutInfoBoxProps) => {
     const t = useTranslation();
     const [ infoBoxTextValue, setInfoBoxTextValue ] = useState('');
 
     return (
         <Region
             name="info_box"
-            tags={tags}
             layout={{ position: 'absolute', left: 18, width: 303, top: 73, height: 114, ...layout }}
         >
             <Region
@@ -172,14 +166,12 @@ export const VariablesManagementDetailLayoutInfoBox = ({ avatarPreviewRegion, ca
 /** Named region `variable_values_table_container` of VariablesManagementDetailLayout - configured through the parent's `variableValuesTableContainer` prop. */
 export interface VariablesManagementDetailLayoutVariableValuesTableContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VariablesManagementDetailLayoutVariableValuesTableContainer = ({ layout, tags }: VariablesManagementDetailLayoutVariableValuesTableContainerProps) => {
+export const VariablesManagementDetailLayoutVariableValuesTableContainer = ({ layout }: VariablesManagementDetailLayoutVariableValuesTableContainerProps) => {
     return (
         <Region
             name="variable_values_table_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 34, ...layout }}
         />
     );
@@ -188,14 +180,12 @@ export const VariablesManagementDetailLayoutVariableValuesTableContainer = ({ la
 /** Named region `var_picker_container` of VariablesManagementDetailLayout - configured through the parent's `varPickerContainer` prop. */
 export interface VariablesManagementDetailLayoutVarPickerContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VariablesManagementDetailLayoutVarPickerContainer = ({ layout, tags }: VariablesManagementDetailLayoutVarPickerContainerProps) => {
+export const VariablesManagementDetailLayoutVarPickerContainer = ({ layout }: VariablesManagementDetailLayoutVarPickerContainerProps) => {
     return (
         <Region
             name="var_picker_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 22, ...layout }}
         />
     );
@@ -204,17 +194,15 @@ export const VariablesManagementDetailLayoutVarPickerContainer = ({ layout, tags
 /** Named region `variable_setting` of VariablesManagementDetailLayout - configured through the parent's `variableSetting` prop. */
 export interface VariablesManagementDetailLayoutVariableSettingProps {
     layout?: BoxLayout;
-    tags?: string[];
     varPickerContainer?: VariablesManagementDetailLayoutVarPickerContainerProps;
 }
 
-export const VariablesManagementDetailLayoutVariableSetting = ({ layout, tags, varPickerContainer }: VariablesManagementDetailLayoutVariableSettingProps) => {
+export const VariablesManagementDetailLayoutVariableSetting = ({ layout, varPickerContainer }: VariablesManagementDetailLayoutVariableSettingProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="variable_setting"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, right: 22, top: 6, height: 42, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -228,17 +216,15 @@ export const VariablesManagementDetailLayoutVariableSetting = ({ layout, tags, v
 /** Named region `value_setting` of VariablesManagementDetailLayout - configured through the parent's `valueSetting` prop. */
 export interface VariablesManagementDetailLayoutValueSettingProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VariablesManagementDetailLayoutValueSetting = ({ layout, tags }: VariablesManagementDetailLayoutValueSettingProps) => {
+export const VariablesManagementDetailLayoutValueSetting = ({ layout }: VariablesManagementDetailLayoutValueSettingProps) => {
     const t = useTranslation();
     const [ valueInputValue, setValueInputValue ] = useState('');
 
     return (
         <Region
             name="value_setting"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, right: 22, top: 52, height: 42, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -266,20 +252,18 @@ export interface VariablesManagementDetailLayoutVariableValuesContainerProps {
     onAddVarBtn?: () => void;
     onCreateVarBtn?: () => void;
     onDeleteVarBtn?: () => void;
-    tags?: string[];
     valueSetting?: VariablesManagementDetailLayoutValueSettingProps;
     variableSetting?: VariablesManagementDetailLayoutVariableSettingProps;
     variableValuesTableContainer?: VariablesManagementDetailLayoutVariableValuesTableContainerProps;
     visibleCreateVarBubble?: boolean;
 }
 
-export const VariablesManagementDetailLayoutVariableValuesContainer = ({ captionTitle, layout, onAddVarBtn, onCreateVarBtn, onDeleteVarBtn, tags, valueSetting, variableSetting, variableValuesTableContainer, visibleCreateVarBubble }: VariablesManagementDetailLayoutVariableValuesContainerProps) => {
+export const VariablesManagementDetailLayoutVariableValuesContainer = ({ captionTitle, layout, onAddVarBtn, onCreateVarBtn, onDeleteVarBtn, valueSetting, variableSetting, variableValuesTableContainer, visibleCreateVarBubble }: VariablesManagementDetailLayoutVariableValuesContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="variable_values_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 18, width: 303, top: 196, bottom: 51, ...layout }}
         >
             <Region

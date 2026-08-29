@@ -49,15 +49,13 @@ export const VimeoViewerLayout = ({ layout, onClose, videoBackground }: VimeoVie
 /** Named region `video_wrapper` of VimeoViewerLayout - configured through the parent's `videoWrapper` prop. */
 export interface VimeoViewerLayoutVideoWrapperProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleVideoWrapper?: boolean;
 }
 
-export const VimeoViewerLayoutVideoWrapper = ({ layout, tags, visibleVideoWrapper }: VimeoViewerLayoutVideoWrapperProps) => {
+export const VimeoViewerLayoutVideoWrapper = ({ layout, visibleVideoWrapper }: VimeoViewerLayoutVideoWrapperProps) => {
     return (
         <Region
             name="video_wrapper"
-            tags={tags}
             visible={visibleVideoWrapper ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         />
@@ -68,17 +66,15 @@ export const VimeoViewerLayoutVideoWrapper = ({ layout, tags, visibleVideoWrappe
 export interface VimeoViewerLayoutVideoBackgroundProps {
     captionNoVideosLabel?: string;
     layout?: BoxLayout;
-    tags?: string[];
     videoWrapper?: VimeoViewerLayoutVideoWrapperProps;
 }
 
-export const VimeoViewerLayoutVideoBackground = ({ captionNoVideosLabel, layout, tags, videoWrapper }: VimeoViewerLayoutVideoBackgroundProps) => {
+export const VimeoViewerLayoutVideoBackground = ({ captionNoVideosLabel, layout, videoWrapper }: VimeoViewerLayoutVideoBackgroundProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="video_background"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 7, right: 13, top: 6, bottom: 48, justifyContent: 'center', ...layout }}
         >

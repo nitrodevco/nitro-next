@@ -20,14 +20,12 @@ export interface WelcomeScreenLayoutClickProps {
     captionText?: string;
     layout?: BoxLayout;
     onClick?: () => void;
-    tags?: string[];
 }
 
-export const WelcomeScreenLayoutClick = ({ captionText, layout, onClick, tags }: WelcomeScreenLayoutClickProps) => {
+export const WelcomeScreenLayoutClick = ({ captionText, layout, onClick }: WelcomeScreenLayoutClickProps) => {
     return (
         <Region
             name="click"
-            tags={tags}
             onPointerTap={onClick}
             cursor="pointer"
             layout={{ position: 'absolute', left: 14, width: 189, top: 8, height: 37, ...layout }}
@@ -54,14 +52,12 @@ export interface WelcomeScreenLayoutWelcomeScreenProps {
     onFrame?: () => void;
     srcArrow?: string;
     srcArrowRight?: string;
-    tags?: string[];
 }
 
-export const WelcomeScreenLayoutWelcomeScreen = ({ click, layout, onClose, onFrame, srcArrow, srcArrowRight, tags }: WelcomeScreenLayoutWelcomeScreenProps) => {
+export const WelcomeScreenLayoutWelcomeScreen = ({ click, layout, onClose, onFrame, srcArrow, srcArrowRight }: WelcomeScreenLayoutWelcomeScreenProps) => {
     return (
         <Region
             name="welcome_screen"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 251, top: 0, height: 87, ...layout }}
         >
             <Frame

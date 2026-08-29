@@ -14,13 +14,9 @@ export const FrameLeaderboardLayout = ({ contentArea, layout }: FrameLeaderboard
         >
             <Header
                 name="titlebar"
-                tags={[ '_HEADER', '_EXCLUDE', '_INTERNAL', '_COLORIZE' ]}
                 layout={{ position: 'absolute', left: 76, right: 76, top: 3, height: 32 }}
             />
-            <FrameLeaderboardLayoutContentArea
-                tags={[ '_CONTENT', '_INTERNAL', '_EXCLUDE' ]}
-                {...contentArea}
-            />
+            <FrameLeaderboardLayoutContentArea {...contentArea} />
         </Region>
     );
 };
@@ -28,14 +24,12 @@ export const FrameLeaderboardLayout = ({ contentArea, layout }: FrameLeaderboard
 /** Named region `content_area` of FrameLeaderboardLayout - configured through the parent's `contentArea` prop. */
 export interface FrameLeaderboardLayoutContentAreaProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FrameLeaderboardLayoutContentArea = ({ layout, tags }: FrameLeaderboardLayoutContentAreaProps) => {
+export const FrameLeaderboardLayoutContentArea = ({ layout }: FrameLeaderboardLayoutContentAreaProps) => {
     return (
         <Region
             name="content_area"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 10, top: 52, bottom: 9, ...layout }}
         />
     );

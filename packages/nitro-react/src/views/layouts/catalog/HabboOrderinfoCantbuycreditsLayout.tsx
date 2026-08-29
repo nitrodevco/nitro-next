@@ -22,16 +22,14 @@ export interface HabboOrderinfoCantbuycreditsLayoutHabboOrderinfoCantbuycreditsP
     layout?: BoxLayout;
     onButtonCancel?: () => void;
     onSubscribe?: () => void;
-    tags?: string[];
 }
 
-export const HabboOrderinfoCantbuycreditsLayoutHabboOrderinfoCantbuycredits = ({ captionHabboMessageTextA, captionHabboMessageTextB, layout, onButtonCancel, onSubscribe, tags }: HabboOrderinfoCantbuycreditsLayoutHabboOrderinfoCantbuycreditsProps) => {
+export const HabboOrderinfoCantbuycreditsLayoutHabboOrderinfoCantbuycredits = ({ captionHabboMessageTextA, captionHabboMessageTextB, layout, onButtonCancel, onSubscribe }: HabboOrderinfoCantbuycreditsLayoutHabboOrderinfoCantbuycreditsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="habbo_orderinfo_cantbuycredits"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 125, ...layout }}
         >
             <Region

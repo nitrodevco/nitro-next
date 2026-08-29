@@ -84,14 +84,12 @@ export interface CalendarLayoutBtnPresentProps {
     srcBitmapIcon?: string;
     srcBitmapIcon2?: string;
     srcBitmapOpenedBg?: string;
-    tags?: string[];
 }
 
-export const CalendarLayoutBtnPresent = ({ layout, srcBitmapBg, srcBitmapIcon, srcBitmapIcon2, srcBitmapOpenedBg, tags }: CalendarLayoutBtnPresentProps) => {
+export const CalendarLayoutBtnPresent = ({ layout, srcBitmapBg, srcBitmapIcon, srcBitmapIcon2, srcBitmapOpenedBg }: CalendarLayoutBtnPresentProps) => {
     return (
         <Region
             name="btn_present"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 192, top: 115, height: 192, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
@@ -130,14 +128,12 @@ export interface CalendarLayoutBtnSlotItemProps {
     onBtnSlot?: () => void;
     srcBitmapItem?: string;
     srcBitmapLock?: string;
-    tags?: string[];
 }
 
-export const CalendarLayoutBtnSlotItem = ({ btnPresent, layout, onBtnSlot, srcBitmapItem, srcBitmapLock, tags }: CalendarLayoutBtnSlotItemProps) => {
+export const CalendarLayoutBtnSlotItem = ({ btnPresent, layout, onBtnSlot, srcBitmapItem, srcBitmapLock }: CalendarLayoutBtnSlotItemProps) => {
     return (
         <Region
             name="btn_slot"
-            tags={tags}
             onPointerTap={onBtnSlot}
             cursor="pointer"
             layout={{ width: 202, height: 447, flexShrink: 0, justifyContent: 'center', ...layout }}
@@ -161,14 +157,12 @@ export const CalendarLayoutBtnSlotItem = ({ btnPresent, layout, onBtnSlot, srcBi
 export interface CalendarLayoutCalendarItemlistProps {
     itemsCalendarItemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CalendarLayoutCalendarItemlist = ({ itemsCalendarItemlist, layout, tags }: CalendarLayoutCalendarItemlistProps) => {
+export const CalendarLayoutCalendarItemlist = ({ itemsCalendarItemlist, layout }: CalendarLayoutCalendarItemlistProps) => {
     return (
         <Region
             name="calendar_itemlist"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 447, flexDirection: 'row', gap: 4, ...layout }}
         >
             {itemsCalendarItemlist ?? (
@@ -208,14 +202,12 @@ export interface CalendarLayoutSpinnerContainerProps {
     layout?: BoxLayout;
     srcGradient1?: string;
     srcGradient2?: string;
-    tags?: string[];
 }
 
-export const CalendarLayoutSpinnerContainer = ({ calendarItemlist, layout, srcGradient1, srcGradient2, tags }: CalendarLayoutSpinnerContainerProps) => {
+export const CalendarLayoutSpinnerContainer = ({ calendarItemlist, layout, srcGradient1, srcGradient2 }: CalendarLayoutSpinnerContainerProps) => {
     return (
         <Region
             name="spinner_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 106, height: 463, ...layout }}
         >
             <CalendarLayoutCalendarItemlist {...calendarItemlist} />
@@ -237,14 +229,12 @@ export const CalendarLayoutSpinnerContainer = ({ calendarItemlist, layout, srcGr
 export interface CalendarLayoutBtnForwardProps {
     layout?: BoxLayout;
     onBtnForward?: () => void;
-    tags?: string[];
 }
 
-export const CalendarLayoutBtnForward = ({ layout, onBtnForward, tags }: CalendarLayoutBtnForwardProps) => {
+export const CalendarLayoutBtnForward = ({ layout, onBtnForward }: CalendarLayoutBtnForwardProps) => {
     return (
         <Region
             name="btn_forward"
-            tags={tags}
             onPointerTap={onBtnForward}
             cursor="pointer"
             layout={{ position: 'absolute', left: 991, width: 33, top: 325, height: 34, ...layout }}
@@ -261,14 +251,12 @@ export const CalendarLayoutBtnForward = ({ layout, onBtnForward, tags }: Calenda
 export interface CalendarLayoutBtnBackProps {
     layout?: BoxLayout;
     onBtnBack?: () => void;
-    tags?: string[];
 }
 
-export const CalendarLayoutBtnBack = ({ layout, onBtnBack, tags }: CalendarLayoutBtnBackProps) => {
+export const CalendarLayoutBtnBack = ({ layout, onBtnBack }: CalendarLayoutBtnBackProps) => {
     return (
         <Region
             name="btn_back"
-            tags={tags}
             onPointerTap={onBtnBack}
             cursor="pointer"
             layout={{ position: 'absolute', left: 4, width: 33, top: 325, height: 34, ...layout }}

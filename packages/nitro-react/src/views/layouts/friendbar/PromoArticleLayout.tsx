@@ -22,14 +22,12 @@ export const PromoArticleLayout = ({ layout, root }: PromoArticleLayoutProps) =>
 export interface PromoArticleLayoutBorderBarItemProps {
     layout?: BoxLayout;
     srcBorderBar?: string;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutBorderBarItem = ({ layout, srcBorderBar, tags }: PromoArticleLayoutBorderBarItemProps) => {
+export const PromoArticleLayoutBorderBarItem = ({ layout, srcBorderBar }: PromoArticleLayoutBorderBarItemProps) => {
     return (
         <ThemeImage
             name="border_bar"
-            tags={tags}
             src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
             layout={{ width: 12, height: 4, flexShrink: 0, ...layout }}
         />
@@ -39,22 +37,22 @@ export const PromoArticleLayoutBorderBarItem = ({ layout, srcBorderBar, tags }: 
 /** Row template `header_txt` of PromoArticleLayout - pass real rows through its `items…` slot. */
 export interface PromoArticleLayoutHeaderTxtItemProps {
     captionHeaderTxt?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutHeaderTxtItem = ({ captionHeaderTxt, layout, tags }: PromoArticleLayoutHeaderTxtItemProps) => {
+export const PromoArticleLayoutHeaderTxtItem = ({ captionHeaderTxt, colorableTextColor, layout }: PromoArticleLayoutHeaderTxtItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header_txt"
-            tags={tags}
             layout={{ width: 155, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionHeaderTxt ?? t('landing.view.promo.article.header')}
                 textStyle="text-style-il-heading-3"
+                textOptions={{ fill: colorableTextColor }}
             />
         </Region>
     );
@@ -64,14 +62,12 @@ export const PromoArticleLayoutHeaderTxtItem = ({ captionHeaderTxt, layout, tags
 export interface PromoArticleLayoutHdrLineItemProps {
     layout?: BoxLayout;
     srcHdrLine?: string;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutHdrLineItem = ({ layout, srcHdrLine, tags }: PromoArticleLayoutHdrLineItemProps) => {
+export const PromoArticleLayoutHdrLineItem = ({ layout, srcHdrLine }: PromoArticleLayoutHdrLineItemProps) => {
     return (
         <ThemeImage
             name="hdr_line"
-            tags={tags}
             src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
             layout={{ width: 500, height: 4, flexShrink: 0, ...layout }}
         />
@@ -82,20 +78,18 @@ export const PromoArticleLayoutHdrLineItem = ({ layout, srcHdrLine, tags }: Prom
 export interface PromoArticleLayoutTitleProps {
     itemsTitle?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutTitle = ({ itemsTitle, layout, tags }: PromoArticleLayoutTitleProps) => {
+export const PromoArticleLayoutTitle = ({ itemsTitle, layout }: PromoArticleLayoutTitleProps) => {
     return (
         <Region
             name="title"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, minWidth: 500, maxWidth: 500, flexDirection: 'row', gap: 4, ...layout }}
         >
             {itemsTitle ?? (
                 <>
                     <PromoArticleLayoutBorderBarItem />
-                    <PromoArticleLayoutHeaderTxtItem tags={[ 'COLORABLE' ]} />
+                    <PromoArticleLayoutHeaderTxtItem />
                     <PromoArticleLayoutHdrLineItem />
                 </>
             )}
@@ -108,16 +102,14 @@ export interface PromoArticleLayoutArticleNavigationProps {
     layout?: BoxLayout;
     onArticleNavigation?: () => void;
     srcNavigationDisk?: string;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutArticleNavigation = ({ layout, onArticleNavigation, srcNavigationDisk, tags }: PromoArticleLayoutArticleNavigationProps) => {
+export const PromoArticleLayoutArticleNavigation = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigationProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="article_navigation"
-            tags={tags}
             tooltip={t('promo.article.widget.tooltip.go.to.article')}
             onPointerTap={onArticleNavigation}
             cursor="pointer"
@@ -137,16 +129,14 @@ export interface PromoArticleLayoutArticleNavigation2Props {
     layout?: BoxLayout;
     onArticleNavigation?: () => void;
     srcNavigationDisk?: string;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutArticleNavigation2 = ({ layout, onArticleNavigation, srcNavigationDisk, tags }: PromoArticleLayoutArticleNavigation2Props) => {
+export const PromoArticleLayoutArticleNavigation2 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="article_navigation"
-            tags={tags}
             tooltip={t('promo.article.widget.tooltip.go.to.article')}
             onPointerTap={onArticleNavigation}
             cursor="pointer"
@@ -166,16 +156,14 @@ export interface PromoArticleLayoutArticleNavigation3Props {
     layout?: BoxLayout;
     onArticleNavigation?: () => void;
     srcNavigationDisk?: string;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutArticleNavigation3 = ({ layout, onArticleNavigation, srcNavigationDisk, tags }: PromoArticleLayoutArticleNavigation3Props) => {
+export const PromoArticleLayoutArticleNavigation3 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation3Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="article_navigation"
-            tags={tags}
             tooltip={t('promo.article.widget.tooltip.go.to.article')}
             onPointerTap={onArticleNavigation}
             cursor="pointer"
@@ -195,16 +183,14 @@ export interface PromoArticleLayoutArticleNavigation4Props {
     layout?: BoxLayout;
     onArticleNavigation?: () => void;
     srcNavigationDisk?: string;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutArticleNavigation4 = ({ layout, onArticleNavigation, srcNavigationDisk, tags }: PromoArticleLayoutArticleNavigation4Props) => {
+export const PromoArticleLayoutArticleNavigation4 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation4Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="article_navigation"
-            tags={tags}
             tooltip={t('promo.article.widget.tooltip.go.to.article')}
             onPointerTap={onArticleNavigation}
             cursor="pointer"
@@ -224,16 +210,14 @@ export interface PromoArticleLayoutArticleNavigation5Props {
     layout?: BoxLayout;
     onArticleNavigation?: () => void;
     srcNavigationDisk?: string;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutArticleNavigation5 = ({ layout, onArticleNavigation, srcNavigationDisk, tags }: PromoArticleLayoutArticleNavigation5Props) => {
+export const PromoArticleLayoutArticleNavigation5 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation5Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="article_navigation"
-            tags={tags}
             tooltip={t('promo.article.widget.tooltip.go.to.article')}
             onPointerTap={onArticleNavigation}
             cursor="pointer"
@@ -253,16 +237,14 @@ export interface PromoArticleLayoutArticleNavigation6Props {
     layout?: BoxLayout;
     onArticleNavigation?: () => void;
     srcNavigationDisk?: string;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutArticleNavigation6 = ({ layout, onArticleNavigation, srcNavigationDisk, tags }: PromoArticleLayoutArticleNavigation6Props) => {
+export const PromoArticleLayoutArticleNavigation6 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation6Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="article_navigation"
-            tags={tags}
             tooltip={t('promo.article.widget.tooltip.go.to.article')}
             onPointerTap={onArticleNavigation}
             cursor="pointer"
@@ -282,16 +264,14 @@ export interface PromoArticleLayoutArticleNavigation7Props {
     layout?: BoxLayout;
     onArticleNavigation?: () => void;
     srcNavigationDisk?: string;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutArticleNavigation7 = ({ layout, onArticleNavigation, srcNavigationDisk, tags }: PromoArticleLayoutArticleNavigation7Props) => {
+export const PromoArticleLayoutArticleNavigation7 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation7Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="article_navigation"
-            tags={tags}
             tooltip={t('promo.article.widget.tooltip.go.to.article')}
             onPointerTap={onArticleNavigation}
             cursor="pointer"
@@ -311,16 +291,14 @@ export interface PromoArticleLayoutArticleNavigation8Props {
     layout?: BoxLayout;
     onArticleNavigation?: () => void;
     srcNavigationDisk?: string;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutArticleNavigation8 = ({ layout, onArticleNavigation, srcNavigationDisk, tags }: PromoArticleLayoutArticleNavigation8Props) => {
+export const PromoArticleLayoutArticleNavigation8 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation8Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="article_navigation"
-            tags={tags}
             tooltip={t('promo.article.widget.tooltip.go.to.article')}
             onPointerTap={onArticleNavigation}
             cursor="pointer"
@@ -340,16 +318,14 @@ export interface PromoArticleLayoutArticleNavigation9Props {
     layout?: BoxLayout;
     onArticleNavigation?: () => void;
     srcNavigationDisk?: string;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutArticleNavigation9 = ({ layout, onArticleNavigation, srcNavigationDisk, tags }: PromoArticleLayoutArticleNavigation9Props) => {
+export const PromoArticleLayoutArticleNavigation9 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation9Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="article_navigation"
-            tags={tags}
             tooltip={t('promo.article.widget.tooltip.go.to.article')}
             onPointerTap={onArticleNavigation}
             cursor="pointer"
@@ -369,16 +345,14 @@ export interface PromoArticleLayoutArticleNavigation10Props {
     layout?: BoxLayout;
     onArticleNavigation?: () => void;
     srcNavigationDisk?: string;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutArticleNavigation10 = ({ layout, onArticleNavigation, srcNavigationDisk, tags }: PromoArticleLayoutArticleNavigation10Props) => {
+export const PromoArticleLayoutArticleNavigation10 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation10Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="article_navigation"
-            tags={tags}
             tooltip={t('promo.article.widget.tooltip.go.to.article')}
             onPointerTap={onArticleNavigation}
             cursor="pointer"
@@ -406,14 +380,12 @@ export interface PromoArticleLayoutNavigationProps {
     articleNavigation8?: PromoArticleLayoutArticleNavigation8Props;
     articleNavigation9?: PromoArticleLayoutArticleNavigation9Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutNavigation = ({ articleNavigation, articleNavigation10, articleNavigation2, articleNavigation3, articleNavigation4, articleNavigation5, articleNavigation6, articleNavigation7, articleNavigation8, articleNavigation9, layout, tags }: PromoArticleLayoutNavigationProps) => {
+export const PromoArticleLayoutNavigation = ({ articleNavigation, articleNavigation10, articleNavigation2, articleNavigation3, articleNavigation4, articleNavigation5, articleNavigation6, articleNavigation7, articleNavigation8, articleNavigation9, layout }: PromoArticleLayoutNavigationProps) => {
     return (
         <Region
             name="navigation"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 160, top: 23, height: 10, ...layout }}
         >
             <PromoArticleLayoutArticleNavigation {...articleNavigation} />
@@ -433,23 +405,22 @@ export const PromoArticleLayoutNavigation = ({ articleNavigation, articleNavigat
 /** Row template `promo_title` of PromoArticleLayout - pass real rows through its `items…` slot. */
 export interface PromoArticleLayoutPromoTitleItemProps {
     captionPromoTitle?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutPromoTitleItem = ({ captionPromoTitle, layout, tags }: PromoArticleLayoutPromoTitleItemProps) => {
+export const PromoArticleLayoutPromoTitleItem = ({ captionPromoTitle, colorableTextColor, layout }: PromoArticleLayoutPromoTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="promo_title"
-            tags={tags}
             layout={{ width: 330, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionPromoTitle ?? t('promo.article.widget.loading')}
                 textStyle="text-style-il-heading-title"
-                textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
+                textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 330 }}
             />
         </Region>
     );
@@ -458,20 +429,19 @@ export const PromoArticleLayoutPromoTitleItem = ({ captionPromoTitle, layout, ta
 /** Row template `promo_text` of PromoArticleLayout - pass real rows through its `items…` slot. */
 export interface PromoArticleLayoutPromoTextItemProps {
     captionPromoText?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutPromoTextItem = ({ captionPromoText, layout, tags }: PromoArticleLayoutPromoTextItemProps) => {
+export const PromoArticleLayoutPromoTextItem = ({ captionPromoText, colorableTextColor, layout }: PromoArticleLayoutPromoTextItemProps) => {
     return (
         <Region
             name="promo_text"
-            tags={tags}
             layout={{ width: 330, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionPromoText ?? ''}
-                textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
+                textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 330 }}
             />
         </Region>
     );
@@ -481,11 +451,10 @@ export const PromoArticleLayoutPromoTextItem = ({ captionPromoText, layout, tags
 export interface PromoArticleLayoutButtonItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
     visibleButton?: boolean;
 }
 
-export const PromoArticleLayoutButtonItem = ({ layout, onButton, tags, visibleButton }: PromoArticleLayoutButtonItemProps) => {
+export const PromoArticleLayoutButtonItem = ({ layout, onButton, visibleButton }: PromoArticleLayoutButtonItemProps) => {
     return (
         <Region
             visible={visibleButton ?? false}
@@ -494,7 +463,6 @@ export const PromoArticleLayoutButtonItem = ({ layout, onButton, tags, visibleBu
             <Button
                 variant="100"
                 name="button"
-                tags={tags}
                 onPointerTap={onButton}
                 layout={{ width: '100%', height: '100%' }}
             />
@@ -506,20 +474,18 @@ export const PromoArticleLayoutButtonItem = ({ layout, onButton, tags, visibleBu
 export interface PromoArticleLayoutContentProps {
     itemsContent?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutContent = ({ itemsContent, layout, tags }: PromoArticleLayoutContentProps) => {
+export const PromoArticleLayoutContent = ({ itemsContent, layout }: PromoArticleLayoutContentProps) => {
     return (
         <Region
             name="content"
-            tags={tags}
             layout={{ position: 'absolute', left: 170, width: 330, top: 0, height: 34, flexDirection: 'column', gap: 6, ...layout }}
         >
             {itemsContent ?? (
                 <>
-                    <PromoArticleLayoutPromoTitleItem tags={[ 'COLORABLE' ]} />
-                    <PromoArticleLayoutPromoTextItem tags={[ 'COLORABLE' ]} />
+                    <PromoArticleLayoutPromoTitleItem />
+                    <PromoArticleLayoutPromoTextItem />
                     <PromoArticleLayoutButtonItem />
                 </>
             )}
@@ -532,14 +498,12 @@ export interface PromoArticleLayoutArticleProps {
     content?: PromoArticleLayoutContentProps;
     layout?: BoxLayout;
     srcPromoImage?: string;
-    tags?: string[];
 }
 
-export const PromoArticleLayoutArticle = ({ content, layout, srcPromoImage, tags }: PromoArticleLayoutArticleProps) => {
+export const PromoArticleLayoutArticle = ({ content, layout, srcPromoImage }: PromoArticleLayoutArticleProps) => {
     return (
         <Region
             name="article"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 500, top: 17, height: 101, ...layout }}
         >
             <ThemeImage
@@ -557,15 +521,13 @@ export interface PromoArticleLayoutRootProps {
     article?: PromoArticleLayoutArticleProps;
     layout?: BoxLayout;
     navigation?: PromoArticleLayoutNavigationProps;
-    tags?: string[];
     title?: PromoArticleLayoutTitleProps;
 }
 
-export const PromoArticleLayoutRoot = ({ article, layout, navigation, tags, title }: PromoArticleLayoutRootProps) => {
+export const PromoArticleLayoutRoot = ({ article, layout, navigation, title }: PromoArticleLayoutRootProps) => {
     return (
         <Region
             name="root"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 118, maxWidth: 500, ...layout }}
         >
             <PromoArticleLayoutTitle {...title} />

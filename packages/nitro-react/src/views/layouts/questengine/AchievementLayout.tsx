@@ -18,14 +18,12 @@ export const AchievementLayout = ({ achievementContainer, layout }: AchievementL
 export interface AchievementLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
-    tags?: string[];
 }
 
-export const AchievementLayoutBgRegion = ({ layout, onBgRegion, tags }: AchievementLayoutBgRegionProps) => {
+export const AchievementLayoutBgRegion = ({ layout, onBgRegion }: AchievementLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60, ...layout }}
@@ -39,14 +37,12 @@ export interface AchievementLayoutAchievementContainerProps {
     layout?: BoxLayout;
     srcBgSelectedBitmap?: string;
     srcBgUnselectedBitmap?: string;
-    tags?: string[];
 }
 
-export const AchievementLayoutAchievementContainer = ({ bgRegion, layout, srcBgSelectedBitmap, srcBgUnselectedBitmap, tags }: AchievementLayoutAchievementContainerProps) => {
+export const AchievementLayoutAchievementContainer = ({ bgRegion, layout, srcBgSelectedBitmap, srcBgUnselectedBitmap }: AchievementLayoutAchievementContainerProps) => {
     return (
         <Region
             name="achievement_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60, ...layout }}
         >
             <ThemeImage
@@ -70,10 +66,7 @@ export const AchievementLayoutAchievementContainer = ({ bgRegion, layout, srcBgS
                 options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 11, width: 40, top: 10, height: 40 }}
             />
-            <AchievementLayoutBgRegion
-                tags={[ 'FIT:achievementsSelectSpecific' ]}
-                {...bgRegion}
-            />
+            <AchievementLayoutBgRegion {...bgRegion} />
         </Region>
     );
 };

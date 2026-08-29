@@ -9,27 +9,26 @@ export interface SnowwarTeamScoresLayoutProps {
     captionScoreRedStroke?: string;
     layout?: BoxLayout;
     srcBackgroundImage?: string;
+    strokeTextColor?: string;
 }
 
-export const SnowwarTeamScoresLayout = ({ captionScoreBlue, captionScoreBlueStroke, captionScoreRed, captionScoreRedStroke, layout, srcBackgroundImage }: SnowwarTeamScoresLayoutProps) => {
+export const SnowwarTeamScoresLayout = ({ captionScoreBlue, captionScoreBlueStroke, captionScoreRed, captionScoreRedStroke, layout, srcBackgroundImage, strokeTextColor }: SnowwarTeamScoresLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 189, height: 147, ...layout }}>
             <Region layout={{ position: 'absolute', right: 0, width: 189, top: 0, height: 147 }}>
                 <ThemeImage
                     name="backgroundImage"
-                    tags={[ 'bitmap' ]}
                     src={srcBackgroundImage ?? layoutImage('ui_timer_and_points.png')}
                     layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 147 }}
                 />
                 <Region layout={{ position: 'absolute', left: 29, width: 56, top: 44, height: 27 }}>
                     <Region
                         name="score_blue_stroke"
-                        tags={[ 'stroke' ]}
                         layout={{ position: 'absolute', left: 0, width: 56, top: 0, height: 27, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionScoreBlueStroke ?? '0'}
-                            textOptions={{ fill: '#1077ac', align: 'center' }}
+                            textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
                         />
                     </Region>
                     <Region

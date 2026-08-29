@@ -23,14 +23,12 @@ export interface MarketPlaceOwnItemsWidgetLayoutImageContainerProps {
     layout?: BoxLayout;
     srcItemImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
-    tags?: string[];
 }
 
-export const MarketPlaceOwnItemsWidgetLayoutImageContainer = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap, tags }: MarketPlaceOwnItemsWidgetLayoutImageContainerProps) => {
+export const MarketPlaceOwnItemsWidgetLayoutImageContainer = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap }: MarketPlaceOwnItemsWidgetLayoutImageContainerProps) => {
     return (
         <Region
             name="image_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
         >
             <Region
@@ -45,7 +43,6 @@ export const MarketPlaceOwnItemsWidgetLayoutImageContainer = ({ layout, srcItemI
             </Region>
             <ThemeImage
                 name="item_image"
-                tags={[ 'BITMAP' ]}
                 src={srcItemImage}
                 layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
             />
@@ -74,17 +71,15 @@ export interface MarketPlaceOwnItemsWidgetLayoutOngoingItemItemProps {
     imageContainer?: MarketPlaceOwnItemsWidgetLayoutImageContainerProps;
     layout?: BoxLayout;
     onPickButton?: () => void;
-    tags?: string[];
 }
 
-export const MarketPlaceOwnItemsWidgetLayoutOngoingItemItem = ({ captionItemDesc, captionItemName, captionItemPrice, captionItemTime, imageContainer, layout, onPickButton, tags }: MarketPlaceOwnItemsWidgetLayoutOngoingItemItemProps) => {
+export const MarketPlaceOwnItemsWidgetLayoutOngoingItemItem = ({ captionItemDesc, captionItemName, captionItemPrice, captionItemTime, imageContainer, layout, onPickButton }: MarketPlaceOwnItemsWidgetLayoutOngoingItemItemProps) => {
     const t = useTranslation();
 
     return (
         <Border
             variant="100"
             name="ongoing_item"
-            tags={tags}
             tintColor="#e3e3e3"
             layout={{ width: 320, height: 58, flexShrink: 0, ...layout }}
         >
@@ -142,14 +137,12 @@ export interface MarketPlaceOwnItemsWidgetLayoutImageContainer2Props {
     layout?: BoxLayout;
     srcItemImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
-    tags?: string[];
 }
 
-export const MarketPlaceOwnItemsWidgetLayoutImageContainer2 = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap, tags }: MarketPlaceOwnItemsWidgetLayoutImageContainer2Props) => {
+export const MarketPlaceOwnItemsWidgetLayoutImageContainer2 = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap }: MarketPlaceOwnItemsWidgetLayoutImageContainer2Props) => {
     return (
         <Region
             name="image_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
         >
             <Region
@@ -164,7 +157,6 @@ export const MarketPlaceOwnItemsWidgetLayoutImageContainer2 = ({ layout, srcItem
             </Region>
             <ThemeImage
                 name="item_image"
-                tags={[ 'BITMAP' ]}
                 src={srcItemImage}
                 layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
             />
@@ -192,17 +184,15 @@ export interface MarketPlaceOwnItemsWidgetLayoutSoldItemItemProps {
     captionItemSold?: string;
     imageContainer?: MarketPlaceOwnItemsWidgetLayoutImageContainer2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MarketPlaceOwnItemsWidgetLayoutSoldItemItem = ({ captionItemDesc, captionItemName, captionItemPrice, captionItemSold, imageContainer, layout, tags }: MarketPlaceOwnItemsWidgetLayoutSoldItemItemProps) => {
+export const MarketPlaceOwnItemsWidgetLayoutSoldItemItem = ({ captionItemDesc, captionItemName, captionItemPrice, captionItemSold, imageContainer, layout }: MarketPlaceOwnItemsWidgetLayoutSoldItemItemProps) => {
     const t = useTranslation();
 
     return (
         <Border
             variant="100"
             name="sold_item"
-            tags={tags}
             tintColor="#e3e3e3"
             layout={{ width: 320, height: 58, flexShrink: 0, ...layout }}
         >
@@ -252,14 +242,12 @@ export interface MarketPlaceOwnItemsWidgetLayoutImageContainer3Props {
     layout?: BoxLayout;
     srcItemImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
-    tags?: string[];
 }
 
-export const MarketPlaceOwnItemsWidgetLayoutImageContainer3 = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap, tags }: MarketPlaceOwnItemsWidgetLayoutImageContainer3Props) => {
+export const MarketPlaceOwnItemsWidgetLayoutImageContainer3 = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap }: MarketPlaceOwnItemsWidgetLayoutImageContainer3Props) => {
     return (
         <Region
             name="image_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
         >
             <Region
@@ -274,7 +262,6 @@ export const MarketPlaceOwnItemsWidgetLayoutImageContainer3 = ({ layout, srcItem
             </Region>
             <ThemeImage
                 name="item_image"
-                tags={[ 'BITMAP' ]}
                 src={srcItemImage}
                 layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
             />
@@ -301,17 +288,15 @@ export interface MarketPlaceOwnItemsWidgetLayoutExpiredItemItemProps {
     captionItemName?: string;
     imageContainer?: MarketPlaceOwnItemsWidgetLayoutImageContainer3Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MarketPlaceOwnItemsWidgetLayoutExpiredItemItem = ({ captionItemDesc, captionItemExpired, captionItemName, imageContainer, layout, tags }: MarketPlaceOwnItemsWidgetLayoutExpiredItemItemProps) => {
+export const MarketPlaceOwnItemsWidgetLayoutExpiredItemItem = ({ captionItemDesc, captionItemExpired, captionItemName, imageContainer, layout }: MarketPlaceOwnItemsWidgetLayoutExpiredItemItemProps) => {
     const t = useTranslation();
 
     return (
         <Border
             variant="100"
             name="expired_item"
-            tags={tags}
             tintColor="#e3e3e3"
             layout={{ width: 320, height: 58, flexShrink: 0, ...layout }}
         >
@@ -351,10 +336,9 @@ export const MarketPlaceOwnItemsWidgetLayoutExpiredItemItem = ({ captionItemDesc
 export interface MarketPlaceOwnItemsWidgetLayoutItemListProps {
     itemsItemList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MarketPlaceOwnItemsWidgetLayoutItemList = ({ itemsItemList, layout, tags }: MarketPlaceOwnItemsWidgetLayoutItemListProps) => {
+export const MarketPlaceOwnItemsWidgetLayoutItemList = ({ itemsItemList, layout }: MarketPlaceOwnItemsWidgetLayoutItemListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -362,7 +346,6 @@ export const MarketPlaceOwnItemsWidgetLayoutItemList = ({ itemsItemList, layout,
         >
             <Region
                 name="item_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 1, width: '100%' }}
             >
                 {itemsItemList ?? (
@@ -383,16 +366,14 @@ export interface MarketPlaceOwnItemsWidgetLayoutMarketPlaceContentProps {
     captionStatusText?: string;
     itemList?: MarketPlaceOwnItemsWidgetLayoutItemListProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MarketPlaceOwnItemsWidgetLayoutMarketPlaceContent = ({ captionRedeemInfo, captionStatusText, itemList, layout, tags }: MarketPlaceOwnItemsWidgetLayoutMarketPlaceContentProps) => {
+export const MarketPlaceOwnItemsWidgetLayoutMarketPlaceContent = ({ captionRedeemInfo, captionStatusText, itemList, layout }: MarketPlaceOwnItemsWidgetLayoutMarketPlaceContentProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="market_place_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 390, ...layout }}
         >
             <Region
@@ -414,10 +395,7 @@ export const MarketPlaceOwnItemsWidgetLayoutMarketPlaceContent = ({ captionRedee
                     textStyle="text-style-u-small"
                 />
             </Region>
-            <MarketPlaceOwnItemsWidgetLayoutItemList
-                tags={[ 'own_items_grid' ]}
-                {...itemList}
-            />
+            <MarketPlaceOwnItemsWidgetLayoutItemList {...itemList} />
         </Region>
     );
 };

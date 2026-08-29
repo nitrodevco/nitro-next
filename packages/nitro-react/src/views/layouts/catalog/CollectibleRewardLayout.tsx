@@ -43,14 +43,12 @@ export const CollectibleRewardLayout = ({ bottomContainer, layout, onClose, rari
 export interface CollectibleRewardLayoutCollectorHubBackgroundProps {
     layout?: BoxLayout;
     srcGradient?: string;
-    tags?: string[];
 }
 
-export const CollectibleRewardLayoutCollectorHubBackground = ({ layout, srcGradient, tags }: CollectibleRewardLayoutCollectorHubBackgroundProps) => {
+export const CollectibleRewardLayoutCollectorHubBackground = ({ layout, srcGradient }: CollectibleRewardLayoutCollectorHubBackgroundProps) => {
     return (
         <Region
             name="collector_hub_background"
-            tags={tags}
             layout={{ position: 'absolute', left: -2, right: -2, top: 0, height: 565, ...layout }}
         >
             <ThemeImage
@@ -75,16 +73,14 @@ export interface CollectibleRewardLayoutTextContainerProps {
     captionProductName?: string;
     captionTitleText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CollectibleRewardLayoutTextContainer = ({ captionProductName, captionTitleText, layout, tags }: CollectibleRewardLayoutTextContainerProps) => {
+export const CollectibleRewardLayoutTextContainer = ({ captionProductName, captionTitleText, layout }: CollectibleRewardLayoutTextContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="text_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 58, ...layout }}
         >
             <Region
@@ -114,14 +110,12 @@ export const CollectibleRewardLayoutTextContainer = ({ captionProductName, capti
 export interface CollectibleRewardLayoutProductContainerProps {
     layout?: BoxLayout;
     srcRotatingStar?: string;
-    tags?: string[];
 }
 
-export const CollectibleRewardLayoutProductContainer = ({ layout, srcRotatingStar, tags }: CollectibleRewardLayoutProductContainerProps) => {
+export const CollectibleRewardLayoutProductContainer = ({ layout, srcRotatingStar }: CollectibleRewardLayoutProductContainerProps) => {
     return (
         <Region
             name="product_container"
-            tags={tags}
             layout={{ position: 'absolute', width: 300, top: 25, height: 300, ...layout }}
         >
             <ThemeImage
@@ -144,15 +138,13 @@ export interface CollectibleRewardLayoutTopContainerProps {
     collectorHubBackground?: CollectibleRewardLayoutCollectorHubBackgroundProps;
     layout?: BoxLayout;
     productContainer?: CollectibleRewardLayoutProductContainerProps;
-    tags?: string[];
     textContainer?: CollectibleRewardLayoutTextContainerProps;
 }
 
-export const CollectibleRewardLayoutTopContainer = ({ collectorHubBackground, layout, productContainer, tags, textContainer }: CollectibleRewardLayoutTopContainerProps) => {
+export const CollectibleRewardLayoutTopContainer = ({ collectorHubBackground, layout, productContainer, textContainer }: CollectibleRewardLayoutTopContainerProps) => {
     return (
         <Region
             name="top_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 350, justifyContent: 'center', ...layout }}
         >
             <CollectibleRewardLayoutCollectorHubBackground {...collectorHubBackground} />
@@ -166,16 +158,14 @@ export const CollectibleRewardLayoutTopContainer = ({ collectorHubBackground, la
 export interface CollectibleRewardLayoutBottomContainerProps {
     layout?: BoxLayout;
     onOkButton?: () => void;
-    tags?: string[];
 }
 
-export const CollectibleRewardLayoutBottomContainer = ({ layout, onOkButton, tags }: CollectibleRewardLayoutBottomContainerProps) => {
+export const CollectibleRewardLayoutBottomContainer = ({ layout, onOkButton }: CollectibleRewardLayoutBottomContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bottom_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 348, bottom: 35, justifyContent: 'center', ...layout }}
         >
             <Border
@@ -209,16 +199,14 @@ export interface CollectibleRewardLayoutRarityContainerProps {
     captionRarityTitle?: string;
     layout?: BoxLayout;
     srcFlagImage?: string;
-    tags?: string[];
 }
 
-export const CollectibleRewardLayoutRarityContainer = ({ captionRarityText, captionRarityTitle, layout, srcFlagImage, tags }: CollectibleRewardLayoutRarityContainerProps) => {
+export const CollectibleRewardLayoutRarityContainer = ({ captionRarityText, captionRarityTitle, layout, srcFlagImage }: CollectibleRewardLayoutRarityContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rarity_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 300, height: 96, ...layout }}
         >
             <ThemeImage

@@ -31,14 +31,12 @@ export interface EvidenceFrameLayoutChatlineItemProps {
     captionMsgTxt?: string;
     captionTimeTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EvidenceFrameLayoutChatlineItem = ({ captionChatterTxt, captionMsgTxt, captionTimeTxt, layout, tags }: EvidenceFrameLayoutChatlineItemProps) => {
+export const EvidenceFrameLayoutChatlineItem = ({ captionChatterTxt, captionMsgTxt, captionTimeTxt, layout }: EvidenceFrameLayoutChatlineItemProps) => {
     return (
         <Region
             name="chatline"
-            tags={tags}
             layout={{ width: 420, height: 41, flexShrink: 0, ...layout }}
         >
             <Region
@@ -76,10 +74,9 @@ export interface EvidenceFrameLayoutEvidenceListProps {
     layout?: BoxLayout;
     onBtnHeaderAction?: () => void;
     onBtnHeaderAction2?: () => void;
-    tags?: string[];
 }
 
-export const EvidenceFrameLayoutEvidenceList = ({ captionText, itemsEvidenceList, layout, onBtnHeaderAction, onBtnHeaderAction2, tags }: EvidenceFrameLayoutEvidenceListProps) => {
+export const EvidenceFrameLayoutEvidenceList = ({ captionText, itemsEvidenceList, layout, onBtnHeaderAction, onBtnHeaderAction2 }: EvidenceFrameLayoutEvidenceListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -87,7 +84,6 @@ export const EvidenceFrameLayoutEvidenceList = ({ captionText, itemsEvidenceList
         >
             <Region
                 name="evidence_list"
-                tags={tags}
                 backgroundColor="#418db0"
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
@@ -135,14 +131,12 @@ export const EvidenceFrameLayoutEvidenceList = ({ captionText, itemsEvidenceList
 export interface EvidenceFrameLayoutChatContProps {
     evidenceList?: EvidenceFrameLayoutEvidenceListProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const EvidenceFrameLayoutChatCont = ({ evidenceList, layout, tags }: EvidenceFrameLayoutChatContProps) => {
+export const EvidenceFrameLayoutChatCont = ({ evidenceList, layout }: EvidenceFrameLayoutChatContProps) => {
     return (
         <Region
             name="chat_cont"
-            tags={tags}
             backgroundColor="#4184b0"
             layout={{ position: 'absolute', left: 0, right: 10, top: 0, bottom: 32, ...layout }}
         >

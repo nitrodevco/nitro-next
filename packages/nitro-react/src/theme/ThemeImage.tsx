@@ -1,4 +1,4 @@
-import { Container as PixiContainer, EventMode, FederatedPointerEvent, Rectangle, Texture } from 'pixi.js';
+import { BLEND_MODES, Container as PixiContainer, EventMode, FederatedPointerEvent, Rectangle, Texture } from 'pixi.js';
 import { CSSProperties, forwardRef, MouseEventHandler, PointerEventHandler, useMemo } from 'react';
 
 import { useConfigValue } from '#base/context';
@@ -16,6 +16,8 @@ export interface ImageProps extends ThemeLayoutMeta {
     height?: number;
     tint?: string;
     alpha?: number;
+    /** The Flash `BLEND_<mode>` tag on a bitmap. */
+    blendMode?: BLEND_MODES;
     eventMode?: EventMode;
     cursor?: string;
     /**
@@ -60,7 +62,7 @@ export interface ImageProps extends ThemeLayoutMeta {
  * unless a caller actually asks for one.
  */
 const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
-    src, frame, width, height, tint, alpha, eventMode, cursor,
+    src, frame, width, height, tint, alpha, blendMode, eventMode, cursor,
     onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     showLoadingPlaceholder, layout, visible,
 }, ref) => {
@@ -97,6 +99,7 @@ const ImagePixi = forwardRef<PixiContainer, ImageProps>(({
                 height={height ?? resolvedTexture.height}
                 tint={tint}
                 alpha={alpha}
+                blendMode={blendMode}
                 eventMode={resolvedEventMode}
                 cursor={cursor}
                 onPointerOver={onPointerOver}
@@ -122,7 +125,7 @@ ImagePixi.displayName = 'ImagePixi';
  * established, sized/positioned to match whichever of the two the base render is.
  */
 const ImageDom = forwardRef<PixiContainer, ImageProps>(({
-    src, frame, width, height, tint, alpha, eventMode, cursor,
+    src, frame, width, height, tint, alpha, blendMode, eventMode, cursor,
     onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     layout, visible,
 }, ref) => {
@@ -137,6 +140,7 @@ const ImageDom = forwardRef<PixiContainer, ImageProps>(({
     const sharedStyle: CSSProperties = {
         cursor,
         opacity: alpha,
+        mixBlendMode: typeof blendMode === 'string' && blendMode !== 'normal' && blendMode !== 'inherit' ? (blendMode === 'add' ? 'screen' : blendMode) as CSSProperties['mixBlendMode'] : undefined,
         pointerEvents: pointerEventsFromEventMode(resolvedEventMode),
     };
     const sharedHandlers = {

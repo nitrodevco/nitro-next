@@ -19,15 +19,13 @@ export const CameraFilterbuttonLayout = ({ layout, region }: CameraFilterbuttonL
 export interface CameraFilterbuttonLayoutRemoveEffectButtonProps {
     layout?: BoxLayout;
     onRemoveEffectButton?: () => void;
-    tags?: string[];
     visibleRemoveEffectButton?: boolean;
 }
 
-export const CameraFilterbuttonLayoutRemoveEffectButton = ({ layout, onRemoveEffectButton, tags, visibleRemoveEffectButton }: CameraFilterbuttonLayoutRemoveEffectButtonProps) => {
+export const CameraFilterbuttonLayoutRemoveEffectButton = ({ layout, onRemoveEffectButton, visibleRemoveEffectButton }: CameraFilterbuttonLayoutRemoveEffectButtonProps) => {
     return (
         <Region
             name="remove_effect_button"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under"
             visible={visibleRemoveEffectButton ?? false}
             onPointerTap={onRemoveEffectButton}
@@ -35,7 +33,6 @@ export const CameraFilterbuttonLayoutRemoveEffectButton = ({ layout, onRemoveEff
             layout={{ position: 'absolute', left: 43, width: 19, top: 0, height: 19, ...layout }}
         >
             <ThemeImage
-                tags={[ '#bg' ]}
                 src={layoutImage('camera_cam_close_x.png')}
                 layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19 }}
             />
@@ -53,14 +50,12 @@ export interface CameraFilterbuttonLayoutRegionProps {
     srcLockIndicator?: string;
     srcOutline?: string;
     srcSelectedIndicator?: string;
-    tags?: string[];
 }
 
-export const CameraFilterbuttonLayoutRegion = ({ layout, onRegion, removeEffectButton, srcActiveIndicator, srcContent, srcLockIndicator, srcOutline, srcSelectedIndicator, tags }: CameraFilterbuttonLayoutRegionProps) => {
+export const CameraFilterbuttonLayoutRegion = ({ layout, onRegion, removeEffectButton, srcActiveIndicator, srcContent, srcLockIndicator, srcOutline, srcSelectedIndicator }: CameraFilterbuttonLayoutRegionProps) => {
     return (
         <Region
             name="region"
-            tags={tags}
             onPointerTap={onRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 62, ...layout }}

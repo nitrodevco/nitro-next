@@ -38,17 +38,15 @@ export interface NewModerationToolLayoutMainViewProps {
     onGiveFurniBtn?: () => void;
     onHotelAlertBtn?: () => void;
     onSendWarningBtn?: () => void;
-    tags?: string[];
     visibleMainView?: boolean;
 }
 
-export const NewModerationToolLayoutMainView = ({ layout, onBanUserBtn, onGiveCoinsBtn, onGiveFurniBtn, onHotelAlertBtn, onSendWarningBtn, tags, visibleMainView }: NewModerationToolLayoutMainViewProps) => {
+export const NewModerationToolLayoutMainView = ({ layout, onBanUserBtn, onGiveCoinsBtn, onGiveFurniBtn, onHotelAlertBtn, onSendWarningBtn, visibleMainView }: NewModerationToolLayoutMainViewProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="main_view"
-            tags={tags}
             visible={visibleMainView ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33, ...layout }}
         >
@@ -108,18 +106,16 @@ export interface NewModerationToolLayoutHotelAlertViewProps {
     captionHotelAlertTxt?: string;
     layout?: BoxLayout;
     onSendHotelAlertBtn?: () => void;
-    tags?: string[];
     visibleHotelAlertView?: boolean;
 }
 
-export const NewModerationToolLayoutHotelAlertView = ({ captionHotelAlertTxt, layout, onSendHotelAlertBtn, tags, visibleHotelAlertView }: NewModerationToolLayoutHotelAlertViewProps) => {
+export const NewModerationToolLayoutHotelAlertView = ({ captionHotelAlertTxt, layout, onSendHotelAlertBtn, visibleHotelAlertView }: NewModerationToolLayoutHotelAlertViewProps) => {
     const t = useTranslation();
     const [ hotelAlertInputValue, setHotelAlertInputValue ] = useState('');
 
     return (
         <Region
             name="hotel_alert_view"
-            tags={tags}
             visible={visibleHotelAlertView ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
@@ -162,11 +158,10 @@ export interface NewModerationToolLayoutSendWarningViewProps {
     captionUserTxt?: string;
     layout?: BoxLayout;
     onSendWarningBtn?: () => void;
-    tags?: string[];
     visibleSendWarningView?: boolean;
 }
 
-export const NewModerationToolLayoutSendWarningView = ({ captionTextTxt, captionUserTxt, layout, onSendWarningBtn, tags, visibleSendWarningView }: NewModerationToolLayoutSendWarningViewProps) => {
+export const NewModerationToolLayoutSendWarningView = ({ captionTextTxt, captionUserTxt, layout, onSendWarningBtn, visibleSendWarningView }: NewModerationToolLayoutSendWarningViewProps) => {
     const t = useTranslation();
     const [ warningUsernameInputValue, setWarningUsernameInputValue ] = useState('');
     const [ warningInputValue, setWarningInputValue ] = useState('');
@@ -174,7 +169,6 @@ export const NewModerationToolLayoutSendWarningView = ({ captionTextTxt, caption
     return (
         <Region
             name="send_warning_view"
-            tags={tags}
             visible={visibleSendWarningView ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
@@ -237,11 +231,10 @@ export interface NewModerationToolLayoutGiveCoinsViewProps {
     onAddCoinsBtn?: () => void;
     onMinusBtnCoins?: () => void;
     onPlusBtnCoins?: () => void;
-    tags?: string[];
     visibleGiveCoinsView?: boolean;
 }
 
-export const NewModerationToolLayoutGiveCoinsView = ({ captionAmountTxt, captionUserTxt, layout, onAddCoinsBtn, onMinusBtnCoins, onPlusBtnCoins, tags, visibleGiveCoinsView }: NewModerationToolLayoutGiveCoinsViewProps) => {
+export const NewModerationToolLayoutGiveCoinsView = ({ captionAmountTxt, captionUserTxt, layout, onAddCoinsBtn, onMinusBtnCoins, onPlusBtnCoins, visibleGiveCoinsView }: NewModerationToolLayoutGiveCoinsViewProps) => {
     const t = useTranslation();
     const [ giveCoinsUsernameInputValue, setGiveCoinsUsernameInputValue ] = useState('');
     const [ amountCoinsInputValue, setAmountCoinsInputValue ] = useState('');
@@ -249,7 +242,6 @@ export const NewModerationToolLayoutGiveCoinsView = ({ captionAmountTxt, caption
     return (
         <Region
             name="give_coins_view"
-            tags={tags}
             visible={visibleGiveCoinsView ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
@@ -325,10 +317,9 @@ export interface NewModerationToolLayoutGiveFurniViewProps {
     onAddFurniBtn?: () => void;
     onMinusBtnFurni?: () => void;
     onPlusBtnFurni?: () => void;
-    tags?: string[];
 }
 
-export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, captionProductNameTxt, captionUserTxt, layout, onAddFurniBtn, onMinusBtnFurni, onPlusBtnFurni, tags }: NewModerationToolLayoutGiveFurniViewProps) => {
+export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, captionProductNameTxt, captionUserTxt, layout, onAddFurniBtn, onMinusBtnFurni, onPlusBtnFurni }: NewModerationToolLayoutGiveFurniViewProps) => {
     const t = useTranslation();
     const [ giveFurniUsernameInputValue, setGiveFurniUsernameInputValue ] = useState('');
     const [ amountFurniInputValue, setAmountFurniInputValue ] = useState('');
@@ -337,7 +328,6 @@ export const NewModerationToolLayoutGiveFurniView = ({ captionAmountTxt, caption
     return (
         <Region
             name="give_furni_view"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
@@ -427,14 +417,12 @@ export interface NewModerationToolLayoutBanTypeProps {
     layout?: BoxLayout;
     onBanRadio?: () => void;
     onUnbanRadio?: () => void;
-    tags?: string[];
 }
 
-export const NewModerationToolLayoutBanType = ({ layout, onBanRadio, onUnbanRadio, tags }: NewModerationToolLayoutBanTypeProps) => {
+export const NewModerationToolLayoutBanType = ({ layout, onBanRadio, onUnbanRadio }: NewModerationToolLayoutBanTypeProps) => {
     return (
         <Region
             name="ban_type"
-            tags={tags}
             layout={{ position: 'absolute', left: 13, right: 15, top: 62, height: 54, ...layout }}
         >
             <RadioButton
@@ -460,18 +448,16 @@ export interface NewModerationToolLayoutBanViewProps {
     layout?: BoxLayout;
     onBanBtn?: () => void;
     onDurationSelector?: () => void;
-    tags?: string[];
     visibleBanView?: boolean;
 }
 
-export const NewModerationToolLayoutBanView = ({ banType, captionUserTxt, layout, onBanBtn, onDurationSelector, tags, visibleBanView }: NewModerationToolLayoutBanViewProps) => {
+export const NewModerationToolLayoutBanView = ({ banType, captionUserTxt, layout, onBanBtn, onDurationSelector, visibleBanView }: NewModerationToolLayoutBanViewProps) => {
     const t = useTranslation();
     const [ banUsernameInputValue, setBanUsernameInputValue ] = useState('');
 
     return (
         <Region
             name="ban_view"
-            tags={tags}
             visible={visibleBanView ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
@@ -536,14 +522,12 @@ export interface NewModerationToolLayoutSubviewWrapperProps {
     layout?: BoxLayout;
     onReturnBtn?: () => void;
     sendWarningView?: NewModerationToolLayoutSendWarningViewProps;
-    tags?: string[];
 }
 
-export const NewModerationToolLayoutSubviewWrapper = ({ banView, giveCoinsView, giveFurniView, hotelAlertView, layout, onReturnBtn, sendWarningView, tags }: NewModerationToolLayoutSubviewWrapperProps) => {
+export const NewModerationToolLayoutSubviewWrapper = ({ banView, giveCoinsView, giveFurniView, hotelAlertView, layout, onReturnBtn, sendWarningView }: NewModerationToolLayoutSubviewWrapperProps) => {
     return (
         <Region
             name="subview_wrapper"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33, ...layout }}
         >
             <ContainerButton

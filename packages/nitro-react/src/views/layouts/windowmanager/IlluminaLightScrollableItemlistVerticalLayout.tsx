@@ -9,10 +9,7 @@ export interface IlluminaLightScrollableItemlistVerticalLayoutProps {
 export const IlluminaLightScrollableItemlistVerticalLayout = ({ iTEMLIST, layout }: IlluminaLightScrollableItemlistVerticalLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 40, height: 40, ...layout }}>
-            <IlluminaLightScrollableItemlistVerticalLayoutITEMLIST
-                tags={[ '_ITEMLIST', '_EXCLUDE', '_INTERNAL' ]}
-                {...iTEMLIST}
-            />
+            <IlluminaLightScrollableItemlistVerticalLayoutITEMLIST {...iTEMLIST} />
             {/* <scrollbar_vertical> for ? - rendered by that list's ScrollArea */}
         </Region>
     );
@@ -21,14 +18,12 @@ export const IlluminaLightScrollableItemlistVerticalLayout = ({ iTEMLIST, layout
 /** Named region `_ITEMLIST` of IlluminaLightScrollableItemlistVerticalLayout - configured through the parent's `iTEMLIST` prop. */
 export interface IlluminaLightScrollableItemlistVerticalLayoutITEMLISTProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IlluminaLightScrollableItemlistVerticalLayoutITEMLIST = ({ layout, tags }: IlluminaLightScrollableItemlistVerticalLayoutITEMLISTProps) => {
+export const IlluminaLightScrollableItemlistVerticalLayoutITEMLIST = ({ layout }: IlluminaLightScrollableItemlistVerticalLayoutITEMLISTProps) => {
     return (
         <Region
             name="_ITEMLIST"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 9, top: 0, bottom: 0, flexDirection: 'column', ...layout }}
         />
     );

@@ -39,17 +39,15 @@ export interface VaultViewLayoutDailygiftContainerItemProps {
     layout?: BoxLayout;
     onDailygiftClaimButton?: () => void;
     srcDailygiftBitmap?: string;
-    tags?: string[];
     visibleCreditIcon?: boolean;
 }
 
-export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditValue, captionDailygiftDucketValue, captionDailygiftLabel, layout, onDailygiftClaimButton, srcDailygiftBitmap, tags, visibleCreditIcon }: VaultViewLayoutDailygiftContainerItemProps) => {
+export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditValue, captionDailygiftDucketValue, captionDailygiftLabel, layout, onDailygiftClaimButton, srcDailygiftBitmap, visibleCreditIcon }: VaultViewLayoutDailygiftContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dailygift_container"
-            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
@@ -100,7 +98,6 @@ export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditVa
             >
                 <ThemeImage
                     name="dailygift_bitmap"
-                    tags={[ '#icon' ]}
                     src={srcDailygiftBitmap ?? layoutImage('vault_earnings_icon_dailygift.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
@@ -134,17 +131,15 @@ export interface VaultViewLayoutGamesContainerItemProps {
     layout?: BoxLayout;
     onGamesClaimButton?: () => void;
     srcGamesBitmap?: string;
-    tags?: string[];
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, captionGamesDucketValue, captionGamesLabel, layout, onGamesClaimButton, srcGamesBitmap, tags, visibleDucketIcon }: VaultViewLayoutGamesContainerItemProps) => {
+export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, captionGamesDucketValue, captionGamesLabel, layout, onGamesClaimButton, srcGamesBitmap, visibleDucketIcon }: VaultViewLayoutGamesContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="games_container"
-            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
@@ -195,7 +190,6 @@ export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, cap
             >
                 <ThemeImage
                     name="games_bitmap"
-                    tags={[ '#icon' ]}
                     src={srcGamesBitmap ?? layoutImage('vault_earnings_icon_games.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
@@ -229,17 +223,15 @@ export interface VaultViewLayoutWiredchestContainerItemProps {
     layout?: BoxLayout;
     onWiredchestClaimButton?: () => void;
     srcWiredchestBitmap?: string;
-    tags?: string[];
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCreditValue, captionWiredchestDucketValue, captionWiredchestLabel, layout, onWiredchestClaimButton, srcWiredchestBitmap, tags, visibleDucketIcon }: VaultViewLayoutWiredchestContainerItemProps) => {
+export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCreditValue, captionWiredchestDucketValue, captionWiredchestLabel, layout, onWiredchestClaimButton, srcWiredchestBitmap, visibleDucketIcon }: VaultViewLayoutWiredchestContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wiredchest_container"
-            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
@@ -290,7 +282,6 @@ export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCredit
             >
                 <ThemeImage
                     name="wiredchest_bitmap"
-                    tags={[ '#icon' ]}
                     src={srcWiredchestBitmap ?? layoutImage('vault_earnings_icon_chests.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 2, height: 32 }}
                 />
@@ -324,16 +315,14 @@ export interface VaultViewLayoutAchievementsContainerItemProps {
     layout?: BoxLayout;
     onAchievementsClaimButton?: () => void;
     srcAchievementsBitmap?: string;
-    tags?: string[];
 }
 
-export const VaultViewLayoutAchievementsContainerItem = ({ captionAchievementsCreditValue, captionAchievementsDucketValue, captionAchievementsLabel, layout, onAchievementsClaimButton, srcAchievementsBitmap, tags }: VaultViewLayoutAchievementsContainerItemProps) => {
+export const VaultViewLayoutAchievementsContainerItem = ({ captionAchievementsCreditValue, captionAchievementsDucketValue, captionAchievementsLabel, layout, onAchievementsClaimButton, srcAchievementsBitmap }: VaultViewLayoutAchievementsContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="achievements_container"
-            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
@@ -378,7 +367,6 @@ export const VaultViewLayoutAchievementsContainerItem = ({ captionAchievementsCr
             >
                 <ThemeImage
                     name="achievements_bitmap"
-                    tags={[ '#icon' ]}
                     src={srcAchievementsBitmap ?? layoutImage('vault_earnings_icon_achievements.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
@@ -412,17 +400,15 @@ export interface VaultViewLayoutMarketplaceContainerItemProps {
     layout?: BoxLayout;
     onMarketplaceClaimButton?: () => void;
     srcMarketplaceBitmap?: string;
-    tags?: string[];
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCreditValue, captionMarketplaceDucketValue, captionMarketplaceLabel, layout, onMarketplaceClaimButton, srcMarketplaceBitmap, tags, visibleDucketIcon }: VaultViewLayoutMarketplaceContainerItemProps) => {
+export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCreditValue, captionMarketplaceDucketValue, captionMarketplaceLabel, layout, onMarketplaceClaimButton, srcMarketplaceBitmap, visibleDucketIcon }: VaultViewLayoutMarketplaceContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="marketplace_container"
-            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
@@ -473,7 +459,6 @@ export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCred
             >
                 <ThemeImage
                     name="marketplace_bitmap"
-                    tags={[ '#icon' ]}
                     src={srcMarketplaceBitmap ?? layoutImage('vault_earnings_icon_marketplace.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
@@ -507,17 +492,15 @@ export interface VaultViewLayoutHabboclubContainerItemProps {
     layout?: BoxLayout;
     onHabboclubClaimButton?: () => void;
     srcHabboclubBitmap?: string;
-    tags?: string[];
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditValue, captionHabboclubDucketValue, captionHabboclubLabel, layout, onHabboclubClaimButton, srcHabboclubBitmap, tags, visibleDucketIcon }: VaultViewLayoutHabboclubContainerItemProps) => {
+export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditValue, captionHabboclubDucketValue, captionHabboclubLabel, layout, onHabboclubClaimButton, srcHabboclubBitmap, visibleDucketIcon }: VaultViewLayoutHabboclubContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="habboclub_container"
-            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
@@ -568,7 +551,6 @@ export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditVa
             >
                 <ThemeImage
                     name="habboclub_bitmap"
-                    tags={[ '#icon' ]}
                     src={srcHabboclubBitmap ?? layoutImage('vault_earnings_icon_hcpayday.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
@@ -602,16 +584,14 @@ export interface VaultViewLayoutLevelprogressionContainerItemProps {
     layout?: BoxLayout;
     onLevelprogressionClaimButton?: () => void;
     srcLevelprogressionBitmap?: string;
-    tags?: string[];
 }
 
-export const VaultViewLayoutLevelprogressionContainerItem = ({ captionLevelprogressionCreditValue, captionLevelprogressionDucketValue, captionLevelprogressionLabel, layout, onLevelprogressionClaimButton, srcLevelprogressionBitmap, tags }: VaultViewLayoutLevelprogressionContainerItemProps) => {
+export const VaultViewLayoutLevelprogressionContainerItem = ({ captionLevelprogressionCreditValue, captionLevelprogressionDucketValue, captionLevelprogressionLabel, layout, onLevelprogressionClaimButton, srcLevelprogressionBitmap }: VaultViewLayoutLevelprogressionContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="levelprogression_container"
-            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
@@ -656,7 +636,6 @@ export const VaultViewLayoutLevelprogressionContainerItem = ({ captionLevelprogr
             >
                 <ThemeImage
                     name="levelprogression_bitmap"
-                    tags={[ '#icon' ]}
                     src={srcLevelprogressionBitmap ?? layoutImage('vault_earnings_icon_levelprogression.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
@@ -690,17 +669,15 @@ export interface VaultViewLayoutDonationContainerItemProps {
     layout?: BoxLayout;
     onDonationClaimButton?: () => void;
     srcDonationBitmap?: string;
-    tags?: string[];
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValue, captionDonationDucketValue, captionDonationLabel, layout, onDonationClaimButton, srcDonationBitmap, tags, visibleDucketIcon }: VaultViewLayoutDonationContainerItemProps) => {
+export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValue, captionDonationDucketValue, captionDonationLabel, layout, onDonationClaimButton, srcDonationBitmap, visibleDucketIcon }: VaultViewLayoutDonationContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="donation_container"
-            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
@@ -751,7 +728,6 @@ export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValu
             >
                 <ThemeImage
                     name="donation_bitmap"
-                    tags={[ '#icon' ]}
                     src={srcDonationBitmap ?? layoutImage('vault_earnings_icon_donations.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
@@ -787,18 +763,16 @@ export interface VaultViewLayoutBonusbagContainerItemProps {
     onBonusbagClaimButton?: () => void;
     srcBonusbagBitmap?: string;
     srcProductIcon?: string;
-    tags?: string[];
     visibleCreditIcon?: boolean;
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValue, captionBonusbagDucketValue, captionBonusbagLabel, captionBonusbagProductValue, layout, onBonusbagClaimButton, srcBonusbagBitmap, srcProductIcon, tags, visibleCreditIcon, visibleDucketIcon }: VaultViewLayoutBonusbagContainerItemProps) => {
+export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValue, captionBonusbagDucketValue, captionBonusbagLabel, captionBonusbagProductValue, layout, onBonusbagClaimButton, srcBonusbagBitmap, srcProductIcon, visibleCreditIcon, visibleDucketIcon }: VaultViewLayoutBonusbagContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bonusbag_container"
-            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
@@ -869,7 +843,6 @@ export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValu
             >
                 <ThemeImage
                     name="bonusbag_bitmap"
-                    tags={[ '#icon' ]}
                     src={srcBonusbagBitmap ?? layoutImage('vault_earnings_icon_bonusbag.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
@@ -903,16 +876,14 @@ export interface VaultViewLayoutSurpriseContainerItemProps {
     layout?: BoxLayout;
     onSurpriseClaimButton?: () => void;
     srcSurpriseBitmap?: string;
-    tags?: string[];
 }
 
-export const VaultViewLayoutSurpriseContainerItem = ({ captionSurpriseCreditValue, captionSurpriseDucketValue, captionSurpriseLabel, layout, onSurpriseClaimButton, srcSurpriseBitmap, tags }: VaultViewLayoutSurpriseContainerItemProps) => {
+export const VaultViewLayoutSurpriseContainerItem = ({ captionSurpriseCreditValue, captionSurpriseDucketValue, captionSurpriseLabel, layout, onSurpriseClaimButton, srcSurpriseBitmap }: VaultViewLayoutSurpriseContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="surprise_container"
-            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
@@ -957,7 +928,6 @@ export const VaultViewLayoutSurpriseContainerItem = ({ captionSurpriseCreditValu
             >
                 <ThemeImage
                     name="surprise_bitmap"
-                    tags={[ '#icon' ]}
                     src={srcSurpriseBitmap ?? layoutImage('vault_earnings_icon_surprise.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
@@ -993,17 +963,15 @@ export interface VaultViewLayoutSnowstormContainerItemProps {
     onSnowstormClaimButton?: () => void;
     srcProductIcon?: string;
     srcSnowstormBitmap?: string;
-    tags?: string[];
     visibleCreditIcon?: boolean;
 }
 
-export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditValue, captionSnowstormDucketValue, captionSnowstormLabel, captionSnowstormProductValue, layout, onSnowstormClaimButton, srcProductIcon, srcSnowstormBitmap, tags, visibleCreditIcon }: VaultViewLayoutSnowstormContainerItemProps) => {
+export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditValue, captionSnowstormDucketValue, captionSnowstormLabel, captionSnowstormProductValue, layout, onSnowstormClaimButton, srcProductIcon, srcSnowstormBitmap, visibleCreditIcon }: VaultViewLayoutSnowstormContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="snowstorm_container"
-            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
@@ -1068,7 +1036,6 @@ export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditVa
             >
                 <ThemeImage
                     name="snowstorm_bitmap"
-                    tags={[ '#icon' ]}
                     src={srcSnowstormBitmap ?? layoutImage('vault_earnings_icon_snowstorm.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 1, height: 32 }}
                 />
@@ -1102,17 +1069,15 @@ export interface VaultViewLayoutAgencyContainerItemProps {
     layout?: BoxLayout;
     onAgencyClaimButton?: () => void;
     srcAgencyBitmap?: string;
-    tags?: string[];
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, captionAgencyDucketValue, captionAgencyLabel, layout, onAgencyClaimButton, srcAgencyBitmap, tags, visibleDucketIcon }: VaultViewLayoutAgencyContainerItemProps) => {
+export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, captionAgencyDucketValue, captionAgencyLabel, layout, onAgencyClaimButton, srcAgencyBitmap, visibleDucketIcon }: VaultViewLayoutAgencyContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="agency_container"
-            tags={tags}
             layout={{ width: 404, height: 34, flexShrink: 0, ...layout }}
         >
             <Border
@@ -1163,7 +1128,6 @@ export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, c
             >
                 <ThemeImage
                     name="agency_bitmap"
-                    tags={[ '#icon' ]}
                     src={srcAgencyBitmap ?? layoutImage('vault_earnings_icon_rpgs.png')}
                     layout={{ position: 'absolute', left: 1, width: 32, top: 3, height: 32 }}
                 />
@@ -1193,14 +1157,12 @@ export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, c
 export interface VaultViewLayoutScrollingEarningsListProps {
     itemsScrollingEarningsList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const VaultViewLayoutScrollingEarningsList = ({ itemsScrollingEarningsList, layout, tags }: VaultViewLayoutScrollingEarningsListProps) => {
+export const VaultViewLayoutScrollingEarningsList = ({ itemsScrollingEarningsList, layout }: VaultViewLayoutScrollingEarningsListProps) => {
     return (
         <Region
             name="scrolling_earnings_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 2, width: 404, top: 5, height: 441, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsScrollingEarningsList ?? (
@@ -1228,16 +1190,14 @@ export interface VaultViewLayoutEarningsContentAreaProps {
     layout?: BoxLayout;
     onClaimAllBtn?: () => void;
     scrollingEarningsList?: VaultViewLayoutScrollingEarningsListProps;
-    tags?: string[];
 }
 
-export const VaultViewLayoutEarningsContentArea = ({ layout, onClaimAllBtn, scrollingEarningsList, tags }: VaultViewLayoutEarningsContentAreaProps) => {
+export const VaultViewLayoutEarningsContentArea = ({ layout, onClaimAllBtn, scrollingEarningsList }: VaultViewLayoutEarningsContentAreaProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="earningsContentArea"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 404, top: 0, bottom: 45, justifyContent: 'center', ...layout }}
         >
             <VaultViewLayoutScrollingEarningsList {...scrollingEarningsList} />

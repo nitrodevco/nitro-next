@@ -20,14 +20,12 @@ export const UseProductControllerReviveMonsterplantLayout = ({ elementList, layo
 /** Row template `separator` of UseProductControllerReviveMonsterplantLayout - pass real rows through its `items…` slot. */
 export interface UseProductControllerReviveMonsterplantLayoutSeparatorItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UseProductControllerReviveMonsterplantLayoutSeparatorItem = ({ layout, tags }: UseProductControllerReviveMonsterplantLayoutSeparatorItemProps) => {
+export const UseProductControllerReviveMonsterplantLayoutSeparatorItem = ({ layout }: UseProductControllerReviveMonsterplantLayoutSeparatorItemProps) => {
     return (
         <Region
             name="separator"
-            tags={tags}
             layout={{ width: 270, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -37,16 +35,14 @@ export const UseProductControllerReviveMonsterplantLayoutSeparatorItem = ({ layo
 export interface UseProductControllerReviveMonsterplantLayoutPlantNameItemProps {
     captionPlantName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UseProductControllerReviveMonsterplantLayoutPlantNameItem = ({ captionPlantName, layout, tags }: UseProductControllerReviveMonsterplantLayoutPlantNameItemProps) => {
+export const UseProductControllerReviveMonsterplantLayoutPlantNameItem = ({ captionPlantName, layout }: UseProductControllerReviveMonsterplantLayoutPlantNameItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="plant_name"
-            tags={tags}
             layout={{ width: 122, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -62,14 +58,12 @@ export interface UseProductControllerReviveMonsterplantLayoutPreviewImageRegionI
     layout?: BoxLayout;
     onPreviewImageRegion?: () => void;
     srcPreviewImage?: string;
-    tags?: string[];
 }
 
-export const UseProductControllerReviveMonsterplantLayoutPreviewImageRegionItem = ({ layout, onPreviewImageRegion, srcPreviewImage, tags }: UseProductControllerReviveMonsterplantLayoutPreviewImageRegionItemProps) => {
+export const UseProductControllerReviveMonsterplantLayoutPreviewImageRegionItem = ({ layout, onPreviewImageRegion, srcPreviewImage }: UseProductControllerReviveMonsterplantLayoutPreviewImageRegionItemProps) => {
     return (
         <Region
             name="preview_image_region"
-            tags={tags}
             onPointerTap={onPreviewImageRegion}
             cursor="pointer"
             layout={{ width: 122, height: 130, flexShrink: 0, minWidth: 122, maxWidth: 122, minHeight: 130, maxHeight: 130, ...layout }}
@@ -87,16 +81,14 @@ export const UseProductControllerReviveMonsterplantLayoutPreviewImageRegionItem 
 export interface UseProductControllerReviveMonsterplantLayoutPlantRarityLevelItemProps {
     captionPlantRarityLevel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UseProductControllerReviveMonsterplantLayoutPlantRarityLevelItem = ({ captionPlantRarityLevel, layout, tags }: UseProductControllerReviveMonsterplantLayoutPlantRarityLevelItemProps) => {
+export const UseProductControllerReviveMonsterplantLayoutPlantRarityLevelItem = ({ captionPlantRarityLevel, layout }: UseProductControllerReviveMonsterplantLayoutPlantRarityLevelItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="plant_rarity_level"
-            tags={tags}
             layout={{ width: 134, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -111,16 +103,14 @@ export const UseProductControllerReviveMonsterplantLayoutPlantRarityLevelItem = 
 export interface UseProductControllerReviveMonsterplantLayoutPlantDescriptionItemProps {
     captionPlantDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UseProductControllerReviveMonsterplantLayoutPlantDescriptionItem = ({ captionPlantDescription, layout, tags }: UseProductControllerReviveMonsterplantLayoutPlantDescriptionItemProps) => {
+export const UseProductControllerReviveMonsterplantLayoutPlantDescriptionItem = ({ captionPlantDescription, layout }: UseProductControllerReviveMonsterplantLayoutPlantDescriptionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="plant_description"
-            tags={tags}
             layout={{ width: 122, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
@@ -135,14 +125,12 @@ export const UseProductControllerReviveMonsterplantLayoutPlantDescriptionItem = 
 export interface UseProductControllerReviveMonsterplantLayoutPlantItemlistItemProps {
     itemsPlantItemlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UseProductControllerReviveMonsterplantLayoutPlantItemlistItem = ({ itemsPlantItemlist, layout, tags }: UseProductControllerReviveMonsterplantLayoutPlantItemlistItemProps) => {
+export const UseProductControllerReviveMonsterplantLayoutPlantItemlistItem = ({ itemsPlantItemlist, layout }: UseProductControllerReviveMonsterplantLayoutPlantItemlistItemProps) => {
     return (
         <Region
             name="plant_itemlist"
-            tags={tags}
             layout={{ flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsPlantItemlist ?? (
@@ -160,14 +148,12 @@ export const UseProductControllerReviveMonsterplantLayoutPlantItemlistItem = ({ 
 /** Named region `separator` of UseProductControllerReviveMonsterplantLayout - configured through the parent's `separator` prop. */
 export interface UseProductControllerReviveMonsterplantLayoutSeparatorProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UseProductControllerReviveMonsterplantLayoutSeparator = ({ layout, tags }: UseProductControllerReviveMonsterplantLayoutSeparatorProps) => {
+export const UseProductControllerReviveMonsterplantLayoutSeparator = ({ layout }: UseProductControllerReviveMonsterplantLayoutSeparatorProps) => {
     return (
         <Region
             name="separator"
-            tags={tags}
             layout={{ width: 130, height: 17, flexShrink: 0, minWidth: 130, maxWidth: 130, ...layout }}
         />
     );
@@ -176,14 +162,12 @@ export const UseProductControllerReviveMonsterplantLayoutSeparator = ({ layout, 
 /** Named region `separator` of UseProductControllerReviveMonsterplantLayout - configured through the parent's `separator` prop. */
 export interface UseProductControllerReviveMonsterplantLayoutSeparator2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UseProductControllerReviveMonsterplantLayoutSeparator2 = ({ layout, tags }: UseProductControllerReviveMonsterplantLayoutSeparator2Props) => {
+export const UseProductControllerReviveMonsterplantLayoutSeparator2 = ({ layout }: UseProductControllerReviveMonsterplantLayoutSeparator2Props) => {
     return (
         <Region
             name="separator"
-            tags={tags}
             layout={{ width: 130, height: 10, flexShrink: 0, minWidth: 130, maxWidth: 130, ...layout }}
         />
     );
@@ -197,16 +181,14 @@ export interface UseProductControllerReviveMonsterplantLayoutPreviewListItemProp
     layout?: BoxLayout;
     separator?: UseProductControllerReviveMonsterplantLayoutSeparatorProps;
     separator2?: UseProductControllerReviveMonsterplantLayoutSeparator2Props;
-    tags?: string[];
 }
 
-export const UseProductControllerReviveMonsterplantLayoutPreviewListItem = ({ captionDescription, captionInfo, itemsPreviewList, layout, separator, separator2, tags }: UseProductControllerReviveMonsterplantLayoutPreviewListItemProps) => {
+export const UseProductControllerReviveMonsterplantLayoutPreviewListItem = ({ captionDescription, captionInfo, itemsPreviewList, layout, separator, separator2 }: UseProductControllerReviveMonsterplantLayoutPreviewListItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="preview_list"
-            tags={tags}
             layout={{ flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsPreviewList ?? (
@@ -242,14 +224,12 @@ export const UseProductControllerReviveMonsterplantLayoutPreviewListItem = ({ ca
 /** Row template `separator` of UseProductControllerReviveMonsterplantLayout - pass real rows through its `items…` slot. */
 export interface UseProductControllerReviveMonsterplantLayoutSeparatorItem2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UseProductControllerReviveMonsterplantLayoutSeparatorItem2 = ({ layout, tags }: UseProductControllerReviveMonsterplantLayoutSeparatorItem2Props) => {
+export const UseProductControllerReviveMonsterplantLayoutSeparatorItem2 = ({ layout }: UseProductControllerReviveMonsterplantLayoutSeparatorItem2Props) => {
     return (
         <Region
             name="separator"
-            tags={tags}
             layout={{ width: 270, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -258,14 +238,12 @@ export const UseProductControllerReviveMonsterplantLayoutSeparatorItem2 = ({ lay
 /** Row template `separator` of UseProductControllerReviveMonsterplantLayout - pass real rows through its `items…` slot. */
 export interface UseProductControllerReviveMonsterplantLayoutSeparatorItem3Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UseProductControllerReviveMonsterplantLayoutSeparatorItem3 = ({ layout, tags }: UseProductControllerReviveMonsterplantLayoutSeparatorItem3Props) => {
+export const UseProductControllerReviveMonsterplantLayoutSeparatorItem3 = ({ layout }: UseProductControllerReviveMonsterplantLayoutSeparatorItem3Props) => {
     return (
         <Region
             name="separator"
-            tags={tags}
             layout={{ width: 270, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -277,16 +255,14 @@ export interface UseProductControllerReviveMonsterplantLayoutElementListProps {
     layout?: BoxLayout;
     onCancelText?: () => void;
     onSaveButton?: () => void;
-    tags?: string[];
 }
 
-export const UseProductControllerReviveMonsterplantLayoutElementList = ({ itemsElementList, layout, onCancelText, onSaveButton, tags }: UseProductControllerReviveMonsterplantLayoutElementListProps) => {
+export const UseProductControllerReviveMonsterplantLayoutElementList = ({ itemsElementList, layout, onCancelText, onSaveButton }: UseProductControllerReviveMonsterplantLayoutElementListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 290, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsElementList ?? (

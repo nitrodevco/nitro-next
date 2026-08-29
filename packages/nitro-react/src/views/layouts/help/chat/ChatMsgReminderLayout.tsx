@@ -18,14 +18,12 @@ export const ChatMsgReminderLayout = ({ chatMsgReminder, layout }: ChatMsgRemind
 export interface ChatMsgReminderLayoutChatMsgReminderProps {
     captionContent?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChatMsgReminderLayoutChatMsgReminder = ({ captionContent, layout, tags }: ChatMsgReminderLayoutChatMsgReminderProps) => {
+export const ChatMsgReminderLayoutChatMsgReminder = ({ captionContent, layout }: ChatMsgReminderLayoutChatMsgReminderProps) => {
     return (
         <Region
             name="chat_msg_reminder"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 24, ...layout }}
         >
             <Region

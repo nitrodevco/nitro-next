@@ -45,16 +45,14 @@ export interface MarketPlaceWidgetLayoutSearchSelectorProps {
     onSearchAdvanced?: () => void;
     onSearchByActivity?: () => void;
     onSearchByValue?: () => void;
-    tags?: string[];
 }
 
-export const MarketPlaceWidgetLayoutSearchSelector = ({ layout, onSearchAdvanced, onSearchByActivity, onSearchByValue, tags }: MarketPlaceWidgetLayoutSearchSelectorProps) => {
+export const MarketPlaceWidgetLayoutSearchSelector = ({ layout, onSearchAdvanced, onSearchByActivity, onSearchByValue }: MarketPlaceWidgetLayoutSearchSelectorProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="search_selector"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 25, ...layout }}
         >
             <ButtonGroupLeft
@@ -90,14 +88,12 @@ export interface MarketPlaceWidgetLayoutImageContainerProps {
     layout?: BoxLayout;
     srcItemImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
-    tags?: string[];
 }
 
-export const MarketPlaceWidgetLayoutImageContainer = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap, tags }: MarketPlaceWidgetLayoutImageContainerProps) => {
+export const MarketPlaceWidgetLayoutImageContainer = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap }: MarketPlaceWidgetLayoutImageContainerProps) => {
     return (
         <Region
             name="image_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
         >
             <Region
@@ -112,7 +108,6 @@ export const MarketPlaceWidgetLayoutImageContainer = ({ layout, srcItemImage, sr
             </Region>
             <ThemeImage
                 name="item_image"
-                tags={[ 'BITMAP' ]}
                 src={srcItemImage}
                 layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
             />
@@ -142,17 +137,15 @@ export interface MarketPlaceWidgetLayoutOfferItemItemProps {
     layout?: BoxLayout;
     onBuyButton?: () => void;
     onMoreButton?: () => void;
-    tags?: string[];
 }
 
-export const MarketPlaceWidgetLayoutOfferItemItem = ({ captionItemDesc, captionItemName, captionItemPrice, captionOfferCount, imageContainer, layout, onBuyButton, onMoreButton, tags }: MarketPlaceWidgetLayoutOfferItemItemProps) => {
+export const MarketPlaceWidgetLayoutOfferItemItem = ({ captionItemDesc, captionItemName, captionItemPrice, captionOfferCount, imageContainer, layout, onBuyButton, onMoreButton }: MarketPlaceWidgetLayoutOfferItemItemProps) => {
     const t = useTranslation();
 
     return (
         <Border
             variant="100"
             name="offer_item"
-            tags={tags}
             tintColor="#e3e3e3"
             layout={{ width: 340, height: 58, flexShrink: 0, ...layout }}
         >
@@ -217,10 +210,9 @@ export const MarketPlaceWidgetLayoutOfferItemItem = ({ captionItemDesc, captionI
 export interface MarketPlaceWidgetLayoutOfferListProps {
     itemsOfferList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MarketPlaceWidgetLayoutOfferList = ({ itemsOfferList, layout, tags }: MarketPlaceWidgetLayoutOfferListProps) => {
+export const MarketPlaceWidgetLayoutOfferList = ({ itemsOfferList, layout }: MarketPlaceWidgetLayoutOfferListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -228,7 +220,6 @@ export const MarketPlaceWidgetLayoutOfferList = ({ itemsOfferList, layout, tags 
         >
             <Region
                 name="offer_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 1, width: '100%' }}
             >
                 {itemsOfferList ?? (

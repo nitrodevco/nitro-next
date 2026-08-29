@@ -36,17 +36,15 @@ export const LogsOverviewLayout = ({ footer, header, layout, middle, onClose }: 
 export interface LogsOverviewLayoutFilterContProps {
     captionFilterKey?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutFilterCont = ({ captionFilterKey, layout, tags }: LogsOverviewLayoutFilterContProps) => {
+export const LogsOverviewLayoutFilterCont = ({ captionFilterKey, layout }: LogsOverviewLayoutFilterContProps) => {
     const t = useTranslation();
     const [ filterInputValue, setFilterInputValue ] = useState('');
 
     return (
         <Region
             name="filter_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 15, width: 314, top: 60, height: 25, ...layout }}
         >
             <Region
@@ -75,16 +73,14 @@ export interface LogsOverviewLayoutLogSourceContProps {
     captionLogSourceKey?: string;
     layout?: BoxLayout;
     onLogSourceMenu?: () => void;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutLogSourceCont = ({ captionLogSourceKey, layout, onLogSourceMenu, tags }: LogsOverviewLayoutLogSourceContProps) => {
+export const LogsOverviewLayoutLogSourceCont = ({ captionLogSourceKey, layout, onLogSourceMenu }: LogsOverviewLayoutLogSourceContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="log_source_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 349, width: 164, top: 60, height: 25, ...layout }}
         >
             <Region
@@ -108,16 +104,14 @@ export interface LogsOverviewLayoutLogLevelContProps {
     captionLogLevelKey?: string;
     layout?: BoxLayout;
     onLogLevelMenu?: () => void;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutLogLevelCont = ({ captionLogLevelKey, layout, onLogLevelMenu, tags }: LogsOverviewLayoutLogLevelContProps) => {
+export const LogsOverviewLayoutLogLevelCont = ({ captionLogLevelKey, layout, onLogLevelMenu }: LogsOverviewLayoutLogLevelContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="log_level_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 534, width: 154, top: 60, height: 25, ...layout }}
         >
             <Region
@@ -144,16 +138,14 @@ export interface LogsOverviewLayoutHeaderProps {
     logLevelCont?: LogsOverviewLayoutLogLevelContProps;
     logSourceCont?: LogsOverviewLayoutLogSourceContProps;
     onAutoRefreshCbx?: () => void;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutHeader = ({ captionInfoText, filterCont, layout, logLevelCont, logSourceCont, onAutoRefreshCbx, tags }: LogsOverviewLayoutHeaderProps) => {
+export const LogsOverviewLayoutHeader = ({ captionInfoText, filterCont, layout, logLevelCont, logSourceCont, onAutoRefreshCbx }: LogsOverviewLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 117, ...layout }}
         >
             <Border
@@ -189,14 +181,12 @@ export const LogsOverviewLayoutHeader = ({ captionInfoText, filterCont, layout, 
 /** Named region `table_view` of LogsOverviewLayout - configured through the parent's `tableView` prop. */
 export interface LogsOverviewLayoutTableViewProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutTableView = ({ layout, tags }: LogsOverviewLayoutTableViewProps) => {
+export const LogsOverviewLayoutTableView = ({ layout }: LogsOverviewLayoutTableViewProps) => {
     return (
         <Region
             name="table_view"
-            tags={tags}
             layout={{ position: 'absolute', left: 13, right: 13, top: 0, bottom: 0, ...layout }}
         />
     );
@@ -206,14 +196,12 @@ export const LogsOverviewLayoutTableView = ({ layout, tags }: LogsOverviewLayout
 export interface LogsOverviewLayoutMiddleProps {
     layout?: BoxLayout;
     tableView?: LogsOverviewLayoutTableViewProps;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutMiddle = ({ layout, tableView, tags }: LogsOverviewLayoutMiddleProps) => {
+export const LogsOverviewLayoutMiddle = ({ layout, tableView }: LogsOverviewLayoutMiddleProps) => {
     return (
         <Region
             name="middle"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, right: 1, top: 97, bottom: 95, ...layout }}
         >
             <LogsOverviewLayoutTableView {...tableView} />
@@ -225,15 +213,13 @@ export const LogsOverviewLayoutMiddle = ({ layout, tableView, tags }: LogsOvervi
 export interface LogsOverviewLayoutFirstPageBtnItemProps {
     layout?: BoxLayout;
     onFirstPageBtn?: () => void;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutFirstPageBtnItem = ({ layout, onFirstPageBtn, tags }: LogsOverviewLayoutFirstPageBtnItemProps) => {
+export const LogsOverviewLayoutFirstPageBtnItem = ({ layout, onFirstPageBtn }: LogsOverviewLayoutFirstPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="first_page_btn"
-            tags={tags}
             onPointerTap={onFirstPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
@@ -255,15 +241,13 @@ export const LogsOverviewLayoutFirstPageBtnItem = ({ layout, onFirstPageBtn, tag
 export interface LogsOverviewLayoutPrevPageBtnItemProps {
     layout?: BoxLayout;
     onPrevPageBtn?: () => void;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn, tags }: LogsOverviewLayoutPrevPageBtnItemProps) => {
+export const LogsOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn }: LogsOverviewLayoutPrevPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="prev_page_btn"
-            tags={tags}
             onPointerTap={onPrevPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
@@ -280,14 +264,12 @@ export const LogsOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn, tags 
 export interface LogsOverviewLayoutFooterButtonsLeftProps {
     itemsFooterButtonsLeft?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout, tags }: LogsOverviewLayoutFooterButtonsLeftProps) => {
+export const LogsOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout }: LogsOverviewLayoutFooterButtonsLeftProps) => {
     return (
         <Region
             name="footer_buttons_left"
-            tags={tags}
             layout={{ position: 'absolute', left: 17, width: 113, top: 0, height: 30, flexDirection: 'row', gap: 13, ...layout }}
         >
             {itemsFooterButtonsLeft ?? (
@@ -304,15 +286,13 @@ export const LogsOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, la
 export interface LogsOverviewLayoutNextPageBtnItemProps {
     layout?: BoxLayout;
     onNextPageBtn?: () => void;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutNextPageBtnItem = ({ layout, onNextPageBtn, tags }: LogsOverviewLayoutNextPageBtnItemProps) => {
+export const LogsOverviewLayoutNextPageBtnItem = ({ layout, onNextPageBtn }: LogsOverviewLayoutNextPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="next_page_btn"
-            tags={tags}
             onPointerTap={onNextPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
@@ -329,15 +309,13 @@ export const LogsOverviewLayoutNextPageBtnItem = ({ layout, onNextPageBtn, tags 
 export interface LogsOverviewLayoutLastPageBtnItemProps {
     layout?: BoxLayout;
     onLastPageBtn?: () => void;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn, tags }: LogsOverviewLayoutLastPageBtnItemProps) => {
+export const LogsOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn }: LogsOverviewLayoutLastPageBtnItemProps) => {
     return (
         <ContainerButton
             variant="3"
             name="last_page_btn"
-            tags={tags}
             onPointerTap={onLastPageBtn}
             layout={{ width: 50, height: 30, flexShrink: 0, minWidth: 50, maxWidth: 50, ...layout }}
         >
@@ -359,14 +337,12 @@ export const LogsOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn, tags 
 export interface LogsOverviewLayoutFooterButtonsRightProps {
     itemsFooterButtonsRight?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutFooterButtonsRight = ({ itemsFooterButtonsRight, layout, tags }: LogsOverviewLayoutFooterButtonsRightProps) => {
+export const LogsOverviewLayoutFooterButtonsRight = ({ itemsFooterButtonsRight, layout }: LogsOverviewLayoutFooterButtonsRightProps) => {
     return (
         <Region
             name="footer_buttons_right"
-            tags={tags}
             layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsFooterButtonsRight ?? (
@@ -386,16 +362,14 @@ export interface LogsOverviewLayoutPaginationProps {
     footerButtonsLeft?: LogsOverviewLayoutFooterButtonsLeftProps;
     footerButtonsRight?: LogsOverviewLayoutFooterButtonsRightProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, footerButtonsLeft, footerButtonsRight, layout, tags }: LogsOverviewLayoutPaginationProps) => {
+export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, footerButtonsLeft, footerButtonsRight, layout }: LogsOverviewLayoutPaginationProps) => {
     const [ paginaNumberInputValue, setPaginaNumberInputValue ] = useState('');
 
     return (
         <Region
             name="pagination"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 14, height: 30, justifyContent: 'center', ...layout }}
         >
             <LogsOverviewLayoutFooterButtonsLeft {...footerButtonsLeft} />
@@ -427,14 +401,12 @@ export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPagi
 export interface LogsOverviewLayoutFooterProps {
     layout?: BoxLayout;
     pagination?: LogsOverviewLayoutPaginationProps;
-    tags?: string[];
 }
 
-export const LogsOverviewLayoutFooter = ({ layout, pagination, tags }: LogsOverviewLayoutFooterProps) => {
+export const LogsOverviewLayoutFooter = ({ layout, pagination }: LogsOverviewLayoutFooterProps) => {
     return (
         <Region
             name="footer"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 35, height: 60, ...layout }}
         >
             <LogsOverviewLayoutPagination {...pagination} />

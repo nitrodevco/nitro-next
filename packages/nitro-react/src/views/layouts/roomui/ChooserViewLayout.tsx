@@ -31,10 +31,9 @@ export const ChooserViewLayout = ({ itemList, layout, onClose }: ChooserViewLayo
 /** Named region `item_list` of ChooserViewLayout - configured through the parent's `itemList` prop. */
 export interface ChooserViewLayoutItemListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChooserViewLayoutItemList = ({ layout, tags }: ChooserViewLayoutItemListProps) => {
+export const ChooserViewLayoutItemList = ({ layout }: ChooserViewLayoutItemListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -42,7 +41,6 @@ export const ChooserViewLayoutItemList = ({ layout, tags }: ChooserViewLayoutIte
         >
             <Region
                 name="item_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>

@@ -91,10 +91,9 @@ export interface RosRoomSettingsLayoutTagCategoryContainerProps {
     onCategories?: () => void;
     onMaxvisitors?: () => void;
     onTradesettings?: () => void;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutTagCategoryContainer = ({ captionCategoryLabel, captionMaxvisitorsLabel, captionTagLabel, captionTradesettingsLabel, layout, onCategories, onMaxvisitors, onTradesettings, tags }: RosRoomSettingsLayoutTagCategoryContainerProps) => {
+export const RosRoomSettingsLayoutTagCategoryContainer = ({ captionCategoryLabel, captionMaxvisitorsLabel, captionTagLabel, captionTradesettingsLabel, layout, onCategories, onMaxvisitors, onTradesettings }: RosRoomSettingsLayoutTagCategoryContainerProps) => {
     const t = useTranslation();
     const [ tag1Value, setTag1Value ] = useState('');
     const [ tag2Value, setTag2Value ] = useState('');
@@ -102,7 +101,6 @@ export const RosRoomSettingsLayoutTagCategoryContainer = ({ captionCategoryLabel
     return (
         <Region
             name="tag_category_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 300, top: 100, height: 192, ...layout }}
         >
             <Region
@@ -180,16 +178,14 @@ export interface RosRoomSettingsLayoutAdvancedContainerProps {
     captionWalkThroughText?: string;
     layout?: BoxLayout;
     onAllowWalkThroughCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutAdvancedContainer = ({ captionWalkThroughText, layout, onAllowWalkThroughCheckbox, tags }: RosRoomSettingsLayoutAdvancedContainerProps) => {
+export const RosRoomSettingsLayoutAdvancedContainer = ({ captionWalkThroughText, layout, onAllowWalkThroughCheckbox }: RosRoomSettingsLayoutAdvancedContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="advanced_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 218, top: 253, height: 82, ...layout }}
         >
             <CheckBox
@@ -216,16 +212,14 @@ export interface RosRoomSettingsLayoutRemoveLinkRegionProps {
     captionRemoveLink?: string;
     layout?: BoxLayout;
     onRemoveLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutRemoveLinkRegion = ({ captionRemoveLink, layout, onRemoveLinkRegion, tags }: RosRoomSettingsLayoutRemoveLinkRegionProps) => {
+export const RosRoomSettingsLayoutRemoveLinkRegion = ({ captionRemoveLink, layout, onRemoveLinkRegion }: RosRoomSettingsLayoutRemoveLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="remove_link_region"
-            tags={tags}
             onPointerTap={onRemoveLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 60, width: 180, top: 339, height: 18, justifyContent: 'center', ...layout }}
@@ -259,11 +253,10 @@ export interface RosRoomSettingsLayoutTabContainer1Props {
     onTabContainer1?: () => void;
     removeLinkRegion?: RosRoomSettingsLayoutRemoveLinkRegionProps;
     tagCategoryContainer?: RosRoomSettingsLayoutTagCategoryContainerProps;
-    tags?: string[];
     visibleTabContainer1?: boolean;
 }
 
-export const RosRoomSettingsLayoutTabContainer1 = ({ advancedContainer, captionDescriptionLabel, captionRoomNameLabel, layout, onTabContainer1, removeLinkRegion, tagCategoryContainer, tags, visibleTabContainer1 }: RosRoomSettingsLayoutTabContainer1Props) => {
+export const RosRoomSettingsLayoutTabContainer1 = ({ advancedContainer, captionDescriptionLabel, captionRoomNameLabel, layout, onTabContainer1, removeLinkRegion, tagCategoryContainer, visibleTabContainer1 }: RosRoomSettingsLayoutTabContainer1Props) => {
     const t = useTranslation();
     const [ roomNameValue, setRoomNameValue ] = useState('');
     const [ descriptionValue, setDescriptionValue ] = useState('');
@@ -271,7 +264,6 @@ export const RosRoomSettingsLayoutTabContainer1 = ({ advancedContainer, captionD
     return (
         <Region
             name="tab_container_1"
-            tags={tags}
             visible={visibleTabContainer1 ?? false}
             onPointerTap={onTabContainer1}
             cursor="pointer"
@@ -321,14 +313,12 @@ export interface RosRoomSettingsLayoutDoormodeProps {
     onDoormodeInvisible?: () => void;
     onDoormodeOpen?: () => void;
     onDoormodePassword?: () => void;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutDoormode = ({ layout, onDoormodeDoorbell, onDoormodeInvisible, onDoormodeOpen, onDoormodePassword, tags }: RosRoomSettingsLayoutDoormodeProps) => {
+export const RosRoomSettingsLayoutDoormode = ({ layout, onDoormodeDoorbell, onDoormodeInvisible, onDoormodeOpen, onDoormodePassword }: RosRoomSettingsLayoutDoormodeProps) => {
     return (
         <Region
             name="doormode"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 274, top: 18, height: 80, ...layout }}
         >
             <RadioButton
@@ -368,16 +358,14 @@ export interface RosRoomSettingsLayoutDoormodeContainerProps {
     captionDoormodePasswordLabel?: string;
     doormode?: RosRoomSettingsLayoutDoormodeProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutDoormodeContainer = ({ captionDoormodeDoorbellLabel, captionDoormodeInvisibleLabel, captionDoormodeLabel, captionDoormodeOpenLabel, captionDoormodePasswordLabel, doormode, layout, tags }: RosRoomSettingsLayoutDoormodeContainerProps) => {
+export const RosRoomSettingsLayoutDoormodeContainer = ({ captionDoormodeDoorbellLabel, captionDoormodeInvisibleLabel, captionDoormodeLabel, captionDoormodeOpenLabel, captionDoormodePasswordLabel, doormode, layout }: RosRoomSettingsLayoutDoormodeContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="doormode_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 309, top: 87, height: 95, ...layout }}
         >
             <Region
@@ -435,10 +423,9 @@ export interface RosRoomSettingsLayoutPasswordContainerProps {
     captionPasswordConfirmLabel?: string;
     captionPasswordLabel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutPasswordContainer = ({ captionPasswordConfirmLabel, captionPasswordLabel, layout, tags }: RosRoomSettingsLayoutPasswordContainerProps) => {
+export const RosRoomSettingsLayoutPasswordContainer = ({ captionPasswordConfirmLabel, captionPasswordLabel, layout }: RosRoomSettingsLayoutPasswordContainerProps) => {
     const t = useTranslation();
     const [ passwordValue, setPasswordValue ] = useState('');
     const [ passwordConfirmValue, setPasswordConfirmValue ] = useState('');
@@ -446,7 +433,6 @@ export const RosRoomSettingsLayoutPasswordContainer = ({ captionPasswordConfirmL
     return (
         <Region
             name="password_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 41, width: 195, top: 188, height: 68, ...layout }}
         >
             <Region
@@ -491,17 +477,15 @@ export interface RosRoomSettingsLayoutNormalAccessContainerProps {
     layout?: BoxLayout;
     onBuildersFaqButton?: () => void;
     passwordContainer?: RosRoomSettingsLayoutPasswordContainerProps;
-    tags?: string[];
     visibleDoormodeOverrideInfo?: boolean;
 }
 
-export const RosRoomSettingsLayoutNormalAccessContainer = ({ captionRoomAccessTabCaption, captionRoomAccessTabInfo, doormodeContainer, layout, onBuildersFaqButton, passwordContainer, tags, visibleDoormodeOverrideInfo }: RosRoomSettingsLayoutNormalAccessContainerProps) => {
+export const RosRoomSettingsLayoutNormalAccessContainer = ({ captionRoomAccessTabCaption, captionRoomAccessTabInfo, doormodeContainer, layout, onBuildersFaqButton, passwordContainer, visibleDoormodeOverrideInfo }: RosRoomSettingsLayoutNormalAccessContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="normal_access_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 354, ...layout }}
         >
             <Region
@@ -564,16 +548,14 @@ export const RosRoomSettingsLayoutNormalAccessContainer = ({ captionRoomAccessTa
 export interface RosRoomSettingsLayoutGuildAccessDisclaimerItemProps {
     captionGuildAccessDisclaimer?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutGuildAccessDisclaimerItem = ({ captionGuildAccessDisclaimer, layout, tags }: RosRoomSettingsLayoutGuildAccessDisclaimerItemProps) => {
+export const RosRoomSettingsLayoutGuildAccessDisclaimerItem = ({ captionGuildAccessDisclaimer, layout }: RosRoomSettingsLayoutGuildAccessDisclaimerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guild_access_disclaimer"
-            tags={tags}
             layout={{ width: 277, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -595,16 +577,14 @@ export interface RosRoomSettingsLayoutAdvancedContainerItemProps {
     onAllowFoodconsumeCheckbox?: () => void;
     onAllowPetsCheckbox?: () => void;
     onMuteAllPetsCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutAdvancedContainerItem = ({ captionAllowFoodConsumeText, captionAllowPetsText, captionMuteAllPetsText, captionPetsContainer, layout, onAllowFoodconsumeCheckbox, onAllowPetsCheckbox, onMuteAllPetsCheckbox, tags }: RosRoomSettingsLayoutAdvancedContainerItemProps) => {
+export const RosRoomSettingsLayoutAdvancedContainerItem = ({ captionAllowFoodConsumeText, captionAllowPetsText, captionMuteAllPetsText, captionPetsContainer, layout, onAllowFoodconsumeCheckbox, onAllowPetsCheckbox, onMuteAllPetsCheckbox }: RosRoomSettingsLayoutAdvancedContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="advanced_container"
-            tags={tags}
             layout={{ width: 218, height: 82, flexShrink: 0, ...layout }}
         >
             <CheckBox
@@ -669,14 +649,12 @@ export const RosRoomSettingsLayoutAdvancedContainerItem = ({ captionAllowFoodCon
 export interface RosRoomSettingsLayoutFlexibleContentProps {
     itemsFlexibleContent?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutFlexibleContent = ({ itemsFlexibleContent, layout, tags }: RosRoomSettingsLayoutFlexibleContentProps) => {
+export const RosRoomSettingsLayoutFlexibleContent = ({ itemsFlexibleContent, layout }: RosRoomSettingsLayoutFlexibleContentProps) => {
     return (
         <Region
             name="flexible_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 277, top: 260, height: 117, flexDirection: 'column', ...layout }}
         >
             {itemsFlexibleContent ?? (
@@ -695,15 +673,13 @@ export interface RosRoomSettingsLayoutTabContainer2Props {
     layout?: BoxLayout;
     normalAccessContainer?: RosRoomSettingsLayoutNormalAccessContainerProps;
     onTabContainer2?: () => void;
-    tags?: string[];
     visibleTabContainer2?: boolean;
 }
 
-export const RosRoomSettingsLayoutTabContainer2 = ({ flexibleContent, layout, normalAccessContainer, onTabContainer2, tags, visibleTabContainer2 }: RosRoomSettingsLayoutTabContainer2Props) => {
+export const RosRoomSettingsLayoutTabContainer2 = ({ flexibleContent, layout, normalAccessContainer, onTabContainer2, visibleTabContainer2 }: RosRoomSettingsLayoutTabContainer2Props) => {
     return (
         <Region
             name="tab_container_2"
-            tags={tags}
             visible={visibleTabContainer2 ?? false}
             onPointerTap={onTabContainer2}
             cursor="pointer"
@@ -718,17 +694,15 @@ export const RosRoomSettingsLayoutTabContainer2 = ({ flexibleContent, layout, no
 /** Named region `guild_rights_container` of RosRoomSettingsLayout - configured through the parent's `guildRightsContainer` prop. */
 export interface RosRoomSettingsLayoutGuildRightsContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleGuildRightsContainer?: boolean;
 }
 
-export const RosRoomSettingsLayoutGuildRightsContainer = ({ layout, tags, visibleGuildRightsContainer }: RosRoomSettingsLayoutGuildRightsContainerProps) => {
+export const RosRoomSettingsLayoutGuildRightsContainer = ({ layout, visibleGuildRightsContainer }: RosRoomSettingsLayoutGuildRightsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guild_rights_container"
-            tags={tags}
             visible={visibleGuildRightsContainer ?? false}
             layout={{ position: 'absolute', left: 6, right: 6, top: 0, height: 367, ...layout }}
         >
@@ -759,10 +733,9 @@ export const RosRoomSettingsLayoutGuildRightsContainer = ({ layout, tags, visibl
 /** Named region `users_with_rights_item_list` of RosRoomSettingsLayout - configured through the parent's `usersWithRightsItemList` prop. */
 export interface RosRoomSettingsLayoutUsersWithRightsItemListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutUsersWithRightsItemList = ({ layout, tags }: RosRoomSettingsLayoutUsersWithRightsItemListProps) => {
+export const RosRoomSettingsLayoutUsersWithRightsItemList = ({ layout }: RosRoomSettingsLayoutUsersWithRightsItemListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -770,7 +743,6 @@ export const RosRoomSettingsLayoutUsersWithRightsItemList = ({ layout, tags }: R
         >
             <Region
                 name="users_with_rights_item_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -780,10 +752,9 @@ export const RosRoomSettingsLayoutUsersWithRightsItemList = ({ layout, tags }: R
 /** Named region `friends_item_list` of RosRoomSettingsLayout - configured through the parent's `friendsItemList` prop. */
 export interface RosRoomSettingsLayoutFriendsItemListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutFriendsItemList = ({ layout, tags }: RosRoomSettingsLayoutFriendsItemListProps) => {
+export const RosRoomSettingsLayoutFriendsItemList = ({ layout }: RosRoomSettingsLayoutFriendsItemListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -791,7 +762,6 @@ export const RosRoomSettingsLayoutFriendsItemList = ({ layout, tags }: RosRoomSe
         >
             <Region
                 name="friends_item_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -806,18 +776,16 @@ export interface RosRoomSettingsLayoutNormalRightsContainerProps {
     friendsItemList?: RosRoomSettingsLayoutFriendsItemListProps;
     layout?: BoxLayout;
     onRemoveAllFlatCtrls?: () => void;
-    tags?: string[];
     usersWithRightsItemList?: RosRoomSettingsLayoutUsersWithRightsItemListProps;
 }
 
-export const RosRoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, captionSearchTxt, captionUsersWithRightsTxt, friendsItemList, layout, onRemoveAllFlatCtrls, tags, usersWithRightsItemList }: RosRoomSettingsLayoutNormalRightsContainerProps) => {
+export const RosRoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, captionSearchTxt, captionUsersWithRightsTxt, friendsItemList, layout, onRemoveAllFlatCtrls, usersWithRightsItemList }: RosRoomSettingsLayoutNormalRightsContainerProps) => {
     const t = useTranslation();
     const [ filterUsersInputValue, setFilterUsersInputValue ] = useState('');
 
     return (
         <Region
             name="normal_rights_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 367, justifyContent: 'center', ...layout }}
         >
             <Border
@@ -896,15 +864,13 @@ export interface RosRoomSettingsLayoutTabContainer3Props {
     guildRightsContainer?: RosRoomSettingsLayoutGuildRightsContainerProps;
     layout?: BoxLayout;
     normalRightsContainer?: RosRoomSettingsLayoutNormalRightsContainerProps;
-    tags?: string[];
     visibleTabContainer3?: boolean;
 }
 
-export const RosRoomSettingsLayoutTabContainer3 = ({ guildRightsContainer, layout, normalRightsContainer, tags, visibleTabContainer3 }: RosRoomSettingsLayoutTabContainer3Props) => {
+export const RosRoomSettingsLayoutTabContainer3 = ({ guildRightsContainer, layout, normalRightsContainer, visibleTabContainer3 }: RosRoomSettingsLayoutTabContainer3Props) => {
     return (
         <Region
             name="tab_container_3"
-            tags={tags}
             visible={visibleTabContainer3 ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 367, ...layout }}
         >
@@ -935,10 +901,9 @@ export interface RosRoomSettingsLayoutTabContainer4Props {
     onIdleAutokickCheckbox?: () => void;
     onIdleSleepCheckbox?: () => void;
     onWallThickness?: () => void;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutTabContainer4 = ({ captionChatSettingsText, captionDoNotLeaveOnDoorTileText, captionHideWallsText, captionIdleAutokickText, captionIdleAutokickTimeoutLabel, captionIdleSleepText, captionIdleSleepTimeoutLabel, captionRoomBehaviorText, captionVipSettingsText, captionVipTabCaption, captionVipTabInfo, layout, onChatFloodSensitivity, onDoNotLeaveOnDoorTileCheckbox, onFloorThickness, onHideWallsCheckbox, onIdleAutokickCheckbox, onIdleSleepCheckbox, onWallThickness, tags }: RosRoomSettingsLayoutTabContainer4Props) => {
+export const RosRoomSettingsLayoutTabContainer4 = ({ captionChatSettingsText, captionDoNotLeaveOnDoorTileText, captionHideWallsText, captionIdleAutokickText, captionIdleAutokickTimeoutLabel, captionIdleSleepText, captionIdleSleepTimeoutLabel, captionRoomBehaviorText, captionVipSettingsText, captionVipTabCaption, captionVipTabInfo, layout, onChatFloodSensitivity, onDoNotLeaveOnDoorTileCheckbox, onFloorThickness, onHideWallsCheckbox, onIdleAutokickCheckbox, onIdleSleepCheckbox, onWallThickness }: RosRoomSettingsLayoutTabContainer4Props) => {
     const t = useTranslation();
     const [ idleSleepTimeoutValue, setIdleSleepTimeoutValue ] = useState('');
     const [ idleAutokickTimeoutValue, setIdleAutokickTimeoutValue ] = useState('');
@@ -946,7 +911,6 @@ export const RosRoomSettingsLayoutTabContainer4 = ({ captionChatSettingsText, ca
     return (
         <Region
             name="tab_container_4"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, width: 322, top: 0, height: 395, ...layout }}
         >
             <Region
@@ -1114,17 +1078,15 @@ export interface RosRoomSettingsLayoutModerationMuteSelectorProps {
     layout?: BoxLayout;
     onModerationMuteNone?: () => void;
     onModerationMuteRights?: () => void;
-    tags?: string[];
     visibleModerationMuteSelector?: boolean;
 }
 
-export const RosRoomSettingsLayoutModerationMuteSelector = ({ captionModerationMuteNoneLabel, captionModerationMuteRightsLabel, layout, onModerationMuteNone, onModerationMuteRights, tags, visibleModerationMuteSelector }: RosRoomSettingsLayoutModerationMuteSelectorProps) => {
+export const RosRoomSettingsLayoutModerationMuteSelector = ({ captionModerationMuteNoneLabel, captionModerationMuteRightsLabel, layout, onModerationMuteNone, onModerationMuteRights, visibleModerationMuteSelector }: RosRoomSettingsLayoutModerationMuteSelectorProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="moderation_mute_selector"
-            tags={tags}
             visible={visibleModerationMuteSelector ?? false}
             layout={{ position: 'absolute', left: 10, width: 291, top: 61, height: 31, ...layout }}
         >
@@ -1171,17 +1133,15 @@ export interface RosRoomSettingsLayoutModerationKickSelectorProps {
     onModerationKickAll?: () => void;
     onModerationKickNone?: () => void;
     onModerationKickRights?: () => void;
-    tags?: string[];
     visibleModerationKickSelector?: boolean;
 }
 
-export const RosRoomSettingsLayoutModerationKickSelector = ({ captionModerationKickAllLabel, captionModerationKickNoneLabel, captionModerationKickRightsHeader, layout, onModerationKickAll, onModerationKickNone, onModerationKickRights, tags, visibleModerationKickSelector }: RosRoomSettingsLayoutModerationKickSelectorProps) => {
+export const RosRoomSettingsLayoutModerationKickSelector = ({ captionModerationKickAllLabel, captionModerationKickNoneLabel, captionModerationKickRightsHeader, layout, onModerationKickAll, onModerationKickNone, onModerationKickRights, visibleModerationKickSelector }: RosRoomSettingsLayoutModerationKickSelectorProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="moderation_kick_selector"
-            tags={tags}
             visible={visibleModerationKickSelector ?? false}
             layout={{ position: 'absolute', left: 10, width: 325, top: 112, height: 26, ...layout }}
         >
@@ -1241,17 +1201,15 @@ export interface RosRoomSettingsLayoutModerationBanSelectorProps {
     layout?: BoxLayout;
     onModerationBanNone?: () => void;
     onModerationBanRights?: () => void;
-    tags?: string[];
     visibleModerationBanSelector?: boolean;
 }
 
-export const RosRoomSettingsLayoutModerationBanSelector = ({ captionModerationBanNoneLabel, captionModerationBanRights, layout, onModerationBanNone, onModerationBanRights, tags, visibleModerationBanSelector }: RosRoomSettingsLayoutModerationBanSelectorProps) => {
+export const RosRoomSettingsLayoutModerationBanSelector = ({ captionModerationBanNoneLabel, captionModerationBanRights, layout, onModerationBanNone, onModerationBanRights, visibleModerationBanSelector }: RosRoomSettingsLayoutModerationBanSelectorProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="moderation_ban_selector"
-            tags={tags}
             visible={visibleModerationBanSelector ?? false}
             layout={{ position: 'absolute', left: 10, width: 293, top: 161, height: 23, ...layout }}
         >
@@ -1292,10 +1250,9 @@ export const RosRoomSettingsLayoutModerationBanSelector = ({ captionModerationBa
 /** Named region `moderation_banned_users` of RosRoomSettingsLayout - configured through the parent's `moderationBannedUsers` prop. */
 export interface RosRoomSettingsLayoutModerationBannedUsersProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutModerationBannedUsers = ({ layout, tags }: RosRoomSettingsLayoutModerationBannedUsersProps) => {
+export const RosRoomSettingsLayoutModerationBannedUsers = ({ layout }: RosRoomSettingsLayoutModerationBannedUsersProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -1303,7 +1260,6 @@ export const RosRoomSettingsLayoutModerationBannedUsers = ({ layout, tags }: Ros
         >
             <Region
                 name="moderation_banned_users"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -1326,17 +1282,15 @@ export interface RosRoomSettingsLayoutTabContainer5Props {
     onModerationKickDropdown?: () => void;
     onModerationMuteDropdown?: () => void;
     onModerationUnbanBtn?: () => void;
-    tags?: string[];
     visibleTabContainer5?: boolean;
 }
 
-export const RosRoomSettingsLayoutTabContainer5 = ({ captionModerationBanHeader, captionModerationBannedUsersLabel, captionModerationHeader, captionModerationKickHeader, captionModerationMuteHeader, layout, moderationBannedUsers, moderationBanSelector, moderationKickSelector, moderationMuteSelector, onModerationBanDropdown, onModerationKickDropdown, onModerationMuteDropdown, onModerationUnbanBtn, tags, visibleTabContainer5 }: RosRoomSettingsLayoutTabContainer5Props) => {
+export const RosRoomSettingsLayoutTabContainer5 = ({ captionModerationBanHeader, captionModerationBannedUsersLabel, captionModerationHeader, captionModerationKickHeader, captionModerationMuteHeader, layout, moderationBannedUsers, moderationBanSelector, moderationKickSelector, moderationMuteSelector, onModerationBanDropdown, onModerationKickDropdown, onModerationMuteDropdown, onModerationUnbanBtn, visibleTabContainer5 }: RosRoomSettingsLayoutTabContainer5Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="tab_container_5"
-            tags={tags}
             visible={visibleTabContainer5 ?? false}
             layout={{ position: 'absolute', left: 0, right: -4, top: 0, height: 367, ...layout }}
         >
@@ -1436,14 +1390,12 @@ export interface RosRoomSettingsLayoutContentContainerProps {
     tabContainer3?: RosRoomSettingsLayoutTabContainer3Props;
     tabContainer4?: RosRoomSettingsLayoutTabContainer4Props;
     tabContainer5?: RosRoomSettingsLayoutTabContainer5Props;
-    tags?: string[];
 }
 
-export const RosRoomSettingsLayoutContentContainer = ({ layout, onContentContainer, tabContainer1, tabContainer2, tabContainer3, tabContainer4, tabContainer5, tags }: RosRoomSettingsLayoutContentContainerProps) => {
+export const RosRoomSettingsLayoutContentContainer = ({ layout, onContentContainer, tabContainer1, tabContainer2, tabContainer3, tabContainer4, tabContainer5 }: RosRoomSettingsLayoutContentContainerProps) => {
     return (
         <Region
             name="content_container"
-            tags={tags}
             onPointerTap={onContentContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 327, top: 42, height: 369, ...layout }}

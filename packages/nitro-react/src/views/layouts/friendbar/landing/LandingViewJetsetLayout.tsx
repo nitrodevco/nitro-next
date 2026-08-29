@@ -31,14 +31,12 @@ export interface LandingViewJetsetLayoutContentBackgroundProps {
     srcBackgroundRight?: string;
     srcLeftRightDivider?: string;
     srcLogo?: string;
-    tags?: string[];
 }
 
-export const LandingViewJetsetLayoutContentBackground = ({ layout, srcBackgroundGradientTop, srcBackgroundHorizon, srcBackgroundHorizonStretch, srcBackgroundHotelLeft, srcBackgroundHotelTop, srcBackgroundRight, srcLeftRightDivider, srcLogo, tags }: LandingViewJetsetLayoutContentBackgroundProps) => {
+export const LandingViewJetsetLayoutContentBackground = ({ layout, srcBackgroundGradientTop, srcBackgroundHorizon, srcBackgroundHorizonStretch, srcBackgroundHotelLeft, srcBackgroundHotelTop, srcBackgroundRight, srcLeftRightDivider, srcLogo }: LandingViewJetsetLayoutContentBackgroundProps) => {
     return (
         <Region
             name="content_background"
-            tags={tags}
             backgroundColor="#aae0f0"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >

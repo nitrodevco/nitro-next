@@ -19,21 +19,18 @@ export const NewControlsLayout = ({ controls, layout }: NewControlsLayoutProps) 
 export interface NewControlsLayoutBtnChatProps {
     layout?: BoxLayout;
     onBtnChat?: () => void;
-    tags?: string[];
 }
 
-export const NewControlsLayoutBtnChat = ({ layout, onBtnChat, tags }: NewControlsLayoutBtnChatProps) => {
+export const NewControlsLayoutBtnChat = ({ layout, onBtnChat }: NewControlsLayoutBtnChatProps) => {
     return (
         <Region
             name="btn_chat"
-            tags={tags}
             dynamicStyle="lifted_hover"
             onPointerTap={onBtnChat}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 25, top: 0, height: 25, ...layout }}
         >
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('friend_bar_friendlist_chat.png')}
                 layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
             />
@@ -45,21 +42,18 @@ export const NewControlsLayoutBtnChat = ({ layout, onBtnChat, tags }: NewControl
 export interface NewControlsLayoutButtonProfileProps {
     layout?: BoxLayout;
     onButtonProfile?: () => void;
-    tags?: string[];
 }
 
-export const NewControlsLayoutButtonProfile = ({ layout, onButtonProfile, tags }: NewControlsLayoutButtonProfileProps) => {
+export const NewControlsLayoutButtonProfile = ({ layout, onButtonProfile }: NewControlsLayoutButtonProfileProps) => {
     return (
         <Region
             name="button_profile"
-            tags={tags}
             dynamicStyle="lifted_hover"
             onPointerTap={onButtonProfile}
             cursor="pointer"
             layout={{ position: 'absolute', left: 58, width: 25, top: 0, height: 25, ...layout }}
         >
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('friend_bar_friendlist_eye.png')}
                 layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
             />
@@ -71,14 +65,12 @@ export const NewControlsLayoutButtonProfile = ({ layout, onButtonProfile, tags }
 export interface NewControlsLayoutBtnVisitProps {
     layout?: BoxLayout;
     onBtnVisit?: () => void;
-    tags?: string[];
 }
 
-export const NewControlsLayoutBtnVisit = ({ layout, onBtnVisit, tags }: NewControlsLayoutBtnVisitProps) => {
+export const NewControlsLayoutBtnVisit = ({ layout, onBtnVisit }: NewControlsLayoutBtnVisitProps) => {
     return (
         <Region
             name="btn_visit"
-            tags={tags}
             dynamicStyle="lifted_hover"
             onPointerTap={onBtnVisit}
             cursor="pointer"
@@ -99,24 +91,19 @@ export interface NewControlsLayoutControlsProps {
     buttonProfile?: NewControlsLayoutButtonProfileProps;
     layout?: BoxLayout;
     onControls?: () => void;
-    tags?: string[];
 }
 
-export const NewControlsLayoutControls = ({ btnChat, btnVisit, buttonProfile, layout, onControls, tags }: NewControlsLayoutControlsProps) => {
+export const NewControlsLayoutControls = ({ btnChat, btnVisit, buttonProfile, layout, onControls }: NewControlsLayoutControlsProps) => {
     return (
         <Region
             name="controls"
-            tags={tags}
             onPointerTap={onControls}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 35, ...layout }}
         >
             <NewControlsLayoutBtnChat {...btnChat} />
             <NewControlsLayoutButtonProfile {...buttonProfile} />
-            <NewControlsLayoutBtnVisit
-                tags={[ '#icon' ]}
-                {...btnVisit}
-            />
+            <NewControlsLayoutBtnVisit {...btnVisit} />
         </Region>
     );
 };

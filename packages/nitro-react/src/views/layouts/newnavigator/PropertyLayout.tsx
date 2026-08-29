@@ -9,10 +9,7 @@ export interface PropertyLayoutProps {
 export const PropertyLayout = ({ layout, roomProperty }: PropertyLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 155, height: 20, ...layout }}>
-            <PropertyLayoutRoomProperty
-                tags={[ 'TEMPLATE' ]}
-                {...roomProperty}
-            />
+            <PropertyLayoutRoomProperty {...roomProperty} />
         </Region>
     );
 };
@@ -22,14 +19,12 @@ export interface PropertyLayoutRoomPropertyProps {
     captionPropertyName?: string;
     captionPropertyValue?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PropertyLayoutRoomProperty = ({ captionPropertyName, captionPropertyValue, layout, tags }: PropertyLayoutRoomPropertyProps) => {
+export const PropertyLayoutRoomProperty = ({ captionPropertyName, captionPropertyValue, layout }: PropertyLayoutRoomPropertyProps) => {
     return (
         <Region
             name="room_property"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 20, ...layout }}
         >
             <Region

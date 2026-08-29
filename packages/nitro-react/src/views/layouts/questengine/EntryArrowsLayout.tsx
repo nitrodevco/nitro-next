@@ -19,14 +19,12 @@ export interface EntryArrowsLayoutEntryArrowsContProps {
     layout?: BoxLayout;
     srcArrow0?: string;
     srcArrow1?: string;
-    tags?: string[];
 }
 
-export const EntryArrowsLayoutEntryArrowsCont = ({ layout, srcArrow0, srcArrow1, tags }: EntryArrowsLayoutEntryArrowsContProps) => {
+export const EntryArrowsLayoutEntryArrowsCont = ({ layout, srcArrow0, srcArrow1 }: EntryArrowsLayoutEntryArrowsContProps) => {
     return (
         <Region
             name="entry_arrows_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 25, justifyContent: 'center', ...layout }}
         >
             <ThemeImage

@@ -55,14 +55,12 @@ export const ChatReportLayout = ({ layout, onClose, onSubmitButton, roomItems }:
 /** Named region `chat_items` of ChatReportLayout - configured through the parent's `chatItems` prop. */
 export interface ChatReportLayoutChatItemsProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChatReportLayoutChatItems = ({ layout, tags }: ChatReportLayoutChatItemsProps) => {
+export const ChatReportLayoutChatItems = ({ layout }: ChatReportLayoutChatItemsProps) => {
     return (
         <Region
             name="chat_items"
-            tags={tags}
             layout={{ position: 'absolute', left: 9, right: 1, top: 23, bottom: 0, flexDirection: 'column', ...layout }}
         />
     );
@@ -73,10 +71,9 @@ export interface ChatReportLayoutRoomItemsProps {
     captionRoomName?: string;
     chatItems?: ChatReportLayoutChatItemsProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ChatReportLayoutRoomItems = ({ captionRoomName, chatItems, layout, tags }: ChatReportLayoutRoomItemsProps) => {
+export const ChatReportLayoutRoomItems = ({ captionRoomName, chatItems, layout }: ChatReportLayoutRoomItemsProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -84,7 +81,6 @@ export const ChatReportLayoutRoomItems = ({ captionRoomName, chatItems, layout, 
         >
             <Region
                 name="room_items"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 <Region layout={{ width: 317, height: 24, flexShrink: 0 }}>

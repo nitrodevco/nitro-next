@@ -19,14 +19,12 @@ export interface CameraTypebuttonLayoutRegionProps {
     layout?: BoxLayout;
     onRegion?: () => void;
     srcIcon?: string;
-    tags?: string[];
 }
 
-export const CameraTypebuttonLayoutRegion = ({ layout, onRegion, srcIcon, tags }: CameraTypebuttonLayoutRegionProps) => {
+export const CameraTypebuttonLayoutRegion = ({ layout, onRegion, srcIcon }: CameraTypebuttonLayoutRegionProps) => {
     return (
         <Region
             name="region"
-            tags={tags}
             dynamicStyle="brightness_and_shadow_under"
             onPointerTap={onRegion}
             cursor="pointer"
@@ -34,14 +32,12 @@ export const CameraTypebuttonLayoutRegion = ({ layout, onRegion, srcIcon, tags }
         >
             <Border
                 variant="0"
-                tags={[ '#bg' ]}
                 tintColor="#cccccc"
                 layout={{ position: 'absolute', left: 0, width: 95, top: 0, height: 47 }}
             />
             <Border
                 variant="8"
                 name="active_border"
-                tags={[ '#bg' ]}
                 layout={{ position: 'absolute', left: 0, width: 95, top: 0, height: 47 }}
             />
             <ThemeImage

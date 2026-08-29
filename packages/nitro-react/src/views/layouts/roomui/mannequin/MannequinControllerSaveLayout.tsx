@@ -65,14 +65,12 @@ export interface MannequinControllerSaveLayoutBackRegionProps {
     captionBackText?: string;
     layout?: BoxLayout;
     onBackRegion?: () => void;
-    tags?: string[];
 }
 
-export const MannequinControllerSaveLayoutBackRegion = ({ captionBackText, layout, onBackRegion, tags }: MannequinControllerSaveLayoutBackRegionProps) => {
+export const MannequinControllerSaveLayoutBackRegion = ({ captionBackText, layout, onBackRegion }: MannequinControllerSaveLayoutBackRegionProps) => {
     return (
         <Region
             name="back_region"
-            tags={tags}
             onPointerTap={onBackRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 15, width: 151, top: 147, height: 20, ...layout }}

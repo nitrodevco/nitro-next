@@ -107,14 +107,12 @@ export interface QuestCompletedDialogLayoutCatalogLinkRegionProps {
     captionCatalogLinkTxt?: string;
     layout?: BoxLayout;
     onCatalogLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const QuestCompletedDialogLayoutCatalogLinkRegion = ({ captionCatalogLinkTxt, layout, onCatalogLinkRegion, tags }: QuestCompletedDialogLayoutCatalogLinkRegionProps) => {
+export const QuestCompletedDialogLayoutCatalogLinkRegion = ({ captionCatalogLinkTxt, layout, onCatalogLinkRegion }: QuestCompletedDialogLayoutCatalogLinkRegionProps) => {
     return (
         <Region
             name="catalog_link_region"
-            tags={tags}
             onPointerTap={onCatalogLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 19, width: 91, bottom: 52, height: 18, ...layout }}

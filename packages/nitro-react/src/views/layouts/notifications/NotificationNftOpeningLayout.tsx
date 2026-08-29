@@ -16,7 +16,6 @@ export const NotificationNftOpeningLayout = ({ bottom, captionNftPrizeDescriptio
         <Region layout={{ position: 'relative', width: 190, height: 110, ...layout }}>
             <Border
                 variant="2"
-                tags={[ 'border' ]}
                 tintColor="#006154"
                 layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 110 }}
             >
@@ -28,7 +27,6 @@ export const NotificationNftOpeningLayout = ({ bottom, captionNftPrizeDescriptio
                 />
                 <Region
                     name="nft_prize_description"
-                    tags={[ 'notification_text' ]}
                     layout={{ position: 'absolute', left: 65, width: 115, top: 29, height: 50, minHeight: 22, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -37,7 +35,6 @@ export const NotificationNftOpeningLayout = ({ bottom, captionNftPrizeDescriptio
                     />
                 </Region>
                 <ThemeImage
-                    tags={[ 'notification_icon' ]}
                     src={undefined}
                     layout={{ position: 'absolute', left: 8, width: 50, alignSelf: 'center', height: 50 }}
                 />
@@ -50,16 +47,14 @@ export const NotificationNftOpeningLayout = ({ bottom, captionNftPrizeDescriptio
 /** Named region `header` of NotificationNftOpeningLayout - configured through the parent's `header` prop. */
 export interface NotificationNftOpeningLayoutHeaderProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NotificationNftOpeningLayoutHeader = ({ layout, tags }: NotificationNftOpeningLayoutHeaderProps) => {
+export const NotificationNftOpeningLayoutHeader = ({ layout }: NotificationNftOpeningLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24, ...layout }}
         >
             <Border
@@ -85,14 +80,12 @@ export const NotificationNftOpeningLayoutHeader = ({ layout, tags }: Notificatio
 export interface NotificationNftOpeningLayoutBottomProps {
     layout?: BoxLayout;
     onRarityText?: () => void;
-    tags?: string[];
 }
 
-export const NotificationNftOpeningLayoutBottom = ({ layout, onRarityText, tags }: NotificationNftOpeningLayoutBottomProps) => {
+export const NotificationNftOpeningLayoutBottom = ({ layout, onRarityText }: NotificationNftOpeningLayoutBottomProps) => {
     return (
         <Region
             name="bottom"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 30, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 6, right: 6, top: 0, height: 25 }}>

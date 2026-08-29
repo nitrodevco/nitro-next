@@ -1,4 +1,5 @@
 import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `specialInfoWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -6,18 +7,16 @@ import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
  * (SpecialInfoWidgetLayout); each passes its own placement through `layout`.
  */
 /** Named region `specialInfoWidget` of SpecialInfoWidget2 - configured through the parent's `specialInfoWidget` prop. */
-export interface SpecialInfoWidget2Props {
+export interface SpecialInfoWidget2Props extends CatalogWidgetFlags {
     captionCtlgSpecialTxt?: string;
     layout?: BoxLayout;
     srcCtlgSpecialImg?: string;
-    tags?: string[];
 }
 
-export const SpecialInfoWidget2 = ({ captionCtlgSpecialTxt, layout, srcCtlgSpecialImg, tags }: SpecialInfoWidget2Props) => {
+export const SpecialInfoWidget2 = ({ captionCtlgSpecialTxt, layout, srcCtlgSpecialImg }: SpecialInfoWidget2Props) => {
     return (
         <Region
             name="specialInfoWidget"
-            tags={tags}
             layout={{ position: 'absolute', justifyContent: 'center', ...layout }}
         >
             <ThemeImage

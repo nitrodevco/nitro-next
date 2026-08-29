@@ -73,15 +73,13 @@ export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearch
 export interface NewUserChooserViewLayoutClearButtonProps {
     layout?: BoxLayout;
     onClearButton?: () => void;
-    tags?: string[];
     visibleClearButton?: boolean;
 }
 
-export const NewUserChooserViewLayoutClearButton = ({ layout, onClearButton, tags, visibleClearButton }: NewUserChooserViewLayoutClearButtonProps) => {
+export const NewUserChooserViewLayoutClearButton = ({ layout, onClearButton, visibleClearButton }: NewUserChooserViewLayoutClearButtonProps) => {
     return (
         <Region
             name="clear_button"
-            tags={tags}
             visible={visibleClearButton ?? false}
             onPointerTap={onClearButton}
             cursor="pointer"
@@ -98,14 +96,12 @@ export const NewUserChooserViewLayoutClearButton = ({ layout, onClearButton, tag
 /** Named region `table_container` of NewUserChooserViewLayout - configured through the parent's `tableContainer` prop. */
 export interface NewUserChooserViewLayoutTableContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewUserChooserViewLayoutTableContainer = ({ layout, tags }: NewUserChooserViewLayoutTableContainerProps) => {
+export const NewUserChooserViewLayoutTableContainer = ({ layout }: NewUserChooserViewLayoutTableContainerProps) => {
     return (
         <Region
             name="table_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, right: 18, top: 53, bottom: 61, ...layout }}
         />
     );

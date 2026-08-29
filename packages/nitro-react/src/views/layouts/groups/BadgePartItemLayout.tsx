@@ -20,14 +20,12 @@ export interface BadgePartItemLayoutContainerProps {
     onContainer?: () => void;
     srcPart?: string;
     srcSelected?: string;
-    tags?: string[];
 }
 
-export const BadgePartItemLayoutContainer = ({ layout, onContainer, srcPart, srcSelected, tags }: BadgePartItemLayoutContainerProps) => {
+export const BadgePartItemLayoutContainer = ({ layout, onContainer, srcPart, srcSelected }: BadgePartItemLayoutContainerProps) => {
     return (
         <Region
             name="container"
-            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onContainer}
             cursor="pointer"

@@ -85,14 +85,12 @@ export const LovelockEngravingLayout = ({ captionDate, captionHeader, captionNam
 export interface LovelockEngravingLayoutHeaderButtonCloseProps {
     layout?: BoxLayout;
     onHeaderButtonClose?: () => void;
-    tags?: string[];
 }
 
-export const LovelockEngravingLayoutHeaderButtonClose = ({ layout, onHeaderButtonClose, tags }: LovelockEngravingLayoutHeaderButtonCloseProps) => {
+export const LovelockEngravingLayoutHeaderButtonClose = ({ layout, onHeaderButtonClose }: LovelockEngravingLayoutHeaderButtonCloseProps) => {
     return (
         <Region
             name="header_button_close"
-            tags={tags}
             onPointerTap={onHeaderButtonClose}
             cursor="pointer"
             layout={{ position: 'absolute', left: 330, width: 21, top: 33, height: 17, ...layout }}

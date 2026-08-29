@@ -53,10 +53,7 @@ export const CatalogUbuntuLayout = ({ captionSearchHelper, catalogHeaderBackgrou
                     <CatalogUbuntuLayoutClearSearchButton {...clearSearchButton} />
                 </Border>
                 <CatalogUbuntuLayoutNavigationContainer {...navigationContainer} />
-                <CatalogUbuntuLayoutLayoutContainer
-                    tags={[ 'UBUNTU' ]}
-                    {...layoutContainer}
-                />
+                <CatalogUbuntuLayoutLayoutContainer {...layoutContainer} />
             </Region>
         </Frame>
     );
@@ -65,14 +62,12 @@ export const CatalogUbuntuLayout = ({ captionSearchHelper, catalogHeaderBackgrou
 /** Named region `catalog.header.background.body` of CatalogUbuntuLayout - configured through the parent's `catalogHeaderBackgroundBody` prop. */
 export interface CatalogUbuntuLayoutCatalogHeaderBackgroundBodyProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutCatalogHeaderBackgroundBody = ({ layout, tags }: CatalogUbuntuLayoutCatalogHeaderBackgroundBodyProps) => {
+export const CatalogUbuntuLayoutCatalogHeaderBackgroundBody = ({ layout }: CatalogUbuntuLayoutCatalogHeaderBackgroundBodyProps) => {
     return (
         <Region
             name="catalog.header.background.body"
-            tags={tags}
             backgroundColor="#0e3f52"
             layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 86, ...layout }}
         />
@@ -84,17 +79,15 @@ export interface CatalogUbuntuLayoutCatalogModeHeaderProps {
     captionCatalogHeaderDescription?: string;
     captionCatalogHeaderTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
     visibleCatalogModeHeader?: boolean;
 }
 
-export const CatalogUbuntuLayoutCatalogModeHeader = ({ captionCatalogHeaderDescription, captionCatalogHeaderTitle, layout, tags, visibleCatalogModeHeader }: CatalogUbuntuLayoutCatalogModeHeaderProps) => {
+export const CatalogUbuntuLayoutCatalogModeHeader = ({ captionCatalogHeaderDescription, captionCatalogHeaderTitle, layout, visibleCatalogModeHeader }: CatalogUbuntuLayoutCatalogModeHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="catalog.mode.header"
-            tags={tags}
             visible={visibleCatalogModeHeader ?? false}
             layout={{ position: 'absolute', left: 0, width: 570, top: 0, height: 90, ...layout }}
         >
@@ -127,16 +120,14 @@ export interface CatalogUbuntuLayoutBuilderModeHeaderProps {
     captionBuilderHeaderStatusMembership?: string;
     captionBuilderHeaderTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutBuilderModeHeader = ({ captionBuilderHeaderStatusLimit, captionBuilderHeaderStatusMembership, captionBuilderHeaderTitle, layout, tags }: CatalogUbuntuLayoutBuilderModeHeaderProps) => {
+export const CatalogUbuntuLayoutBuilderModeHeader = ({ captionBuilderHeaderStatusLimit, captionBuilderHeaderStatusMembership, captionBuilderHeaderTitle, layout }: CatalogUbuntuLayoutBuilderModeHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="builder.mode.header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 570, top: 0, height: 90, ...layout }}
         >
             <Region
@@ -179,14 +170,12 @@ export interface CatalogUbuntuLayoutCatalogHeaderBackgroundBorderProps {
     layout?: BoxLayout;
     srcCatalogHeaderIcon?: string;
     srcCatalogHeaderImage?: string;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutCatalogHeaderBackgroundBorder = ({ builderModeHeader, catalogHeaderBackgroundBody, catalogModeHeader, layout, srcCatalogHeaderIcon, srcCatalogHeaderImage, tags }: CatalogUbuntuLayoutCatalogHeaderBackgroundBorderProps) => {
+export const CatalogUbuntuLayoutCatalogHeaderBackgroundBorder = ({ builderModeHeader, catalogHeaderBackgroundBody, catalogModeHeader, layout, srcCatalogHeaderIcon, srcCatalogHeaderImage }: CatalogUbuntuLayoutCatalogHeaderBackgroundBorderProps) => {
     return (
         <Region
             name="catalog.header.background.border"
-            tags={tags}
             backgroundColor="#376275"
             layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 90, ...layout }}
         >
@@ -212,14 +201,12 @@ export interface CatalogUbuntuLayoutClearSearchButtonProps {
     layout?: BoxLayout;
     onClearSearchButton?: () => void;
     srcSearchClearIcon?: string;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutClearSearchButton = ({ layout, onClearSearchButton, srcSearchClearIcon, tags }: CatalogUbuntuLayoutClearSearchButtonProps) => {
+export const CatalogUbuntuLayoutClearSearchButton = ({ layout, onClearSearchButton, srcSearchClearIcon }: CatalogUbuntuLayoutClearSearchButtonProps) => {
     return (
         <Region
             name="clear_search_button"
-            tags={tags}
             onPointerTap={onClearSearchButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 160, width: 20, top: 2, height: 20, ...layout }}
@@ -236,14 +223,12 @@ export const CatalogUbuntuLayoutClearSearchButton = ({ layout, onClearSearchButt
 /** Row template `normal_list_template` of CatalogUbuntuLayout - pass real rows through its `items…` slot. */
 export interface CatalogUbuntuLayoutNormalListTemplateItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutNormalListTemplateItem = ({ layout, tags }: CatalogUbuntuLayoutNormalListTemplateItemProps) => {
+export const CatalogUbuntuLayoutNormalListTemplateItem = ({ layout }: CatalogUbuntuLayoutNormalListTemplateItemProps) => {
     return (
         <Region
             name="normal_list_template"
-            tags={tags}
             layout={{ width: 178, height: 19, flexShrink: 0, flexDirection: 'column', ...layout }}
         />
     );
@@ -252,14 +237,12 @@ export const CatalogUbuntuLayoutNormalListTemplateItem = ({ layout, tags }: Cata
 /** Named region `item_hilight_inner` of CatalogUbuntuLayout - configured through the parent's `itemHilightInner` prop. */
 export interface CatalogUbuntuLayoutItemHilightInnerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutItemHilightInner = ({ layout, tags }: CatalogUbuntuLayoutItemHilightInnerProps) => {
+export const CatalogUbuntuLayoutItemHilightInner = ({ layout }: CatalogUbuntuLayoutItemHilightInnerProps) => {
     return (
         <Region
             name="item_hilight_inner"
-            tags={tags}
             backgroundColor="#63c5e9"
             layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16, ...layout }}
         />
@@ -270,14 +253,12 @@ export const CatalogUbuntuLayoutItemHilightInner = ({ layout, tags }: CatalogUbu
 export interface CatalogUbuntuLayoutItemHilightOuterProps {
     itemHilightInner?: CatalogUbuntuLayoutItemHilightInnerProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutItemHilightOuter = ({ itemHilightInner, layout, tags }: CatalogUbuntuLayoutItemHilightOuterProps) => {
+export const CatalogUbuntuLayoutItemHilightOuter = ({ itemHilightInner, layout }: CatalogUbuntuLayoutItemHilightOuterProps) => {
     return (
         <Region
             name="item_hilight_outer"
-            tags={tags}
             backgroundColor="#82d1ed"
             layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20, ...layout }}
         >
@@ -293,21 +274,18 @@ export interface CatalogUbuntuLayoutNormalTopitemTemplateItemProps {
     layout?: BoxLayout;
     onNormalTopitemTemplate?: () => void;
     srcIcon?: string;
-    tags?: string[];
     visibleDropButton?: boolean;
 }
 
-export const CatalogUbuntuLayoutNormalTopitemTemplateItem = ({ captionItemTitle, itemHilightOuter, layout, onNormalTopitemTemplate, srcIcon, tags, visibleDropButton }: CatalogUbuntuLayoutNormalTopitemTemplateItemProps) => {
+export const CatalogUbuntuLayoutNormalTopitemTemplateItem = ({ captionItemTitle, itemHilightOuter, layout, onNormalTopitemTemplate, srcIcon, visibleDropButton }: CatalogUbuntuLayoutNormalTopitemTemplateItemProps) => {
     return (
         <Region
             name="normal_topitem_template"
-            tags={tags}
             onPointerTap={onNormalTopitemTemplate}
             cursor="pointer"
             layout={{ width: 180, height: 21, flexShrink: 0, ...layout }}
         >
             <Region
-                tags={[ 'SELECTION_HILIGHT' ]}
                 backgroundColor="#b4b4ae"
                 layout={{ position: 'absolute', left: 1, width: 178, top: 0, height: 21 }}
             >
@@ -315,13 +293,11 @@ export const CatalogUbuntuLayoutNormalTopitemTemplateItem = ({ captionItemTitle,
             </Region>
             <ThemeImage
                 name="icon"
-                tags={[ 'ICON_IMAGE' ]}
                 src={srcIcon ?? '${image.library.url}catalogue/icon_1.png'}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
             />
             <Region
                 name="item_title"
-                tags={[ 'ITEM_TITLE', 'SELECTION_COLOR' ]}
                 layout={{ position: 'absolute', left: 26, right: 127, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -337,7 +313,6 @@ export const CatalogUbuntuLayoutNormalTopitemTemplateItem = ({ captionItemTitle,
                 <Icon
                     variant="5"
                     name="drop_button"
-                    tags={[ 'DOWNBTN' ]}
                     tintColor="#999999"
                     layout={{ width: '100%', height: '100%' }}
                 />
@@ -349,14 +324,12 @@ export const CatalogUbuntuLayoutNormalTopitemTemplateItem = ({ captionItemTitle,
 /** Named region `item_hilight_inner` of CatalogUbuntuLayout - configured through the parent's `itemHilightInner` prop. */
 export interface CatalogUbuntuLayoutItemHilightInner2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutItemHilightInner2 = ({ layout, tags }: CatalogUbuntuLayoutItemHilightInner2Props) => {
+export const CatalogUbuntuLayoutItemHilightInner2 = ({ layout }: CatalogUbuntuLayoutItemHilightInner2Props) => {
     return (
         <Region
             name="item_hilight_inner"
-            tags={tags}
             backgroundColor="#63c5e9"
             layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 15, ...layout }}
         />
@@ -367,14 +340,12 @@ export const CatalogUbuntuLayoutItemHilightInner2 = ({ layout, tags }: CatalogUb
 export interface CatalogUbuntuLayoutItemHilightOuter2Props {
     itemHilightInner?: CatalogUbuntuLayoutItemHilightInner2Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutItemHilightOuter2 = ({ itemHilightInner, layout, tags }: CatalogUbuntuLayoutItemHilightOuter2Props) => {
+export const CatalogUbuntuLayoutItemHilightOuter2 = ({ itemHilightInner, layout }: CatalogUbuntuLayoutItemHilightOuter2Props) => {
     return (
         <Region
             name="item_hilight_outer"
-            tags={tags}
             backgroundColor="#82d1ed"
             layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 19, ...layout }}
         >
@@ -390,21 +361,18 @@ export interface CatalogUbuntuLayoutNormalSubitemTemplateItemProps {
     layout?: BoxLayout;
     onNormalSubitemTemplate?: () => void;
     srcIcon?: string;
-    tags?: string[];
     visibleDropButton?: boolean;
 }
 
-export const CatalogUbuntuLayoutNormalSubitemTemplateItem = ({ captionItemTitle, itemHilightOuter, layout, onNormalSubitemTemplate, srcIcon, tags, visibleDropButton }: CatalogUbuntuLayoutNormalSubitemTemplateItemProps) => {
+export const CatalogUbuntuLayoutNormalSubitemTemplateItem = ({ captionItemTitle, itemHilightOuter, layout, onNormalSubitemTemplate, srcIcon, visibleDropButton }: CatalogUbuntuLayoutNormalSubitemTemplateItemProps) => {
     return (
         <Region
             name="normal_subitem_template"
-            tags={tags}
             onPointerTap={onNormalSubitemTemplate}
             cursor="pointer"
             layout={{ width: 179, height: 21, flexShrink: 0, ...layout }}
         >
             <Region
-                tags={[ 'SELECTION_HILIGHT' ]}
                 backgroundColor="#b4b4ae"
                 layout={{ position: 'absolute', left: 1, width: 178, top: 0, height: 20 }}
             >
@@ -412,13 +380,11 @@ export const CatalogUbuntuLayoutNormalSubitemTemplateItem = ({ captionItemTitle,
             </Region>
             <ThemeImage
                 name="icon"
-                tags={[ 'ICON_IMAGE' ]}
                 src={srcIcon ?? '${image.library.url}catalogue/icon_2.png'}
                 layout={{ position: 'absolute', left: 15, width: 20, top: 0, height: 20 }}
             />
             <Region
                 name="item_title"
-                tags={[ 'ITEM_TITLE', 'SELECTION_COLOR' ]}
                 layout={{ position: 'absolute', left: 42, right: 82, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -434,7 +400,6 @@ export const CatalogUbuntuLayoutNormalSubitemTemplateItem = ({ captionItemTitle,
                 <Icon
                     variant="5"
                     name="drop_button"
-                    tags={[ 'DOWNBTN' ]}
                     tintColor="#999999"
                     layout={{ width: '100%', height: '100%' }}
                 />
@@ -446,14 +411,12 @@ export const CatalogUbuntuLayoutNormalSubitemTemplateItem = ({ captionItemTitle,
 /** Row template `builders_club_list_template` of CatalogUbuntuLayout - pass real rows through its `items…` slot. */
 export interface CatalogUbuntuLayoutBuildersClubListTemplateItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutBuildersClubListTemplateItem = ({ layout, tags }: CatalogUbuntuLayoutBuildersClubListTemplateItemProps) => {
+export const CatalogUbuntuLayoutBuildersClubListTemplateItem = ({ layout }: CatalogUbuntuLayoutBuildersClubListTemplateItemProps) => {
     return (
         <Region
             name="builders_club_list_template"
-            tags={tags}
             layout={{ width: 178, height: 19, flexShrink: 0, flexDirection: 'column', ...layout }}
         />
     );
@@ -462,14 +425,12 @@ export const CatalogUbuntuLayoutBuildersClubListTemplateItem = ({ layout, tags }
 /** Named region `item_hilight_inner` of CatalogUbuntuLayout - configured through the parent's `itemHilightInner` prop. */
 export interface CatalogUbuntuLayoutItemHilightInner3Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutItemHilightInner3 = ({ layout, tags }: CatalogUbuntuLayoutItemHilightInner3Props) => {
+export const CatalogUbuntuLayoutItemHilightInner3 = ({ layout }: CatalogUbuntuLayoutItemHilightInner3Props) => {
     return (
         <Region
             name="item_hilight_inner"
-            tags={tags}
             backgroundColor="#ff8d00"
             layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16, ...layout }}
         />
@@ -480,14 +441,12 @@ export const CatalogUbuntuLayoutItemHilightInner3 = ({ layout, tags }: CatalogUb
 export interface CatalogUbuntuLayoutItemHilightOuter3Props {
     itemHilightInner?: CatalogUbuntuLayoutItemHilightInner3Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutItemHilightOuter3 = ({ itemHilightInner, layout, tags }: CatalogUbuntuLayoutItemHilightOuter3Props) => {
+export const CatalogUbuntuLayoutItemHilightOuter3 = ({ itemHilightInner, layout }: CatalogUbuntuLayoutItemHilightOuter3Props) => {
     return (
         <Region
             name="item_hilight_outer"
-            tags={tags}
             backgroundColor="#ffb53c"
             layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20, ...layout }}
         >
@@ -503,21 +462,18 @@ export interface CatalogUbuntuLayoutBuildersClubTopitemTemplateItemProps {
     layout?: BoxLayout;
     onBuildersClubTopitemTemplate?: () => void;
     srcIcon?: string;
-    tags?: string[];
     visibleDropButton?: boolean;
 }
 
-export const CatalogUbuntuLayoutBuildersClubTopitemTemplateItem = ({ captionItemTitle, itemHilightOuter, layout, onBuildersClubTopitemTemplate, srcIcon, tags, visibleDropButton }: CatalogUbuntuLayoutBuildersClubTopitemTemplateItemProps) => {
+export const CatalogUbuntuLayoutBuildersClubTopitemTemplateItem = ({ captionItemTitle, itemHilightOuter, layout, onBuildersClubTopitemTemplate, srcIcon, visibleDropButton }: CatalogUbuntuLayoutBuildersClubTopitemTemplateItemProps) => {
     return (
         <Region
             name="builders_club_topitem_template"
-            tags={tags}
             onPointerTap={onBuildersClubTopitemTemplate}
             cursor="pointer"
             layout={{ width: 180, height: 21, flexShrink: 0, ...layout }}
         >
             <Region
-                tags={[ 'SELECTION_HILIGHT' ]}
                 backgroundColor="#b4b4ae"
                 layout={{ position: 'absolute', left: 1, width: 178, top: 0, height: 21 }}
             >
@@ -525,13 +481,11 @@ export const CatalogUbuntuLayoutBuildersClubTopitemTemplateItem = ({ captionItem
             </Region>
             <ThemeImage
                 name="icon"
-                tags={[ 'ICON_IMAGE' ]}
                 src={srcIcon ?? '${image.library.url}catalogue/icon_1.png'}
                 layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
             />
             <Region
                 name="item_title"
-                tags={[ 'ITEM_TITLE', 'SELECTION_COLOR' ]}
                 layout={{ position: 'absolute', left: 26, right: 127, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -547,7 +501,6 @@ export const CatalogUbuntuLayoutBuildersClubTopitemTemplateItem = ({ captionItem
                 <Icon
                     variant="5"
                     name="drop_button"
-                    tags={[ 'DOWNBTN' ]}
                     tintColor="#999999"
                     layout={{ width: '100%', height: '100%' }}
                 />
@@ -559,14 +512,12 @@ export const CatalogUbuntuLayoutBuildersClubTopitemTemplateItem = ({ captionItem
 /** Named region `item_hilight_inner` of CatalogUbuntuLayout - configured through the parent's `itemHilightInner` prop. */
 export interface CatalogUbuntuLayoutItemHilightInner4Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutItemHilightInner4 = ({ layout, tags }: CatalogUbuntuLayoutItemHilightInner4Props) => {
+export const CatalogUbuntuLayoutItemHilightInner4 = ({ layout }: CatalogUbuntuLayoutItemHilightInner4Props) => {
     return (
         <Region
             name="item_hilight_inner"
-            tags={tags}
             backgroundColor="#ff8d00"
             layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 15, ...layout }}
         />
@@ -577,14 +528,12 @@ export const CatalogUbuntuLayoutItemHilightInner4 = ({ layout, tags }: CatalogUb
 export interface CatalogUbuntuLayoutItemHilightOuter4Props {
     itemHilightInner?: CatalogUbuntuLayoutItemHilightInner4Props;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutItemHilightOuter4 = ({ itemHilightInner, layout, tags }: CatalogUbuntuLayoutItemHilightOuter4Props) => {
+export const CatalogUbuntuLayoutItemHilightOuter4 = ({ itemHilightInner, layout }: CatalogUbuntuLayoutItemHilightOuter4Props) => {
     return (
         <Region
             name="item_hilight_outer"
-            tags={tags}
             backgroundColor="#ffb53c"
             layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 19, ...layout }}
         >
@@ -600,21 +549,18 @@ export interface CatalogUbuntuLayoutBuildersClubSubitemTemplateItemProps {
     layout?: BoxLayout;
     onBuildersClubSubitemTemplate?: () => void;
     srcIcon?: string;
-    tags?: string[];
     visibleDropButton?: boolean;
 }
 
-export const CatalogUbuntuLayoutBuildersClubSubitemTemplateItem = ({ captionItemTitle, itemHilightOuter, layout, onBuildersClubSubitemTemplate, srcIcon, tags, visibleDropButton }: CatalogUbuntuLayoutBuildersClubSubitemTemplateItemProps) => {
+export const CatalogUbuntuLayoutBuildersClubSubitemTemplateItem = ({ captionItemTitle, itemHilightOuter, layout, onBuildersClubSubitemTemplate, srcIcon, visibleDropButton }: CatalogUbuntuLayoutBuildersClubSubitemTemplateItemProps) => {
     return (
         <Region
             name="builders_club_subitem_template"
-            tags={tags}
             onPointerTap={onBuildersClubSubitemTemplate}
             cursor="pointer"
             layout={{ width: 179, height: 21, flexShrink: 0, ...layout }}
         >
             <Region
-                tags={[ 'SELECTION_HILIGHT' ]}
                 backgroundColor="#b4b4ae"
                 layout={{ position: 'absolute', left: 1, width: 178, top: 0, height: 20 }}
             >
@@ -622,13 +568,11 @@ export const CatalogUbuntuLayoutBuildersClubSubitemTemplateItem = ({ captionItem
             </Region>
             <ThemeImage
                 name="icon"
-                tags={[ 'ICON_IMAGE' ]}
                 src={srcIcon ?? '${image.library.url}catalogue/icon_2.png'}
                 layout={{ position: 'absolute', left: 15, width: 20, top: 0, height: 20 }}
             />
             <Region
                 name="item_title"
-                tags={[ 'ITEM_TITLE', 'SELECTION_COLOR' ]}
                 layout={{ position: 'absolute', left: 42, right: 82, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -644,7 +588,6 @@ export const CatalogUbuntuLayoutBuildersClubSubitemTemplateItem = ({ captionItem
                 <Icon
                     variant="5"
                     name="drop_button"
-                    tags={[ 'DOWNBTN' ]}
                     tintColor="#999999"
                     layout={{ width: '100%', height: '100%' }}
                 />
@@ -657,10 +600,9 @@ export const CatalogUbuntuLayoutBuildersClubSubitemTemplateItem = ({ captionItem
 export interface CatalogUbuntuLayoutNavigationListProps {
     itemsNavigationList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutNavigationList = ({ itemsNavigationList, layout, tags }: CatalogUbuntuLayoutNavigationListProps) => {
+export const CatalogUbuntuLayoutNavigationList = ({ itemsNavigationList, layout }: CatalogUbuntuLayoutNavigationListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -668,7 +610,6 @@ export const CatalogUbuntuLayoutNavigationList = ({ itemsNavigationList, layout,
         >
             <Region
                 name="navigationList"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsNavigationList ?? (
@@ -690,14 +631,12 @@ export const CatalogUbuntuLayoutNavigationList = ({ itemsNavigationList, layout,
 export interface CatalogUbuntuLayoutNavigationContainerProps {
     layout?: BoxLayout;
     navigationList?: CatalogUbuntuLayoutNavigationListProps;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutNavigationContainer = ({ layout, navigationList, tags }: CatalogUbuntuLayoutNavigationContainerProps) => {
+export const CatalogUbuntuLayoutNavigationContainer = ({ layout, navigationList }: CatalogUbuntuLayoutNavigationContainerProps) => {
     return (
         <Region
             name="navigationContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 8, width: 184, top: 124, bottom: 43, ...layout }}
         >
             <Border
@@ -713,14 +652,12 @@ export const CatalogUbuntuLayoutNavigationContainer = ({ layout, navigationList,
 /** Named region `layoutContainer` of CatalogUbuntuLayout - configured through the parent's `layoutContainer` prop. */
 export interface CatalogUbuntuLayoutLayoutContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CatalogUbuntuLayoutLayoutContainer = ({ layout, tags }: CatalogUbuntuLayoutLayoutContainerProps) => {
+export const CatalogUbuntuLayoutLayoutContainer = ({ layout }: CatalogUbuntuLayoutLayoutContainerProps) => {
     return (
         <Region
             name="layoutContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 200, width: 360, top: 96, bottom: 44, ...layout }}
         />
     );

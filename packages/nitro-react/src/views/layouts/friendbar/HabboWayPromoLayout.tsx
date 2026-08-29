@@ -94,16 +94,14 @@ export interface HabboWayPromoLayoutCol1Props {
     layout?: BoxLayout;
     srcCounterBg?: string;
     srcTeaserImage?: string;
-    tags?: string[];
 }
 
-export const HabboWayPromoLayoutCol1 = ({ captionCounterInfoTxt, captionCounterTxt, layout, srcCounterBg, srcTeaserImage, tags }: HabboWayPromoLayoutCol1Props) => {
+export const HabboWayPromoLayoutCol1 = ({ captionCounterInfoTxt, captionCounterTxt, layout, srcCounterBg, srcTeaserImage }: HabboWayPromoLayoutCol1Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="col1"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 245, ...layout }}
         >
@@ -143,14 +141,12 @@ export const HabboWayPromoLayoutCol1 = ({ captionCounterInfoTxt, captionCounterT
 /** Named region `spacing` of HabboWayPromoLayout - configured through the parent's `spacing` prop. */
 export interface HabboWayPromoLayoutSpacingProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabboWayPromoLayoutSpacing = ({ layout, tags }: HabboWayPromoLayoutSpacingProps) => {
+export const HabboWayPromoLayoutSpacing = ({ layout }: HabboWayPromoLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ width: 250, height: 6, flexShrink: 0, ...layout }}
         />

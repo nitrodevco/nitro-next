@@ -75,16 +75,14 @@ export const CitizenshipWelcomeLayout = ({ layout, onFrameClose, onShowCitizensh
 export interface CitizenshipWelcomeLayoutPostponeCitizenshipProps {
     layout?: BoxLayout;
     onPostponeCitizenship?: () => void;
-    tags?: string[];
 }
 
-export const CitizenshipWelcomeLayoutPostponeCitizenship = ({ layout, onPostponeCitizenship, tags }: CitizenshipWelcomeLayoutPostponeCitizenshipProps) => {
+export const CitizenshipWelcomeLayoutPostponeCitizenship = ({ layout, onPostponeCitizenship }: CitizenshipWelcomeLayoutPostponeCitizenshipProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="postpone_citizenship"
-            tags={tags}
             onPointerTap={onPostponeCitizenship}
             cursor="pointer"
             layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 228, top: 40, height: 22, ...layout }}

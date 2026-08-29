@@ -6,12 +6,13 @@ export interface ExpiringCatalogPageSmallLayoutProps {
     captionPageDescTxt?: string;
     captionPageHeaderTxt?: string;
     captionTimerCaptionTxt?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     onOpenCatalogButton?: () => void;
     srcPromoBitmap?: string;
 }
 
-export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPageHeaderTxt, captionTimerCaptionTxt, layout, onOpenCatalogButton, srcPromoBitmap }: ExpiringCatalogPageSmallLayoutProps) => {
+export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPageHeaderTxt, captionTimerCaptionTxt, colorableTextColor, layout, onOpenCatalogButton, srcPromoBitmap }: ExpiringCatalogPageSmallLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -23,12 +24,12 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                 <Region layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 208, flexDirection: 'column' }}>
                     <Region
                         name="page_header_txt"
-                        tags={[ 'COLORABLE' ]}
                         layout={{ width: 94, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPageHeaderTxt ?? 'Caption PH'}
                             textStyle="text-style-il-heading-1"
+                            textOptions={{ fill: colorableTextColor }}
                         />
                     </Region>
                     <Region
@@ -42,13 +43,12 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                         />
                         <Region
                             name="timer_caption_txt"
-                            tags={[ 'COLORABLE' ]}
                             layout={{ position: 'absolute', left: 99, width: 146, top: 23, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionTimerCaptionTxt ?? t('landing.view.pageexpiry.timeremaining')}
                                 textStyle="text-style-il-heading-3"
-                                textOptions={{ align: 'center' }}
+                                textOptions={{ fill: colorableTextColor, align: 'center' }}
                             />
                         </Region>
                         <WidgetSlot
@@ -60,12 +60,11 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                     </Region>
                     <Region
                         name="page_desc_txt"
-                        tags={[ 'COLORABLE' ]}
                         layout={{ width: 250, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPageDescTxt ?? 'Desc PH'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
+                            textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 250 }}
                         />
                     </Region>
                     <Button

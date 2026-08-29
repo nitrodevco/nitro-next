@@ -24,14 +24,12 @@ export const LandingViewGenericReceptionLayout = ({ contentBackground, layout }:
 /** Named region `right_pane_dimmer` of LandingViewGenericReceptionLayout - configured through the parent's `rightPaneDimmer` prop. */
 export interface LandingViewGenericReceptionLayoutRightPaneDimmerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LandingViewGenericReceptionLayoutRightPaneDimmer = ({ layout, tags }: LandingViewGenericReceptionLayoutRightPaneDimmerProps) => {
+export const LandingViewGenericReceptionLayoutRightPaneDimmer = ({ layout }: LandingViewGenericReceptionLayoutRightPaneDimmerProps) => {
     return (
         <Region
             name="right_pane_dimmer"
-            tags={tags}
             backgroundColor="#75bfe3"
             layout={{ position: 'absolute', right: 0, width: 289, top: 0, bottom: 0, ...layout }}
         />
@@ -41,14 +39,12 @@ export const LandingViewGenericReceptionLayoutRightPaneDimmer = ({ layout, tags 
 /** Named region `navigator_placer` of LandingViewGenericReceptionLayout - configured through the parent's `navigatorPlacer` prop. */
 export interface LandingViewGenericReceptionLayoutNavigatorPlacerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LandingViewGenericReceptionLayoutNavigatorPlacer = ({ layout, tags }: LandingViewGenericReceptionLayoutNavigatorPlacerProps) => {
+export const LandingViewGenericReceptionLayoutNavigatorPlacer = ({ layout }: LandingViewGenericReceptionLayoutNavigatorPlacerProps) => {
     return (
         <Region
             name="navigator_placer"
-            tags={tags}
             layout={{ position: 'absolute', left: 310, width: 30, top: 99, height: 30, ...layout }}
         />
     );
@@ -65,16 +61,14 @@ export interface LandingViewGenericReceptionLayoutContentBackgroundProps {
     srcBorderBar?: string;
     srcDive?: string;
     srcReceptionDivider?: string;
-    tags?: string[];
 }
 
-export const LandingViewGenericReceptionLayoutContentBackground = ({ captionDailyContent, layout, navigatorPlacer, rightPaneDimmer, srcBackgroundBack, srcBackgroundFront, srcBorderBar, srcDive, srcReceptionDivider, tags }: LandingViewGenericReceptionLayoutContentBackgroundProps) => {
+export const LandingViewGenericReceptionLayoutContentBackground = ({ captionDailyContent, layout, navigatorPlacer, rightPaneDimmer, srcBackgroundBack, srcBackgroundFront, srcBorderBar, srcDive, srcReceptionDivider }: LandingViewGenericReceptionLayoutContentBackgroundProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="content_background"
-            tags={tags}
             backgroundColor="#aae0f0"
             layout={{ position: 'absolute', left: 0, width: 1172, top: 0, height: 822, minWidth: 950, maxWidth: 1172, minHeight: 600, maxHeight: 822, ...layout }}
         >

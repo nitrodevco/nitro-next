@@ -50,16 +50,14 @@ export interface MeMenuNewViewLayoutGuideProps {
     onGuide?: () => void;
     srcGuideIconColor?: string;
     srcGuideIconGrey?: string;
-    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutGuide = ({ captionFieldText, layout, onGuide, srcGuideIconColor, srcGuideIconGrey, tags }: MeMenuNewViewLayoutGuideProps) => {
+export const MeMenuNewViewLayoutGuide = ({ captionFieldText, layout, onGuide, srcGuideIconColor, srcGuideIconGrey }: MeMenuNewViewLayoutGuideProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guide"
-            tags={tags}
             onPointerTap={onGuide}
             cursor="pointer"
             layout={{ position: 'absolute', left: 12, width: 50, top: 2, height: 48, justifyContent: 'center', ...layout }}
@@ -95,16 +93,14 @@ export interface MeMenuNewViewLayoutTalentsProps {
     onTalents?: () => void;
     srcTalentsIconColor?: string;
     srcTalentsIconGrey?: string;
-    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutTalents = ({ captionFieldText, layout, onTalents, srcTalentsIconColor, srcTalentsIconGrey, tags }: MeMenuNewViewLayoutTalentsProps) => {
+export const MeMenuNewViewLayoutTalents = ({ captionFieldText, layout, onTalents, srcTalentsIconColor, srcTalentsIconGrey }: MeMenuNewViewLayoutTalentsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="talents"
-            tags={tags}
             onPointerTap={onTalents}
             cursor="pointer"
             layout={{ position: 'absolute', left: 70, width: 50, top: 2, height: 48, justifyContent: 'center', ...layout }}
@@ -140,16 +136,14 @@ export interface MeMenuNewViewLayoutMinimailProps {
     onMinimail?: () => void;
     srcMinimailIconColor?: string;
     srcMinimailIconGrey?: string;
-    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutMinimail = ({ captionFieldText, layout, onMinimail, srcMinimailIconColor, srcMinimailIconGrey, tags }: MeMenuNewViewLayoutMinimailProps) => {
+export const MeMenuNewViewLayoutMinimail = ({ captionFieldText, layout, onMinimail, srcMinimailIconColor, srcMinimailIconGrey }: MeMenuNewViewLayoutMinimailProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="minimail"
-            tags={tags}
             onPointerTap={onMinimail}
             cursor="pointer"
             layout={{ position: 'absolute', left: 128, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
@@ -185,16 +179,14 @@ export interface MeMenuNewViewLayoutProfileProps {
     onProfile?: () => void;
     srcProfileIconColor?: string;
     srcProfileIconGrey?: string;
-    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutProfile = ({ captionFieldText, layout, onProfile, srcProfileIconColor, srcProfileIconGrey, tags }: MeMenuNewViewLayoutProfileProps) => {
+export const MeMenuNewViewLayoutProfile = ({ captionFieldText, layout, onProfile, srcProfileIconColor, srcProfileIconGrey }: MeMenuNewViewLayoutProfileProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="profile"
-            tags={tags}
             onPointerTap={onProfile}
             cursor="pointer"
             layout={{ position: 'absolute', left: 196, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
@@ -230,16 +222,14 @@ export interface MeMenuNewViewLayoutRoomsProps {
     onRooms?: () => void;
     srcRoomsIconColor?: string;
     srcRoomsIconGrey?: string;
-    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutRooms = ({ captionFieldText, layout, onRooms, srcRoomsIconColor, srcRoomsIconGrey, tags }: MeMenuNewViewLayoutRoomsProps) => {
+export const MeMenuNewViewLayoutRooms = ({ captionFieldText, layout, onRooms, srcRoomsIconColor, srcRoomsIconGrey }: MeMenuNewViewLayoutRoomsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rooms"
-            tags={tags}
             onPointerTap={onRooms}
             cursor="pointer"
             layout={{ position: 'absolute', left: 264, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
@@ -275,16 +265,14 @@ export interface MeMenuNewViewLayoutClothesProps {
     onClothes?: () => void;
     srcClothesIconColor?: string;
     srcClothesIconGrey?: string;
-    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutClothes = ({ captionFieldText, layout, onClothes, srcClothesIconColor, srcClothesIconGrey, tags }: MeMenuNewViewLayoutClothesProps) => {
+export const MeMenuNewViewLayoutClothes = ({ captionFieldText, layout, onClothes, srcClothesIconColor, srcClothesIconGrey }: MeMenuNewViewLayoutClothesProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="clothes"
-            tags={tags}
             onPointerTap={onClothes}
             cursor="pointer"
             layout={{ position: 'absolute', left: 332, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
@@ -320,16 +308,14 @@ export interface MeMenuNewViewLayoutForumsProps {
     onForums?: () => void;
     srcForumsIconColor?: string;
     srcForumsIconGrey?: string;
-    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutForums = ({ captionFieldText, layout, onForums, srcForumsIconColor, srcForumsIconGrey, tags }: MeMenuNewViewLayoutForumsProps) => {
+export const MeMenuNewViewLayoutForums = ({ captionFieldText, layout, onForums, srcForumsIconColor, srcForumsIconGrey }: MeMenuNewViewLayoutForumsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="forums"
-            tags={tags}
             onPointerTap={onForums}
             cursor="pointer"
             layout={{ position: 'absolute', left: 400, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
@@ -365,16 +351,14 @@ export interface MeMenuNewViewLayoutCollectiblesProps {
     onCollectibles?: () => void;
     srcCollectiblesIconColor?: string;
     srcCollectiblesIconGrey?: string;
-    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutCollectibles = ({ captionFieldText, layout, onCollectibles, srcCollectiblesIconColor, srcCollectiblesIconGrey, tags }: MeMenuNewViewLayoutCollectiblesProps) => {
+export const MeMenuNewViewLayoutCollectibles = ({ captionFieldText, layout, onCollectibles, srcCollectiblesIconColor, srcCollectiblesIconGrey }: MeMenuNewViewLayoutCollectiblesProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="collectibles"
-            tags={tags}
             onPointerTap={onCollectibles}
             cursor="pointer"
             layout={{ position: 'absolute', left: 468, width: 60, top: 2, height: 48, justifyContent: 'center', ...layout }}
@@ -406,14 +390,12 @@ export const MeMenuNewViewLayoutCollectibles = ({ captionFieldText, layout, onCo
 /** Named region `spacer` of MeMenuNewViewLayout - configured through the parent's `spacer` prop. */
 export interface MeMenuNewViewLayoutSpacerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MeMenuNewViewLayoutSpacer = ({ layout, tags }: MeMenuNewViewLayoutSpacerProps) => {
+export const MeMenuNewViewLayoutSpacer = ({ layout }: MeMenuNewViewLayoutSpacerProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ position: 'absolute', left: 536, width: 7, top: 2, height: 30, ...layout }}
         />
     );

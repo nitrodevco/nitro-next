@@ -19,7 +19,6 @@ export const InventoryThumbLayout = ({ layout, numberContainer, srcBitmap, srcCh
             <Region layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}>
                 <Border
                     variant="5"
-                    tags={[ 'BG_COLOR' ]}
                     tintColor="#cacaca"
                     layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
                 >
@@ -45,7 +44,6 @@ export const InventoryThumbLayout = ({ layout, numberContainer, srcBitmap, srcCh
                     </Region>
                     <ThemeImage
                         name="bitmap"
-                        tags={[ 'BITMAP' ]}
                         src={srcBitmap}
                         layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
                     />
@@ -84,10 +82,7 @@ export const InventoryThumbLayout = ({ layout, numberContainer, srcBitmap, srcCh
                         visible={false}
                         layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                     />
-                    <InventoryThumbLayoutNumberContainer
-                        tags={[ 'COUNT' ]}
-                        {...numberContainer}
-                    />
+                    <InventoryThumbLayoutNumberContainer {...numberContainer} />
                     <Region
                         visible={false}
                         layout={{ position: 'absolute', left: 4, width: 10, top: 4, height: 10 }}
@@ -113,22 +108,19 @@ export const InventoryThumbLayout = ({ layout, numberContainer, srcBitmap, srcCh
 export interface InventoryThumbLayoutNumberContainerProps {
     captionNumber?: string;
     layout?: BoxLayout;
-    tags?: string[];
     visibleNumberContainer?: boolean;
 }
 
-export const InventoryThumbLayoutNumberContainer = ({ captionNumber, layout, tags, visibleNumberContainer }: InventoryThumbLayoutNumberContainerProps) => {
+export const InventoryThumbLayoutNumberContainer = ({ captionNumber, layout, visibleNumberContainer }: InventoryThumbLayoutNumberContainerProps) => {
     return (
         <Region
             name="number_container"
-            tags={tags}
             visible={visibleNumberContainer ?? false}
             backgroundColor="#2f6982"
             layout={{ position: 'absolute', left: 33, right: 1, top: 2, height: 15, ...layout }}
         >
             <Region
                 name="number"
-                tags={[ 'NUMBER', 'COUNT' ]}
                 layout={{ position: 'absolute', left: 1, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

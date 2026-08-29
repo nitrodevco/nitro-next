@@ -52,16 +52,14 @@ export interface ClubGiftNotificationLayoutCancelLinkRegionProps {
     captionCancelLink?: string;
     layout?: BoxLayout;
     onCancelLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const ClubGiftNotificationLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion, tags }: ClubGiftNotificationLayoutCancelLinkRegionProps) => {
+export const ClubGiftNotificationLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion }: ClubGiftNotificationLayoutCancelLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_link_region"
-            tags={tags}
             onPointerTap={onCancelLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 8, width: 147, top: 49, height: 18, ...layout }}

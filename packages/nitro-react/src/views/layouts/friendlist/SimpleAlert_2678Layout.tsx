@@ -37,14 +37,12 @@ export const SimpleAlert_2678Layout = ({ layout, list, onClose, srcIllustration 
 export interface SimpleAlert_2678LayoutSubtitleItemProps {
     captionSubtitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutSubtitleItem = ({ captionSubtitle, layout, tags }: SimpleAlert_2678LayoutSubtitleItemProps) => {
+export const SimpleAlert_2678LayoutSubtitleItem = ({ captionSubtitle, layout }: SimpleAlert_2678LayoutSubtitleItemProps) => {
     return (
         <Region
             name="subtitle"
-            tags={tags}
             layout={{ width: 54, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -60,14 +58,12 @@ export const SimpleAlert_2678LayoutSubtitleItem = ({ captionSubtitle, layout, ta
 export interface SimpleAlert_2678LayoutMessageItemProps {
     captionMessage?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutMessageItem = ({ captionMessage, layout, tags }: SimpleAlert_2678LayoutMessageItemProps) => {
+export const SimpleAlert_2678LayoutMessageItem = ({ captionMessage, layout }: SimpleAlert_2678LayoutMessageItemProps) => {
     return (
         <Region
             name="message"
-            tags={tags}
             layout={{ width: 291, height: 24, flexShrink: 0, minWidth: 291, maxWidth: 291, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -82,14 +78,12 @@ export const SimpleAlert_2678LayoutMessageItem = ({ captionMessage, layout, tags
 export interface SimpleAlert_2678LayoutListTopItemProps {
     itemsListTop?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutListTopItem = ({ itemsListTop, layout, tags }: SimpleAlert_2678LayoutListTopItemProps) => {
+export const SimpleAlert_2678LayoutListTopItem = ({ itemsListTop, layout }: SimpleAlert_2678LayoutListTopItemProps) => {
     return (
         <Region
             name="list_top"
-            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsListTop ?? (
@@ -106,17 +100,15 @@ export const SimpleAlert_2678LayoutListTopItem = ({ itemsListTop, layout, tags }
 export interface SimpleAlert_2678LayoutCloseButtonItemProps {
     layout?: BoxLayout;
     onCloseButton?: () => void;
-    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutCloseButtonItem = ({ layout, onCloseButton, tags }: SimpleAlert_2678LayoutCloseButtonItemProps) => {
+export const SimpleAlert_2678LayoutCloseButtonItem = ({ layout, onCloseButton }: SimpleAlert_2678LayoutCloseButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <ButtonThick
             variant="3"
             name="close_button"
-            tags={tags}
             tintColor="#efefef"
             onPointerTap={onCloseButton}
             layout={{ width: 126, height: 28, flexShrink: 0, ...layout }}
@@ -131,14 +123,12 @@ export interface SimpleAlert_2678LayoutLinkItemProps {
     captionLink?: string;
     layout?: BoxLayout;
     onLink?: () => void;
-    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutLinkItem = ({ captionLink, layout, onLink, tags }: SimpleAlert_2678LayoutLinkItemProps) => {
+export const SimpleAlert_2678LayoutLinkItem = ({ captionLink, layout, onLink }: SimpleAlert_2678LayoutLinkItemProps) => {
     return (
         <Region
             name="link"
-            tags={tags}
             layout={{ width: 262, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
             onPointerTap={onLink}
             cursor="pointer"
@@ -155,14 +145,12 @@ export const SimpleAlert_2678LayoutLinkItem = ({ captionLink, layout, onLink, ta
 export interface SimpleAlert_2678LayoutListBottomItemProps {
     itemsListBottom?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutListBottomItem = ({ itemsListBottom, layout, tags }: SimpleAlert_2678LayoutListBottomItemProps) => {
+export const SimpleAlert_2678LayoutListBottomItem = ({ itemsListBottom, layout }: SimpleAlert_2678LayoutListBottomItemProps) => {
     return (
         <Region
             name="list_bottom"
-            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsListBottom ?? (
@@ -183,14 +171,12 @@ export const SimpleAlert_2678LayoutListBottomItem = ({ itemsListBottom, layout, 
 export interface SimpleAlert_2678LayoutListProps {
     itemsList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SimpleAlert_2678LayoutList = ({ itemsList, layout, tags }: SimpleAlert_2678LayoutListProps) => {
+export const SimpleAlert_2678LayoutList = ({ itemsList, layout }: SimpleAlert_2678LayoutListProps) => {
     return (
         <Region
             name="list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, top: 8, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsList ?? (

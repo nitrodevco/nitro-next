@@ -31,16 +31,14 @@ export interface LayoutSingleBundle_1643LayoutCtlgSingleBundleProps {
     simplePriceWidget?: SimplePriceWidgetProps;
     srcCtlgSpecialImg?: string;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const LayoutSingleBundle_1643LayoutCtlgSingleBundle = ({ addOnBadgeViewWidget, bundleGridScrollWidget, captionCtlgDescription, captionCtlgSpecialTxt, captionCtlgText1, layout, purchaseWidget, simplePriceWidget, srcCtlgSpecialImg, srcCtlgTeaserimg1, tags }: LayoutSingleBundle_1643LayoutCtlgSingleBundleProps) => {
+export const LayoutSingleBundle_1643LayoutCtlgSingleBundle = ({ addOnBadgeViewWidget, bundleGridScrollWidget, captionCtlgDescription, captionCtlgSpecialTxt, captionCtlgText1, layout, purchaseWidget, simplePriceWidget, srcCtlgSpecialImg, srcCtlgTeaserimg1 }: LayoutSingleBundle_1643LayoutCtlgSingleBundleProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_single_bundle"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
         >
             <Region
@@ -66,7 +64,6 @@ export const LayoutSingleBundle_1643LayoutCtlgSingleBundle = ({ addOnBadgeViewWi
                 {...purchaseWidget}
             />
             <BundleGridScrollWidget
-                tags={[ 'EMBEDDED' ]}
                 layout={{ position: 'absolute', left: 164, width: 176, top: 207, height: 157 }}
                 {...bundleGridScrollWidget}
             />

@@ -34,16 +34,14 @@ export const UserCreateLayout = ({ layout, list, onClose }: UserCreateLayoutProp
 export interface UserCreateLayoutCreateErrorItemProps {
     captionCreateError?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserCreateLayoutCreateErrorItem = ({ captionCreateError, layout, tags }: UserCreateLayoutCreateErrorItemProps) => {
+export const UserCreateLayoutCreateErrorItem = ({ captionCreateError, layout }: UserCreateLayoutCreateErrorItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="create_error"
-            tags={tags}
             visible={false}
             layout={{ width: 264, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
@@ -58,15 +56,13 @@ export const UserCreateLayoutCreateErrorItem = ({ captionCreateError, layout, ta
 /** Row template `input_widget` of UserCreateLayout - pass real rows through its `items…` slot. */
 export interface UserCreateLayoutInputWidgetItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserCreateLayoutInputWidgetItem = ({ layout, tags }: UserCreateLayoutInputWidgetItemProps) => {
+export const UserCreateLayoutInputWidgetItem = ({ layout }: UserCreateLayoutInputWidgetItemProps) => {
     return (
         <WidgetSlot
             widgetType="illumina_input"
             name="input_widget"
-            tags={tags}
             options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${guide.help.request.user.create.input.help}', 'illumina_input:multiline': 'true' }}
             layout={{ width: 270, height: 100, flexShrink: 0, ...layout }}
         />
@@ -80,16 +76,14 @@ export interface UserCreateLayoutListProps {
     layout?: BoxLayout;
     onCancelLink?: () => void;
     onCreateButton?: () => void;
-    tags?: string[];
 }
 
-export const UserCreateLayoutList = ({ captionCancelLink, itemsList, layout, onCancelLink, onCreateButton, tags }: UserCreateLayoutListProps) => {
+export const UserCreateLayoutList = ({ captionCancelLink, itemsList, layout, onCancelLink, onCreateButton }: UserCreateLayoutListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="list"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, top: 0, minWidth: 270, maxWidth: 270, flexDirection: 'column', ...layout }}
         >
             {itemsList ?? (

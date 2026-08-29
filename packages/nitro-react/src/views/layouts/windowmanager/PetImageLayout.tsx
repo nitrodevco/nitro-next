@@ -27,15 +27,13 @@ export const PetImageLayout = ({ layout, region, srcBitmap }: PetImageLayoutProp
 export interface PetImageLayoutRegionProps {
     layout?: BoxLayout;
     onRegion?: () => void;
-    tags?: string[];
     visibleRegion?: boolean;
 }
 
-export const PetImageLayoutRegion = ({ layout, onRegion, tags, visibleRegion }: PetImageLayoutRegionProps) => {
+export const PetImageLayoutRegion = ({ layout, onRegion, visibleRegion }: PetImageLayoutRegionProps) => {
     return (
         <Region
             name="region"
-            tags={tags}
             visible={visibleRegion ?? false}
             onPointerTap={onRegion}
             cursor="pointer"

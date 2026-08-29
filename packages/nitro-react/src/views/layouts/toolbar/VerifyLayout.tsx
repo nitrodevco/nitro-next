@@ -62,17 +62,15 @@ export interface VerifyLayoutInputBorderProps {
     layout?: BoxLayout;
     onOkButton?: () => void;
     srcPen?: string;
-    tags?: string[];
 }
 
-export const VerifyLayoutInputBorder = ({ layout, onOkButton, srcPen, tags }: VerifyLayoutInputBorderProps) => {
+export const VerifyLayoutInputBorder = ({ layout, onOkButton, srcPen }: VerifyLayoutInputBorderProps) => {
     const t = useTranslation();
     const [ verificationCodeInputValue, setVerificationCodeInputValue ] = useState('');
 
     return (
         <Region
             name="input_border"
-            tags={tags}
             layout={{ position: 'absolute', left: 8, right: 5, top: 99, height: 50, ...layout }}
         >
             <Border
@@ -109,16 +107,14 @@ export interface VerifyLayoutUserInputButtonsContainerProps {
     captionRetryWaitLabel?: string;
     layout?: BoxLayout;
     onDidNotReceiveCodeLink?: () => void;
-    tags?: string[];
 }
 
-export const VerifyLayoutUserInputButtonsContainer = ({ captionDidNotReceiveCodeLink, captionRetryWaitLabel, layout, onDidNotReceiveCodeLink, tags }: VerifyLayoutUserInputButtonsContainerProps) => {
+export const VerifyLayoutUserInputButtonsContainer = ({ captionDidNotReceiveCodeLink, captionRetryWaitLabel, layout, onDidNotReceiveCodeLink }: VerifyLayoutUserInputButtonsContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_input_buttons_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 8, right: 6, top: 159, height: 42, justifyContent: 'center', ...layout }}
         >
             <Border

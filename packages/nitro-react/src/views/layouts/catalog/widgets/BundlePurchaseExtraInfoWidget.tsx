@@ -1,4 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `bundlePurchaseExtraInfoWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -6,16 +7,14 @@ import { BoxLayout, Region } from '#base/theme';
  * (LayoutDefault_1725Layout); each passes its own placement through `layout`.
  */
 /** Named region `bundlePurchaseExtraInfoWidget` of BundlePurchaseExtraInfoWidget - configured through the parent's `bundlePurchaseExtraInfoWidget` prop. */
-export interface BundlePurchaseExtraInfoWidgetProps {
+export interface BundlePurchaseExtraInfoWidgetProps extends CatalogWidgetFlags {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BundlePurchaseExtraInfoWidget = ({ layout, tags }: BundlePurchaseExtraInfoWidgetProps) => {
+export const BundlePurchaseExtraInfoWidget = ({ layout }: BundlePurchaseExtraInfoWidgetProps) => {
     return (
         <Region
             name="bundlePurchaseExtraInfoWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         />
     );

@@ -41,14 +41,12 @@ export const IroRoomDetailsFramedLayout = ({ buttonsCont, embedInfo, layout, onC
 export interface IroRoomDetailsFramedLayoutEmbedInfoRegionProps {
     layout?: BoxLayout;
     onEmbedInfoRegion?: () => void;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutEmbedInfoRegion = ({ layout, onEmbedInfoRegion, tags }: IroRoomDetailsFramedLayoutEmbedInfoRegionProps) => {
+export const IroRoomDetailsFramedLayoutEmbedInfoRegion = ({ layout, onEmbedInfoRegion }: IroRoomDetailsFramedLayoutEmbedInfoRegionProps) => {
     return (
         <Region
             name="embed_info_region"
-            tags={tags}
             onPointerTap={onEmbedInfoRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 79, ...layout }}
@@ -62,18 +60,16 @@ export interface IroRoomDetailsFramedLayoutEmbedInfoProps {
     embedInfoRegion?: IroRoomDetailsFramedLayoutEmbedInfoRegionProps;
     layout?: BoxLayout;
     srcIconWeblink?: string;
-    tags?: string[];
     visibleEmbedInfo?: boolean;
 }
 
-export const IroRoomDetailsFramedLayoutEmbedInfo = ({ captionEmbedInfoTxt, embedInfoRegion, layout, srcIconWeblink, tags, visibleEmbedInfo }: IroRoomDetailsFramedLayoutEmbedInfoProps) => {
+export const IroRoomDetailsFramedLayoutEmbedInfo = ({ captionEmbedInfoTxt, embedInfoRegion, layout, srcIconWeblink, visibleEmbedInfo }: IroRoomDetailsFramedLayoutEmbedInfoProps) => {
     const t = useTranslation();
     const [ embedSrcTxtValue, setEmbedSrcTxtValue ] = useState('');
 
     return (
         <Region
             name="embed_info"
-            tags={tags}
             visible={visibleEmbedInfo ?? false}
             layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 79, ...layout }}
         >
@@ -114,15 +110,13 @@ export interface IroRoomDetailsFramedLayoutPublicSpaceDetailsProps {
     captionPublicSpaceName?: string;
     layout?: BoxLayout;
     onPublicSpaceDetails?: () => void;
-    tags?: string[];
     visiblePublicSpaceDetails?: boolean;
 }
 
-export const IroRoomDetailsFramedLayoutPublicSpaceDetails = ({ captionPublicSpaceDesc, captionPublicSpaceName, layout, onPublicSpaceDetails, tags, visiblePublicSpaceDetails }: IroRoomDetailsFramedLayoutPublicSpaceDetailsProps) => {
+export const IroRoomDetailsFramedLayoutPublicSpaceDetails = ({ captionPublicSpaceDesc, captionPublicSpaceName, layout, onPublicSpaceDetails, visiblePublicSpaceDetails }: IroRoomDetailsFramedLayoutPublicSpaceDetailsProps) => {
     return (
         <Region
             name="public_space_details"
-            tags={tags}
             visible={visiblePublicSpaceDetails ?? false}
             onPointerTap={onPublicSpaceDetails}
             cursor="pointer"
@@ -157,16 +151,14 @@ export interface IroRoomDetailsFramedLayoutRemoveRightsRegionProps {
     layout?: BoxLayout;
     onRemoveRightsRegion?: () => void;
     srcRemoveRights?: string;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutRemoveRightsRegion = ({ layout, onRemoveRightsRegion, srcRemoveRights, tags }: IroRoomDetailsFramedLayoutRemoveRightsRegionProps) => {
+export const IroRoomDetailsFramedLayoutRemoveRightsRegion = ({ layout, onRemoveRightsRegion, srcRemoveRights }: IroRoomDetailsFramedLayoutRemoveRightsRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="remove_rights_region"
-            tags={tags}
             tooltip={t('navigator.roominfo.removerights.tooltip')}
             onPointerTap={onRemoveRightsRegion}
             cursor="pointer"
@@ -186,16 +178,14 @@ export interface IroRoomDetailsFramedLayoutMakeHomeRegionProps {
     layout?: BoxLayout;
     onMakeHomeRegion?: () => void;
     srcMakeHome?: string;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutMakeHomeRegion = ({ layout, onMakeHomeRegion, srcMakeHome, tags }: IroRoomDetailsFramedLayoutMakeHomeRegionProps) => {
+export const IroRoomDetailsFramedLayoutMakeHomeRegion = ({ layout, onMakeHomeRegion, srcMakeHome }: IroRoomDetailsFramedLayoutMakeHomeRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="make_home_region"
-            tags={tags}
             tooltip={t('navigator.roominfo.makehome.tooltip')}
             onPointerTap={onMakeHomeRegion}
             cursor="pointer"
@@ -215,16 +205,14 @@ export interface IroRoomDetailsFramedLayoutFavouriteRegionProps {
     layout?: BoxLayout;
     onFavouriteRegion?: () => void;
     srcFavourite?: string;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutFavouriteRegion = ({ layout, onFavouriteRegion, srcFavourite, tags }: IroRoomDetailsFramedLayoutFavouriteRegionProps) => {
+export const IroRoomDetailsFramedLayoutFavouriteRegion = ({ layout, onFavouriteRegion, srcFavourite }: IroRoomDetailsFramedLayoutFavouriteRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="favourite_region"
-            tags={tags}
             tooltip={t('navigator.favourite.tooltip')}
             onPointerTap={onFavouriteRegion}
             cursor="pointer"
@@ -244,16 +232,14 @@ export interface IroRoomDetailsFramedLayoutMakeFavouriteRegionProps {
     layout?: BoxLayout;
     onMakeFavouriteRegion?: () => void;
     srcMakeFavourite?: string;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutMakeFavouriteRegion = ({ layout, onMakeFavouriteRegion, srcMakeFavourite, tags }: IroRoomDetailsFramedLayoutMakeFavouriteRegionProps) => {
+export const IroRoomDetailsFramedLayoutMakeFavouriteRegion = ({ layout, onMakeFavouriteRegion, srcMakeFavourite }: IroRoomDetailsFramedLayoutMakeFavouriteRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="make_favourite_region"
-            tags={tags}
             tooltip={t('navigator.makefavourite.tooltip')}
             onPointerTap={onMakeFavouriteRegion}
             cursor="pointer"
@@ -271,14 +257,12 @@ export const IroRoomDetailsFramedLayoutMakeFavouriteRegion = ({ layout, onMakeFa
 /** Named region `user_info_region` of IroRoomDetailsFramedLayout - configured through the parent's `userInfoRegion` prop. */
 export interface IroRoomDetailsFramedLayoutUserInfoRegionProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutUserInfoRegion = ({ layout, tags }: IroRoomDetailsFramedLayoutUserInfoRegionProps) => {
+export const IroRoomDetailsFramedLayoutUserInfoRegion = ({ layout }: IroRoomDetailsFramedLayoutUserInfoRegionProps) => {
     return (
         <Region
             name="user_info_region"
-            tags={tags}
             layout={{ position: 'absolute', left: 50, width: 15, top: 0, height: 15, ...layout }}
         >
             <Icon
@@ -301,17 +285,15 @@ export interface IroRoomDetailsFramedLayoutOwnerNameContProps {
     captionOwnerName?: string;
     layout?: BoxLayout;
     onOwnerNameCont?: () => void;
-    tags?: string[];
     userInfoRegion?: IroRoomDetailsFramedLayoutUserInfoRegionProps;
 }
 
-export const IroRoomDetailsFramedLayoutOwnerNameCont = ({ captionOwnerCaption, captionOwnerName, layout, onOwnerNameCont, tags, userInfoRegion }: IroRoomDetailsFramedLayoutOwnerNameContProps) => {
+export const IroRoomDetailsFramedLayoutOwnerNameCont = ({ captionOwnerCaption, captionOwnerName, layout, onOwnerNameCont, userInfoRegion }: IroRoomDetailsFramedLayoutOwnerNameContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="owner_name_cont"
-            tags={tags}
             tooltip={t('infostand.profile.link.tooltip')}
             onPointerTap={onOwnerNameCont}
             cursor="pointer"
@@ -345,14 +327,12 @@ export const IroRoomDetailsFramedLayoutOwnerNameCont = ({ captionOwnerCaption, c
 export interface IroRoomDetailsFramedLayoutTagsProps {
     layout?: BoxLayout;
     onTags?: () => void;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutTags = ({ layout, onTags, tags }: IroRoomDetailsFramedLayoutTagsProps) => {
+export const IroRoomDetailsFramedLayoutTags = ({ layout, onTags }: IroRoomDetailsFramedLayoutTagsProps) => {
     return (
         <Region
             name="tags"
-            tags={tags}
             onPointerTap={onTags}
             cursor="pointer"
             layout={{ position: 'absolute', left: 5, width: 220, top: 37, height: 100, ...layout }}
@@ -365,16 +345,14 @@ export interface IroRoomDetailsFramedLayoutRatingRegionProps {
     layout?: BoxLayout;
     onRatingRegion?: () => void;
     srcThumbUp?: string;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutRatingRegion = ({ layout, onRatingRegion, srcThumbUp, tags }: IroRoomDetailsFramedLayoutRatingRegionProps) => {
+export const IroRoomDetailsFramedLayoutRatingRegion = ({ layout, onRatingRegion, srcThumbUp }: IroRoomDetailsFramedLayoutRatingRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rating_region"
-            tags={tags}
             tooltip={t('navigator.rateroom')}
             onPointerTap={onRatingRegion}
             cursor="pointer"
@@ -396,16 +374,14 @@ export interface IroRoomDetailsFramedLayoutRatingContProps {
     layout?: BoxLayout;
     onRatingCont?: () => void;
     ratingRegion?: IroRoomDetailsFramedLayoutRatingRegionProps;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutRatingCont = ({ captionRatingCaption, captionRatingTxt, layout, onRatingCont, ratingRegion, tags }: IroRoomDetailsFramedLayoutRatingContProps) => {
+export const IroRoomDetailsFramedLayoutRatingCont = ({ captionRatingCaption, captionRatingTxt, layout, onRatingCont, ratingRegion }: IroRoomDetailsFramedLayoutRatingContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rating_cont"
-            tags={tags}
             onPointerTap={onRatingCont}
             cursor="pointer"
             layout={{ position: 'absolute', left: 5, width: 220, top: 110, height: 16, ...layout }}
@@ -440,16 +416,14 @@ export interface IroRoomDetailsFramedLayoutRankingContProps {
     captionRankingTxt?: string;
     layout?: BoxLayout;
     onRankingCont?: () => void;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutRankingCont = ({ captionRankingCaption, captionRankingTxt, layout, onRankingCont, tags }: IroRoomDetailsFramedLayoutRankingContProps) => {
+export const IroRoomDetailsFramedLayoutRankingCont = ({ captionRankingCaption, captionRankingTxt, layout, onRankingCont }: IroRoomDetailsFramedLayoutRankingContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ranking_cont"
-            tags={tags}
             onPointerTap={onRankingCont}
             cursor="pointer"
             layout={{ position: 'absolute', left: 5, width: 220, top: 125, height: 16, ...layout }}
@@ -480,14 +454,12 @@ export const IroRoomDetailsFramedLayoutRankingCont = ({ captionRankingCaption, c
 /** Named region `padding_cont` of IroRoomDetailsFramedLayout - configured through the parent's `paddingCont` prop. */
 export interface IroRoomDetailsFramedLayoutPaddingContProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutPaddingCont = ({ layout, tags }: IroRoomDetailsFramedLayoutPaddingContProps) => {
+export const IroRoomDetailsFramedLayoutPaddingCont = ({ layout }: IroRoomDetailsFramedLayoutPaddingContProps) => {
     return (
         <Region
             name="padding_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 220, top: 185, height: 10, ...layout }}
         />
     );
@@ -497,14 +469,12 @@ export const IroRoomDetailsFramedLayoutPaddingCont = ({ layout, tags }: IroRoomD
 export interface IroRoomDetailsFramedLayoutThumbnailEdgesProps {
     layout?: BoxLayout;
     srcThumbnailImage?: string;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutThumbnailEdges = ({ layout, srcThumbnailImage, tags }: IroRoomDetailsFramedLayoutThumbnailEdgesProps) => {
+export const IroRoomDetailsFramedLayoutThumbnailEdges = ({ layout, srcThumbnailImage }: IroRoomDetailsFramedLayoutThumbnailEdgesProps) => {
     return (
         <Region
             name="thumbnail_edges"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 57, width: 112, top: 1, height: 112, ...layout }}
         >
@@ -521,16 +491,14 @@ export const IroRoomDetailsFramedLayoutThumbnailEdges = ({ layout, srcThumbnailI
 export interface IroRoomDetailsFramedLayoutAddThumbnailRegionProps {
     layout?: BoxLayout;
     onAddThumbnailRegion?: () => void;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutAddThumbnailRegion = ({ layout, onAddThumbnailRegion, tags }: IroRoomDetailsFramedLayoutAddThumbnailRegionProps) => {
+export const IroRoomDetailsFramedLayoutAddThumbnailRegion = ({ layout, onAddThumbnailRegion }: IroRoomDetailsFramedLayoutAddThumbnailRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="add_thumbnail_region"
-            tags={tags}
             tooltip={t('tooltip.navigator.room.info.add.thumbnail')}
             onPointerTap={onAddThumbnailRegion}
             cursor="pointer"
@@ -548,15 +516,13 @@ export const IroRoomDetailsFramedLayoutAddThumbnailRegion = ({ layout, onAddThum
 export interface IroRoomDetailsFramedLayoutThumbnailContainerProps {
     addThumbnailRegion?: IroRoomDetailsFramedLayoutAddThumbnailRegionProps;
     layout?: BoxLayout;
-    tags?: string[];
     thumbnailEdges?: IroRoomDetailsFramedLayoutThumbnailEdgesProps;
 }
 
-export const IroRoomDetailsFramedLayoutThumbnailContainer = ({ addThumbnailRegion, layout, tags, thumbnailEdges }: IroRoomDetailsFramedLayoutThumbnailContainerProps) => {
+export const IroRoomDetailsFramedLayoutThumbnailContainer = ({ addThumbnailRegion, layout, thumbnailEdges }: IroRoomDetailsFramedLayoutThumbnailContainerProps) => {
     return (
         <Region
             name="thumbnail_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 227, top: 140, height: 114, ...layout }}
         >
             <IroRoomDetailsFramedLayoutThumbnailEdges {...thumbnailEdges} />
@@ -579,16 +545,14 @@ export interface IroRoomDetailsFramedLayoutRoomDetailsProps {
     ratingCont?: IroRoomDetailsFramedLayoutRatingContProps;
     removeRightsRegion?: IroRoomDetailsFramedLayoutRemoveRightsRegionProps;
     srcHome?: string;
-    tags?: string[];
-    tags2?: IroRoomDetailsFramedLayoutTagsProps;
+    tags?: IroRoomDetailsFramedLayoutTagsProps;
     thumbnailContainer?: IroRoomDetailsFramedLayoutThumbnailContainerProps;
 }
 
-export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionRoomDesc, captionRoomName, favouriteRegion, layout, makeFavouriteRegion, makeHomeRegion, ownerNameCont, paddingCont, rankingCont, ratingCont, removeRightsRegion, srcHome, tags, tags2, thumbnailContainer }: IroRoomDetailsFramedLayoutRoomDetailsProps) => {
+export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionRoomDesc, captionRoomName, favouriteRegion, layout, makeFavouriteRegion, makeHomeRegion, ownerNameCont, paddingCont, rankingCont, ratingCont, removeRightsRegion, srcHome, tags, thumbnailContainer }: IroRoomDetailsFramedLayoutRoomDetailsProps) => {
     return (
         <Region
             name="room_details"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 256, ...layout }}
         >
             <IroRoomDetailsFramedLayoutRemoveRightsRegion {...removeRightsRegion} />
@@ -616,7 +580,7 @@ export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionRoomDesc, caption
                 />
             </Region>
             <IroRoomDetailsFramedLayoutOwnerNameCont {...ownerNameCont} />
-            <IroRoomDetailsFramedLayoutTags {...tags2} />
+            <IroRoomDetailsFramedLayoutTags {...tags} />
             <Region
                 name="room_desc"
                 layout={{ position: 'absolute', left: 5, width: 220, top: 52, height: 82, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -644,16 +608,14 @@ export interface IroRoomDetailsFramedLayoutButtonsContProps {
     onRoomReportButton?: () => void;
     onRoomSettingsButton?: () => void;
     onStaffPickButton?: () => void;
-    tags?: string[];
 }
 
-export const IroRoomDetailsFramedLayoutButtonsCont = ({ layout, onFloorPlanEditorButton, onRoomFilterButton, onRoomMuteallButton, onRoomReportButton, onRoomSettingsButton, onStaffPickButton, tags }: IroRoomDetailsFramedLayoutButtonsContProps) => {
+export const IroRoomDetailsFramedLayoutButtonsCont = ({ layout, onFloorPlanEditorButton, onRoomFilterButton, onRoomMuteallButton, onRoomReportButton, onRoomSettingsButton, onStaffPickButton }: IroRoomDetailsFramedLayoutButtonsContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="buttons_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 5, width: 220, top: 261, height: 29, ...layout }}
         >
             <Button

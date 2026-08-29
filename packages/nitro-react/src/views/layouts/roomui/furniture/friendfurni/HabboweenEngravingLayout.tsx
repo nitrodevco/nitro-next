@@ -85,14 +85,12 @@ export const HabboweenEngravingLayout = ({ captionDate, captionHeader, captionNa
 export interface HabboweenEngravingLayoutHeaderButtonCloseProps {
     layout?: BoxLayout;
     onHeaderButtonClose?: () => void;
-    tags?: string[];
 }
 
-export const HabboweenEngravingLayoutHeaderButtonClose = ({ layout, onHeaderButtonClose, tags }: HabboweenEngravingLayoutHeaderButtonCloseProps) => {
+export const HabboweenEngravingLayoutHeaderButtonClose = ({ layout, onHeaderButtonClose }: HabboweenEngravingLayoutHeaderButtonCloseProps) => {
     return (
         <Region
             name="header_button_close"
-            tags={tags}
             onPointerTap={onHeaderButtonClose}
             cursor="pointer"
             layout={{ position: 'absolute', left: 330, width: 21, top: 33, height: 17, ...layout }}

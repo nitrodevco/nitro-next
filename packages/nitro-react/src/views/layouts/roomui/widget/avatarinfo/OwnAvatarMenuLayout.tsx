@@ -28,14 +28,12 @@ export interface OwnAvatarMenuLayoutProfileLinkProps {
     captionName?: string;
     layout?: BoxLayout;
     onProfileLink?: () => void;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutProfileLink = ({ captionName, layout, onProfileLink, tags }: OwnAvatarMenuLayoutProfileLinkProps) => {
+export const OwnAvatarMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: OwnAvatarMenuLayoutProfileLinkProps) => {
     return (
         <Region
             name="profile_link"
-            tags={tags}
             onPointerTap={onProfileLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center', ...layout }}
@@ -59,37 +57,41 @@ export interface OwnAvatarMenuLayoutChangeNameItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutChangeNameItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutChangeNameItemProps) => {
+export const OwnAvatarMenuLayoutChangeNameItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutChangeNameItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="change_name"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.avatar.change_name')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.avatar.change_name')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -99,37 +101,41 @@ export interface OwnAvatarMenuLayoutDecorateItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutDecorateItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDecorateItemProps) => {
+export const OwnAvatarMenuLayoutDecorateItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutDecorateItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="decorate"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.avatar.decorate')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.avatar.decorate')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -139,37 +145,41 @@ export interface OwnAvatarMenuLayoutChangeLooksItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutChangeLooksItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutChangeLooksItemProps) => {
+export const OwnAvatarMenuLayoutChangeLooksItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutChangeLooksItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="change_looks"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.myclothes')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.myclothes')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -179,37 +189,41 @@ export interface OwnAvatarMenuLayoutSitItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutSitItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutSitItemProps) => {
+export const OwnAvatarMenuLayoutSitItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutSitItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="sit"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.sit')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.sit')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -219,37 +233,41 @@ export interface OwnAvatarMenuLayoutStandItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutStandItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutStandItemProps) => {
+export const OwnAvatarMenuLayoutStandItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutStandItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="stand"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.stand')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.stand')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -259,37 +277,41 @@ export interface OwnAvatarMenuLayoutWaveItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutWaveItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutWaveItemProps) => {
+export const OwnAvatarMenuLayoutWaveItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutWaveItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wave"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.wave')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.wave')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -299,42 +321,46 @@ export interface OwnAvatarMenuLayoutBlowItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutBlowItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutBlowItemProps) => {
+export const OwnAvatarMenuLayoutBlowItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutBlowItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="blow"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.blow')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.blow')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="14"
+                        name="icon_vip"
+                        layout={{ position: 'absolute', right: 6, width: 15, top: 10, height: 15 }}
                     />
-                </Region>
-                <Icon
-                    variant="14"
-                    name="icon_vip"
-                    layout={{ position: 'absolute', right: 6, width: 15, top: 10, height: 15 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -344,42 +370,46 @@ export interface OwnAvatarMenuLayout_67ItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayout_67Item = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayout_67ItemProps) => {
+export const OwnAvatarMenuLayout_67Item = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayout_67ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="67"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.expression_67')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.expression_67')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="14"
+                        name="icon_vip"
+                        layout={{ position: 'absolute', right: 6, width: 15, top: 10, height: 15 }}
                     />
-                </Region>
-                <Icon
-                    variant="14"
-                    name="icon_vip"
-                    layout={{ position: 'absolute', right: 6, width: 15, top: 10, height: 15 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -389,42 +419,46 @@ export interface OwnAvatarMenuLayoutJumpItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutJumpItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutJumpItemProps) => {
+export const OwnAvatarMenuLayoutJumpItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutJumpItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="jump"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.jump')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.jump')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="14"
+                        name="icon_vip"
+                        layout={{ position: 'absolute', right: 6, width: 15, top: 10, height: 15 }}
                     />
-                </Region>
-                <Icon
-                    variant="14"
-                    name="icon_vip"
-                    layout={{ position: 'absolute', right: 6, width: 15, top: 10, height: 15 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -434,42 +468,46 @@ export interface OwnAvatarMenuLayoutLaughItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutLaughItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutLaughItemProps) => {
+export const OwnAvatarMenuLayoutLaughItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutLaughItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="laugh"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.laugh')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.laugh')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="14"
+                        name="icon_vip"
+                        layout={{ position: 'absolute', right: 6, width: 15, top: 10, height: 15 }}
                     />
-                </Region>
-                <Icon
-                    variant="14"
-                    name="icon_vip"
-                    layout={{ position: 'absolute', right: 6, width: 15, top: 10, height: 15 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -479,37 +517,41 @@ export interface OwnAvatarMenuLayoutIdleItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutIdleItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutIdleItemProps) => {
+export const OwnAvatarMenuLayoutIdleItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutIdleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="idle"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.idle')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.idle')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -519,43 +561,46 @@ export interface OwnAvatarMenuLayoutExpressionsItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutExpressionsItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutExpressionsItemProps) => {
+export const OwnAvatarMenuLayoutExpressionsItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutExpressionsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="expressions"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.link.expressions')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.link.expressions')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="5"
+                        name="icon"
+                        layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
                     />
-                </Region>
-                <Icon
-                    variant="5"
-                    name="icon"
-                    tags={[ 'arrow_right' ]}
-                    layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -565,43 +610,46 @@ export interface OwnAvatarMenuLayoutDanceMenuItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutDanceMenuItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDanceMenuItemProps) => {
+export const OwnAvatarMenuLayoutDanceMenuItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutDanceMenuItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_menu"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.dance')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.dance')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="5"
+                        name="icon"
+                        layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
                     />
-                </Region>
-                <Icon
-                    variant="5"
-                    name="icon"
-                    tags={[ 'arrow_right' ]}
-                    layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -611,37 +659,41 @@ export interface OwnAvatarMenuLayoutDanceItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutDanceItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDanceItemProps) => {
+export const OwnAvatarMenuLayoutDanceItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutDanceItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.dance')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.dance')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -651,37 +703,41 @@ export interface OwnAvatarMenuLayoutDanceStopItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutDanceStopItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDanceStopItemProps) => {
+export const OwnAvatarMenuLayoutDanceStopItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutDanceStopItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_stop"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.dance.stop')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.dance.stop')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -691,37 +747,41 @@ export interface OwnAvatarMenuLayoutDance1ItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutDance1Item = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDance1ItemProps) => {
+export const OwnAvatarMenuLayoutDance1Item = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutDance1ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_1"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.dance1')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.dance1')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -731,37 +791,41 @@ export interface OwnAvatarMenuLayoutDance2ItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutDance2Item = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDance2ItemProps) => {
+export const OwnAvatarMenuLayoutDance2Item = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutDance2ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_2"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.dance2')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.dance2')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -771,37 +835,41 @@ export interface OwnAvatarMenuLayoutDance3ItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutDance3Item = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDance3ItemProps) => {
+export const OwnAvatarMenuLayoutDance3Item = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutDance3ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_3"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.dance3')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.dance3')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -811,37 +879,41 @@ export interface OwnAvatarMenuLayoutDance4ItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutDance4Item = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutDance4ItemProps) => {
+export const OwnAvatarMenuLayoutDance4Item = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutDance4ItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_4"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.dance4')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.dance4')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -850,14 +922,12 @@ export const OwnAvatarMenuLayoutDance4Item = ({ captionLabel, layout, onButton, 
 export interface OwnAvatarMenuLayoutSign1ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign1Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign1ItemProps) => {
+export const OwnAvatarMenuLayoutSign1Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign1ItemProps) => {
     return (
         <Region
             name="sign_1"
-            tags={tags}
             layout={{ width: 34, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -883,14 +953,12 @@ export const OwnAvatarMenuLayoutSign1Item = ({ layout, onButton, tags }: OwnAvat
 export interface OwnAvatarMenuLayoutSign2ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign2Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign2ItemProps) => {
+export const OwnAvatarMenuLayoutSign2Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign2ItemProps) => {
     return (
         <Region
             name="sign_2"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -916,14 +984,12 @@ export const OwnAvatarMenuLayoutSign2Item = ({ layout, onButton, tags }: OwnAvat
 export interface OwnAvatarMenuLayoutSign3ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign3Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign3ItemProps) => {
+export const OwnAvatarMenuLayoutSign3Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign3ItemProps) => {
     return (
         <Region
             name="sign_3"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -949,14 +1015,12 @@ export const OwnAvatarMenuLayoutSign3Item = ({ layout, onButton, tags }: OwnAvat
 export interface OwnAvatarMenuLayoutSign4ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign4Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign4ItemProps) => {
+export const OwnAvatarMenuLayoutSign4Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign4ItemProps) => {
     return (
         <Region
             name="sign_4"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -982,14 +1046,12 @@ export const OwnAvatarMenuLayoutSign4Item = ({ layout, onButton, tags }: OwnAvat
 export interface OwnAvatarMenuLayoutSign5ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign5Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign5ItemProps) => {
+export const OwnAvatarMenuLayoutSign5Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign5ItemProps) => {
     return (
         <Region
             name="sign_5"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1015,14 +1077,12 @@ export const OwnAvatarMenuLayoutSign5Item = ({ layout, onButton, tags }: OwnAvat
 export interface OwnAvatarMenuLayoutSign6ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign6Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign6ItemProps) => {
+export const OwnAvatarMenuLayoutSign6Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign6ItemProps) => {
     return (
         <Region
             name="sign_6"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1048,14 +1108,12 @@ export const OwnAvatarMenuLayoutSign6Item = ({ layout, onButton, tags }: OwnAvat
 export interface OwnAvatarMenuLayoutSign7ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign7Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign7ItemProps) => {
+export const OwnAvatarMenuLayoutSign7Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign7ItemProps) => {
     return (
         <Region
             name="sign_7"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1081,14 +1139,12 @@ export const OwnAvatarMenuLayoutSign7Item = ({ layout, onButton, tags }: OwnAvat
 export interface OwnAvatarMenuLayoutSign8ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign8Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign8ItemProps) => {
+export const OwnAvatarMenuLayoutSign8Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign8ItemProps) => {
     return (
         <Region
             name="sign_8"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1114,14 +1170,12 @@ export const OwnAvatarMenuLayoutSign8Item = ({ layout, onButton, tags }: OwnAvat
 export interface OwnAvatarMenuLayoutSign9ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign9Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign9ItemProps) => {
+export const OwnAvatarMenuLayoutSign9Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign9ItemProps) => {
     return (
         <Region
             name="sign_9"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1147,14 +1201,12 @@ export const OwnAvatarMenuLayoutSign9Item = ({ layout, onButton, tags }: OwnAvat
 export interface OwnAvatarMenuLayoutSign10ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign10Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign10ItemProps) => {
+export const OwnAvatarMenuLayoutSign10Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign10ItemProps) => {
     return (
         <Region
             name="sign_10"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1181,14 +1233,12 @@ export interface OwnAvatarMenuLayoutSign11ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIconHeart?: string;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign11Item = ({ layout, onButton, srcSignIconHeart, tags }: OwnAvatarMenuLayoutSign11ItemProps) => {
+export const OwnAvatarMenuLayoutSign11Item = ({ layout, onButton, srcSignIconHeart }: OwnAvatarMenuLayoutSign11ItemProps) => {
     return (
         <Region
             name="sign_11"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1200,7 +1250,6 @@ export const OwnAvatarMenuLayoutSign11Item = ({ layout, onButton, srcSignIconHea
             >
                 <ThemeImage
                     name="sign_icon_heart"
-                    tags={[ 'icon' ]}
                     src={srcSignIconHeart}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1214,14 +1263,12 @@ export interface OwnAvatarMenuLayoutSign12ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIconSkull?: string;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign12Item = ({ layout, onButton, srcSignIconSkull, tags }: OwnAvatarMenuLayoutSign12ItemProps) => {
+export const OwnAvatarMenuLayoutSign12Item = ({ layout, onButton, srcSignIconSkull }: OwnAvatarMenuLayoutSign12ItemProps) => {
     return (
         <Region
             name="sign_12"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1233,7 +1280,6 @@ export const OwnAvatarMenuLayoutSign12Item = ({ layout, onButton, srcSignIconSku
             >
                 <ThemeImage
                     name="sign_icon_skull"
-                    tags={[ 'icon' ]}
                     src={srcSignIconSkull}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1246,14 +1292,12 @@ export const OwnAvatarMenuLayoutSign12Item = ({ layout, onButton, srcSignIconSku
 export interface OwnAvatarMenuLayoutSign0ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign0Item = ({ layout, onButton, tags }: OwnAvatarMenuLayoutSign0ItemProps) => {
+export const OwnAvatarMenuLayoutSign0Item = ({ layout, onButton }: OwnAvatarMenuLayoutSign0ItemProps) => {
     return (
         <Region
             name="sign_0"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1280,14 +1324,12 @@ export interface OwnAvatarMenuLayoutSign13ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIcon13?: string;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign13Item = ({ layout, onButton, srcSignIcon13, tags }: OwnAvatarMenuLayoutSign13ItemProps) => {
+export const OwnAvatarMenuLayoutSign13Item = ({ layout, onButton, srcSignIcon13 }: OwnAvatarMenuLayoutSign13ItemProps) => {
     return (
         <Region
             name="sign_13"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1299,7 +1341,6 @@ export const OwnAvatarMenuLayoutSign13Item = ({ layout, onButton, srcSignIcon13,
             >
                 <ThemeImage
                     name="sign_icon_13"
-                    tags={[ 'icon' ]}
                     src={srcSignIcon13}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1313,14 +1354,12 @@ export interface OwnAvatarMenuLayoutSign15ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIcon15?: string;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign15Item = ({ layout, onButton, srcSignIcon15, tags }: OwnAvatarMenuLayoutSign15ItemProps) => {
+export const OwnAvatarMenuLayoutSign15Item = ({ layout, onButton, srcSignIcon15 }: OwnAvatarMenuLayoutSign15ItemProps) => {
     return (
         <Region
             name="sign_15"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1332,7 +1371,6 @@ export const OwnAvatarMenuLayoutSign15Item = ({ layout, onButton, srcSignIcon15,
             >
                 <ThemeImage
                     name="sign_icon_15"
-                    tags={[ 'icon' ]}
                     src={srcSignIcon15}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1346,14 +1384,12 @@ export interface OwnAvatarMenuLayoutSign14ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIcon14?: string;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign14Item = ({ layout, onButton, srcSignIcon14, tags }: OwnAvatarMenuLayoutSign14ItemProps) => {
+export const OwnAvatarMenuLayoutSign14Item = ({ layout, onButton, srcSignIcon14 }: OwnAvatarMenuLayoutSign14ItemProps) => {
     return (
         <Region
             name="sign_14"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1365,7 +1401,6 @@ export const OwnAvatarMenuLayoutSign14Item = ({ layout, onButton, srcSignIcon14,
             >
                 <ThemeImage
                     name="sign_icon_14"
-                    tags={[ 'icon' ]}
                     src={srcSignIcon14}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1379,14 +1414,12 @@ export interface OwnAvatarMenuLayoutSign17ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIcon17?: string;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign17Item = ({ layout, onButton, srcSignIcon17, tags }: OwnAvatarMenuLayoutSign17ItemProps) => {
+export const OwnAvatarMenuLayoutSign17Item = ({ layout, onButton, srcSignIcon17 }: OwnAvatarMenuLayoutSign17ItemProps) => {
     return (
         <Region
             name="sign_17"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1398,7 +1431,6 @@ export const OwnAvatarMenuLayoutSign17Item = ({ layout, onButton, srcSignIcon17,
             >
                 <ThemeImage
                     name="sign_icon_17"
-                    tags={[ 'icon' ]}
                     src={srcSignIcon17}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1412,14 +1444,12 @@ export interface OwnAvatarMenuLayoutSign16ItemProps {
     layout?: BoxLayout;
     onButton?: () => void;
     srcSignIcon16?: string;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSign16Item = ({ layout, onButton, srcSignIcon16, tags }: OwnAvatarMenuLayoutSign16ItemProps) => {
+export const OwnAvatarMenuLayoutSign16Item = ({ layout, onButton, srcSignIcon16 }: OwnAvatarMenuLayoutSign16ItemProps) => {
     return (
         <Region
             name="sign_16"
-            tags={tags}
             layout={{ width: 33, height: 25, flexShrink: 0, ...layout }}
         >
             <ContainerButton
@@ -1431,7 +1461,6 @@ export const OwnAvatarMenuLayoutSign16Item = ({ layout, onButton, srcSignIcon16,
             >
                 <ThemeImage
                     name="sign_icon_16"
-                    tags={[ 'icon' ]}
                     src={srcSignIcon16}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
@@ -1444,14 +1473,12 @@ export const OwnAvatarMenuLayoutSign16Item = ({ layout, onButton, srcSignIcon16,
 export interface OwnAvatarMenuLayoutSignsGridItemProps {
     itemsSignsGrid?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutSignsGridItem = ({ itemsSignsGrid, layout, tags }: OwnAvatarMenuLayoutSignsGridItemProps) => {
+export const OwnAvatarMenuLayoutSignsGridItem = ({ itemsSignsGrid, layout }: OwnAvatarMenuLayoutSignsGridItemProps) => {
     return (
         <Region
             name="signs_grid"
-            tags={tags}
             layout={{ width: 103, height: 152, flexShrink: 0, flexDirection: 'row', flexWrap: 'wrap', gap: 1, ...layout }}
         >
             {itemsSignsGrid ?? (
@@ -1485,43 +1512,46 @@ export interface OwnAvatarMenuLayoutSignsItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutSignsItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutSignsItemProps) => {
+export const OwnAvatarMenuLayoutSignsItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutSignsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="signs"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.show.signs')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.show.signs')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="5"
+                        name="icon"
+                        layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
                     />
-                </Region>
-                <Icon
-                    variant="5"
-                    name="icon"
-                    tags={[ 'arrow_right' ]}
-                    layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1531,43 +1561,46 @@ export interface OwnAvatarMenuLayoutBackItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutBackItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutBackItemProps) => {
+export const OwnAvatarMenuLayoutBackItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutBackItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="back"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('generic.back')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('generic.back')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="4"
+                        name="icon"
+                        layout={{ position: 'absolute', left: 10, width: 5, top: 12, height: 10 }}
                     />
-                </Region>
-                <Icon
-                    variant="4"
-                    name="icon"
-                    tags={[ 'arrow_left' ]}
-                    layout={{ position: 'absolute', left: 10, width: 5, top: 12, height: 10 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1577,37 +1610,41 @@ export interface OwnAvatarMenuLayoutHanditemItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutHanditemItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutHanditemItemProps) => {
+export const OwnAvatarMenuLayoutHanditemItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutHanditemItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="handitem"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('avatar.widget.drop_hand_item')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('avatar.widget.drop_hand_item')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1617,37 +1654,41 @@ export interface OwnAvatarMenuLayoutEffectsItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutEffectsItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutEffectsItemProps) => {
+export const OwnAvatarMenuLayoutEffectsItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutEffectsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="effects"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.memenu.effects')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.memenu.effects')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1657,43 +1698,46 @@ export interface OwnAvatarMenuLayoutMoreItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutMoreItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutMoreItemProps) => {
+export const OwnAvatarMenuLayoutMoreItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutMoreItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="more"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.link.more')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.link.more')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="5"
+                        name="icon"
+                        layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
                     />
-                </Region>
-                <Icon
-                    variant="5"
-                    name="icon"
-                    tags={[ 'arrow_right' ]}
-                    layout={{ position: 'absolute', left: 92, width: 5, top: 12, height: 10 }}
-                />
-            </ContainerButton>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1703,37 +1747,41 @@ export interface OwnAvatarMenuLayoutWiredInspectItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const OwnAvatarMenuLayoutWiredInspectItem = ({ captionLabel, layout, onButton, tags }: OwnAvatarMenuLayoutWiredInspectItemProps) => {
+export const OwnAvatarMenuLayoutWiredInspectItem = ({ captionLabel, layout, onButton, visibleGroups }: OwnAvatarMenuLayoutWiredInspectItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wired_inspect"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 103, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.wired_inspect')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.wired_inspect')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -1742,44 +1790,42 @@ export const OwnAvatarMenuLayoutWiredInspectItem = ({ captionLabel, layout, onBu
 export interface OwnAvatarMenuLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutButtons = ({ itemsButtons, layout, tags }: OwnAvatarMenuLayoutButtonsProps) => {
+export const OwnAvatarMenuLayoutButtons = ({ itemsButtons, layout }: OwnAvatarMenuLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ position: 'absolute', minWidth: 105, top: 28, minHeight: 827, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsButtons ?? (
                 <>
-                    <OwnAvatarMenuLayoutChangeNameItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutDecorateItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutChangeLooksItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutSitItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutStandItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutWaveItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutBlowItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayout_67Item tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutJumpItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutLaughItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutIdleItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutExpressionsItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutDanceMenuItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutDanceItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutDanceStopItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutDance1Item tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutDance2Item tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutDance3Item tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutDance4Item tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutSignsGridItem tags={[ 'grid' ]} />
-                    <OwnAvatarMenuLayoutSignsItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutBackItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutHanditemItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutEffectsItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutMoreItem tags={[ 'action' ]} />
-                    <OwnAvatarMenuLayoutWiredInspectItem tags={[ 'action' ]} />
+                    <OwnAvatarMenuLayoutChangeNameItem />
+                    <OwnAvatarMenuLayoutDecorateItem />
+                    <OwnAvatarMenuLayoutChangeLooksItem />
+                    <OwnAvatarMenuLayoutSitItem />
+                    <OwnAvatarMenuLayoutStandItem />
+                    <OwnAvatarMenuLayoutWaveItem />
+                    <OwnAvatarMenuLayoutBlowItem />
+                    <OwnAvatarMenuLayout_67Item />
+                    <OwnAvatarMenuLayoutJumpItem />
+                    <OwnAvatarMenuLayoutLaughItem />
+                    <OwnAvatarMenuLayoutIdleItem />
+                    <OwnAvatarMenuLayoutExpressionsItem />
+                    <OwnAvatarMenuLayoutDanceMenuItem />
+                    <OwnAvatarMenuLayoutDanceItem />
+                    <OwnAvatarMenuLayoutDanceStopItem />
+                    <OwnAvatarMenuLayoutDance1Item />
+                    <OwnAvatarMenuLayoutDance2Item />
+                    <OwnAvatarMenuLayoutDance3Item />
+                    <OwnAvatarMenuLayoutDance4Item />
+                    <OwnAvatarMenuLayoutSignsGridItem />
+                    <OwnAvatarMenuLayoutSignsItem />
+                    <OwnAvatarMenuLayoutBackItem />
+                    <OwnAvatarMenuLayoutHanditemItem />
+                    <OwnAvatarMenuLayoutEffectsItem />
+                    <OwnAvatarMenuLayoutMoreItem />
+                    <OwnAvatarMenuLayoutWiredInspectItem />
                 </>
             )}
         </Region>
@@ -1790,14 +1836,12 @@ export const OwnAvatarMenuLayoutButtons = ({ itemsButtons, layout, tags }: OwnAv
 export interface OwnAvatarMenuLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutMinimize = ({ layout, onMinimize, tags }: OwnAvatarMenuLayoutMinimizeProps) => {
+export const OwnAvatarMenuLayoutMinimize = ({ layout, onMinimize }: OwnAvatarMenuLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 4, width: 100, bottom: 4, height: 18, ...layout }}
@@ -1817,14 +1861,12 @@ export interface OwnAvatarMenuLayoutBorderProps {
     layout?: BoxLayout;
     minimize?: OwnAvatarMenuLayoutMinimizeProps;
     profileLink?: OwnAvatarMenuLayoutProfileLinkProps;
-    tags?: string[];
 }
 
-export const OwnAvatarMenuLayoutBorder = ({ buttons, layout, minimize, profileLink, tags }: OwnAvatarMenuLayoutBorderProps) => {
+export const OwnAvatarMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: OwnAvatarMenuLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 877, justifyContent: 'center', ...layout }}
         >
             <OwnAvatarMenuLayoutProfileLink {...profileLink} />

@@ -4,21 +4,24 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `2434_clock_base_xml` (layout "clock_base", 36x37) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ClockBaseLayoutProps {
     captionSeparator?: string;
+    colorableTextColor?: string;
     counter?: ClockBaseLayoutCounterProps;
     layout?: BoxLayout;
 }
 
-export const ClockBaseLayout = ({ captionSeparator, counter, layout }: ClockBaseLayoutProps) => {
+export const ClockBaseLayout = ({ captionSeparator, colorableTextColor, counter, layout }: ClockBaseLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 36, height: 37, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row' }}>
                 <ClockBaseLayoutCounter {...counter} />
                 <Region
                     name="separator"
-                    tags={[ 'COLORABLE' ]}
                     layout={{ width: 9, height: 20, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionSeparator ?? ':'} />
+                    <ThemeText
+                        text={captionSeparator ?? ':'}
+                        textOptions={{ fill: colorableTextColor }}
+                    />
                 </Region>
             </Region>
         </Region>
@@ -29,15 +32,14 @@ export const ClockBaseLayout = ({ captionSeparator, counter, layout }: ClockBase
 export interface ClockBaseLayoutCounterProps {
     captionUnit?: string;
     captionValue?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClockBaseLayoutCounter = ({ captionUnit, captionValue, layout, tags }: ClockBaseLayoutCounterProps) => {
+export const ClockBaseLayoutCounter = ({ captionUnit, captionValue, colorableTextColor, layout }: ClockBaseLayoutCounterProps) => {
     return (
         <Region
             name="counter"
-            tags={tags}
             layout={{ width: 27, height: 37, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -55,12 +57,11 @@ export const ClockBaseLayoutCounter = ({ captionUnit, captionValue, layout, tags
             </Region>
             <Region
                 name="unit"
-                tags={[ 'COLORABLE' ]}
                 layout={{ position: 'absolute', left: 0, width: 27, top: 23, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionUnit ?? 'hrs'}
-                    textOptions={{ align: 'center' }}
+                    textOptions={{ fill: colorableTextColor, align: 'center' }}
                 />
             </Region>
         </Region>

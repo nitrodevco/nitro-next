@@ -18,14 +18,12 @@ export const CustomWordFilterItemLayout = ({ layout, wordFilterListItem }: Custo
 export interface CustomWordFilterItemLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
-    tags?: string[];
 }
 
-export const CustomWordFilterItemLayoutBgRegion = ({ layout, onBgRegion, tags }: CustomWordFilterItemLayoutBgRegionProps) => {
+export const CustomWordFilterItemLayoutBgRegion = ({ layout, onBgRegion }: CustomWordFilterItemLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18, ...layout }}
@@ -38,14 +36,12 @@ export interface CustomWordFilterItemLayoutWordFilterListItemProps {
     bgRegion?: CustomWordFilterItemLayoutBgRegionProps;
     captionText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CustomWordFilterItemLayoutWordFilterListItem = ({ bgRegion, captionText, layout, tags }: CustomWordFilterItemLayoutWordFilterListItemProps) => {
+export const CustomWordFilterItemLayoutWordFilterListItem = ({ bgRegion, captionText, layout }: CustomWordFilterItemLayoutWordFilterListItemProps) => {
     return (
         <Region
             name="word_filter_list_item"
-            tags={tags}
             backgroundColor="#ff00ff"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18, ...layout }}
         >

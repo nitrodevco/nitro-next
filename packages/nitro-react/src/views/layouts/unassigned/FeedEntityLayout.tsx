@@ -33,14 +33,12 @@ export const FeedEntityLayout = ({ contentList, layout, srcIcon }: FeedEntityLay
 export interface FeedEntityLayoutTitleItemProps {
     captionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FeedEntityLayoutTitleItem = ({ captionTitle, layout, tags }: FeedEntityLayoutTitleItemProps) => {
+export const FeedEntityLayoutTitleItem = ({ captionTitle, layout }: FeedEntityLayoutTitleItemProps) => {
     return (
         <Region
             name="title"
-            tags={tags}
             layout={{ width: 170, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -56,14 +54,12 @@ export const FeedEntityLayoutTitleItem = ({ captionTitle, layout, tags }: FeedEn
 export interface FeedEntityLayoutTimeItemProps {
     captionTime?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FeedEntityLayoutTimeItem = ({ captionTime, layout, tags }: FeedEntityLayoutTimeItemProps) => {
+export const FeedEntityLayoutTimeItem = ({ captionTime, layout }: FeedEntityLayoutTimeItemProps) => {
     return (
         <Region
             name="time"
-            tags={tags}
             layout={{ width: 100, height: 20, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -79,14 +75,12 @@ export const FeedEntityLayoutTimeItem = ({ captionTime, layout, tags }: FeedEnti
 export interface FeedEntityLayoutMessageItemProps {
     captionMessage?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FeedEntityLayoutMessageItem = ({ captionMessage, layout, tags }: FeedEntityLayoutMessageItemProps) => {
+export const FeedEntityLayoutMessageItem = ({ captionMessage, layout }: FeedEntityLayoutMessageItemProps) => {
     return (
         <Region
             name="message"
-            tags={tags}
             layout={{ width: 168, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -102,14 +96,12 @@ export const FeedEntityLayoutMessageItem = ({ captionMessage, layout, tags }: Fe
 export interface FeedEntityLayoutDecorationItemProps {
     layout?: BoxLayout;
     srcDecoration?: string;
-    tags?: string[];
 }
 
-export const FeedEntityLayoutDecorationItem = ({ layout, srcDecoration, tags }: FeedEntityLayoutDecorationItemProps) => {
+export const FeedEntityLayoutDecorationItem = ({ layout, srcDecoration }: FeedEntityLayoutDecorationItemProps) => {
     return (
         <ThemeImage
             name="decoration"
-            tags={tags}
             src={srcDecoration}
             layout={{ width: 178, flexShrink: 0, ...layout }}
         />
@@ -120,15 +112,13 @@ export const FeedEntityLayoutDecorationItem = ({ layout, srcDecoration, tags }: 
 export interface FeedEntityLayoutActionButtonItemProps {
     layout?: BoxLayout;
     onActionButton?: () => void;
-    tags?: string[];
 }
 
-export const FeedEntityLayoutActionButtonItem = ({ layout, onActionButton, tags }: FeedEntityLayoutActionButtonItemProps) => {
+export const FeedEntityLayoutActionButtonItem = ({ layout, onActionButton }: FeedEntityLayoutActionButtonItemProps) => {
     return (
         <Button
             variant="3"
             name="action_button"
-            tags={tags}
             onPointerTap={onActionButton}
             layout={{ width: 65, height: 22, flexShrink: 0, ...layout }}
         >
@@ -141,14 +131,12 @@ export const FeedEntityLayoutActionButtonItem = ({ layout, onActionButton, tags 
 export interface FeedEntityLayoutContentListProps {
     itemsContentList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FeedEntityLayoutContentList = ({ itemsContentList, layout, tags }: FeedEntityLayoutContentListProps) => {
+export const FeedEntityLayoutContentList = ({ itemsContentList, layout }: FeedEntityLayoutContentListProps) => {
     return (
         <Region
             name="content_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 50, right: 1, top: 4, bottom: 6, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsContentList ?? (

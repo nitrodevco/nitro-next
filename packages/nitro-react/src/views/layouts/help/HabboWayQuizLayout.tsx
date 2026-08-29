@@ -70,14 +70,12 @@ export const HabboWayQuizLayout = ({ analysisPane, captionTopIndicator, exitButt
 export interface HabboWayQuizLayoutQuestionItemProps {
     captionQuestion?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabboWayQuizLayoutQuestionItem = ({ captionQuestion, layout, tags }: HabboWayQuizLayoutQuestionItemProps) => {
+export const HabboWayQuizLayoutQuestionItem = ({ captionQuestion, layout }: HabboWayQuizLayoutQuestionItemProps) => {
     return (
         <Region
             name="question"
-            tags={tags}
             layout={{ width: 339, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -92,14 +90,12 @@ export const HabboWayQuizLayoutQuestionItem = ({ captionQuestion, layout, tags }
 export interface HabboWayQuizLayoutAnswerListItemProps {
     layout?: BoxLayout;
     onRadiobutton?: () => void;
-    tags?: string[];
 }
 
-export const HabboWayQuizLayoutAnswerListItem = ({ layout, onRadiobutton, tags }: HabboWayQuizLayoutAnswerListItemProps) => {
+export const HabboWayQuizLayoutAnswerListItem = ({ layout, onRadiobutton }: HabboWayQuizLayoutAnswerListItemProps) => {
     return (
         <Region
             name="answer_list"
-            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', gap: 10, ...layout }}
         >
             <RadioButton
@@ -117,14 +113,12 @@ export const HabboWayQuizLayoutAnswerListItem = ({ layout, onRadiobutton, tags }
 export interface HabboWayQuizLayoutContentsProps {
     itemsContents?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabboWayQuizLayoutContents = ({ itemsContents, layout, tags }: HabboWayQuizLayoutContentsProps) => {
+export const HabboWayQuizLayoutContents = ({ itemsContents, layout }: HabboWayQuizLayoutContentsProps) => {
     return (
         <Region
             name="contents"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 460, top: 20, height: 285, flexDirection: 'column', gap: 15, ...layout }}
         >
             {itemsContents ?? (
@@ -142,15 +136,13 @@ export interface HabboWayQuizLayoutQuestionPaneProps {
     contents?: HabboWayQuizLayoutContentsProps;
     layout?: BoxLayout;
     srcQuestionIllustration?: string;
-    tags?: string[];
     visibleQuestionPane?: boolean;
 }
 
-export const HabboWayQuizLayoutQuestionPane = ({ contents, layout, srcQuestionIllustration, tags, visibleQuestionPane }: HabboWayQuizLayoutQuestionPaneProps) => {
+export const HabboWayQuizLayoutQuestionPane = ({ contents, layout, srcQuestionIllustration, visibleQuestionPane }: HabboWayQuizLayoutQuestionPaneProps) => {
     return (
         <Region
             name="question_pane"
-            tags={tags}
             visible={visibleQuestionPane ?? false}
             layout={{ position: 'absolute', left: 25, width: 470, top: 60, height: 310, ...layout }}
         >
@@ -170,15 +162,13 @@ export interface HabboWayQuizLayoutFailurePaneProps {
     captionFailureResults?: string;
     layout?: BoxLayout;
     srcFailureIllustration?: string;
-    tags?: string[];
     visibleFailurePane?: boolean;
 }
 
-export const HabboWayQuizLayoutFailurePane = ({ captionFailureAdvice, captionFailureResults, layout, srcFailureIllustration, tags, visibleFailurePane }: HabboWayQuizLayoutFailurePaneProps) => {
+export const HabboWayQuizLayoutFailurePane = ({ captionFailureAdvice, captionFailureResults, layout, srcFailureIllustration, visibleFailurePane }: HabboWayQuizLayoutFailurePaneProps) => {
     return (
         <Region
             name="failure_pane"
-            tags={tags}
             visible={visibleFailurePane ?? false}
             layout={{ position: 'absolute', left: 0, width: 498, top: 50, height: 320, justifyContent: 'center', ...layout }}
         >
@@ -214,15 +204,13 @@ export interface HabboWayQuizLayoutSuccessPaneProps {
     captionSuccessResults?: string;
     layout?: BoxLayout;
     srcSuccessIllustration?: string;
-    tags?: string[];
     visibleSuccessPane?: boolean;
 }
 
-export const HabboWayQuizLayoutSuccessPane = ({ captionSuccessResults, layout, srcSuccessIllustration, tags, visibleSuccessPane }: HabboWayQuizLayoutSuccessPaneProps) => {
+export const HabboWayQuizLayoutSuccessPane = ({ captionSuccessResults, layout, srcSuccessIllustration, visibleSuccessPane }: HabboWayQuizLayoutSuccessPaneProps) => {
     return (
         <Region
             name="success_pane"
-            tags={tags}
             visible={visibleSuccessPane ?? false}
             layout={{ position: 'absolute', left: 0, width: 498, top: 50, height: 320, justifyContent: 'center', ...layout }}
         >
@@ -250,14 +238,12 @@ export interface HabboWayQuizLayoutAnswerContainerProps {
     captionAnswer?: string;
     layout?: BoxLayout;
     srcAnswerIllustration?: string;
-    tags?: string[];
 }
 
-export const HabboWayQuizLayoutAnswerContainer = ({ captionAnswer, layout, srcAnswerIllustration, tags }: HabboWayQuizLayoutAnswerContainerProps) => {
+export const HabboWayQuizLayoutAnswerContainer = ({ captionAnswer, layout, srcAnswerIllustration }: HabboWayQuizLayoutAnswerContainerProps) => {
     return (
         <Region
             name="answer_container"
-            tags={tags}
             layout={{ width: 448, height: 28, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -286,10 +272,9 @@ export interface HabboWayQuizLayoutAnalysisPaneProps {
     layout?: BoxLayout;
     srcExplanationIllustration?: string;
     srcSeparator?: string;
-    tags?: string[];
 }
 
-export const HabboWayQuizLayoutAnalysisPane = ({ answerContainer, captionExplanation, captionQuestion, layout, srcExplanationIllustration, srcSeparator, tags }: HabboWayQuizLayoutAnalysisPaneProps) => {
+export const HabboWayQuizLayoutAnalysisPane = ({ answerContainer, captionExplanation, captionQuestion, layout, srcExplanationIllustration, srcSeparator }: HabboWayQuizLayoutAnalysisPaneProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -297,7 +282,6 @@ export const HabboWayQuizLayoutAnalysisPane = ({ answerContainer, captionExplana
         >
             <Region
                 name="analysis_pane"
-                tags={tags}
                 visible={false}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
@@ -347,14 +331,12 @@ export const HabboWayQuizLayoutAnalysisPane = ({ answerContainer, captionExplana
 /** Named region `prev_dimmer` of HabboWayQuizLayout - configured through the parent's `prevDimmer` prop. */
 export interface HabboWayQuizLayoutPrevDimmerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabboWayQuizLayoutPrevDimmer = ({ layout, tags }: HabboWayQuizLayoutPrevDimmerProps) => {
+export const HabboWayQuizLayoutPrevDimmer = ({ layout }: HabboWayQuizLayoutPrevDimmerProps) => {
     return (
         <Region
             name="prev_dimmer"
-            tags={tags}
             backgroundColor="#e2e2e2"
             layout={{ position: 'absolute', left: 14, width: 240, top: 1, height: 58, ...layout }}
         />
@@ -364,14 +346,12 @@ export const HabboWayQuizLayoutPrevDimmer = ({ layout, tags }: HabboWayQuizLayou
 /** Named region `next_dimmer` of HabboWayQuizLayout - configured through the parent's `nextDimmer` prop. */
 export interface HabboWayQuizLayoutNextDimmerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const HabboWayQuizLayoutNextDimmer = ({ layout, tags }: HabboWayQuizLayoutNextDimmerProps) => {
+export const HabboWayQuizLayoutNextDimmer = ({ layout }: HabboWayQuizLayoutNextDimmerProps) => {
     return (
         <Region
             name="next_dimmer"
-            tags={tags}
             backgroundColor="#e2e2e2"
             layout={{ position: 'absolute', left: 243, width: 240, top: 1, height: 58, ...layout }}
         />
@@ -385,16 +365,14 @@ export interface HabboWayQuizLayoutPrevNextButtonsProps {
     onNextButton?: () => void;
     onPrevButton?: () => void;
     prevDimmer?: HabboWayQuizLayoutPrevDimmerProps;
-    tags?: string[];
 }
 
-export const HabboWayQuizLayoutPrevNextButtons = ({ layout, nextDimmer, onNextButton, onPrevButton, prevDimmer, tags }: HabboWayQuizLayoutPrevNextButtonsProps) => {
+export const HabboWayQuizLayoutPrevNextButtons = ({ layout, nextDimmer, onNextButton, onPrevButton, prevDimmer }: HabboWayQuizLayoutPrevNextButtonsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="prev_next_buttons"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 498, bottom: 31, height: 65, ...layout }}
         >
             <ContainerButton
@@ -457,17 +435,15 @@ export interface HabboWayQuizLayoutFailureButtonsProps {
     layout?: BoxLayout;
     onExitButton?: () => void;
     onReviewButton?: () => void;
-    tags?: string[];
     visibleFailureButtons?: boolean;
 }
 
-export const HabboWayQuizLayoutFailureButtons = ({ layout, onExitButton, onReviewButton, tags, visibleFailureButtons }: HabboWayQuizLayoutFailureButtonsProps) => {
+export const HabboWayQuizLayoutFailureButtons = ({ layout, onExitButton, onReviewButton, visibleFailureButtons }: HabboWayQuizLayoutFailureButtonsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="failure_buttons"
-            tags={tags}
             visible={visibleFailureButtons ?? false}
             layout={{ position: 'absolute', left: 0, width: 498, bottom: 31, height: 65, ...layout }}
         >
@@ -507,17 +483,15 @@ export interface HabboWayQuizLayoutExitButtonContainerProps {
     captionRetakeTimeNotice?: string;
     layout?: BoxLayout;
     onExitButton?: () => void;
-    tags?: string[];
     visibleExitButtonContainer?: boolean;
 }
 
-export const HabboWayQuizLayoutExitButtonContainer = ({ captionRetakeTimeNotice, layout, onExitButton, tags, visibleExitButtonContainer }: HabboWayQuizLayoutExitButtonContainerProps) => {
+export const HabboWayQuizLayoutExitButtonContainer = ({ captionRetakeTimeNotice, layout, onExitButton, visibleExitButtonContainer }: HabboWayQuizLayoutExitButtonContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="exit_button_container"
-            tags={tags}
             visible={visibleExitButtonContainer ?? false}
             layout={{ position: 'absolute', left: 0, width: 499, bottom: 31, height: 65, justifyContent: 'center', ...layout }}
         >

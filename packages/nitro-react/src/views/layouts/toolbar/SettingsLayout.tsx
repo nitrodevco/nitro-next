@@ -11,7 +11,6 @@ export const SettingsLayout = ({ layout }: SettingsLayoutProps) => {
             <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 36 }}>
                 <Border
                     variant="6"
-                    tags={[ 'BGCOLOR' ]}
                     tintColor="#55534e"
                     layout={{ position: 'absolute', left: 0, width: 192, top: 0, bottom: 0 }}
                 />

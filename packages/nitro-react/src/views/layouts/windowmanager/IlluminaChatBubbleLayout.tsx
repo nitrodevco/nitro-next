@@ -38,14 +38,12 @@ export interface IlluminaChatBubbleLayoutUserNameRegionItemProps {
     captionUserName?: string;
     layout?: BoxLayout;
     onUserNameRegion?: () => void;
-    tags?: string[];
 }
 
-export const IlluminaChatBubbleLayoutUserNameRegionItem = ({ captionUserName, layout, onUserNameRegion, tags }: IlluminaChatBubbleLayoutUserNameRegionItemProps) => {
+export const IlluminaChatBubbleLayoutUserNameRegionItem = ({ captionUserName, layout, onUserNameRegion }: IlluminaChatBubbleLayoutUserNameRegionItemProps) => {
     return (
         <Region
             name="user_name_region"
-            tags={tags}
             onPointerTap={onUserNameRegion}
             cursor="pointer"
             layout={{ width: 31, height: 15, flexShrink: 0, ...layout }}
@@ -67,15 +65,13 @@ export const IlluminaChatBubbleLayoutUserNameRegionItem = ({ captionUserName, la
 /** Row template `post_time` of IlluminaChatBubbleLayout - pass real rows through its `items…` slot. */
 export interface IlluminaChatBubbleLayoutPostTimeItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IlluminaChatBubbleLayoutPostTimeItem = ({ layout, tags }: IlluminaChatBubbleLayoutPostTimeItemProps) => {
+export const IlluminaChatBubbleLayoutPostTimeItem = ({ layout }: IlluminaChatBubbleLayoutPostTimeItemProps) => {
     return (
         <WidgetSlot
             widgetType="updating_timestamp"
             name="post_time"
-            tags={tags}
             layout={{ width: 131, height: 16, flexShrink: 0, ...layout }}
         />
     );
@@ -86,16 +82,14 @@ export interface IlluminaChatBubbleLayoutOfflinePlaceholderItemProps {
     captionOffline?: string;
     layout?: BoxLayout;
     onOfflinePlaceholder?: () => void;
-    tags?: string[];
 }
 
-export const IlluminaChatBubbleLayoutOfflinePlaceholderItem = ({ captionOffline, layout, onOfflinePlaceholder, tags }: IlluminaChatBubbleLayoutOfflinePlaceholderItemProps) => {
+export const IlluminaChatBubbleLayoutOfflinePlaceholderItem = ({ captionOffline, layout, onOfflinePlaceholder }: IlluminaChatBubbleLayoutOfflinePlaceholderItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="offline_placeholder"
-            tags={tags}
             onPointerTap={onOfflinePlaceholder}
             cursor="pointer"
             layout={{ width: 250, height: 16, flexShrink: 0, ...layout }}
@@ -113,14 +107,12 @@ export const IlluminaChatBubbleLayoutOfflinePlaceholderItem = ({ captionOffline,
 /** Row template `spacing` of IlluminaChatBubbleLayout - pass real rows through its `items…` slot. */
 export interface IlluminaChatBubbleLayoutSpacingItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IlluminaChatBubbleLayoutSpacingItem = ({ layout, tags }: IlluminaChatBubbleLayoutSpacingItemProps) => {
+export const IlluminaChatBubbleLayoutSpacingItem = ({ layout }: IlluminaChatBubbleLayoutSpacingItemProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 0, height: 7, flexShrink: 0, ...layout }}
         />
     );
@@ -130,14 +122,12 @@ export const IlluminaChatBubbleLayoutSpacingItem = ({ layout, tags }: IlluminaCh
 export interface IlluminaChatBubbleLayoutMessageTemplateItemProps {
     captionMessageTemplate?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IlluminaChatBubbleLayoutMessageTemplateItem = ({ captionMessageTemplate, layout, tags }: IlluminaChatBubbleLayoutMessageTemplateItemProps) => {
+export const IlluminaChatBubbleLayoutMessageTemplateItem = ({ captionMessageTemplate, layout }: IlluminaChatBubbleLayoutMessageTemplateItemProps) => {
     return (
         <Region
             name="message_template"
-            tags={tags}
             layout={{ width: 207, height: 4, flexShrink: 0, minHeight: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -152,15 +142,13 @@ export const IlluminaChatBubbleLayoutMessageTemplateItem = ({ captionMessageTemp
 export interface IlluminaChatBubbleLayoutHabbiconTemplateItemProps {
     layout?: BoxLayout;
     srcHabbiconBitmap?: string;
-    tags?: string[];
     visibleHabbiconTemplate?: boolean;
 }
 
-export const IlluminaChatBubbleLayoutHabbiconTemplateItem = ({ layout, srcHabbiconBitmap, tags, visibleHabbiconTemplate }: IlluminaChatBubbleLayoutHabbiconTemplateItemProps) => {
+export const IlluminaChatBubbleLayoutHabbiconTemplateItem = ({ layout, srcHabbiconBitmap, visibleHabbiconTemplate }: IlluminaChatBubbleLayoutHabbiconTemplateItemProps) => {
     return (
         <Region
             name="habbicon_template"
-            tags={tags}
             visible={visibleHabbiconTemplate ?? false}
             layout={{ width: 80, height: 80, flexShrink: 0, ...layout }}
         >
@@ -177,14 +165,12 @@ export const IlluminaChatBubbleLayoutHabbiconTemplateItem = ({ layout, srcHabbic
 export interface IlluminaChatBubbleLayoutMessageContainerItemProps {
     itemsMessageContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IlluminaChatBubbleLayoutMessageContainerItem = ({ itemsMessageContainer, layout, tags }: IlluminaChatBubbleLayoutMessageContainerItemProps) => {
+export const IlluminaChatBubbleLayoutMessageContainerItem = ({ itemsMessageContainer, layout }: IlluminaChatBubbleLayoutMessageContainerItemProps) => {
     return (
         <Region
             name="message_container"
-            tags={tags}
             layout={{ flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsMessageContainer ?? (
@@ -200,14 +186,12 @@ export const IlluminaChatBubbleLayoutMessageContainerItem = ({ itemsMessageConta
 /** Row template `spacing` of IlluminaChatBubbleLayout - pass real rows through its `items…` slot. */
 export interface IlluminaChatBubbleLayoutSpacingItem2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IlluminaChatBubbleLayoutSpacingItem2 = ({ layout, tags }: IlluminaChatBubbleLayoutSpacingItem2Props) => {
+export const IlluminaChatBubbleLayoutSpacingItem2 = ({ layout }: IlluminaChatBubbleLayoutSpacingItem2Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 0, height: 7, flexShrink: 0, ...layout }}
         />
     );
@@ -217,14 +201,12 @@ export const IlluminaChatBubbleLayoutSpacingItem2 = ({ layout, tags }: IlluminaC
 export interface IlluminaChatBubbleLayoutSpacedMessageContainerProps {
     itemsSpacedMessageContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IlluminaChatBubbleLayoutSpacedMessageContainer = ({ itemsSpacedMessageContainer, layout, tags }: IlluminaChatBubbleLayoutSpacedMessageContainerProps) => {
+export const IlluminaChatBubbleLayoutSpacedMessageContainer = ({ itemsSpacedMessageContainer, layout }: IlluminaChatBubbleLayoutSpacedMessageContainerProps) => {
     return (
         <Region
             name="spaced_message_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', ...layout }}
         >
             {itemsSpacedMessageContainer ?? (
@@ -243,14 +225,12 @@ export interface IlluminaChatBubbleLayoutMessageRegionProps {
     layout?: BoxLayout;
     onMessageRegion?: () => void;
     spacedMessageContainer?: IlluminaChatBubbleLayoutSpacedMessageContainerProps;
-    tags?: string[];
 }
 
-export const IlluminaChatBubbleLayoutMessageRegion = ({ layout, onMessageRegion, spacedMessageContainer, tags }: IlluminaChatBubbleLayoutMessageRegionProps) => {
+export const IlluminaChatBubbleLayoutMessageRegion = ({ layout, onMessageRegion, spacedMessageContainer }: IlluminaChatBubbleLayoutMessageRegionProps) => {
     return (
         <Region
             name="message_region"
-            tags={tags}
             onPointerTap={onMessageRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 207, top: 0, height: 18, ...layout }}
@@ -265,14 +245,12 @@ export interface IlluminaChatBubbleLayoutBubbleWrapperProps {
     itemsBubbleWrapper?: ReactNode;
     layout?: BoxLayout;
     messageRegion?: IlluminaChatBubbleLayoutMessageRegionProps;
-    tags?: string[];
 }
 
-export const IlluminaChatBubbleLayoutBubbleWrapper = ({ itemsBubbleWrapper, layout, messageRegion, tags }: IlluminaChatBubbleLayoutBubbleWrapperProps) => {
+export const IlluminaChatBubbleLayoutBubbleWrapper = ({ itemsBubbleWrapper, layout, messageRegion }: IlluminaChatBubbleLayoutBubbleWrapperProps) => {
     return (
         <Region
             name="bubble_wrapper"
-            tags={tags}
             layout={{ position: 'absolute', left: 52, top: 15, flexDirection: 'column', ...layout }}
         >
             {itemsBubbleWrapper ?? (

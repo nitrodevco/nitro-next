@@ -30,36 +30,32 @@ export interface SnowwarResultsPlayerTeam2LayoutPlayerScoreContainerProps {
     srcLoadingIcon?: string;
     srcPlayerScoreBackground?: string;
     srcPlayerScoreGlow?: string;
-    tags?: string[];
+    strokeTextColor?: string;
 }
 
-export const SnowwarResultsPlayerTeam2LayoutPlayerScoreContainer = ({ captionPlayerScore, captionPlayerScoreStroke, layout, srcLoadingIcon, srcPlayerScoreBackground, srcPlayerScoreGlow, tags }: SnowwarResultsPlayerTeam2LayoutPlayerScoreContainerProps) => {
+export const SnowwarResultsPlayerTeam2LayoutPlayerScoreContainer = ({ captionPlayerScore, captionPlayerScoreStroke, layout, srcLoadingIcon, srcPlayerScoreBackground, srcPlayerScoreGlow, strokeTextColor }: SnowwarResultsPlayerTeam2LayoutPlayerScoreContainerProps) => {
     return (
         <Region
             name="playerScoreContainer"
-            tags={tags}
             layout={{ width: 61, height: 62, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="playerScoreBackground"
-                tags={[ 'bitmap' ]}
                 src={srcPlayerScoreBackground ?? layoutImage('red_ball.png')}
                 layout={{ position: 'absolute', left: 0, width: 59, top: 0, height: 59 }}
             />
             <ThemeImage
                 name="playerScoreGlow"
-                tags={[ 'bitmap' ]}
                 src={srcPlayerScoreGlow}
                 layout={{ position: 'absolute', left: 0, width: 61, top: 0, height: 62 }}
             />
             <Region
                 name="playerScore_stroke"
-                tags={[ 'stroke' ]}
                 layout={{ position: 'absolute', left: 0, width: 60, top: 17, height: 24, minWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionPlayerScoreStroke ?? '102'}
-                    textOptions={{ fill: '#fd6859', align: 'center' }}
+                    textOptions={{ fill: strokeTextColor ?? '#fd6859', align: 'center' }}
                 />
             </Region>
             <Region
@@ -77,7 +73,6 @@ export const SnowwarResultsPlayerTeam2LayoutPlayerScoreContainer = ({ captionPla
             >
                 <ThemeImage
                     name="loadingIcon"
-                    tags={[ 'bitmap' ]}
                     src={srcLoadingIcon}
                     layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, top: 5, height: 50 }}
                 />
@@ -95,16 +90,15 @@ export interface SnowwarResultsPlayerTeam2LayoutPlayerStatsProps {
     captionPlayerKillsLabel?: string;
     captionPlayerKillsStroke?: string;
     layout?: BoxLayout;
-    tags?: string[];
+    strokeTextColor?: string;
 }
 
-export const SnowwarResultsPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, captionPlayerHitsLabel, captionPlayerHitsStroke, captionPlayerKills, captionPlayerKillsLabel, captionPlayerKillsStroke, layout, tags }: SnowwarResultsPlayerTeam2LayoutPlayerStatsProps) => {
+export const SnowwarResultsPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, captionPlayerHitsLabel, captionPlayerHitsStroke, captionPlayerKills, captionPlayerKillsLabel, captionPlayerKillsStroke, layout, strokeTextColor }: SnowwarResultsPlayerTeam2LayoutPlayerStatsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="playerStats"
-            tags={tags}
             layout={{ position: 'absolute', left: 20, width: 135, top: 26, height: 35, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 17 }}>
@@ -122,13 +116,12 @@ export const SnowwarResultsPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, 
             <Region layout={{ position: 'absolute', left: 62, width: 60, top: 0, height: 17 }}>
                 <Region
                     name="playerHits_stroke"
-                    tags={[ 'stroke' ]}
                     layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 17, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 >
                     <ThemeText
                         text={captionPlayerHitsStroke ?? '20'}
                         textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#cc6666', align: 'right' }}
+                        textOptions={{ fill: strokeTextColor ?? '#cc6666', align: 'right' }}
                     />
                 </Region>
                 <Region
@@ -157,13 +150,12 @@ export const SnowwarResultsPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, 
             <Region layout={{ position: 'absolute', left: 62, width: 60, top: 14, height: 17 }}>
                 <Region
                     name="playerKills_stroke"
-                    tags={[ 'stroke' ]}
                     layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 17, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 >
                     <ThemeText
                         text={captionPlayerKillsStroke ?? '5'}
                         textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#cc6666', align: 'right' }}
+                        textOptions={{ fill: strokeTextColor ?? '#cc6666', align: 'right' }}
                     />
                 </Region>
                 <Region
@@ -187,16 +179,15 @@ export interface SnowwarResultsPlayerTeam2LayoutPlayerTotalStatsProps {
     captionTotalScoreLabel?: string;
     captionTotalScoreStroke?: string;
     layout?: BoxLayout;
-    tags?: string[];
+    strokeTextColor?: string;
 }
 
-export const SnowwarResultsPlayerTeam2LayoutPlayerTotalStats = ({ captionTotalScore, captionTotalScoreLabel, captionTotalScoreStroke, layout, tags }: SnowwarResultsPlayerTeam2LayoutPlayerTotalStatsProps) => {
+export const SnowwarResultsPlayerTeam2LayoutPlayerTotalStats = ({ captionTotalScore, captionTotalScoreLabel, captionTotalScoreStroke, layout, strokeTextColor }: SnowwarResultsPlayerTeam2LayoutPlayerTotalStatsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="playerTotalStats"
-            tags={tags}
             layout={{ position: 'absolute', left: 13, width: 140, top: 24, height: 35, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 148, top: 9, height: 17 }}>
@@ -214,13 +205,12 @@ export const SnowwarResultsPlayerTeam2LayoutPlayerTotalStats = ({ captionTotalSc
             <Region layout={{ position: 'absolute', left: 100, width: 54, top: 9, height: 17 }}>
                 <Region
                     name="totalScore_stroke"
-                    tags={[ 'stroke' ]}
                     layout={{ position: 'absolute', left: 0, width: 54, top: 0, height: 17, minWidth: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTotalScoreStroke ?? '20'}
                         textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#cc6666' }}
+                        textOptions={{ fill: strokeTextColor ?? '#cc6666' }}
                     />
                 </Region>
                 <Region
@@ -243,15 +233,13 @@ export interface SnowwarResultsPlayerTeam2LayoutScoreTooltipProps {
     layout?: BoxLayout;
     onScoreTooltip?: () => void;
     srcSkillLevel?: string;
-    tags?: string[];
     visibleScoreTooltip?: boolean;
 }
 
-export const SnowwarResultsPlayerTeam2LayoutScoreTooltip = ({ layout, onScoreTooltip, srcSkillLevel, tags, visibleScoreTooltip }: SnowwarResultsPlayerTeam2LayoutScoreTooltipProps) => {
+export const SnowwarResultsPlayerTeam2LayoutScoreTooltip = ({ layout, onScoreTooltip, srcSkillLevel, visibleScoreTooltip }: SnowwarResultsPlayerTeam2LayoutScoreTooltipProps) => {
     return (
         <Region
             name="scoreTooltip"
-            tags={tags}
             visible={visibleScoreTooltip ?? false}
             onPointerTap={onScoreTooltip}
             cursor="pointer"
@@ -259,7 +247,6 @@ export const SnowwarResultsPlayerTeam2LayoutScoreTooltip = ({ layout, onScoreToo
         >
             <ThemeImage
                 name="skillLevel"
-                tags={[ 'bitmap' ]}
                 src={srcSkillLevel}
                 layout={{ position: 'absolute', left: 0, width: 150, top: 0, height: 13 }}
             />
@@ -276,30 +263,27 @@ export interface SnowwarResultsPlayerTeam2LayoutPlayerDataContainerProps {
     playerTotalStats?: SnowwarResultsPlayerTeam2LayoutPlayerTotalStatsProps;
     scoreTooltip?: SnowwarResultsPlayerTeam2LayoutScoreTooltipProps;
     srcPlayerDataBackground?: string;
-    tags?: string[];
+    strokeTextColor?: string;
 }
 
-export const SnowwarResultsPlayerTeam2LayoutPlayerDataContainer = ({ captionPlayerName, captionPlayerNameStroke, layout, playerStats, playerTotalStats, scoreTooltip, srcPlayerDataBackground, tags }: SnowwarResultsPlayerTeam2LayoutPlayerDataContainerProps) => {
+export const SnowwarResultsPlayerTeam2LayoutPlayerDataContainer = ({ captionPlayerName, captionPlayerNameStroke, layout, playerStats, playerTotalStats, scoreTooltip, srcPlayerDataBackground, strokeTextColor }: SnowwarResultsPlayerTeam2LayoutPlayerDataContainerProps) => {
     return (
         <Region
             name="playerDataContainer"
-            tags={tags}
             layout={{ width: 162, height: 62, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="playerDataBackground"
-                tags={[ 'bitmap' ]}
                 src={srcPlayerDataBackground ?? layoutImage('red_infobox.png')}
                 layout={{ position: 'absolute', left: 0, width: 162, top: 0, height: 62 }}
             />
             <Region
                 name="playerName_stroke"
-                tags={[ 'stroke' ]}
                 layout={{ position: 'absolute', width: 68, top: 3, height: 19, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionPlayerNameStroke ?? 'Painimies'}
-                    textOptions={{ fill: '#993333' }}
+                    textOptions={{ fill: strokeTextColor ?? '#993333' }}
                 />
             </Region>
             <Region
@@ -322,17 +306,15 @@ export const SnowwarResultsPlayerTeam2LayoutPlayerDataContainer = ({ captionPlay
 export interface SnowwarResultsPlayerTeam2LayoutAddFriendProps {
     layout?: BoxLayout;
     onAddFriend?: () => void;
-    tags?: string[];
     visibleAddFriend?: boolean;
 }
 
-export const SnowwarResultsPlayerTeam2LayoutAddFriend = ({ layout, onAddFriend, tags, visibleAddFriend }: SnowwarResultsPlayerTeam2LayoutAddFriendProps) => {
+export const SnowwarResultsPlayerTeam2LayoutAddFriend = ({ layout, onAddFriend, visibleAddFriend }: SnowwarResultsPlayerTeam2LayoutAddFriendProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="addFriend"
-            tags={tags}
             tooltip={t('snowwar.add_friend.tooltip')}
             visible={visibleAddFriend ?? false}
             onPointerTap={onAddFriend}
@@ -340,7 +322,6 @@ export const SnowwarResultsPlayerTeam2LayoutAddFriend = ({ layout, onAddFriend, 
             layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 62, ...layout }}
         >
             <ThemeImage
-                tags={[ 'bitmap' ]}
                 src={layoutImage('add_friend_icon_red.png')}
                 layout={{ position: 'absolute', left: 41, width: 20, top: 3, height: 20 }}
             />
@@ -354,25 +335,21 @@ export interface SnowwarResultsPlayerTeam2LayoutPlayerImageContainerProps {
     layout?: BoxLayout;
     srcPlayerImage?: string;
     srcPlayerImageBackground?: string;
-    tags?: string[];
 }
 
-export const SnowwarResultsPlayerTeam2LayoutPlayerImageContainer = ({ addFriend, layout, srcPlayerImage, srcPlayerImageBackground, tags }: SnowwarResultsPlayerTeam2LayoutPlayerImageContainerProps) => {
+export const SnowwarResultsPlayerTeam2LayoutPlayerImageContainer = ({ addFriend, layout, srcPlayerImage, srcPlayerImageBackground }: SnowwarResultsPlayerTeam2LayoutPlayerImageContainerProps) => {
     return (
         <Region
             name="playerImageContainer"
-            tags={tags}
             layout={{ width: 64, height: 62, flexShrink: 0, ...layout }}
         >
             <ThemeImage
                 name="playerImageBackground"
-                tags={[ 'bitmap' ]}
                 src={srcPlayerImageBackground ?? layoutImage('red_square.png')}
                 layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 62 }}
             />
             <ThemeImage
                 name="playerImage"
-                tags={[ 'bitmap' ]}
                 src={srcPlayerImage}
                 layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 62 }}
             />

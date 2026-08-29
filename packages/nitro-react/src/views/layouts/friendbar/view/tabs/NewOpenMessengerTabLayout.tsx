@@ -19,14 +19,12 @@ export const NewOpenMessengerTabLayout = ({ container, layout }: NewOpenMessenge
 export interface NewOpenMessengerTabLayoutContainerProps {
     layout?: BoxLayout;
     onContainer?: () => void;
-    tags?: string[];
 }
 
-export const NewOpenMessengerTabLayoutContainer = ({ layout, onContainer, tags }: NewOpenMessengerTabLayoutContainerProps) => {
+export const NewOpenMessengerTabLayoutContainer = ({ layout, onContainer }: NewOpenMessengerTabLayoutContainerProps) => {
     return (
         <Region
             name="container"
-            tags={tags}
             onPointerTap={onContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30, ...layout }}

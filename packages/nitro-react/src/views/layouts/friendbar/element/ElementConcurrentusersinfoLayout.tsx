@@ -22,28 +22,26 @@ export const ElementConcurrentusersinfoLayout = ({ layout, stateAchieved, stateA
 /** Named region `state.active` of ElementConcurrentusersinfoLayout - configured through the parent's `stateActive` prop. */
 export interface ElementConcurrentusersinfoLayoutStateActiveProps {
     captionUsersDesc?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ElementConcurrentusersinfoLayoutStateActive = ({ captionUsersDesc, layout, tags }: ElementConcurrentusersinfoLayoutStateActiveProps) => {
+export const ElementConcurrentusersinfoLayoutStateActive = ({ captionUsersDesc, colorableTextColor, layout }: ElementConcurrentusersinfoLayoutStateActiveProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="state.active"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 30, ...layout }}
         >
             <Region
                 name="users_desc"
-                tags={[ 'COLORABLE' ]}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionUsersDesc ?? t('landing.view.concurrentusers.info')}
                     textStyle="text-style-il-heading-3"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 185 }}
+                    textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 185 }}
                 />
             </Region>
         </Region>
@@ -53,20 +51,19 @@ export const ElementConcurrentusersinfoLayoutStateActive = ({ captionUsersDesc, 
 /** Named region `state.achieved` of ElementConcurrentusersinfoLayout - configured through the parent's `stateAchieved` prop. */
 export interface ElementConcurrentusersinfoLayoutStateAchievedProps {
     captionBadgeDesc?: string;
+    colorableTextColor?: string;
     layout?: BoxLayout;
     onActionButton?: () => void;
     srcBadgeImage?: string;
-    tags?: string[];
     visibleStateAchieved?: boolean;
 }
 
-export const ElementConcurrentusersinfoLayoutStateAchieved = ({ captionBadgeDesc, layout, onActionButton, srcBadgeImage, tags, visibleStateAchieved }: ElementConcurrentusersinfoLayoutStateAchievedProps) => {
+export const ElementConcurrentusersinfoLayoutStateAchieved = ({ captionBadgeDesc, colorableTextColor, layout, onActionButton, srcBadgeImage, visibleStateAchieved }: ElementConcurrentusersinfoLayoutStateAchievedProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="state.achieved"
-            tags={tags}
             visible={visibleStateAchieved ?? false}
             layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 80, ...layout }}
         >
@@ -77,13 +74,12 @@ export const ElementConcurrentusersinfoLayoutStateAchieved = ({ captionBadgeDesc
             />
             <Region
                 name="badge_desc"
-                tags={[ 'COLORABLE' ]}
                 layout={{ position: 'absolute', left: 50, width: 130, top: 7, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionBadgeDesc ?? t('landing.view.concurrentusers.reward')}
                     textStyle="text-style-il-heading-3"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 130 }}
+                    textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 130 }}
                 />
             </Region>
             <Button

@@ -25,14 +25,12 @@ export interface SpectatorModeLayoutSpectatorModeContainerProps {
     srcTopLeft?: string;
     srcTopMiddle?: string;
     srcTopRight?: string;
-    tags?: string[];
 }
 
-export const SpectatorModeLayoutSpectatorModeContainer = ({ layout, srcBottomLeft, srcBottomMiddle, srcBottomRight, srcMiddleLeft, srcMiddleRight, srcTopLeft, srcTopMiddle, srcTopRight, tags }: SpectatorModeLayoutSpectatorModeContainerProps) => {
+export const SpectatorModeLayoutSpectatorModeContainer = ({ layout, srcBottomLeft, srcBottomMiddle, srcBottomRight, srcMiddleLeft, srcMiddleRight, srcTopLeft, srcTopMiddle, srcTopRight }: SpectatorModeLayoutSpectatorModeContainerProps) => {
     return (
         <Region
             name="spectator_mode_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: -163, top: 0, bottom: -182, minWidth: 183, minHeight: 202, ...layout }}
         >
             <ThemeImage

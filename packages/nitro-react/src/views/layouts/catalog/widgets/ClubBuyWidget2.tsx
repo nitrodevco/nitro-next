@@ -1,5 +1,6 @@
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Icon, Region, ThemeText } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `clubBuyWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -9,14 +10,12 @@ import { Border, BoxLayout, Icon, Region, ThemeText } from '#base/theme';
 /** Named region `item_list_hc` of ClubBuyWidget2 - configured through the parent's `itemListHc` prop. */
 export interface ClubBuyWidget2ItemListHcProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubBuyWidget2ItemListHc = ({ layout, tags }: ClubBuyWidget2ItemListHcProps) => {
+export const ClubBuyWidget2ItemListHc = ({ layout }: ClubBuyWidget2ItemListHcProps) => {
     return (
         <Region
             name="item_list_hc"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 171, top: 155, bottom: 55, flexDirection: 'column', gap: 4, ...layout }}
         />
     );
@@ -25,21 +24,19 @@ export const ClubBuyWidget2ItemListHc = ({ layout, tags }: ClubBuyWidget2ItemLis
 /** Named region `item_list_vip` of ClubBuyWidget2 - configured through the parent's `itemListVip` prop. */
 export interface ClubBuyWidget2ItemListVipProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubBuyWidget2ItemListVip = ({ layout, tags }: ClubBuyWidget2ItemListVipProps) => {
+export const ClubBuyWidget2ItemListVip = ({ layout }: ClubBuyWidget2ItemListVipProps) => {
     return (
         <Region
             name="item_list_vip"
-            tags={tags}
             layout={{ position: 'absolute', left: 180, width: 171, top: 155, bottom: 55, flexDirection: 'column', gap: 4, ...layout }}
         />
     );
 };
 
 /** Named region `clubBuyWidget` of ClubBuyWidget2 - configured through the parent's `clubBuyWidget` prop. */
-export interface ClubBuyWidget2Props {
+export interface ClubBuyWidget2Props extends CatalogWidgetFlags {
     captionClubHeader?: string;
     captionClubInfo?: string;
     captionClubLink?: string;
@@ -47,16 +44,14 @@ export interface ClubBuyWidget2Props {
     itemListHc?: ClubBuyWidget2ItemListHcProps;
     itemListVip?: ClubBuyWidget2ItemListVipProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubBuyWidget2 = ({ captionClubHeader, captionClubInfo, captionClubLink, captionClubRemaining, itemListHc, itemListVip, layout, tags }: ClubBuyWidget2Props) => {
+export const ClubBuyWidget2 = ({ captionClubHeader, captionClubInfo, captionClubLink, captionClubRemaining, itemListHc, itemListVip, layout }: ClubBuyWidget2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="clubBuyWidget"
-            tags={tags}
             layout={{ position: 'absolute', justifyContent: 'center', ...layout }}
         >
             <Border
@@ -102,14 +97,8 @@ export const ClubBuyWidget2 = ({ captionClubHeader, captionClubInfo, captionClub
                 name="icon_vip"
                 layout={{ position: 'absolute', left: 40, width: 85, top: 104, height: 40 }}
             />
-            <ClubBuyWidget2ItemListHc
-                tags={[ 'own_items_grid' ]}
-                {...itemListHc}
-            />
-            <ClubBuyWidget2ItemListVip
-                tags={[ 'own_items_grid' ]}
-                {...itemListVip}
-            />
+            <ClubBuyWidget2ItemListHc {...itemListHc} />
+            <ClubBuyWidget2ItemListVip {...itemListVip} />
             <Region
                 name="club_link"
                 layout={{ position: 'absolute', width: 340, bottom: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}

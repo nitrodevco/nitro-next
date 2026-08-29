@@ -19,14 +19,12 @@ export const IroEventInfoLayout = ({ eventInfoWindow, layout }: IroEventInfoLayo
 export interface IroEventInfoLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
-    tags?: string[];
 }
 
-export const IroEventInfoLayoutBgRegion = ({ layout, onBgRegion, tags }: IroEventInfoLayoutBgRegionProps) => {
+export const IroEventInfoLayoutBgRegion = ({ layout, onBgRegion }: IroEventInfoLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
@@ -39,16 +37,14 @@ export interface IroEventInfoLayoutModifyLinkRegionProps {
     captionModifyLink?: string;
     layout?: BoxLayout;
     onModifyLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const IroEventInfoLayoutModifyLinkRegion = ({ captionModifyLink, layout, onModifyLinkRegion, tags }: IroEventInfoLayoutModifyLinkRegionProps) => {
+export const IroEventInfoLayoutModifyLinkRegion = ({ captionModifyLink, layout, onModifyLinkRegion }: IroEventInfoLayoutModifyLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="modify_link_region"
-            tags={tags}
             onPointerTap={onModifyLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 88, top: 110, height: 18, justifyContent: 'center', ...layout }}
@@ -71,16 +67,14 @@ export interface IroEventInfoLayoutExtendEventRegionProps {
     captionModifyLink?: string;
     layout?: BoxLayout;
     onExtendEventRegion?: () => void;
-    tags?: string[];
 }
 
-export const IroEventInfoLayoutExtendEventRegion = ({ captionModifyLink, layout, onExtendEventRegion, tags }: IroEventInfoLayoutExtendEventRegionProps) => {
+export const IroEventInfoLayoutExtendEventRegion = ({ captionModifyLink, layout, onExtendEventRegion }: IroEventInfoLayoutExtendEventRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="extend_event_region"
-            tags={tags}
             onPointerTap={onExtendEventRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 88, width: 88, top: 110, height: 18, justifyContent: 'center', ...layout }}
@@ -109,16 +103,14 @@ export interface IroEventInfoLayoutContentContProps {
     layout?: BoxLayout;
     modifyLinkRegion?: IroEventInfoLayoutModifyLinkRegionProps;
     srcEventIcon?: string;
-    tags?: string[];
 }
 
-export const IroEventInfoLayoutContentCont = ({ captionCreateLink, captionDescTxt, captionGetEvent, captionHeaderTxt, captionInProgressTxt, extendEventRegion, layout, modifyLinkRegion, srcEventIcon, tags }: IroEventInfoLayoutContentContProps) => {
+export const IroEventInfoLayoutContentCont = ({ captionCreateLink, captionDescTxt, captionGetEvent, captionHeaderTxt, captionInProgressTxt, extendEventRegion, layout, modifyLinkRegion, srcEventIcon }: IroEventInfoLayoutContentContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="content_cont"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 135, justifyContent: 'center', ...layout }}
         >
@@ -186,14 +178,12 @@ export interface IroEventInfoLayoutEventInfoWindowProps {
     srcEventBgContracted?: string;
     srcEventBgOwner?: string;
     srcEventBgVisitor?: string;
-    tags?: string[];
 }
 
-export const IroEventInfoLayoutEventInfoWindow = ({ bgRegion, contentCont, layout, srcEventBgContracted, srcEventBgOwner, srcEventBgVisitor, tags }: IroEventInfoLayoutEventInfoWindowProps) => {
+export const IroEventInfoLayoutEventInfoWindow = ({ bgRegion, contentCont, layout, srcEventBgContracted, srcEventBgOwner, srcEventBgVisitor }: IroEventInfoLayoutEventInfoWindowProps) => {
     return (
         <Region
             name="event_info_window"
-            tags={tags}
             layout={{ position: 'absolute', right: 0, width: 195, top: 0, height: 135, ...layout }}
         >
             <ThemeImage

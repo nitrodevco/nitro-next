@@ -44,7 +44,6 @@ export const NewExtendedProfileLayout = ({ blockedContainer, bottomContainer, la
                     layout={{ position: 'absolute', left: 481, width: 24, top: 4, height: 24 }}
                 >
                     <ThemeImage
-                        tags={[ '#icon' ]}
                         src={layoutImage('extended_profile_block_icon.png')}
                         layout={{ position: 'absolute', left: 4, width: 16, top: 4, height: 16 }}
                     />
@@ -58,14 +57,12 @@ export const NewExtendedProfileLayout = ({ blockedContainer, bottomContainer, la
 /** Named region `avatar` of NewExtendedProfileLayout - configured through the parent's `avatar` prop. */
 export interface NewExtendedProfileLayoutAvatarProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutAvatar = ({ layout, tags }: NewExtendedProfileLayoutAvatarProps) => {
+export const NewExtendedProfileLayoutAvatar = ({ layout }: NewExtendedProfileLayoutAvatarProps) => {
     return (
         <Region
             name="avatar"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 56, top: 0, height: 113, ...layout }}
         >
             <WidgetSlot
@@ -82,16 +79,14 @@ export const NewExtendedProfileLayoutAvatar = ({ layout, tags }: NewExtendedProf
 export interface NewExtendedProfileLayoutUserNameItemProps {
     captionUserName?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutUserNameItem = ({ captionUserName, layout, tags }: NewExtendedProfileLayoutUserNameItemProps) => {
+export const NewExtendedProfileLayoutUserNameItem = ({ captionUserName, layout }: NewExtendedProfileLayoutUserNameItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_name"
-            tags={tags}
             layout={{ width: 141, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionUserName ?? t('extendedprofile.username')} />
@@ -103,14 +98,12 @@ export const NewExtendedProfileLayoutUserNameItem = ({ captionUserName, layout, 
 export interface NewExtendedProfileLayoutMottoTxtItemProps {
     captionMottoTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutMottoTxtItem = ({ captionMottoTxt, layout, tags }: NewExtendedProfileLayoutMottoTxtItemProps) => {
+export const NewExtendedProfileLayoutMottoTxtItem = ({ captionMottoTxt, layout }: NewExtendedProfileLayoutMottoTxtItemProps) => {
     return (
         <Region
             name="motto_txt"
-            tags={tags}
             layout={{ width: 200, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -126,16 +119,14 @@ export const NewExtendedProfileLayoutMottoTxtItem = ({ captionMottoTxt, layout, 
 export interface NewExtendedProfileLayoutUserCreatedItemProps {
     captionUserCreated?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutUserCreatedItem = ({ captionUserCreated, layout, tags }: NewExtendedProfileLayoutUserCreatedItemProps) => {
+export const NewExtendedProfileLayoutUserCreatedItem = ({ captionUserCreated, layout }: NewExtendedProfileLayoutUserCreatedItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_created"
-            tags={tags}
             layout={{ width: 129, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionUserCreated ?? t('extendedprofile.created')} />
@@ -147,16 +138,14 @@ export const NewExtendedProfileLayoutUserCreatedItem = ({ captionUserCreated, la
 export interface NewExtendedProfileLayoutUserActivityPointsItemProps {
     captionUserActivityPoints?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutUserActivityPointsItem = ({ captionUserActivityPoints, layout, tags }: NewExtendedProfileLayoutUserActivityPointsItemProps) => {
+export const NewExtendedProfileLayoutUserActivityPointsItem = ({ captionUserActivityPoints, layout }: NewExtendedProfileLayoutUserActivityPointsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_activity_points"
-            tags={tags}
             visible={false}
             layout={{ width: 161, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
@@ -169,16 +158,14 @@ export const NewExtendedProfileLayoutUserActivityPointsItem = ({ captionUserActi
 export interface NewExtendedProfileLayoutUserLastLoginItemProps {
     captionUserLastLogin?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutUserLastLoginItem = ({ captionUserLastLogin, layout, tags }: NewExtendedProfileLayoutUserLastLoginItemProps) => {
+export const NewExtendedProfileLayoutUserLastLoginItem = ({ captionUserLastLogin, layout }: NewExtendedProfileLayoutUserLastLoginItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="user_last_login"
-            tags={tags}
             layout={{ width: 137, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionUserLastLogin ?? t('extendedprofile.last.login')} />
@@ -192,14 +179,12 @@ export interface NewExtendedProfileLayoutOnlineOfflineContainerItemProps {
     srcHiddenIcon?: string;
     srcOfflineIcon?: string;
     srcOnlineIcon?: string;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutOnlineOfflineContainerItem = ({ layout, srcHiddenIcon, srcOfflineIcon, srcOnlineIcon, tags }: NewExtendedProfileLayoutOnlineOfflineContainerItemProps) => {
+export const NewExtendedProfileLayoutOnlineOfflineContainerItem = ({ layout, srcHiddenIcon, srcOfflineIcon, srcOnlineIcon }: NewExtendedProfileLayoutOnlineOfflineContainerItemProps) => {
     return (
         <Region
             name="online_offline_container"
-            tags={tags}
             layout={{ width: 40, height: 23, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -232,18 +217,16 @@ export interface NewExtendedProfileLayoutFriendstatusItemProps {
     captionStatusTxt?: string;
     layout?: BoxLayout;
     onAddasfriendButton?: () => void;
-    tags?: string[];
     visibleAddasfriendButton?: boolean;
     visibleOkIcon?: boolean;
 }
 
-export const NewExtendedProfileLayoutFriendstatusItem = ({ captionFriendRequestSentTxt, captionStatusTxt, layout, onAddasfriendButton, tags, visibleAddasfriendButton, visibleOkIcon }: NewExtendedProfileLayoutFriendstatusItemProps) => {
+export const NewExtendedProfileLayoutFriendstatusItem = ({ captionFriendRequestSentTxt, captionStatusTxt, layout, onAddasfriendButton, visibleAddasfriendButton, visibleOkIcon }: NewExtendedProfileLayoutFriendstatusItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="friendstatus"
-            tags={tags}
             layout={{ width: 140, height: 23, flexShrink: 0, maxWidth: 140, minHeight: 23, maxHeight: 23, ...layout }}
         >
             <Region
@@ -298,14 +281,12 @@ export const NewExtendedProfileLayoutFriendstatusItem = ({ captionFriendRequestS
 export interface NewExtendedProfileLayoutStatusItemProps {
     itemsStatus?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutStatusItem = ({ itemsStatus, layout, tags }: NewExtendedProfileLayoutStatusItemProps) => {
+export const NewExtendedProfileLayoutStatusItem = ({ itemsStatus, layout }: NewExtendedProfileLayoutStatusItemProps) => {
     return (
         <Region
             name="status"
-            tags={tags}
             layout={{ width: 198, height: 27, flexShrink: 0, flexDirection: 'row', gap: 5, ...layout }}
         >
             {itemsStatus ?? (
@@ -322,14 +303,12 @@ export const NewExtendedProfileLayoutStatusItem = ({ itemsStatus, layout, tags }
 export interface NewExtendedProfileLayoutUserInfoProps {
     itemsUserInfo?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutUserInfo = ({ itemsUserInfo, layout, tags }: NewExtendedProfileLayoutUserInfoProps) => {
+export const NewExtendedProfileLayoutUserInfo = ({ itemsUserInfo, layout }: NewExtendedProfileLayoutUserInfoProps) => {
     return (
         <Region
             name="user_info"
-            tags={tags}
             layout={{ position: 'absolute', left: 56, width: 200, top: -4, height: 118, flexDirection: 'column', ...layout }}
         >
             {itemsUserInfo ?? (
@@ -354,16 +333,14 @@ export interface NewExtendedProfileLayoutChangeOwnAttributesProps {
     layout?: BoxLayout;
     onChangeBadges?: () => void;
     onChangeLooks?: () => void;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutChangeOwnAttributes = ({ captionChangeBadges, captionChangeLooks, layout, onChangeBadges, onChangeLooks, tags }: NewExtendedProfileLayoutChangeOwnAttributesProps) => {
+export const NewExtendedProfileLayoutChangeOwnAttributes = ({ captionChangeBadges, captionChangeLooks, layout, onChangeBadges, onChangeLooks }: NewExtendedProfileLayoutChangeOwnAttributesProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="change_own_attributes"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 257, top: 117, height: 15, ...layout }}
         >
             <Region
@@ -397,15 +374,13 @@ export interface NewExtendedProfileLayoutTopLeftItemProps {
     avatar?: NewExtendedProfileLayoutAvatarProps;
     changeOwnAttributes?: NewExtendedProfileLayoutChangeOwnAttributesProps;
     layout?: BoxLayout;
-    tags?: string[];
     userInfo?: NewExtendedProfileLayoutUserInfoProps;
 }
 
-export const NewExtendedProfileLayoutTopLeftItem = ({ avatar, changeOwnAttributes, layout, tags, userInfo }: NewExtendedProfileLayoutTopLeftItemProps) => {
+export const NewExtendedProfileLayoutTopLeftItem = ({ avatar, changeOwnAttributes, layout, userInfo }: NewExtendedProfileLayoutTopLeftItemProps) => {
     return (
         <Region
             name="top_left"
-            tags={tags}
             layout={{ width: 257, height: 192, flexShrink: 0, ...layout }}
         >
             <NewExtendedProfileLayoutAvatar {...avatar} />
@@ -455,14 +430,12 @@ export const NewExtendedProfileLayoutTopLeftItem = ({ avatar, changeOwnAttribute
 /** Row template `spacer` of NewExtendedProfileLayout - pass real rows through its `items…` slot. */
 export interface NewExtendedProfileLayoutSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutSpacerItem = ({ layout, tags }: NewExtendedProfileLayoutSpacerItemProps) => {
+export const NewExtendedProfileLayoutSpacerItem = ({ layout }: NewExtendedProfileLayoutSpacerItemProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             backgroundColor="#afafaf"
             layout={{ width: 1, height: 192, flexShrink: 0, ...layout }}
         />
@@ -474,16 +447,14 @@ export interface NewExtendedProfileLayoutHeartFriendNameLinkRegionProps {
     captionHeartFriendNameLinkText?: string;
     layout?: BoxLayout;
     onHeartFriendNameLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutHeartFriendNameLinkRegion = ({ captionHeartFriendNameLinkText, layout, onHeartFriendNameLinkRegion, tags }: NewExtendedProfileLayoutHeartFriendNameLinkRegionProps) => {
+export const NewExtendedProfileLayoutHeartFriendNameLinkRegion = ({ captionHeartFriendNameLinkText, layout, onHeartFriendNameLinkRegion }: NewExtendedProfileLayoutHeartFriendNameLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="heart_friend_name_link_region"
-            tags={tags}
             onPointerTap={onHeartFriendNameLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 7, width: 160, top: 3, height: 16, maxWidth: 160, ...layout }}
@@ -503,16 +474,14 @@ export interface NewExtendedProfileLayoutRelationshipHeartItemProps {
     captionHeartTxt?: string;
     heartFriendNameLinkRegion?: NewExtendedProfileLayoutHeartFriendNameLinkRegionProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutRelationshipHeartItem = ({ captionHeartTxt, heartFriendNameLinkRegion, layout, tags }: NewExtendedProfileLayoutRelationshipHeartItemProps) => {
+export const NewExtendedProfileLayoutRelationshipHeartItem = ({ captionHeartTxt, heartFriendNameLinkRegion, layout }: NewExtendedProfileLayoutRelationshipHeartItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="relationship_heart"
-            tags={tags}
             layout={{ width: 227, height: 47, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -549,16 +518,14 @@ export interface NewExtendedProfileLayoutSmileFriendNameLinkRegionProps {
     captionSmileFriendNameLinkText?: string;
     layout?: BoxLayout;
     onSmileFriendNameLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutSmileFriendNameLinkRegion = ({ captionSmileFriendNameLinkText, layout, onSmileFriendNameLinkRegion, tags }: NewExtendedProfileLayoutSmileFriendNameLinkRegionProps) => {
+export const NewExtendedProfileLayoutSmileFriendNameLinkRegion = ({ captionSmileFriendNameLinkText, layout, onSmileFriendNameLinkRegion }: NewExtendedProfileLayoutSmileFriendNameLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="smile_friend_name_link_region"
-            tags={tags}
             onPointerTap={onSmileFriendNameLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 7, width: 160, top: 3, height: 16, maxWidth: 160, ...layout }}
@@ -578,16 +545,14 @@ export interface NewExtendedProfileLayoutRelationshipSmileItemProps {
     captionSmileTxt?: string;
     layout?: BoxLayout;
     smileFriendNameLinkRegion?: NewExtendedProfileLayoutSmileFriendNameLinkRegionProps;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutRelationshipSmileItem = ({ captionSmileTxt, layout, smileFriendNameLinkRegion, tags }: NewExtendedProfileLayoutRelationshipSmileItemProps) => {
+export const NewExtendedProfileLayoutRelationshipSmileItem = ({ captionSmileTxt, layout, smileFriendNameLinkRegion }: NewExtendedProfileLayoutRelationshipSmileItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="relationship_smile"
-            tags={tags}
             layout={{ width: 227, height: 47, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -624,16 +589,14 @@ export interface NewExtendedProfileLayoutBobbaFriendNameLinkRegionProps {
     captionBobbaFriendNameLinkText?: string;
     layout?: BoxLayout;
     onBobbaFriendNameLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutBobbaFriendNameLinkRegion = ({ captionBobbaFriendNameLinkText, layout, onBobbaFriendNameLinkRegion, tags }: NewExtendedProfileLayoutBobbaFriendNameLinkRegionProps) => {
+export const NewExtendedProfileLayoutBobbaFriendNameLinkRegion = ({ captionBobbaFriendNameLinkText, layout, onBobbaFriendNameLinkRegion }: NewExtendedProfileLayoutBobbaFriendNameLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bobba_friend_name_link_region"
-            tags={tags}
             onPointerTap={onBobbaFriendNameLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 7, width: 160, top: 3, height: 16, maxWidth: 160, ...layout }}
@@ -653,16 +616,14 @@ export interface NewExtendedProfileLayoutRelationshipBobbaItemProps {
     bobbaFriendNameLinkRegion?: NewExtendedProfileLayoutBobbaFriendNameLinkRegionProps;
     captionBobbaTxt?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutRelationshipBobbaItem = ({ bobbaFriendNameLinkRegion, captionBobbaTxt, layout, tags }: NewExtendedProfileLayoutRelationshipBobbaItemProps) => {
+export const NewExtendedProfileLayoutRelationshipBobbaItem = ({ bobbaFriendNameLinkRegion, captionBobbaTxt, layout }: NewExtendedProfileLayoutRelationshipBobbaItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="relationship_bobba"
-            tags={tags}
             layout={{ width: 227, height: 47, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -698,14 +659,12 @@ export const NewExtendedProfileLayoutRelationshipBobbaItem = ({ bobbaFriendNameL
 export interface NewExtendedProfileLayoutRelationshipsProps {
     itemsRelationships?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutRelationships = ({ itemsRelationships, layout, tags }: NewExtendedProfileLayoutRelationshipsProps) => {
+export const NewExtendedProfileLayoutRelationships = ({ itemsRelationships, layout }: NewExtendedProfileLayoutRelationshipsProps) => {
     return (
         <Region
             name="relationships"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 227, top: 39, height: 156, flexDirection: 'column', ...layout }}
         >
             {itemsRelationships ?? (
@@ -725,16 +684,14 @@ export interface NewExtendedProfileLayoutTopRightItemProps {
     captionRelStatusLabelTxt?: string;
     layout?: BoxLayout;
     relationships?: NewExtendedProfileLayoutRelationshipsProps;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutTopRightItem = ({ captionFriendCount, captionRelStatusLabelTxt, layout, relationships, tags }: NewExtendedProfileLayoutTopRightItemProps) => {
+export const NewExtendedProfileLayoutTopRightItem = ({ captionFriendCount, captionRelStatusLabelTxt, layout, relationships }: NewExtendedProfileLayoutTopRightItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="top_right"
-            tags={tags}
             layout={{ width: 226, height: 192, flexShrink: 0, ...layout }}
         >
             <Region
@@ -761,14 +718,12 @@ export const NewExtendedProfileLayoutTopRightItem = ({ captionFriendCount, capti
 export interface NewExtendedProfileLayoutTopProps {
     itemsTop?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutTop = ({ itemsTop, layout, tags }: NewExtendedProfileLayoutTopProps) => {
+export const NewExtendedProfileLayoutTop = ({ itemsTop, layout }: NewExtendedProfileLayoutTopProps) => {
     return (
         <Region
             name="top"
-            tags={tags}
             layout={{ width: 500, height: 207, flexShrink: 0, flexDirection: 'row', gap: 8, ...layout }}
         >
             {itemsTop ?? (
@@ -785,14 +740,12 @@ export const NewExtendedProfileLayoutTop = ({ itemsTop, layout, tags }: NewExten
 /** Named region `spacer` of NewExtendedProfileLayout - configured through the parent's `spacer` prop. */
 export interface NewExtendedProfileLayoutSpacerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutSpacer = ({ layout, tags }: NewExtendedProfileLayoutSpacerProps) => {
+export const NewExtendedProfileLayoutSpacer = ({ layout }: NewExtendedProfileLayoutSpacerProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             backgroundColor="#afafaf"
             layout={{ width: 512, height: 1, flexShrink: 0, ...layout }}
         />
@@ -802,14 +755,12 @@ export const NewExtendedProfileLayoutSpacer = ({ layout, tags }: NewExtendedProf
 /** Row template `spacer` of NewExtendedProfileLayout - pass real rows through its `items…` slot. */
 export interface NewExtendedProfileLayoutSpacerItem2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutSpacerItem2 = ({ layout, tags }: NewExtendedProfileLayoutSpacerItem2Props) => {
+export const NewExtendedProfileLayoutSpacerItem2 = ({ layout }: NewExtendedProfileLayoutSpacerItem2Props) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             backgroundColor="#afafaf"
             layout={{ width: 1, height: 39, flexShrink: 0, ...layout }}
         />
@@ -819,14 +770,12 @@ export const NewExtendedProfileLayoutSpacerItem2 = ({ layout, tags }: NewExtende
 /** Named region `spacer` of NewExtendedProfileLayout - configured through the parent's `spacer` prop. */
 export interface NewExtendedProfileLayoutSpacer2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutSpacer2 = ({ layout, tags }: NewExtendedProfileLayoutSpacer2Props) => {
+export const NewExtendedProfileLayoutSpacer2 = ({ layout }: NewExtendedProfileLayoutSpacer2Props) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             backgroundColor="#afafaf"
             layout={{ position: 'absolute', left: 165, width: 1, top: -6, height: 39, ...layout }}
         />
@@ -839,16 +788,14 @@ export interface NewExtendedProfileLayoutRoomsButtonItemProps {
     layout?: BoxLayout;
     onRoomsButton?: () => void;
     spacer?: NewExtendedProfileLayoutSpacer2Props;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutRoomsButtonItem = ({ captionRoomsLinkText, layout, onRoomsButton, spacer, tags }: NewExtendedProfileLayoutRoomsButtonItemProps) => {
+export const NewExtendedProfileLayoutRoomsButtonItem = ({ captionRoomsLinkText, layout, onRoomsButton, spacer }: NewExtendedProfileLayoutRoomsButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rooms_button"
-            tags={tags}
             onPointerTap={onRoomsButton}
             cursor="pointer"
             layout={{ width: 166, height: 30, flexShrink: 0, justifyContent: 'center', ...layout }}
@@ -876,14 +823,12 @@ export const NewExtendedProfileLayoutRoomsButtonItem = ({ captionRoomsLinkText, 
 /** Named region `spacer` of NewExtendedProfileLayout - configured through the parent's `spacer` prop. */
 export interface NewExtendedProfileLayoutSpacer3Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutSpacer3 = ({ layout, tags }: NewExtendedProfileLayoutSpacer3Props) => {
+export const NewExtendedProfileLayoutSpacer3 = ({ layout }: NewExtendedProfileLayoutSpacer3Props) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             backgroundColor="#afafaf"
             layout={{ position: 'absolute', left: 165, width: 1, top: -6, height: 39, ...layout }}
         />
@@ -898,16 +843,14 @@ export interface NewExtendedProfileLayoutBadgeCountRegionItemProps {
     layout?: BoxLayout;
     onBadgeCountRegion?: () => void;
     spacer?: NewExtendedProfileLayoutSpacer3Props;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutBadgeCountRegionItem = ({ captionBadgeCount, captionBadgeCountLabel, captionBadgeRank, layout, onBadgeCountRegion, spacer, tags }: NewExtendedProfileLayoutBadgeCountRegionItemProps) => {
+export const NewExtendedProfileLayoutBadgeCountRegionItem = ({ captionBadgeCount, captionBadgeCountLabel, captionBadgeRank, layout, onBadgeCountRegion, spacer }: NewExtendedProfileLayoutBadgeCountRegionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="badgeCountRegion"
-            tags={tags}
             onPointerTap={onBadgeCountRegion}
             cursor="pointer"
             layout={{ width: 166, height: 32, flexShrink: 0, justifyContent: 'center', ...layout }}
@@ -955,14 +898,12 @@ export const NewExtendedProfileLayoutBadgeCountRegionItem = ({ captionBadgeCount
 /** Named region `spacer` of NewExtendedProfileLayout - configured through the parent's `spacer` prop. */
 export interface NewExtendedProfileLayoutSpacer4Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutSpacer4 = ({ layout, tags }: NewExtendedProfileLayoutSpacer4Props) => {
+export const NewExtendedProfileLayoutSpacer4 = ({ layout }: NewExtendedProfileLayoutSpacer4Props) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             backgroundColor="#afafaf"
             layout={{ position: 'absolute', left: 166, width: 1, top: -6, height: 39, ...layout }}
         />
@@ -976,16 +917,14 @@ export interface NewExtendedProfileLayoutLevelRegionItemProps {
     layout?: BoxLayout;
     onLevelRegion?: () => void;
     spacer?: NewExtendedProfileLayoutSpacer4Props;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutLevelRegionItem = ({ captionLevelLabel, captionLevelValue, layout, onLevelRegion, spacer, tags }: NewExtendedProfileLayoutLevelRegionItemProps) => {
+export const NewExtendedProfileLayoutLevelRegionItem = ({ captionLevelLabel, captionLevelValue, layout, onLevelRegion, spacer }: NewExtendedProfileLayoutLevelRegionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="levelRegion"
-            tags={tags}
             onPointerTap={onLevelRegion}
             cursor="pointer"
             layout={{ width: 167, height: 30, flexShrink: 0, justifyContent: 'center', ...layout }}
@@ -1023,14 +962,12 @@ export const NewExtendedProfileLayoutLevelRegionItem = ({ captionLevelLabel, cap
 export interface NewExtendedProfileLayoutMiddleProps {
     itemsMiddle?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutMiddle = ({ itemsMiddle, layout, tags }: NewExtendedProfileLayoutMiddleProps) => {
+export const NewExtendedProfileLayoutMiddle = ({ itemsMiddle, layout }: NewExtendedProfileLayoutMiddleProps) => {
     return (
         <Region
             name="middle"
-            tags={tags}
             layout={{ width: 500, height: 27, flexShrink: 0, minWidth: 495, flexDirection: 'row', ...layout }}
         >
             {itemsMiddle ?? (
@@ -1048,14 +985,12 @@ export const NewExtendedProfileLayoutMiddle = ({ itemsMiddle, layout, tags }: Ne
 /** Named region `spacer` of NewExtendedProfileLayout - configured through the parent's `spacer` prop. */
 export interface NewExtendedProfileLayoutSpacer5Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutSpacer5 = ({ layout, tags }: NewExtendedProfileLayoutSpacer5Props) => {
+export const NewExtendedProfileLayoutSpacer5 = ({ layout }: NewExtendedProfileLayoutSpacer5Props) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             backgroundColor="#afafaf"
             layout={{ width: 512, height: 1, flexShrink: 0, ...layout }}
         />
@@ -1065,10 +1000,9 @@ export const NewExtendedProfileLayoutSpacer5 = ({ layout, tags }: NewExtendedPro
 /** Named region `groups_list` of NewExtendedProfileLayout - configured through the parent's `groupsList` prop. */
 export interface NewExtendedProfileLayoutGroupsListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutGroupsList = ({ layout, tags }: NewExtendedProfileLayoutGroupsListProps) => {
+export const NewExtendedProfileLayoutGroupsList = ({ layout }: NewExtendedProfileLayoutGroupsListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -1076,7 +1010,6 @@ export const NewExtendedProfileLayoutGroupsList = ({ layout, tags }: NewExtended
         >
             <Region
                 name="groups_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -1088,16 +1021,14 @@ export interface NewExtendedProfileLayoutAllGroupsItemProps {
     captionTotalGroupCount?: string;
     groupsList?: NewExtendedProfileLayoutGroupsListProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutAllGroupsItem = ({ captionTotalGroupCount, groupsList, layout, tags }: NewExtendedProfileLayoutAllGroupsItemProps) => {
+export const NewExtendedProfileLayoutAllGroupsItem = ({ captionTotalGroupCount, groupsList, layout }: NewExtendedProfileLayoutAllGroupsItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="all_groups"
-            tags={tags}
             layout={{ width: 83, height: 227, flexShrink: 0, ...layout }}
         >
             <Region
@@ -1114,14 +1045,12 @@ export const NewExtendedProfileLayoutAllGroupsItem = ({ captionTotalGroupCount, 
 /** Named region `group_cont` of NewExtendedProfileLayout - configured through the parent's `groupCont` prop. */
 export interface NewExtendedProfileLayoutGroupContProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutGroupCont = ({ layout, tags }: NewExtendedProfileLayoutGroupContProps) => {
+export const NewExtendedProfileLayoutGroupCont = ({ layout }: NewExtendedProfileLayoutGroupContProps) => {
     return (
         <Region
             name="group_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 33, width: 343, top: 5, height: 214, ...layout }}
         />
     );
@@ -1131,15 +1060,13 @@ export const NewExtendedProfileLayoutGroupCont = ({ layout, tags }: NewExtendedP
 export interface NewExtendedProfileLayoutGroupDetailsItemProps {
     groupCont?: NewExtendedProfileLayoutGroupContProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutGroupDetailsItem = ({ groupCont, layout, tags }: NewExtendedProfileLayoutGroupDetailsItemProps) => {
+export const NewExtendedProfileLayoutGroupDetailsItem = ({ groupCont, layout }: NewExtendedProfileLayoutGroupDetailsItemProps) => {
     return (
         <Border
             variant="2"
             name="group_details"
-            tags={tags}
             tintColor="#afafaf"
             layout={{ width: 410, height: 224, flexShrink: 0, ...layout }}
         >
@@ -1152,14 +1079,12 @@ export const NewExtendedProfileLayoutGroupDetailsItem = ({ groupCont, layout, ta
 export interface NewExtendedProfileLayoutBottomProps {
     itemsBottom?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutBottom = ({ itemsBottom, layout, tags }: NewExtendedProfileLayoutBottomProps) => {
+export const NewExtendedProfileLayoutBottom = ({ itemsBottom, layout }: NewExtendedProfileLayoutBottomProps) => {
     return (
         <Region
             name="bottom"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 236, flexDirection: 'row', gap: 6, ...layout }}
         >
             {itemsBottom ?? (
@@ -1176,16 +1101,14 @@ export const NewExtendedProfileLayoutBottom = ({ itemsBottom, layout, tags }: Ne
 export interface NewExtendedProfileLayoutBottomContainerProps {
     bottom?: NewExtendedProfileLayoutBottomProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutBottomContainer = ({ bottom, layout, tags }: NewExtendedProfileLayoutBottomContainerProps) => {
+export const NewExtendedProfileLayoutBottomContainer = ({ bottom, layout }: NewExtendedProfileLayoutBottomContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="bottom_container"
-            tags={tags}
             layout={{ width: 500, height: 236, flexShrink: 0, ...layout }}
         >
             <NewExtendedProfileLayoutBottom {...bottom} />
@@ -1209,14 +1132,12 @@ export const NewExtendedProfileLayoutBottomContainer = ({ bottom, layout, tags }
 /** Named region `blocked_bg` of NewExtendedProfileLayout - configured through the parent's `blockedBg` prop. */
 export interface NewExtendedProfileLayoutBlockedBgProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutBlockedBg = ({ layout, tags }: NewExtendedProfileLayoutBlockedBgProps) => {
+export const NewExtendedProfileLayoutBlockedBg = ({ layout }: NewExtendedProfileLayoutBlockedBgProps) => {
     return (
         <Region
             name="blocked_bg"
-            tags={tags}
             backgroundColor="#898985"
             layout={{ position: 'absolute', left: 0, width: 519, top: 0, height: 497, ...layout }}
         />
@@ -1226,14 +1147,12 @@ export const NewExtendedProfileLayoutBlockedBg = ({ layout, tags }: NewExtendedP
 /** Named region `blocked_bg` of NewExtendedProfileLayout - configured through the parent's `blockedBg` prop. */
 export interface NewExtendedProfileLayoutBlockedBg2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutBlockedBg2 = ({ layout, tags }: NewExtendedProfileLayoutBlockedBg2Props) => {
+export const NewExtendedProfileLayoutBlockedBg2 = ({ layout }: NewExtendedProfileLayoutBlockedBg2Props) => {
     return (
         <Region
             name="blocked_bg"
-            tags={tags}
             backgroundColor="#898985"
             layout={{ position: 'absolute', left: 1, width: 517, top: 497, height: 2, ...layout }}
         />
@@ -1243,14 +1162,12 @@ export const NewExtendedProfileLayoutBlockedBg2 = ({ layout, tags }: NewExtended
 /** Named region `blocked_bg` of NewExtendedProfileLayout - configured through the parent's `blockedBg` prop. */
 export interface NewExtendedProfileLayoutBlockedBg3Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutBlockedBg3 = ({ layout, tags }: NewExtendedProfileLayoutBlockedBg3Props) => {
+export const NewExtendedProfileLayoutBlockedBg3 = ({ layout }: NewExtendedProfileLayoutBlockedBg3Props) => {
     return (
         <Region
             name="blocked_bg"
-            tags={tags}
             backgroundColor="#898985"
             layout={{ position: 'absolute', left: 2, width: 515, top: 499, height: 1, ...layout }}
         />
@@ -1260,14 +1177,12 @@ export const NewExtendedProfileLayoutBlockedBg3 = ({ layout, tags }: NewExtended
 /** Named region `blocked_bg` of NewExtendedProfileLayout - configured through the parent's `blockedBg` prop. */
 export interface NewExtendedProfileLayoutBlockedBg4Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutBlockedBg4 = ({ layout, tags }: NewExtendedProfileLayoutBlockedBg4Props) => {
+export const NewExtendedProfileLayoutBlockedBg4 = ({ layout }: NewExtendedProfileLayoutBlockedBg4Props) => {
     return (
         <Region
             name="blocked_bg"
-            tags={tags}
             backgroundColor="#898985"
             layout={{ position: 'absolute', left: 3, width: 513, top: 500, height: 1, ...layout }}
         />
@@ -1277,14 +1192,12 @@ export const NewExtendedProfileLayoutBlockedBg4 = ({ layout, tags }: NewExtended
 /** Named region `blocked_bg` of NewExtendedProfileLayout - configured through the parent's `blockedBg` prop. */
 export interface NewExtendedProfileLayoutBlockedBg5Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NewExtendedProfileLayoutBlockedBg5 = ({ layout, tags }: NewExtendedProfileLayoutBlockedBg5Props) => {
+export const NewExtendedProfileLayoutBlockedBg5 = ({ layout }: NewExtendedProfileLayoutBlockedBg5Props) => {
     return (
         <Region
             name="blocked_bg"
-            tags={tags}
             backgroundColor="#898985"
             layout={{ position: 'absolute', left: 5, width: 509, top: 501, height: 1, ...layout }}
         />
@@ -1302,17 +1215,15 @@ export interface NewExtendedProfileLayoutBlockedContainerProps {
     layout?: BoxLayout;
     onBlockedContainer?: () => void;
     srcFrankStop?: string;
-    tags?: string[];
     visibleBlockedContainer?: boolean;
 }
 
-export const NewExtendedProfileLayoutBlockedContainer = ({ blockedBg, blockedBg2, blockedBg3, blockedBg4, blockedBg5, captionBlockedHtml, layout, onBlockedContainer, srcFrankStop, tags, visibleBlockedContainer }: NewExtendedProfileLayoutBlockedContainerProps) => {
+export const NewExtendedProfileLayoutBlockedContainer = ({ blockedBg, blockedBg2, blockedBg3, blockedBg4, blockedBg5, captionBlockedHtml, layout, onBlockedContainer, srcFrankStop, visibleBlockedContainer }: NewExtendedProfileLayoutBlockedContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="blocked_container"
-            tags={tags}
             visible={visibleBlockedContainer ?? false}
             onPointerTap={onBlockedContainer}
             cursor="pointer"

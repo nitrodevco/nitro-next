@@ -32,14 +32,12 @@ export const DoorbellListEntryLayout = ({ accept, captionUserName, deny, layout 
 export interface DoorbellListEntryLayoutAcceptProps {
     layout?: BoxLayout;
     onAccept?: () => void;
-    tags?: string[];
 }
 
-export const DoorbellListEntryLayoutAccept = ({ layout, onAccept, tags }: DoorbellListEntryLayoutAcceptProps) => {
+export const DoorbellListEntryLayoutAccept = ({ layout, onAccept }: DoorbellListEntryLayoutAcceptProps) => {
     return (
         <Region
             name="accept"
-            tags={tags}
             onPointerTap={onAccept}
             cursor="pointer"
             layout={{ position: 'absolute', left: 155, width: 18, top: 4, height: 15, ...layout }}
@@ -57,14 +55,12 @@ export const DoorbellListEntryLayoutAccept = ({ layout, onAccept, tags }: Doorbe
 export interface DoorbellListEntryLayoutDenyProps {
     layout?: BoxLayout;
     onDeny?: () => void;
-    tags?: string[];
 }
 
-export const DoorbellListEntryLayoutDeny = ({ layout, onDeny, tags }: DoorbellListEntryLayoutDenyProps) => {
+export const DoorbellListEntryLayoutDeny = ({ layout, onDeny }: DoorbellListEntryLayoutDenyProps) => {
     return (
         <Region
             name="deny"
-            tags={tags}
             onPointerTap={onDeny}
             cursor="pointer"
             layout={{ position: 'absolute', left: 180, width: 15, top: 4, height: 13, ...layout }}

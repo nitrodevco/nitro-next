@@ -2,8 +2,8 @@ import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 import { ColourGridWidget, ColourGridWidgetProps } from '#base/views/layouts/catalog/widgets/ColourGridWidget';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
-import { TextInputWidget3, TextInputWidget3Props } from '#base/views/layouts/catalog/widgets/TextInputWidget3';
-import { TrophyWidget2, TrophyWidget2Props } from '#base/views/layouts/catalog/widgets/TrophyWidget2';
+import { TextInputWidget, TextInputWidgetProps } from '#base/views/layouts/catalog/widgets/TextInputWidget';
+import { TrophyWidget, TrophyWidgetProps } from '#base/views/layouts/catalog/widgets/TrophyWidget';
 
 /** Generated from `1695_layout_trophies_xml` (layout "ctlg_trophies", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutTrophies_1695LayoutProps {
@@ -26,18 +26,16 @@ export interface LayoutTrophies_1695LayoutCtlgTrophiesProps {
     colourGridWidget?: ColourGridWidgetProps;
     layout?: BoxLayout;
     purchaseWidget?: PurchaseWidgetProps;
-    tags?: string[];
-    textInputWidget?: TextInputWidget3Props;
-    trophyWidget?: TrophyWidget2Props;
+    textInputWidget?: TextInputWidgetProps;
+    trophyWidget?: TrophyWidgetProps;
 }
 
-export const LayoutTrophies_1695LayoutCtlgTrophies = ({ captionTrophyDescription, captionTrophyEnscription, colourGridWidget, layout, purchaseWidget, tags, textInputWidget, trophyWidget }: LayoutTrophies_1695LayoutCtlgTrophiesProps) => {
+export const LayoutTrophies_1695LayoutCtlgTrophies = ({ captionTrophyDescription, captionTrophyEnscription, colourGridWidget, layout, purchaseWidget, textInputWidget, trophyWidget }: LayoutTrophies_1695LayoutCtlgTrophiesProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_trophies"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
         >
             <Region
@@ -49,8 +47,7 @@ export const LayoutTrophies_1695LayoutCtlgTrophies = ({ captionTrophyDescription
                     textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
                 />
             </Region>
-            <TrophyWidget2
-                tags={[ 'EMBEDDED' ]}
+            <TrophyWidget
                 layout={{ position: 'absolute', left: 0, width: 360, top: 165, height: 127 }}
                 {...trophyWidget}
             />
@@ -72,7 +69,7 @@ export const LayoutTrophies_1695LayoutCtlgTrophies = ({ captionTrophyDescription
                 variant="5"
                 layout={{ position: 'absolute', left: 0, width: 360, top: 355, height: 70 }}
             >
-                <TextInputWidget3
+                <TextInputWidget
                     layout={{ position: 'absolute', left: 6, width: 349, top: 7, height: 58 }}
                     {...textInputWidget}
                 />

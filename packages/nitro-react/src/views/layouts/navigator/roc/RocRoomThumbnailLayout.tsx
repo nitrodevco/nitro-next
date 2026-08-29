@@ -23,14 +23,12 @@ export interface RocRoomThumbnailLayoutThumbnailProps {
     srcSelectArrow?: string;
     srcTileIconBlack?: string;
     srcTileIconWhite?: string;
-    tags?: string[];
 }
 
-export const RocRoomThumbnailLayoutThumbnail = ({ captionTileSizeTxt, layout, onThumbnail, srcBgPic, srcSelectArrow, srcTileIconBlack, srcTileIconWhite, tags }: RocRoomThumbnailLayoutThumbnailProps) => {
+export const RocRoomThumbnailLayoutThumbnail = ({ captionTileSizeTxt, layout, onThumbnail, srcBgPic, srcSelectArrow, srcTileIconBlack, srcTileIconWhite }: RocRoomThumbnailLayoutThumbnailProps) => {
     return (
         <Region
             name="thumbnail"
-            tags={tags}
             onPointerTap={onThumbnail}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 99, ...layout }}

@@ -18,14 +18,12 @@ export const SimpleLayout = ({ frame, layout }: SimpleLayoutProps) => {
 export interface SimpleLayoutContentAreaProps {
     layout?: BoxLayout;
     onContentArea?: () => void;
-    tags?: string[];
 }
 
-export const SimpleLayoutContentArea = ({ layout, onContentArea, tags }: SimpleLayoutContentAreaProps) => {
+export const SimpleLayoutContentArea = ({ layout, onContentArea }: SimpleLayoutContentAreaProps) => {
     return (
         <Region
             name="content_area"
-            tags={tags}
             onPointerTap={onContentArea}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 10, ...layout }}
@@ -38,14 +36,12 @@ export interface SimpleLayoutFrameProps {
     contentArea?: SimpleLayoutContentAreaProps;
     layout?: BoxLayout;
     onFrame?: () => void;
-    tags?: string[];
 }
 
-export const SimpleLayoutFrame = ({ contentArea, layout, onFrame, tags }: SimpleLayoutFrameProps) => {
+export const SimpleLayoutFrame = ({ contentArea, layout, onFrame }: SimpleLayoutFrameProps) => {
     return (
         <Region
             name="frame"
-            tags={tags}
             onPointerTap={onFrame}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}

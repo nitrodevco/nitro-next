@@ -22,14 +22,12 @@ export const FurniChestContentsLayout = ({ furniChest, layout }: FurniChestConte
 export interface FurniChestContentsLayoutClearSearchButtonProps {
     layout?: BoxLayout;
     onClearSearchButton?: () => void;
-    tags?: string[];
 }
 
-export const FurniChestContentsLayoutClearSearchButton = ({ layout, onClearSearchButton, tags }: FurniChestContentsLayoutClearSearchButtonProps) => {
+export const FurniChestContentsLayoutClearSearchButton = ({ layout, onClearSearchButton }: FurniChestContentsLayoutClearSearchButtonProps) => {
     return (
         <Region
             name="clear_search_button"
-            tags={tags}
             onPointerTap={onClearSearchButton}
             cursor="pointer"
             layout={{ position: 'absolute', right: 3, width: 20, top: 2, height: 20, ...layout }}
@@ -46,14 +44,12 @@ export const FurniChestContentsLayoutClearSearchButton = ({ layout, onClearSearc
 export interface FurniChestContentsLayoutNumberContainerInnerBorderProps {
     captionFurniQuantity?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniChestContentsLayoutNumberContainerInnerBorder = ({ captionFurniQuantity, layout, tags }: FurniChestContentsLayoutNumberContainerInnerBorderProps) => {
+export const FurniChestContentsLayoutNumberContainerInnerBorder = ({ captionFurniQuantity, layout }: FurniChestContentsLayoutNumberContainerInnerBorderProps) => {
     return (
         <Region
             name="number_container_inner_border"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14, ...layout }}
         >
@@ -75,15 +71,13 @@ export const FurniChestContentsLayoutNumberContainerInnerBorder = ({ captionFurn
 export interface FurniChestContentsLayoutNumberContainerProps {
     layout?: BoxLayout;
     numberContainerInnerBorder?: FurniChestContentsLayoutNumberContainerInnerBorderProps;
-    tags?: string[];
     visibleNumberContainer?: boolean;
 }
 
-export const FurniChestContentsLayoutNumberContainer = ({ layout, numberContainerInnerBorder, tags, visibleNumberContainer }: FurniChestContentsLayoutNumberContainerProps) => {
+export const FurniChestContentsLayoutNumberContainer = ({ layout, numberContainerInnerBorder, visibleNumberContainer }: FurniChestContentsLayoutNumberContainerProps) => {
     return (
         <Region
             name="number_container"
-            tags={tags}
             visible={visibleNumberContainer ?? false}
             backgroundColor="#2f6982"
             layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16, ...layout }}
@@ -100,14 +94,12 @@ export interface FurniChestContentsLayoutFurniTemplateItemProps {
     onFurniTemplate?: () => void;
     srcOutlineFocus?: string;
     srcUniqueItemBackgroundBitmap?: string;
-    tags?: string[];
 }
 
-export const FurniChestContentsLayoutFurniTemplateItem = ({ layout, numberContainer, onFurniTemplate, srcOutlineFocus, srcUniqueItemBackgroundBitmap, tags }: FurniChestContentsLayoutFurniTemplateItemProps) => {
+export const FurniChestContentsLayoutFurniTemplateItem = ({ layout, numberContainer, onFurniTemplate, srcOutlineFocus, srcUniqueItemBackgroundBitmap }: FurniChestContentsLayoutFurniTemplateItemProps) => {
     return (
         <Region
             name="furni_template"
-            tags={tags}
             onPointerTap={onFurniTemplate}
             cursor="pointer"
             layout={{ width: 42, height: 42, flexShrink: 0, ...layout }}
@@ -160,10 +152,9 @@ export const FurniChestContentsLayoutFurniTemplateItem = ({ layout, numberContai
 export interface FurniChestContentsLayoutGridItemsProps {
     itemsGridItems?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniChestContentsLayoutGridItems = ({ itemsGridItems, layout, tags }: FurniChestContentsLayoutGridItemsProps) => {
+export const FurniChestContentsLayoutGridItems = ({ itemsGridItems, layout }: FurniChestContentsLayoutGridItemsProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -171,7 +162,6 @@ export const FurniChestContentsLayoutGridItems = ({ itemsGridItems, layout, tags
         >
             <Region
                 name="grid_items"
-                tags={tags}
                 layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 3, width: '100%' }}
             >
                 {itemsGridItems ?? (
@@ -185,14 +175,12 @@ export const FurniChestContentsLayoutGridItems = ({ itemsGridItems, layout, tags
 /** Named region `stretching_preview_image_container` of FurniChestContentsLayout - configured through the parent's `stretchingPreviewImageContainer` prop. */
 export interface FurniChestContentsLayoutStretchingPreviewImageContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniChestContentsLayoutStretchingPreviewImageContainer = ({ layout, tags }: FurniChestContentsLayoutStretchingPreviewImageContainerProps) => {
+export const FurniChestContentsLayoutStretchingPreviewImageContainer = ({ layout }: FurniChestContentsLayoutStretchingPreviewImageContainerProps) => {
     return (
         <Region
             name="stretching_preview_image_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 26, bottom: 0, ...layout }}
         >
             <WidgetSlot
@@ -225,17 +213,15 @@ export const FurniChestContentsLayoutWithdrawInputItem = ({ layout }: FurniChest
 export interface FurniChestContentsLayoutWithdrawBtnItemProps {
     layout?: BoxLayout;
     onWithdrawBtn?: () => void;
-    tags?: string[];
 }
 
-export const FurniChestContentsLayoutWithdrawBtnItem = ({ layout, onWithdrawBtn, tags }: FurniChestContentsLayoutWithdrawBtnItemProps) => {
+export const FurniChestContentsLayoutWithdrawBtnItem = ({ layout, onWithdrawBtn }: FurniChestContentsLayoutWithdrawBtnItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="3"
             name="withdraw_btn"
-            tags={tags}
             onPointerTap={onWithdrawBtn}
             layout={{ width: 73, height: 22, flexShrink: 0, minWidth: 60, ...layout }}
         >
@@ -248,14 +234,12 @@ export const FurniChestContentsLayoutWithdrawBtnItem = ({ layout, onWithdrawBtn,
 export interface FurniChestContentsLayoutWithdrawContProps {
     itemsWithdrawCont?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const FurniChestContentsLayoutWithdrawCont = ({ itemsWithdrawCont, layout, tags }: FurniChestContentsLayoutWithdrawContProps) => {
+export const FurniChestContentsLayoutWithdrawCont = ({ itemsWithdrawCont, layout }: FurniChestContentsLayoutWithdrawContProps) => {
     return (
         <Region
             name="withdraw_cont"
-            tags={tags}
             layout={{ position: 'absolute', right: 0, top: 9, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsWithdrawCont ?? (
@@ -272,18 +256,16 @@ export const FurniChestContentsLayoutWithdrawCont = ({ itemsWithdrawCont, layout
 export interface FurniChestContentsLayoutOptionsProps {
     layout?: BoxLayout;
     onViewLogsByFurniBtn?: () => void;
-    tags?: string[];
     visibleViewLogsByFurniBtn?: boolean;
     withdrawCont?: FurniChestContentsLayoutWithdrawContProps;
 }
 
-export const FurniChestContentsLayoutOptions = ({ layout, onViewLogsByFurniBtn, tags, visibleViewLogsByFurniBtn, withdrawCont }: FurniChestContentsLayoutOptionsProps) => {
+export const FurniChestContentsLayoutOptions = ({ layout, onViewLogsByFurniBtn, visibleViewLogsByFurniBtn, withdrawCont }: FurniChestContentsLayoutOptionsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="options"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, bottom: -31, height: 62, ...layout }}
         >
             <FurniChestContentsLayoutWithdrawCont {...withdrawCont} />
@@ -311,14 +293,12 @@ export interface FurniChestContentsLayoutRightPanelProps {
     options?: FurniChestContentsLayoutOptionsProps;
     srcPlaceholderPreviewImage?: string;
     stretchingPreviewImageContainer?: FurniChestContentsLayoutStretchingPreviewImageContainerProps;
-    tags?: string[];
 }
 
-export const FurniChestContentsLayoutRightPanel = ({ captionFurniName, layout, options, srcPlaceholderPreviewImage, stretchingPreviewImageContainer, tags }: FurniChestContentsLayoutRightPanelProps) => {
+export const FurniChestContentsLayoutRightPanel = ({ captionFurniName, layout, options, srcPlaceholderPreviewImage, stretchingPreviewImageContainer }: FurniChestContentsLayoutRightPanelProps) => {
     return (
         <Region
             name="right_panel"
-            tags={tags}
             layout={{ position: 'absolute', right: 9, width: 175, top: 11, bottom: 11, ...layout }}
         >
             <Border
@@ -328,7 +308,6 @@ export const FurniChestContentsLayoutRightPanel = ({ captionFurniName, layout, o
             >
                 <Region
                     name="furni_name"
-                    tags={[ 'furni_name' ]}
                     layout={{ position: 'absolute', left: 5, right: -20, top: 5, height: 17, minWidth: 190, maxWidth: 190, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
@@ -361,18 +340,16 @@ export interface FurniChestContentsLayoutFurniChestProps {
     gridItems?: FurniChestContentsLayoutGridItemsProps;
     layout?: BoxLayout;
     rightPanel?: FurniChestContentsLayoutRightPanelProps;
-    tags?: string[];
     visibleSearchBorder?: boolean;
 }
 
-export const FurniChestContentsLayoutFurniChest = ({ captionNoItemsText, captionSearchPlaceholder, clearSearchButton, gridItems, layout, rightPanel, tags, visibleSearchBorder }: FurniChestContentsLayoutFurniChestProps) => {
+export const FurniChestContentsLayoutFurniChest = ({ captionNoItemsText, captionSearchPlaceholder, clearSearchButton, gridItems, layout, rightPanel, visibleSearchBorder }: FurniChestContentsLayoutFurniChestProps) => {
     const t = useTranslation();
     const [ searchInputValue, setSearchInputValue ] = useState('');
 
     return (
         <Region
             name="furni_chest"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 458, top: 0, height: 264, ...layout }}
         >
             <Border

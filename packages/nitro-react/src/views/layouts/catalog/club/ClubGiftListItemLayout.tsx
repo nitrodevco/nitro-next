@@ -73,14 +73,12 @@ export interface ClubGiftListItemLayoutImageContainerProps {
     captionMultiCounter?: string;
     layout?: BoxLayout;
     srcImage?: string;
-    tags?: string[];
 }
 
-export const ClubGiftListItemLayoutImageContainer = ({ captionBundleCounter, captionMultiCounter, layout, srcImage, tags }: ClubGiftListItemLayoutImageContainerProps) => {
+export const ClubGiftListItemLayoutImageContainer = ({ captionBundleCounter, captionMultiCounter, layout, srcImage }: ClubGiftListItemLayoutImageContainerProps) => {
     return (
         <Region
             name="image_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 52, top: 6, height: 46, ...layout }}
         >
             <ThemeImage

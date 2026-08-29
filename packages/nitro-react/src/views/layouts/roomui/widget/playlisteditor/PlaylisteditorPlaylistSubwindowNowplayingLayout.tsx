@@ -25,22 +25,19 @@ export interface PlaylisteditorPlaylistSubwindowNowplayingLayoutNowPlayingContai
     srcAuthorNameIconBitmap?: string;
     srcPauseImage?: string;
     srcSongNameIconBitmap?: string;
-    tags?: string[];
 }
 
-export const PlaylisteditorPlaylistSubwindowNowplayingLayoutNowPlayingContainer = ({ captionNowPlayingAuthorName, captionNowPlayingTrackName, layout, onButtonPause, srcAuthorNameIconBitmap, srcPauseImage, srcSongNameIconBitmap, tags }: PlaylisteditorPlaylistSubwindowNowplayingLayoutNowPlayingContainerProps) => {
+export const PlaylisteditorPlaylistSubwindowNowplayingLayoutNowPlayingContainer = ({ captionNowPlayingAuthorName, captionNowPlayingTrackName, layout, onButtonPause, srcAuthorNameIconBitmap, srcPauseImage, srcSongNameIconBitmap }: PlaylisteditorPlaylistSubwindowNowplayingLayoutNowPlayingContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="now_playing_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 261, top: 0, height: 56, ...layout }}
         >
             <ContainerButton
                 variant="2"
                 name="button_pause"
-                tags={[ 'PAUSE_PLAYBACK' ]}
                 tintColor="#cc0000"
                 onPointerTap={onButtonPause}
                 layout={{ position: 'absolute', left: 8, width: 46, top: 3, height: 46 }}
@@ -59,14 +56,12 @@ export const PlaylisteditorPlaylistSubwindowNowplayingLayoutNowPlayingContainer 
             </Region>
             <Region
                 name="now_playing_track_name"
-                tags={[ 'SONG_NAME' ]}
                 layout={{ position: 'absolute', left: 82, width: 69, top: 19, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionNowPlayingTrackName ?? 'Song Name'} />
             </Region>
             <Region
                 name="now_playing_author_name"
-                tags={[ 'AUTHOR_NAME' ]}
                 layout={{ position: 'absolute', left: 82, width: 63, top: 35, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionNowPlayingAuthorName ?? 'Author Name'} />

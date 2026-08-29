@@ -90,14 +90,12 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, layout,
 /** Named region `line` of CustomWordFilterSettingsLayout - configured through the parent's `line` prop. */
 export interface CustomWordFilterSettingsLayoutLineProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CustomWordFilterSettingsLayoutLine = ({ layout, tags }: CustomWordFilterSettingsLayoutLineProps) => {
+export const CustomWordFilterSettingsLayoutLine = ({ layout }: CustomWordFilterSettingsLayoutLineProps) => {
     return (
         <Region
             name="line"
-            tags={tags}
             backgroundColor="#2f2f2f"
             layout={{ position: 'absolute', width: 162, top: 24, height: 1, ...layout }}
         />
@@ -108,14 +106,12 @@ export const CustomWordFilterSettingsLayoutLine = ({ layout, tags }: CustomWordF
 export interface CustomWordFilterSettingsLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
-    tags?: string[];
 }
 
-export const CustomWordFilterSettingsLayoutBgRegion = ({ layout, onBgRegion, tags }: CustomWordFilterSettingsLayoutBgRegionProps) => {
+export const CustomWordFilterSettingsLayoutBgRegion = ({ layout, onBgRegion }: CustomWordFilterSettingsLayoutBgRegionProps) => {
     return (
         <Region
             name="bg_region"
-            tags={tags}
             onPointerTap={onBgRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 222, top: 0, height: 18, ...layout }}
@@ -128,15 +124,13 @@ export interface CustomWordFilterSettingsLayoutWordFilterListItemItemProps {
     bgRegion?: CustomWordFilterSettingsLayoutBgRegionProps;
     captionText?: string;
     layout?: BoxLayout;
-    tags?: string[];
     visibleWordFilterListItem?: boolean;
 }
 
-export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ bgRegion, captionText, layout, tags, visibleWordFilterListItem }: CustomWordFilterSettingsLayoutWordFilterListItemItemProps) => {
+export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ bgRegion, captionText, layout, visibleWordFilterListItem }: CustomWordFilterSettingsLayoutWordFilterListItemItemProps) => {
     return (
         <Region
             name="word_filter_list_item"
-            tags={tags}
             visible={visibleWordFilterListItem ?? false}
             backgroundColor="#ff00ff"
             layout={{ width: 213, height: 18, flexShrink: 0, ...layout }}
@@ -156,10 +150,9 @@ export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ bgRegion,
 export interface CustomWordFilterSettingsLayoutWordlistProps {
     itemsWordlist?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CustomWordFilterSettingsLayoutWordlist = ({ itemsWordlist, layout, tags }: CustomWordFilterSettingsLayoutWordlistProps) => {
+export const CustomWordFilterSettingsLayoutWordlist = ({ itemsWordlist, layout }: CustomWordFilterSettingsLayoutWordlistProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -167,7 +160,6 @@ export const CustomWordFilterSettingsLayoutWordlist = ({ itemsWordlist, layout, 
         >
             <Region
                 name="wordlist"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsWordlist ?? (

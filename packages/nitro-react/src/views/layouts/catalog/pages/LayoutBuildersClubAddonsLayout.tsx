@@ -20,14 +20,12 @@ export interface LayoutBuildersClubAddonsLayoutCtlgBuildersClubAddonsProps {
     builderAddonsWidget?: BuilderAddonsWidgetProps;
     captionCtlgDescription?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LayoutBuildersClubAddonsLayoutCtlgBuildersClubAddons = ({ builderAddonsWidget, captionCtlgDescription, layout, tags }: LayoutBuildersClubAddonsLayoutCtlgBuildersClubAddonsProps) => {
+export const LayoutBuildersClubAddonsLayoutCtlgBuildersClubAddons = ({ builderAddonsWidget, captionCtlgDescription, layout }: LayoutBuildersClubAddonsLayoutCtlgBuildersClubAddonsProps) => {
     return (
         <Region
             name="ctlg_builders_club_addons"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
             <Region

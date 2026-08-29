@@ -13,7 +13,6 @@ export const DropmenuLayout = ({ captionDROPLISTTITLETEXT, dROPLISTITEMLIST, dRO
         <Region layout={{ position: 'relative', width: 40, height: 22, ...layout }}>
             <Region
                 name="_DROPLIST_TITLETEXT"
-                tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
                 layout={{ position: 'absolute', left: 10, right: 20, top: 4, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -21,14 +20,8 @@ export const DropmenuLayout = ({ captionDROPLISTTITLETEXT, dROPLISTITEMLIST, dRO
                     textStyle="text-style-regular"
                 />
             </Region>
-            <DropmenuLayoutDROPLISTITEMLIST
-                tags={[ '_EXCLUDE', 'list' ]}
-                {...dROPLISTITEMLIST}
-            />
-            <DropmenuLayoutDROPLISTREGION
-                tags={[ '_EXCLUDE', '_INTERNAL' ]}
-                {...dROPLISTREGION}
-            />
+            <DropmenuLayoutDROPLISTITEMLIST {...dROPLISTITEMLIST} />
+            <DropmenuLayoutDROPLISTREGION {...dROPLISTREGION} />
         </Region>
     );
 };
@@ -36,10 +29,9 @@ export const DropmenuLayout = ({ captionDROPLISTTITLETEXT, dROPLISTITEMLIST, dRO
 /** Named region `_DROPLIST_ITEMLIST` of DropmenuLayout - configured through the parent's `dROPLISTITEMLIST` prop. */
 export interface DropmenuLayoutDROPLISTITEMLISTProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const DropmenuLayoutDROPLISTITEMLIST = ({ layout, tags }: DropmenuLayoutDROPLISTITEMLISTProps) => {
+export const DropmenuLayoutDROPLISTITEMLIST = ({ layout }: DropmenuLayoutDROPLISTITEMLISTProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -47,7 +39,6 @@ export const DropmenuLayoutDROPLISTITEMLIST = ({ layout, tags }: DropmenuLayoutD
         >
             <Region
                 name="_DROPLIST_ITEMLIST"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -58,14 +49,12 @@ export const DropmenuLayoutDROPLISTITEMLIST = ({ layout, tags }: DropmenuLayoutD
 export interface DropmenuLayoutDROPLISTREGIONProps {
     layout?: BoxLayout;
     onDROPLISTREGION?: () => void;
-    tags?: string[];
 }
 
-export const DropmenuLayoutDROPLISTREGION = ({ layout, onDROPLISTREGION, tags }: DropmenuLayoutDROPLISTREGIONProps) => {
+export const DropmenuLayoutDROPLISTREGION = ({ layout, onDROPLISTREGION }: DropmenuLayoutDROPLISTREGIONProps) => {
     return (
         <Region
             name="_DROPLIST_REGION"
-            tags={tags}
             onPointerTap={onDROPLISTREGION}
             cursor="pointer"
             layout={{ position: 'absolute', left: 6, right: 6, top: 2, height: 18, ...layout }}

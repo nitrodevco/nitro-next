@@ -1,5 +1,6 @@
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Region, ThemeText } from '#base/theme';
+import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `redeemItemCodeWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -7,20 +8,18 @@ import { Border, BoxLayout, Button, Region, ThemeText } from '#base/theme';
  * (RedeemItemCodeWidgetLayout); each passes its own placement through `layout`.
  */
 /** Named region `redeemItemCodeWidget` of RedeemItemCodeWidget2 - configured through the parent's `redeemItemCodeWidget` prop. */
-export interface RedeemItemCodeWidget2Props {
+export interface RedeemItemCodeWidget2Props extends CatalogWidgetFlags {
     captionVoucherCode?: string;
     layout?: BoxLayout;
     onRedeem?: () => void;
-    tags?: string[];
 }
 
-export const RedeemItemCodeWidget2 = ({ captionVoucherCode, layout, onRedeem, tags }: RedeemItemCodeWidget2Props) => {
+export const RedeemItemCodeWidget2 = ({ captionVoucherCode, layout, onRedeem }: RedeemItemCodeWidget2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="redeemItemCodeWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <Border

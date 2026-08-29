@@ -58,17 +58,15 @@ export const AreaHideUiLayout = ({ layout, onApplyButton, onClose, onOnOffButton
 export interface AreaHideUiLayoutHeaderContainerItemProps {
     captionHideareaInfo?: string;
     layout?: BoxLayout;
-    tags?: string[];
     visibleHeaderContainer?: boolean;
 }
 
-export const AreaHideUiLayoutHeaderContainerItem = ({ captionHideareaInfo, layout, tags, visibleHeaderContainer }: AreaHideUiLayoutHeaderContainerItemProps) => {
+export const AreaHideUiLayoutHeaderContainerItem = ({ captionHideareaInfo, layout, visibleHeaderContainer }: AreaHideUiLayoutHeaderContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header_container"
-            tags={tags}
             visible={visibleHeaderContainer ?? false}
             layout={{ width: 270, height: 0, flexShrink: 0, ...layout }}
         >
@@ -90,14 +88,12 @@ export const AreaHideUiLayoutHeaderContainerItem = ({ captionHideareaInfo, layou
 /** Row template `spacer` of AreaHideUiLayout - pass real rows through its `items…` slot. */
 export interface AreaHideUiLayoutSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AreaHideUiLayoutSpacerItem = ({ layout, tags }: AreaHideUiLayoutSpacerItemProps) => {
+export const AreaHideUiLayoutSpacerItem = ({ layout }: AreaHideUiLayoutSpacerItemProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ width: 30, height: 5, flexShrink: 0, ...layout }}
         />
     );
@@ -107,17 +103,15 @@ export const AreaHideUiLayoutSpacerItem = ({ layout, tags }: AreaHideUiLayoutSpa
 export interface AreaHideUiLayoutSelectButtonItemProps {
     layout?: BoxLayout;
     onSelectButton?: () => void;
-    tags?: string[];
 }
 
-export const AreaHideUiLayoutSelectButtonItem = ({ layout, onSelectButton, tags }: AreaHideUiLayoutSelectButtonItemProps) => {
+export const AreaHideUiLayoutSelectButtonItem = ({ layout, onSelectButton }: AreaHideUiLayoutSelectButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="select_button"
-            tags={tags}
             onPointerTap={onSelectButton}
             layout={{ width: 211, height: 24, flexShrink: 0, ...layout }}
         >
@@ -130,17 +124,15 @@ export const AreaHideUiLayoutSelectButtonItem = ({ layout, onSelectButton, tags 
 export interface AreaHideUiLayoutClearButtonItemProps {
     layout?: BoxLayout;
     onClearButton?: () => void;
-    tags?: string[];
 }
 
-export const AreaHideUiLayoutClearButtonItem = ({ layout, onClearButton, tags }: AreaHideUiLayoutClearButtonItemProps) => {
+export const AreaHideUiLayoutClearButtonItem = ({ layout, onClearButton }: AreaHideUiLayoutClearButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="clear_button"
-            tags={tags}
             onPointerTap={onClearButton}
             layout={{ width: 205, height: 24, flexShrink: 0, ...layout }}
         >
@@ -153,14 +145,12 @@ export const AreaHideUiLayoutClearButtonItem = ({ layout, onClearButton, tags }:
 export interface AreaHideUiLayoutButtonContainerProps {
     itemsButtonContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AreaHideUiLayoutButtonContainer = ({ itemsButtonContainer, layout, tags }: AreaHideUiLayoutButtonContainerProps) => {
+export const AreaHideUiLayoutButtonContainer = ({ itemsButtonContainer, layout }: AreaHideUiLayoutButtonContainerProps) => {
     return (
         <Region
             name="button_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 260, top: 66, height: 25, flexDirection: 'row', gap: 12, ...layout }}
         >
             {itemsButtonContainer ?? (
@@ -179,16 +169,14 @@ export interface AreaHideUiLayoutAreaContainerItemProps {
     captionAreaselectionInfo?: string;
     captionAreaselectionTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AreaHideUiLayoutAreaContainerItem = ({ buttonContainer, captionAreaselectionInfo, captionAreaselectionTitle, layout, tags }: AreaHideUiLayoutAreaContainerItemProps) => {
+export const AreaHideUiLayoutAreaContainerItem = ({ buttonContainer, captionAreaselectionInfo, captionAreaselectionTitle, layout }: AreaHideUiLayoutAreaContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="area_container"
-            tags={tags}
             layout={{ width: 260, height: 98, flexShrink: 0, ...layout }}
         >
             <Region
@@ -220,16 +208,14 @@ export interface AreaHideUiLayoutWallitemOptionProps {
     captionWallitemsTxt?: string;
     layout?: BoxLayout;
     onWallitemsCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const AreaHideUiLayoutWallitemOption = ({ captionWallitemsTxt, layout, onWallitemsCheckbox, tags }: AreaHideUiLayoutWallitemOptionProps) => {
+export const AreaHideUiLayoutWallitemOption = ({ captionWallitemsTxt, layout, onWallitemsCheckbox }: AreaHideUiLayoutWallitemOptionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="wallitem_option"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 262, top: 0, height: 55, ...layout }}
         >
             <CheckBox
@@ -258,16 +244,14 @@ export interface AreaHideUiLayoutInvertOptionProps {
     captionInvertTxt?: string;
     layout?: BoxLayout;
     onInvertCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const AreaHideUiLayoutInvertOption = ({ captionInvertInfo, captionInvertTxt, layout, onInvertCheckbox, tags }: AreaHideUiLayoutInvertOptionProps) => {
+export const AreaHideUiLayoutInvertOption = ({ captionInvertInfo, captionInvertTxt, layout, onInvertCheckbox }: AreaHideUiLayoutInvertOptionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="invert_option"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 262, top: 20, height: 43, ...layout }}
         >
             <CheckBox
@@ -306,16 +290,14 @@ export interface AreaHideUiLayoutInvisibilityOptionProps {
     captionInvisibilityTxt?: string;
     layout?: BoxLayout;
     onInvisiblityCheckbox?: () => void;
-    tags?: string[];
 }
 
-export const AreaHideUiLayoutInvisibilityOption = ({ captionInvisibilityInfo, captionInvisibilityTxt, layout, onInvisiblityCheckbox, tags }: AreaHideUiLayoutInvisibilityOptionProps) => {
+export const AreaHideUiLayoutInvisibilityOption = ({ captionInvisibilityInfo, captionInvisibilityTxt, layout, onInvisiblityCheckbox }: AreaHideUiLayoutInvisibilityOptionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="invisibility_option"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 262, top: 68, height: 55, ...layout }}
         >
             <CheckBox
@@ -353,15 +335,13 @@ export interface AreaHideUiLayoutOptionsContainerProps {
     invertOption?: AreaHideUiLayoutInvertOptionProps;
     invisibilityOption?: AreaHideUiLayoutInvisibilityOptionProps;
     layout?: BoxLayout;
-    tags?: string[];
     wallitemOption?: AreaHideUiLayoutWallitemOptionProps;
 }
 
-export const AreaHideUiLayoutOptionsContainer = ({ invertOption, invisibilityOption, layout, tags, wallitemOption }: AreaHideUiLayoutOptionsContainerProps) => {
+export const AreaHideUiLayoutOptionsContainer = ({ invertOption, invisibilityOption, layout, wallitemOption }: AreaHideUiLayoutOptionsContainerProps) => {
     return (
         <Region
             name="options_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 262, top: 20, height: 123, ...layout }}
         >
             <AreaHideUiLayoutWallitemOption {...wallitemOption} />
@@ -376,16 +356,14 @@ export interface AreaHideUiLayoutSaturationContainerItemProps {
     captionOptionsTitle?: string;
     layout?: BoxLayout;
     optionsContainer?: AreaHideUiLayoutOptionsContainerProps;
-    tags?: string[];
 }
 
-export const AreaHideUiLayoutSaturationContainerItem = ({ captionOptionsTitle, layout, optionsContainer, tags }: AreaHideUiLayoutSaturationContainerItemProps) => {
+export const AreaHideUiLayoutSaturationContainerItem = ({ captionOptionsTitle, layout, optionsContainer }: AreaHideUiLayoutSaturationContainerItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="saturation_container"
-            tags={tags}
             layout={{ width: 262, height: 143, flexShrink: 0, ...layout }}
         >
             <Region
@@ -406,14 +384,12 @@ export const AreaHideUiLayoutSaturationContainerItem = ({ captionOptionsTitle, l
 export interface AreaHideUiLayoutTabContentProps {
     itemsTabContent?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const AreaHideUiLayoutTabContent = ({ itemsTabContent, layout, tags }: AreaHideUiLayoutTabContentProps) => {
+export const AreaHideUiLayoutTabContent = ({ itemsTabContent, layout }: AreaHideUiLayoutTabContentProps) => {
     return (
         <Region
             name="tab_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 2, width: 270, top: 2, height: 250, flexDirection: 'column', ...layout }}
         >
             {itemsTabContent ?? (

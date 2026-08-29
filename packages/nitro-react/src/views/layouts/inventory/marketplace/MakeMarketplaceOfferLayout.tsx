@@ -33,16 +33,14 @@ export interface MakeMarketplaceOfferLayoutButtonsProps {
     layout?: BoxLayout;
     onCancelMakeOfferButton?: () => void;
     onMakeOfferButton?: () => void;
-    tags?: string[];
 }
 
-export const MakeMarketplaceOfferLayoutButtons = ({ layout, onCancelMakeOfferButton, onMakeOfferButton, tags }: MakeMarketplaceOfferLayoutButtonsProps) => {
+export const MakeMarketplaceOfferLayoutButtons = ({ layout, onCancelMakeOfferButton, onMakeOfferButton }: MakeMarketplaceOfferLayoutButtonsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ width: 270, height: 30, flexShrink: 0, ...layout }}
         >
             <Button
@@ -82,10 +80,9 @@ export interface MakeMarketplaceOfferLayoutMainBorderProps {
     layout?: BoxLayout;
     onCopySuggestedPriceButton?: () => void;
     srcFurniImage?: string;
-    tags?: string[];
 }
 
-export const MakeMarketplaceOfferLayoutMainBorder = ({ buttons, captionAmountRequest, captionAveragePrice, captionExpirationInfo, captionFinalPrice, captionFurniDesc, captionFurniName, captionLowestPrice, captionPriceRequest, captionSuggestedPrice, layout, onCopySuggestedPriceButton, srcFurniImage, tags }: MakeMarketplaceOfferLayoutMainBorderProps) => {
+export const MakeMarketplaceOfferLayoutMainBorder = ({ buttons, captionAmountRequest, captionAveragePrice, captionExpirationInfo, captionFinalPrice, captionFurniDesc, captionFurniName, captionLowestPrice, captionPriceRequest, captionSuggestedPrice, layout, onCopySuggestedPriceButton, srcFurniImage }: MakeMarketplaceOfferLayoutMainBorderProps) => {
     const t = useTranslation();
     const [ priceInputValue, setPriceInputValue ] = useState('');
     const [ amountInputValue, setAmountInputValue ] = useState('');
@@ -93,7 +90,6 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ buttons, captionAmountReq
     return (
         <Region
             name="main_border"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 288, top: 0, height: 393, ...layout }}
         >
             <Border

@@ -83,17 +83,15 @@ export const UserGuideDisconnectedLayout = ({ captionGuideDesc, captionGuideName
 export interface UserGuideDisconnectedLayoutResubmitButtonItemProps {
     layout?: BoxLayout;
     onResubmitButton?: () => void;
-    tags?: string[];
 }
 
-export const UserGuideDisconnectedLayoutResubmitButtonItem = ({ layout, onResubmitButton, tags }: UserGuideDisconnectedLayoutResubmitButtonItemProps) => {
+export const UserGuideDisconnectedLayoutResubmitButtonItem = ({ layout, onResubmitButton }: UserGuideDisconnectedLayoutResubmitButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="101"
             name="resubmit_button"
-            tags={tags}
             tintColor="#bbbbbb"
             onPointerTap={onResubmitButton}
             layout={{ width: 346, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48, ...layout }}
@@ -107,16 +105,14 @@ export const UserGuideDisconnectedLayoutResubmitButtonItem = ({ layout, onResubm
 export interface UserGuideDisconnectedLayoutErrorListProps {
     itemsErrorList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UserGuideDisconnectedLayoutErrorList = ({ itemsErrorList, layout, tags }: UserGuideDisconnectedLayoutErrorListProps) => {
+export const UserGuideDisconnectedLayoutErrorList = ({ itemsErrorList, layout }: UserGuideDisconnectedLayoutErrorListProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="error_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, top: 69, flexDirection: 'column', ...layout }}
         >
             {itemsErrorList ?? (

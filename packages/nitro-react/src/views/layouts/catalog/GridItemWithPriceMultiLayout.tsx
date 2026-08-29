@@ -30,7 +30,6 @@ export const GridItemWithPriceMultiLayout = ({ layout, smallContainer, srcBadgeA
                 </Region>
                 <Border
                     variant="2"
-                    tags={[ 'ITEM_HILIGHT' ]}
                     tintColor="#a1a19b"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
@@ -64,14 +63,12 @@ export const GridItemWithPriceMultiLayout = ({ layout, smallContainer, srcBadgeA
 export interface GridItemWithPriceMultiLayoutWideContainerProps {
     layout?: BoxLayout;
     srcImageWide?: string;
-    tags?: string[];
 }
 
-export const GridItemWithPriceMultiLayoutWideContainer = ({ layout, srcImageWide, tags }: GridItemWithPriceMultiLayoutWideContainerProps) => {
+export const GridItemWithPriceMultiLayoutWideContainer = ({ layout, srcImageWide }: GridItemWithPriceMultiLayoutWideContainerProps) => {
     return (
         <Region
             name="wide_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, width: 60, top: 2, height: 36, ...layout }}
         >
             <ThemeImage
@@ -92,14 +89,12 @@ export interface GridItemWithPriceMultiLayoutSmallContainerProps {
     srcImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
     srcUniqueItemSoldOutBitmap?: string;
-    tags?: string[];
 }
 
-export const GridItemWithPriceMultiLayoutSmallContainer = ({ captionBundleCounter, captionMultiCounter, layout, onSmallContainer, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, tags }: GridItemWithPriceMultiLayoutSmallContainerProps) => {
+export const GridItemWithPriceMultiLayoutSmallContainer = ({ captionBundleCounter, captionMultiCounter, layout, onSmallContainer, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap }: GridItemWithPriceMultiLayoutSmallContainerProps) => {
     return (
         <Region
             name="small_container"
-            tags={tags}
             onPointerTap={onSmallContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 8, width: 36, top: 2, height: 36, ...layout }}
@@ -170,7 +165,6 @@ export const GridItemWithPriceMultiLayoutSmallContainer = ({ captionBundleCounte
                 layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
             >
                 <ThemeImage
-                    tags={[ 'ITEM_HILIGHT_TOP' ]}
                     src={layoutImage('inventory_thumb_selected_outline.png')}
                     layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
                 />
@@ -183,14 +177,12 @@ export const GridItemWithPriceMultiLayoutSmallContainer = ({ captionBundleCounte
 export interface GridItemWithPriceMultiLayoutAmountTextLeftItemProps {
     captionAmountTextLeft?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GridItemWithPriceMultiLayoutAmountTextLeftItem = ({ captionAmountTextLeft, layout, tags }: GridItemWithPriceMultiLayoutAmountTextLeftItemProps) => {
+export const GridItemWithPriceMultiLayoutAmountTextLeftItem = ({ captionAmountTextLeft, layout }: GridItemWithPriceMultiLayoutAmountTextLeftItemProps) => {
     return (
         <Region
             name="amount_text_left"
-            tags={tags}
             layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionAmountTextLeft ?? '00'} />
@@ -201,15 +193,13 @@ export const GridItemWithPriceMultiLayoutAmountTextLeftItem = ({ captionAmountTe
 /** Row template `currency_indicator_bitmap_left` of GridItemWithPriceMultiLayout - pass real rows through its `items…` slot. */
 export interface GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapLeftItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapLeftItem = ({ layout, tags }: GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapLeftItemProps) => {
+export const GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapLeftItem = ({ layout }: GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapLeftItemProps) => {
     return (
         <Icon
             variant="35"
             name="currency_indicator_bitmap_left"
-            tags={tags}
             layout={{ width: 14, height: 15, flexShrink: 0, ...layout }}
         />
     );
@@ -219,14 +209,12 @@ export const GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapLeftItem = ({ la
 export interface GridItemWithPriceMultiLayoutTotalpriceContainerProps {
     itemsTotalpriceContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GridItemWithPriceMultiLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout, tags }: GridItemWithPriceMultiLayoutTotalpriceContainerProps) => {
+export const GridItemWithPriceMultiLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout }: GridItemWithPriceMultiLayoutTotalpriceContainerProps) => {
     return (
         <Region
             name="totalprice_container"
-            tags={tags}
             layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1, ...layout }}
         >
             {itemsTotalpriceContainer ?? (
@@ -243,14 +231,12 @@ export const GridItemWithPriceMultiLayoutTotalpriceContainer = ({ itemsTotalpric
 export interface GridItemWithPriceMultiLayoutPlusItemProps {
     captionPlus?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GridItemWithPriceMultiLayoutPlusItem = ({ captionPlus, layout, tags }: GridItemWithPriceMultiLayoutPlusItemProps) => {
+export const GridItemWithPriceMultiLayoutPlusItem = ({ captionPlus, layout }: GridItemWithPriceMultiLayoutPlusItemProps) => {
     return (
         <Region
             name="plus"
-            tags={tags}
             layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionPlus ?? ' '} />
@@ -262,14 +248,12 @@ export const GridItemWithPriceMultiLayoutPlusItem = ({ captionPlus, layout, tags
 export interface GridItemWithPriceMultiLayoutAmountTextRightItemProps {
     captionAmountTextRight?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GridItemWithPriceMultiLayoutAmountTextRightItem = ({ captionAmountTextRight, layout, tags }: GridItemWithPriceMultiLayoutAmountTextRightItemProps) => {
+export const GridItemWithPriceMultiLayoutAmountTextRightItem = ({ captionAmountTextRight, layout }: GridItemWithPriceMultiLayoutAmountTextRightItemProps) => {
     return (
         <Region
             name="amount_text_right"
-            tags={tags}
             layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionAmountTextRight ?? '00'} />
@@ -280,15 +264,13 @@ export const GridItemWithPriceMultiLayoutAmountTextRightItem = ({ captionAmountT
 /** Row template `currency_indicator_bitmap_right` of GridItemWithPriceMultiLayout - pass real rows through its `items…` slot. */
 export interface GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapRightItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapRightItem = ({ layout, tags }: GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapRightItemProps) => {
+export const GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapRightItem = ({ layout }: GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapRightItemProps) => {
     return (
         <Icon
             variant="35"
             name="currency_indicator_bitmap_right"
-            tags={tags}
             layout={{ width: 14, height: 15, flexShrink: 0, ...layout }}
         />
     );
@@ -298,14 +280,12 @@ export const GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapRightItem = ({ l
 export interface GridItemWithPriceMultiLayoutTotalpriceContainer2Props {
     itemsTotalpriceContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GridItemWithPriceMultiLayoutTotalpriceContainer2 = ({ itemsTotalpriceContainer, layout, tags }: GridItemWithPriceMultiLayoutTotalpriceContainer2Props) => {
+export const GridItemWithPriceMultiLayoutTotalpriceContainer2 = ({ itemsTotalpriceContainer, layout }: GridItemWithPriceMultiLayoutTotalpriceContainer2Props) => {
     return (
         <Region
             name="totalprice_container"
-            tags={tags}
             layout={{ position: 'absolute', right: 2, top: 51, flexDirection: 'row', gap: 1, ...layout }}
         >
             {itemsTotalpriceContainer ?? (

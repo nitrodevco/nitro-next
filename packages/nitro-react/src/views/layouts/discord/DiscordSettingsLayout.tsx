@@ -51,16 +51,14 @@ export interface DiscordSettingsLayoutHeaderProps {
     captionTitle?: string;
     layout?: BoxLayout;
     srcDiscordBox?: string;
-    tags?: string[];
 }
 
-export const DiscordSettingsLayoutHeader = ({ captionDescTxt, captionTitle, layout, srcDiscordBox, tags }: DiscordSettingsLayoutHeaderProps) => {
+export const DiscordSettingsLayoutHeader = ({ captionDescTxt, captionTitle, layout, srcDiscordBox }: DiscordSettingsLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="header"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 375, top: 0, height: 116, ...layout }}
         >
             <Region
@@ -95,15 +93,13 @@ export const DiscordSettingsLayoutHeader = ({ captionDescTxt, captionTitle, layo
 export interface DiscordSettingsLayoutShowHabboCbxItemProps {
     layout?: BoxLayout;
     onShowHabboCbx?: () => void;
-    tags?: string[];
 }
 
-export const DiscordSettingsLayoutShowHabboCbxItem = ({ layout, onShowHabboCbx, tags }: DiscordSettingsLayoutShowHabboCbxItemProps) => {
+export const DiscordSettingsLayoutShowHabboCbxItem = ({ layout, onShowHabboCbx }: DiscordSettingsLayoutShowHabboCbxItemProps) => {
     return (
         <CheckBox
             variant="101"
             name="show_habbo_cbx"
-            tags={tags}
             onPointerTap={onShowHabboCbx}
             layout={{ width: 21, height: 21, flexShrink: 0, minHeight: 21, maxHeight: 21, ...layout }}
         />
@@ -114,16 +110,14 @@ export const DiscordSettingsLayoutShowHabboCbxItem = ({ layout, onShowHabboCbx, 
 export interface DiscordSettingsLayoutSettingContainerProps {
     itemsSettingContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const DiscordSettingsLayoutSettingContainer = ({ itemsSettingContainer, layout, tags }: DiscordSettingsLayoutSettingContainerProps) => {
+export const DiscordSettingsLayoutSettingContainer = ({ itemsSettingContainer, layout }: DiscordSettingsLayoutSettingContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="setting_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 19, width: 214, top: 39, height: 21, flexDirection: 'row', gap: 3, ...layout }}
         >
             {itemsSettingContainer ?? (
@@ -144,15 +138,13 @@ export const DiscordSettingsLayoutSettingContainer = ({ itemsSettingContainer, l
 export interface DiscordSettingsLayoutShareActivityCbxItemProps {
     layout?: BoxLayout;
     onShareActivityCbx?: () => void;
-    tags?: string[];
 }
 
-export const DiscordSettingsLayoutShareActivityCbxItem = ({ layout, onShareActivityCbx, tags }: DiscordSettingsLayoutShareActivityCbxItemProps) => {
+export const DiscordSettingsLayoutShareActivityCbxItem = ({ layout, onShareActivityCbx }: DiscordSettingsLayoutShareActivityCbxItemProps) => {
     return (
         <CheckBox
             variant="101"
             name="share_activity_cbx"
-            tags={tags}
             onPointerTap={onShareActivityCbx}
             layout={{ width: 21, height: 21, flexShrink: 0, minHeight: 21, maxHeight: 21, ...layout }}
         />
@@ -163,16 +155,14 @@ export const DiscordSettingsLayoutShareActivityCbxItem = ({ layout, onShareActiv
 export interface DiscordSettingsLayoutSettingContainer2Props {
     itemsSettingContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const DiscordSettingsLayoutSettingContainer2 = ({ itemsSettingContainer, layout, tags }: DiscordSettingsLayoutSettingContainer2Props) => {
+export const DiscordSettingsLayoutSettingContainer2 = ({ itemsSettingContainer, layout }: DiscordSettingsLayoutSettingContainer2Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="setting_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 19, width: 168, top: 65, height: 21, flexDirection: 'row', gap: 3, ...layout }}
         >
             {itemsSettingContainer ?? (
@@ -193,15 +183,13 @@ export const DiscordSettingsLayoutSettingContainer2 = ({ itemsSettingContainer, 
 export interface DiscordSettingsLayoutHideInHiddenCbxItemProps {
     layout?: BoxLayout;
     onHideInHiddenCbx?: () => void;
-    tags?: string[];
 }
 
-export const DiscordSettingsLayoutHideInHiddenCbxItem = ({ layout, onHideInHiddenCbx, tags }: DiscordSettingsLayoutHideInHiddenCbxItemProps) => {
+export const DiscordSettingsLayoutHideInHiddenCbxItem = ({ layout, onHideInHiddenCbx }: DiscordSettingsLayoutHideInHiddenCbxItemProps) => {
     return (
         <CheckBox
             variant="101"
             name="hide_in_hidden_cbx"
-            tags={tags}
             onPointerTap={onHideInHiddenCbx}
             layout={{ width: 21, height: 21, flexShrink: 0, minHeight: 21, maxHeight: 21, ...layout }}
         />
@@ -212,16 +200,14 @@ export const DiscordSettingsLayoutHideInHiddenCbxItem = ({ layout, onHideInHidde
 export interface DiscordSettingsLayoutSettingContainer3Props {
     itemsSettingContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const DiscordSettingsLayoutSettingContainer3 = ({ itemsSettingContainer, layout, tags }: DiscordSettingsLayoutSettingContainer3Props) => {
+export const DiscordSettingsLayoutSettingContainer3 = ({ itemsSettingContainer, layout }: DiscordSettingsLayoutSettingContainer3Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="setting_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 45, width: 189, top: 91, height: 21, flexDirection: 'row', gap: 3, ...layout }}
         >
             {itemsSettingContainer ?? (
@@ -242,15 +228,13 @@ export const DiscordSettingsLayoutSettingContainer3 = ({ itemsSettingContainer, 
 export interface DiscordSettingsLayoutAllowJoiningCbxItemProps {
     layout?: BoxLayout;
     onAllowJoiningCbx?: () => void;
-    tags?: string[];
 }
 
-export const DiscordSettingsLayoutAllowJoiningCbxItem = ({ layout, onAllowJoiningCbx, tags }: DiscordSettingsLayoutAllowJoiningCbxItemProps) => {
+export const DiscordSettingsLayoutAllowJoiningCbxItem = ({ layout, onAllowJoiningCbx }: DiscordSettingsLayoutAllowJoiningCbxItemProps) => {
     return (
         <CheckBox
             variant="101"
             name="allow_joining_cbx"
-            tags={tags}
             onPointerTap={onAllowJoiningCbx}
             layout={{ width: 21, height: 21, flexShrink: 0, minHeight: 21, maxHeight: 21, ...layout }}
         />
@@ -261,16 +245,14 @@ export const DiscordSettingsLayoutAllowJoiningCbxItem = ({ layout, onAllowJoinin
 export interface DiscordSettingsLayoutSettingContainer4Props {
     itemsSettingContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const DiscordSettingsLayoutSettingContainer4 = ({ itemsSettingContainer, layout, tags }: DiscordSettingsLayoutSettingContainer4Props) => {
+export const DiscordSettingsLayoutSettingContainer4 = ({ itemsSettingContainer, layout }: DiscordSettingsLayoutSettingContainer4Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="setting_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 45, width: 152, top: 117, height: 21, flexDirection: 'row', gap: 3, ...layout }}
         >
             {itemsSettingContainer ?? (
@@ -295,16 +277,14 @@ export interface DiscordSettingsLayoutSettingsProps {
     settingContainer2?: DiscordSettingsLayoutSettingContainer2Props;
     settingContainer3?: DiscordSettingsLayoutSettingContainer3Props;
     settingContainer4?: DiscordSettingsLayoutSettingContainer4Props;
-    tags?: string[];
 }
 
-export const DiscordSettingsLayoutSettings = ({ captionTitle, layout, settingContainer, settingContainer2, settingContainer3, settingContainer4, tags }: DiscordSettingsLayoutSettingsProps) => {
+export const DiscordSettingsLayoutSettings = ({ captionTitle, layout, settingContainer, settingContainer2, settingContainer3, settingContainer4 }: DiscordSettingsLayoutSettingsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="settings"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 375, top: 114, height: 158, ...layout }}
         >
             <Region
@@ -331,14 +311,12 @@ export interface DiscordSettingsLayoutOurServersProps {
     onCollectiblesServer?: () => void;
     onOriginsServer?: () => void;
     onWiredServer?: () => void;
-    tags?: string[];
 }
 
-export const DiscordSettingsLayoutOurServers = ({ captionTitle, layout, onCollectiblesServer, onOriginsServer, onWiredServer, tags }: DiscordSettingsLayoutOurServersProps) => {
+export const DiscordSettingsLayoutOurServers = ({ captionTitle, layout, onCollectiblesServer, onOriginsServer, onWiredServer }: DiscordSettingsLayoutOurServersProps) => {
     return (
         <Region
             name="our_servers"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, width: 375, top: 254, height: 222, ...layout }}
         >
             <Region
@@ -357,17 +335,13 @@ export const DiscordSettingsLayoutOurServers = ({ captionTitle, layout, onCollec
                 onPointerTap={onCollectiblesServer}
                 layout={{ position: 'absolute', left: 5, width: 186, top: 30, height: 98 }}
             >
-                <Region
-                    tags={[ '#icon' ]}
-                    layout={{ position: 'absolute', left: 77, width: 79, top: 40, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 77, width: 79, top: 40, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text="Collectibles"
                         textStyle="text-style-il-regular-white"
                     />
                 </Region>
                 <ThemeImage
-                    tags={[ '#icon' ]}
                     src={layoutImage('collectables_icon_curator_stamp_large.png')}
                     layout={{ position: 'absolute', left: 22, width: 48, top: 26, height: 48 }}
                 />
@@ -380,14 +354,10 @@ export const DiscordSettingsLayoutOurServers = ({ captionTitle, layout, onCollec
                 layout={{ position: 'absolute', left: 185, width: 186, top: 30, height: 98 }}
             >
                 <ThemeImage
-                    tags={[ '#icon' ]}
                     src={layoutImage('discord_wired_logo.png')}
                     layout={{ position: 'absolute', left: 19, width: 155, top: 18, height: 67 }}
                 />
-                <Region
-                    tags={[ '#icon' ]}
-                    layout={{ position: 'absolute', left: 77, width: 66, top: 32, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 77, width: 66, top: 32, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text="The WiredFaculty"
                         textStyle="text-style-il-regular-white"
@@ -401,17 +371,13 @@ export const DiscordSettingsLayoutOurServers = ({ captionTitle, layout, onCollec
                 onPointerTap={onOriginsServer}
                 layout={{ position: 'absolute', left: 5, width: 186, top: 116, height: 98 }}
             >
-                <Region
-                    tags={[ '#icon' ]}
-                    layout={{ position: 'absolute', left: 77, width: 86, top: 31, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
+                <Region layout={{ position: 'absolute', left: 77, width: 86, top: 31, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text="Habbo Hotel:Origins"
                         textStyle="text-style-il-regular-white"
                     />
                 </Region>
                 <ThemeImage
-                    tags={[ '#icon' ]}
                     src={layoutImage('discord_origins_logo.png')}
                     layout={{ position: 'absolute', left: 27, width: 38, top: 26, height: 47 }}
                 />

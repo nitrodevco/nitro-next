@@ -93,14 +93,12 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
 /** Named region `purchase_cost_box` of ClubBuyConfirmationLayout - configured through the parent's `purchaseCostBox` prop. */
 export interface ClubBuyConfirmationLayoutPurchaseCostBoxProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const ClubBuyConfirmationLayoutPurchaseCostBox = ({ layout, tags }: ClubBuyConfirmationLayoutPurchaseCostBoxProps) => {
+export const ClubBuyConfirmationLayoutPurchaseCostBox = ({ layout }: ClubBuyConfirmationLayoutPurchaseCostBoxProps) => {
     return (
         <Region
             name="purchase_cost_box"
-            tags={tags}
             layout={{ width: 20, height: 22, flexShrink: 0, ...layout }}
         />
     );
@@ -110,16 +108,14 @@ export const ClubBuyConfirmationLayoutPurchaseCostBox = ({ layout, tags }: ClubB
 export interface ClubBuyConfirmationLayoutDisclaimerProps {
     layout?: BoxLayout;
     onSpendingDisclaimer?: () => void;
-    tags?: string[];
 }
 
-export const ClubBuyConfirmationLayoutDisclaimer = ({ layout, onSpendingDisclaimer, tags }: ClubBuyConfirmationLayoutDisclaimerProps) => {
+export const ClubBuyConfirmationLayoutDisclaimer = ({ layout, onSpendingDisclaimer }: ClubBuyConfirmationLayoutDisclaimerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="disclaimer"
-            tags={tags}
             layout={{ width: 353, height: 17, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 31, width: 322, top: 0, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>

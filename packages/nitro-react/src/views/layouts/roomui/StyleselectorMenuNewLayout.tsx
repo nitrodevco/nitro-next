@@ -47,14 +47,12 @@ export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, divider, font
 /** Named region `itemgrid` of StyleselectorMenuNewLayout - configured through the parent's `itemgrid` prop. */
 export interface StyleselectorMenuNewLayoutItemgridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const StyleselectorMenuNewLayoutItemgrid = ({ layout, tags }: StyleselectorMenuNewLayoutItemgridProps) => {
+export const StyleselectorMenuNewLayoutItemgrid = ({ layout }: StyleselectorMenuNewLayoutItemgridProps) => {
     return (
         <Region
             name="itemgrid"
-            tags={tags}
             layout={{ position: 'absolute', left: 6, width: 55, top: 5, height: 33, flexDirection: 'row', flexWrap: 'wrap', gap: 1, ...layout }}
         />
     );
@@ -63,15 +61,13 @@ export const StyleselectorMenuNewLayoutItemgrid = ({ layout, tags }: Styleselect
 /** Named region `divider` of StyleselectorMenuNewLayout - configured through the parent's `divider` prop. */
 export interface StyleselectorMenuNewLayoutDividerProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleDivider?: boolean;
 }
 
-export const StyleselectorMenuNewLayoutDivider = ({ layout, tags, visibleDivider }: StyleselectorMenuNewLayoutDividerProps) => {
+export const StyleselectorMenuNewLayoutDivider = ({ layout, visibleDivider }: StyleselectorMenuNewLayoutDividerProps) => {
     return (
         <Region
             name="divider"
-            tags={tags}
             visible={visibleDivider ?? false}
             backgroundColor="#c7c7c7"
             layout={{ position: 'absolute', right: 6, width: 55, bottom: 21, height: 1, ...layout }}
@@ -82,14 +78,12 @@ export const StyleselectorMenuNewLayoutDivider = ({ layout, tags, visibleDivider
 /** Named region `font_size_list` of StyleselectorMenuNewLayout - configured through the parent's `fontSizeList` prop. */
 export interface StyleselectorMenuNewLayoutFontSizeListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const StyleselectorMenuNewLayoutFontSizeList = ({ layout, tags }: StyleselectorMenuNewLayoutFontSizeListProps) => {
+export const StyleselectorMenuNewLayoutFontSizeList = ({ layout }: StyleselectorMenuNewLayoutFontSizeListProps) => {
     return (
         <Region
             name="font_size_list"
-            tags={tags}
             layout={{ position: 'absolute', right: 31, width: 85, bottom: 4, height: 18, flexDirection: 'row', gap: 2, ...layout }}
         />
     );

@@ -19,14 +19,12 @@ export const LayoutLoyaltyVipBuy_1714Layout = ({ ctlgLoyaltyVipBuy, layout }: La
 export interface LayoutLoyaltyVipBuy_1714LayoutCtlgLoyaltyVipBuyProps {
     layout?: BoxLayout;
     loyaltyVipBuyWidget?: LoyaltyVipBuyWidgetProps;
-    tags?: string[];
 }
 
-export const LayoutLoyaltyVipBuy_1714LayoutCtlgLoyaltyVipBuy = ({ layout, loyaltyVipBuyWidget, tags }: LayoutLoyaltyVipBuy_1714LayoutCtlgLoyaltyVipBuyProps) => {
+export const LayoutLoyaltyVipBuy_1714LayoutCtlgLoyaltyVipBuy = ({ layout, loyaltyVipBuyWidget }: LayoutLoyaltyVipBuy_1714LayoutCtlgLoyaltyVipBuyProps) => {
     return (
         <Region
             name="ctlg_loyalty_vip_buy"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
         >

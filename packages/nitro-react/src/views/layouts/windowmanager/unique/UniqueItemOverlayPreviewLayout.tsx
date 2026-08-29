@@ -21,14 +21,12 @@ export interface UniqueItemOverlayPreviewLayoutLimitedItemWidgetProps {
     srcPlaque?: string;
     srcUniqueItemEditionSizeBitmap?: string;
     srcUniqueItemSerialNumberBitmap?: string;
-    tags?: string[];
 }
 
-export const UniqueItemOverlayPreviewLayoutLimitedItemWidget = ({ layout, srcPlaque, srcUniqueItemEditionSizeBitmap, srcUniqueItemSerialNumberBitmap, tags }: UniqueItemOverlayPreviewLayoutLimitedItemWidgetProps) => {
+export const UniqueItemOverlayPreviewLayoutLimitedItemWidget = ({ layout, srcPlaque, srcUniqueItemEditionSizeBitmap, srcUniqueItemSerialNumberBitmap }: UniqueItemOverlayPreviewLayoutLimitedItemWidgetProps) => {
     return (
         <Region
             name="limitedItemWidget"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, ...layout }}
         >
             <ThemeImage

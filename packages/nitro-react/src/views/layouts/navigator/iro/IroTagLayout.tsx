@@ -22,14 +22,12 @@ export interface IroTagLayoutTagProps {
     srcBgL?: string;
     srcBgM?: string;
     srcBgR?: string;
-    tags?: string[];
 }
 
-export const IroTagLayoutTag = ({ captionTxt, layout, onTag, srcBgL, srcBgM, srcBgR, tags }: IroTagLayoutTagProps) => {
+export const IroTagLayoutTag = ({ captionTxt, layout, onTag, srcBgL, srcBgM, srcBgR }: IroTagLayoutTagProps) => {
     return (
         <Region
             name="tag"
-            tags={tags}
             onPointerTap={onTag}
             cursor="pointer"
             layout={{ position: 'absolute', right: 0, width: 38, top: 0, height: 14, ...layout }}

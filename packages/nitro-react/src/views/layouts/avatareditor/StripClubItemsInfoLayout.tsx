@@ -34,21 +34,18 @@ export interface StripClubItemsInfoLayoutBorderProps {
     layout?: BoxLayout;
     onStripButtonClubInfo?: () => void;
     onStripButtonOk?: () => void;
-    tags?: string[];
 }
 
-export const StripClubItemsInfoLayoutBorder = ({ captionStripDescription, layout, onStripButtonClubInfo, onStripButtonOk, tags }: StripClubItemsInfoLayoutBorderProps) => {
+export const StripClubItemsInfoLayoutBorder = ({ captionStripDescription, layout, onStripButtonClubInfo, onStripButtonOk }: StripClubItemsInfoLayoutBorderProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="_border"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="_strip_description"
-                tags={[ 'DESCRIPTION' ]}
                 layout={{ position: 'absolute', left: 27, width: 210, top: 10, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -59,7 +56,6 @@ export const StripClubItemsInfoLayoutBorder = ({ captionStripDescription, layout
             <ButtonThick
                 variant="3"
                 name="strip_button_club_info"
-                tags={[ 'OK' ]}
                 onPointerTap={onStripButtonClubInfo}
                 layout={{ position: 'absolute', left: 110, width: 244, bottom: 7, height: 22, minWidth: 50 }}
             >
@@ -68,7 +64,6 @@ export const StripClubItemsInfoLayoutBorder = ({ captionStripDescription, layout
             <Button
                 variant="3"
                 name="strip_button_ok"
-                tags={[ 'OK' ]}
                 onPointerTap={onStripButtonOk}
                 layout={{ position: 'absolute', marginLeft: -76, marginRight: 76, width: 78, bottom: 7, height: 22, minWidth: 50 }}
             >

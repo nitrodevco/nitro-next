@@ -22,49 +22,41 @@ export const SnowwarSnowballsLayout = ({ layout, makeSnowball, srcBackgroundImag
                 <Region layout={{ position: 'absolute', left: 0, width: 57, top: 0, height: 202 }}>
                     <ThemeImage
                         name="backgroundImage"
-                        tags={[ 'bitmap' ]}
                         src={srcBackgroundImage ?? layoutImage('ui_ball_indicator_bg.png')}
                         layout={{ position: 'absolute', left: 0, width: 57, top: 0, height: 202 }}
                     />
                     <ThemeImage
                         name="ball_4"
-                        tags={[ 'bitmap' ]}
                         src={srcBall4 ?? layoutImage('ui_ball.png')}
                         layout={{ position: 'absolute', left: 14, width: 30, top: 14, height: 30 }}
                     />
                     <ThemeImage
                         name="ball_3"
-                        tags={[ 'bitmap' ]}
                         src={srcBall3 ?? layoutImage('ui_ball.png')}
                         layout={{ position: 'absolute', left: 14, width: 30, top: 50, height: 30 }}
                     />
                     <ThemeImage
                         name="ball_2"
-                        tags={[ 'bitmap' ]}
                         src={srcBall2 ?? layoutImage('ui_ball.png')}
                         layout={{ position: 'absolute', left: 14, width: 30, top: 86, height: 30 }}
                     />
                     <ThemeImage
                         name="ball_1"
-                        tags={[ 'bitmap' ]}
                         src={srcBall1 ?? layoutImage('ui_ball.png')}
                         layout={{ position: 'absolute', left: 14, width: 30, top: 122, height: 30 }}
                     />
                     <ThemeImage
                         name="ball_0"
-                        tags={[ 'bitmap' ]}
                         src={srcBall0 ?? layoutImage('ui_ball.png')}
                         layout={{ position: 'absolute', left: 14, width: 30, top: 158, height: 30 }}
                     />
                     <ThemeImage
                         name="ballProgress"
-                        tags={[ 'bitmap' ]}
                         src={srcBallProgress}
                         layout={{ position: 'absolute', left: 14, width: 30, top: 158, height: 30 }}
                     />
                     <ThemeImage
                         name="emptyFlashImage"
-                        tags={[ 'bitmap' ]}
                         src={srcEmptyFlashImage}
                         layout={{ position: 'absolute', left: 0, width: 57, top: 0, height: 202 }}
                     />
@@ -80,14 +72,12 @@ export interface SnowwarSnowballsLayoutMakeSnowballProps {
     layout?: BoxLayout;
     onMakeSnowball?: () => void;
     srcMakeSnowballImage?: string;
-    tags?: string[];
 }
 
-export const SnowwarSnowballsLayoutMakeSnowball = ({ layout, onMakeSnowball, srcMakeSnowballImage, tags }: SnowwarSnowballsLayoutMakeSnowballProps) => {
+export const SnowwarSnowballsLayoutMakeSnowball = ({ layout, onMakeSnowball, srcMakeSnowballImage }: SnowwarSnowballsLayoutMakeSnowballProps) => {
     return (
         <Region
             name="make_snowball"
-            tags={tags}
             backgroundColor="#000000"
             onPointerTap={onMakeSnowball}
             cursor="pointer"
@@ -95,7 +85,6 @@ export const SnowwarSnowballsLayoutMakeSnowball = ({ layout, onMakeSnowball, src
         >
             <ThemeImage
                 name="makeSnowballImage"
-                tags={[ 'bitmap' ]}
                 src={srcMakeSnowballImage ?? layoutImage('ui_make_balls_up.png')}
                 layout={{ position: 'absolute', left: 0, width: 57, top: 0, height: 58 }}
             />

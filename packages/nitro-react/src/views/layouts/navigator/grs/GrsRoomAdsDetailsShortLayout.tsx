@@ -22,14 +22,12 @@ export interface GrsRoomAdsDetailsShortLayoutDetailsProps {
     srcDoormodeDoorbellSmall?: string;
     srcDoormodeInvisibleSmall?: string;
     srcDoormodePasswordSmall?: string;
-    tags?: string[];
 }
 
-export const GrsRoomAdsDetailsShortLayoutDetails = ({ captionAdname, layout, onDetails, srcDoormodeDoorbellSmall, srcDoormodeInvisibleSmall, srcDoormodePasswordSmall, tags }: GrsRoomAdsDetailsShortLayoutDetailsProps) => {
+export const GrsRoomAdsDetailsShortLayoutDetails = ({ captionAdname, layout, onDetails, srcDoormodeDoorbellSmall, srcDoormodeInvisibleSmall, srcDoormodePasswordSmall }: GrsRoomAdsDetailsShortLayoutDetailsProps) => {
     return (
         <Region
             name="details"
-            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onDetails}
             cursor="pointer"

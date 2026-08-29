@@ -53,14 +53,12 @@ export const MemenuEffectsLayout = ({ captionInfoText, effectsCnvs, layout, line
 /** Named region `line` of MemenuEffectsLayout - configured through the parent's `line` prop. */
 export interface MemenuEffectsLayoutLineProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MemenuEffectsLayoutLine = ({ layout, tags }: MemenuEffectsLayoutLineProps) => {
+export const MemenuEffectsLayoutLine = ({ layout }: MemenuEffectsLayoutLineProps) => {
     return (
         <Region
             name="line"
-            tags={tags}
             backgroundColor="#2f2f2f"
             layout={{ position: 'absolute', width: 153, top: 22, height: 1, ...layout }}
         />
@@ -71,14 +69,12 @@ export const MemenuEffectsLayoutLine = ({ layout, tags }: MemenuEffectsLayoutLin
 export interface MemenuEffectsLayoutEffectsCnvsProps {
     layout?: BoxLayout;
     onEffectsCnvs?: () => void;
-    tags?: string[];
 }
 
-export const MemenuEffectsLayoutEffectsCnvs = ({ layout, onEffectsCnvs, tags }: MemenuEffectsLayoutEffectsCnvsProps) => {
+export const MemenuEffectsLayoutEffectsCnvs = ({ layout, onEffectsCnvs }: MemenuEffectsLayoutEffectsCnvsProps) => {
     return (
         <Region
             name="effects_cnvs"
-            tags={tags}
             onPointerTap={onEffectsCnvs}
             cursor="pointer"
             layout={{ position: 'absolute', left: 11, width: 154, top: 29, height: 48, ...layout }}

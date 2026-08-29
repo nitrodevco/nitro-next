@@ -131,14 +131,12 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
 /** Named region `reports_table_cont` of MyReportsLayout - configured through the parent's `reportsTableCont` prop. */
 export interface MyReportsLayoutReportsTableContProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MyReportsLayoutReportsTableCont = ({ layout, tags }: MyReportsLayoutReportsTableContProps) => {
+export const MyReportsLayoutReportsTableCont = ({ layout }: MyReportsLayoutReportsTableContProps) => {
     return (
         <Region
             name="reports_table_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 4, right: 3, top: 3, bottom: 41, ...layout }}
         />
     );
@@ -147,14 +145,12 @@ export const MyReportsLayoutReportsTableCont = ({ layout, tags }: MyReportsLayou
 /** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
 export interface MyReportsLayoutSpacerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MyReportsLayoutSpacer = ({ layout, tags }: MyReportsLayoutSpacerProps) => {
+export const MyReportsLayoutSpacer = ({ layout }: MyReportsLayoutSpacerProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
         />
     );
@@ -163,14 +159,12 @@ export const MyReportsLayoutSpacer = ({ layout, tags }: MyReportsLayoutSpacerPro
 /** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
 export interface MyReportsLayoutSpacer2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MyReportsLayoutSpacer2 = ({ layout, tags }: MyReportsLayoutSpacer2Props) => {
+export const MyReportsLayoutSpacer2 = ({ layout }: MyReportsLayoutSpacer2Props) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
         />
     );
@@ -179,15 +173,13 @@ export const MyReportsLayoutSpacer2 = ({ layout, tags }: MyReportsLayoutSpacer2P
 /** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
 export interface MyReportsLayoutSpacer3Props {
     layout?: BoxLayout;
-    tags?: string[];
     visibleSpacer?: boolean;
 }
 
-export const MyReportsLayoutSpacer3 = ({ layout, tags, visibleSpacer }: MyReportsLayoutSpacer3Props) => {
+export const MyReportsLayoutSpacer3 = ({ layout, visibleSpacer }: MyReportsLayoutSpacer3Props) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             visible={visibleSpacer ?? false}
             layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
         />
@@ -197,14 +189,12 @@ export const MyReportsLayoutSpacer3 = ({ layout, tags, visibleSpacer }: MyReport
 /** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
 export interface MyReportsLayoutSpacer4Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MyReportsLayoutSpacer4 = ({ layout, tags }: MyReportsLayoutSpacer4Props) => {
+export const MyReportsLayoutSpacer4 = ({ layout }: MyReportsLayoutSpacer4Props) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
         />
     );

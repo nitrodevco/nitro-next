@@ -19,14 +19,12 @@ export const PriceDisplayLayout = ({ layout, priceBox }: PriceDisplayLayoutProps
 /** Row template `spacing` of PriceDisplayLayout - pass real rows through its `items…` slot. */
 export interface PriceDisplayLayoutSpacingItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PriceDisplayLayoutSpacingItem = ({ layout, tags }: PriceDisplayLayoutSpacingItemProps) => {
+export const PriceDisplayLayoutSpacingItem = ({ layout }: PriceDisplayLayoutSpacingItemProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 1, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -36,14 +34,12 @@ export const PriceDisplayLayoutSpacingItem = ({ layout, tags }: PriceDisplayLayo
 export interface PriceDisplayLayoutAmount0ItemProps {
     captionAmount0?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PriceDisplayLayoutAmount0Item = ({ captionAmount0, layout, tags }: PriceDisplayLayoutAmount0ItemProps) => {
+export const PriceDisplayLayoutAmount0Item = ({ captionAmount0, layout }: PriceDisplayLayoutAmount0ItemProps) => {
     return (
         <Region
             name="amount_0"
-            tags={tags}
             layout={{ width: 4, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -57,15 +53,13 @@ export const PriceDisplayLayoutAmount0Item = ({ captionAmount0, layout, tags }: 
 /** Row template `unit_0` of PriceDisplayLayout - pass real rows through its `items…` slot. */
 export interface PriceDisplayLayoutUnit0ItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PriceDisplayLayoutUnit0Item = ({ layout, tags }: PriceDisplayLayoutUnit0ItemProps) => {
+export const PriceDisplayLayoutUnit0Item = ({ layout }: PriceDisplayLayoutUnit0ItemProps) => {
     return (
         <Icon
             variant="0"
             name="unit_0"
-            tags={tags}
             layout={{ width: 22, height: 22, flexShrink: 0, ...layout }}
         />
     );
@@ -75,14 +69,12 @@ export const PriceDisplayLayoutUnit0Item = ({ layout, tags }: PriceDisplayLayout
 export interface PriceDisplayLayoutAmount1ItemProps {
     captionAmount1?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PriceDisplayLayoutAmount1Item = ({ captionAmount1, layout, tags }: PriceDisplayLayoutAmount1ItemProps) => {
+export const PriceDisplayLayoutAmount1Item = ({ captionAmount1, layout }: PriceDisplayLayoutAmount1ItemProps) => {
     return (
         <Region
             name="amount_1"
-            tags={tags}
             layout={{ width: 4, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -96,15 +88,13 @@ export const PriceDisplayLayoutAmount1Item = ({ captionAmount1, layout, tags }: 
 /** Row template `unit_1` of PriceDisplayLayout - pass real rows through its `items…` slot. */
 export interface PriceDisplayLayoutUnit1ItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PriceDisplayLayoutUnit1Item = ({ layout, tags }: PriceDisplayLayoutUnit1ItemProps) => {
+export const PriceDisplayLayoutUnit1Item = ({ layout }: PriceDisplayLayoutUnit1ItemProps) => {
     return (
         <Icon
             variant="0"
             name="unit_1"
-            tags={tags}
             layout={{ width: 22, height: 22, flexShrink: 0, ...layout }}
         />
     );
@@ -113,14 +103,12 @@ export const PriceDisplayLayoutUnit1Item = ({ layout, tags }: PriceDisplayLayout
 /** Row template `spacing` of PriceDisplayLayout - pass real rows through its `items…` slot. */
 export interface PriceDisplayLayoutSpacingItem2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PriceDisplayLayoutSpacingItem2 = ({ layout, tags }: PriceDisplayLayoutSpacingItem2Props) => {
+export const PriceDisplayLayoutSpacingItem2 = ({ layout }: PriceDisplayLayoutSpacingItem2Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 2, height: 1, flexShrink: 0, ...layout }}
         />
     );
@@ -130,14 +118,12 @@ export const PriceDisplayLayoutSpacingItem2 = ({ layout, tags }: PriceDisplayLay
 export interface PriceDisplayLayoutPriceBoxProps {
     itemsPriceBox?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const PriceDisplayLayoutPriceBox = ({ itemsPriceBox, layout, tags }: PriceDisplayLayoutPriceBoxProps) => {
+export const PriceDisplayLayoutPriceBox = ({ itemsPriceBox, layout }: PriceDisplayLayoutPriceBoxProps) => {
     return (
         <Region
             name="price_box"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', gap: 1, ...layout }}
         >
             {itemsPriceBox ?? (

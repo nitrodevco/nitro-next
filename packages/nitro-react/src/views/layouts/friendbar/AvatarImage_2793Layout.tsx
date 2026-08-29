@@ -26,15 +26,13 @@ export const AvatarImage_2793Layout = ({ layout, region, srcBitmap }: AvatarImag
 export interface AvatarImage_2793LayoutRegionProps {
     layout?: BoxLayout;
     onRegion?: () => void;
-    tags?: string[];
     visibleRegion?: boolean;
 }
 
-export const AvatarImage_2793LayoutRegion = ({ layout, onRegion, tags, visibleRegion }: AvatarImage_2793LayoutRegionProps) => {
+export const AvatarImage_2793LayoutRegion = ({ layout, onRegion, visibleRegion }: AvatarImage_2793LayoutRegionProps) => {
     return (
         <Region
             name="region"
-            tags={tags}
             visible={visibleRegion ?? false}
             onPointerTap={onRegion}
             cursor="pointer"

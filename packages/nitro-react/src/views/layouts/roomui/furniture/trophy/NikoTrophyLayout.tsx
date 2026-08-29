@@ -72,14 +72,12 @@ export const NikoTrophyLayout = ({ appstoreRegion, captionDate, captionHtmlTextb
 /** Named region `nikotrophy.background` of NikoTrophyLayout - configured through the parent's `nikotrophyBackground` prop. */
 export interface NikoTrophyLayoutNikotrophyBackgroundProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const NikoTrophyLayoutNikotrophyBackground = ({ layout, tags }: NikoTrophyLayoutNikotrophyBackgroundProps) => {
+export const NikoTrophyLayoutNikotrophyBackground = ({ layout }: NikoTrophyLayoutNikotrophyBackgroundProps) => {
     return (
         <Region
             name="nikotrophy.background"
-            tags={tags}
             backgroundColor="#36494e"
             layout={{ position: 'absolute', left: 0, width: 428, top: 0, height: 169, ...layout }}
         />
@@ -91,16 +89,14 @@ export interface NikoTrophyLayoutAppstoreRegionProps {
     layout?: BoxLayout;
     onAppstoreRegion?: () => void;
     srcStoreImage?: string;
-    tags?: string[];
 }
 
-export const NikoTrophyLayoutAppstoreRegion = ({ layout, onAppstoreRegion, srcStoreImage, tags }: NikoTrophyLayoutAppstoreRegionProps) => {
+export const NikoTrophyLayoutAppstoreRegion = ({ layout, onAppstoreRegion, srcStoreImage }: NikoTrophyLayoutAppstoreRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="appstore_region"
-            tags={tags}
             tooltip={t('trophy.niko.link.tooltip')}
             onPointerTap={onAppstoreRegion}
             cursor="pointer"

@@ -20,14 +20,12 @@ export interface LayoutRecycler_1712LayoutCtlgRecyclerProps {
     layout?: BoxLayout;
     recyclerWidget?: RecyclerWidgetProps;
     srcCtlgTeaserimg1?: string;
-    tags?: string[];
 }
 
-export const LayoutRecycler_1712LayoutCtlgRecycler = ({ layout, recyclerWidget, srcCtlgTeaserimg1, tags }: LayoutRecycler_1712LayoutCtlgRecyclerProps) => {
+export const LayoutRecycler_1712LayoutCtlgRecycler = ({ layout, recyclerWidget, srcCtlgTeaserimg1 }: LayoutRecycler_1712LayoutCtlgRecyclerProps) => {
     return (
         <Region
             name="ctlg_recycler"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
         >

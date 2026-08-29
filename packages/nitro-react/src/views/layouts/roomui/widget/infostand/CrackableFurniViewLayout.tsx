@@ -23,7 +23,6 @@ export const CrackableFurniViewLayout = ({ buttonList, infostandElementList, lay
                 >
                     <CloseButton
                         variant="1"
-                        tags={[ 'close' ]}
                         onPointerTap={onClose}
                         layout={{ position: 'absolute', left: 168, width: 18, top: 6, height: 16 }}
                     />
@@ -39,14 +38,12 @@ export const CrackableFurniViewLayout = ({ buttonList, infostandElementList, lay
 export interface CrackableFurniViewLayoutNameTextItemProps {
     captionNameText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutNameTextItem = ({ captionNameText, layout, tags }: CrackableFurniViewLayoutNameTextItemProps) => {
+export const CrackableFurniViewLayoutNameTextItem = ({ captionNameText, layout }: CrackableFurniViewLayoutNameTextItemProps) => {
     return (
         <Region
             name="name_text"
-            tags={tags}
             layout={{ width: 158, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -60,14 +57,12 @@ export const CrackableFurniViewLayoutNameTextItem = ({ captionNameText, layout, 
 /** Row template `images_spacer` of CrackableFurniViewLayout - pass real rows through its `items…` slot. */
 export interface CrackableFurniViewLayoutImagesSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutImagesSpacerItem = ({ layout, tags }: CrackableFurniViewLayoutImagesSpacerItemProps) => {
+export const CrackableFurniViewLayoutImagesSpacerItem = ({ layout }: CrackableFurniViewLayoutImagesSpacerItemProps) => {
     return (
         <Region
             name="images_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -78,14 +73,12 @@ export const CrackableFurniViewLayoutImagesSpacerItem = ({ layout, tags }: Crack
 export interface CrackableFurniViewLayoutImageItemProps {
     layout?: BoxLayout;
     srcImage?: string;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutImageItem = ({ layout, srcImage, tags }: CrackableFurniViewLayoutImageItemProps) => {
+export const CrackableFurniViewLayoutImageItem = ({ layout, srcImage }: CrackableFurniViewLayoutImageItemProps) => {
     return (
         <ThemeImage
             name="image"
-            tags={tags}
             src={srcImage}
             layout={{ width: 140, height: 120, flexShrink: 0, ...layout }}
         />
@@ -95,14 +88,12 @@ export const CrackableFurniViewLayoutImageItem = ({ layout, srcImage, tags }: Cr
 /** Row template `owner_spacer` of CrackableFurniViewLayout - pass real rows through its `items…` slot. */
 export interface CrackableFurniViewLayoutOwnerSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutOwnerSpacerItem = ({ layout, tags }: CrackableFurniViewLayoutOwnerSpacerItemProps) => {
+export const CrackableFurniViewLayoutOwnerSpacerItem = ({ layout }: CrackableFurniViewLayoutOwnerSpacerItemProps) => {
     return (
         <Region
             name="owner_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -114,14 +105,12 @@ export interface CrackableFurniViewLayoutOwnerRegionItemProps {
     captionOwnerName?: string;
     layout?: BoxLayout;
     onOwnerRegion?: () => void;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwnerRegion, tags }: CrackableFurniViewLayoutOwnerRegionItemProps) => {
+export const CrackableFurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwnerRegion }: CrackableFurniViewLayoutOwnerRegionItemProps) => {
     return (
         <Region
             name="owner_region"
-            tags={tags}
             onPointerTap={onOwnerRegion}
             cursor="pointer"
             layout={{ width: 170, height: 17, flexShrink: 0, ...layout }}
@@ -147,14 +136,12 @@ export const CrackableFurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layo
 /** Row template `description_spacer` of CrackableFurniViewLayout - pass real rows through its `items…` slot. */
 export interface CrackableFurniViewLayoutDescriptionSpacerItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutDescriptionSpacerItem = ({ layout, tags }: CrackableFurniViewLayoutDescriptionSpacerItemProps) => {
+export const CrackableFurniViewLayoutDescriptionSpacerItem = ({ layout }: CrackableFurniViewLayoutDescriptionSpacerItemProps) => {
     return (
         <Region
             name="description_spacer"
-            tags={tags}
             backgroundColor="#333333"
             layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
         />
@@ -165,16 +152,14 @@ export const CrackableFurniViewLayoutDescriptionSpacerItem = ({ layout, tags }: 
 export interface CrackableFurniViewLayoutHitsRemainingItemProps {
     captionHitsRemaining?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutHitsRemainingItem = ({ captionHitsRemaining, layout, tags }: CrackableFurniViewLayoutHitsRemainingItemProps) => {
+export const CrackableFurniViewLayoutHitsRemainingItem = ({ captionHitsRemaining, layout }: CrackableFurniViewLayoutHitsRemainingItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="hits_remaining"
-            tags={tags}
             layout={{ width: 170, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -189,16 +174,14 @@ export const CrackableFurniViewLayoutHitsRemainingItem = ({ captionHitsRemaining
 export interface CrackableFurniViewLayoutExpirationTextItemProps {
     captionExpirationText?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutExpirationTextItem = ({ captionExpirationText, layout, tags }: CrackableFurniViewLayoutExpirationTextItemProps) => {
+export const CrackableFurniViewLayoutExpirationTextItem = ({ captionExpirationText, layout }: CrackableFurniViewLayoutExpirationTextItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="expiration_text"
-            tags={tags}
             layout={{ width: 170, height: 23, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -213,17 +196,15 @@ export const CrackableFurniViewLayoutExpirationTextItem = ({ captionExpirationTe
 export interface CrackableFurniViewLayoutCatalogButtonItemProps {
     layout?: BoxLayout;
     onCatalogButton?: () => void;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutCatalogButtonItem = ({ layout, onCatalogButton, tags }: CrackableFurniViewLayoutCatalogButtonItemProps) => {
+export const CrackableFurniViewLayoutCatalogButtonItem = ({ layout, onCatalogButton }: CrackableFurniViewLayoutCatalogButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="catalog_button"
-            tags={tags}
             onPointerTap={onCatalogButton}
             textStyle="text-style-button-regular"
             layout={{ width: 60, height: 22, flexShrink: 0, ...layout }}
@@ -237,17 +218,15 @@ export const CrackableFurniViewLayoutCatalogButtonItem = ({ layout, onCatalogBut
 export interface CrackableFurniViewLayoutRentButtonItemProps {
     layout?: BoxLayout;
     onRentButton?: () => void;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutRentButtonItem = ({ layout, onRentButton, tags }: CrackableFurniViewLayoutRentButtonItemProps) => {
+export const CrackableFurniViewLayoutRentButtonItem = ({ layout, onRentButton }: CrackableFurniViewLayoutRentButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="rent_button"
-            tags={tags}
             onPointerTap={onRentButton}
             textStyle="text-style-button-regular"
             layout={{ width: 130, height: 22, flexShrink: 0, ...layout }}
@@ -261,17 +240,15 @@ export const CrackableFurniViewLayoutRentButtonItem = ({ layout, onRentButton, t
 export interface CrackableFurniViewLayoutExtendButtonItemProps {
     layout?: BoxLayout;
     onExtendButton?: () => void;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutExtendButtonItem = ({ layout, onExtendButton, tags }: CrackableFurniViewLayoutExtendButtonItemProps) => {
+export const CrackableFurniViewLayoutExtendButtonItem = ({ layout, onExtendButton }: CrackableFurniViewLayoutExtendButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="extend_button"
-            tags={tags}
             onPointerTap={onExtendButton}
             textStyle="text-style-button-regular"
             layout={{ width: 143, height: 22, flexShrink: 0, ...layout }}
@@ -285,17 +262,15 @@ export const CrackableFurniViewLayoutExtendButtonItem = ({ layout, onExtendButto
 export interface CrackableFurniViewLayoutBuyoutButtonItemProps {
     layout?: BoxLayout;
     onBuyoutButton?: () => void;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutBuyoutButtonItem = ({ layout, onBuyoutButton, tags }: CrackableFurniViewLayoutBuyoutButtonItemProps) => {
+export const CrackableFurniViewLayoutBuyoutButtonItem = ({ layout, onBuyoutButton }: CrackableFurniViewLayoutBuyoutButtonItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="0"
             name="buyout_button"
-            tags={tags}
             onPointerTap={onBuyoutButton}
             textStyle="text-style-button-regular"
             layout={{ width: 143, height: 22, flexShrink: 0, ...layout }}
@@ -309,19 +284,17 @@ export const CrackableFurniViewLayoutBuyoutButtonItem = ({ layout, onBuyoutButto
 export interface CrackableFurniViewLayoutPurchaseButtonsItemProps {
     itemsPurchaseButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButtons, layout, tags }: CrackableFurniViewLayoutPurchaseButtonsItemProps) => {
+export const CrackableFurniViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButtons, layout }: CrackableFurniViewLayoutPurchaseButtonsItemProps) => {
     return (
         <Region
             name="purchase_buttons"
-            tags={tags}
             layout={{ width: 170, height: 22, flexShrink: 0, flexDirection: 'row', gap: 5, ...layout }}
         >
             {itemsPurchaseButtons ?? (
                 <>
-                    <CrackableFurniViewLayoutCatalogButtonItem tags={[ 'catalog' ]} />
+                    <CrackableFurniViewLayoutCatalogButtonItem />
                     <CrackableFurniViewLayoutRentButtonItem />
                     <CrackableFurniViewLayoutExtendButtonItem />
                     <CrackableFurniViewLayoutBuyoutButtonItem />
@@ -335,14 +308,12 @@ export const CrackableFurniViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButto
 export interface CrackableFurniViewLayoutInfostandElementListProps {
     itemsInfostandElementList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout, tags }: CrackableFurniViewLayoutInfostandElementListProps) => {
+export const CrackableFurniViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: CrackableFurniViewLayoutInfostandElementListProps) => {
     return (
         <Region
             name="infostand_element_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 251, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsInfostandElementList ?? (
@@ -366,17 +337,15 @@ export const CrackableFurniViewLayoutInfostandElementList = ({ itemsInfostandEle
 export interface CrackableFurniViewLayoutMoveItemProps {
     layout?: BoxLayout;
     onMove?: () => void;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutMoveItem = ({ layout, onMove, tags }: CrackableFurniViewLayoutMoveItemProps) => {
+export const CrackableFurniViewLayoutMoveItem = ({ layout, onMove }: CrackableFurniViewLayoutMoveItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="move"
-            tags={tags}
             onPointerTap={onMove}
             textStyle="text-style-button-regular"
             layout={{ width: 134, height: 25, flexShrink: 0, ...layout }}
@@ -390,17 +359,15 @@ export const CrackableFurniViewLayoutMoveItem = ({ layout, onMove, tags }: Crack
 export interface CrackableFurniViewLayoutRotateItemProps {
     layout?: BoxLayout;
     onRotate?: () => void;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutRotateItem = ({ layout, onRotate, tags }: CrackableFurniViewLayoutRotateItemProps) => {
+export const CrackableFurniViewLayoutRotateItem = ({ layout, onRotate }: CrackableFurniViewLayoutRotateItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="rotate"
-            tags={tags}
             onPointerTap={onRotate}
             textStyle="text-style-button-regular"
             layout={{ width: 141, height: 25, flexShrink: 0, ...layout }}
@@ -414,17 +381,15 @@ export const CrackableFurniViewLayoutRotateItem = ({ layout, onRotate, tags }: C
 export interface CrackableFurniViewLayoutPickupItemProps {
     layout?: BoxLayout;
     onPickup?: () => void;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutPickupItem = ({ layout, onPickup, tags }: CrackableFurniViewLayoutPickupItemProps) => {
+export const CrackableFurniViewLayoutPickupItem = ({ layout, onPickup }: CrackableFurniViewLayoutPickupItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="pickup"
-            tags={tags}
             onPointerTap={onPickup}
             textStyle="text-style-button-regular"
             layout={{ width: 139, height: 25, flexShrink: 0, ...layout }}
@@ -438,17 +403,15 @@ export const CrackableFurniViewLayoutPickupItem = ({ layout, onPickup, tags }: C
 export interface CrackableFurniViewLayoutUseItemProps {
     layout?: BoxLayout;
     onUse?: () => void;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutUseItem = ({ layout, onUse, tags }: CrackableFurniViewLayoutUseItemProps) => {
+export const CrackableFurniViewLayoutUseItem = ({ layout, onUse }: CrackableFurniViewLayoutUseItemProps) => {
     const t = useTranslation();
 
     return (
         <Button
             variant="1"
             name="use"
-            tags={tags}
             onPointerTap={onUse}
             textStyle="text-style-button-regular"
             layout={{ width: 126, height: 25, flexShrink: 0, ...layout }}
@@ -462,14 +425,12 @@ export const CrackableFurniViewLayoutUseItem = ({ layout, onUse, tags }: Crackab
 export interface CrackableFurniViewLayoutButtonListProps {
     itemsButtonList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const CrackableFurniViewLayoutButtonList = ({ itemsButtonList, layout, tags }: CrackableFurniViewLayoutButtonListProps) => {
+export const CrackableFurniViewLayoutButtonList = ({ itemsButtonList, layout }: CrackableFurniViewLayoutButtonListProps) => {
     return (
         <Region
             name="button_list"
-            tags={tags}
             layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsButtonList ?? (

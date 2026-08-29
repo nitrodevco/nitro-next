@@ -11,7 +11,6 @@ export const ButtonShinyLargeLayout = ({ captionBTNTEXT, layout }: ButtonShinyLa
         <Region layout={{ position: 'relative', width: 20, height: 28, ...layout }}>
             <Region
                 name="_BTN_TEXT"
-                tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
                 layout={{ position: 'absolute', width: 20, alignSelf: 'center', height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

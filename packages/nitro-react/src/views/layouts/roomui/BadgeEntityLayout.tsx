@@ -16,7 +16,6 @@ export const BadgeEntityLayout = ({ layout, srcBadgeImage }: BadgeEntityLayoutPr
             >
                 <ThemeImage
                     name="badge.image"
-                    tags={[ 'THUMB_BITMAP' ]}
                     src={srcBadgeImage}
                     layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
                 />

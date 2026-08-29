@@ -112,14 +112,12 @@ export const GuardianChatReviewVoteLayout = ({ captionIncidentTime, chatlog, clo
 export interface GuardianChatReviewVoteLayoutReportedUserTemplateItemProps {
     captionMessage?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuardianChatReviewVoteLayoutReportedUserTemplateItem = ({ captionMessage, layout, tags }: GuardianChatReviewVoteLayoutReportedUserTemplateItemProps) => {
+export const GuardianChatReviewVoteLayoutReportedUserTemplateItem = ({ captionMessage, layout }: GuardianChatReviewVoteLayoutReportedUserTemplateItemProps) => {
     return (
         <Region
             name="reported_user_template"
-            tags={tags}
             layout={{ width: 226, height: 22, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -144,14 +142,12 @@ export const GuardianChatReviewVoteLayoutReportedUserTemplateItem = ({ captionMe
 export interface GuardianChatReviewVoteLayoutSeparatorTemplateItemProps {
     layout?: BoxLayout;
     srcSeparatorTemplate?: string;
-    tags?: string[];
 }
 
-export const GuardianChatReviewVoteLayoutSeparatorTemplateItem = ({ layout, srcSeparatorTemplate, tags }: GuardianChatReviewVoteLayoutSeparatorTemplateItemProps) => {
+export const GuardianChatReviewVoteLayoutSeparatorTemplateItem = ({ layout, srcSeparatorTemplate }: GuardianChatReviewVoteLayoutSeparatorTemplateItemProps) => {
     return (
         <ThemeImage
             name="separator_template"
-            tags={tags}
             src={srcSeparatorTemplate ?? layoutImage('illumina_light_separator_horizontal.png')}
             layout={{ width: 226, height: 2, flexShrink: 0, ...layout }}
         />
@@ -162,14 +158,12 @@ export const GuardianChatReviewVoteLayoutSeparatorTemplateItem = ({ layout, srcS
 export interface GuardianChatReviewVoteLayoutOtherUserTemplateItemProps {
     captionMessage?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuardianChatReviewVoteLayoutOtherUserTemplateItem = ({ captionMessage, layout, tags }: GuardianChatReviewVoteLayoutOtherUserTemplateItemProps) => {
+export const GuardianChatReviewVoteLayoutOtherUserTemplateItem = ({ captionMessage, layout }: GuardianChatReviewVoteLayoutOtherUserTemplateItemProps) => {
     return (
         <Region
             name="other_user_template"
-            tags={tags}
             layout={{ width: 226, height: 22, flexShrink: 0, ...layout }}
         >
             <ThemeImage
@@ -193,10 +187,9 @@ export const GuardianChatReviewVoteLayoutOtherUserTemplateItem = ({ captionMessa
 export interface GuardianChatReviewVoteLayoutChatlogProps {
     itemsChatlog?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GuardianChatReviewVoteLayoutChatlog = ({ itemsChatlog, layout, tags }: GuardianChatReviewVoteLayoutChatlogProps) => {
+export const GuardianChatReviewVoteLayoutChatlog = ({ itemsChatlog, layout }: GuardianChatReviewVoteLayoutChatlogProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -204,7 +197,6 @@ export const GuardianChatReviewVoteLayoutChatlog = ({ itemsChatlog, layout, tags
         >
             <Region
                 name="chatlog"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsChatlog ?? (
@@ -223,16 +215,14 @@ export const GuardianChatReviewVoteLayoutChatlog = ({ itemsChatlog, layout, tags
 export interface GuardianChatReviewVoteLayoutVoteOkProps {
     layout?: BoxLayout;
     onVoteOk?: () => void;
-    tags?: string[];
 }
 
-export const GuardianChatReviewVoteLayoutVoteOk = ({ layout, onVoteOk, tags }: GuardianChatReviewVoteLayoutVoteOkProps) => {
+export const GuardianChatReviewVoteLayoutVoteOk = ({ layout, onVoteOk }: GuardianChatReviewVoteLayoutVoteOkProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="vote_ok"
-            tags={tags}
             tooltip={t('guide.bully.request.guide.vote.ok.tooltip')}
             onPointerTap={onVoteOk}
             cursor="pointer"
@@ -250,16 +240,14 @@ export const GuardianChatReviewVoteLayoutVoteOk = ({ layout, onVoteOk, tags }: G
 export interface GuardianChatReviewVoteLayoutVoteBadProps {
     layout?: BoxLayout;
     onVoteBad?: () => void;
-    tags?: string[];
 }
 
-export const GuardianChatReviewVoteLayoutVoteBad = ({ layout, onVoteBad, tags }: GuardianChatReviewVoteLayoutVoteBadProps) => {
+export const GuardianChatReviewVoteLayoutVoteBad = ({ layout, onVoteBad }: GuardianChatReviewVoteLayoutVoteBadProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="vote_bad"
-            tags={tags}
             tooltip={t('guide.bully.request.guide.vote.bad.tooltip')}
             onPointerTap={onVoteBad}
             cursor="pointer"
@@ -277,16 +265,14 @@ export const GuardianChatReviewVoteLayoutVoteBad = ({ layout, onVoteBad, tags }:
 export interface GuardianChatReviewVoteLayoutVoteVeryBadProps {
     layout?: BoxLayout;
     onVoteVeryBad?: () => void;
-    tags?: string[];
 }
 
-export const GuardianChatReviewVoteLayoutVoteVeryBad = ({ layout, onVoteVeryBad, tags }: GuardianChatReviewVoteLayoutVoteVeryBadProps) => {
+export const GuardianChatReviewVoteLayoutVoteVeryBad = ({ layout, onVoteVeryBad }: GuardianChatReviewVoteLayoutVoteVeryBadProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="vote_very_bad"
-            tags={tags}
             tooltip={t('guide.bully.request.guide.vote.very_bad.tooltip')}
             onPointerTap={onVoteVeryBad}
             cursor="pointer"
@@ -304,16 +290,14 @@ export const GuardianChatReviewVoteLayoutVoteVeryBad = ({ layout, onVoteVeryBad,
 export interface GuardianChatReviewVoteLayoutCloseLinkProps {
     layout?: BoxLayout;
     onCloseLink?: () => void;
-    tags?: string[];
 }
 
-export const GuardianChatReviewVoteLayoutCloseLink = ({ layout, onCloseLink, tags }: GuardianChatReviewVoteLayoutCloseLinkProps) => {
+export const GuardianChatReviewVoteLayoutCloseLink = ({ layout, onCloseLink }: GuardianChatReviewVoteLayoutCloseLinkProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="close_link"
-            tags={tags}
             onPointerTap={onCloseLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 277, top: 149, height: 24, justifyContent: 'center', ...layout }}

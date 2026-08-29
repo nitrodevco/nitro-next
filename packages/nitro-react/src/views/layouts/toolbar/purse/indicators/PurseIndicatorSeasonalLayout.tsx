@@ -15,7 +15,6 @@ export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, cap
             <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}>
                 <Border
                     variant="9"
-                    tags={[ 'BGCOLOR' ]}
                     tintColor="#686661"
                     layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
                 />
@@ -37,7 +36,6 @@ export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, cap
                     layout={{ position: 'absolute', left: 163, width: 29, top: 0, height: 29 }}
                 >
                     <ThemeImage
-                        tags={[ 'ICON' ]}
                         src={undefined}
                         layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                     />

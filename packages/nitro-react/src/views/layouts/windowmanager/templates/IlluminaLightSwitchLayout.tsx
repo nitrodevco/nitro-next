@@ -11,7 +11,6 @@ export const IlluminaLightSwitchLayout = ({ captionCAPTIONTEXT, layout }: Illumi
         <Region layout={{ position: 'relative', width: 50, height: 21, ...layout }}>
             <Region
                 name="_CAPTION_TEXT"
-                tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}
                 layout={{ position: 'absolute', left: 0, width: 2, top: 0, height: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText

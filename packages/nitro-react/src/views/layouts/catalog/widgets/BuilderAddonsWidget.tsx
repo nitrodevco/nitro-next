@@ -1,6 +1,6 @@
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, ButtonThick, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
-import { layoutImage } from '#base/views/layouts/layoutAssets';
+import { CatalogWidgetFlags, layoutImage } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `builderAddonsWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
@@ -15,10 +15,9 @@ export interface BuilderAddonsWidgetAddonsListProps {
     layout?: BoxLayout;
     onItemBuy?: () => void;
     srcDiamondsIcon?: string;
-    tags?: string[];
 }
 
-export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionItemHeader, captionItemPrice, layout, onItemBuy, srcDiamondsIcon, tags }: BuilderAddonsWidgetAddonsListProps) => {
+export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionItemHeader, captionItemPrice, layout, onItemBuy, srcDiamondsIcon }: BuilderAddonsWidgetAddonsListProps) => {
     const t = useTranslation();
 
     return (
@@ -28,7 +27,6 @@ export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionIte
         >
             <Region
                 name="addons_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', gap: 12, width: '100%' }}
             >
                 <Border
@@ -107,20 +105,18 @@ export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionIte
 };
 
 /** Named region `builderAddonsWidget` of BuilderAddonsWidget - configured through the parent's `builderAddonsWidget` prop. */
-export interface BuilderAddonsWidgetProps {
+export interface BuilderAddonsWidgetProps extends CatalogWidgetFlags {
     addonsList?: BuilderAddonsWidgetAddonsListProps;
     captionTrialWarning?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const BuilderAddonsWidget = ({ addonsList, captionTrialWarning, layout, tags }: BuilderAddonsWidgetProps) => {
+export const BuilderAddonsWidget = ({ addonsList, captionTrialWarning, layout }: BuilderAddonsWidgetProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="builderAddonsWidget"
-            tags={tags}
             layout={{ position: 'absolute', ...layout }}
         >
             <BuilderAddonsWidgetAddonsList {...addonsList} />

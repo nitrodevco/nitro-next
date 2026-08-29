@@ -1,5 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
-import { MarketPlaceWidget2, MarketPlaceWidget2Props } from '#base/views/layouts/catalog/widgets/MarketPlaceWidget2';
+import { MarketPlaceWidget, MarketPlaceWidgetProps } from '#base/views/layouts/catalog/widgets/MarketPlaceWidget';
 
 /** Generated from `1621_layout_marketplace_xml` (layout "ctlg_marketplace", 360x608) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutMarketplace_1621LayoutProps {
@@ -18,20 +18,17 @@ export const LayoutMarketplace_1621Layout = ({ ctlgMarketplace, layout }: Layout
 /** Named region `ctlg_marketplace` of LayoutMarketplace_1621Layout - configured through the parent's `ctlgMarketplace` prop. */
 export interface LayoutMarketplace_1621LayoutCtlgMarketplaceProps {
     layout?: BoxLayout;
-    marketPlaceWidget?: MarketPlaceWidget2Props;
-    tags?: string[];
+    marketPlaceWidget?: MarketPlaceWidgetProps;
 }
 
-export const LayoutMarketplace_1621LayoutCtlgMarketplace = ({ layout, marketPlaceWidget, tags }: LayoutMarketplace_1621LayoutCtlgMarketplaceProps) => {
+export const LayoutMarketplace_1621LayoutCtlgMarketplace = ({ layout, marketPlaceWidget }: LayoutMarketplace_1621LayoutCtlgMarketplaceProps) => {
     return (
         <Region
             name="ctlg_marketplace"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
-            <MarketPlaceWidget2
-                tags={[ 'EMBEDDED' ]}
+            <MarketPlaceWidget
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 {...marketPlaceWidget}
             />

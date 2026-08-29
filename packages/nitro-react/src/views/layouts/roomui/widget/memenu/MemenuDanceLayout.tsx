@@ -20,14 +20,12 @@ export const MemenuDanceLayout = ({ danceContainer, layout }: MemenuDanceLayoutP
 /** Named region `line` of MemenuDanceLayout - configured through the parent's `line` prop. */
 export interface MemenuDanceLayoutLineProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MemenuDanceLayoutLine = ({ layout, tags }: MemenuDanceLayoutLineProps) => {
+export const MemenuDanceLayoutLine = ({ layout }: MemenuDanceLayoutLineProps) => {
     return (
         <Region
             name="line"
-            tags={tags}
             backgroundColor="#2f2f2f"
             layout={{ position: 'absolute', left: 5, width: 152, top: 22, height: 1, ...layout }}
         />
@@ -38,16 +36,14 @@ export const MemenuDanceLayoutLine = ({ layout, tags }: MemenuDanceLayoutLinePro
 export interface MemenuDanceLayoutClubInfoItemProps {
     captionClubInfo?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MemenuDanceLayoutClubInfoItem = ({ captionClubInfo, layout, tags }: MemenuDanceLayoutClubInfoItemProps) => {
+export const MemenuDanceLayoutClubInfoItem = ({ captionClubInfo, layout }: MemenuDanceLayoutClubInfoItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="club_info"
-            tags={tags}
             layout={{ width: 145, height: 50, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -62,14 +58,12 @@ export const MemenuDanceLayoutClubInfoItem = ({ captionClubInfo, layout, tags }:
 export interface MemenuDanceLayoutButtonContainerProps {
     itemsButtonContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MemenuDanceLayoutButtonContainer = ({ itemsButtonContainer, layout, tags }: MemenuDanceLayoutButtonContainerProps) => {
+export const MemenuDanceLayoutButtonContainer = ({ itemsButtonContainer, layout }: MemenuDanceLayoutButtonContainerProps) => {
     return (
         <Region
             name="buttonContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 9, width: 145, top: 33, height: 140, flexDirection: 'column', gap: 4, ...layout }}
         >
             {itemsButtonContainer ?? (
@@ -87,16 +81,14 @@ export interface MemenuDanceLayoutDanceContainerProps {
     line?: MemenuDanceLayoutLineProps;
     onBackBtn?: () => void;
     onStopDancingButton?: () => void;
-    tags?: string[];
 }
 
-export const MemenuDanceLayoutDanceContainer = ({ buttonContainer, captionDanceTitle, layout, line, onBackBtn, onStopDancingButton, tags }: MemenuDanceLayoutDanceContainerProps) => {
+export const MemenuDanceLayoutDanceContainer = ({ buttonContainer, captionDanceTitle, layout, line, onBackBtn, onStopDancingButton }: MemenuDanceLayoutDanceContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="dance_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 163, top: 0, height: 208, ...layout }}
         >
             <Border

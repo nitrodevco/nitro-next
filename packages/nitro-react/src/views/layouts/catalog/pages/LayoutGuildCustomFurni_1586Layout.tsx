@@ -33,16 +33,14 @@ export interface LayoutGuildCustomFurni_1586LayoutCtlgDefault3x3Props {
     productViewWidget?: ProductViewWidgetProps;
     purchaseWidget?: PurchaseWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
-    tags?: string[];
 }
 
-export const LayoutGuildCustomFurni_1586LayoutCtlgDefault3x3 = ({ activityPointDisplayWidget, captionCtlgSelectproduct, guildBadgeViewWidget, guildSelectorWidget, itemGridWidget, layout, productViewWidget, purchaseWidget, specialInfoWidget, tags }: LayoutGuildCustomFurni_1586LayoutCtlgDefault3x3Props) => {
+export const LayoutGuildCustomFurni_1586LayoutCtlgDefault3x3 = ({ activityPointDisplayWidget, captionCtlgSelectproduct, guildBadgeViewWidget, guildSelectorWidget, itemGridWidget, layout, productViewWidget, purchaseWidget, specialInfoWidget }: LayoutGuildCustomFurni_1586LayoutCtlgDefault3x3Props) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_default_3x3"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
         >
             <Region
@@ -56,7 +54,6 @@ export const LayoutGuildCustomFurni_1586LayoutCtlgDefault3x3 = ({ activityPointD
                 />
             </Region>
             <ItemGridWidget
-                tags={[ 'E' ]}
                 layout={{ position: 'absolute', left: 5, width: 170, top: 150, height: 185 }}
                 {...itemGridWidget}
             />

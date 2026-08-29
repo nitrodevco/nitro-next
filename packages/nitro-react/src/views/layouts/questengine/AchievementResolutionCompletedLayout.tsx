@@ -60,16 +60,14 @@ export const AchievementResolutionCompletedLayout = ({ cancelButton, layout, onC
 export interface AchievementResolutionCompletedLayoutCancelButtonProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
-    tags?: string[];
 }
 
-export const AchievementResolutionCompletedLayoutCancelButton = ({ layout, onCancelButton, tags }: AchievementResolutionCompletedLayoutCancelButtonProps) => {
+export const AchievementResolutionCompletedLayoutCancelButton = ({ layout, onCancelButton }: AchievementResolutionCompletedLayoutCancelButtonProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_button"
-            tags={tags}
             onPointerTap={onCancelButton}
             cursor="pointer"
             layout={{ width: 294, height: 23, flexShrink: 0, ...layout }}

@@ -43,16 +43,14 @@ export interface MeMenuViewLayoutProfileProps {
     layout?: BoxLayout;
     onProfile?: () => void;
     srcProfileIcon?: string;
-    tags?: string[];
 }
 
-export const MeMenuViewLayoutProfile = ({ captionProfileText, layout, onProfile, srcProfileIcon, tags }: MeMenuViewLayoutProfileProps) => {
+export const MeMenuViewLayoutProfile = ({ captionProfileText, layout, onProfile, srcProfileIcon }: MeMenuViewLayoutProfileProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="profile"
-            tags={tags}
             onPointerTap={onProfile}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 79, top: 0, height: 79, justifyContent: 'center', ...layout }}
@@ -82,16 +80,14 @@ export interface MeMenuViewLayoutMinimailProps {
     layout?: BoxLayout;
     onMinimail?: () => void;
     srcMinimailIcon?: string;
-    tags?: string[];
 }
 
-export const MeMenuViewLayoutMinimail = ({ captionMinimailText, layout, onMinimail, srcMinimailIcon, tags }: MeMenuViewLayoutMinimailProps) => {
+export const MeMenuViewLayoutMinimail = ({ captionMinimailText, layout, onMinimail, srcMinimailIcon }: MeMenuViewLayoutMinimailProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="minimail"
-            tags={tags}
             onPointerTap={onMinimail}
             cursor="pointer"
             layout={{ position: 'absolute', left: 86, width: 79, top: 0, height: 79, justifyContent: 'center', ...layout }}
@@ -121,16 +117,14 @@ export interface MeMenuViewLayoutRoomsProps {
     layout?: BoxLayout;
     onRooms?: () => void;
     srcRoomsIcon?: string;
-    tags?: string[];
 }
 
-export const MeMenuViewLayoutRooms = ({ captionRoomsText, layout, onRooms, srcRoomsIcon, tags }: MeMenuViewLayoutRoomsProps) => {
+export const MeMenuViewLayoutRooms = ({ captionRoomsText, layout, onRooms, srcRoomsIcon }: MeMenuViewLayoutRoomsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rooms"
-            tags={tags}
             onPointerTap={onRooms}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 79, top: 79, height: 79, justifyContent: 'center', ...layout }}
@@ -160,16 +154,14 @@ export interface MeMenuViewLayoutSettingsProps {
     layout?: BoxLayout;
     onSettings?: () => void;
     srcSettingsIcon?: string;
-    tags?: string[];
 }
 
-export const MeMenuViewLayoutSettings = ({ captionSettingsText, layout, onSettings, srcSettingsIcon, tags }: MeMenuViewLayoutSettingsProps) => {
+export const MeMenuViewLayoutSettings = ({ captionSettingsText, layout, onSettings, srcSettingsIcon }: MeMenuViewLayoutSettingsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="settings"
-            tags={tags}
             onPointerTap={onSettings}
             cursor="pointer"
             layout={{ position: 'absolute', left: 86, width: 79, top: 79, height: 79, justifyContent: 'center', ...layout }}
@@ -199,16 +191,14 @@ export interface MeMenuViewLayoutAchievementsProps {
     layout?: BoxLayout;
     onAchievements?: () => void;
     srcAchievementsIcon?: string;
-    tags?: string[];
 }
 
-export const MeMenuViewLayoutAchievements = ({ captionAchievementsText, layout, onAchievements, srcAchievementsIcon, tags }: MeMenuViewLayoutAchievementsProps) => {
+export const MeMenuViewLayoutAchievements = ({ captionAchievementsText, layout, onAchievements, srcAchievementsIcon }: MeMenuViewLayoutAchievementsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="achievements"
-            tags={tags}
             onPointerTap={onAchievements}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 89, top: 158, height: 79, justifyContent: 'center', ...layout }}
@@ -238,16 +228,14 @@ export interface MeMenuViewLayoutTalentsProps {
     layout?: BoxLayout;
     onTalents?: () => void;
     srcTalentsIcon?: string;
-    tags?: string[];
 }
 
-export const MeMenuViewLayoutTalents = ({ captionTalentsText, layout, onTalents, srcTalentsIcon, tags }: MeMenuViewLayoutTalentsProps) => {
+export const MeMenuViewLayoutTalents = ({ captionTalentsText, layout, onTalents, srcTalentsIcon }: MeMenuViewLayoutTalentsProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="talents"
-            tags={tags}
             onPointerTap={onTalents}
             cursor="pointer"
             layout={{ position: 'absolute', left: 86, width: 79, top: 158, height: 79, justifyContent: 'center', ...layout }}
@@ -277,16 +265,14 @@ export interface MeMenuViewLayoutGuideProps {
     layout?: BoxLayout;
     onGuide?: () => void;
     srcGuideIcon?: string;
-    tags?: string[];
 }
 
-export const MeMenuViewLayoutGuide = ({ captionGuideText, layout, onGuide, srcGuideIcon, tags }: MeMenuViewLayoutGuideProps) => {
+export const MeMenuViewLayoutGuide = ({ captionGuideText, layout, onGuide, srcGuideIcon }: MeMenuViewLayoutGuideProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="guide"
-            tags={tags}
             onPointerTap={onGuide}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 79, top: 247, height: 79, justifyContent: 'center', ...layout }}
@@ -316,16 +302,14 @@ export interface MeMenuViewLayoutClothesProps {
     layout?: BoxLayout;
     onClothes?: () => void;
     srcClothesIcon?: string;
-    tags?: string[];
 }
 
-export const MeMenuViewLayoutClothes = ({ captionClothesText, layout, onClothes, srcClothesIcon, tags }: MeMenuViewLayoutClothesProps) => {
+export const MeMenuViewLayoutClothes = ({ captionClothesText, layout, onClothes, srcClothesIcon }: MeMenuViewLayoutClothesProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="clothes"
-            tags={tags}
             onPointerTap={onClothes}
             cursor="pointer"
             layout={{ position: 'absolute', left: 86, width: 79, top: 247, height: 79, justifyContent: 'center', ...layout }}

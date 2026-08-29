@@ -28,14 +28,12 @@ export const GenericWidgetLayout = ({ contentContainer, layout, srcBitmap }: Gen
 /** Named region `content_container` of GenericWidgetLayout - configured through the parent's `contentContainer` prop. */
 export interface GenericWidgetLayoutContentContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GenericWidgetLayoutContentContainer = ({ layout, tags }: GenericWidgetLayoutContentContainerProps) => {
+export const GenericWidgetLayoutContentContainer = ({ layout }: GenericWidgetLayoutContentContainerProps) => {
     return (
         <Region
             name="content_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 20, flexDirection: 'column', ...layout }}
         />
     );

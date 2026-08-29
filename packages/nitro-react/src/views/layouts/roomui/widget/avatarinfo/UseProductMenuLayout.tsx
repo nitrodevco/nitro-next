@@ -28,14 +28,12 @@ export interface UseProductMenuLayoutProfileLinkProps {
     captionName?: string;
     layout?: BoxLayout;
     onProfileLink?: () => void;
-    tags?: string[];
 }
 
-export const UseProductMenuLayoutProfileLink = ({ captionName, layout, onProfileLink, tags }: UseProductMenuLayoutProfileLinkProps) => {
+export const UseProductMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: UseProductMenuLayoutProfileLinkProps) => {
     return (
         <Region
             name="profile_link"
-            tags={tags}
             onPointerTap={onProfileLink}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center', ...layout }}
@@ -59,37 +57,41 @@ export interface UseProductMenuLayoutUseProductItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const UseProductMenuLayoutUseProductItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutUseProductItemProps) => {
+export const UseProductMenuLayoutUseProductItem = ({ captionLabel, layout, onButton, visibleGroups }: UseProductMenuLayoutUseProductItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="use_product"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.useproduct')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.useproduct')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -99,37 +101,41 @@ export interface UseProductMenuLayoutUseProductShampooItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const UseProductMenuLayoutUseProductShampooItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutUseProductShampooItemProps) => {
+export const UseProductMenuLayoutUseProductShampooItem = ({ captionLabel, layout, onButton, visibleGroups }: UseProductMenuLayoutUseProductShampooItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="use_product_shampoo"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.useproduct_shampoo')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.useproduct_shampoo')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -139,37 +145,41 @@ export interface UseProductMenuLayoutUseProductCustomPartItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const UseProductMenuLayoutUseProductCustomPartItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutUseProductCustomPartItemProps) => {
+export const UseProductMenuLayoutUseProductCustomPartItem = ({ captionLabel, layout, onButton, visibleGroups }: UseProductMenuLayoutUseProductCustomPartItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="use_product_custom_part"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.useproduct_custom_part')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.useproduct_custom_part')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -179,37 +189,41 @@ export interface UseProductMenuLayoutUseProductCustomPartShampooItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const UseProductMenuLayoutUseProductCustomPartShampooItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutUseProductCustomPartShampooItemProps) => {
+export const UseProductMenuLayoutUseProductCustomPartShampooItem = ({ captionLabel, layout, onButton, visibleGroups }: UseProductMenuLayoutUseProductCustomPartShampooItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="use_product_custom_part_shampoo"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.useproduct_custom_part_shampoo')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.useproduct_custom_part_shampoo')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -219,37 +233,41 @@ export interface UseProductMenuLayoutUseProductSaddleItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const UseProductMenuLayoutUseProductSaddleItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutUseProductSaddleItemProps) => {
+export const UseProductMenuLayoutUseProductSaddleItem = ({ captionLabel, layout, onButton, visibleGroups }: UseProductMenuLayoutUseProductSaddleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="use_product_saddle"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.useproduct_saddle')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.useproduct_saddle')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -259,37 +277,41 @@ export interface UseProductMenuLayoutReplaceProductSaddleItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const UseProductMenuLayoutReplaceProductSaddleItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutReplaceProductSaddleItemProps) => {
+export const UseProductMenuLayoutReplaceProductSaddleItem = ({ captionLabel, layout, onButton, visibleGroups }: UseProductMenuLayoutReplaceProductSaddleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="replace_product_saddle"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.replaceproduct_saddle')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.replaceproduct_saddle')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -299,37 +321,41 @@ export interface UseProductMenuLayoutReviveMonsterplantItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const UseProductMenuLayoutReviveMonsterplantItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutReviveMonsterplantItemProps) => {
+export const UseProductMenuLayoutReviveMonsterplantItem = ({ captionLabel, layout, onButton, visibleGroups }: UseProductMenuLayoutReviveMonsterplantItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="revive_monsterplant"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.revive_monsterplant')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.revive_monsterplant')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -339,37 +365,41 @@ export interface UseProductMenuLayoutRebreedMonsterplantItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const UseProductMenuLayoutRebreedMonsterplantItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutRebreedMonsterplantItemProps) => {
+export const UseProductMenuLayoutRebreedMonsterplantItem = ({ captionLabel, layout, onButton, visibleGroups }: UseProductMenuLayoutRebreedMonsterplantItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="rebreed_monsterplant"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.rebreed_monsterplant')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.rebreed_monsterplant')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -379,37 +409,41 @@ export interface UseProductMenuLayoutFertilizeMonsterplantItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const UseProductMenuLayoutFertilizeMonsterplantItem = ({ captionLabel, layout, onButton, tags }: UseProductMenuLayoutFertilizeMonsterplantItemProps) => {
+export const UseProductMenuLayoutFertilizeMonsterplantItem = ({ captionLabel, layout, onButton, visibleGroups }: UseProductMenuLayoutFertilizeMonsterplantItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="fertilize_monsterplant"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('infostand.button.fertilize_monsterplant')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.fertilize_monsterplant')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -418,27 +452,25 @@ export const UseProductMenuLayoutFertilizeMonsterplantItem = ({ captionLabel, la
 export interface UseProductMenuLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const UseProductMenuLayoutButtons = ({ itemsButtons, layout, tags }: UseProductMenuLayoutButtonsProps) => {
+export const UseProductMenuLayoutButtons = ({ itemsButtons, layout }: UseProductMenuLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, minWidth: 104, top: 28, minHeight: 242, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsButtons ?? (
                 <>
-                    <UseProductMenuLayoutUseProductItem tags={[ 'action' ]} />
-                    <UseProductMenuLayoutUseProductShampooItem tags={[ 'action' ]} />
-                    <UseProductMenuLayoutUseProductCustomPartItem tags={[ 'action' ]} />
-                    <UseProductMenuLayoutUseProductCustomPartShampooItem tags={[ 'action' ]} />
-                    <UseProductMenuLayoutUseProductSaddleItem tags={[ 'action' ]} />
-                    <UseProductMenuLayoutReplaceProductSaddleItem tags={[ 'action' ]} />
-                    <UseProductMenuLayoutReviveMonsterplantItem tags={[ 'action' ]} />
-                    <UseProductMenuLayoutRebreedMonsterplantItem tags={[ 'action' ]} />
-                    <UseProductMenuLayoutFertilizeMonsterplantItem tags={[ 'action' ]} />
+                    <UseProductMenuLayoutUseProductItem />
+                    <UseProductMenuLayoutUseProductShampooItem />
+                    <UseProductMenuLayoutUseProductCustomPartItem />
+                    <UseProductMenuLayoutUseProductCustomPartShampooItem />
+                    <UseProductMenuLayoutUseProductSaddleItem />
+                    <UseProductMenuLayoutReplaceProductSaddleItem />
+                    <UseProductMenuLayoutReviveMonsterplantItem />
+                    <UseProductMenuLayoutRebreedMonsterplantItem />
+                    <UseProductMenuLayoutFertilizeMonsterplantItem />
                 </>
             )}
         </Region>
@@ -449,14 +481,12 @@ export const UseProductMenuLayoutButtons = ({ itemsButtons, layout, tags }: UseP
 export interface UseProductMenuLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
-    tags?: string[];
 }
 
-export const UseProductMenuLayoutMinimize = ({ layout, onMinimize, tags }: UseProductMenuLayoutMinimizeProps) => {
+export const UseProductMenuLayoutMinimize = ({ layout, onMinimize }: UseProductMenuLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 2, width: 100, bottom: 3, height: 18, ...layout }}
@@ -476,14 +506,12 @@ export interface UseProductMenuLayoutBorderProps {
     layout?: BoxLayout;
     minimize?: UseProductMenuLayoutMinimizeProps;
     profileLink?: UseProductMenuLayoutProfileLinkProps;
-    tags?: string[];
 }
 
-export const UseProductMenuLayoutBorder = ({ buttons, layout, minimize, profileLink, tags }: UseProductMenuLayoutBorderProps) => {
+export const UseProductMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: UseProductMenuLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 292, justifyContent: 'center', ...layout }}
         >
             <UseProductMenuLayoutProfileLink {...profileLink} />

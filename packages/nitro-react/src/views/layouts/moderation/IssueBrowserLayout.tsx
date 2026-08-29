@@ -70,14 +70,12 @@ export const IssueBrowserLayout = ({ layout, onAutoPick, onClose, onMyIssues, on
 /** Named region `list_header` of IssueBrowserLayout - configured through the parent's `listHeader` prop. */
 export interface IssueBrowserLayoutListHeaderProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueBrowserLayoutListHeader = ({ layout, tags }: IssueBrowserLayoutListHeaderProps) => {
+export const IssueBrowserLayoutListHeader = ({ layout }: IssueBrowserLayoutListHeaderProps) => {
     return (
         <Region
             name="list_header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 30, top: 0, height: 15, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -109,14 +107,12 @@ export interface IssueBrowserLayoutTextsContainerProps {
     layout?: BoxLayout;
     onTextsContainer?: () => void;
     srcTargetIcon?: string;
-    tags?: string[];
 }
 
-export const IssueBrowserLayoutTextsContainer = ({ captionCategory, captionScore, captionSource, captionTargetName, captionTime, layout, onTextsContainer, srcTargetIcon, tags }: IssueBrowserLayoutTextsContainerProps) => {
+export const IssueBrowserLayoutTextsContainer = ({ captionCategory, captionScore, captionSource, captionTargetName, captionTime, layout, onTextsContainer, srcTargetIcon }: IssueBrowserLayoutTextsContainerProps) => {
     return (
         <Region
             name="texts_container"
-            tags={tags}
             onPointerTap={onTextsContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 62, top: 4, height: 16, ...layout }}
@@ -165,15 +161,13 @@ export interface IssueBrowserLayoutItemPrototypeItemProps {
     layout?: BoxLayout;
     onItemPrototype?: () => void;
     onPickButton?: () => void;
-    tags?: string[];
     textsContainer?: IssueBrowserLayoutTextsContainerProps;
 }
 
-export const IssueBrowserLayoutItemPrototypeItem = ({ layout, onItemPrototype, onPickButton, tags, textsContainer }: IssueBrowserLayoutItemPrototypeItemProps) => {
+export const IssueBrowserLayoutItemPrototypeItem = ({ layout, onItemPrototype, onPickButton, textsContainer }: IssueBrowserLayoutItemPrototypeItemProps) => {
     return (
         <Region
             name="item_prototype"
-            tags={tags}
             onPointerTap={onItemPrototype}
             cursor="pointer"
             layout={{ width: 517, height: 24, flexShrink: 0, minHeight: 24, maxHeight: 24, ...layout }}
@@ -195,10 +189,9 @@ export const IssueBrowserLayoutItemPrototypeItem = ({ layout, onItemPrototype, o
 export interface IssueBrowserLayoutIssueListProps {
     itemsIssueList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueBrowserLayoutIssueList = ({ itemsIssueList, layout, tags }: IssueBrowserLayoutIssueListProps) => {
+export const IssueBrowserLayoutIssueList = ({ itemsIssueList, layout }: IssueBrowserLayoutIssueListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -206,7 +199,6 @@ export const IssueBrowserLayoutIssueList = ({ itemsIssueList, layout, tags }: Is
         >
             <Region
                 name="issue_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsIssueList ?? (
@@ -222,15 +214,13 @@ export interface IssueBrowserLayoutOpenIssuesPrototypeProps {
     issueList?: IssueBrowserLayoutIssueListProps;
     layout?: BoxLayout;
     listHeader?: IssueBrowserLayoutListHeaderProps;
-    tags?: string[];
     visibleOpenIssuesPrototype?: boolean;
 }
 
-export const IssueBrowserLayoutOpenIssuesPrototype = ({ issueList, layout, listHeader, tags, visibleOpenIssuesPrototype }: IssueBrowserLayoutOpenIssuesPrototypeProps) => {
+export const IssueBrowserLayoutOpenIssuesPrototype = ({ issueList, layout, listHeader, visibleOpenIssuesPrototype }: IssueBrowserLayoutOpenIssuesPrototypeProps) => {
     return (
         <Region
             name="open_issues_prototype"
-            tags={tags}
             visible={visibleOpenIssuesPrototype ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
@@ -246,14 +236,12 @@ export const IssueBrowserLayoutOpenIssuesPrototype = ({ issueList, layout, listH
 /** Named region `list_header` of IssueBrowserLayout - configured through the parent's `listHeader` prop. */
 export interface IssueBrowserLayoutListHeader2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueBrowserLayoutListHeader2 = ({ layout, tags }: IssueBrowserLayoutListHeader2Props) => {
+export const IssueBrowserLayoutListHeader2 = ({ layout }: IssueBrowserLayoutListHeader2Props) => {
     return (
         <Region
             name="list_header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 30, top: 0, height: 15, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -289,14 +277,12 @@ export interface IssueBrowserLayoutTextsContainer2Props {
     layout?: BoxLayout;
     onTextsContainer?: () => void;
     srcTargetIcon?: string;
-    tags?: string[];
 }
 
-export const IssueBrowserLayoutTextsContainer2 = ({ captionCategory, captionMsgs, captionScore, captionSource, captionTargetName, captionTime, layout, onTextsContainer, srcTargetIcon, tags }: IssueBrowserLayoutTextsContainer2Props) => {
+export const IssueBrowserLayoutTextsContainer2 = ({ captionCategory, captionMsgs, captionScore, captionSource, captionTargetName, captionTime, layout, onTextsContainer, srcTargetIcon }: IssueBrowserLayoutTextsContainer2Props) => {
     return (
         <Region
             name="texts_container"
-            tags={tags}
             onPointerTap={onTextsContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 62, top: 4, height: 16, ...layout }}
@@ -352,15 +338,13 @@ export interface IssueBrowserLayoutItemPrototypeItem2Props {
     onHandleButton?: () => void;
     onItemPrototype?: () => void;
     onReleaseButton?: () => void;
-    tags?: string[];
     textsContainer?: IssueBrowserLayoutTextsContainer2Props;
 }
 
-export const IssueBrowserLayoutItemPrototypeItem2 = ({ layout, onHandleButton, onItemPrototype, onReleaseButton, tags, textsContainer }: IssueBrowserLayoutItemPrototypeItem2Props) => {
+export const IssueBrowserLayoutItemPrototypeItem2 = ({ layout, onHandleButton, onItemPrototype, onReleaseButton, textsContainer }: IssueBrowserLayoutItemPrototypeItem2Props) => {
     return (
         <Region
             name="item_prototype"
-            tags={tags}
             onPointerTap={onItemPrototype}
             cursor="pointer"
             layout={{ width: 517, height: 24, flexShrink: 0, minHeight: 24, maxHeight: 24, ...layout }}
@@ -390,10 +374,9 @@ export const IssueBrowserLayoutItemPrototypeItem2 = ({ layout, onHandleButton, o
 export interface IssueBrowserLayoutIssueList2Props {
     itemsIssueList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueBrowserLayoutIssueList2 = ({ itemsIssueList, layout, tags }: IssueBrowserLayoutIssueList2Props) => {
+export const IssueBrowserLayoutIssueList2 = ({ itemsIssueList, layout }: IssueBrowserLayoutIssueList2Props) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -401,7 +384,6 @@ export const IssueBrowserLayoutIssueList2 = ({ itemsIssueList, layout, tags }: I
         >
             <Region
                 name="issue_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsIssueList ?? (
@@ -418,15 +400,13 @@ export interface IssueBrowserLayoutMyIssuesPrototypeProps {
     layout?: BoxLayout;
     listHeader?: IssueBrowserLayoutListHeader2Props;
     onReleaseAll?: () => void;
-    tags?: string[];
     visibleMyIssuesPrototype?: boolean;
 }
 
-export const IssueBrowserLayoutMyIssuesPrototype = ({ issueList, layout, listHeader, onReleaseAll, tags, visibleMyIssuesPrototype }: IssueBrowserLayoutMyIssuesPrototypeProps) => {
+export const IssueBrowserLayoutMyIssuesPrototype = ({ issueList, layout, listHeader, onReleaseAll, visibleMyIssuesPrototype }: IssueBrowserLayoutMyIssuesPrototypeProps) => {
     return (
         <Region
             name="my_issues_prototype"
-            tags={tags}
             visible={visibleMyIssuesPrototype ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
@@ -450,14 +430,12 @@ export const IssueBrowserLayoutMyIssuesPrototype = ({ issueList, layout, listHea
 /** Named region `list_header` of IssueBrowserLayout - configured through the parent's `listHeader` prop. */
 export interface IssueBrowserLayoutListHeader3Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueBrowserLayoutListHeader3 = ({ layout, tags }: IssueBrowserLayoutListHeader3Props) => {
+export const IssueBrowserLayoutListHeader3 = ({ layout }: IssueBrowserLayoutListHeader3Props) => {
     return (
         <Region
             name="list_header"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 30, top: 0, height: 15, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -493,14 +471,12 @@ export interface IssueBrowserLayoutTextsContainer3Props {
     layout?: BoxLayout;
     onTextsContainer?: () => void;
     srcTargetIcon?: string;
-    tags?: string[];
 }
 
-export const IssueBrowserLayoutTextsContainer3 = ({ captionCategory, captionPicker, captionScore, captionSource, captionTargetName, captionTime, layout, onTextsContainer, srcTargetIcon, tags }: IssueBrowserLayoutTextsContainer3Props) => {
+export const IssueBrowserLayoutTextsContainer3 = ({ captionCategory, captionPicker, captionScore, captionSource, captionTargetName, captionTime, layout, onTextsContainer, srcTargetIcon }: IssueBrowserLayoutTextsContainer3Props) => {
     return (
         <Region
             name="texts_container"
-            tags={tags}
             onPointerTap={onTextsContainer}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, right: 0, top: 4, height: 16, ...layout }}
@@ -554,15 +530,13 @@ export const IssueBrowserLayoutTextsContainer3 = ({ captionCategory, captionPick
 export interface IssueBrowserLayoutItemPrototypeItem3Props {
     layout?: BoxLayout;
     onItemPrototype?: () => void;
-    tags?: string[];
     textsContainer?: IssueBrowserLayoutTextsContainer3Props;
 }
 
-export const IssueBrowserLayoutItemPrototypeItem3 = ({ layout, onItemPrototype, tags, textsContainer }: IssueBrowserLayoutItemPrototypeItem3Props) => {
+export const IssueBrowserLayoutItemPrototypeItem3 = ({ layout, onItemPrototype, textsContainer }: IssueBrowserLayoutItemPrototypeItem3Props) => {
     return (
         <Region
             name="item_prototype"
-            tags={tags}
             onPointerTap={onItemPrototype}
             cursor="pointer"
             layout={{ width: 517, height: 24, flexShrink: 0, minHeight: 24, maxHeight: 24, ...layout }}
@@ -576,10 +550,9 @@ export const IssueBrowserLayoutItemPrototypeItem3 = ({ layout, onItemPrototype, 
 export interface IssueBrowserLayoutIssueList3Props {
     itemsIssueList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueBrowserLayoutIssueList3 = ({ itemsIssueList, layout, tags }: IssueBrowserLayoutIssueList3Props) => {
+export const IssueBrowserLayoutIssueList3 = ({ itemsIssueList, layout }: IssueBrowserLayoutIssueList3Props) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -587,7 +560,6 @@ export const IssueBrowserLayoutIssueList3 = ({ itemsIssueList, layout, tags }: I
         >
             <Region
                 name="issue_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
                 {itemsIssueList ?? (
@@ -603,14 +575,12 @@ export interface IssueBrowserLayoutPickedIssuesPrototypeProps {
     issueList?: IssueBrowserLayoutIssueList3Props;
     layout?: BoxLayout;
     listHeader?: IssueBrowserLayoutListHeader3Props;
-    tags?: string[];
 }
 
-export const IssueBrowserLayoutPickedIssuesPrototype = ({ issueList, layout, listHeader, tags }: IssueBrowserLayoutPickedIssuesPrototypeProps) => {
+export const IssueBrowserLayoutPickedIssuesPrototype = ({ issueList, layout, listHeader }: IssueBrowserLayoutPickedIssuesPrototypeProps) => {
     return (
         <Region
             name="picked_issues_prototype"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 10, right: 0, top: 10, bottom: 0 }}>
@@ -628,14 +598,12 @@ export interface IssueBrowserLayoutTabContentProps {
     myIssuesPrototype?: IssueBrowserLayoutMyIssuesPrototypeProps;
     openIssuesPrototype?: IssueBrowserLayoutOpenIssuesPrototypeProps;
     pickedIssuesPrototype?: IssueBrowserLayoutPickedIssuesPrototypeProps;
-    tags?: string[];
 }
 
-export const IssueBrowserLayoutTabContent = ({ layout, myIssuesPrototype, openIssuesPrototype, pickedIssuesPrototype, tags }: IssueBrowserLayoutTabContentProps) => {
+export const IssueBrowserLayoutTabContent = ({ layout, myIssuesPrototype, openIssuesPrototype, pickedIssuesPrototype }: IssueBrowserLayoutTabContentProps) => {
     return (
         <Region
             name="tab_content"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, right: 18, top: 30, bottom: 66, ...layout }}
         >
             <IssueBrowserLayoutOpenIssuesPrototype {...openIssuesPrototype} />

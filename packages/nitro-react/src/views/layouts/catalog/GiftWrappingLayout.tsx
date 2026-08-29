@@ -150,14 +150,12 @@ export const GiftWrappingLayout = ({ avatarImageContainer, boxPickerContainer, c
 /** Named region `suggestion_list` of GiftWrappingLayout - configured through the parent's `suggestionList` prop. */
 export interface GiftWrappingLayoutSuggestionListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GiftWrappingLayoutSuggestionList = ({ layout, tags }: GiftWrappingLayoutSuggestionListProps) => {
+export const GiftWrappingLayoutSuggestionList = ({ layout }: GiftWrappingLayoutSuggestionListProps) => {
     return (
         <Region
             name="suggestion_list"
-            tags={tags}
             layout={{ position: 'absolute', left: 1, top: 0, minWidth: 148, maxWidth: 262, flexDirection: 'column', ...layout }}
         />
     );
@@ -168,15 +166,13 @@ export interface GiftWrappingLayoutSuggestionContainerProps {
     layout?: BoxLayout;
     onSuggestionContainer?: () => void;
     suggestionList?: GiftWrappingLayoutSuggestionListProps;
-    tags?: string[];
     visibleSuggestionContainer?: boolean;
 }
 
-export const GiftWrappingLayoutSuggestionContainer = ({ layout, onSuggestionContainer, suggestionList, tags, visibleSuggestionContainer }: GiftWrappingLayoutSuggestionContainerProps) => {
+export const GiftWrappingLayoutSuggestionContainer = ({ layout, onSuggestionContainer, suggestionList, visibleSuggestionContainer }: GiftWrappingLayoutSuggestionContainerProps) => {
     return (
         <Region
             name="suggestion_container"
-            tags={tags}
             visible={visibleSuggestionContainer ?? false}
             backgroundColor="#999999"
             onPointerTap={onSuggestionContainer}
@@ -197,14 +193,12 @@ export const GiftWrappingLayoutSuggestionContainer = ({ layout, onSuggestionCont
 export interface GiftWrappingLayoutAvatarImageContainerProps {
     layout?: BoxLayout;
     srcAvatarImage?: string;
-    tags?: string[];
 }
 
-export const GiftWrappingLayoutAvatarImageContainer = ({ layout, srcAvatarImage, tags }: GiftWrappingLayoutAvatarImageContainerProps) => {
+export const GiftWrappingLayoutAvatarImageContainer = ({ layout, srcAvatarImage }: GiftWrappingLayoutAvatarImageContainerProps) => {
     return (
         <Region
             name="avatar_image_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 15, width: 60, top: 51, height: 149, minWidth: 60, maxWidth: 60, minHeight: 149, maxHeight: 149, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
@@ -220,16 +214,14 @@ export const GiftWrappingLayoutAvatarImageContainer = ({ layout, srcAvatarImage,
 export interface GiftWrappingLayoutPickBoxPriceTitleItemProps {
     captionPickBoxPriceTitle?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GiftWrappingLayoutPickBoxPriceTitleItem = ({ captionPickBoxPriceTitle, layout, tags }: GiftWrappingLayoutPickBoxPriceTitleItemProps) => {
+export const GiftWrappingLayoutPickBoxPriceTitleItem = ({ captionPickBoxPriceTitle, layout }: GiftWrappingLayoutPickBoxPriceTitleItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="pick_box_price_title"
-            tags={tags}
             layout={{ width: 155, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -244,14 +236,12 @@ export const GiftWrappingLayoutPickBoxPriceTitleItem = ({ captionPickBoxPriceTit
 export interface GiftWrappingLayoutSmallCoinItemProps {
     layout?: BoxLayout;
     srcSmallCoin?: string;
-    tags?: string[];
 }
 
-export const GiftWrappingLayoutSmallCoinItem = ({ layout, srcSmallCoin, tags }: GiftWrappingLayoutSmallCoinItemProps) => {
+export const GiftWrappingLayoutSmallCoinItem = ({ layout, srcSmallCoin }: GiftWrappingLayoutSmallCoinItemProps) => {
     return (
         <ThemeImage
             name="small_coin"
-            tags={tags}
             src={srcSmallCoin ?? layoutImage('common_small_coin.png')}
             layout={{ width: 16, height: 16, flexShrink: 0, ...layout }}
         />
@@ -262,14 +252,12 @@ export const GiftWrappingLayoutSmallCoinItem = ({ layout, srcSmallCoin, tags }: 
 export interface GiftWrappingLayoutPriceBoxContainerProps {
     itemsPriceBoxContainer?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GiftWrappingLayoutPriceBoxContainer = ({ itemsPriceBoxContainer, layout, tags }: GiftWrappingLayoutPriceBoxContainerProps) => {
+export const GiftWrappingLayoutPriceBoxContainer = ({ itemsPriceBoxContainer, layout }: GiftWrappingLayoutPriceBoxContainerProps) => {
     return (
         <Region
             name="price_box_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 154, top: 20, flexDirection: 'row', ...layout }}
         >
             {itemsPriceBoxContainer ?? (
@@ -293,16 +281,14 @@ export interface GiftWrappingLayoutBoxPickerContainerProps {
     onRibbonPrev?: () => void;
     priceBoxContainer?: GiftWrappingLayoutPriceBoxContainerProps;
     srcProductImage?: string;
-    tags?: string[];
 }
 
-export const GiftWrappingLayoutBoxPickerContainer = ({ captionPickBoxTitle, captionPickRibbonTitle, layout, onBoxNext, onBoxPrev, onRibbonNext, onRibbonPrev, priceBoxContainer, srcProductImage, tags }: GiftWrappingLayoutBoxPickerContainerProps) => {
+export const GiftWrappingLayoutBoxPickerContainer = ({ captionPickBoxTitle, captionPickRibbonTitle, layout, onBoxNext, onBoxPrev, onRibbonNext, onRibbonPrev, priceBoxContainer, srcProductImage }: GiftWrappingLayoutBoxPickerContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="box_picker_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 10, width: 306, top: 253, height: 83, ...layout }}
         >
             <Border
@@ -391,14 +377,12 @@ export const GiftWrappingLayoutBoxPickerContainer = ({ captionPickBoxTitle, capt
 /** Named region `color_grid` of GiftWrappingLayout - configured through the parent's `colorGrid` prop. */
 export interface GiftWrappingLayoutColorGridProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GiftWrappingLayoutColorGrid = ({ layout, tags }: GiftWrappingLayoutColorGridProps) => {
+export const GiftWrappingLayoutColorGrid = ({ layout }: GiftWrappingLayoutColorGridProps) => {
     return (
         <Region
             name="color_grid"
-            tags={tags}
             layout={{ position: 'absolute', width: 306, top: 2, height: 26, flexDirection: 'row', flexWrap: 'wrap', gap: 2, ...layout }}
         />
     );
@@ -408,14 +392,12 @@ export const GiftWrappingLayoutColorGrid = ({ layout, tags }: GiftWrappingLayout
 export interface GiftWrappingLayoutColorPickerContainerProps {
     colorGrid?: GiftWrappingLayoutColorGridProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const GiftWrappingLayoutColorPickerContainer = ({ colorGrid, layout, tags }: GiftWrappingLayoutColorPickerContainerProps) => {
+export const GiftWrappingLayoutColorPickerContainer = ({ colorGrid, layout }: GiftWrappingLayoutColorPickerContainerProps) => {
     return (
         <Region
             name="color_picker_container"
-            tags={tags}
             layout={{ position: 'absolute', left: 20, width: 308, top: 360, height: 30, justifyContent: 'center', ...layout }}
         >
             <GiftWrappingLayoutColorGrid {...colorGrid} />
@@ -428,16 +410,14 @@ export interface GiftWrappingLayoutCancelLinkRegionProps {
     captionCancelLink?: string;
     layout?: BoxLayout;
     onCancelLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const GiftWrappingLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion, tags }: GiftWrappingLayoutCancelLinkRegionProps) => {
+export const GiftWrappingLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion }: GiftWrappingLayoutCancelLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="cancel_link_region"
-            tags={tags}
             onPointerTap={onCancelLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 9, width: 100, top: 407, height: 20, ...layout }}

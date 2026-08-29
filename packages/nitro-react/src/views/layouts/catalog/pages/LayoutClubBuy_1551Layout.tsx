@@ -19,14 +19,12 @@ export const LayoutClubBuy_1551Layout = ({ ctlgClubBuy, layout }: LayoutClubBuy_
 export interface LayoutClubBuy_1551LayoutCtlgClubBuyProps {
     clubBuyWidget?: ClubBuyWidgetProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const LayoutClubBuy_1551LayoutCtlgClubBuy = ({ clubBuyWidget, layout, tags }: LayoutClubBuy_1551LayoutCtlgClubBuyProps) => {
+export const LayoutClubBuy_1551LayoutCtlgClubBuy = ({ clubBuyWidget, layout }: LayoutClubBuy_1551LayoutCtlgClubBuyProps) => {
     return (
         <Region
             name="ctlg_club_buy"
-            tags={tags}
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
         >

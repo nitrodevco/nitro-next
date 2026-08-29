@@ -161,14 +161,12 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
 export interface StoriesImageWidgetLayoutReportButtonContainerProps {
     layout?: BoxLayout;
     onReportButton?: () => void;
-    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutReportButtonContainer = ({ layout, onReportButton, tags }: StoriesImageWidgetLayoutReportButtonContainerProps) => {
+export const StoriesImageWidgetLayoutReportButtonContainer = ({ layout, onReportButton }: StoriesImageWidgetLayoutReportButtonContainerProps) => {
     return (
         <Region
             name="reportButtonContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 8, width: 20, top: 5, height: 25, ...layout }}
         >
             <Button
@@ -190,14 +188,12 @@ export const StoriesImageWidgetLayoutReportButtonContainer = ({ layout, onReport
 export interface StoriesImageWidgetLayoutRemoveButtonContainerProps {
     layout?: BoxLayout;
     onRemovebutton?: () => void;
-    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutRemoveButtonContainer = ({ layout, onRemovebutton, tags }: StoriesImageWidgetLayoutRemoveButtonContainerProps) => {
+export const StoriesImageWidgetLayoutRemoveButtonContainer = ({ layout, onRemovebutton }: StoriesImageWidgetLayoutRemoveButtonContainerProps) => {
     return (
         <Region
             name="removeButtonContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 33, width: 19, top: 5, height: 24, ...layout }}
         >
             <Button
@@ -208,7 +204,6 @@ export const StoriesImageWidgetLayoutRemoveButtonContainer = ({ layout, onRemove
                 layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 20, minWidth: 19, maxWidth: 19 }}
             />
             <ThemeImage
-                tags={[ '#icon' ]}
                 src={layoutImage('common_trashcan_small.png')}
                 layout={{ position: 'absolute', left: 3, width: 14, top: 4, height: 11 }}
             />
@@ -222,14 +217,12 @@ export interface StoriesImageWidgetLayoutButtonContainerProps {
     onClosebutton?: () => void;
     removeButtonContainer?: StoriesImageWidgetLayoutRemoveButtonContainerProps;
     reportButtonContainer?: StoriesImageWidgetLayoutReportButtonContainerProps;
-    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutButtonContainer = ({ layout, onClosebutton, removeButtonContainer, reportButtonContainer, tags }: StoriesImageWidgetLayoutButtonContainerProps) => {
+export const StoriesImageWidgetLayoutButtonContainer = ({ layout, onClosebutton, removeButtonContainer, reportButtonContainer }: StoriesImageWidgetLayoutButtonContainerProps) => {
     return (
         <Region
             name="buttonContainer"
-            tags={tags}
             layout={{ position: 'absolute', left: 27, width: 84, top: 68, height: 40, ...layout }}
         >
             <StoriesImageWidgetLayoutReportButtonContainer {...reportButtonContainer} />
@@ -250,17 +243,15 @@ export const StoriesImageWidgetLayoutButtonContainer = ({ layout, onClosebutton,
 export interface StoriesImageWidgetLayoutShareButtonContainerProps {
     layout?: BoxLayout;
     onShareButton?: () => void;
-    tags?: string[];
     visibleShareButtonContainer?: boolean;
 }
 
-export const StoriesImageWidgetLayoutShareButtonContainer = ({ layout, onShareButton, tags, visibleShareButtonContainer }: StoriesImageWidgetLayoutShareButtonContainerProps) => {
+export const StoriesImageWidgetLayoutShareButtonContainer = ({ layout, onShareButton, visibleShareButtonContainer }: StoriesImageWidgetLayoutShareButtonContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="shareButtonContainer"
-            tags={tags}
             visible={visibleShareButtonContainer ?? false}
             layout={{ position: 'absolute', left: 84, width: 26, top: 8, height: 28, ...layout }}
         >
@@ -285,21 +276,18 @@ export interface StoriesImageWidgetLayoutFbShareProps {
     layout?: BoxLayout;
     onFbShare?: () => void;
     srcFacebookIcon?: string;
-    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutFbShare = ({ layout, onFbShare, srcFacebookIcon, tags }: StoriesImageWidgetLayoutFbShareProps) => {
+export const StoriesImageWidgetLayoutFbShare = ({ layout, onFbShare, srcFacebookIcon }: StoriesImageWidgetLayoutFbShareProps) => {
     return (
         <Region
             name="fbShare"
-            tags={tags}
             onPointerTap={onFbShare}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32, minWidth: 32, minHeight: 32, ...layout }}
         >
             <ThemeImage
                 name="facebookIcon"
-                tags={[ '#icon' ]}
                 src={srcFacebookIcon ?? layoutImage('icons_facebook.png')}
                 layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32, minWidth: 32, minHeight: 32 }}
             />
@@ -312,21 +300,18 @@ export interface StoriesImageWidgetLayoutTwitterShareProps {
     layout?: BoxLayout;
     onTwitterShare?: () => void;
     srcTwitterIcon?: string;
-    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutTwitterShare = ({ layout, onTwitterShare, srcTwitterIcon, tags }: StoriesImageWidgetLayoutTwitterShareProps) => {
+export const StoriesImageWidgetLayoutTwitterShare = ({ layout, onTwitterShare, srcTwitterIcon }: StoriesImageWidgetLayoutTwitterShareProps) => {
     return (
         <Region
             name="twitterShare"
-            tags={tags}
             onPointerTap={onTwitterShare}
             cursor="pointer"
             layout={{ position: 'absolute', left: 38, width: 32, top: 0, height: 32, minWidth: 32, minHeight: 32, ...layout }}
         >
             <ThemeImage
                 name="twitterIcon"
-                tags={[ '#icon' ]}
                 src={srcTwitterIcon ?? layoutImage('icons_twitter.png')}
                 layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32, minWidth: 32, minHeight: 32 }}
             />
@@ -339,14 +324,12 @@ export interface StoriesImageWidgetLayoutSenderNameButtonProps {
     captionSenderName?: string;
     layout?: BoxLayout;
     onSenderNameButton?: () => void;
-    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutSenderNameButton = ({ captionSenderName, layout, onSenderNameButton, tags }: StoriesImageWidgetLayoutSenderNameButtonProps) => {
+export const StoriesImageWidgetLayoutSenderNameButton = ({ captionSenderName, layout, onSenderNameButton }: StoriesImageWidgetLayoutSenderNameButtonProps) => {
     return (
         <Region
             name="senderNameButton"
-            tags={tags}
             onPointerTap={onSenderNameButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 129, top: 0, height: 26, ...layout }}
@@ -367,14 +350,12 @@ export const StoriesImageWidgetLayoutSenderNameButton = ({ captionSenderName, la
 /** Named region `name_copy_wrapper` of StoriesImageWidgetLayout - configured through the parent's `nameCopyWrapper` prop. */
 export interface StoriesImageWidgetLayoutNameCopyWrapperProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutNameCopyWrapper = ({ layout, tags }: StoriesImageWidgetLayoutNameCopyWrapperProps) => {
+export const StoriesImageWidgetLayoutNameCopyWrapper = ({ layout }: StoriesImageWidgetLayoutNameCopyWrapperProps) => {
     return (
         <Region
             name="name_copy_wrapper"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 28, ...layout }}
         />
     );
@@ -384,14 +365,12 @@ export const StoriesImageWidgetLayoutNameCopyWrapper = ({ layout, tags }: Storie
 export interface StoriesImageWidgetLayoutNextButtonProps {
     layout?: BoxLayout;
     onNextButton?: () => void;
-    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutNextButton = ({ layout, onNextButton, tags }: StoriesImageWidgetLayoutNextButtonProps) => {
+export const StoriesImageWidgetLayoutNextButton = ({ layout, onNextButton }: StoriesImageWidgetLayoutNextButtonProps) => {
     return (
         <Region
             name="nextButton"
-            tags={tags}
             onPointerTap={onNextButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 300, width: 64, top: 80, height: 64, ...layout }}
@@ -408,14 +387,12 @@ export const StoriesImageWidgetLayoutNextButton = ({ layout, onNextButton, tags 
 export interface StoriesImageWidgetLayoutPreviousButtonProps {
     layout?: BoxLayout;
     onPreviousButton?: () => void;
-    tags?: string[];
 }
 
-export const StoriesImageWidgetLayoutPreviousButton = ({ layout, onPreviousButton, tags }: StoriesImageWidgetLayoutPreviousButtonProps) => {
+export const StoriesImageWidgetLayoutPreviousButton = ({ layout, onPreviousButton }: StoriesImageWidgetLayoutPreviousButtonProps) => {
     return (
         <Region
             name="previousButton"
-            tags={tags}
             onPointerTap={onPreviousButton}
             cursor="pointer"
             layout={{ position: 'absolute', left: 240, width: 64, top: 80, height: 64, ...layout }}

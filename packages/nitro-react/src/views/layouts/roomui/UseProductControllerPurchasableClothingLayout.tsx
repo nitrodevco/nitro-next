@@ -61,14 +61,12 @@ export const UseProductControllerPurchasableClothingLayout = ({ cancelText, capt
 export interface UseProductControllerPurchasableClothingLayoutCancelTextProps {
     layout?: BoxLayout;
     onCancelText?: () => void;
-    tags?: string[];
 }
 
-export const UseProductControllerPurchasableClothingLayoutCancelText = ({ layout, onCancelText, tags }: UseProductControllerPurchasableClothingLayoutCancelTextProps) => {
+export const UseProductControllerPurchasableClothingLayoutCancelText = ({ layout, onCancelText }: UseProductControllerPurchasableClothingLayoutCancelTextProps) => {
     return (
         <Region
             name="cancel_text"
-            tags={tags}
             onPointerTap={onCancelText}
             cursor="pointer"
             layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25, ...layout }}

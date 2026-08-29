@@ -25,16 +25,14 @@ export interface LayoutPetcustomization_1713LayoutCtlgPetcustomizationProps {
     layout?: BoxLayout;
     petPreviewWidget?: PetPreviewWidgetProps;
     purchaseWidget?: PurchaseWidgetProps;
-    tags?: string[];
 }
 
-export const LayoutPetcustomization_1713LayoutCtlgPetcustomization = ({ captionCtlgSelectproduct, itemGridWidget, layout, petPreviewWidget, purchaseWidget, tags }: LayoutPetcustomization_1713LayoutCtlgPetcustomizationProps) => {
+export const LayoutPetcustomization_1713LayoutCtlgPetcustomization = ({ captionCtlgSelectproduct, itemGridWidget, layout, petPreviewWidget, purchaseWidget }: LayoutPetcustomization_1713LayoutCtlgPetcustomizationProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="ctlg_petcustomization"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
         >
             <Region

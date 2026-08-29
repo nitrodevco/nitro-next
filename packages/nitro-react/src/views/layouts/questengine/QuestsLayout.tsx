@@ -34,10 +34,9 @@ export const QuestsLayout = ({ hcInfoCont, layout, onClose, questList }: QuestsL
 /** Named region `quest_list` of QuestsLayout - configured through the parent's `questList` prop. */
 export interface QuestsLayoutQuestListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const QuestsLayoutQuestList = ({ layout, tags }: QuestsLayoutQuestListProps) => {
+export const QuestsLayoutQuestList = ({ layout }: QuestsLayoutQuestListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -45,7 +44,6 @@ export const QuestsLayoutQuestList = ({ layout, tags }: QuestsLayoutQuestListPro
         >
             <Region
                 name="quest_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -57,16 +55,14 @@ export interface QuestsLayoutHcInfoContProps {
     captionHcInfoText?: string;
     layout?: BoxLayout;
     onGetHcBtn?: () => void;
-    tags?: string[];
 }
 
-export const QuestsLayoutHcInfoCont = ({ captionHcInfoText, layout, onGetHcBtn, tags }: QuestsLayoutHcInfoContProps) => {
+export const QuestsLayoutHcInfoCont = ({ captionHcInfoText, layout, onGetHcBtn }: QuestsLayoutHcInfoContProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="hc_info_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 7, width: 493, bottom: 42, height: 36, ...layout }}
         >
             <Region

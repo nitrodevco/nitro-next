@@ -28,37 +28,41 @@ export interface RandomTeleportMenuLayoutUseItemProps {
     captionLabel?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    tags?: string[];
+    visibleGroups?: { action?: boolean; moderate?: boolean; ambassador?: boolean };
 }
 
-export const RandomTeleportMenuLayoutUseItem = ({ captionLabel, layout, onButton, tags }: RandomTeleportMenuLayoutUseItemProps) => {
+export const RandomTeleportMenuLayoutUseItem = ({ captionLabel, layout, onButton, visibleGroups }: RandomTeleportMenuLayoutUseItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="use"
-            tags={tags}
+            visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tags={[ 'action' ]}
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
+            <Region
+                visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <Region
-                    name="label"
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <ContainerButton
+                    variant="3"
+                    name="button"
+                    tintColor="#2d2a27"
+                    onPointerTap={onButton}
+                    layout={{ width: '100%', height: '100%' }}
                 >
-                    <ThemeText
-                        text={captionLabel ?? t('widget.random_teleport.button.use')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </ContainerButton>
+                    <Region
+                        name="label"
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('widget.random_teleport.button.use')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
@@ -67,18 +71,16 @@ export const RandomTeleportMenuLayoutUseItem = ({ captionLabel, layout, onButton
 export interface RandomTeleportMenuLayoutButtonsProps {
     itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const RandomTeleportMenuLayoutButtons = ({ itemsButtons, layout, tags }: RandomTeleportMenuLayoutButtonsProps) => {
+export const RandomTeleportMenuLayoutButtons = ({ itemsButtons, layout }: RandomTeleportMenuLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 26, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsButtons ?? (
-                <RandomTeleportMenuLayoutUseItem tags={[ 'action' ]} />
+                <RandomTeleportMenuLayoutUseItem />
             )}
         </Region>
     );
@@ -88,14 +90,12 @@ export const RandomTeleportMenuLayoutButtons = ({ itemsButtons, layout, tags }: 
 export interface RandomTeleportMenuLayoutMinimizeProps {
     layout?: BoxLayout;
     onMinimize?: () => void;
-    tags?: string[];
 }
 
-export const RandomTeleportMenuLayoutMinimize = ({ layout, onMinimize, tags }: RandomTeleportMenuLayoutMinimizeProps) => {
+export const RandomTeleportMenuLayoutMinimize = ({ layout, onMinimize }: RandomTeleportMenuLayoutMinimizeProps) => {
     return (
         <Region
             name="minimize"
-            tags={tags}
             onPointerTap={onMinimize}
             cursor="pointer"
             layout={{ position: 'absolute', left: 4, width: 100, bottom: 3, height: 18, ...layout }}
@@ -115,14 +115,12 @@ export interface RandomTeleportMenuLayoutBorderProps {
     captionFurniName?: string;
     layout?: BoxLayout;
     minimize?: RandomTeleportMenuLayoutMinimizeProps;
-    tags?: string[];
 }
 
-export const RandomTeleportMenuLayoutBorder = ({ buttons, captionFurniName, layout, minimize, tags }: RandomTeleportMenuLayoutBorderProps) => {
+export const RandomTeleportMenuLayoutBorder = ({ buttons, captionFurniName, layout, minimize }: RandomTeleportMenuLayoutBorderProps) => {
     return (
         <Region
             name="border"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76, justifyContent: 'center', ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center' }}>

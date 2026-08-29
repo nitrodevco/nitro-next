@@ -18,21 +18,18 @@ export const MiniviewLayout = ({ layout, returnusergifting }: MiniviewLayoutProp
 /** Named region `returnusergifting` of MiniviewLayout - configured through the parent's `returnusergifting` prop. */
 export interface MiniviewLayoutReturnusergiftingProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const MiniviewLayoutReturnusergifting = ({ layout, tags }: MiniviewLayoutReturnusergiftingProps) => {
+export const MiniviewLayoutReturnusergifting = ({ layout }: MiniviewLayoutReturnusergiftingProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="returnusergifting"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29, ...layout }}
         >
             <Border
                 variant="6"
-                tags={[ 'BGCOLOR' ]}
                 tintColor="#686661"
                 blend={0.8}
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}

@@ -21,14 +21,12 @@ export const SearchTreeDropdownLayout = ({ layout, searchTreeDropdown }: SearchT
 /** Named region `button_shadow` of SearchTreeDropdownLayout - configured through the parent's `buttonShadow` prop. */
 export interface SearchTreeDropdownLayoutButtonShadowProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutButtonShadow = ({ layout, tags }: SearchTreeDropdownLayoutButtonShadowProps) => {
+export const SearchTreeDropdownLayoutButtonShadow = ({ layout }: SearchTreeDropdownLayoutButtonShadowProps) => {
     return (
         <Region
             name="button_shadow"
-            tags={tags}
             backgroundColor="#dddddd"
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 2, ...layout }}
         />
@@ -41,14 +39,12 @@ export interface SearchTreeDropdownLayoutButtonTemplateItemProps {
     layout?: BoxLayout;
     onButtonTemplate?: () => void;
     srcButtonImg?: string;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutButtonTemplateItem = ({ buttonShadow, layout, onButtonTemplate, srcButtonImg, tags }: SearchTreeDropdownLayoutButtonTemplateItemProps) => {
+export const SearchTreeDropdownLayoutButtonTemplateItem = ({ buttonShadow, layout, onButtonTemplate, srcButtonImg }: SearchTreeDropdownLayoutButtonTemplateItemProps) => {
     return (
         <Region
             name="button_template"
-            tags={tags}
             onPointerTap={onButtonTemplate}
             cursor="pointer"
             layout={{ width: 30, height: 20, flexShrink: 0, ...layout }}
@@ -74,14 +70,12 @@ export const SearchTreeDropdownLayoutButtonTemplateItem = ({ buttonShadow, layou
 export interface SearchTreeDropdownLayoutButtonListItemProps {
     itemsButtonList?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutButtonListItem = ({ itemsButtonList, layout, tags }: SearchTreeDropdownLayoutButtonListItemProps) => {
+export const SearchTreeDropdownLayoutButtonListItem = ({ itemsButtonList, layout }: SearchTreeDropdownLayoutButtonListItemProps) => {
     return (
         <Region
             name="button_list"
-            tags={tags}
             layout={{ width: 196, height: 20, flexShrink: 0, flexDirection: 'row', ...layout }}
         >
             {itemsButtonList ?? (
@@ -94,14 +88,12 @@ export const SearchTreeDropdownLayoutButtonListItem = ({ itemsButtonList, layout
 /** Named region `splitter` of SearchTreeDropdownLayout - configured through the parent's `splitter` prop. */
 export interface SearchTreeDropdownLayoutSplitterProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutSplitter = ({ layout, tags }: SearchTreeDropdownLayoutSplitterProps) => {
+export const SearchTreeDropdownLayoutSplitter = ({ layout }: SearchTreeDropdownLayoutSplitterProps) => {
     return (
         <Region
             name="splitter"
-            tags={tags}
             backgroundColor="#dddddd"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1, ...layout }}
         />
@@ -112,14 +104,12 @@ export const SearchTreeDropdownLayoutSplitter = ({ layout, tags }: SearchTreeDro
 export interface SearchTreeDropdownLayoutSpacerItemProps {
     layout?: BoxLayout;
     splitter?: SearchTreeDropdownLayoutSplitterProps;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutSpacerItem = ({ layout, splitter, tags }: SearchTreeDropdownLayoutSpacerItemProps) => {
+export const SearchTreeDropdownLayoutSpacerItem = ({ layout, splitter }: SearchTreeDropdownLayoutSpacerItemProps) => {
     return (
         <Region
             name="spacer"
-            tags={tags}
             layout={{ width: 195, height: 2, flexShrink: 0, ...layout }}
         >
             <SearchTreeDropdownLayoutSplitter {...splitter} />
@@ -130,17 +120,15 @@ export const SearchTreeDropdownLayoutSpacerItem = ({ layout, splitter, tags }: S
 /** Named region `empty_container` of SearchTreeDropdownLayout - configured through the parent's `emptyContainer` prop. */
 export interface SearchTreeDropdownLayoutEmptyContainerProps {
     layout?: BoxLayout;
-    tags?: string[];
     visibleEmptyContainer?: boolean;
 }
 
-export const SearchTreeDropdownLayoutEmptyContainer = ({ layout, tags, visibleEmptyContainer }: SearchTreeDropdownLayoutEmptyContainerProps) => {
+export const SearchTreeDropdownLayoutEmptyContainer = ({ layout, visibleEmptyContainer }: SearchTreeDropdownLayoutEmptyContainerProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="empty_container"
-            tags={tags}
             visible={visibleEmptyContainer ?? false}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 52, ...layout }}
         >
@@ -158,14 +146,12 @@ export const SearchTreeDropdownLayoutEmptyContainer = ({ layout, tags, visibleEm
 /** Named region `spacing` of SearchTreeDropdownLayout - configured through the parent's `spacing` prop. */
 export interface SearchTreeDropdownLayoutSpacingProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutSpacing = ({ layout, tags }: SearchTreeDropdownLayoutSpacingProps) => {
+export const SearchTreeDropdownLayoutSpacing = ({ layout }: SearchTreeDropdownLayoutSpacingProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 195, height: 3, flexShrink: 0, ...layout }}
         />
     );
@@ -174,10 +160,9 @@ export const SearchTreeDropdownLayoutSpacing = ({ layout, tags }: SearchTreeDrop
 /** Named region `nodes_list` of SearchTreeDropdownLayout - configured through the parent's `nodesList` prop. */
 export interface SearchTreeDropdownLayoutNodesListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutNodesList = ({ layout, tags }: SearchTreeDropdownLayoutNodesListProps) => {
+export const SearchTreeDropdownLayoutNodesList = ({ layout }: SearchTreeDropdownLayoutNodesListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -185,7 +170,6 @@ export const SearchTreeDropdownLayoutNodesList = ({ layout, tags }: SearchTreeDr
         >
             <Region
                 name="nodes_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -195,14 +179,12 @@ export const SearchTreeDropdownLayoutNodesList = ({ layout, tags }: SearchTreeDr
 /** Named region `spacing` of SearchTreeDropdownLayout - configured through the parent's `spacing` prop. */
 export interface SearchTreeDropdownLayoutSpacing2Props {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutSpacing2 = ({ layout, tags }: SearchTreeDropdownLayoutSpacing2Props) => {
+export const SearchTreeDropdownLayoutSpacing2 = ({ layout }: SearchTreeDropdownLayoutSpacing2Props) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 195, height: 3, flexShrink: 0, ...layout }}
         />
     );
@@ -213,14 +195,12 @@ export interface SearchTreeDropdownLayoutNodeTemplateProps {
     captionNodeName?: string;
     layout?: BoxLayout;
     onNodeTemplate?: () => void;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutNodeTemplate = ({ captionNodeName, layout, onNodeTemplate, tags }: SearchTreeDropdownLayoutNodeTemplateProps) => {
+export const SearchTreeDropdownLayoutNodeTemplate = ({ captionNodeName, layout, onNodeTemplate }: SearchTreeDropdownLayoutNodeTemplateProps) => {
     return (
         <Region
             name="node_template"
-            tags={tags}
             backgroundColor="#ffffff"
             onPointerTap={onNodeTemplate}
             cursor="pointer"
@@ -254,14 +234,12 @@ export interface SearchTreeDropdownLayoutContentBoxItemProps {
     nodeTemplate?: SearchTreeDropdownLayoutNodeTemplateProps;
     spacing?: SearchTreeDropdownLayoutSpacingProps;
     spacing2?: SearchTreeDropdownLayoutSpacing2Props;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutContentBoxItem = ({ emptyContainer, layout, nodesList, nodeTemplate, spacing, spacing2, tags }: SearchTreeDropdownLayoutContentBoxItemProps) => {
+export const SearchTreeDropdownLayoutContentBoxItem = ({ emptyContainer, layout, nodesList, nodeTemplate, spacing, spacing2 }: SearchTreeDropdownLayoutContentBoxItemProps) => {
     return (
         <Region
             name="content_box"
-            tags={tags}
             layout={{ width: 195, height: 52, flexShrink: 0, ...layout }}
         >
             <SearchTreeDropdownLayoutEmptyContainer {...emptyContainer} />
@@ -284,14 +262,12 @@ export const SearchTreeDropdownLayoutContentBoxItem = ({ emptyContainer, layout,
 /** Row template `spacing` of SearchTreeDropdownLayout - pass real rows through its `items…` slot. */
 export interface SearchTreeDropdownLayoutSpacingItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutSpacingItem = ({ layout, tags }: SearchTreeDropdownLayoutSpacingItemProps) => {
+export const SearchTreeDropdownLayoutSpacingItem = ({ layout }: SearchTreeDropdownLayoutSpacingItemProps) => {
     return (
         <Region
             name="spacing"
-            tags={tags}
             layout={{ width: 0, height: 2, flexShrink: 0, ...layout }}
         />
     );
@@ -300,14 +276,12 @@ export const SearchTreeDropdownLayoutSpacingItem = ({ layout, tags }: SearchTree
 /** Named region `search_wrapper_expanded` of SearchTreeDropdownLayout - configured through the parent's `searchWrapperExpanded` prop. */
 export interface SearchTreeDropdownLayoutSearchWrapperExpandedProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutSearchWrapperExpanded = ({ layout, tags }: SearchTreeDropdownLayoutSearchWrapperExpandedProps) => {
+export const SearchTreeDropdownLayoutSearchWrapperExpanded = ({ layout }: SearchTreeDropdownLayoutSearchWrapperExpandedProps) => {
     return (
         <Region
             name="search_wrapper_expanded"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20, ...layout }}
         />
     );
@@ -317,14 +291,12 @@ export const SearchTreeDropdownLayoutSearchWrapperExpanded = ({ layout, tags }: 
 export interface SearchTreeDropdownLayoutCancelSearchProps {
     layout?: BoxLayout;
     onCancelSearch?: () => void;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutCancelSearch = ({ layout, onCancelSearch, tags }: SearchTreeDropdownLayoutCancelSearchProps) => {
+export const SearchTreeDropdownLayoutCancelSearch = ({ layout, onCancelSearch }: SearchTreeDropdownLayoutCancelSearchProps) => {
     return (
         <Region
             name="cancel_search"
-            tags={tags}
             onPointerTap={onCancelSearch}
             cursor="pointer"
             layout={{ position: 'absolute', right: 6, width: 9, top: 5, height: 9, ...layout }}
@@ -343,14 +315,12 @@ export interface SearchTreeDropdownLayoutMainContProps {
     itemsMainCont?: ReactNode;
     layout?: BoxLayout;
     searchWrapperExpanded?: SearchTreeDropdownLayoutSearchWrapperExpandedProps;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutMainCont = ({ cancelSearch, itemsMainCont, layout, searchWrapperExpanded, tags }: SearchTreeDropdownLayoutMainContProps) => {
+export const SearchTreeDropdownLayoutMainCont = ({ cancelSearch, itemsMainCont, layout, searchWrapperExpanded }: SearchTreeDropdownLayoutMainContProps) => {
     return (
         <Region
             name="main_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column', ...layout }}
         >
             {itemsMainCont ?? (
@@ -373,14 +343,12 @@ export const SearchTreeDropdownLayoutMainCont = ({ cancelSearch, itemsMainCont, 
 export interface SearchTreeDropdownLayoutExpandedViewWrapperProps {
     layout?: BoxLayout;
     mainCont?: SearchTreeDropdownLayoutMainContProps;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutExpandedViewWrapper = ({ layout, mainCont, tags }: SearchTreeDropdownLayoutExpandedViewWrapperProps) => {
+export const SearchTreeDropdownLayoutExpandedViewWrapper = ({ layout, mainCont }: SearchTreeDropdownLayoutExpandedViewWrapperProps) => {
     return (
         <Region
             name="expanded_view_wrapper"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 1000, top: 0, height: 1000, ...layout }}
         >
             <Border
@@ -399,24 +367,21 @@ export interface SearchTreeDropdownLayoutInputFieldRegionProps {
     captionInputPlaceholderText?: string;
     layout?: BoxLayout;
     onInputFieldRegion?: () => void;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutInputFieldRegion = ({ captionInputPlaceholderText, layout, onInputFieldRegion, tags }: SearchTreeDropdownLayoutInputFieldRegionProps) => {
+export const SearchTreeDropdownLayoutInputFieldRegion = ({ captionInputPlaceholderText, layout, onInputFieldRegion }: SearchTreeDropdownLayoutInputFieldRegionProps) => {
     const t = useTranslation();
     const [ inputFieldValue, setInputFieldValue ] = useState('');
 
     return (
         <Region
             name="input_field_region"
-            tags={tags}
             onPointerTap={onInputFieldRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 20, ...layout }}
         >
             <Region
                 name="input_placeholder_text"
-                tags={[ 'DO_NOT_DISABLE' ]}
                 layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
@@ -439,14 +404,12 @@ export const SearchTreeDropdownLayoutInputFieldRegion = ({ captionInputPlacehold
 export interface SearchTreeDropdownLayoutSearchWrapperCollapsedProps {
     inputFieldRegion?: SearchTreeDropdownLayoutInputFieldRegionProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutSearchWrapperCollapsed = ({ inputFieldRegion, layout, tags }: SearchTreeDropdownLayoutSearchWrapperCollapsedProps) => {
+export const SearchTreeDropdownLayoutSearchWrapperCollapsed = ({ inputFieldRegion, layout }: SearchTreeDropdownLayoutSearchWrapperCollapsedProps) => {
     return (
         <Region
             name="search_wrapper_collapsed"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 20, ...layout }}
         >
             <SearchTreeDropdownLayoutInputFieldRegion {...inputFieldRegion} />
@@ -459,14 +422,12 @@ export interface SearchTreeDropdownLayoutSearchTreeDropdownProps {
     expandedViewWrapper?: SearchTreeDropdownLayoutExpandedViewWrapperProps;
     layout?: BoxLayout;
     searchWrapperCollapsed?: SearchTreeDropdownLayoutSearchWrapperCollapsedProps;
-    tags?: string[];
 }
 
-export const SearchTreeDropdownLayoutSearchTreeDropdown = ({ expandedViewWrapper, layout, searchWrapperCollapsed, tags }: SearchTreeDropdownLayoutSearchTreeDropdownProps) => {
+export const SearchTreeDropdownLayoutSearchTreeDropdown = ({ expandedViewWrapper, layout, searchWrapperCollapsed }: SearchTreeDropdownLayoutSearchTreeDropdownProps) => {
     return (
         <Region
             name="search_tree_dropdown"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 22, ...layout }}
         >
             <Border

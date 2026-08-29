@@ -44,14 +44,12 @@ export const IssueHandlerLayout = ({ buttons, chatCont, issueCont, layout, onCfh
 export interface IssueHandlerLayoutSanctioninfoProps {
     captionSanctionLabel?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueHandlerLayoutSanctioninfo = ({ captionSanctionLabel, layout, tags }: IssueHandlerLayoutSanctioninfoProps) => {
+export const IssueHandlerLayoutSanctioninfo = ({ captionSanctionLabel, layout }: IssueHandlerLayoutSanctioninfoProps) => {
     return (
         <Region
             name="sanctioninfo"
-            tags={tags}
             layout={{ position: 'absolute', left: 524, width: 215, top: 42, height: 18, maxHeight: 47, ...layout }}
         >
             <Region
@@ -76,14 +74,12 @@ export interface IssueHandlerLayoutButtonsProps {
     onCloseUseless?: () => void;
     onHandleNextCheckbox?: () => void;
     onRelease?: () => void;
-    tags?: string[];
 }
 
-export const IssueHandlerLayoutButtons = ({ captionHandleNextText, layout, onCloseResolved, onCloseSanction, onCloseUseless, onHandleNextCheckbox, onRelease, tags }: IssueHandlerLayoutButtonsProps) => {
+export const IssueHandlerLayoutButtons = ({ captionHandleNextText, layout, onCloseResolved, onCloseSanction, onCloseUseless, onHandleNextCheckbox, onRelease }: IssueHandlerLayoutButtonsProps) => {
     return (
         <Region
             name="buttons"
-            tags={tags}
             layout={{ position: 'absolute', left: 290, width: 444, top: 15, height: 75, ...layout }}
         >
             <Button
@@ -143,14 +139,12 @@ export const IssueHandlerLayoutButtons = ({ captionHandleNextText, layout, onClo
 /** Row template `issues_header` of IssueHandlerLayout - pass real rows through its `items…` slot. */
 export interface IssueHandlerLayoutIssuesHeaderItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueHandlerLayoutIssuesHeaderItem = ({ layout, tags }: IssueHandlerLayoutIssuesHeaderItemProps) => {
+export const IssueHandlerLayoutIssuesHeaderItem = ({ layout }: IssueHandlerLayoutIssuesHeaderItemProps) => {
     return (
         <Region
             name="issues_header"
-            tags={tags}
             layout={{ width: 280, height: 13, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
             <Region layout={{ position: 'absolute', marginLeft: -101, marginRight: 101, width: 78, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -188,10 +182,9 @@ export interface IssueHandlerLayoutIssuesItemListItemProps {
     captionTimeOpen?: string;
     captionType?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueHandlerLayoutIssuesItemListItem = ({ captionCategory, captionReporter, captionTimeOpen, captionType, layout, tags }: IssueHandlerLayoutIssuesItemListItemProps) => {
+export const IssueHandlerLayoutIssuesItemListItem = ({ captionCategory, captionReporter, captionTimeOpen, captionType, layout }: IssueHandlerLayoutIssuesItemListItemProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -199,7 +192,6 @@ export const IssueHandlerLayoutIssuesItemListItem = ({ captionCategory, captionR
         >
             <Region
                 name="issues_item_list"
-                tags={tags}
                 backgroundColor="#ffffff"
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
@@ -237,14 +229,12 @@ export const IssueHandlerLayoutIssuesItemListItem = ({ captionCategory, captionR
 /** Row template `caller_user_info` of IssueHandlerLayout - pass real rows through its `items…` slot. */
 export interface IssueHandlerLayoutCallerUserInfoItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueHandlerLayoutCallerUserInfoItem = ({ layout, tags }: IssueHandlerLayoutCallerUserInfoItemProps) => {
+export const IssueHandlerLayoutCallerUserInfoItem = ({ layout }: IssueHandlerLayoutCallerUserInfoItemProps) => {
     return (
         <Region
             name="caller_user_info"
-            tags={tags}
             layout={{ width: 280, height: 207, flexShrink: 0, ...layout }}
         />
     );
@@ -253,10 +243,9 @@ export const IssueHandlerLayoutCallerUserInfoItem = ({ layout, tags }: IssueHand
 /** Row template `msg_item_list` of IssueHandlerLayout - pass real rows through its `items…` slot. */
 export interface IssueHandlerLayoutMsgItemListItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueHandlerLayoutMsgItemListItem = ({ layout, tags }: IssueHandlerLayoutMsgItemListItemProps) => {
+export const IssueHandlerLayoutMsgItemListItem = ({ layout }: IssueHandlerLayoutMsgItemListItemProps) => {
     const [ inputValue, setInputValue ] = useState('');
 
     return (
@@ -266,7 +255,6 @@ export const IssueHandlerLayoutMsgItemListItem = ({ layout, tags }: IssueHandler
         >
             <Region
                 name="msg_item_list"
-                tags={tags}
                 backgroundColor="#ffffff"
                 layout={{ flexDirection: 'column', width: '100%' }}
             >
@@ -285,14 +273,12 @@ export const IssueHandlerLayoutMsgItemListItem = ({ layout, tags }: IssueHandler
 export interface IssueHandlerLayoutReportedUserInfoCaptionItemProps {
     captionReportedUserInfoCaption?: string;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueHandlerLayoutReportedUserInfoCaptionItem = ({ captionReportedUserInfoCaption, layout, tags }: IssueHandlerLayoutReportedUserInfoCaptionItemProps) => {
+export const IssueHandlerLayoutReportedUserInfoCaptionItem = ({ captionReportedUserInfoCaption, layout }: IssueHandlerLayoutReportedUserInfoCaptionItemProps) => {
     return (
         <Region
             name="reported_user_info_caption"
-            tags={tags}
             layout={{ width: 120, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
@@ -306,14 +292,12 @@ export const IssueHandlerLayoutReportedUserInfoCaptionItem = ({ captionReportedU
 /** Row template `reported_user_info` of IssueHandlerLayout - pass real rows through its `items…` slot. */
 export interface IssueHandlerLayoutReportedUserInfoItemProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueHandlerLayoutReportedUserInfoItem = ({ layout, tags }: IssueHandlerLayoutReportedUserInfoItemProps) => {
+export const IssueHandlerLayoutReportedUserInfoItem = ({ layout }: IssueHandlerLayoutReportedUserInfoItemProps) => {
     return (
         <Region
             name="reported_user_info"
-            tags={tags}
             layout={{ width: 280, height: 207, flexShrink: 0, ...layout }}
         />
     );
@@ -323,14 +307,12 @@ export const IssueHandlerLayoutReportedUserInfoItem = ({ layout, tags }: IssueHa
 export interface IssueHandlerLayoutIssueContProps {
     itemsIssueCont?: ReactNode;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueHandlerLayoutIssueCont = ({ itemsIssueCont, layout, tags }: IssueHandlerLayoutIssueContProps) => {
+export const IssueHandlerLayoutIssueCont = ({ itemsIssueCont, layout }: IssueHandlerLayoutIssueContProps) => {
     return (
         <Region
             name="issue_cont"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, right: 465, top: 0, bottom: 26, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsIssueCont ?? (
@@ -362,10 +344,9 @@ export const IssueHandlerLayoutIssueCont = ({ itemsIssueCont, layout, tags }: Is
 /** Named region `evidence_list` of IssueHandlerLayout - configured through the parent's `evidenceList` prop. */
 export interface IssueHandlerLayoutEvidenceListProps {
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueHandlerLayoutEvidenceList = ({ layout, tags }: IssueHandlerLayoutEvidenceListProps) => {
+export const IssueHandlerLayoutEvidenceList = ({ layout }: IssueHandlerLayoutEvidenceListProps) => {
     return (
         <ScrollArea
             orientation="vertical"
@@ -373,7 +354,6 @@ export const IssueHandlerLayoutEvidenceList = ({ layout, tags }: IssueHandlerLay
         >
             <Region
                 name="evidence_list"
-                tags={tags}
                 layout={{ flexDirection: 'column', width: '100%' }}
             />
         </ScrollArea>
@@ -384,14 +364,12 @@ export const IssueHandlerLayoutEvidenceList = ({ layout, tags }: IssueHandlerLay
 export interface IssueHandlerLayoutChatContProps {
     evidenceList?: IssueHandlerLayoutEvidenceListProps;
     layout?: BoxLayout;
-    tags?: string[];
 }
 
-export const IssueHandlerLayoutChatCont = ({ evidenceList, layout, tags }: IssueHandlerLayoutChatContProps) => {
+export const IssueHandlerLayoutChatCont = ({ evidenceList, layout }: IssueHandlerLayoutChatContProps) => {
     return (
         <Region
             name="chat_cont"
-            tags={tags}
             backgroundColor="#418db0"
             layout={{ position: 'absolute', left: 290, width: 445, top: 95, bottom: 75, ...layout }}
         >

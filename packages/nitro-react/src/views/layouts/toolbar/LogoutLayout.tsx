@@ -12,14 +12,8 @@ export const LogoutLayout = ({ helpRegion, layout, logoutRegion }: LogoutLayoutP
     return (
         <Region layout={{ position: 'relative', width: 192, height: 40, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 38 }}>
-                <LogoutLayoutHelpRegion
-                    tags={[ 'REGION' ]}
-                    {...helpRegion}
-                />
-                <LogoutLayoutLogoutRegion
-                    tags={[ 'REGION' ]}
-                    {...logoutRegion}
-                />
+                <LogoutLayoutHelpRegion {...helpRegion} />
+                <LogoutLayoutLogoutRegion {...logoutRegion} />
             </Region>
         </Region>
     );
@@ -30,23 +24,20 @@ export interface LogoutLayoutHelpRegionProps {
     captionHelpText?: string;
     layout?: BoxLayout;
     onHelpRegion?: () => void;
-    tags?: string[];
 }
 
-export const LogoutLayoutHelpRegion = ({ captionHelpText, layout, onHelpRegion, tags }: LogoutLayoutHelpRegionProps) => {
+export const LogoutLayoutHelpRegion = ({ captionHelpText, layout, onHelpRegion }: LogoutLayoutHelpRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="help_region"
-            tags={tags}
             onPointerTap={onHelpRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 95, top: 8, height: 28, ...layout }}
         >
             <Border
                 variant="6"
-                tags={[ 'BGCOLOR' ]}
                 tintColor="#55534e"
                 layout={{ position: 'absolute', left: 0, width: 95, top: 0, height: 28 }}
             >
@@ -58,7 +49,6 @@ export const LogoutLayoutHelpRegion = ({ captionHelpText, layout, onHelpRegion, 
                 >
                     <Region
                         name="help_text"
-                        tags={[ 'TEXT' ]}
                         layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 67, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
@@ -78,23 +68,20 @@ export interface LogoutLayoutLogoutRegionProps {
     captionLogoutText?: string;
     layout?: BoxLayout;
     onLogoutRegion?: () => void;
-    tags?: string[];
 }
 
-export const LogoutLayoutLogoutRegion = ({ captionLogoutText, layout, onLogoutRegion, tags }: LogoutLayoutLogoutRegionProps) => {
+export const LogoutLayoutLogoutRegion = ({ captionLogoutText, layout, onLogoutRegion }: LogoutLayoutLogoutRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="logout_region"
-            tags={tags}
             onPointerTap={onLogoutRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 97, width: 95, top: 8, height: 28, ...layout }}
         >
             <Border
                 variant="6"
-                tags={[ 'BGCOLOR' ]}
                 tintColor="#55534e"
                 layout={{ position: 'absolute', left: 0, width: 95, top: 0, height: 28 }}
             >
@@ -106,7 +93,6 @@ export const LogoutLayoutLogoutRegion = ({ captionLogoutText, layout, onLogoutRe
                 >
                     <Region
                         name="logout_text"
-                        tags={[ 'TEXT' ]}
                         layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 77, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText

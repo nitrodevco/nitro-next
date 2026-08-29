@@ -38,16 +38,14 @@ export interface SafetyLockedNotificationLayoutUnlockLinkRegionProps {
     captionUnlockLink?: string;
     layout?: BoxLayout;
     onUnlockLinkRegion?: () => void;
-    tags?: string[];
 }
 
-export const SafetyLockedNotificationLayoutUnlockLinkRegion = ({ captionUnlockLink, layout, onUnlockLinkRegion, tags }: SafetyLockedNotificationLayoutUnlockLinkRegionProps) => {
+export const SafetyLockedNotificationLayoutUnlockLinkRegion = ({ captionUnlockLink, layout, onUnlockLinkRegion }: SafetyLockedNotificationLayoutUnlockLinkRegionProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="unlock_link_region"
-            tags={tags}
             onPointerTap={onUnlockLinkRegion}
             cursor="pointer"
             layout={{ position: 'absolute', left: 8, width: 35, top: 51, height: 18, ...layout }}

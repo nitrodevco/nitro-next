@@ -19,14 +19,12 @@ export const RoomThumbnailLayout = ({ layout, roomThumbnailContainer }: RoomThum
 export interface RoomThumbnailLayoutRoomThumbnailContainerProps {
     layout?: BoxLayout;
     srcRoomThumbnail?: string;
-    tags?: string[];
 }
 
-export const RoomThumbnailLayoutRoomThumbnailContainer = ({ layout, srcRoomThumbnail, tags }: RoomThumbnailLayoutRoomThumbnailContainerProps) => {
+export const RoomThumbnailLayoutRoomThumbnailContainer = ({ layout, srcRoomThumbnail }: RoomThumbnailLayoutRoomThumbnailContainerProps) => {
     return (
         <Region
             name="room_thumbnail_container"
-            tags={tags}
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 112, ...layout }}
         >

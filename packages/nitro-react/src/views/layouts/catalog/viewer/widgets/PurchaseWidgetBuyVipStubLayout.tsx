@@ -20,16 +20,14 @@ export interface PurchaseWidgetBuyVipStubLayoutPurchaseWidgetBuyVipStubProps {
     captionCtlgWidgetGetClubText?: string;
     layout?: BoxLayout;
     onCtlgBuyClubButton?: () => void;
-    tags?: string[];
 }
 
-export const PurchaseWidgetBuyVipStubLayoutPurchaseWidgetBuyVipStub = ({ captionCtlgWidgetGetClubText, layout, onCtlgBuyClubButton, tags }: PurchaseWidgetBuyVipStubLayoutPurchaseWidgetBuyVipStubProps) => {
+export const PurchaseWidgetBuyVipStubLayoutPurchaseWidgetBuyVipStub = ({ captionCtlgWidgetGetClubText, layout, onCtlgBuyClubButton }: PurchaseWidgetBuyVipStubLayoutPurchaseWidgetBuyVipStubProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="purchaseWidgetBuyVipStub"
-            tags={tags}
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 30, ...layout }}
         >
             <Border
