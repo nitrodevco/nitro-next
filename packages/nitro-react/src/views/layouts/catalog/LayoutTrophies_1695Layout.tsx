@@ -1,7 +1,9 @@
-import { useState } from 'react';
-
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, ContainerButton, Icon, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
+import { ColourGridWidget, ColourGridWidgetProps } from '#base/views/layouts/catalog/widgets/ColourGridWidget';
+import { PurchaseWidget2, PurchaseWidget2Props } from '#base/views/layouts/catalog/widgets/PurchaseWidget2';
+import { TextInputWidget2, TextInputWidget2Props } from '#base/views/layouts/catalog/widgets/TextInputWidget2';
+import { TrophyWidget3, TrophyWidget3Props } from '#base/views/layouts/catalog/widgets/TrophyWidget3';
 
 /** Generated from `1695_layout_trophies_xml` (layout "ctlg_trophies", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutTrophies_1695LayoutProps {
@@ -17,126 +19,15 @@ export const LayoutTrophies_1695Layout = ({ ctlgTrophies, layout }: LayoutTrophi
     );
 };
 
-/** Named region `trophyWidget` of LayoutTrophies_1695Layout - configured through the parent's `trophyWidget` prop. */
-export interface LayoutTrophies_1695LayoutTrophyWidgetProps {
-    layout?: BoxLayout;
-    onCtlgNextmodelButton?: () => void;
-    onCtlgPrevmodelButton?: () => void;
-    srcCtlgTeaserimg1?: string;
-}
-
-export const LayoutTrophies_1695LayoutTrophyWidget = ({ layout, onCtlgNextmodelButton, onCtlgPrevmodelButton, srcCtlgTeaserimg1 }: LayoutTrophies_1695LayoutTrophyWidgetProps) => {
-    return (
-        <Region
-            name="trophyWidget"
-            tags={[ 'EMBEDDED' ]}
-            params={16}
-            layout={{ position: 'absolute', left: 0, width: 360, top: 165, height: 127, ...layout }}
-        >
-            <ThemeImage
-                name="ctlg_teaserimg_1"
-                params={16}
-                src={srcCtlgTeaserimg1}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 127 }}
-            />
-            <ContainerButton
-                variant="3"
-                name="ctlg_prevmodel_button"
-                params={393233}
-                onPointerTap={onCtlgPrevmodelButton}
-                layout={{ position: 'absolute', right: 200, width: 30, top: 96, height: 30, maxWidth: 100 }}
-            >
-                <Icon
-                    variant="2"
-                    name="icon"
-                    params={16}
-                    tintColor="#000000"
-                    layout={{ position: 'absolute', left: 9, width: 13, top: 8, height: 13 }}
-                />
-            </ContainerButton>
-            <ContainerButton
-                variant="3"
-                name="ctlg_nextmodel_button"
-                params={393233}
-                onPointerTap={onCtlgNextmodelButton}
-                layout={{ position: 'absolute', right: 140, width: 30, top: 96, height: 30, maxWidth: 100 }}
-            >
-                <Icon
-                    variant="3"
-                    name="icon"
-                    params={16}
-                    tintColor="#000000"
-                    layout={{ position: 'absolute', left: 9, width: 13, top: 8, height: 13 }}
-                />
-            </ContainerButton>
-        </Region>
-    );
-};
-
-/** Named region `colourGridWidget` of LayoutTrophies_1695Layout - configured through the parent's `colourGridWidget` prop. */
-export interface LayoutTrophies_1695LayoutColourGridWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutTrophies_1695LayoutColourGridWidget = ({ layout }: LayoutTrophies_1695LayoutColourGridWidgetProps) => {
-    return (
-        <Region
-            name="colourGridWidget"
-            params={16}
-            layout={{ position: 'absolute', left: 0, width: 360, top: 295, height: 40, ...layout }}
-        />
-    );
-};
-
-/** Named region `textInputWidget` of LayoutTrophies_1695Layout - configured through the parent's `textInputWidget` prop. */
-export interface LayoutTrophies_1695LayoutTextInputWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutTrophies_1695LayoutTextInputWidget = ({ layout }: LayoutTrophies_1695LayoutTextInputWidgetProps) => {
-    const [ inputTextValue, setInputTextValue ] = useState('');
-
-    return (
-        <Region
-            name="textInputWidget"
-            params={16}
-            layout={{ position: 'absolute', left: 6, width: 349, top: 7, height: 58, ...layout }}
-        >
-            <TextInput
-                value={inputTextValue}
-                onChange={setInputTextValue}
-                maxLength={300}
-                multiline
-                layout={{ position: 'absolute', left: 0, width: 349, top: 0, height: 58 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `purchaseWidget` of LayoutTrophies_1695Layout - configured through the parent's `purchaseWidget` prop. */
-export interface LayoutTrophies_1695LayoutPurchaseWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutTrophies_1695LayoutPurchaseWidget = ({ layout }: LayoutTrophies_1695LayoutPurchaseWidgetProps) => {
-    return (
-        <Region
-            name="purchaseWidget"
-            params={16}
-            layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30, ...layout }}
-        />
-    );
-};
-
 /** Named region `ctlg_trophies` of LayoutTrophies_1695Layout - configured through the parent's `ctlgTrophies` prop. */
 export interface LayoutTrophies_1695LayoutCtlgTrophiesProps {
     captionTrophyDescription?: string;
     captionTrophyEnscription?: string;
-    colourGridWidget?: LayoutTrophies_1695LayoutColourGridWidgetProps;
+    colourGridWidget?: ColourGridWidgetProps;
     layout?: BoxLayout;
-    purchaseWidget?: LayoutTrophies_1695LayoutPurchaseWidgetProps;
-    textInputWidget?: LayoutTrophies_1695LayoutTextInputWidgetProps;
-    trophyWidget?: LayoutTrophies_1695LayoutTrophyWidgetProps;
+    purchaseWidget?: PurchaseWidget2Props;
+    textInputWidget?: TextInputWidget2Props;
+    trophyWidget?: TrophyWidget3Props;
 }
 
 export const LayoutTrophies_1695LayoutCtlgTrophies = ({ captionTrophyDescription, captionTrophyEnscription, colourGridWidget, layout, purchaseWidget, textInputWidget, trophyWidget }: LayoutTrophies_1695LayoutCtlgTrophiesProps) => {
@@ -158,8 +49,14 @@ export const LayoutTrophies_1695LayoutCtlgTrophies = ({ captionTrophyDescription
                     textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
                 />
             </Region>
-            <LayoutTrophies_1695LayoutTrophyWidget {...trophyWidget} />
-            <LayoutTrophies_1695LayoutColourGridWidget {...colourGridWidget} />
+            <TrophyWidget3
+                layout={{ position: 'absolute', left: 0, width: 360, top: 165, height: 127 }}
+                {...trophyWidget}
+            />
+            <ColourGridWidget
+                layout={{ position: 'absolute', left: 0, width: 360, top: 295, height: 40 }}
+                {...colourGridWidget}
+            />
             <Region
                 name="trophy.enscription"
                 params={16}
@@ -176,9 +73,15 @@ export const LayoutTrophies_1695LayoutCtlgTrophies = ({ captionTrophyDescription
                 params={16}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 355, height: 70 }}
             >
-                <LayoutTrophies_1695LayoutTextInputWidget {...textInputWidget} />
+                <TextInputWidget2
+                    layout={{ position: 'absolute', left: 6, width: 349, top: 7, height: 58 }}
+                    {...textInputWidget}
+                />
             </Border>
-            <LayoutTrophies_1695LayoutPurchaseWidget {...purchaseWidget} />
+            <PurchaseWidget2
+                layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                {...purchaseWidget}
+            />
         </Region>
     );
 };

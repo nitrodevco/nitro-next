@@ -1,0 +1,27 @@
+import { BoxLayout, Region, WidgetSlot } from '#base/theme';
+
+/**
+ * Catalog widget `limitedItemWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
+ * layout reserves a container by that name and the client attaches the widget to it. Shared by 3 pages
+ * (LayoutBadgeDisplay_1641Layout, LayoutBadgeDisplay_1669Layout, LayoutDefault_1595Layout); each passes its own placement through `layout`.
+ */
+/** Named region `limitedItemWidget` of LimitedItemWidget - configured through the parent's `limitedItemWidget` prop. */
+export interface LimitedItemWidgetProps {
+    layout?: BoxLayout;
+}
+
+export const LimitedItemWidget = ({ layout }: LimitedItemWidgetProps) => {
+    return (
+        <Region
+            name="limitedItemWidget"
+            layout={{ position: 'absolute', ...layout }}
+        >
+            <WidgetSlot
+                widgetType="limited_item_overlay_supply"
+                name="unique_item_overlay_container"
+                params={147472}
+                layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 40 }}
+            />
+        </Region>
+    );
+};

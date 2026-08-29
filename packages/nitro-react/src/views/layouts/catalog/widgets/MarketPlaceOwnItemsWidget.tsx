@@ -1,0 +1,24 @@
+import { BoxLayout, Region } from '#base/theme';
+import { MarketPlaceOwnItemsWidgetLayout, MarketPlaceOwnItemsWidgetLayoutProps } from '#base/views/layouts/catalog/MarketPlaceOwnItemsWidgetLayout';
+
+/**
+ * Catalog widget `marketPlaceOwnItemsWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
+ * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
+ * (LayoutMarketplaceOwnItems_1691Layout); each passes its own placement through `layout`.
+ */
+export type MarketPlaceOwnItemsWidgetProps = Omit<MarketPlaceOwnItemsWidgetLayoutProps, 'layout'> & { layout?: BoxLayout };
+
+export const MarketPlaceOwnItemsWidget = ({ layout, ...widget }: MarketPlaceOwnItemsWidgetProps) => {
+    return (
+        <Region
+            name="marketPlaceOwnItemsWidget"
+            params={16}
+            layout={{ position: 'absolute', ...layout }}
+        >
+            <MarketPlaceOwnItemsWidgetLayout
+                {...widget}
+                layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}
+            />
+        </Region>
+    );
+};

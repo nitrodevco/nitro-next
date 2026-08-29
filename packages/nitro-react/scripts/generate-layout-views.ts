@@ -14,6 +14,7 @@
  *
  *   yarn workspace @nitrodevco/nitro-react generate-layout-views
  */
+import { createHash } from 'node:crypto';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -298,7 +299,11 @@ const resolveImage = (name: string): string | undefined => {
 /** State shared by every component emitted into one file (the layout plus its list-row sub-components). */
 interface FileContext {
     componentName: string;
+    /** Output folder under views/layouts (see `layoutFolder`). */
+    folder: string;
     imports: Set<string>;
+    /** Placeholder tokens of shared catalog widgets this file renders (resolved to real names after every layout is generated). */
+    sharedImports: Set<string>;
     scrollTargets: Map<string, 'vertical' | 'horizontal'>;
     warnings: string[];
     /** Source of the row-template sub-components, appended after the main component. */
@@ -330,6 +335,8 @@ interface ParentBox {
     flow: boolean;
     /** The root of a row-template sub-component also merges the caller's own `layout` prop. */
     spreadLayout?: boolean;
+    /** The root of a shared widget: placement comes entirely from the caller's `layout`, only the flex/clipping extras stay. */
+    omitPlacement?: boolean;
 }
 
 const INDENT = '    ';
@@ -469,7 +476,9 @@ const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string 
         else fields[axis] = value;
     };
 
-    if (parent.flow) {
+    if (parent.omitPlacement) {
+        fields.position = '\'absolute\'';
+    } else if (parent.flow) {
         sizeField('width', width, autoWidth);
         sizeField('height', height, autoHeight);
         fields.flexShrink = 0;
@@ -876,6 +885,116 @@ const emitThemed = (ctx: EmitContext, component: string, el: Element, parent: Pa
 
 const REGION_TAGS = new Set([ 'container', 'region', 'background', 'boxsizer', 'display_object_wrapper', 'selector', 'gradient' ]);
 
+// ---------------------------------------------------------------------------------------------
+// Shared catalog widgets. The catalog pages embed the same widget markup over and over (23
+// `purchaseWidget`s, 11 `specialInfoWidget`s, ...) under the ids in the client's
+// CatalogWidgetEnum.as - the page layout just reserves a named container and
+// `CatalogPage.as`/`*CatalogWidget.attachWidgetView()` attaches the widget to it by name. Those
+// become one component per widget id (per distinct markup) under `catalog/widgets/`, and the
+// pages render that component at their own placement instead of a private copy.
+// ---------------------------------------------------------------------------------------------
+
+const CATALOG_WIDGET_IDS = new Set([
+    'activityPointDisplayWidget', 'addOnBadgeViewWidget', 'builderWidget', 'builderAddonsWidget', 'builderLoyaltyWidget', 'builderSubscriptionWidget',
+    'bundleGridScrollWidget', 'bundlePurchaseExtraInfoWidget', 'buyGuildWidget', 'clubBuyWidget', 'clubGiftWidget', 'colourGridWidget', 'featuredItemsWidget',
+    'guildBadgeViewWidget', 'guildSelectorWidget', 'guildForumSelectorWidget', 'itemGridWidget', 'loyaltyVipBuyWidget', 'madMoneyWidget', 'marketPlaceWidget',
+    'marketPlaceOwnItemsWidget', 'newPetsWidget', 'petsWidget', 'petPreviewWidget', 'productViewWidget', 'purchaseWidget', 'recyclerWidget', 'recyclerPrizesWidget',
+    'redeemItemCodeWidget', 'roomAdsCatalogWidget', 'roomPreviewWidget', 'simplePriceWidget', 'singleViewWidget', 'soldLtdItemsWidget', 'songDiskProductViewWidget',
+    'spacesNewWidget', 'specialInfoWidget', 'spinnerWidget', 'textInputWidget', 'totalPriceWidget', 'traxPreviewWidget', 'trophyWidget', 'limitedItemWidget',
+    'userBadgeSelectorWidget', 'vipBuyWidget', 'vipGiftWidget', 'warningWidget', 'firstProductAutoSelectorWidget',
+]);
+
+const WIDGETS_FOLDER = 'catalog/widgets';
+
+interface SharedWidgetVariant {
+    /** Placeholder used in every file until all variants are known and can be numbered. */
+    token: string;
+    /** The widget file's component source with `token` standing in for the final name. */
+    code: string;
+    uses: number;
+    imports: Set<string>;
+    sharedImports: Set<string>;
+    subComponentProps: Record<string, { props: string[]; nested: Record<string, string> }>;
+    pages: string[];
+    /** An empty slot the client filled with the widget's own layout (`attachWidgetView` builds the `<id>_xml` asset) - this variant wraps that layout component. */
+    wraps?: { componentName: string; folder: string };
+}
+
+/** widget id -> markup hash -> variant */
+const sharedWidgets = new Map<string, Map<string, SharedWidgetVariant>>();
+
+/** Every layout by its Flash asset name, filled in before generation starts (so widget slots can find the layout they attach). */
+const layoutByBase = new Map<string, { componentName: string; folder: string }>();
+
+const isSharedWidget = (file: FileContext, el: Element): boolean =>
+    file.folder.startsWith('catalog') && !!el.attrs.name && CATALOG_WIDGET_IDS.has(el.attrs.name) && (REGION_TAGS.has(el.tag) || !!LIST_TAGS[el.tag]);
+
+/**
+ * Generates the widget into its own file context (so its nested regions become that file's
+ * sub-components), dedupes by markup, and returns the placeholder token the page refers to it by.
+ */
+const sharedWidget = (page: FileContext, el: Element, parent: ParentBox): string => {
+    const widgetName = pascal(el.attrs.name!);
+    const draft = `__SHARED_${widgetName}_DRAFT__`;
+    const file: FileContext = {
+        componentName: draft, folder: WIDGETS_FOLDER, imports: new Set(), sharedImports: new Set(), scrollTargets: page.scrollTargets, warnings: page.warnings,
+        subComponents: [], subComponentNames: [], subComponentProps: {},
+    };
+
+    // A slot with no children of its own is what `CatalogWidget.attachWidgetView()` filled at
+    // runtime with the widget's own `<id>_xml` layout - render that layout inside the slot.
+    const wraps = el.children.length === 0 ? layoutByBase.get(el.attrs.name!) : undefined;
+
+    if (wraps) {
+        const ctx = createEmitContext(file);
+
+        file.imports.add('Region');
+        file.imports.add('BoxLayout');
+        file.subComponents.push([
+            `export type ${draft}Props = Omit<${wraps.componentName}Props, 'layout'> & { layout?: BoxLayout };`,
+            '',
+            `export const ${draft} = ({ layout, ...widget }: ${draft}Props) => {`,
+            `${INDENT}return (`,
+            ...wrap('Region', [ ...metaProps(ctx, el, false), ...dropShadowProp(el), 'layout={{ position: \'absolute\', ...layout }}' ], INDENT + INDENT, [
+                `${INDENT}${INDENT}${INDENT}<${wraps.componentName}`,
+                `${INDENT}${INDENT}${INDENT}${INDENT}{...widget}`,
+                `${INDENT}${INDENT}${INDENT}${INDENT}layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}`,
+                `${INDENT}${INDENT}${INDENT}/>`,
+            ]),
+            `${INDENT});`,
+            '};',
+            '',
+        ].join('\n'));
+    } else {
+        generateSubComponent(file, el, { ...parent, omitPlacement: true }, 'region', draft);
+    }
+
+    const code = file.subComponents.join('\n');
+    const hash = createHash('md5').update(code.split(draft).join('X')).digest('hex').slice(0, 8);
+    let variants = sharedWidgets.get(widgetName);
+
+    if (!variants) sharedWidgets.set(widgetName, variants = new Map());
+
+    let variant = variants.get(hash);
+
+    if (!variant) {
+        const token = `__SHARED_${widgetName}_${hash}__`;
+        const subComponentProps: SharedWidgetVariant['subComponentProps'] = {};
+
+        for (const [ name, info ] of Object.entries(file.subComponentProps)) {
+            subComponentProps[name.split(draft).join(token)] = { props: info.props, nested: Object.fromEntries(Object.entries(info.nested).map(([ prop, component ]) => [ prop, component.split(draft).join(token) ])) };
+        }
+
+        variants.set(hash, variant = { token, code: code.split(draft).join(token), uses: 0, imports: file.imports, sharedImports: file.sharedImports, subComponentProps, pages: [], wraps });
+    }
+
+    variant.uses++;
+    // A widget used inside another widget reports that widget's (final) name, not its draft token.
+    variant.pages.push(page.componentName.replace(/^__SHARED_(\w+)_DRAFT__$/, '$1'));
+
+    return variant.token;
+};
+
 /**
  * `asRoot` marks the element a sub-component is being generated *for* - it renders inline
  * there instead of being extracted again (which would recurse forever).
@@ -886,6 +1005,16 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
     // Every named structural node (a `container`/`region`/list the Flash code addressed by
     // name) becomes its own component; the parent renders it and exposes one prop, named after
     // it, that forwards that component's props (handlers, caption/src/visible overrides, layout).
+    if (!asRoot && isSharedWidget(ctx.file, el)) {
+        const token = sharedWidget(ctx.file, el, parent);
+        const prop = uniqueProp(ctx, camel(el.attrs.name!));
+
+        ctx.props.set(prop, `${token}Props`);
+        ctx.file.sharedImports.add(token);
+
+        return [ `${indent}<${token}`, `${indent}${INDENT}layout={${boxLayout(el, parent)}}`, `${indent}${INDENT}{...${prop}}`, `${indent}/>` ];
+    }
+
     if (!asRoot && el.attrs.name && (REGION_TAGS.has(tag) || LIST_TAGS[tag])) {
         const component = generateSubComponent(ctx.file, el, parent, 'region');
         const prop = uniqueProp(ctx, camel(el.attrs.name));
@@ -1110,8 +1239,8 @@ const assembleComponent = (ctx: EmitContext, componentName: string, doc: string,
     return { lines, props: propEntries.map(([ name ]) => name), nested };
 };
 
-const generateSubComponent = (file: FileContext, el: Element, parent: ParentBox, kind: 'item' | 'region' = 'item'): string => {
-    const base = `${file.componentName}${pascal(el.attrs.name ?? el.tag)}${kind === 'item' ? 'Item' : ''}`;
+const generateSubComponent = (file: FileContext, el: Element, parent: ParentBox, kind: 'item' | 'region' = 'item', rootName?: string): string => {
+    const base = rootName ?? `${file.componentName}${pascal(el.attrs.name ?? el.tag)}${kind === 'item' ? 'Item' : ''}`;
     let name = base;
 
     for (let i = 2; file.subComponentNames.includes(name); i++) name = `${base}${i}`;
@@ -1146,7 +1275,24 @@ interface GeneratedComponent {
     warnings: string[];
 }
 
-const generateComponent = (componentName: string, sourceFile: string, root: XmlNode): GeneratedComponent => {
+/** The import block every generated file starts with, from what its components ended up using. */
+const assembleImports = (imports: Set<string>, sharedImports: Set<string>): string[] => {
+    const lines: string[] = [];
+    const reactImports = [ 'ReactNode', 'useState' ].filter(name => imports.has(name));
+
+    if (reactImports.length) lines.push(`import { ${reactImports.join(', ')} } from 'react';`, '');
+    if (imports.has('useTranslation')) lines.push('import { useTranslation } from \'#base/context\';');
+
+    const themeImports = [ ...imports ].filter(name => THEME_IMPORTS.has(name)).sort();
+
+    if (themeImports.length) lines.push(`import { ${themeImports.join(', ')} } from '#base/theme';`);
+    if (imports.has('layoutImage')) lines.push('import { layoutImage } from \'#base/views/layouts/layoutAssets\';');
+    for (const token of [ ...sharedImports ].sort()) lines.push(`import { ${token}, ${token}Props } from '#base/views/layouts/${WIDGETS_FOLDER}/${token}';`);
+
+    return lines;
+};
+
+const generateComponent = (componentName: string, sourceFile: string, root: XmlNode, folder: string): GeneratedComponent => {
     const windows = root.children.filter(child => child.tag === 'window');
     const elements = windows.flatMap(window => window.children.flatMap((child) => {
         if (child.tag === 'children') return child.children.map(toElement);
@@ -1154,7 +1300,7 @@ const generateComponent = (componentName: string, sourceFile: string, root: XmlN
 
         return [ toElement(child) ];
     }));
-    const file: FileContext = { componentName, imports: new Set(), scrollTargets: new Map(), warnings: [], subComponents: [], subComponentNames: [], subComponentProps: {} };
+    const file: FileContext = { componentName, folder, imports: new Set(), sharedImports: new Set(), scrollTargets: new Map(), warnings: [], subComponents: [], subComponentNames: [], subComponentProps: {} };
     const ctx = createEmitContext(file);
 
     for (const el of elements) collectScrollTargets(el, ctx.scrollTargets);
@@ -1185,16 +1331,7 @@ const generateComponent = (componentName: string, sourceFile: string, root: XmlN
 
     const doc = `/** Generated from \`${sourceFile}\` (layout "${root.attrs.name ?? ''}", ${width}x${height}) by scripts/generate-layout-views.ts - do not edit by hand. */`;
     const main = assembleComponent(ctx, componentName, doc, body);
-    const lines: string[] = [];
-    const reactImports = [ 'ReactNode', 'useState' ].filter(name => file.imports.has(name));
-
-    if (reactImports.length) lines.push(`import { ${reactImports.join(', ')} } from 'react';`, '');
-    if (file.imports.has('useTranslation')) lines.push('import { useTranslation } from \'#base/context\';');
-
-    const themeImports = [ ...file.imports ].filter(name => THEME_IMPORTS.has(name)).sort();
-
-    if (themeImports.length) lines.push(`import { ${themeImports.join(', ')} } from '#base/theme';`);
-    if (file.imports.has('layoutImage')) lines.push('import { layoutImage } from \'#base/views/layouts/layoutAssets\';');
+    const lines = assembleImports(file.imports, file.sharedImports);
 
     lines.push('', ...main.lines, ...file.subComponents);
 
@@ -1319,19 +1456,30 @@ for (const source of sources) baseCounts.set(nameKey(source), (baseCounts.get(na
 
 const exports: string[] = [];
 const warningCounts = new Map<string, number>();
+/** Layout files are written only after every page has been generated, once the shared widgets can be named. */
+const pendingFiles: { path: string; code: string }[] = [];
 const as3Usage = collectAs3Usage(new Set(sources.map(source => source.base)));
 const registry: string[] = [];
 
-for (const source of sources) {
+const planned = sources.map((source) => {
     const suffix = (baseCounts.get(nameKey(source)) ?? 0) > 1 ? `_${source.id}` : '';
     const componentName = `${pascal(source.base)}${suffix ? pascal(suffix) : ''}Layout`;
-    const { code, props, nested, subComponentProps, rootIsFrame, subComponents, warnings } = generateComponent(componentName, source.file.replace(/\$.*$/, ''), source.root);
-
     const usage = as3Usage.get(source.base);
-    const folder = layoutFolder(usage);
 
-    mkdirSync(join(OUT_DIR, folder), { recursive: true });
-    writeFileSync(join(OUT_DIR, folder, `${componentName}.tsx`), code);
+    return { source, componentName, usage, folder: layoutFolder(usage) };
+});
+
+for (const { source, componentName, folder } of planned) if (!layoutByBase.has(source.base)) layoutByBase.set(source.base, { componentName, folder });
+
+/** Each generated layout's prop tree, for the widget wrappers that forward another layout's props. */
+const generatedInfo = new Map<string, Pick<GeneratedComponent, 'props' | 'nested' | 'subComponentProps'>>();
+
+for (const { source, componentName, usage, folder } of planned) {
+    const { code, props, nested, subComponentProps, rootIsFrame, subComponents, warnings } = generateComponent(componentName, source.file.replace(/\$.*$/, ''), source.root, folder);
+
+    generatedInfo.set(componentName, { props, nested, subComponentProps });
+
+    pendingFiles.push({ path: join(OUT_DIR, folder, `${componentName}.tsx`), code });
     exports.push(`${folder}/${componentName}`);
 
     const as3 = [ ...(usage?.classes ?? []) ].sort();
@@ -1353,6 +1501,65 @@ for (const source of sources) {
 
     for (const warning of warnings) warningCounts.set(warning, (warningCounts.get(warning) ?? 0) + 1);
 }
+
+// Name the shared widget variants - the most-used markup of a widget id gets the plain name
+// (`PurchaseWidget`), the rest are numbered - then write their files and resolve the tokens.
+const tokenNames = new Map<string, string>();
+/** LAYOUT_WIDGET_PROPS entries keyed by component name - several wrapper variants forward the same layout, so entries repeat. */
+const widgetProps = new Map<string, string>();
+const widgetExports: string[] = [];
+
+for (const [ widgetName, variants ] of [ ...sharedWidgets.entries() ].sort(([ a ], [ b ]) => a.localeCompare(b))) {
+    const ordered = [ ...variants.values() ].sort((a, b) => b.uses - a.uses || a.token.localeCompare(b.token));
+
+    ordered.forEach((variant, index) => tokenNames.set(variant.token, index === 0 ? widgetName : `${widgetName}${index + 1}`));
+}
+
+const resolveTokens = (text: string): string => text.replace(/__SHARED_\w+?_[0-9a-f]{8}__/g, token => tokenNames.get(token) ?? token);
+
+for (const variants of sharedWidgets.values()) {
+    for (const variant of variants.values()) {
+        const name = tokenNames.get(variant.token)!;
+        const pages = [ ...new Set(variant.pages) ].sort();
+        const doc = [
+            '/**',
+            ` * Catalog widget \`${camel(name.replace(/\d+$/, ''))}\` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page`,
+            ` * layout reserves a container by that name and the client attaches the widget to it. Shared by ${pages.length} page${pages.length === 1 ? '' : 's'}`,
+            ` * (${pages.slice(0, 6).join(', ')}${pages.length > 6 ? ', …' : ''}); each passes its own placement through \`layout\`.`,
+            ' */',
+        ];
+        const imports = assembleImports(variant.imports, variant.sharedImports);
+
+        if (variant.wraps) imports.push(`import { ${variant.wraps.componentName}, ${variant.wraps.componentName}Props } from '#base/views/layouts/${variant.wraps.folder}/${variant.wraps.componentName}';`);
+
+        const lines = [ ...imports, '', ...doc, variant.code ];
+
+        pendingFiles.push({ path: join(OUT_DIR, WIDGETS_FOLDER, `${name}.tsx`), code: lines.join('\n') });
+        widgetExports.push(`${WIDGETS_FOLDER}/${name}`);
+
+        const propsEntry = (subName: string, info: { props: string[]; nested: Record<string, string> }) =>
+            widgetProps.set(resolveTokens(subName), `${INDENT}${resolveTokens(subName)}: { props: [ ${info.props.map(quote).join(', ')} ], nested: { ${Object.entries(info.nested).map(([ prop, component ]) => `${prop}: ${quote(resolveTokens(component))}`).join(', ')} } },`);
+
+        if (variant.wraps) {
+            // The wrapper forwards the wrapped layout's props - expose that layout's whole prop tree under the widget's name.
+            const wrapped = generatedInfo.get(variant.wraps.componentName);
+
+            if (wrapped) {
+                propsEntry(name, { props: wrapped.props, nested: wrapped.nested });
+                for (const [ subName, info ] of Object.entries(wrapped.subComponentProps)) propsEntry(subName, info);
+            }
+        }
+
+        for (const [ subName, info ] of Object.entries(variant.subComponentProps)) propsEntry(subName, info);
+    }
+}
+
+for (const file of pendingFiles) {
+    mkdirSync(dirname(file.path), { recursive: true });
+    writeFileSync(file.path, resolveTokens(file.code));
+}
+
+exports.push(...widgetExports);
 
 writeFileSync(join(OUT_DIR, 'layoutAssets.ts'), [
     '/** Bitmaps referenced by the generated layouts - copied out of `scripts/images` by scripts/generate-layout-views.ts. */',
@@ -1390,8 +1597,13 @@ writeFileSync(join(OUT_DIR, 'layoutRegistry.ts'), [
     '}',
     '',
     'export const LAYOUT_REGISTRY: LayoutRegistryEntry[] = [',
-    ...registry,
+    ...registry.map(resolveTokens),
     '];',
+    '',
+    '/** Props of the shared catalog widgets (views/layouts/catalog/widgets) and their nested sub-components, keyed by component name. */',
+    'export const LAYOUT_WIDGET_PROPS: Record<string, { props: string[]; nested: Record<string, string> }> = {',
+    ...[ ...widgetProps.keys() ].sort().map(key => widgetProps.get(key)!),
+    '};',
     '',
 ].join('\n'));
 

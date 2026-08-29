@@ -1,5 +1,9 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { AddOnBadgeViewWidget2, AddOnBadgeViewWidget2Props } from '#base/views/layouts/catalog/widgets/AddOnBadgeViewWidget2';
+import { BundleGridScrollWidget, BundleGridScrollWidgetProps } from '#base/views/layouts/catalog/widgets/BundleGridScrollWidget';
+import { PurchaseWidget2, PurchaseWidget2Props } from '#base/views/layouts/catalog/widgets/PurchaseWidget2';
+import { SimplePriceWidget, SimplePriceWidgetProps } from '#base/views/layouts/catalog/widgets/SimplePriceWidget';
 
 /** Generated from `1643_layout_single_bundle_xml` (layout "ctlg_single_bundle", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutSingleBundle_1643LayoutProps {
@@ -15,116 +19,16 @@ export const LayoutSingleBundle_1643Layout = ({ ctlgSingleBundle, layout }: Layo
     );
 };
 
-/** Named region `purchaseWidget` of LayoutSingleBundle_1643Layout - configured through the parent's `purchaseWidget` prop. */
-export interface LayoutSingleBundle_1643LayoutPurchaseWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutSingleBundle_1643LayoutPurchaseWidget = ({ layout }: LayoutSingleBundle_1643LayoutPurchaseWidgetProps) => {
-    return (
-        <Region
-            name="purchaseWidget"
-            params={16}
-            layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30, ...layout }}
-        />
-    );
-};
-
-/** Named region `bundleGrid` of LayoutSingleBundle_1643Layout - configured through the parent's `bundleGrid` prop. */
-export interface LayoutSingleBundle_1643LayoutBundleGridProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutSingleBundle_1643LayoutBundleGrid = ({ layout }: LayoutSingleBundle_1643LayoutBundleGridProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 0, width: 176, top: 0, height: 157, ...layout }}
-        >
-            <Region
-                name="bundleGrid"
-                params={16}
-                layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
-/** Named region `bundleGridScrollWidget` of LayoutSingleBundle_1643Layout - configured through the parent's `bundleGridScrollWidget` prop. */
-export interface LayoutSingleBundle_1643LayoutBundleGridScrollWidgetProps {
-    bundleGrid?: LayoutSingleBundle_1643LayoutBundleGridProps;
-    layout?: BoxLayout;
-}
-
-export const LayoutSingleBundle_1643LayoutBundleGridScrollWidget = ({ bundleGrid, layout }: LayoutSingleBundle_1643LayoutBundleGridScrollWidgetProps) => {
-    return (
-        <Region
-            name="bundleGridScrollWidget"
-            tags={[ 'EMBEDDED' ]}
-            params={16}
-            layout={{ position: 'absolute', left: 164, width: 176, top: 207, height: 157, ...layout }}
-        >
-            <LayoutSingleBundle_1643LayoutBundleGrid {...bundleGrid} />
-        </Region>
-    );
-};
-
-/** Named region `addOnBadgeViewWidget` of LayoutSingleBundle_1643Layout - configured through the parent's `addOnBadgeViewWidget` prop. */
-export interface LayoutSingleBundle_1643LayoutAddOnBadgeViewWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutSingleBundle_1643LayoutAddOnBadgeViewWidget = ({ layout }: LayoutSingleBundle_1643LayoutAddOnBadgeViewWidgetProps) => {
-    return (
-        <Region
-            name="addOnBadgeViewWidget"
-            layout={{ position: 'absolute', left: 292, width: 40, top: 167, height: 40, ...layout }}
-        />
-    );
-};
-
-/** Named region `fake_productimage` of LayoutSingleBundle_1643Layout - configured through the parent's `fakeProductimage` prop. */
-export interface LayoutSingleBundle_1643LayoutFakeProductimageProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutSingleBundle_1643LayoutFakeProductimage = ({ layout }: LayoutSingleBundle_1643LayoutFakeProductimageProps) => {
-    return (
-        <Region
-            name="fake_productimage"
-            params={16}
-            layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 30, ...layout }}
-        />
-    );
-};
-
-/** Named region `simplePriceWidget` of LayoutSingleBundle_1643Layout - configured through the parent's `simplePriceWidget` prop. */
-export interface LayoutSingleBundle_1643LayoutSimplePriceWidgetProps {
-    fakeProductimage?: LayoutSingleBundle_1643LayoutFakeProductimageProps;
-    layout?: BoxLayout;
-}
-
-export const LayoutSingleBundle_1643LayoutSimplePriceWidget = ({ fakeProductimage, layout }: LayoutSingleBundle_1643LayoutSimplePriceWidgetProps) => {
-    return (
-        <Region
-            name="simplePriceWidget"
-            layout={{ position: 'absolute', left: 63, width: 83, top: 167, height: 30, ...layout }}
-        >
-            <LayoutSingleBundle_1643LayoutFakeProductimage {...fakeProductimage} />
-        </Region>
-    );
-};
-
 /** Named region `ctlg_single_bundle` of LayoutSingleBundle_1643Layout - configured through the parent's `ctlgSingleBundle` prop. */
 export interface LayoutSingleBundle_1643LayoutCtlgSingleBundleProps {
-    addOnBadgeViewWidget?: LayoutSingleBundle_1643LayoutAddOnBadgeViewWidgetProps;
-    bundleGridScrollWidget?: LayoutSingleBundle_1643LayoutBundleGridScrollWidgetProps;
+    addOnBadgeViewWidget?: AddOnBadgeViewWidget2Props;
+    bundleGridScrollWidget?: BundleGridScrollWidgetProps;
     captionCtlgDescription?: string;
     captionCtlgSpecialTxt?: string;
     captionCtlgText1?: string;
     layout?: BoxLayout;
-    purchaseWidget?: LayoutSingleBundle_1643LayoutPurchaseWidgetProps;
-    simplePriceWidget?: LayoutSingleBundle_1643LayoutSimplePriceWidgetProps;
+    purchaseWidget?: PurchaseWidget2Props;
+    simplePriceWidget?: SimplePriceWidgetProps;
     srcCtlgSpecialImg?: string;
     srcCtlgTeaserimg1?: string;
 }
@@ -158,8 +62,14 @@ export const LayoutSingleBundle_1643LayoutCtlgSingleBundle = ({ addOnBadgeViewWi
                     textOptions={{ wordWrap: true, wordWrapWidth: 173 }}
                 />
             </Region>
-            <LayoutSingleBundle_1643LayoutPurchaseWidget {...purchaseWidget} />
-            <LayoutSingleBundle_1643LayoutBundleGridScrollWidget {...bundleGridScrollWidget} />
+            <PurchaseWidget2
+                layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                {...purchaseWidget}
+            />
+            <BundleGridScrollWidget
+                layout={{ position: 'absolute', left: 164, width: 176, top: 207, height: 157 }}
+                {...bundleGridScrollWidget}
+            />
             <ThemeImage
                 name="ctlg_teaserimg_1"
                 params={16}
@@ -186,8 +96,14 @@ export const LayoutSingleBundle_1643LayoutCtlgSingleBundle = ({ addOnBadgeViewWi
                     <ThemeText text={captionCtlgText1 ?? t('lorem.html')} />
                 </Region>
             </Border>
-            <LayoutSingleBundle_1643LayoutAddOnBadgeViewWidget {...addOnBadgeViewWidget} />
-            <LayoutSingleBundle_1643LayoutSimplePriceWidget {...simplePriceWidget} />
+            <AddOnBadgeViewWidget2
+                layout={{ position: 'absolute', left: 292, width: 40, top: 167, height: 40 }}
+                {...addOnBadgeViewWidget}
+            />
+            <SimplePriceWidget
+                layout={{ position: 'absolute', left: 63, width: 83, top: 167, height: 30 }}
+                {...simplePriceWidget}
+            />
         </Region>
     );
 };

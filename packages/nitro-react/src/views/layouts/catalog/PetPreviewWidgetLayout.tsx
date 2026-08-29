@@ -1,60 +1,19 @@
-import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { BoxLayout, Region } from '#base/theme';
+import { PetPreviewWidget, PetPreviewWidgetProps } from '#base/views/layouts/catalog/widgets/PetPreviewWidget';
 
 /** Generated from `1573_petPreviewWidget_xml` (layout "petPreviewWidget", 158x207) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PetPreviewWidgetLayoutProps {
     layout?: BoxLayout;
-    petPreviewWidget?: PetPreviewWidgetLayoutPetPreviewWidgetProps;
+    petPreviewWidget?: PetPreviewWidgetProps;
 }
 
 export const PetPreviewWidgetLayout = ({ layout, petPreviewWidget }: PetPreviewWidgetLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 158, height: 207, ...layout }}>
-            <PetPreviewWidgetLayoutPetPreviewWidget {...petPreviewWidget} />
-        </Region>
-    );
-};
-
-/** Named region `petPreviewWidget` of PetPreviewWidgetLayout - configured through the parent's `petPreviewWidget` prop. */
-export interface PetPreviewWidgetLayoutPetPreviewWidgetProps {
-    captionCtlgDescription?: string;
-    captionCtlgProductName?: string;
-    layout?: BoxLayout;
-    srcCtlgTeaserimg1?: string;
-}
-
-export const PetPreviewWidgetLayoutPetPreviewWidget = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1 }: PetPreviewWidgetLayoutPetPreviewWidgetProps) => {
-    return (
-        <Region
-            name="petPreviewWidget"
-            params={16}
-            layout={{ position: 'absolute', left: 174, width: 158, top: 154, height: 207, ...layout }}
-        >
-            <ThemeImage
-                name="ctlg_teaserimg_1"
-                params={16}
-                src={srcCtlgTeaserimg1}
-                layout={{ position: 'absolute', left: 0, width: 162, top: 0, height: 162 }}
+            <PetPreviewWidget
+                layout={{ position: 'absolute', left: 174, width: 158, top: 154, height: 207 }}
+                {...petPreviewWidget}
             />
-            <Region
-                name="ctlg_product_name"
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 71, top: 156, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgProductName ?? 'lorem ipsum'}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
-            <Region
-                name="ctlg_description"
-                params={16}
-                layout={{ position: 'absolute', left: -2, width: 162, top: 173, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgDescription ?? 'lorem ipsum'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 162 }}
-                />
-            </Region>
         </Region>
     );
 };

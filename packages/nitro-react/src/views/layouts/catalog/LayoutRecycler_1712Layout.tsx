@@ -1,4 +1,5 @@
 import { BoxLayout, Region, ThemeImage } from '#base/theme';
+import { RecyclerWidget, RecyclerWidgetProps } from '#base/views/layouts/catalog/widgets/RecyclerWidget';
 
 /** Generated from `1712_layout_recycler_xml` (layout "ctlg_recycler", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutRecycler_1712LayoutProps {
@@ -14,25 +15,10 @@ export const LayoutRecycler_1712Layout = ({ ctlgRecycler, layout }: LayoutRecycl
     );
 };
 
-/** Named region `recyclerWidget` of LayoutRecycler_1712Layout - configured through the parent's `recyclerWidget` prop. */
-export interface LayoutRecycler_1712LayoutRecyclerWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutRecycler_1712LayoutRecyclerWidget = ({ layout }: LayoutRecycler_1712LayoutRecyclerWidgetProps) => {
-    return (
-        <Region
-            name="recyclerWidget"
-            params={16}
-            layout={{ position: 'absolute', left: 0, width: 360, top: 215, height: 245, ...layout }}
-        />
-    );
-};
-
 /** Named region `ctlg_recycler` of LayoutRecycler_1712Layout - configured through the parent's `ctlgRecycler` prop. */
 export interface LayoutRecycler_1712LayoutCtlgRecyclerProps {
     layout?: BoxLayout;
-    recyclerWidget?: LayoutRecycler_1712LayoutRecyclerWidgetProps;
+    recyclerWidget?: RecyclerWidgetProps;
     srcCtlgTeaserimg1?: string;
 }
 
@@ -50,7 +36,10 @@ export const LayoutRecycler_1712LayoutCtlgRecycler = ({ layout, recyclerWidget, 
                 src={srcCtlgTeaserimg1 ?? '${image.library.url}catalogue/ctlg_furnimatic_image.gif'}
                 layout={{ position: 'absolute', left: 172, width: 183, top: 170, height: 235 }}
             />
-            <LayoutRecycler_1712LayoutRecyclerWidget {...recyclerWidget} />
+            <RecyclerWidget
+                layout={{ position: 'absolute', left: 0, width: 360, top: 215, height: 245 }}
+                {...recyclerWidget}
+            />
         </Region>
     );
 };

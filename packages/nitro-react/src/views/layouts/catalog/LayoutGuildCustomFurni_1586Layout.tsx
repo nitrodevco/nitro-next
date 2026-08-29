@@ -1,5 +1,12 @@
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { ActivityPointDisplayWidget2, ActivityPointDisplayWidget2Props } from '#base/views/layouts/catalog/widgets/ActivityPointDisplayWidget2';
+import { GuildBadgeViewWidget, GuildBadgeViewWidgetProps } from '#base/views/layouts/catalog/widgets/GuildBadgeViewWidget';
+import { GuildSelectorWidget2, GuildSelectorWidget2Props } from '#base/views/layouts/catalog/widgets/GuildSelectorWidget2';
+import { ItemGridWidget4, ItemGridWidget4Props } from '#base/views/layouts/catalog/widgets/ItemGridWidget4';
+import { ProductViewWidget, ProductViewWidgetProps } from '#base/views/layouts/catalog/widgets/ProductViewWidget';
+import { PurchaseWidget2, PurchaseWidget2Props } from '#base/views/layouts/catalog/widgets/PurchaseWidget2';
+import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
 
 /** Generated from `1586_layout_guild_custom_furni_xml` (layout "ctlg_guild_custom_furni", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutGuildCustomFurni_1586LayoutProps {
@@ -15,122 +22,17 @@ export const LayoutGuildCustomFurni_1586Layout = ({ ctlgDefault3x3, layout }: La
     );
 };
 
-/** Named region `itemGridWidget` of LayoutGuildCustomFurni_1586Layout - configured through the parent's `itemGridWidget` prop. */
-export interface LayoutGuildCustomFurni_1586LayoutItemGridWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutGuildCustomFurni_1586LayoutItemGridWidget = ({ layout }: LayoutGuildCustomFurni_1586LayoutItemGridWidgetProps) => {
-    return (
-        <Region
-            name="itemGridWidget"
-            tags={[ 'E' ]}
-            params={16}
-            layout={{ position: 'absolute', left: 5, width: 170, top: 150, height: 185, ...layout }}
-        />
-    );
-};
-
-/** Named region `productViewWidget` of LayoutGuildCustomFurni_1586Layout - configured through the parent's `productViewWidget` prop. */
-export interface LayoutGuildCustomFurni_1586LayoutProductViewWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutGuildCustomFurni_1586LayoutProductViewWidget = ({ layout }: LayoutGuildCustomFurni_1586LayoutProductViewWidgetProps) => {
-    return (
-        <Region
-            name="productViewWidget"
-            params={16}
-            layout={{ position: 'absolute', left: 180, width: 175, top: 150, height: 275, ...layout }}
-        />
-    );
-};
-
-/** Named region `guildSelectorWidget` of LayoutGuildCustomFurni_1586Layout - configured through the parent's `guildSelectorWidget` prop. */
-export interface LayoutGuildCustomFurni_1586LayoutGuildSelectorWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutGuildCustomFurni_1586LayoutGuildSelectorWidget = ({ layout }: LayoutGuildCustomFurni_1586LayoutGuildSelectorWidgetProps) => {
-    return (
-        <Region
-            name="guildSelectorWidget"
-            params={16}
-            layout={{ position: 'absolute', left: 5, width: 170, top: 340, height: 85, ...layout }}
-        />
-    );
-};
-
-/** Named region `purchaseWidget` of LayoutGuildCustomFurni_1586Layout - configured through the parent's `purchaseWidget` prop. */
-export interface LayoutGuildCustomFurni_1586LayoutPurchaseWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutGuildCustomFurni_1586LayoutPurchaseWidget = ({ layout }: LayoutGuildCustomFurni_1586LayoutPurchaseWidgetProps) => {
-    return (
-        <Region
-            name="purchaseWidget"
-            params={16}
-            layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30, ...layout }}
-        />
-    );
-};
-
-/** Named region `specialInfoWidget` of LayoutGuildCustomFurni_1586Layout - configured through the parent's `specialInfoWidget` prop. */
-export interface LayoutGuildCustomFurni_1586LayoutSpecialInfoWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutGuildCustomFurni_1586LayoutSpecialInfoWidget = ({ layout }: LayoutGuildCustomFurni_1586LayoutSpecialInfoWidgetProps) => {
-    return (
-        <Region
-            name="specialInfoWidget"
-            params={16}
-            layout={{ position: 'absolute', left: 194, width: 142, top: 118, height: 73, ...layout }}
-        />
-    );
-};
-
-/** Named region `activityPointDisplayWidget` of LayoutGuildCustomFurni_1586Layout - configured through the parent's `activityPointDisplayWidget` prop. */
-export interface LayoutGuildCustomFurni_1586LayoutActivityPointDisplayWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutGuildCustomFurni_1586LayoutActivityPointDisplayWidget = ({ layout }: LayoutGuildCustomFurni_1586LayoutActivityPointDisplayWidgetProps) => {
-    return (
-        <Region
-            name="activityPointDisplayWidget"
-            params={16}
-            layout={{ position: 'absolute', left: 199, width: 156, top: 120, height: 28, ...layout }}
-        />
-    );
-};
-
-/** Named region `guildBadgeViewWidget` of LayoutGuildCustomFurni_1586Layout - configured through the parent's `guildBadgeViewWidget` prop. */
-export interface LayoutGuildCustomFurni_1586LayoutGuildBadgeViewWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutGuildCustomFurni_1586LayoutGuildBadgeViewWidget = ({ layout }: LayoutGuildCustomFurni_1586LayoutGuildBadgeViewWidgetProps) => {
-    return (
-        <Region
-            name="guildBadgeViewWidget"
-            layout={{ position: 'absolute', left: 202, width: 40, top: 378, height: 40, ...layout }}
-        />
-    );
-};
-
 /** Named region `ctlg_default_3x3` of LayoutGuildCustomFurni_1586Layout - configured through the parent's `ctlgDefault3x3` prop. */
 export interface LayoutGuildCustomFurni_1586LayoutCtlgDefault3x3Props {
-    activityPointDisplayWidget?: LayoutGuildCustomFurni_1586LayoutActivityPointDisplayWidgetProps;
+    activityPointDisplayWidget?: ActivityPointDisplayWidget2Props;
     captionCtlgSelectproduct?: string;
-    guildBadgeViewWidget?: LayoutGuildCustomFurni_1586LayoutGuildBadgeViewWidgetProps;
-    guildSelectorWidget?: LayoutGuildCustomFurni_1586LayoutGuildSelectorWidgetProps;
-    itemGridWidget?: LayoutGuildCustomFurni_1586LayoutItemGridWidgetProps;
+    guildBadgeViewWidget?: GuildBadgeViewWidgetProps;
+    guildSelectorWidget?: GuildSelectorWidget2Props;
+    itemGridWidget?: ItemGridWidget4Props;
     layout?: BoxLayout;
-    productViewWidget?: LayoutGuildCustomFurni_1586LayoutProductViewWidgetProps;
-    purchaseWidget?: LayoutGuildCustomFurni_1586LayoutPurchaseWidgetProps;
-    specialInfoWidget?: LayoutGuildCustomFurni_1586LayoutSpecialInfoWidgetProps;
+    productViewWidget?: ProductViewWidgetProps;
+    purchaseWidget?: PurchaseWidget2Props;
+    specialInfoWidget?: SpecialInfoWidgetProps;
 }
 
 export const LayoutGuildCustomFurni_1586LayoutCtlgDefault3x3 = ({ activityPointDisplayWidget, captionCtlgSelectproduct, guildBadgeViewWidget, guildSelectorWidget, itemGridWidget, layout, productViewWidget, purchaseWidget, specialInfoWidget }: LayoutGuildCustomFurni_1586LayoutCtlgDefault3x3Props) => {
@@ -153,13 +55,34 @@ export const LayoutGuildCustomFurni_1586LayoutCtlgDefault3x3 = ({ activityPointD
                     textOptions={{ fill: '#666666' }}
                 />
             </Region>
-            <LayoutGuildCustomFurni_1586LayoutItemGridWidget {...itemGridWidget} />
-            <LayoutGuildCustomFurni_1586LayoutProductViewWidget {...productViewWidget} />
-            <LayoutGuildCustomFurni_1586LayoutGuildSelectorWidget {...guildSelectorWidget} />
-            <LayoutGuildCustomFurni_1586LayoutPurchaseWidget {...purchaseWidget} />
-            <LayoutGuildCustomFurni_1586LayoutSpecialInfoWidget {...specialInfoWidget} />
-            <LayoutGuildCustomFurni_1586LayoutActivityPointDisplayWidget {...activityPointDisplayWidget} />
-            <LayoutGuildCustomFurni_1586LayoutGuildBadgeViewWidget {...guildBadgeViewWidget} />
+            <ItemGridWidget4
+                layout={{ position: 'absolute', left: 5, width: 170, top: 150, height: 185 }}
+                {...itemGridWidget}
+            />
+            <ProductViewWidget
+                layout={{ position: 'absolute', left: 180, width: 175, top: 150, height: 275 }}
+                {...productViewWidget}
+            />
+            <GuildSelectorWidget2
+                layout={{ position: 'absolute', left: 5, width: 170, top: 340, height: 85 }}
+                {...guildSelectorWidget}
+            />
+            <PurchaseWidget2
+                layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                {...purchaseWidget}
+            />
+            <SpecialInfoWidget
+                layout={{ position: 'absolute', left: 194, width: 142, top: 118, height: 73 }}
+                {...specialInfoWidget}
+            />
+            <ActivityPointDisplayWidget2
+                layout={{ position: 'absolute', left: 199, width: 156, top: 120, height: 28 }}
+                {...activityPointDisplayWidget}
+            />
+            <GuildBadgeViewWidget
+                layout={{ position: 'absolute', left: 202, width: 40, top: 378, height: 40 }}
+                {...guildBadgeViewWidget}
+            />
         </Region>
     );
 };

@@ -1,5 +1,6 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Button, Region, ThemeImage, ThemeText } from '#base/theme';
+import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { BuyGuildWidget2, BuyGuildWidget2Props } from '#base/views/layouts/catalog/widgets/BuyGuildWidget2';
 
 /** Generated from `1682_layout_guild_frontpage_xml` (layout "ctlg_guild_frontpage", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutGuildFrontpage_1682LayoutProps {
@@ -15,37 +16,9 @@ export const LayoutGuildFrontpage_1682Layout = ({ ctlgGuildFrontpage, layout }: 
     );
 };
 
-/** Named region `buyGuildWidget` of LayoutGuildFrontpage_1682Layout - configured through the parent's `buyGuildWidget` prop. */
-export interface LayoutGuildFrontpage_1682LayoutBuyGuildWidgetProps {
-    layout?: BoxLayout;
-    onStartGuildPurchase?: () => void;
-}
-
-export const LayoutGuildFrontpage_1682LayoutBuyGuildWidget = ({ layout, onStartGuildPurchase }: LayoutGuildFrontpage_1682LayoutBuyGuildWidgetProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="buyGuildWidget"
-            params={16}
-            layout={{ position: 'absolute', left: 49, width: 267, top: 251, height: 45, justifyContent: 'center', ...layout }}
-        >
-            <Button
-                variant="3"
-                name="start_guild_purchase"
-                params={933905}
-                onPointerTap={onStartGuildPurchase}
-                layout={{ position: 'absolute', marginLeft: -4, marginRight: 4, width: 213, top: 2, height: 28, minWidth: 190, minHeight: 28, maxHeight: 50 }}
-            >
-                {t('catalog.start.guild.purchase.button')}
-            </Button>
-        </Region>
-    );
-};
-
 /** Named region `ctlg_guild_frontpage` of LayoutGuildFrontpage_1682Layout - configured through the parent's `ctlgGuildFrontpage` prop. */
 export interface LayoutGuildFrontpage_1682LayoutCtlgGuildFrontpageProps {
-    buyGuildWidget?: LayoutGuildFrontpage_1682LayoutBuyGuildWidgetProps;
+    buyGuildWidget?: BuyGuildWidget2Props;
     captionCtlgDescription?: string;
     captionCtlgSpecialTxt?: string;
     layout?: BoxLayout;
@@ -87,7 +60,10 @@ export const LayoutGuildFrontpage_1682LayoutCtlgGuildFrontpage = ({ buyGuildWidg
                     textOptions={{ wordWrap: true, wordWrapWidth: 335 }}
                 />
             </Region>
-            <LayoutGuildFrontpage_1682LayoutBuyGuildWidget {...buyGuildWidget} />
+            <BuyGuildWidget2
+                layout={{ position: 'absolute', left: 49, width: 267, top: 251, height: 45 }}
+                {...buyGuildWidget}
+            />
         </Region>
     );
 };

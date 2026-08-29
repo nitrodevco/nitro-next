@@ -1,5 +1,8 @@
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
+import { AddOnBadgeViewWidget2, AddOnBadgeViewWidget2Props } from '#base/views/layouts/catalog/widgets/AddOnBadgeViewWidget2';
+import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
+import { SimplePriceWidget, SimplePriceWidgetProps } from '#base/views/layouts/catalog/widgets/SimplePriceWidget';
 
 /** Generated from `1587_layout_single_bundle_xml` (layout "ctlg_single_bundle", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutSingleBundle_1587LayoutProps {
@@ -35,77 +38,16 @@ export const LayoutSingleBundle_1587LayoutBundleGrid = ({ layout }: LayoutSingle
     );
 };
 
-/** Named region `addOnBadgeViewWidget` of LayoutSingleBundle_1587Layout - configured through the parent's `addOnBadgeViewWidget` prop. */
-export interface LayoutSingleBundle_1587LayoutAddOnBadgeViewWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutSingleBundle_1587LayoutAddOnBadgeViewWidget = ({ layout }: LayoutSingleBundle_1587LayoutAddOnBadgeViewWidgetProps) => {
-    return (
-        <Region
-            name="addOnBadgeViewWidget"
-            layout={{ position: 'absolute', left: 12, width: 40, top: 125, height: 40, ...layout }}
-        />
-    );
-};
-
-/** Named region `fake_productimage` of LayoutSingleBundle_1587Layout - configured through the parent's `fakeProductimage` prop. */
-export interface LayoutSingleBundle_1587LayoutFakeProductimageProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutSingleBundle_1587LayoutFakeProductimage = ({ layout }: LayoutSingleBundle_1587LayoutFakeProductimageProps) => {
-    return (
-        <Region
-            name="fake_productimage"
-            params={16}
-            layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 30, ...layout }}
-        />
-    );
-};
-
-/** Named region `simplePriceWidget` of LayoutSingleBundle_1587Layout - configured through the parent's `simplePriceWidget` prop. */
-export interface LayoutSingleBundle_1587LayoutSimplePriceWidgetProps {
-    fakeProductimage?: LayoutSingleBundle_1587LayoutFakeProductimageProps;
-    layout?: BoxLayout;
-}
-
-export const LayoutSingleBundle_1587LayoutSimplePriceWidget = ({ fakeProductimage, layout }: LayoutSingleBundle_1587LayoutSimplePriceWidgetProps) => {
-    return (
-        <Region
-            name="simplePriceWidget"
-            layout={{ position: 'absolute', left: 74, width: 83, top: 125, height: 30, ...layout }}
-        >
-            <LayoutSingleBundle_1587LayoutFakeProductimage {...fakeProductimage} />
-        </Region>
-    );
-};
-
-/** Named region `purchaseWidget` of LayoutSingleBundle_1587Layout - configured through the parent's `purchaseWidget` prop. */
-export interface LayoutSingleBundle_1587LayoutPurchaseWidgetProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutSingleBundle_1587LayoutPurchaseWidget = ({ layout }: LayoutSingleBundle_1587LayoutPurchaseWidgetProps) => {
-    return (
-        <Region
-            name="purchaseWidget"
-            params={1040}
-            layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30, ...layout }}
-        />
-    );
-};
-
 /** Named region `ctlg_single_bundle` of LayoutSingleBundle_1587Layout - configured through the parent's `ctlgSingleBundle` prop. */
 export interface LayoutSingleBundle_1587LayoutCtlgSingleBundleProps {
-    addOnBadgeViewWidget?: LayoutSingleBundle_1587LayoutAddOnBadgeViewWidgetProps;
+    addOnBadgeViewWidget?: AddOnBadgeViewWidget2Props;
     bundleGrid?: LayoutSingleBundle_1587LayoutBundleGridProps;
     captionCtlgDescription?: string;
     captionCtlgSpecialTxt?: string;
     captionCtlgText1?: string;
     layout?: BoxLayout;
-    purchaseWidget?: LayoutSingleBundle_1587LayoutPurchaseWidgetProps;
-    simplePriceWidget?: LayoutSingleBundle_1587LayoutSimplePriceWidgetProps;
+    purchaseWidget?: PurchaseWidgetProps;
+    simplePriceWidget?: SimplePriceWidgetProps;
     srcCtlgSpecialImg?: string;
     srcCtlgTeaserimg1?: string;
 }
@@ -174,9 +116,18 @@ export const LayoutSingleBundle_1587LayoutCtlgSingleBundle = ({ addOnBadgeViewWi
                     <ThemeText text={captionCtlgText1 ?? t('lorem.html')} />
                 </Region>
             </Border>
-            <LayoutSingleBundle_1587LayoutAddOnBadgeViewWidget {...addOnBadgeViewWidget} />
-            <LayoutSingleBundle_1587LayoutSimplePriceWidget {...simplePriceWidget} />
-            <LayoutSingleBundle_1587LayoutPurchaseWidget {...purchaseWidget} />
+            <AddOnBadgeViewWidget2
+                layout={{ position: 'absolute', left: 12, width: 40, top: 125, height: 40 }}
+                {...addOnBadgeViewWidget}
+            />
+            <SimplePriceWidget
+                layout={{ position: 'absolute', left: 74, width: 83, top: 125, height: 30 }}
+                {...simplePriceWidget}
+            />
+            <PurchaseWidget
+                layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
+                {...purchaseWidget}
+            />
         </Region>
     );
 };

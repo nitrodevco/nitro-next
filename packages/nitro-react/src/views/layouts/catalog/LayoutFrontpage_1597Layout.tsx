@@ -1,7 +1,6 @@
-import { useState } from 'react';
-
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Button, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { RedeemItemCodeWidget, RedeemItemCodeWidgetProps } from '#base/views/layouts/catalog/widgets/RedeemItemCodeWidget';
 
 /** Generated from `1597_layout_frontpage_xml` (layout "ctlg_frontpage4", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutFrontpage_1597LayoutProps {
@@ -17,53 +16,12 @@ export const LayoutFrontpage_1597Layout = ({ ctlgFrontpage4, layout }: LayoutFro
     );
 };
 
-/** Named region `redeemItemCodeWidget` of LayoutFrontpage_1597Layout - configured through the parent's `redeemItemCodeWidget` prop. */
-export interface LayoutFrontpage_1597LayoutRedeemItemCodeWidgetProps {
-    layout?: BoxLayout;
-    onRedeem?: () => void;
-}
-
-export const LayoutFrontpage_1597LayoutRedeemItemCodeWidget = ({ layout, onRedeem }: LayoutFrontpage_1597LayoutRedeemItemCodeWidgetProps) => {
-    const t = useTranslation();
-    const [ voucherCodeValue, setVoucherCodeValue ] = useState('');
-
-    return (
-        <Region
-            name="redeemItemCodeWidget"
-            params={16}
-            layout={{ position: 'absolute', left: 0, width: 345, top: 20, height: 34, ...layout }}
-        >
-            <Border
-                variant="0"
-                params={16}
-                layout={{ position: 'absolute', left: 10, width: 216, top: 5, height: 25 }}
-            >
-                <TextInput
-                    value={voucherCodeValue}
-                    onChange={setVoucherCodeValue}
-                    multiline
-                    layout={{ position: 'absolute', left: 4, width: 206, top: 4, height: 15 }}
-                />
-            </Border>
-            <Button
-                variant="3"
-                name="redeem"
-                params={393361}
-                onPointerTap={onRedeem}
-                layout={{ position: 'absolute', left: 274, right: 9, top: 5, height: 22, maxWidth: 100 }}
-            >
-                {t('redeem')}
-            </Button>
-        </Region>
-    );
-};
-
 /** Named region `ctlg_frontpage4` of LayoutFrontpage_1597Layout - configured through the parent's `ctlgFrontpage4` prop. */
 export interface LayoutFrontpage_1597LayoutCtlgFrontpage4Props {
     captionCtlgTxt1?: string;
     captionCtlgTxt2?: string;
     layout?: BoxLayout;
-    redeemItemCodeWidget?: LayoutFrontpage_1597LayoutRedeemItemCodeWidgetProps;
+    redeemItemCodeWidget?: RedeemItemCodeWidgetProps;
     srcCtlgTeaserimg1?: string;
 }
 
@@ -109,7 +67,10 @@ export const LayoutFrontpage_1597LayoutCtlgFrontpage4 = ({ captionCtlgTxt1, capt
                         textOptions={{ wordWrap: true, wordWrapWidth: 272 }}
                     />
                 </Region>
-                <LayoutFrontpage_1597LayoutRedeemItemCodeWidget {...redeemItemCodeWidget} />
+                <RedeemItemCodeWidget
+                    layout={{ position: 'absolute', left: 0, width: 345, top: 20, height: 34 }}
+                    {...redeemItemCodeWidget}
+                />
             </Border>
         </Region>
     );

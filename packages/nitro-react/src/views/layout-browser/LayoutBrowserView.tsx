@@ -2,7 +2,7 @@ import { ComponentType, useEffect, useMemo, useState } from 'react';
 
 import { useSystemActions } from '#base/context';
 import { Border, Button, ColorLayer, Frame, Region, ScrollArea, TextInput, ThemeText } from '#base/theme';
-import { LAYOUT_REGISTRY, LayoutRegistryEntry } from '#base/views/layouts/layoutRegistry';
+import { LAYOUT_REGISTRY, LAYOUT_WIDGET_PROPS, LayoutRegistryEntry } from '#base/views/layouts/layoutRegistry';
 
 const MAX_RESULTS = 794;
 
@@ -45,7 +45,7 @@ const LayoutPreview = ({ entry, onEvent, onClose }: { entry: LayoutRegistryEntry
                 if (prop === 'onClose' && !path) handlers[prop] = onClose;
                 else if (prop.startsWith('on')) handlers[prop] = () => onEvent(label);
                 else if (nested[prop]) {
-                    const sub = entry.subComponentProps[nested[prop]];
+                    const sub = entry.subComponentProps[nested[prop]] ?? LAYOUT_WIDGET_PROPS[nested[prop]];
 
                     if (sub) handlers[prop] = build(sub.props, sub.nested, label);
                 }
