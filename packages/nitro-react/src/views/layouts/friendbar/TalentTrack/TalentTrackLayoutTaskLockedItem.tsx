@@ -24,7 +24,7 @@ export const TalentTrackLayoutTaskLockedItem = ({ captionDescription, captionTit
                     variant="104"
                     name="border"
                     tintColor="#bdbdbd"
-                    layout={{ position: 'absolute', left: 0, width: 210, top: 20, height: 60 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 60 }}
                 >
                     {(visibleLocked ?? true) && (
                         <ThemeImage

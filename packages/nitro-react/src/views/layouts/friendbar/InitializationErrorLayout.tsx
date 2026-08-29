@@ -10,7 +10,7 @@ export interface InitializationErrorLayoutProps {
 export const InitializationErrorLayout = ({ captionError, layout, srcKittycat }: InitializationErrorLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 220, height: 84, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 220, top: 0, height: 84 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="kittycat"
                     src={srcKittycat ?? '${image.library.url}reception/confused.png'}

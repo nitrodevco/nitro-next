@@ -15,17 +15,17 @@ export const InventoryTradingMinimizedLayout = ({ captionHelpText, layout, onBut
 
     return (
         <Region layout={{ position: 'relative', width: 478, height: 68, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 68 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="102"
                     tintColor="#27556a"
-                    layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 68 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Button
                     variant="3"
                     name="button_continue"
                     onPointerTap={onButtonContinue}
-                    layout={{ position: 'absolute', left: 7, width: 70, top: 36, height: 28 }}
+                    layout={{ position: 'absolute', left: 7, width: 70, bottom: 4, height: 28 }}
                 >
                     {t('inventory.trading.minimized.continue_trade')}
                 </Button>
@@ -33,7 +33,7 @@ export const InventoryTradingMinimizedLayout = ({ captionHelpText, layout, onBut
                     variant="3"
                     name="button_cancel"
                     onPointerTap={onButtonCancel}
-                    layout={{ position: 'absolute', right: 10, width: 56, top: 36, height: 28 }}
+                    layout={{ position: 'absolute', right: 10, width: 56, bottom: 4, height: 28 }}
                 >
                     {t('generic.cancel')}
                 </Button>

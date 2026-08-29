@@ -21,7 +21,7 @@ export const ViprequiredLayout = ({ layout, list, onClose, srcIllustration }: Vi
             name="frame"
             caption={t('viprequired.header')}
             onClose={onClose}
-            layout={{ width: 310, height: 149, ...layout }}
+            layout={{ width: 310, height: 149, minWidth: 310, minHeight: 149, ...layout }}
         >
             <ThemeImage
                 name="illustration"

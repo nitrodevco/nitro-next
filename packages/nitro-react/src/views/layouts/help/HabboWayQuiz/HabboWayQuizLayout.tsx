@@ -46,7 +46,7 @@ export const HabboWayQuizLayout = ({ analysisPane, captionFailureAdvice, caption
             variant="101"
             caption={t('habbo.way.quiz.title')}
             onClose={onClose}
-            layout={{ width: 499, height: 470, ...layout }}
+            layout={{ width: 499, height: 470, minWidth: 499, minHeight: 470, ...layout }}
         >
             <WidgetSlot
                 widgetType="separator"
@@ -149,7 +149,7 @@ export const HabboWayQuizLayout = ({ analysisPane, captionFailureAdvice, caption
             )}
             <WidgetSlot
                 widgetType="separator"
-                layout={{ position: 'absolute', left: 6, width: 485, bottom: 81, height: 30 }}
+                layout={{ position: 'absolute', left: 6, width: 485, bottom: 40, height: 30 }}
             >
                 {separatorWidget2}
             </WidgetSlot>
@@ -157,7 +157,7 @@ export const HabboWayQuizLayout = ({ analysisPane, captionFailureAdvice, caption
             {(visibleFailureButtons ?? false) && (
                 <Region
                     name="failure_buttons"
-                    layout={{ position: 'absolute', left: 0, width: 498, bottom: 31, height: 65 }}
+                    layout={{ position: 'absolute', left: 0, width: 498, bottom: -10, height: 65 }}
                 >
                     <Button
                         variant="101"
@@ -183,7 +183,7 @@ export const HabboWayQuizLayout = ({ analysisPane, captionFailureAdvice, caption
             {(visibleExitButtonContainer ?? false) && (
                 <Region
                     name="exit_button_container"
-                    layout={{ position: 'absolute', left: 0, width: 499, bottom: 31, height: 65, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, width: 499, bottom: -10, height: 65, justifyContent: 'center' }}
                 >
                     <Button
                         variant="101"

@@ -13,7 +13,7 @@ export interface RunningNumberLayoutProps {
 export const RunningNumberLayout = ({ captionNumberField, layout, srcLeft, srcMiddle, srcRight }: RunningNumberLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 60, height: 23, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 23 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="left"
                     src={srcLeft ?? layoutImage('illumina_light_clock_background_left.png')}

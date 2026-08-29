@@ -20,7 +20,7 @@ export const RoomvisitsFrameLayoutVisitrowItem = ({ captionRoomNameTxt, captionT
             {(visibleTimeTxt ?? true) && (
                 <Region
                     name="time_txt"
-                    layout={{ position: 'absolute', right: 44, width: 30, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 44, width: 30, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionTimeTxt ?? '15:14'}
                 </Region>
@@ -28,7 +28,7 @@ export const RoomvisitsFrameLayoutVisitrowItem = ({ captionRoomNameTxt, captionT
             {(visibleRoomNameTxt ?? true) && (
                 <Region
                     name="room_name_txt"
-                    layout={{ position: 'absolute', left: 5, right: 73, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 5, right: 73, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionRoomNameTxt ?? 'Funky room'}
                 </Region>
@@ -36,7 +36,7 @@ export const RoomvisitsFrameLayoutVisitrowItem = ({ captionRoomNameTxt, captionT
             {(visibleViewRoomTxt ?? true) && (
                 <Region
                     name="view_room_txt"
-                    layout={{ position: 'absolute', right: 1, width: 39, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 1, width: 39, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionViewRoomTxt ?? 'Enter'}
                 </Region>

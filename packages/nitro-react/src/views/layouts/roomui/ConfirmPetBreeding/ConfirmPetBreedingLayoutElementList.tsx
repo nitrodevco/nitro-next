@@ -24,7 +24,7 @@ export const ConfirmPetBreedingLayoutElementList = ({ captionInfo, captionText, 
     return (
         <Region
             name="element_list"
-            layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 318, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -10, top: 0, maxWidth: 318, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsElementList ?? (
                 <>
@@ -38,10 +38,10 @@ export const ConfirmPetBreedingLayoutElementList = ({ captionInfo, captionText, 
                 variant="102"
                 layout={{ width: 295, height: 209, flexShrink: 0 }}
             >
-                <Region layout={{ position: 'absolute', left: 10, width: 287, top: 10, height: 199, flexDirection: 'column', gap: 5 }}>
+                <Region layout={{ position: 'absolute', left: 10, right: -2, top: 10, bottom: 0, flexDirection: 'column', gap: 5 }}>
                     <Region
                         name="text"
-                        layout={{ width: 286, height: 40, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 40, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionText ?? t('breedpets.confirmation.widget.text')}
@@ -50,7 +50,7 @@ export const ConfirmPetBreedingLayoutElementList = ({ captionInfo, captionText, 
                     </Region>
                     <Region
                         name="info"
-                        layout={{ width: 290, height: 40, flexShrink: 0, minWidth: 290, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 40, flexShrink: 0, minWidth: 290, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionInfo ?? t('breedpets.confirmation.widget.info')}

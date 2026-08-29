@@ -15,7 +15,7 @@ export const NavigatorFrame2LayoutCategoryContentBackground = ({ categoryContent
         <Region
             name="category_content_background"
             backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 0, width: 396, top: 0, height: 200, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <NavigatorFrame2LayoutCategoryHeader {...categoryHeader} />
             <NavigatorFrame2LayoutCategoryContent {...categoryContent} />

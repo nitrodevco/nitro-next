@@ -24,7 +24,7 @@ export const WiredMenuViewLayoutContextOptionItem = ({ layout, onTypeContextButt
                     tooltip={t('wiredfurni.params.sourcetype.context')}
                     onPointerTap={onTypeContextButton}
                     textStyle="text-style-button-shiny-regular"
-                    layout={{ position: 'absolute', left: 0, width: 37, top: 0, height: 36 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 36 }}
                 />
             )}
             <ThemeImage

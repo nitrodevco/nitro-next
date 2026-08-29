@@ -35,7 +35,8 @@ export const CatalogUbuntuWithTabsLayout = ({ captionSearchHelper, catalogHeader
             caption={t('catalog.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 570, height: 635, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 570, height: 635, minWidth: 570, maxWidth: 570, minHeight: 570, ...layout }}
         >
             <CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBorder {...catalogHeaderBackgroundBorder} />
             <Border
@@ -74,7 +75,7 @@ export const CatalogUbuntuWithTabsLayout = ({ captionSearchHelper, catalogHeader
             <CatalogUbuntuWithTabsLayoutNavigationContainer {...navigationContainer} />
             <Region
                 name="layoutContainer"
-                layout={{ position: 'absolute', left: 200, width: 360, top: 131, bottom: 44 }}
+                layout={{ position: 'absolute', left: 200, width: 360, top: 131, bottom: 3 }}
             >
                 {layoutContainer}
             </Region>
@@ -88,14 +89,14 @@ export const CatalogUbuntuWithTabsLayout = ({ captionSearchHelper, catalogHeader
                     name="tab_button"
                     selected={selectedTabContext === 'tab_button'}
                     onPointerTap={onTabButton}
-                    layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, width: 110, top: 0, bottom: 0 }}
                 />
             </TabContext>
             {(visibleSearchWaitingForResultsMask ?? false) && (
                 <Region
                     name="search_waiting_for_results_mask"
                     backgroundColor="#eceae0"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 37 }}
+                    layout={{ position: 'absolute', left: 0, right: -12, top: 0, bottom: -4 }}
                 >
                     {searchWaitingForResultsMask}
                 </Region>

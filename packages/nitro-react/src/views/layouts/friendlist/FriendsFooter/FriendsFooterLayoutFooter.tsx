@@ -34,7 +34,7 @@ export const FriendsFooterLayoutFooter = ({ layout, onButtonOpenHomepage, onButt
         <Region
             name="footer"
             backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 0, width: 223, top: 0, height: 41, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="0"

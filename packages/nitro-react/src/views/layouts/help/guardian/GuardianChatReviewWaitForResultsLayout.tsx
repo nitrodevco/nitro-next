@@ -25,17 +25,17 @@ export const GuardianChatReviewWaitForResultsLayout = ({ balloonWidget, captionV
             name="guardian_chat_review_wait_for_results"
             caption={t('guide.bully.request.guide.results.title')}
             onClose={onClose}
-            layout={{ width: 248, height: 280, ...layout }}
+            layout={{ width: 248, height: 280, minWidth: 248, minHeight: 280, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region layout={{ position: 'absolute', marginLeft: 30, marginRight: -30, width: 308, top: 12, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', marginLeft: 36, marginRight: -36, width: 308, top: 12, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('guide.bully.request.guide.results.waiting.title')}
                         textStyle="text-style-il-heading-1"
                         textOptions={{ fill: '#888888' }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 170, top: 37, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
+                <Region layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 170, top: 37, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                     <ThemeText
                         text={t('guide.bully.request.guide.results.waiting.description')}
                         textStyle="text-style-il-small"
@@ -55,7 +55,7 @@ export const GuardianChatReviewWaitForResultsLayout = ({ balloonWidget, captionV
                 >
                     <Region
                         name="results"
-                        layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}
                     >
                         <Region layout={{ width: 232, height: 46, flexShrink: 0 }}>
                             <Region
@@ -80,7 +80,7 @@ export const GuardianChatReviewWaitForResultsLayout = ({ balloonWidget, captionV
                         </Region>
                     </Region>
                 </Border>
-                <Region layout={{ position: 'absolute', left: 0, width: 246, bottom: 31, height: 99, justifyContent: 'center' }}>
+                <Region layout={{ position: 'absolute', left: 0, width: 246, bottom: -10, height: 99, justifyContent: 'center' }}>
                     <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 179, alignSelf: 'center', marginTop: -23.5, marginBottom: 23.5, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                         <ThemeText
                             text={t('guide.bully.request.guide.results.wait')}
@@ -103,7 +103,7 @@ export const GuardianChatReviewWaitForResultsLayout = ({ balloonWidget, captionV
                     layout={{ position: 'absolute', left: 229, width: 238, top: 105, height: 25 }}
                 >
                     {balloonWidget}
-                    <Region layout={{ position: 'absolute', left: 0, width: 233, top: 0, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', left: 0, width: 233, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('guide.bully.request.guide.results.your_vote')}
                             textStyle="text-style-il-regular-white"

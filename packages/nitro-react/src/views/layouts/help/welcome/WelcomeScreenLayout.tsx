@@ -17,7 +17,7 @@ export const WelcomeScreenLayout = ({ captionText, layout, onClick, onClose, onF
         <Region layout={{ position: 'relative', width: 251, height: 87, ...layout }}>
             <Region
                 name="welcome_screen"
-                layout={{ position: 'absolute', left: 0, width: 251, top: 0, height: 87 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Frame
                     variant="0"
@@ -26,25 +26,27 @@ export const WelcomeScreenLayout = ({ captionText, layout, onClick, onClose, onF
                     caption="title"
                     tintColor="#418db0"
                     onClose={onFrame}
-                    layout={{ position: 'absolute', left: 9, width: 230, top: 0, height: 87 }}
+                    layout={{ position: 'absolute', left: 9, right: 12, top: 0, bottom: 0 }}
                 >
-                    <CloseButton
-                        variant="0"
-                        name="close"
-                        onPointerTap={onClose}
-                        layout={{ position: 'absolute', left: 200, width: 18, top: 4, height: 18 }}
-                    />
-                    <Region
-                        name="click"
-                        layout={{ position: 'absolute', left: 14, width: 189, top: 8, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        onPointerTap={onClick}
-                        cursor="pointer"
-                    >
-                        <ThemeText
-                            text={captionText ?? 'welcome.scjkh kjh kjh kjh kjh kjh kjh kjhkjh kj hkj hkjhreen.message'}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 189 }}
+                    <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
+                        <CloseButton
+                            variant="0"
+                            name="close"
+                            onPointerTap={onClose}
+                            layout={{ position: 'absolute', right: 0, width: 18, top: 4, height: 18 }}
                         />
+                        <Region
+                            name="click"
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 189, top: 8, bottom: 1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            onPointerTap={onClick}
+                            cursor="pointer"
+                        >
+                            <ThemeText
+                                text={captionText ?? 'welcome.scjkh kjh kjh kjh kjh kjh kjh kjhkjh kj hkj hkjhreen.message'}
+                                textStyle="text-style-u-bold"
+                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 189 }}
+                            />
+                        </Region>
                     </Region>
                 </Frame>
                 <ThemeImage
@@ -55,7 +57,7 @@ export const WelcomeScreenLayout = ({ captionText, layout, onClick, onClose, onF
                 <ThemeImage
                     name="arrow_right"
                     src={srcArrowRight ?? layoutImage('common_welcome_screen_arrow.png')}
-                    layout={{ position: 'absolute', left: 236, width: 12, top: 14, height: 20 }}
+                    layout={{ position: 'absolute', right: 3, width: 12, top: 14, height: 20 }}
                 />
             </Region>
         </Region>

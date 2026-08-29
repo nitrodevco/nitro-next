@@ -22,7 +22,7 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
         <Region layout={{ position: 'relative', width: 275, height: 341, ...layout }}>
             <Bubble
                 variant="100"
-                layout={{ position: 'absolute', left: 0, width: 275, top: 0, height: 341, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Region
                     name="title"
@@ -44,7 +44,7 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
                 >
                     <Border
                         variant="100"
-                        layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 23 }}
+                        layout={{ position: 'absolute', left: 0, width: 190, top: 0, bottom: 0 }}
                     >
                         <Region layout={{ position: 'absolute', left: 1, width: 163, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             {t('high.score.display.users.header')}
@@ -52,7 +52,7 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
                     </Border>
                     <Border
                         variant="100"
-                        layout={{ position: 'absolute', left: 188, width: 70, top: 0, height: 23 }}
+                        layout={{ position: 'absolute', left: 188, width: 70, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="score_header"

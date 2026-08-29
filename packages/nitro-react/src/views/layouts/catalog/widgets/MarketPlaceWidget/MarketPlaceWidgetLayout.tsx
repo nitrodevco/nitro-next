@@ -18,7 +18,7 @@ export const MarketPlaceWidgetLayout = ({ captionStatusText, layout, offerList, 
 
     return (
         <Region layout={{ position: 'relative', width: 360, height: 390, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 390 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Region
                     name="search_selector"
                     layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 25 }}
@@ -27,7 +27,7 @@ export const MarketPlaceWidgetLayout = ({ captionStatusText, layout, offerList, 
                         variant="100"
                         name="search_by_activity"
                         onPointerTap={onSearchByActivity}
-                        layout={{ position: 'absolute', left: 0, right: 233, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
+                        layout={{ position: 'absolute', left: 0, right: 233, top: 0, bottom: 0, minWidth: 107, maxWidth: 107 }}
                     >
                         {t('catalog.marketplace.search_by_activity')}
                     </ButtonGroupLeft>
@@ -35,7 +35,7 @@ export const MarketPlaceWidgetLayout = ({ captionStatusText, layout, offerList, 
                         variant="100"
                         name="search_by_value"
                         onPointerTap={onSearchByValue}
-                        layout={{ position: 'absolute', left: 107, right: 127, top: 0, height: 25, minWidth: 106, maxWidth: 106 }}
+                        layout={{ position: 'absolute', left: 107, right: 127, top: 0, bottom: 0, minWidth: 106, maxWidth: 106 }}
                     >
                         {t('catalog.marketplace.search_by_value')}
                     </ButtonGroupCenter>
@@ -43,7 +43,7 @@ export const MarketPlaceWidgetLayout = ({ captionStatusText, layout, offerList, 
                         variant="100"
                         name="search_advanced"
                         onPointerTap={onSearchAdvanced}
-                        layout={{ position: 'absolute', left: 213, right: 20, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
+                        layout={{ position: 'absolute', left: 213, right: 20, top: 0, bottom: 0, minWidth: 107, maxWidth: 107 }}
                     >
                         {t('catalog.marketplace.search_advanced')}
                     </ButtonGroupRight>
@@ -51,7 +51,7 @@ export const MarketPlaceWidgetLayout = ({ captionStatusText, layout, offerList, 
                 <Border
                     variant="100"
                     name="search_container"
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 30, height: 120 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 30, height: 120 }}
                 />
                 <Region
                     name="status_text"

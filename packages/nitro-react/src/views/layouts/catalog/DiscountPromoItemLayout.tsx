@@ -19,12 +19,12 @@ export const DiscountPromoItemLayout = ({ background, captionPromoText, captionP
         <Region layout={{ position: 'relative', width: 180, height: 20, ...layout }}>
             <Region
                 name="promo_container"
-                layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 20, minHeight: 20, maxHeight: 20 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minHeight: 20, maxHeight: 20 }}
             >
                 <Region
                     name="background"
                     backgroundColor="#009100"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {background}
                 </Region>
@@ -53,7 +53,7 @@ export const DiscountPromoItemLayout = ({ background, captionPromoText, captionP
                     name="click_region"
                     onPointerTap={onClickRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 25, width: 152, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 25, width: 152, top: 0, bottom: 0 }}
                 >
                     {clickRegion}
                 </Region>

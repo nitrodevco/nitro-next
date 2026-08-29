@@ -13,10 +13,10 @@ export const LayoutMarketplaceOwnItems_1691Layout = ({ layout, marketPlaceOwnIte
             <Region
                 name="ctlg_marketplace_own_items"
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <MarketPlaceOwnItemsWidget
-                    layout={{ position: 'absolute', left: 10, width: 340, top: 70, height: 390 }}
+                    layout={{ position: 'absolute', left: 10, right: 10, bottom: 0, height: 390 }}
                     {...marketPlaceOwnItemsWidget}
                 />
             </Region>

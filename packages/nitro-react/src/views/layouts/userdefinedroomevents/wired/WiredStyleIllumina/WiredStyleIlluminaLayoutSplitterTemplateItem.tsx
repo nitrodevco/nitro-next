@@ -13,11 +13,11 @@ export const WiredStyleIlluminaLayoutSplitterTemplateItem = ({ layout }: WiredSt
         >
             <Region
                 backgroundColor="#919191"
-                layout={{ position: 'absolute', left: 0, width: 1, top: 0, height: 18 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18 }}
             />
             <Region
                 backgroundColor="#f2f2f2"
-                layout={{ position: 'absolute', left: 0, width: 1, top: 18, height: 1 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 18, height: 1 }}
             />
         </Region>
     );

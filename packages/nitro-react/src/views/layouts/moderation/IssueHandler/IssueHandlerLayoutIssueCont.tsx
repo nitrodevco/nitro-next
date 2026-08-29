@@ -19,7 +19,7 @@ export const IssueHandlerLayoutIssueCont = ({ itemsIssueCont, layout }: IssueHan
     return (
         <Region
             name="issue_cont"
-            layout={{ position: 'absolute', left: 0, right: 465, top: 0, bottom: 26, flexDirection: 'column', gap: 3, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 453, top: 0, bottom: -15, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsIssueCont ?? (
                 <>

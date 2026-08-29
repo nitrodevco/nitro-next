@@ -54,18 +54,18 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
     return (
         <Region
             name="contentArea"
-            layout={{ position: 'absolute', left: 2, width: 486, top: 36, height: 365, ...layout }}
+            layout={{ position: 'absolute', left: 2, right: -2, bottom: 9, height: 365, ...layout }}
         >
             {(visibleGenericContent ?? false) && (
                 <Region
                     name="generic_content"
-                    layout={{ position: 'absolute', left: 20, width: 250, top: 10, height: 35 }}
+                    layout={{ position: 'absolute', left: 20, width: 250, top: 10, height: 35, justifyContent: 'center' }}
                 >
                     <Region
                         name="tab_boy"
                         onPointerTap={onTabBoy}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 6, width: 47, top: 0, height: 35 }}
+                        layout={{ position: 'absolute', left: 6, width: 47, top: 0, bottom: 0 }}
                     >
                         <ThemeImage
                             name="tab_boy"
@@ -75,7 +75,7 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                     </Region>
                     <Region
                         name="tab_boy_title"
-                        layout={{ position: 'absolute', left: 50, width: 143, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -3.5, marginRight: 3.5, width: 143, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         {captionTabBoyTitle ?? t('avatareditor.generic.boy')}
                     </Region>
@@ -83,7 +83,7 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                         name="tab_girl"
                         onPointerTap={onTabGirl}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 100, width: 47, top: 0, height: 35 }}
+                        layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 47, top: 0, bottom: 0 }}
                     >
                         <ThemeImage
                             name="tab_girl"
@@ -108,13 +108,13 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
             {(visibleLegsContent ?? false) && (
                 <Region
                     name="legs_content"
-                    layout={{ position: 'absolute', left: 20, width: 170, top: 10, height: 35 }}
+                    layout={{ position: 'absolute', left: 20, width: 170, top: 10, height: 35, justifyContent: 'center' }}
                 >
                     <Region
                         name="tab_pants"
                         onPointerTap={onTabPants}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 6, width: 47, top: 0, height: 35 }}
+                        layout={{ position: 'absolute', left: 6, width: 47, top: 0, bottom: 0 }}
                     >
                         <ThemeImage
                             name="tab_pants"
@@ -126,7 +126,7 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                         name="tab_shoes"
                         onPointerTap={onTabShoes}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 58, width: 47, top: 0, height: 35 }}
+                        layout={{ position: 'absolute', marginLeft: -3.5, marginRight: 3.5, width: 47, top: 0, bottom: 0 }}
                     >
                         <ThemeImage
                             name="tab_shoes"
@@ -138,7 +138,7 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                         name="tab_belts"
                         onPointerTap={onTabBelts}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 110, width: 47, top: 0, height: 35 }}
+                        layout={{ position: 'absolute', left: 110, width: 47, top: 0, bottom: 0 }}
                     >
                         <ThemeImage
                             name="tab_belts"
@@ -167,7 +167,7 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                     </Region>
                     <Region
                         name="hotlooks"
-                        layout={{ position: 'absolute', left: 4, width: 299, top: 65, height: 220, flexDirection: 'row', flexWrap: 'wrap', gap: 7 }}
+                        layout={{ position: 'absolute', left: 4, right: 7, bottom: 5, height: 220, flexDirection: 'row', flexWrap: 'wrap', gap: 7 }}
                     >
                         {itemsHotlooks}
                     </Region>
@@ -192,7 +192,7 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                     </Region>
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 4, width: 299, top: 65, height: 220 }}
+                        layout={{ position: 'absolute', left: 4, right: 7, bottom: 5, height: 220 }}
                     >
                         <Region
                             name="nfts"
@@ -215,7 +215,7 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                     />
                     <Region
                         name="effectsTitle"
-                        layout={{ position: 'absolute', left: 40, width: 169, top: 4, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 40, width: 169, top: 4, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         {captionEffectsTitle ?? t('inventory.effects')}
                     </Region>
@@ -223,7 +223,7 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                         name="tab_effects"
                         onPointerTap={onTabEffects}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 6, width: 47, top: 0, height: 35 }}
+                        layout={{ position: 'absolute', left: 6, width: 47, top: 0, bottom: 0 }}
                     >
                         {tabEffects}
                     </Region>
@@ -238,7 +238,7 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                         name="tab_pets"
                         onPointerTap={onTabPets}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 6, width: 47, top: 0, height: 35 }}
+                        layout={{ position: 'absolute', left: 6, width: 47, top: 0, bottom: 0 }}
                     >
                         <ThemeImage
                             name="tab_pets"
@@ -250,7 +250,7 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                         name="tab_misc"
                         onPointerTap={onTabMisc}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 58, width: 47, top: 0, height: 35 }}
+                        layout={{ position: 'absolute', left: 58, width: 47, top: 0, bottom: 0 }}
                     >
                         <ThemeImage
                             name="tab_misc"

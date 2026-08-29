@@ -16,7 +16,7 @@ export const PackagecardNewOpenedLayoutElementList = ({ itemsElementList, layout
     return (
         <Region
             name="element_list"
-            layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsElementList ?? (
                 <>

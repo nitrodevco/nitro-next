@@ -20,16 +20,16 @@ export const FriendRemoveConfirmLayout = ({ captionRemoveInfo, layout, onCancel,
             name="alert_%200"
             caption={t('friendlist.removefriendconfirm.title')}
             onClose={onClose}
-            layout={{ width: 160, height: 200, ...layout }}
+            layout={{ width: 160, height: 200, minWidth: 160, minHeight: 200, ...layout }}
         >
             <Border
                 variant="0"
                 name="border"
-                layout={{ position: 'absolute', left: 0, width: 150, top: 0, height: 143 }}
+                layout={{ position: 'absolute', left: 0, right: -2, top: 0, height: 143 }}
             >
                 <Region
                     name="remove_info"
-                    layout={{ position: 'absolute', left: 10, width: 130, top: 10, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 10, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionRemoveInfo ?? t('friendlist.removefriendconfirm.userlist')}
@@ -41,7 +41,7 @@ export const FriendRemoveConfirmLayout = ({ captionRemoveInfo, layout, onCancel,
                 variant="0"
                 name="cancel"
                 onPointerTap={onCancel}
-                layout={{ position: 'absolute', left: 88, width: 60, top: 147, height: 21, minWidth: 60, maxWidth: 60 }}
+                layout={{ position: 'absolute', right: 0, width: 60, bottom: -9, height: 21, minWidth: 60, maxWidth: 60 }}
             >
                 {t('generic.cancel')}
             </Button>
@@ -49,7 +49,7 @@ export const FriendRemoveConfirmLayout = ({ captionRemoveInfo, layout, onCancel,
                 variant="0"
                 name="ok"
                 onPointerTap={onOk}
-                layout={{ position: 'absolute', left: 0, width: 60, top: 147, height: 21, minWidth: 60, maxWidth: 60 }}
+                layout={{ position: 'absolute', left: 0, width: 60, bottom: -9, height: 21, minWidth: 60, maxWidth: 60 }}
             >
                 {t('generic.ok')}
             </ButtonThick>

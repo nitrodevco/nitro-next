@@ -11,7 +11,7 @@ export const SpecialInfoWidgetLayout = ({ layout, specialInfoWidget }: SpecialIn
     return (
         <Region layout={{ position: 'relative', width: 142, height: 73, ...layout }}>
             <SpecialInfoWidget2
-                layout={{ position: 'absolute', left: 0, width: 142, top: 0, height: 73 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 {...specialInfoWidget}
             />
         </Region>

@@ -20,7 +20,7 @@ export const CollectibleRewardLayoutTopContainer = ({ captionProductName, captio
     return (
         <Region
             name="top_container"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 350, justifyContent: 'center', ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -12, top: 0, height: 350, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="collector_hub_background"
@@ -77,7 +77,7 @@ export const CollectibleRewardLayoutTopContainer = ({ captionProductName, captio
                 <WidgetSlot
                     widgetType="product_image"
                     name="product_image"
-                    layout={{ position: 'absolute', left: 0, width: 300, top: 0, height: 300 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {productImage}
                 </WidgetSlot>

@@ -15,7 +15,7 @@ export const AreaHideUiLayoutClearButtonItem = ({ layout, onClearButton }: AreaH
             variant="0"
             name="clear_button"
             onPointerTap={onClearButton}
-            layout={{ width: 205, height: 24, flexShrink: 0, ...layout }}
+            layout={{ width: 205, alignSelf: 'stretch', flexShrink: 0, ...layout }}
         >
             {t('widget.areahide.area_selection.clear')}
         </Button>

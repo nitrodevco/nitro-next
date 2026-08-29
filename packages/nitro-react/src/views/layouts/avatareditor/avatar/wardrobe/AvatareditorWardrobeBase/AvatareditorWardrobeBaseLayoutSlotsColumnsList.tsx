@@ -15,7 +15,7 @@ export const AvatareditorWardrobeBaseLayoutSlotsColumnsList = ({ itemsSlotsColum
     return (
         <Region
             name="slots_columns_list"
-            layout={{ position: 'absolute', left: 4, width: 132, top: 0, height: 418, flexDirection: 'row', gap: 4, ...layout }}
+            layout={{ position: 'absolute', left: 4, width: 132, top: 0, bottom: 0, flexDirection: 'row', gap: 4, ...layout }}
         >
             {itemsSlotsColumnsList ?? (
                 <>

@@ -34,12 +34,12 @@ export const SpecialItemsDisplayLayout = ({ bg1, bg2, bg3, bottom, captionClaimT
             caption={t('special_items.title')}
             tintColor="#2a2a2a"
             onClose={onClose}
-            layout={{ width: 420, height: 495, ...layout }}
+            layout={{ width: 420, height: 495, minWidth: 420, minHeight: 495, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     name="background_container"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33 }}
+                    layout={{ position: 'absolute', left: 0, right: -12, top: 0, bottom: -8 }}
                 >
                     <Region
                         name="bg1"
@@ -65,7 +65,7 @@ export const SpecialItemsDisplayLayout = ({ bg1, bg2, bg3, bottom, captionClaimT
                 </Region>
                 <Region
                     name="header"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 107 }}
+                    layout={{ position: 'absolute', left: 0, right: -12, top: 0, height: 107 }}
                 >
                     <Border
                         variant="2"
@@ -111,7 +111,7 @@ export const SpecialItemsDisplayLayout = ({ bg1, bg2, bg3, bottom, captionClaimT
                         variant="2"
                         name="claim_container"
                         blend={0.8}
-                        layout={{ position: 'absolute', width: 310, top: 115, height: 40 }}
+                        layout={{ position: 'absolute', marginLeft: 6, marginRight: -6, width: 310, top: 115, height: 40 }}
                     >
                         <Region layout={{ position: 'absolute', left: 16, width: 277, top: 5, height: 30, flexDirection: 'row', gap: 10 }}>
                             <Region

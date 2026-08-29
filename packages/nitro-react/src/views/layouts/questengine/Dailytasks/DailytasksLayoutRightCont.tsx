@@ -28,7 +28,7 @@ export const DailytasksLayoutRightCont = ({ captionClaimTxt, captionRewardTitleT
                 variant="2"
                 name="reward_title_border"
                 tintColor="#a6ce92"
-                layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 28 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 28 }}
             >
                 <Region
                     name="reward_title_text"
@@ -50,18 +50,18 @@ export const DailytasksLayoutRightCont = ({ captionClaimTxt, captionRewardTitleT
             </Region>
             <Region
                 name="right_bottom_cont"
-                layout={{ position: 'absolute', left: 0, width: 110, top: 84, height: 29 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 84, height: 29 }}
             >
                 <Region
                     name="claim_button_container"
-                    layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 23, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23, justifyContent: 'center' }}
                 >
                     <Button
                         variant="5"
                         name="claim_button"
                         tintColor="#01a101"
                         onPointerTap={onClaimButton}
-                        layout={{ position: 'absolute', width: 110, top: 0, height: 23, minWidth: 110, maxWidth: 110 }}
+                        layout={{ position: 'absolute', width: 110, top: 0, bottom: 0, minWidth: 110, maxWidth: 110 }}
                     />
                     <Region
                         name="claim_txt"
@@ -76,7 +76,7 @@ export const DailytasksLayoutRightCont = ({ captionClaimTxt, captionRewardTitleT
                 {(visibleProgressBarWrapper ?? false) && (
                     <Region
                         name="progress_bar_wrapper"
-                        layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 23, minWidth: 110, maxWidth: 110, minHeight: 23, maxHeight: 23 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23, minWidth: 110, maxWidth: 110, minHeight: 23, maxHeight: 23 }}
                     >
                         {progressBarWrapper}
                     </Region>

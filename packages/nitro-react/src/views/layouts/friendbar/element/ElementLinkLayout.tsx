@@ -10,10 +10,10 @@ export interface ElementLinkLayoutProps {
 export const ElementLinkLayout = ({ captionLinkTxt, colorableTextColor, layout }: ElementLinkLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 252, height: 17, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 252, top: 0, height: 17 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Region
                     name="link_txt"
-                    layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 64, top: 0, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionLinkTxt ?? 'Link text ph'}

@@ -26,12 +26,12 @@ export const VideoViewerLayoutItemItem = ({ itemsItemContents, layout, onItem, v
                 <Border
                     variant="103"
                     name="item_background"
-                    layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 121 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {(visibleItemContents ?? true) && (
                         <Region
                             name="item_contents"
-                            layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}
                         >
                             {itemsItemContents ?? (
                                 <>

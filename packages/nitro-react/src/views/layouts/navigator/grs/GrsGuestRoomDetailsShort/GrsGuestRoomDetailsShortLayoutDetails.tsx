@@ -36,7 +36,7 @@ export const GrsGuestRoomDetailsShortLayoutDetails = ({ captionRoomname, caption
             backgroundColor="#ffffff"
             onPointerTap={onDetails}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="room_number"

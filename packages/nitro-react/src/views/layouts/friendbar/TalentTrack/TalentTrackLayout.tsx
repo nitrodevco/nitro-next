@@ -26,13 +26,13 @@ export const TalentTrackLayout = ({ captionFrameSubtitle, captionFrameTitle, lay
 
     return (
         <Region layout={{ position: 'relative', width: 1000, height: 490, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 1000, top: 0, height: 490, minWidth: 100, minHeight: 50 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 100, minHeight: 50 }}>
                 <Frame
                     variant="101"
                     id="frame"
                     name="frame"
                     onClose={onFrame}
-                    layout={{ position: 'absolute', left: 0, width: 1000, top: 22, height: 445, minWidth: 100 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 22, height: 445, minWidth: 100 }}
                 >
                     <TalentTrackLayoutPanorama {...panorama} />
                     {/* <scrollbar_horizontal> for panorama - rendered by that list's ScrollArea */}
@@ -44,7 +44,7 @@ export const TalentTrackLayout = ({ captionFrameSubtitle, captionFrameTitle, lay
                     <ThemeImage
                         name="mask_right"
                         src={srcMaskRight ?? layoutImage('talent_mask_right.png')}
-                        layout={{ position: 'absolute', right: 0, width: 24, top: 20, height: 280 }}
+                        layout={{ position: 'absolute', right: -12, width: 24, top: 20, height: 280 }}
                     />
                     <TalentTrackLayoutProgressContainer {...progressContainer} />
                     {(visibleButtonTrackCitizenship ?? false) && (

@@ -26,7 +26,7 @@ export const CatalogVolterLayoutCatalogMainContainer = ({ captionCatalogHeaderDe
             name="catalog_main_container"
             onPointerTap={onCatalogMainContainer}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 550, top: 0, height: 516, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Frame
                 variant="0"
@@ -40,7 +40,7 @@ export const CatalogVolterLayoutCatalogMainContainer = ({ captionCatalogHeaderDe
                 <Border
                     variant="5"
                     name="navigationContainer"
-                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -9 }}
                 >
                     <CatalogVolterLayoutNavigationList {...navigationList} />
                 </Border>

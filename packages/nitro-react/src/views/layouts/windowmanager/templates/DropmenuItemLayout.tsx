@@ -11,7 +11,7 @@ export const DropmenuItemLayout = ({ captionBTNTEXT, layout }: DropmenuItemLayou
         <Region layout={{ position: 'relative', width: 8, height: 12, ...layout }}>
             <Region
                 name="_BTN_TEXT"
-                layout={{ position: 'absolute', left: 0, width: 8, alignSelf: 'center', height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionBTNTEXT ?? ''}

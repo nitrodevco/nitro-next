@@ -24,7 +24,7 @@ export const CameraFilterbuttonLayoutRegion = ({ layout, onRegion, onRemoveEffec
             name="region"
             onPointerTap={onRegion}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 62, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <ThemeImage
                 name="outline"
@@ -64,7 +64,7 @@ export const CameraFilterbuttonLayoutRegion = ({ layout, onRegion, onRemoveEffec
                     dynamicStyle="brightness_and_shadow_under"
                     onPointerTap={onRemoveEffectButton}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 43, width: 19, top: 0, height: 19 }}
+                    layout={{ position: 'absolute', right: 0, width: 19, top: 0, height: 19 }}
                 >
                     <ThemeImage
                         src={layoutImage('camera_cam_close_x.png')}

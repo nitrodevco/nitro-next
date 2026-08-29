@@ -15,7 +15,7 @@ export const VariableValueInfoBubbleLayout = ({ captionValue, layout, visibleBor
                     variant="5"
                     name="border"
                     tintColor="#ade6ff"
-                    layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 39 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         src={undefined}

@@ -29,7 +29,7 @@ export const NavigatorFrame2LayoutNavigatorEntryRowContainerItem = ({ goToRoomRe
                     name="go_to_room_region"
                     onPointerTap={onGoToRoomRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 357, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, width: 357, top: 0, bottom: 0 }}
                 >
                     {goToRoomRegion}
                 </Region>

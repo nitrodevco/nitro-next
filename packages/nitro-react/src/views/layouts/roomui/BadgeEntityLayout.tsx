@@ -13,7 +13,7 @@ export const BadgeEntityLayout = ({ layout, srcBadgeImage, tintBadgeImage }: Bad
             <Border
                 variant="0"
                 name="border.entity"
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="badge.image"

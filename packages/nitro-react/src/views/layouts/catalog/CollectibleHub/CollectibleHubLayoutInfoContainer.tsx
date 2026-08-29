@@ -16,7 +16,7 @@ export const CollectibleHubLayoutInfoContainer = ({ categoryContentBackground, l
             <Region
                 name="infoContainer"
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, right: 110, top: 125, height: 419, overflow: 'hidden', ...layout }}
+                layout={{ position: 'absolute', left: 0, right: 98, top: 125, height: 419, overflow: 'hidden', ...layout }}
             >
                 <CollectibleHubLayoutCategoryContentBackground {...categoryContentBackground} />
                 <ThemeImage

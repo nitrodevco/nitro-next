@@ -18,11 +18,11 @@ export const SuggestionListItemLayout = ({ captionNameText, layout, onSuggestion
                 backgroundColor="#cceeff"
                 onPointerTap={onSuggestionListItem}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 20 }}
+                layout={{ position: 'absolute', left: 0, width: 200, top: 0, bottom: 0 }}
             >
                 <Region
                     name="name_text"
-                    layout={{ position: 'absolute', left: 6, width: 183, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 6, right: 11, top: 2, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionNameText ?? t('001_lorem_ipsum_title')}

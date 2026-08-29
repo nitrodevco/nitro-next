@@ -21,7 +21,7 @@ export const HabbiconPurchaseConfirmationLayoutNormalPriceRowItem = ({ captionNo
             {(visibleNormalPriceLabel ?? true) && (
                 <Region
                     name="normal_price_label"
-                    layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 80, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionNormalPriceLabel ?? t('habbicon_purchase.confirm.normal_price')}
@@ -32,7 +32,7 @@ export const HabbiconPurchaseConfirmationLayoutNormalPriceRowItem = ({ captionNo
             {(visibleNormalPriceAmount ?? true) && (
                 <Region
                     name="normal_price_amount"
-                    layout={{ position: 'absolute', right: 0, width: 95, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    layout={{ position: 'absolute', right: 0, width: 95, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 >
                     <ThemeText
                         text={captionNormalPriceAmount ?? '0'}

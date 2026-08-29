@@ -13,7 +13,7 @@ export const ListTesterItemLayout = ({ captionChatterTxt, captionMsgTxt, caption
         <Region layout={{ position: 'relative', width: 370, height: 41, ...layout }}>
             <Region
                 name="chatline"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 41 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="time_txt"

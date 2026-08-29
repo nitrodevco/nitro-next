@@ -15,12 +15,12 @@ export const MannequinNoClubLayout = ({ captionDescription, layout, onGetClubBut
 
     return (
         <Region layout={{ position: 'relative', width: 386, height: 180, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 386, top: 0, height: 180 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ButtonThick
                     variant="3"
                     name="get_club_button"
                     onPointerTap={onGetClubButton}
-                    layout={{ position: 'absolute', left: 206, width: 174, top: 141, height: 28, minWidth: 164 }}
+                    layout={{ position: 'absolute', right: 6, width: 174, bottom: 11, height: 28, minWidth: 164 }}
                 >
                     {t('mannequin.widget.getclub')}
                 </ButtonThick>

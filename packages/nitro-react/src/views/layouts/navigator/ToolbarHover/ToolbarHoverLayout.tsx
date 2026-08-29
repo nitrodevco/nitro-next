@@ -15,7 +15,7 @@ export const ToolbarHoverLayout = ({ itemsItemList, layout }: ToolbarHoverLayout
         <Region layout={{ position: 'relative', width: 252, height: 36, ...layout }}>
             <Region
                 dropShadow={{ distance: 3, alpha: 0.6 }}
-                layout={{ position: 'absolute', left: 0, width: 252, top: 0, height: 36 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="6"
@@ -25,7 +25,7 @@ export const ToolbarHoverLayout = ({ itemsItemList, layout }: ToolbarHoverLayout
                 >
                     <Region
                         name="item_list"
-                        layout={{ position: 'absolute', left: 7, minWidth: 245, top: 7, minHeight: 25, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 7, right: 0, top: 7, bottom: 4, flexDirection: 'column' }}
                     >
                         {itemsItemList ?? (
                             <ToolbarHoverLayoutItemBasicItem />

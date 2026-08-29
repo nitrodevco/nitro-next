@@ -22,7 +22,7 @@ export const GroupManagementWindowLayoutFooterCont = ({ captionBuyTxt, captionCa
         (visibleFooterCont ?? false) && (
             <Region
                 name="footer_cont"
-                layout={{ position: 'absolute', left: 0, right: 2, bottom: 45, height: 42, ...layout }}
+                layout={{ position: 'absolute', left: 0, right: -10, bottom: 4, height: 42, ...layout }}
             >
                 <Region
                     name="cancel_link_region"

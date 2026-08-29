@@ -15,7 +15,7 @@ export const DynamicWidgetGridLayoutWidgetSlotsCenterScrollable = ({ itemsWidget
     return (
         <Region
             name="widget_slots_center_scrollable"
-            layout={{ position: 'absolute', left: 0, width: 800, top: 1, height: 681, flexDirection: 'row', gap: 50, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 1, bottom: 0, flexDirection: 'row', gap: 50, ...layout }}
         >
             {itemsWidgetSlotsCenterScrollable ?? (
                 <>

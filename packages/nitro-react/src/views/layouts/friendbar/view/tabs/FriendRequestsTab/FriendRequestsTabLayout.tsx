@@ -69,7 +69,7 @@ export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, ite
                             cursor="pointer"
                             layout={{ position: 'absolute', left: 11, width: 143, bottom: 30, height: 16 }}
                         >
-                            <Region layout={{ position: 'absolute', left: 0, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <Region layout={{ position: 'absolute', left: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                                 <ThemeText
                                     text={t('friendbar.requests.discard')}
                                     textStyle="text-style-u-bold"
@@ -103,7 +103,7 @@ export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, ite
                 >
                     <Region
                         name="badge_counter"
-                        layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionBadgeCounter ?? '0'}

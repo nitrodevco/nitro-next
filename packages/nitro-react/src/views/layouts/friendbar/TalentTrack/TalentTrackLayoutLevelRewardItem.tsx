@@ -39,7 +39,7 @@ export const TalentTrackLayoutLevelRewardItem = ({ captionDescriptionAchieved, c
                     variant="104"
                     name="border"
                     tintColor="#bdbdbd"
-                    layout={{ position: 'absolute', left: 0, width: 350, top: 20, height: 155 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 155 }}
                 >
                     {(visibleUnlocked ?? true) && (
                         <Region

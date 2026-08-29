@@ -50,7 +50,7 @@ export const RoomtoolFrameLayoutRoomContItem = ({ captionDesc, captionName, capt
                     {(visibleTagsCont ?? true) && (
                         <Region
                             name="tags_cont"
-                            layout={{ position: 'absolute', left: 0, width: 220, top: 60, height: 30 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 60, height: 30 }}
                         >
                             <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                                 Tags:
@@ -58,7 +58,7 @@ export const RoomtoolFrameLayoutRoomContItem = ({ captionDesc, captionName, capt
                             {(visibleTagsTxt ?? true) && (
                                 <Region
                                     name="tags_txt"
-                                    layout={{ position: 'absolute', left: 40, right: 2, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 40, right: 2, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionTagsTxt ?? 'PH Room Name: Neque porro quisquam est que'}

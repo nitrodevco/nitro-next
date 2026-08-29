@@ -21,12 +21,12 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
         <Region layout={{ position: 'relative', width: 500, height: 245, ...layout }}>
             <Region
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 245 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="col1"
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 245 }}
+                    layout={{ position: 'absolute', left: 0, width: 200, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="teaser_image"
@@ -34,10 +34,10 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                         layout={{ position: 'absolute', left: 10, width: 200, top: 30, height: 170 }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 230, width: 270, top: 30, height: 111, flexDirection: 'column' }}>
+                <Region layout={{ position: 'absolute', right: 0, width: 270, top: 30, height: 111, flexDirection: 'column' }}>
                     <Region
                         name="caption_txt"
-                        layout={{ width: 329, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCaptionTxt ?? t('landing.view.pixelremovalpromo.caption')}
@@ -53,7 +53,7 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     </Region>
                     <Region
                         name="title_txt"
-                        layout={{ width: 270, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionTitleTxt ?? t('landing.view.pixelremovalpromo.title')}
@@ -63,7 +63,7 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     </Region>
                     <Region
                         name="info_txt"
-                        layout={{ width: 270, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionInfoTxt ?? t('landing.view.pixelremovalpromo.info')}

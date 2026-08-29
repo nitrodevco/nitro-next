@@ -23,12 +23,12 @@ export const VimeoViewerLayout = ({ captionNoVideosLabel, layout, onClose, video
             name="video_viewer"
             tintColor="#67a3bf"
             onClose={onClose}
-            layout={{ width: 451, height: 356, ...layout }}
+            layout={{ width: 451, height: 356, minWidth: 400, minHeight: 350, ...layout }}
         >
             <Region
                 name="video_background"
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 7, right: 13, top: 6, bottom: 48, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 7, right: 1, top: 6, bottom: 7, justifyContent: 'center' }}
             >
                 <Region
                     name="no_videos_label"
@@ -51,7 +51,7 @@ export const VimeoViewerLayout = ({ captionNoVideosLabel, layout, onClose, video
             <Border
                 variant="3"
                 name="video_id_editor"
-                layout={{ position: 'absolute', left: 12, right: 18, top: 12, height: 19 }}
+                layout={{ position: 'absolute', left: 12, right: 6, top: 12, height: 19 }}
             >
                 <Region layout={{ position: 'absolute', left: 1, width: 52, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText

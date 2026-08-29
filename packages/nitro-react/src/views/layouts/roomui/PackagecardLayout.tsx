@@ -24,11 +24,11 @@ export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, 
             caption={t('widget.furni.present.window.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 374, height: 243, ...layout }}
+            layout={{ width: 374, height: 243, minWidth: 374, minHeight: 243, ...layout }}
         >
             <Border
                 variant="0"
-                layout={{ position: 'absolute', left: 0, width: 362, top: 0, height: 211 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 211 }}
             >
                 <ThemeImage
                     name="image_bg"
@@ -67,7 +67,7 @@ export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, 
                 >
                     <Region
                         backgroundColor="#eeeeee"
-                        layout={{ position: 'absolute', left: 0, width: 351, top: 0, height: 50 }}
+                        layout={{ position: 'absolute', left: 0, width: 351, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="close"
@@ -75,7 +75,7 @@ export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, 
                             cursor="pointer"
                             layout={{ position: 'absolute', left: 14, width: 100, bottom: 9, height: 33 }}
                         >
-                            <Region layout={{ position: 'absolute', left: 0, width: 100, top: 9, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 9, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                 <ThemeText
                                     text={t('widget.furni.present.close')}
                                     textOptions={{ align: 'center' }}

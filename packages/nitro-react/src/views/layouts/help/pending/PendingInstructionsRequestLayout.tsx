@@ -23,7 +23,7 @@ export const PendingInstructionsRequestLayout = ({ captionDescription, layout, o
             name="pending_request"
             caption={t('guide.pending.instructions.title')}
             onClose={onClose}
-            layout={{ width: 369, height: 201, ...layout }}
+            layout={{ width: 369, height: 201, minWidth: 369, minHeight: 201, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}>
                 <Region layout={{ width: 236, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -84,7 +84,7 @@ export const PendingInstructionsRequestLayout = ({ captionDescription, layout, o
             </Region>
             <ThemeImage
                 src={layoutImage('help_illustrations_question.png')}
-                layout={{ position: 'absolute', left: 285, width: 90, bottom: 33, height: 128 }}
+                layout={{ position: 'absolute', left: 285, width: 90, bottom: -8, height: 128 }}
             />
         </Frame>
     );

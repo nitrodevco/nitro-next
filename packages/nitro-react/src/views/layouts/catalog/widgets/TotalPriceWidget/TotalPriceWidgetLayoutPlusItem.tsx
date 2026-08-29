@@ -10,7 +10,7 @@ export const TotalPriceWidgetLayoutPlusItem = ({ captionPlus, layout }: TotalPri
     return (
         <Region
             name="plus"
-            layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 8, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             {captionPlus ?? ' '}
         </Region>

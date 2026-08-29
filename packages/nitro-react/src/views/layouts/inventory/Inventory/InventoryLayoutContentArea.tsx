@@ -47,7 +47,7 @@ export const InventoryLayoutContentArea = ({ badges, captionBotDescription, capt
             {(visibleBots ?? false) && (
                 <Region
                     name="bots"
-                    layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <ScrollArea
                         orientation="vertical"
@@ -81,7 +81,7 @@ export const InventoryLayoutContentArea = ({ badges, captionBotDescription, capt
                         />
                         <Region
                             name="bot_description"
-                            layout={{ position: 'absolute', left: 0, width: 190, top: 174, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 174, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionBotDescription ?? ''}

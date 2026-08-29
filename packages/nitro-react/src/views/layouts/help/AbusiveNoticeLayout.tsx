@@ -19,7 +19,7 @@ export const AbusiveNoticeLayout = ({ layout, onClose, onCloseButton }: AbusiveN
             name="abusive_notice"
             caption={t('help.emergency.abusive.title')}
             onClose={onClose}
-            layout={{ width: 309, height: 153, ...layout }}
+            layout={{ width: 309, height: 153, minWidth: 309, minHeight: 153, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}>
                 <Region layout={{ width: 216, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>

@@ -17,21 +17,21 @@ export const ClubBuyVipUpgradeItemLayout = ({ captionItemHeader, captionItemPric
             <Border
                 variant="2"
                 tintColor="#969696"
-                layout={{ position: 'absolute', left: 0, width: 151, top: 0, height: 67 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="2"
                     tintColor="#dfdfdf"
-                    layout={{ position: 'absolute', left: 1, width: 149, top: 1, height: 65 }}
+                    layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                 />
                 <Border
                     variant="2"
                     tintColor="#969696"
-                    layout={{ position: 'absolute', left: 5, width: 141, top: 5, height: 25, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 25, justifyContent: 'center' }}
                 >
                     <Region
                         name="item_header"
-                        layout={{ position: 'absolute', width: 141, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', width: 141, top: 5, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionItemHeader ?? 'catalog.club.item.header'}
@@ -41,7 +41,7 @@ export const ClubBuyVipUpgradeItemLayout = ({ captionItemHeader, captionItemPric
                 </Border>
                 <Region
                     name="item_price"
-                    layout={{ position: 'absolute', left: 9, width: 101, top: 44, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 9, width: 101, bottom: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionItemPrice ?? 'catalog.club.price'}
                 </Region>
@@ -49,7 +49,7 @@ export const ClubBuyVipUpgradeItemLayout = ({ captionItemHeader, captionItemPric
                     variant="3"
                     name="item_buy"
                     onPointerTap={onItemBuy}
-                    layout={{ position: 'absolute', right: 8, width: 151, top: 38, height: 22, minWidth: 40 }}
+                    layout={{ position: 'absolute', right: 8, width: 151, bottom: 7, height: 22, minWidth: 40 }}
                 >
                     {t('catalog.club.button.buy')}
                 </Button>

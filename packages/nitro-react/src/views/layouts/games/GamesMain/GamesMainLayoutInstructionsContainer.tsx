@@ -25,7 +25,7 @@ export const GamesMainLayoutInstructionsContainer = ({ captionInstructionsBack, 
         (visibleInstructionsContainer ?? false) && (
             <Region
                 name="instructions_container"
-                layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 436, justifyContent: 'center', ...layout }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 436, justifyContent: 'center', ...layout }}
             >
                 <ThemeImage
                     name="instructions_image"

@@ -25,14 +25,14 @@ export const ElementDailyquestLayoutQuestdataContainer = ({ captionAcceptText, c
         <Region
             name="questdata_container"
             backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 70, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             {(visibleAcceptButton ?? false) && (
                 <ContainerButton
                     variant="102"
                     name="accept_button"
                     onPointerTap={onAcceptButton}
-                    layout={{ position: 'absolute', left: 0, width: 250, top: 2, height: 39, minWidth: 250, maxWidth: 250 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 39, minWidth: 250, maxWidth: 250 }}
                 >
                     <Region layout={{ position: 'absolute', left: 5, top: 3, flexDirection: 'column' }}>
                         <Region
@@ -55,7 +55,7 @@ export const ElementDailyquestLayoutQuestdataContainer = ({ captionAcceptText, c
                     name="next_quest_region"
                     onPointerTap={onNextQuestRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 250, top: 45, height: 12 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 45, height: 12 }}
                 >
                     <Region
                         name="next_quest_txt"
@@ -72,11 +72,11 @@ export const ElementDailyquestLayoutQuestdataContainer = ({ captionAcceptText, c
                 name="cancel_quest_region"
                 onPointerTap={onCancelQuestRegion}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 250, top: 55, height: 14 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 55, height: 14 }}
             >
                 <Region
                     name="cancel_quest_txt"
-                    layout={{ position: 'absolute', left: 0, width: 105, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 105, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionCancelQuestTxt ?? t('landing.view.quest.cancel')}
@@ -87,7 +87,7 @@ export const ElementDailyquestLayoutQuestdataContainer = ({ captionAcceptText, c
             <Border
                 variant="100"
                 name="current_quest_border"
-                layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 55 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 55 }}
             >
                 <Button
                     variant="100"

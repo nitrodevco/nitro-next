@@ -25,7 +25,7 @@ export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, la
             name="pending_request"
             caption={t('guide.pending.bully.title')}
             onClose={onClose}
-            layout={{ width: 369, height: 228, ...layout }}
+            layout={{ width: 369, height: 228, minWidth: 369, minHeight: 228, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}>
                 <Region layout={{ width: 188, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -100,7 +100,7 @@ export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, la
             </Region>
             <ThemeImage
                 src={layoutImage('help_illustrations_bully.png')}
-                layout={{ position: 'absolute', left: 320, width: 35, bottom: 69, height: 120 }}
+                layout={{ position: 'absolute', left: 320, width: 35, bottom: 28, height: 120 }}
             />
         </Frame>
     );

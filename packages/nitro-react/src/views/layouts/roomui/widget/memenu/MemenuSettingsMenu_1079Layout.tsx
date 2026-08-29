@@ -21,7 +21,7 @@ export const MemenuSettingsMenu_1079Layout = ({ captionIdentityText, captionSett
         <Region layout={{ position: 'relative', width: 170, height: 135, ...layout }}>
             <Region
                 name="dance_container"
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 135, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Region
                     name="settings_title"

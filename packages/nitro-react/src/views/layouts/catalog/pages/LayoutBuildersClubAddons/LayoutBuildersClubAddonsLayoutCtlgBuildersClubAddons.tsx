@@ -12,7 +12,7 @@ export const LayoutBuildersClubAddonsLayoutCtlgBuildersClubAddons = ({ builderAd
     return (
         <Region
             name="ctlg_builders_club_addons"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="ctlg_description"

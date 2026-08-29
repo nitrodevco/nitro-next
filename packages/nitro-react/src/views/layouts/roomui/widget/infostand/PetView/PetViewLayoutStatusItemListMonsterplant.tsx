@@ -20,7 +20,7 @@ export const PetViewLayoutStatusItemListMonsterplant = ({ itemsStatusItemListMon
         (visibleStatusItemListMonsterplant ?? false) && (
             <Region
                 name="status_item_list_monsterplant"
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 137, flexDirection: 'column', gap: 2, ...layout }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 137, flexDirection: 'column', gap: 2, ...layout }}
             >
                 {itemsStatusItemListMonsterplant ?? (
                     <>

@@ -14,12 +14,12 @@ export const CitizenshipWelcomeLayout = ({ layout, onFrameClose, onPostponeCitiz
 
     return (
         <Region layout={{ position: 'relative', width: 480, height: 302, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 480, top: 0, height: 302 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Frame
                     variant="101"
                     caption={t('citizenship.promo.popup.title')}
                     onClose={onFrameClose}
-                    layout={{ position: 'absolute', left: 0, width: 480, top: 20, height: 282 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 282 }}
                 >
                     <Region layout={{ position: 'absolute', left: 14, top: 37, flexDirection: 'column', gap: 10 }}>
                         <Region layout={{ width: 334, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
@@ -56,7 +56,7 @@ export const CitizenshipWelcomeLayout = ({ layout, onFrameClose, onPostponeCitiz
                                 cursor="pointer"
                                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 228, top: 40, height: 22 }}
                             >
-                                <Region layout={{ position: 'absolute', left: 0, width: 228, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                                     <ThemeText
                                         text={t('citizenship.promo.popup.close.button')}
                                         textStyle="text-style-il-link-regular"

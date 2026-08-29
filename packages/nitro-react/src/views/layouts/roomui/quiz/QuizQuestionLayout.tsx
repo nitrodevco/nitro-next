@@ -12,13 +12,13 @@ export interface QuizQuestionLayoutProps {
 export const QuizQuestionLayout = ({ captionQuizTopic, layout, onButtonDislike, onButtonLike }: QuizQuestionLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 360, height: 130, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 130 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="2"
                     name="window_bg"
                     tintColor="#000000"
                     blend={0.8}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 130, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <Region
                         name="ui_container2"
@@ -43,13 +43,13 @@ export const QuizQuestionLayout = ({ captionQuizTopic, layout, onButtonDislike, 
                             name="button_dislike"
                             onPointerTap={onButtonDislike}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                            layout={{ position: 'absolute', left: 0, width: 50, top: 0, bottom: 0 }}
                         >
                             <Border
                                 variant="3"
                                 name="border"
                                 tintColor="#b32e22"
-                                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                             >
                                 <ThemeImage
                                     src={layoutImage('word_quiz_thum_down_big.png')}
@@ -61,13 +61,13 @@ export const QuizQuestionLayout = ({ captionQuizTopic, layout, onButtonDislike, 
                             name="button_like"
                             onPointerTap={onButtonLike}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 121, width: 50, top: 0, height: 50 }}
+                            layout={{ position: 'absolute', left: 121, width: 50, top: 0, bottom: 0 }}
                         >
                             <Border
                                 variant="3"
                                 name="border"
                                 tintColor="#007841"
-                                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                             >
                                 <ThemeImage
                                     src={layoutImage('word_quiz_thum_up_big.png')}

@@ -17,7 +17,7 @@ export const UseProductControllerFertilizeMonsterplantLayoutPlantItemlistItem = 
     return (
         <Region
             name="plant_itemlist"
-            layout={{ flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ alignSelf: 'stretch', flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsPlantItemlist ?? (
                 <>

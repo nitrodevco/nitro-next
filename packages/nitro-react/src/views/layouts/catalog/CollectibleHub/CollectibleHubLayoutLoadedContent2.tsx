@@ -26,7 +26,7 @@ export const CollectibleHubLayoutLoadedContent2 = ({ captionSearchPlaceholder, c
     return (
         <Region
             name="loaded_content"
-            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Dropmenu
                 variant="3"
@@ -51,7 +51,7 @@ export const CollectibleHubLayoutLoadedContent2 = ({ captionSearchPlaceholder, c
             >
                 <Region
                     name="buttonContainer"
-                    layout={{ position: 'absolute', left: 160, width: 24, top: 0, height: 24, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 160, width: 24, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="search_icon"

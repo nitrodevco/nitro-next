@@ -14,7 +14,7 @@ export const ChatMsgLayout = ({ layout, msgWidget }: ChatMsgLayoutProps) => {
             <WidgetSlot
                 widgetType="illumina_chat_bubble"
                 name="msg_widget"
-                layout={{ position: 'absolute', left: 0, width: 259, top: 0, height: 64 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 {msgWidget}
             </WidgetSlot>

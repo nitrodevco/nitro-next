@@ -18,7 +18,7 @@ export const BackgroundColorUiLayoutTabContent = ({ itemsTabContent, layout }: B
     return (
         <Region
             name="tab_content"
-            layout={{ position: 'absolute', left: 2, width: 270, top: 2, height: 166, flexDirection: 'column', ...layout }}
+            layout={{ position: 'absolute', left: 2, right: 3, top: 2, bottom: 3, flexDirection: 'column', ...layout }}
         >
             {itemsTabContent ?? (
                 <>

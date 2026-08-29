@@ -25,7 +25,7 @@ export const MainWindow_1503Layout = ({ captionInfoText, layout, mainContent, on
             caption={t('friendlist.friends')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 275, height: 105, ...layout }}
+            layout={{ width: 275, height: 105, minWidth: 220, minHeight: 105, ...layout }}
         >
             <MainWindow_1503LayoutMainContent {...mainContent} />
             <Region

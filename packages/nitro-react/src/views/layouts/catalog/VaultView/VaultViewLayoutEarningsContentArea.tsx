@@ -16,7 +16,7 @@ export const VaultViewLayoutEarningsContentArea = ({ layout, onClaimAllBtn, scro
     return (
         <Region
             name="earningsContentArea"
-            layout={{ position: 'absolute', left: 1, width: 404, top: 0, bottom: 45, justifyContent: 'center', ...layout }}
+            layout={{ position: 'absolute', left: 1, width: 404, top: 0, bottom: 4, justifyContent: 'center', ...layout }}
         >
             <VaultViewLayoutScrollingEarningsList {...scrollingEarningsList} />
             <ButtonThick

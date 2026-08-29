@@ -21,7 +21,7 @@ export const SpecialItemsDisplayLayoutCenter = ({ layout, onNextButton, onPrevio
     return (
         <Region
             name="center"
-            layout={{ position: 'absolute', left: 0, right: 0, bottom: 168, height: 220, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -12, bottom: 127, height: 220, ...layout }}
         >
             <Region
                 name="item_viewer"
@@ -39,7 +39,7 @@ export const SpecialItemsDisplayLayoutCenter = ({ layout, onNextButton, onPrevio
                 />
                 <Region
                     name="item_rotation"
-                    layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 197 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <WidgetSlot
                         widgetType="product_image"

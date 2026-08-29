@@ -26,7 +26,7 @@ export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, caption
     return (
         <Region
             name="step_cont_1"
-            layout={{ position: 'absolute', left: 0, right: 19, top: 128, height: 310, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 7, top: 128, height: 310, ...layout }}
         >
             <Border
                 variant="0"

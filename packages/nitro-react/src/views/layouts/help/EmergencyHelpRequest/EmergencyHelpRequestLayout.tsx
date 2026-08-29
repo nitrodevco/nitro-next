@@ -40,7 +40,7 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, helpMessage,
             name="emergency_help_request"
             caption={t('help.emergency.main.title')}
             onClose={onClose}
-            layout={{ width: 593, height: 491, ...layout }}
+            layout={{ width: 593, height: 491, minWidth: 593, minHeight: 491, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 9, minWidth: 280, top: 8, minHeight: 563, flexDirection: 'column', gap: 8 }}>
                 <Region layout={{ width: 236, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>

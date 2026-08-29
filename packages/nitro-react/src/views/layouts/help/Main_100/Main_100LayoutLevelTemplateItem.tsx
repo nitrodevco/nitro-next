@@ -74,7 +74,7 @@ export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevel
                             {(visibleProgress ?? true) && (
                                 <Region
                                     name="progress"
-                                    layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 7 }}
+                                    layout={{ position: 'absolute', left: 0, width: 140, top: 0, bottom: 0 }}
                                 >
                                     {(visibleProgressLoadingBar ?? true) && (
                                         <Shape

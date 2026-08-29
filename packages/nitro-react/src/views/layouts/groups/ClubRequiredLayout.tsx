@@ -24,11 +24,11 @@ export const ClubRequiredLayout = ({ captionCancelLink, captionInfoTxt, captionM
             caption={t('group.hcrequired.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 428, height: 215, ...layout }}
+            layout={{ width: 428, height: 215, minWidth: 428, minHeight: 215, ...layout }}
         >
             <Region
                 backgroundColor="#3c3c3c"
-                layout={{ position: 'absolute', left: 0, right: 1, top: 0, height: 125 }}
+                layout={{ position: 'absolute', left: 0, right: -11, top: 0, height: 125 }}
             />
             <Icon
                 variant="18"

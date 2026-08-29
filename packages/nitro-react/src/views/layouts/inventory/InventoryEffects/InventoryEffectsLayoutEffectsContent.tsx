@@ -25,7 +25,7 @@ export const InventoryEffectsLayoutEffectsContent = ({ captionActiveTitle, capti
     return (
         <Region
             name="effects_content"
-            layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="ActiveTitle"
@@ -88,7 +88,7 @@ export const InventoryEffectsLayoutEffectsContent = ({ captionActiveTitle, capti
                 </Button>
                 <Region
                     name="effectDescriptionText"
-                    layout={{ position: 'absolute', left: 75, right: 189, top: 0, height: 55, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 75, right: 189, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionEffectDescriptionText ?? t('inventory.effects.defaultdescription')}

@@ -31,7 +31,8 @@ export const CatalogUbuntuLayout = ({ captionSearchHelper, catalogHeaderBackgrou
             caption={t('catalog.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 570, height: 640, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 570, height: 640, minWidth: 570, maxWidth: 570, minHeight: 540, ...layout }}
         >
             <CatalogUbuntuLayoutCatalogHeaderBackgroundBorder {...catalogHeaderBackgroundBorder} />
             <Border
@@ -69,7 +70,7 @@ export const CatalogUbuntuLayout = ({ captionSearchHelper, catalogHeaderBackgrou
             <CatalogUbuntuLayoutNavigationContainer {...navigationContainer} />
             <Region
                 name="layoutContainer"
-                layout={{ position: 'absolute', left: 200, width: 360, top: 96, bottom: 44 }}
+                layout={{ position: 'absolute', left: 200, width: 360, top: 96, bottom: 3 }}
             >
                 {layoutContainer}
             </Region>

@@ -23,12 +23,12 @@ export const BackgroundColorUiLayout = ({ layout, onApplyButton, onClose, onOnOf
             caption={t('widget.backgroundcolour.title')}
             tintColor="#67a3bf"
             onClose={onClose}
-            layout={{ width: 292, height: 255, ...layout }}
+            layout={{ width: 292, height: 255, minWidth: 292, minHeight: 0, ...layout }}
         >
             <Border
                 variant="100"
                 tintColor="#ffffff"
-                layout={{ position: 'absolute', left: 3, width: 275, top: 16, height: 171 }}
+                layout={{ position: 'absolute', left: 3, right: 2, top: 16, height: 171 }}
             >
                 <BackgroundColorUiLayoutTabContent {...tabContent} />
             </Border>
@@ -36,7 +36,7 @@ export const BackgroundColorUiLayout = ({ layout, onApplyButton, onClose, onOnOf
                 variant="0"
                 name="apply_button"
                 onPointerTap={onApplyButton}
-                layout={{ position: 'absolute', left: 4, width: 203, top: 193, height: 24 }}
+                layout={{ position: 'absolute', left: 4, width: 203, bottom: -3, height: 24 }}
             >
                 {t('widget.backgroundcolor.button.apply')}
             </Button>
@@ -44,7 +44,7 @@ export const BackgroundColorUiLayout = ({ layout, onApplyButton, onClose, onOnOf
                 variant="0"
                 name="on_off_button"
                 onPointerTap={onOnOffButton}
-                layout={{ position: 'absolute', right: 13, width: 189, top: 193, height: 24 }}
+                layout={{ position: 'absolute', right: 1, width: 189, bottom: -3, height: 24 }}
             >
                 {t('widget.backgroundcolor.button.on')}
             </Button>

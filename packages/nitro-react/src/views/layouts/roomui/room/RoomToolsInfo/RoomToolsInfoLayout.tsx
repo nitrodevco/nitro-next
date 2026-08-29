@@ -12,13 +12,13 @@ export interface RoomToolsInfoLayoutProps {
 export const RoomToolsInfoLayout = ({ captionRoomName, layout, ownerNameAndTags }: RoomToolsInfoLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 255, height: 77, ...layout }}>
-            <Region layout={{ position: 'absolute', left: -1, width: 255, top: 0, height: 77, maxWidth: 320 }}>
+            <Region layout={{ position: 'absolute', left: -1, width: 255, top: 0, bottom: 0, maxWidth: 320 }}>
                 <Border
                     variant="2"
                     name="window_bg"
                     tintColor="#24231e"
                     blend={0.8}
-                    layout={{ position: 'absolute', left: 0, width: 255, top: 0, height: 77, maxWidth: 320 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 320 }}
                 >
                     <Region
                         name="room_name"

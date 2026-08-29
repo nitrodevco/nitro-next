@@ -24,7 +24,8 @@ export const GuideClosedLayout = ({ captionCloseReason, captionReportLink, layou
             name="guide_closed"
             caption={t('guide.help.request.guide.closed.title')}
             onClose={onClose}
-            layout={{ width: 282, height: 204, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 282, height: 204, minWidth: 282, maxWidth: 282, minHeight: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 10, width: 60, top: 0, height: 48 }}>
                 <WidgetSlot
@@ -36,8 +37,8 @@ export const GuideClosedLayout = ({ captionCloseReason, captionReportLink, layou
                     {requesterAvatar}
                 </WidgetSlot>
             </Region>
-            <Region layout={{ position: 'absolute', left: 70, top: 0, minWidth: 200, maxWidth: 200, flexDirection: 'column', gap: 5 }}>
-                <Region layout={{ width: 271, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', right: 0, top: 0, minWidth: 200, maxWidth: 200, flexDirection: 'column', gap: 5 }}>
+                <Region layout={{ alignSelf: 'stretch', height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('guide.help.request.guide.closed.heading')}
                         textStyle="text-style-il-heading-1"
@@ -45,14 +46,14 @@ export const GuideClosedLayout = ({ captionCloseReason, captionReportLink, layou
                 </Region>
                 <Region
                     name="close_reason"
-                    layout={{ width: 200, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionCloseReason ?? 'Lilyflower closed the case.'}
                         textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
                     />
                 </Region>
-                <Region layout={{ width: 200, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                <Region layout={{ alignSelf: 'stretch', height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('guide.help.request.guide.closed.thanks')}
                         textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
@@ -63,7 +64,7 @@ export const GuideClosedLayout = ({ captionCloseReason, captionReportLink, layou
                     name="close_button"
                     tintColor="#bbbbbb"
                     onPointerTap={onCloseButton}
-                    layout={{ width: 266, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
+                    layout={{ alignSelf: 'stretch', height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
                 >
                     {t('guide.help.request.user.thanks.close.button')}
                 </Button>

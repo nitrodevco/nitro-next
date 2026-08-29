@@ -26,7 +26,8 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
             caption={t('widget.chooser.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 413, height: 354, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 413, height: 354, minWidth: 413, maxWidth: 413, minHeight: 270, ...layout }}
         >
             <Border
                 variant="105"
@@ -69,13 +70,13 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
             />
             <Region
                 name="table_container"
-                layout={{ position: 'absolute', left: 6, width: 389, top: 53, bottom: 61 }}
+                layout={{ position: 'absolute', left: 6, width: 389, top: 53, bottom: 20 }}
             >
                 {tableContainer}
             </Region>
             <Region
                 name="amount_indicator"
-                layout={{ position: 'absolute', left: 6, width: 215, bottom: 37, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 6, width: 215, bottom: -4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 {captionAmountIndicator ?? t('new_furni_chooser.amount_indicator')}
             </Region>

@@ -18,7 +18,7 @@ export const SeasonalCalendarLayout = ({ calendarCont, footerCont, layout, onClo
             caption="TBD"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 642, height: 465, ...layout }}
+            layout={{ width: 642, height: 465, minWidth: 642, minHeight: 465, ...layout }}
         >
             <SeasonalCalendarLayoutCalendarCont {...calendarCont} />
             <SeasonalCalendarLayoutFooterCont {...footerCont} />

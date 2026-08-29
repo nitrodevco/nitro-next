@@ -19,12 +19,12 @@ export const RoomInfoPopupBubbleLayoutTagAndGroupInfoItem = ({ itemsTagList, lay
     return (
         <Region
             name="tag_and_group_info"
-            layout={{ width: 345, height: 23, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 23, flexShrink: 0, ...layout }}
         >
             {(visibleTagList ?? true) && (
                 <Region
                     name="tag_list"
-                    layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 20, flexDirection: 'row', gap: 2 }}
+                    layout={{ position: 'absolute', left: 0, width: 200, top: 0, bottom: 3, flexDirection: 'row', gap: 2 }}
                 >
                     {itemsTagList}
                 </Region>
@@ -33,7 +33,7 @@ export const RoomInfoPopupBubbleLayoutTagAndGroupInfoItem = ({ itemsTagList, lay
                 <ThemeImage
                     name="group_mode_furnish"
                     src={srcGroupModeFurnish}
-                    layout={{ position: 'absolute', left: 318, width: 18, top: 0, height: 16 }}
+                    layout={{ position: 'absolute', right: 9, width: 18, top: 0, height: 16 }}
                 />
             )}
             {(visibleGroupModeAdmin ?? true) && (

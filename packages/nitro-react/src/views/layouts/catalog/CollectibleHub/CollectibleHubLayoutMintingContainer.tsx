@@ -18,7 +18,7 @@ export const CollectibleHubLayoutMintingContainer = ({ layout, loadedContent, sr
             <Region
                 name="mintingContainer"
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, right: 10, top: 125, height: 430, overflow: 'hidden', ...layout }}
+                layout={{ position: 'absolute', left: 0, right: -2, top: 125, height: 430, overflow: 'hidden', ...layout }}
             >
                 <CollectibleHubLayoutLoadedContent {...loadedContent} />
                 {(visibleLoadingContents ?? false) && (

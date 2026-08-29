@@ -16,7 +16,7 @@ export const BreedPetsConfirmationLayoutAcceptButtonItem = ({ layout, onAcceptBu
             name="accept_button"
             tintColor="#00aa00"
             onPointerTap={onAcceptButton}
-            layout={{ width: 122, height: 30, flexShrink: 0, minWidth: 122, maxWidth: 122, ...layout }}
+            layout={{ width: 122, alignSelf: 'stretch', flexShrink: 0, minWidth: 122, maxWidth: 122, ...layout }}
         >
             {t('breedpets.widget.accept')}
         </ButtonThick>

@@ -14,7 +14,7 @@ export const OwnPetMenuLayout = ({ border, layout }: OwnPetMenuLayoutProps) => {
             <Bubble
                 variant="0"
                 tintColor="#6e6b67"
-                layout={{ position: 'absolute', left: 0, width: 115, bottom: 0, height: 600 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 600 }}
             >
                 <OwnPetMenuLayoutBorder {...border} />
             </Bubble>

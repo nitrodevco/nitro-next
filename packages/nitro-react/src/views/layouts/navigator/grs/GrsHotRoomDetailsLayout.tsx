@@ -19,7 +19,7 @@ export const GrsHotRoomDetailsLayout = ({ detailsContainer, layout }: GrsHotRoom
             >
                 <Region
                     name="details_container"
-                    layout={{ position: 'absolute', left: 5, width: 193, top: 5, height: 70 }}
+                    layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: -5 }}
                 >
                     {detailsContainer}
                 </Region>

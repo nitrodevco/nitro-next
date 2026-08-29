@@ -22,7 +22,7 @@ export const VariablesManagementDetailLayoutVariableValuesContainer = ({ caption
     return (
         <Region
             name="variable_values_container"
-            layout={{ position: 'absolute', left: 18, width: 303, top: 196, bottom: 51, ...layout }}
+            layout={{ position: 'absolute', left: 18, width: 303, top: 196, bottom: 10, ...layout }}
         >
             <Region
                 name="title"

@@ -24,7 +24,7 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, capti
     return (
         <Region
             name="header"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 117, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -12, top: 0, height: 117, ...layout }}
         >
             <Border
                 variant="4"
@@ -62,7 +62,7 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, capti
                     variant="3"
                     name="user_type_menu"
                     onPointerTap={onUserTypeMenu}
-                    layout={{ position: 'absolute', left: 68, width: 131, top: 0, height: 25 }}
+                    layout={{ position: 'absolute', left: 68, width: 131, top: 0, bottom: 0 }}
                 />
             </Region>
             <Region
@@ -79,7 +79,7 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, capti
                     variant="3"
                     name="sort_type_menu"
                     onPointerTap={onSortTypeMenu}
-                    layout={{ position: 'absolute', left: 53, width: 135, top: 0, height: 25 }}
+                    layout={{ position: 'absolute', left: 53, width: 135, top: 0, bottom: 0 }}
                 />
             </Region>
             <Button

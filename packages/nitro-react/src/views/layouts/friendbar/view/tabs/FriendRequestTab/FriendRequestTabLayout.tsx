@@ -30,7 +30,7 @@ export const FriendRequestTabLayout = ({ captionButtonProfileCaption, captionCap
                 variant="6"
                 name="frame"
                 tintColor="#fac919"
-                layout={{ position: 'absolute', left: 0, width: 127, top: 107, height: 36 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 107, height: 36 }}
             >
                 <Region
                     name="pieces"
@@ -117,7 +117,7 @@ export const FriendRequestTabLayout = ({ captionButtonProfileCaption, captionCap
                         >
                             <Region
                                 name="link_reject"
-                                layout={{ position: 'absolute', left: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionLinkReject ?? t('friendbar.request.decline')}

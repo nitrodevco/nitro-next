@@ -61,7 +61,7 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionFurniQuantit
                         <WidgetSlot
                             widgetType="product_icon"
                             name="furni_icon"
-                            layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         >
                             {furniIcon}
                         </WidgetSlot>

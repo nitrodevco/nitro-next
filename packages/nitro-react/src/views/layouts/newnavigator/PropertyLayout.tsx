@@ -12,11 +12,11 @@ export const PropertyLayout = ({ captionPropertyName, captionPropertyValue, layo
         <Region layout={{ position: 'relative', width: 155, height: 20, ...layout }}>
             <Region
                 name="room_property"
-                layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 20 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="property_name"
-                    layout={{ position: 'absolute', left: 0, width: 70, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 70, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPropertyName ?? 'Name PH'}
@@ -25,7 +25,7 @@ export const PropertyLayout = ({ captionPropertyName, captionPropertyValue, layo
                 </Region>
                 <Region
                     name="property_value"
-                    layout={{ position: 'absolute', left: 70, width: 43, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 70, width: 43, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPropertyValue ?? 'Value PH'}

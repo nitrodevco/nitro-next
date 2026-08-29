@@ -19,7 +19,7 @@ export const PendingGuideSessionLayout = ({ layout, onClose, onCloseButton }: Pe
             name="pending_request"
             caption={t('guide.pending.guide.title')}
             onClose={onClose}
-            layout={{ width: 369, height: 153, ...layout }}
+            layout={{ width: 369, height: 153, minWidth: 369, minHeight: 153, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 8, top: 6, flexDirection: 'column', gap: 9 }}>
                 <Region layout={{ width: 194, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>

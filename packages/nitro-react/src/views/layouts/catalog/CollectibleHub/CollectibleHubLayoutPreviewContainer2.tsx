@@ -43,13 +43,13 @@ export const CollectibleHubLayoutPreviewContainer2 = ({ avatarImageWidget, badge
     return (
         <Region
             name="preview_container"
-            layout={{ position: 'absolute', left: 0, width: 290, top: 34, height: 260, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 34, height: 260, ...layout }}
         >
             <Border
                 variant="3"
                 name="collection_preview_bg"
                 tintColor="#3d1f39"
-                layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     src={layoutImage('collectables_score_background.png')}
@@ -134,11 +134,11 @@ export const CollectibleHubLayoutPreviewContainer2 = ({ avatarImageWidget, badge
                         backgroundColor="#000000"
                         onPointerTap={onProductNameContainer}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 26 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26 }}
                     >
                         <Region
                             name="preview_furni_name"
-                            layout={{ position: 'absolute', left: 0, width: 290, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionPreviewFurniName ?? 'Lorem ipsum hot air balloon'}
@@ -151,7 +151,7 @@ export const CollectibleHubLayoutPreviewContainer2 = ({ avatarImageWidget, badge
                     <Region
                         name="product_info_container"
                         backgroundColor="#3b1829"
-                        layout={{ position: 'absolute', left: 0, width: 290, top: 26, height: 194 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 26, height: 194 }}
                     >
                         <Region
                             name="product_info_list"
@@ -168,7 +168,7 @@ export const CollectibleHubLayoutPreviewContainer2 = ({ avatarImageWidget, badge
                     <Region
                         name="collection_progress_container"
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 290, top: 200, height: 60, justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 200, height: 60, justifyContent: 'center' }}
                     >
                         <Region
                             name="preview_score_text"
@@ -199,7 +199,7 @@ export const CollectibleHubLayoutPreviewContainer2 = ({ avatarImageWidget, badge
                 <Region
                     name="product_progress_container"
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 290, top: 220, height: 40 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 220, height: 40 }}
                 >
                     <Border
                         variant="3"

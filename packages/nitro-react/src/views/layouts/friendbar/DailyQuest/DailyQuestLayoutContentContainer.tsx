@@ -22,7 +22,7 @@ export const DailyQuestLayoutContentContainer = ({ captionCancelQuestTxt, captio
         <Region
             name="content_container"
             backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 230, width: 270, top: 0, height: 194, ...layout }}
+            layout={{ position: 'absolute', left: 230, width: 270, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="caption_txt"
@@ -35,7 +35,7 @@ export const DailyQuestLayoutContentContainer = ({ captionCancelQuestTxt, captio
             </Region>
             <Region
                 name="info_txt"
-                layout={{ position: 'absolute', left: 0, width: 270, top: 61, height: 41, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 41, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionInfoTxt ?? '...and everything must go, so get yourself some of the sweet, sweet plastic fantastic while you still can! You don\'t want to miss out on the classics!'}

@@ -17,12 +17,12 @@ export const LayoutInfoPets3_1661Layout = ({ captionCtlgText1, captionCtlgText2,
         <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
             <Region
                 name="ctlg_pets2"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="2"
                     tintColor="#8899a2"
-                    layout={{ position: 'absolute', left: 10, width: 340, top: 140, height: 310 }}
+                    layout={{ position: 'absolute', left: 10, right: 10, bottom: 10, height: 310, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="ctlg_teaserimg_1"
@@ -41,7 +41,7 @@ export const LayoutInfoPets3_1661Layout = ({ captionCtlgText1, captionCtlgText2,
                     </Region>
                     <Region
                         name="ctlg_text_2"
-                        layout={{ position: 'absolute', left: 20, width: 307, top: 72, height: 124, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 307, top: 72, height: 124, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCtlgText2 ?? t('lorem.content')}
@@ -50,7 +50,7 @@ export const LayoutInfoPets3_1661Layout = ({ captionCtlgText1, captionCtlgText2,
                     </Region>
                     <Region
                         name="ctlg_text_3"
-                        layout={{ position: 'absolute', left: 20, width: 306, top: 210, height: 138, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 3, marginRight: -3, width: 306, top: 210, height: 138, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCtlgText3 ?? t('lorem.newline')}

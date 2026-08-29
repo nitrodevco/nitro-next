@@ -35,12 +35,12 @@ export const AvatarEditorContentLayoutTabbedView = ({ actionContainer, contentAr
     return (
         <Region
             name="tabbedView"
-            layout={{ position: 'absolute', left: 0, width: 486, top: 4, height: 410, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 3, top: 4, bottom: 0, ...layout }}
         >
             <TabContext
                 variant="3"
                 name="mainTabs"
-                layout={{ position: 'absolute', left: 0, width: 486, top: 5, height: 395 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 10 }}
             >
                 <TabButton
                     variant="3"

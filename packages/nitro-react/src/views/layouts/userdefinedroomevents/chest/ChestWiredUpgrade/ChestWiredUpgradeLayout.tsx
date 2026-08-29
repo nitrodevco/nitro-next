@@ -19,7 +19,7 @@ export const ChestWiredUpgradeLayout = ({ content, layout, onClose }: ChestWired
             caption={t('wiredchests.upgrade.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 353, height: 287, ...layout }}
+            layout={{ width: 353, height: 287, minWidth: 275, minHeight: 150, ...layout }}
         >
             <ChestWiredUpgradeLayoutContent {...content} />
         </Frame>

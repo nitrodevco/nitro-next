@@ -28,7 +28,7 @@ export interface AchievementCompetitionPrizesLayoutProps {
 export const AchievementCompetitionPrizesLayout = ({ avatarImage, captionCaptionTxt, captionInfoTxt, captionRank1InfoTxt, captionRank1Txt, captionRank2InfoTxt, captionRank2Txt, captionRank3InfoTxt, captionRank3Txt, captionRewardInfoTxt, captionRewardNameTxt, captionUserRankInfoTxt, captionUserRankTxt, colorableTextColor, layout, srcBorderBar, srcBorderBar2, srcRewardImage }: AchievementCompetitionPrizesLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 270, height: 352, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 352 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="border_bar"
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}

@@ -13,7 +13,7 @@ export interface IlluminaBorderLayoutProps {
 export const IlluminaBorderLayout = ({ children, layout, srcCanvas, tintCanvas }: IlluminaBorderLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 30, height: 30, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="canvas"
                     src={srcCanvas}
@@ -22,7 +22,7 @@ export const IlluminaBorderLayout = ({ children, layout, srcCanvas, tintCanvas }
                 />
                 <Region
                     name="children"
-                    layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {children}
                 </Region>

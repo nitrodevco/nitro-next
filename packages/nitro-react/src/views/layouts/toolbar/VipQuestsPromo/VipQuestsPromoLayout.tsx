@@ -25,13 +25,13 @@ export const VipQuestsPromoLayout = ({ captionTitleTxt, itemsContentItemlist, la
         <Region layout={{ position: 'relative', width: 193, height: 216, ...layout }}>
             <Border
                 variant="0"
-                layout={{ position: 'absolute', left: 0, width: 193, top: 0, height: 216 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="minimize_region"
                     onPointerTap={onMinimizeRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 167, width: 20, top: 7, height: 20 }}
+                    layout={{ position: 'absolute', right: 6, width: 20, top: 7, height: 20 }}
                 >
                     <ThemeImage
                         src={layoutImage('messenger_minimize_button.png')}
@@ -42,7 +42,7 @@ export const VipQuestsPromoLayout = ({ captionTitleTxt, itemsContentItemlist, la
                     name="maximize_region"
                     onPointerTap={onMaximizeRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 167, width: 20, top: 7, height: 20 }}
+                    layout={{ position: 'absolute', right: 6, width: 20, top: 7, height: 20 }}
                 >
                     <ThemeImage
                         src={layoutImage('common_maximize.png')}
@@ -65,7 +65,7 @@ export const VipQuestsPromoLayout = ({ captionTitleTxt, itemsContentItemlist, la
                 />
                 <Region
                     name="content_itemlist"
-                    layout={{ position: 'absolute', left: 0, top: 30, flexDirection: 'column', gap: 5 }}
+                    layout={{ position: 'absolute', left: 0, right: 5, top: 30, flexDirection: 'column', gap: 5 }}
                 >
                     {itemsContentItemlist ?? (
                         <>

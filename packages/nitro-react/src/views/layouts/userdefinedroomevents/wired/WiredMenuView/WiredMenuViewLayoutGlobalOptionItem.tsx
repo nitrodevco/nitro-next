@@ -24,7 +24,7 @@ export const WiredMenuViewLayoutGlobalOptionItem = ({ layout, onTypeGlobalButton
                     tooltip={t('wiredfurni.params.sourcetype.global')}
                     onPointerTap={onTypeGlobalButton}
                     textStyle="text-style-button-shiny-regular"
-                    layout={{ position: 'absolute', left: 0, width: 37, top: 0, height: 36 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 36 }}
                 />
             )}
             <ThemeImage

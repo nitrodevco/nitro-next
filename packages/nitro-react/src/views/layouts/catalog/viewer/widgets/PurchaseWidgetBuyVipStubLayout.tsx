@@ -15,12 +15,12 @@ export const PurchaseWidgetBuyVipStubLayout = ({ captionCtlgWidgetGetClubText, l
         <Region layout={{ position: 'relative', width: 360, height: 30, ...layout }}>
             <Region
                 name="purchaseWidgetBuyVipStub"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="2"
                     tintColor="#969696"
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Icon
                     variant="12"

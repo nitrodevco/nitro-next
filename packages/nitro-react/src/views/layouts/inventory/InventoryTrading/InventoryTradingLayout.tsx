@@ -33,12 +33,12 @@ export const InventoryTradingLayout = ({ captionHelpText, captionInfoTextHighlig
 
     return (
         <Region layout={{ position: 'relative', width: 478, height: 371, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 371 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="102"
                     name="trade_container"
                     tintColor="#27556a"
-                    layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 233 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 233 }}
                 >
                     <Region
                         name="help_text"
@@ -64,7 +64,7 @@ export const InventoryTradingLayout = ({ captionHelpText, captionInfoTextHighlig
                     variant="3"
                     name="silver_container"
                     tintColor="#a0ccd8"
-                    layout={{ position: 'absolute', left: 0, width: 478, top: 240, height: 59 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 240, height: 59 }}
                 >
                     <ContainerButton
                         variant="4"
@@ -90,7 +90,7 @@ export const InventoryTradingLayout = ({ captionHelpText, captionInfoTextHighlig
                     />
                     <Region
                         name="silver_fee_info_text"
-                        layout={{ position: 'absolute', left: 0, width: 478, top: 5, height: 16, minWidth: 478, maxWidth: 478, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, height: 16, minWidth: 478, maxWidth: 478, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionSilverFeeInfoText ?? t('inventory.trading.note_silver_fee')}
@@ -143,7 +143,7 @@ export const InventoryTradingLayout = ({ captionHelpText, captionInfoTextHighlig
                 </Border>
                 <Region
                     name="button_container"
-                    layout={{ position: 'absolute', left: 0, width: 478, top: 341, height: 32 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 341, height: 32 }}
                 >
                     <Button
                         variant="3"

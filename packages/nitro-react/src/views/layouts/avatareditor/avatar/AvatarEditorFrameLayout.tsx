@@ -21,11 +21,11 @@ export const AvatarEditorFrameLayout = ({ layout, maincontent, onClose }: Avatar
             caption={t('avatareditor.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 210, height: 155, ...layout }}
+            layout={{ width: 210, height: 155, minWidth: 210, minHeight: 155, ...layout }}
         >
             <Region
                 name="maincontent"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 33, bottom: 2 }}
+                layout={{ position: 'absolute', left: 0, right: -12, top: 33, bottom: -39 }}
             >
                 {maincontent}
             </Region>

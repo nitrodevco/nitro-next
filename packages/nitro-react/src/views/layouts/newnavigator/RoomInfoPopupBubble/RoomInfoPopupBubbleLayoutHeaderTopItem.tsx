@@ -15,7 +15,7 @@ export const RoomInfoPopupBubbleLayoutHeaderTopItem = ({ itemsHeaderTop, layout 
     return (
         <Region
             name="header_top"
-            layout={{ width: 329, height: 112, flexShrink: 0, flexDirection: 'row', ...layout }}
+            layout={{ alignSelf: 'stretch', height: 112, flexShrink: 0, flexDirection: 'row', ...layout }}
         >
             {itemsHeaderTop ?? (
                 <>

@@ -26,7 +26,8 @@ export const GuideAcceptLayout = ({ countdown, itemlist, layout, onClose, srcFra
             name="guide_accept"
             caption={t('guide.help.request.guide.accept.title')}
             onClose={onClose}
-            layout={{ width: 282, height: 276, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 282, height: 276, minWidth: 282, maxWidth: 282, minHeight: 0, ...layout }}
         >
             <Border
                 variant="103"
@@ -56,7 +57,7 @@ export const GuideAcceptLayout = ({ countdown, itemlist, layout, onClose, srcFra
                 <ThemeImage
                     name="frank_greeting"
                     src={srcFrankGreeting ?? layoutImage('help_frank_greeting.png')}
-                    layout={{ position: 'absolute', left: -10, width: 230, bottom: -19, height: 140 }}
+                    layout={{ position: 'absolute', left: -10, width: 230, bottom: -60, height: 140 }}
                 />
             )}
         </Frame>

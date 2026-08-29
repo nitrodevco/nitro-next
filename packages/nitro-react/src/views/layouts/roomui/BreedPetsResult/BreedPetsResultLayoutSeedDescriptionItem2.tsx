@@ -13,7 +13,7 @@ export const BreedPetsResultLayoutSeedDescriptionItem2 = ({ captionSeedDescripti
     return (
         <Region
             name="seed_description"
-            layout={{ width: 122, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
+            layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
                 text={captionSeedDescription ?? t('breedpetsresult.widget.seed2.description')}

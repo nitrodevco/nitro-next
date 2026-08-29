@@ -12,10 +12,10 @@ export const LayoutClubGifts_1538Layout = ({ clubGiftWidget, layout }: LayoutClu
         <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
             <Region
                 name="ctlg_presents"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ClubGiftWidget2
-                    layout={{ position: 'absolute', left: 10, width: 340, top: 140, height: 320 }}
+                    layout={{ position: 'absolute', left: 10, right: 10, bottom: 0, height: 320 }}
                     {...clubGiftWidget}
                 />
             </Region>

@@ -23,7 +23,7 @@ export const BadgeDetailsLayout = ({ itemsDetailsList, layout }: BadgeDetailsLay
             >
                 <Region
                     name="details_list"
-                    layout={{ position: 'absolute', left: 0, width: 263, top: 6, height: 11, flexDirection: 'column', gap: 3 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 6, height: 11, flexDirection: 'column', gap: 3 }}
                 >
                     {itemsDetailsList ?? (
                         <>

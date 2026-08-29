@@ -23,7 +23,7 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layou
             variant="100"
             caption={t('talent.track.common.levelup.caption')}
             onClose={onClose}
-            layout={{ width: 430, height: 362, ...layout }}
+            layout={{ width: 430, height: 362, minWidth: 430, minHeight: 362, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 10, top: 10, flexDirection: 'column' }}>
                 <Region layout={{ width: 291, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -69,7 +69,7 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layou
             <ThemeImage
                 name="level_decoration"
                 src={srcLevelDecoration}
-                layout={{ position: 'absolute', left: 280, width: 260, bottom: 13, height: 260 }}
+                layout={{ position: 'absolute', left: 280, width: 260, bottom: -28, height: 260 }}
             />
         </Frame>
     );

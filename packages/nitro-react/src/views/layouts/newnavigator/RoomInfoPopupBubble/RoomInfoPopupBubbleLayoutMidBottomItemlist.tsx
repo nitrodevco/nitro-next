@@ -23,7 +23,7 @@ export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ itemsMidBottomIteml
     return (
         <Region
             name="midBottom_itemlist"
-            layout={{ position: 'absolute', left: 12, width: 170, top: 0, height: 80, flexDirection: 'column', ...layout }}
+            layout={{ position: 'absolute', left: 12, right: -12, top: 0, bottom: 0, flexDirection: 'column', ...layout }}
         >
             {itemsMidBottomItemlist ?? (
                 <>
@@ -31,12 +31,12 @@ export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ itemsMidBottomIteml
                     <RoomInfoPopupBubbleLayoutReportContainerItem />
                 </>
             )}
-            <Region layout={{ width: 170, height: 20, flexShrink: 0 }}>
+            <Region layout={{ alignSelf: 'stretch', height: 20, flexShrink: 0 }}>
                 <Region
                     name="favorite_region"
                     onPointerTap={onFavoriteRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="favorite_icon"
@@ -44,16 +44,16 @@ export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ itemsMidBottomIteml
                         layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 20, width: 236, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', left: 20, width: 236, top: 0, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     {t('navigator.room.popup.room.info.favorite')}
                 </Region>
             </Region>
-            <Region layout={{ width: 170, height: 20, flexShrink: 0 }}>
+            <Region layout={{ alignSelf: 'stretch', height: 20, flexShrink: 0 }}>
                 <Region
                     name="home_region"
                     onPointerTap={onHomeRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="home_icon"
@@ -61,7 +61,7 @@ export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ itemsMidBottomIteml
                         layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 20, width: 224, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', left: 20, width: 224, top: 0, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     {t('navigator.room.popup.room.info.home')}
                 </Region>
             </Region>

@@ -66,7 +66,7 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
         <Region layout={{ position: 'relative', width: 200, height: 200, ...layout }}>
             <Region
                 backgroundColor="#e2e2e2"
-                layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 200 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 {(visibleRulerView ?? false) && (
                     <Region
@@ -275,7 +275,7 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                         caption={t('wiredfurni.title')}
                         tintColor="#3e3e3e"
                         onClose={onFrame}
-                        layout={{ position: 'absolute', left: 0, width: 240, top: 0, height: 200, minWidth: 100 }}
+                        layout={{ position: 'absolute', left: 0, width: 240, top: 0, bottom: 0, minWidth: 100 }}
                     />
                 )}
                 {(visibleQuickMenu ?? false) && (
@@ -297,7 +297,7 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                             >
                                 <Region
                                     name="menu_list"
-                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23, flexDirection: 'column' }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}
                                 >
                                     {itemsMenuList ?? (
                                         <>
@@ -344,7 +344,7 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                         variant="102"
                         name="mini_button_click"
                         onPointerTap={onMiniButtonClick}
-                        layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19, maxWidth: 19 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 19 }}
                     >
                         <ThemeImage
                             name="mini_button_icon"

@@ -20,18 +20,18 @@ export const GroupCreatedWindowLayout = ({ layout, onClose, onOkButton, srcGroup
             caption={t('group.created.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 358, height: 381, ...layout }}
+            layout={{ width: 358, height: 381, minWidth: 358, minHeight: 381, ...layout }}
         >
             <ThemeImage
                 name="group_welcome_info"
                 src={srcGroupWelcomeInfo ?? '${image.library.url}guilds/group_welcome_info.png'}
-                layout={{ position: 'absolute', left: 20, width: 316, bottom: 86, height: 155 }}
+                layout={{ position: 'absolute', left: 20, width: 316, bottom: 45, height: 155 }}
             />
             <ButtonThick
                 variant="3"
                 name="ok_button"
                 onPointerTap={onOkButton}
-                layout={{ position: 'absolute', left: 115, width: 131, bottom: 48, height: 29, minWidth: 131, maxWidth: 131 }}
+                layout={{ position: 'absolute', left: 115, width: 131, bottom: 7, height: 29, minWidth: 131, maxWidth: 131 }}
             >
                 {t('group.created.ok')}
             </ButtonThick>

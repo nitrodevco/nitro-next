@@ -24,12 +24,13 @@ export const TransactionOverviewLayout = ({ footer, header, layout, onClose, tab
             caption={t('wiredchests.logs.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 880, height: 391, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 880, height: 391, minWidth: 880, maxWidth: 880, minHeight: 391, maxHeight: 700, ...layout }}
         >
             <TransactionOverviewLayoutHeader {...header} />
             <Region
                 name="middle"
-                layout={{ position: 'absolute', left: 1, right: 1, top: 62, bottom: 95 }}
+                layout={{ position: 'absolute', left: 1, right: -11, top: 62, bottom: 54 }}
             >
                 <Region
                     name="table_view"

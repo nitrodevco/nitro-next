@@ -15,7 +15,7 @@ export const VipQuestsPromoLayoutQuestsButtonItem = ({ layout, onQuestsButton }:
             variant="100"
             name="quests_button"
             onPointerTap={onQuestsButton}
-            layout={{ width: 187, height: 50, flexShrink: 0, minWidth: 187, maxWidth: 187, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 50, flexShrink: 0, minWidth: 187, maxWidth: 187, ...layout }}
         >
             {t('citizenship.vip.quests.button')}
         </Button>

@@ -17,7 +17,7 @@ export const SimpleAlert_2678Layout = ({ layout, list, onClose, srcIllustration 
             caption="caption"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 310, height: 163, ...layout }}
+            layout={{ width: 310, height: 163, minWidth: 310, minHeight: 163, ...layout }}
         >
             <ThemeImage
                 name="illustration"

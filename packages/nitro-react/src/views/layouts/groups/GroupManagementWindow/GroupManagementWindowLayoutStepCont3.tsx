@@ -26,7 +26,7 @@ export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, c
         (visibleStepCont3 ?? false) && (
             <Region
                 name="step_cont_3"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 110, height: 305, ...layout }}
+                layout={{ position: 'absolute', left: 0, right: -12, top: 110, height: 305, ...layout }}
             >
                 <Region
                     name="label_guild_color"

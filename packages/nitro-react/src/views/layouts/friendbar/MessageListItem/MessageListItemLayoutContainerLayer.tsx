@@ -14,7 +14,7 @@ export const MessageListItemLayoutContainerLayer = ({ layout, msgContainer, text
     return (
         <Region
             name="container_layer"
-            layout={{ position: 'absolute', left: 0, width: 670, top: 0, height: 126, minWidth: 0, minHeight: 0, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 0, minHeight: 0, ...layout }}
         >
             <MessageListItemLayoutMsgContainer {...msgContainer} />
             <MessageListItemLayoutTextsContainer {...textsContainer} />

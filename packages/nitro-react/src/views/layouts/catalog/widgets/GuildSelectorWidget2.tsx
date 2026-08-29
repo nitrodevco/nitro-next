@@ -24,13 +24,13 @@ export const GuildSelectorWidget2 = ({ layout, onFindGroupsButton }: GuildSelect
             <Droplist
                 variant="3"
                 name="guild_selector"
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 26 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26 }}
             />
             <Border
                 variant="2"
                 name="members_only"
                 tintColor="#5ea1ab"
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 85, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Region layout={{ position: 'absolute', left: 7, width: 147, top: 7, height: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText
@@ -42,7 +42,7 @@ export const GuildSelectorWidget2 = ({ layout, onFindGroupsButton }: GuildSelect
                     variant="3"
                     name="find_groups_button"
                     onPointerTap={onFindGroupsButton}
-                    layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 210, top: 55, height: 25 }}
+                    layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 210, bottom: 5, height: 25 }}
                 >
                     {t('catalog.guild_selector.find_groups')}
                 </Button>

@@ -20,7 +20,7 @@ export const TaskProgressDialogLayoutUnverifiedContainer = ({ captionErrorTxt, l
         (visibleUnverifiedContainer ?? false) && (
             <Region
                 name="unverified_container"
-                layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 60, ...layout }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
             >
                 <Border
                     variant="105"

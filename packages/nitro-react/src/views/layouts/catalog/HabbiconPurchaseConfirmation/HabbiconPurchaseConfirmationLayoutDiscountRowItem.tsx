@@ -21,7 +21,7 @@ export const HabbiconPurchaseConfirmationLayoutDiscountRowItem = ({ captionDisco
             {(visibleDiscountLabel ?? true) && (
                 <Region
                     name="discount_label"
-                    layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 58, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionDiscountLabel ?? t('habbicon_purchase.confirm.discount')}

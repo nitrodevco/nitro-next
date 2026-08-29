@@ -21,7 +21,7 @@ export const DynamicWidgetGridLayoutWidgetSlotsRightItem = ({ itemsWidgetSlotsCe
             {(visibleWidgetSlotsCenterRight ?? true) && (
                 <Region
                     name="widget_slots_center_right"
-                    layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', gap: 50 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column', gap: 50 }}
                 >
                     {itemsWidgetSlotsCenterRight ?? (
                         <>

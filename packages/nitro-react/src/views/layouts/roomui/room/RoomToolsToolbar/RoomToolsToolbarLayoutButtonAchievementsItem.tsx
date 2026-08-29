@@ -22,7 +22,7 @@ export const RoomToolsToolbarLayoutButtonAchievementsItem = ({ captionTextSettin
             cursor="pointer"
             layout={{ width: 130, height: 25, flexShrink: 0, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, width: 28, top: 0, height: 25 }} />
+            <Region layout={{ position: 'absolute', left: 0, width: 28, top: 0, bottom: 0 }} />
             <ThemeImage
                 src={layoutImage('roomtools_achievements.png')}
                 layout={{ position: 'absolute', left: 3, width: 25, top: 0, height: 25 }}

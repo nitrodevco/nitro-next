@@ -59,7 +59,7 @@ export const NewPetsWidget2 = ({ addOnBadgeViewWidget, captionCtlgText2, caption
                 />
             </Region>
             <ColourGridWidget
-                layout={{ position: 'absolute', left: 0, width: 360, top: 245, height: 80 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 245, height: 80 }}
                 {...colourGridWidget}
             />
             <Region
@@ -84,7 +84,7 @@ export const NewPetsWidget2 = ({ addOnBadgeViewWidget, captionCtlgText2, caption
                 />
             </Border>
             <PurchaseWidget
-                layout={{ position: 'absolute', left: 0, width: 360, bottom: 1, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 1, height: 30 }}
                 {...purchaseWidget}
             />
             <AddOnBadgeViewWidget

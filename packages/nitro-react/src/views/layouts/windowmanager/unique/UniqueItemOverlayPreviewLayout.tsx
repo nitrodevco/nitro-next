@@ -16,7 +16,7 @@ export const UniqueItemOverlayPreviewLayout = ({ layout, srcPlaque, srcUniqueIte
         <Region layout={{ position: 'relative', width: 40, height: 40, ...layout }}>
             <Region
                 name="limitedItemWidget"
-                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="plaque"
@@ -27,13 +27,13 @@ export const UniqueItemOverlayPreviewLayout = ({ layout, srcPlaque, srcUniqueIte
                     name="unique_item_edition_size_bitmap"
                     src={srcUniqueItemEditionSizeBitmap}
                     tint={tintUniqueItemEditionSizeBitmap}
-                    layout={{ position: 'absolute', left: 10, width: 20, top: 23, height: 5 }}
+                    layout={{ position: 'absolute', left: 10, width: 20, bottom: 12, height: 5 }}
                 />
                 <ThemeImage
                     name="unique_item_serial_number_bitmap"
                     src={srcUniqueItemSerialNumberBitmap}
                     tint={tintUniqueItemSerialNumberBitmap}
-                    layout={{ position: 'absolute', left: 10, width: 20, top: 16, height: 5 }}
+                    layout={{ position: 'absolute', left: 10, width: 20, alignSelf: 'center', marginTop: -1.5, marginBottom: 1.5, height: 5 }}
                 />
             </Region>
         </Region>

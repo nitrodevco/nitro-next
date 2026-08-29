@@ -18,16 +18,16 @@ export const WelcomeNameChangeLayout = ({ layout, onChangeNameButton, onClose, o
             caption={t('tutorial.name_change.title.main')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 315, height: 225, ...layout }}
+            layout={{ width: 315, height: 225, minWidth: 50, minHeight: 50, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, width: 303, top: 0, height: 190 }}>
-                <Region layout={{ position: 'absolute', left: 6, width: 290, top: 21, height: 69, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -6 }}>
+                <Region layout={{ position: 'absolute', left: 6, right: 7, top: 21, height: 69, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('tutorial.name_change.info.main')}
                         textOptions={{ wordWrap: true, wordWrapWidth: 290 }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 8, width: 289, top: 96, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <Region layout={{ position: 'absolute', left: 8, right: 6, top: 96, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text={t('tutorial.name_change.current')}
                         textOptions={{ align: 'center' }}
@@ -37,7 +37,7 @@ export const WelcomeNameChangeLayout = ({ layout, onChangeNameButton, onClose, o
                     variant="3"
                     name="change_name_button"
                     onPointerTap={onChangeNameButton}
-                    layout={{ position: 'absolute', left: 4, width: 142, top: 124, height: 66 }}
+                    layout={{ position: 'absolute', left: 4, width: 142, bottom: 0, height: 66 }}
                 >
                     <ThemeText
                         text={t('tutorial.name_change.change')}
@@ -48,7 +48,7 @@ export const WelcomeNameChangeLayout = ({ layout, onChangeNameButton, onClose, o
                     variant="3"
                     name="keep_name_button"
                     onPointerTap={onKeepNameButton}
-                    layout={{ position: 'absolute', left: 155, width: 142, top: 124, height: 66 }}
+                    layout={{ position: 'absolute', right: 6, width: 142, bottom: 0, height: 66 }}
                 >
                     <ThemeText
                         text={t('tutorial.name_change.keep')}

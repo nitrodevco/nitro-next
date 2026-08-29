@@ -19,9 +19,9 @@ export const ChooserViewLayout = ({ itemsItemList, layout, onClose }: ChooserVie
             caption={t('widget.chooser.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 203, height: 168, ...layout }}
+            layout={{ width: 203, height: 168, minWidth: 150, minHeight: 90, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 9, right: 21, top: 13, bottom: 35 }}>
+            <Region layout={{ position: 'absolute', left: 9, right: 9, top: 13, bottom: -6 }}>
                 <ScrollArea
                     orientation="vertical"
                     layout={{ position: 'absolute', left: 0, right: 1, top: 0, bottom: 0 }}

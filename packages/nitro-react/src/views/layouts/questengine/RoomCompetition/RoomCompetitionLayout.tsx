@@ -31,11 +31,11 @@ export const RoomCompetitionLayout = ({ captionButtonInfoTxt, captionCaptionTxt,
 
     return (
         <Region layout={{ position: 'relative', width: 448, height: 86, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 448, top: 0, height: 86 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="1"
                     name="dont_show_again_container"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 86, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <Region
                         name="dont_show_info_txt"

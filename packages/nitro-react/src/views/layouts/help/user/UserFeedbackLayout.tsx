@@ -28,18 +28,19 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
             name="user_feedback"
             caption={t('guide.help.request.user.feedback.title')}
             onClose={onClose}
-            layout={{ width: 282, height: 306, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 282, height: 306, minWidth: 282, maxWidth: 282, minHeight: 0, ...layout }}
         >
             <Border
                 variant="103"
-                layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 65 }}
+                layout={{ position: 'absolute', left: 0, right: -10, top: 0, height: 65 }}
             >
                 <Region layout={{ position: 'absolute', left: 10, top: 10, flexDirection: 'row', gap: 5 }}>
                     <ThemeImage
                         src={layoutImage('help_guide_icon.png')}
                         layout={{ width: 30, height: 40, flexShrink: 0 }}
                     />
-                    <Region layout={{ width: 130, height: 35, flexShrink: 0, flexDirection: 'column' }}>
+                    <Region layout={{ width: 130, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'column' }}>
                         <Region
                             name="guide_name_link"
                             tooltip={t('guide.help.common.profile.tooltip')}
@@ -63,7 +64,7 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
                 <Region
                     name="report_guide_link"
                     tooltip={t('guide.help.common.report.link.tooltip')}
-                    layout={{ position: 'absolute', left: 170, width: 100, top: 23, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    layout={{ position: 'absolute', right: 10, width: 100, alignSelf: 'center', marginTop: -1.5, marginBottom: 1.5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                     onPointerTap={onReportGuideLink}
                     cursor="pointer"
                 >
@@ -73,14 +74,14 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
                     />
                 </Region>
             </Border>
-            <Region layout={{ position: 'absolute', left: 10, top: 75, minWidth: 260, maxWidth: 260, flexDirection: 'column', gap: 5 }}>
+            <Region layout={{ position: 'absolute', left: 10, right: 0, bottom: 7, minWidth: 260, maxWidth: 260, flexDirection: 'column', gap: 5 }}>
                 <Region layout={{ width: 170, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('guide.help.request.user.feedback.closed.title')}
                         textStyle="text-style-il-heading-2"
                     />
                 </Region>
-                <Region layout={{ width: 260, height: 50, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                <Region layout={{ alignSelf: 'stretch', height: 50, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('guide.help.request.user.feedback.closed.desc')}
                         textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
@@ -92,7 +93,7 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
                 >
                     {separatorWidget}
                 </WidgetSlot>
-                <Region layout={{ width: 260, height: 1, flexShrink: 0 }}>
+                <Region layout={{ alignSelf: 'stretch', height: 1, flexShrink: 0 }}>
                     <ThemeImage
                         src={layoutImage('help_user_feedback.png')}
                         layout={{ position: 'absolute', left: 0, width: 60, top: -17, height: 94 }}
@@ -111,7 +112,7 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
                         name="positive_button"
                         tintColor="#bbbbbb"
                         onPointerTap={onPositiveButton}
-                        layout={{ width: 69, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
+                        layout={{ width: 69, alignSelf: 'stretch', flexShrink: 0, minHeight: 48, maxHeight: 48 }}
                     >
                         {t('guide.help.request.user.feedback.positive.button')}
                     </Button>
@@ -120,7 +121,7 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
                         name="negative_button"
                         tintColor="#bbbbbb"
                         onPointerTap={onNegativeButton}
-                        layout={{ width: 65, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
+                        layout={{ width: 65, alignSelf: 'stretch', flexShrink: 0, minHeight: 48, maxHeight: 48 }}
                     >
                         {t('guide.help.request.user.feedback.negative.button')}
                     </Button>

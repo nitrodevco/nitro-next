@@ -19,13 +19,13 @@ export const BonusRarePromoLayout = ({ layout, midContainer, onBuyButton, srcPre
 
     return (
         <Region layout={{ position: 'relative', width: 602, height: 75, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 602, top: 0, height: 75 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="105"
                     blend={0.2}
                     layout={{ position: 'absolute', left: 1, width: 600, top: 5, height: 63 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 600, top: 0, height: 63, flexDirection: 'row' }}>
+                    <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row' }}>
                         <Region
                             name="teaser_image_container"
                             layout={{ width: 96, height: 63, flexShrink: 0 }}

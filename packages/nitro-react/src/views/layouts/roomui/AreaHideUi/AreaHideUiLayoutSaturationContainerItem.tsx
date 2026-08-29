@@ -18,7 +18,7 @@ export const AreaHideUiLayoutSaturationContainerItem = ({ captionOptionsTitle, l
     return (
         <Region
             name="saturation_container"
-            layout={{ width: 262, height: 143, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 143, flexShrink: 0, ...layout }}
         >
             {(visibleOptionsTitle ?? true) && (
                 <Region

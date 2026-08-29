@@ -22,7 +22,7 @@ export const HabbiconselectorMenuLayoutHabbiconSectionTemplateItem = ({ captionS
             {(visibleSectionTitle ?? true) && (
                 <Region
                     name="section_title"
-                    layout={{ position: 'absolute', left: 0, width: 217, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionSectionTitle ?? 'Section'}
@@ -33,7 +33,7 @@ export const HabbiconselectorMenuLayoutHabbiconSectionTemplateItem = ({ captionS
             {(visibleHabbiconGrid ?? true) && (
                 <Region
                     name="habbicon_grid"
-                    layout={{ position: 'absolute', left: 0, width: 217, top: 20, height: 42, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 42, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
                 >
                     {itemsHabbiconGrid ?? (
                         <HabbiconselectorMenuLayoutHabbiconItemTemplateItem />

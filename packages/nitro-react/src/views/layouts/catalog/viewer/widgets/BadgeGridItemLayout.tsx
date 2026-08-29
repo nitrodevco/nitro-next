@@ -11,17 +11,17 @@ export interface BadgeGridItemLayoutProps {
 export const BadgeGridItemLayout = ({ badgeWidget, layout }: BadgeGridItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 44, height: 44, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 44, top: 0, height: 44 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="2"
                     name="bg"
-                    layout={{ position: 'absolute', left: 0, width: 44, top: 0, height: 44 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <WidgetSlot
                         widgetType="badge_image"
                         name="badgeWidget"
                         options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                        layout={{ position: 'absolute', left: 2, width: 40, top: 2, height: 40 }}
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                     >
                         {badgeWidget}
                     </WidgetSlot>

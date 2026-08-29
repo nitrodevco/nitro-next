@@ -22,13 +22,13 @@ export const NewFeatureNotificationPromoLayout = ({ captionDesc, layout, onCance
                 dynamicStyle="brightness_and_shadow_under_gentle"
                 onPointerTap={onMainRegion}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 34 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="9"
                     name="border"
                     tintColor="#686661"
-                    layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 34 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="static_bitmap"
@@ -49,7 +49,7 @@ export const NewFeatureNotificationPromoLayout = ({ captionDesc, layout, onCance
                             name="cancel_link_region"
                             onPointerTap={onCancelLinkRegion}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 174, width: 10, top: 12, height: 10 }}
+                            layout={{ position: 'absolute', right: 8, width: 10, top: 12, height: 10 }}
                         >
                             <ThemeImage
                                 name="cancel_img"

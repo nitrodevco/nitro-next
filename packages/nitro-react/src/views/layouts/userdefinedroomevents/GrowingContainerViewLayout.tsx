@@ -16,7 +16,7 @@ export const GrowingContainerViewLayout = ({ container, layout, onContainer }: G
                 name="container"
                 onPointerTap={onContainer}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 1000, top: 0, height: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 0 }}
             >
                 {container}
             </Region>

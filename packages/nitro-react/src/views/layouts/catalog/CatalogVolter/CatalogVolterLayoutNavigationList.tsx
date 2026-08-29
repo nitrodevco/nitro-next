@@ -16,7 +16,7 @@ export const CatalogVolterLayoutNavigationList = ({ itemsNavigationList, layout 
     return (
         <ScrollArea
             orientation="vertical"
-            layout={{ position: 'absolute', left: 3, width: 160, top: 0, height: 434, ...layout }}
+            layout={{ position: 'absolute', left: 3, width: 160, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="navigationList"

@@ -31,7 +31,7 @@ export const MarketplaceOfferDetailsLayoutDetailsContainer = ({ captionAveragePr
     return (
         <Region
             name="details_container"
-            layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 460, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Button
                 variant="3"
@@ -70,7 +70,7 @@ export const MarketplaceOfferDetailsLayoutDetailsContainer = ({ captionAveragePr
             </WidgetSlot>
             <Region
                 name="text_container"
-                layout={{ position: 'absolute', left: 73, width: 267, top: 28, height: 80 }}
+                layout={{ position: 'absolute', right: 0, width: 267, top: 28, height: 80 }}
             >
                 <Region
                     name="item_name"
@@ -101,7 +101,7 @@ export const MarketplaceOfferDetailsLayoutDetailsContainer = ({ captionAveragePr
                 </Region>
                 <Region
                     name="offer_count"
-                    layout={{ position: 'absolute', left: 0, width: 216, top: 54, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 216, bottom: 11, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionOfferCount ?? t('catalog.marketplace.offer_details.offer_count')}
@@ -110,7 +110,7 @@ export const MarketplaceOfferDetailsLayoutDetailsContainer = ({ captionAveragePr
                 </Region>
                 <Region
                     name="average_price"
-                    layout={{ position: 'absolute', left: 0, width: 228, top: 67, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 228, bottom: -2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionAveragePrice ?? t('catalog.marketplace.offer_details.average_price')}
@@ -134,7 +134,7 @@ export const MarketplaceOfferDetailsLayoutDetailsContainer = ({ captionAveragePr
                     variant="3"
                     name="price_development"
                     onPointerTap={onPriceDevelopment}
-                    layout={{ position: 'absolute', left: 0, width: 160, top: 0, height: 22, minWidth: 160, maxWidth: 160 }}
+                    layout={{ position: 'absolute', left: 0, width: 160, top: 0, bottom: 12, minWidth: 160, maxWidth: 160 }}
                 >
                     {t('catalog.marketplace.offer_details.price_development')}
                 </ButtonGroupLeft>
@@ -142,7 +142,7 @@ export const MarketplaceOfferDetailsLayoutDetailsContainer = ({ captionAveragePr
                     variant="3"
                     name="trade_volume"
                     onPointerTap={onTradeVolume}
-                    layout={{ position: 'absolute', left: 160, width: 160, top: 0, height: 22, minWidth: 160, maxWidth: 160 }}
+                    layout={{ position: 'absolute', left: 160, width: 160, top: 0, bottom: 12, minWidth: 160, maxWidth: 160 }}
                 >
                     {t('catalog.marketplace.offer_details.trade_volume')}
                 </ButtonGroupRight>
@@ -155,7 +155,7 @@ export const MarketplaceOfferDetailsLayoutDetailsContainer = ({ captionAveragePr
             </Region>
             <Border
                 variant="0"
-                layout={{ position: 'absolute', left: 0, width: 340, top: 165, height: 220 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 165, height: 220 }}
             >
                 <ThemeImage
                     name="chart_bitmap"

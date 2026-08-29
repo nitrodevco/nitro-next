@@ -24,7 +24,7 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
             caption={t('catalog.club.buy.confirm')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 369, height: 210, ...layout }}
+            layout={{ width: 369, height: 210, minWidth: 369, minHeight: 210, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', gap: 10 }}>
                 <Region layout={{ width: 354, height: 97, flexShrink: 0 }}>
@@ -74,7 +74,7 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
                     name="disclaimer"
                     layout={{ width: 353, height: 17, flexShrink: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 31, width: 322, top: 0, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', left: 31, width: 322, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('disclaimer.credit_spending')}
                             textOptions={{ wordWrap: true, wordWrapWidth: 322 }}

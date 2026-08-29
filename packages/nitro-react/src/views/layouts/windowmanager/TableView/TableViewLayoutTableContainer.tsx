@@ -16,7 +16,7 @@ export const TableViewLayoutTableContainer = ({ captionNothingToDisplayText, lay
     return (
         <Region
             name="table_container"
-            layout={{ position: 'absolute', left: 0, width: 472, top: 0, height: 177, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="0"

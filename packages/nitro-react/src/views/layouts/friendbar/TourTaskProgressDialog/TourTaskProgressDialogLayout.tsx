@@ -25,7 +25,7 @@ export const TourTaskProgressDialogLayout = ({ actionSeparator, itemsTopList, la
             variant="100"
             caption={t('talent.track.task.progress.dialog.title')}
             onClose={onClose}
-            layout={{ width: 378, height: 289, ...layout }}
+            layout={{ width: 378, height: 289, minWidth: 378, minHeight: 289, ...layout }}
         >
             <Border
                 variant="104"

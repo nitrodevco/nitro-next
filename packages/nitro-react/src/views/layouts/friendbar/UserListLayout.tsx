@@ -8,7 +8,7 @@ export interface UserListLayoutProps {
 export const UserListLayout = ({ layout }: UserListLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 800, height: 220, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 800, bottom: 0, height: 220 }} />
+            <Region layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 220 }} />
         </Region>
     );
 };

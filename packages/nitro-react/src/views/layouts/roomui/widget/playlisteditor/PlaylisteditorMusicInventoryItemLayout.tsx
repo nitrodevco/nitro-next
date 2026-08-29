@@ -20,11 +20,11 @@ export interface PlaylisteditorMusicInventoryItemLayoutProps {
 export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, layout, onButtonPlayPause, onButtonToPlaylist, srcDiskImage, srcImageButtonPlayPause, srcImageButtonToPlaylist, srcTitleFaderBitmap, tintDiskImage, tintImageButtonPlayPause, tintImageButtonToPlaylist, tintTitleFaderBitmap }: PlaylisteditorMusicInventoryItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 91, height: 104, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 91, top: 0, height: 104, justifyContent: 'center' }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}>
                 <Border
                     variant="0"
                     name="selected"
-                    layout={{ position: 'absolute', left: 0, width: 91, top: 0, height: 104 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Border
                     variant="2"
@@ -57,7 +57,7 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, l
                     <Border
                         variant="2"
                         tintColor="#86a762"
-                        layout={{ position: 'absolute', left: 0, width: 84, top: 0, height: 44 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                     <ContainerButton
                         variant="0"

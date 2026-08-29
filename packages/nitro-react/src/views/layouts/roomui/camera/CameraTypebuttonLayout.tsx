@@ -16,23 +16,23 @@ export const CameraTypebuttonLayout = ({ layout, onRegion, srcIcon, tintIcon }: 
                 dynamicStyle="brightness_and_shadow_under"
                 onPointerTap={onRegion}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 95, top: 0, height: 37 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Border
                     variant="0"
                     tintColor="#cccccc"
-                    layout={{ position: 'absolute', left: 0, width: 95, top: 0, height: 47 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -10 }}
                 />
                 <Border
                     variant="8"
                     name="active_border"
-                    layout={{ position: 'absolute', left: 0, width: 95, top: 0, height: 47 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -10 }}
                 />
                 <ThemeImage
                     name="icon"
                     src={srcIcon}
                     tint={tintIcon}
-                    layout={{ position: 'absolute', left: 18, width: 60, top: 0, height: 37 }}
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 60, top: 0, height: 37 }}
                 />
             </Region>
         </Region>

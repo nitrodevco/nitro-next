@@ -11,7 +11,7 @@ export const PagelinkLayout = ({ captionPagelink, layout }: PagelinkLayoutProps)
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Region
                 name="pagelink"
-                layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, right: -10, top: 0, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 backgroundColor="#ffffff"
             >
                 <ThemeText

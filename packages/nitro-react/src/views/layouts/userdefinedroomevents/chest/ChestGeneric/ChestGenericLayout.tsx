@@ -19,7 +19,7 @@ export const ChestGenericLayout = ({ layout, mainList, onClose }: ChestGenericLa
             caption={t('wiredchests.furni_chest')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 460, height: 463, ...layout }}
+            layout={{ width: 460, height: 463, minWidth: 415, maxWidth: 595, minHeight: 390, maxHeight: 730, ...layout }}
         >
             <ChestGenericLayoutMainList {...mainList} />
         </Frame>

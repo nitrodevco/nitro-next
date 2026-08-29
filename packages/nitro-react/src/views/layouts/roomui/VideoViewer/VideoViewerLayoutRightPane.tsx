@@ -20,7 +20,7 @@ export const VideoViewerLayoutRightPane = ({ itemsPlaylists, layout, onPlaylistN
     return (
         <Region
             name="right_pane"
-            layout={{ position: 'absolute', left: 447, width: 278, top: 6, bottom: 48, ...layout }}
+            layout={{ position: 'absolute', left: 447, width: 278, top: 6, bottom: 7, ...layout }}
         >
             <ContainerButton
                 variant="3"

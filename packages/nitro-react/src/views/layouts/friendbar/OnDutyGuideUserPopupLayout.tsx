@@ -13,7 +13,7 @@ export const OnDutyGuideUserPopupLayout = ({ captionRankDescTxt, captionUserName
 
     return (
         <Region layout={{ position: 'relative', width: 100, height: 59, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 59 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="0"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 10 }}

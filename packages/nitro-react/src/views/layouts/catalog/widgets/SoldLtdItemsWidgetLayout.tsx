@@ -18,7 +18,7 @@ export const SoldLtdItemsWidgetLayout = ({ captionCheckMarkeplaceLink, captionNo
         <Region layout={{ position: 'relative', width: 360, height: 30, ...layout }}>
             <Region
                 name="widgetContainer"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     src={layoutImage('unique_item_large_na_button_wide.png')}
@@ -26,7 +26,7 @@ export const SoldLtdItemsWidgetLayout = ({ captionCheckMarkeplaceLink, captionNo
                 />
                 <Region
                     name="not_available_text"
-                    layout={{ position: 'absolute', left: 204, width: 137, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 204, width: 137, top: 8, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionNotAvailableText ?? t('sold.ltd.items.not.available')}
@@ -37,7 +37,7 @@ export const SoldLtdItemsWidgetLayout = ({ captionCheckMarkeplaceLink, captionNo
                 {(visibleCheckMarkeplaceLink ?? false) && (
                     <Region
                         name="check_markeplace_link"
-                        layout={{ position: 'absolute', left: 18, width: 179, top: 8, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 18, width: 179, top: 8, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         onPointerTap={onCheckMarkeplaceLink}
                         cursor="pointer"
                     >

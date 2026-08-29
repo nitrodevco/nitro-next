@@ -14,7 +14,7 @@ export const UseProductMenuLayout = ({ border, layout }: UseProductMenuLayoutPro
             <Bubble
                 variant="0"
                 tintColor="#6e6b67"
-                layout={{ position: 'absolute', left: 0, width: 115, bottom: -9, height: 302 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: -9, height: 302 }}
             >
                 <UseProductMenuLayoutBorder {...border} />
             </Bubble>

@@ -19,11 +19,11 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, itemsList, 
             variant="100"
             caption="Profiler"
             onClose={onClose}
-            layout={{ width: 470, height: 182, ...layout }}
+            layout={{ width: 470, height: 182, minWidth: 470, minHeight: 182, ...layout }}
         >
             <Border
                 variant="0"
-                layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 37 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -4 }}
             >
                 <Region
                     name="header"

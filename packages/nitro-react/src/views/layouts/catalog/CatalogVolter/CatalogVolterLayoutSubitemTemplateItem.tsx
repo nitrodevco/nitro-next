@@ -27,7 +27,7 @@ export const CatalogVolterLayoutSubitemTemplateItem = ({ background, captionItem
                 <Region
                     name="background"
                     backgroundColor="#d2f0f3"
-                    layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
                 >
                     {background}
                 </Region>

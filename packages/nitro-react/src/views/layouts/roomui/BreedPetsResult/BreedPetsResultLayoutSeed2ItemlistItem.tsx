@@ -18,7 +18,7 @@ export const BreedPetsResultLayoutSeed2ItemlistItem = ({ itemsSeed2Itemlist, lay
     return (
         <Region
             name="seed2_itemlist"
-            layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ alignSelf: 'stretch', flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsSeed2Itemlist ?? (
                 <>

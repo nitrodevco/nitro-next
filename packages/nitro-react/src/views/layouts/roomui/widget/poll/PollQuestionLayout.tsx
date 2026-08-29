@@ -29,7 +29,7 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
             caption={t('poll_question_title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 382, height: 561, ...layout }}
+            layout={{ width: 382, height: 561, minWidth: 382, minHeight: 561, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
@@ -55,7 +55,7 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
                         layout={{ position: 'absolute', left: 10, width: 40, top: 7, height: 40 }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 0, width: 370, top: 70, bottom: 67 }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 70, bottom: 26 }}>
                     <Region
                         name="poll_content_wrapper"
                         layout={{ position: 'absolute', left: 5, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}
@@ -89,7 +89,7 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
                 </Region>
                 <Region
                     name="footer_container"
-                    layout={{ position: 'absolute', marginLeft: 5.5, marginRight: -5.5, width: 383, bottom: 30, height: 45 }}
+                    layout={{ position: 'absolute', marginLeft: 11.5, marginRight: -11.5, width: 383, bottom: -11, height: 45 }}
                 >
                     <Region
                         name="poll_question_number"

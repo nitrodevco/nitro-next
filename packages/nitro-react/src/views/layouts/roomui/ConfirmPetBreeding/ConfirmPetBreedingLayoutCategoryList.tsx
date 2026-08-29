@@ -17,7 +17,7 @@ export const ConfirmPetBreedingLayoutCategoryList = ({ itemsCategoryList, layout
     return (
         <Region
             name="category_list"
-            layout={{ width: 282, height: 109, flexShrink: 0, flexDirection: 'column', gap: 2, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 109, flexShrink: 0, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsCategoryList ?? (
                 <>

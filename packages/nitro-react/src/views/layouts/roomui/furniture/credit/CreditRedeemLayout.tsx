@@ -22,11 +22,11 @@ export const CreditRedeemLayout = ({ captionExchangeText, layout, onCancel, onCl
             caption={t('catalog.redeem.dialog.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 315, height: 165, ...layout }}
+            layout={{ width: 315, height: 165, minWidth: 315, minHeight: 165, ...layout }}
         >
             <Border
                 variant="0"
-                layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -9, justifyContent: 'center' }}
             >
                 <Button
                     variant="0"

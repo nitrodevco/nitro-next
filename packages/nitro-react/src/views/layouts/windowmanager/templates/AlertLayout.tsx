@@ -14,18 +14,18 @@ export const AlertLayout = ({ captionAlertText, captionAlertTitle, layout, onClo
             id="frame"
             name="frame"
             onClose={onClose}
-            layout={{ width: 200, height: 400, ...layout }}
+            layout={{ width: 200, height: 400, minWidth: 200, minHeight: 400, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     name="alert_title"
-                    layout={{ position: 'absolute', marginLeft: -12, marginRight: 12, width: 160, top: 8, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -6, marginRight: 6, width: 160, top: 8, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionAlertTitle ?? ''}
                 </Region>
                 <Region
                     name="alert_text"
-                    layout={{ position: 'absolute', marginLeft: -12, marginRight: 12, width: 160, top: 40, height: 120, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -6, marginRight: 6, width: 160, top: 40, height: 120, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionAlertText ?? ''}
                 </Region>

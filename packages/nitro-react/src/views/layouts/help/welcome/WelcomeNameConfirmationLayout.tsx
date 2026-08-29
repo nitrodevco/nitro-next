@@ -16,10 +16,10 @@ export const WelcomeNameConfirmationLayout = ({ captionConfirmText, captionFinal
 
     return (
         <Region layout={{ position: 'relative', width: 303, height: 193, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 303, top: 0, height: 193 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}>
                 <Region
                     name="info_text"
-                    layout={{ position: 'absolute', left: 47, width: 205, top: 29, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 205, top: 29, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInfoText ?? t('tutorial.name_change.info.confirm')}
@@ -29,7 +29,7 @@ export const WelcomeNameConfirmationLayout = ({ captionConfirmText, captionFinal
                 </Region>
                 <Region
                     name="confirm_text"
-                    layout={{ position: 'absolute', left: 8, width: 285, top: 78, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 8, right: 10, top: 78, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionConfirmText ?? t('tutorial.name_change.confirm')}
@@ -39,7 +39,7 @@ export const WelcomeNameConfirmationLayout = ({ captionConfirmText, captionFinal
                 </Region>
                 <Region
                     name="final_name"
-                    layout={{ position: 'absolute', left: 47, width: 205, top: 105, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 205, top: 105, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionFinalName ?? 'final_name'}

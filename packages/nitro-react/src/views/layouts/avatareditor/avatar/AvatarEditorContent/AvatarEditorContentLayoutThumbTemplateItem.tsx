@@ -43,14 +43,14 @@ export const AvatarEditorContentLayoutThumbTemplateItem = ({ layout, onThumbTemp
                 <ThemeImage
                     name="club_icon"
                     src={srcClubIcon ?? layoutImage('icons_hc_icon_small.png')}
-                    layout={{ position: 'absolute', left: 40, width: 10, top: 40, height: 9 }}
+                    layout={{ position: 'absolute', right: 0, width: 10, bottom: 1, height: 9 }}
                 />
             )}
             {(visibleSellableIcon ?? true) && (
                 <ThemeImage
                     name="sellable_icon"
                     src={srcSellableIcon ?? layoutImage('icons_wearable.png')}
-                    layout={{ position: 'absolute', left: 0, width: 17, top: 30, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, width: 17, bottom: 0, height: 20 }}
                 />
             )}
         </Region>

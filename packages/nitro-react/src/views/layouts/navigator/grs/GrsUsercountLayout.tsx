@@ -16,7 +16,7 @@ export const GrsUsercountLayout = ({ captionTxt, layout, onUsercount, srcUsercou
                 name="usercount"
                 onPointerTap={onUsercount}
                 cursor="pointer"
-                layout={{ position: 'absolute', right: 0, width: 34, top: 0, height: 13, justifyContent: 'center' }}
+                layout={{ position: 'absolute', right: 0, width: 34, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="usercount_bg"

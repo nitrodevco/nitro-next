@@ -23,12 +23,13 @@ export const ConfirmPetBreedingLayout = ({ elementList, itemsButtonList, layout,
             variant="100"
             caption={t('breedpets.confirmation.widget.title')}
             onClose={onClose}
-            layout={{ width: 320, height: 623, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 320, height: 623, minWidth: 320, maxWidth: 320, minHeight: 623, ...layout }}
         >
             <ConfirmPetBreedingLayoutElementList {...elementList} />
             <Region
                 name="button_list"
-                layout={{ position: 'absolute', left: 10, top: 524, minWidth: 295, maxWidth: 295, flexDirection: 'column', gap: 3 }}
+                layout={{ position: 'absolute', left: 10, right: 3, bottom: 4, minWidth: 295, maxWidth: 295, flexDirection: 'column', gap: 3 }}
             >
                 {itemsButtonList ?? (
                     <>

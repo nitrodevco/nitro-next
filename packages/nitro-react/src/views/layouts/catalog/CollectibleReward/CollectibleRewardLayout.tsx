@@ -26,18 +26,18 @@ export const CollectibleRewardLayout = ({ captionRarityText, captionRarityTitle,
             caption={t('collectibles.reward_box.notif.title')}
             tintColor="#5e696d"
             onClose={onClose}
-            layout={{ width: 424, height: 570, ...layout }}
+            layout={{ width: 424, height: 570, minWidth: 424, minHeight: 570, ...layout }}
         >
             <Border
                 variant="3"
                 name="background"
                 tintColor="#5e696d"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33 }}
+                layout={{ position: 'absolute', left: 0, right: -12, top: 0, bottom: -8 }}
             />
             <CollectibleRewardLayoutTopContainer {...topContainer} />
             <Region
                 name="bottom_container"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 348, bottom: 35, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: -12, top: 348, bottom: -6, justifyContent: 'center' }}
             >
                 <Border
                     variant="3"
@@ -63,7 +63,7 @@ export const CollectibleRewardLayout = ({ captionRarityText, captionRarityTitle,
             </Region>
             <Region
                 name="rarity_container"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 300, height: 96 }}
+                layout={{ position: 'absolute', left: 0, right: -12, top: 300, height: 96 }}
             >
                 <ThemeImage
                     name="flag_image"

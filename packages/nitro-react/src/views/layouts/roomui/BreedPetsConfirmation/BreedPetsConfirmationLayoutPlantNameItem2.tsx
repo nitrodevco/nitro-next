@@ -13,7 +13,7 @@ export const BreedPetsConfirmationLayoutPlantNameItem2 = ({ captionPlantName, la
     return (
         <Region
             name="plant_name"
-            layout={{ width: 122, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
+            layout={{ alignSelf: 'stretch', height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
         >
             <ThemeText
                 text={captionPlantName ?? t('breedpets.widget.plant2.name')}

@@ -26,19 +26,19 @@ export const CatalogUbuntuWithTabsLayoutNormalTopitemTemplateItem = ({ captionIt
         >
             <Region
                 backgroundColor="#b4b4ae"
-                layout={{ position: 'absolute', left: 1, width: 178, top: 0, height: 21 }}
+                layout={{ position: 'absolute', left: 1, width: 178, top: 0, bottom: 0 }}
             >
                 {(visibleItemHilightOuter ?? true) && (
                     <Region
                         name="item_hilight_outer"
                         backgroundColor="#82d1ed"
-                        layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
                     >
                         {(visibleItemHilightInner ?? true) && (
                             <Region
                                 name="item_hilight_inner"
                                 backgroundColor="#63c5e9"
-                                layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 16 }}
                             >
                                 {itemHilightInner}
                             </Region>

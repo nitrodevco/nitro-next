@@ -13,11 +13,11 @@ export const StyleselectorMenuLayout = ({ itemsItemgrid, layout }: Styleselector
         <Region layout={{ position: 'relative', width: 67, height: 42, ...layout }}>
             <Border
                 variant="8"
-                layout={{ position: 'absolute', left: 0, width: 67, top: 0, height: 41 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 1 }}
             >
                 <Region
                     name="itemgrid"
-                    layout={{ position: 'absolute', left: 6, width: 55, top: 5, height: 33, flexDirection: 'row', flexWrap: 'wrap', gap: 1 }}
+                    layout={{ position: 'absolute', left: 6, right: 6, top: 5, bottom: 3, flexDirection: 'row', flexWrap: 'wrap', gap: 1 }}
                 >
                     {itemsItemgrid}
                 </Region>

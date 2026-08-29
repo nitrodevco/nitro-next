@@ -14,7 +14,7 @@ export const UiHelpBubbleLayout = ({ captionHelpBubbleText, layout, onHelpBubble
         <Region layout={{ position: 'relative', width: 180, height: 500, ...layout }}>
             <Region
                 name="master_container"
-                layout={{ position: 'absolute', right: 0, width: 180, top: 0, height: 500, maxWidth: 180 }}
+                layout={{ position: 'absolute', right: 0, width: 180, top: 0, bottom: 0, maxWidth: 180 }}
             >
                 {(visibleBubble ?? true) && (
                     <Bubble

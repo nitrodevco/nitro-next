@@ -16,7 +16,7 @@ export const HabbiconPurchaseConfirmationLayoutContent = ({ itemsContent, layout
     return (
         <Region
             name="content"
-            layout={{ position: 'absolute', left: 0, right: 2, top: 8, height: 250, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -10, top: 8, height: 250, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsContent ?? (
                 <>

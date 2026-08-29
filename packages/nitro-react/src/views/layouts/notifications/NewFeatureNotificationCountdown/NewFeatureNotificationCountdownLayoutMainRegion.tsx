@@ -24,13 +24,13 @@ export const NewFeatureNotificationCountdownLayoutMainRegion = ({ captionDesc, c
             dynamicStyle="brightness_and_shadow_under_gentle"
             onPointerTap={onMainRegion}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 76, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="9"
                 name="border"
                 tintColor="#686661"
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 76 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="static_bitmap"

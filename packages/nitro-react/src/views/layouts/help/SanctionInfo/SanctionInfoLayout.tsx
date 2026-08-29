@@ -27,7 +27,7 @@ export const SanctionInfoLayout = ({ captionFaqLink, captionSanctionInfoDisclaim
             caption={t('help.sanction.info.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 450, height: 359, ...layout }}
+            layout={{ width: 450, height: 359, minWidth: 450, minHeight: 350, maxHeight: 360, ...layout }}
         >
             <ScrollArea
                 orientation="vertical"
@@ -80,7 +80,7 @@ export const SanctionInfoLayout = ({ captionFaqLink, captionSanctionInfoDisclaim
                     name="ok_button"
                     tintColor="#009900"
                     onPointerTap={onOkButton}
-                    layout={{ position: 'absolute', right: 0, width: 99, top: 0, height: 40, minWidth: 99 }}
+                    layout={{ position: 'absolute', right: 0, width: 99, top: 0, bottom: 0, minWidth: 99 }}
                 >
                     {t('generic.got.it')}
                 </ButtonThick>

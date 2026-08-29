@@ -23,7 +23,7 @@ export const CollectibleHubLayoutStampPurchasingContainer = ({ captionMintTokenB
     return (
         <Region
             name="stamp_purchasing_container"
-            layout={{ position: 'absolute', left: 0, width: 488, top: 0, height: 100, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="3"

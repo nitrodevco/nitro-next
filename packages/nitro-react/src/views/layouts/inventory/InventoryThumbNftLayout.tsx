@@ -18,7 +18,7 @@ export interface InventoryThumbNftLayoutProps {
 export const InventoryThumbNftLayout = ({ captionNumber, layout, nftIcon, srcOutline, srcUniqueItemBackgroundBitmap, visibleNumberContainer, visibleOutline, visibleUniqueItemBackgroundBitmap }: InventoryThumbNftLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 42, height: 42, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="5"
                     tintColor="#cacaca"
@@ -34,7 +34,7 @@ export const InventoryThumbNftLayout = ({ captionNumber, layout, nftIcon, srcOut
                     <WidgetSlot
                         widgetType="product_icon"
                         name="nft_icon"
-                        layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         {nftIcon}
                     </WidgetSlot>

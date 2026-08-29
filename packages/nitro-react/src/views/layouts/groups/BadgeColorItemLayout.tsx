@@ -19,7 +19,7 @@ export const BadgeColorItemLayout = ({ layout, onContainer, srcBackground, srcFo
                 name="container"
                 onPointerTap={onContainer}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="background"

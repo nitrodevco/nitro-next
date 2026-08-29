@@ -16,7 +16,7 @@ export interface RoomToolsToolbarLayoutProps {
 export const RoomToolsToolbarLayout = ({ itemlistButtons, layout, onButtonCollapse, onButtonExpand, srcArrowCollapse, srcArrowExpand }: RoomToolsToolbarLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 165, height: 229, ...layout }}>
-            <Region layout={{ position: 'absolute', left: -2, width: 165, top: 0, height: 229 }}>
+            <Region layout={{ position: 'absolute', left: -2, width: 165, top: 0, bottom: 0 }}>
                 <Border
                     variant="2"
                     name="window_bg"
@@ -36,7 +36,7 @@ export const RoomToolsToolbarLayout = ({ itemlistButtons, layout, onButtonCollap
                         name="button_collapse"
                         onPointerTap={onButtonCollapse}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 172 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <ThemeImage
                             name="arrow_collapse"
@@ -55,7 +55,7 @@ export const RoomToolsToolbarLayout = ({ itemlistButtons, layout, onButtonCollap
                         name="button_expand"
                         onPointerTap={onButtonExpand}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 19, top: 0, bottom: 0 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <ThemeImage
                             name="arrow_expand"

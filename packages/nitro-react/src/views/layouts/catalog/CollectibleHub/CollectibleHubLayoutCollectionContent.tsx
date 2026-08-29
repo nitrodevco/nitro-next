@@ -22,7 +22,7 @@ export const CollectibleHubLayoutCollectionContent = ({ captionCollectionName, c
                 variant="3"
                 name="collection_header_container"
                 tintColor="#cbd1d8"
-                layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
             >
                 <Region
                     name="collection_name"
@@ -38,7 +38,7 @@ export const CollectibleHubLayoutCollectionContent = ({ captionCollectionName, c
                         variant="3"
                         name="progress_color"
                         tintColor="#00910a"
-                        layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 26 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                     <Region
                         name="progress_text"

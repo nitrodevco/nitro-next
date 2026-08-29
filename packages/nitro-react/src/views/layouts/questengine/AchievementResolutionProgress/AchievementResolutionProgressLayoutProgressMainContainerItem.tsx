@@ -33,7 +33,7 @@ export const AchievementResolutionProgressLayoutProgressMainContainerItem = ({ c
             {(visibleProgressContainer ?? true) && (
                 <Region
                     name="progress_container"
-                    layout={{ position: 'absolute', left: 0, width: 404, top: 0, height: 16 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 16 }}
                 >
                     {(visibleUnachievedLeft ?? true) && (
                         <ThemeImage
@@ -82,7 +82,7 @@ export const AchievementResolutionProgressLayoutProgressMainContainerItem = ({ c
             {(visibleProgressText ?? true) && (
                 <Region
                     name="progress_text"
-                    layout={{ position: 'absolute', left: 0, width: 404, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionProgressText ?? t('resolution.progress.progress')}

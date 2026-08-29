@@ -27,12 +27,12 @@ export const EffectboxLayout = ({ captionCancel, captionEffectboxHeaderDescripti
             caption={t('effectbox.name.title')}
             tintColor="#67a3bf"
             onClose={onClose}
-            layout={{ width: 475, height: 193, ...layout }}
+            layout={{ width: 475, height: 193, minWidth: 475, minHeight: 193, ...layout }}
         >
             <Region
                 name="effectbox.header.background.border"
                 backgroundColor="#376275"
-                layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 100 }}
+                layout={{ position: 'absolute', left: 1, right: -11, top: 0, height: 100 }}
             >
                 <Region
                     name="effectbox.header.background.body"

@@ -36,7 +36,7 @@ export const IroRoomDetailsFramedLayout = ({ buttonsCont, captionEmbedInfoTxt, c
             caption={t('navigator.roomsettings.roominfo')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 236, height: 411, ...layout }}
+            layout={{ width: 236, height: 411, minWidth: 236, minHeight: 411, ...layout }}
         >
             {(visibleEmbedInfo ?? false) && (
                 <Region
@@ -74,7 +74,7 @@ export const IroRoomDetailsFramedLayout = ({ buttonsCont, captionEmbedInfoTxt, c
                         name="embed_info_region"
                         onPointerTap={onEmbedInfoRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 79 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         {embedInfoRegion}
                     </Region>

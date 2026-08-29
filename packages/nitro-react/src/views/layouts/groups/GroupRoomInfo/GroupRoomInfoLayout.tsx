@@ -19,7 +19,7 @@ export interface GroupRoomInfoLayoutProps {
 export const GroupRoomInfoLayout = ({ contentCont, infoRegion, layout, onInfoRegion, onTitleRegion, srcBgContracted, srcBgExpanded, titleRegion }: GroupRoomInfoLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 195, height: 119, ...layout }}>
-            <Region layout={{ position: 'absolute', right: 0, width: 195, top: 0, height: 119 }}>
+            <Region layout={{ position: 'absolute', right: 0, width: 195, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="bg_expanded"
                     src={srcBgExpanded ?? '${image.library.url}guilds/group_bg.png'}

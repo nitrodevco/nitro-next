@@ -25,13 +25,13 @@ export const OpenedToWebPopupLayout = ({ captionInfoText, cont, layout, srcOpene
                 <Region
                     name="cont"
                     backgroundColor="#ffcc66"
-                    layout={{ position: 'absolute', left: 2, width: 185, top: 2, height: 41 }}
+                    layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                 >
                     {cont}
                 </Region>
                 <Region
                     name="info_text"
-                    layout={{ position: 'absolute', left: 50, width: 100, top: 10, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 50, width: 100, top: 10, bottom: 5, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInfoText ?? t('friendlist.weblinkinfo')}

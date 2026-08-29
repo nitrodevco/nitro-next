@@ -21,13 +21,13 @@ export const GuildMembersWindowLayoutFooterCont = ({ captionFooterInfoTxt, capti
     return (
         <Region
             name="footer_cont"
-            layout={{ position: 'absolute', left: 10, right: 9, bottom: 43, height: 25, justifyContent: 'center', ...layout }}
+            layout={{ position: 'absolute', left: 10, right: -3, bottom: 2, height: 25, justifyContent: 'center', ...layout }}
         >
             <ContainerButton
                 variant="3"
                 name="previous_page_button"
                 onPointerTap={onPreviousPageButton}
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 25, minWidth: 50, maxWidth: 50 }}
+                layout={{ position: 'absolute', left: 0, width: 50, top: 0, bottom: 0, minWidth: 50, maxWidth: 50 }}
             >
                 <Icon
                     variant="4"
@@ -39,7 +39,7 @@ export const GuildMembersWindowLayoutFooterCont = ({ captionFooterInfoTxt, capti
                 variant="3"
                 name="next_page_button"
                 onPointerTap={onNextPageButton}
-                layout={{ position: 'absolute', right: 0, width: 50, top: 0, height: 25, minWidth: 50, maxWidth: 50 }}
+                layout={{ position: 'absolute', right: 0, width: 50, top: 0, bottom: 0, minWidth: 50, maxWidth: 50 }}
             >
                 <Icon
                     variant="5"

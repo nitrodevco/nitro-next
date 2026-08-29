@@ -26,7 +26,7 @@ export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageH
         <Region layout={{ position: 'relative', width: 350, height: 340, ...layout }}>
             <Region
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 350, top: 0, height: 340 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="lift_header"

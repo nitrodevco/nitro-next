@@ -21,12 +21,12 @@ export const IssueBrowserLayout = ({ layout, onAutoPick, onClose, onMyIssues, on
             caption="Issue browser"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 585, height: 273, ...layout }}
+            layout={{ width: 585, height: 273, minWidth: 585, minHeight: 273, ...layout }}
         >
             <TabContext
                 variant="0"
                 name="tab_context"
-                layout={{ position: 'absolute', left: 3, right: 16, top: 5, bottom: 64 }}
+                layout={{ position: 'absolute', left: 3, right: 4, top: 5, bottom: 23 }}
             >
                 <TabButton
                     variant="0"
@@ -61,7 +61,7 @@ export const IssueBrowserLayout = ({ layout, onAutoPick, onClose, onMyIssues, on
                 variant="0"
                 name="auto_pick"
                 onPointerTap={onAutoPick}
-                layout={{ position: 'absolute', right: 406, width: 175, bottom: 36, height: 22 }}
+                layout={{ position: 'absolute', right: 394, width: 175, bottom: -5, height: 22 }}
             >
                 Give me the next priority issue
             </Button>

@@ -21,7 +21,7 @@ export const VaultViewLayout = ({ earningsContentArea, layout, onClose }: VaultV
             caption={t('earnings.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 422, height: 536, ...layout }}
+            layout={{ width: 422, height: 536, minWidth: 422, minHeight: 536, ...layout }}
         >
             <VaultViewLayoutEarningsContentArea {...earningsContentArea} />
         </Frame>

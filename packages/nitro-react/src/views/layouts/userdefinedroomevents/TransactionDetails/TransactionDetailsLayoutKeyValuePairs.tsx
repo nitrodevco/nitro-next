@@ -24,7 +24,7 @@ export const TransactionDetailsLayoutKeyValuePairs = ({ itemsKeyValuePairs, layo
     return (
         <Region
             name="key_value_pairs"
-            layout={{ position: 'absolute', left: 10, right: 10, top: 13, height: 336, flexDirection: 'column', gap: 2, ...layout }}
+            layout={{ position: 'absolute', left: 10, right: -2, top: 13, height: 336, flexDirection: 'column', gap: 2, ...layout }}
         >
             {itemsKeyValuePairs ?? (
                 <>

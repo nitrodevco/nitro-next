@@ -22,43 +22,45 @@ export const NavPromoAlertLayout = ({ captionBodyText, captionPromoText, layout,
             caption="PH Caption"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 224, height: 182, ...layout }}
+            layout={{ width: 224, height: 182, minWidth: 224, minHeight: 182, ...layout }}
         >
-            <Region
-                name="body_text"
-                layout={{ position: 'absolute', left: 7, width: 186, top: 12, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 186 }}
-                />
-            </Region>
-            <Button
-                variant="3"
-                name="ok"
-                onPointerTap={onOk}
-                layout={{ position: 'absolute', left: 76, width: 60, top: 122, height: 24, minWidth: 60, maxWidth: 60 }}
-            >
-                {t('generic.ok')}
-            </Button>
-            <Region
-                name="promo_container"
-                onPointerTap={onPromoContainer}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 7, width: 199, top: 72, height: 43 }}
-            >
-                <Icon
-                    variant="16"
-                    layout={{ position: 'absolute', left: 0, width: 44, top: 3, height: 43 }}
-                />
+            <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
-                    name="promo_text"
-                    layout={{ position: 'absolute', left: 46, width: 144, top: 6, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    name="body_text"
+                    layout={{ position: 'absolute', left: 7, width: 186, top: 12, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
-                        text={captionPromoText ?? t('002_lorem_ipsum_content')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 144 }}
+                        text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 186 }}
                     />
+                </Region>
+                <Button
+                    variant="3"
+                    name="ok"
+                    onPointerTap={onOk}
+                    layout={{ position: 'absolute', width: 60, bottom: -5, height: 24, minWidth: 60, maxWidth: 60 }}
+                >
+                    {t('generic.ok')}
+                </Button>
+                <Region
+                    name="promo_container"
+                    onPointerTap={onPromoContainer}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 7, right: 6, top: 72, height: 43 }}
+                >
+                    <Icon
+                        variant="16"
+                        layout={{ position: 'absolute', left: 0, width: 44, top: 3, height: 43 }}
+                    />
+                    <Region
+                        name="promo_text"
+                        layout={{ position: 'absolute', right: 9, width: 144, top: 6, bottom: 3, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionPromoText ?? t('002_lorem_ipsum_content')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 144 }}
+                        />
+                    </Region>
                 </Region>
             </Region>
         </Frame>

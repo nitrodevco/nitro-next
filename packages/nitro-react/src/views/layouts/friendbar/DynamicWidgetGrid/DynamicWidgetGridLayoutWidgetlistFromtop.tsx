@@ -15,7 +15,7 @@ export const DynamicWidgetGridLayoutWidgetlistFromtop = ({ itemsWidgetlistFromto
     return (
         <Region
             name="widgetlist_fromtop"
-            layout={{ position: 'absolute', left: 86, width: 925, top: 4, height: 767, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ position: 'absolute', right: 0, width: 925, top: 4, bottom: 0, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsWidgetlistFromtop ?? (
                 <>

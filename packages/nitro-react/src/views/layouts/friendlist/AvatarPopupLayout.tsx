@@ -42,7 +42,7 @@ export const AvatarPopupLayout = ({ captionLastAccessText, captionMottoText, cap
                 </Region>
                 <Region
                     name="name_text_offline"
-                    layout={{ position: 'absolute', left: 60, width: 140, top: 9, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 3, width: 140, top: 9, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionNameTextOffline ?? 'PH Avatar Name'}
@@ -60,7 +60,7 @@ export const AvatarPopupLayout = ({ captionLastAccessText, captionMottoText, cap
                 </Region>
                 <Region
                     name="online_text"
-                    layout={{ position: 'absolute', left: 10, width: 180, top: 66, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 10, width: 180, bottom: 11, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionOnlineText ?? t('friendlist.avatarpopup.online')}

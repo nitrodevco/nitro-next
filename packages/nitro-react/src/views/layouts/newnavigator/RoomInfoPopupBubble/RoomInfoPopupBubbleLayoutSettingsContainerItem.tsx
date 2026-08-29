@@ -17,14 +17,14 @@ export const RoomInfoPopupBubbleLayoutSettingsContainerItem = ({ layout, onSetti
     return (
         <Region
             name="settings_container"
-            layout={{ width: 170, height: 20, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 20, flexShrink: 0, ...layout }}
         >
             {(visibleSettingsRegion ?? true) && (
                 <Region
                     name="settings_region"
                     onPointerTap={onSettingsRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, bottom: 0 }}
                 >
                     {(visibleSettingsIcon ?? true) && (
                         <ThemeImage
@@ -35,7 +35,7 @@ export const RoomInfoPopupBubbleLayoutSettingsContainerItem = ({ layout, onSetti
                     )}
                 </Region>
             )}
-            <Region layout={{ position: 'absolute', left: 20, width: 235, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', left: 20, width: 235, top: 0, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 {t('navigator.room.popup.info.room.settings')}
             </Region>
         </Region>

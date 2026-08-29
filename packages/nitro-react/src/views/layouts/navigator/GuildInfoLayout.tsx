@@ -20,19 +20,19 @@ export const GuildInfoLayout = ({ captionGuildBaseTxt, guildBadge, layout, onGui
                 name="guild_info"
                 onPointerTap={onGuildInfo}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 49 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <WidgetSlot
                     widgetType="badge_image"
                     name="guild_badge"
                     options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                    layout={{ position: 'absolute', left: 0, width: 39, top: 5, height: 39 }}
+                    layout={{ position: 'absolute', left: 0, width: 39, top: 5, bottom: 5 }}
                 >
                     {guildBadge}
                 </WidgetSlot>
                 <Region
                     name="guild_base_txt"
-                    layout={{ position: 'absolute', left: 45, width: 170, top: 1, height: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 45, width: 170, top: 1, bottom: 2, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionGuildBaseTxt ?? t('navigator.guildbase')}

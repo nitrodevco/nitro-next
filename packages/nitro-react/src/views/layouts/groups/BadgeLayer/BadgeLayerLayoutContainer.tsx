@@ -19,23 +19,23 @@ export const BadgeLayerLayoutContainer = ({ itemsColorSelector, layout, onPartBu
     return (
         <Region
             name="container"
-            layout={{ position: 'absolute', left: 0, width: 247, top: 0, height: 49, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="3"
                 name="border"
                 tintColor="#bebba5"
-                layout={{ position: 'absolute', left: 0, width: 247, top: 0, height: 49 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <Region
                 name="preview_container"
-                layout={{ position: 'absolute', left: 3, width: 51, top: 0, height: 49 }}
+                layout={{ position: 'absolute', left: 3, width: 51, top: 0, bottom: 0 }}
             >
                 <ButtonThick
                     variant="3"
                     name="part_button"
                     onPointerTap={onPartButton}
-                    layout={{ position: 'absolute', left: 0, width: 49, top: 0, height: 49 }}
+                    layout={{ position: 'absolute', left: 0, right: 2, top: 0, bottom: 0 }}
                 />
                 <ThemeImage
                     name="part_preview"
@@ -46,7 +46,7 @@ export const BadgeLayerLayoutContainer = ({ itemsColorSelector, layout, onPartBu
             </Region>
             <Region
                 name="position_container"
-                layout={{ position: 'absolute', left: 67, width: 43, top: 3, height: 43 }}
+                layout={{ position: 'absolute', left: 67, width: 43, top: 3, bottom: 3 }}
             >
                 <ThemeImage
                     name="position_grid"
@@ -63,7 +63,7 @@ export const BadgeLayerLayoutContainer = ({ itemsColorSelector, layout, onPartBu
             </Region>
             <Region
                 name="color_selector"
-                layout={{ position: 'absolute', left: 124, width: 120, top: 2, height: 45, flexDirection: 'row', flexWrap: 'wrap' }}
+                layout={{ position: 'absolute', right: 3, width: 120, top: 2, bottom: 2, flexDirection: 'row', flexWrap: 'wrap' }}
             >
                 {itemsColorSelector}
             </Region>

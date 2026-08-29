@@ -22,7 +22,7 @@ export const RecyclerWidgetLayoutIndicatorWrapper = ({ layout, onAbortRegion, sr
         >
             <Region
                 name="layout"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 115 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     src={layoutImage('recycler_furnimatic_container_left.png')}
@@ -39,7 +39,7 @@ export const RecyclerWidgetLayoutIndicatorWrapper = ({ layout, onAbortRegion, sr
             </Region>
             <Region
                 name="indicator"
-                layout={{ position: 'absolute', left: 1, width: 123, top: 0, height: 115, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 1, width: 123, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="indicator"
@@ -68,7 +68,7 @@ export const RecyclerWidgetLayoutIndicatorWrapper = ({ layout, onAbortRegion, sr
                         cursor="pointer"
                         layout={{ position: 'absolute', width: 65, top: 91, height: 17, minHeight: 17, maxHeight: 17 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 0, width: 65, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             {t('catalog.recycler.button.abort')}
                         </Region>
                     </Region>

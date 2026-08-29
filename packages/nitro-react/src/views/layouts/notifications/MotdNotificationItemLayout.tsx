@@ -11,7 +11,7 @@ export const MotdNotificationItemLayout = ({ captionMessageText, layout }: MotdN
         <Region layout={{ position: 'relative', width: 405, height: 95, ...layout }}>
             <Region
                 name="item_container"
-                layout={{ position: 'absolute', left: 0, width: 405, top: 0, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="message_text"

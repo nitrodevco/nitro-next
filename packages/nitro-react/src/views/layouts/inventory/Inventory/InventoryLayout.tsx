@@ -24,12 +24,13 @@ export const InventoryLayout = ({ layout, onClose, subContentArea, topContent }:
             caption={t('inventory.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 490, height: 342, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 490, height: 342, minWidth: 490, maxWidth: 490, minHeight: 300, ...layout }}
         >
             <InventoryLayoutTopContent {...topContent} />
             <Region
                 name="subContentArea"
-                layout={{ position: 'absolute', left: 0, width: 478, top: 301, height: 1 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 301, height: 1 }}
             >
                 {subContentArea}
             </Region>

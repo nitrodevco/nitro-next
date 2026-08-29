@@ -1,11 +1,11 @@
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeText } from '#base/theme';
 import { ItemGridWidget, ItemGridWidgetProps } from '#base/views/layouts/catalog/widgets/ItemGridWidget';
-import { LimitedItemWidget, LimitedItemWidgetProps } from '#base/views/layouts/catalog/widgets/LimitedItemWidget';
+import { LimitedItemWidget3, LimitedItemWidget3Props } from '#base/views/layouts/catalog/widgets/LimitedItemWidget3';
 import { ProductViewWidget, ProductViewWidgetProps } from '#base/views/layouts/catalog/widgets/ProductViewWidget';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
-import { UserBadgeSelectorWidget, UserBadgeSelectorWidgetProps } from '#base/views/layouts/catalog/widgets/UserBadgeSelectorWidget';
+import { UserBadgeSelectorWidget2, UserBadgeSelectorWidget2Props } from '#base/views/layouts/catalog/widgets/UserBadgeSelectorWidget2';
 
 /** Named region `ctlg_badgedisplay` of LayoutBadgeDisplay_1641Layout - configured through the parent's `ctlgBadgedisplay` prop. */
 export interface LayoutBadgeDisplay_1641LayoutCtlgBadgedisplayProps {
@@ -13,11 +13,11 @@ export interface LayoutBadgeDisplay_1641LayoutCtlgBadgedisplayProps {
     captionCtlgSelectproduct?: string;
     itemGridWidget?: ItemGridWidgetProps;
     layout?: BoxLayout;
-    limitedItemWidget?: LimitedItemWidgetProps;
+    limitedItemWidget?: LimitedItemWidget3Props;
     productViewWidget?: ProductViewWidgetProps;
     purchaseWidget?: PurchaseWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
-    userBadgeSelectorWidget?: UserBadgeSelectorWidgetProps;
+    userBadgeSelectorWidget?: UserBadgeSelectorWidget2Props;
 }
 
 export const LayoutBadgeDisplay_1641LayoutCtlgBadgedisplay = ({ captionCtlgSelectbadge, captionCtlgSelectproduct, itemGridWidget, layout, limitedItemWidget, productViewWidget, purchaseWidget, specialInfoWidget, userBadgeSelectorWidget }: LayoutBadgeDisplay_1641LayoutCtlgBadgedisplayProps) => {
@@ -26,7 +26,7 @@ export const LayoutBadgeDisplay_1641LayoutCtlgBadgedisplay = ({ captionCtlgSelec
     return (
         <Region
             name="ctlg_badgedisplay"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="ctlg_selectproduct"
@@ -38,7 +38,7 @@ export const LayoutBadgeDisplay_1641LayoutCtlgBadgedisplay = ({ captionCtlgSelec
                 />
             </Region>
             <ProductViewWidget
-                layout={{ position: 'absolute', left: 180, width: 175, top: 150, height: 248 }}
+                layout={{ position: 'absolute', right: 5, width: 175, top: 150, height: 248 }}
                 {...productViewWidget}
             />
             <SpecialInfoWidget
@@ -46,15 +46,15 @@ export const LayoutBadgeDisplay_1641LayoutCtlgBadgedisplay = ({ captionCtlgSelec
                 {...specialInfoWidget}
             />
             <PurchaseWidget
-                layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 30 }}
                 {...purchaseWidget}
             />
             <ItemGridWidget
                 layout={{ position: 'absolute', left: 5, width: 170, top: 150, height: 73 }}
                 {...itemGridWidget}
             />
-            <LimitedItemWidget
-                layout={{ position: 'absolute', left: 181, width: 170, top: 400, height: 30 }}
+            <LimitedItemWidget3
+                layout={{ position: 'absolute', right: 9, width: 170, top: 400, height: 30 }}
                 {...limitedItemWidget}
             />
             <Region
@@ -66,7 +66,7 @@ export const LayoutBadgeDisplay_1641LayoutCtlgBadgedisplay = ({ captionCtlgSelec
                     textStyle="text-style-u-small"
                 />
             </Region>
-            <UserBadgeSelectorWidget
+            <UserBadgeSelectorWidget2
                 layout={{ position: 'absolute', left: 4, width: 170, top: 242, height: 175 }}
                 {...userBadgeSelectorWidget}
             />

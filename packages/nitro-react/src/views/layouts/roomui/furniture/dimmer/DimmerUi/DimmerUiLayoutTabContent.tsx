@@ -23,7 +23,7 @@ export const DimmerUiLayoutTabContent = ({ captionDimmerInfo, captionTypeText, i
     return (
         <Region
             name="tab_content"
-            layout={{ position: 'absolute', left: 17, width: 228, top: 34, height: 118, ...layout }}
+            layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 228, top: 34, height: 118, ...layout }}
         >
             <Region
                 name="color_grid_container"
@@ -33,7 +33,7 @@ export const DimmerUiLayoutTabContent = ({ captionDimmerInfo, captionTypeText, i
             >
                 <Region
                     name="color_grid"
-                    layout={{ position: 'absolute', left: 0, width: 210, top: 0, height: 30, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
                 >
                     {itemsColorGrid}
                 </Region>
@@ -50,7 +50,7 @@ export const DimmerUiLayoutTabContent = ({ captionDimmerInfo, captionTypeText, i
                 />
                 <Region
                     name="slider_movement_area"
-                    layout={{ position: 'absolute', left: 0, width: 206, top: 1, height: 17 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 1, bottom: 0 }}
                 >
                     <ThemeImage
                         name="slider_button"
@@ -70,7 +70,7 @@ export const DimmerUiLayoutTabContent = ({ captionDimmerInfo, captionTypeText, i
             </CheckBox>
             <Region
                 name="type_text"
-                layout={{ position: 'absolute', left: 22, width: 200, top: 61, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', right: 6, width: 200, top: 61, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionTypeText ?? t('widget.dimmer.type.checkbox')}
@@ -79,7 +79,7 @@ export const DimmerUiLayoutTabContent = ({ captionDimmerInfo, captionTypeText, i
             </Region>
             <Region
                 name="dimmer_info"
-                layout={{ position: 'absolute', left: 4, width: 222, top: 80, height: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 4, right: 2, bottom: -8, height: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionDimmerInfo ?? t('widget.dimmer.info')}

@@ -8,12 +8,12 @@ export interface ScrollbarVerticalLayoutProps {
 export const ScrollbarVerticalLayout = ({ layout }: ScrollbarVerticalLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 17, height: 56, ...layout }}>
-            <ScrollbarSliderButtonUp layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 16 }} />
+            <ScrollbarSliderButtonUp layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 16 }} />
             <ScrollbarSliderTrackVertical
                 name="slider_track"
-                layout={{ position: 'absolute', left: 0, width: 17, top: 16, bottom: 16 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 16, bottom: 16 }}
             />
-            <ScrollbarSliderButtonDown layout={{ position: 'absolute', left: 0, width: 17, bottom: 0, height: 16 }} />
+            <ScrollbarSliderButtonDown layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 16 }} />
         </Region>
     );
 };

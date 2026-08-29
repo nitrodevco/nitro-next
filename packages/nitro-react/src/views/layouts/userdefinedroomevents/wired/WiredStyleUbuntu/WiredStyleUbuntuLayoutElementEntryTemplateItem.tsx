@@ -33,7 +33,7 @@ export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantity
                     variant="4"
                     name="icon_border"
                     tintColor="#eeeeee"
-                    layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {(visibleElementIconWidget ?? true) && (
                         <WidgetSlot
@@ -83,7 +83,7 @@ export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantity
                             <Border
                                 variant="12"
                                 tintColor="#dddddd"
-                                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                             >
                                 <ThemeImage
                                     src={layoutImage('common_close_x.png')}

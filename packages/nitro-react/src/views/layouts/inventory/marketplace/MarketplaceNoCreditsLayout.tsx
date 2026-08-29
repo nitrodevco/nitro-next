@@ -20,9 +20,9 @@ export const MarketplaceNoCreditsLayout = ({ layout, onCancelNoCreditsButton, on
             caption={t('inventory.marketplace.no_credits.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 252, height: 153, ...layout }}
+            layout={{ width: 252, height: 153, minWidth: 252, minHeight: 153, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 37 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -4 }}>
                 <Region layout={{ position: 'absolute', left: 7, right: 10, top: 12, bottom: 39, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('inventory.marketplace.no_credits.info')}

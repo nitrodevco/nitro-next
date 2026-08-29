@@ -26,7 +26,7 @@ export const DiscountValueItemLayoutDiscountValueContainer = ({ captionDiscountC
     return (
         <Region
             name="discount_value_container"
-            layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 37, minHeight: 37, maxHeight: 37, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minHeight: 37, maxHeight: 37, ...layout }}
         >
             <Region
                 name="total_value_backgroundbackground"

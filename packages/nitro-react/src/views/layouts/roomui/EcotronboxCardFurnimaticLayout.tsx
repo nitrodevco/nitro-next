@@ -23,7 +23,7 @@ export const EcotronboxCardFurnimaticLayout = ({ captionEcotronboxCardDate, capt
                 name="ecotronbox_container"
                 onPointerTap={onEcotronboxContainer}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 257, top: 0, height: 114 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="ecotronbox_card_bg"
@@ -34,13 +34,13 @@ export const EcotronboxCardFurnimaticLayout = ({ captionEcotronboxCardDate, capt
                     name="ecotronbox_card_preview"
                     src={srcEcotronboxCardPreview}
                     tint={tintEcotronboxCardPreview}
-                    layout={{ position: 'absolute', left: 7, width: 39, top: 38, height: 39 }}
+                    layout={{ position: 'absolute', left: 7, width: 39, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 39 }}
                 />
                 <ButtonThick
                     variant="0"
                     name="ecotronbox_card_btn_open"
                     onPointerTap={onEcotronboxCardBtnOpen}
-                    layout={{ position: 'absolute', left: 47, width: 205, top: 90, height: 22 }}
+                    layout={{ position: 'absolute', right: 5, width: 205, bottom: 2, height: 22 }}
                 >
                     {t('widget.furni.furnimaticbox.open')}
                 </ButtonThick>
@@ -48,7 +48,7 @@ export const EcotronboxCardFurnimaticLayout = ({ captionEcotronboxCardDate, capt
                     variant="0"
                     name="ecotronbox_card_btn_close"
                     onPointerTap={onEcotronboxCardBtnClose}
-                    layout={{ position: 'absolute', left: 200, width: 85, top: 90, height: 22 }}
+                    layout={{ position: 'absolute', left: 200, width: 85, bottom: 2, height: 22 }}
                 >
                     {t('generic.close')}
                 </Button>

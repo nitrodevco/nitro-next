@@ -20,7 +20,7 @@ export const SpecialItemsDisplayLayoutBottom = ({ itemsItemScrollArea, layout, p
     return (
         <Region
             name="bottom"
-            layout={{ position: 'absolute', left: 0, right: 0, bottom: 33, height: 135, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -12, bottom: -8, height: 135, ...layout }}
         >
             <Border
                 variant="2"

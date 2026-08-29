@@ -18,12 +18,12 @@ export const UserclassificationFrameLayout = ({ itemsUserclassificationList, lay
             caption="User Classifications"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 292, height: 224, ...layout }}
+            layout={{ width: 292, height: 224, minWidth: 150, minHeight: 100, ...layout }}
         >
             <Region
                 name="classifications_cont"
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -9 }}
             >
                 <ScrollArea
                     orientation="vertical"

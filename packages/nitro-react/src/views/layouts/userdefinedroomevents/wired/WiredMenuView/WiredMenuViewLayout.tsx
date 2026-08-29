@@ -30,7 +30,7 @@ export const WiredMenuViewLayout = ({ bodyContainer, headerContainer, layout, on
             caption={t('wiredmenu.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 500, height: 500, ...layout }}
+            layout={{ width: 500, height: 500, minWidth: 500, minHeight: 500, ...layout }}
         >
             <TabContext
                 variant="3"

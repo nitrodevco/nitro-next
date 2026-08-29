@@ -24,7 +24,8 @@ export const DailytasksUnclaimedLayout = ({ itemsMainCont, layout, onClose }: Da
             caption={t('dailytasks.unclaimed')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 452, height: 426, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 452, height: 426, minWidth: 452, maxWidth: 452, minHeight: 426, ...layout }}
         >
             <Region
                 name="main_cont"

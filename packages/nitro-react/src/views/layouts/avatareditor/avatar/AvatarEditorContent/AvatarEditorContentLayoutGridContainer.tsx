@@ -26,7 +26,7 @@ export const AvatarEditorContentLayoutGridContainer = ({ captionContentNotificat
         >
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 0, width: 330, top: 0, height: 200 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 200 }}
             >
                 <Region
                     name="thumbs"
@@ -39,7 +39,7 @@ export const AvatarEditorContentLayoutGridContainer = ({ captionContentNotificat
             </ScrollArea>
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 0, width: 165, top: 210, height: 93 }}
+                layout={{ position: 'absolute', left: 0, width: 165, bottom: -1, height: 93 }}
             >
                 <Region
                     name="palette0"
@@ -52,7 +52,7 @@ export const AvatarEditorContentLayoutGridContainer = ({ captionContentNotificat
             </ScrollArea>
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 165, width: 165, top: 210, height: 93 }}
+                layout={{ position: 'absolute', right: 0, width: 165, bottom: -1, height: 93 }}
             >
                 <Region
                     name="palette1"

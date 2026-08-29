@@ -69,7 +69,7 @@ export const SnowwarLobbyPlayerTeam2LayoutPlayerDataContainer = ({ captionPlayer
                 <Region layout={{ position: 'absolute', left: 100, width: 54, top: 9, height: 17 }}>
                     <Region
                         name="totalScore_stroke"
-                        layout={{ position: 'absolute', left: 0, width: 54, top: 0, height: 17, minWidth: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionTotalScoreStroke ?? '20'}
@@ -79,7 +79,7 @@ export const SnowwarLobbyPlayerTeam2LayoutPlayerDataContainer = ({ captionPlayer
                     </Region>
                     <Region
                         name="totalScore"
-                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 17, minWidth: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, bottom: 0, minWidth: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionTotalScore ?? '20'}

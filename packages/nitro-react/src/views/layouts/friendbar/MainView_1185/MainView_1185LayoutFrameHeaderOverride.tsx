@@ -18,9 +18,9 @@ export const MainView_1185LayoutFrameHeaderOverride = ({ captionTitleTxt, captio
     return (
         <Region
             name="frame_header_override"
-            layout={{ position: 'absolute', left: 88, right: 113, top: 3, height: 32, justifyContent: 'center', ...layout }}
+            layout={{ position: 'absolute', left: 88, right: 101, top: 3, height: 32, justifyContent: 'center', ...layout }}
         >
-            <Region layout={{ position: 'absolute', width: 115, top: 0, height: 32, flexDirection: 'row', gap: 6 }}>
+            <Region layout={{ position: 'absolute', width: 115, top: 0, bottom: 0, flexDirection: 'row', gap: 6 }}>
                 <Region
                     name="hacky_title"
                     layout={{ width: 96, height: 27, flexShrink: 0 }}

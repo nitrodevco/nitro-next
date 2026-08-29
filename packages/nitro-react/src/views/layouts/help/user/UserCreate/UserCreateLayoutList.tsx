@@ -22,7 +22,7 @@ export const UserCreateLayoutList = ({ captionCancelLink, itemsList, layout, onC
     return (
         <Region
             name="list"
-            layout={{ position: 'absolute', left: 5, top: 0, minWidth: 270, maxWidth: 270, flexDirection: 'column', ...layout }}
+            layout={{ position: 'absolute', left: 5, right: -5, top: 0, bottom: -4, minWidth: 270, maxWidth: 270, flexDirection: 'column', ...layout }}
         >
             {itemsList ?? (
                 <>
@@ -30,13 +30,13 @@ export const UserCreateLayoutList = ({ captionCancelLink, itemsList, layout, onC
                     <UserCreateLayoutInputWidgetItem />
                 </>
             )}
-            <Region layout={{ width: 264, height: 50, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Region layout={{ alignSelf: 'stretch', height: 50, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('guide.help.request.user.create.help')}
                     textOptions={{ wordWrap: true, wordWrapWidth: 264 }}
                 />
             </Region>
-            <Region layout={{ width: 270, height: 108, flexShrink: 0 }}>
+            <Region layout={{ alignSelf: 'stretch', height: 108, flexShrink: 0 }}>
                 <Button
                     variant="101"
                     name="create_button"
@@ -48,7 +48,7 @@ export const UserCreateLayoutList = ({ captionCancelLink, itemsList, layout, onC
                 </Button>
                 <Region
                     name="cancel_link"
-                    layout={{ position: 'absolute', left: 95, width: 107, top: 50, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 95, width: 107, alignSelf: 'center', marginTop: 4, marginBottom: -4, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     onPointerTap={onCancelLink}
                     cursor="pointer"
                 >

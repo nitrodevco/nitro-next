@@ -12,7 +12,7 @@ export const HeaderLeaderboardLayout = ({ captionHeaderTitleText, layout, onHead
         <Region layout={{ position: 'relative', width: 41, height: 32, ...layout }}>
             <Region
                 name="header_container"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 32, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Region
                     name="header_title_text"

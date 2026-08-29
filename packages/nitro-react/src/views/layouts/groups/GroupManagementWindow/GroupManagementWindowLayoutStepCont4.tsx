@@ -31,7 +31,7 @@ export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaptio
         (visibleStepCont4 ?? false) && (
             <Region
                 name="step_cont_4"
-                layout={{ position: 'absolute', left: 0, right: 3, top: 111, height: 360, ...layout }}
+                layout={{ position: 'absolute', left: 0, right: -9, top: 111, height: 360, ...layout }}
             >
                 <Region
                     name="confirmation_caption"
@@ -129,7 +129,7 @@ export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaptio
                         name="vip_required_region"
                         onPointerTap={onVipRequiredRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 248, top: 0, height: 39 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         {vipRequiredRegion}
                     </Region>

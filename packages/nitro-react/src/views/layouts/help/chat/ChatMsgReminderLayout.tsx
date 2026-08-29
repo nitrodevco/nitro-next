@@ -11,7 +11,7 @@ export const ChatMsgReminderLayout = ({ captionContent, layout }: ChatMsgReminde
         <Region layout={{ position: 'relative', width: 270, height: 24, ...layout }}>
             <Region
                 name="chat_msg_reminder"
-                layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionContent ?? ''}

@@ -13,17 +13,17 @@ export const QuizLikeLayout = ({ layout, onButtonLike }: QuizLikeLayoutProps) =>
 
     return (
         <Region layout={{ position: 'relative', width: 32, height: 32, ...layout }}>
-            <Region layout={{ position: 'absolute', left: -1, width: 32, top: 0, height: 32 }}>
+            <Region layout={{ position: 'absolute', left: -1, right: 1, top: 0, bottom: 0 }}>
                 <Border
                     variant="2"
                     name="white"
-                    layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Border
                     variant="2"
                     name="colored"
                     tintColor="#007841"
-                    layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Region
                     name="button_like"
@@ -31,7 +31,7 @@ export const QuizLikeLayout = ({ layout, onButtonLike }: QuizLikeLayoutProps) =>
                     dynamicStyle="brightness_and_shadow_under"
                     onPointerTap={onButtonLike}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32, minWidth: 32, maxWidth: 32 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 32, maxWidth: 32 }}
                 >
                     <ThemeImage
                         src={layoutImage('word_quiz_thum_up.png')}

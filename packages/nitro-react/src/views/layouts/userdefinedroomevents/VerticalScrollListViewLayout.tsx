@@ -13,7 +13,7 @@ export const VerticalScrollListViewLayout = ({ itemsScrollView, layout }: Vertic
         <Region layout={{ position: 'relative', width: 100, height: 100, ...layout }}>
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 100 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="scroll_view"

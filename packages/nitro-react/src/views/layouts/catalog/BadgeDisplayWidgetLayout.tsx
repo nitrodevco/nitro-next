@@ -17,7 +17,7 @@ export const BadgeDisplayWidgetLayout = ({ badgeImage, layout, srcAssetImage, sr
         <Region layout={{ position: 'relative', width: 42, height: 42, ...layout }}>
             <Region
                 name="container"
-                layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="asset_image"

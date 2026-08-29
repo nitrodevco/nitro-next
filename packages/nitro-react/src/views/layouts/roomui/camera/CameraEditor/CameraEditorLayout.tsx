@@ -40,7 +40,7 @@ export const CameraEditorLayout = ({ buttonSeparator, captionSaveText, captionZo
             caption={t('camera.editor.button.text')}
             tintColor="#555555"
             onClose={onClose}
-            layout={{ width: 586, height: 517, ...layout }}
+            layout={{ width: 586, height: 517, minWidth: 586, minHeight: 517, ...layout }}
         >
             <ThemeImage
                 name="image"
@@ -123,7 +123,7 @@ export const CameraEditorLayout = ({ buttonSeparator, captionSaveText, captionZo
                     variant="2"
                     name="zoom_bg_border"
                     tintColor="#c7c6bf"
-                    layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 24 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Border
                     variant="2"
@@ -158,7 +158,7 @@ export const CameraEditorLayout = ({ buttonSeparator, captionSaveText, captionZo
                     variant="2"
                     name="save_bg_border"
                     tintColor="#c7c6bf"
-                    layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 24 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Border
                     variant="2"

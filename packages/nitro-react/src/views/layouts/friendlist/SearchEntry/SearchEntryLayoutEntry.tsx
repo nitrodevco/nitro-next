@@ -25,13 +25,13 @@ export const SearchEntryLayoutEntry = ({ bgRegion, captionCaption, captionName, 
             backgroundColor="#eeeeff"
             onPointerTap={onEntry}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 20, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="bg_region"
                 onPointerTap={onBgRegion}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 {bgRegion}
             </Region>

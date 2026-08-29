@@ -23,7 +23,7 @@ export const MessengerHabbiconPickerLayout = ({ captionEmptyText, itemsHabbiconS
             <Border
                 variant="107"
                 name="messenger_habbicon_picker_window"
-                layout={{ position: 'absolute', left: 0, width: 256, bottom: 0, height: 138 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 138 }}
             >
                 <Region
                     name="top_controls"

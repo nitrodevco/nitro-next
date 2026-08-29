@@ -11,7 +11,7 @@ export const BottomBackgroundBorderLayout = ({ layout }: BottomBackgroundBorderL
             <Border
                 variant="9"
                 tintColor="#686661"
-                layout={{ position: 'absolute', left: 0, width: 293, top: 0, height: 54 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
         </Region>
     );

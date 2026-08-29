@@ -12,7 +12,7 @@ export const LayoutVipBuy_1585LayoutCtlgVipBuy = ({ layout, vipBuyWidget }: Layo
         <Region
             name="ctlg_vip_buy"
             backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <VipBuyWidget
                 layout={{ position: 'absolute', left: 10, width: 340, top: 80, height: 380 }}

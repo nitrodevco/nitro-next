@@ -72,7 +72,7 @@ export const TableViewLayoutTableElementItem = ({ captionElementLink, captionEle
                     name="extra_button"
                     onPointerTap={onExtraButton}
                     cursor="pointer"
-                    layout={{ position: 'absolute', right: 3, width: 20, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', right: 3, width: 20, top: 0, bottom: 0 }}
                 >
                     {(visibleExtraButtonBitmap ?? true) && (
                         <ThemeImage

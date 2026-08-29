@@ -51,9 +51,9 @@ export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectibl
                 variant="6"
                 name="buttons"
                 tintColor="#3b3933"
-                layout={{ position: 'absolute', left: 0, width: 546, top: 0, height: 53 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region layout={{ position: 'absolute', left: 0, width: 546, top: 0, height: 53 }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                     <Region layout={{ position: 'absolute', left: 3, width: 543, top: 3, height: 50 }}>
                         <Region
                             name="guide"

@@ -19,7 +19,7 @@ export const FurniViewLayoutUniqueItemBackgroundContainer = ({ layout, srcUnique
         (visibleUniqueItemBackgroundContainer ?? false) && (
             <Region
                 name="unique_item_background_container"
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, minHeight: 45, ...layout }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minHeight: 45, ...layout }}
             >
                 <ThemeImage
                     name="unique_item_background_bottom"

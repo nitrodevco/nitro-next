@@ -5,8 +5,8 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `limitedItemWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
- * layout reserves a container by that name and the client attaches the widget to it. Shared by 3 pages
- * (LayoutBadgeDisplay_1641Layout, LayoutBadgeDisplay_1669Layout, LayoutDefault_1595Layout); each passes its own placement through `layout`.
+ * layout reserves a container by that name and the client attaches the widget to it. Shared by 2 pages
+ * (LayoutBadgeDisplay_1669Layout, LayoutDefault_1595Layout); each passes its own placement through `layout`.
  */
 /** Named region `limitedItemWidget` of LimitedItemWidget - configured through the parent's `limitedItemWidget` prop. */
 export interface LimitedItemWidgetProps extends CatalogWidgetFlags {

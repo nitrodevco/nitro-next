@@ -44,7 +44,7 @@ export const CollectibleHubLayoutItemTemplateItem = ({ badgeImageWidget, caption
                         variant="3"
                         name="border_outline"
                         tintColor="#8f9db1"
-                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 60 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         {(visibleBorderBackground ?? true) && (
                             <Border
@@ -108,7 +108,7 @@ export const CollectibleHubLayoutItemTemplateItem = ({ badgeImageWidget, caption
                     {(visibleNumber ?? true) && (
                         <Region
                             name="number"
-                            layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionNumber ?? 'x10'}

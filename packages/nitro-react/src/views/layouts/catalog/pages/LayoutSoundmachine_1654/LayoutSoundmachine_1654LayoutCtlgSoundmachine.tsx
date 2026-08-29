@@ -21,7 +21,7 @@ export const LayoutSoundmachine_1654LayoutCtlgSoundmachine = ({ captionCtlgSelec
     return (
         <Region
             name="ctlg_soundmachine"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="ctlg_selectproduct"
@@ -38,7 +38,7 @@ export const LayoutSoundmachine_1654LayoutCtlgSoundmachine = ({ captionCtlgSelec
                 {...itemGridWidget}
             />
             <SongDiskProductViewWidget
-                layout={{ position: 'absolute', left: 180, width: 175, top: 154, height: 274 }}
+                layout={{ position: 'absolute', right: 5, width: 175, top: 154, height: 274 }}
                 {...songDiskProductViewWidget}
             />
             <SpecialInfoWidget
@@ -46,7 +46,7 @@ export const LayoutSoundmachine_1654LayoutCtlgSoundmachine = ({ captionCtlgSelec
                 {...specialInfoWidget}
             />
             <PurchaseWidget
-                layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 30 }}
                 {...purchaseWidget}
             />
         </Region>

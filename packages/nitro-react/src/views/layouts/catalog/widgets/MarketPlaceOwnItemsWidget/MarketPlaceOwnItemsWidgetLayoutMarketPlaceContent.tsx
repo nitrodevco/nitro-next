@@ -17,7 +17,7 @@ export const MarketPlaceOwnItemsWidgetLayoutMarketPlaceContent = ({ captionRedee
     return (
         <Region
             name="market_place_content"
-            layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 390, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="redeem_info"

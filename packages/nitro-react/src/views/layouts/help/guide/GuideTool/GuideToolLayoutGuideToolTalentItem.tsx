@@ -15,7 +15,7 @@ export const GuideToolLayoutGuideToolTalentItem = ({ captionGuideToolTalent, lay
         <Region
             name="guide_tool_talent"
             tooltip={t('guide.help.guide.tool.skill.tooltip')}
-            layout={{ width: 226, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
+            layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', ...layout }}
             onPointerTap={onGuideToolTalent}
             cursor="pointer"
         >

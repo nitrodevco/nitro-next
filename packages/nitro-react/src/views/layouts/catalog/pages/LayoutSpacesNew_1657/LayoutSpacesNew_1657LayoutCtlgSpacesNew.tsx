@@ -19,19 +19,19 @@ export const LayoutSpacesNew_1657LayoutCtlgSpacesNew = ({ activityPointDisplayWi
     return (
         <Region
             name="ctlg_spaces_new"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <ProductViewWidget
                 noRoomCanvas
-                layout={{ position: 'absolute', left: 180, width: 170, top: 150, height: 245 }}
+                layout={{ position: 'absolute', right: 10, width: 170, top: 150, height: 245 }}
                 {...productViewWidget}
             />
             <RoomPreviewWidget
-                layout={{ position: 'absolute', left: 180, width: 180, top: 150, height: 275 }}
+                layout={{ position: 'absolute', right: 0, width: 180, top: 150, height: 275 }}
                 {...roomPreviewWidget}
             />
             <PurchaseWidget
-                layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 30 }}
                 {...purchaseWidget}
             />
             <SpacesNewWidget
@@ -40,7 +40,7 @@ export const LayoutSpacesNew_1657LayoutCtlgSpacesNew = ({ activityPointDisplayWi
                 {...spacesNewWidget}
             />
             <ActivityPointDisplayWidget
-                layout={{ position: 'absolute', left: 180, width: 175, top: 125, height: 28 }}
+                layout={{ position: 'absolute', right: 5, width: 175, top: 125, height: 28 }}
                 {...activityPointDisplayWidget}
             />
         </Region>

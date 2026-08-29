@@ -10,7 +10,7 @@ export const RoomtoolsLayoutRoominfoNameItem = ({ captionRoominfoName, layout }:
     return (
         <Region
             name="roominfo_name"
-            layout={{ width: 12, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 12, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionRoominfoName ?? '...'}

@@ -15,7 +15,7 @@ export const LogoutConfirmationLayout = ({ layout, onCancel, onConfirm }: Logout
         <Region layout={{ position: 'relative', width: 192, height: 90, ...layout }}>
             <Border
                 variant="1"
-                layout={{ position: 'absolute', right: 0, width: 192, top: 0, height: 90 }}
+                layout={{ position: 'absolute', right: 0, width: 192, top: 0, bottom: 0 }}
             >
                 <Region layout={{ position: 'absolute', left: 11, width: 170, top: 9, height: 41, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText

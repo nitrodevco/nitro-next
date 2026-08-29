@@ -21,7 +21,7 @@ export const RentablespaceLayoutRentButtonItem = ({ captionPriceLabel, captionRe
             onPointerTap={onRentButton}
             layout={{ width: 270, height: 44, flexShrink: 0, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', gap: 5 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', gap: 5 }}>
                 {(visiblePriceLabel ?? true) && (
                     <Region
                         name="price_label"

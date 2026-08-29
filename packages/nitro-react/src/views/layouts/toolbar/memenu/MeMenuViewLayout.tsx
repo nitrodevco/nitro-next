@@ -40,7 +40,7 @@ export const MeMenuViewLayout = ({ captionAchievementsText, captionClothesText, 
                 variant="6"
                 name="buttons"
                 tintColor="#79756e"
-                layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 335 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="profile"

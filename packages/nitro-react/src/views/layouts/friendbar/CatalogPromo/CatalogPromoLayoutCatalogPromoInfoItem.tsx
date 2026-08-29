@@ -14,7 +14,7 @@ export const CatalogPromoLayoutCatalogPromoInfoItem = ({ captionCatalogPromoInfo
     return (
         <Region
             name="catalog_promo_info"
-            layout={{ width: 300, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionCatalogPromoInfo ?? t('landing.view.catalogpromo.info')}

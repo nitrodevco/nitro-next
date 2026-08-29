@@ -15,7 +15,7 @@ export const BreedPetsConfirmationLayoutCancelButtonItem = ({ layout, onCancelBu
             variant="3"
             name="cancel_button"
             onPointerTap={onCancelButton}
-            layout={{ width: 122, height: 30, flexShrink: 0, minWidth: 122, maxWidth: 122, ...layout }}
+            layout={{ width: 122, alignSelf: 'stretch', flexShrink: 0, minWidth: 122, maxWidth: 122, ...layout }}
         >
             {t('breedpets.widget.cancel')}
         </Button>

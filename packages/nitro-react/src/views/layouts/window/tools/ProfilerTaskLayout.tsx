@@ -18,7 +18,7 @@ export const ProfilerTaskLayout = ({ layout, onCheck, srcCanvas, tintCanvas }: P
         <Region layout={{ position: 'relative', width: 430, height: 38, ...layout }}>
             <Border
                 variant="0"
-                layout={{ position: 'absolute', left: 0, width: 430, top: 0, height: 38 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <TextInput
                     value={textValue}

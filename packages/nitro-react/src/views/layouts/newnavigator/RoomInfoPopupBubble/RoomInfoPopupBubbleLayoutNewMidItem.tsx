@@ -18,7 +18,7 @@ export const RoomInfoPopupBubbleLayoutNewMidItem = ({ itemsProperties, layout, m
     return (
         <Region
             name="newMid"
-            layout={{ width: 344, height: 80, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 80, flexShrink: 0, ...layout }}
         >
             {(visibleMid ?? true) && (
                 <Region
@@ -28,7 +28,7 @@ export const RoomInfoPopupBubbleLayoutNewMidItem = ({ itemsProperties, layout, m
                     {(visibleProperties ?? true) && (
                         <Region
                             name="properties"
-                            layout={{ position: 'absolute', left: 0, width: 263, top: 0, height: 65, flexDirection: 'column' }}
+                            layout={{ position: 'absolute', left: 0, width: 263, top: 0, bottom: 0, flexDirection: 'column' }}
                         >
                             {itemsProperties}
                         </Region>

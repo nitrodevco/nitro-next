@@ -32,7 +32,7 @@ export interface InventoryThumbLayoutProps {
 export const InventoryThumbLayout = ({ badge, captionNumber, chestOverlayContainer, layout, rarityItemOverlayContainer, srcBitmap, srcChestBackgroundBitmap, srcOutline, srcRecyclableContainer, srcRentState, srcUniqueItemBackgroundBitmap, tintBitmap, uniqueItemOverlayContainer, visibleBadge, visibleChestBackgroundBitmap, visibleChestOverlayContainer, visibleNumberContainer, visibleRarityItemOverlayContainer, visibleRecyclableContainer, visibleRentState, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer }: InventoryThumbLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 42, height: 42, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="5"
                     tintColor="#cacaca"
@@ -63,7 +63,7 @@ export const InventoryThumbLayout = ({ badge, captionNumber, chestOverlayContain
                             widgetType="badge_image"
                             name="badge"
                             options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                            layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         >
                             {badge}
                         </WidgetSlot>

@@ -20,7 +20,7 @@ export const CampaignLayoutCampaignContainer = ({ bg, bgBottom, bgTop, captionCa
     return (
         <Region
             name="campaign_container"
-            layout={{ position: 'absolute', left: 0, width: 103, top: 0, height: 114, justifyContent: 'center', ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="bg"

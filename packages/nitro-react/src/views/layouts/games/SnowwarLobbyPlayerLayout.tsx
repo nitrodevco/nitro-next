@@ -18,7 +18,7 @@ export const SnowwarLobbyPlayerLayout = ({ layout, onRegion, srcBgImage, srcImag
                 name="region"
                 onPointerTap={onRegion}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 63 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="bg_image"

@@ -21,17 +21,17 @@ export const BadgeEditorLayoutBadgeEditor = ({ captionLabelSymbol, guildBadge, i
     return (
         <Region
             name="badge_editor"
-            layout={{ position: 'absolute', left: 0, width: 392, top: 0, height: 305, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <BadgeEditorLayoutGuildBadge {...guildBadge} />
             <BadgeEditorLayoutPartEdit {...partEdit} />
             <Region
                 name="part_select"
-                layout={{ position: 'absolute', left: 128, width: 264, top: 0, height: 305 }}
+                layout={{ position: 'absolute', left: 128, width: 264, top: 0, bottom: 0 }}
             >
                 <Region
                     name="part_edit_top_labels"
-                    layout={{ position: 'absolute', left: 0, width: 264, top: 0, height: 29 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
                 >
                     <Region
                         name="label_symbol"

@@ -130,7 +130,7 @@ export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionOwnerCaption, cap
                 tooltip={t('infostand.profile.link.tooltip')}
                 onPointerTap={onOwnerNameCont}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 230, top: 34, height: 16 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 34, height: 16 }}
             >
                 <Region
                     name="owner_caption"
@@ -196,7 +196,7 @@ export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionOwnerCaption, cap
                     tooltip={t('navigator.rateroom')}
                     onPointerTap={onRatingRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', right: 202, width: 18, top: 0, height: 16 }}
+                    layout={{ position: 'absolute', right: 202, width: 18, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="thumb_up"

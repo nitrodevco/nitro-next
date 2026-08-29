@@ -8,7 +8,7 @@ export interface IlluminaLightScrollbarHorizontalLayoutProps {
 export const IlluminaLightScrollbarHorizontalLayout = ({ layout }: IlluminaLightScrollbarHorizontalLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 9, height: 9, ...layout }}>
-            <ScrollbarSliderTrackHorizontal layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 9 }} />
+            <ScrollbarSliderTrackHorizontal layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }} />
         </Region>
     );
 };

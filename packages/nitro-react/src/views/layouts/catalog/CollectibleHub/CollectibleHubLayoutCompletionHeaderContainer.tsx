@@ -13,7 +13,7 @@ export const CollectibleHubLayoutCompletionHeaderContainer = ({ layout, paddedCo
         <Region
             name="completion_header_container"
             backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 60, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 60, ...layout }}
         >
             <CollectibleHubLayoutPaddedCont {...paddedCont} />
         </Region>

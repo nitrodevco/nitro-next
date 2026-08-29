@@ -18,13 +18,13 @@ export const BadgePartItemLayout = ({ layout, onContainer, srcPart, srcSelected,
                 backgroundColor="#ffffff"
                 onPointerTap={onContainer}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 41, top: 0, height: 41 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="3"
                     name="background"
                     tintColor="#e9e9e1"
-                    layout={{ position: 'absolute', left: 0, width: 41, top: 0, height: 41 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <ThemeImage
                     name="part"

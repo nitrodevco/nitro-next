@@ -24,7 +24,7 @@ export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, ca
     return (
         <Region
             name="info_container"
-            layout={{ position: 'absolute', left: 0, width: 182, top: 0, height: 142, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="background_bitmap"
@@ -33,7 +33,7 @@ export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, ca
             />
             <Region
                 name="header_text"
-                layout={{ position: 'absolute', left: 4, width: 174, top: 11, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 4, right: 4, top: 11, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionHeaderText ?? t('catalog.bundlewidget.info.header')}
@@ -43,18 +43,18 @@ export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, ca
             <ThemeImage
                 name="formula_bitmap"
                 src={srcFormulaBitmap ?? '${image.library.catalogue.url}clakboard_formula.png'}
-                layout={{ position: 'absolute', left: 33, width: 115, top: 44, height: 41 }}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 115, top: 44, height: 41 }}
             />
             <Region
                 name="underline_container"
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 45, width: 88, top: 84, height: 1 }}
+                layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 88, top: 84, height: 1 }}
             >
                 {underlineContainer}
             </Region>
             <Region
                 name="free_text"
-                layout={{ position: 'absolute', left: 103, width: 166, top: 67, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 103, width: 166, alignSelf: 'center', marginTop: 3.5, marginBottom: -3.5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionFreeText ?? t('catalog.bundlewidget.info.for.free')}
@@ -63,7 +63,7 @@ export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, ca
             </Region>
             <Region
                 name="equals_bundle_text"
-                layout={{ position: 'absolute', left: 34, width: 116, top: 85, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 116, top: 85, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionEqualsBundleText ?? t('catalog.bundlewidget.info.equals.bundle')}
@@ -73,7 +73,7 @@ export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, ca
             </Region>
             <Region
                 name="footer_text"
-                layout={{ position: 'absolute', left: 4, width: 174, top: 105, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 4, right: 4, top: 105, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionFooterText ?? t('catalog.bundlewidget.info.footer')}
@@ -84,7 +84,7 @@ export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, ca
                 name="click_region"
                 onPointerTap={onClickRegion}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 182, top: 1, height: 142 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 1, bottom: -1 }}
             >
                 {clickRegion}
             </Region>

@@ -16,7 +16,7 @@ export const ChestGenericLayoutMainList = ({ itemsMainList, layout }: ChestGener
     return (
         <Region
             name="main_list"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 428, flexDirection: 'column', ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -12, top: 0, height: 428, flexDirection: 'column', ...layout }}
         >
             {itemsMainList ?? (
                 <>

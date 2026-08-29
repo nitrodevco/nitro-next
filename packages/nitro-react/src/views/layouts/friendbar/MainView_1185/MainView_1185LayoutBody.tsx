@@ -23,7 +23,7 @@ export const MainView_1185LayoutBody = ({ captionRankTypeInfo, itemsButtons, lay
     return (
         <Region
             name="body"
-            layout={{ position: 'absolute', left: 6, right: 30, top: 59, bottom: 17, justifyContent: 'center', ...layout }}
+            layout={{ position: 'absolute', left: 6, right: 18, top: 59, bottom: -24, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="info_container"

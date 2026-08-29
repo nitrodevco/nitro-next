@@ -1,7 +1,7 @@
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeText } from '#base/theme';
 import { ItemGridWidget, ItemGridWidgetProps } from '#base/views/layouts/catalog/widgets/ItemGridWidget';
-import { PetPreviewWidget, PetPreviewWidgetProps } from '#base/views/layouts/catalog/widgets/PetPreviewWidget';
+import { PetPreviewWidget2, PetPreviewWidget2Props } from '#base/views/layouts/catalog/widgets/PetPreviewWidget2';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 
 /** Named region `ctlg_petcustomization` of LayoutPetcustomization_1713Layout - configured through the parent's `ctlgPetcustomization` prop. */
@@ -9,7 +9,7 @@ export interface LayoutPetcustomization_1713LayoutCtlgPetcustomizationProps {
     captionCtlgSelectproduct?: string;
     itemGridWidget?: ItemGridWidgetProps;
     layout?: BoxLayout;
-    petPreviewWidget?: PetPreviewWidgetProps;
+    petPreviewWidget?: PetPreviewWidget2Props;
     purchaseWidget?: PurchaseWidgetProps;
 }
 
@@ -19,7 +19,7 @@ export const LayoutPetcustomization_1713LayoutCtlgPetcustomization = ({ captionC
     return (
         <Region
             name="ctlg_petcustomization"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="ctlg_selectproduct"
@@ -35,12 +35,12 @@ export const LayoutPetcustomization_1713LayoutCtlgPetcustomization = ({ captionC
                 layout={{ position: 'absolute', left: 5, width: 170, top: 150, height: 275 }}
                 {...itemGridWidget}
             />
-            <PetPreviewWidget
-                layout={{ position: 'absolute', left: 180, width: 175, top: 150, height: 275 }}
+            <PetPreviewWidget2
+                layout={{ position: 'absolute', right: 5, width: 175, top: 150, height: 275 }}
                 {...petPreviewWidget}
             />
             <PurchaseWidget
-                layout={{ position: 'absolute', left: 0, width: 360, top: 430, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 30 }}
                 {...purchaseWidget}
             />
         </Region>

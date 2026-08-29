@@ -12,13 +12,13 @@ export const ClubGiftPreviewLayout = ({ layout, srcImage, tintImage }: ClubGiftP
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Border
                 variant="0"
-                layout={{ position: 'absolute', left: 21, width: 200, top: 12, height: 200 }}
+                layout={{ position: 'absolute', left: 21, width: 200, top: 12, height: 200, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="image"
                     src={srcImage}
                     tint={tintImage}
-                    layout={{ position: 'absolute', left: 20, top: 20 }}
+                    layout={{ position: 'absolute', alignSelf: 'center' }}
                 />
             </Border>
         </Region>

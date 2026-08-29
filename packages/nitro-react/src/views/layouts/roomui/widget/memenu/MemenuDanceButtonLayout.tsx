@@ -13,7 +13,7 @@ export const MemenuDanceButtonLayout = ({ layout, onDanceButton }: MemenuDanceBu
                 variant="1"
                 name="dance_button"
                 onPointerTap={onDanceButton}
-                layout={{ position: 'absolute', left: 0, width: 145, top: 0, height: 22, minWidth: 145 }}
+                layout={{ position: 'absolute', left: 0, width: 145, top: 0, bottom: -2, minWidth: 145 }}
             />
         </Region>
     );

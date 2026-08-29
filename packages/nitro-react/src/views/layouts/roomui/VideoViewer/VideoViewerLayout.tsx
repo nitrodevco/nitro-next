@@ -25,12 +25,12 @@ export const VideoViewerLayout = ({ captionNoVideosLabel, layout, onClose, right
             name="video_viewer"
             tintColor="#67a3bf"
             onClose={onClose}
-            layout={{ width: 738, height: 356, ...layout }}
+            layout={{ width: 738, height: 356, minWidth: 400, minHeight: 350, ...layout }}
         >
             <Region
                 name="video_background"
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 7, width: 431, top: 6, bottom: 48, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 7, width: 431, top: 6, bottom: 7, justifyContent: 'center' }}
             >
                 <Region
                     name="no_videos_label"

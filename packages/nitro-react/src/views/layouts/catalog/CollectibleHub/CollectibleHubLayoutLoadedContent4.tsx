@@ -21,11 +21,11 @@ export const CollectibleHubLayoutLoadedContent4 = ({ captionTransferFeeText, lay
     return (
         <Region
             name="loaded_content"
-            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="headercontainer"
-                layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 50, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50, justifyContent: 'center' }}
             >
                 <Region layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 450, alignSelf: 'center', height: 30, minWidth: 450, maxWidth: 450, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                     <ThemeText

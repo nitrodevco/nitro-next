@@ -47,7 +47,7 @@ export const UserInfoLayoutFields = ({ captionAbusiveCfhCountTxt, captionBanCoun
             name="fields"
             onPointerTap={onFields}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 5, width: 270, top: 5, height: 194, ...layout }}
+            layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 3, ...layout }}
         >
             <Region
                 name="shade1"
@@ -101,7 +101,7 @@ export const UserInfoLayoutFields = ({ captionAbusiveCfhCountTxt, captionBanCoun
             <Region
                 name="shade2"
                 backgroundColor="#a2d6ea"
-                layout={{ position: 'absolute', left: 0, width: 187, top: 182, height: 13 }}
+                layout={{ position: 'absolute', left: 0, width: 187, bottom: -1, height: 13 }}
             >
                 {shade27}
             </Region>
@@ -126,7 +126,7 @@ export const UserInfoLayoutFields = ({ captionAbusiveCfhCountTxt, captionBanCoun
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 78, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 Trade locks
             </Region>
-            <Region layout={{ position: 'absolute', left: 0, width: 70, top: 91, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', left: 0, width: 70, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 Lock Expires
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 104, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -147,12 +147,12 @@ export const UserInfoLayoutFields = ({ captionAbusiveCfhCountTxt, captionBanCoun
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 156, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 Banned Accs.
             </Region>
-            <Region layout={{ position: 'absolute', left: 0, width: 70, top: 169, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', left: 0, width: 70, bottom: 12, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 Registered
             </Region>
             <Region
                 name="user_class_txt"
-                layout={{ position: 'absolute', left: 0, width: 184, top: 182, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, width: 184, bottom: -1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 {captionUserClassTxt ?? '-'}
             </Region>
@@ -164,7 +164,7 @@ export const UserInfoLayoutFields = ({ captionAbusiveCfhCountTxt, captionBanCoun
             </Region>
             <Region
                 name="registered_txt"
-                layout={{ position: 'absolute', left: 70, width: 114, top: 169, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 70, width: 114, bottom: 12, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 {captionRegisteredTxt ?? '0'}
             </Region>
@@ -226,7 +226,7 @@ export const UserInfoLayoutFields = ({ captionAbusiveCfhCountTxt, captionBanCoun
             </Region>
             <Region
                 name="trading_lock_expiry_txt"
-                layout={{ position: 'absolute', left: 70, width: 114, top: 91, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 70, width: 114, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 {captionTradingLockExpiryTxt ?? 'No active lock'}
             </Region>
@@ -265,13 +265,13 @@ export const UserInfoLayoutFields = ({ captionAbusiveCfhCountTxt, captionBanCoun
                 name="buttons"
                 onPointerTap={onButtons}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 190, width: 80, top: 0, height: 122 }}
+                layout={{ position: 'absolute', right: 0, width: 80, top: 0, height: 122 }}
             >
                 <Button
                     variant="0"
                     name="chatlog_but"
                     onPointerTap={onChatlogBut}
-                    layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 21, minWidth: 80, maxWidth: 80 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 21, minWidth: 80, maxWidth: 80 }}
                 >
                     Room Chat
                 </Button>
@@ -279,7 +279,7 @@ export const UserInfoLayoutFields = ({ captionAbusiveCfhCountTxt, captionBanCoun
                     variant="0"
                     name="message_but"
                     onPointerTap={onMessageBut}
-                    layout={{ position: 'absolute', left: 0, width: 80, top: 22, height: 21, maxWidth: 80 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 22, height: 21, maxWidth: 80 }}
                 >
                     Send Message
                 </Button>
@@ -287,7 +287,7 @@ export const UserInfoLayoutFields = ({ captionAbusiveCfhCountTxt, captionBanCoun
                     variant="0"
                     name="roomvisits_but"
                     onPointerTap={onRoomvisitsBut}
-                    layout={{ position: 'absolute', left: 0, width: 80, top: 44, height: 21, minWidth: 80, maxWidth: 80 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 44, height: 21, minWidth: 80, maxWidth: 80 }}
                 >
                     Room Visits
                 </Button>
@@ -295,7 +295,7 @@ export const UserInfoLayoutFields = ({ captionAbusiveCfhCountTxt, captionBanCoun
                     variant="0"
                     name="modaction_but"
                     onPointerTap={onModactionBut}
-                    layout={{ position: 'absolute', left: 0, width: 80, top: 88, height: 21, minWidth: 80, maxWidth: 80 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 88, height: 21, minWidth: 80, maxWidth: 80 }}
                 >
                     Mod Action
                 </Button>
@@ -303,7 +303,7 @@ export const UserInfoLayoutFields = ({ captionAbusiveCfhCountTxt, captionBanCoun
                     variant="0"
                     name="habboinfotool_but"
                     onPointerTap={onHabboinfotoolBut}
-                    layout={{ position: 'absolute', left: 0, width: 80, top: 66, height: 21, minWidth: 80, maxWidth: 80 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 66, height: 21, minWidth: 80, maxWidth: 80 }}
                 >
                     Habbo Info
                 </Button>

@@ -21,10 +21,10 @@ export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoT
 
     return (
         <Region layout={{ position: 'relative', width: 303, height: 193, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 303, top: 0, height: 193 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Region
                     name="static_info_text"
-                    layout={{ position: 'absolute', left: 10, width: 284, top: 9, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 10, right: 9, top: 9, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionStaticInfoText ?? t('tutorial.name_change.info.select')}
@@ -41,7 +41,7 @@ export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoT
                         value={inputValue}
                         onChange={setInputValue}
                         maxLength={15}
-                        layout={{ position: 'absolute', left: 8, width: 154, top: 5, height: 17 }}
+                        layout={{ position: 'absolute', left: 8, right: 5, top: 5, bottom: 3 }}
                     />
                 </Border>
                 <Button
@@ -49,7 +49,7 @@ export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoT
                     name="check_name_button"
                     tintColor="#bbbbbb"
                     onPointerTap={onCheckNameButton}
-                    layout={{ position: 'absolute', left: 185, width: 108, top: 41, height: 32, maxWidth: 108 }}
+                    layout={{ position: 'absolute', right: 10, width: 108, top: 41, height: 32, maxWidth: 108 }}
                 >
                     {t('tutorial.name_change.check')}
                 </Button>
@@ -76,7 +76,7 @@ export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoT
                     name="select_name_button"
                     tintColor="#bbbbbb"
                     onPointerTap={onSelectNameButton}
-                    layout={{ position: 'absolute', left: 10, width: 166, top: 152, height: 33 }}
+                    layout={{ position: 'absolute', left: 10, width: 166, bottom: 8, height: 33 }}
                 >
                     {t('tutorial.name_change.pick')}
                 </Button>
@@ -85,7 +85,7 @@ export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoT
                     name="cancel_selection_button"
                     tintColor="#bbbbbb"
                     onPointerTap={onCancelSelectionButton}
-                    layout={{ position: 'absolute', right: 10, width: 99, top: 152, height: 33 }}
+                    layout={{ position: 'absolute', right: 10, width: 99, bottom: 8, height: 33 }}
                 >
                     {t('generic.cancel')}
                 </Button>

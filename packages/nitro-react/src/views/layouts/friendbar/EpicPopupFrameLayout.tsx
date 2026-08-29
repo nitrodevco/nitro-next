@@ -17,7 +17,7 @@ export const EpicPopupFrameLayout = ({ layout, onClose, onCloseButton, srcConten
         <Frame
             variant="100"
             onClose={onClose}
-            layout={{ width: 215, height: 275, ...layout }}
+            layout={{ width: 215, height: 275, minWidth: 215, minHeight: 275, ...layout }}
         >
             <ThemeImage
                 name="content_static_bitmap"
@@ -26,14 +26,14 @@ export const EpicPopupFrameLayout = ({ layout, onClose, onCloseButton, srcConten
             />
             <ThemeImage
                 src={layoutImage('illumina_horizontal_separator.png')}
-                layout={{ position: 'absolute', left: 7, right: 9, bottom: 66, height: 14 }}
+                layout={{ position: 'absolute', left: 7, right: -3, bottom: 25, height: 14 }}
             />
             <Button
                 variant="101"
                 name="close_button"
                 tintColor="#bbbbbb"
                 onPointerTap={onCloseButton}
-                layout={{ position: 'absolute', right: -3, width: 140, bottom: 26, height: 48 }}
+                layout={{ position: 'absolute', right: -15, width: 140, bottom: -15, height: 48 }}
             >
                 {t('alert.close.button')}
             </Button>

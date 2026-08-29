@@ -35,13 +35,13 @@ export const CollectibleHubLayoutItemTemplateItem2 = ({ captionItemTitle, captio
                     <Region
                         name="item_hilight_outer"
                         backgroundColor="#82d1ed"
-                        layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
                     >
                         {(visibleItemHilightInner ?? true) && (
                             <Region
                                 name="item_hilight_inner"
                                 backgroundColor="#63c5e9"
-                                layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 16 }}
                             >
                                 {itemHilightInner}
                             </Region>
@@ -71,13 +71,13 @@ export const CollectibleHubLayoutItemTemplateItem2 = ({ captionItemTitle, captio
                             variant="3"
                             name="progress_color"
                             tintColor="#00910a"
-                            layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 14 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 14 }}
                         />
                     )}
                     {(visibleProgressText ?? true) && (
                         <Region
                             name="progress_text"
-                            layout={{ position: 'absolute', left: 2, width: 32, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: 2, width: 32, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionProgressText ?? '100%'}

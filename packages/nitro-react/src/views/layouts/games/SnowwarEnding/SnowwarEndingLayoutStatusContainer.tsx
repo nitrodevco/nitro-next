@@ -29,7 +29,7 @@ export const SnowwarEndingLayoutStatusContainer = ({ captionGamesLeft, captionGa
                 <Region layout={{ width: 15, height: 26, flexShrink: 0 }}>
                     <Region
                         name="games_left_stroke"
-                        layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionGamesLeftStroke ?? '3'}
@@ -38,7 +38,7 @@ export const SnowwarEndingLayoutStatusContainer = ({ captionGamesLeft, captionGa
                     </Region>
                     <Region
                         name="games_left"
-                        layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionGamesLeft ?? '3'}

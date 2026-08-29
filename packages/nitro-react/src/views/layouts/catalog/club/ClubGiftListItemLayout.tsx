@@ -22,7 +22,7 @@ export const ClubGiftListItemLayout = ({ captionBundleCounter, captionGiftDesc, 
             <Border
                 variant="0"
                 tintColor="#e3e3e3"
-                layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 58 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="gift_name"

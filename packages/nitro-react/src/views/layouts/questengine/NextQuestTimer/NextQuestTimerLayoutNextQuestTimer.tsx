@@ -25,7 +25,7 @@ export const NextQuestTimerLayoutNextQuestTimer = ({ captionDescTxt, captionMore
             name="next_quest_timer"
             onPointerTap={onNextQuestTimer}
             cursor="pointer"
-            layout={{ position: 'absolute', right: 0, width: 195, top: 0, height: 116, ...layout }}
+            layout={{ position: 'absolute', right: 0, width: 195, top: 0, bottom: 0, ...layout }}
         >
             <ThemeImage
                 name="quest_timer_expanded"

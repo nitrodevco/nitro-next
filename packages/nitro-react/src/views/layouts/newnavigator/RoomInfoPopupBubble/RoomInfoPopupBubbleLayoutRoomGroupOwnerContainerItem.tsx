@@ -21,7 +21,7 @@ export const RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItem = ({ captionGr
     return (
         <Region
             name="room_group_owner_container"
-            layout={{ width: 344, height: 30, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0, ...layout }}
         >
             {(visibleRoomGroupRegion ?? true) && (
                 <Region
@@ -29,7 +29,7 @@ export const RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItem = ({ captionGr
                     tooltip={t('navigator.tooltip.groupinfo.owner')}
                     onPointerTap={onRoomGroupRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 175, width: 170, top: 3, height: 30 }}
+                    layout={{ position: 'absolute', right: -1, width: 170, top: 3, bottom: -3 }}
                 >
                     <ThemeImage
                         src={layoutImage('newnavigator_icon_group.png')}
@@ -38,7 +38,7 @@ export const RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItem = ({ captionGr
                     {(visibleGroupName ?? true) && (
                         <Region
                             name="group_name"
-                            layout={{ position: 'absolute', left: 20, width: 170, top: 0, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 20, width: 170, top: 0, bottom: -3, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionGroupName ?? 'The Bubblers'}
@@ -55,7 +55,7 @@ export const RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItem = ({ captionGr
                     tooltip={t('navigator.tooltip.roominfo.owner')}
                     onPointerTap={onRoomOwnerRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 5, width: 150, top: 3, height: 30 }}
+                    layout={{ position: 'absolute', left: 5, width: 150, top: 3, bottom: -3 }}
                 >
                     <ThemeImage
                         src={layoutImage('friend_bar_friendlist_eye.png')}
@@ -64,7 +64,7 @@ export const RoomInfoPopupBubbleLayoutRoomGroupOwnerContainerItem = ({ captionGr
                     {(visibleOwnerName ?? true) && (
                         <Region
                             name="owner_name"
-                            layout={{ position: 'absolute', left: 20, width: 130, top: -2, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', right: 0, width: 130, top: -2, bottom: -1, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionOwnerName ?? 'Macklebee'}

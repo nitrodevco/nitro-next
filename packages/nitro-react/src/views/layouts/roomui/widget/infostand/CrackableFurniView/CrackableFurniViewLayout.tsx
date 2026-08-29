@@ -19,7 +19,7 @@ export interface CrackableFurniViewLayoutProps {
 export const CrackableFurniViewLayout = ({ infostandElementList, itemsButtonList, layout, onClose }: CrackableFurniViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 429, height: 306, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 429, top: 0, height: 306, flexDirection: 'column', gap: 10 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column', gap: 10 }}>
                 <Border
                     variant="2"
                     name="info_border"

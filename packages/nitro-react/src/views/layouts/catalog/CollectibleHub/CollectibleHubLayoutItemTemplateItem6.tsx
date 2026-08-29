@@ -44,14 +44,14 @@ export const CollectibleHubLayoutItemTemplateItem6 = ({ badgeImageWidget, captio
             <Border
                 variant="2"
                 tintColor="#a1a19b"
-                layout={{ position: 'absolute', left: 0, width: 466, top: 0, height: 50 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 {(visibleBorderOutline ?? true) && (
                     <Border
                         variant="3"
                         name="border_outline"
                         tintColor="#8f9db1"
-                        layout={{ position: 'absolute', left: 0, width: 466, top: 0, height: 50 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         {(visibleBorderBackground ?? true) && (
                             <Border
@@ -69,7 +69,7 @@ export const CollectibleHubLayoutItemTemplateItem6 = ({ badgeImageWidget, captio
                     variant="3"
                     name="item_border"
                     tintColor="#8f9db1"
-                    layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                    layout={{ position: 'absolute', left: 0, width: 50, top: 0, bottom: 0 }}
                 >
                     <Border
                         variant="3"
@@ -170,12 +170,12 @@ export const CollectibleHubLayoutItemTemplateItem6 = ({ badgeImageWidget, captio
                     <Border
                         variant="3"
                         tintColor="#8f9db1"
-                        layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 14 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 14 }}
                     />
                     {(visibleAmountText ?? true) && (
                         <Region
                             name="amount_text"
-                            layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionAmountText ?? 'x0'}

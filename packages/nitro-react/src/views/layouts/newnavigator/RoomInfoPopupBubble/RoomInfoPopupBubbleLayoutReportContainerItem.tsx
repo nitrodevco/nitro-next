@@ -17,14 +17,14 @@ export const RoomInfoPopupBubbleLayoutReportContainerItem = ({ layout, onReportR
     return (
         <Region
             name="report_container"
-            layout={{ width: 170, height: 20, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 20, flexShrink: 0, ...layout }}
         >
             {(visibleReportRegion ?? true) && (
                 <Region
                     name="report_region"
                     onPointerTap={onReportRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, bottom: 0 }}
                 >
                     {(visibleReportIcon ?? true) && (
                         <ThemeImage
@@ -35,7 +35,7 @@ export const RoomInfoPopupBubbleLayoutReportContainerItem = ({ layout, onReportR
                     )}
                 </Region>
             )}
-            <Region layout={{ position: 'absolute', left: 20, width: 202, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', left: 20, width: 202, top: 0, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 {t('navigator.room.popup.report.room')}
             </Region>
         </Region>

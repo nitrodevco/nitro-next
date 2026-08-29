@@ -21,7 +21,7 @@ export const RoomSettingsLayoutContents = ({ itemsContents, layout }: RoomSettin
     return (
         <ScrollArea
             orientation="vertical"
-            layout={{ position: 'absolute', left: 4, right: 5, top: 0, bottom: 35, ...layout }}
+            layout={{ position: 'absolute', left: 4, right: -7, top: 0, bottom: -6, ...layout }}
         >
             <Region
                 name="contents"

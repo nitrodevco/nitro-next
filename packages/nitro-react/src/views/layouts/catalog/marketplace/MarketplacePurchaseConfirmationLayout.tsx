@@ -35,9 +35,9 @@ export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, capti
             caption={t('catalog.marketplace.confirm_title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 279, height: 255, ...layout }}
+            layout={{ width: 279, height: 255, minWidth: 279, minHeight: 255, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 38 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: -6, top: 0, bottom: -3 }}>
                 <Border
                     variant="0"
                     tintColor="#f1f1f1"

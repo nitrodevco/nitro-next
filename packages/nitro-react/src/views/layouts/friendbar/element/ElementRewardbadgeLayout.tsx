@@ -11,7 +11,7 @@ export interface ElementRewardbadgeLayoutProps {
 export const ElementRewardbadgeLayout = ({ captionBadgeDesc, colorableTextColor, layout, srcBadgeImage }: ElementRewardbadgeLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 250, height: 46, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 46 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="badge_image"
                     src={srcBadgeImage}
@@ -19,7 +19,7 @@ export const ElementRewardbadgeLayout = ({ captionBadgeDesc, colorableTextColor,
                 />
                 <Region
                     name="badge_desc"
-                    layout={{ position: 'absolute', left: 50, width: 188, top: 7, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 12, width: 188, top: 7, bottom: 6, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionBadgeDesc ?? 'klj hklj hlkj hlkj hkljh lkjh kljh lkjh klj hlkj hlkjh kljh'}

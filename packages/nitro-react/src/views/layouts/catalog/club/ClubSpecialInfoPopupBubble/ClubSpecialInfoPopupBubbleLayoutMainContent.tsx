@@ -24,11 +24,11 @@ export const ClubSpecialInfoPopupBubbleLayoutMainContent = ({ caption_247Bhccent
             <Border
                 variant="3"
                 tintColor="#eeeeee"
-                layout={{ width: 346, height: 120, flexShrink: 0 }}
+                layout={{ alignSelf: 'stretch', height: 120, flexShrink: 0 }}
             >
                 <Region
                     name="%24%7Bhccenter.breakdown.title%7D"
-                    layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={caption_247BhccenterBreakdownTitle7D ?? t('hccenter.breakdown.title')}
@@ -37,35 +37,35 @@ export const ClubSpecialInfoPopupBubbleLayoutMainContent = ({ caption_247Bhccent
                 </Region>
                 <Region
                     name="info_creditsspent"
-                    layout={{ position: 'absolute', left: 0, width: 340, top: 20, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 20, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionInfoCreditsspent ?? 'Lorem ipsum'}
                 </Region>
                 <Region
                     name="info_factor"
-                    layout={{ position: 'absolute', left: 0, width: 340, top: 40, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 40, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionInfoFactor ?? 'Lorem ipsum'}
                 </Region>
                 <Region
                     name="info_streakbonus"
-                    layout={{ position: 'absolute', left: 0, width: 340, top: 60, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 60, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionInfoStreakbonus ?? 'Lorem ipsum'}
                 </Region>
                 <Border
                     variant="1"
-                    layout={{ position: 'absolute', left: 0, width: 340, top: 79, height: 1 }}
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 79, height: 1 }}
                 />
                 <Region
                     name="info_total"
-                    layout={{ position: 'absolute', left: 0, width: 340, top: 80, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 6, bottom: 10, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionInfoTotal ?? 'Lorem ipsum'}
                 </Region>
                 <Region
                     name="special_infolink"
-                    layout={{ position: 'absolute', right: 11, width: 190, top: 100, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}
+                    layout={{ position: 'absolute', right: 11, width: 190, bottom: 3, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}
                     onPointerTap={onSpecialInfolink}
                     cursor="pointer"
                 >

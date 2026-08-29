@@ -28,7 +28,7 @@ export const ChestUpgradeLayoutContent = ({ captionPlus, captionPriceCredits, ca
     return (
         <Region
             name="content"
-            layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 38, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -10, top: 8, bottom: -3, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsContent ?? (
                 <>
@@ -83,7 +83,7 @@ export const ChestUpgradeLayoutContent = ({ captionPlus, captionPriceCredits, ca
                         name="purchase_cost_box"
                         layout={{ width: 88, height: 25, flexShrink: 0 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 25, flexDirection: 'row', gap: 2 }}>
+                        <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', gap: 2 }}>
                             <Region
                                 name="price_credits"
                                 layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

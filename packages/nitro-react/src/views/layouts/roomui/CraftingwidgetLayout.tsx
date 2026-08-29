@@ -39,7 +39,7 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
             caption={t('crafting.title')}
             tintColor="#2d4f64"
             onClose={onClose}
-            layout={{ width: 543, height: 407, ...layout }}
+            layout={{ width: 543, height: 407, minWidth: 543, minHeight: 407, ...layout }}
         >
             <ThemeImage
                 src={layoutImage('craft_craft_bg.png')}
@@ -71,7 +71,7 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
             </Region>
             <Region
                 name="header_mixer"
-                layout={{ position: 'absolute', left: 292, width: 215, bottom: 346, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 292, width: 215, bottom: 305, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionHeaderMixer ?? 'Spellbook wdfsdf ef ewfwe fwfe wef ewf wefwe'}
@@ -156,7 +156,7 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
                             name="tooltip"
                             onPointerTap={onTooltip}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         >
                             {tooltip}
                         </Region>

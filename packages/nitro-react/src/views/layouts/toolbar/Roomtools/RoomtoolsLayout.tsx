@@ -18,24 +18,24 @@ export const RoomtoolsLayout = ({ layout, onZoomRegion, roominfoRegion, srcIconZ
 
     return (
         <Region layout={{ position: 'relative', width: 192, height: 32, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 32 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Region
                     name="zoom_region"
                     tooltip={t('toolbar.icon.tooltip.zoom')}
                     onPointerTap={onZoomRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 29, top: 2, height: 29 }}
+                    layout={{ position: 'absolute', left: 0, width: 29, top: 2, bottom: 1 }}
                 >
                     <Border
                         variant="6"
                         tintColor="#55534e"
-                        layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <Border
                             variant="3"
                             tintColor="#201e19"
                             blend={0.8}
-                            layout={{ position: 'absolute', left: 3, width: 23, top: 3, height: 22 }}
+                            layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 4 }}
                         />
                         <ThemeImage
                             name="icon_zoom_off"

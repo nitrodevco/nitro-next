@@ -22,7 +22,7 @@ export const ChatReportLayout = ({ captionRoomName, itemsChatItems, layout, onCl
             name="emergency_help_request"
             caption={t('help.emergency.main.title')}
             onClose={onClose}
-            layout={{ width: 380, height: 491, ...layout }}
+            layout={{ width: 380, height: 491, minWidth: 380, minHeight: 491, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region layout={{ position: 'absolute', left: 9, minWidth: 360, top: 8, minHeight: 1423, flexDirection: 'column', gap: 8 }}>
@@ -72,7 +72,7 @@ export const ChatReportLayout = ({ captionRoomName, itemsChatItems, layout, onCl
                     name="submit_button"
                     tintColor="#bbbbbb"
                     onPointerTap={onSubmitButton}
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 135, top: 409, height: 43 }}
+                    layout={{ position: 'absolute', marginLeft: 5.5, marginRight: -5.5, width: 135, top: 409, height: 43 }}
                 >
                     {t('help.emergency.chat_report.submit.button')}
                 </Button>

@@ -22,11 +22,11 @@ export const CollectibleHubLayoutLoadedContent = ({ captionMintingDescription, c
         <Region
             name="loaded_content"
             backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 430, overflow: 'hidden', ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, overflow: 'hidden', ...layout }}
         >
             <Region
                 name="category_minting_header_region"
-                layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 58, overflow: 'hidden' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 58, overflow: 'hidden' }}
             >
                 <Region
                     name="category_name_region"
@@ -36,7 +36,7 @@ export const CollectibleHubLayoutLoadedContent = ({ captionMintingDescription, c
                 >
                     <Region
                         name="minting_header"
-                        layout={{ position: 'absolute', left: 0, width: 130, top: 0, height: 17, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 130, top: 0, bottom: 0, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionMintingHeader ?? t('shop.minting.info.title')}

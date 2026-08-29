@@ -21,7 +21,8 @@ export const RoomSettingsLayout = ({ contents, layout, onClose }: RoomSettingsLa
             caption={t('navigator.roomsettings')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 341, height: 584, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 341, height: 584, minWidth: 341, maxWidth: 341, minHeight: 584, ...layout }}
         >
             <RoomSettingsLayoutContents {...contents} />
         </Frame>

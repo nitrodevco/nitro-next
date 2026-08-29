@@ -20,7 +20,8 @@ export const ReportWindowLayout = ({ layout, list, onClose }: ReportWindowLayout
             name="report_user"
             caption={t('guide.help.request.emergency.title')}
             onClose={onClose}
-            layout={{ width: 282, height: 347, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 282, height: 347, minWidth: 282, maxWidth: 282, minHeight: 50, ...layout }}
         >
             <ReportWindowLayoutList {...list} />
         </Frame>

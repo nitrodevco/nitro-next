@@ -16,11 +16,11 @@ export const BadgeEditorLayoutPartEdit = ({ captionLabelBase, captionLabelColors
     return (
         <Region
             name="part_edit"
-            layout={{ position: 'absolute', left: 128, width: 264, top: 0, height: 305, ...layout }}
+            layout={{ position: 'absolute', left: 128, width: 264, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="part_edit_top_labels"
-                layout={{ position: 'absolute', left: 0, width: 264, top: 0, height: 29 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
             >
                 <Region
                     name="label_symbol"

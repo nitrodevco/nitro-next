@@ -19,7 +19,7 @@ export const PackagecardNewOpenedLayout = ({ elementList, layout, onClose }: Pac
             caption={t('widget.furni.present.window.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 342, height: 360, ...layout }}
+            layout={{ width: 342, height: 360, minWidth: 275, minHeight: 150, ...layout }}
         >
             <Region
                 backgroundColor="#e9e9e9"

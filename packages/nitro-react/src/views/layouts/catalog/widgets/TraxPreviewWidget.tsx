@@ -25,19 +25,19 @@ export const TraxPreviewWidget = ({ captionPlayPreviewText, layout, onListen }: 
             <Border
                 variant="4"
                 tintColor="#cccccc"
-                layout={{ position: 'absolute', left: 0, width: 150, top: 0, height: 47 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <Button
                 variant="3"
                 name="listen"
                 onPointerTap={onListen}
-                layout={{ position: 'absolute', left: 79, width: 66, top: 13, height: 22, minWidth: 66, maxWidth: 66 }}
+                layout={{ position: 'absolute', right: 5, width: 66, bottom: 12, height: 22, minWidth: 66, maxWidth: 66 }}
             >
                 {t('play_preview_button')}
             </Button>
             <Region
                 name="play_preview_text"
-                layout={{ position: 'absolute', left: 9, width: 85, top: 17, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 9, width: 85, alignSelf: 'center', marginTop: 2, marginBottom: -2, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionPlayPreviewText ?? t('play_preview')}

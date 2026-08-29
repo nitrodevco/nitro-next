@@ -83,7 +83,7 @@ export const SeasonalCalendarLayoutRareTeaserCont = ({ bg, bottom, captionTeaser
                     name="click_region"
                     onPointerTap={onClickRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {clickRegion}
                 </Region>
@@ -117,7 +117,7 @@ export const SeasonalCalendarLayoutRareTeaserCont = ({ bg, bottom, captionTeaser
                     name="click_region"
                     onPointerTap={onClickRegion2}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {clickRegion2}
                 </Region>
@@ -151,7 +151,7 @@ export const SeasonalCalendarLayoutRareTeaserCont = ({ bg, bottom, captionTeaser
                     name="click_region"
                     onPointerTap={onClickRegion3}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {clickRegion3}
                 </Region>

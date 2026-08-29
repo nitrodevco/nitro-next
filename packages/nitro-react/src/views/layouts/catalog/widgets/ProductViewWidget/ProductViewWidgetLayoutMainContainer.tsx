@@ -28,7 +28,7 @@ export const ProductViewWidgetLayoutMainContainer = ({ captionCtlgDescription, c
     return (
         <Region
             name="main_container"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <ThemeImage
                 name="ctlg_teaserimg_1"
@@ -113,7 +113,7 @@ export const ProductViewWidgetLayoutMainContainer = ({ captionCtlgDescription, c
             <WidgetSlot
                 widgetType="product_image"
                 name="product_image_widget"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 200 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 200 }}
             >
                 {productImageWidget}
             </WidgetSlot>

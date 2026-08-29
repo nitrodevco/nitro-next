@@ -28,7 +28,8 @@ export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionG
             name="user_ongoing"
             caption="Getting helped by"
             onClose={onClose}
-            layout={{ width: 282, height: 345, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 282, height: 345, minWidth: 282, maxWidth: 282, minHeight: 345, ...layout }}
         >
             <Border
                 variant="103"
@@ -75,7 +76,7 @@ export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionG
             </Border>
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 5, width: 270, top: 65, bottom: 125 }}
+                layout={{ position: 'absolute', left: 5, width: 270, top: 65, bottom: 84 }}
             >
                 <Region
                     name="chat_list"
@@ -89,7 +90,7 @@ export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionG
                     </Region>
                 </Region>
             </ScrollArea>
-            <Region layout={{ position: 'absolute', left: 0, width: 280, bottom: 46, height: 79 }}>
+            <Region layout={{ position: 'absolute', left: 0, width: 280, bottom: 5, height: 79 }}>
                 <ThemeImage
                     src={layoutImage('illumina_horizontal_separator.png')}
                     layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 2, minWidth: 280, maxWidth: 280 }}

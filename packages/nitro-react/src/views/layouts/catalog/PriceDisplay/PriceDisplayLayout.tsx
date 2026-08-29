@@ -20,7 +20,7 @@ export const PriceDisplayLayout = ({ itemsPriceBox, layout }: PriceDisplayLayout
         <Region layout={{ position: 'relative', width: 60, height: 21, ...layout }}>
             <Region
                 name="price_box"
-                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', gap: 1 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', gap: 1 }}
             >
                 {itemsPriceBox ?? (
                     <>

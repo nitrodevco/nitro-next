@@ -23,14 +23,14 @@ export const PremiumPurchaseConfirmationLayoutContent = ({ itemsPrice, layout, t
     return (
         <Region
             name="content"
-            layout={{ position: 'absolute', left: 12, right: 12, top: 20, height: 268, ...layout }}
+            layout={{ position: 'absolute', left: 12, right: 0, top: 20, height: 268, ...layout }}
         >
             <PremiumPurchaseConfirmationLayoutTopBody {...topBody} />
             <Border
                 variant="15"
                 name="purchase_cost_box"
                 tintColor="#f7e7ff"
-                layout={{ position: 'absolute', left: 0, width: 366, bottom: 10, height: 38 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 10, height: 38 }}
             >
                 <Region layout={{ position: 'absolute', left: 10, width: 241, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText

@@ -23,14 +23,14 @@ export const GrsMainWindowNewLayout = ({ captionLoadingText, layout, onClose, ta
             caption={t('navigator.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 400, height: 474, ...layout }}
+            layout={{ width: 400, height: 474, minWidth: 400, minHeight: 215, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <GrsMainWindowNewLayoutTabbedview {...tabbedview} />
                 {(visibleLoadingText ?? false) && (
                     <Region
                         name="loading_text"
-                        layout={{ position: 'absolute', marginLeft: -67, marginRight: 67, width: 104, top: 210, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -61, marginRight: 61, width: 104, top: 210, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         {captionLoadingText ?? t('navigator.loading')}
                     </Region>

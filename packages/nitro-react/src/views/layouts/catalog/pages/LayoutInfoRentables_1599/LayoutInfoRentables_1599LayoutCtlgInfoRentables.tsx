@@ -23,7 +23,7 @@ export const LayoutInfoRentables_1599LayoutCtlgInfoRentables = ({ captionCtlgTex
     return (
         <Region
             name="ctlg_info_rentables"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="2"

@@ -20,13 +20,13 @@ export const RosBannedUserLayout = ({ bgRegion, captionUserNameTxt, layout, onBg
             <Region
                 name="user_container"
                 backgroundColor="#cc0000"
-                layout={{ position: 'absolute', left: 0, width: 111, top: 0, height: 20 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="bg_region"
                     onPointerTap={onBgRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 111, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {bgRegion}
                 </Region>

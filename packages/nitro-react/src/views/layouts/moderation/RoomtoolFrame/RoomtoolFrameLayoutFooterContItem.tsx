@@ -20,7 +20,7 @@ export const RoomtoolFrameLayoutFooterContItem = ({ layout, onSendCautionBut, on
                     variant="0"
                     name="send_caution_but"
                     onPointerTap={onSendCautionBut}
-                    layout={{ position: 'absolute', left: 0, width: 97, top: 0, height: 21, minWidth: 97, maxWidth: 97 }}
+                    layout={{ position: 'absolute', left: 0, width: 97, top: 0, bottom: 0, minWidth: 97, maxWidth: 97 }}
                 >
                     Send Caution
                 </Button>
@@ -30,7 +30,7 @@ export const RoomtoolFrameLayoutFooterContItem = ({ layout, onSendCautionBut, on
                     variant="0"
                     name="send_message_but"
                     onPointerTap={onSendMessageBut}
-                    layout={{ position: 'absolute', left: 131, width: 97, top: 0, height: 21, minWidth: 97, maxWidth: 97 }}
+                    layout={{ position: 'absolute', left: 131, width: 97, top: 0, bottom: 0, minWidth: 97, maxWidth: 97 }}
                 >
                     Send message
                 </Button>

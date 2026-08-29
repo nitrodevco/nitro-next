@@ -27,7 +27,8 @@ export const IssueHandlerLayout = ({ captionHandleNextText, captionSanctionLabel
             caption="Issue handling"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 750, height: 650, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 750, height: 650, minWidth: 750, maxWidth: 750, minHeight: 390, ...layout }}
         >
             <Dropmenu
                 variant="100"
@@ -43,7 +44,7 @@ export const IssueHandlerLayout = ({ captionHandleNextText, captionSanctionLabel
             >
                 <Region
                     name="sanction_label"
-                    layout={{ position: 'absolute', left: 0, width: 215, top: 0, height: 17, maxWidth: 215, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, maxWidth: 215, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionSanctionLabel ?? ''}
@@ -110,7 +111,7 @@ export const IssueHandlerLayout = ({ captionHandleNextText, captionSanctionLabel
             <Region
                 name="chat_cont"
                 backgroundColor="#418db0"
-                layout={{ position: 'absolute', left: 290, width: 445, top: 95, bottom: 75 }}
+                layout={{ position: 'absolute', left: 290, width: 445, top: 95, bottom: 34 }}
             >
                 <ScrollArea
                     orientation="vertical"

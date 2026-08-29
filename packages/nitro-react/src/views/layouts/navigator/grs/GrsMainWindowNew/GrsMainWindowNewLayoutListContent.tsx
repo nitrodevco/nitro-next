@@ -32,7 +32,7 @@ export const GrsMainWindowNewLayoutListContent = ({ captionNoRoomsFound, caption
             <Region
                 name="guest_rooms"
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 370, top: 0, bottom: 0, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <ScrollArea
                     orientation="vertical"
@@ -134,7 +134,7 @@ export const GrsMainWindowNewLayoutListContent = ({ captionNoRoomsFound, caption
             <Region
                 name="official_rooms"
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 370, top: 0, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ScrollArea
                     orientation="vertical"

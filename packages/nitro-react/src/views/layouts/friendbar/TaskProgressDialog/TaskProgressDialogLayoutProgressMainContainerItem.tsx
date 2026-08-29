@@ -37,7 +37,7 @@ export const TaskProgressDialogLayoutProgressMainContainerItem = ({ captionProgr
             {(visibleProgressContainer ?? true) && (
                 <Region
                     name="progress_container"
-                    layout={{ position: 'absolute', left: 0, width: 350, top: 0, height: 16 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 16 }}
                 >
                     {(visibleUnachievedLeft ?? true) && (
                         <ThemeImage
@@ -99,7 +99,7 @@ export const TaskProgressDialogLayoutProgressMainContainerItem = ({ captionProgr
                 <WidgetSlot
                     widgetType="separator"
                     name="progress_separator"
-                    layout={{ position: 'absolute', left: 0, width: 350, top: 46, height: 2 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 46, height: 2 }}
                 >
                     {progressSeparator}
                 </WidgetSlot>

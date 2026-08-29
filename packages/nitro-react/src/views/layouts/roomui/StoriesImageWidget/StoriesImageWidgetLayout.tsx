@@ -40,7 +40,7 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
 
     return (
         <Region layout={{ position: 'relative', width: 502, height: 455, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 502, top: 0, height: 455 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 {(visiblePhotoWidgetBg ?? false) && (
                     <Border
                         variant="2"
@@ -96,7 +96,7 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                             tooltip={t('info.share.button')}
                             tintColor="#4eaac1"
                             onPointerTap={onShareButton}
-                            layout={{ position: 'absolute', left: 0, width: 24, top: 0, height: 28 }}
+                            layout={{ position: 'absolute', left: 0, width: 24, top: 0, bottom: 0 }}
                         />
                         <ThemeImage
                             src={layoutImage('icons_share.png')}
@@ -112,7 +112,7 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                         blend={0.7}
                         layout={{ position: 'absolute', left: 13, width: 218, top: 65, height: 116 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 0, width: 218, top: 0, height: 116 }}>
+                        <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                             <Region layout={{ position: 'absolute', left: 8, width: 200, top: 8, height: 17, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                                 <ThemeText
                                     text={t('info.share.link.info')}
@@ -135,7 +135,7 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                                     name="fbShare"
                                     onPointerTap={onFbShare}
                                     cursor="pointer"
-                                    layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32, minWidth: 32, minHeight: 32 }}
+                                    layout={{ position: 'absolute', left: 0, width: 32, top: 0, bottom: 0, minWidth: 32, minHeight: 32 }}
                                 >
                                     <ThemeImage
                                         name="facebookIcon"
@@ -147,7 +147,7 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                                     name="twitterShare"
                                     onPointerTap={onTwitterShare}
                                     cursor="pointer"
-                                    layout={{ position: 'absolute', left: 38, width: 32, top: 0, height: 32, minWidth: 32, minHeight: 32 }}
+                                    layout={{ position: 'absolute', left: 38, width: 32, top: 0, bottom: 0, minWidth: 32, minHeight: 32 }}
                                 >
                                     <ThemeImage
                                         name="twitterIcon"

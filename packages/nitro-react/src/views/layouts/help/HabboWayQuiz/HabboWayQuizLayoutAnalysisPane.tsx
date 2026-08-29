@@ -46,7 +46,7 @@ export const HabboWayQuizLayoutAnalysisPane = ({ captionAnswer, captionExplanati
                             />
                             <Region
                                 name="answer"
-                                layout={{ position: 'absolute', left: 15, width: 433, top: 0, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 15, width: 433, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionAnswer ?? 'Lorem ipsum answer text, not quite as long as it gets. Lorem ipsum answer text, not quite as long as it gets.'}
@@ -66,7 +66,7 @@ export const HabboWayQuizLayoutAnalysisPane = ({ captionAnswer, captionExplanati
                             />
                             <Region
                                 name="explanation"
-                                layout={{ position: 'absolute', left: 42, width: 393, top: 0, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 42, width: 393, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
                                     text={captionExplanation ?? 'Lorem ipsum explanation text, not quite as long as it gets. Lorem ipsum explanation text, not quite as long as it gets.'}

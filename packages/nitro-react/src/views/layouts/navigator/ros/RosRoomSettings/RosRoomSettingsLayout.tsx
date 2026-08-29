@@ -27,7 +27,7 @@ export const RosRoomSettingsLayout = ({ contentContainer, layout, onClose, onTab
             caption={t('navigator.roomsettings')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 341, height: 477, ...layout }}
+            layout={{ width: 341, height: 477, minWidth: 341, minHeight: 477, ...layout }}
         >
             <TabContext
                 variant="3"
@@ -39,7 +39,7 @@ export const RosRoomSettingsLayout = ({ contentContainer, layout, onClose, onTab
                     name="tab_1"
                     selected={selectedTabContext === 'tab_1'}
                     onPointerTap={onTab1}
-                    layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 32 }}
+                    layout={{ position: 'absolute', left: 0, width: 185, top: 0, bottom: 0 }}
                 >
                     {t('navigator.roomsettings.tab.1')}
                 </TabButton>
@@ -48,7 +48,7 @@ export const RosRoomSettingsLayout = ({ contentContainer, layout, onClose, onTab
                     name="tab_2"
                     selected={selectedTabContext === 'tab_2'}
                     onPointerTap={onTab2}
-                    layout={{ position: 'absolute', left: 185, width: 185, top: 0, height: 32 }}
+                    layout={{ position: 'absolute', left: 185, width: 185, top: 0, bottom: 0 }}
                 >
                     {t('navigator.roomsettings.tab.2')}
                 </TabButton>
@@ -57,7 +57,7 @@ export const RosRoomSettingsLayout = ({ contentContainer, layout, onClose, onTab
                     name="tab_3"
                     selected={selectedTabContext === 'tab_3'}
                     onPointerTap={onTab3}
-                    layout={{ position: 'absolute', left: 370, width: 185, top: 0, height: 32 }}
+                    layout={{ position: 'absolute', left: 370, width: 185, top: 0, bottom: 0 }}
                 >
                     {t('navigator.roomsettings.tab.3')}
                 </TabButton>
@@ -66,7 +66,7 @@ export const RosRoomSettingsLayout = ({ contentContainer, layout, onClose, onTab
                     name="tab_4"
                     selected={selectedTabContext === 'tab_4'}
                     onPointerTap={onTab4}
-                    layout={{ position: 'absolute', left: 555, width: 186, top: 0, height: 32 }}
+                    layout={{ position: 'absolute', left: 555, width: 186, top: 0, bottom: 0 }}
                 >
                     {t('navigator.roomsettings.tab.4')}
                 </TabButton>
@@ -75,7 +75,7 @@ export const RosRoomSettingsLayout = ({ contentContainer, layout, onClose, onTab
                     name="tab_5"
                     selected={selectedTabContext === 'tab_5'}
                     onPointerTap={onTab5}
-                    layout={{ position: 'absolute', left: 741, width: 185, top: 0, height: 32 }}
+                    layout={{ position: 'absolute', left: 741, width: 185, top: 0, bottom: 0 }}
                 >
                     {t('navigator.roomsettings.tab.5')}
                 </TabButton>

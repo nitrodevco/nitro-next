@@ -19,7 +19,7 @@ export const HabbiconHubLayoutTrayContainer = ({ captionTraySummary, captionTray
         (visibleTrayContainer ?? false) && (
             <Region
                 name="tray_container"
-                layout={{ position: 'absolute', left: 7, width: 540, top: 146, bottom: 44, ...layout }}
+                layout={{ position: 'absolute', left: 7, width: 540, top: 146, bottom: 3, ...layout }}
             >
                 <Border
                     variant="3"

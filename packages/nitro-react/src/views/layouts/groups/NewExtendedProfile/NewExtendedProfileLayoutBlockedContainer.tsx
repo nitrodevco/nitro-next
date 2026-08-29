@@ -32,7 +32,7 @@ export const NewExtendedProfileLayoutBlockedContainer = ({ blockedBg, blockedBg2
                 <Region
                     name="blocked_bg"
                     backgroundColor="#898985"
-                    layout={{ position: 'absolute', left: 0, width: 519, top: 0, height: 497 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 497 }}
                 >
                     {blockedBg}
                 </Region>

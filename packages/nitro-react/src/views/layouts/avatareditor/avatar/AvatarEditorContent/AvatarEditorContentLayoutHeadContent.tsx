@@ -28,7 +28,7 @@ export const AvatarEditorContentLayoutHeadContent = ({ layout, onTabAccessories,
                     name="tab_hair"
                     onPointerTap={onTabHair}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 6, width: 47, top: 0, height: 35 }}
+                    layout={{ position: 'absolute', left: 6, width: 47, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="tab_hair"
@@ -40,7 +40,7 @@ export const AvatarEditorContentLayoutHeadContent = ({ layout, onTabAccessories,
                     name="tab_hat"
                     onPointerTap={onTabHat}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 58, width: 47, top: 0, height: 35 }}
+                    layout={{ position: 'absolute', left: 58, width: 47, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="tab_hat"
@@ -52,7 +52,7 @@ export const AvatarEditorContentLayoutHeadContent = ({ layout, onTabAccessories,
                     name="tab_accessories"
                     onPointerTap={onTabAccessories}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 110, width: 47, top: 0, height: 35 }}
+                    layout={{ position: 'absolute', left: 110, width: 47, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="tab_accessories"
@@ -64,7 +64,7 @@ export const AvatarEditorContentLayoutHeadContent = ({ layout, onTabAccessories,
                     name="tab_eyewear"
                     onPointerTap={onTabEyewear}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 162, width: 47, top: 0, height: 35 }}
+                    layout={{ position: 'absolute', left: 162, width: 47, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="tab_eyewear"
@@ -76,7 +76,7 @@ export const AvatarEditorContentLayoutHeadContent = ({ layout, onTabAccessories,
                     name="tab_masks"
                     onPointerTap={onTabMasks}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 214, width: 47, top: 0, height: 35 }}
+                    layout={{ position: 'absolute', left: 214, width: 47, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="tab_masks"

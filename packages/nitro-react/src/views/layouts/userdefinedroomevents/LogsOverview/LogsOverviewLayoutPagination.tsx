@@ -26,7 +26,7 @@ export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPagi
         >
             <Region
                 name="footer_buttons_left"
-                layout={{ position: 'absolute', left: 17, width: 113, top: 0, height: 30, flexDirection: 'row', gap: 13 }}
+                layout={{ position: 'absolute', left: 17, width: 113, top: 0, bottom: 0, flexDirection: 'row', gap: 13 }}
             >
                 {itemsFooterButtonsLeft ?? (
                     <>
@@ -37,7 +37,7 @@ export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPagi
             </Region>
             <Region
                 name="footer_buttons_right"
-                layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10 }}
+                layout={{ position: 'absolute', right: 17, width: 110, top: 0, bottom: 0, flexDirection: 'row', gap: 10 }}
             >
                 {itemsFooterButtonsRight ?? (
                     <>

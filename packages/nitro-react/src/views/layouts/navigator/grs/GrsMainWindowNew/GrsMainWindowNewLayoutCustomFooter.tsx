@@ -36,7 +36,7 @@ export const GrsMainWindowNewLayoutCustomFooter = ({ adCont, captionAdCaption, c
                 name="me_footer"
                 onPointerTap={onMeFooter}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 37 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 37 }}
             >
                 <Border
                     variant="0"
@@ -70,7 +70,7 @@ export const GrsMainWindowNewLayoutCustomFooter = ({ adCont, captionAdCaption, c
                 name="ad_footer"
                 onPointerTap={onAdFooter}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 85 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 85 }}
             >
                 {(visibleAdCaption ?? false) && (
                     <Region
@@ -94,7 +94,7 @@ export const GrsMainWindowNewLayoutCustomFooter = ({ adCont, captionAdCaption, c
                 name="room_ads_footer"
                 onPointerTap={onRoomAdsFooter}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 37 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 37 }}
             >
                 <Border
                     variant="0"

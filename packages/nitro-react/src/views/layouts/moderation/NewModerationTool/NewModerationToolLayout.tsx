@@ -25,12 +25,12 @@ export const NewModerationToolLayout = ({ layout, onBanUserBtn, onClose, onGiveC
             caption={t('moderation.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 238, height: 206, ...layout }}
+            layout={{ width: 238, height: 206, minWidth: 238, minHeight: 206, ...layout }}
         >
             {(visibleMainView ?? false) && (
                 <Region
                     name="main_view"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33 }}
+                    layout={{ position: 'absolute', left: 0, right: -12, top: 0, bottom: -8 }}
                 >
                     <Region layout={{ position: 'absolute', left: 11, right: 12, top: 7, height: 154, flexDirection: 'column', gap: 7 }}>
                         <Button

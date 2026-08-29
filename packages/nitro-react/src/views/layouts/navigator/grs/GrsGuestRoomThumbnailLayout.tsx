@@ -19,7 +19,7 @@ export const GrsGuestRoomThumbnailLayout = ({ layout, picframe, srcEnterRoom, ti
             >
                 <Region
                     name="picframe"
-                    layout={{ position: 'absolute', left: 0, width: 64, top: 3, height: 64 }}
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 3, bottom: 3 }}
                 >
                     {picframe}
                 </Region>

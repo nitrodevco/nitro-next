@@ -13,12 +13,12 @@ export const RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItem = ({ captio
     return (
         <Region
             name="room_name_desc_owner_container"
-            layout={{ width: 219, height: 112, flexShrink: 0, ...layout }}
+            layout={{ width: 219, alignSelf: 'stretch', flexShrink: 0, ...layout }}
         >
             {(visibleRoomName ?? true) && (
                 <Region
                     name="room_name"
-                    layout={{ position: 'absolute', left: 6, width: 214, top: 0, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 6, right: -1, top: 0, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionRoomName ?? 'ROOM NAME PLACEHOLDER LOREM IPSUM DOLOR SIT AMET'}
@@ -30,7 +30,7 @@ export const RoomInfoPopupBubbleLayoutRoomNameDescOwnerContainerItem = ({ captio
             {(visibleRoomDesc ?? true) && (
                 <Region
                     name="room_desc"
-                    layout={{ position: 'absolute', left: 5, width: 214, top: 33, height: 80, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 5, right: 0, bottom: -1, height: 80, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionRoomDesc ?? 'ROOM DESC PLACEHOLDER LOREM IPSUM DOLOR SIT AMET'}

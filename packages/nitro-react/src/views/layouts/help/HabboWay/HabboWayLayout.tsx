@@ -24,14 +24,14 @@ export const HabboWayLayout = ({ finalPage, layout, onFrameClose, pageContainer,
 
     return (
         <Region layout={{ position: 'relative', width: 500, height: 500, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 500, minHeight: 50 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minHeight: 50 }}>
                 <Frame
                     variant="101"
                     onClose={onFrameClose}
-                    layout={{ position: 'absolute', left: 0, width: 500, top: 10, height: 470 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 10, height: 470 }}
                 >
                     <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                        <Region layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, top: 0, flexDirection: 'row', gap: 2 }}>
+                        <Region layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, top: 0, flexDirection: 'row', gap: 2 }}>
                             <WidgetSlot
                                 widgetType="progress_indicator"
                                 name="page_widget"
@@ -54,7 +54,7 @@ export const HabboWayLayout = ({ finalPage, layout, onFrameClose, pageContainer,
                         )}
                     </Region>
                 </Frame>
-                <Region layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 80 }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80 }}>
                     <Region layout={{ position: 'absolute', left: 0, width: 145, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('habbo.way.frame.subtitle')}

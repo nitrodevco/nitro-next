@@ -32,7 +32,7 @@ export const SearchTreeDropdownLayoutContentBoxItem = ({ captionNodeName, itemsN
             {(visibleEmptyContainer ?? false) && (
                 <Region
                     name="empty_container"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 52 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Region layout={{ position: 'absolute', left: 0, top: 19, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <ThemeText
@@ -47,9 +47,9 @@ export const SearchTreeDropdownLayoutContentBoxItem = ({ captionNodeName, itemsN
                 <Border
                     variant="3"
                     name="variable_overview_template"
-                    layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 36 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 36 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, flexDirection: 'column' }}>
+                    <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}>
                         {(visibleSpacing ?? true) && (
                             <Region
                                 name="spacing"
@@ -88,7 +88,7 @@ export const SearchTreeDropdownLayoutContentBoxItem = ({ captionNodeName, itemsN
                     backgroundColor="#ffffff"
                     onPointerTap={onNodeTemplate}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
                 >
                     {(visibleRightTriangleIcon ?? true) && (
                         <Icon

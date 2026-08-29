@@ -21,7 +21,7 @@ export const MessageListItemLayoutMsgContainer = ({ avatarWidget, badgeWidget, c
         >
             <Region
                 name="message_text_container"
-                layout={{ position: 'absolute', left: 130, right: 0, top: 0, height: 100, minHeight: 100 }}
+                layout={{ position: 'absolute', left: 130, right: 0, top: 0, bottom: 0, minHeight: 100 }}
             >
                 <Region
                     name="message_text"

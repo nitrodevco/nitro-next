@@ -18,11 +18,11 @@ export const PollAnswerCheckboxInputLayout = ({ itemsPollAnswerItemlist, layout,
                 name="poll_answer_content"
                 onPointerTap={onPollAnswerContent}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 125 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="poll_answer_itemlist"
-                    layout={{ position: 'absolute', left: 0, right: 7, top: 0, minHeight: 125, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 0, right: 7, top: 0, bottom: 0, flexDirection: 'column' }}
                 >
                     {itemsPollAnswerItemlist ?? (
                         <PollAnswerCheckboxInputLayoutPollAnswerEntityItem />

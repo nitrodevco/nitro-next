@@ -20,7 +20,7 @@ export const GroupManagementWindowLayoutStepCont5 = ({ captionGuildRights, capti
         (visibleStepCont5 ?? false) && (
             <Region
                 name="step_cont_5"
-                layout={{ position: 'absolute', left: 0, right: 3, top: 111, height: 360, ...layout }}
+                layout={{ position: 'absolute', left: 0, right: -9, top: 111, height: 360, ...layout }}
             >
                 <Region
                     name="guild_type"

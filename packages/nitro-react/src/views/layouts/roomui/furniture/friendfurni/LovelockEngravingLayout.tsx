@@ -24,7 +24,7 @@ export const LovelockEngravingLayout = ({ captionDate, captionHeader, captionNam
 
     return (
         <Region layout={{ position: 'relative', width: 375, height: 210, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 375, top: 0, height: 210 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}>
                 <ThemeImage
                     name="background"
                     src={srcBackground ?? '${image.library.url}furniextras/loveLock_engraving.png'}
@@ -32,7 +32,7 @@ export const LovelockEngravingLayout = ({ captionDate, captionHeader, captionNam
                 />
                 <Region
                     name="header"
-                    layout={{ position: 'absolute', left: 82, width: 217, top: 126, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', marginLeft: 3, marginRight: -3, width: 217, top: 126, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionHeader ?? t('lovelock.engraving.caption')}
@@ -74,7 +74,7 @@ export const LovelockEngravingLayout = ({ captionDate, captionHeader, captionNam
                 </Region>
                 <Region
                     name="date"
-                    layout={{ position: 'absolute', left: 143, width: 97, top: 151, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', marginLeft: 4, marginRight: -4, width: 97, top: 151, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionDate ?? ''}

@@ -32,7 +32,7 @@ export const NewExtendedProfileLayout = ({ blockedContainer, bottomContainer, la
             caption={t('extendedprofile.caption')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 521, height: 537, ...layout }}
+            layout={{ width: 521, height: 537, minWidth: 521, minHeight: 537, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 6, width: 500, top: -1, height: 495, flexDirection: 'column', gap: 6 }}>
                 <NewExtendedProfileLayoutTop {...top} />

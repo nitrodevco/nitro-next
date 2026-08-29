@@ -20,7 +20,8 @@ export const GuideToolLayout = ({ layout, list, onClose }: GuideToolLayoutProps)
             name="guide_tool"
             caption={t('guide.help.guide.tool.title')}
             onClose={onClose}
-            layout={{ width: 242, height: 306, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 242, height: 306, minWidth: 242, maxWidth: 242, minHeight: 50, ...layout }}
         >
             <GuideToolLayoutList {...list} />
         </Frame>

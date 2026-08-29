@@ -34,13 +34,13 @@ export const GrsMainWindowNewLayoutCustomContent = ({ layout, onCustomContent, o
                     name="me_header"
                     onPointerTap={onMeHeader}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
                 >
                     <Dropmenu
                         variant="0"
                         name="meSubNavi"
                         onPointerTap={onMeSubNavi}
-                        layout={{ position: 'absolute', left: 0, width: 368, top: 0, height: 20 }}
+                        layout={{ position: 'absolute', left: 0, width: 368, top: 0, bottom: 0 }}
                     />
                 </Region>
             )}
@@ -49,13 +49,13 @@ export const GrsMainWindowNewLayoutCustomContent = ({ layout, onCustomContent, o
                     name="rooms_header"
                     onPointerTap={onRoomsHeader}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
                 >
                     <Dropmenu
                         variant="0"
                         name="roomCtgFilter"
                         onPointerTap={onRoomCtgFilter}
-                        layout={{ position: 'absolute', left: 0, width: 368, top: 0, height: 20 }}
+                        layout={{ position: 'absolute', left: 0, width: 368, top: 0, bottom: 0 }}
                     />
                 </Region>
             )}
@@ -64,13 +64,13 @@ export const GrsMainWindowNewLayoutCustomContent = ({ layout, onCustomContent, o
                     name="room_ad_header"
                     onPointerTap={onRoomAdHeader}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
                 >
                     <Dropmenu
                         variant="0"
                         name="roomAdFilter"
                         onPointerTap={onRoomAdFilter}
-                        layout={{ position: 'absolute', left: 0, width: 368, top: 0, height: 20 }}
+                        layout={{ position: 'absolute', left: 0, width: 368, top: 0, bottom: 0 }}
                     />
                 </Region>
             )}
@@ -78,7 +78,7 @@ export const GrsMainWindowNewLayoutCustomContent = ({ layout, onCustomContent, o
                 name="room_competitions_header"
                 onPointerTap={onRoomCompetitionsHeader}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 382, top: 0, height: 33, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 33, justifyContent: 'center' }}
             >
                 <Region layout={{ position: 'absolute', marginLeft: -5, marginRight: 5, width: 370, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText

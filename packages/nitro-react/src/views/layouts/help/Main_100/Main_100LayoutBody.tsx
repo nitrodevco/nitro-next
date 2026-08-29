@@ -27,7 +27,7 @@ export const Main_100LayoutBody = ({ captionTaskHintText, captionTaskInfoDescrip
     return (
         <Region
             name="body"
-            layout={{ position: 'absolute', left: 0, right: 24, top: 249, bottom: 55, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 12, top: 249, bottom: 14, ...layout }}
         >
             <Border
                 variant="15"

@@ -13,13 +13,13 @@ export const AvatarImageViewLayout = ({ avatarImage, layout }: AvatarImageViewLa
         <Region layout={{ position: 'relative', width: 90, height: 120, ...layout }}>
             <Region
                 name="avatar_image_view"
-                layout={{ position: 'absolute', left: 0, width: 90, top: 0, height: 120 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <WidgetSlot
                     widgetType="avatar_image"
                     name="avatar_image"
                     options={{ 'avatar_image:direction': 'south' }}
-                    layout={{ position: 'absolute', left: 0, width: 90, top: -10, height: 130 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: -10, bottom: 0 }}
                 >
                     {avatarImage}
                 </WidgetSlot>

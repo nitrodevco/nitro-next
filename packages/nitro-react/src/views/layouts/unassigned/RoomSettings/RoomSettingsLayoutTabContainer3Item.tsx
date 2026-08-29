@@ -22,7 +22,7 @@ export const RoomSettingsLayoutTabContainer3Item = ({ layout, normalRightsContai
             {(visibleGuildRightsContainer ?? false) && (
                 <Region
                     name="guild_rights_container"
-                    layout={{ position: 'absolute', left: 6, right: -62, top: 0, height: 367 }}
+                    layout={{ position: 'absolute', left: 6, right: -62, top: 0, bottom: 0 }}
                 >
                     <Region layout={{ position: 'absolute', left: 0, width: 215, top: 3, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <ThemeText

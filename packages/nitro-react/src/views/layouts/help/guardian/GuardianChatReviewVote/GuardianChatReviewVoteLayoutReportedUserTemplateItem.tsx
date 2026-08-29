@@ -21,7 +21,7 @@ export const GuardianChatReviewVoteLayoutReportedUserTemplateItem = ({ captionMe
             {(visibleMessage ?? true) && (
                 <Region
                     name="message"
-                    layout={{ position: 'absolute', left: 23, width: 203, top: 0, height: 22, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 23, width: 203, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionMessage ?? 'lorem ipsum blah blah'}

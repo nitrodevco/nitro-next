@@ -12,7 +12,7 @@ export const CollectibleHubLayoutItemContainer = ({ itemgridCollection, layout }
     return (
         <Region
             name="item_container"
-            layout={{ position: 'absolute', left: 0, width: 290, top: 300, height: 123, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 300, height: 123, ...layout }}
         >
             <CollectibleHubLayoutItemgridCollection {...itemgridCollection} />
         </Region>

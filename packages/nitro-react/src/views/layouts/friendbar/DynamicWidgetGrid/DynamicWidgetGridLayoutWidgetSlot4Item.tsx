@@ -12,7 +12,7 @@ export const DynamicWidgetGridLayoutWidgetSlot4Item = ({ layout, widgetSlot4 }: 
     return (
         <Region
             name="widget_slot_4"
-            layout={{ width: 500, height: 1, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 1, flexShrink: 0, ...layout }}
         >
             {widgetSlot4}
         </Region>

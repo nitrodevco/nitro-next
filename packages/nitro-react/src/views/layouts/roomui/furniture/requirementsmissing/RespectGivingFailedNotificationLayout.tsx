@@ -19,7 +19,7 @@ export const RespectGivingFailedNotificationLayout = ({ captionBodyTxt, captionC
             variant="100"
             caption={t('respect.giving.failed.title')}
             onClose={onClose}
-            layout={{ width: 369, height: 220, ...layout }}
+            layout={{ width: 369, height: 220, minWidth: 369, minHeight: 220, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
@@ -51,7 +51,7 @@ export const RespectGivingFailedNotificationLayout = ({ captionBodyTxt, captionC
                     name="close"
                     tintColor="#bbbbbb"
                     onPointerTap={onClose2}
-                    layout={{ position: 'absolute', marginLeft: 26.5, marginRight: -26.5, width: 140, top: 130, height: 50 }}
+                    layout={{ position: 'absolute', marginLeft: 32.5, marginRight: -32.5, width: 140, top: 130, height: 50 }}
                 >
                     {t('respect.giving.failed.button')}
                 </Button>

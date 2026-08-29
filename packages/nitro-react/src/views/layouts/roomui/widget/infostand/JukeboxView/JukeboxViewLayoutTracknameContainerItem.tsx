@@ -31,7 +31,7 @@ export const JukeboxViewLayoutTracknameContainerItem = ({ captionTrackNameText, 
             {(visibleTrackNameText ?? true) && (
                 <Region
                     name="track_name_text"
-                    layout={{ position: 'absolute', left: 20, width: 150, top: 0, height: 14, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 20, width: 150, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTrackNameText ?? t('infostand.jukebox.text.track.name')}

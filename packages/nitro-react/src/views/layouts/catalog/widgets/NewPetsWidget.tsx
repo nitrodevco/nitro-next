@@ -42,7 +42,7 @@ export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionC
             />
             <Region
                 name="pet_breed_text"
-                layout={{ position: 'absolute', left: 10, width: 340, top: 136, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 10, right: 9, top: 136, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionPetBreedText ?? t('lorem.title')}
@@ -52,7 +52,7 @@ export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionC
             </Region>
             <Region
                 name="ctlg_text_3"
-                layout={{ position: 'absolute', left: 12, width: 340, top: 156, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 12, right: 7, top: 156, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionCtlgText3 ?? t('lorem.title')}
@@ -61,12 +61,12 @@ export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionC
                 />
             </Region>
             <ColourGridWidget
-                layout={{ position: 'absolute', left: 5, width: 350, top: 173, height: 70 }}
+                layout={{ position: 'absolute', left: 5, right: 4, top: 173, height: 70 }}
                 {...colourGridWidget}
             />
             <Region
                 name="ctlg_text_2"
-                layout={{ position: 'absolute', left: 12, width: 339, top: 253, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 12, right: 8, top: 253, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionCtlgText2 ?? t('lorem.title')}
@@ -77,17 +77,17 @@ export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionC
             <Border
                 variant="4"
                 tintColor="#cccccc"
-                layout={{ position: 'absolute', left: 10, width: 340, top: 275, height: 25 }}
+                layout={{ position: 'absolute', left: 10, right: 9, top: 275, height: 25 }}
             >
                 <TextInput
                     value={nameInputTextValue}
                     onChange={setNameInputTextValue}
                     maxLength={16}
-                    layout={{ position: 'absolute', left: 4, width: 325, top: 4, height: 17 }}
+                    layout={{ position: 'absolute', left: 4, right: 11, top: 4, bottom: 4 }}
                 />
             </Border>
             <PurchaseWidget
-                layout={{ position: 'absolute', left: 0, width: 360, top: 345, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: -1, bottom: 0, height: 30 }}
                 {...purchaseWidget}
             />
             <AddOnBadgeViewWidget

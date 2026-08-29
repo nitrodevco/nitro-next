@@ -20,7 +20,7 @@ export const TotalPriceWidgetTotalLeftItem = ({ captionText, layout, strike, vis
             {(visibleText ?? true) && (
                 <Region
                     name="text"
-                    layout={{ position: 'absolute', left: 0, width: 10, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionText ?? '0'}
@@ -32,7 +32,7 @@ export const TotalPriceWidgetTotalLeftItem = ({ captionText, layout, strike, vis
                 <Region
                     name="strike"
                     backgroundColor="#ff0000"
-                    layout={{ position: 'absolute', left: 0, width: 10, top: 10, height: 2 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 10, height: 2 }}
                 >
                     {strike}
                 </Region>

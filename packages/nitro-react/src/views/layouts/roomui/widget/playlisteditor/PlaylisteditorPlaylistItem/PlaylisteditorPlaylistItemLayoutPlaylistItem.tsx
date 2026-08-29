@@ -24,12 +24,12 @@ export const PlaylisteditorPlaylistItemLayoutPlaylistItem = ({ captionSongAuthor
             name="playlist_item"
             onPointerTap={onPlaylistItem}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 229, top: 0, height: 52, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="0"
                 name="selected"
-                layout={{ position: 'absolute', left: 0, width: 229, top: 0, height: 52 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <Border
                 variant="2"
@@ -51,7 +51,7 @@ export const PlaylisteditorPlaylistItemLayoutPlaylistItem = ({ captionSongAuthor
                     variant="2"
                     name="button_border"
                     tintColor="#658da0"
-                    layout={{ position: 'absolute', left: 0, width: 44, top: 0, height: 44 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <ContainerButton
                         variant="0"

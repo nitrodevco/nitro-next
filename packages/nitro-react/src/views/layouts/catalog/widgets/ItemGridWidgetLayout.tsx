@@ -11,7 +11,7 @@ export interface ItemGridWidgetLayoutProps {
 export const ItemGridWidgetLayout = ({ itemsItemGrid, layout }: ItemGridWidgetLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 360, height: 200, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="6"
                     blend={0.5}

@@ -47,13 +47,13 @@ export const MemenuSettingsLayoutUiVolumeContainer = ({ captionTitle, layout, on
                 />
                 <Region
                     name="slider_movement_area"
-                    layout={{ position: 'absolute', left: 0, width: 144, top: 9, height: 15 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 9, height: 15 }}
                 >
                     <Region
                         name="slider_button"
                         onPointerTap={onSliderButton}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 132, width: 12, top: 0, height: 15 }}
+                        layout={{ position: 'absolute', left: 132, width: 12, top: 0, bottom: 0 }}
                     >
                         <ThemeImage
                             name="slider_bitmap"

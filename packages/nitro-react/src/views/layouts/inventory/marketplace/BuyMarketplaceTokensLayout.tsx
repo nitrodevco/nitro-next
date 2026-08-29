@@ -18,9 +18,9 @@ export const BuyMarketplaceTokensLayout = ({ layout, onBuyTokensButton, onCancel
             caption={t('inventory.marketplace.buy_tokens.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 283, height: 175, ...layout }}
+            layout={{ width: 283, height: 175, minWidth: 283, minHeight: 175, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 36 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -5 }}>
                 <Region layout={{ position: 'absolute', left: 6, width: 255, top: 6, height: 69, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('inventory.marketplace.buy_tokens.info')}

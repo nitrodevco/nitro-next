@@ -14,7 +14,7 @@ export const ConfirmPetBreedingLayoutParentContainerItem = ({ layout, previewLis
         <Border
             variant="103"
             name="parentContainer"
-            layout={{ width: 314, height: 140, flexShrink: 0, minWidth: 310, maxWidth: 314, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 140, flexShrink: 0, minWidth: 310, maxWidth: 314, ...layout }}
         >
             {(visiblePreviewList ?? true) && (
                 <ConfirmPetBreedingLayoutPreviewList {...previewList} />

@@ -57,7 +57,7 @@ export const NewExtendedProfileLayoutFriendstatusItem = ({ captionFriendRequestS
                     name="addasfriend_button"
                     onPointerTap={onAddasfriendButton}
                     textStyle="text-style-button-shiny-regular"
-                    layout={{ position: 'absolute', left: 12, width: 105, top: 0, height: 23, minWidth: 105, maxWidth: 105 }}
+                    layout={{ position: 'absolute', left: 12, width: 105, top: 0, bottom: 0, minWidth: 105, maxWidth: 105 }}
                 >
                     {t('extendedprofile.addasafriend')}
                 </Button>

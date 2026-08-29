@@ -17,7 +17,7 @@ export const BreedPetsConfirmationLayoutPlant2ItemlistItem = ({ itemsPlant2Iteml
     return (
         <Region
             name="plant2_itemlist"
-            layout={{ flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ alignSelf: 'stretch', flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsPlant2Itemlist ?? (
                 <>

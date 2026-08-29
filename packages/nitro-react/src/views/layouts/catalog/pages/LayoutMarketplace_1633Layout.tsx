@@ -13,10 +13,10 @@ export const LayoutMarketplace_1633Layout = ({ layout, marketPlaceWidget }: Layo
             <Region
                 name="ctlg_marketplace"
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <MarketPlaceWidget
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 70, height: 390 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 390 }}
                     {...marketPlaceWidget}
                 />
             </Region>

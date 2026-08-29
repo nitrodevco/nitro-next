@@ -44,7 +44,7 @@ export const ClubCenterLayout = ({ avatar, captionGeneralInfo, captionGeneralInf
             caption={t('generic.hccenter')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 460, height: 597, ...layout }}
+            layout={{ width: 460, height: 597, minWidth: 460, minHeight: 597, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 460, top: 0, height: 559, flexDirection: 'column' }}>
                 <Region layout={{ width: 459, height: 137, flexShrink: 0 }}>

@@ -20,7 +20,7 @@ export const SafetyQuizPromoLayout = ({ avatar, layout, onSafetyQuizButton }: Sa
                 variant="2"
                 name="safety_quiz_overlay"
                 tintColor="#9b0000"
-                layout={{ position: 'absolute', marginLeft: 186, marginRight: -186, width: 577, top: 0, height: 57 }}
+                layout={{ position: 'absolute', marginLeft: 186, marginRight: -186, width: 577, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="106"

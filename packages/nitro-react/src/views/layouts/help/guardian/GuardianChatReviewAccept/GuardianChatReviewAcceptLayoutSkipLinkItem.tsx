@@ -17,7 +17,7 @@ export const GuardianChatReviewAcceptLayoutSkipLinkItem = ({ layout, onSkipLink 
             cursor="pointer"
             layout={{ width: 215, height: 30, flexShrink: 0, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, width: 215, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('guide.bully.request.guide.accept.skip.link')}
                     textStyle="text-style-il-link-regular"

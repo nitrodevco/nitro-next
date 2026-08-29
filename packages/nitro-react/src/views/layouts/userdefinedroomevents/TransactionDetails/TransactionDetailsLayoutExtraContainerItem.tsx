@@ -32,7 +32,7 @@ export const TransactionDetailsLayoutExtraContainerItem = ({ itemsExtraInfoBubbl
             {(visibleExtraPair ?? true) && (
                 <Region
                     name="extra_pair"
-                    layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 20, flexDirection: 'row', gap: 2 }}
+                    layout={{ position: 'absolute', left: 0, width: 47, top: 0, bottom: 0, flexDirection: 'row', gap: 2 }}
                 >
                     <Region layout={{ width: 37, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         {t('wiredchests.log_details.extra')}
@@ -47,7 +47,7 @@ export const TransactionDetailsLayoutExtraContainerItem = ({ itemsExtraInfoBubbl
                     name="extra_info_button"
                     onPointerTap={onExtraInfoButton}
                     cursor="pointer"
-                    layout={{ position: 'absolute', right: 3, width: 20, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', right: 3, width: 20, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         src={layoutImage('icons_info_grey.png')}

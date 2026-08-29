@@ -17,7 +17,7 @@ export const AreaHideUiLayoutTabContent = ({ itemsTabContent, layout }: AreaHide
     return (
         <Region
             name="tab_content"
-            layout={{ position: 'absolute', left: 2, width: 270, top: 2, height: 250, flexDirection: 'column', ...layout }}
+            layout={{ position: 'absolute', left: 2, right: 3, top: 2, bottom: -2, flexDirection: 'column', ...layout }}
         >
             {itemsTabContent ?? (
                 <>

@@ -26,18 +26,18 @@ export const NotificationGiftUnlockedLayout = ({ captionHeader, captionOpenTxt, 
             caption={t('widget.furni.teaser.gift.title')}
             tintColor="#4c4c4c"
             onClose={onClose}
-            layout={{ width: 433, height: 260, ...layout }}
+            layout={{ width: 433, height: 260, minWidth: 433, minHeight: 260, ...layout }}
         >
             <Border
                 variant="1"
                 name="bg"
                 blend={0}
-                layout={{ position: 'absolute', left: 0, width: 420, top: 0, height: 227 }}
+                layout={{ position: 'absolute', left: 0, right: 1, top: 0, bottom: -8, justifyContent: 'center' }}
             >
                 <Border
                     variant="0"
                     name="white_bg"
-                    layout={{ position: 'absolute', left: 0, width: 420, top: 0, height: 160 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 160 }}
                 >
                     <ThemeImage
                         name="dialog_bg"
@@ -48,7 +48,7 @@ export const NotificationGiftUnlockedLayout = ({ captionHeader, captionOpenTxt, 
                 </Border>
                 <Region
                     name="header"
-                    layout={{ position: 'absolute', left: 130, width: 282, top: 12, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 8, width: 282, top: 12, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionHeader ?? t('widget.furni.teaser.gift.unlocked.title')}
@@ -58,7 +58,7 @@ export const NotificationGiftUnlockedLayout = ({ captionHeader, captionOpenTxt, 
                 </Region>
                 <Region
                     name="text"
-                    layout={{ position: 'absolute', left: 130, width: 282, top: 31, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 8, width: 282, top: 31, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionText ?? t('widget.furni.teaser.gift.unlocked.desc')}
@@ -69,19 +69,19 @@ export const NotificationGiftUnlockedLayout = ({ captionHeader, captionOpenTxt, 
                     variant="0"
                     name="open_btn"
                     onPointerTap={onOpenBtn}
-                    layout={{ position: 'absolute', left: 53, width: 306, top: 173, height: 46, minWidth: 306, maxWidth: 306, minHeight: 46, maxHeight: 46, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', marginLeft: -4, marginRight: 4, width: 306, bottom: 8, height: 46, minWidth: 306, maxWidth: 306, minHeight: 46, maxHeight: 46, justifyContent: 'center' }}
                 >
                     <Border
                         variant="3"
                         name="btn_bg_1"
                         tintColor="#006d00"
-                        layout={{ position: 'absolute', left: 3, width: 300, top: 3, height: 40, minWidth: 300, maxWidth: 300, minHeight: 40, maxHeight: 40 }}
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 3, minWidth: 300, maxWidth: 300, minHeight: 40, maxHeight: 40 }}
                     />
                     <Border
                         variant="3"
                         name="btn_bg_2"
                         tintColor="#309d00"
-                        layout={{ position: 'absolute', left: 6, width: 294, top: 6, height: 17, minWidth: 294, maxWidth: 294, minHeight: 17, maxHeight: 17 }}
+                        layout={{ position: 'absolute', left: 6, right: 6, top: 6, height: 17, minWidth: 294, maxWidth: 294, minHeight: 17, maxHeight: 17 }}
                     />
                     <Region
                         name="open_txt"

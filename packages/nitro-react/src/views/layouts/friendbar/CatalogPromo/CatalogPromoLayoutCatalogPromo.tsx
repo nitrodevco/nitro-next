@@ -22,7 +22,7 @@ export const CatalogPromoLayoutCatalogPromo = ({ captionCatalogPromoStatus, colo
     return (
         <Region
             name="catalog_promo"
-            layout={{ position: 'absolute', left: 0, width: 507, top: 0, height: 188, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="info_container"
@@ -38,11 +38,11 @@ export const CatalogPromoLayoutCatalogPromo = ({ captionCatalogPromoStatus, colo
             </Region>
             <Region
                 name="picture_container"
-                layout={{ position: 'absolute', left: 281, width: 226, top: 11, height: 177 }}
+                layout={{ position: 'absolute', right: 0, width: 226, top: 11, bottom: 0, justifyContent: 'center' }}
             >
                 <Region
                     name="catalog_promo_status"
-                    layout={{ position: 'absolute', left: 10, width: 200, top: 145, height: 28, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 10, width: 200, bottom: 4, height: 28, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionCatalogPromoStatus ?? t('landing.view.catalog.promo.picture.text')}
@@ -52,7 +52,7 @@ export const CatalogPromoLayoutCatalogPromo = ({ captionCatalogPromoStatus, colo
                 <ThemeImage
                     name="picture"
                     src={srcPicture ?? '${image.library.url}reception/meter_level_0.png'}
-                    layout={{ position: 'absolute', left: 20, width: 183, top: 0, height: 144 }}
+                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 183, top: 0, height: 144 }}
                 />
             </Region>
         </Region>

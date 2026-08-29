@@ -29,12 +29,12 @@ export const InventoryTradingWiredLayout = ({ bubbleContents, captionInfoText, c
 
     return (
         <Region layout={{ position: 'relative', width: 478, height: 274, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 274 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="102"
                     name="trade_container"
                     tintColor="#27556a"
-                    layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 233 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 233 }}
                 >
                     <Region
                         name="info_text"
@@ -101,7 +101,7 @@ export const InventoryTradingWiredLayout = ({ bubbleContents, captionInfoText, c
                 </Border>
                 <Region
                     name="button_container"
-                    layout={{ position: 'absolute', left: 0, width: 478, top: 240, height: 32 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 240, height: 32 }}
                 >
                     <Region layout={{ position: 'absolute', left: 5, width: 299, top: 0, height: 28, flexDirection: 'row', gap: 6 }}>
                         <Button

@@ -29,7 +29,8 @@ export const GuardianChatReviewVoteLayout = ({ captionIncidentTime, chatlog, cou
             name="guardian_chat_review_vote"
             caption={t('guide.bully.request.guide.vote.title')}
             onClose={onClose}
-            layout={{ width: 279, height: 499, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 279, height: 499, minWidth: 279, maxWidth: 279, minHeight: 499, ...layout }}
         >
             <WidgetSlot
                 widgetType="countdown"
@@ -60,11 +61,11 @@ export const GuardianChatReviewVoteLayout = ({ captionIncidentTime, chatlog, cou
             </Region>
             <Border
                 variant="105"
-                layout={{ position: 'absolute', left: 10, width: 258, top: 60, bottom: 174 }}
+                layout={{ position: 'absolute', left: 10, width: 258, top: 60, bottom: 133 }}
             >
                 <GuardianChatReviewVoteLayoutChatlog {...chatlog} />
             </Border>
-            <Region layout={{ position: 'absolute', left: 0, width: 277, bottom: 3, height: 180, justifyContent: 'center' }}>
+            <Region layout={{ position: 'absolute', left: 0, width: 277, bottom: -38, height: 180, justifyContent: 'center' }}>
                 <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 198, top: 23, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('guide.bully.request.guide.vote.question')}
@@ -85,7 +86,7 @@ export const GuardianChatReviewVoteLayout = ({ captionIncidentTime, chatlog, cou
                             tooltip={t('guide.bully.request.guide.vote.ok.tooltip')}
                             onPointerTap={onVoteOk}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77, justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 77, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 src={layoutImage('help_chat_review_vote_ok.png')}
@@ -105,7 +106,7 @@ export const GuardianChatReviewVoteLayout = ({ captionIncidentTime, chatlog, cou
                             tooltip={t('guide.bully.request.guide.vote.bad.tooltip')}
                             onPointerTap={onVoteBad}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77, justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 77, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 src={layoutImage('help_chat_review_vote_bad.png')}
@@ -125,7 +126,7 @@ export const GuardianChatReviewVoteLayout = ({ captionIncidentTime, chatlog, cou
                             tooltip={t('guide.bully.request.guide.vote.very_bad.tooltip')}
                             onPointerTap={onVoteVeryBad}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77, justifyContent: 'center' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 77, justifyContent: 'center' }}
                         >
                             <ThemeImage
                                 src={layoutImage('help_chat_review_vote_very_bad.png')}
@@ -142,7 +143,7 @@ export const GuardianChatReviewVoteLayout = ({ captionIncidentTime, chatlog, cou
                     name="close_link"
                     onPointerTap={onCloseLink}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 277, top: 149, height: 24, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 149, height: 24, justifyContent: 'center' }}
                 >
                     <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 188, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText

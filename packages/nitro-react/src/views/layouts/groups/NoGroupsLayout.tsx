@@ -18,7 +18,7 @@ export const NoGroupsLayout = ({ captionNoGroupsCaption, captionNoGroupsInfo, la
         <Region layout={{ position: 'relative', width: 343, height: 214, ...layout }}>
             <Region
                 name="no_groups_cont"
-                layout={{ position: 'absolute', left: 0, width: 343, top: 0, height: 214 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Region
                     name="no_groups_caption"
@@ -32,7 +32,7 @@ export const NoGroupsLayout = ({ captionNoGroupsCaption, captionNoGroupsInfo, la
                 <ThemeImage
                     name="ext_profile_grouppic"
                     src={srcExtProfileGrouppic ?? '${image.library.url}guilds/ext_profile_grouppic.png'}
-                    layout={{ position: 'absolute', left: 15, width: 311, top: 21, height: 136 }}
+                    layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 311, top: 21, height: 136 }}
                 />
                 <Region
                     name="no_groups_info"
@@ -47,14 +47,14 @@ export const NoGroupsLayout = ({ captionNoGroupsCaption, captionNoGroupsInfo, la
                     variant="0"
                     name="view_groups_button"
                     onPointerTap={onViewGroupsButton}
-                    layout={{ position: 'absolute', left: 62, width: 216, top: 184, height: 30 }}
+                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 216, bottom: 0, height: 30 }}
                 >
                     <ThemeImage
                         name="group_base_icon"
                         src={srcGroupBaseIcon ?? '${image.library.url}guilds/group_base_icon.png'}
                         layout={{ position: 'absolute', left: 11, width: 24, top: 7, height: 17 }}
                     />
-                    <Region layout={{ position: 'absolute', left: 42, width: 215, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', left: 42, width: 215, top: 6, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('extendedprofile.nogroups.viewgroups')}
                             textStyle="text-style-u-regular"

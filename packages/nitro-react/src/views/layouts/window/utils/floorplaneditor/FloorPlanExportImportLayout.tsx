@@ -21,12 +21,12 @@ export const FloorPlanExportImportLayout = ({ layout, onClose, onRevert, onSave 
             caption={t('floor.plan.editor.import.export')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 379, height: 374, ...layout }}
+            layout={{ width: 379, height: 374, minWidth: 379, minHeight: 374, ...layout }}
         >
             <Border
                 variant="105"
                 tintColor="#ffffff"
-                layout={{ position: 'absolute', left: 8, right: 23, top: 12, bottom: 93 }}
+                layout={{ position: 'absolute', left: 8, right: 11, top: 12, bottom: 52 }}
             >
                 <TextInput
                     value={dataValue}
@@ -42,7 +42,7 @@ export const FloorPlanExportImportLayout = ({ layout, onClose, onRevert, onSave 
                 name="revert"
                 tintColor="#bbbbbb"
                 onPointerTap={onRevert}
-                layout={{ position: 'absolute', left: -3, width: 191, bottom: 31, height: 49, maxWidth: 191 }}
+                layout={{ position: 'absolute', left: -3, width: 191, bottom: -10, height: 49, maxWidth: 191 }}
             >
                 {t('floor.plan.editor.revert.to.last.received.map')}
             </Button>
@@ -51,7 +51,7 @@ export const FloorPlanExportImportLayout = ({ layout, onClose, onRevert, onSave 
                 name="save"
                 tintColor="#bbbbbb"
                 onPointerTap={onSave}
-                layout={{ position: 'absolute', right: 5, width: 73, bottom: 31, height: 49, maxWidth: 73 }}
+                layout={{ position: 'absolute', right: -7, width: 73, bottom: -10, height: 49, maxWidth: 73 }}
             >
                 {t('floor.plan.editor.save')}
             </Button>

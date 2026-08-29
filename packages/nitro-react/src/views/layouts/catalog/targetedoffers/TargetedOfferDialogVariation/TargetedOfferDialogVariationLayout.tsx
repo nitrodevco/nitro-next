@@ -27,7 +27,7 @@ export const TargetedOfferDialogVariationLayout = ({ captionTxtStatus, captionTx
             variant="3"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 640, height: 480, ...layout }}
+            layout={{ width: 640, height: 480, minWidth: 640, minHeight: 480, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <ThemeImage
@@ -35,10 +35,10 @@ export const TargetedOfferDialogVariationLayout = ({ captionTxtStatus, captionTx
                     src={srcBmpIllustration}
                     layout={{ position: 'absolute', left: 0, width: 638, top: 35, height: 340 }}
                 />
-                <Region layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 540, top: 366, height: 70, justifyContent: 'center' }}>
+                <Region layout={{ position: 'absolute', marginLeft: 11, marginRight: -11, width: 540, top: 366, height: 70, justifyContent: 'center' }}>
                     <Region
                         name="txt_status"
-                        layout={{ position: 'absolute', left: 0, width: 540, top: 14, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 14, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionTxtStatus ?? t('targeted.offer.not.enough.credits')}
@@ -66,7 +66,7 @@ export const TargetedOfferDialogVariationLayout = ({ captionTxtStatus, captionTx
                     layout={{ position: 'absolute', left: -3, width: 641, top: -5, height: 40 }}
                 >
                     <Region layout={{ position: 'absolute', left: 5, width: 631, top: 7, height: 30, justifyContent: 'center' }}>
-                        <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, top: 0, flexDirection: 'row' }}>
+                        <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, top: 0, bottom: 0, flexDirection: 'row' }}>
                             <Region
                                 name="txt_time_left_label_1"
                                 layout={{ width: 15, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

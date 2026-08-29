@@ -55,7 +55,7 @@ export const FeaturedItemsWidgetFeaturedItemTemplateItem = ({ captionItemTitle, 
                     name="event_catcher_region"
                     onPointerTap={onEventCatcherRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 126 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {eventCatcherRegion}
                 </Region>

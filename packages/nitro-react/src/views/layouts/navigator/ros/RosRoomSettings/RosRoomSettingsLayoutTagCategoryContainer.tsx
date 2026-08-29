@@ -38,7 +38,7 @@ export const RosRoomSettingsLayoutTagCategoryContainer = ({ captionCategoryLabel
                 variant="2"
                 name="categories"
                 onPointerTap={onCategories}
-                layout={{ position: 'absolute', left: 0, width: 300, top: 16, height: 24 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 16, height: 24 }}
             />
             <Region
                 name="maxvisitors_label"
@@ -53,7 +53,7 @@ export const RosRoomSettingsLayoutTagCategoryContainer = ({ captionCategoryLabel
                 variant="2"
                 name="maxvisitors"
                 onPointerTap={onMaxvisitors}
-                layout={{ position: 'absolute', left: 0, width: 300, top: 61, height: 24 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 24 }}
             />
             <Region
                 name="tradesettings_label"
@@ -68,7 +68,7 @@ export const RosRoomSettingsLayoutTagCategoryContainer = ({ captionCategoryLabel
                 variant="2"
                 name="tradesettings"
                 onPointerTap={onTradesettings}
-                layout={{ position: 'absolute', left: 0, width: 300, top: 106, height: 24 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 106, height: 24 }}
             />
             <Region
                 name="tag_label"

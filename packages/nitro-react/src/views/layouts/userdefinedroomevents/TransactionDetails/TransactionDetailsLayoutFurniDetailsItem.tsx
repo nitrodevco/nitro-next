@@ -18,7 +18,7 @@ export const TransactionDetailsLayoutFurniDetailsItem = ({ depositsContainer, la
             name="furni_details"
             layout={{ width: 380, height: 161, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
-            <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 345, top: 0, height: 161, flexDirection: 'row', gap: 15 }}>
+            <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 345, top: 0, bottom: 0, flexDirection: 'row', gap: 15 }}>
                 {(visibleWithdrawalsContainer ?? true) && (
                     <TransactionDetailsLayoutWithdrawalsContainer {...withdrawalsContainer} />
                 )}

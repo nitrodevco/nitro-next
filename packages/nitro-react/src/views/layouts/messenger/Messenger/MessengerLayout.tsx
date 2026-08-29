@@ -44,11 +44,11 @@ export const MessengerLayout = ({ avatarClickRegion, avatarImage, captionSeparat
                     name="frame"
                     caption={t('messenger.window.title')}
                     onClose={onFrame}
-                    layout={{ position: 'absolute', left: 0, width: 282, top: 0, height: 385, minWidth: 282, minHeight: 275 }}
+                    layout={{ position: 'absolute', left: 0, width: 282, top: 0, bottom: 0, minWidth: 282, minHeight: 275 }}
                 >
                     <Region
                         name="avatar_list"
-                        layout={{ position: 'absolute', left: 16, right: 18, top: 0, height: 40 }}
+                        layout={{ position: 'absolute', left: 16, right: 6, top: 0, height: 40 }}
                     >
                         <Border
                             variant="102"
@@ -83,7 +83,7 @@ export const MessengerLayout = ({ avatarClickRegion, avatarImage, captionSeparat
                                 name="avatar_click_region"
                                 onPointerTap={onAvatarClickRegion}
                                 cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 35 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                             >
                                 {avatarClickRegion}
                             </Region>
@@ -104,7 +104,7 @@ export const MessengerLayout = ({ avatarClickRegion, avatarImage, captionSeparat
                         name="avatars_scroll_right"
                         onPointerTap={onAvatarsScrollRight}
                         cursor="pointer"
-                        layout={{ position: 'absolute', right: 2, width: 15, top: 0, height: 35 }}
+                        layout={{ position: 'absolute', right: -10, width: 15, top: 0, height: 35 }}
                     >
                         <ThemeImage
                             src={layoutImage('help_habboway_next.png')}
@@ -113,7 +113,7 @@ export const MessengerLayout = ({ avatarClickRegion, avatarImage, captionSeparat
                     </Region>
                     <WidgetSlot
                         widgetType="separator"
-                        layout={{ position: 'absolute', left: 0, right: 1, top: 39, height: 15 }}
+                        layout={{ position: 'absolute', left: 0, right: -11, top: 39, height: 15 }}
                     >
                         {separatorWidget}
                         <Region
@@ -129,7 +129,7 @@ export const MessengerLayout = ({ avatarClickRegion, avatarImage, captionSeparat
                     </WidgetSlot>
                     <Region
                         name="button_strip"
-                        layout={{ position: 'absolute', left: 7, right: 9, top: 57, height: 21, flexDirection: 'row', gap: 4 }}
+                        layout={{ position: 'absolute', left: 7, right: -3, top: 57, height: 21, flexDirection: 'row', gap: 4 }}
                     >
                         {itemsButtonStrip ?? (
                             <>
@@ -143,7 +143,7 @@ export const MessengerLayout = ({ avatarClickRegion, avatarImage, captionSeparat
                         variant="100"
                         name="close_conversation_button"
                         onPointerTap={onCloseConversationButton}
-                        layout={{ position: 'absolute', right: 9, width: 20, top: 57, height: 20 }}
+                        layout={{ position: 'absolute', right: -3, width: 20, top: 57, height: 20 }}
                     />
                     <MessengerLayoutConversation {...conversation} />
                     <ContainerButton
@@ -151,7 +151,7 @@ export const MessengerLayout = ({ avatarClickRegion, avatarImage, captionSeparat
                         name="habbicon_button"
                         tooltip={t('messenger.habbicons.tooltip')}
                         onPointerTap={onHabbiconButton}
-                        layout={{ position: 'absolute', right: 9, width: 30, bottom: 52, height: 28 }}
+                        layout={{ position: 'absolute', right: -3, width: 30, bottom: 11, height: 28 }}
                     >
                         <ThemeImage
                             name="habbicon_button_icon"
@@ -163,7 +163,7 @@ export const MessengerLayout = ({ avatarClickRegion, avatarImage, captionSeparat
                         widgetType="illumina_input"
                         name="input_widget"
                         options={{ 'illumina_input:empty_message': '${messenger.window.input.default}', 'illumina_input:max_chars': '120' }}
-                        layout={{ position: 'absolute', left: 7, right: 43, bottom: 50, height: 30 }}
+                        layout={{ position: 'absolute', left: 7, right: 31, bottom: 9, height: 30 }}
                     >
                         {inputWidget}
                     </WidgetSlot>

@@ -15,7 +15,7 @@ export const UserCreateLayoutCreateErrorItem = ({ captionCreateError, layout, vi
         (visibleCreateError ?? false) && (
             <Region
                 name="create_error"
-                layout={{ width: 264, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+                layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
             >
                 <ThemeText
                     text={captionCreateError ?? t('guide.help.request.user.create.input.error')}

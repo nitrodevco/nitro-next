@@ -14,7 +14,7 @@ export const MonsterplantSeedMenuLayout = ({ border, layout }: MonsterplantSeedM
             <Bubble
                 variant="0"
                 tintColor="#6e6b67"
-                layout={{ position: 'absolute', left: 0, width: 115, bottom: -27, height: 86 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: -27, height: 86 }}
             >
                 <MonsterplantSeedMenuLayoutBorder {...border} />
             </Bubble>

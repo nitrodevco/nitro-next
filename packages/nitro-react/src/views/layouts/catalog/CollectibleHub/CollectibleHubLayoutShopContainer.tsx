@@ -18,7 +18,7 @@ export const CollectibleHubLayoutShopContainer = ({ layout, loadedContent, srcLo
             <Region
                 name="shopContainer"
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: -5, right: 15, top: 125, height: 428, overflow: 'hidden', ...layout }}
+                layout={{ position: 'absolute', left: -5, right: 3, top: 125, height: 428, overflow: 'hidden', ...layout }}
             >
                 <CollectibleHubLayoutLoadedContent3 {...loadedContent} />
                 {(visibleLoadingContents ?? false) && (

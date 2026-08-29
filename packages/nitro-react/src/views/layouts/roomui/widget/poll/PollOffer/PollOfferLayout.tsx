@@ -31,7 +31,7 @@ export const PollOfferLayout = ({ captionPollOfferButtonCancel, captionPollOffer
             caption={t('poll_offer_window')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 382, height: 250, ...layout }}
+            layout={{ width: 382, height: 250, minWidth: 382, minHeight: 250, ...layout }}
         >
             <Region
                 name="header_container"
@@ -57,7 +57,7 @@ export const PollOfferLayout = ({ captionPollOfferButtonCancel, captionPollOffer
             <Border
                 variant="2"
                 name="poll_offer_border"
-                layout={{ position: 'absolute', left: 0, right: 12, top: 100, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 100, bottom: -41 }}
             >
                 <Region
                     name="poll_offer_summary_wrapper"

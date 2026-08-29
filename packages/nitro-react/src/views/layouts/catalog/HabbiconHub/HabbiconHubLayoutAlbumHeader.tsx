@@ -26,7 +26,7 @@ export const HabbiconHubLayoutAlbumHeader = ({ captionAlbumProgressText, caption
         <Region
             name="album_header"
             backgroundColor="#2b7aa0"
-            layout={{ position: 'absolute', left: -2, right: 4, top: -3, height: 110, ...layout }}
+            layout={{ position: 'absolute', left: -2, right: -8, top: -3, height: 110, ...layout }}
         >
             <Border
                 variant="3"

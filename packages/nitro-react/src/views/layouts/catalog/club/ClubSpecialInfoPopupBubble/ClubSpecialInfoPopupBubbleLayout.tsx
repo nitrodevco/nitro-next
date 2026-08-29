@@ -14,7 +14,7 @@ export const ClubSpecialInfoPopupBubbleLayout = ({ layout, mainContent }: ClubSp
             <Bubble
                 variant="7"
                 pointer="left"
-                layout={{ position: 'absolute', left: 0, width: 374, top: 0, height: 146 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ClubSpecialInfoPopupBubbleLayoutMainContent {...mainContent} />
             </Bubble>

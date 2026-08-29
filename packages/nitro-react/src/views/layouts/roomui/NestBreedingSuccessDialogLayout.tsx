@@ -21,7 +21,7 @@ export const NestBreedingSuccessDialogLayout = ({ captionPetName, captionPetRari
             variant="100"
             caption={t('breedpets.nestbreeding.success.header')}
             onClose={onClose}
-            layout={{ width: 323, height: 221, ...layout }}
+            layout={{ width: 323, height: 221, minWidth: 323, minHeight: 221, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region layout={{ position: 'absolute', left: 39, width: 252, top: 15, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -53,7 +53,7 @@ export const NestBreedingSuccessDialogLayout = ({ captionPetName, captionPetRari
                     variant="102"
                     name="button.ok"
                     onPointerTap={onButtonOk}
-                    layout={{ position: 'absolute', marginLeft: 9.5, marginRight: -9.5, width: 172, top: 143, height: 32, minWidth: 100 }}
+                    layout={{ position: 'absolute', marginLeft: 15.5, marginRight: -15.5, width: 172, bottom: 5, height: 32, minWidth: 100 }}
                 >
                     {t('breedpets.nestbreeding.success.button.ok')}
                 </Button>

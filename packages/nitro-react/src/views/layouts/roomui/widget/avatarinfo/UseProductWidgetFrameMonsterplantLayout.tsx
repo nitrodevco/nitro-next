@@ -16,7 +16,7 @@ export const UseProductWidgetFrameMonsterplantLayout = ({ layout, onClose }: Use
             caption={t('useproduct.widget.title.monsterplant')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 388, height: 220, ...layout }}
+            layout={{ width: 388, height: 220, minWidth: 388, minHeight: 220, ...layout }}
         />
     );
 };

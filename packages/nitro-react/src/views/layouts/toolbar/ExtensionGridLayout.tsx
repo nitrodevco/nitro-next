@@ -8,7 +8,7 @@ export interface ExtensionGridLayoutProps {
 export const ExtensionGridLayout = ({ layout }: ExtensionGridLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 192, height: 260, ...layout }}>
-            <Region layout={{ position: 'absolute', right: 0, width: 192, top: 0, height: 260, minWidth: 192, maxWidth: 192, flexDirection: 'column', gap: 2 }} />
+            <Region layout={{ position: 'absolute', right: 0, width: 192, top: 0, bottom: 0, minWidth: 192, maxWidth: 192, flexDirection: 'column', gap: 2 }} />
         </Region>
     );
 };

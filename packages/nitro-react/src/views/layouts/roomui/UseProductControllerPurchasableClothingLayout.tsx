@@ -19,12 +19,12 @@ export const UseProductControllerPurchasableClothingLayout = ({ avatarPreview, c
 
     return (
         <Region layout={{ position: 'relative', width: 386, height: 180, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 386, top: 0, height: 180 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}>
                 <ButtonThick
                     variant="3"
                     name="save_button"
                     onPointerTap={onSaveButton}
-                    layout={{ position: 'absolute', left: 230, width: 145, top: 112, height: 28, minWidth: 130, maxWidth: 145 }}
+                    layout={{ position: 'absolute', right: 11, width: 145, top: 112, height: 28, minWidth: 130, maxWidth: 145 }}
                 >
                     {t('useproduct.widget.bind_clothing')}
                 </ButtonThick>
@@ -48,11 +48,11 @@ export const UseProductControllerPurchasableClothingLayout = ({ avatarPreview, c
                     name="cancel_text"
                     onPointerTap={onCancelText}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25 }}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 65, top: 118, height: 25 }}
                 >
                     {cancelText}
                 </Region>
-                <Region layout={{ position: 'absolute', left: 160, width: 70, top: 120, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 70, top: 120, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     {t('useproduct.widget.cancel')}
                 </Region>
                 <Region

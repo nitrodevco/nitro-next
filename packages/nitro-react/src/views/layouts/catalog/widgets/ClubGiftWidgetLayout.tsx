@@ -17,11 +17,11 @@ export const ClubGiftWidgetLayout = ({ captionInfoText, captionPastClubDays, cap
         <Region layout={{ position: 'relative', width: 340, height: 320, ...layout }}>
             <Region
                 name="widget_main_container"
-                layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 320 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 0, width: 340, top: 35, bottom: 16 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 35, bottom: 16 }}
                 >
                     <Region
                         name="gift_list"
@@ -32,7 +32,7 @@ export const ClubGiftWidgetLayout = ({ captionInfoText, captionPastClubDays, cap
                 </ScrollArea>
                 <Region
                     name="info_text"
-                    layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 35, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 35, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInfoText ?? 'lorem ipsum'}
@@ -42,7 +42,7 @@ export const ClubGiftWidgetLayout = ({ captionInfoText, captionPastClubDays, cap
                 </Region>
                 <Region
                     name="past_club_days"
-                    layout={{ position: 'absolute', left: 0, width: 340, top: 305, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 305, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionPastClubDays ?? 'lorem ipsum'}

@@ -21,17 +21,17 @@ export const TotalPriceWidgetLayout = ({ captionHeaderText, itemsTotalpriceConta
             <Border
                 variant="103"
                 name="totalprice_widget_border"
-                layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 25 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="header_text"
-                    layout={{ position: 'absolute', left: 10, width: 14, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 10, width: 14, top: 3, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionHeaderText ?? '='}
                 </Region>
                 <Region
                     name="totalprice_container"
-                    layout={{ position: 'absolute', right: 3, top: 1, flexDirection: 'row' }}
+                    layout={{ position: 'absolute', right: 3, top: 1, bottom: 0, flexDirection: 'row' }}
                 >
                     {itemsTotalpriceContainer ?? (
                         <>

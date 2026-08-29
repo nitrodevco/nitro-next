@@ -96,7 +96,7 @@ export const HabboWayLayoutPageContainer = ({ captionCorrectDescription, caption
                     onPointerTap={onPreviousButton}
                     layout={{ position: 'absolute', left: 21, width: 197, top: 350, height: 60 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}>
+                    <Region layout={{ position: 'absolute', left: 0, right: 0, top: 15, flexDirection: 'row' }}>
                         <Region layout={{ width: 15, height: 30, flexShrink: 0 }} />
                         <ThemeImage
                             src={layoutImage('help_habboway_prev.png')}
@@ -125,7 +125,7 @@ export const HabboWayLayoutPageContainer = ({ captionCorrectDescription, caption
                     onPointerTap={onNextButton}
                     layout={{ position: 'absolute', right: 19, width: 178, top: 350, height: 60 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}>
+                    <Region layout={{ position: 'absolute', left: 0, right: 0, top: 15, flexDirection: 'row' }}>
                         <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
                         <Region layout={{ width: 121, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <ThemeText

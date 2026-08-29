@@ -17,7 +17,7 @@ export const TargetedOfferPurchaseConfirmationLayoutContent = ({ itemsContent, i
     return (
         <Region
             name="content"
-            layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 48, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -10, top: 8, bottom: 7, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsContent ?? (
                 <>

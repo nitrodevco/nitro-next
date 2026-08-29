@@ -14,7 +14,7 @@ export const UserCreateLayoutInputWidgetItem = ({ inputWidget, layout }: UserCre
             widgetType="illumina_input"
             name="input_widget"
             options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${guide.help.request.user.create.input.help}', 'illumina_input:multiline': 'true' }}
-            layout={{ width: 270, height: 100, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 100, flexShrink: 0, ...layout }}
         >
             {inputWidget}
         </WidgetSlot>

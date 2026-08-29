@@ -65,7 +65,7 @@ export const NavigatorFrame2LayoutNavigatorEntryTileItem = ({ captionRoomName, g
                     tooltip={t('navigator.tooltip.go.to.room')}
                     onPointerTap={onGoToRoomRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 146 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {goToRoomRegion}
                 </Region>

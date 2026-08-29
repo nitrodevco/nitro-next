@@ -23,13 +23,13 @@ export const Notification_1049Layout = ({ captionTextDescription, captionTextTit
             caption="widget.notification.header"
             tintColor="#4c4c4c"
             onClose={onClose}
-            layout={{ width: 315, height: 191, ...layout }}
+            layout={{ width: 315, height: 191, minWidth: 315, minHeight: 191, ...layout }}
         >
             <Border
                 variant="0"
                 tintColor="#4c4c4c"
                 blend={0}
-                layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -9, justifyContent: 'center' }}
             >
                 <Border
                     variant="0"

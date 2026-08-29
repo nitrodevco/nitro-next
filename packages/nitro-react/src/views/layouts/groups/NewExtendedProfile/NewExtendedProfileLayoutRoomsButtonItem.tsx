@@ -24,7 +24,7 @@ export const NewExtendedProfileLayoutRoomsButtonItem = ({ captionRoomsLinkText, 
             cursor="pointer"
             layout={{ width: 166, height: 30, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
-            <Region layout={{ position: 'absolute', width: 162, top: 0, height: 30, minHeight: 30, maxHeight: 30, flexDirection: 'row', gap: 6 }}>
+            <Region layout={{ position: 'absolute', width: 162, top: 0, bottom: 0, minHeight: 30, maxHeight: 30, flexDirection: 'row', gap: 6 }}>
                 <ThemeImage
                     src={layoutImage('extended_profile_rooms.png')}
                     layout={{ width: 32, height: 28, flexShrink: 0 }}

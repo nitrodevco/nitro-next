@@ -14,7 +14,7 @@ export const InventoryTradingWiredLayoutRuleNodesRows = ({ itemsRuleNodesRows, l
     return (
         <Region
             name="rule_nodes_rows"
-            layout={{ position: 'absolute', left: 32, right: 0, top: 0, height: 40, flexDirection: 'column', gap: 3, ...layout }}
+            layout={{ position: 'absolute', left: 32, right: 0, top: 0, bottom: 0, flexDirection: 'column', gap: 3, ...layout }}
         >
             {itemsRuleNodesRows ?? (
                 <InventoryTradingWiredLayoutRuleNodeColumnsTemplateItem />

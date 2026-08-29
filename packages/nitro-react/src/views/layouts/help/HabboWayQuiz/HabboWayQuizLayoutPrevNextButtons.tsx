@@ -19,7 +19,7 @@ export const HabboWayQuizLayoutPrevNextButtons = ({ layout, nextDimmer, onNextBu
     return (
         <Region
             name="prev_next_buttons"
-            layout={{ position: 'absolute', left: 0, width: 498, bottom: 31, height: 65, ...layout }}
+            layout={{ position: 'absolute', left: 0, width: 498, bottom: -10, height: 65, ...layout }}
         >
             <ContainerButton
                 variant="101"

@@ -17,11 +17,11 @@ export const HabboCrasherDialogLayout = ({ captionCrasherText, layout, onClose, 
             caption="Client Crasher Tool"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 201, height: 123, ...layout }}
+            layout={{ width: 201, height: 123, minWidth: 201, minHeight: 123, ...layout }}
         >
             <Region
                 name="crasher_text"
-                layout={{ position: 'absolute', left: 7, width: 171, top: 12, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 7, right: 11, top: 12, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCrasherText ?? 'Warning: Pressing the button crashes the client!!!'}
@@ -34,7 +34,7 @@ export const HabboCrasherDialogLayout = ({ captionCrasherText, layout, onClose, 
                 name="crasher_button"
                 tooltip={'Pressing me is the last thing you\'ll do...'}
                 onPointerTap={onCrasherButton}
-                layout={{ position: 'absolute', left: 50, width: 79, top: 50, height: 34 }}
+                layout={{ position: 'absolute', left: 50, width: 79, bottom: -2, height: 34 }}
             >
                 Crash Me!
             </ButtonThick>

@@ -22,7 +22,7 @@ export const BreedPetsResultLayoutElementList = ({ itemsElementList, layout }: B
     return (
         <Region
             name="element_list"
-            layout={{ position: 'absolute', left: 0, top: 0, minWidth: 274, maxWidth: 274, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -11, top: 0, minWidth: 274, maxWidth: 274, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsElementList ?? (
                 <>

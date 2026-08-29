@@ -18,7 +18,7 @@ export const IssueBrowserLayoutTabContent = ({ layout, myIssuesPrototype, openIs
     return (
         <Region
             name="tab_content"
-            layout={{ position: 'absolute', left: 10, right: 18, top: 30, bottom: 66, ...layout }}
+            layout={{ position: 'absolute', left: 10, right: 6, top: 30, bottom: 25, ...layout }}
         >
             {(visibleOpenIssuesPrototype ?? false) && (
                 <IssueBrowserLayoutOpenIssuesPrototype {...openIssuesPrototype} />

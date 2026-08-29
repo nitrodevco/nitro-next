@@ -17,10 +17,10 @@ export const ElementConcurrentusersinfoLayout = ({ captionBadgeDesc, captionUser
 
     return (
         <Region layout={{ position: 'relative', width: 185, height: 70, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 70 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Region
                     name="state.active"
-                    layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
                 >
                     <Region
                         name="users_desc"
@@ -36,7 +36,7 @@ export const ElementConcurrentusersinfoLayout = ({ captionBadgeDesc, captionUser
                 {(visibleStateAchieved ?? false) && (
                     <Region
                         name="state.achieved"
-                        layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 80 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80 }}
                     >
                         <ThemeImage
                             name="badge_image"

@@ -16,23 +16,23 @@ export const MiniviewLayout = ({ countdown, layout }: MiniviewLayoutProps) => {
         <Region layout={{ position: 'relative', width: 192, height: 29, ...layout }}>
             <Region
                 name="returnusergifting"
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="6"
                     tintColor="#686661"
                     blend={0.8}
-                    layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <WidgetSlot
                         widgetType="countdown"
                         name="countdown"
                         options={{ 'countdown:running': 'true' }}
-                        layout={{ position: 'absolute', left: 124, width: 99, top: 3, height: 37 }}
+                        layout={{ position: 'absolute', left: 124, width: 99, top: 3, bottom: -11 }}
                     >
                         {countdown}
                     </WidgetSlot>
-                    <Region layout={{ position: 'absolute', left: 10, width: 154, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', left: 10, width: 154, top: 6, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('next.gift.in')}
                             textStyle="text-style-il-regular-white"

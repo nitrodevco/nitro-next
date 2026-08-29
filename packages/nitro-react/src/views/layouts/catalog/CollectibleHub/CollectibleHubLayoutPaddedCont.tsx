@@ -20,7 +20,7 @@ export const CollectibleHubLayoutPaddedCont = ({ captionProgressBarText, caption
             name="padded_cont"
             layout={{ position: 'absolute', left: 4, width: 282, top: 4, height: 52, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, width: 282, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                 <ThemeText
                     text={t('collectibles.preview.completion_bonus')}
                     textOptions={{ fill: '#ffd300', align: 'center' }}
@@ -28,7 +28,7 @@ export const CollectibleHubLayoutPaddedCont = ({ captionProgressBarText, caption
             </Region>
             <Region
                 name="reward_furni_name"
-                layout={{ position: 'absolute', left: 0, width: 282, top: 14, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 14, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionRewardFurniName ?? 'Lorem ipsum hot air balloon'}
@@ -38,7 +38,7 @@ export const CollectibleHubLayoutPaddedCont = ({ captionProgressBarText, caption
             <Region
                 name="progress_bar"
                 backgroundColor="#112e31"
-                layout={{ position: 'absolute', left: 0, width: 282, top: 34, height: 18 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 34, height: 18 }}
             >
                 <Region
                     name="progress_padded_bar"
@@ -61,7 +61,7 @@ export const CollectibleHubLayoutPaddedCont = ({ captionProgressBarText, caption
                 </Region>
                 <Region
                     name="progress_bar_text"
-                    layout={{ position: 'absolute', left: 0, width: 282, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionProgressBarText ?? t('shop.minting.time_left')}

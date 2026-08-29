@@ -13,11 +13,11 @@ export const GuildSelectorWidgetItemLayout = ({ captionGuildName, layout, srcGui
         <Region layout={{ position: 'relative', width: 133, height: 22, ...layout }}>
             <Region
                 name="guild_item"
-                layout={{ position: 'absolute', left: 0, width: 133, top: 0, height: 22 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="guild_name"
-                    layout={{ position: 'absolute', left: 0, width: 72, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 72, top: 4, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionGuildName ?? 'lorem ipsum'}
                 </Region>
@@ -25,7 +25,7 @@ export const GuildSelectorWidgetItemLayout = ({ captionGuildName, layout, srcGui
                     name="guild_colors"
                     src={srcGuildColors}
                     tint={tintGuildColors}
-                    layout={{ position: 'absolute', left: 112, width: 21, top: 4, height: 14 }}
+                    layout={{ position: 'absolute', right: 0, width: 21, top: 4, height: 14 }}
                 />
             </Region>
         </Region>

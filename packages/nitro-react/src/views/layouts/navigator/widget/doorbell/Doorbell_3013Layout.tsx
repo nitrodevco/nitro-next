@@ -21,7 +21,7 @@ export const Doorbell_3013Layout = ({ captionCancel, captionInfo, captionRoomNam
             caption={t('navigator.doorbell.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 270, height: 182, ...layout }}
+            layout={{ width: 270, height: 182, minWidth: 270, minHeight: 182, ...layout }}
         >
             <Region
                 name="room_name"
@@ -31,7 +31,7 @@ export const Doorbell_3013Layout = ({ captionCancel, captionInfo, captionRoomNam
             </Region>
             <Region
                 name="info"
-                layout={{ position: 'absolute', left: 10, right: 20, top: 35, bottom: 81, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 10, right: 8, top: 35, bottom: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionInfo ?? t('navigator.doorbell.info')}
@@ -46,7 +46,7 @@ export const Doorbell_3013Layout = ({ captionCancel, captionInfo, captionRoomNam
                     name="cancel_region"
                     onPointerTap={onCancelRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, right: 154, top: 0, height: 36 }}
+                    layout={{ position: 'absolute', left: 0, right: 154, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="cancel"

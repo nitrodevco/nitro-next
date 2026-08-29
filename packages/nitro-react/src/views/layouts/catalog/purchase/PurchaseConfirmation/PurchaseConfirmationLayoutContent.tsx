@@ -27,7 +27,7 @@ export const PurchaseConfirmationLayoutContent = ({ itemsContent, itemsPropertie
     return (
         <Region
             name="content"
-            layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 37, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -10, top: 8, bottom: -4, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsContent ?? (
                 <>
@@ -52,7 +52,7 @@ export const PurchaseConfirmationLayoutContent = ({ itemsContent, itemsPropertie
                         <WidgetSlot
                             widgetType="product_image"
                             name="nft_image"
-                            layout={{ position: 'absolute', left: 0, width: 126, top: 0, height: 152 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         >
                             {nftImage}
                         </WidgetSlot>

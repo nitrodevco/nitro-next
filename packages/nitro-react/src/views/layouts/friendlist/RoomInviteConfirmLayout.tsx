@@ -24,16 +24,16 @@ export const RoomInviteConfirmLayout = ({ captionInviteNote, captionInviteSummar
             name="alert_%202"
             caption={t('friendlist.invite.title')}
             onClose={onClose}
-            layout={{ width: 211, height: 175, ...layout }}
+            layout={{ width: 211, height: 175, minWidth: 211, minHeight: 175, ...layout }}
         >
             <Border
                 variant="0"
                 name="border"
-                layout={{ position: 'absolute', left: 0, width: 199, top: 0, height: 118 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 118 }}
             >
                 <Region
                     name="invite_summary"
-                    layout={{ position: 'absolute', left: 10, width: 180, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 10, right: 9, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInviteSummary ?? t('friendlist.invite.summary')}
@@ -44,11 +44,11 @@ export const RoomInviteConfirmLayout = ({ captionInviteNote, captionInviteSummar
                     value={messageInputValue}
                     onChange={setMessageInputValue}
                     textColor="#000000"
-                    layout={{ position: 'absolute', left: 10, width: 180, top: 24, height: 70 }}
+                    layout={{ position: 'absolute', left: 10, right: 9, alignSelf: 'center', height: 70 }}
                 />
                 <Region
                     name="invite_note"
-                    layout={{ position: 'absolute', left: 10, width: 180, top: 98, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 10, right: 9, bottom: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInviteNote ?? t('friendlist.invite.note')}
@@ -60,7 +60,7 @@ export const RoomInviteConfirmLayout = ({ captionInviteNote, captionInviteSummar
                 variant="0"
                 name="cancel"
                 onPointerTap={onCancel}
-                layout={{ position: 'absolute', left: 139, width: 60, top: 122, height: 21, minWidth: 60, maxWidth: 60 }}
+                layout={{ position: 'absolute', right: 0, width: 60, bottom: -9, height: 21, minWidth: 60, maxWidth: 60 }}
             >
                 {t('generic.cancel')}
             </Button>
@@ -68,7 +68,7 @@ export const RoomInviteConfirmLayout = ({ captionInviteNote, captionInviteSummar
                 variant="0"
                 name="ok"
                 onPointerTap={onOk}
-                layout={{ position: 'absolute', left: 0, width: 60, top: 122, height: 21, minWidth: 60, maxWidth: 60 }}
+                layout={{ position: 'absolute', left: 0, width: 60, bottom: -9, height: 21, minWidth: 60, maxWidth: 60 }}
             >
                 {t('friendlist.invite.send')}
             </ButtonThick>

@@ -12,7 +12,7 @@ export interface SnowwarTimerLayoutProps {
 export const SnowwarTimerLayout = ({ captionTimeLeft, captionTimeLeftStroke, layout, strokeTextColor, visibleChecksumIndicator }: SnowwarTimerLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 100, height: 46, ...layout }}>
-            <Region layout={{ position: 'absolute', right: 0, width: 100, top: 0, height: 46 }}>
+            <Region layout={{ position: 'absolute', right: 0, width: 100, top: 0, bottom: 0 }}>
                 {(visibleChecksumIndicator ?? false) && (
                     <Border
                         variant="0"

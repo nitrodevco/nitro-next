@@ -45,7 +45,7 @@ export const BackgroundColorUiLayoutLightnessContainerItem = ({ captionParameter
             {(visibleSliderMovementArea ?? true) && (
                 <Region
                     name="slider_movement_area"
-                    layout={{ position: 'absolute', left: 0, width: 206, top: 13, height: 17 }}
+                    layout={{ position: 'absolute', left: 0, width: 206, bottom: 12, height: 17 }}
                 >
                     {(visibleSliderButton ?? true) && (
                         <ThemeImage

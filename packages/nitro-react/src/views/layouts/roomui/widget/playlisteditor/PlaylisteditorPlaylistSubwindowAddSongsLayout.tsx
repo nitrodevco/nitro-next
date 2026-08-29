@@ -15,7 +15,7 @@ export const PlaylisteditorPlaylistSubwindowAddSongsLayout = ({ layout, srcAddSo
 
     return (
         <Region layout={{ position: 'relative', width: 261, height: 56, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 261, top: 0, height: 56 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="background_image"
                     src={srcBackgroundImage}
@@ -34,7 +34,7 @@ export const PlaylisteditorPlaylistSubwindowAddSongsLayout = ({ layout, srcAddSo
                         textStyle="text-style-bold"
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 63, width: 200, top: 21, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', right: -2, width: 200, bottom: 3, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('playlist.editor.text.click.song.to.choose.click.again.to.move')}
                         textOptions={{ wordWrap: true, wordWrapWidth: 200 }}

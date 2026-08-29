@@ -21,12 +21,12 @@ export const TabContentLayout = ({ itemsListContent, layout, onTabContent }: Tab
             >
                 <Region
                     name="list"
-                    layout={{ position: 'absolute', left: 5, width: 218, top: 5, height: 95 }}
+                    layout={{ position: 'absolute', left: 5, right: 0, top: 5, bottom: 0 }}
                 >
                     <Region
                         name="list_content"
                         backgroundColor="#ffffff"
-                        layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 95, flexDirection: 'column' }}
+                        layout={{ position: 'absolute', left: 0, width: 195, top: 0, bottom: 0, flexDirection: 'column' }}
                     >
                         {itemsListContent}
                     </Region>

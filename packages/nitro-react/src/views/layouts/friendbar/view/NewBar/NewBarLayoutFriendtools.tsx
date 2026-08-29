@@ -33,7 +33,7 @@ export const NewBarLayoutFriendtools = ({ layout, onCollapseLeft, onIconAllFrien
                 name="collapse_left"
                 onPointerTap={onCollapseLeft}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 135, width: 15, top: 0, height: 46, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 135, width: 15, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Border
                     variant="2"

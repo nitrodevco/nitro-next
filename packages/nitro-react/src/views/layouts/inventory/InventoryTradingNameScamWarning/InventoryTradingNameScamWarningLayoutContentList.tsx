@@ -18,7 +18,7 @@ export const InventoryTradingNameScamWarningLayoutContentList = ({ itemsContentL
     return (
         <Region
             name="content_list"
-            layout={{ position: 'absolute', left: 10, right: 16, top: 8, height: 280, flexDirection: 'column', gap: 8, ...layout }}
+            layout={{ position: 'absolute', left: 10, right: 4, top: 8, height: 280, flexDirection: 'column', gap: 8, ...layout }}
         >
             {itemsContentList ?? (
                 <>

@@ -22,7 +22,7 @@ export const RoomUsercountLayout = ({ itemsUsercount, layout }: RoomUsercountLay
             >
                 <Region
                     name="usercount"
-                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
+                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 31, top: 1, bottom: 2, flexDirection: 'row', gap: 1 }}
                 >
                     {itemsUsercount ?? (
                         <>

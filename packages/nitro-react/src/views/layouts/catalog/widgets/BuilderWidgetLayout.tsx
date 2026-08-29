@@ -16,13 +16,13 @@ export const BuilderWidgetLayout = ({ captionErrorMessage, layout, onPlaceMany, 
 
     return (
         <Region layout={{ position: 'relative', width: 360, height: 60, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 60 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ButtonThick
                     variant="5"
                     name="place_one"
                     tintColor="#dda100"
                     onPointerTap={onPlaceOne}
-                    layout={{ position: 'absolute', left: 30, width: 130, top: 30, height: 30, minWidth: 130, maxWidth: 130 }}
+                    layout={{ position: 'absolute', left: 30, width: 130, bottom: 0, height: 30, minWidth: 130, maxWidth: 130 }}
                 >
                     {t('builder.placement_widget.place_one')}
                 </ButtonThick>
@@ -31,7 +31,7 @@ export const BuilderWidgetLayout = ({ captionErrorMessage, layout, onPlaceMany, 
                     name="place_many"
                     tintColor="#0a9bc5"
                     onPointerTap={onPlaceMany}
-                    layout={{ position: 'absolute', left: 201, width: 130, top: 30, height: 30, minWidth: 130, maxWidth: 130 }}
+                    layout={{ position: 'absolute', left: 201, width: 130, bottom: 0, height: 30, minWidth: 130, maxWidth: 130 }}
                 >
                     {t('builder.placement_widget.place_many')}
                 </ButtonThick>
@@ -43,12 +43,12 @@ export const BuilderWidgetLayout = ({ captionErrorMessage, layout, onPlaceMany, 
                 </Region>
                 <Region
                     name="error_container"
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 25 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25 }}
                 >
                     <Border
                         variant="2"
                         tintColor="#f2d193"
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 2, height: 22 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 1 }}
                     />
                     <ThemeImage
                         name="error_icon"
@@ -57,7 +57,7 @@ export const BuilderWidgetLayout = ({ captionErrorMessage, layout, onPlaceMany, 
                     />
                     <Region
                         name="error_message"
-                        layout={{ position: 'absolute', left: 38, width: 105, top: 5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 38, width: 105, top: 5, bottom: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionErrorMessage ?? 'We have a problem!'}

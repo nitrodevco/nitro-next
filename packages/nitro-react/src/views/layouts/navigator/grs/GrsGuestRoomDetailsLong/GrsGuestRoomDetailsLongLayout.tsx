@@ -14,7 +14,7 @@ export const GrsGuestRoomDetailsLongLayout = ({ detailsContainer, layout }: GrsG
             <Border
                 variant="0"
                 name="room_popup_container"
-                layout={{ position: 'absolute', left: 0, width: 253, top: 0, height: 351 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <GrsGuestRoomDetailsLongLayoutDetailsContainer {...detailsContainer} />
             </Border>

@@ -19,7 +19,7 @@ export const IroEventInfoLayoutEventInfoWindow = ({ bgRegion, contentCont, layou
     return (
         <Region
             name="event_info_window"
-            layout={{ position: 'absolute', right: 0, width: 195, top: 0, height: 135, ...layout }}
+            layout={{ position: 'absolute', right: 0, width: 195, top: 0, bottom: 0, ...layout }}
         >
             <ThemeImage
                 name="event_bg_visitor"

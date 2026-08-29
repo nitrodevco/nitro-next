@@ -23,9 +23,9 @@ export const ClubGiftConfirmationLayout = ({ captionBundleCounter, captionItemNa
             caption={t('catalog.club_gift.confirm')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 280, height: 142, ...layout }}
+            layout={{ width: 280, height: 142, minWidth: 280, minHeight: 142, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -9 }}>
                 <Border
                     variant="0"
                     name="image_border"

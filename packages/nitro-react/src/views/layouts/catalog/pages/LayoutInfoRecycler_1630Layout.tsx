@@ -16,12 +16,12 @@ export const LayoutInfoRecycler_1630Layout = ({ captionCtlgDescription, captionC
         <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
             <Region
                 name="ctlg_recycler_info"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="2"
                     tintColor="#fbc362"
-                    layout={{ position: 'absolute', left: 10, width: 340, top: 140, height: 310 }}
+                    layout={{ position: 'absolute', left: 10, right: 10, bottom: 10, height: 310, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="ctlg_teaserimg_1"
@@ -40,7 +40,7 @@ export const LayoutInfoRecycler_1630Layout = ({ captionCtlgDescription, captionC
                     </Region>
                     <Region
                         name="ctlg_special_txt"
-                        layout={{ position: 'absolute', left: 15, width: 307, top: 72, height: 283, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 307, top: 72, height: 283, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCtlgSpecialTxt ?? t('lorem.newline')}

@@ -18,7 +18,7 @@ export const ErrorPopupLayoutContentList = ({ itemsContentList, layout }: ErrorP
     return (
         <Region
             name="content_list"
-            layout={{ position: 'absolute', left: 17, right: 18, top: 10, height: 271, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ position: 'absolute', left: 17, right: 6, top: 10, height: 271, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsContentList ?? (
                 <>

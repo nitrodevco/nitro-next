@@ -13,7 +13,7 @@ export const UseProductControllerReviveMonsterplantLayoutPlantRarityLevelItem = 
     return (
         <Region
             name="plant_rarity_level"
-            layout={{ width: 134, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
+            layout={{ alignSelf: 'stretch', height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
                 text={captionPlantRarityLevel ?? t('useproduct.widget.monsterplant.plant.raritylevel')}

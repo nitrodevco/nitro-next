@@ -25,7 +25,7 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
             variant="100"
             caption={t('widget.custom.stack.height.title')}
             onClose={onClose}
-            layout={{ width: 320, height: 210, ...layout }}
+            layout={{ width: 320, height: 210, minWidth: 320, minHeight: 185, maxHeight: 210, ...layout }}
         >
             <Button
                 variant="102"
@@ -39,25 +39,25 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
                 variant="102"
                 name="button_floor_level"
                 onPointerTap={onButtonFloorLevel}
-                layout={{ position: 'absolute', right: 12, width: 126, top: 110, height: 29 }}
+                layout={{ position: 'absolute', right: 0, width: 126, top: 110, height: 29 }}
             >
                 {t('furniture.floor.level')}
             </Button>
             <Border
                 variant="105"
                 name="slider"
-                layout={{ position: 'absolute', left: 35, width: 206, top: 68, height: 30 }}
+                layout={{ position: 'absolute', left: 35, width: 206, alignSelf: 'center', marginTop: -1.5, marginBottom: 1.5, height: 30 }}
             >
                 <ContainerButton
                     variant="102"
                     name="slider_button"
                     onPointerTap={onSliderButton}
-                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, bottom: 0 }}
                 />
             </Border>
             <Region
                 name="height_text"
-                layout={{ position: 'absolute', left: 10, width: 294, top: 5, height: 59, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 10, right: 4, top: 5, height: 59, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionHeightText ?? t('widget.custom.stack.height.text')}
@@ -66,17 +66,17 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
             </Region>
             <Border
                 variant="105"
-                layout={{ position: 'absolute', left: 250, width: 58, top: 68, height: 30 }}
+                layout={{ position: 'absolute', right: 0, width: 58, alignSelf: 'center', marginTop: -1.5, marginBottom: 1.5, height: 30 }}
             >
                 <TextInput
                     value={inputHeightValue}
                     onChange={setInputHeightValue}
-                    layout={{ position: 'absolute', left: 7, width: 45, top: 7, height: 20 }}
+                    layout={{ position: 'absolute', left: 7, right: 6, top: 7, bottom: 3 }}
                 />
             </Border>
             <Region
                 name="walktile_container"
-                layout={{ position: 'absolute', left: 0, width: 318, top: 149, height: 24 }}
+                layout={{ position: 'absolute', left: 0, right: -10, bottom: -4, height: 24 }}
             >
                 <CheckBox
                     variant="102"
@@ -84,7 +84,7 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
                     onPointerTap={onMultiwalkCheckbox}
                     layout={{ position: 'absolute', left: 13, width: 17, top: 3, height: 16 }}
                 />
-                <Region layout={{ position: 'absolute', left: 31, width: 282, top: 2, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', right: 5, width: 282, top: 2, bottom: 3, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('widget.custom.multiwalk_mode.text')}
                         textOptions={{ wordWrap: true, wordWrapWidth: 282 }}

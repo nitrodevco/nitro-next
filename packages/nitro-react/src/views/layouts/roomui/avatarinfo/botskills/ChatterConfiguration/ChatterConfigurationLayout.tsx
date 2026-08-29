@@ -17,7 +17,7 @@ export const ChatterConfigurationLayout = ({ configurationItems, layout }: Chatt
             <Bubble
                 variant="100"
                 tintColor="#6e6b67"
-                layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 369 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     backgroundColor="#000000"

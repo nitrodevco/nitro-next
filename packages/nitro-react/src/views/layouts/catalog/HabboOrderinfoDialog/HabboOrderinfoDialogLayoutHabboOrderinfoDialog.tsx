@@ -12,11 +12,11 @@ export const HabboOrderinfoDialogLayoutHabboOrderinfoDialog = ({ layout, orderIt
     return (
         <Region
             name="habbo_orderinfo_dialog"
-            layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 149, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="0"
-                layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 149 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <HabboOrderinfoDialogLayoutOrderItemList {...orderItemList} />
             </Border>

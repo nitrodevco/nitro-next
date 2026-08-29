@@ -16,7 +16,7 @@ export interface SnowwarTeamScoresLayoutProps {
 export const SnowwarTeamScoresLayout = ({ captionScoreBlue, captionScoreBlueStroke, captionScoreRed, captionScoreRedStroke, layout, srcBackgroundImage, strokeTextColor, tintBackgroundImage }: SnowwarTeamScoresLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 189, height: 147, ...layout }}>
-            <Region layout={{ position: 'absolute', right: 0, width: 189, top: 0, height: 147 }}>
+            <Region layout={{ position: 'absolute', right: 0, width: 189, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="backgroundImage"
                     src={srcBackgroundImage ?? layoutImage('ui_timer_and_points.png')}
@@ -26,7 +26,7 @@ export const SnowwarTeamScoresLayout = ({ captionScoreBlue, captionScoreBlueStro
                 <Region layout={{ position: 'absolute', left: 29, width: 56, top: 44, height: 27 }}>
                     <Region
                         name="score_blue_stroke"
-                        layout={{ position: 'absolute', left: 0, width: 56, top: 0, height: 27, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionScoreBlueStroke ?? '0'}
@@ -35,7 +35,7 @@ export const SnowwarTeamScoresLayout = ({ captionScoreBlue, captionScoreBlueStro
                     </Region>
                     <Region
                         name="score_blue"
-                        layout={{ position: 'absolute', left: 0, width: 56, top: 0, height: 26, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionScoreBlue ?? '0'}
@@ -46,7 +46,7 @@ export const SnowwarTeamScoresLayout = ({ captionScoreBlue, captionScoreBlueStro
                 <Region layout={{ position: 'absolute', left: 104, width: 56, top: 44, height: 27 }}>
                     <Region
                         name="score_red_stroke"
-                        layout={{ position: 'absolute', left: 0, width: 56, top: 0, height: 27, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionScoreRedStroke ?? '0'}
@@ -55,7 +55,7 @@ export const SnowwarTeamScoresLayout = ({ captionScoreBlue, captionScoreBlueStro
                     </Region>
                     <Region
                         name="score_red"
-                        layout={{ position: 'absolute', left: 0, width: 56, top: 0, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionScoreRed ?? '0'}

@@ -12,7 +12,7 @@ export const LogsOverviewLayoutFooter = ({ layout, pagination }: LogsOverviewLay
     return (
         <Region
             name="footer"
-            layout={{ position: 'absolute', left: 0, right: 0, bottom: 35, height: 60, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -12, bottom: -6, height: 60, ...layout }}
         >
             <LogsOverviewLayoutPagination {...pagination} />
         </Region>

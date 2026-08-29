@@ -64,7 +64,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
         <Region layout={{ position: 'relative', width: 882, height: 510, ...layout }}>
             <Region
                 backgroundColor="#eeeeff"
-                layout={{ position: 'absolute', marginLeft: -25, marginRight: 25, width: 882, top: 0, height: 510, minWidth: 455, justifyContent: 'center' }}
+                layout={{ position: 'absolute', marginLeft: -25, marginRight: 25, width: 882, top: 0, bottom: 0, minWidth: 455, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="snowwar_logo"
@@ -96,7 +96,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                                 name="button_play_again"
                                 tintColor="#00ff00"
                                 onPointerTap={onButtonPlayAgain}
-                                layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
+                                layout={{ position: 'absolute', width: 180, top: 0, bottom: 0, minWidth: 180, minHeight: 50 }}
                             >
                                 {t('snowwar.new_game')}
                             </ButtonThick>
@@ -106,7 +106,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                             name="button_rematch"
                             tintColor="#00ff00"
                             onPointerTap={onButtonRematch}
-                            layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
+                            layout={{ position: 'absolute', width: 180, top: 0, bottom: 0, minWidth: 180, minHeight: 50 }}
                         >
                             Rematch
                         </ButtonThick>
@@ -116,7 +116,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                                 name="button_buy_games"
                                 tintColor="#00ff00"
                                 onPointerTap={onButtonBuyGames}
-                                layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
+                                layout={{ position: 'absolute', width: 180, top: 0, bottom: 0, minWidth: 180, minHeight: 50 }}
                             >
                                 {t('snowwar.buy_x_games')}
                             </ButtonThick>
@@ -136,7 +136,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                     />
                     <Region
                         name="leave_link"
-                        layout={{ position: 'absolute', left: 5, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 5, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionLeaveLink ?? t('snowwar.leave_game')}
@@ -299,7 +299,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                 >
                     <Region
                         name="endingInformation_stroke"
-                        layout={{ position: 'absolute', left: 0, width: 450, top: 0, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionEndingInformationStroke ?? 'Blue team wins!'}
@@ -308,7 +308,7 @@ export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation
                     </Region>
                     <Region
                         name="endingInformation"
-                        layout={{ position: 'absolute', left: 0, width: 450, top: 0, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionEndingInformation ?? 'Blue team wins!'}

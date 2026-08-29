@@ -15,7 +15,7 @@ export const BreedPetsResultLayoutCloseButtonItem = ({ layout, onCloseButton }: 
             variant="3"
             name="close_button"
             onPointerTap={onCloseButton}
-            layout={{ width: 122, height: 30, flexShrink: 0, minWidth: 122, maxWidth: 122, ...layout }}
+            layout={{ width: 122, alignSelf: 'stretch', flexShrink: 0, minWidth: 122, maxWidth: 122, ...layout }}
         >
             {t('breedpetsresult.widget.close')}
         </Button>

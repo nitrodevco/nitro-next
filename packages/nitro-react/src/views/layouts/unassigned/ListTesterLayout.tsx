@@ -17,11 +17,11 @@ export const ListTesterLayout = ({ itemsListHorizontal, itemsListVertical, layou
             caption="Tester"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 240, height: 245, ...layout }}
+            layout={{ width: 240, height: 245, minWidth: 240, minHeight: 245, ...layout }}
         >
             <Border
                 variant="0"
-                layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -9 }}
             >
                 <ScrollArea
                     orientation="vertical"

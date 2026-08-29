@@ -17,7 +17,7 @@ export const PremiumPurchaseConfirmationLayoutTopBody = ({ benefits, layout, src
     return (
         <Region
             name="top_body"
-            layout={{ position: 'absolute', left: 0, width: 366, top: 0, height: 208, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 208, ...layout }}
         >
             <Border
                 variant="15"
@@ -37,8 +37,8 @@ export const PremiumPurchaseConfirmationLayoutTopBody = ({ benefits, layout, src
                         layout={{ position: 'absolute', left: 20, width: 67, top: 12, height: 67 }}
                     />
                 </Border>
-                <Region layout={{ position: 'absolute', left: 0, width: 132, top: 115, bottom: 12 }}>
-                    <Region layout={{ position: 'absolute', left: 0, width: 132, alignSelf: 'center', height: 35, flexDirection: 'column' }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 115, bottom: 12 }}>
+                    <Region layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', height: 35, flexDirection: 'column' }}>
                         <Region layout={{ width: 116, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                             <ThemeText
                                 text={t('reward_track.rewards.premium')}

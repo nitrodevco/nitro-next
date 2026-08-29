@@ -25,20 +25,20 @@ export const MainView_65LayoutTopPart = ({ captionTopHeaderText, captionTopText,
             backgroundColor="#0e3f52"
             onPointerTap={onTopPart}
             cursor="pointer"
-            layout={{ position: 'absolute', left: -5, right: 7, top: 8, height: 80, ...layout }}
+            layout={{ position: 'absolute', left: -5, right: -5, top: 8, height: 80, ...layout }}
         >
             <Region
                 name="top_click_area"
                 onPointerTap={onTopClickArea}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 {topClickArea}
             </Region>
             <Region
                 name="icon_background"
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80 }}
+                layout={{ position: 'absolute', left: 0, width: 80, top: 0, bottom: 0 }}
             >
                 <WidgetSlot
                     widgetType="badge_image"

@@ -13,7 +13,7 @@ export const VerticalListViewLayout = ({ itemsVerticalListView, layout }: Vertic
         <Region layout={{ position: 'relative', width: 1000, height: 0, ...layout }}>
             <Region
                 name="vertical_list_view"
-                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, flexDirection: 'column' }}
             >
                 {itemsVerticalListView}
             </Region>

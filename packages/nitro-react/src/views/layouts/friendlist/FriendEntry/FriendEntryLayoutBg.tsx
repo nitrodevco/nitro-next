@@ -39,7 +39,7 @@ export const FriendEntryLayoutBg = ({ captionCaption, captionName, captionSelect
             backgroundColor="#ffffcc"
             onPointerTap={onBg}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20, justifyContent: 'center', ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="name"
@@ -151,7 +151,7 @@ export const FriendEntryLayoutBg = ({ captionCaption, captionName, captionSelect
             >
                 <Region
                     name="select_all_text"
-                    layout={{ position: 'absolute', left: 0, width: 49, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionSelectAllText ?? t('friendlist.select_all')}

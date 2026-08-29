@@ -18,13 +18,13 @@ export const LayoutMonkey_1663Layout = ({ ctlgSpecialImgRegion, ctlgTeaserimg1Re
         <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
             <Region
                 name="ctlg_monkey"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ctlg_teaserimg_1_region"
                     onPointerTap={onCtlgTeaserimg1Region}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 10, width: 339, top: 170, height: 184 }}
+                    layout={{ position: 'absolute', left: 10, right: 11, top: 170, height: 184 }}
                 >
                     {ctlgTeaserimg1Region}
                 </Region>
@@ -32,7 +32,7 @@ export const LayoutMonkey_1663Layout = ({ ctlgSpecialImgRegion, ctlgTeaserimg1Re
                     name="ctlg_special_img_region"
                     onPointerTap={onCtlgSpecialImgRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 10, width: 339, top: 365, height: 80 }}
+                    layout={{ position: 'absolute', left: 10, right: 11, top: 365, height: 80 }}
                 >
                     {ctlgSpecialImgRegion}
                 </Region>

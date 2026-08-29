@@ -12,7 +12,7 @@ export const ToggleLayout = ({ layout, onButtonOpen }: ToggleLayoutProps) => {
             <Border
                 variant="1"
                 name="container"
-                layout={{ position: 'absolute', left: 0, width: 26, top: 10, height: 32 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 10, bottom: -10 }}
             >
                 <CloseButton
                     variant="0"

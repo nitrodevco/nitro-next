@@ -14,7 +14,7 @@ export const RoomInfoPopupBubbleLayoutHeaderContent = ({ itemsHeaderContent, lay
     return (
         <Region
             name="header_content"
-            layout={{ position: 'absolute', left: 7, width: 331, top: 6, height: 112, flexDirection: 'column', gap: 7, ...layout }}
+            layout={{ position: 'absolute', left: 7, right: 7, top: 6, bottom: 7, flexDirection: 'column', gap: 7, ...layout }}
         >
             {itemsHeaderContent ?? (
                 <RoomInfoPopupBubbleLayoutHeaderTopItem />

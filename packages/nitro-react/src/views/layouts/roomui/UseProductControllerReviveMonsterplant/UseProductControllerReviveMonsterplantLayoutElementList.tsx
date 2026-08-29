@@ -22,7 +22,7 @@ export const UseProductControllerReviveMonsterplantLayoutElementList = ({ itemsE
     return (
         <Region
             name="element_list"
-            layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 290, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 290, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsElementList ?? (
                 <>
@@ -37,7 +37,7 @@ export const UseProductControllerReviveMonsterplantLayoutElementList = ({ itemsE
                     variant="3"
                     name="cancel_text"
                     onPointerTap={onCancelText}
-                    layout={{ width: 130, height: 30, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
+                    layout={{ width: 130, alignSelf: 'stretch', flexShrink: 0, minWidth: 130, maxWidth: 130 }}
                 >
                     {t('useproduct.widget.cancel')}
                 </Button>
@@ -46,7 +46,7 @@ export const UseProductControllerReviveMonsterplantLayoutElementList = ({ itemsE
                     name="save_button"
                     tintColor="#00aa00"
                     onPointerTap={onSaveButton}
-                    layout={{ width: 130, height: 30, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
+                    layout={{ width: 130, alignSelf: 'stretch', flexShrink: 0, minWidth: 130, maxWidth: 130 }}
                 >
                     {t('useproduct.widget.revive')}
                 </ButtonThick>

@@ -49,7 +49,7 @@ export const DailytasksLayoutRewardTemplateItem = ({ captionRewardAmountText, la
                     {(visibleRewardAmountText ?? true) && (
                         <Region
                             name="reward_amount_text"
-                            layout={{ position: 'absolute', left: 0, width: 28, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionRewardAmountText ?? 'x10'}

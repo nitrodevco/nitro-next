@@ -49,7 +49,7 @@ export const CollectibleHubLayoutPreviewContainer = ({ avatarImageWidget, badgeI
                 variant="3"
                 name="collection_preview_bg"
                 tintColor="#3d1f39"
-                layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     src={layoutImage('collectables_score_background.png')}
@@ -135,11 +135,11 @@ export const CollectibleHubLayoutPreviewContainer = ({ avatarImageWidget, badgeI
                     backgroundColor="#000000"
                     onPointerTap={onProductNameContainer}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 26 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26 }}
                 >
                     <Region
                         name="preview_furni_name"
-                        layout={{ position: 'absolute', left: 0, width: 290, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionPreviewFurniName ?? 'Lorem ipsum hot air balloon'}
@@ -151,7 +151,7 @@ export const CollectibleHubLayoutPreviewContainer = ({ avatarImageWidget, badgeI
                     name="collect_container"
                     layout={{ position: 'absolute', left: 82, width: 200, top: 180, height: 30 }}
                 >
-                    <Region layout={{ position: 'absolute', right: 0, top: 0, flexDirection: 'row' }}>
+                    <Region layout={{ position: 'absolute', right: 0, top: 0, bottom: 0, flexDirection: 'row' }}>
                         <Region
                             name="stamp_pricing"
                             layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

@@ -18,7 +18,7 @@ export interface CampaignPromoLayoutProps {
 export const CampaignPromoLayout = ({ itemsContent, layout, srcPromoBackground }: CampaignPromoLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 500, height: 130, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 130, maxWidth: 500 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 500 }}>
                 <ThemeImage
                     name="promo_background"
                     src={srcPromoBackground}
@@ -26,7 +26,7 @@ export const CampaignPromoLayout = ({ itemsContent, layout, srcPromoBackground }
                 />
                 <Region
                     name="content"
-                    layout={{ position: 'absolute', left: 161, width: 275, top: 16, height: 96, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 161, width: 275, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 96, flexDirection: 'column' }}
                 >
                     {itemsContent ?? (
                         <>

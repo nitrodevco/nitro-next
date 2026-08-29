@@ -14,7 +14,7 @@ export const AvatarImage_56Layout = ({ avatarImage, layout }: AvatarImage_56Layo
             <WidgetSlot
                 widgetType="avatar_image"
                 name="avatar_image"
-                layout={{ position: 'absolute', left: 0, width: 90, bottom: 0, height: 130 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 130 }}
             >
                 {avatarImage}
             </WidgetSlot>

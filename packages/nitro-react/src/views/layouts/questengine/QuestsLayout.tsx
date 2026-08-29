@@ -23,11 +23,11 @@ export const QuestsLayout = ({ captionHcInfoText, itemsQuestList, layout, onClos
             caption={t('quests.list.caption')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 512, height: 448, ...layout }}
+            layout={{ width: 512, height: 448, minWidth: 512, minHeight: 448, ...layout }}
         >
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 10, right: 29, top: 7, bottom: 79 }}
+                layout={{ position: 'absolute', left: 10, right: 17, top: 7, bottom: 38 }}
             >
                 <Region
                     name="quest_list"
@@ -39,7 +39,7 @@ export const QuestsLayout = ({ captionHcInfoText, itemsQuestList, layout, onClos
             {/* <scrollbar_vertical> for quest_list - rendered by that list's ScrollArea */}
             <Region
                 name="hc_info_cont"
-                layout={{ position: 'absolute', left: 7, width: 493, bottom: 42, height: 36 }}
+                layout={{ position: 'absolute', left: 7, width: 493, bottom: 1, height: 36 }}
             >
                 <Region
                     name="hc_info_text"

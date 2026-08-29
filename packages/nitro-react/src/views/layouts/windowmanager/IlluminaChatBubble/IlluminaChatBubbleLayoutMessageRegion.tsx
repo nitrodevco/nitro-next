@@ -19,11 +19,11 @@ export const IlluminaChatBubbleLayoutMessageRegion = ({ itemsSpacedMessageContai
             name="message_region"
             onPointerTap={onMessageRegion}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 207, top: 0, height: 18, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="spaced_message_container"
-                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}
             >
                 {itemsSpacedMessageContainer ?? (
                     <>

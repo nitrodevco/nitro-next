@@ -61,7 +61,8 @@ export const CollectibleHubLayout = ({ captionCollectorLevelDescription, caption
             caption={t('collectibles.title')}
             tintColor="#2a2a2a"
             onClose={onClose}
-            layout={{ width: 500, height: 600, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 500, height: 600, minWidth: 500, maxWidth: 500, minHeight: 600, ...layout }}
         >
             <CollectibleHubLayoutCollectorHubHeader {...collectorHubHeader} />
             <TabContext
@@ -154,12 +155,12 @@ export const CollectibleHubLayout = ({ captionCollectorLevelDescription, caption
                 <Region
                     name="collectorProfileContainer"
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, right: 110, top: 125, height: 400, overflow: 'hidden' }}
+                    layout={{ position: 'absolute', left: 0, right: 98, top: 125, height: 400, overflow: 'hidden' }}
                 >
                     <Region
                         name="category_content_background"
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400, overflow: 'hidden' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, overflow: 'hidden' }}
                     >
                         <Region
                             name="category_collector_header_region"
@@ -175,7 +176,7 @@ export const CollectibleHubLayout = ({ captionCollectorLevelDescription, caption
                                     {(visibleCollectorProfileHeader ?? false) && (
                                         <Region
                                             name="collector_profile_header"
-                                            layout={{ position: 'absolute', left: 0, width: 141, top: 0, height: 17, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                            layout={{ position: 'absolute', left: 0, width: 141, top: 0, bottom: 0, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                         >
                                             <ThemeText
                                                 text={captionCollectorProfileHeader ?? 'Collector Profile Header'}
@@ -212,16 +213,16 @@ export const CollectibleHubLayout = ({ captionCollectorLevelDescription, caption
                 <Region
                     name="levelsContainer"
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden' }}
+                    layout={{ position: 'absolute', left: 0, right: 3, top: 125, height: 429, overflow: 'hidden' }}
                 >
                     <Region
                         name="category_content_background"
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, overflow: 'hidden' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, overflow: 'hidden' }}
                     >
                         <Region
                             name="category_collector_header_region"
-                            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 80, overflow: 'hidden' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80, overflow: 'hidden' }}
                         >
                             <Region
                                 name="category_name_region"
@@ -231,7 +232,7 @@ export const CollectibleHubLayout = ({ captionCollectorLevelDescription, caption
                             >
                                 <Region
                                     name="collector_level_header"
-                                    layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 17, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                    layout={{ position: 'absolute', left: 0, width: 83, top: 0, bottom: 0, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                                 >
                                     <ThemeText
                                         text={captionCollectorLevelHeader ?? 'Levels Header'}

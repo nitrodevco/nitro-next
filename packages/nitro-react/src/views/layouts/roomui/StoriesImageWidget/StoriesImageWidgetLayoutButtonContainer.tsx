@@ -40,7 +40,7 @@ export const StoriesImageWidgetLayoutButtonContainer = ({ layout, onClosebutton,
                     name="removebutton"
                     tintColor="#de4537"
                     onPointerTap={onRemovebutton}
-                    layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 20, minWidth: 19, maxWidth: 19 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20, minWidth: 19, maxWidth: 19 }}
                 />
                 <ThemeImage
                     src={layoutImage('common_trashcan_small.png')}

@@ -19,7 +19,7 @@ export const MakeMarketplaceOfferLayout = ({ layout, mainBorder, onClose }: Make
             caption={t('inventory.marketplace.make_offer.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 300, height: 429, ...layout }}
+            layout={{ width: 300, height: 429, minWidth: 300, minHeight: 429, ...layout }}
         >
             <MakeMarketplaceOfferLayoutMainBorder {...mainBorder} />
         </Frame>

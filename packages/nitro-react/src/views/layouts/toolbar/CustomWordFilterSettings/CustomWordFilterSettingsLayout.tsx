@@ -49,7 +49,7 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, itemsWo
                     <Region layout={{ width: 222, height: 24, flexShrink: 0 }}>
                         <Border
                             variant="3"
-                            layout={{ position: 'absolute', left: 0, right: 70, top: 0, height: 24, maxWidth: 160 }}
+                            layout={{ position: 'absolute', left: 0, right: 70, top: 0, bottom: 0, maxWidth: 160 }}
                         >
                             <TextInput
                                 value={addWordInputValue}
@@ -61,7 +61,7 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, itemsWo
                             variant="3"
                             name="add_btn"
                             onPointerTap={onAddBtn}
-                            layout={{ position: 'absolute', left: 157, right: -1, top: 0, height: 24, minWidth: 66, maxWidth: 66 }}
+                            layout={{ position: 'absolute', left: 157, right: -1, top: 0, bottom: 0, minWidth: 66, maxWidth: 66 }}
                         >
                             {t('navigator.roomsettings.roomfilter.addword')}
                         </Button>

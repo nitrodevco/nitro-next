@@ -19,22 +19,22 @@ export const IssueBrowserLayoutPickedIssuesPrototype = ({ issueList, layout }: I
                     name="list_header"
                     layout={{ position: 'absolute', left: 0, right: 30, top: 0, height: 15 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         Score
                     </Region>
-                    <Region layout={{ position: 'absolute', left: 40, width: 120, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', left: 40, width: 120, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         Category
                     </Region>
-                    <Region layout={{ position: 'absolute', left: 160, width: 70, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', left: 160, width: 70, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         Type
                     </Region>
-                    <Region layout={{ position: 'absolute', left: 230, width: 120, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', left: 230, width: 120, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         Player
                     </Region>
-                    <Region layout={{ position: 'absolute', right: 107, width: 60, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', right: 107, width: 60, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         Open
                     </Region>
-                    <Region layout={{ position: 'absolute', right: 0, width: 107, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', right: 0, width: 107, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         Picker
                     </Region>
                 </Region>

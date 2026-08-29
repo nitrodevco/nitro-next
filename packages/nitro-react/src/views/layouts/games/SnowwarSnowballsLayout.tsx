@@ -28,8 +28,8 @@ export interface SnowwarSnowballsLayoutProps {
 export const SnowwarSnowballsLayout = ({ layout, onMakeSnowball, srcBackgroundImage, srcBall0, srcBall1, srcBall2, srcBall3, srcBall4, srcBallProgress, srcEmptyFlashImage, srcMakeSnowballImage, tintBackgroundImage, tintBall0, tintBall1, tintBall2, tintBall3, tintBall4, tintBallProgress, tintEmptyFlashImage, tintMakeSnowballImage }: SnowwarSnowballsLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 57, height: 260, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 57, alignSelf: 'center', marginTop: 83, marginBottom: -83, height: 260 }}>
-                <Region layout={{ position: 'absolute', left: 0, width: 57, top: 0, height: 202 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', marginTop: 83, marginBottom: -83, height: 260 }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 202 }}>
                     <ThemeImage
                         name="backgroundImage"
                         src={srcBackgroundImage ?? layoutImage('ui_ball_indicator_bg.png')}
@@ -84,7 +84,7 @@ export const SnowwarSnowballsLayout = ({ layout, onMakeSnowball, srcBackgroundIm
                     backgroundColor="#000000"
                     onPointerTap={onMakeSnowball}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 57, top: 202, height: 58 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 202, height: 58 }}
                 >
                     <ThemeImage
                         name="makeSnowballImage"

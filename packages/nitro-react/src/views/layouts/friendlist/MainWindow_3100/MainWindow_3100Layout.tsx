@@ -23,7 +23,7 @@ export const MainWindow_3100Layout = ({ content, layout, onClose }: MainWindow_3
             name="messenger_window"
             caption={t('messenger.title')}
             onClose={onClose}
-            layout={{ width: 212, height: 405, ...layout }}
+            layout={{ width: 212, height: 405, minWidth: 102, minHeight: 200, ...layout }}
         >
             <MainWindow_3100LayoutContent {...content} />
             <TextInput
@@ -31,7 +31,7 @@ export const MainWindow_3100Layout = ({ content, layout, onClose }: MainWindow_3
                 onChange={setMessageInputValue}
                 textColor="#000000"
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 10, right: 12, bottom: 36, height: 54 }}
+                layout={{ position: 'absolute', left: 10, right: 0, bottom: -5, height: 54 }}
             />
         </Frame>
     );

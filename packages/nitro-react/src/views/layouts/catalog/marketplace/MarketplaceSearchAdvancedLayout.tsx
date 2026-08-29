@@ -19,12 +19,12 @@ export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckb
 
     return (
         <Region layout={{ position: 'relative', width: 360, height: 120, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 120 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Region
                     name="text_search_container"
-                    layout={{ position: 'absolute', left: 10, width: 340, top: 10, height: 20 }}
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 10, height: 20 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('catalog.marketplace.search_name')}
                             textOptions={{ fill: '#666666' }}
@@ -32,20 +32,20 @@ export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckb
                     </Region>
                     <Border
                         variant="0"
-                        layout={{ position: 'absolute', left: 120, width: 220, top: 0, height: 20 }}
+                        layout={{ position: 'absolute', right: 0, width: 220, top: 0, bottom: 0 }}
                     >
                         <TextInput
                             value={searchInputValue}
                             onChange={setSearchInputValue}
-                            layout={{ position: 'absolute', left: 6, width: 210, top: 2, height: 16 }}
+                            layout={{ position: 'absolute', left: 6, right: 4, top: 2, bottom: 2 }}
                         />
                     </Border>
                 </Region>
                 <Region
                     name="price_container"
-                    layout={{ position: 'absolute', left: 10, width: 340, top: 35, height: 20 }}
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 35, height: 20 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('catalog.marketplace.search_price')}
                             textOptions={{ fill: '#666666' }}
@@ -53,30 +53,30 @@ export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckb
                     </Region>
                     <Border
                         variant="0"
-                        layout={{ position: 'absolute', left: 120, width: 70, top: 0, height: 20 }}
+                        layout={{ position: 'absolute', left: 120, width: 70, top: 0, bottom: 0 }}
                     >
                         <TextInput
                             value={minPriceInputValue}
                             onChange={setMinPriceInputValue}
-                            layout={{ position: 'absolute', left: 6, width: 60, top: 3, height: 16 }}
+                            layout={{ position: 'absolute', left: 6, right: 4, top: 3, bottom: 1 }}
                         />
                     </Border>
                     <Border
                         variant="0"
-                        layout={{ position: 'absolute', left: 270, width: 70, top: 0, height: 20 }}
+                        layout={{ position: 'absolute', right: 0, width: 70, top: 0, bottom: 0 }}
                     >
                         <TextInput
                             value={maxPriceInputValue}
                             onChange={setMaxPriceInputValue}
-                            layout={{ position: 'absolute', left: 6, width: 60, top: 3, height: 16 }}
+                            layout={{ position: 'absolute', left: 6, right: 4, top: 3, bottom: 1 }}
                         />
                     </Border>
                 </Region>
                 <Region
                     name="sort_container"
-                    layout={{ position: 'absolute', left: 10, width: 340, top: 60, height: 24 }}
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 60, height: 24 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('catalog.marketplace.sort_order')}
                             textOptions={{ fill: '#666666' }}
@@ -86,7 +86,7 @@ export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckb
                         variant="3"
                         name="sort_dropmenu"
                         onPointerTap={onSortDropmenu}
-                        layout={{ position: 'absolute', left: 120, width: 220, top: 0, height: 24 }}
+                        layout={{ position: 'absolute', right: 0, width: 220, top: 0, bottom: 0 }}
                     />
                 </Region>
                 <CheckBox
@@ -95,7 +95,7 @@ export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckb
                     onPointerTap={onCombineUniquesCheckbox}
                     layout={{ position: 'absolute', left: 10, width: 16, top: 92, height: 15 }}
                 />
-                <Region layout={{ position: 'absolute', left: 29, width: 218, top: 91, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', left: 29, width: 218, bottom: 12, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('catalog.marketplace.combine_uniques')}
                         textOptions={{ fill: '#666666' }}
@@ -105,7 +105,7 @@ export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckb
                     variant="3"
                     name="search_button"
                     onPointerTap={onSearchButton}
-                    layout={{ position: 'absolute', right: 10, width: 100, top: 90, height: 22, minWidth: 100 }}
+                    layout={{ position: 'absolute', right: 10, width: 100, bottom: 8, height: 22, minWidth: 100 }}
                 >
                     {t('generic.search')}
                 </Button>

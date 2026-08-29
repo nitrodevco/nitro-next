@@ -25,7 +25,7 @@ export const VipDiscountPromotionV2Layout = ({ captionTitleTxt, itemsContentItem
         <Region layout={{ position: 'relative', width: 193, height: 216, ...layout }}>
             <Border
                 variant="0"
-                layout={{ position: 'absolute', left: 0, width: 193, top: 0, height: 216 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="minimize_region"

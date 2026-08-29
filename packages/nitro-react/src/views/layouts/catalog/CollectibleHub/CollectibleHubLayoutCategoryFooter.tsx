@@ -26,13 +26,13 @@ export const CollectibleHubLayoutCategoryFooter = ({ captionNoWalletText, layout
                 variant="3"
                 name="large_border"
                 tintColor="#bac3cd"
-                layout={{ position: 'absolute', left: 0, width: 488, top: 0, height: 100 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <CollectibleHubLayoutStampPurchasingContainer {...stampPurchasingContainer} />
                 {(visibleNoWalletContainer ?? false) && (
                     <Region
                         name="no_wallet_container"
-                        layout={{ position: 'absolute', left: 0, width: 488, top: 0, height: 100 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="no_wallet_text"

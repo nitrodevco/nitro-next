@@ -8,7 +8,7 @@ import { ProductViewWidget, ProductViewWidgetProps } from '#base/views/layouts/c
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 import { SoldLtdItemsWidget, SoldLtdItemsWidgetProps } from '#base/views/layouts/catalog/widgets/SoldLtdItemsWidget';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
-import { SpinnerWidget2, SpinnerWidget2Props } from '#base/views/layouts/catalog/widgets/SpinnerWidget2';
+import { SpinnerWidget, SpinnerWidgetProps } from '#base/views/layouts/catalog/widgets/SpinnerWidget';
 import { TotalPriceWidget, TotalPriceWidgetProps } from '#base/views/layouts/catalog/widgets/TotalPriceWidget/TotalPriceWidget';
 
 /** Named region `container` of LayoutDefault_1595Layout - configured through the parent's `container` prop. */
@@ -23,7 +23,7 @@ export interface LayoutDefault_1595LayoutContainerProps {
     purchaseWidget?: PurchaseWidgetProps;
     soldLtdItemsWidget?: SoldLtdItemsWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
-    spinnerWidget?: SpinnerWidget2Props;
+    spinnerWidget?: SpinnerWidgetProps;
     totalPriceWidget?: TotalPriceWidgetProps;
     visibleColourGridWidget?: boolean;
 }
@@ -32,15 +32,15 @@ export const LayoutDefault_1595LayoutContainer = ({ activityPointDisplayWidget, 
     return (
         <Region
             name="container"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             {/* `label` is hidden and has no name to show it by */}
             <ProductViewWidget
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 240 }}
                 {...productViewWidget}
             />
             <ItemGridWidget
-                layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 60 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 245, bottom: 60 }}
                 {...itemGridWidget}
             />
             {(visibleColourGridWidget ?? false) && (
@@ -50,7 +50,7 @@ export const LayoutDefault_1595LayoutContainer = ({ activityPointDisplayWidget, 
                 />
             )}
             <PurchaseWidget
-                layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 30 }}
                 {...purchaseWidget}
             />
             <ActivityPointDisplayWidget
@@ -66,10 +66,10 @@ export const LayoutDefault_1595LayoutContainer = ({ activityPointDisplayWidget, 
                 {...limitedItemWidget}
             />
             <SoldLtdItemsWidget
-                layout={{ position: 'absolute', left: 0, width: 360, bottom: 5, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 5, height: 30 }}
                 {...soldLtdItemsWidget}
             />
-            <SpinnerWidget2
+            <SpinnerWidget
                 layout={{ position: 'absolute', left: 0, width: 200, bottom: 30, height: 25 }}
                 {...spinnerWidget}
             />
@@ -78,7 +78,7 @@ export const LayoutDefault_1595LayoutContainer = ({ activityPointDisplayWidget, 
                 {...totalPriceWidget}
             />
             <BuilderWidget
-                layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 60 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 60 }}
                 {...builderWidget}
             />
         </Region>

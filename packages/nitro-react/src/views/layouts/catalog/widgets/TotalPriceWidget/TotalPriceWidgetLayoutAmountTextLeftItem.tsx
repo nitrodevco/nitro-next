@@ -10,7 +10,7 @@ export const TotalPriceWidgetLayoutAmountTextLeftItem = ({ captionAmountTextLeft
     return (
         <Region
             name="amount_text_left"
-            layout={{ width: 38, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 38, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             {captionAmountTextLeft ?? '00000'}
         </Region>

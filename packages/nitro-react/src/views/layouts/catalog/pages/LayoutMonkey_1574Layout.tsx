@@ -14,7 +14,7 @@ export const LayoutMonkey_1574Layout = ({ layout, onCtlgSpecialImgRegion, onCtlg
         <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
             <Region
                 name="ctlg_monkey"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ctlg_teaserimg_1_region"

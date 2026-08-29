@@ -17,7 +17,7 @@ export const NewControlsLayout = ({ layout, onBtnChat, onBtnVisit, onButtonProfi
                 name="controls"
                 onPointerTap={onControls}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 35 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="btn_chat"

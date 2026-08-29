@@ -30,7 +30,7 @@ export const GroupManagementWindowLayoutHeaderCont = ({ captionHeaderCaptionTxt,
     return (
         <Region
             name="header_cont"
-            layout={{ position: 'absolute', left: 0, right: 1, top: 0, height: 110, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -11, top: 0, height: 110, ...layout }}
         >
             <Region
                 backgroundColor="#b3b099"

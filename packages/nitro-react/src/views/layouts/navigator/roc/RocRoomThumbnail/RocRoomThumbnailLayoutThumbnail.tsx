@@ -20,19 +20,19 @@ export const RocRoomThumbnailLayoutThumbnail = ({ captionTileSizeTxt, layout, on
             name="thumbnail"
             onPointerTap={onThumbnail}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 99, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
             <Border
                 variant="0"
                 name="bg_sel"
                 tintColor="#6f8285"
-                layout={{ position: 'absolute', left: 0, width: 135, top: 0, height: 96 }}
+                layout={{ position: 'absolute', left: 0, right: 2, top: 0, bottom: 3 }}
             />
             <Border
                 variant="0"
                 name="bg_unsel"
                 tintColor="#cccccc"
-                layout={{ position: 'absolute', left: 0, width: 135, top: 0, height: 96 }}
+                layout={{ position: 'absolute', left: 0, right: 2, top: 0, bottom: 3 }}
             />
             <ThemeImage
                 name="bg_pic"
@@ -41,7 +41,7 @@ export const RocRoomThumbnailLayoutThumbnail = ({ captionTileSizeTxt, layout, on
             />
             <Region
                 name="tile_size_txt"
-                layout={{ position: 'absolute', left: 25, width: 18, top: 78, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 25, width: 18, bottom: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 backgroundColor="#000000"
             >
                 {captionTileSizeTxt ?? '104'}
@@ -50,24 +50,24 @@ export const RocRoomThumbnailLayoutThumbnail = ({ captionTileSizeTxt, layout, on
                 name="tile_icon_black"
                 src={srcTileIconBlack}
                 tint={tintTileIconBlack}
-                layout={{ position: 'absolute', left: 5, width: 18, top: 80, height: 10 }}
+                layout={{ position: 'absolute', left: 5, width: 18, bottom: 9, height: 10 }}
             />
             <ThemeImage
                 name="tile_icon_white"
                 src={srcTileIconWhite}
                 tint={tintTileIconWhite}
-                layout={{ position: 'absolute', left: 5, width: 18, top: 80, height: 10 }}
+                layout={{ position: 'absolute', left: 5, width: 18, bottom: 9, height: 10 }}
             />
             <ThemeImage
                 name="select_arrow"
                 src={srcSelectArrow}
                 tint={tintSelectArrow}
-                layout={{ position: 'absolute', left: 60, width: 18, top: 0, height: 20 }}
+                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 18, top: 0, height: 20 }}
             />
             <Icon
                 variant="12"
                 name="club_icon"
-                layout={{ position: 'absolute', left: 109, width: 20, top: 5, height: 10 }}
+                layout={{ position: 'absolute', right: 8, width: 20, top: 5, height: 10 }}
             />
         </Region>
     );

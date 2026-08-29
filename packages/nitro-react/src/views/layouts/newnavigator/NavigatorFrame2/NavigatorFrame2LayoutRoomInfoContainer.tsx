@@ -26,7 +26,7 @@ export const NavigatorFrame2LayoutRoomInfoContainer = ({ captionRoomName, itemsU
                 variant="3"
                 name="room_info_usercount_border"
                 tintColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 18, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, width: 40, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Region
                     name="usercount"
@@ -50,7 +50,7 @@ export const NavigatorFrame2LayoutRoomInfoContainer = ({ captionRoomName, itemsU
                 name="info_popup_click_region"
                 onPointerTap={onInfoPopupClickRegion}
                 cursor="pointer"
-                layout={{ position: 'absolute', right: 4, width: 18, top: 0, height: 18 }}
+                layout={{ position: 'absolute', right: 4, width: 18, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     src={layoutImage('newnavigator_button_show_room_info.png')}

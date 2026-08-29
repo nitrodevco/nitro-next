@@ -22,7 +22,7 @@ export const TrophyLayoutTrophyContainer = ({ captionDate, captionGreeting, capt
             name="trophy_container"
             onPointerTap={onTrophyContainer}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 173, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
             <ThemeImage
                 name="trophy_bg"
@@ -32,7 +32,7 @@ export const TrophyLayoutTrophyContainer = ({ captionDate, captionGreeting, capt
             />
             <Region
                 name="greeting"
-                layout={{ position: 'absolute', left: 22, width: 297, top: 25, height: 116, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 297, alignSelf: 'center', marginTop: -3.5, marginBottom: 3.5, height: 116, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionGreeting ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sit amet justo sagittis orci dapibus semper sagittis id neque. Nunc sed quam vitae felis semper neque. Nunc sed quam vitae felis semper neque. Nunc sed quam vitae felis semper neque. Nunc sed quam vitae felis semper neque. Nunc sed quam vitae felis semper  semper  semper  semper  semper  semper  semper  sempeaaaaaa'}
@@ -58,18 +58,18 @@ export const TrophyLayoutTrophyContainer = ({ captionDate, captionGreeting, capt
                 name="close"
                 onPointerTap={onClose}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 318, width: 18, top: 3, height: 20 }}
+                layout={{ position: 'absolute', right: 4, width: 18, top: 3, height: 20 }}
             >
                 {close}
             </Region>
             <Region
                 name="title_bg"
                 backgroundColor="#ff0000"
-                layout={{ position: 'absolute', left: 110, width: 120, top: 4, height: 18, justifyContent: 'center' }}
+                layout={{ position: 'absolute', width: 120, top: 4, height: 18, justifyContent: 'center' }}
             >
                 <Region
                     name="title"
-                    layout={{ position: 'absolute', width: 120, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', width: 120, top: 1, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionTitle ?? 'Trophy'}

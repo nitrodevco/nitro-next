@@ -31,7 +31,7 @@ export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoTex
             name="avatar_name_change_frame"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 350, height: 270, ...layout }}
+            layout={{ width: 350, height: 270, minWidth: 350, minHeight: 270, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 345, top: 0, height: 225, justifyContent: 'center' }}>
                 <Region

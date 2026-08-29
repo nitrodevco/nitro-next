@@ -12,7 +12,7 @@ export interface BotViewLayoutProps {
 export const BotViewLayout = ({ infostandElementList, layout, onClose }: BotViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 1036, height: 400, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 1036, top: 0, height: 400, flexDirection: 'column', gap: 10 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column', gap: 10 }}>
                 <Border
                     variant="1"
                     name="info_border"

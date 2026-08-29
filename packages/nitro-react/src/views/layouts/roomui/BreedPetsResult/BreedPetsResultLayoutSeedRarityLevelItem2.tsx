@@ -13,7 +13,7 @@ export const BreedPetsResultLayoutSeedRarityLevelItem2 = ({ captionSeedRarityLev
     return (
         <Region
             name="seed_rarity_level"
-            layout={{ width: 134, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
+            layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
                 text={captionSeedRarityLevel ?? t('breedpetsresult.widget.seed2.raritylevel')}

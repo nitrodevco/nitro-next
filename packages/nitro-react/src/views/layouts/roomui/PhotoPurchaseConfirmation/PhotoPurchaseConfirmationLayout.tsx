@@ -19,7 +19,7 @@ export const PhotoPurchaseConfirmationLayout = ({ contentlist, layout, onClose }
             caption={t('camera.confirm_phase.title')}
             tintColor="#555555"
             onClose={onClose}
-            layout={{ width: 340, height: 686, ...layout }}
+            layout={{ width: 340, height: 686, minWidth: 340, minHeight: 686, ...layout }}
         >
             <PhotoPurchaseConfirmationLayoutContentlist {...contentlist} />
         </Frame>

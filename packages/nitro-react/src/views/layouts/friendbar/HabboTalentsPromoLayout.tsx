@@ -22,7 +22,7 @@ export const HabboTalentsPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
         <Region layout={{ position: 'relative', width: 500, height: 149, ...layout }}>
             <Region
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 149 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="border_bar"
@@ -41,17 +41,17 @@ export const HabboTalentsPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                 <ThemeImage
                     name="hdr_line"
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
-                    layout={{ position: 'absolute', left: 200, width: 300, top: 10, height: 4 }}
+                    layout={{ position: 'absolute', right: 0, width: 300, top: 10, height: 4 }}
                 />
                 <ThemeImage
                     name="teaser_image"
                     src={srcTeaserImage ?? '${image.library.url}reception/reception_widget_helpers_rev.png'}
-                    layout={{ position: 'absolute', left: 21, width: 192, top: 60, height: 101 }}
+                    layout={{ position: 'absolute', left: 21, width: 192, bottom: -12, height: 101 }}
                 />
-                <Region layout={{ position: 'absolute', left: 230, width: 270, top: 29, height: 120, flexDirection: 'column', gap: 5 }}>
+                <Region layout={{ position: 'absolute', right: 0, width: 270, bottom: 0, height: 120, flexDirection: 'column', gap: 5 }}>
                     <Region
                         name="caption_txt"
-                        layout={{ width: 279, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCaptionTxt ?? t('landing.view.talentspromo.caption')}
@@ -60,7 +60,7 @@ export const HabboTalentsPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     </Region>
                     <Region
                         name="subcaption_txt"
-                        layout={{ width: 270, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionSubcaptionTxt ?? t('landing.view.talentspromo.subcaption')}
@@ -70,7 +70,7 @@ export const HabboTalentsPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                     </Region>
                     <Region
                         name="info_txt"
-                        layout={{ width: 270, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionInfoTxt ?? t('landing.view.talentspromo.info')}

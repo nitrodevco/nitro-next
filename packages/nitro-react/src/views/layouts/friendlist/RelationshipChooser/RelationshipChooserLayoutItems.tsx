@@ -17,7 +17,7 @@ export const RelationshipChooserLayoutItems = ({ itemsItems, layout }: Relations
     return (
         <Region
             name="items"
-            layout={{ position: 'absolute', left: 2, width: 25, top: 2, height: 63, flexDirection: 'column', gap: 1, ...layout }}
+            layout={{ position: 'absolute', left: 2, right: 3, top: 2, bottom: 3, flexDirection: 'column', gap: 1, ...layout }}
         >
             {itemsItems ?? (
                 <>

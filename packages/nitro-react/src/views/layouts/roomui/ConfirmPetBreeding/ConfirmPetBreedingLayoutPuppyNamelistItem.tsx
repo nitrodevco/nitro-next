@@ -27,14 +27,14 @@ export const ConfirmPetBreedingLayoutPuppyNamelistItem = ({ layout, visiblePuppy
             <Border
                 variant="105"
                 tintColor="#f0f0f0"
-                layout={{ width: 295, height: 31, flexShrink: 0 }}
+                layout={{ alignSelf: 'stretch', height: 31, flexShrink: 0 }}
             >
                 {(visiblePuppyNameInput ?? true) && (
                     <TextInput
                         value={puppyNameInputValue}
                         onChange={setPuppyNameInputValue}
                         maxLength={32}
-                        layout={{ position: 'absolute', left: 5, width: 284, top: 5, height: 20 }}
+                        layout={{ position: 'absolute', left: 5, right: 6, top: 5, bottom: 6 }}
                     />
                 )}
             </Border>

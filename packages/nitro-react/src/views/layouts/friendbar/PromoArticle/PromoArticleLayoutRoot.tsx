@@ -23,7 +23,7 @@ export const PromoArticleLayoutRoot = ({ itemsContent, itemsTitle, layout, navig
     return (
         <Region
             name="root"
-            layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 118, maxWidth: 500, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 500, ...layout }}
         >
             <Region
                 name="title"
@@ -40,7 +40,7 @@ export const PromoArticleLayoutRoot = ({ itemsContent, itemsTitle, layout, navig
             <PromoArticleLayoutNavigation {...navigation} />
             <Region
                 name="article"
-                layout={{ position: 'absolute', left: 0, width: 500, top: 17, height: 101 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 17, height: 101 }}
             >
                 <ThemeImage
                     name="promo_image"

@@ -18,11 +18,11 @@ export const HabbopediaEditLayout = ({ layout, onClose, onRevert, onSave }: Habb
             variant="100"
             caption="Habbopedia Editor"
             onClose={onClose}
-            layout={{ width: 385, height: 355, ...layout }}
+            layout={{ width: 385, height: 355, minWidth: 385, minHeight: 355, ...layout }}
         >
             <Border
                 variant="105"
-                layout={{ position: 'absolute', left: 8, right: 9, top: 7, bottom: 72 }}
+                layout={{ position: 'absolute', left: 8, right: -3, top: 7, bottom: 31 }}
             >
                 <TextInput
                     value={dataValue}
@@ -36,7 +36,7 @@ export const HabbopediaEditLayout = ({ layout, onClose, onRevert, onSave }: Habb
                 name="revert"
                 tintColor="#bbbbbb"
                 onPointerTap={onRevert}
-                layout={{ position: 'absolute', left: -3, width: 83, bottom: 30, height: 46 }}
+                layout={{ position: 'absolute', left: -3, width: 83, bottom: -11, height: 46 }}
             >
                 Revert
             </Button>
@@ -45,7 +45,7 @@ export const HabbopediaEditLayout = ({ layout, onClose, onRevert, onSave }: Habb
                 name="save"
                 tintColor="#bbbbbb"
                 onPointerTap={onSave}
-                layout={{ position: 'absolute', right: -2, width: 73, bottom: 30, height: 46 }}
+                layout={{ position: 'absolute', right: -14, width: 73, bottom: -11, height: 46 }}
             >
                 Save
             </Button>

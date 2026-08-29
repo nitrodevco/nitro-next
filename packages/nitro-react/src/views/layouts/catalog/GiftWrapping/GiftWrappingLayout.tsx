@@ -43,12 +43,12 @@ export const GiftWrappingLayout = ({ boxPickerContainer, captionBoxColorTitle, c
             caption={t('catalog.gift_wrapping.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 342, height: 482, ...layout }}
+            layout={{ width: 342, height: 482, minWidth: 342, minHeight: 482, ...layout }}
         >
             <Border
                 variant="3"
                 tintColor="#e9e9e9"
-                layout={{ position: 'absolute', left: 0, right: 12, top: 10, bottom: 32 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 10, bottom: -9 }}
             >
                 <Border
                     variant="0"
@@ -197,7 +197,7 @@ export const GiftWrappingLayout = ({ boxPickerContainer, captionBoxColorTitle, c
                 >
                     <Region
                         name="cancel_link"
-                        layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 80, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCancelLink ?? t('catalog.gift_wrapping.cancel')}

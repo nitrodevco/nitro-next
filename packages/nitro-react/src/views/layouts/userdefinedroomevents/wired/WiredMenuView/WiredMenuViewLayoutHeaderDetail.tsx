@@ -10,7 +10,7 @@ export const WiredMenuViewLayoutHeaderDetail = ({ layout }: WiredMenuViewLayoutH
     return (
         <Region
             name="header_detail"
-            layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 50, ...layout }}
+            layout={{ position: 'absolute', left: 0, width: 500, top: 0, bottom: 0, ...layout }}
         >
             <ThemeImage
                 src={layoutImage('wired_box_lines.png')}

@@ -24,12 +24,12 @@ export const PremiumPurchaseConfirmationLayout = ({ content, itemsButtons, layou
             caption={t('reward_track.premium.confirm.title')}
             tintColor="#7b3fa1"
             onClose={onClose}
-            layout={{ width: 390, height: 352, ...layout }}
+            layout={{ width: 390, height: 352, minWidth: 390, minHeight: 352, ...layout }}
         >
             <PremiumPurchaseConfirmationLayoutContent {...content} />
             <Region
                 name="buttons"
-                layout={{ position: 'absolute', left: 12, right: 12, bottom: 36, minHeight: 27, flexDirection: 'row', gap: 146 }}
+                layout={{ position: 'absolute', left: 12, right: 0, bottom: -5, minHeight: 27, flexDirection: 'row', gap: 146 }}
             >
                 {itemsButtons ?? (
                     <>

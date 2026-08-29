@@ -38,7 +38,7 @@ export const MarketPlaceOwnItemsWidgetLayoutExpiredItemItem = ({ captionItemDesc
             {(visibleImageContainer ?? true) && (
                 <Region
                     name="image_container"
-                    layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40 }}
+                    layout={{ position: 'absolute', left: 9, width: 40, top: 9, bottom: 9 }}
                 >
                     {(visibleUniqueItemBackgroundBitmap ?? false) && (
                         <ThemeImage
@@ -59,7 +59,7 @@ export const MarketPlaceOwnItemsWidgetLayoutExpiredItemItem = ({ captionItemDesc
                         <WidgetSlot
                             widgetType="limited_item_overlay_grid"
                             name="unique_item_overlay_widget"
-                            layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                         >
                             {uniqueItemOverlayWidget}
                         </WidgetSlot>
@@ -68,7 +68,7 @@ export const MarketPlaceOwnItemsWidgetLayoutExpiredItemItem = ({ captionItemDesc
                         <WidgetSlot
                             widgetType="rarity_item_overlay_grid"
                             name="rarity_item_overlay_widget"
-                            layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                         >
                             {rarityItemOverlayWidget}
                         </WidgetSlot>
@@ -100,7 +100,7 @@ export const MarketPlaceOwnItemsWidgetLayoutExpiredItemItem = ({ captionItemDesc
             {(visibleItemExpired ?? true) && (
                 <Region
                     name="item_expired"
-                    layout={{ position: 'absolute', left: 58, width: 62, top: 41, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 58, width: 62, bottom: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionItemExpired ?? t('lorem.title')}

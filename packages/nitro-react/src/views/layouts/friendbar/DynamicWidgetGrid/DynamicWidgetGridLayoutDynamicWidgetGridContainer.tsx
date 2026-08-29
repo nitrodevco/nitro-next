@@ -12,7 +12,7 @@ export const DynamicWidgetGridLayoutDynamicWidgetGridContainer = ({ layout, widg
     return (
         <Region
             name="dynamic_widget_grid_container"
-            layout={{ position: 'absolute', left: 170, width: 1011, top: 0, height: 771, ...layout }}
+            layout={{ position: 'absolute', left: 170, width: 1011, top: 0, bottom: 0, ...layout }}
         >
             <DynamicWidgetGridLayoutWidgetlistFromtop {...widgetlistFromtop} />
         </Region>

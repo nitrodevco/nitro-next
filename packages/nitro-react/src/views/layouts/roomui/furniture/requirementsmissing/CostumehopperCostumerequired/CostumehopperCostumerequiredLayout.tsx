@@ -19,7 +19,7 @@ export const CostumehopperCostumerequiredLayout = ({ layout, list, onClose, srcI
             variant="100"
             caption={t('costumehopper.costumerequired.header')}
             onClose={onClose}
-            layout={{ width: 310, height: 149, ...layout }}
+            layout={{ width: 310, height: 149, minWidth: 310, minHeight: 149, ...layout }}
         >
             <ThemeImage
                 name="illustration"

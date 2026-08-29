@@ -26,7 +26,7 @@ export const TalentTrackLayoutRewardAchievedItem = ({ achieved, captionDescripti
                     widgetType="badge_image"
                     name="achieved"
                     options={{ 'badge_image:type': 'perk', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                    layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 60 }}
+                    layout={{ position: 'absolute', left: 0, width: 60, top: 0, bottom: 0 }}
                 >
                     {achieved}
                 </WidgetSlot>

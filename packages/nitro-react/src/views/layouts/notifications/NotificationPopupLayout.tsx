@@ -19,7 +19,7 @@ export const NotificationPopupLayout = ({ captionLink, captionMessage, layout, o
             variant="3"
             tintColor="#67a3bf"
             onClose={onClose}
-            layout={{ width: 306, height: 92, ...layout }}
+            layout={{ width: 306, height: 92, minWidth: 306, minHeight: 92, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 3, top: 2, flexDirection: 'row' }}>
                 <ThemeImage

@@ -13,7 +13,7 @@ export const EvidenceFrameLayoutChatCont = ({ evidenceList, layout }: EvidenceFr
         <Region
             name="chat_cont"
             backgroundColor="#4184b0"
-            layout={{ position: 'absolute', left: 0, right: 10, top: 0, bottom: 32, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -2, top: 0, bottom: -9, ...layout }}
         >
             <EvidenceFrameLayoutEvidenceList {...evidenceList} />
             {/* <scrollbar_vertical> for evidence_list - rendered by that list's ScrollArea */}

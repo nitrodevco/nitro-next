@@ -19,7 +19,7 @@ export const EffectsWidgetLayout = ({ captionTitle, itemsList, layout, onClose }
             <Border
                 variant="6"
                 tintColor="#5b5953"
-                layout={{ position: 'absolute', left: 0, width: 190, bottom: 0, height: 85 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 85 }}
             >
                 <Border
                     variant="3"
@@ -28,7 +28,7 @@ export const EffectsWidgetLayout = ({ captionTitle, itemsList, layout, onClose }
                 />
                 <Region
                     name="title"
-                    layout={{ position: 'absolute', left: 3, width: 184, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionTitle ?? t('widget.memenu.effects')}
@@ -40,11 +40,11 @@ export const EffectsWidgetLayout = ({ captionTitle, itemsList, layout, onClose }
                     variant="3"
                     name="close"
                     onPointerTap={onClose}
-                    layout={{ position: 'absolute', left: 165, width: 20, top: 6, height: 20 }}
+                    layout={{ position: 'absolute', right: 5, width: 20, top: 6, height: 20 }}
                 />
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 6, width: 178, top: 30, height: 48 }}
+                    layout={{ position: 'absolute', left: 6, right: 6, bottom: 7, height: 48 }}
                 >
                     <Region
                         name="list"
@@ -55,9 +55,9 @@ export const EffectsWidgetLayout = ({ captionTitle, itemsList, layout, onClose }
                 </ScrollArea>
                 <Region
                     name="no_effects"
-                    layout={{ position: 'absolute', left: 0, width: 190, top: 30, height: 48 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 7, height: 48 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 190, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <Region layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <ThemeText
                             text={t('widget.memenu.effects.info')}
                             textOptions={{ fill: '#ffffff', align: 'center' }}

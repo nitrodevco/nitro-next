@@ -40,7 +40,7 @@ export const TalentTrackLayoutTaskOngoingItem = ({ badge, captionDescription, ca
                 <Border
                     variant="101"
                     name="border"
-                    layout={{ position: 'absolute', left: 0, width: 210, top: 20, height: 60 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 60 }}
                 >
                     {(visibleBadge ?? true) && (
                         <WidgetSlot
@@ -118,7 +118,7 @@ export const TalentTrackLayoutTaskOngoingItem = ({ badge, captionDescription, ca
                     tooltip={t('talent.track.common.view.progress.tooltip')}
                     onPointerTap={onTaskOngoingRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 210, top: 0, height: 80 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {taskOngoingRegion}
                 </Region>

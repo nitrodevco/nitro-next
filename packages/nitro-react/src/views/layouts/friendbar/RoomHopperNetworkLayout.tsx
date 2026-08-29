@@ -24,7 +24,7 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
         <Region layout={{ position: 'relative', width: 250, height: 218, ...layout }}>
             <Region
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 218, maxWidth: 250 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 250 }}
             >
                 <ThemeImage
                     name="border_bar"
@@ -45,10 +45,10 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
                     layout={{ position: 'absolute', left: 167, width: 100, top: 10, height: 4 }}
                 />
-                <Region layout={{ position: 'absolute', left: 0, width: 250, top: 20, height: 198, flexDirection: 'column' }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 198, flexDirection: 'column' }}>
                     <Region
                         name="header"
-                        layout={{ width: 341, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionHeader ?? t('landing.view.roomhoppernetwork.caption')}
@@ -63,16 +63,16 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
                     </Region>
                     <Region
                         backgroundColor="#000000"
-                        layout={{ width: 250, height: 120, flexShrink: 0 }}
+                        layout={{ alignSelf: 'stretch', height: 120, flexShrink: 0 }}
                     >
                         <ThemeImage
                             name="bitmap"
                             src={srcBitmap ?? '${image.library.url}reception/catalog_teaser_set_mnstr_gothic.png'}
-                            layout={{ position: 'absolute', left: 126, width: 120, top: 0, height: 120 }}
+                            layout={{ position: 'absolute', right: 4, width: 120, top: 0, height: 120 }}
                         />
                         <Region
                             name="info"
-                            layout={{ position: 'absolute', left: 0, width: 124, top: 0, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 0, width: 124, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionInfo ?? t('landing.view.roomhoppernetwork.info')}
@@ -84,7 +84,7 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
                         variant="100"
                         name="button"
                         onPointerTap={onButton}
-                        layout={{ width: 271, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
+                        layout={{ alignSelf: 'stretch', height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
                     >
                         {t('landing.view.roomhoppernetwork.gotoroom')}
                     </Button>

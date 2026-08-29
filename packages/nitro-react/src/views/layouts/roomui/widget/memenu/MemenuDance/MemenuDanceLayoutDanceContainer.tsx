@@ -26,7 +26,7 @@ export const MemenuDanceLayoutDanceContainer = ({ captionDanceTitle, itemsButton
             <Border
                 variant="1"
                 name="dance_border"
-                layout={{ position: 'absolute', left: 0, width: 163, top: 0, height: 181, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 181, justifyContent: 'center' }}
             >
                 <Region
                     name="dance_title"

@@ -20,10 +20,11 @@ export const OfferCenterLayout = ({ captionRewardDate, captionRewardName, layout
             caption={t('offers.center.title')}
             tintColor="#67a3bf"
             onClose={onClose}
-            layout={{ width: 377, height: 412, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 377, height: 412, minWidth: 377, maxWidth: 377, minHeight: 412, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 186, top: 9, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', marginLeft: 4.5, marginRight: -4.5, width: 186, top: 9, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('offers.center.rewards.label')}
                         textStyle="text-style-u-headline-small"
@@ -32,7 +33,7 @@ export const OfferCenterLayout = ({ captionRewardDate, captionRewardName, layout
                 <Border
                     variant="0"
                     tintColor="#bbbbb4"
-                    layout={{ position: 'absolute', left: 14, width: 348, top: 31, bottom: 45 }}
+                    layout={{ position: 'absolute', left: 14, width: 348, top: 31, bottom: 4 }}
                 >
                     <ScrollArea
                         orientation="vertical"

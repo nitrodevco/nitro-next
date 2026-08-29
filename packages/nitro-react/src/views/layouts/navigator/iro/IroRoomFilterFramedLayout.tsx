@@ -24,7 +24,7 @@ export const IroRoomFilterFramedLayout = ({ itemsBadwordsItemlist, layout, onBad
             caption={t('navigator.roomsettings.roomfilter')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 250, height: 230, ...layout }}
+            layout={{ width: 250, height: 230, minWidth: 250, minHeight: 230, ...layout }}
         >
             <Border
                 variant="0"
@@ -34,17 +34,17 @@ export const IroRoomFilterFramedLayout = ({ itemsBadwordsItemlist, layout, onBad
                 <TextInput
                     value={roomfilterAddwordTxtValue}
                     onChange={setRoomfilterAddwordTxtValue}
-                    layout={{ position: 'absolute', left: 5, width: 115, top: 6, height: 17, maxWidth: 115 }}
+                    layout={{ position: 'absolute', left: 5, right: 10, top: 6, bottom: 7, maxWidth: 115 }}
                 />
             </Border>
             <Border
                 variant="0"
                 name="roomfilter_badwords_border"
-                layout={{ position: 'absolute', left: 5, width: 235, top: 50, height: 100 }}
+                layout={{ position: 'absolute', left: 5, right: -2, top: 50, height: 100 }}
             >
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 3, width: 226, top: 4, height: 95 }}
+                    layout={{ position: 'absolute', left: 3, right: 6, top: 4, bottom: 1 }}
                 >
                     <Region
                         name="badwords_itemlist"
@@ -59,7 +59,7 @@ export const IroRoomFilterFramedLayout = ({ itemsBadwordsItemlist, layout, onBad
                 variant="3"
                 name="badword_remove_btn"
                 onPointerTap={onBadwordRemoveBtn}
-                layout={{ position: 'absolute', left: 140, width: 286, top: 155, height: 30 }}
+                layout={{ position: 'absolute', left: 140, width: 286, bottom: 4, height: 30 }}
             >
                 {t('navigator.roomsettings.roomfilter.removeword')}
             </Button>

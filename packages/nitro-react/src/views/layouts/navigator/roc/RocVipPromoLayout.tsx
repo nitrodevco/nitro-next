@@ -25,7 +25,7 @@ export const RocVipPromoLayout = ({ captionLink, layout }: RocVipPromoLayoutProp
                 </Region>
                 <Region
                     name="link"
-                    layout={{ position: 'absolute', left: 52, width: 206, top: 30, height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 52, width: 206, bottom: 10, height: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionLink ?? t('navigator.createroom.vippromo.link')}

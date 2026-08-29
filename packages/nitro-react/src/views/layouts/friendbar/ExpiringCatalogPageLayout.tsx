@@ -26,7 +26,7 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
         <Region layout={{ position: 'relative', width: 500, height: 186, ...layout }}>
             <Region
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 186, maxWidth: 500 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 500 }}
             >
                 <ThemeImage
                     name="border_bar"
@@ -46,9 +46,9 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                 <ThemeImage
                     name="hdr_line"
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
-                    layout={{ position: 'absolute', left: 167, width: 330, top: 10, height: 4, minHeight: 4, maxHeight: 4 }}
+                    layout={{ position: 'absolute', right: 3, width: 330, top: 10, height: 4, minHeight: 4, maxHeight: 4 }}
                 />
-                <Region layout={{ position: 'absolute', left: 239, width: 259, top: 19, height: 155, flexDirection: 'column' }}>
+                <Region layout={{ position: 'absolute', right: 2, width: 259, bottom: 12, height: 155, flexDirection: 'column' }}>
                     <WidgetSlot
                         widgetType="countdown"
                         name="countdown_widget"
@@ -75,7 +75,7 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                     </Region>
                     <Region
                         name="page_desc_txt"
-                        layout={{ width: 260, height: 40, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 40, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPageDescTxt ?? '...and everything must go, so get yourself some of the sweet, sweet plastic fantastic while you still can! You don\'t want to miss out on the classics!'}
@@ -94,7 +94,7 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                 <ThemeImage
                     name="promo_bitmap"
                     src={srcPromoBitmap ?? '${image.library.catalogue.url}kitchen_teaser_de.gif'}
-                    layout={{ position: 'absolute', left: 52, width: 162, top: 20, height: 162 }}
+                    layout={{ position: 'absolute', left: 52, width: 162, bottom: 4, height: 162 }}
                 />
             </Region>
         </Region>

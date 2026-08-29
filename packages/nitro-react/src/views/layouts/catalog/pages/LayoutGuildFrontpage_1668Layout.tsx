@@ -19,7 +19,7 @@ export const LayoutGuildFrontpage_1668Layout = ({ buyGuildWidget, captionCtlgDes
         <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
             <Region
                 name="ctlg_guild_frontpage"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="ctlg_teaserimg_1"

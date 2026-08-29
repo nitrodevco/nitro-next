@@ -31,7 +31,7 @@ export const TrophyWidget = ({ layout, onCtlgNextmodelButton, onCtlgPrevmodelBut
                 variant="3"
                 name="ctlg_prevmodel_button"
                 onPointerTap={onCtlgPrevmodelButton}
-                layout={{ position: 'absolute', right: 200, width: 30, top: 96, height: 30, maxWidth: 100 }}
+                layout={{ position: 'absolute', right: 200, width: 30, bottom: 1, height: 30, maxWidth: 100 }}
             >
                 <Icon
                     variant="2"
@@ -44,7 +44,7 @@ export const TrophyWidget = ({ layout, onCtlgNextmodelButton, onCtlgPrevmodelBut
                 variant="3"
                 name="ctlg_nextmodel_button"
                 onPointerTap={onCtlgNextmodelButton}
-                layout={{ position: 'absolute', right: 140, width: 30, top: 96, height: 30, maxWidth: 100 }}
+                layout={{ position: 'absolute', right: 140, width: 30, bottom: 1, height: 30, maxWidth: 100 }}
             >
                 <Icon
                     variant="3"

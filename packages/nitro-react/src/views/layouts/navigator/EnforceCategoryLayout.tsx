@@ -19,7 +19,7 @@ export const EnforceCategoryLayout = ({ layout, onCategory, onClose, onOk, onTra
             caption={t('enforce.category.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 310, height: 240, ...layout }}
+            layout={{ width: 310, height: 240, minWidth: 310, minHeight: 240, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region layout={{ position: 'absolute', left: 4, width: 295, top: 4, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
@@ -47,7 +47,7 @@ export const EnforceCategoryLayout = ({ layout, onCategory, onClose, onOk, onTra
                     variant="3"
                     name="ok"
                     onPointerTap={onOk}
-                    layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 132, top: 158, height: 32 }}
+                    layout={{ position: 'absolute', marginLeft: 3, marginRight: -3, width: 132, top: 158, height: 32 }}
                 >
                     {t('enforce.category.ok')}
                 </Button>

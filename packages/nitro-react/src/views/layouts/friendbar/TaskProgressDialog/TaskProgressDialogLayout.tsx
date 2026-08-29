@@ -18,7 +18,7 @@ export const TaskProgressDialogLayout = ({ layout, list, onClose }: TaskProgress
             variant="100"
             caption={t('talent.track.task.progress.dialog.title')}
             onClose={onClose}
-            layout={{ width: 378, height: 370, ...layout }}
+            layout={{ width: 378, height: 370, minWidth: 378, minHeight: 370, ...layout }}
         >
             <TaskProgressDialogLayoutList {...list} />
         </Frame>

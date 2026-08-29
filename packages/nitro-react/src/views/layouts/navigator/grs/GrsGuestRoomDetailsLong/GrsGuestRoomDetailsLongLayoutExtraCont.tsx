@@ -26,13 +26,13 @@ export const GrsGuestRoomDetailsLongLayoutExtraCont = ({ captionRating, captionR
                 name="tags"
                 onPointerTap={onTags}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 233, top: 0, height: 40 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 40 }}
             >
                 {tags}
             </Region>
             <Region
                 name="startedat_cont"
-                layout={{ position: 'absolute', left: 0, width: 233, top: 0, height: 12 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 12 }}
             >
                 <Region
                     name="startedat.caption"
@@ -49,7 +49,7 @@ export const GrsGuestRoomDetailsLongLayoutExtraCont = ({ captionRating, captionR
             </Region>
             <Region
                 name="rating_cont"
-                layout={{ position: 'absolute', left: 0, width: 233, top: 0, height: 12 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 12 }}
             >
                 <Region
                     name="rating.caption"

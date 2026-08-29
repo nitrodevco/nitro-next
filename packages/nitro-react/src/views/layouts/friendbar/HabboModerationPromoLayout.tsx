@@ -28,7 +28,7 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
         <Region layout={{ position: 'relative', width: 250, height: 192, ...layout }}>
             <Region
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 192 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="border_bar"
@@ -47,12 +47,12 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                 <ThemeImage
                     name="hdr_line"
                     src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
-                    layout={{ position: 'absolute', left: 150, width: 100, top: 10, height: 4 }}
+                    layout={{ position: 'absolute', right: 0, width: 100, top: 10, height: 4 }}
                 />
-                <Region layout={{ position: 'absolute', left: 0, width: 250, top: 29, height: 163, flexDirection: 'column' }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 163, flexDirection: 'column' }}>
                     <Region
                         name="caption_txt"
-                        layout={{ width: 316, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCaptionTxt ?? t('landing.view.moderationpromo.caption')}
@@ -62,13 +62,13 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     <Region
                         name="spacing"
                         backgroundColor="#000000"
-                        layout={{ width: 250, height: 6, flexShrink: 0 }}
+                        layout={{ alignSelf: 'stretch', height: 6, flexShrink: 0 }}
                     >
                         {spacing}
                     </Region>
                     <Region
                         name="info_txt"
-                        layout={{ width: 250, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionInfoTxt ?? t('landing.view.moderationpromo.info')}
@@ -78,7 +78,7 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     <Region
                         name="spacing"
                         backgroundColor="#000000"
-                        layout={{ width: 250, height: 8, flexShrink: 0 }}
+                        layout={{ alignSelf: 'stretch', height: 8, flexShrink: 0 }}
                     >
                         {spacing2}
                     </Region>
@@ -94,7 +94,7 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     </Region>
                     <Region
                         name="cursing_info_txt"
-                        layout={{ width: 250, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCursingInfoTxt ?? t('landing.view.moderationpromo.cursing.info')}
@@ -104,7 +104,7 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     <Region
                         name="spacing"
                         backgroundColor="#000000"
-                        layout={{ width: 250, height: 8, flexShrink: 0 }}
+                        layout={{ alignSelf: 'stretch', height: 8, flexShrink: 0 }}
                     >
                         {spacing3}
                     </Region>
@@ -120,7 +120,7 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                     </Region>
                     <Region
                         name="wrongdoers_info_txt"
-                        layout={{ width: 250, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionWrongdoersInfoTxt ?? t('landing.view.moderationpromo.wrongdoers.info')}

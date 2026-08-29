@@ -20,11 +20,11 @@ export const ForumListItemLayoutMainBox = ({ captionDetails, captionHeader, capt
         <Region
             name="main_box"
             backgroundColor="#eefeff"
-            layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 41, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="left_button_container"
-                layout={{ position: 'absolute', left: 0, width: 41, top: 0, height: 41 }}
+                layout={{ position: 'absolute', left: 0, width: 41, top: 0, bottom: 0 }}
             >
                 <WidgetSlot
                     widgetType="badge_image"
@@ -47,7 +47,7 @@ export const ForumListItemLayoutMainBox = ({ captionDetails, captionHeader, capt
                 >
                     <Region
                         name="header"
-                        layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 114, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         {captionHeader ?? 'Some group header'}
                     </Region>
@@ -67,7 +67,7 @@ export const ForumListItemLayoutMainBox = ({ captionDetails, captionHeader, capt
                     name="unread_region"
                     onPointerTap={onUnreadRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 40 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {unreadRegion}
                 </Region>

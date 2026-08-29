@@ -28,7 +28,7 @@ export const MainWindow_1503LayoutHeader = ({ captionCaptionText, layout, onHead
             name="header"
             onPointerTap={onHeader}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 273, top: 0, height: 17, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <ThemeImage
                 name="hdr_hilite"

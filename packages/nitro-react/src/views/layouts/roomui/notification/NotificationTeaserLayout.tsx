@@ -26,18 +26,19 @@ export const NotificationTeaserLayout = ({ captionCongrats, captionDescription, 
             caption={t('widget.furni.teaser.title')}
             tintColor="#4c4c4c"
             onClose={onClose}
-            layout={{ width: 433, height: 260, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 433, height: 260, minWidth: 433, maxWidth: 433, minHeight: 260, ...layout }}
         >
             <Border
                 variant="0"
                 tintColor="#4c4c4c"
                 blend={0}
-                layout={{ position: 'absolute', left: 0, width: 421, top: 0, height: 228 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -9, justifyContent: 'center' }}
             >
                 <Border
                     variant="0"
                     name="white_border"
-                    layout={{ position: 'absolute', left: 0, width: 420, top: 0, height: 160 }}
+                    layout={{ position: 'absolute', left: 0, right: 1, top: 0, height: 160 }}
                 />
                 <Region
                     name="congrats"
@@ -51,7 +52,7 @@ export const NotificationTeaserLayout = ({ captionCongrats, captionDescription, 
                 </Region>
                 <Region
                     name="description"
-                    layout={{ position: 'absolute', left: 130, width: 283, top: 32, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 8, width: 283, top: 32, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionDescription ?? t('widget.furni.teaser.description')}
@@ -62,18 +63,18 @@ export const NotificationTeaserLayout = ({ captionCongrats, captionDescription, 
                     variant="1"
                     name="teaser_ok_btn"
                     onPointerTap={onTeaserOkBtn}
-                    layout={{ position: 'absolute', left: 56, width: 306, top: 173, height: 46, minWidth: 306, maxWidth: 306, minHeight: 46, maxHeight: 46, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 306, bottom: 9, height: 46, minWidth: 306, maxWidth: 306, minHeight: 46, maxHeight: 46, justifyContent: 'center' }}
                 >
                     <Border
                         variant="3"
                         name="ok_btn_bg1"
                         tintColor="#006d00"
-                        layout={{ position: 'absolute', left: 3, width: 300, top: 3, height: 40 }}
+                        layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 3 }}
                     />
                     <Border
                         variant="3"
                         tintColor="#309d00"
-                        layout={{ position: 'absolute', left: 6, width: 294, top: 6, height: 17 }}
+                        layout={{ position: 'absolute', left: 6, right: 6, top: 6, height: 17 }}
                     />
                     <Region
                         name="ok"

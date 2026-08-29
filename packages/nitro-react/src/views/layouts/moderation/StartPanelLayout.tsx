@@ -28,25 +28,25 @@ export const StartPanelLayout = ({ captionChatlogButOffenceName, captionOffenceN
             caption="Mod Tools"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 170, height: 170, ...layout }}
+            layout={{ width: 170, height: 170, minWidth: 170, minHeight: 170, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, width: 158, top: 10, height: 128, flexDirection: 'column' }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 10, bottom: -9, flexDirection: 'column' }}>
                 <Region
                     name="room_tool_but"
                     onPointerTap={onRoomToolBut}
                     cursor="pointer"
-                    layout={{ width: 155, height: 30, flexShrink: 0 }}
+                    layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0 }}
                 >
                     {(visibleMouseover ?? false) && (
                         <Border
                             variant="102"
                             name="mouseover"
-                            layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 30 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                     )}
                     <Region
                         name="offence_name"
-                        layout={{ position: 'absolute', left: 24, width: 123, top: 7, height: 15, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', right: 8, width: 123, top: 7, bottom: 8, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionOffenceName ?? 'Room tool for this room'}
@@ -62,18 +62,18 @@ export const StartPanelLayout = ({ captionChatlogButOffenceName, captionOffenceN
                     name="chatlog_but"
                     onPointerTap={onChatlogBut}
                     cursor="pointer"
-                    layout={{ width: 155, height: 30, flexShrink: 0 }}
+                    layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0, justifyContent: 'center' }}
                 >
                     {(visibleChatlogButMouseover ?? false) && (
                         <Border
                             variant="102"
                             name="mouseover"
-                            layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 30 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                     )}
                     <Region
                         name="offence_name"
-                        layout={{ position: 'absolute', left: 24, width: 111, top: 7, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 111, top: 7, bottom: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionChatlogButOffenceName ?? 'Chatlog for this room'}
@@ -89,18 +89,18 @@ export const StartPanelLayout = ({ captionChatlogButOffenceName, captionOffenceN
                     name="userinfo_but"
                     onPointerTap={onUserinfoBut}
                     cursor="pointer"
-                    layout={{ width: 155, height: 30, flexShrink: 0 }}
+                    layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0 }}
                 >
                     {(visibleUserinfoButMouseover ?? false) && (
                         <Border
                             variant="102"
                             name="mouseover"
-                            layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 30 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                     )}
                     <Region
                         name="offence_name"
-                        layout={{ position: 'absolute', left: 24, width: 50, top: 7, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 24, width: 50, top: 7, bottom: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionUserinfoButOffenceName ?? 'User info:'}
@@ -116,18 +116,18 @@ export const StartPanelLayout = ({ captionChatlogButOffenceName, captionOffenceN
                     name="ticket_queue_but"
                     onPointerTap={onTicketQueueBut}
                     cursor="pointer"
-                    layout={{ width: 155, height: 30, flexShrink: 0 }}
+                    layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0 }}
                 >
                     {(visibleTicketQueueButMouseover ?? false) && (
                         <Border
                             variant="102"
                             name="mouseover"
-                            layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 30 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                     )}
                     <Region
                         name="offence_name"
-                        layout={{ position: 'absolute', left: 24, width: 78, top: 7, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 24, width: 78, top: 7, bottom: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionTicketQueueButOffenceName ?? 'Ticket browser'}

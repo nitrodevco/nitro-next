@@ -27,7 +27,7 @@ export const GuardianChatReviewResultsLayout = ({ balloonWidget, captionResultTe
             name="guardian_chat_review_results"
             caption={t('guide.bully.request.guide.results.final.title')}
             onClose={onClose}
-            layout={{ width: 248, height: 280, ...layout }}
+            layout={{ width: 248, height: 280, minWidth: 248, minHeight: 280, ...layout }}
         >
             <Border
                 variant="103"
@@ -61,7 +61,7 @@ export const GuardianChatReviewResultsLayout = ({ balloonWidget, captionResultTe
             >
                 <Region
                     name="results"
-                    layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}
                 >
                     <Region layout={{ width: 232, height: 46, flexShrink: 0 }}>
                         <Region
@@ -86,7 +86,7 @@ export const GuardianChatReviewResultsLayout = ({ balloonWidget, captionResultTe
                     </Region>
                 </Region>
             </Border>
-            <Region layout={{ position: 'absolute', left: 0, width: 246, bottom: 31, height: 99, justifyContent: 'center' }}>
+            <Region layout={{ position: 'absolute', left: 0, width: 246, bottom: -10, height: 99, justifyContent: 'center' }}>
                 <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 179, alignSelf: 'center', marginTop: -23.5, marginBottom: 23.5, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                     <ThemeText
                         text={t('guide.bully.request.guide.results.thanks')}
@@ -109,7 +109,7 @@ export const GuardianChatReviewResultsLayout = ({ balloonWidget, captionResultTe
                 layout={{ position: 'absolute', left: 229, width: 238, top: 105, height: 25 }}
             >
                 {balloonWidget}
-                <Region layout={{ position: 'absolute', left: 0, width: 233, top: 0, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', left: 0, width: 233, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('guide.bully.request.guide.results.your_vote')}
                         textStyle="text-style-il-regular-white"

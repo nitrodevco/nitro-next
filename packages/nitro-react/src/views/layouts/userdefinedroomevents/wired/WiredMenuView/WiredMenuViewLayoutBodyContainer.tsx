@@ -49,7 +49,7 @@ export const WiredMenuViewLayoutBodyContainer = ({ chestsContainer, infoContaine
             {(visibleInfoContainer ?? false) && (
                 <Region
                     name="info_container"
-                    layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {infoContainer}
                 </Region>
@@ -60,7 +60,7 @@ export const WiredMenuViewLayoutBodyContainer = ({ chestsContainer, infoContaine
                     backgroundColor="#e9e9e1"
                     onPointerTap={onLoadingView}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {loadingView}
                 </Region>

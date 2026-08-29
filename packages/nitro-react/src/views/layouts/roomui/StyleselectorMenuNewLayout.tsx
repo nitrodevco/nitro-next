@@ -22,7 +22,7 @@ export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, divider, item
                 variant="2"
                 tintColor="#24231e"
                 blend={0.8}
-                layout={{ position: 'absolute', left: 0, width: 67, top: 0, height: 70 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="itemgrid"

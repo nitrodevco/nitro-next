@@ -13,7 +13,7 @@ export const GuardianChatReviewAcceptLayoutRequestDescriptionItem = ({ captionRe
     return (
         <Region
             name="request_description"
-            layout={{ width: 195, height: 38, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ alignSelf: 'stretch', height: 38, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionRequestDescription ?? t('guide.bully.request.guide.accept.request.description')}

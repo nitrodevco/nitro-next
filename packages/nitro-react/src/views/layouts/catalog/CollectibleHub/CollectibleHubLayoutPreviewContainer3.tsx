@@ -40,13 +40,13 @@ export const CollectibleHubLayoutPreviewContainer3 = ({ avatarImageWidget, badge
     return (
         <Region
             name="preview_container"
-            layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 260, ...layout }}
         >
             <Border
                 variant="3"
                 name="collection_preview_bg"
                 tintColor="#3d1f39"
-                layout={{ position: 'absolute', left: 0, width: 296, top: 0, height: 260, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, width: 296, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     src={layoutImage('collectables_score_background.png')}
@@ -134,7 +134,7 @@ export const CollectibleHubLayoutPreviewContainer3 = ({ avatarImageWidget, badge
                 >
                     <Region
                         name="preview_furni_name"
-                        layout={{ position: 'absolute', left: 0, width: 290, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionPreviewFurniName ?? 'Lorem ipsum hot air balloon'}

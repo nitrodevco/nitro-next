@@ -71,7 +71,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
         <Region layout={{ position: 'relative', width: 200, height: 200, ...layout }}>
             <Region
                 backgroundColor="#e9e9e1"
-                layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 200 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 {(visibleRequirementRule ?? false) && (
                     <Border
@@ -96,7 +96,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                             <Border
                                 variant="12"
                                 tintColor="#dddddd"
-                                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                             >
                                 <ThemeImage
                                     src={layoutImage('common_close_x.png')}
@@ -131,7 +131,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                     >
                         <Region
                             backgroundColor="#b5b5b5"
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                     </Region>
                 )}
@@ -142,7 +142,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                     >
                         <Region
                             backgroundColor="#b5b5b5"
-                            layout={{ position: 'absolute', left: 0, width: 1, top: 0, bottom: 0 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                     </Region>
                 )}
@@ -301,7 +301,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                         caption={t('wiredfurni.title')}
                         tintColor="#418db0"
                         onClose={onFrame}
-                        layout={{ position: 'absolute', left: 0, width: 240, top: 0, height: 200, minWidth: 100 }}
+                        layout={{ position: 'absolute', left: 0, width: 240, top: 0, bottom: 0, minWidth: 100 }}
                     />
                 )}
                 {(visibleQuickMenu ?? false) && (
@@ -371,7 +371,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                             variant="3"
                             name="mini_button_click"
                             onPointerTap={onMiniButtonClick}
-                            layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19, maxWidth: 19 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 19 }}
                         >
                             <ThemeImage
                                 name="mini_button_icon"

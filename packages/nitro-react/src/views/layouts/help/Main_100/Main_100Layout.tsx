@@ -19,7 +19,7 @@ export const Main_100Layout = ({ body, header, layout, onClose, recolorDark }: M
             caption="Reward Track"
             tintColor={recolorDark ?? '#3576b9'}
             onClose={onClose}
-            layout={{ width: 1103, height: 722, ...layout }}
+            layout={{ width: 1103, height: 722, minWidth: 1103, minHeight: 722, ...layout }}
         >
             <Main_100LayoutHeader {...header} />
             <Main_100LayoutBody {...body} />

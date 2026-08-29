@@ -22,7 +22,7 @@ export const ChatReviewReporterFeedbackLayout = ({ captionBodyTxt, captionCaptio
             name="pending_request"
             caption={t('guide.bully.request.reporter.title')}
             onClose={onClose}
-            layout={{ width: 369, height: 304, ...layout }}
+            layout={{ width: 369, height: 304, minWidth: 369, minHeight: 304, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 11, width: 345, top: 2, height: 266, justifyContent: 'center' }}>
                 <Region
@@ -46,7 +46,7 @@ export const ChatReviewReporterFeedbackLayout = ({ captionBodyTxt, captionCaptio
                 </Region>
                 <Border
                     variant="102"
-                    layout={{ position: 'absolute', left: 0, width: 345, top: 151, height: 50 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 151, height: 50 }}
                 >
                     <ThemeImage
                         src={layoutImage('help_notification.png')}
@@ -74,7 +74,7 @@ export const ChatReviewReporterFeedbackLayout = ({ captionBodyTxt, captionCaptio
             </Region>
             <ThemeImage
                 src={layoutImage('help_illustrations_bully.png')}
-                layout={{ position: 'absolute', left: 307, width: 35, bottom: 168, height: 120 }}
+                layout={{ position: 'absolute', left: 307, width: 35, bottom: 127, height: 120 }}
             />
         </Frame>
     );

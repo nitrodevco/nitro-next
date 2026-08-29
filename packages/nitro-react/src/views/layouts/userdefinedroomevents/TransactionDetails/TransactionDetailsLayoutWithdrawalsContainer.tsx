@@ -27,7 +27,7 @@ export const TransactionDetailsLayoutWithdrawalsContainer = ({ captionEmptyText,
             <Border
                 variant="4"
                 tintColor="#e2e2e2"
-                layout={{ position: 'absolute', left: 0, width: 165, top: 20, height: 141 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 141 }}
             >
                 <TransactionDetailsLayoutItemGrid {...itemGrid} />
                 <Region

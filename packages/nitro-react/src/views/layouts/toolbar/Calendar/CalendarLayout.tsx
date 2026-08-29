@@ -22,11 +22,11 @@ export const CalendarLayout = ({ captionInfoBody, captionInfoHeading, layout, on
             variant="3"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 1033, height: 607, ...layout }}
+            layout={{ width: 1033, height: 607, minWidth: 1033, minHeight: 607, ...layout }}
         >
             <Region
                 backgroundColor="#0e0f1f"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: -12, top: 0, bottom: -41 }}
             >
                 <CalendarLayoutSpinnerContainer {...spinnerContainer} />
             </Region>

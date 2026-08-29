@@ -15,7 +15,7 @@ export const LayoutInfoDuckets_1719Layout = ({ captionCtlgDescription, layout, s
         <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
             <Region
                 name="ctlg_info_duckets"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="ctlg_description"

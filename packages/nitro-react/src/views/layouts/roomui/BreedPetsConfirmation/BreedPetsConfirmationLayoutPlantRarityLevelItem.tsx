@@ -13,7 +13,7 @@ export const BreedPetsConfirmationLayoutPlantRarityLevelItem = ({ captionPlantRa
     return (
         <Region
             name="plant_rarity_level"
-            layout={{ width: 134, height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
+            layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
                 text={captionPlantRarityLevel ?? t('breedpets.widget.plant1.raritylevel')}

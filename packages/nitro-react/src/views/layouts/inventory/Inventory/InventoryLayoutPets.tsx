@@ -30,13 +30,13 @@ export const InventoryLayoutPets = ({ captionPreviewDescription, captionPreviewI
         (visiblePets ?? false) && (
             <Region
                 name="pets"
-                layout={{ position: 'absolute', left: 0, width: 468, top: 0, bottom: 0, ...layout }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
             >
                 <Border
                     variant="3"
                     name="options_container"
                     tintColor="#cacaca"
-                    layout={{ position: 'absolute', left: 0, width: 468, top: 0, height: 25 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25 }}
                 >
                     <Border
                         variant="0"
@@ -52,7 +52,7 @@ export const InventoryLayoutPets = ({ captionPreviewDescription, captionPreviewI
                                 name="clear_filter_button"
                                 onPointerTap={onClearFilterButton}
                                 cursor="pointer"
-                                layout={{ position: 'absolute', left: 120, width: 20, top: 0, height: 20 }}
+                                layout={{ position: 'absolute', left: 120, width: 20, top: 0, bottom: 0 }}
                             >
                                 <ThemeImage
                                     src={layoutImage('icons_close.png')}

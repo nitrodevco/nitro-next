@@ -26,15 +26,15 @@ export const ThreadListItemLayoutMainBox = ({ captionDetails, captionHeader, cap
     return (
         <Region
             name="main_box"
-            layout={{ position: 'absolute', left: 0, width: 600, top: 0, height: 40, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="left_button_container"
-                layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 40 }}
+                layout={{ position: 'absolute', left: 0, width: 20, top: 0, bottom: 0 }}
             >
                 <Region
                     name="info_buttons"
-                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 40, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}
                 >
                     {itemsInfoButtons ?? (
                         <>
@@ -47,7 +47,7 @@ export const ThreadListItemLayoutMainBox = ({ captionDetails, captionHeader, cap
             <Region
                 name="texts_container"
                 backgroundColor="#eefeff"
-                layout={{ position: 'absolute', left: 21, width: 387, top: 0, height: 40 }}
+                layout={{ position: 'absolute', left: 21, width: 387, top: 0, bottom: 0 }}
             >
                 <Region
                     name="header_region"
@@ -57,7 +57,7 @@ export const ThreadListItemLayoutMainBox = ({ captionDetails, captionHeader, cap
                 >
                     <Region
                         name="header"
-                        layout={{ position: 'absolute', left: 0, width: 117, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 117, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         {captionHeader ?? 'Some thread header'}
                     </Region>
@@ -71,19 +71,19 @@ export const ThreadListItemLayoutMainBox = ({ captionDetails, captionHeader, cap
             </Region>
             <Region
                 name="unread_texts_container"
-                layout={{ position: 'absolute', left: 409, width: 140, top: 0, height: 40 }}
+                layout={{ position: 'absolute', left: 409, width: 140, top: 0, bottom: 0 }}
             >
                 <Region
                     name="unread_region"
                     onPointerTap={onUnreadRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 40 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {unreadRegion}
                 </Region>
                 <Region
                     name="messages1"
-                    layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionMessages1 ?? '100 messages'}
@@ -92,7 +92,7 @@ export const ThreadListItemLayoutMainBox = ({ captionDetails, captionHeader, cap
                 </Region>
                 <Region
                     name="messages2"
-                    layout={{ position: 'absolute', left: 0, width: 140, top: 15, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionMessages2 ?? '12 new'}
@@ -104,11 +104,11 @@ export const ThreadListItemLayoutMainBox = ({ captionDetails, captionHeader, cap
                 name="button_container"
                 onPointerTap={onButtonContainer}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 550, width: 50, top: 0, height: 40 }}
+                layout={{ position: 'absolute', left: 550, width: 50, top: 0, bottom: 0 }}
             >
                 <Region
                     name="mod_buttons"
-                    layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 40, flexDirection: 'row' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row' }}
                 >
                     {itemsModButtons ?? (
                         <>

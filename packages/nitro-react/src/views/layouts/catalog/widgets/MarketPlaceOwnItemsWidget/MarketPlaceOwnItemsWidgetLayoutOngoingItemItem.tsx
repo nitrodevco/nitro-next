@@ -42,7 +42,7 @@ export const MarketPlaceOwnItemsWidgetLayoutOngoingItemItem = ({ captionItemDesc
             {(visibleImageContainer ?? true) && (
                 <Region
                     name="image_container"
-                    layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40 }}
+                    layout={{ position: 'absolute', left: 9, width: 40, top: 9, bottom: 9 }}
                 >
                     {(visibleUniqueItemBackgroundBitmap ?? false) && (
                         <ThemeImage
@@ -63,7 +63,7 @@ export const MarketPlaceOwnItemsWidgetLayoutOngoingItemItem = ({ captionItemDesc
                         <WidgetSlot
                             widgetType="limited_item_overlay_grid"
                             name="unique_item_overlay_widget"
-                            layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                         >
                             {uniqueItemOverlayWidget}
                         </WidgetSlot>
@@ -72,7 +72,7 @@ export const MarketPlaceOwnItemsWidgetLayoutOngoingItemItem = ({ captionItemDesc
                         <WidgetSlot
                             widgetType="rarity_item_overlay_grid"
                             name="rarity_item_overlay_widget"
-                            layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                         >
                             {rarityItemOverlayWidget}
                         </WidgetSlot>
@@ -115,7 +115,7 @@ export const MarketPlaceOwnItemsWidgetLayoutOngoingItemItem = ({ captionItemDesc
             {(visibleItemTime ?? true) && (
                 <Region
                     name="item_time"
-                    layout={{ position: 'absolute', left: 58, width: 62, top: 41, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 58, width: 62, bottom: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionItemTime ?? t('lorem.title')}
@@ -128,7 +128,7 @@ export const MarketPlaceOwnItemsWidgetLayoutOngoingItemItem = ({ captionItemDesc
                     variant="3"
                     name="pick_button"
                     onPointerTap={onPickButton}
-                    layout={{ position: 'absolute', right: 6, width: 73, top: 31, height: 22 }}
+                    layout={{ position: 'absolute', right: 6, width: 73, bottom: 5, height: 22 }}
                 >
                     {t('catalog.marketplace.offer.pick')}
                 </Button>

@@ -17,7 +17,7 @@ export const RoomInfoPopupBubbleLayoutRoomThumbnailContainerItem = ({ layout, ro
         <Region
             name="room_thumbnail_container"
             backgroundColor="#000000"
-            layout={{ width: 112, height: 112, flexShrink: 0, ...layout }}
+            layout={{ width: 112, alignSelf: 'stretch', flexShrink: 0, ...layout }}
         >
             {(visibleRoomThumbnail ?? true) && (
                 <ThemeImage

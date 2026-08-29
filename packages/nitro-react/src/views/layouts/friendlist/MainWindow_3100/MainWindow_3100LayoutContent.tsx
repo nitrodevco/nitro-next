@@ -23,7 +23,7 @@ export const MainWindow_3100LayoutContent = ({ bg, conversation, conversationsta
             backgroundColor="#ffffff"
             onPointerTap={onContent}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 100, ...layout }}
+            layout={{ position: 'absolute', left: 1, right: -11, top: 0, bottom: 59, ...layout }}
         >
             <ThemeImage
                 name="convo_bg"

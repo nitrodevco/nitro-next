@@ -14,7 +14,7 @@ export const CommunityGoalLayoutGoalInfoItem = ({ captionGoalInfo, colorableText
     return (
         <Region
             name="goal_info"
-            layout={{ width: 300, height: 16, flexShrink: 0, minWidth: 300, maxWidth: 300, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, minWidth: 300, maxWidth: 300, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionGoalInfo ?? t('landing.view.community.info')}

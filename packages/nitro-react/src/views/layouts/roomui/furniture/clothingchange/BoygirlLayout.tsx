@@ -18,12 +18,12 @@ export const BoygirlLayout = ({ layout, onBoy, onClose, onGirl }: BoygirlLayoutP
             caption={t('widget.furni.clothingchange.gender.title')}
             tintColor="#3d3d3d"
             onClose={onClose}
-            layout={{ width: 308, height: 151, ...layout }}
+            layout={{ width: 308, height: 151, minWidth: 308, minHeight: 151, ...layout }}
         >
             <Border
                 variant="0"
                 tintColor="#f0f0f0"
-                layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -9 }}
             >
                 <Button
                     variant="0"

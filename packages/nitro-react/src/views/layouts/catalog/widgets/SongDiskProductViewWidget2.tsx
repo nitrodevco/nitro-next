@@ -69,7 +69,7 @@ export const SongDiskProductViewWidget2 = ({ captionCtlgDescription, captionCtlg
                     variant="2"
                     tintColor="#cccccc"
                     blend={0.5}
-                    layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 36 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Button
                     variant="3"

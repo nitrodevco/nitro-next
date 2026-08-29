@@ -19,7 +19,7 @@ export const BreedPetsResultLayout = ({ elementList, layout, onClose }: BreedPet
             caption={t('breedpetsresult.widget.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 275, height: 300, ...layout }}
+            layout={{ width: 275, height: 300, minWidth: 275, minHeight: 300, ...layout }}
         >
             <BreedPetsResultLayoutElementList {...elementList} />
         </Frame>

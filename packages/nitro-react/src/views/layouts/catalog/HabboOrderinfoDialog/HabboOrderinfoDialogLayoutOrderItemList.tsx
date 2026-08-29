@@ -15,7 +15,7 @@ export const HabboOrderinfoDialogLayoutOrderItemList = ({ itemsOrderItemList, la
     return (
         <Region
             name="orderItemList"
-            layout={{ position: 'absolute', left: 0, minWidth: 284, top: 0, minHeight: 149, flexDirection: 'column', ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column', ...layout }}
         >
             {itemsOrderItemList ?? (
                 <>

@@ -11,10 +11,10 @@ export interface CompetitionUserPopupLayoutProps {
 export const CompetitionUserPopupLayout = ({ captionRankDescTxt, captionScoreTxt, captionUserNameTxt, layout }: CompetitionUserPopupLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 154, height: 79, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 154, top: 0, height: 79 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}>
                 <Border
                     variant="0"
-                    layout={{ position: 'absolute', left: 0, width: 154, top: 0, height: 69 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 10 }}
                 >
                     <ThemeImage
                         src="${image.library.url}reception/leaf.png"
@@ -22,7 +22,7 @@ export const CompetitionUserPopupLayout = ({ captionRankDescTxt, captionScoreTxt
                     />
                     <Region
                         name="rank_desc_txt"
-                        layout={{ position: 'absolute', left: 13, width: 133, top: 41, height: 27, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', right: 8, width: 133, bottom: 1, height: 27, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionRankDescTxt ?? 'The garden king'}
@@ -40,7 +40,7 @@ export const CompetitionUserPopupLayout = ({ captionRankDescTxt, captionScoreTxt
                     </Region>
                     <Region
                         name="score_txt"
-                        layout={{ position: 'absolute', left: 12, width: 70, top: 27, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 12, width: 70, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionScoreTxt ?? '12333 Points'}
@@ -51,7 +51,7 @@ export const CompetitionUserPopupLayout = ({ captionRankDescTxt, captionScoreTxt
                 </Border>
                 <ThemeImage
                     src="${image.library.url}reception/sakara.png"
-                    layout={{ position: 'absolute', left: 72, width: 9, top: 68, height: 6 }}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 9, bottom: 5, height: 6 }}
                 />
             </Region>
         </Region>

@@ -24,12 +24,13 @@ export const GuardianChatReviewAcceptLayout = ({ countdown, itemlist, layout, on
             name="guardian_chat_review_accept"
             caption={t('guide.bully.request.guide.accept.title')}
             onClose={onClose}
-            layout={{ width: 282, height: 276, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 282, height: 276, minWidth: 282, maxWidth: 282, minHeight: 0, ...layout }}
         >
             <Border
                 variant="103"
                 name="border"
-                layout={{ position: 'absolute', left: 0, width: 280, top: 20, height: 224 }}
+                layout={{ position: 'absolute', left: 0, right: -10, bottom: -9, height: 224 }}
             >
                 <GuardianChatReviewAcceptLayoutItemlist {...itemlist} />
             </Border>
@@ -39,13 +40,13 @@ export const GuardianChatReviewAcceptLayout = ({ countdown, itemlist, layout, on
             />
             <Border
                 variant="102"
-                layout={{ position: 'absolute', left: 185, width: 80, top: 0, height: 50 }}
+                layout={{ position: 'absolute', right: 5, width: 80, top: 0, height: 50 }}
             >
                 <WidgetSlot
                     widgetType="countdown"
                     name="countdown"
                     options={{ 'countdown:digits': '2' }}
-                    layout={{ position: 'absolute', left: 10, width: 63, top: 10, height: 37 }}
+                    layout={{ position: 'absolute', left: 10, right: 7, top: 10, bottom: 3 }}
                 >
                     {countdown}
                 </WidgetSlot>

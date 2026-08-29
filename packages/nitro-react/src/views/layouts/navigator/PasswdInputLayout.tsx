@@ -24,7 +24,7 @@ export const PasswdInputLayout = ({ captionCancel, captionInfo, captionRoomName,
             caption={t('navigator.password.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 237, height: 217, ...layout }}
+            layout={{ width: 237, height: 217, minWidth: 237, minHeight: 217, ...layout }}
         >
             <Region
                 name="room_name"
@@ -61,7 +61,7 @@ export const PasswdInputLayout = ({ captionCancel, captionInfo, captionRoomName,
                 >
                     <Region
                         name="cancel"
-                        layout={{ position: 'absolute', left: 0, width: 83, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         {captionCancel ?? t('generic.cancel')}
                     </Region>

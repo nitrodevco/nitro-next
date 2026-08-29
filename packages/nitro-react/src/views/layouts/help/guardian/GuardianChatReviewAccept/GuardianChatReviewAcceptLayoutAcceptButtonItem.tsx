@@ -19,12 +19,12 @@ export const GuardianChatReviewAcceptLayoutAcceptButtonItem = ({ layout, onAccep
             onPointerTap={onAcceptButton}
             layout={{ width: 200, height: 48, flexShrink: 0, maxWidth: 200, minHeight: 48, maxHeight: 48, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 20, top: 11, maxWidth: 200, flexDirection: 'row', gap: 5 }}>
+            <Region layout={{ position: 'absolute', left: 20, top: 11, bottom: 12, maxWidth: 200, flexDirection: 'row', gap: 5 }}>
                 <ThemeImage
                     src={layoutImage('help_accept_icon.png')}
                     layout={{ width: 11, height: 12, flexShrink: 0 }}
                 />
-                <Region layout={{ width: 247, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region layout={{ width: 247, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('guide.bully.request.guide.accept.accept.button')}
                         textStyle="text-style-il-button"

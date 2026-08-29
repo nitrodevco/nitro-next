@@ -20,7 +20,7 @@ export const SpecialItemsDisplayLayoutPageContainer = ({ itemsPageList, layout }
         >
             <Region
                 name="page_list"
-                layout={{ position: 'absolute', top: 0, flexDirection: 'row', gap: 7 }}
+                layout={{ position: 'absolute', top: 0, bottom: 0, flexDirection: 'row', gap: 7 }}
             >
                 {itemsPageList ?? (
                     <>

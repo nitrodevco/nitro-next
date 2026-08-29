@@ -34,7 +34,7 @@ export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCred
                     variant="3"
                     name="marketplace_extended_border"
                     tintColor="#bec3c1"
-                    layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
+                    layout={{ position: 'absolute', left: 179, width: 223, top: 0, bottom: 0 }}
                 >
                     {(visibleDucketIcon ?? false) && (
                         <Icon
@@ -78,7 +78,7 @@ export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCred
                 <Border
                     variant="5"
                     name="marketplace_border"
-                    layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 34 }}
+                    layout={{ position: 'absolute', left: 0, width: 185, top: 0, bottom: 0 }}
                 >
                     {(visibleMarketplaceBitmap ?? true) && (
                         <ThemeImage

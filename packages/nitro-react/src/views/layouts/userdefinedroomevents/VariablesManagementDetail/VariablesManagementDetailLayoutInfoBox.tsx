@@ -61,7 +61,7 @@ export const VariablesManagementDetailLayoutInfoBox = ({ avatarPreview, avatarPr
                     <WidgetSlot
                         widgetType="pet_image"
                         name="pet_preview"
-                        layout={{ position: 'absolute', left: 0, width: 94, top: 0, height: 94 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         {petPreview}
                     </WidgetSlot>

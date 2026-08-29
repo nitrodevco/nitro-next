@@ -60,21 +60,21 @@ export const CameraInterfaceLayoutBgBorder = ({ captionPhotoDate, captionPhotoRo
             name="bgBorder"
             onPointerTap={onBgBorder}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 536, justifyContent: 'center', ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
             {(visibleSlotContainer ?? false) && (
                 <Border
                     variant="7"
                     name="slot_container"
-                    layout={{ position: 'absolute', left: 6, width: 328, top: 453, height: 82 }}
+                    layout={{ position: 'absolute', left: 6, right: 6, bottom: 1, height: 82 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 7, width: 340, top: 15, height: 58 }}>
+                    <Region layout={{ position: 'absolute', left: 7, width: 340, bottom: 9, height: 58 }}>
                         <Region
                             name="cameraButton_0"
                             dynamicStyle="brightness_and_shadow_under"
                             onPointerTap={onCameraButton0}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 58 }}
+                            layout={{ position: 'absolute', left: 0, width: 58, top: 0, bottom: 0 }}
                         >
                             <ThemeImage
                                 name="cameraSlot_0"
@@ -87,7 +87,7 @@ export const CameraInterfaceLayoutBgBorder = ({ captionPhotoDate, captionPhotoRo
                             name="cameraButton_1"
                             onPointerTap={onCameraButton1}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 64, width: 58, top: 0, height: 58 }}
+                            layout={{ position: 'absolute', left: 64, width: 58, top: 0, bottom: 0 }}
                         >
                             <ThemeImage
                                 name="cameraSlot_1"
@@ -100,7 +100,7 @@ export const CameraInterfaceLayoutBgBorder = ({ captionPhotoDate, captionPhotoRo
                             name="cameraButton_2"
                             onPointerTap={onCameraButton2}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 128, width: 58, top: 0, height: 58 }}
+                            layout={{ position: 'absolute', left: 128, width: 58, top: 0, bottom: 0 }}
                         >
                             <ThemeImage
                                 name="cameraSlot_2"
@@ -113,7 +113,7 @@ export const CameraInterfaceLayoutBgBorder = ({ captionPhotoDate, captionPhotoRo
                             name="cameraButton_3"
                             onPointerTap={onCameraButton3}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 192, width: 58, top: 0, height: 58 }}
+                            layout={{ position: 'absolute', left: 192, width: 58, top: 0, bottom: 0 }}
                         >
                             <ThemeImage
                                 name="cameraSlot_3"
@@ -126,7 +126,7 @@ export const CameraInterfaceLayoutBgBorder = ({ captionPhotoDate, captionPhotoRo
                             name="cameraButton_4"
                             onPointerTap={onCameraButton4}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 256, width: 58, top: 0, height: 58 }}
+                            layout={{ position: 'absolute', left: 256, width: 58, top: 0, bottom: 0 }}
                         >
                             <ThemeImage
                                 name="cameraSlot_4"
@@ -207,7 +207,7 @@ export const CameraInterfaceLayoutBgBorder = ({ captionPhotoDate, captionPhotoRo
                 tooltip={t('camera.take.photo.button.tooltip')}
                 onPointerTap={onButtonRelease}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 120, width: 98, top: 362, height: 95 }}
+                layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 98, top: 362, height: 95 }}
             >
                 <ThemeImage
                     name="release_bitmap"
@@ -296,7 +296,7 @@ export const CameraInterfaceLayoutBgBorder = ({ captionPhotoDate, captionPhotoRo
                 variant="3"
                 tintColor="#666666"
                 caption="${camera.interface.title}"
-                layout={{ position: 'absolute', left: 9, width: 323, top: 5, height: 28 }}
+                layout={{ position: 'absolute', left: 9, right: 8, top: 5, height: 28 }}
             />
         </Region>
     );

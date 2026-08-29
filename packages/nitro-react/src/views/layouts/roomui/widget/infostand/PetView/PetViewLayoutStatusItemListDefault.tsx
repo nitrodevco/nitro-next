@@ -17,7 +17,7 @@ export const PetViewLayoutStatusItemListDefault = ({ itemsStatusItemListDefault,
     return (
         <Region
             name="status_item_list_default"
-            layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 142, flexDirection: 'column', ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 142, flexDirection: 'column', ...layout }}
         >
             {itemsStatusItemListDefault ?? (
                 <>

@@ -25,7 +25,7 @@ export const WiredMenuViewLayoutMonitorContainer = ({ captionTitle, layout, logT
     return (
         <Region
             name="monitor_container"
-            layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <WiredMenuViewLayoutStatisticsContainer {...statisticsContainer} />
             <Region
@@ -57,7 +57,7 @@ export const WiredMenuViewLayoutMonitorContainer = ({ captionTitle, layout, logT
                 </Region>
                 <Region
                     name="log_table_container"
-                    layout={{ position: 'absolute', left: 0, width: 472, top: 20, height: 156 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 156 }}
                 >
                     {logTableContainer}
                 </Region>

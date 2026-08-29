@@ -18,7 +18,7 @@ export const MysteryBoxRewardLayout = ({ layout, onClose, onCloseButton, srcRewa
             variant="100"
             caption={t('mysterybox.reward.text')}
             onClose={onClose}
-            layout={{ width: 430, height: 234, ...layout }}
+            layout={{ width: 430, height: 234, minWidth: 430, minHeight: 234, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, top: 8, flexDirection: 'column', gap: 4 }}>
                 <Region layout={{ width: 128, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>

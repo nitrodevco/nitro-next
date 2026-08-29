@@ -14,17 +14,17 @@ export const TrackPromoLayout = ({ captionTitleTxt, layout, srcPixelIcon }: Trac
 
     return (
         <Region layout={{ position: 'relative', width: 192, height: 29, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="9"
                     tintColor="#686661"
-                    layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 {/* `border` is hidden and has no name to show it by */}
                 <Border
                     variant="6"
                     tintColor="#596f8d"
-                    layout={{ position: 'absolute', left: 163, width: 29, top: 0, height: 29 }}
+                    layout={{ position: 'absolute', right: 0, width: 29, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="pixel_icon"
@@ -34,7 +34,7 @@ export const TrackPromoLayout = ({ captionTitleTxt, layout, srcPixelIcon }: Trac
                 </Border>
                 <Region
                     name="title_txt"
-                    layout={{ position: 'absolute', left: 10, width: 148, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 10, width: 148, top: 6, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTitleTxt ?? t('citizenship.promo.title')}

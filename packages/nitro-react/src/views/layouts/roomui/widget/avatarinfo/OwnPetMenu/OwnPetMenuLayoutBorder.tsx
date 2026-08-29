@@ -19,7 +19,7 @@ export const OwnPetMenuLayoutBorder = ({ buttons, captionName, layout, onMinimiz
         >
             <Region
                 name="profile_link"
-                layout={{ position: 'absolute', left: 0, width: 107, top: -1, height: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: -1, height: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 onPointerTap={onProfileLink}
                 cursor="pointer"
             >

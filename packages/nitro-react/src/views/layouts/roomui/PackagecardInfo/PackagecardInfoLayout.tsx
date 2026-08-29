@@ -19,7 +19,7 @@ export const PackagecardInfoLayout = ({ elementList, layout, onClose }: Packagec
             caption={t('widget.furni.present.window.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 342, height: 298, ...layout }}
+            layout={{ width: 342, height: 298, minWidth: 275, minHeight: 150, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: -2, width: 336, top: 0, height: 246, minWidth: 330, maxWidth: 380, justifyContent: 'center' }}>
                 <PackagecardInfoLayoutElementList {...elementList} />

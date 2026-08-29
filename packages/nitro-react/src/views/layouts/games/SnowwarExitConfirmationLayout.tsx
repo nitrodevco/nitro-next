@@ -18,7 +18,7 @@ export const SnowwarExitConfirmationLayout = ({ layout, onClose, onNo, onYes }: 
             caption={t('snowwar.exit.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 270, height: 163, ...layout }}
+            layout={{ width: 270, height: 163, minWidth: 270, minHeight: 163, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 12, width: 238, top: 12, height: 18, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                 <ThemeText

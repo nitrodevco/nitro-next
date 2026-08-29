@@ -27,7 +27,7 @@ export const WiredStyleVolterGreenLayoutSourceBtnItem = ({ itemsSourceElements, 
                 <Region
                     name="source_elements"
                     backgroundColor="#ffeda5"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row' }}
                 >
                     {itemsSourceElements ?? (
                         <>

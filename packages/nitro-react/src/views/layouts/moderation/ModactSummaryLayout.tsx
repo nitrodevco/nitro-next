@@ -23,7 +23,7 @@ export const ModactSummaryLayout = ({ captionDefaultSanctionLabel, captionMessag
             caption="Mod action on:"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 383, height: 295, ...layout }}
+            layout={{ width: 383, height: 295, minWidth: 383, minHeight: 295, ...layout }}
         >
             <Dropmenu
                 variant="100"
@@ -54,7 +54,7 @@ export const ModactSummaryLayout = ({ captionDefaultSanctionLabel, captionMessag
                 value={messageInputValue}
                 onChange={setMessageInputValue}
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 20, width: 320, bottom: 145, height: 45 }}
+                layout={{ position: 'absolute', left: 20, width: 320, bottom: 104, height: 45 }}
             />
             <Button
                 variant="0"

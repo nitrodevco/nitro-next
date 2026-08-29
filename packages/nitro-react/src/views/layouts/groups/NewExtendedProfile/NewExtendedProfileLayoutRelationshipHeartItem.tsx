@@ -43,7 +43,7 @@ export const NewExtendedProfileLayoutRelationshipHeartItem = ({ captionHeartFrie
                         {(visibleHeartFriendNameLinkText ?? true) && (
                             <Region
                                 name="heart_friend_name_link_text"
-                                layout={{ position: 'absolute', left: 0, width: 151, top: 0, height: 16, maxWidth: 160, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                layout={{ position: 'absolute', left: 0, width: 151, top: 0, bottom: 0, maxWidth: 160, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 {captionHeartFriendNameLinkText ?? t('extendedprofile.add.friends')}
                             </Region>

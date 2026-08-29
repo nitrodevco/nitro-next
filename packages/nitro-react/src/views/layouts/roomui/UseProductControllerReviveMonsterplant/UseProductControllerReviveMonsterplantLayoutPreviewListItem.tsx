@@ -34,7 +34,7 @@ export const UseProductControllerReviveMonsterplantLayoutPreviewListItem = ({ ca
                 {(visibleSeparator ?? true) && (
                     <Region
                         name="separator"
-                        layout={{ width: 130, height: 17, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
+                        layout={{ alignSelf: 'stretch', height: 17, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
                     >
                         {separator}
                     </Region>
@@ -42,7 +42,7 @@ export const UseProductControllerReviveMonsterplantLayoutPreviewListItem = ({ ca
                 {(visibleDescription ?? true) && (
                     <Region
                         name="description"
-                        layout={{ width: 130, height: 71, flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 71, flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionDescription ?? t('useproduct.widget.text.revive_monsterplant')}
@@ -53,7 +53,7 @@ export const UseProductControllerReviveMonsterplantLayoutPreviewListItem = ({ ca
                 {(visibleSeparator2 ?? true) && (
                     <Region
                         name="separator"
-                        layout={{ width: 130, height: 10, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
+                        layout={{ alignSelf: 'stretch', height: 10, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
                     >
                         {separator2}
                     </Region>
@@ -61,7 +61,7 @@ export const UseProductControllerReviveMonsterplantLayoutPreviewListItem = ({ ca
                 {(visibleInfo ?? true) && (
                     <Region
                         name="info"
-                        layout={{ width: 130, height: 30, flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionInfo ?? t('useproduct.widget.info.revive_monsterplant')}

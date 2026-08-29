@@ -32,7 +32,7 @@ export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus,
     return (
         <Region
             name="meter_container"
-            layout={{ position: 'absolute', left: 290, width: 226, top: 0, height: 200, ...layout }}
+            layout={{ position: 'absolute', right: 0, width: 226, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="community_total_status"
@@ -46,7 +46,7 @@ export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus,
             <ThemeImage
                 name="meter_level_0"
                 src={srcMeterLevel0 ?? '${image.library.url}reception/meter_level_0.png'}
-                layout={{ position: 'absolute', left: 20, width: 183, top: 0, height: 144 }}
+                layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 183, top: 0, height: 144 }}
             />
             <ThemeImage
                 name="meter_level_1"
@@ -70,20 +70,20 @@ export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus,
             <ThemeImage
                 name="meter_level_2"
                 src={srcMeterLevel2 ?? '${image.library.url}reception/meter_level_2.png'}
-                layout={{ position: 'absolute', left: 50, width: 133, top: 10, height: 78 }}
+                layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 133, top: 10, height: 78 }}
             />
             {(visibleMeterLevel2Icon ?? false) && (
                 <ThemeImage
                     name="meter_level_2_icon"
                     src={srcMeterLevel2Icon}
-                    layout={{ position: 'absolute', left: 50, width: 133, top: 10, height: 78 }}
+                    layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 133, top: 10, height: 78 }}
                 />
             )}
             {(visibleMeterLevel2IconLocked ?? false) && (
                 <ThemeImage
                     name="meter_level_2_icon_locked"
                     src={srcMeterLevel2IconLocked}
-                    layout={{ position: 'absolute', left: 50, width: 133, top: 10, height: 78 }}
+                    layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 133, top: 10, height: 78 }}
                 />
             )}
             <ThemeImage

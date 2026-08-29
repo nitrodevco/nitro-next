@@ -22,7 +22,7 @@ export const LogsOverviewLayoutHeader = ({ captionFilterKey, captionInfoText, ca
     return (
         <Region
             name="header"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 117, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -12, top: 0, height: 117, ...layout }}
         >
             <Border
                 variant="4"
@@ -50,7 +50,7 @@ export const LogsOverviewLayoutHeader = ({ captionFilterKey, captionInfoText, ca
                 </Region>
                 <Border
                     variant="4"
-                    layout={{ position: 'absolute', left: 45, width: 269, top: 0, height: 25 }}
+                    layout={{ position: 'absolute', left: 45, width: 269, top: 0, bottom: 0 }}
                 >
                     <TextInput
                         value={filterInputValue}
@@ -83,7 +83,7 @@ export const LogsOverviewLayoutHeader = ({ captionFilterKey, captionInfoText, ca
                     variant="3"
                     name="log_source_menu"
                     onPointerTap={onLogSourceMenu}
-                    layout={{ position: 'absolute', left: 74, width: 90, top: 0, height: 25 }}
+                    layout={{ position: 'absolute', left: 74, width: 90, top: 0, bottom: 0 }}
                 />
             </Region>
             <Region
@@ -100,7 +100,7 @@ export const LogsOverviewLayoutHeader = ({ captionFilterKey, captionInfoText, ca
                     variant="3"
                     name="log_level_menu"
                     onPointerTap={onLogLevelMenu}
-                    layout={{ position: 'absolute', left: 62, width: 90, top: 0, height: 25 }}
+                    layout={{ position: 'absolute', left: 62, width: 90, top: 0, bottom: 0 }}
                 />
             </Region>
         </Region>

@@ -26,7 +26,7 @@ export const NavigatorFrame2LayoutQuickLinkItem = ({ captionQuickLinkText, layou
             {(visibleQuickLinkText ?? true) && (
                 <Region
                     name="quick_link_text"
-                    layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 185, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionQuickLinkText ?? 'quick link ph oijasdf oaijs dfodisjf'}
                 </Region>

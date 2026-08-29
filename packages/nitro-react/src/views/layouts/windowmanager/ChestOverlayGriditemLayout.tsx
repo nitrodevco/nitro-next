@@ -15,7 +15,7 @@ export const ChestOverlayGriditemLayout = ({ layout, srcChestOverlayGlazeBitmap,
         <Region layout={{ position: 'relative', width: 36, height: 36, ...layout }}>
             <Region
                 name="chest_overlay_container_internal"
-                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="chest_plaque_bitmap"
@@ -26,7 +26,7 @@ export const ChestOverlayGriditemLayout = ({ layout, srcChestOverlayGlazeBitmap,
                     name="chest_plaque_number_bitmap"
                     src={srcChestPlaqueNumberBitmap}
                     tint={tintChestPlaqueNumberBitmap}
-                    layout={{ position: 'absolute', left: 6, width: 24, top: 28, height: 5 }}
+                    layout={{ position: 'absolute', left: 6, width: 24, bottom: 3, height: 5 }}
                 />
                 <ThemeImage
                     name="chest_overlay_glaze_bitmap"

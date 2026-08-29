@@ -27,12 +27,12 @@ export const MemenuEffectUnselectedLayoutSelectedBorder = ({ captionEffectAmount
             name="selected_border"
             onPointerTap={onSelectedBorder}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 154, top: 0, height: 52, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="2"
                 tintColor="#666666"
-                layout={{ position: 'absolute', left: 0, width: 154, top: 0, height: 48 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 4 }}
             >
                 <ThemeImage
                     name="effect_icon_bg"
@@ -55,22 +55,22 @@ export const MemenuEffectUnselectedLayoutSelectedBorder = ({ captionEffectAmount
                 <Region
                     name="loader_border"
                     backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', left: 50, width: 98, top: 20, height: 22 }}
+                    layout={{ position: 'absolute', right: 6, width: 98, bottom: 6, height: 22 }}
                 >
                     <Region
                         name="loader_bg"
                         backgroundColor="#3d3d3d"
-                        layout={{ position: 'absolute', left: 1, width: 96, top: 1, height: 20 }}
+                        layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                     >
                         <Region
                             name="loader_bar"
                             backgroundColor="#666666"
-                            layout={{ position: 'absolute', left: 1, width: 94, top: 1, height: 18 }}
+                            layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                         >
                             <Region
                                 name="loader_highlight"
                                 backgroundColor="#999999"
-                                layout={{ position: 'absolute', left: 0, width: 94, top: 0, height: 2 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 2 }}
                             >
                                 {loaderHighlight}
                             </Region>
@@ -79,7 +79,7 @@ export const MemenuEffectUnselectedLayoutSelectedBorder = ({ captionEffectAmount
                 </Region>
                 <Region
                     name="time_left"
-                    layout={{ position: 'absolute', left: 52, width: 98, top: 24, height: 13, minWidth: 98, maxWidth: 98, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', right: 4, width: 98, bottom: 11, height: 13, minWidth: 98, maxWidth: 98, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionTimeLeft ?? t('widgets.memenu.effects.active.timeleft')}
@@ -102,7 +102,7 @@ export const MemenuEffectUnselectedLayoutSelectedBorder = ({ captionEffectAmount
                 >
                     <Region
                         name="effect_amount_bg2"
-                        layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         backgroundColor="#666666"
                     >
                         <ThemeText

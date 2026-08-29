@@ -13,11 +13,11 @@ export const FurniViewBrandingElementLayout = ({ captionElementName, layout }: F
 
     return (
         <Region layout={{ position: 'relative', width: 180, height: 65, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 65 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="1"
                     name="element_border"
-                    layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 65 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="element_name"

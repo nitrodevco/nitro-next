@@ -14,7 +14,7 @@ export const HabboOrderinfoGiftUncheckedLayout = ({ layout, onBuyAsGift }: Habbo
         <Region layout={{ position: 'relative', width: 280, height: 25, ...layout }}>
             <Region
                 name="checkBoxContainer"
-                layout={{ position: 'absolute', left: 0, width: 280, top: 80, height: 25 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 80, height: 25 }}
             >
                 <CheckBox
                     variant="101"

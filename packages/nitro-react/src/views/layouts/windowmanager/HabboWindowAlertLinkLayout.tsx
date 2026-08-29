@@ -22,7 +22,7 @@ export const HabboWindowAlertLinkLayout = ({ captionAlertButtonOk, captionAlertD
             caption="Alert"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 278, height: 181, ...layout }}
+            layout={{ width: 278, height: 181, minWidth: 278, minHeight: 181, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
@@ -39,13 +39,13 @@ export const HabboWindowAlertLinkLayout = ({ captionAlertButtonOk, captionAlertD
                     variant="3"
                     name="_alert_button_link"
                     onPointerTap={onAlertButtonLink}
-                    layout={{ position: 'absolute', marginLeft: 58.5, marginRight: -58.5, width: 81, bottom: 39, height: 24, minWidth: 50 }}
+                    layout={{ position: 'absolute', marginLeft: 64.5, marginRight: -64.5, width: 81, bottom: -2, height: 24, minWidth: 50 }}
                 >
                     Open URL
                 </ButtonThick>
                 <Region
                     name="_alert_button_ok"
-                    layout={{ position: 'absolute', marginLeft: -77, marginRight: 77, width: 82, bottom: 43, height: 17, minWidth: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', marginLeft: -71, marginRight: 71, width: 82, bottom: 2, height: 17, minWidth: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     onPointerTap={onAlertButtonOk}
                     cursor="pointer"
                 >

@@ -26,7 +26,7 @@ export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ bgRegion,
                         name="bg_region"
                         onPointerTap={onBgRegion}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 222, top: 0, height: 18 }}
+                        layout={{ position: 'absolute', left: 0, width: 222, top: 0, bottom: 0 }}
                     >
                         {bgRegion}
                     </Region>
@@ -34,7 +34,7 @@ export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ bgRegion,
                 {(visibleText ?? true) && (
                     <Region
                         name="text"
-                        layout={{ position: 'absolute', left: 0, width: 222, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 222, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         {captionText ?? 'BadWord'}
                     </Region>

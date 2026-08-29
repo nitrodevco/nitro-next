@@ -52,27 +52,28 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
             caption={t('groupforum.settings.window_title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 350, height: 545, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 350, height: 545, minWidth: 350, maxWidth: 350, minHeight: 455, ...layout }}
         >
             <Region
                 name="top_part"
                 backgroundColor="#0e3f52"
                 onPointerTap={onTopPart}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: -5, right: 7, top: 8, height: 80 }}
+                layout={{ position: 'absolute', left: -5, right: -5, top: 8, height: 80 }}
             >
                 <Region
                     name="top_click_area"
                     onPointerTap={onTopClickArea}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {topClickArea}
                 </Region>
                 <Region
                     name="icon_background"
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80 }}
+                    layout={{ position: 'absolute', left: 0, width: 80, top: 0, bottom: 0 }}
                 >
                     <WidgetSlot
                         widgetType="badge_image"
@@ -107,7 +108,7 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                 name="cancel_btn"
                 tintColor="#dddddd"
                 onPointerTap={onCancelBtn}
-                layout={{ position: 'absolute', left: 25, width: 120, bottom: 37, height: 30, minWidth: 120, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 25, width: 120, bottom: -4, height: 30, minWidth: 120, justifyContent: 'center' }}
             >
                 <ThemeText
                     text={t('groupforum.settings.cancel')}
@@ -119,7 +120,7 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                 name="ok_btn"
                 tintColor="#0a9bc5"
                 onPointerTap={onOkBtn}
-                layout={{ position: 'absolute', right: 40, width: 120, bottom: 37, height: 30, minWidth: 120, justifyContent: 'center' }}
+                layout={{ position: 'absolute', right: 28, width: 120, bottom: -4, height: 30, minWidth: 120, justifyContent: 'center' }}
             >
                 <ThemeText
                     text={t('groupforum.settings.ok')}

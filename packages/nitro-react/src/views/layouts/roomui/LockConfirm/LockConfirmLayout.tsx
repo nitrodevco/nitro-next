@@ -18,7 +18,7 @@ export const LockConfirmLayout = ({ layout, onClose, topList }: LockConfirmLayou
             variant="100"
             caption={t('friend.furniture.confirm.lock.caption')}
             onClose={onClose}
-            layout={{ width: 309, height: 198, ...layout }}
+            layout={{ width: 309, height: 198, minWidth: 309, minHeight: 198, ...layout }}
         >
             <LockConfirmLayoutTopList {...topList} />
         </Frame>

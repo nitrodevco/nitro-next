@@ -27,7 +27,8 @@ export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, inputW
             name="guide_ongoing"
             caption="Helping out"
             onClose={onClose}
-            layout={{ width: 282, height: 340, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 282, height: 340, minWidth: 282, maxWidth: 282, minHeight: 320, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 10, width: 258, top: 0, height: 30, flexDirection: 'row', gap: 5 }}>
                 <Button
@@ -67,7 +68,7 @@ export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, inputW
             />
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 5, width: 270, top: 38, bottom: 118 }}
+                layout={{ position: 'absolute', left: 5, width: 270, top: 38, bottom: 77 }}
             >
                 <Region
                     name="chat_list"
@@ -81,7 +82,7 @@ export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, inputW
                     </Region>
                 </Region>
             </ScrollArea>
-            <Region layout={{ position: 'absolute', left: 0, width: 280, bottom: 44, height: 75 }}>
+            <Region layout={{ position: 'absolute', left: 0, width: 280, bottom: 3, height: 75 }}>
                 <ThemeImage
                     src={layoutImage('illumina_horizontal_separator.png')}
                     layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 2, minWidth: 280, maxWidth: 280 }}

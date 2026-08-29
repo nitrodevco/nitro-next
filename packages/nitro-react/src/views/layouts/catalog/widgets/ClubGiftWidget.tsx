@@ -26,7 +26,7 @@ export const ClubGiftWidget = ({ captionInfoText, captionPastClubDays, captionPa
         >
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 35, bottom: 16 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 35, bottom: 16 }}
             >
                 <Region
                     name="gift_list"
@@ -37,7 +37,7 @@ export const ClubGiftWidget = ({ captionInfoText, captionPastClubDays, captionPa
             </ScrollArea>
             <Region
                 name="info_text"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 35, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 35, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionInfoText ?? 'lorem ipsum'}
@@ -47,7 +47,7 @@ export const ClubGiftWidget = ({ captionInfoText, captionPastClubDays, captionPa
             </Region>
             <Region
                 name="past_club_days"
-                layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionPastClubDays ?? 'lorem ipsum'}

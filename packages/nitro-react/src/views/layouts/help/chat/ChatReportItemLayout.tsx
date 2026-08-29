@@ -11,11 +11,11 @@ export const ChatReportItemLayout = ({ captionText, layout }: ChatReportItemLayo
         <Region layout={{ position: 'relative', width: 307, height: 24, ...layout }}>
             <Border
                 variant="105"
-                layout={{ position: 'absolute', left: 0, width: 307, top: 64, height: 24 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 64, height: 24 }}
             >
                 <Region
                     name="text"
-                    layout={{ position: 'absolute', left: 0, width: 307, alignSelf: 'center', height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionText ?? 'foo faa fee'}

@@ -19,39 +19,39 @@ export const UserGuideDisconnectedLayoutErrorList = ({ itemsErrorList, layout, s
     return (
         <Region
             name="error_list"
-            layout={{ position: 'absolute', left: 10, top: 69, flexDirection: 'column', ...layout }}
+            layout={{ position: 'absolute', left: 10, right: 0, bottom: 1, flexDirection: 'column', ...layout }}
         >
             {itemsErrorList ?? (
                 <UserGuideDisconnectedLayoutResubmitButtonItem />
             )}
-            <Region layout={{ width: 260, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Region layout={{ alignSelf: 'stretch', height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('guide.help.request.user.guide.disconnected.error.heading')}
                     textStyle="text-style-il-heading-1"
                     textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
                 />
             </Region>
-            <Region layout={{ width: 260, height: 10, flexShrink: 0 }} />
-            <Region layout={{ width: 260, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Region layout={{ alignSelf: 'stretch', height: 10, flexShrink: 0 }} />
+            <Region layout={{ alignSelf: 'stretch', height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('guide.help.request.user.guide.disconnected.error.desc')}
                     textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
                 />
             </Region>
-            <Region layout={{ width: 260, height: 10, flexShrink: 0 }} />
+            <Region layout={{ alignSelf: 'stretch', height: 10, flexShrink: 0 }} />
             <WidgetSlot
                 widgetType="separator"
-                layout={{ width: 260, height: 1, flexShrink: 0 }}
+                layout={{ alignSelf: 'stretch', height: 1, flexShrink: 0 }}
             >
                 {separatorWidget}
             </WidgetSlot>
-            <Region layout={{ width: 260, height: 1, flexShrink: 0 }}>
+            <Region layout={{ alignSelf: 'stretch', height: 1, flexShrink: 0 }}>
                 <ThemeImage
                     src={layoutImage('help_error_state.png')}
                     layout={{ position: 'absolute', left: 0, width: 81, top: -6, height: 97 }}
                 />
             </Region>
-            <Region layout={{ width: 260, height: 50, flexShrink: 0 }} />
+            <Region layout={{ alignSelf: 'stretch', height: 50, flexShrink: 0 }} />
         </Region>
     );
 };

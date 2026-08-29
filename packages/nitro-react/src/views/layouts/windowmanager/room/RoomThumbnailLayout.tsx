@@ -13,7 +13,7 @@ export const RoomThumbnailLayout = ({ layout, srcRoomThumbnail }: RoomThumbnailL
             <Region
                 name="room_thumbnail_container"
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 112 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="room_thumbnail"

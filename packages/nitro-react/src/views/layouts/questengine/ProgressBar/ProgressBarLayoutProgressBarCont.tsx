@@ -19,7 +19,7 @@ export const ProgressBarLayoutProgressBarCont = ({ barABkg, captionProgressTxt, 
     return (
         <Region
             name="progress_bar_cont"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <ThemeImage
                 name="bar_l"

@@ -20,7 +20,7 @@ export const RosRoomSettingsLayoutTabContainer3 = ({ layout, normalRightsContain
                 {(visibleGuildRightsContainer ?? false) && (
                     <Region
                         name="guild_rights_container"
-                        layout={{ position: 'absolute', left: 6, right: 6, top: 0, height: 367 }}
+                        layout={{ position: 'absolute', left: 6, right: 6, top: 0, bottom: 0 }}
                     >
                         {/* `text` is hidden and has no name to show it by */}
                         {/* `text` is hidden and has no name to show it by */}

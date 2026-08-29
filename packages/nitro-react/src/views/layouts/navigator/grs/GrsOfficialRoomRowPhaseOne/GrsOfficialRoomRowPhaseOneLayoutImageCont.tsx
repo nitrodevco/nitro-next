@@ -43,7 +43,7 @@ export const GrsOfficialRoomRowPhaseOneLayoutImageCont = ({ captionPicText, layo
                 name="picTextContainer"
                 tintColor="#000000"
                 blend={0.8}
-                layout={{ position: 'absolute', left: 0, width: 267, top: 0, height: 24 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
             >
                 <Region
                     name="picText"
@@ -87,7 +87,7 @@ export const GrsOfficialRoomRowPhaseOneLayoutImageCont = ({ captionPicText, layo
             />
             <Region
                 name="enter_room"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 64, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="enter_room_l"

@@ -25,11 +25,11 @@ export const IroEventSettingsLayout = ({ buttons, captionDescLabel, captionNameL
             name="event_window"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 241, height: 191, ...layout }}
+            layout={{ width: 241, height: 191, minWidth: 241, minHeight: 191, ...layout }}
         >
             <Region
                 name="inputs_cont"
-                layout={{ position: 'absolute', left: 11, right: 12, top: 4, height: 192 }}
+                layout={{ position: 'absolute', left: 11, right: 0, top: 4, height: 192 }}
             >
                 <Region
                     name="name_label"

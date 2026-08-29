@@ -22,7 +22,7 @@ export const DailytasksLayoutExtraContItem = ({ layout, onUnclaimedBtn, visibleU
                     name="unclaimed_btn"
                     tooltip={t('dailytasks.unclaimed.tooltip')}
                     onPointerTap={onUnclaimedBtn}
-                    layout={{ position: 'absolute', right: 16, width: 133, top: 0, height: 30 }}
+                    layout={{ position: 'absolute', right: 16, width: 133, top: 0, bottom: 0 }}
                 >
                     {t('dailytasks.unclaimed')}
                 </Button>

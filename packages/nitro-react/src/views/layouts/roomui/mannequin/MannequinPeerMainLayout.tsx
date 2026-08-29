@@ -16,12 +16,12 @@ export const MannequinPeerMainLayout = ({ captionDescription, captionOutfitNameS
 
     return (
         <Region layout={{ position: 'relative', width: 386, height: 180, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 386, top: 0, height: 180 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ButtonThick
                     variant="3"
                     name="wear_button"
                     onPointerTap={onWearButton}
-                    layout={{ position: 'absolute', left: 227, width: 145, top: 141, height: 28, minWidth: 138, maxWidth: 145 }}
+                    layout={{ position: 'absolute', left: 227, width: 145, bottom: 11, height: 28, minWidth: 138, maxWidth: 145 }}
                 >
                     {t('mannequin.widget.wear')}
                 </ButtonThick>
@@ -42,7 +42,7 @@ export const MannequinPeerMainLayout = ({ captionDescription, captionOutfitNameS
                 </Region>
                 <Region
                     name="description"
-                    layout={{ position: 'absolute', left: 126, width: 242, top: 60, height: 61, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 126, width: 242, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 61, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionDescription ?? t('mannequin.widget.weartext')}

@@ -35,7 +35,7 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
     return (
         <Region
             name="main_border"
-            layout={{ position: 'absolute', left: 0, width: 288, top: 0, height: 393, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -5, ...layout }}
         >
             <Border
                 variant="105"
@@ -69,7 +69,7 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
             )}
             <Region
                 name="furni_name"
-                layout={{ position: 'absolute', left: 88, width: 190, top: 13, height: 56, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', right: 10, width: 190, top: 13, height: 56, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionFurniName ?? t('001_lorem_ipsum_title')}
@@ -80,7 +80,7 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
             {(visibleFurniDesc ?? false) && (
                 <Region
                     name="furni_desc"
-                    layout={{ position: 'absolute', left: 88, width: 190, top: 34, height: 49, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 10, width: 190, top: 34, height: 49, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionFurniDesc ?? t('002_lorem_ipsum_content')}
@@ -90,7 +90,7 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
             )}
             <Region
                 name="expiration_info"
-                layout={{ position: 'absolute', left: 10, width: 268, top: 87, height: 39, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 10, right: 10, top: 87, height: 39, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionExpirationInfo ?? t('inventory.marketplace.make_offer.expiration_info_days')}
@@ -110,12 +110,12 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
             <Border
                 variant="105"
                 name="input_border"
-                layout={{ position: 'absolute', left: 212, width: 66, top: 129, height: 26 }}
+                layout={{ position: 'absolute', right: 10, width: 66, top: 129, height: 26 }}
             >
                 <TextInput
                     value={priceInputValue}
                     onChange={setPriceInputValue}
-                    layout={{ position: 'absolute', left: 8, width: 50, top: 3, height: 19, minWidth: 50, maxWidth: 50 }}
+                    layout={{ position: 'absolute', left: 8, right: 8, top: 3, bottom: 4, minWidth: 50, maxWidth: 50 }}
                 />
             </Border>
             <Region
@@ -131,30 +131,30 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
             <Border
                 variant="105"
                 name="amount_input_border"
-                layout={{ position: 'absolute', left: 212, width: 66, top: 158, height: 26 }}
+                layout={{ position: 'absolute', right: 10, width: 66, top: 158, height: 26 }}
             >
                 <TextInput
                     value={amountInputValue}
                     onChange={setAmountInputValue}
-                    layout={{ position: 'absolute', left: 8, width: 50, top: 3, height: 19, minWidth: 50, maxWidth: 50 }}
+                    layout={{ position: 'absolute', left: 8, right: 8, top: 3, bottom: 4, minWidth: 50, maxWidth: 50 }}
                 />
             </Border>
-            <Region layout={{ position: 'absolute', left: 10, width: 268, top: 190, height: 197, flexDirection: 'column', gap: 7 }}>
+            <Region layout={{ position: 'absolute', left: 10, right: 10, bottom: 6, height: 197, flexDirection: 'column', gap: 7 }}>
                 <Region
                     name="average_price"
-                    layout={{ width: 268, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ alignSelf: 'stretch', height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionAveragePrice ?? t('inventory.marketplace.make_offer.average_price')}
                 </Region>
                 <Region
                     name="lowest_price"
-                    layout={{ width: 268, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ alignSelf: 'stretch', height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionLowestPrice ?? t('inventory.marketplace.make_offer.lowest_price')}
                 </Region>
                 <Region
                     name="suggested_price"
-                    layout={{ width: 268, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ alignSelf: 'stretch', height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionSuggestedPrice ?? t('inventory.marketplace.make_offer.suggested_price')}
                 </Region>
@@ -170,11 +170,11 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
                 <Border
                     variant="105"
                     name="final_price_border"
-                    layout={{ width: 268, height: 54, flexShrink: 0 }}
+                    layout={{ alignSelf: 'stretch', height: 54, flexShrink: 0 }}
                 >
                     <Region
                         name="final_price"
-                        layout={{ position: 'absolute', left: 6, width: 257, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 30, maxWidth: 257, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 6, right: 5, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 30, maxWidth: 257, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionFinalPrice ?? t('inventory.marketplace.make_offer.final_price')}
@@ -184,14 +184,14 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
                 </Border>
                 <Region
                     name="buttons"
-                    layout={{ width: 270, height: 30, flexShrink: 0 }}
+                    layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0 }}
                 >
                     <Button
                         variant="3"
                         name="cancel_make_offer_button"
                         onPointerTap={onCancelMakeOfferButton}
                         textStyle="text-style-button-shiny-regular"
-                        layout={{ position: 'absolute', right: 2, width: 130, top: 0, height: 28, maxWidth: 130 }}
+                        layout={{ position: 'absolute', right: 2, width: 130, top: 0, bottom: 2, maxWidth: 130 }}
                     >
                         {t('inventory.marketplace.make_offer.cancel')}
                     </Button>
@@ -200,7 +200,7 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
                         name="make_offer_button"
                         onPointerTap={onMakeOfferButton}
                         textStyle="text-style-button-shiny-regular"
-                        layout={{ position: 'absolute', left: 0, width: 130, top: 0, height: 28, maxWidth: 130 }}
+                        layout={{ position: 'absolute', left: 0, width: 130, top: 0, bottom: 2, maxWidth: 130 }}
                     >
                         {t('inventory.marketplace.make_offer.post')}
                     </Button>

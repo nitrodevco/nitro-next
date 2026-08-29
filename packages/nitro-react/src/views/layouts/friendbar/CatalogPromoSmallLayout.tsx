@@ -17,12 +17,12 @@ export const CatalogPromoSmallLayout = ({ captionCatalogPromoCaption, captionCat
         <Region layout={{ position: 'relative', width: 250, height: 192, ...layout }}>
             <Region
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 192, maxWidth: 250 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 250 }}
             >
-                <Region layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 192, flexDirection: 'column' }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}>
                     <Region
                         name="catalog_promo_caption"
-                        layout={{ width: 284, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCatalogPromoCaption ?? t('landing.view.catalogpromo.caption')}
@@ -31,7 +31,7 @@ export const CatalogPromoSmallLayout = ({ captionCatalogPromoCaption, captionCat
                     </Region>
                     <Region
                         backgroundColor="#000000"
-                        layout={{ width: 250, height: 120, flexShrink: 0 }}
+                        layout={{ alignSelf: 'stretch', height: 120, flexShrink: 0 }}
                     >
                         <ThemeImage
                             name="picture"
@@ -40,7 +40,7 @@ export const CatalogPromoSmallLayout = ({ captionCatalogPromoCaption, captionCat
                         />
                         <Region
                             name="catalog_promo_info"
-                            layout={{ position: 'absolute', left: 126, width: 124, top: 0, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', right: 0, width: 124, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionCatalogPromoInfo ?? t('landing.view.catalogpromo.info')}

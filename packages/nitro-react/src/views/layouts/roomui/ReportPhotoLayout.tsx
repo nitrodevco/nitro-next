@@ -20,7 +20,7 @@ export const ReportPhotoLayout = ({ inputWidget, layout, onClose, onReportConfir
         <Frame
             variant="101"
             onClose={onClose}
-            layout={{ width: 395, height: 666, ...layout }}
+            layout={{ width: 395, height: 666, minWidth: 50, minHeight: 50, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 10, width: 165, top: -2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
@@ -28,7 +28,7 @@ export const ReportPhotoLayout = ({ inputWidget, layout, onClose, onReportConfir
                     textStyle="text-style-il-border"
                 />
             </Region>
-            <Region layout={{ position: 'absolute', left: 9, width: 371, top: 19, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', left: 9, right: 3, top: 19, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('help.report.selfie.body')}
                     textStyle="text-style-il-border"
@@ -53,7 +53,7 @@ export const ReportPhotoLayout = ({ inputWidget, layout, onClose, onReportConfir
                 variant="100"
                 name="report_confirm"
                 onPointerTap={onReportConfirm}
-                layout={{ position: 'absolute', right: 18, width: 173, top: 538, height: 48, minWidth: 0, maxWidth: 196, minHeight: 48, maxHeight: 48 }}
+                layout={{ position: 'absolute', right: 6, width: 173, top: 538, height: 48, minWidth: 0, maxWidth: 196, minHeight: 48, maxHeight: 48 }}
             >
                 {t('help.report.selfie.button')}
             </Button>

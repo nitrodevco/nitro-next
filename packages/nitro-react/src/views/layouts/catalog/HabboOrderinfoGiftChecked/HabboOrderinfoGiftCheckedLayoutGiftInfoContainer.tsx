@@ -17,7 +17,7 @@ export const HabboOrderinfoGiftCheckedLayoutGiftInfoContainer = ({ layout, onBuy
     return (
         <Region
             name="giftInfoContainer"
-            layout={{ position: 'absolute', left: 0, width: 282, top: 105, height: 127, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 105, height: 127, ...layout }}
         >
             <CheckBox
                 variant="3"
@@ -38,20 +38,20 @@ export const HabboOrderinfoGiftCheckedLayoutGiftInfoContainer = ({ layout, onBuy
                 <TextInput
                     value={receiverValue}
                     onChange={setReceiverValue}
-                    layout={{ position: 'absolute', left: 5, width: 200, top: 5, height: 12 }}
+                    layout={{ position: 'absolute', left: 5, width: 200, top: 5, bottom: 3 }}
                 />
             </Border>
             <Border
                 variant="0"
-                layout={{ position: 'absolute', left: 25, width: 220, top: 72, height: 50 }}
+                layout={{ position: 'absolute', left: 25, width: 220, bottom: 5, height: 50 }}
             >
                 <TextInput
                     value={messageValue}
                     onChange={setMessageValue}
-                    layout={{ position: 'absolute', left: 5, width: 200, top: 5, height: 40 }}
+                    layout={{ position: 'absolute', left: 5, width: 200, top: 5, bottom: 5 }}
                 />
             </Border>
-            <Region layout={{ position: 'absolute', left: 25, width: 213, top: 47, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', left: 25, width: 213, alignSelf: 'center', marginTop: -3.5, marginBottom: 3.5, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('catalog.purchase.confirmation.dialog.buyasgift.greetings.info')}
                     textStyle="text-style-u-small"

@@ -32,7 +32,7 @@ export const RecyclerPrizesWidget2 = ({ captionCtlgDescription, captionCtlgProdu
         >
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 237, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 237, bottom: 0 }}
             >
                 <Region
                     name="itemList"
@@ -43,12 +43,12 @@ export const RecyclerPrizesWidget2 = ({ captionCtlgDescription, captionCtlgProdu
             </ScrollArea>
             <Region
                 name="productView"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 240 }}
             >
                 <WidgetSlot
                     widgetType="product_image"
                     name="product_viewer"
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {productViewer}
                 </WidgetSlot>

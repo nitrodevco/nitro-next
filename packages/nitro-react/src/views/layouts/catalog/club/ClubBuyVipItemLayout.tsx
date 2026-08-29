@@ -17,17 +17,17 @@ export const ClubBuyVipItemLayout = ({ captionItemHeader, captionItemPrice, layo
             <Border
                 variant="2"
                 tintColor="#969696"
-                layout={{ position: 'absolute', left: 0, width: 151, top: 0, height: 67 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="2"
                     tintColor="#dfdfdf"
-                    layout={{ position: 'absolute', left: 1, width: 149, top: 1, height: 65 }}
+                    layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                 />
                 <Border
                     variant="2"
                     tintColor="#969696"
-                    layout={{ position: 'absolute', left: 5, width: 141, top: 5, height: 25 }}
+                    layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 25 }}
                 >
                     <Icon
                         variant="12"
@@ -35,7 +35,7 @@ export const ClubBuyVipItemLayout = ({ captionItemHeader, captionItemPrice, layo
                     />
                     <Region
                         name="item_header"
-                        layout={{ position: 'absolute', left: 46, width: 90, top: 5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', right: 5, width: 90, top: 5, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionItemHeader ?? 'catalog.club.item.header'}
@@ -45,7 +45,7 @@ export const ClubBuyVipItemLayout = ({ captionItemHeader, captionItemPrice, layo
                 </Border>
                 <Region
                     name="item_price"
-                    layout={{ position: 'absolute', left: 9, width: 101, top: 44, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 9, width: 101, bottom: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionItemPrice ?? 'catalog.club.price'}
                 </Region>
@@ -53,7 +53,7 @@ export const ClubBuyVipItemLayout = ({ captionItemHeader, captionItemPrice, layo
                     variant="3"
                     name="item_buy"
                     onPointerTap={onItemBuy}
-                    layout={{ position: 'absolute', right: 8, width: 151, top: 38, height: 22, minWidth: 40 }}
+                    layout={{ position: 'absolute', right: 8, width: 151, bottom: 7, height: 22, minWidth: 40 }}
                 >
                     {t('catalog.club.button.buy')}
                 </Button>

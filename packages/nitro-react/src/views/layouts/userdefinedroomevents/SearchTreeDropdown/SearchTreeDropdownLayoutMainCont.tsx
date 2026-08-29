@@ -33,7 +33,7 @@ export const SearchTreeDropdownLayoutMainCont = ({ itemsMainCont, layout, onCanc
             <Region layout={{ width: 196, height: 20, flexShrink: 0 }}>
                 <Region
                     name="search_wrapper_expanded"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {searchWrapperExpanded}
                 </Region>

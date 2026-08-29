@@ -21,7 +21,7 @@ export const DailytasksLayout = ({ layout, mainCont, onClose }: DailytasksLayout
             caption={t('dailytasks.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 428, height: 553, ...layout }}
+            layout={{ width: 428, height: 553, minWidth: 428, maxWidth: 452, minHeight: 553, ...layout }}
         >
             <DailytasksLayoutMainCont {...mainCont} />
         </Frame>

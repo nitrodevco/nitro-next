@@ -19,9 +19,9 @@ export const Doorbell_889Layout = ({ itemsUserList, layout, onClose }: Doorbell_
             caption={t('widgets.doorbell.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 249, height: 165, ...layout }}
+            layout={{ width: 249, height: 165, minWidth: 249, minHeight: 165, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 10, right: 24, top: 13, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', left: 10, right: 12, top: 13, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('widgets.doorbell.info')}
                     textOptions={{ wordWrap: true, wordWrapWidth: 215 }}
@@ -34,7 +34,7 @@ export const Doorbell_889Layout = ({ itemsUserList, layout, onClose }: Doorbell_
             >
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 82 }}
+                    layout={{ position: 'absolute', left: 0, width: 200, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="user_list"

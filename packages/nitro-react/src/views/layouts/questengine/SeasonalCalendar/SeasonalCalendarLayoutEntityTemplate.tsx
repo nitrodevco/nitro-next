@@ -66,7 +66,7 @@ export const SeasonalCalendarLayoutEntityTemplate = ({ captionEntityIndicatorTex
                 name="entity_mouse_region"
                 onPointerTap={onEntityMouseRegion}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 79, top: 0, height: 313 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 313 }}
             >
                 {entityMouseRegion}
             </Region>

@@ -14,15 +14,15 @@ export const LayoutRecycler_1712Layout = ({ layout, recyclerWidget, srcCtlgTease
             <Region
                 name="ctlg_recycler"
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="ctlg_teaserimg_1"
                     src={srcCtlgTeaserimg1 ?? '${image.library.url}catalogue/ctlg_furnimatic_image.gif'}
-                    layout={{ position: 'absolute', left: 172, width: 183, top: 170, height: 235 }}
+                    layout={{ position: 'absolute', right: 5, width: 183, top: 170, height: 235 }}
                 />
                 <RecyclerWidget
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 215, height: 245 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 245 }}
                     {...recyclerWidget}
                 />
             </Region>

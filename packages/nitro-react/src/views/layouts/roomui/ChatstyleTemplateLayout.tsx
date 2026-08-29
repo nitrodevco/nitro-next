@@ -15,12 +15,12 @@ export const ChatstyleTemplateLayout = ({ layout, onChatstyleRegion, srcBubblePr
                 name="chatstyle_region"
                 onPointerTap={onChatstyleRegion}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 34 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="2"
                     name="background_color"
-                    layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 34 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <ThemeImage
                     name="bubble_preview"

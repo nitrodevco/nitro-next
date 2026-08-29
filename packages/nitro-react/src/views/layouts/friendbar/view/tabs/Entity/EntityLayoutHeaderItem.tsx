@@ -38,7 +38,7 @@ export const EntityLayoutHeaderItem = ({ captionName, layout, onHeader, onRegion
                     name="region_profile"
                     onPointerTap={onRegionProfile}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, right: 86, top: 0, height: 24 }}
+                    layout={{ position: 'absolute', left: 0, right: 86, top: 0, bottom: 0 }}
                 >
                     <Region layout={{ position: 'absolute', left: -11, width: 50, top: -25, height: 70, justifyContent: 'center' }}>
                         {(visibleCanvas ?? true) && (

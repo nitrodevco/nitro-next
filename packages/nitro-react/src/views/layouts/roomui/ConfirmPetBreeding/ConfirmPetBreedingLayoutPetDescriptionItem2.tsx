@@ -13,7 +13,7 @@ export const ConfirmPetBreedingLayoutPetDescriptionItem2 = ({ captionPetDescript
     return (
         <Region
             name="pet_description"
-            layout={{ width: 140, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
+            layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
             <ThemeText
                 text={captionPetDescription ?? t('breedpets.widget.pet2.description')}

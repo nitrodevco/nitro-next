@@ -28,11 +28,11 @@ export const PurseLayout = ({ captionDays, captionEarnings, captionJoin, layout,
 
     return (
         <Region layout={{ position: 'relative', width: 230, height: 77, ...layout }}>
-            <Region layout={{ position: 'absolute', left: -38, width: 230, top: 0, height: 77 }}>
+            <Region layout={{ position: 'absolute', left: -38, width: 230, top: 0, bottom: 0 }}>
                 <Border
                     variant="9"
                     tintColor="#686661"
-                    layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 76 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 76 }}
                 />
                 {/* `border` is hidden and has no name to show it by */}
                 <PurseLayoutPurseItemlist {...purseItemlist} />

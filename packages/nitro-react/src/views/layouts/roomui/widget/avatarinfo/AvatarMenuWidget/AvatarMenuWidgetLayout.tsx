@@ -14,7 +14,7 @@ export const AvatarMenuWidgetLayout = ({ border, layout }: AvatarMenuWidgetLayou
             <Bubble
                 variant="0"
                 tintColor="#6e6b67"
-                layout={{ position: 'absolute', left: 0, width: 151, bottom: 530, height: 1462 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 530, height: 1462 }}
             >
                 <AvatarMenuWidgetLayoutBorder {...border} />
             </Bubble>

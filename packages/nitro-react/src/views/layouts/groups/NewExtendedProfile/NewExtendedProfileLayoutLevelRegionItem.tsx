@@ -26,7 +26,7 @@ export const NewExtendedProfileLayoutLevelRegionItem = ({ captionLevelLabel, cap
             cursor="pointer"
             layout={{ width: 167, height: 30, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
-            <Region layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 123, top: 0, height: 30, flexDirection: 'row', gap: 6 }}>
+            <Region layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 123, top: 0, bottom: 0, flexDirection: 'row', gap: 6 }}>
                 <ThemeImage
                     src={layoutImage('extended_profile_icon_level.png')}
                     layout={{ width: 29, height: 28, flexShrink: 0 }}

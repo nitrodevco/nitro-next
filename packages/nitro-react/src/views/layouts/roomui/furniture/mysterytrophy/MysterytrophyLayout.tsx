@@ -29,12 +29,12 @@ export const MysterytrophyLayout = ({ captionCancel, captionMysterytrophyHeaderD
             caption={t('mysterytrophy.name.title')}
             tintColor="#67a3bf"
             onClose={onClose}
-            layout={{ width: 475, height: 270, ...layout }}
+            layout={{ width: 475, height: 270, minWidth: 475, minHeight: 270, ...layout }}
         >
             <Region
                 name="mysterytrophy.header.background.border"
                 backgroundColor="#376275"
-                layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 100 }}
+                layout={{ position: 'absolute', left: 1, right: -11, top: 0, height: 100 }}
             >
                 <Region
                     name="mysterytrophy.header.background.body"

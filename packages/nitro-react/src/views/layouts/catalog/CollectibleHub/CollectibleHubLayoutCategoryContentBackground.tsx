@@ -13,7 +13,7 @@ export const CollectibleHubLayoutCategoryContentBackground = ({ categoryCollecto
         <Region
             name="category_content_background"
             backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400, overflow: 'hidden', ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 400, overflow: 'hidden', ...layout }}
         >
             <CollectibleHubLayoutCategoryCollectorHeaderRegion {...categoryCollectorHeaderRegion} />
         </Region>

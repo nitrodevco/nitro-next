@@ -10,7 +10,7 @@ export const RoomUsercountLayoutRoomUsercountItem = ({ captionRoomUsercount, lay
     return (
         <Region
             name="room_usercount"
-            layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 17, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionRoomUsercount ?? '99'}

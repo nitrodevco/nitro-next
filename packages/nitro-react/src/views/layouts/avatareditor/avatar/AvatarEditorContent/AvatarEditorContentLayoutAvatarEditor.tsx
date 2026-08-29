@@ -30,7 +30,7 @@ export const AvatarEditorContentLayoutAvatarEditor = ({ avatarWidget, captionAva
     return (
         <Region
             name="avatarEditor"
-            layout={{ position: 'absolute', left: 1, width: 489, top: 70, height: 414, justifyContent: 'center', ...layout }}
+            layout={{ position: 'absolute', left: 1, right: 0, bottom: 6, height: 414, justifyContent: 'center', ...layout }}
         >
             <AvatarEditorContentLayoutTabbedView {...tabbedView} />
             <WidgetSlot
@@ -52,11 +52,11 @@ export const AvatarEditorContentLayoutAvatarEditor = ({ avatarWidget, captionAva
             </ButtonThick>
             <Region
                 name="effectParamsContainer"
-                layout={{ position: 'absolute', left: 11, width: 468, top: 46, height: 352 }}
+                layout={{ position: 'absolute', left: 11, right: 10, top: 46, height: 352 }}
             >
                 <Region
                     name="effect_name"
-                    layout={{ position: 'absolute', left: 339, width: 120, top: 284, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', right: 9, width: 120, top: 284, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionEffectName ?? 'xxx'}
@@ -66,7 +66,7 @@ export const AvatarEditorContentLayoutAvatarEditor = ({ avatarWidget, captionAva
                 </Region>
                 <Region
                     name="time_left_bg"
-                    layout={{ position: 'absolute', left: 345, width: 120, top: 301, height: 18 }}
+                    layout={{ position: 'absolute', right: 3, width: 120, top: 301, height: 18 }}
                 >
                     <ThemeImage
                         name="progress_bar_bitmap"
@@ -76,7 +76,7 @@ export const AvatarEditorContentLayoutAvatarEditor = ({ avatarWidget, captionAva
                     />
                     <Region
                         name="effect_time_left"
-                        layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionEffectTimeLeft ?? '00:00 left'}
@@ -86,7 +86,7 @@ export const AvatarEditorContentLayoutAvatarEditor = ({ avatarWidget, captionAva
                 </Region>
                 <Region
                     name="save_to_activate"
-                    layout={{ position: 'absolute', left: 9, width: 300, top: 327, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 9, width: 300, bottom: 8, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionSaveToActivate ?? t('avatareditor.save.to.activate')}
@@ -108,18 +108,18 @@ export const AvatarEditorContentLayoutAvatarEditor = ({ avatarWidget, captionAva
                 <Region
                     name="collectible_avatar_info"
                     backgroundColor="#454545"
-                    layout={{ position: 'absolute', left: 356, width: 122, top: 345, height: 20 }}
+                    layout={{ position: 'absolute', right: 11, width: 122, top: 345, height: 20 }}
                 >
                     <Region
                         name="collectible_avatar_info_background"
                         backgroundColor="#454545"
-                        layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 20 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         {collectibleAvatarInfoBackground}
                     </Region>
                     <Region
                         name="avatar_info_text"
-                        layout={{ position: 'absolute', left: 0, width: 122, top: 3, height: 20, minHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 3, bottom: -3, minHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionAvatarInfoText ?? 'Habbo Avatar'}

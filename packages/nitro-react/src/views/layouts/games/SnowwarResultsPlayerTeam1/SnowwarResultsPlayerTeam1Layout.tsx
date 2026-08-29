@@ -31,7 +31,7 @@ export const SnowwarResultsPlayerTeam1Layout = ({ captionPlayerScore, captionPla
 
     return (
         <Region layout={{ position: 'relative', width: 289, height: 62, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 289, top: 0, height: 62, flexDirection: 'row' }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row' }}>
                 <Region
                     name="playerImageContainer"
                     layout={{ width: 64, height: 62, flexShrink: 0 }}
@@ -54,7 +54,7 @@ export const SnowwarResultsPlayerTeam1Layout = ({ captionPlayerScore, captionPla
                             tooltip={t('snowwar.add_friend.tooltip')}
                             onPointerTap={onAddFriend}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 62 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         >
                             <ThemeImage
                                 src={layoutImage('add_friend_icon_blue.png')}

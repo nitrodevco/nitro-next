@@ -21,12 +21,12 @@ export const NuxGiftSelectionLayout = ({ captionNuxGiftSelectionChooseOne, layou
             caption={t('nux.gift.selection.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 487, height: 287, ...layout }}
+            layout={{ width: 487, height: 287, minWidth: 487, minHeight: 287, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     backgroundColor="#3d6373"
-                    layout={{ position: 'absolute', left: -5, right: 7, top: 8, bottom: 219 }}
+                    layout={{ position: 'absolute', left: -5, right: -5, top: 8, bottom: 178 }}
                 >
                     <Region
                         backgroundColor="#0f4052"

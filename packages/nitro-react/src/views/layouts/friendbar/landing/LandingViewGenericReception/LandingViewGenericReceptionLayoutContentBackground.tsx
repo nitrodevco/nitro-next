@@ -24,7 +24,7 @@ export const LandingViewGenericReceptionLayoutContentBackground = ({ captionDail
         <Region
             name="content_background"
             backgroundColor="#aae0f0"
-            layout={{ position: 'absolute', left: 0, width: 1172, top: 0, height: 822, minWidth: 950, maxWidth: 1172, minHeight: 600, maxHeight: 822, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 950, maxWidth: 1172, minHeight: 600, maxHeight: 822, ...layout }}
         >
             <ThemeImage
                 name="background_back"

@@ -17,7 +17,7 @@ export const BreedPetsResultLayoutPickButton2Item = ({ layout, onPickButton2, vi
                 variant="3"
                 name="pick_button2"
                 onPointerTap={onPickButton2}
-                layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
+                layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
             >
                 {t('breedpetsresult.widget.seed2.pick')}
             </Button>

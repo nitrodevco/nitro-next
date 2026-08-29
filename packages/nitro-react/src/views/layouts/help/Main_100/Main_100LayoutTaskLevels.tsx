@@ -32,7 +32,7 @@ export const Main_100LayoutTaskLevels = ({ layout, levels, spacer }: Main_100Lay
                 backgroundColor="#f0f0f0"
                 layout={{ position: 'absolute', left: 37, width: 53, top: 7, height: 18 }}
             >
-                <Region layout={{ position: 'absolute', left: 3, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', left: 3, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('reward_track.levels.title')}
                         textOptions={{ fill: '#124b8b' }}

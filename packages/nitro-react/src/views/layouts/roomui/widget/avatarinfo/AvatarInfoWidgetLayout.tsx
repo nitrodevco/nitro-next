@@ -22,7 +22,7 @@ export const AvatarInfoWidgetLayout = ({ captionName, layout, onChangeNameContai
                     variant="5"
                     name="border"
                     tintColor="#3d3d3d"
-                    layout={{ position: 'absolute', left: 0, width: 129, top: 0, height: 39, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="relationship_status"
@@ -45,7 +45,7 @@ export const AvatarInfoWidgetLayout = ({ captionName, layout, onChangeNameContai
                         cursor="pointer"
                         layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 123, top: 19, height: 18 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 20, width: 106, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <Region layout={{ position: 'absolute', left: 20, width: 106, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <ThemeText
                                 text={t('widget.avatar.change_name')}
                                 textStyle="text-style-u-italic"

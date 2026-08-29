@@ -10,7 +10,7 @@ export interface NotificationFriendonlineLayoutProps {
 export const NotificationFriendonlineLayout = ({ layout, onSlideNotificationAway }: NotificationFriendonlineLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 86, height: 58, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 86, top: 0, height: 58, minHeight: 58, maxHeight: 58 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minHeight: 58, maxHeight: 58 }}>
                 <Region
                     name="content"
                     layout={{ position: 'absolute', left: 0, width: 43, top: 12, height: 34 }}

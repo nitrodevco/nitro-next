@@ -16,7 +16,7 @@ export const NotificationTreasurehuntLayout = ({ captionDescription, layout }: N
             <Border
                 variant="2"
                 tintColor="#664e16"
-                layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 87 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="header"
@@ -25,7 +25,7 @@ export const NotificationTreasurehuntLayout = ({ captionDescription, layout }: N
                     <Border
                         variant="2"
                         tintColor="#382b0c"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                     <Region
                         backgroundColor="#382b0c"

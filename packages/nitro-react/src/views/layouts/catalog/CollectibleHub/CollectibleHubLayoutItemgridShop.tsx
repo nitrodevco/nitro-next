@@ -14,7 +14,7 @@ export const CollectibleHubLayoutItemgridShop = ({ itemsItemgridShop, layout }: 
     return (
         <ScrollArea
             orientation="vertical"
-            layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 153, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="itemgrid_shop"

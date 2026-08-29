@@ -15,11 +15,11 @@ export const ElementTimerLayout = ({ captionTimerCaptionTxt, colorableTextColor,
         <Region layout={{ position: 'relative', width: 149, height: 56, ...layout }}>
             <Region
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 149, top: 0, height: 56 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Region
                     name="timer_caption_txt"
-                    layout={{ position: 'absolute', left: 0, width: 146, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 3, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionTimerCaptionTxt ?? 'Timer caption ph'}
@@ -31,7 +31,7 @@ export const ElementTimerLayout = ({ captionTimerCaptionTxt, colorableTextColor,
                     widgetType="countdown"
                     name="countdown_widget"
                     options={{ 'countdown:running': 'true' }}
-                    layout={{ position: 'absolute', left: 25, width: 99, top: 19, height: 37 }}
+                    layout={{ position: 'absolute', width: 99, bottom: 0, height: 37 }}
                 >
                     {countdownWidget}
                 </WidgetSlot>

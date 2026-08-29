@@ -13,11 +13,11 @@ export const UnseenItemCounterLayout = ({ captionCount, layout }: UnseenItemCoun
                 variant="7"
                 name="unseen_item_container"
                 tintColor="#ee2924"
-                layout={{ position: 'absolute', right: -3, width: 29, top: 0, height: 18 }}
+                layout={{ position: 'absolute', right: -3, width: 29, top: 0, bottom: 0 }}
             >
                 <Region
                     name="count"
-                    layout={{ position: 'absolute', left: 4, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 4, top: 0, bottom: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionCount ?? '999'}

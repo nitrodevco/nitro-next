@@ -15,7 +15,7 @@ export const ChatinputWindowLayoutMasterContainer = ({ bubblecont, chatstylesMen
     return (
         <Region
             name="master_container"
-            layout={{ position: 'absolute', left: 0, width: 1280, top: 0, height: 1024, minWidth: 90, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 90, ...layout }}
         >
             <ChatinputWindowLayoutBubblecont {...bubblecont} />
             <Region

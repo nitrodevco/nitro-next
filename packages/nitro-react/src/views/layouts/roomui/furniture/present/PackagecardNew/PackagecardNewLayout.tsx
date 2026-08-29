@@ -19,10 +19,10 @@ export const PackagecardNewLayout = ({ elementList, layout, onClose }: Packageca
             caption={t('widget.furni.present.window.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 334, height: 355, ...layout }}
+            layout={{ width: 334, height: 355, minWidth: 275, minHeight: 150, maxHeight: 360, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region layout={{ position: 'absolute', marginLeft: -4, marginRight: 4, width: 326, top: 0, bottom: 43, minWidth: 326, maxWidth: 380, maxHeight: 345 }}>
+                <Region layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 326, top: 0, bottom: 2, minWidth: 326, maxWidth: 380, maxHeight: 345 }}>
                     <PackagecardNewLayoutElementList {...elementList} />
                 </Region>
             </Region>

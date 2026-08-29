@@ -17,7 +17,7 @@ export const GamesMainLayoutQuickPlayContainer = ({ footerContainer, instruction
     return (
         <Region
             name="quick_play_container"
-            layout={{ position: 'absolute', left: 0, right: 6, top: 0, height: 485, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -6, top: 0, height: 485, ...layout }}
         >
             <GamesMainLayoutTeaserContainer {...teaserContainer} />
             {(visibleInstructionsContainer ?? false) && (

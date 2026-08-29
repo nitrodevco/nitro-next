@@ -46,11 +46,11 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, itemsHeightmapWrapp
             caption={t('floor.plan.editor.title')}
             tintColor="#ff8d00"
             onClose={onClose}
-            layout={{ width: 662, height: 600, ...layout }}
+            layout={{ width: 662, height: 600, minWidth: 662, maxWidth: 1380, minHeight: 600, maxHeight: 900, ...layout }}
         >
             <Region
                 backgroundColor="#4e4844"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50 }}
+                layout={{ position: 'absolute', left: 0, right: -12, top: 0, height: 50 }}
             >
                 <Region
                     backgroundColor="#2d2724"
@@ -73,7 +73,7 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, itemsHeightmapWrapp
                 variant="3"
                 name="heightmap_border"
                 tintColor="#bdbdb5"
-                layout={{ position: 'absolute', left: 10, right: 308, top: 57, bottom: 95 }}
+                layout={{ position: 'absolute', left: 10, right: 296, top: 57, bottom: 54 }}
             >
                 <FloorPlanEditorBcLayoutControlsContainer {...controlsContainer} />
                 <Border
@@ -127,7 +127,7 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, itemsHeightmapWrapp
                 variant="3"
                 name="preview_border"
                 tintColor="#bdbdb5"
-                layout={{ position: 'absolute', right: 7, width: 289, top: 57, bottom: 94 }}
+                layout={{ position: 'absolute', right: -5, width: 289, top: 57, bottom: 53 }}
             >
                 <FloorPlanEditorBcLayoutRoomControlsItemlist {...roomControlsItemlist} />
                 <Region
@@ -184,11 +184,11 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, itemsHeightmapWrapp
             </Border>
             <Region
                 name="main_buttons"
-                layout={{ position: 'absolute', left: 10, right: 9, bottom: 42, height: 40 }}
+                layout={{ position: 'absolute', left: 10, right: -3, bottom: 1, height: 40 }}
             >
                 <Region
                     name="left_buttons"
-                    layout={{ position: 'absolute', left: 2, width: 120, top: 0, height: 40, flexDirection: 'row', gap: 5 }}
+                    layout={{ position: 'absolute', left: 2, width: 120, top: 0, bottom: 0, flexDirection: 'row', gap: 5 }}
                 >
                     {itemsLeftButtons ?? (
                         <FloorPlanEditorBcLayoutReloadItem />
@@ -196,7 +196,7 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, itemsHeightmapWrapp
                 </Region>
                 <Region
                     name="right_buttons"
-                    layout={{ position: 'absolute', right: 2, width: 376, top: 0, height: 40, flexDirection: 'row', gap: 8 }}
+                    layout={{ position: 'absolute', right: 2, width: 376, top: 0, bottom: 0, flexDirection: 'row', gap: 8 }}
                 >
                     {itemsRightButtons ?? (
                         <>

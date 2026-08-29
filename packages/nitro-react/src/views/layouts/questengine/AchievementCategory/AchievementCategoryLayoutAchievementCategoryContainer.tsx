@@ -23,7 +23,7 @@ export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionC
     return (
         <Region
             name="achievement_category_container"
-            layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 105, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             {(visibleCategoryBgAct ?? false) && (
                 <ThemeImage
@@ -87,7 +87,7 @@ export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionC
             >
                 <Region
                     name="unseen_count"
-                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionUnseenCount ?? '0'}

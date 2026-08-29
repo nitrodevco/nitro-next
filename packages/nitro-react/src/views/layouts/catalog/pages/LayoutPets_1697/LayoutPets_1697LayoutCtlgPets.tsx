@@ -1,13 +1,13 @@
 import { BoxLayout, Region, ThemeText } from '#base/theme';
 import { NewPetsWidget, NewPetsWidgetProps } from '#base/views/layouts/catalog/widgets/NewPetsWidget';
-import { PetsWidget, PetsWidgetProps } from '#base/views/layouts/catalog/widgets/PetsWidget';
+import { PetsWidget2, PetsWidget2Props } from '#base/views/layouts/catalog/widgets/PetsWidget2';
 
 /** Named region `ctlg_pets` of LayoutPets_1697Layout - configured through the parent's `ctlgPets` prop. */
 export interface LayoutPets_1697LayoutCtlgPetsProps {
     captionCtlgPrice1?: string;
     layout?: BoxLayout;
     newPetsWidget?: NewPetsWidgetProps;
-    petsWidget?: PetsWidgetProps;
+    petsWidget?: PetsWidget2Props;
     visibleCtlgPrice1?: boolean;
 }
 
@@ -15,14 +15,14 @@ export const LayoutPets_1697LayoutCtlgPets = ({ captionCtlgPrice1, layout, newPe
     return (
         <Region
             name="ctlg_pets"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
-            <PetsWidget
-                layout={{ position: 'absolute', left: 0, width: 359, top: 75, height: 377 }}
+            <PetsWidget2
+                layout={{ position: 'absolute', left: 0, right: 1, bottom: 8, height: 377 }}
                 {...petsWidget}
             />
             <NewPetsWidget
-                layout={{ position: 'absolute', left: 0, width: 359, top: 75, height: 375 }}
+                layout={{ position: 'absolute', left: 0, right: 1, bottom: 10, height: 375 }}
                 {...newPetsWidget}
             />
             {(visibleCtlgPrice1 ?? false) && (

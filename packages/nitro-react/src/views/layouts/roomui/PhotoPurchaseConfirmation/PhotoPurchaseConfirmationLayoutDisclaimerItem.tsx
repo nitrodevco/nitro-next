@@ -21,7 +21,7 @@ export const PhotoPurchaseConfirmationLayoutDisclaimerItem = ({ captionSpendingD
             {(visibleSpendingDisclaimerText ?? true) && (
                 <Region
                     name="spending_disclaimer_text"
-                    layout={{ position: 'absolute', left: 33, width: 278, top: 0, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 33, width: 278, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionSpendingDisclaimerText ?? t('disclaimer.credit_spending')}

@@ -32,7 +32,7 @@ export const CollectibleHubLayoutCategoryCollectorHeaderRegion = ({ captionCateg
             >
                 <Region
                     name="collector_collections_header"
-                    layout={{ position: 'absolute', left: 0, width: 27, top: 0, height: 17, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 27, top: 0, bottom: 0, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionCollectorCollectionsHeader ?? t('collectibles.info.title')}
@@ -60,7 +60,7 @@ export const CollectibleHubLayoutCategoryCollectorHeaderRegion = ({ captionCateg
                 )}
                 <Region
                     name="info_desc"
-                    layout={{ position: 'absolute', left: 0, width: 480, top: 0, height: 50, maxWidth: 480, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 480, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInfoDesc ?? t('collectibles.info.description')}
@@ -88,7 +88,7 @@ export const CollectibleHubLayoutCategoryCollectorHeaderRegion = ({ captionCateg
                 )}
                 <Region
                     name="transfer_desc"
-                    layout={{ position: 'absolute', left: 0, width: 480, top: 0, height: 60, maxWidth: 480, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 480, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTransferDesc ?? t('collectibles.info.trading')}

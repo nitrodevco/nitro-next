@@ -16,7 +16,7 @@ export const RelationshipChooserLayoutItemSmileItem = ({ layout, onItemSmile, sr
             backgroundColor="#ececec"
             onPointerTap={onItemSmile}
             cursor="pointer"
-            layout={{ width: 25, height: 15, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 15, flexShrink: 0, ...layout }}
         >
             {(visibleImage ?? true) && (
                 <ThemeImage

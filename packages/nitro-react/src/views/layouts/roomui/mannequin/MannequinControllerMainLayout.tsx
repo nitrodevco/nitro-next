@@ -20,7 +20,7 @@ export const MannequinControllerMainLayout = ({ layout, onConfigureButton, onWea
 
     return (
         <Region layout={{ position: 'relative', width: 386, height: 180, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 386, top: 0, height: 180 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <TextInput
                     value={outfitNameSetValue}
                     onChange={setOutfitNameSetValue}

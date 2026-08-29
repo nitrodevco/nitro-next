@@ -16,19 +16,19 @@ export const RosBadwordLayout = ({ bgRegion, captionBadwordTxt, layout, onBgRegi
             <Region
                 name="badword_container"
                 backgroundColor="#cc0000"
-                layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 20 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="bg_region"
                     onPointerTap={onBgRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 111, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, width: 111, top: 0, bottom: 0 }}
                 >
                     {bgRegion}
                 </Region>
                 <Region
                     name="badword_txt"
-                    layout={{ position: 'absolute', left: 4, width: 200, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 4, right: -4, top: 1, bottom: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionBadwordTxt ?? 'PH Badword'}

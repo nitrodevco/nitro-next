@@ -26,7 +26,7 @@ export const DailytasksLayoutLeftCont = ({ captionTaskDescTxt, captionTaskTitleT
                 variant="4"
                 name="task_name_cont"
                 tintColor="#4bb245"
-                layout={{ position: 'absolute', left: 0, width: 274, top: 0, height: 28 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 28 }}
             >
                 <Region
                     name="task_title_txt"
@@ -43,7 +43,7 @@ export const DailytasksLayoutLeftCont = ({ captionTaskDescTxt, captionTaskTitleT
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 254, width: 14, top: 4, height: 22 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 1, width: 12, top: 0, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', left: 1, width: 12, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text="?"
                             textOptions={{ fill: '#ffffff' }}

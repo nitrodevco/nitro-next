@@ -19,7 +19,7 @@ export const ReportPhotoPosterLayoutReportingReason = ({ layout, on_130, on_131,
     return (
         <Region
             name="reporting_reason"
-            layout={{ position: 'absolute', left: 20, width: 550, top: 445, height: 136, ...layout }}
+            layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 550, top: 445, height: 136, ...layout }}
         >
             <RadioButton
                 variant="100"
@@ -49,7 +49,7 @@ export const ReportPhotoPosterLayoutReportingReason = ({ layout, on_130, on_131,
                 variant="100"
                 name="133"
                 onPointerTap={on_133}
-                layout={{ position: 'absolute', left: 0, width: 550, top: 60, height: 16, minHeight: 16, maxHeight: 16 }}
+                layout={{ position: 'absolute', left: 0, width: 550, alignSelf: 'center', height: 16, minHeight: 16, maxHeight: 16 }}
             >
                 {t('help.report.reason.133')}
             </RadioButton>
@@ -73,7 +73,7 @@ export const ReportPhotoPosterLayoutReportingReason = ({ layout, on_130, on_131,
                 variant="100"
                 name="136"
                 onPointerTap={on_136}
-                layout={{ position: 'absolute', left: 0, width: 550, top: 120, height: 16, minHeight: 16, maxHeight: 16 }}
+                layout={{ position: 'absolute', left: 0, width: 550, bottom: 0, height: 16, minHeight: 16, maxHeight: 16 }}
             >
                 {t('help.report.reason.136')}
             </RadioButton>

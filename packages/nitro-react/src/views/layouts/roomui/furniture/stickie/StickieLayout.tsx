@@ -34,7 +34,7 @@ export const StickieLayout = ({ blue, cyan, green, layout, onBlue, onCyan, onGre
 
     return (
         <Region layout={{ position: 'relative', width: 185, height: 178, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 178 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}>
                 <ThemeImage
                     name="bg"
                     src={srcBg}
@@ -97,7 +97,7 @@ export const StickieLayout = ({ blue, cyan, green, layout, onBlue, onCyan, onGre
                     backgroundColor="#ff9c9c"
                     onPointerTap={onRed}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 86, width: 9, top: 5, height: 9 }}
+                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 9, top: 5, height: 9 }}
                 >
                     {red}
                 </Region>
@@ -123,14 +123,14 @@ export const StickieLayout = ({ blue, cyan, green, layout, onBlue, onCyan, onGre
                     name="close"
                     src={srcClose}
                     tint={tintClose}
-                    layout={{ position: 'absolute', left: 168, width: 10, top: 5, height: 10 }}
+                    layout={{ position: 'absolute', right: 7, width: 10, top: 5, height: 10 }}
                 />
                 <TextInput
                     value={textValue}
                     onChange={setTextValue}
                     maxLength={500}
                     multiline
-                    layout={{ position: 'absolute', left: 5, width: 175, top: 24, height: 135 }}
+                    layout={{ position: 'absolute', left: 5, right: 5, alignSelf: 'center', marginTop: 2.5, marginBottom: -2.5, height: 135 }}
                 />
             </Region>
         </Region>

@@ -12,7 +12,7 @@ export const RoomInfoPopupBubbleLayoutMidBottom = ({ layout, midBottomItemlist }
     return (
         <Region
             name="midBottom"
-            layout={{ position: 'absolute', left: 166, width: 170, top: 0, height: 80, ...layout }}
+            layout={{ position: 'absolute', right: 8, width: 170, top: 0, bottom: 0, ...layout }}
         >
             <RoomInfoPopupBubbleLayoutMidBottomItemlist {...midBottomItemlist} />
         </Region>

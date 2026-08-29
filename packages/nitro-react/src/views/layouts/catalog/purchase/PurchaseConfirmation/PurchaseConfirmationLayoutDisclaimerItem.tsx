@@ -16,7 +16,7 @@ export const PurchaseConfirmationLayoutDisclaimerItem = ({ layout, onSpendingDis
             name="disclaimer"
             layout={{ width: 311, height: 17, flexShrink: 0, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 33, width: 278, top: 0, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', left: 33, width: 278, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('disclaimer.credit_spending')}
                     textOptions={{ wordWrap: true, wordWrapWidth: 278 }}

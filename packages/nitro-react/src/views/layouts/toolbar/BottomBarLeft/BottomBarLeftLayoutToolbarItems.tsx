@@ -40,7 +40,7 @@ export const BottomBarLeftLayoutToolbarItems = ({ context, layout, onBUILDER, on
     return (
         <Region
             name="toolbar_items"
-            layout={{ position: 'absolute', left: 19, width: 607, top: 0, height: 46, ...layout }}
+            layout={{ position: 'absolute', left: 19, width: 607, top: 0, bottom: 0, ...layout }}
         >
             {(context === undefined || [ 'room', 'gameCenter' ].includes(context)) && (
                 <Region

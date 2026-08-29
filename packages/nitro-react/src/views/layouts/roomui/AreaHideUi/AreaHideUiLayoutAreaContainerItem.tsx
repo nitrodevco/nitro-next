@@ -23,7 +23,7 @@ export const AreaHideUiLayoutAreaContainerItem = ({ captionAreaselectionInfo, ca
     return (
         <Region
             name="area_container"
-            layout={{ width: 260, height: 98, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 98, flexShrink: 0, ...layout }}
         >
             {(visibleAreaselectionTitle ?? true) && (
                 <Region
@@ -39,7 +39,7 @@ export const AreaHideUiLayoutAreaContainerItem = ({ captionAreaselectionInfo, ca
             {(visibleAreaselectionInfo ?? true) && (
                 <Region
                     name="areaselection_info"
-                    layout={{ position: 'absolute', left: 0, width: 262, top: 20, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: -2, top: 20, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionAreaselectionInfo ?? t('widget.areahide.area_selection.info')}
@@ -51,7 +51,7 @@ export const AreaHideUiLayoutAreaContainerItem = ({ captionAreaselectionInfo, ca
             {(visibleButtonContainer ?? true) && (
                 <Region
                     name="button_container"
-                    layout={{ position: 'absolute', left: 0, width: 260, top: 66, height: 25, flexDirection: 'row', gap: 12 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 7, height: 25, flexDirection: 'row', gap: 12 }}
                 >
                     {itemsButtonContainer ?? (
                         <>

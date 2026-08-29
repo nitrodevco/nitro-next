@@ -16,7 +16,7 @@ export const QuestTrackerLayoutQuestTracker = ({ contentCont, layout, onQuestTra
             name="quest_tracker"
             onPointerTap={onQuestTracker}
             cursor="pointer"
-            layout={{ position: 'absolute', right: 0, width: 192, top: 0, height: 132, ...layout }}
+            layout={{ position: 'absolute', right: 0, width: 192, top: 0, bottom: 0, ...layout }}
         >
             <ThemeImage
                 name="quest_tracker_bg"

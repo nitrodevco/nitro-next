@@ -27,14 +27,14 @@ export const TalentTrackLayoutTaskAchievedItem = ({ badge, captionDescription, c
                 <Border
                     variant="102"
                     name="border"
-                    layout={{ position: 'absolute', left: 0, width: 210, top: 20, height: 60 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 60 }}
                 >
                     {(visibleBadge ?? true) && (
                         <WidgetSlot
                             widgetType="badge_image"
                             name="badge"
                             options={{ 'badge_image:badge_id': 'ACH_RegistrationDuration3', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                            layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 60 }}
+                            layout={{ position: 'absolute', left: 0, width: 60, top: 0, bottom: 0 }}
                         >
                             {badge}
                         </WidgetSlot>

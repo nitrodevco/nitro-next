@@ -43,14 +43,14 @@ export const GroupManagementWindowLayout = ({ footerCont, headerCont, layout, on
             caption={t('group.window.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 392, height: 497, ...layout }}
+            layout={{ width: 392, height: 497, minWidth: 392, minHeight: 497, ...layout }}
         >
             <GroupManagementWindowLayoutHeaderCont {...headerCont} />
             <GroupManagementWindowLayoutStepCont1 {...stepCont1} />
             {(visibleStepCont2 ?? false) && (
                 <Region
                     name="step_cont_2"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 110, height: 305 }}
+                    layout={{ position: 'absolute', left: 0, right: -12, top: 110, height: 305 }}
                 >
                     {stepCont2}
                 </Region>

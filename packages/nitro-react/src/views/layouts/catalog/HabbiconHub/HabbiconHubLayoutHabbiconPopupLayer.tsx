@@ -12,7 +12,7 @@ export const HabbiconHubLayoutHabbiconPopupLayer = ({ habbiconItemPopup, layout 
     return (
         <Region
             name="habbicon_popup_layer"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 102, bottom: 40, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -12, top: 102, bottom: -1, ...layout }}
         >
             <HabbiconHubLayoutHabbiconItemPopup {...habbiconItemPopup} />
         </Region>

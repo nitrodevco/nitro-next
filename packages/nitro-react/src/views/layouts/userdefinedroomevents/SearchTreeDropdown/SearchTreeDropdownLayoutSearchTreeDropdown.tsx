@@ -20,7 +20,7 @@ export const SearchTreeDropdownLayoutSearchTreeDropdown = ({ captionInputPlaceho
     return (
         <Region
             name="search_tree_dropdown"
-            layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 22, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="12"
@@ -43,7 +43,7 @@ export const SearchTreeDropdownLayoutSearchTreeDropdown = ({ captionInputPlaceho
                     name="input_field_region"
                     onPointerTap={onInputFieldRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 20 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="input_placeholder_text"

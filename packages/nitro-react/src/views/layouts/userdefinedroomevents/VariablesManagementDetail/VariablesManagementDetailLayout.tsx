@@ -26,7 +26,8 @@ export const VariablesManagementDetailLayout = ({ captionInfoText, infoBox, layo
             caption={t('wiredmenu.variable_management_detail.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 339, height: 512, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 339, height: 512, minWidth: 339, maxWidth: 339, minHeight: 400, maxHeight: 650, ...layout }}
         >
             <Region
                 name="header"

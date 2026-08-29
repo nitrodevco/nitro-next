@@ -23,7 +23,7 @@ export const IroEventInfoLayoutContentCont = ({ captionCreateLink, captionDescTx
         <Region
             name="content_cont"
             backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 135, justifyContent: 'center', ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
             <Region
                 name="header_txt"

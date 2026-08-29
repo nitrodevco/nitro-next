@@ -51,7 +51,7 @@ export const MemenuMainLayoutButtons = ({ captionClothesText, captionCreditsText
             name="buttons"
             onPointerTap={onButtons}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 245, top: 0, height: 249, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="hc"

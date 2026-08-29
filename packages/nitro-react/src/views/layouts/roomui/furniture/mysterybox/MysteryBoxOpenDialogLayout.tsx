@@ -22,7 +22,7 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
             name="title_text"
             caption="Mystery Box"
             onClose={onClose}
-            layout={{ width: 361, height: 271, ...layout }}
+            layout={{ width: 361, height: 271, minWidth: 361, minHeight: 271, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <ThemeImage
@@ -50,7 +50,7 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
                 </Region>
                 <Border
                     variant="102"
-                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 310, top: 123, height: 60 }}
+                    layout={{ position: 'absolute', marginLeft: 4.5, marginRight: -4.5, width: 310, top: 123, height: 60 }}
                 >
                     <ThemeImage
                         name="needed_base"
@@ -74,7 +74,7 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
                     name="cancel_button"
                     tintColor="#bbbbbb"
                     onPointerTap={onCancelButton}
-                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 124, top: 186, height: 48 }}
+                    layout={{ position: 'absolute', marginLeft: 4.5, marginRight: -4.5, width: 124, top: 186, height: 48 }}
                 >
                     Cancel opening
                 </Button>

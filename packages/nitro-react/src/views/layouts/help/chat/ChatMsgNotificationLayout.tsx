@@ -13,7 +13,7 @@ export const ChatMsgNotificationLayout = ({ captionContent, layout }: ChatMsgNot
             <Border
                 variant="102"
                 name="chat_msg_notification"
-                layout={{ position: 'absolute', left: 0, width: 260, top: 0, height: 50 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     src={layoutImage('help_notification.png')}
@@ -21,7 +21,7 @@ export const ChatMsgNotificationLayout = ({ captionContent, layout }: ChatMsgNot
                 />
                 <Region
                     name="content"
-                    layout={{ position: 'absolute', left: 50, width: 210, top: 10, height: 14, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 0, width: 210, top: 10, height: 14, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionContent ?? ''}

@@ -25,7 +25,7 @@ export const FurniChestContentsLayoutFurniChest = ({ captionNoItemsText, caption
     return (
         <Region
             name="furni_chest"
-            layout={{ position: 'absolute', left: 0, width: 458, top: 0, height: 264, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="2"

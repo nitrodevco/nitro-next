@@ -15,7 +15,7 @@ export const UseProductControllerReviveMonsterplantLayoutPreviewImageRegionItem 
             name="preview_image_region"
             onPointerTap={onPreviewImageRegion}
             cursor="pointer"
-            layout={{ width: 122, height: 130, flexShrink: 0, minWidth: 122, maxWidth: 122, minHeight: 130, maxHeight: 130, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 130, flexShrink: 0, minWidth: 122, maxWidth: 122, minHeight: 130, maxHeight: 130, ...layout }}
         >
             {(visiblePreviewImage ?? true) && (
                 <ThemeImage

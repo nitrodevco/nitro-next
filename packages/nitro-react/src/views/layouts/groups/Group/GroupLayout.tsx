@@ -61,7 +61,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                 variant="0"
                 name="group_info"
                 tintColor="#cccccc"
-                layout={{ position: 'absolute', left: 0, width: 343, top: 0, height: 214, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Region
                     name="group_name"

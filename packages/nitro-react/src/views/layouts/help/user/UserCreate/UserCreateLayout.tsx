@@ -20,7 +20,8 @@ export const UserCreateLayout = ({ layout, list, onClose }: UserCreateLayoutProp
             name="user_create"
             caption={t('guide.help.request.user.create.title')}
             onClose={onClose}
-            layout={{ width: 282, height: 295, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 282, height: 295, minWidth: 282, maxWidth: 282, minHeight: 50, ...layout }}
         >
             <UserCreateLayoutList {...list} />
         </Frame>

@@ -15,14 +15,14 @@ export const PurchaseWidgetLayout = ({ captionPurchaseLabel, layout, onBuyButton
 
     return (
         <Region layout={{ position: 'relative', width: 360, height: 30, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 30 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="6"
                     name="selection_information"
                     blend={0.5}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 30 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 10, width: 341, top: 5, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <Region layout={{ position: 'absolute', left: 10, right: 9, top: 5, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <ThemeText
                             text={t('catalog.purchase.select.info')}
                             textStyle="text-style-u-headline-small"
@@ -33,14 +33,14 @@ export const PurchaseWidgetLayout = ({ captionPurchaseLabel, layout, onBuyButton
                 {(visibleDefaultButtons ?? false) && (
                     <Region
                         name="default_buttons"
-                        layout={{ position: 'absolute', left: 0, width: 360, top: 3, height: 25 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 3, bottom: 2 }}
                     >
                         <ContainerButton
                             variant="3"
                             name="buy_button"
                             tintColor="#00aa00"
                             onPointerTap={onBuyButton}
-                            layout={{ position: 'absolute', left: 185, width: 170, top: 0, height: 24, minWidth: 170, maxWidth: 170, minHeight: 24, maxHeight: 24, justifyContent: 'center' }}
+                            layout={{ position: 'absolute', right: 5, width: 170, top: 0, bottom: 1, minWidth: 170, maxWidth: 170, minHeight: 24, maxHeight: 24, justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionPurchaseLabel ?? t('catalog.purchase_confirmation.buy')}
@@ -51,7 +51,7 @@ export const PurchaseWidgetLayout = ({ captionPurchaseLabel, layout, onBuyButton
                             variant="3"
                             name="gift_button"
                             onPointerTap={onGiftButton}
-                            layout={{ position: 'absolute', left: 5, width: 170, top: 0, height: 24, minWidth: 170, maxWidth: 170, minHeight: 24, maxHeight: 24 }}
+                            layout={{ position: 'absolute', left: 5, width: 170, top: 0, bottom: 1, minWidth: 170, maxWidth: 170, minHeight: 24, maxHeight: 24 }}
                         >
                             {t('catalog.purchase_confirmation.gift')}
                         </Button>

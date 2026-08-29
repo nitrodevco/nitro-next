@@ -18,15 +18,15 @@ export const EffectSelectorLayout = ({ itemsEffectList, layout, onClose }: Effec
             caption="Show effect on avatar"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 280, height: 270, ...layout }}
+            layout={{ width: 280, height: 270, minWidth: 280, minHeight: 270, ...layout }}
         >
             <Region
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 4, right: 20, top: 17, bottom: 38 }}
+                layout={{ position: 'absolute', left: 4, right: 8, top: 17, bottom: -3 }}
             />
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 4, right: 20, top: 17, bottom: 38 }}
+                layout={{ position: 'absolute', left: 4, right: 8, top: 17, bottom: -3 }}
             >
                 <Region
                     name="effect_list"

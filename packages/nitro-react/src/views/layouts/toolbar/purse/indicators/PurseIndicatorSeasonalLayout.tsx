@@ -12,18 +12,18 @@ export interface PurseIndicatorSeasonalLayoutProps {
 export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, captionSeasonalName, layout, visibleChangeOverlay }: PurseIndicatorSeasonalLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 192, height: 29, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="9"
                     tintColor="#686661"
-                    layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 {/* `border` is hidden and has no name to show it by */}
                 <Border
                     variant="6"
                     name="seasonal_bg"
                     tintColor="#7adde9"
-                    layout={{ position: 'absolute', left: 163, width: 29, top: 0, height: 29 }}
+                    layout={{ position: 'absolute', left: 163, width: 29, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         src={undefined}
@@ -60,11 +60,11 @@ export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, cap
                         variant="6"
                         name="change_overlay"
                         tintColor="#bb7dc3"
-                        layout={{ position: 'absolute', left: 44, width: 33, top: 0, height: 29 }}
+                        layout={{ position: 'absolute', left: 44, width: 33, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="change"
-                            layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 29, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionChange ?? ' 50'}

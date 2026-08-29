@@ -30,7 +30,7 @@ export const Main_100LayoutTabButtonTemplateItem3 = ({ captionButtonText, layout
                     tintColor={recolorDark ?? '#3576b9'}
                     onPointerTap={onSelectedView}
                     textStyle="text-style-button-shiny-regular"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             )}
             {(visibleNotselectedShape ?? true) && (

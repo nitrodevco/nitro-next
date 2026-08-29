@@ -87,7 +87,7 @@ export const GrsOfficialRoomRowLayoutImageCont = ({ captionPicText, layout, srcE
             />
             <Region
                 name="enter_room"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 64, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="enter_room_l"

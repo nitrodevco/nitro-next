@@ -22,7 +22,7 @@ export const GamesMainLayoutFooterContainer = ({ captionGamesLobbyGetVip, captio
     return (
         <Region
             name="footer_container"
-            layout={{ position: 'absolute', left: 0, width: 407, top: 364, height: 124, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 364, height: 124, ...layout }}
         >
             <GamesMainLayoutGamesLeftRegion {...gamesLeftRegion} />
             <Region

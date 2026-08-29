@@ -13,7 +13,7 @@ export const ToolbarViewLayout = ({ layout, toolbarItems }: ToolbarViewLayoutPro
         <Region layout={{ position: 'relative', width: 87, height: 875, ...layout }}>
             <Region
                 dropShadow={{ distance: 3, alpha: 0.6 }}
-                layout={{ position: 'absolute', left: 0, width: 87, top: 0, height: 875 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="6"

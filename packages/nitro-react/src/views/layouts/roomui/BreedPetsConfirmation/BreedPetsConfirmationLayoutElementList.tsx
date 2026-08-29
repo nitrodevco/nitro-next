@@ -20,7 +20,7 @@ export const BreedPetsConfirmationLayoutElementList = ({ itemsElementList, layou
     return (
         <Region
             name="element_list"
-            layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 272, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -10, top: 0, maxWidth: 272, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsElementList ?? (
                 <>
@@ -33,7 +33,7 @@ export const BreedPetsConfirmationLayoutElementList = ({ itemsElementList, layou
                     <BreedPetsConfirmationLayoutButtonListItem />
                 </>
             )}
-            <Region layout={{ width: 272, height: 1, flexShrink: 0, minWidth: 272 }} />
+            <Region layout={{ alignSelf: 'stretch', height: 1, flexShrink: 0, minWidth: 272 }} />
         </Region>
     );
 };

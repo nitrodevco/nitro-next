@@ -13,7 +13,7 @@ export const RarityItemOverlayPreviewLayout = ({ captionLevel, layout, srcPlaque
         <Region layout={{ position: 'relative', width: 36, height: 28, ...layout }}>
             <Region
                 name="rarityItemWidget"
-                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 28 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="plaque"
@@ -22,7 +22,7 @@ export const RarityItemOverlayPreviewLayout = ({ captionLevel, layout, srcPlaque
                 />
                 <Region
                     name="level"
-                    layout={{ position: 'absolute', left: 0, width: 36, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionLevel ?? '0'}

@@ -30,7 +30,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
             caption={t('widgets.pet.commands.title')}
             tintColor="#67a3bf"
             onClose={onClose}
-            layout={{ width: 195, height: 462, ...layout }}
+            layout={{ width: 195, height: 462, minWidth: 195, minHeight: 462, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
@@ -67,7 +67,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                     name="status_skill_container"
                     onPointerTap={onStatusSkillContainer}
                     cursor="pointer"
-                    layout={{ position: 'absolute', marginLeft: -8, marginRight: 8, width: 169, bottom: 42, height: 20, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 169, bottom: 1, height: 20, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="status_skill_bitmap"

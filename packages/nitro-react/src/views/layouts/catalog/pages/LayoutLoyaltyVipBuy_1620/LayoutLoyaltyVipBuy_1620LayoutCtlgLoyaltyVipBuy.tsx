@@ -12,10 +12,10 @@ export const LayoutLoyaltyVipBuy_1620LayoutCtlgLoyaltyVipBuy = ({ layout, loyalt
         <Region
             name="ctlg_loyalty_vip_buy"
             backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <LoyaltyVipBuyWidget
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 {...loyaltyVipBuyWidget}
             />
         </Region>

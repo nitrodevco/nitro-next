@@ -18,7 +18,7 @@ export const ClubGiftNotificationLayout = ({ captionCancelLink, captionInfoText,
             <Border
                 variant="9"
                 tintColor="#686661"
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 82 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Icon
                     variant="14"
@@ -27,7 +27,7 @@ export const ClubGiftNotificationLayout = ({ captionCancelLink, captionInfoText,
                 />
                 <Region
                     name="info_text"
-                    layout={{ position: 'absolute', left: 25, width: 174, top: 7, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: -7, width: 174, top: 7, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInfoText ?? t('notifications.text.club_gift')}
@@ -38,7 +38,7 @@ export const ClubGiftNotificationLayout = ({ captionCancelLink, captionInfoText,
                     variant="4"
                     name="open_catalog_button"
                     onPointerTap={onOpenCatalogButton}
-                    layout={{ position: 'absolute', right: 8, width: 216, top: 44, height: 28 }}
+                    layout={{ position: 'absolute', right: 8, width: 216, bottom: 10, height: 28 }}
                 >
                     {t('notifications.button.show_gift_list')}
                 </Button>
@@ -50,7 +50,7 @@ export const ClubGiftNotificationLayout = ({ captionCancelLink, captionInfoText,
                 >
                     <Region
                         name="cancel_link"
-                        layout={{ position: 'absolute', left: 0, width: 147, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCancelLink ?? t('notifications.button.later')}

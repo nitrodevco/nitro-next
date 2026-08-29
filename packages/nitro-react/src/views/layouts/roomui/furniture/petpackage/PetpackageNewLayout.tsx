@@ -29,12 +29,12 @@ export const PetpackageNewLayout = ({ captionCancel, captionPetpackageHeaderDesc
             caption={t('widgets.petpackage.name.title')}
             tintColor="#67a3bf"
             onClose={onClose}
-            layout={{ width: 475, height: 250, ...layout }}
+            layout={{ width: 475, height: 250, minWidth: 475, minHeight: 250, ...layout }}
         >
             <Region
                 name="petpackage.header.background.border"
                 backgroundColor="#376275"
-                layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 100 }}
+                layout={{ position: 'absolute', left: 1, right: -11, top: 0, height: 100 }}
             >
                 <Region
                     name="petpackage.header.background.body"
@@ -91,7 +91,7 @@ export const PetpackageNewLayout = ({ captionCancel, captionPetpackageHeaderDesc
                         layout={{ position: 'absolute', left: 393, width: 17, top: 8, height: 18 }}
                     />
                 </Border>
-                <Region layout={{ position: 'absolute', left: 0, width: 475, top: 64, height: 51 }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 64, height: 51 }}>
                     <Region
                         name="cancel"
                         onPointerTap={onCancel}

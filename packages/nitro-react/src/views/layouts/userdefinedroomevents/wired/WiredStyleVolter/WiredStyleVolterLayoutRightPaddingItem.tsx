@@ -28,7 +28,7 @@ export const WiredStyleVolterLayoutRightPaddingItem = ({ border, layout, marginI
                         <Region
                             name="margin_item_color_right"
                             backgroundColor="#222222"
-                            layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 13, minWidth: 1, maxWidth: 1, minHeight: 13, maxHeight: 13 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 13, minWidth: 1, maxWidth: 1, minHeight: 13, maxHeight: 13 }}
                         >
                             {marginItemColorRight}
                         </Region>

@@ -26,12 +26,12 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionCounterInfoTxt, 
         <Region layout={{ position: 'relative', width: 500, height: 245, ...layout }}>
             <Region
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 245 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="col1"
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 245 }}
+                    layout={{ position: 'absolute', left: 0, width: 230, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="teaser_image"
@@ -63,10 +63,10 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionCounterInfoTxt, 
                         />
                     </Region>
                 </Region>
-                <Region layout={{ position: 'absolute', left: 230, width: 270, top: 0, height: 190, flexDirection: 'column' }}>
+                <Region layout={{ position: 'absolute', right: 0, width: 270, top: 0, height: 190, flexDirection: 'column' }}>
                     <Region
                         name="caption_txt"
-                        layout={{ width: 307, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionCaptionTxt ?? t('landing.view.habbowaypromo.caption')}
@@ -82,7 +82,7 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionCounterInfoTxt, 
                     </Region>
                     <Region
                         name="info_txt"
-                        layout={{ width: 270, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionInfoTxt ?? t('landing.view.habbowaypromo.info')}
@@ -99,7 +99,7 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionCounterInfoTxt, 
                     </Button>
                     <Region
                         name="ps_title_txt"
-                        layout={{ width: 270, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPsTitleTxt ?? t('landing.view.habbowaypromo.ps.title')}
@@ -109,16 +109,16 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionCounterInfoTxt, 
                     </Region>
                     <Border
                         variant="100"
-                        layout={{ width: 270, height: 79, flexShrink: 0 }}
+                        layout={{ alignSelf: 'stretch', height: 79, flexShrink: 0 }}
                     >
                         <ThemeImage
                             name="counter_bg"
                             src={srcCounterBg2 ?? '${image.library.url}album1584/ACH_HabboWayGraduate1.png'}
-                            layout={{ position: 'absolute', left: 16, width: 38, top: 17, height: 38 }}
+                            layout={{ position: 'absolute', left: 16, width: 38, alignSelf: 'center', marginTop: -3.5, marginBottom: 3.5, height: 38 }}
                         />
                         <Region
                             name="info_txt"
-                            layout={{ position: 'absolute', left: 63, width: 201, top: 15, height: 60, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', right: 6, width: 201, bottom: 4, height: 60, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionInfoTxt2 ?? t('landing.view.habbowaypromo.ps.info')}

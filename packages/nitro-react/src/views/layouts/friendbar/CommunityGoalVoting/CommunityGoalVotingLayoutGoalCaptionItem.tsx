@@ -14,7 +14,7 @@ export const CommunityGoalVotingLayoutGoalCaptionItem = ({ captionGoalCaption, c
     return (
         <Region
             name="goal_caption"
-            layout={{ width: 300, height: 24, flexShrink: 0, minWidth: 300, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
+            layout={{ alignSelf: 'stretch', height: 24, flexShrink: 0, minWidth: 300, maxWidth: 300, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionGoalCaption ?? t('landing.view.community.caption')}

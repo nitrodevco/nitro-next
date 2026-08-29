@@ -26,7 +26,7 @@ export const LayoutSingleBundle_1587LayoutCtlgSingleBundle = ({ addOnBadgeViewWi
     return (
         <Region
             name="ctlg_single_bundle"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="ctlg_description"
@@ -94,7 +94,7 @@ export const LayoutSingleBundle_1587LayoutCtlgSingleBundle = ({ addOnBadgeViewWi
                 {...simplePriceWidget}
             />
             <PurchaseWidget
-                layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 30 }}
                 {...purchaseWidget}
             />
         </Region>

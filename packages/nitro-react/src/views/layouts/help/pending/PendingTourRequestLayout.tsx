@@ -19,7 +19,7 @@ export const PendingTourRequestLayout = ({ layout, onClose, onCloseButton }: Pen
             name="pending_request"
             caption={t('guide.pending.tour.title')}
             onClose={onClose}
-            layout={{ width: 369, height: 137, ...layout }}
+            layout={{ width: 369, height: 137, minWidth: 369, minHeight: 137, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 8, top: 2, flexDirection: 'column', gap: 3 }}>
                 <Region layout={{ width: 185, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>

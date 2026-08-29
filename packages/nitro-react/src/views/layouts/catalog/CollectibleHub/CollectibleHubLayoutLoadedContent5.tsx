@@ -18,7 +18,7 @@ export const CollectibleHubLayoutLoadedContent5 = ({ itemContainer, layout, onCl
         (visibleLoadedContent ?? false) && (
             <Region
                 name="loaded_content"
-                layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
             >
                 <CollectibleHubLayoutItemContainer3 {...itemContainer} />
                 <Border

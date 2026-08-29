@@ -20,27 +20,27 @@ export const PollCancelConfirmLayout = ({ layout, onClose, onPollCancelConfirmBu
             caption={t('poll_cancel_confirm_title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 221, height: 153, ...layout }}
+            layout={{ width: 221, height: 153, minWidth: 221, minHeight: 153, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region layout={{ position: 'absolute', left: 5, right: 18, top: 13, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <Region layout={{ position: 'absolute', left: 5, right: 6, top: 13, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <ThemeText
                         text={t('poll_cancel_confirm_short')}
                         textOptions={{ align: 'center' }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 5, right: 17, top: 32, bottom: 108, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
+                <Region layout={{ position: 'absolute', left: 5, right: 5, top: 32, bottom: 67, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                     <ThemeText
                         text={t('poll_cancel_confirm_long')}
                         textOptions={{ wordWrap: true, wordWrapWidth: 199, align: 'center' }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', marginLeft: -6, marginRight: 6, width: 201, bottom: 37, height: 22 }}>
+                <Region layout={{ position: 'absolute', width: 201, bottom: -4, height: 22 }}>
                     <Button
                         variant="0"
                         name="poll_cancel_confirm_button_cancel"
                         onPointerTap={onPollCancelConfirmButtonCancel}
-                        layout={{ position: 'absolute', right: 102, width: 51, top: 0, height: 22 }}
+                        layout={{ position: 'absolute', right: 102, width: 51, top: 0, bottom: 0 }}
                     >
                         {t('cancel')}
                     </Button>
@@ -48,7 +48,7 @@ export const PollCancelConfirmLayout = ({ layout, onClose, onPollCancelConfirmBu
                         variant="0"
                         name="poll_cancel_confirm_button_ok"
                         onPointerTap={onPollCancelConfirmButtonOk}
-                        layout={{ position: 'absolute', left: 121, width: 33, top: 0, height: 22 }}
+                        layout={{ position: 'absolute', left: 121, width: 33, top: 0, bottom: 0 }}
                     >
                         {t('ok')}
                     </ButtonThick>

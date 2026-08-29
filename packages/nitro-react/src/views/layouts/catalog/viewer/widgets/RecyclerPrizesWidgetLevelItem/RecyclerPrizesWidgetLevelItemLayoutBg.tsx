@@ -12,7 +12,7 @@ export const RecyclerPrizesWidgetLevelItemLayoutBg = ({ content, layout }: Recyc
     return (
         <Region
             name="bg"
-            layout={{ position: 'absolute', left: 0, width: 348, top: 0, height: 78, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="0"

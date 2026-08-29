@@ -23,21 +23,21 @@ export const VipBuyItemLayout = ({ captionItemHeader, itemPrice, layout, onItemB
             <Border
                 variant="2"
                 tintColor="#969696"
-                layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 75, minWidth: 320, maxWidth: 320, minHeight: 75 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 320, maxWidth: 320, minHeight: 75 }}
             >
                 <Border
                     variant="2"
                     tintColor="#dfdfdf"
-                    layout={{ position: 'absolute', left: 1, width: 320, top: 1, height: 73, minWidth: 320, maxWidth: 320 }}
+                    layout={{ position: 'absolute', left: 1, right: -1, top: 1, bottom: 1, minWidth: 320, maxWidth: 320 }}
                 />
                 <Border
                     variant="2"
                     tintColor="#969696"
-                    layout={{ position: 'absolute', left: 5, width: 310, top: 5, height: 25, minWidth: 310, maxWidth: 310 }}
+                    layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 25, minWidth: 310, maxWidth: 310, justifyContent: 'center' }}
                 >
                     <Region
                         name="item_header"
-                        layout={{ position: 'absolute', left: 60, width: 187, top: 2, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 187, top: 2, bottom: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionItemHeader ?? 'catalog.club.item.header'}
@@ -54,7 +54,7 @@ export const VipBuyItemLayout = ({ captionItemHeader, itemPrice, layout, onItemB
                 </Border>
                 <Region
                     name="item_price"
-                    layout={{ position: 'absolute', left: 5, width: 112, top: 41, height: 26 }}
+                    layout={{ position: 'absolute', left: 5, width: 112, bottom: 8, height: 26 }}
                 >
                     {itemPrice}
                 </Region>
@@ -63,7 +63,7 @@ export const VipBuyItemLayout = ({ captionItemHeader, itemPrice, layout, onItemB
                     name="item_buy"
                     tintColor="#00aa00"
                     onPointerTap={onItemBuy}
-                    layout={{ position: 'absolute', right: 5, width: 90, top: 37, height: 30, minWidth: 90, maxWidth: 90, minHeight: 30, maxHeight: 30 }}
+                    layout={{ position: 'absolute', right: 5, width: 90, bottom: 8, height: 30, minWidth: 90, maxWidth: 90, minHeight: 30, maxHeight: 30 }}
                 >
                     {t('catalog.club.button.buy')}
                 </ButtonThick>
@@ -72,7 +72,7 @@ export const VipBuyItemLayout = ({ captionItemHeader, itemPrice, layout, onItemB
                     name="item_gift"
                     tintColor="#00aa00"
                     onPointerTap={onItemGift}
-                    layout={{ position: 'absolute', right: 100, width: 90, top: 37, height: 30, minWidth: 90, maxWidth: 90, minHeight: 30, maxHeight: 30 }}
+                    layout={{ position: 'absolute', right: 100, width: 90, bottom: 8, height: 30, minWidth: 90, maxWidth: 90, minHeight: 30, maxHeight: 30 }}
                 >
                     {t('catalog.purchase_confirmation.gift')}
                 </ButtonThick>

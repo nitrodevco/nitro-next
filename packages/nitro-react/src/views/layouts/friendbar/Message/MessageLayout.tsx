@@ -17,7 +17,7 @@ export const MessageLayout = ({ itemsItems, layout }: MessageLayoutProps) => {
             <Region
                 name="message"
                 backgroundColor="#4c5832"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 37 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="items"

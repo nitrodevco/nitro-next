@@ -16,7 +16,7 @@ export const UserGuideDisconnectedLayoutResubmitButtonItem = ({ layout, onResubm
             name="resubmit_button"
             tintColor="#bbbbbb"
             onPointerTap={onResubmitButton}
-            layout={{ width: 346, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48, ...layout }}
         >
             {t('guide.help.request.user.guide.disconnected.resubmit.button')}
         </Button>

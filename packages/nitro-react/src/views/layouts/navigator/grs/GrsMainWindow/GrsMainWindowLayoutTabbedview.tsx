@@ -28,7 +28,7 @@ export const GrsMainWindowLayoutTabbedview = ({ layout, onNavigatorTab1, onNavig
             name="tabbedview"
             onPointerTap={onTabbedview}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 313, top: 0, bottom: 32, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -9, ...layout }}
         >
             <TabContext
                 variant="0"

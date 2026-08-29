@@ -25,7 +25,7 @@ export const ToolbarViewLayoutToolbarItems = ({ itemsToolbarItems, layout }: Too
     return (
         <Region
             name="toolbar_items"
-            layout={{ position: 'absolute', left: 0, top: 5, flexDirection: 'column', ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 5, flexDirection: 'column', ...layout }}
         >
             {itemsToolbarItems ?? (
                 <>

@@ -30,7 +30,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionWaitText, captionWai
             caption={t('games.main.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 413, height: 530, ...layout }}
+            layout={{ width: 413, height: 530, minWidth: 413, minHeight: 530, ...layout }}
         >
             <ThemeImage
                 name="quick_play_background"
@@ -42,7 +42,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionWaitText, captionWai
             {(visibleSnowwarLobbyCont ?? false) && (
                 <Region
                     name="snowwar_lobby_cont"
-                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, height: 436 }}
+                    layout={{ position: 'absolute', left: 0, right: -6, top: 0, height: 436 }}
                 >
                     <Region
                         name="wait_text_stroke"

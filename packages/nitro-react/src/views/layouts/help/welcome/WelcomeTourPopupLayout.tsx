@@ -20,7 +20,7 @@ export const WelcomeTourPopupLayout = ({ layout, onClose, onRefuseTour, onTakeTo
             caption={t('help.tour.popup.action.accept')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 435, height: 222, ...layout }}
+            layout={{ width: 435, height: 222, minWidth: 435, minHeight: 222, ...layout }}
         >
             <ThemeImage
                 src={layoutImage('help_frank_greeting.png')}

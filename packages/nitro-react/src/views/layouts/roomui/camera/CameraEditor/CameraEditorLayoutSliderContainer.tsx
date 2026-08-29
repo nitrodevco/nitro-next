@@ -28,7 +28,7 @@ export const CameraEditorLayoutSliderContainer = ({ captionSliderEffectInfo, lay
                 name="slider_bg_border"
                 tintColor="#000000"
                 blend={0.5}
-                layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 59 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <Border
                 variant="3"
@@ -40,7 +40,7 @@ export const CameraEditorLayoutSliderContainer = ({ captionSliderEffectInfo, lay
                     name="shaft_click_area"
                     onPointerTap={onShaftClickArea}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 292, top: 0, height: 8 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {shaftClickArea}
                 </Region>

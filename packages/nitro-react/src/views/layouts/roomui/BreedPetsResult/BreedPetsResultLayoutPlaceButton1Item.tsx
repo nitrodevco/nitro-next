@@ -18,7 +18,7 @@ export const BreedPetsResultLayoutPlaceButton1Item = ({ layout, onPlaceButton1, 
                 name="place_button1"
                 tintColor="#00aa00"
                 onPointerTap={onPlaceButton1}
-                layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
+                layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
             >
                 {t('breedpetsresult.widget.seed2.use')}
             </ButtonThick>

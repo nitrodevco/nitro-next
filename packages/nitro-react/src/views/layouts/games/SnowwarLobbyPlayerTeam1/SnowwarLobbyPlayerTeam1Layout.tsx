@@ -21,7 +21,7 @@ export interface SnowwarLobbyPlayerTeam1LayoutProps {
 export const SnowwarLobbyPlayerTeam1Layout = ({ captionPlayerScore, captionPlayerScoreStroke, layout, playerDataContainer, srcPlayerImage, srcPlayerImageBackground, srcPlayerScoreBackground, strokeTextColor, tintPlayerImage, tintPlayerImageBackground, tintPlayerScoreBackground }: SnowwarLobbyPlayerTeam1LayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 289, height: 62, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 289, top: 0, height: 62, flexDirection: 'row' }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row' }}>
                 <Region
                     name="playerImageContainer"
                     layout={{ width: 64, height: 62, flexShrink: 0 }}

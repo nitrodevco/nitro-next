@@ -13,7 +13,7 @@ export const RoomtoolsLayoutRoominfoTextItem = ({ captionRoominfoText, layout }:
     return (
         <Region
             name="roominfo_text"
-            layout={{ width: 175, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
+            layout={{ width: 175, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText
                 text={captionRoominfoText ?? t('navigator.roomsettings.roomname')}

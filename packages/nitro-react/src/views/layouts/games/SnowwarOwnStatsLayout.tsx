@@ -20,7 +20,7 @@ export interface SnowwarOwnStatsLayoutProps {
 export const SnowwarOwnStatsLayout = ({ captionPersonalScore, captionPersonalScoreStroke, layout, srcBackgroundFlashImage, srcBackgroundImage, srcEnergyBar, srcUserImage, strokeTextColor, tintBackgroundFlashImage, tintBackgroundImage, tintEnergyBar, tintUserImage }: SnowwarOwnStatsLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 171, height: 73, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 171, bottom: 0, height: 73 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 73 }}>
                 <ThemeImage
                     name="backgroundImage"
                     src={srcBackgroundImage ?? layoutImage('ui_me_bg.png')}

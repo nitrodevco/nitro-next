@@ -30,7 +30,7 @@ export const Main_100LayoutInformation2 = ({ captionDesc, captionTitle, layout }
             </Region>
             <Region
                 name="splitter"
-                layout={{ position: 'absolute', right: 0, width: 2, top: 0, height: 80 }}
+                layout={{ position: 'absolute', right: 0, width: 2, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="15"
@@ -40,7 +40,7 @@ export const Main_100LayoutInformation2 = ({ captionDesc, captionTitle, layout }
                     layout={{ position: 'absolute', left: -18, width: 20, top: -6, bottom: -5 }}
                 />
             </Region>
-            <Region layout={{ position: 'absolute', left: 0, width: 100, bottom: 3, height: 30, flexDirection: 'column', gap: -3 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, bottom: 3, height: 30, flexDirection: 'column', gap: -3 }}>
                 <Region
                     name="title"
                     layout={{ width: 90, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}

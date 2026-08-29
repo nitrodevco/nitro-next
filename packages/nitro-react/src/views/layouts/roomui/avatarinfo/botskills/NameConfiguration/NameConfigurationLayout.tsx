@@ -21,7 +21,7 @@ export const NameConfigurationLayout = ({ itemsConfigurationItems, layout, onCan
             <Bubble
                 variant="100"
                 tintColor="#6e6b67"
-                layout={{ position: 'absolute', left: 0, width: 209, top: 0, height: 119 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     backgroundColor="#000000"

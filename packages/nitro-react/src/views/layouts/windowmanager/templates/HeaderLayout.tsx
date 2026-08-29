@@ -13,11 +13,11 @@ export const HeaderLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClo
         <Region layout={{ position: 'relative', width: 100, height: 15, ...layout }}>
             <Region
                 name="header_container"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Region
                     name="header_title_text"
-                    layout={{ position: 'absolute', marginLeft: -40, marginRight: 40, width: 12, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -40, marginRight: 40, width: 12, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionHeaderTitleText ?? ''}
@@ -32,7 +32,7 @@ export const HeaderLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClo
                 />
                 <Region
                     backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', right: 0, width: 15, top: 0, height: 15, flexDirection: 'row' }}
+                    layout={{ position: 'absolute', right: 0, width: 15, top: 0, bottom: 0, flexDirection: 'row' }}
                 >
                     <CloseButton
                         name="header_button_close"

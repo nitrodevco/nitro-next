@@ -15,7 +15,7 @@ export const RoomInfoPopupBubbleLayoutBottomItemlistItem = ({ itemsBottomItemlis
     return (
         <Region
             name="bottom_itemlist"
-            layout={{ width: 345, height: 80, flexShrink: 0, flexDirection: 'column', ...layout }}
+            layout={{ alignSelf: 'stretch', height: 80, flexShrink: 0, flexDirection: 'column', ...layout }}
         >
             {itemsBottomItemlist ?? (
                 <>

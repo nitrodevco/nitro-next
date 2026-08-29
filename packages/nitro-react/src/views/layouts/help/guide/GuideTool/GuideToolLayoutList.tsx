@@ -21,7 +21,7 @@ export const GuideToolLayoutList = ({ captionStatusCaptionTxt, itemsList, layout
     return (
         <Region
             name="list"
-            layout={{ position: 'absolute', left: 8, top: 0, flexDirection: 'column', gap: 5, ...layout }}
+            layout={{ position: 'absolute', left: 8, right: -4, top: 0, bottom: 12, flexDirection: 'column', gap: 5, ...layout }}
         >
             {itemsList ?? (
                 <>
@@ -32,13 +32,13 @@ export const GuideToolLayoutList = ({ captionStatusCaptionTxt, itemsList, layout
             )}
             <Border
                 variant="102"
-                layout={{ width: 226, height: 65, flexShrink: 0 }}
+                layout={{ alignSelf: 'stretch', height: 65, flexShrink: 0 }}
             >
                 <CheckBox
                     variant="100"
                     name="guide_tool_duty"
                     onPointerTap={onGuideToolDuty}
-                    layout={{ position: 'absolute', left: 15, width: 200, top: 24, height: 21, minHeight: 21, maxHeight: 21 }}
+                    layout={{ position: 'absolute', right: 11, width: 200, alignSelf: 'center', marginTop: 2, marginBottom: -2, height: 21, minHeight: 21, maxHeight: 21 }}
                 >
                     Off duty right now
                 </CheckBox>

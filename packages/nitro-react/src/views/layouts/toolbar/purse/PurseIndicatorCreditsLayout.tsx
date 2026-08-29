@@ -16,22 +16,22 @@ export const PurseIndicatorCreditsLayout = ({ captionChange, captionCredits, lay
 
     return (
         <Region layout={{ position: 'relative', width: 192, height: 29, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="6"
                     tintColor="#55534e"
-                    layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Border
                     variant="3"
                     tintColor="#201e19"
                     blend={0.8}
-                    layout={{ position: 'absolute', left: 3, width: 186, top: 3, height: 22 }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 4 }}
                 />
                 <Border
                     variant="6"
                     tintColor="#e3af1e"
-                    layout={{ position: 'absolute', left: 163, width: 29, top: 0, height: 29 }}
+                    layout={{ position: 'absolute', right: 0, width: 29, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="credit_icon"
@@ -39,7 +39,7 @@ export const PurseIndicatorCreditsLayout = ({ captionChange, captionCredits, lay
                         layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                     />
                 </Border>
-                <Region layout={{ position: 'absolute', left: 10, width: 91, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', left: 10, width: 91, top: 6, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('purse_coins')}
                         textStyle="text-style-il-regular-white"
@@ -48,7 +48,7 @@ export const PurseIndicatorCreditsLayout = ({ captionChange, captionCredits, lay
                 </Region>
                 <Region
                     name="credits"
-                    layout={{ position: 'absolute', right: 42, width: 60, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    layout={{ position: 'absolute', right: 42, width: 60, top: 6, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 >
                     <ThemeText
                         text={captionCredits ?? '0'}
@@ -61,11 +61,11 @@ export const PurseIndicatorCreditsLayout = ({ captionChange, captionCredits, lay
                         variant="6"
                         name="change_overlay"
                         tintColor="#e3af1e"
-                        layout={{ position: 'absolute', left: 44, width: 33, top: 0, height: 29 }}
+                        layout={{ position: 'absolute', left: 44, width: 33, top: 0, bottom: 0 }}
                     >
                         <Region
                             name="change"
-                            layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 29, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
                                 text={captionChange ?? ' 50'}

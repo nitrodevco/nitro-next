@@ -13,7 +13,7 @@ export const UserInfoFrameLayout = ({ layout, onClose }: UserInfoFrameLayoutProp
             caption="User info"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 292, height: 225, ...layout }}
+            layout={{ width: 292, height: 225, minWidth: 292, minHeight: 225, ...layout }}
         />
     );
 };

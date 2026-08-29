@@ -14,12 +14,12 @@ export interface OutfitLayoutProps {
 export const OutfitLayout = ({ layout, onButton, srcBitmap, srcOutfitGradient, tintBitmap, visibleOutfitGradient }: OutfitLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 35, height: 60, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 60 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Button
                     variant="3"
                     name="button"
                     onPointerTap={onButton}
-                    layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 60, overflow: 'hidden' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, overflow: 'hidden' }}
                 />
                 {(visibleOutfitGradient ?? false) && (
                     <ThemeImage

@@ -14,7 +14,7 @@ export const HabbiconHubLayoutAllSetsContainer = ({ layout, setPageContainer, se
     return (
         <Region
             name="all_sets_container"
-            layout={{ position: 'absolute', left: 7, width: 540, top: 146, bottom: 44, ...layout }}
+            layout={{ position: 'absolute', left: 7, width: 540, top: 146, bottom: 3, ...layout }}
         >
             <Border
                 variant="6"

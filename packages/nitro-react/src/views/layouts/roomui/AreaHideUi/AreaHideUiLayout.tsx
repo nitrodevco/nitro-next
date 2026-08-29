@@ -23,12 +23,12 @@ export const AreaHideUiLayout = ({ layout, onApplyButton, onClose, onOnOffButton
             caption={t('widget.areahide.title')}
             tintColor="#67a3bf"
             onClose={onClose}
-            layout={{ width: 292, height: 334, ...layout }}
+            layout={{ width: 292, height: 334, minWidth: 292, minHeight: 0, ...layout }}
         >
             <Border
                 variant="100"
                 tintColor="#ffffff"
-                layout={{ position: 'absolute', left: 3, width: 275, top: 16, height: 250 }}
+                layout={{ position: 'absolute', left: 3, right: 2, top: 16, height: 250 }}
             >
                 <AreaHideUiLayoutTabContent {...tabContent} />
             </Border>
@@ -36,7 +36,7 @@ export const AreaHideUiLayout = ({ layout, onApplyButton, onClose, onOnOffButton
                 variant="0"
                 name="apply_button"
                 onPointerTap={onApplyButton}
-                layout={{ position: 'absolute', left: 4, width: 165, top: 272, height: 24 }}
+                layout={{ position: 'absolute', left: 4, width: 165, bottom: -3, height: 24 }}
             >
                 {t('widget.areahide.button.apply')}
             </Button>
@@ -44,7 +44,7 @@ export const AreaHideUiLayout = ({ layout, onApplyButton, onClose, onOnOffButton
                 variant="0"
                 name="on_off_button"
                 onPointerTap={onOnOffButton}
-                layout={{ position: 'absolute', right: 15, width: 151, top: 272, height: 24 }}
+                layout={{ position: 'absolute', right: 3, width: 151, bottom: -3, height: 24 }}
             >
                 {t('widget.areahide.button.on')}
             </Button>

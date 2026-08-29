@@ -22,7 +22,7 @@ export const ClubExtendConfirmationLayout = ({ backgroundContainer, itemlistVert
             name="frame_title"
             tintColor="#007a98"
             onClose={onClose}
-            layout={{ width: 450, height: 235, ...layout }}
+            layout={{ width: 450, height: 235, minWidth: 450, minHeight: 235, ...layout }}
         >
             <Region
                 name="background_container"
@@ -41,7 +41,7 @@ export const ClubExtendConfirmationLayout = ({ backgroundContainer, itemlistVert
                 name="club_teaser"
                 src={srcClubTeaser}
                 tint={tintClubTeaser}
-                layout={{ position: 'absolute', right: 409, width: 40, bottom: -19, height: 144 }}
+                layout={{ position: 'absolute', right: 397, width: 40, bottom: -60, height: 144 }}
             />
         </Frame>
     );

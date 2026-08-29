@@ -18,11 +18,11 @@ export const SpinnerWidgetLayout = ({ captionTextHeader, captionTextValue, layou
             <Border
                 variant="103"
                 name="border_spinner_widget"
-                layout={{ position: 'absolute', left: 0, width: 182, top: 0, height: 25 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="text_header"
-                    layout={{ position: 'absolute', left: 7, width: 226, top: 5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 7, width: 226, top: 5, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTextHeader ?? t('catalog.bundlewidget.spinner.select.amount')}
@@ -33,7 +33,7 @@ export const SpinnerWidgetLayout = ({ captionTextHeader, captionTextValue, layou
                     variant="3"
                     name="button_less"
                     onPointerTap={onButtonLess}
-                    layout={{ position: 'absolute', left: 139, width: 14, top: 13, height: 14 }}
+                    layout={{ position: 'absolute', left: 139, width: 14, bottom: -2, height: 14 }}
                 >
                     <Icon
                         variant="7"
@@ -46,7 +46,7 @@ export const SpinnerWidgetLayout = ({ captionTextHeader, captionTextValue, layou
                     variant="3"
                     name="button_more"
                     onPointerTap={onButtonMore}
-                    layout={{ position: 'absolute', left: 139, width: 14, top: -1, height: 15 }}
+                    layout={{ position: 'absolute', left: 139, width: 14, top: -1, bottom: 11 }}
                 >
                     <Icon
                         variant="6"
@@ -57,7 +57,7 @@ export const SpinnerWidgetLayout = ({ captionTextHeader, captionTextValue, layou
                 </ContainerButton>
                 <Region
                     name="text_value"
-                    layout={{ position: 'absolute', left: 154, width: 24, top: 5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', right: 4, width: 24, top: 5, bottom: 5, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionTextValue ?? '1'}

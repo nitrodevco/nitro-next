@@ -24,12 +24,13 @@ export const VariablesManagementOverviewLayout = ({ footer, header, layout, onCl
             caption={t('wiredmenu.variable_management.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 700, height: 508, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 700, height: 508, minWidth: 700, maxWidth: 700, minHeight: 380, maxHeight: 700, ...layout }}
         >
             <VariablesManagementOverviewLayoutHeader {...header} />
             <Region
                 name="middle"
-                layout={{ position: 'absolute', left: 1, right: 1, top: 117, bottom: 95 }}
+                layout={{ position: 'absolute', left: 1, right: -11, top: 117, bottom: 54 }}
             >
                 <Region
                     name="table_view"

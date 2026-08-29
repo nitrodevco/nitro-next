@@ -30,7 +30,7 @@ export const RecyclerPrizesWidget = ({ captionCtlgDescription, captionCtlgProduc
         >
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 314 }}
+                layout={{ position: 'absolute', left: 0, width: 175, top: 0, bottom: 0 }}
             >
                 <Region
                     name="itemList"
@@ -41,7 +41,7 @@ export const RecyclerPrizesWidget = ({ captionCtlgDescription, captionCtlgProduc
             </ScrollArea>
             <Region
                 name="productView"
-                layout={{ position: 'absolute', left: 180, width: 180, top: 0, height: 277 }}
+                layout={{ position: 'absolute', right: 0, width: 180, top: 0, height: 277, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="ctlg_teaserimg_1"
@@ -70,7 +70,7 @@ export const RecyclerPrizesWidget = ({ captionCtlgDescription, captionCtlgProduc
                 </Region>
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 18, width: 142, top: 87, height: 76 }}
+                    layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 142, top: 87, height: 76 }}
                 >
                     <Region
                         name="bundleGrid"

@@ -14,7 +14,7 @@ export const GuildFurniMenuLayout = ({ border, layout }: GuildFurniMenuLayoutPro
             <Bubble
                 variant="0"
                 tintColor="#6e6b67"
-                layout={{ position: 'absolute', left: 0, width: 115, bottom: 0, height: 140 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 140 }}
             >
                 <GuildFurniMenuLayoutBorder {...border} />
             </Bubble>

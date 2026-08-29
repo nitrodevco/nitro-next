@@ -19,11 +19,11 @@ export const CollectibleHubLayoutMintInfoContainer = ({ captionMintLockText, cap
         <Region
             name="mint_info_container"
             backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 0, width: 290, top: 214, height: 46, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 214, height: 46, ...layout }}
         >
             <Region
                 name="right_box"
-                layout={{ position: 'absolute', left: 64, width: 226, top: 0, height: 46, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 64, width: 226, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Region
                     name="mint_lock_text"
@@ -60,7 +60,7 @@ export const CollectibleHubLayoutMintInfoContainer = ({ captionMintLockText, cap
                     </Region>
                     <Region
                         name="progress_bar_text"
-                        layout={{ position: 'absolute', left: 0, width: 220, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionProgressBarText ?? t('collectibles.preview.time_left')}

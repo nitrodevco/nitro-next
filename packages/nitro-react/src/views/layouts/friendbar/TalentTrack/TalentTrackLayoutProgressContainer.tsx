@@ -70,7 +70,7 @@ export const TalentTrackLayoutProgressContainer = ({ captionProgressText, layout
                 layout={{ position: 'absolute', left: 42, width: 215, top: 64, height: 30 }}
             >
                 {progressBalloon}
-                <Region layout={{ position: 'absolute', left: 0, width: 215, top: 0, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('talent.track.common.progress.position')}
                         textStyle="text-style-il-regular-white"

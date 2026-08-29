@@ -26,19 +26,20 @@ export const UserGuideDisconnectedLayout = ({ captionGuideDesc, captionGuideName
             name="user_guide_disconnected"
             caption={t('guide.help.request.user.guide.disconnected.title')}
             onClose={onClose}
-            layout={{ width: 282, height: 294, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 282, height: 294, minWidth: 282, maxWidth: 282, minHeight: 50, ...layout }}
         >
             <Border
                 variant="103"
                 name="guide_info"
-                layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 65 }}
+                layout={{ position: 'absolute', left: 0, right: -10, top: 0, height: 65 }}
             >
                 <Region layout={{ position: 'absolute', left: 10, width: 180, top: 10, height: 40, flexDirection: 'row', gap: 5 }}>
                     <ThemeImage
                         src={layoutImage('help_guide_icon.png')}
                         layout={{ width: 30, height: 40, flexShrink: 0 }}
                     />
-                    <Region layout={{ width: 130, height: 35, flexShrink: 0, flexDirection: 'column' }}>
+                    <Region layout={{ width: 130, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'column' }}>
                         <Region
                             name="guide_name_link"
                             tooltip={t('guide.help.common.profile.tooltip')}
@@ -53,7 +54,7 @@ export const UserGuideDisconnectedLayout = ({ captionGuideDesc, captionGuideName
                         </Region>
                         <Region
                             name="guide_desc"
-                            layout={{ width: 130, height: 16, flexShrink: 0, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             {captionGuideDesc ?? t('guide.help.request.user.guide.disconnected.guide.desc')}
                         </Region>
@@ -62,7 +63,7 @@ export const UserGuideDisconnectedLayout = ({ captionGuideDesc, captionGuideName
                 <Region
                     name="report_guide_link"
                     tooltip={t('guide.help.common.report.link.tooltip')}
-                    layout={{ position: 'absolute', left: 170, width: 100, top: 23, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    layout={{ position: 'absolute', right: 10, width: 100, alignSelf: 'center', marginTop: -1.5, marginBottom: 1.5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                     onPointerTap={onReportGuideLink}
                     cursor="pointer"
                 >

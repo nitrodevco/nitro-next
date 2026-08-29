@@ -26,7 +26,7 @@ export const AvatarEditorContentLayoutTorsoContent = ({ layout, onTabAccessories
                     name="tab_shirt"
                     onPointerTap={onTabShirt}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 6, width: 47, top: 0, height: 35 }}
+                    layout={{ position: 'absolute', left: 6, width: 47, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="tab_shirt"
@@ -38,7 +38,7 @@ export const AvatarEditorContentLayoutTorsoContent = ({ layout, onTabAccessories
                     name="tab_prints"
                     onPointerTap={onTabPrints}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 58, width: 47, top: 0, height: 35 }}
+                    layout={{ position: 'absolute', left: 58, width: 47, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="tab_prints"
@@ -50,7 +50,7 @@ export const AvatarEditorContentLayoutTorsoContent = ({ layout, onTabAccessories
                     name="tab_jacket"
                     onPointerTap={onTabJacket}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 110, width: 47, top: 0, height: 35 }}
+                    layout={{ position: 'absolute', left: 110, width: 47, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="tab_jacket"
@@ -62,7 +62,7 @@ export const AvatarEditorContentLayoutTorsoContent = ({ layout, onTabAccessories
                     name="tab_accessories"
                     onPointerTap={onTabAccessories}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 162, width: 47, top: 0, height: 35 }}
+                    layout={{ position: 'absolute', right: 1, width: 47, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="tab_accessories"

@@ -17,9 +17,9 @@ export const QuizResultLayout = ({ captionLblDislikeCount, captionLblLikeCount, 
                     name="window_bg"
                     tintColor="#000000"
                     blend={0.8}
-                    layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 63 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 8, top: 0, maxWidth: 772, flexDirection: 'row', gap: 20 }}>
+                    <Region layout={{ position: 'absolute', left: 8, top: 0, bottom: 0, maxWidth: 772, flexDirection: 'row', gap: 20 }}>
                         <Region
                             dynamicStyle="brightness_and_shadow_under"
                             layout={{ width: 32, height: 32, flexShrink: 0, justifyContent: 'center' }}
@@ -27,7 +27,7 @@ export const QuizResultLayout = ({ captionLblDislikeCount, captionLblLikeCount, 
                             <Border
                                 variant="2"
                                 tintColor="#b32e22"
-                                layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                             />
                             <Region
                                 name="lbl_dislike_count"

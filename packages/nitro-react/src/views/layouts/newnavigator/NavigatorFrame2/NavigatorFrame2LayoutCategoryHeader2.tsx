@@ -23,7 +23,7 @@ export const NavigatorFrame2LayoutCategoryHeader2 = ({ captionCategoryName, item
         <Region
             name="category_header"
             backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="category_name_region"

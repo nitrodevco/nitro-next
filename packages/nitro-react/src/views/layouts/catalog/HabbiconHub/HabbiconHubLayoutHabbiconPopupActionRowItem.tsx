@@ -23,7 +23,7 @@ export const HabbiconHubLayoutHabbiconPopupActionRowItem = ({ layout, onHabbicon
                     tintColor="#01a101"
                     onPointerTap={onHabbiconPopupActionButton}
                     textStyle="text-style-button-shiny-regular"
-                    layout={{ position: 'absolute', left: 12, width: 156, top: 0, height: 28, minWidth: 156, maxWidth: 156 }}
+                    layout={{ position: 'absolute', left: 12, width: 156, top: 0, bottom: 0, minWidth: 156, maxWidth: 156 }}
                 >
                     {t('generic.claim')}
                 </Button>

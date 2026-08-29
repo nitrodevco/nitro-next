@@ -8,7 +8,7 @@ export interface ProgressIndicatorLayoutProps {
 export const ProgressIndicatorLayout = ({ layout }: ProgressIndicatorLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 8, height: 8, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', gap: 3 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', gap: 3 }}>
                 <ThemeImage
                     src={undefined}
                     layout={{ width: 8, height: 8, flexShrink: 0 }}

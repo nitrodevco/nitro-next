@@ -58,7 +58,7 @@ export const Main_100LayoutPointsIndicatorContainer = ({ captionPointsTxt, layou
                     />
                     <Region
                         name="points_txt"
-                        layout={{ position: 'absolute', left: 0, width: 80, top: 136, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 136, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionPointsTxt ?? '100'}

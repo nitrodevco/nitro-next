@@ -11,10 +11,10 @@ export interface LoginEnvironmentListItemLayoutProps {
 export const LoginEnvironmentListItemLayout = ({ captionTitle, layout, srcIcon }: LoginEnvironmentListItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 172, height: 20, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 172, top: 0, height: 20, minWidth: 172, maxWidth: 172 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 172, maxWidth: 172 }}>
                 <Region
                     name="title"
-                    layout={{ position: 'absolute', left: 20, width: 27, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 20, width: 27, top: 2, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTitle ?? 'title'}

@@ -29,7 +29,7 @@ export const EntityLayout = ({ captionBubbleCaption, captionBubbleLinkReject, ca
                 variant="6"
                 name="frame"
                 tintColor="#a5cd5d"
-                layout={{ position: 'absolute', left: 0, width: 127, top: 101, height: 36 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 101, height: 36 }}
             >
                 <Region
                     name="icons"
@@ -109,7 +109,7 @@ export const EntityLayout = ({ captionBubbleCaption, captionBubbleLinkReject, ca
                         >
                             <Region
                                 name="bubble_link_reject"
-                                layout={{ position: 'absolute', left: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                                layout={{ position: 'absolute', left: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                             >
                                 <ThemeText
                                     text={captionBubbleLinkReject ?? t('friendbar.request.decline')}

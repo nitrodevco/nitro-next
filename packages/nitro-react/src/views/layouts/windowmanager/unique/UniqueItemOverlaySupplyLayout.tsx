@@ -21,7 +21,7 @@ export const UniqueItemOverlaySupplyLayout = ({ captionItemsLeft, captionItemsLe
         <Region layout={{ position: 'relative', width: 200, height: 40, ...layout }}>
             <Region
                 name="limitedItemWidget"
-                layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 40 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="plaque"
@@ -49,7 +49,7 @@ export const UniqueItemOverlaySupplyLayout = ({ captionItemsLeft, captionItemsLe
                 </Region>
                 <Region
                     name="items_total"
-                    layout={{ position: 'absolute', left: 40, width: 58, top: 15, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 40, width: 58, bottom: 11, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionItemsTotal ?? t('unique.items.number.sold')}
@@ -58,7 +58,7 @@ export const UniqueItemOverlaySupplyLayout = ({ captionItemsLeft, captionItemsLe
                 </Region>
                 <Region
                     name="items_total_count"
-                    layout={{ position: 'absolute', left: 120, width: 23, top: 15, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    layout={{ position: 'absolute', left: 120, width: 23, bottom: 11, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 >
                     <ThemeText
                         text={captionItemsTotalCount ?? '9999'}

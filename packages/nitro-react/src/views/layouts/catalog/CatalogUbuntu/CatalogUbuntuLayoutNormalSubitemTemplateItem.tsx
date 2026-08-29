@@ -32,13 +32,13 @@ export const CatalogUbuntuLayoutNormalSubitemTemplateItem = ({ captionItemTitle,
                     <Region
                         name="item_hilight_outer"
                         backgroundColor="#82d1ed"
-                        layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 19 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 19 }}
                     >
                         {(visibleItemHilightInner ?? true) && (
                             <Region
                                 name="item_hilight_inner"
                                 backgroundColor="#63c5e9"
-                                layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 15 }}
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 15 }}
                             >
                                 {itemHilightInner}
                             </Region>

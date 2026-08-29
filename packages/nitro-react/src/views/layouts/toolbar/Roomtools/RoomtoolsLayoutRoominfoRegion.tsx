@@ -20,22 +20,22 @@ export const RoomtoolsLayoutRoominfoRegion = ({ itemsList, layout, onRoominfoReg
             name="roominfo_region"
             onPointerTap={onRoominfoRegion}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 31, width: 161, top: 2, height: 29, ...layout }}
+            layout={{ position: 'absolute', right: 0, width: 161, top: 2, bottom: 1, ...layout }}
         >
             <Border
                 variant="6"
                 tintColor="#55534e"
-                layout={{ position: 'absolute', left: 0, width: 161, top: 0, height: 29 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="3"
                     tintColor="#201e19"
                     blend={0.8}
-                    layout={{ position: 'absolute', left: 3, width: 155, top: 3, height: 22 }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 4 }}
                 />
                 <Region
                     name="list"
-                    layout={{ position: 'absolute', left: 9, width: 114, top: 5, height: 17, flexDirection: 'row', gap: 2 }}
+                    layout={{ position: 'absolute', left: 9, width: 114, top: 5, bottom: 7, flexDirection: 'row', gap: 2 }}
                 >
                     {itemsList ?? (
                         <>
@@ -48,13 +48,13 @@ export const RoomtoolsLayoutRoominfoRegion = ({ itemsList, layout, onRoominfoReg
             <Border
                 variant="6"
                 tintColor="#55534e"
-                layout={{ position: 'absolute', left: 132, width: 29, top: 0, height: 29 }}
+                layout={{ position: 'absolute', right: 0, width: 29, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="3"
                     tintColor="#201e19"
                     blend={0.8}
-                    layout={{ position: 'absolute', left: 3, width: 23, top: 3, height: 22 }}
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 4 }}
                 />
                 <ThemeImage
                     name="icon_zoom_off"

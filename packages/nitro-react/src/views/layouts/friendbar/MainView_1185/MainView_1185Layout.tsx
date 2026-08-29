@@ -16,7 +16,8 @@ export const MainView_1185Layout = ({ body, frameHeaderOverride, layout, onClose
         <Frame
             variant="10000"
             onClose={onClose}
-            layout={{ width: 412, height: 650, ...layout }}
+            resizeDirection="none"
+            layout={{ width: 412, height: 650, minWidth: 412, maxWidth: 412, minHeight: 650, maxHeight: 650, ...layout }}
         >
             <MainView_1185LayoutFrameHeaderOverride {...frameHeaderOverride} />
             <MainView_1185LayoutBody {...body} />

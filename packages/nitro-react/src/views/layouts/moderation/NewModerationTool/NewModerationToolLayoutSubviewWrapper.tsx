@@ -31,7 +31,7 @@ export const NewModerationToolLayoutSubviewWrapper = ({ banView, captionHotelAle
     return (
         <Region
             name="subview_wrapper"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -12, top: 0, bottom: -8, ...layout }}
         >
             <ContainerButton
                 variant="103"

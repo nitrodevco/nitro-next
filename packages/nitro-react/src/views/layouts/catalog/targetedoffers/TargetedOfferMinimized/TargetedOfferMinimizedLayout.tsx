@@ -20,16 +20,16 @@ export const TargetedOfferMinimizedLayout = ({ itemsItemlist, layout, onTargeted
                 name="targetedoffers_minimized"
                 onPointerTap={onTargetedoffersMinimized}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 51 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="9"
                     tintColor="#686661"
-                    layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 51 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="itemlist"
-                        layout={{ position: 'absolute', left: 0, top: 6, flexDirection: 'column', gap: 2 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 6, flexDirection: 'column', gap: 2 }}
                     >
                         {itemsItemlist ?? (
                             <>

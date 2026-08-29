@@ -15,7 +15,7 @@ export const GuideToolLayoutOnlineCountsContainerItem = ({ layout, srcInfoImg, v
     return (
         <Region
             name="online_counts_container"
-            layout={{ width: 227, height: 61, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 61, flexShrink: 0, ...layout }}
         >
             {(visibleInfoImg ?? true) && (
                 <ThemeImage
@@ -24,18 +24,18 @@ export const GuideToolLayoutOnlineCountsContainerItem = ({ layout, srcInfoImg, v
                     layout={{ position: 'absolute', left: 4, width: 23, top: 13, height: 24 }}
                 />
             )}
-            <Region layout={{ position: 'absolute', left: 31, width: 188, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', right: 8, width: 188, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 {t('guide.help.guide.tool.guidesonduty')}
             </Region>
-            <Region layout={{ position: 'absolute', left: 31, width: 193, top: 17, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', right: 3, width: 193, top: 17, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 {t('guide.help.guide.tool.helpersonduty')}
             </Region>
-            <Region layout={{ position: 'absolute', left: 31, width: 206, top: 34, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', right: -10, width: 206, bottom: 11, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 {t('guide.help.guide.tool.guardiansonduty')}
             </Region>
             <ThemeImage
                 src={layoutImage('illumina_horizontal_separator.png')}
-                layout={{ position: 'absolute', left: 0, width: 229, top: 54, height: 2 }}
+                layout={{ position: 'absolute', left: 0, width: 229, bottom: 5, height: 2 }}
             />
         </Region>
     );

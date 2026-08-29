@@ -25,12 +25,12 @@ export const QuestHelpLayout = ({ captionHelpHeaderShort, captionHelpHeaderTitle
                 name="help.container"
                 onPointerTap={onHelpContainer}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 208, top: 0, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="help.header"
                     backgroundColor="#e0e0e0"
-                    layout={{ position: 'absolute', left: 0, width: 208, top: 0, height: 27 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 27 }}
                 >
                     <ThemeImage
                         name="help.header.img"
@@ -40,7 +40,7 @@ export const QuestHelpLayout = ({ captionHelpHeaderShort, captionHelpHeaderTitle
                     />
                     <Region
                         name="help.header.title"
-                        layout={{ position: 'absolute', left: 0, width: 208, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionHelpHeaderTitle ?? t('quest.help.title')}
@@ -49,7 +49,7 @@ export const QuestHelpLayout = ({ captionHelpHeaderShort, captionHelpHeaderTitle
                     </Region>
                     <Region
                         name="help.header.short"
-                        layout={{ position: 'absolute', left: 0, width: 208, top: 12, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 12, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionHelpHeaderShort ?? t('quest.help.short')}
@@ -59,7 +59,7 @@ export const QuestHelpLayout = ({ captionHelpHeaderShort, captionHelpHeaderTitle
                 </Region>
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 0, width: 208, top: 32, height: 330 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 32, height: 330 }}
                 >
                     <Region
                         name="help.content.itemlist"

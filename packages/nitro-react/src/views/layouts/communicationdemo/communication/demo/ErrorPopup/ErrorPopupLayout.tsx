@@ -16,7 +16,8 @@ export const ErrorPopupLayout = ({ contentList, layout, onClose }: ErrorPopupLay
             caption="Title"
             tintColor="#d43d59"
             onClose={onClose}
-            layout={{ width: 300, height: 328, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 300, height: 328, minWidth: 300, maxWidth: 300, minHeight: 328, ...layout }}
         >
             <ErrorPopupLayoutContentList {...contentList} />
         </Frame>

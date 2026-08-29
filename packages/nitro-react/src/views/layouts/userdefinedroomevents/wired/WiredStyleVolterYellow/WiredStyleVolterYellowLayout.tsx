@@ -63,7 +63,7 @@ export const WiredStyleVolterYellowLayout = ({ captionTextBoldView, captionTextH
         <Region layout={{ position: 'relative', width: 200, height: 200, ...layout }}>
             <Region
                 backgroundColor="#f4d763"
-                layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 200 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 {(visibleInnerBorder ?? false) && (
                     <Border
@@ -81,7 +81,7 @@ export const WiredStyleVolterYellowLayout = ({ captionTextBoldView, captionTextH
                         caption={t('wiredfurni.title')}
                         tintColor="#fac200"
                         onClose={onFrame}
-                        layout={{ position: 'absolute', left: 0, width: 256, top: 0, height: 200, minWidth: 100 }}
+                        layout={{ position: 'absolute', left: 0, width: 256, top: 0, bottom: 0, minWidth: 100 }}
                     />
                 )}
                 {(visibleRulerView ?? false) && (
@@ -91,7 +91,7 @@ export const WiredStyleVolterYellowLayout = ({ captionTextBoldView, captionTextH
                     >
                         <Region
                             backgroundColor="#222222"
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                         />
                     </Region>
                 )}
@@ -303,7 +303,7 @@ export const WiredStyleVolterYellowLayout = ({ captionTextBoldView, captionTextH
                             >
                                 <Region
                                     name="menu_list"
-                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23, flexDirection: 'column' }}
+                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}
                                 >
                                     {itemsMenuList ?? (
                                         <>

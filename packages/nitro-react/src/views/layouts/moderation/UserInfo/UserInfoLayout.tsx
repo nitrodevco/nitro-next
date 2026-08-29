@@ -16,7 +16,7 @@ export const UserInfoLayout = ({ captionLoadingTxt, fields, layout, visibleLoadi
             <Border
                 variant="0"
                 name="user_info"
-                layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 202 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -8 }}
             >
                 {(visibleLoadingTxt ?? false) && (
                     <Region

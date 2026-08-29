@@ -22,9 +22,9 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
         <Region layout={{ position: 'relative', width: 250, height: 208, ...layout }}>
             <Region
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 208 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
-                <Region layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 208, flexDirection: 'column' }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}>
                     <Region
                         name="page_header_txt"
                         layout={{ width: 94, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -37,7 +37,7 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                     </Region>
                     <Region
                         backgroundColor="#000000"
-                        layout={{ width: 250, height: 120, flexShrink: 0 }}
+                        layout={{ alignSelf: 'stretch', height: 120, flexShrink: 0 }}
                     >
                         <ThemeImage
                             name="promo_bitmap"
@@ -46,7 +46,7 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                         />
                         <Region
                             name="timer_caption_txt"
-                            layout={{ position: 'absolute', left: 99, width: 146, top: 23, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            layout={{ position: 'absolute', right: 5, width: 146, top: 23, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
                                 text={captionTimerCaptionTxt ?? t('landing.view.pageexpiry.timeremaining')}
@@ -58,14 +58,14 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                             widgetType="countdown"
                             name="countdown_widget"
                             options={{ 'countdown:running': 'true' }}
-                            layout={{ position: 'absolute', left: 124, width: 99, top: 41, height: 37 }}
+                            layout={{ position: 'absolute', left: 124, width: 99, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 37 }}
                         >
                             {countdownWidget}
                         </WidgetSlot>
                     </Region>
                     <Region
                         name="page_desc_txt"
-                        layout={{ width: 250, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ alignSelf: 'stretch', height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPageDescTxt ?? 'Desc PH'}

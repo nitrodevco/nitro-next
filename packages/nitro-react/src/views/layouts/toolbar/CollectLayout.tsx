@@ -27,11 +27,11 @@ export const CollectLayout = ({ captionCollectSummary, captionNeverLink, caption
             caption={t('phone.number.collect.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 477, height: 440, ...layout }}
+            layout={{ width: 477, height: 440, minWidth: 477, minHeight: 440, ...layout }}
         >
             <Region
                 backgroundColor="#96bdcb"
-                layout={{ position: 'absolute', left: -2, right: 4, top: -3, height: 198 }}
+                layout={{ position: 'absolute', left: -2, right: -8, top: -3, height: 198 }}
             >
                 <Region
                     backgroundColor="#6f95a4"
@@ -83,7 +83,7 @@ export const CollectLayout = ({ captionCollectSummary, captionNeverLink, caption
                     <Region layout={{ position: 'absolute', left: 213, width: 244, top: 18, height: 42 }}>
                         <Border
                             variant="4"
-                            layout={{ position: 'absolute', left: 0, width: 244, top: 0, height: 38 }}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 38 }}
                         >
                             <TextInput
                                 value={phoneNumberInputValue}
@@ -107,7 +107,7 @@ export const CollectLayout = ({ captionCollectSummary, captionNeverLink, caption
             </Droplist>
             <Region
                 name="user_input_buttons_container"
-                layout={{ position: 'absolute', left: 2, right: 7, top: 308, height: 87, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 2, right: -5, top: 308, height: 87, justifyContent: 'center' }}
             >
                 <Border
                     variant="3"

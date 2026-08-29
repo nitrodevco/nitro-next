@@ -14,7 +14,7 @@ export interface OfferExtensionLayoutProps {
 export const OfferExtensionLayout = ({ itemsList, layout }: OfferExtensionLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 192, height: 13, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 13 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <Border
                     variant="9"
                     tintColor="#686661"

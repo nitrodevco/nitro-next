@@ -20,7 +20,7 @@ export const IroTagLayout = ({ captionTxt, layout, onTag, srcBgL, srcBgM, srcBgR
                 name="tag"
                 onPointerTap={onTag}
                 cursor="pointer"
-                layout={{ position: 'absolute', right: 0, width: 38, top: 0, height: 14 }}
+                layout={{ position: 'absolute', right: 0, width: 38, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="bg_l"

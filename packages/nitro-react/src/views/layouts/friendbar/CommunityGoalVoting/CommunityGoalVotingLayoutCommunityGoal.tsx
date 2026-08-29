@@ -27,7 +27,7 @@ export const CommunityGoalVotingLayoutCommunityGoal = ({ captionCommunityTitle, 
     return (
         <Region
             name="community_goal"
-            layout={{ position: 'absolute', left: 0, width: 516, top: 0, height: 200, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <ThemeImage
                 name="border_bar"

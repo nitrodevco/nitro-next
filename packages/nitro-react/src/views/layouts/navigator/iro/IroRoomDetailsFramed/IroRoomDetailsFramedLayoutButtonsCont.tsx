@@ -25,7 +25,7 @@ export const IroRoomDetailsFramedLayoutButtonsCont = ({ layout, onFloorPlanEdito
                 variant="3"
                 name="room_settings_button"
                 onPointerTap={onRoomSettingsButton}
-                layout={{ position: 'absolute', left: 0, width: 220, top: 0, height: 29, minWidth: 220, maxWidth: 220 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 220, maxWidth: 220 }}
             >
                 {t('navigator.roomsettings')}
             </Button>
@@ -33,7 +33,7 @@ export const IroRoomDetailsFramedLayoutButtonsCont = ({ layout, onFloorPlanEdito
                 variant="3"
                 name="room_filter_button"
                 onPointerTap={onRoomFilterButton}
-                layout={{ position: 'absolute', left: 0, width: 220, top: 0, height: 29, minWidth: 220, maxWidth: 220 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 220, maxWidth: 220 }}
             >
                 {t('navigator.roomsettings.roomfilter')}
             </Button>
@@ -41,7 +41,7 @@ export const IroRoomDetailsFramedLayoutButtonsCont = ({ layout, onFloorPlanEdito
                 variant="3"
                 name="staff_pick_button"
                 onPointerTap={onStaffPickButton}
-                layout={{ position: 'absolute', left: 0, width: 220, top: 0, height: 29, minWidth: 220, maxWidth: 220 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 220, maxWidth: 220 }}
             >
                 filledByTheServer
             </Button>
@@ -49,7 +49,7 @@ export const IroRoomDetailsFramedLayoutButtonsCont = ({ layout, onFloorPlanEdito
                 variant="3"
                 name="floor_plan_editor_button"
                 onPointerTap={onFloorPlanEditorButton}
-                layout={{ position: 'absolute', left: 0, width: 220, top: 0, height: 29, minWidth: 220, maxWidth: 220 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 220, maxWidth: 220 }}
             >
                 {t('open.floor.plan.editor')}
             </Button>
@@ -78,7 +78,7 @@ export const IroRoomDetailsFramedLayoutButtonsCont = ({ layout, onFloorPlanEdito
                 variant="3"
                 name="room_muteall_button"
                 onPointerTap={onRoomMuteallButton}
-                layout={{ position: 'absolute', left: 0, width: 220, top: 48, height: 29, minWidth: 220, maxWidth: 220 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 48, height: 29, minWidth: 220, maxWidth: 220 }}
             >
                 {t('navigator.muteall')}
             </Button>

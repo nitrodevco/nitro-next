@@ -21,11 +21,11 @@ export const StripClubItemsInfoLayout = ({ captionStripDescription, layout, onCl
             caption={t('avatareditor.invalidclubitems.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 278, height: 154, ...layout }}
+            layout={{ width: 278, height: 154, minWidth: 278, minHeight: 154, ...layout }}
         >
             <Region
                 name="_border"
-                layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -9, justifyContent: 'center' }}
             >
                 <Region
                     name="_strip_description"

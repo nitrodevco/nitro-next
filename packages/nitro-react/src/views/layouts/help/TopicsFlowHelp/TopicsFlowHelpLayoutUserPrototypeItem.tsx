@@ -30,7 +30,7 @@ export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, caption
                 <Border
                     variant="2"
                     name="user_bg"
-                    layout={{ position: 'absolute', left: 0, width: 367, top: 0, height: 52 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 52 }}
                 />
             )}
             {(visibleUserName ?? true) && (

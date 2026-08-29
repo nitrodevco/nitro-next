@@ -32,7 +32,7 @@ export const RentablespaceLayout = ({ itemsErrorView, itemsRentedView, layout, o
             caption={t('rentablespace.widget.title')}
             tintColor="#67a3bf"
             onClose={onClose}
-            layout={{ width: 256, height: 224, ...layout }}
+            layout={{ width: 256, height: 224, minWidth: 256, minHeight: 224, ...layout }}
         >
             <RentablespaceLayoutRentView {...rentView} />
             {(visibleRentedView ?? false) && (

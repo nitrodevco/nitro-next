@@ -14,7 +14,7 @@ export interface AvatarEditorEffectGriditemLayoutProps {
 export const AvatarEditorEffectGriditemLayout = ({ captionEffectAmount, layout, srcBitmap, srcProgressBar, tintBitmap, tintProgressBar, visibleDurationContainer }: AvatarEditorEffectGriditemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 50, height: 50, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50, justifyContent: 'center' }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}>
                 {/* `static_bitmap` is hidden and has no name to show it by */}
                 <ThemeImage
                     name="bitmap"

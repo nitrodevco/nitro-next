@@ -12,7 +12,7 @@ export const EntryArrowsLayout = ({ layout, srcArrow0, srcArrow1 }: EntryArrowsL
         <Region layout={{ position: 'relative', width: 15, height: 25, ...layout }}>
             <Region
                 name="entry_arrows_cont"
-                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 25, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="arrow_0"

@@ -22,7 +22,7 @@ export const TransactionOverviewLayoutHeader = ({ captionWarningText, itemsKeyVa
     return (
         <Region
             name="header"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 62, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: -12, top: 0, height: 62, ...layout }}
         >
             {(visibleWarningText ?? false) && (
                 <Region

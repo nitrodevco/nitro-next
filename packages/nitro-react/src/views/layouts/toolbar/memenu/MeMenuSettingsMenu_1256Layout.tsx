@@ -24,7 +24,7 @@ export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSett
                 variant="6"
                 name="dance_container"
                 tintColor="#79756e"
-                layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 140, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Region
                     name="settings_title"

@@ -39,7 +39,7 @@ export const RoomPreviewWidget = ({ layout, srcCatalogFloorPreviewExample, srcCa
                 name="catalog_space_preview_window"
                 src={srcCatalogSpacePreviewWindow}
                 tint={tintCatalogSpacePreviewWindow}
-                layout={{ position: 'absolute', left: 118, width: 120, top: 151, height: 118 }}
+                layout={{ position: 'absolute', left: 118, width: 120, bottom: 6, height: 118 }}
             />
         </Region>
     );

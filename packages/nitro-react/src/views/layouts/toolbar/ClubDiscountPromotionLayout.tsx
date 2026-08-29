@@ -17,7 +17,7 @@ export const ClubDiscountPromotionLayout = ({ captionPromoText, captionPromoText
                 variant="9"
                 name="club_promo_bar_border"
                 tintColor="#686661"
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 44 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="flashing_animation"
@@ -29,11 +29,11 @@ export const ClubDiscountPromotionLayout = ({ captionPromoText, captionPromoText
                     name="text_region"
                     onPointerTap={onTextRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 26, width: 161, top: 6, height: 30 }}
+                    layout={{ position: 'absolute', right: 5, width: 161, top: 6, bottom: 8 }}
                 >
                     <Region
                         name="promo_text_shadow"
-                        layout={{ position: 'absolute', left: 1, width: 160, top: 1, height: 30, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 1, right: 0, top: 1, bottom: -1, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPromoTextShadow ?? 'club extend discount promo text'}
@@ -42,7 +42,7 @@ export const ClubDiscountPromotionLayout = ({ captionPromoText, captionPromoText
                     </Region>
                     <Region
                         name="promo_text"
-                        layout={{ position: 'absolute', left: 0, width: 160, top: 0, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 1, top: 0, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPromoText ?? 'club extend discount promo text'}

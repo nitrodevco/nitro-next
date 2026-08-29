@@ -29,7 +29,7 @@ export const FurniViewLayoutGroupDetailsContainerItem = ({ captionGroupName, gro
                     widgetType="badge_image"
                     name="group_badge_image"
                     options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                    layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
+                    layout={{ position: 'absolute', left: 0, width: 40, top: 0, bottom: 0 }}
                 >
                     {groupBadgeImage}
                 </WidgetSlot>

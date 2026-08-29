@@ -21,11 +21,11 @@ export const GroupInfoWindowLayout = ({ groupCont, layout, onClose }: GroupInfoW
             caption={t('group.window.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 363, height: 268, ...layout }}
+            layout={{ width: 363, height: 268, minWidth: 363, minHeight: 268, ...layout }}
         >
             <Region
                 name="group_cont"
-                layout={{ position: 'absolute', left: 10, width: 343, top: 10, height: 214 }}
+                layout={{ position: 'absolute', left: 10, right: -2, top: 10, bottom: 3 }}
             >
                 {groupCont}
             </Region>

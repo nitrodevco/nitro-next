@@ -22,12 +22,12 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
             caption={t('room.queue.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 229, height: 118, ...layout }}
+            layout={{ width: 229, height: 118, minWidth: 229, minHeight: 118, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
                     name="info_text"
-                    layout={{ position: 'absolute', left: 0, width: 217, top: 21, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 21, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionInfoText ?? 'Your position in the queue: 5'}
@@ -50,7 +50,7 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
                     variant="3"
                     name="cancel_button"
                     onPointerTap={onCancelButton}
-                    layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 154, top: 50, height: 27 }}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 154, bottom: 0, height: 27 }}
                 >
                     {t('room.queue.button.exit')}
                 </Button>
@@ -59,7 +59,7 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
                         variant="3"
                         name="change_button"
                         onPointerTap={onChangeButton}
-                        layout={{ position: 'absolute', marginLeft: 41.5, marginRight: -41.5, width: 178, top: 140, height: 26 }}
+                        layout={{ position: 'absolute', marginLeft: 47.5, marginRight: -47.5, width: 178, top: 140, height: 26 }}
                     >
                         {t('room.queue.spectatormode')}
                     </Button>

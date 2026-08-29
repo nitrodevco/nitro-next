@@ -24,24 +24,24 @@ export interface GridItemLayoutProps {
 export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layout, srcBadgeAddOn, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, tintBadgeAddOn, tintImage, uniqueItemOverlayContainer, visibleBg, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer, visibleUniqueItemSoldOutBitmap }: GridItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 36, height: 36, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 {(visibleBg ?? false) && (
                     <Border
                         variant="3"
                         name="bg"
-                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                 )}
                 <Border
                     variant="2"
                     tintColor="#a1a19b"
-                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     <Border
                         variant="3"
                         name="border_outline"
                         tintColor="#63c5e9"
-                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         <Border
                             variant="3"
@@ -66,7 +66,7 @@ export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layo
                     <WidgetSlot
                         widgetType="limited_item_overlay_grid"
                         name="unique_item_overlay_container"
-                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
                         {uniqueItemOverlayContainer}
                     </WidgetSlot>

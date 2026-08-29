@@ -17,20 +17,20 @@ export const CollectMinimizedLayout = ({ layout, onCollectMinimized, srcClubIcon
                 name="collect_minimized"
                 onPointerTap={onCollectMinimized}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="6"
                     tintColor="#686661"
                     blend={1}
-                    layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 {/* `border` is hidden and has no name to show it by */}
                 <Border
                     variant="6"
                     tintColor="#96bdcb"
                     blend={1}
-                    layout={{ position: 'absolute', left: 163, width: 29, top: 0, height: 29 }}
+                    layout={{ position: 'absolute', right: 0, width: 29, top: 0, bottom: 0 }}
                 >
                     <ThemeImage
                         name="club_icon"
@@ -38,7 +38,7 @@ export const CollectMinimizedLayout = ({ layout, onCollectMinimized, srcClubIcon
                         layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
                     />
                 </Border>
-                <Region layout={{ position: 'absolute', left: 10, width: 154, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', left: 10, width: 154, top: 6, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('phone.number.collect.title')}
                         textStyle="text-style-il-regular-white"

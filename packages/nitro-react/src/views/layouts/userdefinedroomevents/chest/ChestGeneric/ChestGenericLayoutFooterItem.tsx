@@ -104,7 +104,7 @@ export const ChestGenericLayoutFooterItem = ({ captionItemCountTextBottom, foote
                     {(visibleFooterButtonsLeft ?? true) && (
                         <Region
                             name="footer_buttons_left"
-                            layout={{ position: 'absolute', left: 17, width: 194, top: 0, height: 30, flexDirection: 'row', gap: 13 }}
+                            layout={{ position: 'absolute', left: 17, width: 194, top: 0, bottom: 0, flexDirection: 'row', gap: 13 }}
                         >
                             {itemsFooterButtonsLeft ?? (
                                 <>
@@ -117,7 +117,7 @@ export const ChestGenericLayoutFooterItem = ({ captionItemCountTextBottom, foote
                     {(visibleButtonRowFooterButtonsLeft ?? true) && (
                         <Region
                             name="footer_buttons_left"
-                            layout={{ position: 'absolute', right: 17, width: 73, top: 0, height: 30, flexDirection: 'row', gap: 10 }}
+                            layout={{ position: 'absolute', right: 17, width: 73, top: 0, bottom: 0, flexDirection: 'row', gap: 10 }}
                         >
                             {itemsFooterButtonsLeft2 ?? (
                                 <ChestGenericLayoutViewLogsBtnItem />

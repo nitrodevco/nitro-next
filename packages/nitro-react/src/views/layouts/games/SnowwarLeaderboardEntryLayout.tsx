@@ -22,7 +22,7 @@ export interface SnowwarLeaderboardEntryLayoutProps {
 export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captionScore, imageRegion, layout, onImageRegion, srcAvatarImage, srcDivider, srcHighlight, tintAvatarImage, tintDivider, tintHighlight }: SnowwarLeaderboardEntryLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 356, height: 42, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 356, top: 0, height: 42 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ThemeImage
                     name="highlight"
                     src={srcHighlight ?? layoutImage('leaderboard_highlighter.png')}

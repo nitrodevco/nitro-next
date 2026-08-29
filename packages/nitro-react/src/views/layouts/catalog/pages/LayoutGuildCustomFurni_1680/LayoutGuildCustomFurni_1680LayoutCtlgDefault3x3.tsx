@@ -28,7 +28,7 @@ export const LayoutGuildCustomFurni_1680LayoutCtlgDefault3x3 = ({ activityPointD
     return (
         <Region
             name="ctlg_default_3x3"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             {(visibleCtlgSelectproduct ?? false) && (
                 <Region
@@ -43,11 +43,11 @@ export const LayoutGuildCustomFurni_1680LayoutCtlgDefault3x3 = ({ activityPointD
                 </Region>
             )}
             <ItemGridWidget
-                layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 90 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 245, bottom: 90 }}
                 {...itemGridWidget}
             />
             <ProductViewWidget
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 240 }}
                 {...productViewWidget}
             />
             <GuildSelectorWidget
@@ -67,7 +67,7 @@ export const LayoutGuildCustomFurni_1680LayoutCtlgDefault3x3 = ({ activityPointD
                 {...guildBadgeViewWidget}
             />
             <PurchaseWidget
-                layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 30 }}
                 {...purchaseWidget}
             />
         </Region>

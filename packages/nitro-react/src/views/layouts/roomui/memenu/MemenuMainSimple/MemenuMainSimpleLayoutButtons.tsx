@@ -44,7 +44,7 @@ export const MemenuMainSimpleLayoutButtons = ({ captionAchievementsText, caption
             name="buttons"
             onPointerTap={onButtons}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 245, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="profile"

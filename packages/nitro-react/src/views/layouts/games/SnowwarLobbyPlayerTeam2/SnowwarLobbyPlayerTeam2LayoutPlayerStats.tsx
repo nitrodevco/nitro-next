@@ -23,7 +23,7 @@ export const SnowwarLobbyPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, ca
             <Region layout={{ width: 33, height: 17, flexShrink: 0 }}>
                 <Region
                     name="playerHitsLabel_stroke"
-                    layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 17, minWidth: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerHitsLabelStroke ?? 'HITS'}
@@ -33,7 +33,7 @@ export const SnowwarLobbyPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, ca
                 </Region>
                 <Region
                     name="playerHitsLabel"
-                    layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 17, minWidth: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerHitsLabel ?? 'HITS'}
@@ -45,7 +45,7 @@ export const SnowwarLobbyPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, ca
             <Region layout={{ width: 54, height: 17, flexShrink: 0 }}>
                 <Region
                     name="playerHits_stroke"
-                    layout={{ position: 'absolute', left: 0, width: 54, top: 0, height: 17, minWidth: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerHitsStroke ?? '20'}
@@ -55,7 +55,7 @@ export const SnowwarLobbyPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, ca
                 </Region>
                 <Region
                     name="playerHits"
-                    layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 17, minWidth: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 50, top: 0, bottom: 0, minWidth: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerHits ?? '20'}
@@ -67,7 +67,7 @@ export const SnowwarLobbyPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, ca
             <Region layout={{ width: 40, height: 17, flexShrink: 0 }}>
                 <Region
                     name="playerKillsLabel_stroke"
-                    layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, minWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerKillsLabelStroke ?? 'KILLS'}
@@ -77,7 +77,7 @@ export const SnowwarLobbyPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, ca
                 </Region>
                 <Region
                     name="playerKillsLabel"
-                    layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, minWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerKillsLabel ?? 'KILLS'}
@@ -89,7 +89,7 @@ export const SnowwarLobbyPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, ca
             <Region layout={{ width: 50, height: 17, flexShrink: 0 }}>
                 <Region
                     name="playerKills_stroke"
-                    layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 17, minWidth: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerKillsStroke ?? '5'}
@@ -99,7 +99,7 @@ export const SnowwarLobbyPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, ca
                 </Region>
                 <Region
                     name="playerKills"
-                    layout={{ position: 'absolute', left: 0, width: 41, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, width: 41, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerKills ?? '5'}

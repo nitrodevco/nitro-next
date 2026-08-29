@@ -29,7 +29,7 @@ export const RentConfirmationLayout = ({ captionPriceAmount, itemsContentList, l
             caption={t('rent.confirmation.title.extend')}
             tintColor="#67a3bf"
             onClose={onClose}
-            layout={{ width: 370, height: 300, ...layout }}
+            layout={{ width: 370, height: 300, minWidth: 370, minHeight: 300, ...layout }}
         >
             <Border
                 variant="0"
@@ -46,7 +46,7 @@ export const RentConfirmationLayout = ({ captionPriceAmount, itemsContentList, l
                 variant="3"
                 name="cancel_button"
                 onPointerTap={onCancelButton}
-                layout={{ position: 'absolute', left: 20, width: 99, bottom: 50, height: 30 }}
+                layout={{ position: 'absolute', left: 20, width: 99, bottom: 9, height: 30 }}
             >
                 {t('generic.cancel')}
             </Button>
@@ -55,13 +55,13 @@ export const RentConfirmationLayout = ({ captionPriceAmount, itemsContentList, l
                 name="ok_button"
                 tintColor="#00cc00"
                 onPointerTap={onOkButton}
-                layout={{ position: 'absolute', right: 20, width: 82, bottom: 50, height: 30 }}
+                layout={{ position: 'absolute', right: 8, width: 82, bottom: 9, height: 30 }}
             >
                 {t('generic.ok')}
             </ButtonThick>
             <Region
                 name="content_list"
-                layout={{ position: 'absolute', left: 200, alignSelf: 'center', marginTop: -40.5, marginBottom: 40.5, flexDirection: 'column', gap: 10 }}
+                layout={{ position: 'absolute', left: 200, alignSelf: 'center', marginTop: -20, marginBottom: 20, flexDirection: 'column', gap: 10 }}
             >
                 {itemsContentList ?? (
                     <>

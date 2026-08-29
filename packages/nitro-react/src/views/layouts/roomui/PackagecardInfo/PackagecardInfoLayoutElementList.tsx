@@ -16,7 +16,7 @@ export const PackagecardInfoLayoutElementList = ({ itemsElementList, layout }: P
     return (
         <Region
             name="element_list"
-            layout={{ position: 'absolute', top: 0, minWidth: 330, maxWidth: 370, flexDirection: 'column', gap: 10, ...layout }}
+            layout={{ position: 'absolute', top: 0, bottom: 0, minWidth: 330, maxWidth: 370, flexDirection: 'column', gap: 10, ...layout }}
         >
             {itemsElementList ?? (
                 <>

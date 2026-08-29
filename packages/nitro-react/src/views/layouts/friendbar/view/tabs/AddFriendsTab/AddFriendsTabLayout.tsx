@@ -20,7 +20,7 @@ export const AddFriendsTabLayout = ({ itemsTabContent, layout }: AddFriendsTabLa
                 variant="6"
                 name="frame"
                 tintColor="#74dbfa"
-                layout={{ position: 'absolute', left: 0, width: 127, top: 0, height: 164 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="tab_content"

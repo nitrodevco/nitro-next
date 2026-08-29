@@ -23,7 +23,7 @@ export const MessengerHabbiconPickerLayoutHabbiconItemTemplateItem = ({ layout, 
                     variant="104"
                     name="habbicon_item_bg"
                     tintColor="#dddddd"
-                    layout={{ position: 'absolute', left: 0, width: 44, top: 0, height: 45 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             )}
             {(visibleHabbiconIcon ?? true) && (

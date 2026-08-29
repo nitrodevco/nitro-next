@@ -12,7 +12,7 @@ export const LoginWindowLayoutUserlistItemItem = ({ layout, onUserlistItem }: Lo
             variant="102"
             name="userlist_item"
             onPointerTap={onUserlistItem}
-            layout={{ width: 196, height: 28, flexShrink: 0, minWidth: 196, maxWidth: 196, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 28, flexShrink: 0, minWidth: 196, maxWidth: 196, ...layout }}
         >
             username
         </Button>

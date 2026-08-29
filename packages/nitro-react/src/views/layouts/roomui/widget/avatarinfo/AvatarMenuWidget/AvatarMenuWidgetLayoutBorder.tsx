@@ -26,7 +26,7 @@ export const AvatarMenuWidgetLayoutBorder = ({ buttons, captionName, layout, onM
             >
                 <Region
                     name="name"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionName ?? 'my_name_here'}

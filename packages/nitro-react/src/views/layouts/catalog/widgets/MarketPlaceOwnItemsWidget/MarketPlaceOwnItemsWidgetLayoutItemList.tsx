@@ -16,7 +16,7 @@ export const MarketPlaceOwnItemsWidgetLayoutItemList = ({ itemsItemList, layout 
     return (
         <ScrollArea
             orientation="vertical"
-            layout={{ position: 'absolute', left: 0, width: 340, top: 120, height: 265, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, bottom: 5, height: 265, ...layout }}
         >
             <Region
                 name="item_list"

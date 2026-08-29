@@ -18,7 +18,7 @@ export const BottomBarLeftLayoutMainToolbar = ({ context, layout, onCollapseLeft
     return (
         <Region
             name="main_toolbar"
-            layout={{ position: 'absolute', left: 0, width: 623, top: 0, height: 46, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             {/* `static_bitmap` is hidden and has no name to show it by */}
             {(context === undefined || [ 'room', 'hotel', 'gameCenter' ].includes(context)) && (
@@ -30,7 +30,7 @@ export const BottomBarLeftLayoutMainToolbar = ({ context, layout, onCollapseLeft
                         name="collapse_left"
                         onPointerTap={onCollapseLeft}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 15, top: -2, height: 45, justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: -2, height: 45, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_collapse_left"
@@ -49,7 +49,7 @@ export const BottomBarLeftLayoutMainToolbar = ({ context, layout, onCollapseLeft
                         name="collapse_right"
                         onPointerTap={onCollapseRight}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 15, top: -2, height: 46, justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: -2, height: 46, justifyContent: 'center' }}
                     >
                         <ThemeImage
                             name="icons_toolbar_collapse_right"

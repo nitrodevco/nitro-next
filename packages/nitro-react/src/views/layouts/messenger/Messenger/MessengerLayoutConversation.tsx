@@ -17,7 +17,7 @@ export const MessengerLayoutConversation = ({ itemsConversation, layout }: Messe
     return (
         <ScrollArea
             orientation="vertical"
-            layout={{ position: 'absolute', left: 7, right: 9, top: 84, bottom: 89, ...layout }}
+            layout={{ position: 'absolute', left: 7, right: -3, top: 84, bottom: 48, ...layout }}
         >
             <Region
                 name="conversation"

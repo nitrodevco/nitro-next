@@ -18,7 +18,7 @@ export interface SongdiskViewLayoutProps {
 export const SongdiskViewLayout = ({ infostandElementList, itemsButtonList, layout, onClose }: SongdiskViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 429, height: 25, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 429, top: 0, height: 25, flexDirection: 'column', gap: 10 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column', gap: 10 }}>
                 <Border
                     variant="2"
                     name="info_border"

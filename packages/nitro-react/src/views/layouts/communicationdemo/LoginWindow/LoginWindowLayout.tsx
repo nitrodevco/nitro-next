@@ -29,9 +29,9 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
             name="habbo_login_dialog"
             caption="Habbo Login"
             onClose={onClose}
-            layout={{ width: 305, height: 444, ...layout }}
+            layout={{ width: 305, height: 444, minWidth: 305, minHeight: 444, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 5, width: 293, top: 0, height: 364, flexDirection: 'column', gap: 3 }}>
+            <Region layout={{ position: 'absolute', left: 5, right: -5, top: 0, height: 364, flexDirection: 'column', gap: 3 }}>
                 <Region
                     name="options_container"
                     layout={{ width: 198, height: 46, flexShrink: 0 }}
@@ -54,31 +54,31 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
                         variant="101"
                         name="useExistingSession"
                         onPointerTap={onUseExistingSession}
-                        layout={{ position: 'absolute', left: 0, width: 198, top: 22, height: 21, minHeight: 21, maxHeight: 21 }}
+                        layout={{ position: 'absolute', left: 0, width: 198, bottom: 3, height: 21, minHeight: 21, maxHeight: 21 }}
                     >
                         Use existing Session
                     </CheckBox>
                 </Region>
                 <Region
                     name="environment_container"
-                    layout={{ width: 296, height: 28, flexShrink: 0 }}
+                    layout={{ alignSelf: 'stretch', height: 28, flexShrink: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 72, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <Region layout={{ position: 'absolute', left: 0, width: 72, top: 6, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         Environment:
                     </Region>
                     <Droplist
                         variant="100"
                         name="environment_list"
-                        layout={{ position: 'absolute', left: 89, width: 200, top: 0, height: 25, minWidth: 200 }}
+                        layout={{ position: 'absolute', right: 7, width: 200, top: 0, bottom: 3, minWidth: 200 }}
                     />
                 </Region>
                 <Region
                     name="name_container"
-                    layout={{ width: 298, height: 30, flexShrink: 0 }}
+                    layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0 }}
                 >
                     <Region
                         name="label_name"
-                        layout={{ position: 'absolute', left: 0, width: 46, top: 4, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 46, top: 4, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionLabelName ?? 'Name:'}
@@ -88,23 +88,23 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
                     <Border
                         variant="105"
                         name="name_border"
-                        layout={{ position: 'absolute', left: 90, width: 200, top: 0, height: 29 }}
+                        layout={{ position: 'absolute', right: 8, width: 200, top: 0, bottom: 1 }}
                     >
                         <TextInput
                             value={nameFieldValue}
                             onChange={setNameFieldValue}
-                            layout={{ position: 'absolute', left: 5, width: 191, top: 4, height: 20 }}
+                            layout={{ position: 'absolute', left: 5, right: 4, top: 4, bottom: 5 }}
                         />
                     </Border>
-                    <Region layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }} />
+                    <Region layout={{ position: 'absolute', left: 0, width: 30, top: 0, bottom: 0 }} />
                 </Region>
                 <Region
                     name="password_container"
-                    layout={{ width: 306, height: 30, flexShrink: 0 }}
+                    layout={{ alignSelf: 'stretch', height: 30, flexShrink: 0 }}
                 >
                     <Region
                         name="label_password"
-                        layout={{ position: 'absolute', left: 0, width: 73, top: 4, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, width: 73, top: 4, bottom: 7, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionLabelPassword ?? 'Password:'}
@@ -114,12 +114,12 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
                     <Border
                         variant="105"
                         name="password_border"
-                        layout={{ position: 'absolute', left: 90, width: 200, top: 0, height: 29 }}
+                        layout={{ position: 'absolute', left: 90, width: 200, top: 0, bottom: 1 }}
                     >
                         <TextInput
                             value={pwdFieldValue}
                             onChange={setPwdFieldValue}
-                            layout={{ position: 'absolute', left: 5, width: 192, top: 4, height: 20 }}
+                            layout={{ position: 'absolute', left: 5, right: 3, top: 4, bottom: 5 }}
                         />
                     </Border>
                 </Region>
@@ -139,7 +139,7 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
                 >
                     <Region
                         name="users_info"
-                        layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 157, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionUsersInfo ?? 'A list of your avatars will appear after successful login.'}
@@ -148,7 +148,7 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
                     </Region>
                     <ScrollArea
                         orientation="vertical"
-                        layout={{ position: 'absolute', left: 2, width: 196, top: 2, height: 153 }}
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                     >
                         <Region
                             name="list"

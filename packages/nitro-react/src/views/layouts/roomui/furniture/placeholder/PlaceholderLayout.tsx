@@ -15,12 +15,12 @@ export const PlaceholderLayout = ({ captionPhMsg, layout, onClose }: Placeholder
             name="ph_frame"
             caption="This feature is not yet available!"
             onClose={onClose}
-            layout={{ width: 250, height: 150, ...layout }}
+            layout={{ width: 250, height: 150, minWidth: 250, minHeight: 150, ...layout }}
         >
             <Border
                 variant="0"
                 name="ph_border"
-                layout={{ position: 'absolute', left: 0, width: 238, top: 0, height: 118 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -9 }}
             >
                 <Region
                     name="ph_msg"

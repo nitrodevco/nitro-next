@@ -58,7 +58,7 @@ export const SpacesNewWidget2 = ({ itemsItemGrid, layout, onGroupFloors, onGroup
             <Border
                 variant="6"
                 blend={0.5}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 25, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 25, bottom: 0 }}
             />
             <ScrollArea
                 orientation="vertical"

@@ -38,7 +38,7 @@ export const SingleViewWidget = ({ captionCtlgDescription, captionCtlgProductNam
             </Region>
             <Region
                 name="ctlg_description"
-                layout={{ position: 'absolute', left: -2, width: 162, top: 173, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: -2, right: -2, top: 173, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCtlgDescription ?? 'lorem ipsum'}

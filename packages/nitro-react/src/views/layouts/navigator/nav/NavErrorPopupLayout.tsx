@@ -21,11 +21,11 @@ export const NavErrorPopupLayout = ({ captionErrorText, layout, onPopupContainer
                 <Border
                     variant="0"
                     name="border"
-                    layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 23 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 10 }}
                 >
                     <Region
                         name="error_text"
-                        layout={{ position: 'absolute', left: 8, width: 173, top: 4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 8, right: 3, top: 4, bottom: -1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionErrorText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
@@ -37,7 +37,7 @@ export const NavErrorPopupLayout = ({ captionErrorText, layout, onPopupContainer
                     name="popup_arrow_down"
                     src={srcPopupArrowDown}
                     tint={tintPopupArrowDown}
-                    layout={{ position: 'absolute', left: 50, width: 11, top: 22, height: 11 }}
+                    layout={{ position: 'absolute', left: 50, width: 11, bottom: 0, height: 11 }}
                 />
             </Region>
         </Region>

@@ -14,7 +14,7 @@ export const ChooserItemLayout = ({ captionItemtext, layout }: ChooserItemLayout
         <Region layout={{ position: 'relative', width: 159, height: 18, ...layout }}>
             <Region
                 backgroundColor="#eeeeee"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="itemtext"

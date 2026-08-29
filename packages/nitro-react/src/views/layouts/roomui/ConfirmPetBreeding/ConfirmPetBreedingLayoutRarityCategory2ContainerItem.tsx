@@ -16,9 +16,9 @@ export const ConfirmPetBreedingLayoutRarityCategory2ContainerItem = ({ itemsBree
     return (
         <Region
             name="rarityCategory2.container"
-            layout={{ width: 280, height: 25, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 25, flexShrink: 0, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, width: 109, top: 5, height: 15, minWidth: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', left: 0, width: 109, top: 5, bottom: 5, minWidth: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text={t('breedpets.confirmation.widget.raritycategory.2')}
                     textStyle="text-style-il-heading-3"
@@ -27,7 +27,7 @@ export const ConfirmPetBreedingLayoutRarityCategory2ContainerItem = ({ itemsBree
             {(visibleBreeds2 ?? true) && (
                 <Region
                     name="breeds2"
-                    layout={{ position: 'absolute', left: 90, width: 200, top: 0, height: 25, flexDirection: 'row', gap: 2 }}
+                    layout={{ position: 'absolute', right: -10, width: 200, top: 0, bottom: 0, flexDirection: 'row', gap: 2 }}
                 >
                     {itemsBreeds2}
                 </Region>

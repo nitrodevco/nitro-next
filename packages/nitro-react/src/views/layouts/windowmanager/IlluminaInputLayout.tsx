@@ -16,7 +16,7 @@ export const IlluminaInputLayout = ({ captionEmptyMessage, layout, onSubmit }: I
         <Region layout={{ position: 'relative', width: 244, height: 28, ...layout }}>
             <Border
                 variant="105"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 28 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Button
                     variant="101"

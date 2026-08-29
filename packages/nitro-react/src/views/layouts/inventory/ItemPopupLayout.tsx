@@ -23,7 +23,7 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, nftImage, srcArro
             <Border
                 variant="0"
                 name="item_popup_content"
-                layout={{ position: 'absolute', left: 0, width: 203, top: 0, height: 90, minWidth: 203, maxWidth: 203 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 203, maxWidth: 203, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="item_image"
@@ -33,7 +33,7 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, nftImage, srcArro
                 />
                 <Region
                     name="item_name_text"
-                    layout={{ position: 'absolute', left: 5, width: 190, top: 5, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 5, right: 8, top: 5, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                 >
                     <ThemeText
                         text={captionItemNameText ?? 'PH Item name'}
@@ -45,7 +45,7 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, nftImage, srcArro
                     name="arrow_pointer"
                     src={srcArrowPointer}
                     tint={tintArrowPointer}
-                    layout={{ position: 'absolute', left: 180, width: 18, top: 6, height: 24 }}
+                    layout={{ position: 'absolute', right: 5, width: 18, top: 6, height: 24 }}
                 />
                 {(visibleNftOverlayIcon ?? false) && (
                     <ThemeImage
@@ -57,14 +57,14 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, nftImage, srcArro
                 <WidgetSlot
                     widgetType="limited_item_overlay_preview"
                     name="unique_item_overlay_widget"
-                    layout={{ position: 'absolute', left: 159, width: 40, top: 23, height: 40 }}
+                    layout={{ position: 'absolute', right: 4, width: 40, alignSelf: 'center', marginTop: -2, marginBottom: 2, height: 40 }}
                 >
                     {uniqueItemOverlayWidget}
                 </WidgetSlot>
                 <WidgetSlot
                     widgetType="product_image"
                     name="nft_image"
-                    layout={{ position: 'absolute', left: 16, width: 170, top: 29, height: 146 }}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 170, top: 29, height: 146 }}
                 >
                     {nftImage}
                 </WidgetSlot>

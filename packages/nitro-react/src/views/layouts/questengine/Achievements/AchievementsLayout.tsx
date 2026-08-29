@@ -33,17 +33,17 @@ export const AchievementsLayout = ({ achievementPicBitmap, achievementsHeaderCon
             caption={t('inventory.achievements')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 389, height: 297, ...layout }}
+            layout={{ width: 389, height: 297, minWidth: 389, minHeight: 297, ...layout }}
         >
             <Region
                 name="categories_cont"
-                layout={{ position: 'absolute', left: 19, right: -1, top: 0, height: 10 }}
+                layout={{ position: 'absolute', left: 19, right: -13, top: 0, height: 10 }}
             >
                 {categoriesCont}
             </Region>
             <Region
                 name="categories_footer_cont"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 37 }}
+                layout={{ position: 'absolute', left: 0, right: -12, top: 0, height: 37 }}
             >
                 <Region
                     name="achievement_score_txt"
@@ -62,7 +62,7 @@ export const AchievementsLayout = ({ achievementPicBitmap, achievementsHeaderCon
             >
                 <ScrollArea
                     orientation="vertical"
-                    layout={{ position: 'absolute', left: 0, width: 367, top: 0, height: 10, maxHeight: 245 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 10, maxHeight: 245 }}
                 >
                     <Region
                         name="achievements_scrollarea"
@@ -79,7 +79,7 @@ export const AchievementsLayout = ({ achievementPicBitmap, achievementsHeaderCon
                 variant="0"
                 name="achievement_cont"
                 tintColor="#cccccc"
-                layout={{ position: 'absolute', left: 15, right: 14, top: 0, height: 129 }}
+                layout={{ position: 'absolute', left: 15, right: 2, top: 0, height: 129 }}
             >
                 <Region
                     name="achievement_name_txt"

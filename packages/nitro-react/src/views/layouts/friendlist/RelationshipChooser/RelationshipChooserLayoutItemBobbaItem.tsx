@@ -16,7 +16,7 @@ export const RelationshipChooserLayoutItemBobbaItem = ({ layout, onItemBobba, sr
             backgroundColor="#ffffff"
             onPointerTap={onItemBobba}
             cursor="pointer"
-            layout={{ width: 25, height: 15, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 15, flexShrink: 0, ...layout }}
         >
             {(visibleImage ?? true) && (
                 <ThemeImage

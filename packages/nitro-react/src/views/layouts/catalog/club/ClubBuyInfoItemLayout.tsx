@@ -16,21 +16,21 @@ export const ClubBuyInfoItemLayout = ({ captionInfoContent, captionItemHeader, l
             <Border
                 variant="2"
                 tintColor="#9b9448"
-                layout={{ position: 'absolute', left: 0, width: 151, top: 0, height: 139 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="2"
                     tintColor="#ebeada"
-                    layout={{ position: 'absolute', left: 1, width: 149, top: 1, height: 137 }}
+                    layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                 />
                 <Border
                     variant="2"
                     tintColor="#9b9448"
-                    layout={{ position: 'absolute', left: 5, width: 141, top: 5, height: 25, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 25, justifyContent: 'center' }}
                 >
                     <Region
                         name="item_header"
-                        layout={{ position: 'absolute', width: 141, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        layout={{ position: 'absolute', width: 141, top: 5, bottom: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
                         <ThemeText
                             text={captionItemHeader ?? t('catalog.club.info.header')}
@@ -40,7 +40,7 @@ export const ClubBuyInfoItemLayout = ({ captionInfoContent, captionItemHeader, l
                 </Border>
                 <Region
                     name="info_content"
-                    layout={{ position: 'absolute', left: 9, width: 134, top: 44, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 9, right: 8, top: 44, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInfoContent ?? t('catalog.club.info.content')}

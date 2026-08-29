@@ -16,7 +16,7 @@ export const PackagecardNewOpenedLayoutMessageContainerItem = ({ captionGiftMess
             {(visibleGiftMessage ?? true) && (
                 <Region
                     name="gift_message"
-                    layout={{ position: 'absolute', left: 0, width: 184, top: 20, height: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionGiftMessage ?? ''}

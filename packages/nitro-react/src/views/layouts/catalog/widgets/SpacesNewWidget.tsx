@@ -34,7 +34,7 @@ export const SpacesNewWidget = ({ itemsItemGrid, layout, onGroupFloors, onGroupV
                     variant="100"
                     name="group.walls"
                     onPointerTap={onGroupWalls}
-                    layout={{ position: 'absolute', left: 0, width: 147, top: 0, height: 21, minWidth: 50 }}
+                    layout={{ position: 'absolute', left: 0, width: 147, top: 0, bottom: 1, minWidth: 50 }}
                 >
                     {t('catalog.spaces.tab.walls')}
                 </ButtonGroupLeft>
@@ -42,7 +42,7 @@ export const SpacesNewWidget = ({ itemsItemGrid, layout, onGroupFloors, onGroupV
                     variant="100"
                     name="group.floors"
                     onPointerTap={onGroupFloors}
-                    layout={{ position: 'absolute', left: 50, width: 152, top: 0, height: 21, minWidth: 50 }}
+                    layout={{ position: 'absolute', left: 50, width: 152, top: 0, bottom: 1, minWidth: 50 }}
                 >
                     {t('catalog.spaces.tab.floors')}
                 </ButtonGroupCenter>
@@ -50,14 +50,14 @@ export const SpacesNewWidget = ({ itemsItemGrid, layout, onGroupFloors, onGroupV
                     variant="100"
                     name="group.views"
                     onPointerTap={onGroupViews}
-                    layout={{ position: 'absolute', left: 100, width: 150, top: 0, height: 21, minWidth: 50 }}
+                    layout={{ position: 'absolute', left: 100, width: 150, top: 0, bottom: 1, minWidth: 50 }}
                 >
                     {t('catalog.spaces.tab.views')}
                 </ButtonGroupRight>
             </Region>
             <ScrollArea
                 orientation="vertical"
-                layout={{ position: 'absolute', left: 0, width: 170, top: 28, height: 239 }}
+                layout={{ position: 'absolute', left: 0, right: 0, alignSelf: 'center', marginTop: 1.5, marginBottom: -1.5, height: 239 }}
             >
                 <Region
                     name="itemGrid"

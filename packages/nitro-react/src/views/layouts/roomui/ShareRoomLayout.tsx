@@ -25,7 +25,7 @@ export const ShareRoomLayout = ({ captionEmbedInfoDirectTxt, captionEmbedInfoHdl
             caption={t('navigator.embed.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 457, height: 250, ...layout }}
+            layout={{ width: 457, height: 250, minWidth: 457, minHeight: 250, ...layout }}
         >
             <Region
                 name="thumbnail_edges"
@@ -40,11 +40,11 @@ export const ShareRoomLayout = ({ captionEmbedInfoDirectTxt, captionEmbedInfoHdl
             </Region>
             <Region
                 name="embed_info"
-                layout={{ position: 'absolute', left: 150, width: 285, top: 10, height: 240 }}
+                layout={{ position: 'absolute', right: 10, width: 285, top: 10, height: 240 }}
             >
                 <Region
                     name="embed_info_hdln"
-                    layout={{ position: 'absolute', left: 0, width: 281, top: 0, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 4, top: 0, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionEmbedInfoHdln ?? t('navigator.embed.headline')}
@@ -54,7 +54,7 @@ export const ShareRoomLayout = ({ captionEmbedInfoDirectTxt, captionEmbedInfoHdl
                 </Region>
                 <Region
                     name="embed_info_txt"
-                    layout={{ position: 'absolute', left: 0, width: 286, top: 28, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: -1, top: 28, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionEmbedInfoTxt ?? t('navigator.embed.info')}
@@ -64,7 +64,7 @@ export const ShareRoomLayout = ({ captionEmbedInfoDirectTxt, captionEmbedInfoHdl
                 </Region>
                 <Region
                     name="embed_src_txt"
-                    layout={{ position: 'absolute', left: 0, width: 286, top: 83, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: -1, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionEmbedSrcTxt ?? `${t('url.prefix')}/room/%roomId%`}
@@ -74,7 +74,7 @@ export const ShareRoomLayout = ({ captionEmbedInfoDirectTxt, captionEmbedInfoHdl
                 </Region>
                 <Region
                     name="embed_info_direct_txt"
-                    layout={{ position: 'absolute', left: 0, width: 286, top: 107, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: -1, top: 107, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionEmbedInfoDirectTxt ?? t('navigator.embed.direct.info')}
@@ -85,7 +85,7 @@ export const ShareRoomLayout = ({ captionEmbedInfoDirectTxt, captionEmbedInfoHdl
                 <TextInput
                     value={embedSrcDirectTxtValue}
                     onChange={setEmbedSrcDirectTxtValue}
-                    layout={{ position: 'absolute', left: 0, width: 290, top: 162, height: 24 }}
+                    layout={{ position: 'absolute', left: 0, right: -5, top: 162, height: 24 }}
                 />
             </Region>
         </Frame>

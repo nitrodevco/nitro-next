@@ -36,7 +36,7 @@ export const GrsOfficialRoomRowPhaseOneLayoutCont = ({ captionArrowLabel, captio
             backgroundColor="#ffffff"
             onPointerTap={onCont}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 346, top: 0, height: 68, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="1"

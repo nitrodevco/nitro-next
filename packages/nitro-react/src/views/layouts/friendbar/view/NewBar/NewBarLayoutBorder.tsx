@@ -23,7 +23,7 @@ export const NewBarLayoutBorder = ({ friendtools, itemsList, layout, onBorder, o
             name="border"
             onPointerTap={onBorder}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 300, top: 0, height: 48, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <NewBarLayoutFriendtools {...friendtools} />
             <Region

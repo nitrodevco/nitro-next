@@ -17,17 +17,17 @@ export const VideoOfferPromotionLayout = ({ captionPromoText, captionPromoTextSh
                 variant="6"
                 name="promo_bar_border"
                 tintColor="#6f6f6f"
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 40 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <Region
                     name="text_region"
                     onPointerTap={onTextRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 26, width: 145, top: 6, height: 30 }}
+                    layout={{ position: 'absolute', marginLeft: 2.5, marginRight: -2.5, width: 145, top: 6, bottom: 4 }}
                 >
                     <Region
                         name="promo_text_shadow"
-                        layout={{ position: 'absolute', left: 1, width: 136, top: 1, height: 17, minWidth: 136, maxWidth: 136, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 1, right: 8, top: 1, bottom: 12, minWidth: 136, maxWidth: 136, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPromoTextShadow ?? 'video offer promo text'}
@@ -36,7 +36,7 @@ export const VideoOfferPromotionLayout = ({ captionPromoText, captionPromoTextSh
                     </Region>
                     <Region
                         name="promo_text"
-                        layout={{ position: 'absolute', left: 0, width: 136, top: 0, minWidth: 136, maxWidth: 136, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 0, right: 9, top: 0, minWidth: 136, maxWidth: 136, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionPromoText ?? 'video offer promo text'}

@@ -13,7 +13,7 @@ export const QuestEntryLayout = ({ entryContainer, layout }: QuestEntryLayoutPro
         <Region layout={{ position: 'relative', width: 135, height: 122, ...layout }}>
             <Region
                 name="entry_container"
-                layout={{ position: 'absolute', left: 0, width: 135, top: 0, height: 122 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 {entryContainer}
             </Region>

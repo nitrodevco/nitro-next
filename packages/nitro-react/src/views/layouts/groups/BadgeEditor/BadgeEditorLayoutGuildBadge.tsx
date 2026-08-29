@@ -23,7 +23,7 @@ export const BadgeEditorLayoutGuildBadge = ({ captionGuildBadge, layout, srcLaye
     return (
         <Region
             name="guild_badge"
-            layout={{ position: 'absolute', left: 0, width: 128, top: 0, height: 305, ...layout }}
+            layout={{ position: 'absolute', left: 0, width: 128, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="guild_badge"

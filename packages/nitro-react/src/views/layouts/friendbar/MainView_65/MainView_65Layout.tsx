@@ -38,13 +38,13 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
             caption={t('groupforum.view.window_title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 552, height: 565, ...layout }}
+            layout={{ width: 552, height: 565, minWidth: 400, minHeight: 525, ...layout }}
         >
             <MainView_65LayoutTopPart {...topPart} />
             <Region
                 name="shortcuts"
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: -5, right: 7, top: 88, height: 25, flexDirection: 'row', gap: 5 }}
+                layout={{ position: 'absolute', left: -5, right: -5, top: 88, height: 25, flexDirection: 'row', gap: 5 }}
             >
                 {itemsShortcuts ?? (
                     <>
@@ -57,7 +57,7 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
             </Region>
             <Region
                 name="list_header"
-                layout={{ position: 'absolute', left: 0, right: 11, top: 115, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, right: -1, top: 115, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionListHeader ?? 'Topic'}
@@ -68,7 +68,7 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
             <Border
                 variant="7"
                 name="list_border"
-                layout={{ position: 'absolute', left: 0, right: 12, top: 140, bottom: 105 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 140, bottom: 64 }}
             >
                 <ScrollArea
                     orientation="vertical"
@@ -87,7 +87,7 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                 name="back_button"
                 tintColor="#dddddd"
                 onPointerTap={onBackButton}
-                layout={{ position: 'absolute', left: 10, width: 95, bottom: 62, height: 30, minWidth: 95, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 10, width: 95, bottom: 21, height: 30, minWidth: 95, justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionBackButtonLabel ?? t('groupforum.view.back')}
@@ -99,7 +99,7 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                 name="post_button"
                 tintColor="#0a9bc5"
                 onPointerTap={onPostButton}
-                layout={{ position: 'absolute', right: 190, width: 95, bottom: 62, height: 30, minWidth: 95, justifyContent: 'center' }}
+                layout={{ position: 'absolute', right: 178, width: 95, bottom: 21, height: 30, minWidth: 95, justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionPostButtonLabel ?? 'Post'}
@@ -107,12 +107,12 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                     textOptions={{ fill: '#ffffff' }}
                 />
             </ContainerButton>
-            <Region layout={{ position: 'absolute', right: 15, width: 165, bottom: 62, height: 30 }}>
+            <Region layout={{ position: 'absolute', right: 3, width: 165, bottom: 21, height: 30 }}>
                 <ContainerButton
                     variant="3"
                     name="show_first"
                     onPointerTap={onShowFirst}
-                    layout={{ position: 'absolute', right: 140, width: 25, top: 0, height: 30, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', right: 140, width: 25, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <ThemeText
                         text="<<"
@@ -123,7 +123,7 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                     variant="3"
                     name="show_previous"
                     onPointerTap={onShowPrevious}
-                    layout={{ position: 'absolute', right: 110, width: 25, top: 0, height: 30, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', right: 110, width: 25, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <ThemeText
                         text="<"
@@ -143,7 +143,7 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                     variant="3"
                     name="show_next"
                     onPointerTap={onShowNext}
-                    layout={{ position: 'absolute', right: 30, width: 25, top: 0, height: 30, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', right: 30, width: 25, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <ThemeText
                         text=">"
@@ -154,7 +154,7 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                     variant="3"
                     name="show_last"
                     onPointerTap={onShowLast}
-                    layout={{ position: 'absolute', right: 0, width: 25, top: 0, height: 30, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', right: 0, width: 25, top: 0, bottom: 0, justifyContent: 'center' }}
                 >
                     <ThemeText
                         text=">>"
@@ -162,7 +162,7 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                     />
                 </ContainerButton>
             </Region>
-            <Region layout={{ position: 'absolute', right: 72, width: 300, bottom: 30, height: 20 }}>
+            <Region layout={{ position: 'absolute', right: 60, width: 300, bottom: -11, height: 20 }}>
                 <Region
                     name="status"
                     layout={{ position: 'absolute', left: 3, right: -3, bottom: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}

@@ -16,7 +16,7 @@ export const NuxGiftSelectionLayoutNuxGiftSelectionList = ({ itemsNuxGiftSelecti
     return (
         <Region
             name="nux_gift_selection_list"
-            layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, minWidth: 374, top: 78, minHeight: 443, flexDirection: 'row', gap: 10, ...layout }}
+            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, minWidth: 374, top: 78, minHeight: 443, flexDirection: 'row', gap: 10, ...layout }}
         >
             {itemsNuxGiftSelectionList ?? (
                 <>

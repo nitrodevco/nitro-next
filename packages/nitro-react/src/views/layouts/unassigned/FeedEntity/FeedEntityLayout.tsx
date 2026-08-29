@@ -23,7 +23,7 @@ export const FeedEntityLayout = ({ itemsContentList, layout, srcIcon, tintIcon }
                 variant="3"
                 name="item"
                 tintColor="#f9f9f9"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 172 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="icon"

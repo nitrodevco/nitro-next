@@ -22,12 +22,12 @@ export const DimmerUiLayoutTabbedview = ({ layout, onTab1, onTab2, onTab3, onTab
             name="tabbedview"
             onPointerTap={onTabbedview}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 2, width: 266, top: -1, height: 166, ...layout }}
+            layout={{ position: 'absolute', left: 2, right: -3, top: -1, height: 166, justifyContent: 'center', ...layout }}
         >
             <TabContext
                 variant="0"
                 name="tab_context"
-                layout={{ position: 'absolute', left: 2, width: 258, top: 1, height: 163 }}
+                layout={{ position: 'absolute', left: 2, right: 6, top: 1, bottom: 2 }}
             >
                 <TabButton
                     variant="0"

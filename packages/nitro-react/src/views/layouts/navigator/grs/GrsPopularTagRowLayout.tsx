@@ -14,7 +14,7 @@ export const GrsPopularTagRowLayout = ({ layout, row }: GrsPopularTagRowLayoutPr
             <Region
                 name="row"
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 20 }}
+                layout={{ position: 'absolute', left: 0, width: 270, top: 0, bottom: 0 }}
             >
                 {row}
             </Region>

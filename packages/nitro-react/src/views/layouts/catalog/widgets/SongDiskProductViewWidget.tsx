@@ -35,7 +35,7 @@ export const SongDiskProductViewWidget = ({ captionCtlgDescription, captionCtlgP
             />
             <Region
                 name="ctlg_product_name"
-                layout={{ position: 'absolute', left: 0, width: 175, top: 176, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 176, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCtlgProductName ?? t('lorem.title')}
@@ -63,18 +63,18 @@ export const SongDiskProductViewWidget = ({ captionCtlgDescription, captionCtlgP
             </Region>
             <Region
                 name="playPreviewContainer"
-                layout={{ position: 'absolute', left: 0, width: 175, top: 235, height: 36 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 3, height: 36 }}
             >
                 <Border
                     variant="2"
                     tintColor="#cccccc"
-                    layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 36 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <Button
                     variant="3"
                     name="listen"
                     onPointerTap={onListen}
-                    layout={{ position: 'absolute', left: 102, width: 66, top: 8, height: 22, minWidth: 66, maxWidth: 66 }}
+                    layout={{ position: 'absolute', right: 7, width: 66, top: 8, bottom: 6, minWidth: 66, maxWidth: 66 }}
                 >
                     {t('play_preview_button')}
                 </Button>

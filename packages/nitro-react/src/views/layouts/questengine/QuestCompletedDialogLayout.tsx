@@ -28,11 +28,11 @@ export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongr
             caption={t('quests.completed.caption')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 426, height: 215, ...layout }}
+            layout={{ width: 426, height: 215, minWidth: 426, minHeight: 215, ...layout }}
         >
             <Region
                 backgroundColor="#7d7da6"
-                layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 95 }}
+                layout={{ position: 'absolute', left: 1, right: -11, top: 0, bottom: 54 }}
             />
             <ThemeImage
                 name="reward_icon"
@@ -57,7 +57,7 @@ export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongr
             />
             <Region
                 name="congrats_txt"
-                layout={{ position: 'absolute', left: 138, right: 5, top: 22, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 138, right: -7, top: 22, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCongratsTxt ?? t('quests.completed.congrats')}
@@ -66,7 +66,7 @@ export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongr
             </Region>
             <Region
                 name="desc_txt"
-                layout={{ position: 'absolute', left: 139, right: 5, top: 48, height: 31, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 139, right: -7, top: 48, height: 31, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionDescTxt ?? 'desc_txt jhg kjh gjkhg kjh gjkh gkjh gkjh gkjh gkjhg kjhg kjh'}
@@ -75,7 +75,7 @@ export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongr
             </Region>
             <Region
                 name="reward_txt"
-                layout={{ position: 'absolute', left: 138, right: -3, bottom: 104, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 138, right: -15, bottom: 63, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionRewardTxt ?? 'reward_txt'}
@@ -86,7 +86,7 @@ export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongr
                 variant="3"
                 name="next_quest_button"
                 onPointerTap={onNextQuestButton}
-                layout={{ position: 'absolute', right: 13, width: 141, bottom: 45, height: 29, minWidth: 141, maxWidth: 141 }}
+                layout={{ position: 'absolute', right: 1, width: 141, bottom: 4, height: 29, minWidth: 141, maxWidth: 141 }}
             >
                 {t('quests.completed.next')}
             </ButtonThick>
@@ -94,7 +94,7 @@ export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongr
                 name="catalog_link_region"
                 onPointerTap={onCatalogLinkRegion}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 19, width: 91, bottom: 52, height: 18 }}
+                layout={{ position: 'absolute', left: 19, width: 91, bottom: 11, height: 18 }}
             >
                 <Region
                     name="catalog_link_txt"
@@ -107,7 +107,7 @@ export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongr
                 variant="3"
                 name="more_quests_button"
                 onPointerTap={onMoreQuestsButton}
-                layout={{ position: 'absolute', right: 134, width: 157, bottom: 45, height: 29, minWidth: 157, maxWidth: 157 }}
+                layout={{ position: 'absolute', right: 122, width: 157, bottom: 4, height: 29, minWidth: 157, maxWidth: 157 }}
             >
                 {t('quests.campaigncompleted.more')}
             </ButtonThick>

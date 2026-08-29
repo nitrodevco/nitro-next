@@ -19,7 +19,7 @@ export const CollectibleHubLayoutNavigationContainer2 = ({ itemsNavigationList, 
             <Border
                 variant="6"
                 blend={0.5}
-                layout={{ position: 'absolute', left: 0, width: 184, top: 0, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
             <ScrollArea
                 orientation="vertical"

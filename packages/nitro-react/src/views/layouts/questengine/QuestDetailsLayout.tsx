@@ -16,7 +16,7 @@ export const QuestDetailsLayout = ({ layout, onClose }: QuestDetailsLayoutProps)
             caption={t('quests.details.caption')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 493, height: 253, ...layout }}
+            layout={{ width: 493, height: 253, minWidth: 493, minHeight: 253, ...layout }}
         />
     );
 };

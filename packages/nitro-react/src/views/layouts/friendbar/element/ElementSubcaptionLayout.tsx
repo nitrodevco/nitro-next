@@ -9,7 +9,7 @@ export interface ElementSubcaptionLayoutProps {
 export const ElementSubcaptionLayout = ({ colorableTextColor, layout }: ElementSubcaptionLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 250, height: 15, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText
                     text="Desc PH"
                     textStyle="text-style-il-heading-3"

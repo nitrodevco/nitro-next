@@ -22,7 +22,7 @@ export const HabbiconHubLayoutHabbiconPopupBottomBarItem = ({ captionHabbiconPop
             blend={0}
             layout={{ width: 180, height: 28, flexShrink: 0, ...layout }}
         >
-            <Region layout={{ position: 'absolute', right: 12, width: 91, top: 0, height: 28, flexDirection: 'row', gap: 4 }}>
+            <Region layout={{ position: 'absolute', right: 12, width: 91, top: 0, bottom: 0, flexDirection: 'row', gap: 4 }}>
                 {(visibleHabbiconPopupPrice ?? true) && (
                     <Region
                         name="habbicon_popup_price"

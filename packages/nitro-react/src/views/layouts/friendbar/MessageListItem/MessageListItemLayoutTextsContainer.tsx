@@ -30,7 +30,7 @@ export const MessageListItemLayoutTextsContainer = ({ captionDate, captionReplyN
                     textOptions={{ fill: '#eeeeee' }}
                 />
             </Region>
-            <Region layout={{ position: 'absolute', right: 0, width: 106, top: 0, height: 26, flexDirection: 'row' }}>
+            <Region layout={{ position: 'absolute', right: 0, width: 106, top: 0, bottom: 0, flexDirection: 'row' }}>
                 <Region
                     name="reply_num"
                     layout={{ width: 40, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}

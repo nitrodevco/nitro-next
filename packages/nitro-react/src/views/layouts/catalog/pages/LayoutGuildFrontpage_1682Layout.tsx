@@ -19,13 +19,13 @@ export const LayoutGuildFrontpage_1682Layout = ({ buyGuildWidget, captionCtlgDes
         <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
             <Region
                 name="ctlg_guild_frontpage"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="ctlg_teaserimg_1"
                     src={srcCtlgTeaserimg1}
                     tint={tintCtlgTeaserimg1}
-                    layout={{ position: 'absolute', left: 0, width: 359, top: 288, height: 163 }}
+                    layout={{ position: 'absolute', left: 0, width: 359, bottom: 9, height: 163 }}
                 />
                 <Region
                     name="ctlg_special_txt"
@@ -38,7 +38,7 @@ export const LayoutGuildFrontpage_1682Layout = ({ buyGuildWidget, captionCtlgDes
                 </Region>
                 <Region
                     name="ctlg_description"
-                    layout={{ position: 'absolute', left: 15, width: 335, top: 176, height: 82, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 10, width: 335, top: 176, height: 82, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionCtlgDescription ?? t('lorem.header')}
@@ -46,7 +46,7 @@ export const LayoutGuildFrontpage_1682Layout = ({ buyGuildWidget, captionCtlgDes
                     />
                 </Region>
                 <BuyGuildWidget
-                    layout={{ position: 'absolute', left: 49, width: 267, top: 251, height: 45 }}
+                    layout={{ position: 'absolute', marginLeft: 2.5, marginRight: -2.5, width: 267, top: 251, height: 45 }}
                     {...buyGuildWidget}
                 />
             </Region>

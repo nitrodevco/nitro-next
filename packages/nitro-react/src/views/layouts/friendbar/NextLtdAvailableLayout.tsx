@@ -21,7 +21,7 @@ export const NextLtdAvailableLayout = ({ captionHeader, colorableTextColor, coun
         <Region layout={{ position: 'relative', width: 541, height: 60, ...layout }}>
             <Border
                 variant="100"
-                layout={{ position: 'absolute', left: 0, width: 541, top: 0, height: 60 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     src="${image.library.url}reception/new_limited_released.png"
@@ -62,7 +62,7 @@ export const NextLtdAvailableLayout = ({ captionHeader, colorableTextColor, coun
                         variant="100"
                         name="catalogue_button"
                         onPointerTap={onCatalogueButton}
-                        layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 43 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 43 }}
                     >
                         {t('landing.view.next.ltd.opencatalogue')}
                     </Button>

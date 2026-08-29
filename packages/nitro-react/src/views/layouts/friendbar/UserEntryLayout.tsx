@@ -23,7 +23,7 @@ export const UserEntryLayout = ({ avatarImageWidget, layout, onBgRegion, onExtra
                 tooltip={t('group.members.showinfo')}
                 onPointerTap={onBgRegion}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 48, top: 0, height: 158 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <WidgetSlot
                     widgetType="avatar_image"
@@ -36,7 +36,7 @@ export const UserEntryLayout = ({ avatarImageWidget, layout, onBgRegion, onExtra
                     name="extra_link_region"
                     onPointerTap={onExtraLinkRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 12, width: 26, top: 112, height: 24 }}
+                    layout={{ position: 'absolute', left: 12, right: 10, top: 112, height: 24 }}
                 >
                     <ThemeImage
                         name="extra_link_icon"

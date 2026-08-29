@@ -19,7 +19,7 @@ export const TargetedOfferHabbomallLayout = ({ captionTxtDescription, captionTxt
             variant="3"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 268, height: 362, ...layout }}
+            layout={{ width: 268, height: 362, minWidth: 268, minHeight: 362, ...layout }}
         >
             <ThemeImage
                 name="bmp_illustration"
@@ -29,17 +29,17 @@ export const TargetedOfferHabbomallLayout = ({ captionTxtDescription, captionTxt
             <Border
                 variant="3"
                 tintColor="#ffde5a"
-                layout={{ position: 'absolute', left: 10, width: 240, top: 153, height: 122 }}
+                layout={{ position: 'absolute', left: 10, right: 6, top: 153, height: 122 }}
             >
                 <Region
                     name="txt_title"
-                    layout={{ position: 'absolute', left: 8, width: 225, top: 8, height: 32, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 8, right: 7, top: 8, height: 32, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     {captionTxtTitle ?? ''}
                 </Region>
                 <Region
                     name="txt_description"
-                    layout={{ position: 'absolute', left: 8, width: 224, top: 40, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 8, right: 8, bottom: 7, height: 75, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTxtDescription ?? t('targeted.offer.habbomall.notification')}
@@ -52,7 +52,7 @@ export const TargetedOfferHabbomallLayout = ({ captionTxtDescription, captionTxt
                 name="btn_buy"
                 tintColor="#4faf4f"
                 onPointerTap={onBtnBuy}
-                layout={{ position: 'absolute', left: 53, width: 197, top: 284, height: 30 }}
+                layout={{ position: 'absolute', right: 6, width: 197, bottom: 7, height: 30 }}
             >
                 {t('targeted.offer.open.habbomall')}
             </ButtonThick>

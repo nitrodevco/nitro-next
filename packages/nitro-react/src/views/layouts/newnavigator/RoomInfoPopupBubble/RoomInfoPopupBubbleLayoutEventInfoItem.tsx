@@ -26,7 +26,7 @@ export const RoomInfoPopupBubbleLayoutEventInfoItem = ({ captionEventDesc, capti
             {(visibleEventName ?? true) && (
                 <Region
                     name="event_name"
-                    layout={{ position: 'absolute', left: 54, width: 275, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 2, width: 275, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionEventName ?? 'EVENT NAME LOREM IPSUM DOLOR SIT AMET'}
@@ -38,7 +38,7 @@ export const RoomInfoPopupBubbleLayoutEventInfoItem = ({ captionEventDesc, capti
             {(visibleEventDesc ?? true) && (
                 <Region
                     name="event_desc"
-                    layout={{ position: 'absolute', left: 54, width: 275, top: 19, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 2, width: 275, bottom: 0, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionEventDesc ?? 'EVENT DESCRIPTION LOREM IPSUM DOLOR SIT AMET'}

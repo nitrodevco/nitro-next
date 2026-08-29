@@ -21,7 +21,7 @@ export const NotificationWiredLayout = ({ captionDescription, itemsSpacing, layo
             <Border
                 variant="2"
                 tintColor="#355477"
-                layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 60 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     src={layoutImage('illumina_wired_bg_right.png')}
@@ -34,7 +34,7 @@ export const NotificationWiredLayout = ({ captionDescription, itemsSpacing, layo
                     <Border
                         variant="2"
                         tintColor="#1e3044"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                     <Region
                         backgroundColor="#1e3044"
@@ -47,7 +47,7 @@ export const NotificationWiredLayout = ({ captionDescription, itemsSpacing, layo
                         />
                     </Region>
                 </Region>
-                <Region layout={{ position: 'absolute', left: 0, width: 190, top: 31, height: 23, flexDirection: 'column' }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 31, height: 23, flexDirection: 'column' }}>
                     <Region
                         name="description"
                         layout={{ width: 174, height: 16, flexShrink: 0, minWidth: 174, maxWidth: 174, minHeight: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}

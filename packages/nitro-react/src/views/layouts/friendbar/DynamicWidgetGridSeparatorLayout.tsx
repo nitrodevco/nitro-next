@@ -13,7 +13,7 @@ export interface DynamicWidgetGridSeparatorLayoutProps {
 export const DynamicWidgetGridSeparatorLayout = ({ captionSeparatorTitle, colorableTextColor, layout, srcBorderBar, srcHdrLine }: DynamicWidgetGridSeparatorLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 500, height: 20, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 20, flexDirection: 'row', gap: 6 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'row', gap: 6 }}>
                 <ThemeImage
                     name="border_bar"
                     src={srcBorderBar ?? layoutImage('illumina_light_border_top_center.png')}
@@ -21,7 +21,7 @@ export const DynamicWidgetGridSeparatorLayout = ({ captionSeparatorTitle, colora
                 />
                 <Region
                     name="separator_title"
-                    layout={{ width: 40, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ width: 40, alignSelf: 'stretch', flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionSeparatorTitle ?? 'Title PH'}

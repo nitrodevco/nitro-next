@@ -18,7 +18,7 @@ export const GuardianChatReviewAcceptLayoutItemlist = ({ itemsItemlist, layout }
     return (
         <Region
             name="itemlist"
-            layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 221, flexDirection: 'column', ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 3, flexDirection: 'column', ...layout }}
         >
             {itemsItemlist ?? (
                 <>

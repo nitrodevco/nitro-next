@@ -23,11 +23,11 @@ export const BreedPetMenuLayoutBorder = ({ captionName, itemsButtons, layout, on
                 name="profile_link"
                 onPointerTap={onProfileLink}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 7, height: 16, justifyContent: 'center' }}
             >
                 <Region
                     name="name"
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionName ?? 'my_name_here'}

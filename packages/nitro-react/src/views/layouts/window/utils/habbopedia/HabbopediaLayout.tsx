@@ -17,15 +17,15 @@ export const HabbopediaLayout = ({ captionContent, layout, onClose }: Habbopedia
             caption={t('habbopedia.title')}
             tintColor="#67a3bf"
             onClose={onClose}
-            layout={{ width: 420, height: 400, ...layout }}
+            layout={{ width: 420, height: 400, minWidth: 300, minHeight: 300, ...layout }}
         >
             <Border
                 variant="3"
-                layout={{ position: 'absolute', left: 4, right: 26, top: 7, bottom: 55 }}
+                layout={{ position: 'absolute', left: 4, right: 14, top: 7, bottom: 14 }}
             />
             <Region
                 name="content"
-                layout={{ position: 'absolute', left: 7, right: 29, top: 7, bottom: 55, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 7, right: 17, top: 7, bottom: 14, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionContent ?? 'Here is some mighty text describing certain Hotel feature. Let\'s see what happens when it goes over the limit.'}

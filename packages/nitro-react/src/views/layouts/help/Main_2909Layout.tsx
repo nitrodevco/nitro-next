@@ -31,7 +31,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
         <Frame
             variant="101"
             onClose={onClose}
-            layout={{ width: 643, height: 532, ...layout }}
+            layout={{ width: 643, height: 532, minWidth: 643, minHeight: 532, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region layout={{ position: 'absolute', left: 0, width: 641, top: -33, height: 50 }}>
@@ -209,7 +209,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                 </Region>
                 <WidgetSlot
                     widgetType="separator"
-                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 574, top: 367, height: 25 }}
+                    layout={{ position: 'absolute', marginLeft: 4.5, marginRight: -4.5, width: 574, top: 367, height: 25 }}
                 >
                     {separatorWidget4}
                     <Region layout={{ position: 'absolute', left: 12, width: 105, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -228,7 +228,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                         name="safetypolicy_link"
                         onPointerTap={onSafetypolicyLink}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 191, top: 0, height: 68, justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 0, width: 191, top: 0, bottom: 0, justifyContent: 'center' }}
                     >
                         <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 170, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                             <ThemeText
@@ -248,7 +248,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                         name="habboway_link"
                         onPointerTap={onHabbowayLink}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 191, width: 193, top: 0, height: 68, justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 191, width: 193, top: 0, bottom: 0, justifyContent: 'center' }}
                     >
                         <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 170, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                             <ThemeText
@@ -268,7 +268,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                         name="faq_link"
                         onPointerTap={onFaqLink}
                         cursor="pointer"
-                        layout={{ position: 'absolute', left: 385, width: 190, top: 0, height: 68, justifyContent: 'center' }}
+                        layout={{ position: 'absolute', left: 385, width: 190, top: 0, bottom: 0, justifyContent: 'center' }}
                     >
                         <Region layout={{ position: 'absolute', width: 170, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                             <ThemeText
@@ -282,7 +282,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     name="payment_link"
                     onPointerTap={onPaymentLink}
                     cursor="pointer"
-                    layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 541, top: 463, height: 23, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 541, top: 463, height: 23, justifyContent: 'center' }}
                 >
                     <Region layout={{ position: 'absolute', width: 129, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText

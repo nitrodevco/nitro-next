@@ -22,7 +22,7 @@ export const ExtendedProfileBadgeDetailsLayoutRarityTagItem = ({ captionRarity, 
                 {(visibleRarityBorder ?? true) && (
                     <Region
                         name="rarity_border"
-                        layout={{ position: 'absolute', left: 5, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 5, top: 2, bottom: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionRarityBorder ?? 'Unique badge'}
@@ -33,7 +33,7 @@ export const ExtendedProfileBadgeDetailsLayoutRarityTagItem = ({ captionRarity, 
                 {(visibleRarity ?? true) && (
                     <Region
                         name="rarity"
-                        layout={{ position: 'absolute', left: 5, width: 81, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 5, right: 6, top: 2, bottom: 2, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
                             text={captionRarity ?? 'Unique badge'}

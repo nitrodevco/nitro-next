@@ -23,7 +23,7 @@ export const PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayContain
         <Region
             name="preview_play_container"
             backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 110, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <ThemeImage
                 name="preview_play_background_image"
@@ -66,7 +66,7 @@ export const PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayContain
                 name="stop_preview_button"
                 tintColor="#cc0000"
                 onPointerTap={onStopPreviewButton}
-                layout={{ position: 'absolute', left: 15, width: 219, top: 76, height: 28 }}
+                layout={{ position: 'absolute', left: 15, width: 219, bottom: 6, height: 28 }}
             >
                 {t('playlist.editor.button.preview.stop')}
             </ButtonThick>

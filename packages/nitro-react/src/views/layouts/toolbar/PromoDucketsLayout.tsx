@@ -13,18 +13,18 @@ export const PromoDucketsLayout = ({ layout, onCloseButton }: PromoDucketsLayout
 
     return (
         <Region layout={{ position: 'relative', width: 278, height: 44, ...layout }}>
-            <Region layout={{ position: 'absolute', right: 0, width: 278, top: 0, height: 44 }}>
+            <Region layout={{ position: 'absolute', right: 0, width: 278, top: 0, bottom: 0 }}>
                 <Border
                     variant="6"
                     tintColor="#757575"
-                    layout={{ position: 'absolute', left: 0, width: 267, top: 0, height: 44 }}
+                    layout={{ position: 'absolute', left: 0, width: 267, top: 0, bottom: 0 }}
                 >
                     <Border
                         variant="3"
                         tintColor="#24231e"
                         layout={{ position: 'absolute', left: 3, width: 261, top: 3, height: 37 }}
                     >
-                        <Region layout={{ position: 'absolute', left: 30, width: 231, top: 0, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                        <Region layout={{ position: 'absolute', left: 30, width: 231, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                             <ThemeText
                                 text={t('purse.duckets.promo')}
                                 textStyle="text-style-u-italic"

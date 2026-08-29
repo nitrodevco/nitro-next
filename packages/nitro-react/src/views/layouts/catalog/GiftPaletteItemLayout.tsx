@@ -18,7 +18,7 @@ export const GiftPaletteItemLayout = ({ layout, onColorContainer, srcBorder, src
                 backgroundColor="#ffffff"
                 onPointerTap={onColorContainer}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 27, top: 0, height: 22 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="color"

@@ -19,7 +19,7 @@ export const NewFeatureNotificationLayout = ({ captionCancelLink, captionDesc, l
             <Border
                 variant="9"
                 tintColor="#686661"
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 92 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="static_bitmap"

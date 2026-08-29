@@ -24,7 +24,7 @@ export const CatalogUbuntuLayoutCatalogHeaderBackgroundBorder = ({ captionBuilde
         <Region
             name="catalog.header.background.border"
             backgroundColor="#376275"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 90, ...layout }}
+            layout={{ position: 'absolute', left: 1, right: -11, top: 0, height: 90, ...layout }}
         >
             <Region
                 name="catalog.header.background.body"
@@ -46,7 +46,7 @@ export const CatalogUbuntuLayoutCatalogHeaderBackgroundBorder = ({ captionBuilde
             {(visibleCatalogModeHeader ?? false) && (
                 <Region
                     name="catalog.mode.header"
-                    layout={{ position: 'absolute', left: 0, width: 570, top: 0, height: 90 }}
+                    layout={{ position: 'absolute', left: 0, width: 570, top: 0, bottom: 0 }}
                 >
                     <Region
                         name="catalog.header.title"
@@ -71,7 +71,7 @@ export const CatalogUbuntuLayoutCatalogHeaderBackgroundBorder = ({ captionBuilde
             )}
             <Region
                 name="builder.mode.header"
-                layout={{ position: 'absolute', left: 0, width: 570, top: 0, height: 90 }}
+                layout={{ position: 'absolute', left: 0, width: 570, top: 0, bottom: 0 }}
             >
                 <Region
                     name="builder.header.title"

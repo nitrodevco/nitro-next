@@ -32,11 +32,12 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
             caption={t('report.status.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 538, height: 220, ...layout }}
+            resizeDirection="none"
+            layout={{ width: 538, height: 220, minWidth: 538, maxWidth: 538, minHeight: 220, maxHeight: 220, ...layout }}
         >
             <Region
                 name="reports_table_cont"
-                layout={{ position: 'absolute', left: 4, right: 3, top: 3, bottom: 41 }}
+                layout={{ position: 'absolute', left: 4, right: -9, top: 3, bottom: 0 }}
             >
                 {reportsTableCont}
             </Region>

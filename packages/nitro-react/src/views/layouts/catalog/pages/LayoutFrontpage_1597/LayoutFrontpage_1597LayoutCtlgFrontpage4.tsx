@@ -17,7 +17,7 @@ export const LayoutFrontpage_1597LayoutCtlgFrontpage4 = ({ captionCtlgTxt1, capt
     return (
         <Region
             name="ctlg_frontpage4"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <ThemeImage
                 name="ctlg_teaserimg_1"
@@ -49,7 +49,7 @@ export const LayoutFrontpage_1597LayoutCtlgFrontpage4 = ({ captionCtlgTxt1, capt
                     />
                 </Region>
                 <RedeemItemCodeWidget
-                    layout={{ position: 'absolute', left: 0, width: 345, top: 20, height: 34 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 34 }}
                     {...redeemItemCodeWidget}
                 />
             </Border>

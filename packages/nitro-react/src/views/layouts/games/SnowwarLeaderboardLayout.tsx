@@ -41,14 +41,14 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
             variant="3"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 437, height: 511, ...layout }}
+            layout={{ width: 437, height: 511, minWidth: 437, minHeight: 511, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <ThemeImage
                     name="background"
                     src={srcBackground ?? layoutImage('leaderboard_bg.png')}
                     tint={tintBackground}
-                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 39 }}
+                    layout={{ position: 'absolute', left: 0, right: -6, top: 0, bottom: -2 }}
                 />
                 <Region
                     name="this_week_region"
@@ -98,7 +98,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                 </Region>
                 <Region
                     name="borderContainer"
-                    layout={{ position: 'absolute', left: 40, width: 350, alignSelf: 'center', marginTop: -31, marginBottom: 31, height: 389, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 40, width: 350, alignSelf: 'center', marginTop: -10.5, marginBottom: 10.5, height: 389, justifyContent: 'center' }}
                 >
                     <Border
                         variant="0"
@@ -142,7 +142,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                 </Region>
                 <Region
                     name="list"
-                    layout={{ position: 'absolute', marginLeft: -3.5, marginRight: 3.5, width: 356, alignSelf: 'center', marginTop: -29.5, marginBottom: 29.5, height: 336, flexDirection: 'column' }}
+                    layout={{ position: 'absolute', marginLeft: 2.5, marginRight: -2.5, width: 356, alignSelf: 'center', marginTop: -9, marginBottom: 9, height: 336, flexDirection: 'column' }}
                 >
                     {itemsList}
                 </Region>

@@ -30,7 +30,7 @@ export const MysteryBoxToolbarExtensionLayout = ({ captionFaqLink, layout, onBox
             <Border
                 variant="6"
                 tintColor="#676767"
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 137 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Border
                     variant="3"
@@ -40,7 +40,7 @@ export const MysteryBoxToolbarExtensionLayout = ({ captionFaqLink, layout, onBox
                 >
                     <Region
                         backgroundColor="#676767"
-                        layout={{ position: 'absolute', left: 0, width: 186, top: 0, height: 20 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
                     />
                     <Region layout={{ position: 'absolute', left: 1, width: 150, top: 3, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <ThemeText
@@ -59,7 +59,7 @@ export const MysteryBoxToolbarExtensionLayout = ({ captionFaqLink, layout, onBox
                             name="box_region"
                             onPointerTap={onBoxRegion}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
+                            layout={{ position: 'absolute', left: 0, width: 39, top: 0, bottom: 0 }}
                         >
                             <ThemeImage
                                 src={layoutImage('mysterybox_tracker_border.png')}
@@ -81,7 +81,7 @@ export const MysteryBoxToolbarExtensionLayout = ({ captionFaqLink, layout, onBox
                             name="key_region"
                             onPointerTap={onKeyRegion}
                             cursor="pointer"
-                            layout={{ position: 'absolute', left: 50, width: 39, top: 0, height: 39 }}
+                            layout={{ position: 'absolute', left: 50, width: 39, top: 0, bottom: 0 }}
                         >
                             <ThemeImage
                                 src={layoutImage('mysterybox_tracker_border.png')}

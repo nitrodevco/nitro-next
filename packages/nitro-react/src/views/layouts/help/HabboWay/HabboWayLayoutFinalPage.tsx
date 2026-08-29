@@ -50,7 +50,7 @@ export const HabboWayLayoutFinalPage = ({ layout, onBackButton, onQuizButton, se
                     onPointerTap={onBackButton}
                     layout={{ position: 'absolute', left: 21, width: 177, top: 350, height: 60 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}>
+                    <Region layout={{ position: 'absolute', left: 0, right: 0, top: 15, flexDirection: 'row' }}>
                         <Region layout={{ width: 15, height: 30, flexShrink: 0 }} />
                         <ThemeImage
                             name="illustration"

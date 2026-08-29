@@ -63,7 +63,7 @@ export const NavigatorFrame2LayoutSearchTools = ({ layout, onClearSearchButton, 
                         tintColor="#7cc561"
                         onPointerTap={onRefreshButton}
                         textStyle="text-style-button-shiny-regular"
-                        layout={{ position: 'absolute', left: 0, width: 25, top: 0, height: 23 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23 }}
                     />
                     <ThemeImage
                         src={layoutImage('newnavigator_refresh_search_icon.png')}

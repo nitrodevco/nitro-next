@@ -25,7 +25,8 @@ export const UserPendingLayout = ({ captionRequestDescription, captionRequestTyp
             name="user_pending"
             caption={t('guide.help.request.user.pending.title')}
             onClose={onClose}
-            layout={{ width: 282, height: 320, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 282, height: 320, minWidth: 282, maxWidth: 282, minHeight: 290, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 5, minWidth: 270, top: 0, minHeight: 272, maxWidth: 270, flexDirection: 'column', gap: 5 }}>
                 <Border

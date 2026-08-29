@@ -26,7 +26,7 @@ export const WiredMenuViewLayoutHeaderContainer = ({ captionHeaderTitle, headerD
             <Region
                 name="header_border"
                 backgroundColor="#486f81"
-                layout={{ position: 'absolute', left: 0, width: 498, top: 0, height: 50 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="header_inner"

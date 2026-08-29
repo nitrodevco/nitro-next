@@ -30,12 +30,12 @@ export const InventoryLayoutTopContent = ({ captionInventoryEmptyDescription, ca
     return (
         <Region
             name="top_content"
-            layout={{ position: 'absolute', left: 0, width: 478, top: 0, bottom: 41, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <TabContext
                 variant="3"
                 name="tabs"
-                layout={{ position: 'absolute', left: 0, width: 478, top: 0, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <TabButton
                     variant="3"
@@ -95,7 +95,7 @@ export const InventoryLayoutTopContent = ({ captionInventoryEmptyDescription, ca
             {(visibleEmptyContainer ?? false) && (
                 <Region
                     name="empty_container"
-                    layout={{ position: 'absolute', left: 0, width: 478, top: 20, bottom: 3, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 3, justifyContent: 'center' }}
                 >
                     <ThemeImage
                         name="image"

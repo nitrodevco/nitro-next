@@ -18,7 +18,7 @@ export const LayoutRecyclerPrizes_1537LayoutCtlgDefault3x3 = ({ captionCtlgSelec
     return (
         <Region
             name="ctlg_default_3x3"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             {(visibleCtlgSelectproduct ?? false) && (
                 <Region
@@ -36,7 +36,7 @@ export const LayoutRecyclerPrizes_1537LayoutCtlgDefault3x3 = ({ captionCtlgSelec
                 {...specialInfoWidget}
             />
             <RecyclerPrizesWidget2
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 {...recyclerPrizesWidget}
             />
         </Region>

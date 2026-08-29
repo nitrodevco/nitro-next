@@ -27,11 +27,11 @@ export const GuildMembersWindowLayout = ({ footerCont, groupLogo, layout, member
             caption={t('group.members.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 352, height: 431, ...layout }}
+            layout={{ width: 352, height: 431, minWidth: 352, minHeight: 431, ...layout }}
         >
             <Region
                 name="header_cont"
-                layout={{ position: 'absolute', left: 10, right: 9, top: 0, height: 77 }}
+                layout={{ position: 'absolute', left: 10, right: -3, top: 0, height: 77 }}
             >
                 <WidgetSlot
                     widgetType="badge_image"
@@ -60,7 +60,7 @@ export const GuildMembersWindowLayout = ({ footerCont, groupLogo, layout, member
             </Region>
             <Region
                 name="members_cont"
-                layout={{ position: 'absolute', left: 10, right: 9, top: 82, bottom: 72 }}
+                layout={{ position: 'absolute', left: 10, right: -3, top: 82, bottom: 31 }}
             >
                 {membersCont}
             </Region>

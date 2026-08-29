@@ -20,7 +20,7 @@ export const ClubBuyWidgetLayoutClubBuyContent = ({ captionClubHeader, captionCl
     return (
         <Region
             name="club_buy_content"
-            layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 345, justifyContent: 'center', ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
         >
             <Border
                 variant="2"
@@ -45,7 +45,7 @@ export const ClubBuyWidgetLayoutClubBuyContent = ({ captionClubHeader, captionCl
             </Region>
             <Region
                 name="club_info"
-                layout={{ position: 'absolute', left: 7, width: 307, top: 30, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 7, right: 6, top: 30, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionClubInfo ?? t('catalog.club.buy.info')}
@@ -77,7 +77,7 @@ export const ClubBuyWidgetLayoutClubBuyContent = ({ captionClubHeader, captionCl
             </Region>
             <Region
                 name="club_link"
-                layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 307, top: 330, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 307, bottom: -2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionClubLink ?? t('catalog.club.buy.link')}

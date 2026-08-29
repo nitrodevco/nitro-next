@@ -15,7 +15,7 @@ export const AreaHideUiLayoutSelectButtonItem = ({ layout, onSelectButton }: Are
             variant="0"
             name="select_button"
             onPointerTap={onSelectButton}
-            layout={{ width: 211, height: 24, flexShrink: 0, ...layout }}
+            layout={{ width: 211, alignSelf: 'stretch', flexShrink: 0, ...layout }}
         >
             {t('widget.areahide.area_selection.select')}
         </Button>

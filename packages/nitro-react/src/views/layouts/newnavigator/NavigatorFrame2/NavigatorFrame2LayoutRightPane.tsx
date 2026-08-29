@@ -26,7 +26,7 @@ export const NavigatorFrame2LayoutRightPane = ({ blockResults, layout, onCreateR
     return (
         <Region
             name="right_pane"
-            layout={{ position: 'absolute', left: 159, right: 9, top: 25, bottom: 55, justifyContent: 'center', ...layout }}
+            layout={{ position: 'absolute', left: 159, right: -3, top: 25, bottom: 14, justifyContent: 'center', ...layout }}
         >
             <Border
                 variant="4"

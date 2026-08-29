@@ -18,7 +18,7 @@ export const AchievementResolutionProgressLayout = ({ elementList, layout, onClo
             variant="100"
             caption={t('resolution.progress.title')}
             onClose={onClose}
-            layout={{ width: 419, height: 273, ...layout }}
+            layout={{ width: 419, height: 273, minWidth: 340, minHeight: 273, maxHeight: 525, ...layout }}
         >
             <AchievementResolutionProgressLayoutElementList {...elementList} />
         </Frame>

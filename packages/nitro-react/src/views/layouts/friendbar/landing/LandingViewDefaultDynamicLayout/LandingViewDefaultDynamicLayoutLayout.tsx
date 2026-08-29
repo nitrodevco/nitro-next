@@ -13,7 +13,7 @@ export const LandingViewDefaultDynamicLayoutLayout = ({ contentBackground, layou
         <Region layout={{ position: 'relative', width: 1172, height: 822, ...layout }}>
             <Region
                 backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 1172, top: 0, height: 822 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <LandingViewDefaultDynamicLayoutLayoutContentBackground {...contentBackground} />
             </Region>

@@ -16,7 +16,7 @@ export const RoomtoolFrameLayout = ({ layout, listCont, onClose }: RoomtoolFrame
             caption="Room Info"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 240, height: 437, ...layout }}
+            layout={{ width: 240, height: 437, minWidth: 240, minHeight: 437, ...layout }}
         >
             <RoomtoolFrameLayoutListCont {...listCont} />
         </Frame>

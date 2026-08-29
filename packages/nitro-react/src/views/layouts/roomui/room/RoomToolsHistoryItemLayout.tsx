@@ -11,11 +11,11 @@ export const RoomToolsHistoryItemLayout = ({ captionRoomName, layout }: RoomTool
         <Region layout={{ position: 'relative', width: 169, height: 24, ...layout }}>
             <Region
                 dynamicStyle="brightness_and_shadow_under"
-                layout={{ position: 'absolute', left: 0, width: 169, top: 0, height: 24 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <Region
                     name="room_name"
-                    layout={{ position: 'absolute', left: 3, width: 145, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 3, width: 145, top: 3, bottom: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionRoomName ?? 'the greatest room on earth'}

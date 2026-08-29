@@ -44,7 +44,7 @@ export const FeaturedItemsWidget = ({ captionItemTitle, eventCatcherRegion, item
                 name="firstitem"
                 onPointerTap={onFirstitem}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, width: 184, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="item_image"
@@ -73,7 +73,7 @@ export const FeaturedItemsWidget = ({ captionItemTitle, eventCatcherRegion, item
                     name="event_catcher_region"
                     onPointerTap={onEventCatcherRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 184, top: 0, height: 422 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 422 }}
                 >
                     {eventCatcherRegion}
                 </Region>

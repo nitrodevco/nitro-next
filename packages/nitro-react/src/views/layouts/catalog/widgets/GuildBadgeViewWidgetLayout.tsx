@@ -15,7 +15,7 @@ export const GuildBadgeViewWidgetLayout = ({ badge, layout }: GuildBadgeViewWidg
                 widgetType="badge_image"
                 name="badge"
                 options={{ 'badge_image:type': 'group' }}
-                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 {badge}
             </WidgetSlot>

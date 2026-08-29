@@ -128,7 +128,7 @@ export const GrsGuestRoomDetailsLongLayoutDetailsContainer = ({ captionDoormodeI
                 />
                 <Region
                     name="infotxt"
-                    layout={{ position: 'absolute', left: 35, width: 198, top: 0, height: 31, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 35, width: 198, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInfotxt ?? t('navigator.info.doorbell')}
@@ -148,7 +148,7 @@ export const GrsGuestRoomDetailsLongLayoutDetailsContainer = ({ captionDoormodeI
                 />
                 <Region
                     name="infotxt"
-                    layout={{ position: 'absolute', left: 35, width: 198, top: 0, height: 31, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 35, width: 198, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionDoormodeInvisibleInfotxt ?? t('navigator.info.invisible')}
@@ -168,7 +168,7 @@ export const GrsGuestRoomDetailsLongLayoutDetailsContainer = ({ captionDoormodeI
                 />
                 <Region
                     name="infotxt"
-                    layout={{ position: 'absolute', left: 35, width: 198, top: 0, height: 31, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 35, width: 198, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionDoormodePasswordInfotxt ?? t('navigator.info.password')}
@@ -188,7 +188,7 @@ export const GrsGuestRoomDetailsLongLayoutDetailsContainer = ({ captionDoormodeI
                 />
                 <Region
                     name="infotxt"
-                    layout={{ position: 'absolute', left: 35, width: 198, top: 0, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 35, width: 198, top: 0, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionTradingAllowedInfotxt ?? t('navigator.info.tradingallowed')}

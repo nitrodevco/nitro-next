@@ -16,7 +16,7 @@ export const SeasonalCalendarLayoutPromoInfoCont = ({ captionPromoHeader, captio
     return (
         <Region
             name="promo_info_cont"
-            layout={{ position: 'absolute', left: 106, width: 276, top: 0, height: 97, ...layout }}
+            layout={{ position: 'absolute', left: 106, width: 276, top: 0, bottom: 0, ...layout }}
         >
             <Region
                 name="promo_header"

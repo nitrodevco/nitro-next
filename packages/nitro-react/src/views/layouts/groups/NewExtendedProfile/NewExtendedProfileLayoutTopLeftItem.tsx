@@ -64,7 +64,7 @@ export const NewExtendedProfileLayoutTopLeftItem = ({ avatarImage, badge0, badge
             {(visibleChangeOwnAttributes ?? true) && (
                 <Region
                     name="change_own_attributes"
-                    layout={{ position: 'absolute', left: 0, width: 257, top: 117, height: 15 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 117, height: 15 }}
                 >
                     {(visibleChangeLooks ?? true) && (
                         <Region

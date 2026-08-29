@@ -26,11 +26,12 @@ export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearch
             caption={t('widget.chooser.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 290, height: 357, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 290, height: 357, minWidth: 290, maxWidth: 290, minHeight: 270, ...layout }}
         >
             <Border
                 variant="105"
-                layout={{ position: 'absolute', left: 6, right: 130, top: 18, height: 26 }}
+                layout={{ position: 'absolute', left: 6, right: 118, top: 18, height: 26 }}
             >
                 <Region
                     name="search_placeholder"
@@ -65,19 +66,19 @@ export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearch
                 variant="3"
                 name="type_dropdown"
                 onPointerTap={onTypeDropdown}
-                layout={{ position: 'absolute', right: 18, width: 100, top: 18, height: 25 }}
+                layout={{ position: 'absolute', right: 6, width: 100, top: 18, height: 25 }}
             >
                 {t('new_user_chooser.usertype.all')}
             </Dropmenu>
             <Region
                 name="table_container"
-                layout={{ position: 'absolute', left: 6, right: 18, top: 53, bottom: 61 }}
+                layout={{ position: 'absolute', left: 6, right: 6, top: 53, bottom: 20 }}
             >
                 {tableContainer}
             </Region>
             <Region
                 name="amount_indicator"
-                layout={{ position: 'absolute', left: 6, width: 212, bottom: 37, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 6, width: 212, bottom: -4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 {captionAmountIndicator ?? t('new_user_chooser.amount_indicator')}
             </Region>

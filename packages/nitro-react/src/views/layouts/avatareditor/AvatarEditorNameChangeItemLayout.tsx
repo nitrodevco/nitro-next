@@ -11,7 +11,7 @@ export const AvatarEditorNameChangeItemLayout = ({ captionContent, layout }: Ava
         <Region layout={{ position: 'relative', width: 22, height: 16, ...layout }}>
             <Region
                 name="content"
-                layout={{ position: 'absolute', left: 4, width: 22, top: 4, height: 16, minWidth: 2, maxWidth: 120, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 4, right: -4, top: 4, bottom: -4, minWidth: 2, maxWidth: 120, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionContent ?? 'fef'}

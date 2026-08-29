@@ -16,7 +16,7 @@ export const PlaylisteditorInventorySubwindowGetMoreMusicLayout = ({ layout, onO
         <Region layout={{ position: 'relative', width: 278, height: 110, ...layout }}>
             <Region
                 name="get_more_music_container"
-                layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 110 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="get_more_music_background_image"
@@ -33,14 +33,14 @@ export const PlaylisteditorInventorySubwindowGetMoreMusicLayout = ({ layout, onO
                 <Region layout={{ position: 'absolute', left: 15, width: 285, top: 35, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     {t('playlist.editor.text.you.have.no.songdisks.available')}
                 </Region>
-                <Region layout={{ position: 'absolute', left: 15, width: 319, top: 50, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <Region layout={{ position: 'absolute', left: 15, width: 319, alignSelf: 'center', marginTop: 3.5, marginBottom: -3.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     {t('playlist.editor.text.you.can.buy.some.from.the.catalogue')}
                 </Region>
                 <ButtonThick
                     variant="3"
                     name="open_catalog_button"
                     onPointerTap={onOpenCatalogButton}
-                    layout={{ position: 'absolute', left: 15, width: 233, top: 73, height: 29 }}
+                    layout={{ position: 'absolute', left: 15, width: 233, bottom: 8, height: 29 }}
                 >
                     {t('playlist.editor.button.open.catalogue')}
                 </ButtonThick>

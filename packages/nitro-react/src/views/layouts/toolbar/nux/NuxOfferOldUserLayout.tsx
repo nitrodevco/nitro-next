@@ -21,11 +21,11 @@ export const NuxOfferOldUserLayout = ({ captionBtnSkip, captionTxtBody, layout, 
             caption={t('notification.notification.nux.popup.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 456, height: 220, ...layout }}
+            layout={{ width: 456, height: 220, minWidth: 456, minHeight: 220, ...layout }}
         >
             <Region
                 backgroundColor="#3d6373"
-                layout={{ position: 'absolute', left: 0, right: 2, top: 23, bottom: 137 }}
+                layout={{ position: 'absolute', left: 0, right: -10, top: 23, bottom: 96 }}
             >
                 <Region
                     backgroundColor="#0f4052"
@@ -76,7 +76,7 @@ export const NuxOfferOldUserLayout = ({ captionBtnSkip, captionTxtBody, layout, 
                         name="btnGo"
                         tintColor="#1da100"
                         onPointerTap={onBtnGo}
-                        layout={{ position: 'absolute', left: 168, width: 130, top: 0, height: 30, minWidth: 130, maxWidth: 130 }}
+                        layout={{ position: 'absolute', left: 168, width: 130, top: 0, bottom: 0, minWidth: 130, maxWidth: 130 }}
                     >
                         {t('nux.offer.old.user.button.verify')}
                     </ButtonThick>

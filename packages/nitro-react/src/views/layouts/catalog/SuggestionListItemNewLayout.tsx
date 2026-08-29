@@ -18,7 +18,7 @@ export const SuggestionListItemNewLayout = ({ captionNameText, layout, onSuggest
                 backgroundColor="#cceeff"
                 onPointerTap={onSuggestionListItem}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 262, top: 0, height: 20, minWidth: 150, maxWidth: 262, minHeight: 20, maxHeight: 20 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 150, maxWidth: 262, minHeight: 20, maxHeight: 20 }}
             >
                 <Region
                     name="name_text"

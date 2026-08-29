@@ -19,13 +19,13 @@ export const SendMsgsLayout = ({ layout, onClose, onMsgTemplatesSelect, onSendMe
             caption="Msg to:"
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 212, height: 168, ...layout }}
+            layout={{ width: 212, height: 168, minWidth: 212, minHeight: 168, ...layout }}
         >
             <Dropmenu
                 variant="0"
                 name="msgTemplatesSelect"
                 onPointerTap={onMsgTemplatesSelect}
-                layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 20 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
             >
                 Select from message templates
             </Dropmenu>
@@ -33,13 +33,13 @@ export const SendMsgsLayout = ({ layout, onClose, onMsgTemplatesSelect, onSendMe
                 value={messageInputValue}
                 onChange={setMessageInputValue}
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 199, top: 25, height: 58 }}
+                layout={{ position: 'absolute', left: 0, right: 1, top: 25, height: 58 }}
             />
             <Button
                 variant="0"
                 name="send_message_but"
                 onPointerTap={onSendMessageBut}
-                layout={{ position: 'absolute', left: 0, width: 200, top: 115, height: 21, minWidth: 200, maxWidth: 200 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: -9, height: 21, minWidth: 200, maxWidth: 200 }}
             >
                 Send message
             </Button>

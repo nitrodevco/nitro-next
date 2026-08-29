@@ -18,9 +18,10 @@ export const ErrorWindowLayout = ({ layout, onClose, onCloseButton }: ErrorWindo
             name="error_window"
             caption={t('guide.help.request.error.title')}
             onClose={onClose}
-            layout={{ width: 242, height: 147, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 242, height: 147, minWidth: 242, maxWidth: 242, minHeight: 50, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 8, top: 0, bottom: 48, flexDirection: 'column' }}>
+            <Region layout={{ position: 'absolute', left: 8, top: 0, bottom: 7, flexDirection: 'column' }}>
                 <Region layout={{ width: 221, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <ThemeText
                         text={t('guide.help.request.error.heading')}

@@ -25,7 +25,8 @@ export const RocCreateRoomLayout = ({ captionChooseLayoutCaption, itemsLayoutIte
             caption={t('navigator.createroom.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 585, height: 367, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 585, height: 367, minWidth: 600, maxWidth: 585, minHeight: 367, ...layout }}
         >
             <RocCreateRoomLayoutRoomSettingsContainer {...roomSettingsContainer} />
             <Region

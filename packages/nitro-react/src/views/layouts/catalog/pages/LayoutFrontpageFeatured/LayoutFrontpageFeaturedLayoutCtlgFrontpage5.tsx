@@ -17,10 +17,10 @@ export const LayoutFrontpageFeaturedLayoutCtlgFrontpage5 = ({ captionCtlgTxt2, f
     return (
         <Region
             name="ctlg_frontpage5"
-            layout={{ position: 'absolute', left: 0, width: 552, top: 0, height: 460, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <FeaturedItemsWidget
-                layout={{ position: 'absolute', left: 0, width: 552, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 {...featuredItemsWidget}
             />
             <Border
@@ -39,7 +39,7 @@ export const LayoutFrontpageFeaturedLayoutCtlgFrontpage5 = ({ captionCtlgTxt2, f
                     />
                 </Region>
                 <RedeemItemCodeWidget
-                    layout={{ position: 'absolute', left: 0, width: 345, top: 20, height: 34 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 34 }}
                     {...redeemItemCodeWidget}
                 />
             </Border>

@@ -19,7 +19,7 @@ export const PurchaseConfirmationLayout = ({ content, layout, onClose }: Purchas
             caption={t('catalog.purchase_confirmation.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 325, height: 339, ...layout }}
+            layout={{ width: 325, height: 339, minWidth: 275, minHeight: 150, ...layout }}
         >
             <PurchaseConfirmationLayoutContent {...content} />
         </Frame>

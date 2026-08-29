@@ -21,7 +21,8 @@ export const InventoryTradingNameScamWarningLayout = ({ contentList, layout, onC
             caption={t('inventory.trading.namescam.title')}
             tintColor="#d43d59"
             onClose={onClose}
-            layout={{ width: 356, height: 333, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 356, height: 333, minWidth: 356, maxWidth: 356, minHeight: 333, ...layout }}
         >
             <InventoryTradingNameScamWarningLayoutContentList {...contentList} />
         </Frame>

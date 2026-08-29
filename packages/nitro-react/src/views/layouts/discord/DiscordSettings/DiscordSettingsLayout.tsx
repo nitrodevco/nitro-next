@@ -28,7 +28,7 @@ export const DiscordSettingsLayout = ({ captionDescTxt, captionTitle, layout, on
             caption={t('discord_activity.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 377, height: 551, ...layout }}
+            layout={{ width: 377, height: 551, minWidth: 377, minHeight: 551, ...layout }}
         >
             <Region
                 name="header"
@@ -66,7 +66,7 @@ export const DiscordSettingsLayout = ({ captionDescTxt, captionTitle, layout, on
                 name="funny_button"
                 tintColor="#bbbbbb"
                 onPointerTap={onFunnyButton}
-                layout={{ position: 'absolute', left: 14, width: 348, bottom: 44, height: 28, minWidth: 348, maxWidth: 348 }}
+                layout={{ position: 'absolute', left: 14, width: 348, bottom: 3, height: 28, minWidth: 348, maxWidth: 348 }}
             >
                 {t('discord_activity.funny_button')}
             </Button>

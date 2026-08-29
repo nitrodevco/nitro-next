@@ -20,7 +20,7 @@ export const IroRoomThumbnailCameraLayout = ({ layout, onButtonCancel, onButtonC
             caption={t('navigator.thumbnail.camera.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 148, height: 217, ...layout }}
+            layout={{ width: 148, height: 217, minWidth: 148, minHeight: 217, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <Region
@@ -34,7 +34,7 @@ export const IroRoomThumbnailCameraLayout = ({ layout, onButtonCancel, onButtonC
                         layout={{ position: 'absolute', left: 1, width: 110, top: 1, height: 110 }}
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 135, top: 138, height: 30, flexDirection: 'row', gap: 5 }}>
+                <Region layout={{ position: 'absolute', marginLeft: 3.5, marginRight: -3.5, width: 135, top: 138, height: 30, flexDirection: 'row', gap: 5 }}>
                     <ButtonThick
                         variant="6"
                         name="button_cancel"

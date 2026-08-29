@@ -30,24 +30,25 @@ export const NavigatorFrame2Layout = ({ itemsQuicklinksList, layout, leftPaneHid
             caption={t('navigator.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 578, height: 628, ...layout }}
+            resizeDirection="y"
+            layout={{ width: 578, height: 628, minWidth: 578, maxWidth: 578, minHeight: 500, ...layout }}
         >
             <Border
                 variant="3"
                 tintColor="#eceae0"
-                layout={{ position: 'absolute', left: -3, right: 4, top: -3, bottom: 53 }}
+                layout={{ position: 'absolute', left: -3, right: -8, top: -3, bottom: 12 }}
             />
             <Region
                 name="white_background"
                 backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: -2, right: 4, top: -5, height: 33 }}
+                layout={{ position: 'absolute', left: -2, right: -8, top: -5, height: 33 }}
             >
                 {whiteBackground}
             </Region>
             <Border
                 variant="2"
                 name="left_pane"
-                layout={{ position: 'absolute', left: 6, width: 141, top: 35, bottom: 55 }}
+                layout={{ position: 'absolute', left: 6, width: 141, top: 35, bottom: 14 }}
             >
                 <NavigatorFrame2LayoutLeftPaneHide {...leftPaneHide} />
                 <ScrollArea
@@ -79,7 +80,7 @@ export const NavigatorFrame2Layout = ({ itemsQuicklinksList, layout, leftPaneHid
             </Region>
             <ThemeImage
                 src={layoutImage('talent_task_progress_bg.png')}
-                layout={{ position: 'absolute', left: -2, right: -5, top: 28, height: 1 }}
+                layout={{ position: 'absolute', left: -2, right: -17, top: 28, height: 1 }}
             />
             <TabContext
                 variant="3"

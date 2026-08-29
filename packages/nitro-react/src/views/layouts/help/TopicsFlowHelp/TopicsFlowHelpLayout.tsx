@@ -49,7 +49,7 @@ export const TopicsFlowHelpLayout = ({ captionButtonText, captionChangeUser, cap
             caption={t('help.button.cfh')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 448, height: 522, ...layout }}
+            layout={{ width: 448, height: 522, minWidth: 448, minHeight: 522, ...layout }}
         >
             {(visibleStartContainer ?? false) && (
                 <TopicsFlowHelpLayoutStartContainer {...startContainer} />
@@ -78,11 +78,11 @@ export const TopicsFlowHelpLayout = ({ captionButtonText, captionChangeUser, cap
                 >
                     <Region
                         backgroundColor="#8899a2"
-                        layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 90 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                     <Region
                         backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 446, top: 89, height: 1 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 89, height: 1 }}
                     />
                     <WidgetSlot
                         widgetType="avatar_image"

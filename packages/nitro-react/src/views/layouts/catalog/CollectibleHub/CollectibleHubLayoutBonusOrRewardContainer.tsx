@@ -16,7 +16,7 @@ export const CollectibleHubLayoutBonusOrRewardContainer = ({ completionHeaderCon
     return (
         <Region
             name="bonus_or_reward_container"
-            layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 200, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 200, ...layout }}
         >
             <CollectibleHubLayoutCompletionHeaderContainer {...completionHeaderContainer} />
             <Button

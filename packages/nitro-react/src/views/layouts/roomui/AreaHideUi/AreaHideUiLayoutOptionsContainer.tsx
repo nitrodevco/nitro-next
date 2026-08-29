@@ -20,11 +20,11 @@ export const AreaHideUiLayoutOptionsContainer = ({ captionInvertInfo, captionInv
     return (
         <Region
             name="options_container"
-            layout={{ position: 'absolute', left: 0, width: 262, top: 20, height: 123, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 123, ...layout }}
         >
             <Region
                 name="wallitem_option"
-                layout={{ position: 'absolute', left: 0, width: 262, top: 0, height: 55 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 55 }}
             >
                 <CheckBox
                     variant="0"
@@ -34,7 +34,7 @@ export const AreaHideUiLayoutOptionsContainer = ({ captionInvertInfo, captionInv
                 />
                 <Region
                     name="wallitems_txt"
-                    layout={{ position: 'absolute', left: 20, width: 240, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 2, width: 240, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionWallitemsTxt ?? t('widget.areahide.options.wallitems')}
@@ -45,7 +45,7 @@ export const AreaHideUiLayoutOptionsContainer = ({ captionInvertInfo, captionInv
             </Region>
             <Region
                 name="invert_option"
-                layout={{ position: 'absolute', left: 0, width: 262, top: 20, height: 43 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 43 }}
             >
                 <CheckBox
                     variant="0"
@@ -55,7 +55,7 @@ export const AreaHideUiLayoutOptionsContainer = ({ captionInvertInfo, captionInv
                 />
                 <Region
                     name="invert_txt"
-                    layout={{ position: 'absolute', left: 20, width: 240, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 2, width: 240, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInvertTxt ?? t('widget.areahide.options.invert')}
@@ -65,7 +65,7 @@ export const AreaHideUiLayoutOptionsContainer = ({ captionInvertInfo, captionInv
                 </Region>
                 <Region
                     name="invert_info"
-                    layout={{ position: 'absolute', left: 20, width: 242, top: 16, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 0, width: 242, bottom: -3, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInvertInfo ?? t('widget.areahide.options.invert.info')}
@@ -76,7 +76,7 @@ export const AreaHideUiLayoutOptionsContainer = ({ captionInvertInfo, captionInv
             </Region>
             <Region
                 name="invisibility_option"
-                layout={{ position: 'absolute', left: 0, width: 262, top: 68, height: 55 }}
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 55 }}
             >
                 <CheckBox
                     variant="0"
@@ -86,7 +86,7 @@ export const AreaHideUiLayoutOptionsContainer = ({ captionInvertInfo, captionInv
                 />
                 <Region
                     name="invisibility_txt"
-                    layout={{ position: 'absolute', left: 20, width: 240, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 2, width: 240, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInvisibilityTxt ?? t('widget.areahide.options.invisibility')}
@@ -96,7 +96,7 @@ export const AreaHideUiLayoutOptionsContainer = ({ captionInvertInfo, captionInv
                 </Region>
                 <Region
                     name="invisibility_info"
-                    layout={{ position: 'absolute', left: 20, width: 242, top: 16, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', right: 0, width: 242, bottom: -1, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionInvisibilityInfo ?? t('widget.areahide.options.invisibility.info')}

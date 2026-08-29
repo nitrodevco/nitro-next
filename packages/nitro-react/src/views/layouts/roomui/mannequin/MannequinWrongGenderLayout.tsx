@@ -15,12 +15,12 @@ export const MannequinWrongGenderLayout = ({ captionDescription, layout, onOkBut
 
     return (
         <Region layout={{ position: 'relative', width: 386, height: 180, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 386, top: 0, height: 180 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
                 <ButtonThick
                     variant="3"
                     name="ok_button"
                     onPointerTap={onOkButton}
-                    layout={{ position: 'absolute', left: 289, width: 75, top: 141, height: 28, minWidth: 75, maxWidth: 140 }}
+                    layout={{ position: 'absolute', left: 289, width: 75, bottom: 11, height: 28, minWidth: 75, maxWidth: 140 }}
                 >
                     {t('generic.ok')}
                 </ButtonThick>

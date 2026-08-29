@@ -18,7 +18,7 @@ export const AchievementLayout = ({ achievementPicBitmap, bgRegion, layout, onBg
         <Region layout={{ position: 'relative', width: 62, height: 60, ...layout }}>
             <Region
                 name="achievement_container"
-                layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             >
                 <ThemeImage
                     name="bg_unselected_bitmap"
@@ -36,7 +36,7 @@ export const AchievementLayout = ({ achievementPicBitmap, bgRegion, layout, onBg
                     widgetType="badge_image"
                     name="achievement_pic_bitmap"
                     options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                    layout={{ position: 'absolute', left: 11, width: 40, top: 10, height: 40 }}
+                    layout={{ position: 'absolute', left: 11, right: 11, top: 10, bottom: 10 }}
                 >
                     {achievementPicBitmap}
                 </WidgetSlot>
@@ -44,7 +44,7 @@ export const AchievementLayout = ({ achievementPicBitmap, bgRegion, layout, onBg
                     name="bg_region"
                     onPointerTap={onBgRegion}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {bgRegion}
                 </Region>

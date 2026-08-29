@@ -15,7 +15,7 @@ export const BreedPetsResultLayoutInfoMutate2Item = ({ captionInfoMutate2, layou
         (visibleInfoMutate2 ?? false) && (
             <Region
                 name="info_mutate2"
-                layout={{ width: 122, height: 33, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
+                layout={{ alignSelf: 'stretch', height: 33, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
             >
                 <ThemeText
                     text={captionInfoMutate2 ?? t('breedpetsresult.widget.info.mutation')}

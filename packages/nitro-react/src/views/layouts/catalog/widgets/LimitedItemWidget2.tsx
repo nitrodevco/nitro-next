@@ -25,7 +25,7 @@ export const LimitedItemWidget2 = ({ layout, uniqueItemOverlayContainer, visible
                 <WidgetSlot
                     widgetType="limited_item_overlay_supply"
                     name="unique_item_overlay_container"
-                    layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 40 }}
+                    layout={{ position: 'absolute', left: 0, width: 200, top: 0, bottom: 0 }}
                 >
                     {uniqueItemOverlayContainer}
                 </WidgetSlot>

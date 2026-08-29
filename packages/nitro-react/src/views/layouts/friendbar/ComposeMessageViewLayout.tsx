@@ -35,27 +35,27 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
             caption={t('groupforum.compose.window_title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 455, height: 470, ...layout }}
+            layout={{ width: 455, height: 470, minWidth: 455, minHeight: 455, ...layout }}
         >
             <Region
                 name="top_part"
                 backgroundColor="#0e3f52"
                 onPointerTap={onTopPart}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: -5, right: 7, top: 8, height: 80 }}
+                layout={{ position: 'absolute', left: -5, right: -5, top: 8, height: 80 }}
             >
                 <Region
                     name="top_click_area"
                     onPointerTap={onTopClickArea}
                     cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80 }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 >
                     {topClickArea}
                 </Region>
                 <Region
                     name="icon_background"
                     backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80 }}
+                    layout={{ position: 'absolute', left: 0, width: 80, top: 0, bottom: 0 }}
                 >
                     <WidgetSlot
                         widgetType="badge_image"
@@ -88,7 +88,7 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
             </Region>
             <Region
                 name="thread_subject_container"
-                layout={{ position: 'absolute', left: 0, right: 11, top: 96, height: 48 }}
+                layout={{ position: 'absolute', left: 0, right: -1, top: 96, height: 48 }}
             >
                 <Region
                     backgroundColor="#227aad"
@@ -113,7 +113,7 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
                 name="message_text_container"
                 onPointerTap={onMessageTextContainer}
                 cursor="pointer"
-                layout={{ position: 'absolute', left: 0, right: 11, top: 145, bottom: 105 }}
+                layout={{ position: 'absolute', left: 0, right: -1, top: 145, bottom: 64 }}
             >
                 <Region
                     backgroundColor="#227aad"
@@ -152,7 +152,7 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
                 name="cancel_btn"
                 tintColor="#dddddd"
                 onPointerTap={onCancelBtn}
-                layout={{ position: 'absolute', left: 25, width: 120, bottom: 62, height: 30, minWidth: 120, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 25, width: 120, bottom: 21, height: 30, minWidth: 120, justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionCancelBtnLabel ?? t('groupforum.compose.cancel')}
@@ -164,7 +164,7 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
                 name="post_btn"
                 tintColor="#0a9bc5"
                 onPointerTap={onPostBtn}
-                layout={{ position: 'absolute', right: 40, width: 120, bottom: 62, height: 30, minWidth: 120, justifyContent: 'center' }}
+                layout={{ position: 'absolute', right: 28, width: 120, bottom: 21, height: 30, minWidth: 120, justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionSendMessageLabel ?? t('groupforum.compose.post')}
@@ -174,7 +174,7 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
             </ContainerButton>
             <Region
                 name="status_text"
-                layout={{ position: 'absolute', left: 10, right: 21, bottom: 31, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 10, right: 9, bottom: -10, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionStatusText ?? 'Thread subject should not be empty!'}

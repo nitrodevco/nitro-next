@@ -12,7 +12,7 @@ export const BreedPetsConfirmationLayoutSeparatorItem = ({ layout, separator }: 
     return (
         <Region
             name="separator"
-            layout={{ width: 274, height: 1, flexShrink: 0, ...layout }}
+            layout={{ alignSelf: 'stretch', height: 1, flexShrink: 0, ...layout }}
         >
             {separator}
         </Region>

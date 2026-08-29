@@ -24,7 +24,7 @@ export const SnowwarResultsPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, 
             <Region layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 17 }}>
                 <Region
                     name="playerHitsLabel"
-                    layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 16, minWidth: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 16, minWidth: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerHitsLabel ?? t('snowwar.results.hits')}
@@ -36,7 +36,7 @@ export const SnowwarResultsPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, 
             <Region layout={{ position: 'absolute', left: 62, width: 60, top: 0, height: 17 }}>
                 <Region
                     name="playerHits_stroke"
-                    layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 17, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 >
                     <ThemeText
                         text={captionPlayerHitsStroke ?? '20'}
@@ -46,7 +46,7 @@ export const SnowwarResultsPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, 
                 </Region>
                 <Region
                     name="playerHits"
-                    layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 17, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 >
                     <ThemeText
                         text={captionPlayerHits ?? '20'}
@@ -58,7 +58,7 @@ export const SnowwarResultsPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, 
             <Region layout={{ position: 'absolute', left: 0, width: 114, top: 14, height: 17 }}>
                 <Region
                     name="playerKillsLabel"
-                    layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 16, minWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 16, minWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionPlayerKillsLabel ?? t('snowwar.results.kills')}
@@ -70,7 +70,7 @@ export const SnowwarResultsPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, 
             <Region layout={{ position: 'absolute', left: 62, width: 60, top: 14, height: 17 }}>
                 <Region
                     name="playerKills_stroke"
-                    layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 17, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 >
                     <ThemeText
                         text={captionPlayerKillsStroke ?? '5'}
@@ -80,7 +80,7 @@ export const SnowwarResultsPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, 
                 </Region>
                 <Region
                     name="playerKills"
-                    layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 17, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, minWidth: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
                 >
                     <ThemeText
                         text={captionPlayerKills ?? '5'}

@@ -22,12 +22,12 @@ export const MemenuEffectInactiveLayoutSelectedBorder = ({ captionEffectAmount, 
             name="selected_border"
             onPointerTap={onSelectedBorder}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 154, top: 0, height: 52, ...layout }}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
         >
             <Border
                 variant="2"
                 blend={0}
-                layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 48 }}
+                layout={{ position: 'absolute', left: 0, width: 175, top: 0, bottom: 4 }}
             >
                 <ThemeImage
                     name="effect_icon_bg"
@@ -54,7 +54,7 @@ export const MemenuEffectInactiveLayoutSelectedBorder = ({ captionEffectAmount, 
                     variant="1"
                     name="activate_effect"
                     onPointerTap={onActivateEffect}
-                    layout={{ position: 'absolute', left: 50, width: 98, top: 20, height: 22 }}
+                    layout={{ position: 'absolute', left: 50, width: 98, bottom: 6, height: 22 }}
                 >
                     {t('widgets.memenu.effects.activate')}
                 </Button>
@@ -65,7 +65,7 @@ export const MemenuEffectInactiveLayoutSelectedBorder = ({ captionEffectAmount, 
                 >
                     <Region
                         name="effect_amount_bg2"
-                        layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         backgroundColor="#666666"
                     >
                         <ThemeText

@@ -13,7 +13,7 @@ export const ElementButtonLayout = ({ layout, onActionButton }: ElementButtonLay
                 variant="100"
                 name="action_button"
                 onPointerTap={onActionButton}
-                layout={{ position: 'absolute', left: -11, width: 200, top: 0, height: 48, minWidth: 200, maxWidth: 200, minHeight: 48, maxHeight: 48 }}
+                layout={{ position: 'absolute', left: -11, right: 11, top: 0, bottom: 0, minWidth: 200, maxWidth: 200, minHeight: 48, maxHeight: 48 }}
             >
                 Button Text PH
             </Button>

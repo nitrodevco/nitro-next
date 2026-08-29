@@ -27,7 +27,7 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
             caption={t('phone.number.verify.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 477, height: 248, ...layout }}
+            layout={{ width: 477, height: 248, minWidth: 477, minHeight: 248, ...layout }}
         >
             <Region
                 backgroundColor="#96bdcb"
@@ -38,7 +38,7 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
                     layout={{ position: 'absolute', left: 2, width: 472, top: 2, bottom: 3 }}
                 />
             </Region>
-            <Region layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 40 }}>
+            <Region layout={{ position: 'absolute', left: 0, right: -6, top: 0, bottom: -1 }}>
                 <Region layout={{ position: 'absolute', left: 8, width: 455, top: 8, height: 81 }}>
                     <Region layout={{ position: 'absolute', left: 70, width: 384, top: 0, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
@@ -88,7 +88,7 @@ export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLab
                 >
                     <Border
                         variant="3"
-                        layout={{ position: 'absolute', left: 0, width: 457, top: 0, height: 42 }}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     />
                     <Region
                         name="did_not_receive_code_link"

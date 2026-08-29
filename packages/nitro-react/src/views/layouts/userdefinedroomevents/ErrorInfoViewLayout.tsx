@@ -21,11 +21,11 @@ export const ErrorInfoViewLayout = ({ captionErrorName, captionErrorText, layout
             caption={t('wiredmenu.error_info.title')}
             tintColor="#418db0"
             onClose={onClose}
-            layout={{ width: 337, height: 148, ...layout }}
+            layout={{ width: 337, height: 148, minWidth: 300, minHeight: 148, ...layout }}
         >
             <Region
                 name="contents"
-                layout={{ position: 'absolute', left: 8, right: 9, top: 3, height: 100, minHeight: 100, justifyContent: 'center' }}
+                layout={{ position: 'absolute', left: 8, right: -3, top: 3, height: 100, minHeight: 100, justifyContent: 'center' }}
             >
                 <ThemeImage
                     name="type_icon"
