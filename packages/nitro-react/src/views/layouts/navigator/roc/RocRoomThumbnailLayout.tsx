@@ -1,4 +1,4 @@
-import { Border, BoxLayout, Icon, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, Icon, Region, ThemeImage } from '#base/theme';
 
 /** Generated from `3048_roc_room_thumbnail_xml` (layout "roc_room_thumbnail", 137x99) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RocRoomThumbnailLayoutProps {
@@ -55,7 +55,7 @@ export const RocRoomThumbnailLayoutThumbnail = ({ captionTileSizeTxt, layout, on
                 layout={{ position: 'absolute', left: 25, width: 18, top: 78, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 backgroundColor="#000000"
             >
-                <ThemeText text={captionTileSizeTxt ?? '104'} />
+                {captionTileSizeTxt ?? '104'}
             </Region>
             <ThemeImage
                 name="tile_icon_black"

@@ -128,7 +128,7 @@ export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ captionTe
                     name="text"
                     layout={{ position: 'absolute', left: 0, width: 222, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionText ?? 'BadWord'} />
+                    {captionText ?? 'BadWord'}
                 </Region>
             </Region>
         )

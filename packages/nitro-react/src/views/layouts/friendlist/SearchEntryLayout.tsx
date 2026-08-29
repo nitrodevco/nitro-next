@@ -1,4 +1,4 @@
-import { BoxLayout, Icon, Region, ThemeImage, ThemeText } from '#base/theme';
+import { BoxLayout, Icon, Region, ThemeImage } from '#base/theme';
 
 /** Generated from `1525_search_entry_xml` (layout "search_entry", 190x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface SearchEntryLayoutProps {
@@ -45,7 +45,7 @@ export const SearchEntryLayoutEntry = ({ captionCaption, captionName, layout, on
                 name="caption"
                 layout={{ position: 'absolute', left: 5, width: 200, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionCaption ?? 'PH CAPTION'} />
+                {captionCaption ?? 'PH CAPTION'}
             </Region>
             <Region
                 name="user_info_region"
@@ -66,7 +66,7 @@ export const SearchEntryLayoutEntry = ({ captionCaption, captionName, layout, on
                 name="name"
                 layout={{ position: 'absolute', left: 37, width: 200, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionName ?? 'PH Avatar Name'} />
+                {captionName ?? 'PH Avatar Name'}
             </Region>
             <ThemeImage
                 name="face"

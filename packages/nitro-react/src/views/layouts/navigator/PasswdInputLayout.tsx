@@ -30,7 +30,7 @@ export const PasswdInputLayout = ({ captionCancel, captionInfo, captionRoomName,
                 name="room_name"
                 layout={{ position: 'absolute', left: 10, width: 176, top: 16, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionRoomName ?? 'Room name'} />
+                {captionRoomName ?? 'Room name'}
             </Region>
             <Region
                 name="info"
@@ -42,7 +42,7 @@ export const PasswdInputLayout = ({ captionCancel, captionInfo, captionRoomName,
                 />
             </Region>
             <Region layout={{ position: 'absolute', left: 10, width: 97, top: 107, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('navigator.password.enter')} />
+                {t('navigator.password.enter')}
             </Region>
             <TextInput
                 value={passwordInputValue}
@@ -63,7 +63,7 @@ export const PasswdInputLayout = ({ captionCancel, captionInfo, captionRoomName,
                         name="cancel"
                         layout={{ position: 'absolute', left: 0, width: 83, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionCancel ?? t('generic.cancel')} />
+                        {captionCancel ?? t('generic.cancel')}
                     </Region>
                 </Region>
                 <Button

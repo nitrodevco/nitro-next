@@ -41,7 +41,7 @@ export const MainWindow_1503Layout = ({ captionInfoText, layout, mainContent, on
                         layout={{ position: 'absolute', left: 5, width: 10, top: 5, height: 10 }}
                     />
                     <Region layout={{ position: 'absolute', left: 20, width: 100, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('friendlist.settings')} />
+                        {t('friendlist.settings')}
                     </Region>
                 </ContainerButton>
                 <Region

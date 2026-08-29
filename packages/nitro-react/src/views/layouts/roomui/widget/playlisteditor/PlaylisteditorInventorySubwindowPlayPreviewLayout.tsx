@@ -51,13 +51,13 @@ export const PlaylisteditorInventorySubwindowPlayPreviewLayoutPreviewPlayContain
                 name="preview_play_track_name"
                 layout={{ position: 'absolute', left: 31, width: 193, top: 40, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionPreviewPlayTrackName ?? 'preview_track_name'} />
+                {captionPreviewPlayTrackName ?? 'preview_track_name'}
             </Region>
             <Region
                 name="preview_play_author_name"
                 layout={{ position: 'absolute', left: 31, width: 193, top: 56, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionPreviewPlayAuthorName ?? 'preview_author_name'} />
+                {captionPreviewPlayAuthorName ?? 'preview_author_name'}
             </Region>
             <ThemeImage
                 name="song_name_icon_bitmap"

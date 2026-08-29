@@ -51,7 +51,7 @@ export const VariablesManagementOverviewLayoutVariableNameKeyItem = ({ captionVa
             name="variable_name_key"
             layout={{ width: 88, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionVariableNameKey ?? t('wiredmenu.variable_management.variable_name')} />
+            {captionVariableNameKey ?? t('wiredmenu.variable_management.variable_name')}
         </Region>
     );
 };
@@ -68,7 +68,7 @@ export const VariablesManagementOverviewLayoutVariableNameValueItem = ({ caption
             name="variable_name_value"
             layout={{ width: 35, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionVariableNameValue ?? 'name'} />
+            {captionVariableNameValue ?? 'name'}
         </Region>
     );
 };
@@ -146,7 +146,7 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, capti
                     name="user_type_key"
                     layout={{ position: 'absolute', left: 0, width: 63, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionUserTypeKey ?? t('wiredmenu.variable_management.usertype')} />
+                    {captionUserTypeKey ?? t('wiredmenu.variable_management.usertype')}
                 </Region>
                 <Dropmenu
                     variant="3"
@@ -163,7 +163,7 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, capti
                     name="sort_type_key"
                     layout={{ position: 'absolute', left: 0, width: 47, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionSortTypeKey ?? t('wiredmenu.variable_management.sort_by')} />
+                    {captionSortTypeKey ?? t('wiredmenu.variable_management.sort_by')}
                 </Region>
                 <Dropmenu
                     variant="3"
@@ -337,7 +337,7 @@ export const VariablesManagementOverviewLayoutPagination = ({ captionPaginaTextE
                     name="pagina_text_start"
                     layout={{ width: 175, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionPaginaTextStart ?? 'X entries found. Showing page '} />
+                    {captionPaginaTextStart ?? 'X entries found. Showing page '}
                 </Region>
                 <TextInput
                     value={paginaNumberInputValue}
@@ -348,7 +348,7 @@ export const VariablesManagementOverviewLayoutPagination = ({ captionPaginaTextE
                     name="pagina_text_end"
                     layout={{ width: 26, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionPaginaTextEnd ?? 'of Y'} />
+                    {captionPaginaTextEnd ?? 'of Y'}
                 </Region>
             </Region>
         </Region>

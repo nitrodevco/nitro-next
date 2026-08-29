@@ -63,7 +63,7 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                                 name="reported_date_txt"
                                 layout={{ width: 63, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
-                                <ThemeText text={captionReportedDateTxt ?? '18.09.2024'} />
+                                {captionReportedDateTxt ?? '18.09.2024'}
                             </Region>
                         </Region>
                         <Region layout={{ width: 219, height: 17, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
@@ -77,7 +77,7 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                                 name="decision_date_txt"
                                 layout={{ width: 63, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
-                                <ThemeText text={captionDecisionDateTxt ?? '18.09.2024'} />
+                                {captionDecisionDateTxt ?? '18.09.2024'}
                             </Region>
                         </Region>
                         <Region

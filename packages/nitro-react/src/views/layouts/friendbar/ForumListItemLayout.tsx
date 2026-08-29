@@ -57,14 +57,14 @@ export const ForumListItemLayoutMainBox = ({ captionDetails, captionHeader, capt
                         name="header"
                         layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionHeader ?? 'Some group header'} />
+                        {captionHeader ?? 'Some group header'}
                     </Region>
                 </Region>
                 <Region
                     name="details"
                     layout={{ position: 'absolute', left: 0, width: 459, top: 16, height: 16, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionDetails ?? 'Rating 1000, last message by LongLongLongName 30 seconds ago'} />
+                    {captionDetails ?? 'Rating 1000, last message by LongLongLongName 30 seconds ago'}
                 </Region>
             </Region>
             <Region

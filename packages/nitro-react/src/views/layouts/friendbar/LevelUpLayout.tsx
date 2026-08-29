@@ -64,7 +64,7 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layou
                     onPointerTap={onCloseButton}
                     cursor="pointer"
                 >
-                    <ThemeText text={captionCloseButton ?? t('alert.close.button')} />
+                    {captionCloseButton ?? t('alert.close.button')}
                 </Region>
             </Region>
             <ThemeImage

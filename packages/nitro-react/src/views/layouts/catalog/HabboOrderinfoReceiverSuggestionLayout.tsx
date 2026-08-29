@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, Region } from '#base/theme';
 
 /** Generated from `1571_habbo_orderinfo_receiver_suggestion_xml` (layout "habbo_orderinfo_receiver_suggestion", 150x17) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface HabboOrderinfoReceiverSuggestionLayoutProps {
@@ -15,7 +15,7 @@ export const HabboOrderinfoReceiverSuggestionLayout = ({ captionName, layout }: 
                     layout={{ width: 35, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     backgroundColor="#eeeeee"
                 >
-                    <ThemeText text={captionName ?? 'name'} />
+                    {captionName ?? 'name'}
                 </Region>
             </Region>
         </Region>

@@ -30,7 +30,7 @@ export const TableViewLayoutColumnNameItem = ({ captionColumnName, layout }: Tab
             name="column_name"
             layout={{ width: 100, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionColumnName ?? 'col1'} />
+            {captionColumnName ?? 'col1'}
         </Region>
     );
 };
@@ -120,7 +120,7 @@ export const TableViewLayoutTableElementItem = ({ captionElementLink, captionEle
                 name="element_text"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionElementText ?? 'elem1'} />
+                {captionElementText ?? 'elem1'}
             </Region>
             {(visibleElementInput ?? false) && (
                 <TextInput

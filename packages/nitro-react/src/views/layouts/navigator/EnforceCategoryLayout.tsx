@@ -35,7 +35,7 @@ export const EnforceCategoryLayout = ({ layout, onCategory, onClose, onOk, onTra
                     layout={{ position: 'absolute', left: 6, width: 279, top: 68, height: 23 }}
                 />
                 <Region layout={{ position: 'absolute', left: 4, width: 295, top: 96, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('enforce.category.trade.setting')} />
+                    {t('enforce.category.trade.setting')}
                 </Region>
                 <Dropmenu
                     variant="3"

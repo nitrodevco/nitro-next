@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, Button, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
+import { BoxLayout, Button, Frame, Region, ThemeImage } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `907_pet_commands_xml` (layout "pet_commands", 195x462) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -46,7 +46,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                     name="pet_name"
                     layout={{ position: 'absolute', left: 76, width: 159, top: 43, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionPetName ?? t('widgets.pet.commands.title')} />
+                    {captionPetName ?? t('widgets.pet.commands.title')}
                 </Region>
                 <Region
                     name="commands_container"
@@ -74,7 +74,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                         name="status_skill_value_text"
                         layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 2, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionStatusSkillValueText ?? ''} />
+                        {captionStatusSkillValueText ?? ''}
                     </Region>
                     <ThemeImage
                         name="status_skill_icon"
@@ -86,7 +86,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                             name="status_skill_text"
                             layout={{ position: 'absolute', width: 155, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionStatusSkillText ?? t('infostand.pet.text.skill.next')} />
+                            {captionStatusSkillText ?? t('infostand.pet.text.skill.next')}
                         </Region>
                     )}
                 </Region>

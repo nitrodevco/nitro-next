@@ -105,7 +105,7 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, itemsHeightmapWrapp
                     />
                 </Region>
                 <Region layout={{ position: 'absolute', left: 1034, width: 30, top: 108, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text="hi :)" />
+                    hi :)
                 </Region>
             </Border>
             <Border
@@ -359,7 +359,7 @@ export const FloorPlanEditorBcLayoutTileheightControllerContainerItem = ({ capti
                 name="tile_height_text"
                 layout={{ position: 'absolute', left: 0, width: 156, top: 4, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTileHeightText ?? t('floor.plan.editor.tile.height')} />
+                {captionTileHeightText ?? t('floor.plan.editor.tile.height')}
             </Region>
             <ThemeImage
                 name="tile_height_colormap"
@@ -397,7 +397,7 @@ export const FloorPlanEditorBcLayoutControlsContainer = ({ itemsControlsContaine
             )}
             <Region layout={{ width: 318, height: 24, flexShrink: 0 }}>
                 <Region layout={{ position: 'absolute', left: 0, width: 161, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('floor.plan.editor.draw.mode')} />
+                    {t('floor.plan.editor.draw.mode')}
                 </Region>
             </Region>
         </Region>
@@ -466,7 +466,7 @@ export const FloorPlanEditorBcLayoutEnterdirectionContainerItem = ({ layout, onE
                 layout={{ position: 'absolute', left: 41, width: 45, top: 12, height: 72 }}
             />
             <Region layout={{ position: 'absolute', left: 7, width: 120, top: 4, height: 17, maxWidth: 120, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('floor.plan.editor.enter.direction')} />
+                {t('floor.plan.editor.enter.direction')}
             </Region>
         </Region>
     );
@@ -497,7 +497,7 @@ export const FloorPlanEditorBcLayoutRoomControlsItemlist = ({ itemsRoomControlsI
             />
             <Region layout={{ width: 128, height: 99, flexShrink: 0 }}>
                 <Region layout={{ position: 'absolute', left: 14, width: 110, top: 4, height: 17, maxWidth: 110, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('floor.plan.editor.room.options')} />
+                    {t('floor.plan.editor.room.options')}
                 </Region>
                 <Dropmenu
                     variant="3"
@@ -547,7 +547,7 @@ export const FloorPlanEditorBcLayoutWallHeightTextItem = ({ captionWallHeightTex
             name="wall_height_text"
             layout={{ width: 105, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionWallHeightText ?? t('floor.editor.wall.height')} />
+            {captionWallHeightText ?? t('floor.editor.wall.height')}
         </Region>
     );
 };

@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Button, Region, ThemeText } from '#base/theme';
+import { Border, BoxLayout, Button, Region } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
@@ -38,7 +38,7 @@ export const RedeemItemCodeWidget2 = ({ captionVoucherCode, layout, onRedeem }: 
                 name="voucher_code"
                 layout={{ position: 'absolute', left: 0, width: 72, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionVoucherCode ?? 'lorem ipsum'} />
+                {captionVoucherCode ?? 'lorem ipsum'}
             </Region>
         </Region>
     );

@@ -139,7 +139,7 @@ export const MintGridItemLayoutAmountTextRightItem = ({ captionAmountTextRight, 
             name="amount_text_right"
             layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionAmountTextRight ?? '00000'} />
+            {captionAmountTextRight ?? '00000'}
         </Region>
     );
 };

@@ -63,7 +63,7 @@ export const CreditRedeemLayout = ({ captionExchangeText, layout, onCancel, onCl
                         layout={{ position: 'absolute', left: 0, width: 153, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         backgroundColor="#ffffff"
                     >
-                        <ThemeText text={t('catelog.redeem.dialog.readmore.description')} />
+                        {t('catelog.redeem.dialog.readmore.description')}
                     </Region>
                 </Region>
             </Border>

@@ -85,7 +85,7 @@ export const GuardianChatReviewAcceptLayoutRequestTypeItem = ({ captionRequestTy
             name="request_type"
             layout={{ width: 170, height: 16, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionRequestType ?? t('guide.bully.request.guide.accept.request.type')} />
+            {captionRequestType ?? t('guide.bully.request.guide.accept.request.type')}
         </Region>
     );
 };

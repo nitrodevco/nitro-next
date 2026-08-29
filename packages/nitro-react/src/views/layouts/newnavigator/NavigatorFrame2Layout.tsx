@@ -176,7 +176,7 @@ export const NavigatorFrame2LayoutQuickLinkItem = ({ captionQuickLinkText, layou
                 name="quick_link_text"
                 layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionQuickLinkText ?? 'quick link ph oijasdf oaijs dfodisjf'} />
+                {captionQuickLinkText ?? 'quick link ph oijasdf oaijs dfodisjf'}
             </Region>
             {(visibleRemoveQuickLink ?? false) && (
                 <ContainerButton
@@ -693,7 +693,7 @@ export const NavigatorFrame2LayoutRoomInfoContainer = ({ captionRoomName, itemsU
                 name="room_name"
                 layout={{ position: 'absolute', left: 44, right: 55, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionRoomName ?? 'Room Name PH'} />
+                {captionRoomName ?? 'Room Name PH'}
             </Region>
             <Region
                 name="info_popup_click_region"

@@ -94,13 +94,13 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                     name="reward_caption_txt"
                     layout={{ position: 'absolute', left: 99, width: 143, bottom: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionRewardCaptionTxt ?? t('quests.list.rewardcaption')} />
+                    {captionRewardCaptionTxt ?? t('quests.list.rewardcaption')}
                 </Region>
                 <Region
                     name="reward_amount_txt"
                     layout={{ position: 'absolute', left: 150, width: 23, bottom: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionRewardAmountTxt ?? '200'} />
+                    {captionRewardAmountTxt ?? '200'}
                 </Region>
                 <Region
                     name="cancel_region"
@@ -112,7 +112,7 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                         name="cancel_txt"
                         layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionCancelTxt ?? t('quests.list.reject')} />
+                        {captionCancelTxt ?? t('quests.list.reject')}
                     </Region>
                 </Region>
                 <ThemeImage
@@ -148,7 +148,7 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                                 name="link_catalog"
                                 layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
-                                <ThemeText text={captionLinkCatalog ?? t('quests.list.opencatalog')} />
+                                {captionLinkCatalog ?? t('quests.list.opencatalog')}
                             </Region>
                         )}
                         {(visibleLinkNavigator ?? false) && (
@@ -156,7 +156,7 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                                 name="link_navigator"
                                 layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
-                                <ThemeText text={captionLinkNavigator ?? t('quests.list.opennavigator')} />
+                                {captionLinkNavigator ?? t('quests.list.opennavigator')}
                             </Region>
                         )}
                         {(visibleLinkRoom ?? false) && (
@@ -164,7 +164,7 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                                 name="link_room"
                                 layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
-                                <ThemeText text={captionLinkRoom ?? t('quests.gotocampaignroom')} />
+                                {captionLinkRoom ?? t('quests.gotocampaignroom')}
                             </Region>
                         )}
                     </Region>
@@ -174,7 +174,7 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                         name="delay_desc_txt"
                         layout={{ position: 'absolute', left: 98, right: 9, top: 53, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionDelayDescTxt ?? t('quests.list.nextquestavailable')} />
+                        {captionDelayDescTxt ?? t('quests.list.nextquestavailable')}
                     </Region>
                 )}
                 {(visibleDelayTxt ?? false) && (

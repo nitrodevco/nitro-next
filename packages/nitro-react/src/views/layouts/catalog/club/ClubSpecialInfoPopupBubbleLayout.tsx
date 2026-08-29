@@ -59,19 +59,19 @@ export const ClubSpecialInfoPopupBubbleLayoutMainContent = ({ caption_247Bhccent
                     name="info_creditsspent"
                     layout={{ position: 'absolute', left: 0, width: 340, top: 20, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionInfoCreditsspent ?? 'Lorem ipsum'} />
+                    {captionInfoCreditsspent ?? 'Lorem ipsum'}
                 </Region>
                 <Region
                     name="info_factor"
                     layout={{ position: 'absolute', left: 0, width: 340, top: 40, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionInfoFactor ?? 'Lorem ipsum'} />
+                    {captionInfoFactor ?? 'Lorem ipsum'}
                 </Region>
                 <Region
                     name="info_streakbonus"
                     layout={{ position: 'absolute', left: 0, width: 340, top: 60, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionInfoStreakbonus ?? 'Lorem ipsum'} />
+                    {captionInfoStreakbonus ?? 'Lorem ipsum'}
                 </Region>
                 <Border
                     variant="1"
@@ -81,7 +81,7 @@ export const ClubSpecialInfoPopupBubbleLayoutMainContent = ({ caption_247Bhccent
                     name="info_total"
                     layout={{ position: 'absolute', left: 0, width: 340, top: 80, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionInfoTotal ?? 'Lorem ipsum'} />
+                    {captionInfoTotal ?? 'Lorem ipsum'}
                 </Region>
                 <Region
                     name="special_infolink"

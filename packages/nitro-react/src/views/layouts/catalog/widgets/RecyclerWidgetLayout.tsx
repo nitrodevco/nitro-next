@@ -329,7 +329,7 @@ export const RecyclerWidgetLayoutIndicatorWrapper = ({ layout, onAbortRegion, sr
                         layout={{ position: 'absolute', width: 65, top: 91, height: 17, minHeight: 17, maxHeight: 17 }}
                     >
                         <Region layout={{ position: 'absolute', left: 0, width: 65, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text={t('catalog.recycler.button.abort')} />
+                            {t('catalog.recycler.button.abort')}
                         </Region>
                     </Region>
                 )}
@@ -361,7 +361,7 @@ export const RecyclerWidgetLayoutNormal = ({ captionDucketCost, indicatorWrapper
                     name="ducket_cost"
                     layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionDucketCost ?? '50'} />
+                    {captionDucketCost ?? '50'}
                 </Region>
                 <Region
                     name="spacer"

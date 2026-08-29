@@ -154,7 +154,7 @@ export const MarketplaceOfferDetailsLayoutDetailsContainer = ({ captionAveragePr
                 name="chart_title"
                 layout={{ position: 'absolute', left: 0, width: 76, top: 145, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionChartTitle ?? t('lorem.title')} />
+                {captionChartTitle ?? t('lorem.title')}
             </Region>
             <Border
                 variant="0"

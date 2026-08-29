@@ -57,7 +57,7 @@ export const GrsGuestRoomDetailsPhaseOneLayoutDetails = ({ captionRoomname, capt
                 name="roomname"
                 layout={{ position: 'absolute', left: 6, width: 285, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionRoomname ?? 'PH Room Name: Neque porro quisquam est que'} />
+                {captionRoomname ?? 'PH Room Name: Neque porro quisquam est que'}
             </Region>
             <ThemeImage
                 name="group_base_icon"

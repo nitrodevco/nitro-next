@@ -169,7 +169,7 @@ export const VideoViewerLayoutRightPane = ({ itemsPlaylists, layout, onPlaylistN
                 />
             </ContainerButton>
             <Region layout={{ position: 'absolute', left: 0, width: 194, top: 33, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('widget.furni.video_viewer.playlists')} />
+                {t('widget.furni.video_viewer.playlists')}
             </Region>
             <ScrollArea
                 orientation="vertical"

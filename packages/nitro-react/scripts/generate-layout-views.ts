@@ -766,11 +766,31 @@ const textElement = (ctx: EmitContext, el: Element): { props: string[]; hasText:
     return { props, hasText, wordWrap, autoSize };
 };
 
-/** A text as a button's caption: no positioning wrapper, the button's own flex centring places it. */
-const emitInlineText = (ctx: EmitContext, el: Element, indent: string): string[] => {
+/** `text="..."` / `text={expr}` -> the bare JSX child a Region/Button wraps in its own ThemeText. */
+const bareText = (textProp: string, indent: string): string[] => {
+    const value = textProp.slice(5);
+
+    return [ `${indent}${value.startsWith('{') ? value : jsxText(quote(value.slice(1, -1)))}` ];
+};
+
+/**
+ * A text as a button's caption: no positioning wrapper, the button's own flex centring places
+ * it. When the text brings nothing the button doesn't already apply (its variant's text style,
+ * or the same `text_style` the button itself declares) it's emitted as a plain child - the
+ * button wraps bare text in a `ThemeText` with its own style.
+ */
+const emitInlineText = (ctx: EmitContext, el: Element, button: Element, indent: string): string[] => {
     const { props, hasText } = textElement(ctx, el);
 
-    return hasText ? openTag('ThemeText', props, indent, true) : [];
+    if (!hasText) return [];
+
+    const textProp = props.find(prop => prop.startsWith('text='))!;
+    const styleProp = props.find(prop => prop.startsWith('textStyle='));
+    const buttonStyle = resolveTextStyle(button.vars.text_style).textStyle;
+    const redundantStyle = !styleProp || styleProp === `textStyle="${buttonStyle}"`;
+    const plain = props.length === 1 + (styleProp ? 1 : 0) && redundantStyle;
+
+    return plain ? bareText(textProp, indent) : openTag('ThemeText', props, indent, true);
 };
 
 /** A single text child that covers its container exactly - the container's box can hold the text directly. */
@@ -807,7 +827,11 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
 
     if (bgColor && (box.attrs.background === 'true' || box.tag === 'background' || box.tag === 'gradient')) regionProps.push(`backgroundColor={${recolorExpr(ctx, box, bgColor)}}`);
 
-    return wrap('Region', regionProps, indent, hasText ? openTag('ThemeText', textProps, indent + INDENT, true) : []);
+    // A text with no style/options of its own is a bare child - the Region wraps it in a
+    // default-styled ThemeText itself.
+    const child = !hasText ? [] : textProps.length === 1 ? bareText(textProps[0], indent + INDENT) : openTag('ThemeText', textProps, indent + INDENT, true);
+
+    return wrap('Region', regionProps, indent, child);
 };
 
 const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
@@ -1206,7 +1230,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
     // A button whose children are all texts: they're its caption, and the button already
     // centres its content, so they go in bare instead of each in a positioned Region.
     const allTexts = el.children.length > 0 && el.children.every(child => TEXT_TAGS.has(child.tag) && child.attrs.visible !== 'false');
-    const buttonChildren = (ci: string) => (allTexts ? el.children.flatMap(child => emitInlineText(ctx, child, ci)) : childrenOnly(ci));
+    const buttonChildren = (ci: string) => (allTexts ? el.children.flatMap(child => emitInlineText(ctx, child, el, ci)) : childrenOnly(ci));
     const captionAndButtonChildren = (ci: string) => [ ...captionOnly(ci), ...buttonChildren(ci) ];
     const none = () => [] as string[];
 

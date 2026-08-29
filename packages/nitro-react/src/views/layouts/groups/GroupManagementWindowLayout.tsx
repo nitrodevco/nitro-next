@@ -381,7 +381,7 @@ export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, caption
                 name="name_label"
                 layout={{ position: 'absolute', left: 126, right: 140, top: -8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionNameLabel ?? t('group.edit.name')} />
+                {captionNameLabel ?? t('group.edit.name')}
             </Region>
             <TextInput
                 value={nameTxtValue}
@@ -393,7 +393,7 @@ export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, caption
                 name="desc_label"
                 layout={{ position: 'absolute', left: 126, right: 147, top: 52, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionDescLabel ?? t('group.edit.desc')} />
+                {captionDescLabel ?? t('group.edit.desc')}
             </Region>
             <TextInput
                 value={descTxtValue}
@@ -405,7 +405,7 @@ export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, caption
                 name="base_label"
                 layout={{ position: 'absolute', left: 126, right: 146, top: 166, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionBaseLabel ?? t('group.edit.base')} />
+                {captionBaseLabel ?? t('group.edit.base')}
             </Region>
             <Dropmenu
                 variant="0"
@@ -735,7 +735,7 @@ export const GroupManagementWindowLayoutFooterCont = ({ captionBuyTxt, captionCa
                         name="cancel_link"
                         layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionCancelLink ?? t('cancel')} />
+                        {captionCancelLink ?? t('cancel')}
                     </Region>
                 </Region>
                 <Region
@@ -748,7 +748,7 @@ export const GroupManagementWindowLayoutFooterCont = ({ captionBuyTxt, captionCa
                         name="previous_step_link"
                         layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionPreviousStepLink ?? t('group.create.previousstep')} />
+                        {captionPreviousStepLink ?? t('group.create.previousstep')}
                     </Region>
                 </Region>
                 <Border

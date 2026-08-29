@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, ContainerButton, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ContainerButton, Region, TextInput, ThemeImage } from '#base/theme';
 
 /** Generated from `1499_search_footer_xml` (layout "search_footer", 223x41) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface SearchFooterLayoutProps {
@@ -45,7 +45,7 @@ export const SearchFooterLayout = ({ layout, onSearchBut, srcSearch }: SearchFoo
                             layout={{ position: 'absolute', left: 5, width: 12, top: 4, height: 12 }}
                         />
                         <Region layout={{ position: 'absolute', left: 20, width: 50, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text={t('generic.search')} />
+                            {t('generic.search')}
                         </Region>
                     </ContainerButton>
                 </Border>

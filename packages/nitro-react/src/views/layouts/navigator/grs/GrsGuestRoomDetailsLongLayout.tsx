@@ -53,13 +53,13 @@ export const GrsGuestRoomDetailsLongLayoutExtraCont = ({ captionRating, captionR
                     name="startedat.caption"
                     layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionStartedatCaption ?? t('navigator.eventstartedat')} />
+                    {captionStartedatCaption ?? t('navigator.eventstartedat')}
                 </Region>
                 <Region
                     name="startedat"
                     layout={{ position: 'absolute', left: 50, width: 46, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionStartedat ?? 'PH: 15:48'} />
+                    {captionStartedat ?? 'PH: 15:48'}
                 </Region>
             </Region>
             <Region
@@ -70,13 +70,13 @@ export const GrsGuestRoomDetailsLongLayoutExtraCont = ({ captionRating, captionR
                     name="rating.caption"
                     layout={{ position: 'absolute', left: 0, width: 142, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionRatingCaption ?? t('navigator.ratingcaption')} />
+                    {captionRatingCaption ?? t('navigator.ratingcaption')}
                 </Region>
                 <Region
                     name="rating"
                     layout={{ position: 'absolute', left: 50, width: 21, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionRating ?? '999'} />
+                    {captionRating ?? '999'}
                 </Region>
             </Region>
         </Region>
@@ -141,7 +141,7 @@ export const GrsGuestRoomDetailsLongLayoutDetailsContainer = ({ captionEventinfo
                     name="roomowner.caption"
                     layout={{ position: 'absolute', left: 0, width: 171, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionRoomownerCaption ?? t('navigator.roomownercaption')} />
+                    {captionRoomownerCaption ?? t('navigator.roomownercaption')}
                 </Region>
                 <Region
                     name="user_info_region"
@@ -162,7 +162,7 @@ export const GrsGuestRoomDetailsLongLayoutDetailsContainer = ({ captionEventinfo
                     name="roomowner"
                     layout={{ position: 'absolute', left: 67, width: 80, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionRoomowner ?? 'PH Room Owner'} />
+                    {captionRoomowner ?? 'PH Room Owner'}
                 </Region>
             </Region>
             <Region
@@ -173,13 +173,13 @@ export const GrsGuestRoomDetailsLongLayoutDetailsContainer = ({ captionEventinfo
                     name="roomctg.caption"
                     layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionRoomctgCaption ?? t('navigator.roomctg')} />
+                    {captionRoomctgCaption ?? t('navigator.roomctg')}
                 </Region>
                 <Region
                     name="roomctg"
                     layout={{ position: 'absolute', left: 50, width: 65, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionRoomctg ?? 'PH Category'} />
+                    {captionRoomctg ?? 'PH Category'}
                 </Region>
             </Region>
             <Region
@@ -324,7 +324,7 @@ export const GrsGuestRoomDetailsLongLayoutDetailsContainer = ({ captionEventinfo
                     name="roomsettings"
                     layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionRoomsettings ?? t('navigator.roomsettings')} />
+                    {captionRoomsettings ?? t('navigator.roomsettings')}
                 </Region>
             </Region>
         </Region>

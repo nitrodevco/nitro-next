@@ -103,13 +103,13 @@ export const AchievementsLayout = ({ achievementsHeaderCont, captionAchievementD
                     name="reward_caption_txt"
                     layout={{ position: 'absolute', left: 113, width: 162, bottom: 38, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionRewardCaptionTxt ?? t('achievements.details.reward')} />
+                    {captionRewardCaptionTxt ?? t('achievements.details.reward')}
                 </Region>
                 <Region
                     name="reward_amount_txt"
                     layout={{ position: 'absolute', left: 164, width: 23, bottom: 38, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionRewardAmountTxt ?? '200'} />
+                    {captionRewardAmountTxt ?? '200'}
                 </Region>
                 <Icon
                     variant="0"

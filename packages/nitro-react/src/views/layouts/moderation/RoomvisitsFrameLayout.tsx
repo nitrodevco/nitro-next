@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { BoxLayout, Frame, Region, ScrollArea, ThemeText } from '#base/theme';
+import { BoxLayout, Frame, Region, ScrollArea } from '#base/theme';
 
 /** Generated from `1117_roomvisits_frame_xml` (layout "roomvisits_frame", 292x224) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RoomvisitsFrameLayoutProps {
@@ -60,19 +60,19 @@ export const RoomvisitsFrameLayoutVisitrowItem = ({ captionRoomNameTxt, captionT
                 name="time_txt"
                 layout={{ position: 'absolute', right: 44, width: 30, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTimeTxt ?? '15:14'} />
+                {captionTimeTxt ?? '15:14'}
             </Region>
             <Region
                 name="room_name_txt"
                 layout={{ position: 'absolute', left: 5, right: 73, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionRoomNameTxt ?? 'Funky room'} />
+                {captionRoomNameTxt ?? 'Funky room'}
             </Region>
             <Region
                 name="view_room_txt"
                 layout={{ position: 'absolute', right: 1, width: 39, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionViewRoomTxt ?? 'Enter'} />
+                {captionViewRoomTxt ?? 'Enter'}
             </Region>
         </Region>
     );

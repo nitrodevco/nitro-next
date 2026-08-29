@@ -116,7 +116,7 @@ export const ChatinputWindowLayoutSendButtonItem = ({ captionSendButtonText, lay
             onPointerTap={onSendButton}
             layout={{ width: 47, height: 38, flexShrink: 0, ...layout }}
         >
-            <ThemeText text={captionSendButtonText ?? '.'} />
+            {captionSendButtonText ?? '.'}
         </ContainerButton>
     );
 };

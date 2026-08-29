@@ -111,7 +111,7 @@ export const ErrorPopupLayoutDoNotShowContainerItem = ({ layout, onDoNotShowCbx 
                 layout={{ position: 'absolute', left: 0, width: 17, top: 1, height: 17 }}
             />
             <Region layout={{ position: 'absolute', left: 20, width: 110, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('error_window.do_not_show')} />
+                {t('error_window.do_not_show')}
             </Region>
         </Region>
     );

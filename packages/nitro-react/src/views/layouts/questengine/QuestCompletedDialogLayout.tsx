@@ -98,7 +98,7 @@ export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongr
                     name="catalog_link_txt"
                     layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionCatalogLinkTxt ?? 'catalog_link_txt'} />
+                    {captionCatalogLinkTxt ?? 'catalog_link_txt'}
                 </Region>
             </Region>
             <ButtonThick

@@ -69,7 +69,7 @@ export const GuideClosedLayout = ({ captionCloseReason, captionReportLink, layou
                     onPointerTap={onReportLink}
                     cursor="pointer"
                 >
-                    <ThemeText text={captionReportLink ?? 'Report Lilyflower'} />
+                    {captionReportLink ?? 'Report Lilyflower'}
                 </Region>
             </Region>
         </Frame>

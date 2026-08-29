@@ -154,7 +154,7 @@ export const AchievementsResolutionsLayoutElementList = ({ captionAchievementDes
                     </Region>
                     <Region layout={{ width: 220, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
                         <Region layout={{ width: 153, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text={t('resolution.achievement.level')} />
+                            {t('resolution.achievement.level')}
                         </Region>
                         <Region
                             name="achievement.level"

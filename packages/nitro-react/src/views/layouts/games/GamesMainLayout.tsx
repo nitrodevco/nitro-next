@@ -71,7 +71,7 @@ export const GamesMainLayout = ({ captionCancelLink, captionWaitText, captionWai
                             name="cancel_link"
                             layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionCancelLink ?? t('generic.cancel')} />
+                            {captionCancelLink ?? t('generic.cancel')}
                         </Region>
                     </Region>
                 </Region>
@@ -401,7 +401,7 @@ export const GamesMainLayoutGamesLeftRegion = ({ captionGamesLeft, captionGamesL
                 layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 28, flexDirection: 'row', gap: 5 }}
             >
                 <Region layout={{ width: 135, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('snowwar.games_left')} />
+                    {t('snowwar.games_left')}
                 </Region>
                 <Region layout={{ width: 60, height: 30, flexShrink: 0 }}>
                     <Region
@@ -428,7 +428,7 @@ export const GamesMainLayoutGamesLeftRegion = ({ captionGamesLeft, captionGamesL
                 name="games.lobby.get.games"
                 layout={{ position: 'absolute', left: 0, width: 175, top: 31, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionGamesLobbyGetGames ?? t('snowwar.buy_more_games')} />
+                {captionGamesLobbyGetGames ?? t('snowwar.buy_more_games')}
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 220, top: 52, height: 70, flexDirection: 'row', gap: 8 }}>
                 <ThemeImage

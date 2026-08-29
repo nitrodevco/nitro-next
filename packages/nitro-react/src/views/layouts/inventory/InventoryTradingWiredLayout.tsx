@@ -148,7 +148,7 @@ export const InventoryTradingWiredLayoutPlainTextItem = ({ captionPlainText, lay
             name="plain_text"
             layout={{ width: 95, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionPlainText ?? t('inventory.wired_trading.offering')} />
+            {captionPlainText ?? t('inventory.wired_trading.offering')}
         </Region>
     );
 };
@@ -305,7 +305,7 @@ export const InventoryTradingWiredLayoutPlainTextItem2 = ({ captionPlainText, la
             name="plain_text"
             layout={{ width: 90, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionPlainText ?? t('inventory.wired_trading.receiving')} />
+            {captionPlainText ?? t('inventory.wired_trading.receiving')}
         </Region>
     );
 };
@@ -496,7 +496,7 @@ export const InventoryTradingWiredLayoutAndTextItem = ({ captionAndText, layout 
             name="and_text"
             layout={{ width: 12, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionAndText ?? '&'} />
+            {captionAndText ?? '&'}
         </Region>
     );
 };
@@ -513,7 +513,7 @@ export const InventoryTradingWiredLayoutAmountTextItem = ({ captionAmountText, l
             name="amount_text"
             layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionAmountText ?? '2x'} />
+            {captionAmountText ?? '2x'}
         </Region>
     );
 };

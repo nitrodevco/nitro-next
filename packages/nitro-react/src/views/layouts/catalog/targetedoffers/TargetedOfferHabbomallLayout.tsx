@@ -35,7 +35,7 @@ export const TargetedOfferHabbomallLayout = ({ captionTxtDescription, captionTxt
                     name="txt_title"
                     layout={{ position: 'absolute', left: 8, width: 225, top: 8, height: 32, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionTxtTitle ?? ''} />
+                    {captionTxtTitle ?? ''}
                 </Region>
                 <Region
                     name="txt_description"

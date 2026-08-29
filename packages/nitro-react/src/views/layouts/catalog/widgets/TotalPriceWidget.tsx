@@ -51,7 +51,7 @@ export const TotalPriceWidgetAmountTextLeftItem = ({ captionAmountTextLeft, layo
             name="amount_text_left"
             layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionAmountTextLeft ?? '0'} />
+            {captionAmountTextLeft ?? '0'}
         </Region>
     );
 };
@@ -83,7 +83,7 @@ export const TotalPriceWidgetPlusItem = ({ captionPlus, layout }: TotalPriceWidg
             name="plus"
             layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionPlus ?? ' '} />
+            {captionPlus ?? ' '}
         </Region>
     );
 };
@@ -130,7 +130,7 @@ export const TotalPriceWidgetAmountTextRightItem = ({ captionAmountTextRight, la
             name="amount_text_right"
             layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionAmountTextRight ?? '0'} />
+            {captionAmountTextRight ?? '0'}
         </Region>
     );
 };

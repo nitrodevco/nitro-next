@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { BoxLayout, Region, ThemeImage } from '#base/theme';
 
 /** Generated from `3040_grs_room_ads_details_short_xml` (layout "navigator_guest_room_details_short", 271x17) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GrsRoomAdsDetailsShortLayoutProps {
@@ -24,7 +24,7 @@ export const GrsRoomAdsDetailsShortLayout = ({ captionAdname, layout, onDetails,
                     name="adname"
                     layout={{ position: 'absolute', left: 6, width: 210, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionAdname ?? 'PH Room Name: Neque porro quisquam est que'} />
+                    {captionAdname ?? 'PH Room Name: Neque porro quisquam est que'}
                 </Region>
                 <ThemeImage
                     name="doormode_password_small"

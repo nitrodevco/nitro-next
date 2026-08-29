@@ -219,7 +219,7 @@ export const ChestWiredUpgradeLayoutContent = ({ captionFree, itemsContent, item
                         name="free"
                         layout={{ width: 39, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionFree ?? t('wiredchests.upgrade.wired.cost')} />
+                        {captionFree ?? t('wiredchests.upgrade.wired.cost')}
                     </Region>
                 </Region>
             </Region>

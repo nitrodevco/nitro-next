@@ -32,7 +32,7 @@ export const SnowwarExitConfirmationLayout = ({ layout, onClose, onNo, onYes }: 
                 onPointerTap={onNo}
                 layout={{ position: 'absolute', left: 8, width: 110, top: 80, height: 35, justifyContent: 'center' }}
             >
-                <ThemeText text={t('snowwar.exit.no')} />
+                {t('snowwar.exit.no')}
             </ContainerButton>
             <ContainerButton
                 variant="3"
@@ -40,7 +40,7 @@ export const SnowwarExitConfirmationLayout = ({ layout, onClose, onNo, onYes }: 
                 onPointerTap={onYes}
                 layout={{ position: 'absolute', left: 144, width: 110, top: 80, height: 35, justifyContent: 'center' }}
             >
-                <ThemeText text={t('snowwar.exit.yes')} />
+                {t('snowwar.exit.yes')}
             </ContainerButton>
         </Frame>
     );

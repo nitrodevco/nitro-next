@@ -1,4 +1,4 @@
-import { Border, BoxLayout, ContainerButton, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ContainerButton, Region, ThemeImage } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `961_playlisteditor_music_inventory_item_xml` (layout "music_inventory_item", 91x104) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -37,7 +37,7 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, l
                     name="song_title_text"
                     layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 85, height: 18, maxWidth: 80, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionSongTitleText ?? ''} />
+                    {captionSongTitleText ?? ''}
                 </Region>
                 <ThemeImage
                     name="title_fader_bitmap"

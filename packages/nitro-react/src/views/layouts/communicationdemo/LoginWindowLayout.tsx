@@ -38,7 +38,7 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
                         name="text002"
                         layout={{ position: 'absolute', left: 0, width: 133, top: 0, height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionText002 ?? ''} />
+                        {captionText002 ?? ''}
                     </Region>
                     <CheckBox
                         variant="101"
@@ -62,7 +62,7 @@ export const LoginWindowLayout = ({ captionLabelName, captionLabelPassword, capt
                     layout={{ width: 296, height: 28, flexShrink: 0 }}
                 >
                     <Region layout={{ position: 'absolute', left: 0, width: 72, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text="Environment:" />
+                        Environment:
                     </Region>
                     <Droplist
                         variant="100"

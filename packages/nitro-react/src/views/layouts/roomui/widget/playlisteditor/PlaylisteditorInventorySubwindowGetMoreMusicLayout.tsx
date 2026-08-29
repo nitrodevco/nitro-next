@@ -29,10 +29,10 @@ export const PlaylisteditorInventorySubwindowGetMoreMusicLayout = ({ layout, onO
                     />
                 </Region>
                 <Region layout={{ position: 'absolute', left: 15, width: 285, top: 35, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('playlist.editor.text.you.have.no.songdisks.available')} />
+                    {t('playlist.editor.text.you.have.no.songdisks.available')}
                 </Region>
                 <Region layout={{ position: 'absolute', left: 15, width: 319, top: 50, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('playlist.editor.text.you.can.buy.some.from.the.catalogue')} />
+                    {t('playlist.editor.text.you.can.buy.some.from.the.catalogue')}
                 </Region>
                 <ButtonThick
                     variant="3"

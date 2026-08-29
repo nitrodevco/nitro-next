@@ -132,7 +132,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                         name="group_room_link"
                         layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionGroupRoomLink ?? t('group.room.link')} />
+                        {captionGroupRoomLink ?? t('group.room.link')}
                     </Region>
                 </Region>
                 <Region
@@ -145,7 +145,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                         name="buy_furni_link"
                         layout={{ position: 'absolute', left: 0, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionBuyFurniLink ?? t('group.buyfurni')} />
+                        {captionBuyFurniLink ?? t('group.buyfurni')}
                     </Region>
                 </Region>
                 <Region
@@ -158,7 +158,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                         name="show_groups_link"
                         layout={{ position: 'absolute', left: 0, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionShowGroupsLink ?? t('group.showgroups')} />
+                        {captionShowGroupsLink ?? t('group.showgroups')}
                     </Region>
                 </Region>
                 <Region
@@ -171,7 +171,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                         name="manage_guild_link"
                         layout={{ position: 'absolute', marginLeft: -7, marginRight: 7, width: 83, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionManageGuildLink ?? t('group.manage')} />
+                        {captionManageGuildLink ?? t('group.manage')}
                     </Region>
                 </Region>
                 <Region
@@ -184,7 +184,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                         name="delete_guild_link"
                         layout={{ position: 'absolute', marginLeft: -7, marginRight: 7, width: 83, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionDeleteGuildLink ?? t('group.delete')} />
+                        {captionDeleteGuildLink ?? t('group.delete')}
                     </Region>
                 </Region>
                 <ButtonThick
@@ -259,7 +259,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                         name="membership_pending_txt"
                         layout={{ position: 'absolute', width: 175, top: 184, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionMembershipPendingTxt ?? t('group.membershippending')} />
+                        {captionMembershipPendingTxt ?? t('group.membershippending')}
                     </Region>
                 )}
                 <Icon
@@ -272,7 +272,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                     name="youaremember_txt"
                     layout={{ position: 'absolute', width: 123, top: 184, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionYouarememberTxt ?? t('group.youaremember')} />
+                    {captionYouarememberTxt ?? t('group.youaremember')}
                 </Region>
                 <Region
                     name="created_txt"
@@ -345,7 +345,7 @@ export const GroupLayout = ({ captionBuyFurniLink, captionCreatedTxt, captionDel
                         name="show_forum_link"
                         layout={{ position: 'absolute', left: 0, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionShowForumLink ?? t('group.showforum')} />
+                        {captionShowForumLink ?? t('group.showforum')}
                     </Region>
                 </Region>
             </Border>

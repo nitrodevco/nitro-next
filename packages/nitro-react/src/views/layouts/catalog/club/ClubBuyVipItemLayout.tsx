@@ -47,7 +47,7 @@ export const ClubBuyVipItemLayout = ({ captionItemHeader, captionItemPrice, layo
                     name="item_price"
                     layout={{ position: 'absolute', left: 9, width: 101, top: 44, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionItemPrice ?? 'catalog.club.price'} />
+                    {captionItemPrice ?? 'catalog.club.price'}
                 </Region>
                 <Button
                     variant="3"

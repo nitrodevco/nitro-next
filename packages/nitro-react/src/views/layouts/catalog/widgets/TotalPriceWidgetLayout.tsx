@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Border, BoxLayout, Icon, Region, ThemeText } from '#base/theme';
+import { Border, BoxLayout, Icon, Region } from '#base/theme';
 
 /** Generated from `1588_totalPriceWidget_xml` (layout "totalPriceWidget", 180x25) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface TotalPriceWidgetLayoutProps {
@@ -21,7 +21,7 @@ export const TotalPriceWidgetLayout = ({ captionHeaderText, itemsTotalpriceConta
                     name="header_text"
                     layout={{ position: 'absolute', left: 10, width: 14, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionHeaderText ?? '='} />
+                    {captionHeaderText ?? '='}
                 </Region>
                 <Region
                     name="totalprice_container"
@@ -54,7 +54,7 @@ export const TotalPriceWidgetLayoutAmountTextLeftItem = ({ captionAmountTextLeft
             name="amount_text_left"
             layout={{ width: 38, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionAmountTextLeft ?? '00000'} />
+            {captionAmountTextLeft ?? '00000'}
         </Region>
     );
 };
@@ -86,7 +86,7 @@ export const TotalPriceWidgetLayoutPlusItem = ({ captionPlus, layout }: TotalPri
             name="plus"
             layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionPlus ?? ' '} />
+            {captionPlus ?? ' '}
         </Region>
     );
 };
@@ -103,7 +103,7 @@ export const TotalPriceWidgetLayoutAmountTextRightItem = ({ captionAmountTextRig
             name="amount_text_right"
             layout={{ width: 38, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionAmountTextRight ?? '00000'} />
+            {captionAmountTextRight ?? '00000'}
         </Region>
     );
 };

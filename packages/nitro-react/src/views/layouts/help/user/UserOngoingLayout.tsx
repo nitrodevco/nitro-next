@@ -53,7 +53,7 @@ export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionG
                             name="guide_desc"
                             layout={{ width: 130, height: 16, flexShrink: 0, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionGuideDesc ?? t('guide.help.request.user.ongoing.guide.desc')} />
+                            {captionGuideDesc ?? t('guide.help.request.user.ongoing.guide.desc')}
                         </Region>
                     </Region>
                 </Region>

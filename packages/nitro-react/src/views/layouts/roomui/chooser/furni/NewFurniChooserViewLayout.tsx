@@ -74,7 +74,7 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
                 name="amount_indicator"
                 layout={{ position: 'absolute', left: 6, width: 215, bottom: 37, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionAmountIndicator ?? t('new_furni_chooser.amount_indicator')} />
+                {captionAmountIndicator ?? t('new_furni_chooser.amount_indicator')}
             </Region>
         </Frame>
     );

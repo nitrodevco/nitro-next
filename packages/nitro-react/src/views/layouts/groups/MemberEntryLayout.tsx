@@ -67,7 +67,7 @@ export const MemberEntryLayout = ({ captionActionLink, captionMemberSinceTxt, ca
                             name="action_link"
                             layout={{ position: 'absolute', left: 0, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionActionLink ?? 'Action Name PH'} />
+                            {captionActionLink ?? 'Action Name PH'}
                         </Region>
                     </Region>
                 )}

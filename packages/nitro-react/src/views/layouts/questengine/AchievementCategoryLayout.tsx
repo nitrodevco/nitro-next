@@ -65,7 +65,7 @@ export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionC
                     name="header_txt"
                     layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 65, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionHeaderTxt ?? 'Decoration'} />
+                    {captionHeaderTxt ?? 'Decoration'}
                 </Region>
                 <ThemeImage
                     name="category_pic_bitmap"

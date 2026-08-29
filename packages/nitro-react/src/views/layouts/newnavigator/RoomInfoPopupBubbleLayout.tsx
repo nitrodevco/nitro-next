@@ -240,7 +240,7 @@ export const RoomInfoPopupBubbleLayoutSettingsContainerItem = ({ layout, onSetti
                 />
             </Region>
             <Region layout={{ position: 'absolute', left: 20, width: 235, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('navigator.room.popup.info.room.settings')} />
+                {t('navigator.room.popup.info.room.settings')}
             </Region>
         </Region>
     );
@@ -274,7 +274,7 @@ export const RoomInfoPopupBubbleLayoutReportContainerItem = ({ layout, onReportR
                 />
             </Region>
             <Region layout={{ position: 'absolute', left: 20, width: 202, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('navigator.room.popup.report.room')} />
+                {t('navigator.room.popup.report.room')}
             </Region>
         </Region>
     );
@@ -318,7 +318,7 @@ export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ itemsMidBottomIteml
                     />
                 </Region>
                 <Region layout={{ position: 'absolute', left: 20, width: 236, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('navigator.room.popup.room.info.favorite')} />
+                    {t('navigator.room.popup.room.info.favorite')}
                 </Region>
             </Region>
             <Region layout={{ width: 170, height: 20, flexShrink: 0 }}>
@@ -335,7 +335,7 @@ export const RoomInfoPopupBubbleLayoutMidBottomItemlist = ({ itemsMidBottomIteml
                     />
                 </Region>
                 <Region layout={{ position: 'absolute', left: 20, width: 224, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('navigator.room.popup.room.info.home')} />
+                    {t('navigator.room.popup.room.info.home')}
                 </Region>
             </Region>
         </Region>

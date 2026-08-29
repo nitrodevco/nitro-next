@@ -103,7 +103,7 @@ export const SpinnerWidget = ({ captionPromoInfo, captionQuantityLabel, captionT
                             name="promo.info"
                             layout={{ position: 'absolute', left: 28, width: 82, top: 5, height: 15, maxWidth: 82, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionPromoInfo ?? t('shop.bonus.items.count')} />
+                            {captionPromoInfo ?? t('shop.bonus.items.count')}
                         </Region>
                     </Border>
                 )}

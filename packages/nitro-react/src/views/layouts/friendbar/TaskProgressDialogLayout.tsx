@@ -263,7 +263,7 @@ export const TaskProgressDialogLayoutUnverifiedContainer = ({ captionErrorTxt, l
                     layout={{ position: 'absolute', left: 3, width: 319, top: 28, height: 21 }}
                 >
                     <Region layout={{ position: 'absolute', left: 0, width: 156, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('talent.track.progress.setemail')} />
+                        {t('talent.track.progress.setemail')}
                     </Region>
                 </Region>
                 <Region

@@ -27,7 +27,7 @@ export const Doorbell_3013Layout = ({ captionCancel, captionInfo, captionRoomNam
                 name="room_name"
                 layout={{ position: 'absolute', left: 10, width: 64, top: 14, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionRoomName ?? 'Roomname'} />
+                {captionRoomName ?? 'Roomname'}
             </Region>
             <Region
                 name="info"
@@ -52,7 +52,7 @@ export const Doorbell_3013Layout = ({ captionCancel, captionInfo, captionRoomNam
                         name="cancel"
                         layout={{ position: 'absolute', left: 3, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionCancel ?? t('generic.cancel')} />
+                        {captionCancel ?? t('generic.cancel')}
                     </Region>
                 </Region>
                 <Button

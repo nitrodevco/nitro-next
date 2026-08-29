@@ -181,7 +181,7 @@ export const GridItemWithPriceMultiLayoutAmountTextLeftItem = ({ captionAmountTe
             name="amount_text_left"
             layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionAmountTextLeft ?? '00'} />
+            {captionAmountTextLeft ?? '00'}
         </Region>
     );
 };
@@ -213,7 +213,7 @@ export const GridItemWithPriceMultiLayoutPlusItem = ({ captionPlus, layout }: Gr
             name="plus"
             layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionPlus ?? ' '} />
+            {captionPlus ?? ' '}
         </Region>
     );
 };
@@ -230,7 +230,7 @@ export const GridItemWithPriceMultiLayoutAmountTextRightItem = ({ captionAmountT
             name="amount_text_right"
             layout={{ width: 17, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionAmountTextRight ?? '00'} />
+            {captionAmountTextRight ?? '00'}
         </Region>
     );
 };

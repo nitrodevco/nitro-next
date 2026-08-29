@@ -73,7 +73,7 @@ export const CatalogVolterLayoutItemTemplateItem = ({ captionItemTitle, layout, 
                 name="item_title"
                 layout={{ position: 'absolute', left: 26, right: 128, top: 4, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionItemTitle ?? ''} />
+                {captionItemTitle ?? ''}
             </Region>
             <Icon
                 variant="5"
@@ -116,7 +116,7 @@ export const CatalogVolterLayoutSubitemTemplateItem = ({ captionItemTitle, layou
                 name="item_title"
                 layout={{ position: 'absolute', left: 32, right: 122, top: 4, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionItemTitle ?? ''} />
+                {captionItemTitle ?? ''}
             </Region>
         </Region>
     );

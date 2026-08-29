@@ -267,7 +267,7 @@ export const MainView_65LayoutHeaderItem = ({ captionHeader, layout }: MainView_
             name="header"
             layout={{ width: 191, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionHeader ?? t('groupforum.view.shortcuts.header')} />
+            {captionHeader ?? t('groupforum.view.shortcuts.header')}
         </Region>
     );
 };

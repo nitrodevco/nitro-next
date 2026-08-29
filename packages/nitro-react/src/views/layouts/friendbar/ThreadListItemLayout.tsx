@@ -166,14 +166,14 @@ export const ThreadListItemLayoutMainBox = ({ captionDetails, captionHeader, cap
                         name="header"
                         layout={{ position: 'absolute', left: 0, width: 117, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionHeader ?? 'Some thread header'} />
+                        {captionHeader ?? 'Some thread header'}
                     </Region>
                 </Region>
                 <Region
                     name="details"
                     layout={{ position: 'absolute', left: 0, width: 460, top: 16, height: 16, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionDetails ?? 'By author LongLongLongName 7 days ago, last message by LongLongLongName 30 seconds ago'} />
+                    {captionDetails ?? 'By author LongLongLongName 7 days ago, last message by LongLongLongName 30 seconds ago'}
                 </Region>
             </Region>
             <Region

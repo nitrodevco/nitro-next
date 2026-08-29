@@ -247,7 +247,7 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                         name="tab_boy_title"
                         layout={{ position: 'absolute', left: 50, width: 143, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTabBoyTitle ?? t('avatareditor.generic.boy')} />
+                        {captionTabBoyTitle ?? t('avatareditor.generic.boy')}
                     </Region>
                     <Region
                         name="tab_girl"
@@ -265,7 +265,7 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                         name="tab_girl_title"
                         layout={{ position: 'absolute', left: 150, width: 141, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTabGirlTitle ?? t('avatareditor.generic.girl')} />
+                        {captionTabGirlTitle ?? t('avatareditor.generic.girl')}
                     </Region>
                 </Region>
             )}
@@ -327,13 +327,13 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                         name="hotlooksTitle"
                         layout={{ position: 'absolute', left: 0, width: 262, top: 0, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionHotlooksTitle ?? t('avatareditor.hotlooks.title')} />
+                        {captionHotlooksTitle ?? t('avatareditor.hotlooks.title')}
                     </Region>
                     <Region
                         name="hotlooksChoose"
                         layout={{ position: 'absolute', left: 0, width: 168, top: 28, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionHotlooksChoose ?? t('avatareditor.hotlooks.choose')} />
+                        {captionHotlooksChoose ?? t('avatareditor.hotlooks.choose')}
                     </Region>
                     <Region
                         name="hotlooks"
@@ -350,13 +350,13 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                         name="nftsTitle"
                         layout={{ position: 'absolute', left: 0, width: 217, top: 0, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionNftsTitle ?? t('avatareditor.nfts.title')} />
+                        {captionNftsTitle ?? t('avatareditor.nfts.title')}
                     </Region>
                     <Region
                         name="nftsChoose"
                         layout={{ position: 'absolute', left: 0, width: 140, top: 28, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionNftsChoose ?? t('avatareditor.nfts.choose')} />
+                        {captionNftsChoose ?? t('avatareditor.nfts.choose')}
                     </Region>
                     <ScrollArea
                         orientation="vertical"
@@ -383,7 +383,7 @@ export const AvatarEditorContentLayoutContentArea = ({ captionEffectsTitle, capt
                         name="effectsTitle"
                         layout={{ position: 'absolute', left: 40, width: 169, top: 4, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionEffectsTitle ?? t('inventory.effects')} />
+                        {captionEffectsTitle ?? t('inventory.effects')}
                     </Region>
                     <Region
                         name="tab_effects"
@@ -562,7 +562,7 @@ export const AvatarEditorContentLayoutGridContainer = ({ captionContentNotificat
                 name="content_notification"
                 layout={{ position: 'absolute', left: 0, width: 298, top: 30, height: 128, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionContentNotification ?? t('avatar.editor.content.notification')} />
+                {captionContentNotification ?? t('avatar.editor.content.notification')}
             </Region>
             <Region
                 name="content_title"

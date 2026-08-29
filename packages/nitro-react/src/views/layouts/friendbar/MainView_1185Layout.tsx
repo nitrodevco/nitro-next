@@ -53,25 +53,25 @@ export const MainView_1185LayoutFrameHeaderOverride = ({ captionTitleTxt, captio
                         name="title_txt_shadow_0"
                         layout={{ position: 'absolute', left: 0, width: 94, top: 5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTitleTxtShadow0 ?? 'Top Badges'} />
+                        {captionTitleTxtShadow0 ?? 'Top Badges'}
                     </Region>
                     <Region
                         name="title_txt_shadow_1"
                         layout={{ position: 'absolute', left: 1, width: 94, top: 4, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTitleTxtShadow1 ?? 'Top Badges'} />
+                        {captionTitleTxtShadow1 ?? 'Top Badges'}
                     </Region>
                     <Region
                         name="title_txt_shadow_2"
                         layout={{ position: 'absolute', left: 2, width: 94, top: 5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTitleTxtShadow2 ?? 'Top Badges'} />
+                        {captionTitleTxtShadow2 ?? 'Top Badges'}
                     </Region>
                     <Region
                         name="title_txt_shadow_3"
                         layout={{ position: 'absolute', left: 1, width: 94, top: 6, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTitleTxtShadow3 ?? 'Top Badges'} />
+                        {captionTitleTxtShadow3 ?? 'Top Badges'}
                     </Region>
                     <Region
                         name="title_txt"
@@ -119,7 +119,7 @@ export const MainView_1185LayoutScoreTxtItem = ({ captionScoreTxt, layout }: Mai
             name="score_txt"
             layout={{ width: 31, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionScoreTxt ?? '7864'} />
+            {captionScoreTxt ?? '7864'}
         </Region>
     );
 };
@@ -210,7 +210,7 @@ export const MainView_1185LayoutEntryTemplateItem = ({ captionRankNumber, captio
                 name="username_txt"
                 layout={{ position: 'absolute', left: 98, width: 114, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionUsernameTxt ?? 'Username very long'} />
+                {captionUsernameTxt ?? 'Username very long'}
             </Region>
             <Region
                 name="right_aligned"
@@ -258,7 +258,7 @@ export const MainView_1185LayoutScoreTxtItem2 = ({ captionScoreTxt, layout }: Ma
             name="score_txt"
             layout={{ width: 31, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionScoreTxt ?? '7864'} />
+            {captionScoreTxt ?? '7864'}
         </Region>
     );
 };
@@ -340,7 +340,7 @@ export const MainView_1185LayoutOwnContainer = ({ captionRankOwn, captionUsernam
                 name="username_txt"
                 layout={{ position: 'absolute', left: 97, width: 99, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionUsernameTxt ?? 'sirjonasxx-XIVXXI'} />
+                {captionUsernameTxt ?? 'sirjonasxx-XIVXXI'}
             </Region>
             <Region
                 name="right_aligned"

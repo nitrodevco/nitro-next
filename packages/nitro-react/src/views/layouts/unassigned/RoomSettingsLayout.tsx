@@ -965,7 +965,7 @@ export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader
                 name="moderation_mute_header"
                 layout={{ position: 'absolute', left: 0, width: 276, top: 50, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionModerationMuteHeader ?? t('navigator.roomsettings.moderation.mute.header')} />
+                {captionModerationMuteHeader ?? t('navigator.roomsettings.moderation.mute.header')}
             </Region>
             <Region
                 name="moderation_mute_selector"
@@ -981,13 +981,13 @@ export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader
                     name="moderation_mute_none_label"
                     layout={{ position: 'absolute', left: 15, width: 93, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionModerationMuteNoneLabel ?? t('navigator.roomsettings.moderation.none')} />
+                    {captionModerationMuteNoneLabel ?? t('navigator.roomsettings.moderation.none')}
                 </Region>
                 <Region
                     name="moderation_mute_rights_label"
                     layout={{ position: 'absolute', left: 95, width: 162, top: -4, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionModerationMuteRightsLabel ?? t('navigator.roomsettings.moderation.rights')} />
+                    {captionModerationMuteRightsLabel ?? t('navigator.roomsettings.moderation.rights')}
                 </Region>
                 <RadioButton
                     variant="0"
@@ -1000,7 +1000,7 @@ export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader
                 name="moderation_kick_header"
                 layout={{ position: 'absolute', left: 0, width: 273, top: 110, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionModerationKickHeader ?? t('navigator.roomsettings.moderation.kick.header')} />
+                {captionModerationKickHeader ?? t('navigator.roomsettings.moderation.kick.header')}
             </Region>
             <Region
                 name="moderation_kick_selector"
@@ -1016,19 +1016,19 @@ export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader
                     name="moderation_kick_none_label"
                     layout={{ position: 'absolute', left: 15, width: 66, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionModerationKickNoneLabel ?? t('navigator.roomsettings.moderation.none')} />
+                    {captionModerationKickNoneLabel ?? t('navigator.roomsettings.moderation.none')}
                 </Region>
                 <Region
                     name="moderation_kick_rights_header"
                     layout={{ position: 'absolute', left: 96, width: 123, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionModerationKickRightsHeader ?? t('navigator.roomsettings.moderation.rights')} />
+                    {captionModerationKickRightsHeader ?? t('navigator.roomsettings.moderation.rights')}
                 </Region>
                 <Region
                     name="moderation_kick_all_label"
                     layout={{ position: 'absolute', left: 245, width: 93, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionModerationKickAllLabel ?? t('navigator.roomsettings.moderation.all')} />
+                    {captionModerationKickAllLabel ?? t('navigator.roomsettings.moderation.all')}
                 </Region>
                 <RadioButton
                     variant="0"
@@ -1047,7 +1047,7 @@ export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader
                 name="moderation_ban_header"
                 layout={{ position: 'absolute', left: 0, width: 292, top: 160, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionModerationBanHeader ?? t('navigator.roomsettings.moderation.ban.header')} />
+                {captionModerationBanHeader ?? t('navigator.roomsettings.moderation.ban.header')}
             </Region>
             <Region
                 name="moderation_ban_selector"
@@ -1057,7 +1057,7 @@ export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader
                     name="moderation_ban_none_label"
                     layout={{ position: 'absolute', left: 15, width: 93, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionModerationBanNoneLabel ?? t('navigator.roomsettings.moderation.none')} />
+                    {captionModerationBanNoneLabel ?? t('navigator.roomsettings.moderation.none')}
                 </Region>
                 <RadioButton
                     variant="0"
@@ -1069,7 +1069,7 @@ export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader
                     name="moderation_ban_rights"
                     layout={{ position: 'absolute', left: 95, width: 197, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionModerationBanRights ?? t('navigator.roomsettings.moderation.rights')} />
+                    {captionModerationBanRights ?? t('navigator.roomsettings.moderation.rights')}
                 </Region>
                 <RadioButton
                     variant="0"
@@ -1098,7 +1098,7 @@ export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader
                 name="moderation_banned_users_label"
                 layout={{ position: 'absolute', left: 178, width: 125, top: 233, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionModerationBannedUsersLabel ?? t('navigator.roomsettings.moderation.banned.users')} />
+                {captionModerationBannedUsersLabel ?? t('navigator.roomsettings.moderation.banned.users')}
             </Region>
             <Button
                 variant="3"

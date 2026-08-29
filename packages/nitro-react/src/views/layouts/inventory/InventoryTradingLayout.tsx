@@ -131,7 +131,7 @@ export const InventoryTradingLayout = ({ captionHelpText, captionInfoTextHighlig
                         name="info_text_highlighted"
                         layout={{ position: 'absolute', left: 5, width: 4, top: 5, height: 4, maxWidth: 453, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionInfoTextHighlighted ?? ''} />
+                        {captionInfoTextHighlighted ?? ''}
                     </Region>
                 </Border>
                 <Region
@@ -174,7 +174,7 @@ export const InventoryTradingLayoutBoldTextItem = ({ captionBoldText, layout }: 
             name="bold_text"
             layout={{ width: 127, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionBoldText ?? t('inventory.trading.you')} />
+            {captionBoldText ?? t('inventory.trading.you')}
         </Region>
     );
 };
@@ -193,7 +193,7 @@ export const InventoryTradingLayoutPlainTextItem = ({ captionPlainText, layout }
             name="plain_text"
             layout={{ width: 167, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionPlainText ?? t('inventory.trading.areoffering')} />
+            {captionPlainText ?? t('inventory.trading.areoffering')}
         </Region>
     );
 };
@@ -322,13 +322,13 @@ export const InventoryTradingLayoutOffers0 = ({ captionContentText1A, captionCon
                 name="content_text_1_a"
                 layout={{ position: 'absolute', left: 80, width: 4, top: 162, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionContentText1A ?? ''} />
+                {captionContentText1A ?? ''}
             </Region>
             <Region
                 name="content_text_1_b"
                 layout={{ position: 'absolute', left: 80, width: 4, top: 180, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionContentText1B ?? ''} />
+                {captionContentText1B ?? ''}
             </Region>
             <ThemeImage
                 name="lock_0"
@@ -353,7 +353,7 @@ export const InventoryTradingLayoutBoldTextItem2 = ({ captionBoldText, layout }:
             name="bold_text"
             layout={{ width: 138, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionBoldText ?? t('inventory.trading.other')} />
+            {captionBoldText ?? t('inventory.trading.other')}
         </Region>
     );
 };
@@ -372,7 +372,7 @@ export const InventoryTradingLayoutPlainTextItem2 = ({ captionPlainText, layout 
             name="plain_text"
             layout={{ width: 157, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionPlainText ?? t('inventory.trading.isoffering')} />
+            {captionPlainText ?? t('inventory.trading.isoffering')}
         </Region>
     );
 };
@@ -501,13 +501,13 @@ export const InventoryTradingLayoutOffers1 = ({ captionContentText2A, captionCon
                 name="content_text_2_a"
                 layout={{ position: 'absolute', left: 80, width: 4, top: 162, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionContentText2A ?? ''} />
+                {captionContentText2A ?? ''}
             </Region>
             <Region
                 name="content_text_2_b"
                 layout={{ position: 'absolute', left: 80, width: 4, top: 180, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionContentText2B ?? ''} />
+                {captionContentText2B ?? ''}
             </Region>
             <ThemeImage
                 name="lock_1"
@@ -530,7 +530,7 @@ export const InventoryTradingLayoutSilverProgressHtmlItem = ({ captionSilverProg
             name="silver_progress_html"
             layout={{ width: 32, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionSilverProgressHtml ?? '<font color="#AC232A">0</font>/10'} />
+            {captionSilverProgressHtml ?? '<font color="#AC232A">0</font>/10'}
         </Region>
     );
 };

@@ -65,7 +65,7 @@ export const RoomtoolFrameLayoutRoomContItem = ({ captionDesc, captionName, capt
                     layout={{ position: 'absolute', left: 0, width: 220, top: 60, height: 30 }}
                 >
                     <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text="Tags:" />
+                        Tags:
                     </Region>
                     <Region
                         name="tags_txt"
@@ -116,40 +116,40 @@ export const RoomtoolFrameLayoutInfoContItem = ({ captionHasEventTxt, captionOwn
             layout={{ width: 230, height: 74, flexShrink: 0, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 5, width: 80, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Room owner:" />
+                Room owner:
             </Region>
             <Region layout={{ position: 'absolute', left: 5, width: 90, top: 15, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Users in room:" />
+                Users in room:
             </Region>
             <Region layout={{ position: 'absolute', left: 5, width: 90, top: 28, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Owner in room:" />
+                Owner in room:
             </Region>
             <Region layout={{ position: 'absolute', left: 5, width: 90, top: 41, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Has event:" />
+                Has event:
             </Region>
             <Region
                 name="owner_name_txt"
                 layout={{ position: 'absolute', left: 85, width: 71, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionOwnerNameTxt ?? 'sulka'} />
+                {captionOwnerNameTxt ?? 'sulka'}
             </Region>
             <Region
                 name="owner_in_room_txt"
                 layout={{ position: 'absolute', left: 100, width: 40, top: 28, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionOwnerInRoomTxt ?? 'yes'} />
+                {captionOwnerInRoomTxt ?? 'yes'}
             </Region>
             <Region
                 name="user_count_txt"
                 layout={{ position: 'absolute', left: 100, width: 40, top: 15, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionUserCountTxt ?? '18'} />
+                {captionUserCountTxt ?? '18'}
             </Region>
             <Region
                 name="has_event_txt"
                 layout={{ position: 'absolute', left: 100, width: 40, top: 41, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionHasEventTxt ?? 'no'} />
+                {captionHasEventTxt ?? 'no'}
             </Region>
             <Button
                 variant="0"
@@ -268,7 +268,7 @@ export const RoomtoolFrameLayoutActContItem = ({ layout, onChangenameCheck, onKi
                 />
             </Region>
             <Region layout={{ position: 'absolute', left: 24, width: 199, top: 31, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Change room lock to doorbell" />
+                Change room lock to doorbell
             </Region>
             <Region layout={{ position: 'absolute', left: 24, width: 199, top: 48, height: 25, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <ThemeText

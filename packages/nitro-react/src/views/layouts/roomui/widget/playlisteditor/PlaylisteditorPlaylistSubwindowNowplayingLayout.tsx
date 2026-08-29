@@ -58,13 +58,13 @@ export const PlaylisteditorPlaylistSubwindowNowplayingLayoutNowPlayingContainer 
                 name="now_playing_track_name"
                 layout={{ position: 'absolute', left: 82, width: 69, top: 19, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionNowPlayingTrackName ?? 'Song Name'} />
+                {captionNowPlayingTrackName ?? 'Song Name'}
             </Region>
             <Region
                 name="now_playing_author_name"
                 layout={{ position: 'absolute', left: 82, width: 63, top: 35, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionNowPlayingAuthorName ?? 'Author Name'} />
+                {captionNowPlayingAuthorName ?? 'Author Name'}
             </Region>
             <ThemeImage
                 name="song_name_icon_bitmap"

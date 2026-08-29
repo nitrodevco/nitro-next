@@ -41,10 +41,10 @@ export const TransactionDetailsLayoutTransactionTypePairItem = ({ layout }: Tran
             layout={{ width: 111, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 101, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredchests.log_details.type')} />
+                {t('wiredchests.log_details.type')}
             </Region>
             <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="-" />
+                -
             </Region>
         </Region>
     );
@@ -64,10 +64,10 @@ export const TransactionDetailsLayoutTimestampPairItem = ({ layout }: Transactio
             layout={{ width: 77, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 67, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredchests.log_details.timestamp')} />
+                {t('wiredchests.log_details.timestamp')}
             </Region>
             <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="-" />
+                -
             </Region>
         </Region>
     );
@@ -87,10 +87,10 @@ export const TransactionDetailsLayoutRoomIdPairItem = ({ layout }: TransactionDe
             layout={{ width: 61, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 51, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredchests.log_details.room_id')} />
+                {t('wiredchests.log_details.room_id')}
             </Region>
             <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="-" />
+                -
             </Region>
         </Region>
     );
@@ -110,10 +110,10 @@ export const TransactionDetailsLayoutChestIdsPairItem = ({ layout }: Transaction
             layout={{ width: 78, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 68, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredchests.log_details.chest_ids')} />
+                {t('wiredchests.log_details.chest_ids')}
             </Region>
             <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="-" />
+                -
             </Region>
         </Region>
     );
@@ -133,10 +133,10 @@ export const TransactionDetailsLayoutUsernamePairItem = ({ layout }: Transaction
             layout={{ width: 74, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 64, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredchests.log_details.username')} />
+                {t('wiredchests.log_details.username')}
             </Region>
             <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="-" />
+                -
             </Region>
         </Region>
     );
@@ -156,10 +156,10 @@ export const TransactionDetailsLayoutFurniTransactionsPairItem = ({ layout }: Tr
             layout={{ width: 89, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2, ...layout }}
         >
             <Region layout={{ width: 79, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredchests.log_details.transactions')} />
+                {t('wiredchests.log_details.transactions')}
             </Region>
             <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="-" />
+                -
             </Region>
         </Region>
     );
@@ -680,10 +680,10 @@ export const TransactionDetailsLayoutExtraContainerItem = ({ itemsExtraInfoBubbl
                 layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 20, flexDirection: 'row', gap: 2 }}
             >
                 <Region layout={{ width: 37, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredchests.log_details.extra')} />
+                    {t('wiredchests.log_details.extra')}
                 </Region>
                 <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text="-" />
+                    -
                 </Region>
             </Region>
             <Region

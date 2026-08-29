@@ -87,7 +87,7 @@ export const InventoryTradingNameScamWarningLayoutTraderSectionItem = ({ caption
                 name="trader_name_text"
                 layout={{ position: 'absolute', left: 63, width: 44, top: 29, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTraderNameText ?? 'Habbo'} />
+                {captionTraderNameText ?? 'Habbo'}
             </Region>
             <Button
                 variant="3"
@@ -121,7 +121,7 @@ export const InventoryTradingNameScamWarningLayoutRoomMatchesSectionItem = ({ ca
                 name="room_matches_header"
                 layout={{ position: 'absolute', left: 0, width: 138, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionRoomMatchesHeader ?? t('inventory.trading.namescam.similar_in_room')} />
+                {captionRoomMatchesHeader ?? t('inventory.trading.namescam.similar_in_room')}
             </Region>
             <Region
                 name="room_matches_text"
@@ -155,7 +155,7 @@ export const InventoryTradingNameScamWarningLayoutFriendMatchesSectionItem = ({ 
                 name="friend_matches_header"
                 layout={{ position: 'absolute', left: 0, width: 172, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionFriendMatchesHeader ?? t('inventory.trading.namescam.similar_in_friends')} />
+                {captionFriendMatchesHeader ?? t('inventory.trading.namescam.similar_in_friends')}
             </Region>
             <Region
                 name="friend_matches_text"

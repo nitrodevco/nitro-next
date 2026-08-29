@@ -31,7 +31,7 @@ export const SafetyQuizPromoLayout = ({ layout, onSafetyQuizButton }: SafetyQuiz
                     />
                 </Region>
                 <Region layout={{ position: 'absolute', left: 74, width: 160, top: 30, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('safety.promo.widget.message')} />
+                    {t('safety.promo.widget.message')}
                 </Region>
                 <Button
                     variant="100"

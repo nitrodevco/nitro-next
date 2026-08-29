@@ -36,7 +36,7 @@ export const ErrorInfoViewLayout = ({ captionErrorName, captionErrorText, layout
                     name="error_name"
                     layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 101, alignSelf: 'center', marginTop: -30.5, marginBottom: 30.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionErrorName ?? 'EXECUTION_CAP'} />
+                    {captionErrorName ?? 'EXECUTION_CAP'}
                 </Region>
                 <Region
                     name="error_text"

@@ -231,7 +231,7 @@ export const ChestUpgradeLayoutContent = ({ captionPlus, captionPriceCredits, ca
                     )}
                     <Region layout={{ width: 276, height: 25, flexShrink: 0, flexDirection: 'row', gap: 5 }}>
                         <Region layout={{ width: 213, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text={t('wiredchests.upgrade.capacity.amount')} />
+                            {t('wiredchests.upgrade.capacity.amount')}
                         </Region>
                         <Dropmenu
                             variant="3"
@@ -257,7 +257,7 @@ export const ChestUpgradeLayoutContent = ({ captionPlus, captionPriceCredits, ca
                                 name="price_credits"
                                 layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
-                                <ThemeText text={captionPriceCredits ?? '0'} />
+                                {captionPriceCredits ?? '0'}
                             </Region>
                             <Icon
                                 variant="34"
@@ -267,13 +267,13 @@ export const ChestUpgradeLayoutContent = ({ captionPlus, captionPriceCredits, ca
                                 name="plus"
                                 layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
-                                <ThemeText text={captionPlus ?? ' '} />
+                                {captionPlus ?? ' '}
                             </Region>
                             <Region
                                 name="price_diamonds"
                                 layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
-                                <ThemeText text={captionPriceDiamonds ?? '0'} />
+                                {captionPriceDiamonds ?? '0'}
                             </Region>
                             <Icon
                                 variant="41"

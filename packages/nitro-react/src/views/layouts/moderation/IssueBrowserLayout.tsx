@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { BoxLayout, Button, Frame, Region, ScrollArea, TabButton, TabContext, ThemeImage, ThemeText } from '#base/theme';
+import { BoxLayout, Button, Frame, Region, ScrollArea, TabButton, TabContext, ThemeImage } from '#base/theme';
 
 /** Generated from `1118_issue_browser_xml` (layout "issue_browser", 585x273) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IssueBrowserLayoutProps {
@@ -97,25 +97,25 @@ export const IssueBrowserLayoutItemPrototypeItem = ({ captionCategory, captionSc
                     name="score"
                     layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionScore ?? 'xx'} />
+                    {captionScore ?? 'xx'}
                 </Region>
                 <Region
                     name="category"
                     layout={{ position: 'absolute', left: 40, width: 140, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionCategory ?? 'Sharing personal info'} />
+                    {captionCategory ?? 'Sharing personal info'}
                 </Region>
                 <Region
                     name="source"
                     layout={{ position: 'absolute', left: 180, right: 185, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionSource ?? 'source'} />
+                    {captionSource ?? 'source'}
                 </Region>
                 <Region
                     name="target_name"
                     layout={{ position: 'absolute', left: 270, right: 65, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionTargetName ?? 'target'} />
+                    {captionTargetName ?? 'target'}
                 </Region>
                 <ThemeImage
                     name="target_icon"
@@ -126,7 +126,7 @@ export const IssueBrowserLayoutItemPrototypeItem = ({ captionCategory, captionSc
                     name="time"
                     layout={{ position: 'absolute', right: 0, width: 45, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionTime ?? 'mm:ss'} />
+                    {captionTime ?? 'mm:ss'}
                 </Region>
             </Region>
             <Button
@@ -185,19 +185,19 @@ export const IssueBrowserLayoutOpenIssuesPrototype = ({ issueList, layout, visib
                         layout={{ position: 'absolute', left: 0, right: 30, top: 0, height: 15 }}
                     >
                         <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text="Score" />
+                            Score
                         </Region>
                         <Region layout={{ position: 'absolute', left: 40, width: 140, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text="Category" />
+                            Category
                         </Region>
                         <Region layout={{ position: 'absolute', left: 180, width: 90, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text="Type" />
+                            Type
                         </Region>
                         <Region layout={{ position: 'absolute', left: 270, width: 120, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text="Player" />
+                            Player
                         </Region>
                         <Region layout={{ position: 'absolute', right: 77, width: 50, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text="Open" />
+                            Open
                         </Region>
                     </Region>
                     <IssueBrowserLayoutIssueList {...issueList} />
@@ -233,25 +233,25 @@ export const IssueBrowserLayoutTextsContainer = ({ captionCategory, captionMsgs,
                 name="score"
                 layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionScore ?? 'xx'} />
+                {captionScore ?? 'xx'}
             </Region>
             <Region
                 name="category"
                 layout={{ position: 'absolute', left: 40, width: 111, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionCategory ?? 'Sharing personal info'} />
+                {captionCategory ?? 'Sharing personal info'}
             </Region>
             <Region
                 name="source"
                 layout={{ position: 'absolute', left: 151, right: 234, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionSource ?? 'source'} />
+                {captionSource ?? 'source'}
             </Region>
             <Region
                 name="target_name"
                 layout={{ position: 'absolute', left: 221, right: 144, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTargetName ?? 'target'} />
+                {captionTargetName ?? 'target'}
             </Region>
             <ThemeImage
                 name="target_icon"
@@ -262,13 +262,13 @@ export const IssueBrowserLayoutTextsContainer = ({ captionCategory, captionMsgs,
                 name="time"
                 layout={{ position: 'absolute', right: 84, width: 40, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTime ?? 'mm:ss'} />
+                {captionTime ?? 'mm:ss'}
             </Region>
             <Region
                 name="msgs"
                 layout={{ position: 'absolute', right: 59, width: 25, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionMsgs ?? 'yy'} />
+                {captionMsgs ?? 'yy'}
             </Region>
         </Region>
     );
@@ -357,22 +357,22 @@ export const IssueBrowserLayoutMyIssuesPrototype = ({ issueList, layout, onRelea
                         layout={{ position: 'absolute', left: 0, right: 30, top: 0, height: 15 }}
                     >
                         <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text="Score" />
+                            Score
                         </Region>
                         <Region layout={{ position: 'absolute', left: 40, width: 111, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text="Category" />
+                            Category
                         </Region>
                         <Region layout={{ position: 'absolute', left: 151, width: 170, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text="Type" />
+                            Type
                         </Region>
                         <Region layout={{ position: 'absolute', left: 221, width: 90, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text="Player" />
+                            Player
                         </Region>
                         <Region layout={{ position: 'absolute', right: 146, width: 60, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text="Open" />
+                            Open
                         </Region>
                         <Region layout={{ position: 'absolute', right: 111, width: 35, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text="Msgs" />
+                            Msgs
                         </Region>
                     </Region>
                     <IssueBrowserLayoutIssueList2 {...issueList} />
@@ -416,25 +416,25 @@ export const IssueBrowserLayoutTextsContainer2 = ({ captionCategory, captionPick
                 name="score"
                 layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionScore ?? 'xx'} />
+                {captionScore ?? 'xx'}
             </Region>
             <Region
                 name="category"
                 layout={{ position: 'absolute', left: 40, width: 120, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionCategory ?? 'category'} />
+                {captionCategory ?? 'category'}
             </Region>
             <Region
                 name="source"
                 layout={{ position: 'absolute', left: 160, right: 287, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionSource ?? 'source'} />
+                {captionSource ?? 'source'}
             </Region>
             <Region
                 name="target_name"
                 layout={{ position: 'absolute', left: 230, right: 167, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTargetName ?? 'target'} />
+                {captionTargetName ?? 'target'}
             </Region>
             <ThemeImage
                 name="target_icon"
@@ -445,13 +445,13 @@ export const IssueBrowserLayoutTextsContainer2 = ({ captionCategory, captionPick
                 name="time"
                 layout={{ position: 'absolute', right: 107, width: 40, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTime ?? 'mm:ss'} />
+                {captionTime ?? 'mm:ss'}
             </Region>
             <Region
                 name="picker"
                 layout={{ position: 'absolute', right: 0, width: 107, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionPicker ?? 'picker'} />
+                {captionPicker ?? 'picker'}
             </Region>
         </Region>
     );
@@ -519,22 +519,22 @@ export const IssueBrowserLayoutPickedIssuesPrototype = ({ issueList, layout }: I
                     layout={{ position: 'absolute', left: 0, right: 30, top: 0, height: 15 }}
                 >
                     <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text="Score" />
+                        Score
                     </Region>
                     <Region layout={{ position: 'absolute', left: 40, width: 120, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text="Category" />
+                        Category
                     </Region>
                     <Region layout={{ position: 'absolute', left: 160, width: 70, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text="Type" />
+                        Type
                     </Region>
                     <Region layout={{ position: 'absolute', left: 230, width: 120, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text="Player" />
+                        Player
                     </Region>
                     <Region layout={{ position: 'absolute', right: 107, width: 60, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text="Open" />
+                        Open
                     </Region>
                     <Region layout={{ position: 'absolute', right: 0, width: 107, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text="Picker" />
+                        Picker
                     </Region>
                 </Region>
                 <IssueBrowserLayoutIssueList3 {...issueList} />

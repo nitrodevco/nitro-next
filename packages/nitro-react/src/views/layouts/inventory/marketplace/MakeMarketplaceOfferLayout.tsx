@@ -159,19 +159,19 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, cap
                     name="average_price"
                     layout={{ width: 268, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionAveragePrice ?? t('inventory.marketplace.make_offer.average_price')} />
+                    {captionAveragePrice ?? t('inventory.marketplace.make_offer.average_price')}
                 </Region>
                 <Region
                     name="lowest_price"
                     layout={{ width: 268, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionLowestPrice ?? t('inventory.marketplace.make_offer.lowest_price')} />
+                    {captionLowestPrice ?? t('inventory.marketplace.make_offer.lowest_price')}
                 </Region>
                 <Region
                     name="suggested_price"
                     layout={{ width: 268, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionSuggestedPrice ?? t('inventory.marketplace.make_offer.suggested_price')} />
+                    {captionSuggestedPrice ?? t('inventory.marketplace.make_offer.suggested_price')}
                 </Region>
                 <Button
                     variant="3"

@@ -188,25 +188,25 @@ export const IssueHandlerLayoutIssuesItemListItem = ({ captionCategory, captionR
                         name="reporter"
                         layout={{ position: 'absolute', left: 0, width: 78, top: 0, height: 13, maxWidth: 78, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionReporter ?? 'reporter'} />
+                        {captionReporter ?? 'reporter'}
                     </Region>
                     <Region
                         name="category"
                         layout={{ position: 'absolute', left: 78, width: 110, top: 0, height: 13, maxWidth: 110, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionCategory ?? 'category'} />
+                        {captionCategory ?? 'category'}
                     </Region>
                     <Region
                         name="type"
                         layout={{ position: 'absolute', left: 188, width: 60, top: 0, height: 13, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionType ?? 'type'} />
+                        {captionType ?? 'type'}
                     </Region>
                     <Region
                         name="time_open"
                         layout={{ position: 'absolute', left: 248, width: 32, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTimeOpen ?? '00:00'} />
+                        {captionTimeOpen ?? '00:00'}
                     </Region>
                 </Region>
             </Region>

@@ -51,7 +51,7 @@ export const FriendEntryLayoutBg = ({ captionCaption, captionName, captionSelect
                 name="name"
                 layout={{ position: 'absolute', left: 38, width: 39, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionName ?? 'bobber'} />
+                {captionName ?? 'bobber'}
             </Region>
             <Region
                 name="caption"

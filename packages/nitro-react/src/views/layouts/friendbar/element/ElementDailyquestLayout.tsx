@@ -112,13 +112,13 @@ export const ElementDailyquestLayoutQuestdataContainer = ({ captionAcceptText, c
                             name="caption_txt"
                             layout={{ height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionCaptionTxt ?? 'DQ Title'} />
+                            {captionCaptionTxt ?? 'DQ Title'}
                         </Region>
                         <Region
                             name="accept_text"
                             layout={{ height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionAcceptText ?? t('landing.view.quest.accept')} />
+                            {captionAcceptText ?? t('landing.view.quest.accept')}
                         </Region>
                     </Region>
                 </ContainerButton>

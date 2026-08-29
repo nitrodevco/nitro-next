@@ -91,7 +91,7 @@ export const LayoutSingleBundle_1587LayoutCtlgSingleBundle = ({ addOnBadgeViewWi
                     name="ctlg_text_1"
                     layout={{ position: 'absolute', left: 51, width: 256, top: 10, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionCtlgText1 ?? t('lorem.html')} />
+                    {captionCtlgText1 ?? t('lorem.html')}
                 </Region>
             </Border>
             <AddOnBadgeViewWidget

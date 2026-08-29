@@ -78,7 +78,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                             name="title"
                             layout={{ position: 'absolute', left: 6, width: 106, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionTitle ?? 'Payment option 1:'} />
+                            {captionTitle ?? 'Payment option 1:'}
                         </Region>
                         <Region
                             name="close_rule_region"
@@ -143,7 +143,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                         name="text_view"
                         layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTextView ?? 'some text'} />
+                        {captionTextView ?? 'some text'}
                     </Region>
                 )}
                 {(visibleTextBoldView ?? false) && (
@@ -151,7 +151,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                         name="text_bold_view"
                         layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTextBoldView ?? 'some bold text'} />
+                        {captionTextBoldView ?? 'some bold text'}
                     </Region>
                 )}
                 {(visibleTextHtml ?? false) && (
@@ -159,7 +159,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                         name="text_html"
                         layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 17, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTextHtml ?? 'Use this by typing'} />
+                        {captionTextHtml ?? 'Use this by typing'}
                     </Region>
                 )}
                 {(visibleInputTemplate ?? false) && (

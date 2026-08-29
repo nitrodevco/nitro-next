@@ -213,7 +213,7 @@ export const WiredMenuViewLayoutStatisticsContainer = ({ captionStatisticsFloorf
                 name="title"
                 layout={{ position: 'absolute', left: 0, width: 106, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTitle ?? t('wiredmenu.monitor.statistics')} />
+                {captionTitle ?? t('wiredmenu.monitor.statistics')}
             </Region>
             <Border
                 variant="3"
@@ -230,43 +230,43 @@ export const WiredMenuViewLayoutStatisticsContainer = ({ captionStatisticsFloorf
                             name="statistics_usage_html"
                             layout={{ width: 68, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionStatisticsUsageHtml ?? 'Wired usage:'} />
+                            {captionStatisticsUsageHtml ?? 'Wired usage:'}
                         </Region>
                         <Region
                             name="statistics_heavy_html"
                             layout={{ width: 48, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionStatisticsHeavyHtml ?? 'Is heavy:'} />
+                            {captionStatisticsHeavyHtml ?? 'Is heavy:'}
                         </Region>
                         <Region
                             name="statistics_floorfurni_html"
                             layout={{ width: 60, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionStatisticsFloorfurniHtml ?? 'Floor furni:'} />
+                            {captionStatisticsFloorfurniHtml ?? 'Floor furni:'}
                         </Region>
                         <Region
                             name="statistics_wallfurni_html"
                             layout={{ width: 57, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionStatisticsWallfurniHtml ?? 'Wall furni:'} />
+                            {captionStatisticsWallfurniHtml ?? 'Wall furni:'}
                         </Region>
                         <Region
                             name="statistics_perm_vars_furni_html"
                             layout={{ width: 114, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionStatisticsPermVarsFurniHtml ?? 'Permanent furni vars:'} />
+                            {captionStatisticsPermVarsFurniHtml ?? 'Permanent furni vars:'}
                         </Region>
                         <Region
                             name="statistics_perm_vars_user_html"
                             layout={{ width: 113, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionStatisticsPermVarsUserHtml ?? 'Permanent user vars:'} />
+                            {captionStatisticsPermVarsUserHtml ?? 'Permanent user vars:'}
                         </Region>
                         <Region
                             name="statistics_perm_vars_global_html"
                             layout={{ width: 122, height: 16, flexShrink: 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionStatisticsPermVarsGlobalHtml ?? 'Permanent global vars:'} />
+                            {captionStatisticsPermVarsGlobalHtml ?? 'Permanent global vars:'}
                         </Region>
                     </Region>
                 </ScrollArea>
@@ -321,7 +321,7 @@ export const WiredMenuViewLayoutMonitorContainer = ({ captionTitle, layout, onCl
                     name="title"
                     layout={{ position: 'absolute', left: 0, width: 106, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionTitle ?? t('wiredmenu.monitor.log')} />
+                    {captionTitle ?? t('wiredmenu.monitor.log')}
                 </Region>
                 <Region
                     name="log_table_container"
@@ -514,7 +514,7 @@ export const WiredMenuViewLayoutTypePickerContainer = ({ buttons, captionTitle, 
                 name="title"
                 layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTitle ?? t('wiredmenu.variable_overview.type')} />
+                {captionTitle ?? t('wiredmenu.variable_overview.type')}
             </Region>
             <Border
                 variant="3"
@@ -603,7 +603,7 @@ export const WiredMenuViewLayoutVariableOverviewContainer = ({ captionTitle, cap
                         name="title"
                         layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTitle ?? t('wiredmenu.variable_overview.picker')} />
+                        {captionTitle ?? t('wiredmenu.variable_overview.picker')}
                     </Region>
                     <Region
                         name="variable_list_container"
@@ -629,7 +629,7 @@ export const WiredMenuViewLayoutVariableOverviewContainer = ({ captionTitle, cap
                         name="title"
                         layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTitle2 ?? t('wiredmenu.variable_overview.properties')} />
+                        {captionTitle2 ?? t('wiredmenu.variable_overview.properties')}
                     </Region>
                     <Region
                         name="variable_properties_table_container"
@@ -644,7 +644,7 @@ export const WiredMenuViewLayoutVariableOverviewContainer = ({ captionTitle, cap
                         name="title"
                         layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTitle3 ?? t('wiredmenu.variable_overview.text_values')} />
+                        {captionTitle3 ?? t('wiredmenu.variable_overview.text_values')}
                     </Region>
                     <Region
                         name="variable_texts_table_container"
@@ -788,7 +788,7 @@ export const WiredMenuViewLayoutTypePickerContainer2 = ({ buttons, captionTitle,
                 name="title"
                 layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTitle ?? t('wiredmenu.inspection.type')} />
+                {captionTitle ?? t('wiredmenu.inspection.type')}
             </Region>
             <Border
                 variant="3"
@@ -825,7 +825,7 @@ export const WiredMenuViewLayoutVariableValuesContainer = ({ captionTitle, layou
                 name="title"
                 layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTitle ?? t('wiredmenu.inspection.variables')} />
+                {captionTitle ?? t('wiredmenu.inspection.variables')}
             </Region>
             <Region
                 name="variable_values_table_container"
@@ -862,7 +862,7 @@ export const WiredMenuViewLayoutVariableValuesContainer = ({ captionTitle, layou
                         layout={{ position: 'absolute', left: 6, right: 22, top: 6, height: 42 }}
                     >
                         <Region layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text={t('wiredmenu.inspection.select_variable')} />
+                            {t('wiredmenu.inspection.select_variable')}
                         </Region>
                         <Region
                             name="var_picker_container"
@@ -874,7 +874,7 @@ export const WiredMenuViewLayoutVariableValuesContainer = ({ captionTitle, layou
                         layout={{ position: 'absolute', left: 6, right: 22, top: 52, height: 42 }}
                     >
                         <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text={t('wiredmenu.inspection.select_value')} />
+                            {t('wiredmenu.inspection.select_value')}
                         </Region>
                         <Border
                             variant="4"
@@ -933,7 +933,7 @@ export const WiredMenuViewLayoutPreviewContainer = ({ captionPreviewInstructionF
                 name="title"
                 layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTitle ?? t('wiredmenu.inspection.preview')} />
+                {captionTitle ?? t('wiredmenu.inspection.preview')}
             </Region>
             <Border
                 variant="3"
@@ -1016,7 +1016,7 @@ export const WiredMenuViewLayoutPreviewContainer = ({ captionPreviewInstructionF
                     layout={{ position: 'absolute', left: 0, width: 17, top: 1, height: 17 }}
                 />
                 <Region layout={{ position: 'absolute', left: 20, width: 82, top: 0, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredmenu.inspection.pin')} />
+                    {t('wiredmenu.inspection.pin')}
                 </Region>
             </Region>
         </Region>
@@ -1071,7 +1071,7 @@ export const WiredMenuViewLayoutChestControlsContainer = ({ captionTitle, layout
                 name="title"
                 layout={{ position: 'absolute', left: 0, width: 84, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTitle ?? t('wiredmenu.chests.chest_control')} />
+                {captionTitle ?? t('wiredmenu.chests.chest_control')}
             </Region>
             <Border
                 variant="3"
@@ -1143,13 +1143,13 @@ export const WiredMenuViewLayoutChestsContainer = ({ captionTitle, captionTitleE
                         name="title"
                         layout={{ position: 'absolute', left: 0, width: 136, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTitle ?? t('wiredmenu.chests.room_logs')} />
+                        {captionTitle ?? t('wiredmenu.chests.room_logs')}
                     </Region>
                     <Region
                         name="title_extra"
                         layout={{ position: 'absolute', right: 3, width: 197, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionTitleExtra ?? t('wiredmenu.chests.room_logs.extra')} />
+                        {captionTitleExtra ?? t('wiredmenu.chests.room_logs.extra')}
                     </Region>
                     <Region
                         name="logs_table_container"
@@ -1187,7 +1187,7 @@ export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, onModify1Ch
             layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 102, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.room_settings.modify_rights')} />
+                {t('wiredmenu.settings.room_settings.modify_rights')}
             </Region>
             <Region
                 name="option_box"
@@ -1200,7 +1200,7 @@ export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, onModify1Ch
                     layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
                 />
                 <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredmenu.settings.permission_level.1')} />
+                    {t('wiredmenu.settings.permission_level.1')}
                 </Region>
             </Region>
             <Region
@@ -1214,7 +1214,7 @@ export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, onModify1Ch
                     layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
                 />
                 <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredmenu.settings.permission_level.2')} />
+                    {t('wiredmenu.settings.permission_level.2')}
                 </Region>
             </Region>
             <Region
@@ -1228,7 +1228,7 @@ export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, onModify1Ch
                     layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
                 />
                 <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredmenu.settings.permission_level.3')} />
+                    {t('wiredmenu.settings.permission_level.3')}
                 </Region>
             </Region>
         </Region>
@@ -1253,7 +1253,7 @@ export const WiredMenuViewLayoutReadSettingsContainer = ({ layout, onRead0Checkb
             layout={{ position: 'absolute', left: 10, width: 233, top: 8, height: 102, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.room_settings.read_rights')} />
+                {t('wiredmenu.settings.room_settings.read_rights')}
             </Region>
             <Region
                 name="option_box"
@@ -1266,7 +1266,7 @@ export const WiredMenuViewLayoutReadSettingsContainer = ({ layout, onRead0Checkb
                     layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
                 />
                 <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredmenu.settings.permission_level.0')} />
+                    {t('wiredmenu.settings.permission_level.0')}
                 </Region>
             </Region>
             <Region
@@ -1280,7 +1280,7 @@ export const WiredMenuViewLayoutReadSettingsContainer = ({ layout, onRead0Checkb
                     layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
                 />
                 <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredmenu.settings.permission_level.1')} />
+                    {t('wiredmenu.settings.permission_level.1')}
                 </Region>
             </Region>
             <Region
@@ -1294,7 +1294,7 @@ export const WiredMenuViewLayoutReadSettingsContainer = ({ layout, onRead0Checkb
                     layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
                 />
                 <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredmenu.settings.permission_level.2')} />
+                    {t('wiredmenu.settings.permission_level.2')}
                 </Region>
             </Region>
             <Region
@@ -1308,7 +1308,7 @@ export const WiredMenuViewLayoutReadSettingsContainer = ({ layout, onRead0Checkb
                     layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
                 />
                 <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredmenu.settings.permission_level.3')} />
+                    {t('wiredmenu.settings.permission_level.3')}
                 </Region>
             </Region>
         </Region>
@@ -1338,7 +1338,7 @@ export const WiredMenuViewLayoutRoomSettingsContainer = ({ captionTitle, layout,
                 name="title"
                 layout={{ position: 'absolute', left: 0, width: 208, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTitle ?? '${wiredmenu.settings.room_settings)'} />
+                {captionTitle ?? '${wiredmenu.settings.room_settings)'}
             </Region>
             <Border
                 variant="3"
@@ -1367,7 +1367,7 @@ export const WiredMenuViewLayoutRoomSettingsContainer = ({ captionTitle, layout,
                     layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50 }}
                 >
                     <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('wiredmenu.settings.room_settings.timezone')} />
+                        {t('wiredmenu.settings.room_settings.timezone')}
                     </Region>
                     <Dropmenu
                         variant="3"
@@ -1388,7 +1388,7 @@ export const WiredMenuViewLayoutRoomSettingsContainer = ({ captionTitle, layout,
                     layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50 }}
                 >
                     <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('wiredmenu.settings.room_settings.room_state')} />
+                        {t('wiredmenu.settings.room_settings.room_state')}
                     </Region>
                     <Button
                         variant="3"
@@ -1433,7 +1433,7 @@ export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, onPreferenceA
             layout={{ position: 'absolute', left: 10, right: 4, top: 8, bottom: 2, ...layout }}
         >
             <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.preferences.general')} />
+                {t('wiredmenu.settings.preferences.general')}
             </Region>
             <Region
                 name="option_container"
@@ -1446,7 +1446,7 @@ export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, onPreferenceA
                     layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
                 />
                 <Region layout={{ position: 'absolute', left: 20, width: 390, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredmenu.settings.preferences.toolbar')} />
+                    {t('wiredmenu.settings.preferences.toolbar')}
                 </Region>
             </Region>
             <Region
@@ -1460,7 +1460,7 @@ export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, onPreferenceA
                     layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
                 />
                 <Region layout={{ position: 'absolute', left: 20, width: 390, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredmenu.settings.preferences.inspect_button')} />
+                    {t('wiredmenu.settings.preferences.inspect_button')}
                 </Region>
             </Region>
             <Region
@@ -1474,7 +1474,7 @@ export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, onPreferenceA
                     layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
                 />
                 <Region layout={{ position: 'absolute', left: 20, width: 430, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredmenu.settings.preferences.playtest')} />
+                    {t('wiredmenu.settings.preferences.playtest')}
                 </Region>
             </Region>
             <Region
@@ -1488,7 +1488,7 @@ export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, onPreferenceA
                     layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
                 />
                 <Region layout={{ position: 'absolute', left: 20, width: 430, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredmenu.settings.preferences.show_all_errors')} />
+                    {t('wiredmenu.settings.preferences.show_all_errors')}
                 </Region>
             </Region>
         </Region>
@@ -1515,7 +1515,7 @@ export const WiredMenuViewLayoutPreferencesContainer = ({ captionTitle, layout, 
                 name="title"
                 layout={{ position: 'absolute', left: 0, width: 208, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTitle ?? t('wiredmenu.settings.preferences')} />
+                {captionTitle ?? t('wiredmenu.settings.preferences')}
             </Region>
             <Border
                 variant="3"
@@ -1536,7 +1536,7 @@ export const WiredMenuViewLayoutPreferencesContainer = ({ captionTitle, layout, 
                     layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50 }}
                 >
                     <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('wiredmenu.settings.preferences.wired_style')} />
+                        {t('wiredmenu.settings.preferences.wired_style')}
                     </Region>
                     <Dropmenu
                         variant="3"

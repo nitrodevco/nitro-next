@@ -35,7 +35,7 @@ export const DiscountValueItemLayoutTotalValueContainer = ({ captionTotalCurrenc
                 name="total_text"
                 layout={{ position: 'absolute', left: -3, width: 147, top: 1, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTotalText ?? t('catalog.bundlewidget.discount.total')} />
+                {captionTotalText ?? t('catalog.bundlewidget.discount.total')}
             </Region>
             <Region
                 name="total_currency_value_left"

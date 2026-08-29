@@ -50,7 +50,7 @@ export const EvidenceFrameLayoutChatlineItem = ({ captionChatterTxt, captionMsgT
                 name="chatter_txt"
                 layout={{ position: 'absolute', left: 40, width: 95, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionChatterTxt ?? 'ROBIN_WAN_PERSI'} />
+                {captionChatterTxt ?? 'ROBIN_WAN_PERSI'}
             </Region>
             <Region
                 name="msg_txt"

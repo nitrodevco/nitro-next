@@ -93,7 +93,7 @@ export const MemenuEffectSelectedLayoutSelectedBorder = ({ captionEffectAmount, 
                     name="effect_name"
                     layout={{ position: 'absolute', left: 50, width: 163, top: 6, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionEffectName ?? t('widget.memenu.effectname')} />
+                    {captionEffectName ?? t('widget.memenu.effectname')}
                 </Region>
                 <Region
                     name="effect_amount_bg1"

@@ -45,7 +45,7 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
                         layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 23 }}
                     >
                         <Region layout={{ position: 'absolute', left: 1, width: 163, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text={t('high.score.display.users.header')} />
+                            {t('high.score.display.users.header')}
                         </Region>
                     </Border>
                     <Border
@@ -56,7 +56,7 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
                             name="score_header"
                             layout={{ position: 'absolute', right: 5, width: 161, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionScoreHeader ?? t('high.score.display.score.header')} />
+                            {captionScoreHeader ?? t('high.score.display.score.header')}
                         </Region>
                     </Border>
                 </Border>

@@ -30,7 +30,7 @@ export const DiscountPromoItemLayout = ({ captionPromoText, captionPromoTextEffe
                     name="promo_text_effect"
                     layout={{ position: 'absolute', left: 33, width: 151, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionPromoTextEffect ?? 'test 1 get 2 tests for free!'} />
+                    {captionPromoTextEffect ?? 'test 1 get 2 tests for free!'}
                 </Region>
                 <Region
                     name="promo_text"

@@ -90,7 +90,7 @@ export const VariablesManagementDetailLayoutInfoBox = ({ captionTitle, layout, o
                 name="title"
                 layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTitle ?? t('wiredmenu.variable_management_detail.holder_info')} />
+                {captionTitle ?? t('wiredmenu.variable_management_detail.holder_info')}
             </Region>
             <Border
                 variant="2"
@@ -160,7 +160,7 @@ export const VariablesManagementDetailLayoutVariableValuesContainer = ({ caption
                 name="title"
                 layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTitle ?? t('wiredmenu.variable_management_detail.variables')} />
+                {captionTitle ?? t('wiredmenu.variable_management_detail.variables')}
             </Region>
             <Region
                 name="variable_values_table_container"
@@ -195,7 +195,7 @@ export const VariablesManagementDetailLayoutVariableValuesContainer = ({ caption
                         layout={{ position: 'absolute', left: 6, right: 22, top: 6, height: 42 }}
                     >
                         <Region layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text={t('wiredmenu.inspection.select_variable')} />
+                            {t('wiredmenu.inspection.select_variable')}
                         </Region>
                         <Region
                             name="var_picker_container"
@@ -207,7 +207,7 @@ export const VariablesManagementDetailLayoutVariableValuesContainer = ({ caption
                         layout={{ position: 'absolute', left: 6, right: 22, top: 52, height: 42 }}
                     >
                         <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText text={t('wiredmenu.inspection.select_value')} />
+                            {t('wiredmenu.inspection.select_value')}
                         </Region>
                         <Border
                             variant="4"

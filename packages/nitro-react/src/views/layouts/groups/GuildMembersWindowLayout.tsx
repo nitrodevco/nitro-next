@@ -121,7 +121,7 @@ export const GuildMembersWindowLayoutFooterCont = ({ captionFooterInfoTxt, capti
                     name="pagina_text_start"
                     layout={{ width: 135, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionPaginaTextStart ?? 'X matching users. Page '} />
+                    {captionPaginaTextStart ?? 'X matching users. Page '}
                 </Region>
                 <TextInput
                     value={paginaNumberInputValue}
@@ -132,7 +132,7 @@ export const GuildMembersWindowLayoutFooterCont = ({ captionFooterInfoTxt, capti
                     name="pagina_text_end"
                     layout={{ width: 18, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionPaginaTextEnd ?? '/ Y'} />
+                    {captionPaginaTextEnd ?? '/ Y'}
                 </Region>
             </Region>
         </Region>

@@ -177,7 +177,7 @@ export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRe
                             name="points_total_collected_txt"
                             layout={{ width: 41, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionPointsTotalCollectedTxt ?? '125'} />
+                            {captionPointsTotalCollectedTxt ?? '125'}
                         </Region>
                     </Region>
                     <Region layout={{ position: 'absolute', left: 10, width: 160, top: 36, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -202,7 +202,7 @@ export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRe
                         name="rewards_collected_txt"
                         layout={{ width: 224, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionRewardsCollectedTxt ?? t('reward_track.profile.rewards_collected')} />
+                        {captionRewardsCollectedTxt ?? t('reward_track.profile.rewards_collected')}
                     </Region>
                 </Region>
             </Border>
@@ -940,7 +940,7 @@ export const Main_100LayoutHeader2 = ({ captionTasksCompletionTxt, layout, tabSe
                 layout={{ position: 'absolute', left: 19, width: 19, top: 17, height: 25 }}
             />
             <Region layout={{ position: 'absolute', left: 46, width: 83, top: 11, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('reward_track.tasks')} />
+                {t('reward_track.tasks')}
             </Region>
             <Region
                 name="tasks_completion_txt"
@@ -986,13 +986,13 @@ export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, caption
                     name="task_name"
                     layout={{ position: 'absolute', left: 67, width: 202, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionTaskName ?? 'Visit Rooms'} />
+                    {captionTaskName ?? 'Visit Rooms'}
                 </Region>
                 <Region
                     name="task_description"
                     layout={{ position: 'absolute', left: 67, width: 202, top: 23, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionTaskDescription ?? 'Explore rooms made by other players'} />
+                    {captionTaskDescription ?? 'Explore rooms made by other players'}
                 </Region>
                 <Region
                     name="loading_bar"
@@ -1030,7 +1030,7 @@ export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, caption
                     name="task_progress_txt"
                     layout={{ position: 'absolute', left: 280, width: 25, top: 38, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionTaskProgressTxt ?? '3 / 5'} />
+                    {captionTaskProgressTxt ?? '3 / 5'}
                 </Region>
                 <Border
                     variant="15"
@@ -1042,7 +1042,7 @@ export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, caption
                             name="track_reward_txt"
                             layout={{ width: 20, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionTrackRewardTxt ?? '30'} />
+                            {captionTrackRewardTxt ?? '30'}
                         </Region>
                         <ThemeImage
                             name="track_reward_icon"
@@ -1117,7 +1117,7 @@ export const Main_100LayoutLevelRewardTxtItem = ({ captionLevelRewardTxt, layout
             name="level_reward_txt"
             layout={{ width: 20, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionLevelRewardTxt ?? '30'} />
+            {captionLevelRewardTxt ?? '30'}
         </Region>
     );
 };
@@ -1169,7 +1169,7 @@ export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevel
                     name="level_name"
                     layout={{ position: 'absolute', left: 18, width: 85, top: 14, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionLevelName ?? t('reward_track.levels.level')} />
+                    {captionLevelName ?? t('reward_track.levels.level')}
                 </Region>
                 <Region
                     name="loading_bar"
@@ -1207,7 +1207,7 @@ export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevel
                     name="level_progress_txt"
                     layout={{ position: 'absolute', left: 377, width: 25, top: 14, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionLevelProgressTxt ?? '3 / 5'} />
+                    {captionLevelProgressTxt ?? '3 / 5'}
                 </Region>
                 <Region layout={{ position: 'absolute', right: 18, width: 94, top: 7, height: 30, flexDirection: 'row', gap: 10 }}>
                     <ThemeImage
@@ -1413,7 +1413,7 @@ export const Main_100LayoutBody = ({ captionTaskHintText, captionTaskInfoDescrip
                         onPointerTap={onTaskInfoNameRegion}
                         cursor="pointer"
                     >
-                        <ThemeText text={captionTaskInfoName ?? 'Visit Rooms'} />
+                        {captionTaskInfoName ?? 'Visit Rooms'}
                     </Region>
                     <Region
                         name="task_info_description"

@@ -66,7 +66,7 @@ export const ClubGiftConfirmationLayout = ({ captionBundleCounter, captionItemNa
                     name="item_name"
                     layout={{ position: 'absolute', left: 69, width: 184, top: 29, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionItemName ?? ''} />
+                    {captionItemName ?? ''}
                 </Region>
                 <Button
                     variant="3"

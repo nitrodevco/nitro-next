@@ -1796,7 +1796,7 @@ export const CollectibleHubLayoutCollectionContent = ({ captionCollectionName, c
                     name="collection_name"
                     layout={{ position: 'absolute', left: 4, width: 121, top: 4, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionCollectionName ?? 'Collection name'} />
+                    {captionCollectionName ?? 'Collection name'}
                 </Region>
                 <Region
                     name="progress_header_container"
@@ -1893,7 +1893,7 @@ export const CollectibleHubLayoutLoadedContent2 = ({ captionSearchPlaceholder, c
                     name="search_placeholder"
                     layout={{ position: 'absolute', left: 4, width: 156, top: 4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionSearchPlaceholder ?? t('generic.search')} />
+                    {captionSearchPlaceholder ?? t('generic.search')}
                 </Region>
             </Border>
             <CollectibleHubLayoutNavigationContainer {...navigationContainer} />
@@ -2851,13 +2851,13 @@ export const CollectibleHubLayoutItemTemplateItem6 = ({ captionAmountText, capti
                 name="collection_text"
                 layout={{ position: 'absolute', left: 52, width: 340, top: 20, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionCollectionText ?? '<b>Collection:</b> test'} />
+                {captionCollectionText ?? '<b>Collection:</b> test'}
             </Region>
             <Region
                 name="expires_text"
                 layout={{ position: 'absolute', left: 52, width: 340, top: 33, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionExpiresText ?? '<b>Expires:</b> test'} />
+                {captionExpiresText ?? '<b>Expires:</b> test'}
             </Region>
             <Region
                 name="amount_container"

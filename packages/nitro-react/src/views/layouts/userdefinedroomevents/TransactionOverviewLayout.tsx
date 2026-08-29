@@ -51,7 +51,7 @@ export const TransactionOverviewLayoutListTypeKeyItem = ({ captionListTypeKey, l
             name="list_type_key"
             layout={{ width: 57, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionListTypeKey ?? t('wiredchests.logs.list_type')} />
+            {captionListTypeKey ?? t('wiredchests.logs.list_type')}
         </Region>
     );
 };
@@ -70,7 +70,7 @@ export const TransactionOverviewLayoutListTypeValueItem = ({ captionListTypeValu
             name="list_type_value"
             layout={{ width: 35, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionListTypeValue ?? t('wiredchests.logs.type.0')} />
+            {captionListTypeValue ?? t('wiredchests.logs.type.0')}
         </Region>
     );
 };
@@ -111,7 +111,7 @@ export const TransactionOverviewLayoutIdKeyItem = ({ captionIdKey, layout }: Tra
             name="id_key"
             layout={{ width: 53, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionIdKey ?? t('wiredchests.logs.chest_id')} />
+            {captionIdKey ?? t('wiredchests.logs.chest_id')}
         </Region>
     );
 };
@@ -128,7 +128,7 @@ export const TransactionOverviewLayoutIdValueItem = ({ captionIdValue, layout }:
             name="id_value"
             layout={{ width: 38, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionIdValue ?? '12345'} />
+            {captionIdValue ?? '12345'}
         </Region>
     );
 };
@@ -360,7 +360,7 @@ export const TransactionOverviewLayoutPagination = ({ captionPaginaTextEnd, capt
                     name="pagina_text_start"
                     layout={{ width: 205, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionPaginaTextStart ?? 'X transactions found. Showing page '} />
+                    {captionPaginaTextStart ?? 'X transactions found. Showing page '}
                 </Region>
                 <TextInput
                     value={paginaNumberInputValue}
@@ -371,7 +371,7 @@ export const TransactionOverviewLayoutPagination = ({ captionPaginaTextEnd, capt
                     name="pagina_text_end"
                     layout={{ width: 26, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionPaginaTextEnd ?? 'of Y'} />
+                    {captionPaginaTextEnd ?? 'of Y'}
                 </Region>
             </Region>
         </Region>

@@ -229,7 +229,7 @@ export const GrsOfficialRoomRowPhaseOneLayoutCont = ({ captionArrowLabel, captio
                     name="entry_caption"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionEntryCaption ?? 'PH Room Name: Neque porro quisquam est que'} />
+                    {captionEntryCaption ?? 'PH Room Name: Neque porro quisquam est que'}
                 </Region>
                 <Region
                     name="entry_desc"

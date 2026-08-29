@@ -1,4 +1,4 @@
-import { BoxLayout, Frame, Region, ThemeText } from '#base/theme';
+import { BoxLayout, Frame, Region } from '#base/theme';
 
 /** Generated from `1788_alert_xml` (layout "habbo_window_layout_alert", 300x200) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface AlertLayoutProps {
@@ -21,13 +21,13 @@ export const AlertLayout = ({ captionAlertText, captionAlertTitle, layout, onClo
                     name="alert_title"
                     layout={{ position: 'absolute', marginLeft: -12, marginRight: 12, width: 160, top: 8, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionAlertTitle ?? ''} />
+                    {captionAlertTitle ?? ''}
                 </Region>
                 <Region
                     name="alert_text"
                     layout={{ position: 'absolute', marginLeft: -12, marginRight: 12, width: 160, top: 40, height: 120, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionAlertText ?? ''} />
+                    {captionAlertText ?? ''}
                 </Region>
             </Region>
         </Frame>

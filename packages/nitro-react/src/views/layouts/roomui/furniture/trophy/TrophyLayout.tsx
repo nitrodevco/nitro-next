@@ -61,7 +61,7 @@ export const TrophyLayoutTrophyContainer = ({ captionDate, captionGreeting, capt
                 name="name"
                 layout={{ position: 'absolute', right: 20, width: 74, top: 142, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionName ?? 'kateislonger'} />
+                {captionName ?? 'kateislonger'}
             </Region>
             <Region
                 name="close"

@@ -168,7 +168,7 @@ export const GridItemWithPriceSingleLayoutAmountTextRightItem = ({ captionAmount
             name="amount_text_right"
             layout={{ width: 38, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionAmountTextRight ?? '00000'} />
+            {captionAmountTextRight ?? '00000'}
         </Region>
     );
 };

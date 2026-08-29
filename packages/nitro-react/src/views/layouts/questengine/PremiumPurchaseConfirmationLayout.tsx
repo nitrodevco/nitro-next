@@ -111,7 +111,7 @@ export const PremiumPurchaseConfirmationLayoutBenefitBoostRowItem = ({ captionBe
                 name="benefit_boost_txt"
                 layout={{ position: 'absolute', left: 30, width: 181, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionBenefitBoostTxt ?? ''} />
+                {captionBenefitBoostTxt ?? ''}
             </Region>
         </Border>
     );
@@ -141,7 +141,7 @@ export const PremiumPurchaseConfirmationLayoutBenefitRewardsRowItem = ({ caption
                 name="benefit_rewards_txt"
                 layout={{ position: 'absolute', left: 30, width: 181, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionBenefitRewardsTxt ?? t('reward_track.premium.confirm.benefit.rewards')} />
+                {captionBenefitRewardsTxt ?? t('reward_track.premium.confirm.benefit.rewards')}
             </Region>
         </Border>
     );
@@ -169,7 +169,7 @@ export const PremiumPurchaseConfirmationLayoutBenefitInstantPointsRowItem = ({ c
                 name="benefit_instant_points_txt"
                 layout={{ position: 'absolute', left: 30, width: 181, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionBenefitInstantPointsTxt ?? ''} />
+                {captionBenefitInstantPointsTxt ?? ''}
             </Region>
         </Border>
     );
@@ -199,7 +199,7 @@ export const PremiumPurchaseConfirmationLayoutBenefitTasksRowItem = ({ captionBe
                 name="benefit_tasks_txt"
                 layout={{ position: 'absolute', left: 30, width: 181, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionBenefitTasksTxt ?? t('reward_track.premium.confirm.benefit.tasks')} />
+                {captionBenefitTasksTxt ?? t('reward_track.premium.confirm.benefit.tasks')}
             </Region>
         </Border>
     );
@@ -229,7 +229,7 @@ export const PremiumPurchaseConfirmationLayoutBenefitLevelsRowItem = ({ captionB
                 name="benefit_levels_txt"
                 layout={{ position: 'absolute', left: 30, width: 181, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionBenefitLevelsTxt ?? t('reward_track.premium.confirm.benefit.levels')} />
+                {captionBenefitLevelsTxt ?? t('reward_track.premium.confirm.benefit.levels')}
             </Region>
         </Border>
     );
@@ -330,7 +330,7 @@ export const PremiumPurchaseConfirmationLayoutPriceCreditsItem = ({ captionPrice
             name="price_credits"
             layout={{ width: 10, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionPriceCredits ?? '0'} />
+            {captionPriceCredits ?? '0'}
         </Region>
     );
 };
@@ -362,7 +362,7 @@ export const PremiumPurchaseConfirmationLayoutPlusTxtItem = ({ captionPlusTxt, l
             name="plus_txt"
             layout={{ width: 11, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionPlusTxt ?? ' '} />
+            {captionPlusTxt ?? ' '}
         </Region>
     );
 };
@@ -379,7 +379,7 @@ export const PremiumPurchaseConfirmationLayoutPriceDiamondsItem = ({ captionPric
             name="price_diamonds"
             layout={{ width: 10, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionPriceDiamonds ?? '0'} />
+            {captionPriceDiamonds ?? '0'}
         </Region>
     );
 };

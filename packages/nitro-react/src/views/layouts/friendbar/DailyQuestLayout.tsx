@@ -65,7 +65,7 @@ export const DailyQuestLayout = ({ captionLabelTxt, captionLabelTxt2, captionTit
                             name="label_txt"
                             layout={{ position: 'absolute', left: 0, width: 98, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionLabelTxt ?? t('landing.view.quest.easy')} />
+                            {captionLabelTxt ?? t('landing.view.quest.easy')}
                         </Region>
                     </Region>
                     <ThemeImage
@@ -83,7 +83,7 @@ export const DailyQuestLayout = ({ captionLabelTxt, captionLabelTxt2, captionTit
                             name="label_txt"
                             layout={{ position: 'absolute', left: 0, width: 99, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionLabelTxt2 ?? t('landing.view.quest.hard')} />
+                            {captionLabelTxt2 ?? t('landing.view.quest.hard')}
                         </Region>
                     </Region>
                 </Region>
@@ -151,7 +151,7 @@ export const DailyQuestLayoutContentContainer = ({ captionCancelQuestTxt, captio
                     name="next_quest_txt"
                     layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionNextQuestTxt ?? 'PH: Show me another easy quest'} />
+                    {captionNextQuestTxt ?? 'PH: Show me another easy quest'}
                 </Region>
             </Region>
             <Region
@@ -164,7 +164,7 @@ export const DailyQuestLayoutContentContainer = ({ captionCancelQuestTxt, captio
                     name="cancel_quest_txt"
                     layout={{ position: 'absolute', left: 0, width: 105, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionCancelQuestTxt ?? t('landing.view.quest.cancel')} />
+                    {captionCancelQuestTxt ?? t('landing.view.quest.cancel')}
                 </Region>
             </Region>
             <Border

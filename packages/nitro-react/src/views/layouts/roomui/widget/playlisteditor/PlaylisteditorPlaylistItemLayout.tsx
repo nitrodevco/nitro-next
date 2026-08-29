@@ -1,4 +1,4 @@
-import { Border, BoxLayout, ContainerButton, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, ContainerButton, Region, ThemeImage } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1059_playlisteditor_playlist_item_xml` (layout "playlist_item", 229x52) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -80,13 +80,13 @@ export const PlaylisteditorPlaylistItemLayoutPlaylistItem = ({ captionSongAuthor
                 name="song_title_text"
                 layout={{ position: 'absolute', left: 70, width: 4, top: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionSongTitleText ?? ''} />
+                {captionSongTitleText ?? ''}
             </Region>
             <Region
                 name="song_author_text"
                 layout={{ position: 'absolute', left: 70, width: 4, top: 27, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionSongAuthorText ?? ''} />
+                {captionSongAuthorText ?? ''}
             </Region>
             <ThemeImage
                 name="song_name_icon_bitmap"

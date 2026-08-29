@@ -539,7 +539,7 @@ export const ChestGenericLayoutLockingOptionsItem = ({ itemsLockingOptions, layo
                     layout={{ width: 15, height: 15, flexShrink: 0 }}
                 />
                 <Region layout={{ width: 86, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredchests.lock_chest')} />
+                    {t('wiredchests.lock_chest')}
                 </Region>
             </Region>
             <Region layout={{ width: 286, height: 16, flexShrink: 0, flexDirection: 'row', gap: 5 }}>
@@ -550,7 +550,7 @@ export const ChestGenericLayoutLockingOptionsItem = ({ itemsLockingOptions, layo
                     layout={{ width: 15, height: 15, flexShrink: 0 }}
                 />
                 <Region layout={{ width: 266, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredchests.auto_lock_chest')} />
+                    {t('wiredchests.auto_lock_chest')}
                 </Region>
             </Region>
         </Region>
@@ -594,7 +594,7 @@ export const ChestGenericLayoutMaxCapacityTxtItem = ({ captionMaxCapacityTxt, la
             name="max_capacity_txt"
             layout={{ width: 172, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionMaxCapacityTxt ?? t('wiredchests.max_capacity')} />
+            {captionMaxCapacityTxt ?? t('wiredchests.max_capacity')}
         </Region>
     );
 };
@@ -646,7 +646,7 @@ export const ChestGenericLayoutCapacityOptionsItem = ({ captionItemCountText, it
                     name="item_count_text"
                     layout={{ position: 'absolute', left: 0, width: 184, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionItemCountText ?? t('wiredchests.space_used')} />
+                    {captionItemCountText ?? t('wiredchests.space_used')}
                 </Region>
             )}
             <Region
@@ -657,7 +657,7 @@ export const ChestGenericLayoutCapacityOptionsItem = ({ captionItemCountText, it
                     <ChestGenericLayoutCapacityInputBorderItem />
                 )}
                 <Region layout={{ width: 85, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredchests.capacity')} />
+                    {t('wiredchests.capacity')}
                 </Region>
             </Region>
             <Region
@@ -852,7 +852,7 @@ export const ChestGenericLayoutFooterItem = ({ captionItemCountTextBottom, foote
                         name="item_count_text_bottom"
                         layout={{ position: 'absolute', right: 15, width: 184, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionItemCountTextBottom ?? t('wiredchests.space_used')} />
+                        {captionItemCountTextBottom ?? t('wiredchests.space_used')}
                     </Region>
                 )}
             </Region>

@@ -75,20 +75,20 @@ export const GrsPromotedRoomCategoryLayoutRow = ({ captionCategoryNameTxt, capti
                         name="leader_name_caption_txt"
                         layout={{ position: 'absolute', left: 0, width: 166, top: 4, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionLeaderNameCaptionTxt ?? t('navigator.promotedrooms.owner')} />
+                        {captionLeaderNameCaptionTxt ?? t('navigator.promotedrooms.owner')}
                     </Region>
                     <Region
                         name="leader_name_txt"
                         layout={{ position: 'absolute', left: 49, width: 71, top: 4, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionLeaderNameTxt ?? 'WillyWallyWolly'} />
+                        {captionLeaderNameTxt ?? 'WillyWallyWolly'}
                     </Region>
                 </Region>
                 <Region
                     name="room_name_txt"
                     layout={{ position: 'absolute', left: 60, width: 147, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionRoomNameTxt ?? 'Dippa daa'} />
+                    {captionRoomNameTxt ?? 'Dippa daa'}
                 </Region>
                 <ThemeImage
                     name="navi_room_icon"
@@ -106,13 +106,13 @@ export const GrsPromotedRoomCategoryLayoutRow = ({ captionCategoryNameTxt, capti
                     name="open_txt"
                     layout={{ position: 'absolute', left: -1, width: 191, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionOpenTxt ?? t('navigator.promotedrooms.viewtopten')} />
+                    {captionOpenTxt ?? t('navigator.promotedrooms.viewtopten')}
                 </Region>
                 <Region
                     name="close_txt"
                     layout={{ position: 'absolute', left: -1, width: 189, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionCloseTxt ?? t('navigator.promotedrooms.hidetopten')} />
+                    {captionCloseTxt ?? t('navigator.promotedrooms.hidetopten')}
                 </Region>
                 <Icon
                     variant="5"

@@ -1,4 +1,4 @@
-import { Border, BoxLayout, Button, Region, ThemeText } from '#base/theme';
+import { Border, BoxLayout, Button, Region } from '#base/theme';
 
 /** Generated from `1122_user_info_xml` (layout "user_info", 280x194) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface UserInfoLayoutProps {
@@ -22,7 +22,7 @@ export const UserInfoLayout = ({ captionLoadingTxt, fields, layout, visibleLoadi
                         layout={{ position: 'absolute', left: 120, width: 70, top: 45, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         backgroundColor="#ffffff"
                     >
-                        <ThemeText text={captionLoadingTxt ?? 'Loading...'} />
+                        {captionLoadingTxt ?? 'Loading...'}
                     </Region>
                 )}
                 <UserInfoLayoutFields {...fields} />
@@ -111,160 +111,160 @@ export const UserInfoLayoutFields = ({ captionAbusiveCfhCountTxt, captionBanCoun
                 layout={{ position: 'absolute', left: 0, width: 187, top: 182, height: 13 }}
             />
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Name" />
+                Name
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 13, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="CFHs" />
+                CFHs
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 26, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Abusive CFHs" />
+                Abusive CFHs
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 39, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Cautions" />
+                Cautions
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 52, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Bans" />
+                Bans
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 75, top: 65, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Last sanction" />
+                Last sanction
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 78, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Trade locks" />
+                Trade locks
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 91, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Lock Expires" />
+                Lock Expires
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 104, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Last Login" />
+                Last Login
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 117, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Online" />
+                Online
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 130, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Purchase" />
+                Purchase
             </Region>
             <Region
                 name="email_address_txt"
                 layout={{ position: 'absolute', left: 0, width: 184, top: 143, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionEmailAddressTxt ?? 'yes'} />
+                {captionEmailAddressTxt ?? 'yes'}
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 156, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Banned Accs." />
+                Banned Accs.
             </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 169, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Registered" />
+                Registered
             </Region>
             <Region
                 name="user_class_txt"
                 layout={{ position: 'absolute', left: 0, width: 184, top: 182, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionUserClassTxt ?? '-'} />
+                {captionUserClassTxt ?? '-'}
             </Region>
             <Region
                 name="name_txt"
                 layout={{ position: 'absolute', left: 70, width: 114, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionNameTxt ?? 'sulka'} />
+                {captionNameTxt ?? 'sulka'}
             </Region>
             <Region
                 name="registered_txt"
                 layout={{ position: 'absolute', left: 70, width: 114, top: 169, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionRegisteredTxt ?? '0'} />
+                {captionRegisteredTxt ?? '0'}
             </Region>
             <Region
                 name="cfh_count_txt"
                 layout={{ position: 'absolute', left: 70, width: 70, top: 13, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionCfhCountTxt ?? '34'} />
+                {captionCfhCountTxt ?? '34'}
             </Region>
             <Region
                 name="abusive_cfh_count_txt"
                 layout={{ position: 'absolute', left: 70, width: 70, top: 26, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionAbusiveCfhCountTxt ?? '2'} />
+                {captionAbusiveCfhCountTxt ?? '2'}
             </Region>
             <Region
                 name="caution_count_txt"
                 layout={{ position: 'absolute', left: 70, width: 70, top: 39, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionCautionCountTxt ?? '8'} />
+                {captionCautionCountTxt ?? '8'}
             </Region>
             <Region
                 name="view_caution_count_txt"
                 layout={{ position: 'absolute', left: 150, width: 30, top: 39, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionViewCautionCountTxt ?? 'view'} />
+                {captionViewCautionCountTxt ?? 'view'}
             </Region>
             <Region
                 name="ban_count_txt"
                 layout={{ position: 'absolute', left: 70, width: 70, top: 52, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionBanCountTxt ?? '3'} />
+                {captionBanCountTxt ?? '3'}
             </Region>
             <Region
                 name="view_ban_count_txt"
                 layout={{ position: 'absolute', left: 150, width: 30, top: 52, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 backgroundColor="#a2d6ea"
             >
-                <ThemeText text={captionViewBanCountTxt ?? 'view'} />
+                {captionViewBanCountTxt ?? 'view'}
             </Region>
             <Region
                 name="last_sanction_time_txt"
                 layout={{ position: 'absolute', left: 76, width: 100, top: 65, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionLastSanctionTimeTxt ?? '2015-09-22 14:57'} />
+                {captionLastSanctionTimeTxt ?? '2015-09-22 14:57'}
             </Region>
             <Region
                 name="trading_lock_count_txt"
                 layout={{ position: 'absolute', left: 70, width: 114, top: 78, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTradingLockCountTxt ?? '3'} />
+                {captionTradingLockCountTxt ?? '3'}
             </Region>
             <Region
                 name="view_trading_lock_count_txt"
                 layout={{ position: 'absolute', left: 150, width: 30, top: 78, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 backgroundColor="#a2d6ea"
             >
-                <ThemeText text={captionViewTradingLockCountTxt ?? 'view'} />
+                {captionViewTradingLockCountTxt ?? 'view'}
             </Region>
             <Region
                 name="trading_lock_expiry_txt"
                 layout={{ position: 'absolute', left: 70, width: 114, top: 91, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTradingLockExpiryTxt ?? 'No active lock'} />
+                {captionTradingLockExpiryTxt ?? 'No active lock'}
             </Region>
             <Region
                 name="last_login_txt"
                 layout={{ position: 'absolute', left: 70, width: 114, top: 104, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionLastLoginTxt ?? '5 minutes ago'} />
+                {captionLastLoginTxt ?? '5 minutes ago'}
             </Region>
             <Region
                 name="online_txt"
                 layout={{ position: 'absolute', left: 70, width: 70, top: 117, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionOnlineTxt ?? 'Yes'} />
+                {captionOnlineTxt ?? 'Yes'}
             </Region>
             <Region
                 name="last_purchase_txt"
                 layout={{ position: 'absolute', left: 70, width: 114, top: 130, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionLastPurchaseTxt ?? 'Yes'} />
+                {captionLastPurchaseTxt ?? 'Yes'}
             </Region>
             <Region
                 name="id_bans_txt"
                 layout={{ position: 'absolute', left: 70, width: 114, top: 156, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionIdBansTxt ?? 'Yes'} />
+                {captionIdBansTxt ?? 'Yes'}
             </Region>
             <Region
                 name="view_id_bans_txt"
                 layout={{ position: 'absolute', left: 150, width: 30, top: 156, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 backgroundColor="#a2d6ea"
             >
-                <ThemeText text={captionViewIdBansTxt ?? 'view'} />
+                {captionViewIdBansTxt ?? 'view'}
             </Region>
             <Region
                 name="buttons"

@@ -75,7 +75,7 @@ export const NewExtendedProfileLayoutUserNameItem = ({ captionUserName, layout }
             name="user_name"
             layout={{ width: 141, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionUserName ?? t('extendedprofile.username')} />
+            {captionUserName ?? t('extendedprofile.username')}
         </Region>
     );
 };
@@ -115,7 +115,7 @@ export const NewExtendedProfileLayoutUserCreatedItem = ({ captionUserCreated, la
             name="user_created"
             layout={{ width: 129, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionUserCreated ?? t('extendedprofile.created')} />
+            {captionUserCreated ?? t('extendedprofile.created')}
         </Region>
     );
 };
@@ -136,7 +136,7 @@ export const NewExtendedProfileLayoutUserActivityPointsItem = ({ captionUserActi
                 name="user_activity_points"
                 layout={{ width: 161, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             >
-                <ThemeText text={captionUserActivityPoints ?? t('extendedprofile.activitypoints')} />
+                {captionUserActivityPoints ?? t('extendedprofile.activitypoints')}
             </Region>
         )
     );
@@ -156,7 +156,7 @@ export const NewExtendedProfileLayoutUserLastLoginItem = ({ captionUserLastLogin
             name="user_last_login"
             layout={{ width: 137, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionUserLastLogin ?? t('extendedprofile.last.login')} />
+            {captionUserLastLogin ?? t('extendedprofile.last.login')}
         </Region>
     );
 };
@@ -455,7 +455,7 @@ export const NewExtendedProfileLayoutRelationshipHeartItem = ({ captionHeartFrie
                         name="heart_friend_name_link_text"
                         layout={{ position: 'absolute', left: 0, width: 151, top: 0, height: 16, maxWidth: 160, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionHeartFriendNameLinkText ?? t('extendedprofile.add.friends')} />
+                        {captionHeartFriendNameLinkText ?? t('extendedprofile.add.friends')}
                     </Region>
                 </Region>
             </Border>
@@ -512,7 +512,7 @@ export const NewExtendedProfileLayoutRelationshipSmileItem = ({ captionSmileFrie
                         name="smile_friend_name_link_text"
                         layout={{ position: 'absolute', left: 0, width: 151, top: 0, height: 16, maxWidth: 160, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionSmileFriendNameLinkText ?? t('extendedprofile.add.friends')} />
+                        {captionSmileFriendNameLinkText ?? t('extendedprofile.add.friends')}
                     </Region>
                 </Region>
             </Border>
@@ -569,7 +569,7 @@ export const NewExtendedProfileLayoutRelationshipBobbaItem = ({ captionBobbaFrie
                         name="bobba_friend_name_link_text"
                         layout={{ position: 'absolute', left: 0, width: 151, top: 0, height: 16, maxWidth: 160, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionBobbaFriendNameLinkText ?? t('extendedprofile.add.friends')} />
+                        {captionBobbaFriendNameLinkText ?? t('extendedprofile.add.friends')}
                     </Region>
                 </Region>
             </Border>
@@ -635,7 +635,7 @@ export const NewExtendedProfileLayoutTopRightItem = ({ captionFriendCount, capti
                 name="friend_count"
                 layout={{ position: 'absolute', left: 0, width: 161, top: 5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionFriendCount ?? t('extendedprofile.friends.count')} />
+                {captionFriendCount ?? t('extendedprofile.friends.count')}
             </Region>
             <Region
                 name="rel_status_label_txt"
@@ -886,7 +886,7 @@ export const NewExtendedProfileLayoutAllGroupsItem = ({ captionTotalGroupCount, 
                 name="total_group_count"
                 layout={{ position: 'absolute', left: 0, width: 159, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTotalGroupCount ?? t('extendedprofile.groups.count')} />
+                {captionTotalGroupCount ?? t('extendedprofile.groups.count')}
             </Region>
             <ScrollArea
                 orientation="vertical"

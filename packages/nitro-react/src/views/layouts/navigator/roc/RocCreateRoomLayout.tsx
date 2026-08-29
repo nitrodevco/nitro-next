@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useTranslation } from '#base/context';
-import { BoxLayout, Button, ButtonThick, Dropmenu, Frame, Region, ScrollArea, TextInput, ThemeText } from '#base/theme';
+import { BoxLayout, Button, ButtonThick, Dropmenu, Frame, Region, ScrollArea, TextInput } from '#base/theme';
 
 /** Generated from `3031_roc_create_room_xml` (layout "roc_create_room", 585x367) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RocCreateRoomLayoutProps {
@@ -43,7 +43,7 @@ export const RocCreateRoomLayout = ({ captionChooseLayoutCaption, layout, onClos
                     name="choose_layout_caption"
                     layout={{ position: 'absolute', left: 0, width: 257, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionChooseLayoutCaption ?? t('navigator.createroom.chooselayoutcaption')} />
+                    {captionChooseLayoutCaption ?? t('navigator.createroom.chooselayoutcaption')}
                 </Region>
             </Region>
         </Frame>
@@ -79,7 +79,7 @@ export const RocCreateRoomLayoutRoomSettingsContainer = ({ captionCreateCategory
                 name="create_room_caption"
                 layout={{ position: 'absolute', left: 0, width: 122, bottom: 302, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionCreateRoomCaption ?? t('navigator.roomname')} />
+                {captionCreateRoomCaption ?? t('navigator.roomname')}
             </Region>
             <TextInput
                 value={roomNameInputValue}
@@ -90,7 +90,7 @@ export const RocCreateRoomLayoutRoomSettingsContainer = ({ captionCreateCategory
                 name="create_desc_caption"
                 layout={{ position: 'absolute', left: 0, width: 120, bottom: 252, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionCreateDescCaption ?? t('navigator.roomdesc')} />
+                {captionCreateDescCaption ?? t('navigator.roomdesc')}
             </Region>
             <TextInput
                 value={roomDescInputValue}
@@ -102,7 +102,7 @@ export const RocCreateRoomLayoutRoomSettingsContainer = ({ captionCreateCategory
                 name="create_category_caption"
                 layout={{ position: 'absolute', left: 0, width: 117, bottom: 162, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionCreateCategoryCaption ?? t('navigator.category')} />
+                {captionCreateCategoryCaption ?? t('navigator.category')}
             </Region>
             <Dropmenu
                 variant="2"
@@ -114,7 +114,7 @@ export const RocCreateRoomLayoutRoomSettingsContainer = ({ captionCreateCategory
                 name="create_visitors_caption"
                 layout={{ position: 'absolute', left: 0, width: 132, bottom: 112, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionCreateVisitorsCaption ?? t('navigator.maxvisitors')} />
+                {captionCreateVisitorsCaption ?? t('navigator.maxvisitors')}
             </Region>
             <Dropmenu
                 variant="0"
@@ -126,7 +126,7 @@ export const RocCreateRoomLayoutRoomSettingsContainer = ({ captionCreateCategory
                 name="create_trade_caption"
                 layout={{ position: 'absolute', left: 0, width: 145, bottom: 62, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionCreateTradeCaption ?? t('navigator.tradesettings')} />
+                {captionCreateTradeCaption ?? t('navigator.tradesettings')}
             </Region>
             <Dropmenu
                 variant="0"

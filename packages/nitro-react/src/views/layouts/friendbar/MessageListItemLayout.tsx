@@ -75,7 +75,7 @@ export const MessageListItemLayoutMsgContainer = ({ captionAuthor, captionAuthor
                     name="author_post_count"
                     layout={{ position: 'absolute', left: 2, width: 126, top: 23, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionAuthorPostCount ?? 'AuthorPosts'} />
+                    {captionAuthorPostCount ?? 'AuthorPosts'}
                 </Region>
             </Region>
         </Region>

@@ -89,7 +89,7 @@ export const IlluminaChatBubbleLayoutOfflinePlaceholderItem = ({ captionOffline,
             onPointerTap={onOfflinePlaceholder}
             cursor="pointer"
         >
-            <ThemeText text={captionOffline ?? t('messenger.notification.persisted_message_sent')} />
+            {captionOffline ?? t('messenger.notification.persisted_message_sent')}
         </Region>
     );
 };

@@ -357,7 +357,7 @@ export const PhotoPurchaseConfirmationLayoutInventoryLinkItem = ({ captionInvent
             onPointerTap={onInventoryLink}
             cursor="pointer"
         >
-            <ThemeText text={captionInventoryLink ?? t('camera.open.inventory')} />
+            {captionInventoryLink ?? t('camera.open.inventory')}
         </Region>
     );
 };
@@ -586,7 +586,7 @@ export const PhotoPurchaseConfirmationLayoutPublishLinkItem = ({ captionPublishL
             onPointerTap={onPublishLink}
             cursor="pointer"
         >
-            <ThemeText text={captionPublishLink ?? t('camera.link.to.published')} />
+            {captionPublishLink ?? t('camera.link.to.published')}
         </Region>
     );
 };

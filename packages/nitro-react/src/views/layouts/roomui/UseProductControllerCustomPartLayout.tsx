@@ -54,7 +54,7 @@ export const UseProductControllerCustomPartLayout = ({ captionDescription, capti
                     layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25 }}
                 />
                 <Region layout={{ position: 'absolute', left: 160, width: 70, top: 120, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('useproduct.widget.cancel')} />
+                    {t('useproduct.widget.cancel')}
                 </Region>
                 <Region
                     name="info"

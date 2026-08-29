@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { Border, BoxLayout, Region, ThemeImage } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1566_recyclerPrizesWidgetLevelItem_xml` (layout "recyclerPrizesWidgetLevelItem", 348x78) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -45,7 +45,7 @@ export const RecyclerPrizesWidgetLevelItemLayoutLevelTitleItem = ({ captionLevel
             name="level_title"
             layout={{ width: 28, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionLevelTitle ?? 'Title'} />
+            {captionLevelTitle ?? 'Title'}
         </Region>
     );
 };
@@ -62,7 +62,7 @@ export const RecyclerPrizesWidgetLevelItemLayoutLevelSplitterItem = ({ captionLe
             name="level_splitter"
             layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionLevelSplitter ?? ' -'} />
+            {captionLevelSplitter ?? ' -'}
         </Region>
     );
 };
@@ -79,7 +79,7 @@ export const RecyclerPrizesWidgetLevelItemLayoutLevelChancesItem = ({ captionLev
             name="level_chances"
             layout={{ width: 50, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionLevelChances ?? 'Chances'} />
+            {captionLevelChances ?? 'Chances'}
         </Region>
     );
 };

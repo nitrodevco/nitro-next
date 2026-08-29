@@ -333,7 +333,7 @@ export const InventoryLayoutTradeableInfoRegionItem = ({ captionTradeableNumber,
                 name="tradeable_number"
                 layout={{ position: 'absolute', left: 33, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionTradeableNumber ?? ''} />
+                {captionTradeableNumber ?? ''}
             </Region>
             <ThemeImage
                 name="tradeable_icon"
@@ -367,7 +367,7 @@ export const InventoryLayoutRecyclableInfoRegionItem = ({ captionRecyclableNumbe
                 name="recyclable_number"
                 layout={{ position: 'absolute', left: 18, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionRecyclableNumber ?? ''} />
+                {captionRecyclableNumber ?? ''}
             </Region>
             <ThemeImage
                 name="recyclable_icon"
@@ -658,7 +658,7 @@ export const InventoryLayoutTradeableInfoRegionItem2 = ({ captionTradeableNumber
                     name="tradeable_number"
                     layout={{ position: 'absolute', left: 33, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionTradeableNumber ?? ''} />
+                    {captionTradeableNumber ?? ''}
                 </Region>
                 <ThemeImage
                     name="tradeable_icon"
@@ -1421,7 +1421,7 @@ export const InventoryLayoutTopContent = ({ captionInventoryEmptyDescription, ca
                     onPointerTap={onFurni}
                     layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 34 }}
                 >
-                    <ThemeText text={t('inventory.furni')} />
+                    {t('inventory.furni')}
                 </TabButton>
                 <TabButton
                     variant="3"
@@ -1429,7 +1429,7 @@ export const InventoryLayoutTopContent = ({ captionInventoryEmptyDescription, ca
                     onPointerTap={onCollectibles}
                     layout={{ position: 'absolute', left: 107, width: 87, top: 0, height: 34 }}
                 >
-                    <ThemeText text={t('inventory.collectibles')} />
+                    {t('inventory.collectibles')}
                 </TabButton>
                 <TabButton
                     variant="3"
@@ -1437,7 +1437,7 @@ export const InventoryLayoutTopContent = ({ captionInventoryEmptyDescription, ca
                     onPointerTap={onRentables}
                     layout={{ position: 'absolute', left: 194, width: 131, top: 0, height: 34 }}
                 >
-                    <ThemeText text={t('inventory.rentables')} />
+                    {t('inventory.rentables')}
                 </TabButton>
                 <TabButton
                     variant="3"
@@ -1445,7 +1445,7 @@ export const InventoryLayoutTopContent = ({ captionInventoryEmptyDescription, ca
                     onPointerTap={onPets}
                     layout={{ position: 'absolute', left: 325, width: 155, top: 0, height: 34 }}
                 >
-                    <ThemeText text={t('inventory.furni.tab.pets')} />
+                    {t('inventory.furni.tab.pets')}
                 </TabButton>
                 <TabButton
                     variant="3"
@@ -1453,7 +1453,7 @@ export const InventoryLayoutTopContent = ({ captionInventoryEmptyDescription, ca
                     onPointerTap={onBadges}
                     layout={{ position: 'absolute', left: 480, width: 64, top: 0, height: 34 }}
                 >
-                    <ThemeText text={t('inventory.badges')} />
+                    {t('inventory.badges')}
                 </TabButton>
                 <TabButton
                     variant="3"
@@ -1461,7 +1461,7 @@ export const InventoryLayoutTopContent = ({ captionInventoryEmptyDescription, ca
                     onPointerTap={onBots}
                     layout={{ position: 'absolute', left: 544, width: 105, top: 0, height: 34 }}
                 >
-                    <ThemeText text={t('inventory.bots')} />
+                    {t('inventory.bots')}
                 </TabButton>
             </TabContext>
             {(visibleEmptyContainer ?? false) && (

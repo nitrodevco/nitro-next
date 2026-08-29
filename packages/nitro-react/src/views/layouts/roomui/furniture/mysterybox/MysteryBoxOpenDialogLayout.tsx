@@ -66,7 +66,7 @@ export const MysteryBoxOpenDialogLayout = ({ captionSubtitleText, captionWaiting
                         name="waiting_text"
                         layout={{ position: 'absolute', left: 62, width: 228, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionWaitingText ?? 'Waiting for the other user to insert the key.'} />
+                        {captionWaitingText ?? 'Waiting for the other user to insert the key.'}
                     </Region>
                 </Border>
                 <Button

@@ -312,7 +312,7 @@ export const FurniChestContentsLayoutFurniChest = ({ captionNoItemsText, caption
                     name="no_items_text"
                     layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 108, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionNoItemsText ?? t('wiredchests.furni_chest.no_items')} />
+                    {captionNoItemsText ?? t('wiredchests.furni_chest.no_items')}
                 </Region>
                 <FurniChestContentsLayoutGridItems {...gridItems} />
             </Border>

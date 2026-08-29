@@ -71,7 +71,7 @@ export const ClubRequiredLayout = ({ captionCancelLink, captionInfoTxt, captionM
                     name="cancel_link"
                     layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionCancelLink ?? t('generic.cancel')} />
+                    {captionCancelLink ?? t('generic.cancel')}
                 </Region>
             </Region>
             <ButtonThick

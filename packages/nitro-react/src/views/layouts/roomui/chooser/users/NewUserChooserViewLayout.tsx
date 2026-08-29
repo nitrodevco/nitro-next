@@ -76,7 +76,7 @@ export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearch
                 name="amount_indicator"
                 layout={{ position: 'absolute', left: 6, width: 212, bottom: 37, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionAmountIndicator ?? t('new_user_chooser.amount_indicator')} />
+                {captionAmountIndicator ?? t('new_user_chooser.amount_indicator')}
             </Region>
         </Frame>
     );

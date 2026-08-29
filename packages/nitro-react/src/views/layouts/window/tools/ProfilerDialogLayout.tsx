@@ -1,4 +1,4 @@
-import { Border, BoxLayout, Button, CheckBox, Frame, Region, ScrollArea, ThemeText } from '#base/theme';
+import { Border, BoxLayout, Button, CheckBox, Frame, Region, ScrollArea } from '#base/theme';
 
 /** Generated from `3198_profiler_dialog_xml` (layout "habbo_profiler_dialog_2", 470x182) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ProfilerDialogLayoutProps {
@@ -26,7 +26,7 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, onB
                     name="header"
                     layout={{ position: 'absolute', left: 26, right: 102, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionHeader ?? '...'} />
+                    {captionHeader ?? '...'}
                 </Region>
                 <Region layout={{ position: 'absolute', left: 4, right: 4, top: 20, bottom: -5 }}>
                     <ScrollArea
@@ -43,7 +43,7 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, onB
                         name="footer"
                         layout={{ position: 'absolute', left: 20, right: 382, bottom: 19, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionFooter ?? 'Info text'} />
+                        {captionFooter ?? 'Info text'}
                     </Region>
                     <CheckBox
                         variant="101"

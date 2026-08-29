@@ -1,4 +1,4 @@
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, Region } from '#base/theme';
 
 /** Generated from `1228_custom_word_filter_item_xml` (layout "custom_word_filter_item", 222x18) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface CustomWordFilterItemLayoutProps {
@@ -25,7 +25,7 @@ export const CustomWordFilterItemLayout = ({ captionText, layout, onBgRegion }: 
                     name="text"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionText ?? 'BadWord'} />
+                    {captionText ?? 'BadWord'}
                 </Region>
             </Region>
         </Region>

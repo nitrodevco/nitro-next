@@ -1,4 +1,4 @@
-import { BoxLayout, Icon, Region, ThemeText } from '#base/theme';
+import { BoxLayout, Icon, Region } from '#base/theme';
 
 /** Generated from `1509_friend_request_entry_xml` (layout "friend_request_entry", 20x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface FriendRequestEntryLayoutProps {
@@ -59,13 +59,13 @@ export const FriendRequestEntryLayoutCont26981 = ({ captionInfoText, captionRequ
                 name="requester_name_text"
                 layout={{ position: 'absolute', left: 17, width: 101, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionRequesterNameText ?? 'PH Requester Name'} />
+                {captionRequesterNameText ?? 'PH Requester Name'}
             </Region>
             <Region
                 name="info_text"
                 layout={{ position: 'absolute', right: 13, width: 67, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionInfoText ?? 'PH Info Text'} />
+                {captionInfoText ?? 'PH Info Text'}
             </Region>
             <Region
                 name="accept"

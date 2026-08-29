@@ -104,7 +104,7 @@ export const SpecialItemsDisplayLayout = ({ bottom, captionClaimTxt, captionSetD
                                 name="claim_txt"
                                 layout={{ width: 212, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
-                                <ThemeText text={captionClaimTxt ?? t('special_items.claim_info')} />
+                                {captionClaimTxt ?? t('special_items.claim_info')}
                             </Region>
                             <Button
                                 variant="4"

@@ -362,7 +362,7 @@ export const SnowwarEndingLayoutStatusContainer = ({ captionGamesLeft, captionGa
         >
             <Region layout={{ position: 'absolute', top: 0, flexDirection: 'row', gap: 5 }}>
                 <Region layout={{ width: 127, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('snowwar.games_left')} />
+                    {t('snowwar.games_left')}
                 </Region>
                 <Region layout={{ width: 15, height: 26, flexShrink: 0 }}>
                     <Region

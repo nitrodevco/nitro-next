@@ -1,5 +1,5 @@
 import { useTranslation } from '#base/context';
-import { BoxLayout, ContainerButton, Icon, Region, ThemeImage, ThemeText } from '#base/theme';
+import { BoxLayout, ContainerButton, Icon, Region, ThemeImage } from '#base/theme';
 
 /** Generated from `2996_grs_category_selector_xml` (layout "grs_category_selector", 345x55) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GrsCategorySelectorLayoutProps {
@@ -30,7 +30,7 @@ export const GrsCategorySelectorLayout = ({ captionCategoryNameTxt, captionOpenT
                         name="category_name_txt"
                         layout={{ position: 'absolute', left: 10, width: 250, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionCategoryNameTxt ?? 'Dippa daa'} />
+                        {captionCategoryNameTxt ?? 'Dippa daa'}
                     </Region>
                     <ThemeImage
                         name="navi_room_icon"
@@ -47,7 +47,7 @@ export const GrsCategorySelectorLayout = ({ captionCategoryNameTxt, captionOpenT
                             name="open_txt"
                             layout={{ position: 'absolute', left: -1, width: 157, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionOpenTxt ?? t('navigator.categories.viewmore')} />
+                            {captionOpenTxt ?? t('navigator.categories.viewmore')}
                         </Region>
                         <Icon
                             variant="5"

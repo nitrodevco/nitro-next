@@ -92,7 +92,7 @@ export const GuideAcceptLayoutRequestTypeItem = ({ captionRequestType, layout }:
             name="request_type"
             layout={{ width: 73, height: 16, flexShrink: 0, maxWidth: 170, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
-            <ThemeText text={captionRequestType ?? 'Request type'} />
+            {captionRequestType ?? 'Request type'}
         </Region>
     );
 };
@@ -191,7 +191,7 @@ export const GuideAcceptLayoutSkipLinkItem = ({ captionSkipLink, layout, onSkipL
             onPointerTap={onSkipLink}
             cursor="pointer"
         >
-            <ThemeText text={captionSkipLink ?? t('guide.help.request.guide.accept.skip.link')} />
+            {captionSkipLink ?? t('guide.help.request.guide.accept.skip.link')}
         </Region>
     );
 };

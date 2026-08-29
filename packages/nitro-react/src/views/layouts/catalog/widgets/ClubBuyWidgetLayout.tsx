@@ -71,7 +71,7 @@ export const ClubBuyWidgetLayoutClubBuyContent = ({ captionClubHeader, captionCl
                 name="club_remaining"
                 layout={{ position: 'absolute', left: 6, width: 151, top: 305, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionClubRemaining ?? t('catalog.club.buy.remaining')} />
+                {captionClubRemaining ?? t('catalog.club.buy.remaining')}
             </Region>
             <Region
                 name="item_list_hc"

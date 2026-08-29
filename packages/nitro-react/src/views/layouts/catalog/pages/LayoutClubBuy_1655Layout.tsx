@@ -1,5 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
-import { ClubBuyWidget2, ClubBuyWidget2Props } from '#base/views/layouts/catalog/widgets/ClubBuyWidget2';
+import { ClubBuyWidget, ClubBuyWidgetProps } from '#base/views/layouts/catalog/widgets/ClubBuyWidget';
 
 /** Generated from `1655_layout_club_buy_xml` (layout "ctlg_club_buy", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutClubBuy_1655LayoutProps {
@@ -17,7 +17,7 @@ export const LayoutClubBuy_1655Layout = ({ ctlgClubBuy, layout }: LayoutClubBuy_
 
 /** Named region `ctlg_club_buy` of LayoutClubBuy_1655Layout - configured through the parent's `ctlgClubBuy` prop. */
 export interface LayoutClubBuy_1655LayoutCtlgClubBuyProps {
-    clubBuyWidget?: ClubBuyWidget2Props;
+    clubBuyWidget?: ClubBuyWidgetProps;
     layout?: BoxLayout;
 }
 
@@ -28,7 +28,7 @@ export const LayoutClubBuy_1655LayoutCtlgClubBuy = ({ clubBuyWidget, layout }: L
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
-            <ClubBuyWidget2
+            <ClubBuyWidget
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 {...clubBuyWidget}
             />

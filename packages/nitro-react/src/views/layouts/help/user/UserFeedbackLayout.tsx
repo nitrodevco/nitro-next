@@ -53,7 +53,7 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
                             name="guide_desc"
                             layout={{ width: 64, height: 16, flexShrink: 0, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionGuideDesc ?? t('guide.help.request.user.feedback.guide.desc')} />
+                            {captionGuideDesc ?? t('guide.help.request.user.feedback.guide.desc')}
                         </Region>
                     </Region>
                 </Region>

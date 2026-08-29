@@ -32,7 +32,7 @@ export const GrsMainWindowLayout = ({ captionLoadingText, layout, onClose, tabbe
                         name="loading_text"
                         layout={{ position: 'absolute', marginLeft: -29.5, marginRight: 29.5, width: 104, top: 210, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionLoadingText ?? t('navigator.loading')} />
+                        {captionLoadingText ?? t('navigator.loading')}
                     </Region>
                 )}
             </Region>
@@ -333,7 +333,7 @@ export const GrsMainWindowLayoutCustomFooter = ({ captionAdCaption, captionGetEv
                         name="more_rooms_caption"
                         layout={{ position: 'absolute', left: 32, width: 146, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeText text={captionMoreRoomsCaption ?? t('navigator.moreroomscaption')} />
+                        {captionMoreRoomsCaption ?? t('navigator.moreroomscaption')}
                     </Region>
                     <Button
                         variant="0"
@@ -355,7 +355,7 @@ export const GrsMainWindowLayoutCustomFooter = ({ captionAdCaption, captionGetEv
                     name="ad_caption"
                     layout={{ position: 'absolute', left: 6, width: 121, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionAdCaption ?? t('navigator.adcaption')} />
+                    {captionAdCaption ?? t('navigator.adcaption')}
                 </Region>
                 <Region
                     name="ad_cont"

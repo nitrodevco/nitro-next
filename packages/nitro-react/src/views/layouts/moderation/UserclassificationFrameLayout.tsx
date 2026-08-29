@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { BoxLayout, Frame, Region, ScrollArea, ThemeText } from '#base/theme';
+import { BoxLayout, Frame, Region, ScrollArea } from '#base/theme';
 
 /** Generated from `1125_userclassification_frame_xml` (layout "userclassification_frame", 292x224) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface UserclassificationFrameLayoutProps {
@@ -60,19 +60,19 @@ export const UserclassificationFrameLayoutClassificationrowItem = ({ captionUser
                 name="user_classification_txt"
                 layout={{ position: 'absolute', right: 48, width: 105, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionUserClassificationTxt ?? ''} />
+                {captionUserClassificationTxt ?? ''}
             </Region>
             <Region
                 name="user_name_txt"
                 layout={{ position: 'absolute', left: 5, right: 158, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionUserNameTxt ?? 'whatwasit'} />
+                {captionUserNameTxt ?? 'whatwasit'}
             </Region>
             <Region
                 name="visit_room_txt"
                 layout={{ position: 'absolute', right: 1, width: 39, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <ThemeText text={captionVisitRoomTxt ?? 'Visit'} />
+                {captionVisitRoomTxt ?? 'Visit'}
             </Region>
         </Region>
     );
