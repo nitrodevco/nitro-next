@@ -23,85 +23,61 @@ export const RoomtoolFrameLayout = ({ layout, listCont, onClose }: RoomtoolFrame
     );
 };
 
-/** Named region `tags_cont` of RoomtoolFrameLayout - configured through the parent's `tagsCont` prop. */
-export interface RoomtoolFrameLayoutTagsContProps {
+/** Row template `room_cont` of RoomtoolFrameLayout - pass real rows through its `items…` slot. */
+export interface RoomtoolFrameLayoutRoomContItemProps {
+    captionDesc?: string;
+    captionName?: string;
     captionTagsTxt?: string;
     layout?: BoxLayout;
 }
 
-export const RoomtoolFrameLayoutTagsCont = ({ captionTagsTxt, layout }: RoomtoolFrameLayoutTagsContProps) => {
-    return (
-        <Region
-            name="tags_cont"
-            layout={{ position: 'absolute', left: 0, width: 220, top: 60, height: 30, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="Tags:" />
-            </Region>
-            <Region
-                name="tags_txt"
-                layout={{ position: 'absolute', left: 40, right: 2, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTagsTxt ?? 'PH Room Name: Neque porro quisquam est que'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 178 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `room_data` of RoomtoolFrameLayout - configured through the parent's `roomData` prop. */
-export interface RoomtoolFrameLayoutRoomDataProps {
-    captionDesc?: string;
-    captionName?: string;
-    layout?: BoxLayout;
-    tagsCont?: RoomtoolFrameLayoutTagsContProps;
-}
-
-export const RoomtoolFrameLayoutRoomData = ({ captionDesc, captionName, layout, tagsCont }: RoomtoolFrameLayoutRoomDataProps) => {
-    return (
-        <Region
-            name="room_data"
-            layout={{ position: 'absolute', left: 5, width: 220, top: 5, height: 90, ...layout }}
-        >
-            <Region
-                name="name"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionName ?? 'PH Room Name: Neque porro quisquam est que'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                />
-            </Region>
-            <Region
-                name="desc"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 30, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
-                    textOptions={{ fill: '#808080', wordWrap: true, wordWrapWidth: 220 }}
-                />
-            </Region>
-            <RoomtoolFrameLayoutTagsCont {...tagsCont} />
-        </Region>
-    );
-};
-
-/** Row template `room_cont` of RoomtoolFrameLayout - pass real rows through its `items…` slot. */
-export interface RoomtoolFrameLayoutRoomContItemProps {
-    layout?: BoxLayout;
-    roomData?: RoomtoolFrameLayoutRoomDataProps;
-}
-
-export const RoomtoolFrameLayoutRoomContItem = ({ layout, roomData }: RoomtoolFrameLayoutRoomContItemProps) => {
+export const RoomtoolFrameLayoutRoomContItem = ({ captionDesc, captionName, captionTagsTxt, layout }: RoomtoolFrameLayoutRoomContItemProps) => {
     return (
         <Border
             variant="0"
             name="room_cont"
             layout={{ width: 230, height: 97, flexShrink: 0, ...layout }}
         >
-            <RoomtoolFrameLayoutRoomData {...roomData} />
+            <Region
+                name="room_data"
+                layout={{ position: 'absolute', left: 5, width: 220, top: 5, height: 90 }}
+            >
+                <Region
+                    name="name"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionName ?? 'PH Room Name: Neque porro quisquam est que'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
+                    />
+                </Region>
+                <Region
+                    name="desc"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 30, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
+                        textOptions={{ fill: '#808080', wordWrap: true, wordWrapWidth: 220 }}
+                    />
+                </Region>
+                <Region
+                    name="tags_cont"
+                    layout={{ position: 'absolute', left: 0, width: 220, top: 60, height: 30 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText text="Tags:" />
+                    </Region>
+                    <Region
+                        name="tags_txt"
+                        layout={{ position: 'absolute', left: 40, right: 2, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionTagsTxt ?? 'PH Room Name: Neque porro quisquam est que'}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 178 }}
+                        />
+                    </Region>
+                </Region>
+            </Region>
         </Border>
     );
 };

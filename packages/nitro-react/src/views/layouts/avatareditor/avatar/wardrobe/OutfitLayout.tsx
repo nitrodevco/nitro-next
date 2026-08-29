@@ -7,9 +7,10 @@ export interface OutfitLayoutProps {
     onButton?: () => void;
     srcBitmap?: string;
     srcOutfitGradient?: string;
+    visibleOutfitGradient?: boolean;
 }
 
-export const OutfitLayout = ({ layout, onButton, srcBitmap, srcOutfitGradient }: OutfitLayoutProps) => {
+export const OutfitLayout = ({ layout, onButton, srcBitmap, srcOutfitGradient, visibleOutfitGradient }: OutfitLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 35, height: 60, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 60 }}>
@@ -19,12 +20,13 @@ export const OutfitLayout = ({ layout, onButton, srcBitmap, srcOutfitGradient }:
                     onPointerTap={onButton}
                     layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 60, overflow: 'hidden' }}
                 />
-                <ThemeImage
-                    name="outfit_gradient"
-                    src={srcOutfitGradient ?? layoutImage('collectables_score_background_gradient.png')}
-                    layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
-                    visible={false}
-                />
+                {(visibleOutfitGradient ?? false) && (
+                    <ThemeImage
+                        name="outfit_gradient"
+                        src={srcOutfitGradient ?? layoutImage('collectables_score_background_gradient.png')}
+                        layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
+                    />
+                )}
                 <ThemeImage
                     name="bitmap"
                     src={srcBitmap}

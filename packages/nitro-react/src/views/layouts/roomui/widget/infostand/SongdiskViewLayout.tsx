@@ -6,13 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1053_songdisk_view_xml` (layout "furni_view", 429x25) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface SongdiskViewLayoutProps {
-    buttonList?: SongdiskViewLayoutButtonListProps;
     infostandElementList?: SongdiskViewLayoutInfostandElementListProps;
+    itemsButtonList?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const SongdiskViewLayout = ({ buttonList, infostandElementList, layout, onClose }: SongdiskViewLayoutProps) => {
+export const SongdiskViewLayout = ({ infostandElementList, itemsButtonList, layout, onClose }: SongdiskViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 429, height: 25, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 429, top: 0, height: 25, flexDirection: 'column', gap: 10 }}>
@@ -29,7 +29,18 @@ export const SongdiskViewLayout = ({ buttonList, infostandElementList, layout, o
                     />
                     <SongdiskViewLayoutInfostandElementList {...infostandElementList} />
                 </Border>
-                <SongdiskViewLayoutButtonList {...buttonList} />
+                <Region
+                    name="button_list"
+                    layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10 }}
+                >
+                    {itemsButtonList ?? (
+                        <>
+                            <SongdiskViewLayoutMoveItem />
+                            <SongdiskViewLayoutRotateItem />
+                            <SongdiskViewLayoutPickupItem />
+                        </>
+                    )}
+                </Region>
             </Region>
         </Region>
     );
@@ -439,28 +450,5 @@ export const SongdiskViewLayoutPickupItem = ({ layout, onPickup }: SongdiskViewL
         >
             {t('infostand.button.pickup')}
         </Button>
-    );
-};
-
-/** Named region `button_list` of SongdiskViewLayout - configured through the parent's `buttonList` prop. */
-export interface SongdiskViewLayoutButtonListProps {
-    itemsButtonList?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const SongdiskViewLayoutButtonList = ({ itemsButtonList, layout }: SongdiskViewLayoutButtonListProps) => {
-    return (
-        <Region
-            name="button_list"
-            layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
-        >
-            {itemsButtonList ?? (
-                <>
-                    <SongdiskViewLayoutMoveItem />
-                    <SongdiskViewLayoutRotateItem />
-                    <SongdiskViewLayoutPickupItem />
-                </>
-            )}
-        </Region>
     );
 };

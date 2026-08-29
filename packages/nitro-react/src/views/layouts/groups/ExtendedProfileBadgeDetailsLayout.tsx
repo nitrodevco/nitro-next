@@ -4,11 +4,11 @@ import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 
 /** Generated from `1200_extended_profile_badge_details_xml` (layout "extended_profile_badge_details", 263x25) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ExtendedProfileBadgeDetailsLayoutProps {
-    detailsList?: ExtendedProfileBadgeDetailsLayoutDetailsListProps;
+    itemsDetailsList?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const ExtendedProfileBadgeDetailsLayout = ({ detailsList, layout }: ExtendedProfileBadgeDetailsLayoutProps) => {
+export const ExtendedProfileBadgeDetailsLayout = ({ itemsDetailsList, layout }: ExtendedProfileBadgeDetailsLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 263, height: 25, ...layout }}>
             <Border
@@ -16,7 +16,19 @@ export const ExtendedProfileBadgeDetailsLayout = ({ detailsList, layout }: Exten
                 name="test"
                 layout={{ position: 'absolute', left: 87, width: 263, top: 53, height: 25 }}
             >
-                <ExtendedProfileBadgeDetailsLayoutDetailsList {...detailsList} />
+                <Region
+                    name="details_list"
+                    layout={{ position: 'absolute', left: 0, width: 263, top: 6, height: 11, flexDirection: 'column', gap: 3 }}
+                >
+                    {itemsDetailsList ?? (
+                        <>
+                            <ExtendedProfileBadgeDetailsLayoutNameItem />
+                            <ExtendedProfileBadgeDetailsLayoutDescriptionItem />
+                            <ExtendedProfileBadgeDetailsLayoutRarityTagItem />
+                            <ExtendedProfileBadgeDetailsLayoutOwnerCountItem />
+                        </>
+                    )}
+                </Region>
             </Border>
         </Region>
     );
@@ -72,32 +84,33 @@ export interface ExtendedProfileBadgeDetailsLayoutRarityTagItemProps {
 
 export const ExtendedProfileBadgeDetailsLayoutRarityTagItem = ({ captionRarity, captionRarityBorder, layout, visibleRarityTag }: ExtendedProfileBadgeDetailsLayoutRarityTagItemProps) => {
     return (
-        <Border
-            variant="2"
-            name="rarity_tag"
-            tintColor="#cccccc"
-            visible={visibleRarityTag ?? false}
-            layout={{ width: 92, height: 17, flexShrink: 0, ...layout }}
-        >
-            <Region
-                name="rarity_border"
-                layout={{ position: 'absolute', left: 5, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+        (visibleRarityTag ?? false) && (
+            <Border
+                variant="2"
+                name="rarity_tag"
+                tintColor="#cccccc"
+                layout={{ width: 92, height: 17, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionRarityBorder ?? 'Unique badge'}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-            <Region
-                name="rarity"
-                layout={{ position: 'absolute', left: 5, width: 81, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRarity ?? 'Unique badge'}
-                    textStyle="text-style-bold"
-                />
-            </Region>
-        </Border>
+                <Region
+                    name="rarity_border"
+                    layout={{ position: 'absolute', left: 5, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionRarityBorder ?? 'Unique badge'}
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+                <Region
+                    name="rarity"
+                    layout={{ position: 'absolute', left: 5, width: 81, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionRarity ?? 'Unique badge'}
+                        textStyle="text-style-bold"
+                    />
+                </Region>
+            </Border>
+        )
     );
 };
 
@@ -105,43 +118,21 @@ export const ExtendedProfileBadgeDetailsLayoutRarityTagItem = ({ captionRarity, 
 export interface ExtendedProfileBadgeDetailsLayoutOwnerCountItemProps {
     captionOwnerCount?: string;
     layout?: BoxLayout;
+    visibleOwnerCount?: boolean;
 }
 
-export const ExtendedProfileBadgeDetailsLayoutOwnerCountItem = ({ captionOwnerCount, layout }: ExtendedProfileBadgeDetailsLayoutOwnerCountItemProps) => {
+export const ExtendedProfileBadgeDetailsLayoutOwnerCountItem = ({ captionOwnerCount, layout, visibleOwnerCount }: ExtendedProfileBadgeDetailsLayoutOwnerCountItemProps) => {
     return (
-        <Region
-            name="owner_count"
-            visible={false}
-            layout={{ width: 250, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionOwnerCount ?? ''}
-                textOptions={{ fill: '#555555', wordWrap: true, wordWrapWidth: 250 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `details_list` of ExtendedProfileBadgeDetailsLayout - configured through the parent's `detailsList` prop. */
-export interface ExtendedProfileBadgeDetailsLayoutDetailsListProps {
-    itemsDetailsList?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const ExtendedProfileBadgeDetailsLayoutDetailsList = ({ itemsDetailsList, layout }: ExtendedProfileBadgeDetailsLayoutDetailsListProps) => {
-    return (
-        <Region
-            name="details_list"
-            layout={{ position: 'absolute', left: 0, width: 263, top: 6, height: 11, flexDirection: 'column', gap: 3, ...layout }}
-        >
-            {itemsDetailsList ?? (
-                <>
-                    <ExtendedProfileBadgeDetailsLayoutNameItem />
-                    <ExtendedProfileBadgeDetailsLayoutDescriptionItem />
-                    <ExtendedProfileBadgeDetailsLayoutRarityTagItem />
-                    <ExtendedProfileBadgeDetailsLayoutOwnerCountItem />
-                </>
-            )}
-        </Region>
+        (visibleOwnerCount ?? false) && (
+            <Region
+                name="owner_count"
+                layout={{ width: 250, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            >
+                <ThemeText
+                    text={captionOwnerCount ?? ''}
+                    textOptions={{ fill: '#555555', wordWrap: true, wordWrapWidth: 250 }}
+                />
+            </Region>
+        )
     );
 };

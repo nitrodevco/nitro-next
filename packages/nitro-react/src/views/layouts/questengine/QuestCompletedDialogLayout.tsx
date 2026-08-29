@@ -3,11 +3,12 @@ import { BoxLayout, ButtonThick, Frame, Region, ThemeImage, ThemeText } from '#b
 
 /** Generated from `128_QuestCompletedDialog_xml` (layout "achievement_notification", 426x215) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface QuestCompletedDialogLayoutProps {
+    captionCatalogLinkTxt?: string;
     captionCongratsTxt?: string;
     captionDescTxt?: string;
     captionRewardTxt?: string;
-    catalogLinkRegion?: QuestCompletedDialogLayoutCatalogLinkRegionProps;
     layout?: BoxLayout;
+    onCatalogLinkRegion?: () => void;
     onClose?: () => void;
     onMoreQuestsButton?: () => void;
     onNextQuestButton?: () => void;
@@ -17,7 +18,7 @@ export interface QuestCompletedDialogLayoutProps {
     srcTwinkleBitmap?: string;
 }
 
-export const QuestCompletedDialogLayout = ({ captionCongratsTxt, captionDescTxt, captionRewardTxt, catalogLinkRegion, layout, onClose, onMoreQuestsButton, onNextQuestButton, srcCampaignPicBitmap, srcCampaignRewardIcon, srcRewardIcon, srcTwinkleBitmap }: QuestCompletedDialogLayoutProps) => {
+export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongratsTxt, captionDescTxt, captionRewardTxt, layout, onCatalogLinkRegion, onClose, onMoreQuestsButton, onNextQuestButton, srcCampaignPicBitmap, srcCampaignRewardIcon, srcRewardIcon, srcTwinkleBitmap }: QuestCompletedDialogLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -87,7 +88,19 @@ export const QuestCompletedDialogLayout = ({ captionCongratsTxt, captionDescTxt,
             >
                 {t('quests.completed.next')}
             </ButtonThick>
-            <QuestCompletedDialogLayoutCatalogLinkRegion {...catalogLinkRegion} />
+            <Region
+                name="catalog_link_region"
+                onPointerTap={onCatalogLinkRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 19, width: 91, bottom: 52, height: 18 }}
+            >
+                <Region
+                    name="catalog_link_txt"
+                    layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionCatalogLinkTxt ?? 'catalog_link_txt'} />
+                </Region>
+            </Region>
             <ButtonThick
                 variant="3"
                 name="more_quests_button"
@@ -97,30 +110,5 @@ export const QuestCompletedDialogLayout = ({ captionCongratsTxt, captionDescTxt,
                 {t('quests.campaigncompleted.more')}
             </ButtonThick>
         </Frame>
-    );
-};
-
-/** Named region `catalog_link_region` of QuestCompletedDialogLayout - configured through the parent's `catalogLinkRegion` prop. */
-export interface QuestCompletedDialogLayoutCatalogLinkRegionProps {
-    captionCatalogLinkTxt?: string;
-    layout?: BoxLayout;
-    onCatalogLinkRegion?: () => void;
-}
-
-export const QuestCompletedDialogLayoutCatalogLinkRegion = ({ captionCatalogLinkTxt, layout, onCatalogLinkRegion }: QuestCompletedDialogLayoutCatalogLinkRegionProps) => {
-    return (
-        <Region
-            name="catalog_link_region"
-            onPointerTap={onCatalogLinkRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 19, width: 91, bottom: 52, height: 18, ...layout }}
-        >
-            <Region
-                name="catalog_link_txt"
-                layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionCatalogLinkTxt ?? 'catalog_link_txt'} />
-            </Region>
-        </Region>
     );
 };

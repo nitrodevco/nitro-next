@@ -15,77 +15,27 @@ export const GrsGuestRoomDetailsShortLayout = ({ details, layout }: GrsGuestRoom
     );
 };
 
-/** Named region `favourite` of GrsGuestRoomDetailsShortLayout - configured through the parent's `favourite` prop. */
-export interface GrsGuestRoomDetailsShortLayoutFavouriteProps {
-    layout?: BoxLayout;
-    onFavourite?: () => void;
-    srcFavourite?: string;
-}
-
-export const GrsGuestRoomDetailsShortLayoutFavourite = ({ layout, onFavourite, srcFavourite }: GrsGuestRoomDetailsShortLayoutFavouriteProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="favourite"
-            tooltip={t('navigator.favourite.tooltip')}
-            onPointerTap={onFavourite}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 40, width: 18, top: 1, height: 16, ...layout }}
-        >
-            <ThemeImage
-                name="favourite"
-                src={srcFavourite}
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `make_favourite` of GrsGuestRoomDetailsShortLayout - configured through the parent's `makeFavourite` prop. */
-export interface GrsGuestRoomDetailsShortLayoutMakeFavouriteProps {
-    layout?: BoxLayout;
-    onMakeFavourite?: () => void;
-    srcMakeFavourite?: string;
-}
-
-export const GrsGuestRoomDetailsShortLayoutMakeFavourite = ({ layout, onMakeFavourite, srcMakeFavourite }: GrsGuestRoomDetailsShortLayoutMakeFavouriteProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="make_favourite"
-            tooltip={t('navigator.makefavourite.tooltip')}
-            onPointerTap={onMakeFavourite}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 40, width: 18, top: 1, height: 16, ...layout }}
-        >
-            <ThemeImage
-                name="make_favourite"
-                src={srcMakeFavourite}
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `details` of GrsGuestRoomDetailsShortLayout - configured through the parent's `details` prop. */
 export interface GrsGuestRoomDetailsShortLayoutDetailsProps {
     captionRoomname?: string;
     captionRoomNumber?: string;
-    favourite?: GrsGuestRoomDetailsShortLayoutFavouriteProps;
     layout?: BoxLayout;
-    makeFavourite?: GrsGuestRoomDetailsShortLayoutMakeFavouriteProps;
     onDetails?: () => void;
+    onFavourite?: () => void;
+    onMakeFavourite?: () => void;
     srcDoormodeDoorbellSmall?: string;
     srcDoormodeInvisibleSmall?: string;
     srcDoormodePasswordSmall?: string;
+    srcFavourite?: string;
     srcGroupBaseIcon?: string;
     srcGroupBaseIconNoDoormode?: string;
     srcHome?: string;
+    srcMakeFavourite?: string;
 }
 
-export const GrsGuestRoomDetailsShortLayoutDetails = ({ captionRoomname, captionRoomNumber, favourite, layout, makeFavourite, onDetails, srcDoormodeDoorbellSmall, srcDoormodeInvisibleSmall, srcDoormodePasswordSmall, srcGroupBaseIcon, srcGroupBaseIconNoDoormode, srcHome }: GrsGuestRoomDetailsShortLayoutDetailsProps) => {
+export const GrsGuestRoomDetailsShortLayoutDetails = ({ captionRoomname, captionRoomNumber, layout, onDetails, onFavourite, onMakeFavourite, srcDoormodeDoorbellSmall, srcDoormodeInvisibleSmall, srcDoormodePasswordSmall, srcFavourite, srcGroupBaseIcon, srcGroupBaseIconNoDoormode, srcHome, srcMakeFavourite }: GrsGuestRoomDetailsShortLayoutDetailsProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="details"
@@ -139,8 +89,32 @@ export const GrsGuestRoomDetailsShortLayoutDetails = ({ captionRoomname, caption
                 src={srcHome}
                 layout={{ position: 'absolute', right: 40, width: 18, top: 0, height: 16 }}
             />
-            <GrsGuestRoomDetailsShortLayoutFavourite {...favourite} />
-            <GrsGuestRoomDetailsShortLayoutMakeFavourite {...makeFavourite} />
+            <Region
+                name="favourite"
+                tooltip={t('navigator.favourite.tooltip')}
+                onPointerTap={onFavourite}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 40, width: 18, top: 1, height: 16 }}
+            >
+                <ThemeImage
+                    name="favourite"
+                    src={srcFavourite}
+                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
+                />
+            </Region>
+            <Region
+                name="make_favourite"
+                tooltip={t('navigator.makefavourite.tooltip')}
+                onPointerTap={onMakeFavourite}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 40, width: 18, top: 1, height: 16 }}
+            >
+                <ThemeImage
+                    name="make_favourite"
+                    src={srcMakeFavourite}
+                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
+                />
+            </Region>
         </Region>
     );
 };

@@ -4,16 +4,22 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `96_daily_quest_xml` (layout "landing_view", 500x194) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface DailyQuestLayoutProps {
+    captionLabelTxt?: string;
+    captionLabelTxt2?: string;
     captionTitleTxt?: string;
     contentContainer?: DailyQuestLayoutContentContainerProps;
-    difficultyContainer?: DailyQuestLayoutDifficultyContainerProps;
     layout?: BoxLayout;
+    onEasyRegion?: () => void;
+    onHardRegion?: () => void;
     srcBitmap?: string;
     srcBorderBar?: string;
+    srcDivider?: string;
     srcHdrLine?: string;
 }
 
-export const DailyQuestLayout = ({ captionTitleTxt, contentContainer, difficultyContainer, layout, srcBitmap, srcBorderBar, srcHdrLine }: DailyQuestLayoutProps) => {
+export const DailyQuestLayout = ({ captionLabelTxt, captionLabelTxt2, captionTitleTxt, contentContainer, layout, onEasyRegion, onHardRegion, srcBitmap, srcBorderBar, srcDivider, srcHdrLine }: DailyQuestLayoutProps) => {
+    const t = useTranslation();
+
     return (
         <Region layout={{ position: 'relative', width: 500, height: 194, ...layout }}>
             <Region
@@ -45,59 +51,42 @@ export const DailyQuestLayout = ({ captionTitleTxt, contentContainer, difficulty
                     layout={{ position: 'absolute', left: 10, width: 20, top: 10, height: 20 }}
                 />
                 <DailyQuestLayoutContentContainer {...contentContainer} />
-                <DailyQuestLayoutDifficultyContainer {...difficultyContainer} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `next_quest_region` of DailyQuestLayout - configured through the parent's `nextQuestRegion` prop. */
-export interface DailyQuestLayoutNextQuestRegionProps {
-    captionNextQuestTxt?: string;
-    layout?: BoxLayout;
-    onNextQuestRegion?: () => void;
-}
-
-export const DailyQuestLayoutNextQuestRegion = ({ captionNextQuestTxt, layout, onNextQuestRegion }: DailyQuestLayoutNextQuestRegionProps) => {
-    return (
-        <Region
-            name="next_quest_region"
-            onPointerTap={onNextQuestRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 253, top: 139, height: 19, ...layout }}
-        >
-            <Region
-                name="next_quest_txt"
-                layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionNextQuestTxt ?? 'PH: Show me another easy quest'} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `cancel_quest_region` of DailyQuestLayout - configured through the parent's `cancelQuestRegion` prop. */
-export interface DailyQuestLayoutCancelQuestRegionProps {
-    captionCancelQuestTxt?: string;
-    layout?: BoxLayout;
-    onCancelQuestRegion?: () => void;
-}
-
-export const DailyQuestLayoutCancelQuestRegion = ({ captionCancelQuestTxt, layout, onCancelQuestRegion }: DailyQuestLayoutCancelQuestRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="cancel_quest_region"
-            onPointerTap={onCancelQuestRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 253, top: 152, height: 19, ...layout }}
-        >
-            <Region
-                name="cancel_quest_txt"
-                layout={{ position: 'absolute', left: 0, width: 105, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionCancelQuestTxt ?? t('landing.view.quest.cancel')} />
+                <Region
+                    name="difficulty_container"
+                    layout={{ position: 'absolute', left: 285, width: 211, top: 3, height: 17 }}
+                >
+                    <Region
+                        name="easy_region"
+                        onPointerTap={onEasyRegion}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 18 }}
+                    >
+                        <Region
+                            name="label_txt"
+                            layout={{ position: 'absolute', left: 0, width: 98, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText text={captionLabelTxt ?? t('landing.view.quest.easy')} />
+                        </Region>
+                    </Region>
+                    <ThemeImage
+                        name="divider"
+                        src={srcDivider ?? layoutImage('landing_view_reception_horizontal.png')}
+                        layout={{ position: 'absolute', right: 106, width: 2, top: 0, bottom: -3 }}
+                    />
+                    <Region
+                        name="hard_region"
+                        onPointerTap={onHardRegion}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: 112, width: 99, top: 0, height: 18 }}
+                    >
+                        <Region
+                            name="label_txt"
+                            layout={{ position: 'absolute', left: 0, width: 99, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText text={captionLabelTxt2 ?? t('landing.view.quest.hard')} />
+                        </Region>
+                    </Region>
+                </Region>
             </Region>
         </Region>
     );
@@ -105,17 +94,19 @@ export const DailyQuestLayoutCancelQuestRegion = ({ captionCancelQuestTxt, layou
 
 /** Named region `content_container` of DailyQuestLayout - configured through the parent's `contentContainer` prop. */
 export interface DailyQuestLayoutContentContainerProps {
-    cancelQuestRegion?: DailyQuestLayoutCancelQuestRegionProps;
+    captionCancelQuestTxt?: string;
     captionCaptionTxt?: string;
     captionCurrentQuestTxt?: string;
     captionInfoTxt?: string;
+    captionNextQuestTxt?: string;
     layout?: BoxLayout;
-    nextQuestRegion?: DailyQuestLayoutNextQuestRegionProps;
     onAcceptButton?: () => void;
+    onCancelQuestRegion?: () => void;
     onGoButton?: () => void;
+    onNextQuestRegion?: () => void;
 }
 
-export const DailyQuestLayoutContentContainer = ({ cancelQuestRegion, captionCaptionTxt, captionCurrentQuestTxt, captionInfoTxt, layout, nextQuestRegion, onAcceptButton, onGoButton }: DailyQuestLayoutContentContainerProps) => {
+export const DailyQuestLayoutContentContainer = ({ captionCancelQuestTxt, captionCaptionTxt, captionCurrentQuestTxt, captionInfoTxt, captionNextQuestTxt, layout, onAcceptButton, onCancelQuestRegion, onGoButton, onNextQuestRegion }: DailyQuestLayoutContentContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -150,8 +141,32 @@ export const DailyQuestLayoutContentContainer = ({ cancelQuestRegion, captionCap
             >
                 {t('landing.view.quest.accept')}
             </Button>
-            <DailyQuestLayoutNextQuestRegion {...nextQuestRegion} />
-            <DailyQuestLayoutCancelQuestRegion {...cancelQuestRegion} />
+            <Region
+                name="next_quest_region"
+                onPointerTap={onNextQuestRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 253, top: 139, height: 19 }}
+            >
+                <Region
+                    name="next_quest_txt"
+                    layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionNextQuestTxt ?? 'PH: Show me another easy quest'} />
+                </Region>
+            </Region>
+            <Region
+                name="cancel_quest_region"
+                onPointerTap={onCancelQuestRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 253, top: 152, height: 19 }}
+            >
+                <Region
+                    name="cancel_quest_txt"
+                    layout={{ position: 'absolute', left: 0, width: 105, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionCancelQuestTxt ?? t('landing.view.quest.cancel')} />
+                </Region>
+            </Region>
             <Border
                 variant="100"
                 name="current_quest_border"
@@ -175,85 +190,6 @@ export const DailyQuestLayoutContentContainer = ({ cancelQuestRegion, captionCap
                     />
                 </Region>
             </Border>
-        </Region>
-    );
-};
-
-/** Named region `easy_region` of DailyQuestLayout - configured through the parent's `easyRegion` prop. */
-export interface DailyQuestLayoutEasyRegionProps {
-    captionLabelTxt?: string;
-    layout?: BoxLayout;
-    onEasyRegion?: () => void;
-}
-
-export const DailyQuestLayoutEasyRegion = ({ captionLabelTxt, layout, onEasyRegion }: DailyQuestLayoutEasyRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="easy_region"
-            onPointerTap={onEasyRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 18, ...layout }}
-        >
-            <Region
-                name="label_txt"
-                layout={{ position: 'absolute', left: 0, width: 98, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionLabelTxt ?? t('landing.view.quest.easy')} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `hard_region` of DailyQuestLayout - configured through the parent's `hardRegion` prop. */
-export interface DailyQuestLayoutHardRegionProps {
-    captionLabelTxt?: string;
-    layout?: BoxLayout;
-    onHardRegion?: () => void;
-}
-
-export const DailyQuestLayoutHardRegion = ({ captionLabelTxt, layout, onHardRegion }: DailyQuestLayoutHardRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="hard_region"
-            onPointerTap={onHardRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 112, width: 99, top: 0, height: 18, ...layout }}
-        >
-            <Region
-                name="label_txt"
-                layout={{ position: 'absolute', left: 0, width: 99, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionLabelTxt ?? t('landing.view.quest.hard')} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `difficulty_container` of DailyQuestLayout - configured through the parent's `difficultyContainer` prop. */
-export interface DailyQuestLayoutDifficultyContainerProps {
-    easyRegion?: DailyQuestLayoutEasyRegionProps;
-    hardRegion?: DailyQuestLayoutHardRegionProps;
-    layout?: BoxLayout;
-    srcDivider?: string;
-}
-
-export const DailyQuestLayoutDifficultyContainer = ({ easyRegion, hardRegion, layout, srcDivider }: DailyQuestLayoutDifficultyContainerProps) => {
-    return (
-        <Region
-            name="difficulty_container"
-            layout={{ position: 'absolute', left: 285, width: 211, top: 3, height: 17, ...layout }}
-        >
-            <DailyQuestLayoutEasyRegion {...easyRegion} />
-            <ThemeImage
-                name="divider"
-                src={srcDivider ?? layoutImage('landing_view_reception_horizontal.png')}
-                layout={{ position: 'absolute', right: 106, width: 2, top: 0, bottom: -3 }}
-            />
-            <DailyQuestLayoutHardRegion {...hardRegion} />
         </Region>
     );
 };

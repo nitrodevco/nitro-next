@@ -137,17 +137,18 @@ export interface IlluminaChatBubbleLayoutHabbiconTemplateItemProps {
 
 export const IlluminaChatBubbleLayoutHabbiconTemplateItem = ({ layout, srcHabbiconBitmap, visibleHabbiconTemplate }: IlluminaChatBubbleLayoutHabbiconTemplateItemProps) => {
     return (
-        <Region
-            name="habbicon_template"
-            visible={visibleHabbiconTemplate ?? false}
-            layout={{ width: 80, height: 80, flexShrink: 0, ...layout }}
-        >
-            <ThemeImage
-                name="habbicon_bitmap"
-                src={srcHabbiconBitmap}
-                layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80 }}
-            />
-        </Region>
+        (visibleHabbiconTemplate ?? false) && (
+            <Region
+                name="habbicon_template"
+                layout={{ width: 80, height: 80, flexShrink: 0, ...layout }}
+            >
+                <ThemeImage
+                    name="habbicon_bitmap"
+                    src={srcHabbiconBitmap}
+                    layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -187,37 +188,14 @@ export const IlluminaChatBubbleLayoutSpacingItem2 = ({ layout }: IlluminaChatBub
     );
 };
 
-/** Named region `spaced_message_container` of IlluminaChatBubbleLayout - configured through the parent's `spacedMessageContainer` prop. */
-export interface IlluminaChatBubbleLayoutSpacedMessageContainerProps {
-    itemsSpacedMessageContainer?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const IlluminaChatBubbleLayoutSpacedMessageContainer = ({ itemsSpacedMessageContainer, layout }: IlluminaChatBubbleLayoutSpacedMessageContainerProps) => {
-    return (
-        <Region
-            name="spaced_message_container"
-            layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', ...layout }}
-        >
-            {itemsSpacedMessageContainer ?? (
-                <>
-                    <IlluminaChatBubbleLayoutSpacingItem />
-                    <IlluminaChatBubbleLayoutMessageContainerItem />
-                    <IlluminaChatBubbleLayoutSpacingItem2 />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Named region `message_region` of IlluminaChatBubbleLayout - configured through the parent's `messageRegion` prop. */
 export interface IlluminaChatBubbleLayoutMessageRegionProps {
+    itemsSpacedMessageContainer?: ReactNode;
     layout?: BoxLayout;
     onMessageRegion?: () => void;
-    spacedMessageContainer?: IlluminaChatBubbleLayoutSpacedMessageContainerProps;
 }
 
-export const IlluminaChatBubbleLayoutMessageRegion = ({ layout, onMessageRegion, spacedMessageContainer }: IlluminaChatBubbleLayoutMessageRegionProps) => {
+export const IlluminaChatBubbleLayoutMessageRegion = ({ itemsSpacedMessageContainer, layout, onMessageRegion }: IlluminaChatBubbleLayoutMessageRegionProps) => {
     return (
         <Region
             name="message_region"
@@ -225,7 +203,18 @@ export const IlluminaChatBubbleLayoutMessageRegion = ({ layout, onMessageRegion,
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 207, top: 0, height: 18, ...layout }}
         >
-            <IlluminaChatBubbleLayoutSpacedMessageContainer {...spacedMessageContainer} />
+            <Region
+                name="spaced_message_container"
+                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
+            >
+                {itemsSpacedMessageContainer ?? (
+                    <>
+                        <IlluminaChatBubbleLayoutSpacingItem />
+                        <IlluminaChatBubbleLayoutMessageContainerItem />
+                        <IlluminaChatBubbleLayoutSpacingItem2 />
+                    </>
+                )}
+            </Region>
         </Region>
     );
 };

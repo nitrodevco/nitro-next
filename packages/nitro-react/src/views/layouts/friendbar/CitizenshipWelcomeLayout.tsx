@@ -5,11 +5,11 @@ import { BoxLayout, Button, Frame, Region, ThemeImage, ThemeText } from '#base/t
 export interface CitizenshipWelcomeLayoutProps {
     layout?: BoxLayout;
     onFrameClose?: () => void;
+    onPostponeCitizenship?: () => void;
     onShowCitizenship?: () => void;
-    postponeCitizenship?: CitizenshipWelcomeLayoutPostponeCitizenshipProps;
 }
 
-export const CitizenshipWelcomeLayout = ({ layout, onFrameClose, onShowCitizenship, postponeCitizenship }: CitizenshipWelcomeLayoutProps) => {
+export const CitizenshipWelcomeLayout = ({ layout, onFrameClose, onPostponeCitizenship, onShowCitizenship }: CitizenshipWelcomeLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -50,7 +50,19 @@ export const CitizenshipWelcomeLayout = ({ layout, onFrameClose, onShowCitizensh
                             >
                                 {t('citizenship.promo.popup.open.button')}
                             </Button>
-                            <CitizenshipWelcomeLayoutPostponeCitizenship {...postponeCitizenship} />
+                            <Region
+                                name="postpone_citizenship"
+                                onPointerTap={onPostponeCitizenship}
+                                cursor="pointer"
+                                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 228, top: 40, height: 22 }}
+                            >
+                                <Region layout={{ position: 'absolute', left: 0, width: 228, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                    <ThemeText
+                                        text={t('citizenship.promo.popup.close.button')}
+                                        textStyle="text-style-il-link-regular"
+                                    />
+                                </Region>
+                            </Region>
                         </Region>
                     </Region>
                     <ThemeImage
@@ -64,32 +76,6 @@ export const CitizenshipWelcomeLayout = ({ layout, onFrameClose, onShowCitizensh
                         textStyle="text-style-il-small-white"
                     />
                 </Region>
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `postpone_citizenship` of CitizenshipWelcomeLayout - configured through the parent's `postponeCitizenship` prop. */
-export interface CitizenshipWelcomeLayoutPostponeCitizenshipProps {
-    layout?: BoxLayout;
-    onPostponeCitizenship?: () => void;
-}
-
-export const CitizenshipWelcomeLayoutPostponeCitizenship = ({ layout, onPostponeCitizenship }: CitizenshipWelcomeLayoutPostponeCitizenshipProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="postpone_citizenship"
-            onPointerTap={onPostponeCitizenship}
-            cursor="pointer"
-            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 228, top: 40, height: 22, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 228, top: 6, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('citizenship.promo.popup.close.button')}
-                    textStyle="text-style-il-link-regular"
-                />
             </Region>
         </Region>
     );

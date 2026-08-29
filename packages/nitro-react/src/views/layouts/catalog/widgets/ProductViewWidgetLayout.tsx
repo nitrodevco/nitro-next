@@ -15,123 +15,24 @@ export const ProductViewWidgetLayout = ({ layout, mainContainer }: ProductViewWi
     );
 };
 
-/** Named region `room_canvas` of ProductViewWidgetLayout - configured through the parent's `roomCanvas` prop. */
-export interface ProductViewWidgetLayoutRoomCanvasProps {
-    layout?: BoxLayout;
-}
-
-export const ProductViewWidgetLayoutRoomCanvas = ({ layout }: ProductViewWidgetLayoutRoomCanvasProps) => {
-    return (
-        <Region
-            name="room_canvas"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `room_canvas_container` of ProductViewWidgetLayout - configured through the parent's `roomCanvasContainer` prop. */
-export interface ProductViewWidgetLayoutRoomCanvasContainerProps {
-    layout?: BoxLayout;
-    onRoomCanvasContainer?: () => void;
-    roomCanvas?: ProductViewWidgetLayoutRoomCanvasProps;
-}
-
-export const ProductViewWidgetLayoutRoomCanvasContainer = ({ layout, onRoomCanvasContainer, roomCanvas }: ProductViewWidgetLayoutRoomCanvasContainerProps) => {
-    return (
-        <Region
-            name="room_canvas_container"
-            backgroundColor="#000000"
-            onPointerTap={onRoomCanvasContainer}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
-        >
-            <ProductViewWidgetLayoutRoomCanvas {...roomCanvas} />
-        </Region>
-    );
-};
-
-/** Named region `toggle_preview_zoom` of ProductViewWidgetLayout - configured through the parent's `togglePreviewZoom` prop. */
-export interface ProductViewWidgetLayoutTogglePreviewZoomProps {
-    layout?: BoxLayout;
-    onTogglePreviewZoom?: () => void;
-}
-
-export const ProductViewWidgetLayoutTogglePreviewZoom = ({ layout, onTogglePreviewZoom }: ProductViewWidgetLayoutTogglePreviewZoomProps) => {
-    return (
-        <Region
-            name="toggle_preview_zoom"
-            dynamicStyle="button"
-            onPointerTap={onTogglePreviewZoom}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 9, width: 20, top: 37, height: 22, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('roomtools_magnifier.png')}
-                layout={{ position: 'absolute', left: 3, width: 13, top: 0, height: 22 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `toggle_preview_magic` of ProductViewWidgetLayout - configured through the parent's `togglePreviewMagic` prop. */
-export interface ProductViewWidgetLayoutTogglePreviewMagicProps {
-    layout?: BoxLayout;
-    onTogglePreviewMagic?: () => void;
-}
-
-export const ProductViewWidgetLayoutTogglePreviewMagic = ({ layout, onTogglePreviewMagic }: ProductViewWidgetLayoutTogglePreviewMagicProps) => {
-    return (
-        <Region
-            name="toggle_preview_magic"
-            dynamicStyle="button"
-            onPointerTap={onTogglePreviewMagic}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 7, width: 22, top: 63, height: 22, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('avatar_editor_tabs_ae_tabs_generic.png')}
-                layout={{ position: 'absolute', left: -10, width: 41, top: 0, height: 22 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `bundleGrid` of ProductViewWidgetLayout - configured through the parent's `bundleGrid` prop. */
-export interface ProductViewWidgetLayoutBundleGridProps {
-    layout?: BoxLayout;
-}
-
-export const ProductViewWidgetLayoutBundleGrid = ({ layout }: ProductViewWidgetLayoutBundleGridProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 11, width: 137, top: 88, height: 76, ...layout }}
-        >
-            <Region
-                name="bundleGrid"
-                layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
 /** Named region `main_container` of ProductViewWidgetLayout - configured through the parent's `mainContainer` prop. */
 export interface ProductViewWidgetLayoutMainContainerProps {
-    bundleGrid?: ProductViewWidgetLayoutBundleGridProps;
     captionCtlgDescription?: string;
     captionCtlgProductName?: string;
     layout?: BoxLayout;
+    onRoomCanvasContainer?: () => void;
     onRotateAvatarLeft?: () => void;
     onRotateAvatarRight?: () => void;
-    roomCanvasContainer?: ProductViewWidgetLayoutRoomCanvasContainerProps;
+    onTogglePreviewMagic?: () => void;
+    onTogglePreviewZoom?: () => void;
     srcCtlgTeaserimg1?: string;
     srcRecyclableIcon?: string;
     srcTradeableIcon?: string;
-    togglePreviewMagic?: ProductViewWidgetLayoutTogglePreviewMagicProps;
-    togglePreviewZoom?: ProductViewWidgetLayoutTogglePreviewZoomProps;
+    visibleRecyclableIcon?: boolean;
+    visibleTradeableIcon?: boolean;
 }
 
-export const ProductViewWidgetLayoutMainContainer = ({ bundleGrid, captionCtlgDescription, captionCtlgProductName, layout, onRotateAvatarLeft, onRotateAvatarRight, roomCanvasContainer, srcCtlgTeaserimg1, srcRecyclableIcon, srcTradeableIcon, togglePreviewMagic, togglePreviewZoom }: ProductViewWidgetLayoutMainContainerProps) => {
+export const ProductViewWidgetLayoutMainContainer = ({ captionCtlgDescription, captionCtlgProductName, layout, onRoomCanvasContainer, onRotateAvatarLeft, onRotateAvatarRight, onTogglePreviewMagic, onTogglePreviewZoom, srcCtlgTeaserimg1, srcRecyclableIcon, srcTradeableIcon, visibleRecyclableIcon, visibleTradeableIcon }: ProductViewWidgetLayoutMainContainerProps) => {
     return (
         <Region
             name="main_container"
@@ -142,7 +43,18 @@ export const ProductViewWidgetLayoutMainContainer = ({ bundleGrid, captionCtlgDe
                 src={srcCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
             />
-            <ProductViewWidgetLayoutRoomCanvasContainer {...roomCanvasContainer} />
+            <Region
+                name="room_canvas_container"
+                backgroundColor="#000000"
+                onPointerTap={onRoomCanvasContainer}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+            >
+                <Region
+                    name="room_canvas"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                />
+            </Region>
             <ContainerButton
                 variant="5"
                 name="rotate_avatar_left"
@@ -167,14 +79,40 @@ export const ProductViewWidgetLayoutMainContainer = ({ bundleGrid, captionCtlgDe
                     layout={{ position: 'absolute', left: 9, width: 28, top: 7, height: 29 }}
                 />
             </ContainerButton>
-            <ProductViewWidgetLayoutTogglePreviewZoom {...togglePreviewZoom} />
-            <ProductViewWidgetLayoutTogglePreviewMagic {...togglePreviewMagic} />
-            <WidgetSlot
-                widgetType="separator"
-                visible={false}
-                layout={{ position: 'absolute', left: 0, right: 0, bottom: 66, height: 4 }}
-            />
-            <ProductViewWidgetLayoutBundleGrid {...bundleGrid} />
+            <Region
+                name="toggle_preview_zoom"
+                dynamicStyle="button"
+                onPointerTap={onTogglePreviewZoom}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 9, width: 20, top: 37, height: 22 }}
+            >
+                <ThemeImage
+                    src={layoutImage('roomtools_magnifier.png')}
+                    layout={{ position: 'absolute', left: 3, width: 13, top: 0, height: 22 }}
+                />
+            </Region>
+            <Region
+                name="toggle_preview_magic"
+                dynamicStyle="button"
+                onPointerTap={onTogglePreviewMagic}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 7, width: 22, top: 63, height: 22 }}
+            >
+                <ThemeImage
+                    src={layoutImage('avatar_editor_tabs_ae_tabs_generic.png')}
+                    layout={{ position: 'absolute', left: -10, width: 41, top: 0, height: 22 }}
+                />
+            </Region>
+            {/* `widget` is hidden and has no name to show it by */}
+            <ScrollArea
+                orientation="vertical"
+                layout={{ position: 'absolute', left: 11, width: 137, top: 88, height: 76 }}
+            >
+                <Region
+                    name="bundleGrid"
+                    layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
+                />
+            </ScrollArea>
             <WidgetSlot
                 widgetType="product_image"
                 name="product_image_widget"
@@ -201,18 +139,20 @@ export const ProductViewWidgetLayoutMainContainer = ({ bundleGrid, captionCtlgDe
                         textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 280 }}
                     />
                 </Region>
-                <ThemeImage
-                    name="tradeable_icon"
-                    src={srcTradeableIcon ?? layoutImage('inventory_furni_no_trade_icon.png')}
-                    layout={{ width: 40, height: 16, flexShrink: 0 }}
-                    visible={false}
-                />
-                <ThemeImage
-                    name="recyclable_icon"
-                    src={srcRecyclableIcon ?? layoutImage('inventory_furni_no_recycle_icon.png')}
-                    layout={{ width: 28, height: 16, flexShrink: 0 }}
-                    visible={false}
-                />
+                {(visibleTradeableIcon ?? false) && (
+                    <ThemeImage
+                        name="tradeable_icon"
+                        src={srcTradeableIcon ?? layoutImage('inventory_furni_no_trade_icon.png')}
+                        layout={{ width: 40, height: 16, flexShrink: 0 }}
+                    />
+                )}
+                {(visibleRecyclableIcon ?? false) && (
+                    <ThemeImage
+                        name="recyclable_icon"
+                        src={srcRecyclableIcon ?? layoutImage('inventory_furni_no_recycle_icon.png')}
+                        layout={{ width: 28, height: 16, flexShrink: 0 }}
+                    />
+                )}
             </Region>
         </Region>
     );

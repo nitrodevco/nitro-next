@@ -22,9 +22,10 @@ export interface LayoutPets_1697LayoutCtlgPetsProps {
     layout?: BoxLayout;
     newPetsWidget?: NewPetsWidgetProps;
     petsWidget?: PetsWidget2Props;
+    visibleCtlgPrice1?: boolean;
 }
 
-export const LayoutPets_1697LayoutCtlgPets = ({ captionCtlgPrice1, layout, newPetsWidget, petsWidget }: LayoutPets_1697LayoutCtlgPetsProps) => {
+export const LayoutPets_1697LayoutCtlgPets = ({ captionCtlgPrice1, layout, newPetsWidget, petsWidget, visibleCtlgPrice1 }: LayoutPets_1697LayoutCtlgPetsProps) => {
     return (
         <Region
             name="ctlg_pets"
@@ -38,17 +39,18 @@ export const LayoutPets_1697LayoutCtlgPets = ({ captionCtlgPrice1, layout, newPe
                 layout={{ position: 'absolute', left: 0, width: 359, top: 75, height: 375 }}
                 {...newPetsWidget}
             />
-            <Region
-                name="ctlg_price_1"
-                visible={false}
-                layout={{ position: 'absolute', left: 267, width: 78, top: 426, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}
-            >
-                <ThemeText
-                    text={captionCtlgPrice1 ?? '0'}
-                    textStyle="text-style-u-small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 78, align: 'right' }}
-                />
-            </Region>
+            {(visibleCtlgPrice1 ?? false) && (
+                <Region
+                    name="ctlg_price_1"
+                    layout={{ position: 'absolute', left: 267, width: 78, top: 426, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end' }}
+                >
+                    <ThemeText
+                        text={captionCtlgPrice1 ?? '0'}
+                        textStyle="text-style-u-small"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 78, align: 'right' }}
+                    />
+                </Region>
+            )}
         </Region>
     );
 };

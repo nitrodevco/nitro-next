@@ -10,13 +10,12 @@ export interface ExpiringCatalogPageLayoutProps {
     colorableTextColor?: string;
     layout?: BoxLayout;
     onOpenCatalogButton?: () => void;
-    spacing?: ExpiringCatalogPageLayoutSpacingProps;
     srcBorderBar?: string;
     srcHdrLine?: string;
     srcPromoBitmap?: string;
 }
 
-export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpiryTitle, captionPageHeaderTxt, colorableTextColor, layout, onOpenCatalogButton, spacing, srcBorderBar, srcHdrLine, srcPromoBitmap }: ExpiringCatalogPageLayoutProps) => {
+export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpiryTitle, captionPageHeaderTxt, colorableTextColor, layout, onOpenCatalogButton, srcBorderBar, srcHdrLine, srcPromoBitmap }: ExpiringCatalogPageLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -52,7 +51,10 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                         options={{ 'countdown:running': 'true' }}
                         layout={{ width: 99, height: 37, flexShrink: 0 }}
                     />
-                    <ExpiringCatalogPageLayoutSpacing {...spacing} />
+                    <Region
+                        name="spacing"
+                        layout={{ width: 30, height: 6, flexShrink: 0 }}
+                    />
                     <Region
                         name="page_header_txt"
                         layout={{ width: 183, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -88,19 +90,5 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                 />
             </Region>
         </Region>
-    );
-};
-
-/** Named region `spacing` of ExpiringCatalogPageLayout - configured through the parent's `spacing` prop. */
-export interface ExpiringCatalogPageLayoutSpacingProps {
-    layout?: BoxLayout;
-}
-
-export const ExpiringCatalogPageLayoutSpacing = ({ layout }: ExpiringCatalogPageLayoutSpacingProps) => {
-    return (
-        <Region
-            name="spacing"
-            layout={{ width: 30, height: 6, flexShrink: 0, ...layout }}
-        />
     );
 };

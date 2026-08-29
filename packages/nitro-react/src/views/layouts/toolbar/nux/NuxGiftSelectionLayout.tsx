@@ -55,53 +55,15 @@ export const NuxGiftSelectionLayout = ({ captionNuxGiftSelectionChooseOne, layou
     );
 };
 
-/** Named region `option_bitmap_bg` of NuxGiftSelectionLayout - configured through the parent's `optionBitmapBg` prop. */
-export interface NuxGiftSelectionLayoutOptionBitmapBgProps {
-    layout?: BoxLayout;
-}
-
-export const NuxGiftSelectionLayoutOptionBitmapBg = ({ layout }: NuxGiftSelectionLayoutOptionBitmapBgProps) => {
-    return (
-        <Region
-            name="option_bitmap_bg"
-            backgroundColor="#bfbfb8"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `option_thumbnail` of NuxGiftSelectionLayout - configured through the parent's `optionThumbnail` prop. */
-export interface NuxGiftSelectionLayoutOptionThumbnailProps {
-    layout?: BoxLayout;
-    optionBitmapBg?: NuxGiftSelectionLayoutOptionBitmapBgProps;
-    srcOptionBitmap?: string;
-}
-
-export const NuxGiftSelectionLayoutOptionThumbnail = ({ layout, optionBitmapBg, srcOptionBitmap }: NuxGiftSelectionLayoutOptionThumbnailProps) => {
-    return (
-        <Region
-            name="option_thumbnail"
-            layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108, ...layout }}
-        >
-            <NuxGiftSelectionLayoutOptionBitmapBg {...optionBitmapBg} />
-            <ThemeImage
-                name="option_bitmap"
-                src={srcOptionBitmap}
-                layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108 }}
-            />
-        </Region>
-    );
-};
-
 /** Row template `nux_gift_option` of NuxGiftSelectionLayout - pass real rows through its `items…` slot. */
 export interface NuxGiftSelectionLayoutNuxGiftOptionItemProps {
     captionOptionHeading?: string;
     layout?: BoxLayout;
     onOptionButton?: () => void;
-    optionThumbnail?: NuxGiftSelectionLayoutOptionThumbnailProps;
+    srcOptionBitmap?: string;
 }
 
-export const NuxGiftSelectionLayoutNuxGiftOptionItem = ({ captionOptionHeading, layout, onOptionButton, optionThumbnail }: NuxGiftSelectionLayoutNuxGiftOptionItemProps) => {
+export const NuxGiftSelectionLayoutNuxGiftOptionItem = ({ captionOptionHeading, layout, onOptionButton, srcOptionBitmap }: NuxGiftSelectionLayoutNuxGiftOptionItemProps) => {
     const t = useTranslation();
 
     return (
@@ -109,7 +71,21 @@ export const NuxGiftSelectionLayoutNuxGiftOptionItem = ({ captionOptionHeading, 
             name="nux_gift_option"
             layout={{ width: 118, height: 435, flexShrink: 0, ...layout }}
         >
-            <NuxGiftSelectionLayoutOptionThumbnail {...optionThumbnail} />
+            <Region
+                name="option_thumbnail"
+                layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108 }}
+            >
+                <Region
+                    name="option_bitmap_bg"
+                    backgroundColor="#bfbfb8"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                />
+                <ThemeImage
+                    name="option_bitmap"
+                    src={srcOptionBitmap}
+                    layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108 }}
+                />
+            </Region>
             <Region
                 name="option_heading"
                 layout={{ position: 'absolute', left: 0, width: 108, top: 112, height: 24, maxHeight: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -128,44 +104,6 @@ export const NuxGiftSelectionLayoutNuxGiftOptionItem = ({ captionOptionHeading, 
             >
                 {t('nux.gift.selection.button.get')}
             </Button>
-        </Region>
-    );
-};
-
-/** Named region `option_bitmap_bg` of NuxGiftSelectionLayout - configured through the parent's `optionBitmapBg` prop. */
-export interface NuxGiftSelectionLayoutOptionBitmapBg2Props {
-    layout?: BoxLayout;
-}
-
-export const NuxGiftSelectionLayoutOptionBitmapBg2 = ({ layout }: NuxGiftSelectionLayoutOptionBitmapBg2Props) => {
-    return (
-        <Region
-            name="option_bitmap_bg"
-            backgroundColor="#bfbfb8"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `option_thumbnail` of NuxGiftSelectionLayout - configured through the parent's `optionThumbnail` prop. */
-export interface NuxGiftSelectionLayoutOptionThumbnail2Props {
-    layout?: BoxLayout;
-    optionBitmapBg?: NuxGiftSelectionLayoutOptionBitmapBg2Props;
-    srcOptionBitmap?: string;
-}
-
-export const NuxGiftSelectionLayoutOptionThumbnail2 = ({ layout, optionBitmapBg, srcOptionBitmap }: NuxGiftSelectionLayoutOptionThumbnail2Props) => {
-    return (
-        <Region
-            name="option_thumbnail"
-            layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108, ...layout }}
-        >
-            <NuxGiftSelectionLayoutOptionBitmapBg2 {...optionBitmapBg} />
-            <ThemeImage
-                name="option_bitmap"
-                src={srcOptionBitmap}
-                layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108 }}
-            />
         </Region>
     );
 };
@@ -175,10 +113,10 @@ export interface NuxGiftSelectionLayoutNuxGiftOptionItem2Props {
     captionOptionHeading?: string;
     layout?: BoxLayout;
     onOptionButton?: () => void;
-    optionThumbnail?: NuxGiftSelectionLayoutOptionThumbnail2Props;
+    srcOptionBitmap?: string;
 }
 
-export const NuxGiftSelectionLayoutNuxGiftOptionItem2 = ({ captionOptionHeading, layout, onOptionButton, optionThumbnail }: NuxGiftSelectionLayoutNuxGiftOptionItem2Props) => {
+export const NuxGiftSelectionLayoutNuxGiftOptionItem2 = ({ captionOptionHeading, layout, onOptionButton, srcOptionBitmap }: NuxGiftSelectionLayoutNuxGiftOptionItem2Props) => {
     const t = useTranslation();
 
     return (
@@ -186,7 +124,21 @@ export const NuxGiftSelectionLayoutNuxGiftOptionItem2 = ({ captionOptionHeading,
             name="nux_gift_option"
             layout={{ width: 118, height: 435, flexShrink: 0, ...layout }}
         >
-            <NuxGiftSelectionLayoutOptionThumbnail2 {...optionThumbnail} />
+            <Region
+                name="option_thumbnail"
+                layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108 }}
+            >
+                <Region
+                    name="option_bitmap_bg"
+                    backgroundColor="#bfbfb8"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                />
+                <ThemeImage
+                    name="option_bitmap"
+                    src={srcOptionBitmap}
+                    layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108 }}
+                />
+            </Region>
             <Region
                 name="option_heading"
                 layout={{ position: 'absolute', left: 0, width: 108, top: 112, height: 24, maxHeight: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -209,53 +161,15 @@ export const NuxGiftSelectionLayoutNuxGiftOptionItem2 = ({ captionOptionHeading,
     );
 };
 
-/** Named region `option_bitmap_bg` of NuxGiftSelectionLayout - configured through the parent's `optionBitmapBg` prop. */
-export interface NuxGiftSelectionLayoutOptionBitmapBg3Props {
-    layout?: BoxLayout;
-}
-
-export const NuxGiftSelectionLayoutOptionBitmapBg3 = ({ layout }: NuxGiftSelectionLayoutOptionBitmapBg3Props) => {
-    return (
-        <Region
-            name="option_bitmap_bg"
-            backgroundColor="#bfbfb8"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `option_thumbnail` of NuxGiftSelectionLayout - configured through the parent's `optionThumbnail` prop. */
-export interface NuxGiftSelectionLayoutOptionThumbnail3Props {
-    layout?: BoxLayout;
-    optionBitmapBg?: NuxGiftSelectionLayoutOptionBitmapBg3Props;
-    srcOptionBitmap?: string;
-}
-
-export const NuxGiftSelectionLayoutOptionThumbnail3 = ({ layout, optionBitmapBg, srcOptionBitmap }: NuxGiftSelectionLayoutOptionThumbnail3Props) => {
-    return (
-        <Region
-            name="option_thumbnail"
-            layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108, ...layout }}
-        >
-            <NuxGiftSelectionLayoutOptionBitmapBg3 {...optionBitmapBg} />
-            <ThemeImage
-                name="option_bitmap"
-                src={srcOptionBitmap}
-                layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108 }}
-            />
-        </Region>
-    );
-};
-
 /** Row template `nux_gift_option` of NuxGiftSelectionLayout - pass real rows through its `items…` slot. */
 export interface NuxGiftSelectionLayoutNuxGiftOptionItem3Props {
     captionOptionHeading?: string;
     layout?: BoxLayout;
     onOptionButton?: () => void;
-    optionThumbnail?: NuxGiftSelectionLayoutOptionThumbnail3Props;
+    srcOptionBitmap?: string;
 }
 
-export const NuxGiftSelectionLayoutNuxGiftOptionItem3 = ({ captionOptionHeading, layout, onOptionButton, optionThumbnail }: NuxGiftSelectionLayoutNuxGiftOptionItem3Props) => {
+export const NuxGiftSelectionLayoutNuxGiftOptionItem3 = ({ captionOptionHeading, layout, onOptionButton, srcOptionBitmap }: NuxGiftSelectionLayoutNuxGiftOptionItem3Props) => {
     const t = useTranslation();
 
     return (
@@ -263,7 +177,21 @@ export const NuxGiftSelectionLayoutNuxGiftOptionItem3 = ({ captionOptionHeading,
             name="nux_gift_option"
             layout={{ width: 118, height: 435, flexShrink: 0, ...layout }}
         >
-            <NuxGiftSelectionLayoutOptionThumbnail3 {...optionThumbnail} />
+            <Region
+                name="option_thumbnail"
+                layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108 }}
+            >
+                <Region
+                    name="option_bitmap_bg"
+                    backgroundColor="#bfbfb8"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                />
+                <ThemeImage
+                    name="option_bitmap"
+                    src={srcOptionBitmap}
+                    layout={{ position: 'absolute', left: 0, width: 108, top: 0, height: 108 }}
+                />
+            </Region>
             <Region
                 name="option_heading"
                 layout={{ position: 'absolute', left: 0, width: 108, top: 112, height: 24, maxHeight: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}

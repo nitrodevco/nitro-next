@@ -4,16 +4,43 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `2434_clock_base_xml` (layout "clock_base", 36x37) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ClockBaseLayoutProps {
     captionSeparator?: string;
+    captionUnit?: string;
+    captionValue?: string;
     colorableTextColor?: string;
-    counter?: ClockBaseLayoutCounterProps;
     layout?: BoxLayout;
 }
 
-export const ClockBaseLayout = ({ captionSeparator, colorableTextColor, counter, layout }: ClockBaseLayoutProps) => {
+export const ClockBaseLayout = ({ captionSeparator, captionUnit, captionValue, colorableTextColor, layout }: ClockBaseLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 36, height: 37, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row' }}>
-                <ClockBaseLayoutCounter {...counter} />
+                <Region
+                    name="counter"
+                    layout={{ width: 27, height: 37, flexShrink: 0 }}
+                >
+                    <ThemeImage
+                        src={layoutImage('illumina_light_clock_background.png')}
+                        layout={{ position: 'absolute', left: 0, width: 27, top: 0, height: 23 }}
+                    />
+                    <Region
+                        name="value"
+                        layout={{ position: 'absolute', left: 0, width: 27, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionValue ?? '00'}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Region
+                        name="unit"
+                        layout={{ position: 'absolute', left: 0, width: 27, top: 23, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionUnit ?? 'hrs'}
+                            textOptions={{ fill: colorableTextColor, align: 'center' }}
+                        />
+                    </Region>
+                </Region>
                 <Region
                     name="separator"
                     layout={{ width: 9, height: 20, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -23,46 +50,6 @@ export const ClockBaseLayout = ({ captionSeparator, colorableTextColor, counter,
                         textOptions={{ fill: colorableTextColor }}
                     />
                 </Region>
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `counter` of ClockBaseLayout - configured through the parent's `counter` prop. */
-export interface ClockBaseLayoutCounterProps {
-    captionUnit?: string;
-    captionValue?: string;
-    colorableTextColor?: string;
-    layout?: BoxLayout;
-}
-
-export const ClockBaseLayoutCounter = ({ captionUnit, captionValue, colorableTextColor, layout }: ClockBaseLayoutCounterProps) => {
-    return (
-        <Region
-            name="counter"
-            layout={{ width: 27, height: 37, flexShrink: 0, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('illumina_light_clock_background.png')}
-                layout={{ position: 'absolute', left: 0, width: 27, top: 0, height: 23 }}
-            />
-            <Region
-                name="value"
-                layout={{ position: 'absolute', left: 0, width: 27, top: 2, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionValue ?? '00'}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="unit"
-                layout={{ position: 'absolute', left: 0, width: 27, top: 23, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionUnit ?? 'hrs'}
-                    textOptions={{ fill: colorableTextColor, align: 'center' }}
-                />
             </Region>
         </Region>
     );

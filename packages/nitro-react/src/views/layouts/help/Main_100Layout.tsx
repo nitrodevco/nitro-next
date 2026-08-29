@@ -28,30 +28,6 @@ export const Main_100Layout = ({ body, header, layout, onClose, recolorDark }: M
     );
 };
 
-/** Named region `cutout` of Main_100Layout - configured through the parent's `cutout` prop. */
-export interface Main_100LayoutCutout2Props {
-    layout?: BoxLayout;
-    recolorLight?: string;
-}
-
-export const Main_100LayoutCutout2 = ({ layout, recolorLight }: Main_100LayoutCutout2Props) => {
-    return (
-        <Region
-            name="cutout"
-            layout={{ position: 'absolute', right: -32, width: 35, top: 2, bottom: 0, ...layout }}
-        >
-            <Shape
-                shape="ellipse"
-                color={recolorLight ?? '#ddebf9'}
-                strokeColor="#000000"
-                strokeThickness={2}
-                radius={40}
-                layout={{ position: 'absolute', left: -35, width: 70, top: -59, height: 300 }}
-            />
-        </Region>
-    );
-};
-
 /** Row template `track_title_region` of Main_100Layout - pass real rows through its `items…` slot. */
 export interface Main_100LayoutTrackTitleRegionItemProps {
     captionTrackTitleTxt?: string;
@@ -129,42 +105,17 @@ export const Main_100LayoutTrackInstructionsTxtItem = ({ captionTrackInstruction
     );
 };
 
-/** Named region `track_info` of Main_100Layout - configured through the parent's `trackInfo` prop. */
-export interface Main_100LayoutTrackInfoProps {
-    itemsTrackInfo?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutTrackInfo = ({ itemsTrackInfo, layout }: Main_100LayoutTrackInfoProps) => {
-    return (
-        <Region
-            name="track_info"
-            layout={{ position: 'absolute', left: 0, width: 160, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 73, flexDirection: 'column', gap: 1, ...layout }}
-        >
-            {itemsTrackInfo ?? (
-                <>
-                    <Main_100LayoutTrackTitleRegionItem />
-                    <Main_100LayoutSpacerItem />
-                    <Main_100LayoutTrackDescTxtItem />
-                    <Main_100LayoutTrackInstructionsTxtItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Named region `cutout` of Main_100Layout - configured through the parent's `cutout` prop. */
 export interface Main_100LayoutCutoutProps {
     captionPointsTotalCollectedTxt?: string;
     captionRewardsCollectedTxt?: string;
-    cutout?: Main_100LayoutCutout2Props;
+    itemsTrackInfo?: ReactNode;
     layout?: BoxLayout;
     recolorLight?: string;
     recolorMedium?: string;
-    trackInfo?: Main_100LayoutTrackInfoProps;
 }
 
-export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRewardsCollectedTxt, cutout, layout, recolorLight, recolorMedium, trackInfo }: Main_100LayoutCutoutProps) => {
+export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRewardsCollectedTxt, itemsTrackInfo, layout, recolorLight, recolorMedium }: Main_100LayoutCutoutProps) => {
     const t = useTranslation();
 
     return (
@@ -172,7 +123,19 @@ export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRe
             name="cutout"
             layout={{ position: 'absolute', left: 0, width: 245, top: 0, bottom: 0, ...layout }}
         >
-            <Main_100LayoutCutout2 {...cutout} />
+            <Region
+                name="cutout"
+                layout={{ position: 'absolute', right: -32, width: 35, top: 2, bottom: 0 }}
+            >
+                <Shape
+                    shape="ellipse"
+                    color={recolorLight ?? '#ddebf9'}
+                    strokeColor="#000000"
+                    strokeThickness={2}
+                    radius={40}
+                    layout={{ position: 'absolute', left: -35, width: 70, top: -59, height: 300 }}
+                />
+            </Region>
             <Border
                 variant="15"
                 name="profile"
@@ -185,7 +148,19 @@ export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRe
                     layout={{ position: 'absolute', left: -3, width: 90, top: -15, height: 130 }}
                 />
                 <Region layout={{ position: 'absolute', right: 2, width: 175, top: -1, bottom: 120 }}>
-                    <Main_100LayoutTrackInfo {...trackInfo} />
+                    <Region
+                        name="track_info"
+                        layout={{ position: 'absolute', left: 0, width: 160, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 73, flexDirection: 'column', gap: 1 }}
+                    >
+                        {itemsTrackInfo ?? (
+                            <>
+                                <Main_100LayoutTrackTitleRegionItem />
+                                <Main_100LayoutSpacerItem />
+                                <Main_100LayoutTrackDescTxtItem />
+                                <Main_100LayoutTrackInstructionsTxtItem />
+                            </>
+                        )}
+                    </Region>
                 </Region>
                 <Border
                     variant="15"
@@ -235,166 +210,15 @@ export const Main_100LayoutCutout = ({ captionPointsTotalCollectedTxt, captionRe
     );
 };
 
-/** Named region `loading_bar` of Main_100Layout - configured through the parent's `loadingBar` prop. */
-export interface Main_100LayoutLoadingBar2Props {
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutLoadingBar2 = ({ layout }: Main_100LayoutLoadingBar2Props) => {
-    return (
-        <Region
-            name="loading_bar"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
-        >
-            <Shape
-                name="shape"
-                shape="round_rectangle"
-                color="#71af24"
-                strokeThickness={1}
-                radius={6}
-                layout={{ position: 'absolute', left: 0, right: -4, top: 0, bottom: 0 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `progress` of Main_100Layout - configured through the parent's `progress` prop. */
-export interface Main_100LayoutProgressProps {
-    layout?: BoxLayout;
-    loadingBar?: Main_100LayoutLoadingBar2Props;
-}
-
-export const Main_100LayoutProgress = ({ layout, loadingBar }: Main_100LayoutProgressProps) => {
-    return (
-        <Region
-            name="progress"
-            layout={{ position: 'absolute', left: 0, width: 300, top: 0, bottom: 0, ...layout }}
-        >
-            <Main_100LayoutLoadingBar2 {...loadingBar} />
-            <Region
-                blendMode="add"
-                layout={{ position: 'absolute', left: 1, right: 0, top: 1, bottom: 1 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `loading_bar` of Main_100Layout - configured through the parent's `loadingBar` prop. */
-export interface Main_100LayoutLoadingBarProps {
-    layout?: BoxLayout;
-    progress?: Main_100LayoutProgressProps;
-}
-
-export const Main_100LayoutLoadingBar = ({ layout, progress }: Main_100LayoutLoadingBarProps) => {
-    return (
-        <Region
-            name="loading_bar"
-            layout={{ position: 'absolute', left: 29, right: 29, top: 92, height: 13, ...layout }}
-        >
-            <Shape
-                name="bg"
-                shape="round_rectangle"
-                color="#888888"
-                strokeThickness={1}
-                radius={6}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-            />
-            <Main_100LayoutProgress {...progress} />
-        </Region>
-    );
-};
-
-/** Named region `track` of Main_100Layout - configured through the parent's `track` prop. */
-export interface Main_100LayoutTrackProps {
-    layout?: BoxLayout;
-    loadingBar?: Main_100LayoutLoadingBarProps;
-}
-
-export const Main_100LayoutTrack = ({ layout, loadingBar }: Main_100LayoutTrackProps) => {
-    return (
-        <Region
-            name="track"
-            layout={{ position: 'absolute', left: 165, right: 22, top: 2, bottom: 2, ...layout }}
-        >
-            <Main_100LayoutLoadingBar {...loadingBar} />
-        </Region>
-    );
-};
-
-/** Named region `point_indicator_template` of Main_100Layout - configured through the parent's `pointIndicatorTemplate` prop. */
-export interface Main_100LayoutPointIndicatorTemplateProps {
+/** Named region `points_indicator_container` of Main_100Layout - configured through the parent's `pointsIndicatorContainer` prop. */
+export interface Main_100LayoutPointsIndicatorContainerProps {
     captionPointsTxt?: string;
     layout?: BoxLayout;
     recolorMedium?: string;
     srcAvailableIcon?: string;
 }
 
-export const Main_100LayoutPointIndicatorTemplate = ({ captionPointsTxt, layout, recolorMedium, srcAvailableIcon }: Main_100LayoutPointIndicatorTemplateProps) => {
-    return (
-        <Region
-            name="point_indicator_template"
-            layout={{ position: 'absolute', left: 9, width: 80, top: 82, height: 157, ...layout }}
-        >
-            <ThemeImage
-                name="available_icon"
-                src={srcAvailableIcon ?? layoutImage('reward_track_not_available_icon.png')}
-                layout={{ position: 'absolute', left: 30, width: 20, top: 7, height: 20 }}
-            />
-            <Shape
-                shape="ellipse"
-                color={recolorMedium ?? '#cfe2f9'}
-                strokeThickness={3}
-                layout={{ position: 'absolute', left: 37, width: 7, top: 121, height: 7 }}
-            />
-            <Shape
-                color={recolorMedium ?? '#cfe2f9'}
-                strokeThickness={3}
-                layout={{ position: 'absolute', left: 40, width: 1, top: 127, height: 8 }}
-            />
-            <Shape
-                name="connector"
-                color={recolorMedium ?? '#cfe2f9'}
-                strokeThickness={3}
-                layout={{ position: 'absolute', left: 40, width: 1, bottom: 35, height: 9 }}
-            />
-            <Region
-                name="points_txt"
-                layout={{ position: 'absolute', left: 0, width: 80, top: 136, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionPointsTxt ?? '100'}
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `points_indicator` of Main_100Layout - configured through the parent's `pointsIndicator` prop. */
-export interface Main_100LayoutPointsIndicatorProps {
-    layout?: BoxLayout;
-    pointIndicatorTemplate?: Main_100LayoutPointIndicatorTemplateProps;
-}
-
-export const Main_100LayoutPointsIndicator = ({ layout, pointIndicatorTemplate }: Main_100LayoutPointsIndicatorProps) => {
-    return (
-        <Region
-            name="points_indicator"
-            layout={{ position: 'absolute', left: 194, right: 51, top: 0, bottom: 0, ...layout }}
-        >
-            <Main_100LayoutPointIndicatorTemplate {...pointIndicatorTemplate} />
-        </Region>
-    );
-};
-
-/** Named region `points_indicator_container` of Main_100Layout - configured through the parent's `pointsIndicatorContainer` prop. */
-export interface Main_100LayoutPointsIndicatorContainerProps {
-    layout?: BoxLayout;
-    pointsIndicator?: Main_100LayoutPointsIndicatorProps;
-    recolorMedium?: string;
-}
-
-export const Main_100LayoutPointsIndicatorContainer = ({ layout, pointsIndicator, recolorMedium }: Main_100LayoutPointsIndicatorContainerProps) => {
+export const Main_100LayoutPointsIndicatorContainer = ({ captionPointsTxt, layout, recolorMedium, srcAvailableIcon }: Main_100LayoutPointsIndicatorContainerProps) => {
     return (
         <Region
             name="points_indicator_container"
@@ -411,92 +235,108 @@ export const Main_100LayoutPointsIndicatorContainer = ({ layout, pointsIndicator
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             </Border>
-            <Main_100LayoutPointsIndicator {...pointsIndicator} />
-        </Region>
-    );
-};
-
-/** Named region `click_region` of Main_100Layout - configured through the parent's `clickRegion` prop. */
-export interface Main_100LayoutClickRegionProps {
-    layout?: BoxLayout;
-    onClickRegion?: () => void;
-}
-
-export const Main_100LayoutClickRegion = ({ layout, onClickRegion }: Main_100LayoutClickRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="click_region"
-            tooltip={t('reward_track.rewards.reward_tooltip.claim')}
-            dynamicStyle="reward_track_item"
-            onPointerTap={onClickRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 12, width: 56, top: 10, height: 60, ...layout }}
-        >
-            <Border
-                variant="1"
-                name="shadow"
-                blend={0.25}
-                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 16 }}
-            />
-            <Border
-                variant="16"
-                name="border"
-                tintColor="#f9efe0"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 2, justifyContent: 'center' }}
+            <Region
+                name="points_indicator"
+                layout={{ position: 'absolute', left: 194, right: 51, top: 0, bottom: 0 }}
             >
-                <WidgetSlot
-                    widgetType="product_icon"
-                    name="product_icon"
-                    layout={{ position: 'absolute', width: 40, alignSelf: 'center', height: 40 }}
-                />
-                <Shape
-                    name="quantity_container"
-                    shape="round_rectangle"
-                    color="#f9efe0"
-                    strokeColor="#000000"
-                    strokeThickness={1}
-                    radius={5}
-                    layout={{ position: 'absolute', width: 20, bottom: 5, height: 14 }}
-                />
-            </Border>
+                <Region
+                    name="point_indicator_template"
+                    layout={{ position: 'absolute', left: 9, width: 80, top: 82, height: 157 }}
+                >
+                    <ThemeImage
+                        name="available_icon"
+                        src={srcAvailableIcon ?? layoutImage('reward_track_not_available_icon.png')}
+                        layout={{ position: 'absolute', left: 30, width: 20, top: 7, height: 20 }}
+                    />
+                    <Shape
+                        shape="ellipse"
+                        color={recolorMedium ?? '#cfe2f9'}
+                        strokeThickness={3}
+                        layout={{ position: 'absolute', left: 37, width: 7, top: 121, height: 7 }}
+                    />
+                    <Shape
+                        color={recolorMedium ?? '#cfe2f9'}
+                        strokeThickness={3}
+                        layout={{ position: 'absolute', left: 40, width: 1, top: 127, height: 8 }}
+                    />
+                    <Shape
+                        name="connector"
+                        color={recolorMedium ?? '#cfe2f9'}
+                        strokeThickness={3}
+                        layout={{ position: 'absolute', left: 40, width: 1, bottom: 35, height: 9 }}
+                    />
+                    <Region
+                        name="points_txt"
+                        layout={{ position: 'absolute', left: 0, width: 80, top: 136, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionPointsTxt ?? '100'}
+                            textOptions={{ align: 'center' }}
+                        />
+                    </Region>
+                </Region>
+            </Region>
         </Region>
-    );
-};
-
-/** Named region `connector` of Main_100Layout - configured through the parent's `connector` prop. */
-export interface Main_100LayoutConnectorProps {
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutConnector = ({ layout }: Main_100LayoutConnectorProps) => {
-    return (
-        <Region
-            name="connector"
-            backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 39, width: 2, top: 66, height: 19, ...layout }}
-        />
     );
 };
 
 /** Named region `prize_template` of Main_100Layout - configured through the parent's `prizeTemplate` prop. */
 export interface Main_100LayoutPrizeTemplateProps {
-    clickRegion?: Main_100LayoutClickRegionProps;
-    connector?: Main_100LayoutConnectorProps;
     layout?: BoxLayout;
+    onClickRegion?: () => void;
     srcClaimedIcon?: string;
     srcLockedIcon?: string;
 }
 
-export const Main_100LayoutPrizeTemplate = ({ clickRegion, connector, layout, srcClaimedIcon, srcLockedIcon }: Main_100LayoutPrizeTemplateProps) => {
+export const Main_100LayoutPrizeTemplate = ({ layout, onClickRegion, srcClaimedIcon, srcLockedIcon }: Main_100LayoutPrizeTemplateProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="prize_template"
             layout={{ position: 'absolute', left: 9, width: 80, top: 4, height: 105, ...layout }}
         >
-            <Main_100LayoutClickRegion {...clickRegion} />
-            <Main_100LayoutConnector {...connector} />
+            <Region
+                name="click_region"
+                tooltip={t('reward_track.rewards.reward_tooltip.claim')}
+                dynamicStyle="reward_track_item"
+                onPointerTap={onClickRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 12, width: 56, top: 10, height: 60 }}
+            >
+                <Border
+                    variant="1"
+                    name="shadow"
+                    blend={0.25}
+                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 16 }}
+                />
+                <Border
+                    variant="16"
+                    name="border"
+                    tintColor="#f9efe0"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 2, justifyContent: 'center' }}
+                >
+                    <WidgetSlot
+                        widgetType="product_icon"
+                        name="product_icon"
+                        layout={{ position: 'absolute', width: 40, alignSelf: 'center', height: 40 }}
+                    />
+                    <Shape
+                        name="quantity_container"
+                        shape="round_rectangle"
+                        color="#f9efe0"
+                        strokeColor="#000000"
+                        strokeThickness={1}
+                        radius={5}
+                        layout={{ position: 'absolute', width: 20, bottom: 5, height: 14 }}
+                    />
+                </Border>
+            </Region>
+            <Region
+                name="connector"
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 39, width: 2, top: 66, height: 19 }}
+            />
             <ThemeImage
                 name="locked_icon"
                 src={srcLockedIcon ?? layoutImage('reward_track_locked_reward.png')}
@@ -511,87 +351,63 @@ export const Main_100LayoutPrizeTemplate = ({ clickRegion, connector, layout, sr
     );
 };
 
-/** Named region `click_region` of Main_100Layout - configured through the parent's `clickRegion` prop. */
-export interface Main_100LayoutClickRegion2Props {
-    layout?: BoxLayout;
-    onClickRegion?: () => void;
-}
-
-export const Main_100LayoutClickRegion2 = ({ layout, onClickRegion }: Main_100LayoutClickRegion2Props) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="click_region"
-            tooltip={t('reward_track.rewards.reward_tooltip.premium')}
-            dynamicStyle="reward_track_item"
-            onPointerTap={onClickRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 12, width: 56, top: 34, height: 60, ...layout }}
-        >
-            <Border
-                variant="1"
-                name="shadow"
-                blend={0.25}
-                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 16 }}
-            />
-            <Border
-                variant="16"
-                name="border"
-                tintColor="#f1def7"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 2, justifyContent: 'center' }}
-            >
-                <WidgetSlot
-                    widgetType="product_icon"
-                    name="product_icon"
-                    layout={{ position: 'absolute', width: 40, alignSelf: 'center', height: 40 }}
-                />
-                <Shape
-                    name="quantity_container"
-                    shape="round_rectangle"
-                    color="#f1def7"
-                    strokeColor="#000000"
-                    strokeThickness={1}
-                    radius={5}
-                    layout={{ position: 'absolute', width: 20, bottom: 5, height: 14 }}
-                />
-            </Border>
-        </Region>
-    );
-};
-
-/** Named region `connector` of Main_100Layout - configured through the parent's `connector` prop. */
-export interface Main_100LayoutConnector2Props {
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutConnector2 = ({ layout }: Main_100LayoutConnector2Props) => {
-    return (
-        <Region
-            name="connector"
-            backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 39, width: 2, bottom: 66, height: 19, ...layout }}
-        />
-    );
-};
-
 /** Named region `prize_template_premium` of Main_100Layout - configured through the parent's `prizeTemplatePremium` prop. */
 export interface Main_100LayoutPrizeTemplatePremiumProps {
-    clickRegion?: Main_100LayoutClickRegion2Props;
-    connector?: Main_100LayoutConnector2Props;
     layout?: BoxLayout;
+    onClickRegion?: () => void;
     srcClaimedIcon?: string;
     srcLockedIcon?: string;
 }
 
-export const Main_100LayoutPrizeTemplatePremium = ({ clickRegion, connector, layout, srcClaimedIcon, srcLockedIcon }: Main_100LayoutPrizeTemplatePremiumProps) => {
+export const Main_100LayoutPrizeTemplatePremium = ({ layout, onClickRegion, srcClaimedIcon, srcLockedIcon }: Main_100LayoutPrizeTemplatePremiumProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="prize_template_premium"
             layout={{ position: 'absolute', left: 9, width: 80, top: 89, height: 104, ...layout }}
         >
-            <Main_100LayoutClickRegion2 {...clickRegion} />
-            <Main_100LayoutConnector2 {...connector} />
+            <Region
+                name="click_region"
+                tooltip={t('reward_track.rewards.reward_tooltip.premium')}
+                dynamicStyle="reward_track_item"
+                onPointerTap={onClickRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 12, width: 56, top: 34, height: 60 }}
+            >
+                <Border
+                    variant="1"
+                    name="shadow"
+                    blend={0.25}
+                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 16 }}
+                />
+                <Border
+                    variant="16"
+                    name="border"
+                    tintColor="#f1def7"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 2, bottom: 2, justifyContent: 'center' }}
+                >
+                    <WidgetSlot
+                        widgetType="product_icon"
+                        name="product_icon"
+                        layout={{ position: 'absolute', width: 40, alignSelf: 'center', height: 40 }}
+                    />
+                    <Shape
+                        name="quantity_container"
+                        shape="round_rectangle"
+                        color="#f1def7"
+                        strokeColor="#000000"
+                        strokeThickness={1}
+                        radius={5}
+                        layout={{ position: 'absolute', width: 20, bottom: 5, height: 14 }}
+                    />
+                </Border>
+            </Region>
+            <Region
+                name="connector"
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 39, width: 2, bottom: 66, height: 19 }}
+            />
             <ThemeImage
                 name="locked_icon"
                 src={srcLockedIcon ?? layoutImage('reward_track_locked_reward.png')}
@@ -625,60 +441,14 @@ export const Main_100LayoutPrizeContent = ({ layout, prizeTemplate, prizeTemplat
     );
 };
 
-/** Named region `cut` of Main_100Layout - configured through the parent's `cut` prop. */
-export interface Main_100LayoutCutProps {
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutCut = ({ layout }: Main_100LayoutCutProps) => {
-    return (
-        <Region
-            name="cut"
-            layout={{ position: 'absolute', left: 0, right: 2, top: 0, bottom: 0, ...layout }}
-        >
-            <Border
-                variant="15"
-                name="free_tier_cont"
-                tintColor="#f9efe0"
-                blend={0.5}
-                layout={{ position: 'absolute', left: 0, right: -5, top: 0, bottom: 0 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `splitter` of Main_100Layout - configured through the parent's `splitter` prop. */
-export interface Main_100LayoutSplitterProps {
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutSplitter = ({ layout }: Main_100LayoutSplitterProps) => {
-    return (
-        <Region
-            name="splitter"
-            layout={{ position: 'absolute', right: 0, width: 2, top: 0, height: 80, ...layout }}
-        >
-            <Border
-                variant="15"
-                name="bg"
-                tintColor="#f9efe0"
-                blend={0.5}
-                layout={{ position: 'absolute', left: -18, width: 20, top: -6, bottom: -5 }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `information` of Main_100Layout - configured through the parent's `information` prop. */
 export interface Main_100LayoutInformationProps {
     captionDesc?: string;
     captionTitle?: string;
-    cut?: Main_100LayoutCutProps;
     layout?: BoxLayout;
-    splitter?: Main_100LayoutSplitterProps;
 }
 
-export const Main_100LayoutInformation = ({ captionDesc, captionTitle, cut, layout, splitter }: Main_100LayoutInformationProps) => {
+export const Main_100LayoutInformation = ({ captionDesc, captionTitle, layout }: Main_100LayoutInformationProps) => {
     const t = useTranslation();
 
     return (
@@ -686,8 +456,30 @@ export const Main_100LayoutInformation = ({ captionDesc, captionTitle, cut, layo
             name="information"
             layout={{ position: 'absolute', left: 0, width: 100, top: 0, bottom: 0, ...layout }}
         >
-            <Main_100LayoutCut {...cut} />
-            <Main_100LayoutSplitter {...splitter} />
+            <Region
+                name="cut"
+                layout={{ position: 'absolute', left: 0, right: 2, top: 0, bottom: 0 }}
+            >
+                <Border
+                    variant="15"
+                    name="free_tier_cont"
+                    tintColor="#f9efe0"
+                    blend={0.5}
+                    layout={{ position: 'absolute', left: 0, right: -5, top: 0, bottom: 0 }}
+                />
+            </Region>
+            <Region
+                name="splitter"
+                layout={{ position: 'absolute', right: 0, width: 2, top: 0, height: 80 }}
+            >
+                <Border
+                    variant="15"
+                    name="bg"
+                    tintColor="#f9efe0"
+                    blend={0.5}
+                    layout={{ position: 'absolute', left: -18, width: 20, top: -6, bottom: -5 }}
+                />
+            </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 100, bottom: 2, height: 21, flexDirection: 'column' }}>
                 <Region
                     name="title"
@@ -716,60 +508,14 @@ export const Main_100LayoutInformation = ({ captionDesc, captionTitle, cut, layo
     );
 };
 
-/** Named region `cut` of Main_100Layout - configured through the parent's `cut` prop. */
-export interface Main_100LayoutCut2Props {
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutCut2 = ({ layout }: Main_100LayoutCut2Props) => {
-    return (
-        <Region
-            name="cut"
-            layout={{ position: 'absolute', left: 0, right: 2, top: 0, bottom: 0, ...layout }}
-        >
-            <Border
-                variant="15"
-                name="free_tier_cont"
-                tintColor="#f1def7"
-                blend={0.5}
-                layout={{ position: 'absolute', left: 0, right: -5, top: 0, bottom: 0 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `splitter` of Main_100Layout - configured through the parent's `splitter` prop. */
-export interface Main_100LayoutSplitter2Props {
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutSplitter2 = ({ layout }: Main_100LayoutSplitter2Props) => {
-    return (
-        <Region
-            name="splitter"
-            layout={{ position: 'absolute', right: 0, width: 2, top: 0, height: 80, ...layout }}
-        >
-            <Border
-                variant="15"
-                name="bg"
-                tintColor="#f1def7"
-                blend={0.5}
-                layout={{ position: 'absolute', left: -18, width: 20, top: -6, bottom: -5 }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `information` of Main_100Layout - configured through the parent's `information` prop. */
 export interface Main_100LayoutInformation2Props {
     captionDesc?: string;
     captionTitle?: string;
-    cut?: Main_100LayoutCut2Props;
     layout?: BoxLayout;
-    splitter?: Main_100LayoutSplitter2Props;
 }
 
-export const Main_100LayoutInformation2 = ({ captionDesc, captionTitle, cut, layout, splitter }: Main_100LayoutInformation2Props) => {
+export const Main_100LayoutInformation2 = ({ captionDesc, captionTitle, layout }: Main_100LayoutInformation2Props) => {
     const t = useTranslation();
 
     return (
@@ -777,8 +523,30 @@ export const Main_100LayoutInformation2 = ({ captionDesc, captionTitle, cut, lay
             name="information"
             layout={{ position: 'absolute', left: 0, width: 100, top: 0, bottom: 0, ...layout }}
         >
-            <Main_100LayoutCut2 {...cut} />
-            <Main_100LayoutSplitter2 {...splitter} />
+            <Region
+                name="cut"
+                layout={{ position: 'absolute', left: 0, right: 2, top: 0, bottom: 0 }}
+            >
+                <Border
+                    variant="15"
+                    name="free_tier_cont"
+                    tintColor="#f1def7"
+                    blend={0.5}
+                    layout={{ position: 'absolute', left: 0, right: -5, top: 0, bottom: 0 }}
+                />
+            </Region>
+            <Region
+                name="splitter"
+                layout={{ position: 'absolute', right: 0, width: 2, top: 0, height: 80 }}
+            >
+                <Border
+                    variant="15"
+                    name="bg"
+                    tintColor="#f1def7"
+                    blend={0.5}
+                    layout={{ position: 'absolute', left: -18, width: 20, top: -6, bottom: -5 }}
+                />
+            </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 100, bottom: 3, height: 30, flexDirection: 'column', gap: -3 }}>
                 <Region
                     name="title"
@@ -803,52 +571,6 @@ export const Main_100LayoutInformation2 = ({ captionDesc, captionTitle, cut, lay
     );
 };
 
-/** Named region `previous_btn` of Main_100Layout - configured through the parent's `previousBtn` prop. */
-export interface Main_100LayoutPreviousBtnProps {
-    layout?: BoxLayout;
-    onPreviousBtn?: () => void;
-}
-
-export const Main_100LayoutPreviousBtn = ({ layout, onPreviousBtn }: Main_100LayoutPreviousBtnProps) => {
-    return (
-        <Region
-            name="previous_btn"
-            dynamicStyle="button"
-            onPointerTap={onPreviousBtn}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 54, width: 33, top: 84, height: 34, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('icons_back.png')}
-                layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `next_btn` of Main_100Layout - configured through the parent's `nextBtn` prop. */
-export interface Main_100LayoutNextBtnProps {
-    layout?: BoxLayout;
-    onNextBtn?: () => void;
-}
-
-export const Main_100LayoutNextBtn = ({ layout, onNextBtn }: Main_100LayoutNextBtnProps) => {
-    return (
-        <Region
-            name="next_btn"
-            dynamicStyle="button"
-            onPointerTap={onNextBtn}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 805, width: 33, top: 84, height: 34, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('icons_forward.png')}
-                layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `header` of Main_100Layout - configured through the parent's `header` prop. */
 export interface Main_100LayoutHeaderProps {
     captionNextUnclaimedCount?: string;
@@ -857,18 +579,17 @@ export interface Main_100LayoutHeaderProps {
     information?: Main_100LayoutInformationProps;
     information2?: Main_100LayoutInformation2Props;
     layout?: BoxLayout;
-    nextBtn?: Main_100LayoutNextBtnProps;
+    onNextBtn?: () => void;
+    onPreviousBtn?: () => void;
     pointsIndicatorContainer?: Main_100LayoutPointsIndicatorContainerProps;
-    previousBtn?: Main_100LayoutPreviousBtnProps;
     prizeContent?: Main_100LayoutPrizeContentProps;
     recolorDark?: string;
     recolorLight?: string;
-    track?: Main_100LayoutTrackProps;
     visibleNextUnclaimedIndicator?: boolean;
     visiblePreviousUnclaimedIndicator?: boolean;
 }
 
-export const Main_100LayoutHeader = ({ captionNextUnclaimedCount, captionPreviousUnclaimedCount, cutout, information, information2, layout, nextBtn, pointsIndicatorContainer, previousBtn, prizeContent, recolorDark, recolorLight, track, visibleNextUnclaimedIndicator, visiblePreviousUnclaimedIndicator }: Main_100LayoutHeaderProps) => {
+export const Main_100LayoutHeader = ({ captionNextUnclaimedCount, captionPreviousUnclaimedCount, cutout, information, information2, layout, onNextBtn, onPreviousBtn, pointsIndicatorContainer, prizeContent, recolorDark, recolorLight, visibleNextUnclaimedIndicator, visiblePreviousUnclaimedIndicator }: Main_100LayoutHeaderProps) => {
     return (
         <Region
             name="header"
@@ -891,7 +612,46 @@ export const Main_100LayoutHeader = ({ captionNextUnclaimedCount, captionPreviou
                     src={layoutImage('reward_track_prizes_background_stars.png')}
                     layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 243 }}
                 />
-                <Main_100LayoutTrack {...track} />
+                <Region
+                    name="track"
+                    layout={{ position: 'absolute', left: 165, right: 22, top: 2, bottom: 2 }}
+                >
+                    <Region
+                        name="loading_bar"
+                        layout={{ position: 'absolute', left: 29, right: 29, top: 92, height: 13 }}
+                    >
+                        <Shape
+                            name="bg"
+                            shape="round_rectangle"
+                            color="#888888"
+                            strokeThickness={1}
+                            radius={6}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                        />
+                        <Region
+                            name="progress"
+                            layout={{ position: 'absolute', left: 0, width: 300, top: 0, bottom: 0 }}
+                        >
+                            <Region
+                                name="loading_bar"
+                                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                            >
+                                <Shape
+                                    name="shape"
+                                    shape="round_rectangle"
+                                    color="#71af24"
+                                    strokeThickness={1}
+                                    radius={6}
+                                    layout={{ position: 'absolute', left: 0, right: -4, top: 0, bottom: 0 }}
+                                />
+                            </Region>
+                            <Region
+                                blendMode="add"
+                                layout={{ position: 'absolute', left: 1, right: 0, top: 1, bottom: 1 }}
+                            />
+                        </Region>
+                    </Region>
+                </Region>
                 <Main_100LayoutPointsIndicatorContainer {...pointsIndicatorContainer} />
                 <Main_100LayoutPrizeContent {...prizeContent} />
                 <Border
@@ -916,42 +676,66 @@ export const Main_100LayoutHeader = ({ captionNextUnclaimedCount, captionPreviou
                         layout={{ position: 'absolute', left: 24, width: 58, top: 4, height: 45 }}
                     />
                 </Border>
-                <Main_100LayoutPreviousBtn {...previousBtn} />
-                <Main_100LayoutNextBtn {...nextBtn} />
-                <Border
-                    variant="7"
-                    name="previous_unclaimed_indicator"
-                    tintColor="#ee2924"
-                    visible={visiblePreviousUnclaimedIndicator ?? false}
-                    layout={{ position: 'absolute', right: 756, width: 17, top: 77, height: 18 }}
+                <Region
+                    name="previous_btn"
+                    dynamicStyle="button"
+                    onPointerTap={onPreviousBtn}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 54, width: 33, top: 84, height: 34 }}
                 >
-                    <Region
-                        name="previous_unclaimed_count"
-                        layout={{ position: 'absolute', left: 3, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPreviousUnclaimedCount ?? '2'}
-                            textStyle="text-style-il-regular-white"
-                        />
-                    </Region>
-                </Border>
-                <Border
-                    variant="7"
-                    name="next_unclaimed_indicator"
-                    tintColor="#ee2924"
-                    visible={visibleNextUnclaimedIndicator ?? false}
-                    layout={{ position: 'absolute', right: 3, width: 17, top: 77, height: 18 }}
+                    <ThemeImage
+                        src={layoutImage('icons_back.png')}
+                        layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
+                    />
+                </Region>
+                <Region
+                    name="next_btn"
+                    dynamicStyle="button"
+                    onPointerTap={onNextBtn}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 805, width: 33, top: 84, height: 34 }}
                 >
-                    <Region
-                        name="next_unclaimed_count"
-                        layout={{ position: 'absolute', left: 3, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    <ThemeImage
+                        src={layoutImage('icons_forward.png')}
+                        layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
+                    />
+                </Region>
+                {(visiblePreviousUnclaimedIndicator ?? false) && (
+                    <Border
+                        variant="7"
+                        name="previous_unclaimed_indicator"
+                        tintColor="#ee2924"
+                        layout={{ position: 'absolute', right: 756, width: 17, top: 77, height: 18 }}
                     >
-                        <ThemeText
-                            text={captionNextUnclaimedCount ?? '2'}
-                            textStyle="text-style-il-regular-white"
-                        />
-                    </Region>
-                </Border>
+                        <Region
+                            name="previous_unclaimed_count"
+                            layout={{ position: 'absolute', left: 3, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionPreviousUnclaimedCount ?? '2'}
+                                textStyle="text-style-il-regular-white"
+                            />
+                        </Region>
+                    </Border>
+                )}
+                {(visibleNextUnclaimedIndicator ?? false) && (
+                    <Border
+                        variant="7"
+                        name="next_unclaimed_indicator"
+                        tintColor="#ee2924"
+                        layout={{ position: 'absolute', right: 3, width: 17, top: 77, height: 18 }}
+                    >
+                        <Region
+                            name="next_unclaimed_count"
+                            layout={{ position: 'absolute', left: 3, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionNextUnclaimedCount ?? '2'}
+                                textStyle="text-style-il-regular-white"
+                            />
+                        </Region>
+                    </Border>
+                )}
             </Border>
         </Region>
     );
@@ -964,9 +748,10 @@ export interface Main_100LayoutTabButtonTemplateItemProps {
     onSelectedView?: () => void;
     onTabButtonTemplate?: () => void;
     recolorDark?: string;
+    visibleNotselectedShape?: boolean;
 }
 
-export const Main_100LayoutTabButtonTemplateItem = ({ captionButtonText, layout, onSelectedView, onTabButtonTemplate, recolorDark }: Main_100LayoutTabButtonTemplateItemProps) => {
+export const Main_100LayoutTabButtonTemplateItem = ({ captionButtonText, layout, onSelectedView, onTabButtonTemplate, recolorDark, visibleNotselectedShape }: Main_100LayoutTabButtonTemplateItemProps) => {
     const t = useTranslation();
 
     return (
@@ -984,16 +769,17 @@ export const Main_100LayoutTabButtonTemplateItem = ({ captionButtonText, layout,
                 textStyle="text-style-button-shiny-regular"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
             />
-            <Shape
-                name="notselected_shape"
-                visible={false}
-                shape="round_rectangle"
-                color="#dddcdc"
-                strokeColor="#b7b7b7"
-                strokeThickness={2}
-                radius={4}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
-            />
+            {(visibleNotselectedShape ?? false) && (
+                <Shape
+                    name="notselected_shape"
+                    shape="round_rectangle"
+                    color="#dddcdc"
+                    strokeColor="#b7b7b7"
+                    strokeThickness={2}
+                    radius={4}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
+                />
+            )}
             <Region
                 name="button_text"
                 layout={{ position: 'absolute', width: 78, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
@@ -1027,15 +813,16 @@ export const Main_100LayoutTabButtonTemplateItem2 = ({ captionButtonText, layout
             cursor="pointer"
             layout={{ width: 88, height: 29, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
-            <Button
-                variant="3"
-                name="selected_view"
-                tintColor={recolorDark ?? '#3576b9'}
-                onPointerTap={onSelectedView}
-                textStyle="text-style-button-shiny-regular"
-                visible={visibleSelectedView ?? false}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
-            />
+            {(visibleSelectedView ?? false) && (
+                <Button
+                    variant="3"
+                    name="selected_view"
+                    tintColor={recolorDark ?? '#3576b9'}
+                    onPointerTap={onSelectedView}
+                    textStyle="text-style-button-shiny-regular"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
+                />
+            )}
             <Shape
                 name="notselected_shape"
                 shape="round_rectangle"
@@ -1078,15 +865,16 @@ export const Main_100LayoutTabButtonTemplateItem3 = ({ captionButtonText, layout
             cursor="pointer"
             layout={{ width: 88, height: 29, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
-            <Button
-                variant="3"
-                name="selected_view"
-                tintColor={recolorDark ?? '#3576b9'}
-                onPointerTap={onSelectedView}
-                textStyle="text-style-button-shiny-regular"
-                visible={visibleSelectedView ?? false}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
-            />
+            {(visibleSelectedView ?? false) && (
+                <Button
+                    variant="3"
+                    name="selected_view"
+                    tintColor={recolorDark ?? '#3576b9'}
+                    onPointerTap={onSelectedView}
+                    textStyle="text-style-button-shiny-regular"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
+                />
+            )}
             <Shape
                 name="notselected_shape"
                 shape="round_rectangle"
@@ -1168,72 +956,6 @@ export const Main_100LayoutHeader2 = ({ captionTasksCompletionTxt, layout, tabSe
     );
 };
 
-/** Named region `gradient` of Main_100Layout - configured through the parent's `gradient` prop. */
-export interface Main_100LayoutGradientProps {
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutGradient = ({ layout }: Main_100LayoutGradientProps) => {
-    return (
-        <Region
-            name="gradient"
-            blendMode="add"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 1, height: 5, ...layout }}
-        />
-    );
-};
-
-/** Named region `progress` of Main_100Layout - configured through the parent's `progress` prop. */
-export interface Main_100LayoutProgress2Props {
-    gradient?: Main_100LayoutGradientProps;
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutProgress2 = ({ gradient, layout }: Main_100LayoutProgress2Props) => {
-    return (
-        <Region
-            name="progress"
-            layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 7, ...layout }}
-        >
-            <Shape
-                name="loading_bar"
-                shape="round_rectangle"
-                color="#eba60c"
-                strokeThickness={1}
-                radius={5}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
-            />
-            <Main_100LayoutGradient {...gradient} />
-        </Region>
-    );
-};
-
-/** Named region `loading_bar` of Main_100Layout - configured through the parent's `loadingBar` prop. */
-export interface Main_100LayoutLoadingBar3Props {
-    layout?: BoxLayout;
-    progress?: Main_100LayoutProgress2Props;
-}
-
-export const Main_100LayoutLoadingBar3 = ({ layout, progress }: Main_100LayoutLoadingBar3Props) => {
-    return (
-        <Region
-            name="loading_bar"
-            layout={{ position: 'absolute', left: 68, width: 200, top: 44, height: 7, ...layout }}
-        >
-            <Shape
-                name="bg"
-                shape="round_rectangle"
-                color="#cccccc"
-                strokeColor="#777777"
-                strokeThickness={1}
-                radius={5}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
-            />
-            <Main_100LayoutProgress2 {...progress} />
-        </Region>
-    );
-};
-
 /** Row template `task_template` of Main_100Layout - pass real rows through its `items…` slot. */
 export interface Main_100LayoutTaskTemplateItemProps {
     captionTaskDescription?: string;
@@ -1241,13 +963,12 @@ export interface Main_100LayoutTaskTemplateItemProps {
     captionTaskProgressTxt?: string;
     captionTrackRewardTxt?: string;
     layout?: BoxLayout;
-    loadingBar?: Main_100LayoutLoadingBar3Props;
     onTaskTemplate?: () => void;
     srcTaskImage?: string;
     srcTrackRewardIcon?: string;
 }
 
-export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, captionTaskName, captionTaskProgressTxt, captionTrackRewardTxt, layout, loadingBar, onTaskTemplate, srcTaskImage, srcTrackRewardIcon }: Main_100LayoutTaskTemplateItemProps) => {
+export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, captionTaskName, captionTaskProgressTxt, captionTrackRewardTxt, layout, onTaskTemplate, srcTaskImage, srcTrackRewardIcon }: Main_100LayoutTaskTemplateItemProps) => {
     return (
         <Region
             name="task_template"
@@ -1273,7 +994,38 @@ export const Main_100LayoutTaskTemplateItem = ({ captionTaskDescription, caption
                 >
                     <ThemeText text={captionTaskDescription ?? 'Explore rooms made by other players'} />
                 </Region>
-                <Main_100LayoutLoadingBar3 {...loadingBar} />
+                <Region
+                    name="loading_bar"
+                    layout={{ position: 'absolute', left: 68, width: 200, top: 44, height: 7 }}
+                >
+                    <Shape
+                        name="bg"
+                        shape="round_rectangle"
+                        color="#cccccc"
+                        strokeColor="#777777"
+                        strokeThickness={1}
+                        radius={5}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
+                    />
+                    <Region
+                        name="progress"
+                        layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 7 }}
+                    >
+                        <Shape
+                            name="loading_bar"
+                            shape="round_rectangle"
+                            color="#eba60c"
+                            strokeThickness={1}
+                            radius={5}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
+                        />
+                        <Region
+                            name="gradient"
+                            blendMode="add"
+                            layout={{ position: 'absolute', left: 1, right: 1, top: 1, height: 5 }}
+                        />
+                    </Region>
+                </Region>
                 <Region
                     name="task_progress_txt"
                     layout={{ position: 'absolute', left: 280, width: 25, top: 38, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -1353,164 +1105,6 @@ export const Main_100LayoutTasks = ({ itemsTasks, layout }: Main_100LayoutTasksP
     );
 };
 
-/** Named region `task_info_name_region` of Main_100Layout - configured through the parent's `taskInfoNameRegion` prop. */
-export interface Main_100LayoutTaskInfoNameRegionProps {
-    captionTaskInfoName?: string;
-    layout?: BoxLayout;
-    onTaskInfoNameRegion?: () => void;
-}
-
-export const Main_100LayoutTaskInfoNameRegion = ({ captionTaskInfoName, layout, onTaskInfoNameRegion }: Main_100LayoutTaskInfoNameRegionProps) => {
-    return (
-        <Region
-            name="task_info_name_region"
-            layout={{ position: 'absolute', left: 137, width: 100, top: 35, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-            onPointerTap={onTaskInfoNameRegion}
-            cursor="pointer"
-        >
-            <ThemeText text={captionTaskInfoName ?? 'Visit Rooms'} />
-        </Region>
-    );
-};
-
-/** Named region `task_info_header` of Main_100Layout - configured through the parent's `taskInfoHeader` prop. */
-export interface Main_100LayoutTaskInfoHeaderProps {
-    captionTaskInfoDescription?: string;
-    layout?: BoxLayout;
-    srcTaskInfoImg?: string;
-    taskInfoNameRegion?: Main_100LayoutTaskInfoNameRegionProps;
-}
-
-export const Main_100LayoutTaskInfoHeader = ({ captionTaskInfoDescription, layout, srcTaskInfoImg, taskInfoNameRegion }: Main_100LayoutTaskInfoHeaderProps) => {
-    return (
-        <Region
-            name="task_info_header"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 128, ...layout }}
-        >
-            <ThemeImage
-                name="task_info_img"
-                src={srcTaskInfoImg ?? layoutImage('reward_track_tasks_dance.png')}
-                layout={{ position: 'absolute', left: 23, width: 104, top: 23, height: 100 }}
-            />
-            <Main_100LayoutTaskInfoNameRegion {...taskInfoNameRegion} />
-            <Region
-                name="task_info_description"
-                layout={{ position: 'absolute', left: 137, right: 22, top: 59, height: 63, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTaskInfoDescription ?? 'Explore the hotel and visit rooms created by other players!'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 469 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `spacer` of Main_100Layout - configured through the parent's `spacer` prop. */
-export interface Main_100LayoutSpacerProps {
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutSpacer = ({ layout }: Main_100LayoutSpacerProps) => {
-    return (
-        <Region
-            name="spacer"
-            backgroundColor="#d6d5d3"
-            layout={{ position: 'absolute', left: 22, width: 582, top: 20, height: 2, ...layout }}
-        />
-    );
-};
-
-/** Named region `levels_title_bg` of Main_100Layout - configured through the parent's `levelsTitleBg` prop. */
-export interface Main_100LayoutLevelsTitleBgProps {
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutLevelsTitleBg = ({ layout }: Main_100LayoutLevelsTitleBgProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="levels_title_bg"
-            backgroundColor="#f0f0f0"
-            layout={{ position: 'absolute', left: 37, width: 53, top: 7, height: 18, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 3, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('reward_track.levels.title')}
-                    textOptions={{ fill: '#124b8b' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `gradient` of Main_100Layout - configured through the parent's `gradient` prop. */
-export interface Main_100LayoutGradient2Props {
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutGradient2 = ({ layout }: Main_100LayoutGradient2Props) => {
-    return (
-        <Region
-            name="gradient"
-            blendMode="add"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 1, height: 5, ...layout }}
-        />
-    );
-};
-
-/** Named region `progress` of Main_100Layout - configured through the parent's `progress` prop. */
-export interface Main_100LayoutProgress3Props {
-    gradient?: Main_100LayoutGradient2Props;
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutProgress3 = ({ gradient, layout }: Main_100LayoutProgress3Props) => {
-    return (
-        <Region
-            name="progress"
-            layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 7, ...layout }}
-        >
-            <Shape
-                name="loading_bar"
-                shape="round_rectangle"
-                color="#eba60c"
-                strokeThickness={1}
-                radius={5}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
-            />
-            <Main_100LayoutGradient2 {...gradient} />
-        </Region>
-    );
-};
-
-/** Named region `loading_bar` of Main_100Layout - configured through the parent's `loadingBar` prop. */
-export interface Main_100LayoutLoadingBar4Props {
-    layout?: BoxLayout;
-    progress?: Main_100LayoutProgress3Props;
-}
-
-export const Main_100LayoutLoadingBar4 = ({ layout, progress }: Main_100LayoutLoadingBar4Props) => {
-    return (
-        <Region
-            name="loading_bar"
-            layout={{ position: 'absolute', left: 94, width: 260, top: 19, height: 7, ...layout }}
-        >
-            <Shape
-                name="bg"
-                shape="round_rectangle"
-                color="#cccccc"
-                strokeColor="#777777"
-                strokeThickness={1}
-                radius={5}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
-            />
-            <Main_100LayoutProgress3 {...progress} />
-        </Region>
-    );
-};
-
 /** Row template `level_reward_txt` of Main_100Layout - pass real rows through its `items…` slot. */
 export interface Main_100LayoutLevelRewardTxtItemProps {
     captionLevelRewardTxt?: string;
@@ -1544,41 +1138,18 @@ export const Main_100LayoutLevelRewardIconItem = ({ layout, srcLevelRewardIcon }
     );
 };
 
-/** Named region `reward_container` of Main_100Layout - configured through the parent's `rewardContainer` prop. */
-export interface Main_100LayoutRewardContainerProps {
-    itemsRewardContainer?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const Main_100LayoutRewardContainer = ({ itemsRewardContainer, layout }: Main_100LayoutRewardContainerProps) => {
-    return (
-        <Region
-            name="reward_container"
-            layout={{ width: 44, height: 23, flexShrink: 0, flexDirection: 'row', gap: 5, ...layout }}
-        >
-            {itemsRewardContainer ?? (
-                <>
-                    <Main_100LayoutLevelRewardTxtItem />
-                    <Main_100LayoutLevelRewardIconItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Row template `level_template` of Main_100Layout - pass real rows through its `items…` slot. */
 export interface Main_100LayoutLevelTemplateItemProps {
     captionLevelName?: string;
     captionLevelProgressTxt?: string;
+    itemsRewardContainer?: ReactNode;
     layout?: BoxLayout;
-    loadingBar?: Main_100LayoutLoadingBar4Props;
     onLevelTemplate?: () => void;
-    rewardContainer?: Main_100LayoutRewardContainerProps;
     srcCompletedIcon?: string;
     srcLockedIcon?: string;
 }
 
-export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevelProgressTxt, layout, loadingBar, onLevelTemplate, rewardContainer, srcCompletedIcon, srcLockedIcon }: Main_100LayoutLevelTemplateItemProps) => {
+export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevelProgressTxt, itemsRewardContainer, layout, onLevelTemplate, srcCompletedIcon, srcLockedIcon }: Main_100LayoutLevelTemplateItemProps) => {
     const t = useTranslation();
 
     return (
@@ -1600,7 +1171,38 @@ export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevel
                 >
                     <ThemeText text={captionLevelName ?? t('reward_track.levels.level')} />
                 </Region>
-                <Main_100LayoutLoadingBar4 {...loadingBar} />
+                <Region
+                    name="loading_bar"
+                    layout={{ position: 'absolute', left: 94, width: 260, top: 19, height: 7 }}
+                >
+                    <Shape
+                        name="bg"
+                        shape="round_rectangle"
+                        color="#cccccc"
+                        strokeColor="#777777"
+                        strokeThickness={1}
+                        radius={5}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
+                    />
+                    <Region
+                        name="progress"
+                        layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 7 }}
+                    >
+                        <Shape
+                            name="loading_bar"
+                            shape="round_rectangle"
+                            color="#eba60c"
+                            strokeThickness={1}
+                            radius={5}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 7 }}
+                        />
+                        <Region
+                            name="gradient"
+                            blendMode="add"
+                            layout={{ position: 'absolute', left: 1, right: 1, top: 1, height: 5 }}
+                        />
+                    </Region>
+                </Region>
                 <Region
                     name="level_progress_txt"
                     layout={{ position: 'absolute', left: 377, width: 25, top: 14, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -1618,7 +1220,17 @@ export const Main_100LayoutLevelTemplateItem = ({ captionLevelName, captionLevel
                         src={srcLockedIcon ?? layoutImage('reward_track_locked_small.png')}
                         layout={{ width: 13, height: 18, flexShrink: 0 }}
                     />
-                    <Main_100LayoutRewardContainer {...rewardContainer} />
+                    <Region
+                        name="reward_container"
+                        layout={{ width: 44, height: 23, flexShrink: 0, flexDirection: 'row', gap: 5 }}
+                    >
+                        {itemsRewardContainer ?? (
+                            <>
+                                <Main_100LayoutLevelRewardTxtItem />
+                                <Main_100LayoutLevelRewardIconItem />
+                            </>
+                        )}
+                    </Region>
                 </Region>
             </Border>
         </Region>
@@ -1668,18 +1280,33 @@ export const Main_100LayoutLevels = ({ itemsLevels, layout }: Main_100LayoutLeve
 export interface Main_100LayoutTaskLevelsProps {
     layout?: BoxLayout;
     levels?: Main_100LayoutLevelsProps;
-    levelsTitleBg?: Main_100LayoutLevelsTitleBgProps;
-    spacer?: Main_100LayoutSpacerProps;
 }
 
-export const Main_100LayoutTaskLevels = ({ layout, levels, levelsTitleBg, spacer }: Main_100LayoutTaskLevelsProps) => {
+export const Main_100LayoutTaskLevels = ({ layout, levels }: Main_100LayoutTaskLevelsProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="task_levels"
             layout={{ position: 'absolute', left: 0, right: 0, top: 127, height: 200, ...layout }}
         >
-            <Main_100LayoutSpacer {...spacer} />
-            <Main_100LayoutLevelsTitleBg {...levelsTitleBg} />
+            <Region
+                name="spacer"
+                backgroundColor="#d6d5d3"
+                layout={{ position: 'absolute', left: 22, width: 582, top: 20, height: 2 }}
+            />
+            <Region
+                name="levels_title_bg"
+                backgroundColor="#f0f0f0"
+                layout={{ position: 'absolute', left: 37, width: 53, top: 7, height: 18 }}
+            >
+                <Region layout={{ position: 'absolute', left: 3, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('reward_track.levels.title')}
+                        textOptions={{ fill: '#124b8b' }}
+                    />
+                </Region>
+            </Region>
             <Main_100LayoutLevels {...levels} />
         </Region>
     );
@@ -1688,16 +1315,19 @@ export const Main_100LayoutTaskLevels = ({ layout, levels, levelsTitleBg, spacer
 /** Named region `body` of Main_100Layout - configured through the parent's `body` prop. */
 export interface Main_100LayoutBodyProps {
     captionTaskHintText?: string;
+    captionTaskInfoDescription?: string;
+    captionTaskInfoName?: string;
     header?: Main_100LayoutHeader2Props;
     layout?: BoxLayout;
     onGetPremiumBtn?: () => void;
     onHintRedirectBtn?: () => void;
-    taskInfoHeader?: Main_100LayoutTaskInfoHeaderProps;
+    onTaskInfoNameRegion?: () => void;
+    srcTaskInfoImg?: string;
     taskLevels?: Main_100LayoutTaskLevelsProps;
     tasks?: Main_100LayoutTasksProps;
 }
 
-export const Main_100LayoutBody = ({ captionTaskHintText, header, layout, onGetPremiumBtn, onHintRedirectBtn, taskInfoHeader, taskLevels, tasks }: Main_100LayoutBodyProps) => {
+export const Main_100LayoutBody = ({ captionTaskHintText, captionTaskInfoDescription, captionTaskInfoName, header, layout, onGetPremiumBtn, onHintRedirectBtn, onTaskInfoNameRegion, srcTaskInfoImg, taskLevels, tasks }: Main_100LayoutBodyProps) => {
     const t = useTranslation();
 
     return (
@@ -1768,7 +1398,33 @@ export const Main_100LayoutBody = ({ captionTaskHintText, header, layout, onGetP
                 tintColor="#f0f0f0"
                 layout={{ position: 'absolute', left: 451, right: 0, top: 0, bottom: 0 }}
             >
-                <Main_100LayoutTaskInfoHeader {...taskInfoHeader} />
+                <Region
+                    name="task_info_header"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 128 }}
+                >
+                    <ThemeImage
+                        name="task_info_img"
+                        src={srcTaskInfoImg ?? layoutImage('reward_track_tasks_dance.png')}
+                        layout={{ position: 'absolute', left: 23, width: 104, top: 23, height: 100 }}
+                    />
+                    <Region
+                        name="task_info_name_region"
+                        layout={{ position: 'absolute', left: 137, width: 100, top: 35, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        onPointerTap={onTaskInfoNameRegion}
+                        cursor="pointer"
+                    >
+                        <ThemeText text={captionTaskInfoName ?? 'Visit Rooms'} />
+                    </Region>
+                    <Region
+                        name="task_info_description"
+                        layout={{ position: 'absolute', left: 137, right: 22, top: 59, height: 63, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionTaskInfoDescription ?? 'Explore the hotel and visit rooms created by other players!'}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 469 }}
+                        />
+                    </Region>
+                </Region>
                 <Main_100LayoutTaskLevels {...taskLevels} />
                 <Border
                     variant="14"

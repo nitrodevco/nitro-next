@@ -91,39 +91,6 @@ export const WiredMenuViewLayout = ({ bodyContainer, headerContainer, layout, on
     );
 };
 
-/** Named region `header_inner` of WiredMenuViewLayout - configured through the parent's `headerInner` prop. */
-export interface WiredMenuViewLayoutHeaderInnerProps {
-    layout?: BoxLayout;
-}
-
-export const WiredMenuViewLayoutHeaderInner = ({ layout }: WiredMenuViewLayoutHeaderInnerProps) => {
-    return (
-        <Region
-            name="header_inner"
-            backgroundColor="#235061"
-            layout={{ position: 'absolute', left: 2, width: 494, top: 2, height: 46, ...layout }}
-        />
-    );
-};
-
-/** Named region `header_border` of WiredMenuViewLayout - configured through the parent's `headerBorder` prop. */
-export interface WiredMenuViewLayoutHeaderBorderProps {
-    headerInner?: WiredMenuViewLayoutHeaderInnerProps;
-    layout?: BoxLayout;
-}
-
-export const WiredMenuViewLayoutHeaderBorder = ({ headerInner, layout }: WiredMenuViewLayoutHeaderBorderProps) => {
-    return (
-        <Region
-            name="header_border"
-            backgroundColor="#486f81"
-            layout={{ position: 'absolute', left: 0, width: 498, top: 0, height: 50, ...layout }}
-        >
-            <WiredMenuViewLayoutHeaderInner {...headerInner} />
-        </Region>
-    );
-};
-
 /** Named region `header_detail` of WiredMenuViewLayout - configured through the parent's `headerDetail` prop. */
 export interface WiredMenuViewLayoutHeaderDetailProps {
     layout?: BoxLayout;
@@ -167,48 +134,33 @@ export const WiredMenuViewLayoutHeaderDetail = ({ layout }: WiredMenuViewLayoutH
     );
 };
 
-/** Named region `discord_region` of WiredMenuViewLayout - configured through the parent's `discordRegion` prop. */
-export interface WiredMenuViewLayoutDiscordRegionProps {
+/** Named region `header_container` of WiredMenuViewLayout - configured through the parent's `headerContainer` prop. */
+export interface WiredMenuViewLayoutHeaderContainerProps {
+    captionHeaderTitle?: string;
+    headerDetail?: WiredMenuViewLayoutHeaderDetailProps;
     layout?: BoxLayout;
     onDiscordRegion?: () => void;
 }
 
-export const WiredMenuViewLayoutDiscordRegion = ({ layout, onDiscordRegion }: WiredMenuViewLayoutDiscordRegionProps) => {
+export const WiredMenuViewLayoutHeaderContainer = ({ captionHeaderTitle, headerDetail, layout, onDiscordRegion }: WiredMenuViewLayoutHeaderContainerProps) => {
     const t = useTranslation();
 
-    return (
-        <Region
-            name="discord_region"
-            tooltip={t('wiredmenu.discord_region.tooltip')}
-            dynamicStyle="brightness_and_shadow_under_gentle"
-            onPointerTap={onDiscordRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 473, width: 22, top: 3, height: 25, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('icon_discord.png')}
-                layout={{ position: 'absolute', left: 0, width: 22, top: 1, height: 23 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `header_container` of WiredMenuViewLayout - configured through the parent's `headerContainer` prop. */
-export interface WiredMenuViewLayoutHeaderContainerProps {
-    captionHeaderTitle?: string;
-    discordRegion?: WiredMenuViewLayoutDiscordRegionProps;
-    headerBorder?: WiredMenuViewLayoutHeaderBorderProps;
-    headerDetail?: WiredMenuViewLayoutHeaderDetailProps;
-    layout?: BoxLayout;
-}
-
-export const WiredMenuViewLayoutHeaderContainer = ({ captionHeaderTitle, discordRegion, headerBorder, headerDetail, layout }: WiredMenuViewLayoutHeaderContainerProps) => {
     return (
         <Region
             name="header_container"
             layout={{ position: 'absolute', left: 1, width: 498, top: 32, height: 50, ...layout }}
         >
-            <WiredMenuViewLayoutHeaderBorder {...headerBorder} />
+            <Region
+                name="header_border"
+                backgroundColor="#486f81"
+                layout={{ position: 'absolute', left: 0, width: 498, top: 0, height: 50 }}
+            >
+                <Region
+                    name="header_inner"
+                    backgroundColor="#235061"
+                    layout={{ position: 'absolute', left: 2, width: 494, top: 2, height: 46 }}
+                />
+            </Region>
             <WiredMenuViewLayoutHeaderDetail {...headerDetail} />
             <Region
                 name="header_title"
@@ -219,7 +171,19 @@ export const WiredMenuViewLayoutHeaderContainer = ({ captionHeaderTitle, discord
                     textOptions={{ fill: '#ffffff', align: 'center' }}
                 />
             </Region>
-            <WiredMenuViewLayoutDiscordRegion {...discordRegion} />
+            <Region
+                name="discord_region"
+                tooltip={t('wiredmenu.discord_region.tooltip')}
+                dynamicStyle="brightness_and_shadow_under_gentle"
+                onPointerTap={onDiscordRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 473, width: 22, top: 3, height: 25 }}
+            >
+                <ThemeImage
+                    src={layoutImage('icon_discord.png')}
+                    layout={{ position: 'absolute', left: 0, width: 22, top: 1, height: 23 }}
+                />
+            </Region>
         </Region>
     );
 };
@@ -311,112 +275,78 @@ export const WiredMenuViewLayoutStatisticsContainer = ({ captionStatisticsFloorf
     );
 };
 
-/** Named region `image_container` of WiredMenuViewLayout - configured through the parent's `imageContainer` prop. */
-export interface WiredMenuViewLayoutImageContainerProps {
-    layout?: BoxLayout;
-    srcMonitorImage1?: string;
-    srcMonitorImage2?: string;
-}
-
-export const WiredMenuViewLayoutImageContainer = ({ layout, srcMonitorImage1, srcMonitorImage2 }: WiredMenuViewLayoutImageContainerProps) => {
-    return (
-        <Region
-            name="image_container"
-            layout={{ position: 'absolute', left: 230, width: 256, top: 4, height: 145, ...layout }}
-        >
-            <ThemeImage
-                name="monitor_image_1"
-                src={srcMonitorImage1 ?? layoutImage('wired_monitor_element1.png')}
-                layout={{ position: 'absolute', left: 0, width: 256, top: 0, height: 145 }}
-                visible={false}
-            />
-            <ThemeImage
-                name="monitor_image_2"
-                src={srcMonitorImage2 ?? layoutImage('wired_monitor_element2.png')}
-                layout={{ position: 'absolute', left: 0, width: 256, top: 0, height: 145 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `log_table_container` of WiredMenuViewLayout - configured through the parent's `logTableContainer` prop. */
-export interface WiredMenuViewLayoutLogTableContainerProps {
-    layout?: BoxLayout;
-}
-
-export const WiredMenuViewLayoutLogTableContainer = ({ layout }: WiredMenuViewLayoutLogTableContainerProps) => {
-    return (
-        <Region
-            name="log_table_container"
-            layout={{ position: 'absolute', left: 0, width: 472, top: 20, height: 156, ...layout }}
-        />
-    );
-};
-
-/** Named region `log_container` of WiredMenuViewLayout - configured through the parent's `logContainer` prop. */
-export interface WiredMenuViewLayoutLogContainerProps {
-    captionTitle?: string;
-    layout?: BoxLayout;
-    logTableContainer?: WiredMenuViewLayoutLogTableContainerProps;
-    onClearLogBtn?: () => void;
-    onLogOverviewBtn?: () => void;
-}
-
-export const WiredMenuViewLayoutLogContainer = ({ captionTitle, layout, logTableContainer, onClearLogBtn, onLogOverviewBtn }: WiredMenuViewLayoutLogContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="log_container"
-            layout={{ position: 'absolute', left: 14, width: 472, top: 152, height: 218, ...layout }}
-        >
-            <Region
-                name="title"
-                layout={{ position: 'absolute', left: 0, width: 106, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionTitle ?? t('wiredmenu.monitor.log')} />
-            </Region>
-            <WiredMenuViewLayoutLogTableContainer {...logTableContainer} />
-            <Button
-                variant="5"
-                name="clear_log_btn"
-                tintColor="#e33934"
-                onPointerTap={onClearLogBtn}
-                textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 0, width: 110, top: 185, height: 30, minWidth: 110, maxWidth: 110 }}
-            >
-                {t('wiredmenu.monitor.clear_all')}
-            </Button>
-            <Button
-                variant="3"
-                name="log_overview_btn"
-                onPointerTap={onLogOverviewBtn}
-                textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', right: 1, width: 110, top: 185, height: 30, minWidth: 110, maxWidth: 110 }}
-            >
-                {t('wiredmenu.monitor.log_overview')}
-            </Button>
-        </Region>
-    );
-};
-
 /** Named region `monitor_container` of WiredMenuViewLayout - configured through the parent's `monitorContainer` prop. */
 export interface WiredMenuViewLayoutMonitorContainerProps {
-    imageContainer?: WiredMenuViewLayoutImageContainerProps;
+    captionTitle?: string;
     layout?: BoxLayout;
-    logContainer?: WiredMenuViewLayoutLogContainerProps;
+    onClearLogBtn?: () => void;
+    onLogOverviewBtn?: () => void;
+    srcMonitorImage1?: string;
+    srcMonitorImage2?: string;
     statisticsContainer?: WiredMenuViewLayoutStatisticsContainerProps;
+    visibleMonitorImage1?: boolean;
 }
 
-export const WiredMenuViewLayoutMonitorContainer = ({ imageContainer, layout, logContainer, statisticsContainer }: WiredMenuViewLayoutMonitorContainerProps) => {
+export const WiredMenuViewLayoutMonitorContainer = ({ captionTitle, layout, onClearLogBtn, onLogOverviewBtn, srcMonitorImage1, srcMonitorImage2, statisticsContainer, visibleMonitorImage1 }: WiredMenuViewLayoutMonitorContainerProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="monitor_container"
             layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
         >
             <WiredMenuViewLayoutStatisticsContainer {...statisticsContainer} />
-            <WiredMenuViewLayoutImageContainer {...imageContainer} />
-            <WiredMenuViewLayoutLogContainer {...logContainer} />
+            <Region
+                name="image_container"
+                layout={{ position: 'absolute', left: 230, width: 256, top: 4, height: 145 }}
+            >
+                {(visibleMonitorImage1 ?? false) && (
+                    <ThemeImage
+                        name="monitor_image_1"
+                        src={srcMonitorImage1 ?? layoutImage('wired_monitor_element1.png')}
+                        layout={{ position: 'absolute', left: 0, width: 256, top: 0, height: 145 }}
+                    />
+                )}
+                <ThemeImage
+                    name="monitor_image_2"
+                    src={srcMonitorImage2 ?? layoutImage('wired_monitor_element2.png')}
+                    layout={{ position: 'absolute', left: 0, width: 256, top: 0, height: 145 }}
+                />
+            </Region>
+            <Region
+                name="log_container"
+                layout={{ position: 'absolute', left: 14, width: 472, top: 152, height: 218 }}
+            >
+                <Region
+                    name="title"
+                    layout={{ position: 'absolute', left: 0, width: 106, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionTitle ?? t('wiredmenu.monitor.log')} />
+                </Region>
+                <Region
+                    name="log_table_container"
+                    layout={{ position: 'absolute', left: 0, width: 472, top: 20, height: 156 }}
+                />
+                <Button
+                    variant="5"
+                    name="clear_log_btn"
+                    tintColor="#e33934"
+                    onPointerTap={onClearLogBtn}
+                    textStyle="text-style-button-shiny-regular"
+                    layout={{ position: 'absolute', left: 0, width: 110, top: 185, height: 30, minWidth: 110, maxWidth: 110 }}
+                >
+                    {t('wiredmenu.monitor.clear_all')}
+                </Button>
+                <Button
+                    variant="3"
+                    name="log_overview_btn"
+                    onPointerTap={onLogOverviewBtn}
+                    textStyle="text-style-button-shiny-regular"
+                    layout={{ position: 'absolute', right: 1, width: 110, top: 185, height: 30, minWidth: 110, maxWidth: 110 }}
+                >
+                    {t('wiredmenu.monitor.log_overview')}
+                </Button>
+            </Region>
         </Region>
     );
 };
@@ -598,46 +528,6 @@ export const WiredMenuViewLayoutTypePickerContainer = ({ buttons, captionTitle, 
     );
 };
 
-/** Named region `variable_list_container` of WiredMenuViewLayout - configured through the parent's `variableListContainer` prop. */
-export interface WiredMenuViewLayoutVariableListContainerProps {
-    layout?: BoxLayout;
-}
-
-export const WiredMenuViewLayoutVariableListContainer = ({ layout }: WiredMenuViewLayoutVariableListContainerProps) => {
-    return (
-        <Region
-            name="variable_list_container"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `variable_picker_container` of WiredMenuViewLayout - configured through the parent's `variablePickerContainer` prop. */
-export interface WiredMenuViewLayoutVariablePickerContainerProps {
-    captionTitle?: string;
-    layout?: BoxLayout;
-    variableListContainer?: WiredMenuViewLayoutVariableListContainerProps;
-}
-
-export const WiredMenuViewLayoutVariablePickerContainer = ({ captionTitle, layout, variableListContainer }: WiredMenuViewLayoutVariablePickerContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="variable_picker_container"
-            layout={{ position: 'absolute', left: 14, right: 298, top: 94, height: 239, ...layout }}
-        >
-            <Region
-                name="title"
-                layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionTitle ?? t('wiredmenu.variable_overview.picker')} />
-            </Region>
-            <WiredMenuViewLayoutVariableListContainer {...variableListContainer} />
-        </Region>
-    );
-};
-
 /** Row template `highlight_holders_button` of WiredMenuViewLayout - pass real rows through its `items…` slot. */
 export interface WiredMenuViewLayoutHighlightHoldersButtonItemProps {
     layout?: BoxLayout;
@@ -684,132 +574,85 @@ export const WiredMenuViewLayoutManageButtonItem = ({ layout, onManageButton }: 
     );
 };
 
-/** Named region `button_row` of WiredMenuViewLayout - configured through the parent's `buttonRow` prop. */
-export interface WiredMenuViewLayoutButtonRowProps {
-    itemsButtonRow?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const WiredMenuViewLayoutButtonRow = ({ itemsButtonRow, layout }: WiredMenuViewLayoutButtonRowProps) => {
-    return (
-        <Region
-            name="button_row"
-            layout={{ position: 'absolute', left: 14, width: 188, top: 342, height: 25, minWidth: 188, maxWidth: 188, flexDirection: 'row', gap: 10, ...layout }}
-        >
-            {itemsButtonRow ?? (
-                <>
-                    <WiredMenuViewLayoutHighlightHoldersButtonItem />
-                    <WiredMenuViewLayoutManageButtonItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
-/** Named region `variable_properties_table_container` of WiredMenuViewLayout - configured through the parent's `variablePropertiesTableContainer` prop. */
-export interface WiredMenuViewLayoutVariablePropertiesTableContainerProps {
-    layout?: BoxLayout;
-}
-
-export const WiredMenuViewLayoutVariablePropertiesTableContainer = ({ layout }: WiredMenuViewLayoutVariablePropertiesTableContainerProps) => {
-    return (
-        <Region
-            name="variable_properties_table_container"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `variable_properties_container` of WiredMenuViewLayout - configured through the parent's `variablePropertiesContainer` prop. */
-export interface WiredMenuViewLayoutVariablePropertiesContainerProps {
-    captionTitle?: string;
-    layout?: BoxLayout;
-    variablePropertiesTableContainer?: WiredMenuViewLayoutVariablePropertiesTableContainerProps;
-}
-
-export const WiredMenuViewLayoutVariablePropertiesContainer = ({ captionTitle, layout, variablePropertiesTableContainer }: WiredMenuViewLayoutVariablePropertiesContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="variable_properties_container"
-            layout={{ position: 'absolute', left: 230, width: 256, top: 17, height: 208, ...layout }}
-        >
-            <Region
-                name="title"
-                layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionTitle ?? t('wiredmenu.variable_overview.properties')} />
-            </Region>
-            <WiredMenuViewLayoutVariablePropertiesTableContainer {...variablePropertiesTableContainer} />
-        </Region>
-    );
-};
-
-/** Named region `variable_texts_table_container` of WiredMenuViewLayout - configured through the parent's `variableTextsTableContainer` prop. */
-export interface WiredMenuViewLayoutVariableTextsTableContainerProps {
-    layout?: BoxLayout;
-}
-
-export const WiredMenuViewLayoutVariableTextsTableContainer = ({ layout }: WiredMenuViewLayoutVariableTextsTableContainerProps) => {
-    return (
-        <Region
-            name="variable_texts_table_container"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `variable_texts_container` of WiredMenuViewLayout - configured through the parent's `variableTextsContainer` prop. */
-export interface WiredMenuViewLayoutVariableTextsContainerProps {
-    captionTitle?: string;
-    layout?: BoxLayout;
-    variableTextsTableContainer?: WiredMenuViewLayoutVariableTextsTableContainerProps;
-}
-
-export const WiredMenuViewLayoutVariableTextsContainer = ({ captionTitle, layout, variableTextsTableContainer }: WiredMenuViewLayoutVariableTextsContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="variable_texts_container"
-            layout={{ position: 'absolute', left: 230, width: 256, top: 233, height: 135, ...layout }}
-        >
-            <Region
-                name="title"
-                layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionTitle ?? t('wiredmenu.variable_overview.text_values')} />
-            </Region>
-            <WiredMenuViewLayoutVariableTextsTableContainer {...variableTextsTableContainer} />
-        </Region>
-    );
-};
-
 /** Named region `variable_overview_container` of WiredMenuViewLayout - configured through the parent's `variableOverviewContainer` prop. */
 export interface WiredMenuViewLayoutVariableOverviewContainerProps {
-    buttonRow?: WiredMenuViewLayoutButtonRowProps;
+    captionTitle?: string;
+    captionTitle2?: string;
+    captionTitle3?: string;
+    itemsButtonRow?: ReactNode;
     layout?: BoxLayout;
     typePickerContainer?: WiredMenuViewLayoutTypePickerContainerProps;
-    variablePickerContainer?: WiredMenuViewLayoutVariablePickerContainerProps;
-    variablePropertiesContainer?: WiredMenuViewLayoutVariablePropertiesContainerProps;
-    variableTextsContainer?: WiredMenuViewLayoutVariableTextsContainerProps;
     visibleVariableOverviewContainer?: boolean;
 }
 
-export const WiredMenuViewLayoutVariableOverviewContainer = ({ buttonRow, layout, typePickerContainer, variablePickerContainer, variablePropertiesContainer, variableTextsContainer, visibleVariableOverviewContainer }: WiredMenuViewLayoutVariableOverviewContainerProps) => {
+export const WiredMenuViewLayoutVariableOverviewContainer = ({ captionTitle, captionTitle2, captionTitle3, itemsButtonRow, layout, typePickerContainer, visibleVariableOverviewContainer }: WiredMenuViewLayoutVariableOverviewContainerProps) => {
+    const t = useTranslation();
+
     return (
-        <Region
-            name="variable_overview_container"
-            visible={visibleVariableOverviewContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
-        >
-            <WiredMenuViewLayoutTypePickerContainer {...typePickerContainer} />
-            <WiredMenuViewLayoutVariablePickerContainer {...variablePickerContainer} />
-            <WiredMenuViewLayoutButtonRow {...buttonRow} />
-            <WiredMenuViewLayoutVariablePropertiesContainer {...variablePropertiesContainer} />
-            <WiredMenuViewLayoutVariableTextsContainer {...variableTextsContainer} />
-        </Region>
+        (visibleVariableOverviewContainer ?? false) && (
+            <Region
+                name="variable_overview_container"
+                layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
+            >
+                <WiredMenuViewLayoutTypePickerContainer {...typePickerContainer} />
+                <Region
+                    name="variable_picker_container"
+                    layout={{ position: 'absolute', left: 14, right: 298, top: 94, height: 239 }}
+                >
+                    <Region
+                        name="title"
+                        layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionTitle ?? t('wiredmenu.variable_overview.picker')} />
+                    </Region>
+                    <Region
+                        name="variable_list_container"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0 }}
+                    />
+                </Region>
+                <Region
+                    name="button_row"
+                    layout={{ position: 'absolute', left: 14, width: 188, top: 342, height: 25, minWidth: 188, maxWidth: 188, flexDirection: 'row', gap: 10 }}
+                >
+                    {itemsButtonRow ?? (
+                        <>
+                            <WiredMenuViewLayoutHighlightHoldersButtonItem />
+                            <WiredMenuViewLayoutManageButtonItem />
+                        </>
+                    )}
+                </Region>
+                <Region
+                    name="variable_properties_container"
+                    layout={{ position: 'absolute', left: 230, width: 256, top: 17, height: 208 }}
+                >
+                    <Region
+                        name="title"
+                        layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionTitle2 ?? t('wiredmenu.variable_overview.properties')} />
+                    </Region>
+                    <Region
+                        name="variable_properties_table_container"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0 }}
+                    />
+                </Region>
+                <Region
+                    name="variable_texts_container"
+                    layout={{ position: 'absolute', left: 230, width: 256, top: 233, height: 135 }}
+                >
+                    <Region
+                        name="title"
+                        layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionTitle3 ?? t('wiredmenu.variable_overview.text_values')} />
+                    </Region>
+                    <Region
+                        name="variable_texts_table_container"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0 }}
+                    />
+                </Region>
+            </Region>
+        )
     );
 };
 
@@ -959,88 +802,6 @@ export const WiredMenuViewLayoutTypePickerContainer2 = ({ buttons, captionTitle,
     );
 };
 
-/** Named region `variable_values_table_container` of WiredMenuViewLayout - configured through the parent's `variableValuesTableContainer` prop. */
-export interface WiredMenuViewLayoutVariableValuesTableContainerProps {
-    layout?: BoxLayout;
-}
-
-export const WiredMenuViewLayoutVariableValuesTableContainer = ({ layout }: WiredMenuViewLayoutVariableValuesTableContainerProps) => {
-    return (
-        <Region
-            name="variable_values_table_container"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 34, ...layout }}
-        />
-    );
-};
-
-/** Named region `var_picker_container` of WiredMenuViewLayout - configured through the parent's `varPickerContainer` prop. */
-export interface WiredMenuViewLayoutVarPickerContainerProps {
-    layout?: BoxLayout;
-}
-
-export const WiredMenuViewLayoutVarPickerContainer = ({ layout }: WiredMenuViewLayoutVarPickerContainerProps) => {
-    return (
-        <Region
-            name="var_picker_container"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 22, ...layout }}
-        />
-    );
-};
-
-/** Named region `variable_setting` of WiredMenuViewLayout - configured through the parent's `variableSetting` prop. */
-export interface WiredMenuViewLayoutVariableSettingProps {
-    layout?: BoxLayout;
-    varPickerContainer?: WiredMenuViewLayoutVarPickerContainerProps;
-}
-
-export const WiredMenuViewLayoutVariableSetting = ({ layout, varPickerContainer }: WiredMenuViewLayoutVariableSettingProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="variable_setting"
-            layout={{ position: 'absolute', left: 6, right: 22, top: 6, height: 42, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.inspection.select_variable')} />
-            </Region>
-            <WiredMenuViewLayoutVarPickerContainer {...varPickerContainer} />
-        </Region>
-    );
-};
-
-/** Named region `value_setting` of WiredMenuViewLayout - configured through the parent's `valueSetting` prop. */
-export interface WiredMenuViewLayoutValueSettingProps {
-    layout?: BoxLayout;
-}
-
-export const WiredMenuViewLayoutValueSetting = ({ layout }: WiredMenuViewLayoutValueSettingProps) => {
-    const t = useTranslation();
-    const [ valueInputValue, setValueInputValue ] = useState('');
-
-    return (
-        <Region
-            name="value_setting"
-            layout={{ position: 'absolute', left: 6, right: 22, top: 52, height: 42, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.inspection.select_value')} />
-            </Region>
-            <Border
-                variant="4"
-                name="value_input_border"
-                layout={{ position: 'absolute', left: 0, width: 80, top: 20, height: 22 }}
-            >
-                <TextInput
-                    value={valueInputValue}
-                    onChange={setValueInputValue}
-                    layout={{ position: 'absolute', left: 5, right: 4, top: 3, bottom: 2 }}
-                />
-            </Border>
-        </Region>
-    );
-};
-
 /** Named region `variable_values_container` of WiredMenuViewLayout - configured through the parent's `variableValuesContainer` prop. */
 export interface WiredMenuViewLayoutVariableValuesContainerProps {
     captionTitle?: string;
@@ -1048,14 +809,12 @@ export interface WiredMenuViewLayoutVariableValuesContainerProps {
     onAddVarBtn?: () => void;
     onCreateVarBtn?: () => void;
     onDeleteVarBtn?: () => void;
-    valueSetting?: WiredMenuViewLayoutValueSettingProps;
-    variableSetting?: WiredMenuViewLayoutVariableSettingProps;
-    variableValuesTableContainer?: WiredMenuViewLayoutVariableValuesTableContainerProps;
     visibleCreateVarBubble?: boolean;
 }
 
-export const WiredMenuViewLayoutVariableValuesContainer = ({ captionTitle, layout, onAddVarBtn, onCreateVarBtn, onDeleteVarBtn, valueSetting, variableSetting, variableValuesTableContainer, visibleCreateVarBubble }: WiredMenuViewLayoutVariableValuesContainerProps) => {
+export const WiredMenuViewLayoutVariableValuesContainer = ({ captionTitle, layout, onAddVarBtn, onCreateVarBtn, onDeleteVarBtn, visibleCreateVarBubble }: WiredMenuViewLayoutVariableValuesContainerProps) => {
     const t = useTranslation();
+    const [ valueInputValue, setValueInputValue ] = useState('');
 
     return (
         <Region
@@ -1068,7 +827,10 @@ export const WiredMenuViewLayoutVariableValuesContainer = ({ captionTitle, layou
             >
                 <ThemeText text={captionTitle ?? t('wiredmenu.inspection.variables')} />
             </Region>
-            <WiredMenuViewLayoutVariableValuesTableContainer {...variableValuesTableContainer} />
+            <Region
+                name="variable_values_table_container"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 34 }}
+            />
             <Region layout={{ position: 'absolute', left: 0, right: 0, bottom: -5, height: 30, flexDirection: 'row', gap: 13 }}>
                 <Button
                     variant="3"
@@ -1089,51 +851,54 @@ export const WiredMenuViewLayoutVariableValuesContainer = ({ captionTitle, layou
                     {t('wiredmenu.inspection.add')}
                 </Button>
             </Region>
-            <Bubble
-                variant="7"
-                name="create_var_bubble"
-                visible={visibleCreateVarBubble ?? false}
-                layout={{ position: 'absolute', left: 122, width: 186, top: 181, height: 145 }}
-            >
-                <WiredMenuViewLayoutVariableSetting {...variableSetting} />
-                <WiredMenuViewLayoutValueSetting {...valueSetting} />
-                <Button
-                    variant="3"
-                    name="create_var_btn"
-                    onPointerTap={onCreateVarBtn}
-                    textStyle="text-style-button-shiny-regular"
-                    layout={{ position: 'absolute', left: 6, right: 22, bottom: 20, height: 25, minWidth: 158, maxWidth: 158 }}
+            {(visibleCreateVarBubble ?? false) && (
+                <Bubble
+                    variant="7"
+                    name="create_var_bubble"
+                    layout={{ position: 'absolute', left: 122, width: 186, top: 181, height: 145 }}
                 >
-                    {t('wiredmenu.inspection.create')}
-                </Button>
-            </Bubble>
-        </Region>
-    );
-};
-
-/** Named region `pin_option_container` of WiredMenuViewLayout - configured through the parent's `pinOptionContainer` prop. */
-export interface WiredMenuViewLayoutPinOptionContainerProps {
-    layout?: BoxLayout;
-    onPinCheckbox?: () => void;
-}
-
-export const WiredMenuViewLayoutPinOptionContainer = ({ layout, onPinCheckbox }: WiredMenuViewLayoutPinOptionContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="pin_option_container"
-            layout={{ position: 'absolute', left: 0, width: 197, top: 254, height: 18, ...layout }}
-        >
-            <CheckBox
-                variant="3"
-                name="pin_checkbox"
-                onPointerTap={onPinCheckbox}
-                layout={{ position: 'absolute', left: 0, width: 17, top: 1, height: 17 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 82, top: 0, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.inspection.pin')} />
-            </Region>
+                    <Region
+                        name="variable_setting"
+                        layout={{ position: 'absolute', left: 6, right: 22, top: 6, height: 42 }}
+                    >
+                        <Region layout={{ position: 'absolute', left: 0, width: 55, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <ThemeText text={t('wiredmenu.inspection.select_variable')} />
+                        </Region>
+                        <Region
+                            name="var_picker_container"
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 20, height: 22 }}
+                        />
+                    </Region>
+                    <Region
+                        name="value_setting"
+                        layout={{ position: 'absolute', left: 6, right: 22, top: 52, height: 42 }}
+                    >
+                        <Region layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <ThemeText text={t('wiredmenu.inspection.select_value')} />
+                        </Region>
+                        <Border
+                            variant="4"
+                            name="value_input_border"
+                            layout={{ position: 'absolute', left: 0, width: 80, top: 20, height: 22 }}
+                        >
+                            <TextInput
+                                value={valueInputValue}
+                                onChange={setValueInputValue}
+                                layout={{ position: 'absolute', left: 5, right: 4, top: 3, bottom: 2 }}
+                            />
+                        </Border>
+                    </Region>
+                    <Button
+                        variant="3"
+                        name="create_var_btn"
+                        onPointerTap={onCreateVarBtn}
+                        textStyle="text-style-button-shiny-regular"
+                        layout={{ position: 'absolute', left: 6, right: 22, bottom: 20, height: 25, minWidth: 158, maxWidth: 158 }}
+                    >
+                        {t('wiredmenu.inspection.create')}
+                    </Button>
+                </Bubble>
+            )}
         </Region>
     );
 };
@@ -1145,12 +910,18 @@ export interface WiredMenuViewLayoutPreviewContainerProps {
     captionTitle?: string;
     layout?: BoxLayout;
     onHighlightWiredBtn?: () => void;
-    pinOptionContainer?: WiredMenuViewLayoutPinOptionContainerProps;
+    onPinCheckbox?: () => void;
     srcGlobalPlaceholder?: string;
     srcPreviewImageBitmap?: string;
+    visibleGlobalPlaceholder?: boolean;
+    visiblePreviewAvatar?: boolean;
+    visiblePreviewImageBitmap?: boolean;
+    visiblePreviewInstructionFurni?: boolean;
+    visiblePreviewInstructionUser?: boolean;
+    visiblePreviewPet?: boolean;
 }
 
-export const WiredMenuViewLayoutPreviewContainer = ({ captionPreviewInstructionFurni, captionPreviewInstructionUser, captionTitle, layout, onHighlightWiredBtn, pinOptionContainer, srcGlobalPlaceholder, srcPreviewImageBitmap }: WiredMenuViewLayoutPreviewContainerProps) => {
+export const WiredMenuViewLayoutPreviewContainer = ({ captionPreviewInstructionFurni, captionPreviewInstructionUser, captionTitle, layout, onHighlightWiredBtn, onPinCheckbox, srcGlobalPlaceholder, srcPreviewImageBitmap, visibleGlobalPlaceholder, visiblePreviewAvatar, visiblePreviewImageBitmap, visiblePreviewInstructionFurni, visiblePreviewInstructionUser, visiblePreviewPet }: WiredMenuViewLayoutPreviewContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -1170,51 +941,57 @@ export const WiredMenuViewLayoutPreviewContainer = ({ captionPreviewInstructionF
                 tintColor="#dadada"
                 layout={{ position: 'absolute', left: 0, right: 9, top: 20, height: 225, justifyContent: 'center' }}
             >
-                <Region
-                    name="preview_instruction_furni"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionPreviewInstructionFurni ?? t('wiredmenu.inspection.preview_furni_instruction')}
-                        textOptions={{ align: 'center' }}
+                {(visiblePreviewInstructionFurni ?? false) && (
+                    <Region
+                        name="preview_instruction_furni"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionPreviewInstructionFurni ?? t('wiredmenu.inspection.preview_furni_instruction')}
+                            textOptions={{ align: 'center' }}
+                        />
+                    </Region>
+                )}
+                {(visiblePreviewInstructionUser ?? false) && (
+                    <Region
+                        name="preview_instruction_user"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionPreviewInstructionUser ?? t('wiredmenu.inspection.preview_user_instruction')}
+                            textOptions={{ align: 'center' }}
+                        />
+                    </Region>
+                )}
+                {(visiblePreviewAvatar ?? false) && (
+                    <WidgetSlot
+                        widgetType="avatar_image"
+                        name="preview_avatar"
+                        options={{ 'avatar_image:cropped': 'true' }}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 84 }}
                     />
-                </Region>
-                <Region
-                    name="preview_instruction_user"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 104, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionPreviewInstructionUser ?? t('wiredmenu.inspection.preview_user_instruction')}
-                        textOptions={{ align: 'center' }}
+                )}
+                {(visiblePreviewPet ?? false) && (
+                    <WidgetSlot
+                        widgetType="pet_image"
+                        name="preview_pet"
+                        layout={{ position: 'absolute', left: 46, right: 46, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 38, overflow: 'hidden' }}
                     />
-                </Region>
-                <WidgetSlot
-                    widgetType="avatar_image"
-                    name="preview_avatar"
-                    visible={false}
-                    options={{ 'avatar_image:cropped': 'true' }}
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 84 }}
-                />
-                <WidgetSlot
-                    widgetType="pet_image"
-                    name="preview_pet"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 46, right: 46, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 38, overflow: 'hidden' }}
-                />
-                <ThemeImage
-                    name="preview_image_bitmap"
-                    src={srcPreviewImageBitmap}
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 50 }}
-                    visible={false}
-                />
-                <ThemeImage
-                    name="global_placeholder"
-                    src={srcGlobalPlaceholder ?? layoutImage('wired_global_placeholder.png')}
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 120, top: 64, height: 97 }}
-                    visible={false}
-                />
+                )}
+                {(visiblePreviewImageBitmap ?? false) && (
+                    <ThemeImage
+                        name="preview_image_bitmap"
+                        src={srcPreviewImageBitmap}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 50 }}
+                    />
+                )}
+                {(visibleGlobalPlaceholder ?? false) && (
+                    <ThemeImage
+                        name="global_placeholder"
+                        src={srcGlobalPlaceholder ?? layoutImage('wired_global_placeholder.png')}
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 120, top: 64, height: 97 }}
+                    />
+                )}
                 <ContainerButton
                     variant="7"
                     name="highlight_wired_btn"
@@ -1228,7 +1005,20 @@ export const WiredMenuViewLayoutPreviewContainer = ({ captionPreviewInstructionF
                     />
                 </ContainerButton>
             </Border>
-            <WiredMenuViewLayoutPinOptionContainer {...pinOptionContainer} />
+            <Region
+                name="pin_option_container"
+                layout={{ position: 'absolute', left: 0, width: 197, top: 254, height: 18 }}
+            >
+                <CheckBox
+                    variant="3"
+                    name="pin_checkbox"
+                    onPointerTap={onPinCheckbox}
+                    layout={{ position: 'absolute', left: 0, width: 17, top: 1, height: 17 }}
+                />
+                <Region layout={{ position: 'absolute', left: 20, width: 82, top: 0, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredmenu.inspection.pin')} />
+                </Region>
+            </Region>
         </Region>
     );
 };
@@ -1245,17 +1035,18 @@ export interface WiredMenuViewLayoutInspectionContainerProps {
 
 export const WiredMenuViewLayoutInspectionContainer = ({ layout, onInspectionContainer, previewContainer, typePickerContainer, variableValuesContainer, visibleInspectionContainer }: WiredMenuViewLayoutInspectionContainerProps) => {
     return (
-        <Region
-            name="inspection_container"
-            visible={visibleInspectionContainer ?? false}
-            onPointerTap={onInspectionContainer}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
-        >
-            <WiredMenuViewLayoutTypePickerContainer2 {...typePickerContainer} />
-            <WiredMenuViewLayoutVariableValuesContainer {...variableValuesContainer} />
-            <WiredMenuViewLayoutPreviewContainer {...previewContainer} />
-        </Region>
+        (visibleInspectionContainer ?? false) && (
+            <Region
+                name="inspection_container"
+                onPointerTap={onInspectionContainer}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
+            >
+                <WiredMenuViewLayoutTypePickerContainer2 {...typePickerContainer} />
+                <WiredMenuViewLayoutVariableValuesContainer {...variableValuesContainer} />
+                <WiredMenuViewLayoutPreviewContainer {...previewContainer} />
+            </Region>
+        )
     );
 };
 
@@ -1324,174 +1115,70 @@ export const WiredMenuViewLayoutChestControlsContainer = ({ captionTitle, layout
     );
 };
 
-/** Named region `logs_table_container` of WiredMenuViewLayout - configured through the parent's `logsTableContainer` prop. */
-export interface WiredMenuViewLayoutLogsTableContainerProps {
-    layout?: BoxLayout;
-}
-
-export const WiredMenuViewLayoutLogsTableContainer = ({ layout }: WiredMenuViewLayoutLogsTableContainerProps) => {
-    return (
-        <Region
-            name="logs_table_container"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 40, ...layout }}
-        />
-    );
-};
-
-/** Named region `logs_container` of WiredMenuViewLayout - configured through the parent's `logsContainer` prop. */
-export interface WiredMenuViewLayoutLogsContainerProps {
-    captionTitle?: string;
-    captionTitleExtra?: string;
-    layout?: BoxLayout;
-    logsTableContainer?: WiredMenuViewLayoutLogsTableContainerProps;
-    onViewInDetailButton?: () => void;
-}
-
-export const WiredMenuViewLayoutLogsContainer = ({ captionTitle, captionTitleExtra, layout, logsTableContainer, onViewInDetailButton }: WiredMenuViewLayoutLogsContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="logs_container"
-            layout={{ position: 'absolute', left: 14, width: 472, top: 139, height: 228, ...layout }}
-        >
-            <Region
-                name="title"
-                layout={{ position: 'absolute', left: 0, width: 136, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionTitle ?? t('wiredmenu.chests.room_logs')} />
-            </Region>
-            <Region
-                name="title_extra"
-                layout={{ position: 'absolute', right: 3, width: 197, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionTitleExtra ?? t('wiredmenu.chests.room_logs.extra')} />
-            </Region>
-            <WiredMenuViewLayoutLogsTableContainer {...logsTableContainer} />
-            <Button
-                variant="3"
-                name="view_in_detail_button"
-                onPointerTap={onViewInDetailButton}
-                textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 0, width: 114, top: 197, height: 30 }}
-            >
-                {t('wiredmenu.chests.room_logs.view_detail')}
-            </Button>
-        </Region>
-    );
-};
-
 /** Named region `chests_container` of WiredMenuViewLayout - configured through the parent's `chestsContainer` prop. */
 export interface WiredMenuViewLayoutChestsContainerProps {
+    captionTitle?: string;
+    captionTitleExtra?: string;
     chestControlsContainer?: WiredMenuViewLayoutChestControlsContainerProps;
     layout?: BoxLayout;
-    logsContainer?: WiredMenuViewLayoutLogsContainerProps;
+    onViewInDetailButton?: () => void;
     visibleChestsContainer?: boolean;
 }
 
-export const WiredMenuViewLayoutChestsContainer = ({ chestControlsContainer, layout, logsContainer, visibleChestsContainer }: WiredMenuViewLayoutChestsContainerProps) => {
-    return (
-        <Region
-            name="chests_container"
-            visible={visibleChestsContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
-        >
-            <WiredMenuViewLayoutChestControlsContainer {...chestControlsContainer} />
-            <WiredMenuViewLayoutLogsContainer {...logsContainer} />
-        </Region>
-    );
-};
-
-/** Named region `option_box` of WiredMenuViewLayout - configured through the parent's `optionBox` prop. */
-export interface WiredMenuViewLayoutOptionBoxProps {
-    layout?: BoxLayout;
-    onModify1Checkbox?: () => void;
-}
-
-export const WiredMenuViewLayoutOptionBox = ({ layout, onModify1Checkbox }: WiredMenuViewLayoutOptionBoxProps) => {
+export const WiredMenuViewLayoutChestsContainer = ({ captionTitle, captionTitleExtra, chestControlsContainer, layout, onViewInDetailButton, visibleChestsContainer }: WiredMenuViewLayoutChestsContainerProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="option_box"
-            layout={{ position: 'absolute', left: 0, width: 214, top: 20, height: 20, ...layout }}
-        >
-            <CheckBox
-                variant="3"
-                name="modify_1_checkbox"
-                onPointerTap={onModify1Checkbox}
-                layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.permission_level.1')} />
+        (visibleChestsContainer ?? false) && (
+            <Region
+                name="chests_container"
+                layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
+            >
+                <WiredMenuViewLayoutChestControlsContainer {...chestControlsContainer} />
+                <Region
+                    name="logs_container"
+                    layout={{ position: 'absolute', left: 14, width: 472, top: 139, height: 228 }}
+                >
+                    <Region
+                        name="title"
+                        layout={{ position: 'absolute', left: 0, width: 136, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionTitle ?? t('wiredmenu.chests.room_logs')} />
+                    </Region>
+                    <Region
+                        name="title_extra"
+                        layout={{ position: 'absolute', right: 3, width: 197, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionTitleExtra ?? t('wiredmenu.chests.room_logs.extra')} />
+                    </Region>
+                    <Region
+                        name="logs_table_container"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 40 }}
+                    />
+                    <Button
+                        variant="3"
+                        name="view_in_detail_button"
+                        onPointerTap={onViewInDetailButton}
+                        textStyle="text-style-button-shiny-regular"
+                        layout={{ position: 'absolute', left: 0, width: 114, top: 197, height: 30 }}
+                    >
+                        {t('wiredmenu.chests.room_logs.view_detail')}
+                    </Button>
+                </Region>
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `option_box` of WiredMenuViewLayout - configured through the parent's `optionBox` prop. */
-export interface WiredMenuViewLayoutOptionBox2Props {
-    layout?: BoxLayout;
-    onModify2Checkbox?: () => void;
-}
-
-export const WiredMenuViewLayoutOptionBox2 = ({ layout, onModify2Checkbox }: WiredMenuViewLayoutOptionBox2Props) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="option_box"
-            layout={{ position: 'absolute', left: 0, width: 214, top: 39, height: 20, ...layout }}
-        >
-            <CheckBox
-                variant="3"
-                name="modify_2_checkbox"
-                onPointerTap={onModify2Checkbox}
-                layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.permission_level.2')} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `option_box` of WiredMenuViewLayout - configured through the parent's `optionBox` prop. */
-export interface WiredMenuViewLayoutOptionBox3Props {
-    layout?: BoxLayout;
-    onModify3Checkbox?: () => void;
-}
-
-export const WiredMenuViewLayoutOptionBox3 = ({ layout, onModify3Checkbox }: WiredMenuViewLayoutOptionBox3Props) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="option_box"
-            layout={{ position: 'absolute', left: 0, width: 214, top: 58, height: 20, ...layout }}
-        >
-            <CheckBox
-                variant="3"
-                name="modify_3_checkbox"
-                onPointerTap={onModify3Checkbox}
-                layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.permission_level.3')} />
-            </Region>
-        </Region>
+        )
     );
 };
 
 /** Named region `modify_settings_container` of WiredMenuViewLayout - configured through the parent's `modifySettingsContainer` prop. */
 export interface WiredMenuViewLayoutModifySettingsContainerProps {
     layout?: BoxLayout;
-    optionBox?: WiredMenuViewLayoutOptionBoxProps;
-    optionBox2?: WiredMenuViewLayoutOptionBox2Props;
-    optionBox3?: WiredMenuViewLayoutOptionBox3Props;
+    onModify1Checkbox?: () => void;
+    onModify2Checkbox?: () => void;
+    onModify3Checkbox?: () => void;
 }
 
-export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, optionBox, optionBox2, optionBox3 }: WiredMenuViewLayoutModifySettingsContainerProps) => {
+export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, onModify1Checkbox, onModify2Checkbox, onModify3Checkbox }: WiredMenuViewLayoutModifySettingsContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -1502,116 +1189,47 @@ export const WiredMenuViewLayoutModifySettingsContainer = ({ layout, optionBox, 
             <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredmenu.settings.room_settings.modify_rights')} />
             </Region>
-            <WiredMenuViewLayoutOptionBox {...optionBox} />
-            <WiredMenuViewLayoutOptionBox2 {...optionBox2} />
-            <WiredMenuViewLayoutOptionBox3 {...optionBox3} />
-        </Region>
-    );
-};
-
-/** Named region `option_box` of WiredMenuViewLayout - configured through the parent's `optionBox` prop. */
-export interface WiredMenuViewLayoutOptionBox4Props {
-    layout?: BoxLayout;
-    onRead0Checkbox?: () => void;
-}
-
-export const WiredMenuViewLayoutOptionBox4 = ({ layout, onRead0Checkbox }: WiredMenuViewLayoutOptionBox4Props) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="option_box"
-            layout={{ position: 'absolute', left: 0, width: 214, top: 20, height: 20, ...layout }}
-        >
-            <CheckBox
-                variant="3"
-                name="read_0_checkbox"
-                onPointerTap={onRead0Checkbox}
-                layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.permission_level.0')} />
+            <Region
+                name="option_box"
+                layout={{ position: 'absolute', left: 0, width: 214, top: 20, height: 20 }}
+            >
+                <CheckBox
+                    variant="3"
+                    name="modify_1_checkbox"
+                    onPointerTap={onModify1Checkbox}
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
+                />
+                <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredmenu.settings.permission_level.1')} />
+                </Region>
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `option_box` of WiredMenuViewLayout - configured through the parent's `optionBox` prop. */
-export interface WiredMenuViewLayoutOptionBox5Props {
-    layout?: BoxLayout;
-    onRead1Checkbox?: () => void;
-}
-
-export const WiredMenuViewLayoutOptionBox5 = ({ layout, onRead1Checkbox }: WiredMenuViewLayoutOptionBox5Props) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="option_box"
-            layout={{ position: 'absolute', left: 0, width: 214, top: 39, height: 20, ...layout }}
-        >
-            <CheckBox
-                variant="3"
-                name="read_1_checkbox"
-                onPointerTap={onRead1Checkbox}
-                layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.permission_level.1')} />
+            <Region
+                name="option_box"
+                layout={{ position: 'absolute', left: 0, width: 214, top: 39, height: 20 }}
+            >
+                <CheckBox
+                    variant="3"
+                    name="modify_2_checkbox"
+                    onPointerTap={onModify2Checkbox}
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
+                />
+                <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredmenu.settings.permission_level.2')} />
+                </Region>
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `option_box` of WiredMenuViewLayout - configured through the parent's `optionBox` prop. */
-export interface WiredMenuViewLayoutOptionBox6Props {
-    layout?: BoxLayout;
-    onRead2Checkbox?: () => void;
-}
-
-export const WiredMenuViewLayoutOptionBox6 = ({ layout, onRead2Checkbox }: WiredMenuViewLayoutOptionBox6Props) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="option_box"
-            layout={{ position: 'absolute', left: 0, width: 214, top: 58, height: 20, ...layout }}
-        >
-            <CheckBox
-                variant="3"
-                name="read_2_checkbox"
-                onPointerTap={onRead2Checkbox}
-                layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.permission_level.2')} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `option_box` of WiredMenuViewLayout - configured through the parent's `optionBox` prop. */
-export interface WiredMenuViewLayoutOptionBox7Props {
-    layout?: BoxLayout;
-    onRead3Checkbox?: () => void;
-}
-
-export const WiredMenuViewLayoutOptionBox7 = ({ layout, onRead3Checkbox }: WiredMenuViewLayoutOptionBox7Props) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="option_box"
-            layout={{ position: 'absolute', left: 0, width: 214, top: 77, height: 20, ...layout }}
-        >
-            <CheckBox
-                variant="3"
-                name="read_3_checkbox"
-                onPointerTap={onRead3Checkbox}
-                layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.permission_level.3')} />
+            <Region
+                name="option_box"
+                layout={{ position: 'absolute', left: 0, width: 214, top: 58, height: 20 }}
+            >
+                <CheckBox
+                    variant="3"
+                    name="modify_3_checkbox"
+                    onPointerTap={onModify3Checkbox}
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
+                />
+                <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredmenu.settings.permission_level.3')} />
+                </Region>
             </Region>
         </Region>
     );
@@ -1620,13 +1238,13 @@ export const WiredMenuViewLayoutOptionBox7 = ({ layout, onRead3Checkbox }: Wired
 /** Named region `read_settings_container` of WiredMenuViewLayout - configured through the parent's `readSettingsContainer` prop. */
 export interface WiredMenuViewLayoutReadSettingsContainerProps {
     layout?: BoxLayout;
-    optionBox?: WiredMenuViewLayoutOptionBox4Props;
-    optionBox2?: WiredMenuViewLayoutOptionBox5Props;
-    optionBox3?: WiredMenuViewLayoutOptionBox6Props;
-    optionBox4?: WiredMenuViewLayoutOptionBox7Props;
+    onRead0Checkbox?: () => void;
+    onRead1Checkbox?: () => void;
+    onRead2Checkbox?: () => void;
+    onRead3Checkbox?: () => void;
 }
 
-export const WiredMenuViewLayoutReadSettingsContainer = ({ layout, optionBox, optionBox2, optionBox3, optionBox4 }: WiredMenuViewLayoutReadSettingsContainerProps) => {
+export const WiredMenuViewLayoutReadSettingsContainer = ({ layout, onRead0Checkbox, onRead1Checkbox, onRead2Checkbox, onRead3Checkbox }: WiredMenuViewLayoutReadSettingsContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -1637,78 +1255,62 @@ export const WiredMenuViewLayoutReadSettingsContainer = ({ layout, optionBox, op
             <Region layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredmenu.settings.room_settings.read_rights')} />
             </Region>
-            <WiredMenuViewLayoutOptionBox4 {...optionBox} />
-            <WiredMenuViewLayoutOptionBox5 {...optionBox2} />
-            <WiredMenuViewLayoutOptionBox6 {...optionBox3} />
-            <WiredMenuViewLayoutOptionBox7 {...optionBox4} />
-        </Region>
-    );
-};
-
-/** Named region `timezone_container` of WiredMenuViewLayout - configured through the parent's `timezoneContainer` prop. */
-export interface WiredMenuViewLayoutTimezoneContainerProps {
-    layout?: BoxLayout;
-    onTimezonePicker?: () => void;
-}
-
-export const WiredMenuViewLayoutTimezoneContainer = ({ layout, onTimezonePicker }: WiredMenuViewLayoutTimezoneContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="timezone_container"
-            layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.room_settings.timezone')} />
-            </Region>
-            <Dropmenu
-                variant="3"
-                name="timezone_picker"
-                onPointerTap={onTimezonePicker}
-                layout={{ position: 'absolute', left: 0, width: 206, top: 21, height: 25 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `timezone_container` of WiredMenuViewLayout - configured through the parent's `timezoneContainer` prop. */
-export interface WiredMenuViewLayoutTimezoneContainer2Props {
-    layout?: BoxLayout;
-    onReloadRoomBtn?: () => void;
-    onRollBackBtn?: () => void;
-}
-
-export const WiredMenuViewLayoutTimezoneContainer2 = ({ layout, onReloadRoomBtn, onRollBackBtn }: WiredMenuViewLayoutTimezoneContainer2Props) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="timezone_container"
-            layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.room_settings.room_state')} />
-            </Region>
-            <Button
-                variant="3"
-                name="reload_room_btn"
-                onPointerTap={onReloadRoomBtn}
-                textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 0, width: 98, top: 21, height: 28, minWidth: 98, maxWidth: 98 }}
+            <Region
+                name="option_box"
+                layout={{ position: 'absolute', left: 0, width: 214, top: 20, height: 20 }}
             >
-                {t('wiredmenu.settings.room_state.reload')}
-            </Button>
-            <Button
-                variant="5"
-                name="roll_back_btn"
-                tintColor="#e33934"
-                onPointerTap={onRollBackBtn}
-                textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 109, width: 98, top: 21, height: 28, minWidth: 98, maxWidth: 98 }}
+                <CheckBox
+                    variant="3"
+                    name="read_0_checkbox"
+                    onPointerTap={onRead0Checkbox}
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
+                />
+                <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredmenu.settings.permission_level.0')} />
+                </Region>
+            </Region>
+            <Region
+                name="option_box"
+                layout={{ position: 'absolute', left: 0, width: 214, top: 39, height: 20 }}
             >
-                {t('wiredmenu.settings.room_state.roll_back')}
-            </Button>
+                <CheckBox
+                    variant="3"
+                    name="read_1_checkbox"
+                    onPointerTap={onRead1Checkbox}
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
+                />
+                <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredmenu.settings.permission_level.1')} />
+                </Region>
+            </Region>
+            <Region
+                name="option_box"
+                layout={{ position: 'absolute', left: 0, width: 214, top: 58, height: 20 }}
+            >
+                <CheckBox
+                    variant="3"
+                    name="read_2_checkbox"
+                    onPointerTap={onRead2Checkbox}
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
+                />
+                <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredmenu.settings.permission_level.2')} />
+                </Region>
+            </Region>
+            <Region
+                name="option_box"
+                layout={{ position: 'absolute', left: 0, width: 214, top: 77, height: 20 }}
+            >
+                <CheckBox
+                    variant="3"
+                    name="read_3_checkbox"
+                    onPointerTap={onRead3Checkbox}
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 1, height: 20 }}
+                />
+                <Region layout={{ position: 'absolute', left: 20, width: 210, top: 0, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredmenu.settings.permission_level.3')} />
+                </Region>
+            </Region>
         </Region>
     );
 };
@@ -1718,12 +1320,15 @@ export interface WiredMenuViewLayoutRoomSettingsContainerProps {
     captionTitle?: string;
     layout?: BoxLayout;
     modifySettingsContainer?: WiredMenuViewLayoutModifySettingsContainerProps;
+    onReloadRoomBtn?: () => void;
+    onRollBackBtn?: () => void;
+    onTimezonePicker?: () => void;
     readSettingsContainer?: WiredMenuViewLayoutReadSettingsContainerProps;
-    timezoneContainer?: WiredMenuViewLayoutTimezoneContainerProps;
-    timezoneContainer2?: WiredMenuViewLayoutTimezoneContainer2Props;
 }
 
-export const WiredMenuViewLayoutRoomSettingsContainer = ({ captionTitle, layout, modifySettingsContainer, readSettingsContainer, timezoneContainer, timezoneContainer2 }: WiredMenuViewLayoutRoomSettingsContainerProps) => {
+export const WiredMenuViewLayoutRoomSettingsContainer = ({ captionTitle, layout, modifySettingsContainer, onReloadRoomBtn, onRollBackBtn, onTimezonePicker, readSettingsContainer }: WiredMenuViewLayoutRoomSettingsContainerProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="room_settings_container"
@@ -1757,7 +1362,20 @@ export const WiredMenuViewLayoutRoomSettingsContainer = ({ captionTitle, layout,
                 tintColor="#dadada"
                 layout={{ position: 'absolute', left: 0, right: 245, top: 143, height: 64 }}
             >
-                <WiredMenuViewLayoutTimezoneContainer {...timezoneContainer} />
+                <Region
+                    name="timezone_container"
+                    layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText text={t('wiredmenu.settings.room_settings.timezone')} />
+                    </Region>
+                    <Dropmenu
+                        variant="3"
+                        name="timezone_picker"
+                        onPointerTap={onTimezonePicker}
+                        layout={{ position: 'absolute', left: 0, width: 206, top: 21, height: 25 }}
+                    />
+                </Region>
             </Border>
             <Border
                 variant="3"
@@ -1765,116 +1383,34 @@ export const WiredMenuViewLayoutRoomSettingsContainer = ({ captionTitle, layout,
                 tintColor="#dadada"
                 layout={{ position: 'absolute', left: 245, right: 0, top: 143, height: 64 }}
             >
-                <WiredMenuViewLayoutTimezoneContainer2 {...timezoneContainer2} />
+                <Region
+                    name="timezone_container"
+                    layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText text={t('wiredmenu.settings.room_settings.room_state')} />
+                    </Region>
+                    <Button
+                        variant="3"
+                        name="reload_room_btn"
+                        onPointerTap={onReloadRoomBtn}
+                        textStyle="text-style-button-shiny-regular"
+                        layout={{ position: 'absolute', left: 0, width: 98, top: 21, height: 28, minWidth: 98, maxWidth: 98 }}
+                    >
+                        {t('wiredmenu.settings.room_state.reload')}
+                    </Button>
+                    <Button
+                        variant="5"
+                        name="roll_back_btn"
+                        tintColor="#e33934"
+                        onPointerTap={onRollBackBtn}
+                        textStyle="text-style-button-shiny-regular"
+                        layout={{ position: 'absolute', left: 109, width: 98, top: 21, height: 28, minWidth: 98, maxWidth: 98 }}
+                    >
+                        {t('wiredmenu.settings.room_state.roll_back')}
+                    </Button>
+                </Region>
             </Border>
-        </Region>
-    );
-};
-
-/** Named region `option_container` of WiredMenuViewLayout - configured through the parent's `optionContainer` prop. */
-export interface WiredMenuViewLayoutOptionContainerProps {
-    layout?: BoxLayout;
-    onPreferenceToolbarCheckbox?: () => void;
-}
-
-export const WiredMenuViewLayoutOptionContainer = ({ layout, onPreferenceToolbarCheckbox }: WiredMenuViewLayoutOptionContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="option_container"
-            layout={{ position: 'absolute', left: 0, width: 450, top: 20, height: 20, ...layout }}
-        >
-            <CheckBox
-                variant="3"
-                name="preference_toolbar_checkbox"
-                onPointerTap={onPreferenceToolbarCheckbox}
-                layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 390, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.preferences.toolbar')} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `option_container` of WiredMenuViewLayout - configured through the parent's `optionContainer` prop. */
-export interface WiredMenuViewLayoutOptionContainer2Props {
-    layout?: BoxLayout;
-    onPreferenceInspectButtonCheckbox?: () => void;
-}
-
-export const WiredMenuViewLayoutOptionContainer2 = ({ layout, onPreferenceInspectButtonCheckbox }: WiredMenuViewLayoutOptionContainer2Props) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="option_container"
-            layout={{ position: 'absolute', left: 0, width: 450, top: 39, height: 20, ...layout }}
-        >
-            <CheckBox
-                variant="3"
-                name="preference_inspect_button_checkbox"
-                onPointerTap={onPreferenceInspectButtonCheckbox}
-                layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 390, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.preferences.inspect_button')} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `option_container` of WiredMenuViewLayout - configured through the parent's `optionContainer` prop. */
-export interface WiredMenuViewLayoutOptionContainer3Props {
-    layout?: BoxLayout;
-    onPreferencePlaytestCheckbox?: () => void;
-}
-
-export const WiredMenuViewLayoutOptionContainer3 = ({ layout, onPreferencePlaytestCheckbox }: WiredMenuViewLayoutOptionContainer3Props) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="option_container"
-            layout={{ position: 'absolute', left: 0, width: 450, top: 58, height: 20, ...layout }}
-        >
-            <CheckBox
-                variant="3"
-                name="preference_playtest_checkbox"
-                onPointerTap={onPreferencePlaytestCheckbox}
-                layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 430, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.preferences.playtest')} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `option_container` of WiredMenuViewLayout - configured through the parent's `optionContainer` prop. */
-export interface WiredMenuViewLayoutOptionContainer4Props {
-    layout?: BoxLayout;
-    onPreferenceAllNotificationsCheckbox?: () => void;
-}
-
-export const WiredMenuViewLayoutOptionContainer4 = ({ layout, onPreferenceAllNotificationsCheckbox }: WiredMenuViewLayoutOptionContainer4Props) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="option_container"
-            layout={{ position: 'absolute', left: 0, width: 450, top: 77, height: 20, ...layout }}
-        >
-            <CheckBox
-                variant="3"
-                name="preference_all_notifications_checkbox"
-                onPointerTap={onPreferenceAllNotificationsCheckbox}
-                layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 430, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.preferences.show_all_errors')} />
-            </Region>
         </Region>
     );
 };
@@ -1882,13 +1418,13 @@ export const WiredMenuViewLayoutOptionContainer4 = ({ layout, onPreferenceAllNot
 /** Named region `preferences_container` of WiredMenuViewLayout - configured through the parent's `preferencesContainer` prop. */
 export interface WiredMenuViewLayoutPreferencesContainer2Props {
     layout?: BoxLayout;
-    optionContainer?: WiredMenuViewLayoutOptionContainerProps;
-    optionContainer2?: WiredMenuViewLayoutOptionContainer2Props;
-    optionContainer3?: WiredMenuViewLayoutOptionContainer3Props;
-    optionContainer4?: WiredMenuViewLayoutOptionContainer4Props;
+    onPreferenceAllNotificationsCheckbox?: () => void;
+    onPreferenceInspectButtonCheckbox?: () => void;
+    onPreferencePlaytestCheckbox?: () => void;
+    onPreferenceToolbarCheckbox?: () => void;
 }
 
-export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, optionContainer, optionContainer2, optionContainer3, optionContainer4 }: WiredMenuViewLayoutPreferencesContainer2Props) => {
+export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, onPreferenceAllNotificationsCheckbox, onPreferenceInspectButtonCheckbox, onPreferencePlaytestCheckbox, onPreferenceToolbarCheckbox }: WiredMenuViewLayoutPreferencesContainer2Props) => {
     const t = useTranslation();
 
     return (
@@ -1899,37 +1435,62 @@ export const WiredMenuViewLayoutPreferencesContainer2 = ({ layout, optionContain
             <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredmenu.settings.preferences.general')} />
             </Region>
-            <WiredMenuViewLayoutOptionContainer {...optionContainer} />
-            <WiredMenuViewLayoutOptionContainer2 {...optionContainer2} />
-            <WiredMenuViewLayoutOptionContainer3 {...optionContainer3} />
-            <WiredMenuViewLayoutOptionContainer4 {...optionContainer4} />
-        </Region>
-    );
-};
-
-/** Named region `wored_style_container` of WiredMenuViewLayout - configured through the parent's `woredStyleContainer` prop. */
-export interface WiredMenuViewLayoutWoredStyleContainerProps {
-    layout?: BoxLayout;
-    onWiredStylePicker?: () => void;
-}
-
-export const WiredMenuViewLayoutWoredStyleContainer = ({ layout, onWiredStylePicker }: WiredMenuViewLayoutWoredStyleContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="wored_style_container"
-            layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredmenu.settings.preferences.wired_style')} />
+            <Region
+                name="option_container"
+                layout={{ position: 'absolute', left: 0, width: 450, top: 20, height: 20 }}
+            >
+                <CheckBox
+                    variant="3"
+                    name="preference_toolbar_checkbox"
+                    onPointerTap={onPreferenceToolbarCheckbox}
+                    layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
+                />
+                <Region layout={{ position: 'absolute', left: 20, width: 390, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredmenu.settings.preferences.toolbar')} />
+                </Region>
             </Region>
-            <Dropmenu
-                variant="3"
-                name="wired_style_picker"
-                onPointerTap={onWiredStylePicker}
-                layout={{ position: 'absolute', left: 0, width: 206, top: 21, height: 25 }}
-            />
+            <Region
+                name="option_container"
+                layout={{ position: 'absolute', left: 0, width: 450, top: 39, height: 20 }}
+            >
+                <CheckBox
+                    variant="3"
+                    name="preference_inspect_button_checkbox"
+                    onPointerTap={onPreferenceInspectButtonCheckbox}
+                    layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
+                />
+                <Region layout={{ position: 'absolute', left: 20, width: 390, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredmenu.settings.preferences.inspect_button')} />
+                </Region>
+            </Region>
+            <Region
+                name="option_container"
+                layout={{ position: 'absolute', left: 0, width: 450, top: 58, height: 20 }}
+            >
+                <CheckBox
+                    variant="3"
+                    name="preference_playtest_checkbox"
+                    onPointerTap={onPreferencePlaytestCheckbox}
+                    layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
+                />
+                <Region layout={{ position: 'absolute', left: 20, width: 430, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredmenu.settings.preferences.playtest')} />
+                </Region>
+            </Region>
+            <Region
+                name="option_container"
+                layout={{ position: 'absolute', left: 0, width: 450, top: 77, height: 20 }}
+            >
+                <CheckBox
+                    variant="3"
+                    name="preference_all_notifications_checkbox"
+                    onPointerTap={onPreferenceAllNotificationsCheckbox}
+                    layout={{ position: 'absolute', left: 0, width: 19, top: 1, height: 18 }}
+                />
+                <Region layout={{ position: 'absolute', left: 20, width: 430, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredmenu.settings.preferences.show_all_errors')} />
+                </Region>
+            </Region>
         </Region>
     );
 };
@@ -1938,11 +1499,11 @@ export const WiredMenuViewLayoutWoredStyleContainer = ({ layout, onWiredStylePic
 export interface WiredMenuViewLayoutPreferencesContainerProps {
     captionTitle?: string;
     layout?: BoxLayout;
+    onWiredStylePicker?: () => void;
     preferencesContainer?: WiredMenuViewLayoutPreferencesContainer2Props;
-    woredStyleContainer?: WiredMenuViewLayoutWoredStyleContainerProps;
 }
 
-export const WiredMenuViewLayoutPreferencesContainer = ({ captionTitle, layout, preferencesContainer, woredStyleContainer }: WiredMenuViewLayoutPreferencesContainerProps) => {
+export const WiredMenuViewLayoutPreferencesContainer = ({ captionTitle, layout, onWiredStylePicker, preferencesContainer }: WiredMenuViewLayoutPreferencesContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -1970,7 +1531,20 @@ export const WiredMenuViewLayoutPreferencesContainer = ({ captionTitle, layout, 
                 tintColor="#dadada"
                 layout={{ position: 'absolute', left: 245, right: 0, top: 20, height: 64 }}
             >
-                <WiredMenuViewLayoutWoredStyleContainer {...woredStyleContainer} />
+                <Region
+                    name="wored_style_container"
+                    layout={{ position: 'absolute', left: 10, width: 212, top: 8, height: 50 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 0, width: 205, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText text={t('wiredmenu.settings.preferences.wired_style')} />
+                    </Region>
+                    <Dropmenu
+                        variant="3"
+                        name="wired_style_picker"
+                        onPointerTap={onWiredStylePicker}
+                        layout={{ position: 'absolute', left: 0, width: 206, top: 21, height: 25 }}
+                    />
+                </Region>
             </Border>
         </Region>
     );
@@ -1986,78 +1560,69 @@ export interface WiredMenuViewLayoutSettingsContainerProps {
 
 export const WiredMenuViewLayoutSettingsContainer = ({ layout, preferencesContainer, roomSettingsContainer, visibleSettingsContainer }: WiredMenuViewLayoutSettingsContainerProps) => {
     return (
-        <Region
-            name="settings_container"
-            visible={visibleSettingsContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
-        >
-            <WiredMenuViewLayoutRoomSettingsContainer {...roomSettingsContainer} />
-            <WiredMenuViewLayoutPreferencesContainer {...preferencesContainer} />
-        </Region>
-    );
-};
-
-/** Named region `info_container` of WiredMenuViewLayout - configured through the parent's `infoContainer` prop. */
-export interface WiredMenuViewLayoutInfoContainerProps {
-    layout?: BoxLayout;
-    visibleInfoContainer?: boolean;
-}
-
-export const WiredMenuViewLayoutInfoContainer = ({ layout, visibleInfoContainer }: WiredMenuViewLayoutInfoContainerProps) => {
-    return (
-        <Region
-            name="info_container"
-            visible={visibleInfoContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
-        />
-    );
-};
-
-/** Named region `loading_view` of WiredMenuViewLayout - configured through the parent's `loadingView` prop. */
-export interface WiredMenuViewLayoutLoadingViewProps {
-    layout?: BoxLayout;
-    onLoadingView?: () => void;
-    visibleLoadingView?: boolean;
-}
-
-export const WiredMenuViewLayoutLoadingView = ({ layout, onLoadingView, visibleLoadingView }: WiredMenuViewLayoutLoadingViewProps) => {
-    return (
-        <Region
-            name="loading_view"
-            visible={visibleLoadingView ?? false}
-            backgroundColor="#e9e9e1"
-            onPointerTap={onLoadingView}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
-        />
+        (visibleSettingsContainer ?? false) && (
+            <Region
+                name="settings_container"
+                layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382, ...layout }}
+            >
+                <WiredMenuViewLayoutRoomSettingsContainer {...roomSettingsContainer} />
+                <WiredMenuViewLayoutPreferencesContainer {...preferencesContainer} />
+            </Region>
+        )
     );
 };
 
 /** Named region `body_container` of WiredMenuViewLayout - configured through the parent's `bodyContainer` prop. */
 export interface WiredMenuViewLayoutBodyContainerProps {
     chestsContainer?: WiredMenuViewLayoutChestsContainerProps;
-    infoContainer?: WiredMenuViewLayoutInfoContainerProps;
     inspectionContainer?: WiredMenuViewLayoutInspectionContainerProps;
     layout?: BoxLayout;
-    loadingView?: WiredMenuViewLayoutLoadingViewProps;
     monitorContainer?: WiredMenuViewLayoutMonitorContainerProps;
+    onLoadingView?: () => void;
     settingsContainer?: WiredMenuViewLayoutSettingsContainerProps;
     variableOverviewContainer?: WiredMenuViewLayoutVariableOverviewContainerProps;
+    visibleChestsContainer?: boolean;
+    visibleInfoContainer?: boolean;
+    visibleInspectionContainer?: boolean;
+    visibleLoadingView?: boolean;
+    visibleSettingsContainer?: boolean;
+    visibleVariableOverviewContainer?: boolean;
 }
 
-export const WiredMenuViewLayoutBodyContainer = ({ chestsContainer, infoContainer, inspectionContainer, layout, loadingView, monitorContainer, settingsContainer, variableOverviewContainer }: WiredMenuViewLayoutBodyContainerProps) => {
+export const WiredMenuViewLayoutBodyContainer = ({ chestsContainer, inspectionContainer, layout, monitorContainer, onLoadingView, settingsContainer, variableOverviewContainer, visibleChestsContainer, visibleInfoContainer, visibleInspectionContainer, visibleLoadingView, visibleSettingsContainer, visibleVariableOverviewContainer }: WiredMenuViewLayoutBodyContainerProps) => {
     return (
         <Region
             name="body_container"
             layout={{ position: 'absolute', left: 0, width: 500, top: 82, height: 382, ...layout }}
         >
             <WiredMenuViewLayoutMonitorContainer {...monitorContainer} />
-            <WiredMenuViewLayoutVariableOverviewContainer {...variableOverviewContainer} />
-            <WiredMenuViewLayoutInspectionContainer {...inspectionContainer} />
-            <WiredMenuViewLayoutChestsContainer {...chestsContainer} />
-            <WiredMenuViewLayoutSettingsContainer {...settingsContainer} />
-            <WiredMenuViewLayoutInfoContainer {...infoContainer} />
-            <WiredMenuViewLayoutLoadingView {...loadingView} />
+            {(visibleVariableOverviewContainer ?? false) && (
+                <WiredMenuViewLayoutVariableOverviewContainer {...variableOverviewContainer} />
+            )}
+            {(visibleInspectionContainer ?? false) && (
+                <WiredMenuViewLayoutInspectionContainer {...inspectionContainer} />
+            )}
+            {(visibleChestsContainer ?? false) && (
+                <WiredMenuViewLayoutChestsContainer {...chestsContainer} />
+            )}
+            {(visibleSettingsContainer ?? false) && (
+                <WiredMenuViewLayoutSettingsContainer {...settingsContainer} />
+            )}
+            {(visibleInfoContainer ?? false) && (
+                <Region
+                    name="info_container"
+                    layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382 }}
+                />
+            )}
+            {(visibleLoadingView ?? false) && (
+                <Region
+                    name="loading_view"
+                    backgroundColor="#e9e9e1"
+                    onPointerTap={onLoadingView}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 382 }}
+                />
+            )}
         </Region>
     );
 };

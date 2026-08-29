@@ -4,13 +4,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1590_builderWidget_xml` (layout "builderWidget", 360x60) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface BuilderWidgetLayoutProps {
-    errorContainer?: BuilderWidgetLayoutErrorContainerProps;
+    captionErrorMessage?: string;
     layout?: BoxLayout;
     onPlaceMany?: () => void;
     onPlaceOne?: () => void;
+    srcErrorIcon?: string;
 }
 
-export const BuilderWidgetLayout = ({ errorContainer, layout, onPlaceMany, onPlaceOne }: BuilderWidgetLayoutProps) => {
+export const BuilderWidgetLayout = ({ captionErrorMessage, layout, onPlaceMany, onPlaceOne, srcErrorIcon }: BuilderWidgetLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -40,44 +41,31 @@ export const BuilderWidgetLayout = ({ errorContainer, layout, onPlaceMany, onPla
                         textStyle="text-style-u-small"
                     />
                 </Region>
-                <BuilderWidgetLayoutErrorContainer {...errorContainer} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `error_container` of BuilderWidgetLayout - configured through the parent's `errorContainer` prop. */
-export interface BuilderWidgetLayoutErrorContainerProps {
-    captionErrorMessage?: string;
-    layout?: BoxLayout;
-    srcErrorIcon?: string;
-}
-
-export const BuilderWidgetLayoutErrorContainer = ({ captionErrorMessage, layout, srcErrorIcon }: BuilderWidgetLayoutErrorContainerProps) => {
-    return (
-        <Region
-            name="error_container"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 25, ...layout }}
-        >
-            <Border
-                variant="2"
-                tintColor="#f2d193"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 2, height: 22 }}
-            />
-            <ThemeImage
-                name="error_icon"
-                src={srcErrorIcon ?? layoutImage('icons_builder_error_full.png')}
-                layout={{ position: 'absolute', left: 4, width: 25, top: 0, height: 25 }}
-            />
-            <Region
-                name="error_message"
-                layout={{ position: 'absolute', left: 38, width: 105, top: 5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionErrorMessage ?? 'We have a problem!'}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#de0e0a' }}
-                />
+                <Region
+                    name="error_container"
+                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 25 }}
+                >
+                    <Border
+                        variant="2"
+                        tintColor="#f2d193"
+                        layout={{ position: 'absolute', left: 0, width: 360, top: 2, height: 22 }}
+                    />
+                    <ThemeImage
+                        name="error_icon"
+                        src={srcErrorIcon ?? layoutImage('icons_builder_error_full.png')}
+                        layout={{ position: 'absolute', left: 4, width: 25, top: 0, height: 25 }}
+                    />
+                    <Region
+                        name="error_message"
+                        layout={{ position: 'absolute', left: 38, width: 105, top: 5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionErrorMessage ?? 'We have a problem!'}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#de0e0a' }}
+                        />
+                    </Region>
+                </Region>
             </Region>
         </Region>
     );

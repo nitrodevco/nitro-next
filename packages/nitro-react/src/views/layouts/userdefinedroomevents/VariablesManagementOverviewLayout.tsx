@@ -8,11 +8,10 @@ export interface VariablesManagementOverviewLayoutProps {
     footer?: VariablesManagementOverviewLayoutFooterProps;
     header?: VariablesManagementOverviewLayoutHeaderProps;
     layout?: BoxLayout;
-    middle?: VariablesManagementOverviewLayoutMiddleProps;
     onClose?: () => void;
 }
 
-export const VariablesManagementOverviewLayout = ({ footer, header, layout, middle, onClose }: VariablesManagementOverviewLayoutProps) => {
+export const VariablesManagementOverviewLayout = ({ footer, header, layout, onClose }: VariablesManagementOverviewLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -24,7 +23,15 @@ export const VariablesManagementOverviewLayout = ({ footer, header, layout, midd
             layout={{ width: 700, height: 508, ...layout }}
         >
             <VariablesManagementOverviewLayoutHeader {...header} />
-            <VariablesManagementOverviewLayoutMiddle {...middle} />
+            <Region
+                name="middle"
+                layout={{ position: 'absolute', left: 1, right: 1, top: 117, bottom: 95 }}
+            >
+                <Region
+                    name="table_view"
+                    layout={{ position: 'absolute', left: 13, right: 13, top: 0, bottom: 0 }}
+                />
+            </Region>
             <VariablesManagementOverviewLayoutFooter {...footer} />
         </Frame>
     );
@@ -88,99 +95,20 @@ export const VariablesManagementOverviewLayoutPairItem = ({ itemsPair, layout }:
     );
 };
 
-/** Named region `key_value_pairs` of VariablesManagementOverviewLayout - configured through the parent's `keyValuePairs` prop. */
-export interface VariablesManagementOverviewLayoutKeyValuePairsProps {
-    itemsKeyValuePairs?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const VariablesManagementOverviewLayoutKeyValuePairs = ({ itemsKeyValuePairs, layout }: VariablesManagementOverviewLayoutKeyValuePairsProps) => {
-    return (
-        <Region
-            name="key_value_pairs"
-            layout={{ position: 'absolute', left: 15, width: 400, top: 55, height: 20, flexDirection: 'column', gap: 2, ...layout }}
-        >
-            {itemsKeyValuePairs ?? (
-                <VariablesManagementOverviewLayoutPairItem />
-            )}
-        </Region>
-    );
-};
-
-/** Named region `user_type_cont` of VariablesManagementOverviewLayout - configured through the parent's `userTypeCont` prop. */
-export interface VariablesManagementOverviewLayoutUserTypeContProps {
-    captionUserTypeKey?: string;
-    layout?: BoxLayout;
-    onUserTypeMenu?: () => void;
-}
-
-export const VariablesManagementOverviewLayoutUserTypeCont = ({ captionUserTypeKey, layout, onUserTypeMenu }: VariablesManagementOverviewLayoutUserTypeContProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="user_type_cont"
-            layout={{ position: 'absolute', left: 15, width: 217, top: 80, height: 25, ...layout }}
-        >
-            <Region
-                name="user_type_key"
-                layout={{ position: 'absolute', left: 0, width: 63, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionUserTypeKey ?? t('wiredmenu.variable_management.usertype')} />
-            </Region>
-            <Dropmenu
-                variant="3"
-                name="user_type_menu"
-                onPointerTap={onUserTypeMenu}
-                layout={{ position: 'absolute', left: 68, width: 131, top: 0, height: 25 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `sort_type_cont` of VariablesManagementOverviewLayout - configured through the parent's `sortTypeCont` prop. */
-export interface VariablesManagementOverviewLayoutSortTypeContProps {
-    captionSortTypeKey?: string;
-    layout?: BoxLayout;
-    onSortTypeMenu?: () => void;
-}
-
-export const VariablesManagementOverviewLayoutSortTypeCont = ({ captionSortTypeKey, layout, onSortTypeMenu }: VariablesManagementOverviewLayoutSortTypeContProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="sort_type_cont"
-            layout={{ position: 'absolute', left: 247, width: 217, top: 80, height: 25, ...layout }}
-        >
-            <Region
-                name="sort_type_key"
-                layout={{ position: 'absolute', left: 0, width: 47, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionSortTypeKey ?? t('wiredmenu.variable_management.sort_by')} />
-            </Region>
-            <Dropmenu
-                variant="3"
-                name="sort_type_menu"
-                onPointerTap={onSortTypeMenu}
-                layout={{ position: 'absolute', left: 53, width: 135, top: 0, height: 25 }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `header` of VariablesManagementOverviewLayout - configured through the parent's `header` prop. */
 export interface VariablesManagementOverviewLayoutHeaderProps {
     captionInfoText?: string;
-    keyValuePairs?: VariablesManagementOverviewLayoutKeyValuePairsProps;
+    captionSortTypeKey?: string;
+    captionUserTypeKey?: string;
+    itemsKeyValuePairs?: ReactNode;
     layout?: BoxLayout;
     onRefreshBtn?: () => void;
-    sortTypeCont?: VariablesManagementOverviewLayoutSortTypeContProps;
-    userTypeCont?: VariablesManagementOverviewLayoutUserTypeContProps;
+    onSortTypeMenu?: () => void;
+    onUserTypeMenu?: () => void;
     visibleSearchingIcon?: boolean;
 }
 
-export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, keyValuePairs, layout, onRefreshBtn, sortTypeCont, userTypeCont, visibleSearchingIcon }: VariablesManagementOverviewLayoutHeaderProps) => {
+export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, captionSortTypeKey, captionUserTypeKey, itemsKeyValuePairs, layout, onRefreshBtn, onSortTypeMenu, onUserTypeMenu, visibleSearchingIcon }: VariablesManagementOverviewLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
@@ -202,9 +130,48 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, keyVa
                     />
                 </Region>
             </Border>
-            <VariablesManagementOverviewLayoutKeyValuePairs {...keyValuePairs} />
-            <VariablesManagementOverviewLayoutUserTypeCont {...userTypeCont} />
-            <VariablesManagementOverviewLayoutSortTypeCont {...sortTypeCont} />
+            <Region
+                name="key_value_pairs"
+                layout={{ position: 'absolute', left: 15, width: 400, top: 55, height: 20, flexDirection: 'column', gap: 2 }}
+            >
+                {itemsKeyValuePairs ?? (
+                    <VariablesManagementOverviewLayoutPairItem />
+                )}
+            </Region>
+            <Region
+                name="user_type_cont"
+                layout={{ position: 'absolute', left: 15, width: 217, top: 80, height: 25 }}
+            >
+                <Region
+                    name="user_type_key"
+                    layout={{ position: 'absolute', left: 0, width: 63, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionUserTypeKey ?? t('wiredmenu.variable_management.usertype')} />
+                </Region>
+                <Dropmenu
+                    variant="3"
+                    name="user_type_menu"
+                    onPointerTap={onUserTypeMenu}
+                    layout={{ position: 'absolute', left: 68, width: 131, top: 0, height: 25 }}
+                />
+            </Region>
+            <Region
+                name="sort_type_cont"
+                layout={{ position: 'absolute', left: 247, width: 217, top: 80, height: 25 }}
+            >
+                <Region
+                    name="sort_type_key"
+                    layout={{ position: 'absolute', left: 0, width: 47, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionSortTypeKey ?? t('wiredmenu.variable_management.sort_by')} />
+                </Region>
+                <Dropmenu
+                    variant="3"
+                    name="sort_type_menu"
+                    onPointerTap={onSortTypeMenu}
+                    layout={{ position: 'absolute', left: 53, width: 135, top: 0, height: 25 }}
+                />
+            </Region>
             <Button
                 variant="3"
                 name="refresh_btn"
@@ -213,47 +180,13 @@ export const VariablesManagementOverviewLayoutHeader = ({ captionInfoText, keyVa
             >
                 {t('wiredmenu.list_view.refresh')}
             </Button>
-            <Region
-                visible={visibleSearchingIcon ?? false}
-                layout={{ position: 'absolute', left: 667, width: 15, top: 50, height: 15 }}
-            >
+            {(visibleSearchingIcon ?? false) && (
                 <Icon
                     variant="23"
                     name="searching_icon"
-                    layout={{ width: '100%', height: '100%' }}
+                    layout={{ position: 'absolute', left: 667, width: 15, top: 50, height: 15 }}
                 />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `table_view` of VariablesManagementOverviewLayout - configured through the parent's `tableView` prop. */
-export interface VariablesManagementOverviewLayoutTableViewProps {
-    layout?: BoxLayout;
-}
-
-export const VariablesManagementOverviewLayoutTableView = ({ layout }: VariablesManagementOverviewLayoutTableViewProps) => {
-    return (
-        <Region
-            name="table_view"
-            layout={{ position: 'absolute', left: 13, right: 13, top: 0, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `middle` of VariablesManagementOverviewLayout - configured through the parent's `middle` prop. */
-export interface VariablesManagementOverviewLayoutMiddleProps {
-    layout?: BoxLayout;
-    tableView?: VariablesManagementOverviewLayoutTableViewProps;
-}
-
-export const VariablesManagementOverviewLayoutMiddle = ({ layout, tableView }: VariablesManagementOverviewLayoutMiddleProps) => {
-    return (
-        <Region
-            name="middle"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 117, bottom: 95, ...layout }}
-        >
-            <VariablesManagementOverviewLayoutTableView {...tableView} />
+            )}
         </Region>
     );
 };
@@ -309,28 +242,6 @@ export const VariablesManagementOverviewLayoutPrevPageBtnItem = ({ layout, onPre
     );
 };
 
-/** Named region `footer_buttons_left` of VariablesManagementOverviewLayout - configured through the parent's `footerButtonsLeft` prop. */
-export interface VariablesManagementOverviewLayoutFooterButtonsLeftProps {
-    itemsFooterButtonsLeft?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const VariablesManagementOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout }: VariablesManagementOverviewLayoutFooterButtonsLeftProps) => {
-    return (
-        <Region
-            name="footer_buttons_left"
-            layout={{ position: 'absolute', left: 17, width: 113, top: 0, height: 30, flexDirection: 'row', gap: 13, ...layout }}
-        >
-            {itemsFooterButtonsLeft ?? (
-                <>
-                    <VariablesManagementOverviewLayoutFirstPageBtnItem />
-                    <VariablesManagementOverviewLayoutPrevPageBtnItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Row template `next_page_btn` of VariablesManagementOverviewLayout - pass real rows through its `items…` slot. */
 export interface VariablesManagementOverviewLayoutNextPageBtnItemProps {
     layout?: BoxLayout;
@@ -382,38 +293,16 @@ export const VariablesManagementOverviewLayoutLastPageBtnItem = ({ layout, onLas
     );
 };
 
-/** Named region `footer_buttons_right` of VariablesManagementOverviewLayout - configured through the parent's `footerButtonsRight` prop. */
-export interface VariablesManagementOverviewLayoutFooterButtonsRightProps {
-    itemsFooterButtonsRight?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const VariablesManagementOverviewLayoutFooterButtonsRight = ({ itemsFooterButtonsRight, layout }: VariablesManagementOverviewLayoutFooterButtonsRightProps) => {
-    return (
-        <Region
-            name="footer_buttons_right"
-            layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10, ...layout }}
-        >
-            {itemsFooterButtonsRight ?? (
-                <>
-                    <VariablesManagementOverviewLayoutNextPageBtnItem />
-                    <VariablesManagementOverviewLayoutLastPageBtnItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Named region `pagination` of VariablesManagementOverviewLayout - configured through the parent's `pagination` prop. */
 export interface VariablesManagementOverviewLayoutPaginationProps {
     captionPaginaTextEnd?: string;
     captionPaginaTextStart?: string;
-    footerButtonsLeft?: VariablesManagementOverviewLayoutFooterButtonsLeftProps;
-    footerButtonsRight?: VariablesManagementOverviewLayoutFooterButtonsRightProps;
+    itemsFooterButtonsLeft?: ReactNode;
+    itemsFooterButtonsRight?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const VariablesManagementOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, footerButtonsLeft, footerButtonsRight, layout }: VariablesManagementOverviewLayoutPaginationProps) => {
+export const VariablesManagementOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, itemsFooterButtonsLeft, itemsFooterButtonsRight, layout }: VariablesManagementOverviewLayoutPaginationProps) => {
     const [ paginaNumberInputValue, setPaginaNumberInputValue ] = useState('');
 
     return (
@@ -421,8 +310,28 @@ export const VariablesManagementOverviewLayoutPagination = ({ captionPaginaTextE
             name="pagination"
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 14, height: 30, justifyContent: 'center', ...layout }}
         >
-            <VariablesManagementOverviewLayoutFooterButtonsLeft {...footerButtonsLeft} />
-            <VariablesManagementOverviewLayoutFooterButtonsRight {...footerButtonsRight} />
+            <Region
+                name="footer_buttons_left"
+                layout={{ position: 'absolute', left: 17, width: 113, top: 0, height: 30, flexDirection: 'row', gap: 13 }}
+            >
+                {itemsFooterButtonsLeft ?? (
+                    <>
+                        <VariablesManagementOverviewLayoutFirstPageBtnItem />
+                        <VariablesManagementOverviewLayoutPrevPageBtnItem />
+                    </>
+                )}
+            </Region>
+            <Region
+                name="footer_buttons_right"
+                layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10 }}
+            >
+                {itemsFooterButtonsRight ?? (
+                    <>
+                        <VariablesManagementOverviewLayoutNextPageBtnItem />
+                        <VariablesManagementOverviewLayoutLastPageBtnItem />
+                    </>
+                )}
+            </Region>
             <Region layout={{ position: 'absolute', width: 226, top: 4, height: 25, flexDirection: 'row', gap: 2 }}>
                 <Region
                     name="pagina_text_start"

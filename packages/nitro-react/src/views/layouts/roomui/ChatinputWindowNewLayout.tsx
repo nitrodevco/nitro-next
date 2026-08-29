@@ -18,114 +18,23 @@ export const ChatinputWindowNewLayout = ({ layout, masterContainer }: ChatinputW
     );
 };
 
-/** Named region `helpbutton_show_hover_region` of ChatinputWindowNewLayout - configured through the parent's `helpbuttonShowHoverRegion` prop. */
-export interface ChatinputWindowNewLayoutHelpbuttonShowHoverRegionProps {
-    layout?: BoxLayout;
-    onHelpbuttonShowHoverRegion?: () => void;
-}
-
-export const ChatinputWindowNewLayoutHelpbuttonShowHoverRegion = ({ layout, onHelpbuttonShowHoverRegion }: ChatinputWindowNewLayoutHelpbuttonShowHoverRegionProps) => {
-    return (
-        <Region
-            name="helpbutton_show_hover_region"
-            onPointerTap={onHelpbuttonShowHoverRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 1, width: 401, top: -1, height: 37, ...layout }}
-        />
-    );
-};
-
-/** Named region `styles` of ChatinputWindowNewLayout - configured through the parent's `styles` prop. */
-export interface ChatinputWindowNewLayoutStylesProps {
-    layout?: BoxLayout;
-    onStyles?: () => void;
-    srcStyleBg?: string;
-    srcStyleIcon?: string;
-}
-
-export const ChatinputWindowNewLayoutStyles = ({ layout, onStyles, srcStyleBg, srcStyleIcon }: ChatinputWindowNewLayoutStylesProps) => {
-    return (
-        <Region
-            name="styles"
-            onPointerTap={onStyles}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 39, ...layout }}
-        >
-            <ThemeImage
-                name="style_bg"
-                src={srcStyleBg ?? layoutImage('common_chat_style_block.png')}
-                layout={{ position: 'absolute', left: 0, width: 57, top: 0, height: 38 }}
-            />
-            <ThemeImage
-                name="style_icon"
-                src={srcStyleIcon ?? layoutImage('common_chat_styles.png')}
-                layout={{ position: 'absolute', left: 25, width: 17, top: 10, height: 19 }}
-            />
-            <Icon
-                variant="7"
-                dynamicStyle="brightness_and_shadow_under"
-                tintColor="#4c4c4c"
-                layout={{ position: 'absolute', left: 10, width: 10, top: 17, height: 5 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `chat_extra_button` of ChatinputWindowNewLayout - configured through the parent's `chatExtraButton` prop. */
-export interface ChatinputWindowNewLayoutChatExtraButtonProps {
+/** Named region `chat_input_container` of ChatinputWindowNewLayout - configured through the parent's `chatInputContainer` prop. */
+export interface ChatinputWindowNewLayoutChatInputContainerProps {
+    captionBlockText?: string;
     layout?: BoxLayout;
     onChatExtraButton?: () => void;
+    onHelpbuttonShowHoverRegion?: () => void;
+    onStyles?: () => void;
     srcChatExtraBg?: string;
     srcChatExtraBg2?: string;
     srcChatExtraIcon?: string;
     srcChatExtraSetIcon?: string;
+    srcStyleBg?: string;
+    srcStyleIcon?: string;
+    visibleBlockText?: boolean;
 }
 
-export const ChatinputWindowNewLayoutChatExtraButton = ({ layout, onChatExtraButton, srcChatExtraBg, srcChatExtraBg2, srcChatExtraIcon, srcChatExtraSetIcon }: ChatinputWindowNewLayoutChatExtraButtonProps) => {
-    return (
-        <Region
-            name="chat_extra_button"
-            dynamicStyle="lifted_hover"
-            onPointerTap={onChatExtraButton}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 427, width: 41, top: 0, height: 38, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 41, top: 0, height: 38 }}>
-                <ThemeImage
-                    name="chat_extra_bg"
-                    src={srcChatExtraBg ?? layoutImage('habbicons_sticky_note.png')}
-                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 38 }}
-                />
-                <ThemeImage
-                    name="chat_extra_set_icon"
-                    src={srcChatExtraSetIcon}
-                    layout={{ position: 'absolute', left: 3, width: 30, top: 3, height: 30 }}
-                />
-                <ThemeImage
-                    name="chat_extra_icon"
-                    src={srcChatExtraIcon ?? layoutImage('habbicons_clip.png')}
-                    layout={{ position: 'absolute', left: 23, width: 18, top: 2, height: 15 }}
-                />
-                <ThemeImage
-                    name="chat_extra_bg"
-                    src={srcChatExtraBg2 ?? layoutImage('habbicons_sticky_note2.png')}
-                    layout={{ position: 'absolute', left: 24, width: 12, top: 26, height: 12 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `chat_input_container` of ChatinputWindowNewLayout - configured through the parent's `chatInputContainer` prop. */
-export interface ChatinputWindowNewLayoutChatInputContainerProps {
-    captionBlockText?: string;
-    chatExtraButton?: ChatinputWindowNewLayoutChatExtraButtonProps;
-    helpbuttonShowHoverRegion?: ChatinputWindowNewLayoutHelpbuttonShowHoverRegionProps;
-    layout?: BoxLayout;
-    styles?: ChatinputWindowNewLayoutStylesProps;
-}
-
-export const ChatinputWindowNewLayoutChatInputContainer = ({ captionBlockText, chatExtraButton, helpbuttonShowHoverRegion, layout, styles }: ChatinputWindowNewLayoutChatInputContainerProps) => {
+export const ChatinputWindowNewLayoutChatInputContainer = ({ captionBlockText, layout, onChatExtraButton, onHelpbuttonShowHoverRegion, onStyles, srcChatExtraBg, srcChatExtraBg2, srcChatExtraIcon, srcChatExtraSetIcon, srcStyleBg, srcStyleIcon, visibleBlockText }: ChatinputWindowNewLayoutChatInputContainerProps) => {
     const t = useTranslation();
     const [ chatInputValue, setChatInputValue ] = useState('');
 
@@ -140,17 +49,23 @@ export const ChatinputWindowNewLayoutChatInputContainer = ({ captionBlockText, c
                 tintColor="#e5e5e5"
                 layout={{ position: 'absolute', left: 11, width: 400, top: 0, height: 38 }}
             >
-                <ChatinputWindowNewLayoutHelpbuttonShowHoverRegion {...helpbuttonShowHoverRegion} />
                 <Region
-                    name="block_text"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 10, width: 325, top: 9, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBlockText ?? t('chat.input.alert.flood')}
-                        textOptions={{ fill: '#ff0000' }}
-                    />
-                </Region>
+                    name="helpbutton_show_hover_region"
+                    onPointerTap={onHelpbuttonShowHoverRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 1, width: 401, top: -1, height: 37 }}
+                />
+                {(visibleBlockText ?? false) && (
+                    <Region
+                        name="block_text"
+                        layout={{ position: 'absolute', left: 10, width: 325, top: 9, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionBlockText ?? t('chat.input.alert.flood')}
+                            textOptions={{ fill: '#ff0000' }}
+                        />
+                    </Region>
+                )}
                 <TextInput
                     value={chatInputValue}
                     onChange={setChatInputValue}
@@ -159,8 +74,59 @@ export const ChatinputWindowNewLayoutChatInputContainer = ({ captionBlockText, c
                     layout={{ position: 'absolute', left: 50, width: 326, top: 7, height: 24 }}
                 />
             </Border>
-            <ChatinputWindowNewLayoutStyles {...styles} />
-            <ChatinputWindowNewLayoutChatExtraButton {...chatExtraButton} />
+            <Region
+                name="styles"
+                onPointerTap={onStyles}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 39 }}
+            >
+                <ThemeImage
+                    name="style_bg"
+                    src={srcStyleBg ?? layoutImage('common_chat_style_block.png')}
+                    layout={{ position: 'absolute', left: 0, width: 57, top: 0, height: 38 }}
+                />
+                <ThemeImage
+                    name="style_icon"
+                    src={srcStyleIcon ?? layoutImage('common_chat_styles.png')}
+                    layout={{ position: 'absolute', left: 25, width: 17, top: 10, height: 19 }}
+                />
+                <Icon
+                    variant="7"
+                    dynamicStyle="brightness_and_shadow_under"
+                    tintColor="#4c4c4c"
+                    layout={{ position: 'absolute', left: 10, width: 10, top: 17, height: 5 }}
+                />
+            </Region>
+            <Region
+                name="chat_extra_button"
+                dynamicStyle="lifted_hover"
+                onPointerTap={onChatExtraButton}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 427, width: 41, top: 0, height: 38 }}
+            >
+                <Region layout={{ position: 'absolute', left: 0, width: 41, top: 0, height: 38 }}>
+                    <ThemeImage
+                        name="chat_extra_bg"
+                        src={srcChatExtraBg ?? layoutImage('habbicons_sticky_note.png')}
+                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 38 }}
+                    />
+                    <ThemeImage
+                        name="chat_extra_set_icon"
+                        src={srcChatExtraSetIcon}
+                        layout={{ position: 'absolute', left: 3, width: 30, top: 3, height: 30 }}
+                    />
+                    <ThemeImage
+                        name="chat_extra_icon"
+                        src={srcChatExtraIcon ?? layoutImage('habbicons_clip.png')}
+                        layout={{ position: 'absolute', left: 23, width: 18, top: 2, height: 15 }}
+                    />
+                    <ThemeImage
+                        name="chat_extra_bg"
+                        src={srcChatExtraBg2 ?? layoutImage('habbicons_sticky_note2.png')}
+                        layout={{ position: 'absolute', left: 24, width: 12, top: 26, height: 12 }}
+                    />
+                </Region>
+            </Region>
         </Region>
     );
 };
@@ -189,53 +155,29 @@ export const ChatinputWindowNewLayoutBubblecont = ({ chatInputContainer, layout,
     );
 };
 
-/** Named region `chatstyles_menu` of ChatinputWindowNewLayout - configured through the parent's `chatstylesMenu` prop. */
-export interface ChatinputWindowNewLayoutChatstylesMenuProps {
-    layout?: BoxLayout;
-}
-
-export const ChatinputWindowNewLayoutChatstylesMenu = ({ layout }: ChatinputWindowNewLayoutChatstylesMenuProps) => {
-    return (
-        <Region
-            name="chatstyles_menu"
-            dropShadow={{ distance: 4, alpha: 0.6 }}
-            layout={{ position: 'absolute', left: 2, width: 160, bottom: 46, height: 60, ...layout }}
-        />
-    );
-};
-
-/** Named region `habbicon_menu` of ChatinputWindowNewLayout - configured through the parent's `habbiconMenu` prop. */
-export interface ChatinputWindowNewLayoutHabbiconMenuProps {
-    layout?: BoxLayout;
-}
-
-export const ChatinputWindowNewLayoutHabbiconMenu = ({ layout }: ChatinputWindowNewLayoutHabbiconMenuProps) => {
-    return (
-        <Region
-            name="habbicon_menu"
-            dropShadow={{ distance: 4, alpha: 0.6 }}
-            layout={{ position: 'absolute', left: 2, width: 270, bottom: -154, height: 260, ...layout }}
-        />
-    );
-};
-
 /** Named region `master_container` of ChatinputWindowNewLayout - configured through the parent's `masterContainer` prop. */
 export interface ChatinputWindowNewLayoutMasterContainerProps {
     bubblecont?: ChatinputWindowNewLayoutBubblecontProps;
-    chatstylesMenu?: ChatinputWindowNewLayoutChatstylesMenuProps;
-    habbiconMenu?: ChatinputWindowNewLayoutHabbiconMenuProps;
     layout?: BoxLayout;
 }
 
-export const ChatinputWindowNewLayoutMasterContainer = ({ bubblecont, chatstylesMenu, habbiconMenu, layout }: ChatinputWindowNewLayoutMasterContainerProps) => {
+export const ChatinputWindowNewLayoutMasterContainer = ({ bubblecont, layout }: ChatinputWindowNewLayoutMasterContainerProps) => {
     return (
         <Region
             name="master_container"
             layout={{ position: 'absolute', left: 0, width: 471, top: 0, height: 100, minWidth: 90, ...layout }}
         >
             <ChatinputWindowNewLayoutBubblecont {...bubblecont} />
-            <ChatinputWindowNewLayoutChatstylesMenu {...chatstylesMenu} />
-            <ChatinputWindowNewLayoutHabbiconMenu {...habbiconMenu} />
+            <Region
+                name="chatstyles_menu"
+                dropShadow={{ distance: 4, alpha: 0.6 }}
+                layout={{ position: 'absolute', left: 2, width: 160, bottom: 46, height: 60 }}
+            />
+            <Region
+                name="habbicon_menu"
+                dropShadow={{ distance: 4, alpha: 0.6 }}
+                layout={{ position: 'absolute', left: 2, width: 270, bottom: -154, height: 260 }}
+            />
         </Region>
     );
 };

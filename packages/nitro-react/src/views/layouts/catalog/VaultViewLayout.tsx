@@ -38,9 +38,10 @@ export interface VaultViewLayoutDailygiftContainerItemProps {
     onDailygiftClaimButton?: () => void;
     srcDailygiftBitmap?: string;
     visibleCreditIcon?: boolean;
+    visibleDailygiftCreditValue?: boolean;
 }
 
-export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditValue, captionDailygiftDucketValue, captionDailygiftLabel, layout, onDailygiftClaimButton, srcDailygiftBitmap, visibleCreditIcon }: VaultViewLayoutDailygiftContainerItemProps) => {
+export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditValue, captionDailygiftDucketValue, captionDailygiftLabel, layout, onDailygiftClaimButton, srcDailygiftBitmap, visibleCreditIcon, visibleDailygiftCreditValue }: VaultViewLayoutDailygiftContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -68,26 +69,24 @@ export const VaultViewLayoutDailygiftContainerItem = ({ captionDailygiftCreditVa
                         textStyle="text-style-u-bold"
                     />
                 </Region>
-                <Region
-                    visible={visibleCreditIcon ?? false}
-                    layout={{ position: 'absolute', left: 85, width: 30, top: 7, height: 30 }}
-                >
+                {(visibleCreditIcon ?? false) && (
                     <Icon
                         variant="34"
                         name="creditIcon"
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ position: 'absolute', left: 85, width: 30, top: 7, height: 30 }}
                     />
-                </Region>
-                <Region
-                    name="dailygiftCreditValue"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDailygiftCreditValue ?? '0'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                )}
+                {(visibleDailygiftCreditValue ?? false) && (
+                    <Region
+                        name="dailygiftCreditValue"
+                        layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionDailygiftCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                )}
             </Border>
             <Border
                 variant="5"
@@ -130,9 +129,10 @@ export interface VaultViewLayoutGamesContainerItemProps {
     onGamesClaimButton?: () => void;
     srcGamesBitmap?: string;
     visibleDucketIcon?: boolean;
+    visibleGamesDucketValue?: boolean;
 }
 
-export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, captionGamesDucketValue, captionGamesLabel, layout, onGamesClaimButton, srcGamesBitmap, visibleDucketIcon }: VaultViewLayoutGamesContainerItemProps) => {
+export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, captionGamesDucketValue, captionGamesLabel, layout, onGamesClaimButton, srcGamesBitmap, visibleDucketIcon, visibleGamesDucketValue }: VaultViewLayoutGamesContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -146,26 +146,24 @@ export const VaultViewLayoutGamesContainerItem = ({ captionGamesCreditValue, cap
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
-                <Region
-                    visible={visibleDucketIcon ?? false}
-                    layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
-                >
+                {(visibleDucketIcon ?? false) && (
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                     />
-                </Region>
-                <Region
-                    name="gamesDucketValue"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionGamesDucketValue ?? '0'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                )}
+                {(visibleGamesDucketValue ?? false) && (
+                    <Region
+                        name="gamesDucketValue"
+                        layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionGamesDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                )}
                 <Icon
                     variant="34"
                     name="creditIcon"
@@ -222,9 +220,10 @@ export interface VaultViewLayoutWiredchestContainerItemProps {
     onWiredchestClaimButton?: () => void;
     srcWiredchestBitmap?: string;
     visibleDucketIcon?: boolean;
+    visibleWiredchestDucketValue?: boolean;
 }
 
-export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCreditValue, captionWiredchestDucketValue, captionWiredchestLabel, layout, onWiredchestClaimButton, srcWiredchestBitmap, visibleDucketIcon }: VaultViewLayoutWiredchestContainerItemProps) => {
+export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCreditValue, captionWiredchestDucketValue, captionWiredchestLabel, layout, onWiredchestClaimButton, srcWiredchestBitmap, visibleDucketIcon, visibleWiredchestDucketValue }: VaultViewLayoutWiredchestContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -238,26 +237,24 @@ export const VaultViewLayoutWiredchestContainerItem = ({ captionWiredchestCredit
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
-                <Region
-                    visible={visibleDucketIcon ?? false}
-                    layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
-                >
+                {(visibleDucketIcon ?? false) && (
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                     />
-                </Region>
-                <Region
-                    name="wiredchestDucketValue"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionWiredchestDucketValue ?? '0'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                )}
+                {(visibleWiredchestDucketValue ?? false) && (
+                    <Region
+                        name="wiredchestDucketValue"
+                        layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionWiredchestDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                )}
                 <Icon
                     variant="34"
                     name="creditIcon"
@@ -399,9 +396,10 @@ export interface VaultViewLayoutMarketplaceContainerItemProps {
     onMarketplaceClaimButton?: () => void;
     srcMarketplaceBitmap?: string;
     visibleDucketIcon?: boolean;
+    visibleMarketplaceDucketValue?: boolean;
 }
 
-export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCreditValue, captionMarketplaceDucketValue, captionMarketplaceLabel, layout, onMarketplaceClaimButton, srcMarketplaceBitmap, visibleDucketIcon }: VaultViewLayoutMarketplaceContainerItemProps) => {
+export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCreditValue, captionMarketplaceDucketValue, captionMarketplaceLabel, layout, onMarketplaceClaimButton, srcMarketplaceBitmap, visibleDucketIcon, visibleMarketplaceDucketValue }: VaultViewLayoutMarketplaceContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -415,26 +413,24 @@ export const VaultViewLayoutMarketplaceContainerItem = ({ captionMarketplaceCred
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
-                <Region
-                    visible={visibleDucketIcon ?? false}
-                    layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
-                >
+                {(visibleDucketIcon ?? false) && (
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                     />
-                </Region>
-                <Region
-                    name="marketplaceDucketValue"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMarketplaceDucketValue ?? '0'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                )}
+                {(visibleMarketplaceDucketValue ?? false) && (
+                    <Region
+                        name="marketplaceDucketValue"
+                        layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionMarketplaceDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                )}
                 <Icon
                     variant="34"
                     name="creditIcon"
@@ -491,9 +487,10 @@ export interface VaultViewLayoutHabboclubContainerItemProps {
     onHabboclubClaimButton?: () => void;
     srcHabboclubBitmap?: string;
     visibleDucketIcon?: boolean;
+    visibleHabboclubDucketValue?: boolean;
 }
 
-export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditValue, captionHabboclubDucketValue, captionHabboclubLabel, layout, onHabboclubClaimButton, srcHabboclubBitmap, visibleDucketIcon }: VaultViewLayoutHabboclubContainerItemProps) => {
+export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditValue, captionHabboclubDucketValue, captionHabboclubLabel, layout, onHabboclubClaimButton, srcHabboclubBitmap, visibleDucketIcon, visibleHabboclubDucketValue }: VaultViewLayoutHabboclubContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -507,26 +504,24 @@ export const VaultViewLayoutHabboclubContainerItem = ({ captionHabboclubCreditVa
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
-                <Region
-                    visible={visibleDucketIcon ?? false}
-                    layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
-                >
+                {(visibleDucketIcon ?? false) && (
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                     />
-                </Region>
-                <Region
-                    name="habboclubDucketValue"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHabboclubDucketValue ?? '0'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                )}
+                {(visibleHabboclubDucketValue ?? false) && (
+                    <Region
+                        name="habboclubDucketValue"
+                        layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionHabboclubDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                )}
                 <Icon
                     variant="34"
                     name="creditIcon"
@@ -667,10 +662,11 @@ export interface VaultViewLayoutDonationContainerItemProps {
     layout?: BoxLayout;
     onDonationClaimButton?: () => void;
     srcDonationBitmap?: string;
+    visibleDonationDucketValue?: boolean;
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValue, captionDonationDucketValue, captionDonationLabel, layout, onDonationClaimButton, srcDonationBitmap, visibleDucketIcon }: VaultViewLayoutDonationContainerItemProps) => {
+export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValue, captionDonationDucketValue, captionDonationLabel, layout, onDonationClaimButton, srcDonationBitmap, visibleDonationDucketValue, visibleDucketIcon }: VaultViewLayoutDonationContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -684,26 +680,24 @@ export const VaultViewLayoutDonationContainerItem = ({ captionDonationCreditValu
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
-                <Region
-                    visible={visibleDucketIcon ?? false}
-                    layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
-                >
+                {(visibleDucketIcon ?? false) && (
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                     />
-                </Region>
-                <Region
-                    name="donationDucketValue"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDonationDucketValue ?? '0'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                )}
+                {(visibleDonationDucketValue ?? false) && (
+                    <Region
+                        name="donationDucketValue"
+                        layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionDonationDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                )}
                 <Icon
                     variant="34"
                     name="creditIcon"
@@ -761,11 +755,13 @@ export interface VaultViewLayoutBonusbagContainerItemProps {
     onBonusbagClaimButton?: () => void;
     srcBonusbagBitmap?: string;
     srcProductIcon?: string;
+    visibleBonusbagCreditValue?: boolean;
+    visibleBonusbagDucketValue?: boolean;
     visibleCreditIcon?: boolean;
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValue, captionBonusbagDucketValue, captionBonusbagLabel, captionBonusbagProductValue, layout, onBonusbagClaimButton, srcBonusbagBitmap, srcProductIcon, visibleCreditIcon, visibleDucketIcon }: VaultViewLayoutBonusbagContainerItemProps) => {
+export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValue, captionBonusbagDucketValue, captionBonusbagLabel, captionBonusbagProductValue, layout, onBonusbagClaimButton, srcBonusbagBitmap, srcProductIcon, visibleBonusbagCreditValue, visibleBonusbagDucketValue, visibleCreditIcon, visibleDucketIcon }: VaultViewLayoutBonusbagContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -779,46 +775,42 @@ export const VaultViewLayoutBonusbagContainerItem = ({ captionBonusbagCreditValu
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
-                <Region
-                    visible={visibleDucketIcon ?? false}
-                    layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
-                >
+                {(visibleDucketIcon ?? false) && (
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                     />
-                </Region>
-                <Region
-                    name="bonusbagDucketValue"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBonusbagDucketValue ?? '0'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
-                <Region
-                    visible={visibleCreditIcon ?? false}
-                    layout={{ position: 'absolute', left: 85, width: 30, top: 7, height: 30 }}
-                >
+                )}
+                {(visibleBonusbagDucketValue ?? false) && (
+                    <Region
+                        name="bonusbagDucketValue"
+                        layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionBonusbagDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                )}
+                {(visibleCreditIcon ?? false) && (
                     <Icon
                         variant="34"
                         name="creditIcon"
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ position: 'absolute', left: 85, width: 30, top: 7, height: 30 }}
                     />
-                </Region>
-                <Region
-                    name="bonusbagCreditValue"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBonusbagCreditValue ?? '0'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                )}
+                {(visibleBonusbagCreditValue ?? false) && (
+                    <Region
+                        name="bonusbagCreditValue"
+                        layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionBonusbagCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                )}
                 <Region
                     name="bonusbagProductValue"
                     layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -962,9 +954,10 @@ export interface VaultViewLayoutSnowstormContainerItemProps {
     srcProductIcon?: string;
     srcSnowstormBitmap?: string;
     visibleCreditIcon?: boolean;
+    visibleSnowstormCreditValue?: boolean;
 }
 
-export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditValue, captionSnowstormDucketValue, captionSnowstormLabel, captionSnowstormProductValue, layout, onSnowstormClaimButton, srcProductIcon, srcSnowstormBitmap, visibleCreditIcon }: VaultViewLayoutSnowstormContainerItemProps) => {
+export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditValue, captionSnowstormDucketValue, captionSnowstormLabel, captionSnowstormProductValue, layout, onSnowstormClaimButton, srcProductIcon, srcSnowstormBitmap, visibleCreditIcon, visibleSnowstormCreditValue }: VaultViewLayoutSnowstormContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -992,26 +985,24 @@ export const VaultViewLayoutSnowstormContainerItem = ({ captionSnowstormCreditVa
                         textStyle="text-style-u-bold"
                     />
                 </Region>
-                <Region
-                    visible={visibleCreditIcon ?? false}
-                    layout={{ position: 'absolute', left: 85, width: 30, top: 7, height: 30 }}
-                >
+                {(visibleCreditIcon ?? false) && (
                     <Icon
                         variant="34"
                         name="creditIcon"
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ position: 'absolute', left: 85, width: 30, top: 7, height: 30 }}
                     />
-                </Region>
-                <Region
-                    name="snowstormCreditValue"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSnowstormCreditValue ?? '0'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                )}
+                {(visibleSnowstormCreditValue ?? false) && (
+                    <Region
+                        name="snowstormCreditValue"
+                        layout={{ position: 'absolute', left: 110, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionSnowstormCreditValue ?? '0'}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                )}
                 <ThemeImage
                     name="productIcon"
                     src={srcProductIcon ?? layoutImage('vault_icon_present.png')}
@@ -1067,10 +1058,11 @@ export interface VaultViewLayoutAgencyContainerItemProps {
     layout?: BoxLayout;
     onAgencyClaimButton?: () => void;
     srcAgencyBitmap?: string;
+    visibleAgencyDucketValue?: boolean;
     visibleDucketIcon?: boolean;
 }
 
-export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, captionAgencyDucketValue, captionAgencyLabel, layout, onAgencyClaimButton, srcAgencyBitmap, visibleDucketIcon }: VaultViewLayoutAgencyContainerItemProps) => {
+export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, captionAgencyDucketValue, captionAgencyLabel, layout, onAgencyClaimButton, srcAgencyBitmap, visibleAgencyDucketValue, visibleDucketIcon }: VaultViewLayoutAgencyContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -1084,26 +1076,24 @@ export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, c
                 tintColor="#bec3c1"
                 layout={{ position: 'absolute', left: 179, width: 223, top: 0, height: 34 }}
             >
-                <Region
-                    visible={visibleDucketIcon ?? false}
-                    layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
-                >
+                {(visibleDucketIcon ?? false) && (
                     <Icon
                         variant="32"
                         name="ducketIcon"
-                        layout={{ width: '100%', height: '100%' }}
+                        layout={{ position: 'absolute', left: 15, width: 30, top: 7, height: 30 }}
                     />
-                </Region>
-                <Region
-                    name="agencyDucketValue"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAgencyDucketValue ?? '0'}
-                        textStyle="text-style-u-bold"
-                    />
-                </Region>
+                )}
+                {(visibleAgencyDucketValue ?? false) && (
+                    <Region
+                        name="agencyDucketValue"
+                        layout={{ position: 'absolute', left: 40, width: 40, top: 7, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionAgencyDucketValue ?? '0'}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                )}
                 <Icon
                     variant="34"
                     name="creditIcon"

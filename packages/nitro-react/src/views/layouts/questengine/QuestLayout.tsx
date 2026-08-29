@@ -3,23 +3,34 @@ import { Border, BoxLayout, ButtonThick, Icon, Region, ThemeImage, ThemeText } f
 
 /** Generated from `112_Quest_xml` (layout "Quest", 362x114) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface QuestLayoutProps {
-    cancelRegion?: QuestLayoutCancelRegionProps;
+    captionCancelTxt?: string;
     captionDelayDescTxt?: string;
     captionDelayTxt?: string;
     captionDescTxt?: string;
     captionHintTxt?: string;
+    captionLinkCatalog?: string;
+    captionLinkNavigator?: string;
+    captionLinkRoom?: string;
     captionQuestHeaderTxt?: string;
     captionRewardAmountTxt?: string;
     captionRewardCaptionTxt?: string;
     captionTimeleftTxt?: string;
     layout?: BoxLayout;
-    linkRegion?: QuestLayoutLinkRegionProps;
     onAcceptButton?: () => void;
+    onCancelRegion?: () => void;
+    onLinkRegion?: () => void;
     srcHourglassIcon?: string;
     srcQuestPicBitmap?: string;
+    visibleDelayDescTxt?: boolean;
+    visibleDelayTxt?: boolean;
+    visibleHintTxt?: boolean;
+    visibleLinkCatalog?: boolean;
+    visibleLinkNavigator?: boolean;
+    visibleLinkRegion?: boolean;
+    visibleLinkRoom?: boolean;
 }
 
-export const QuestLayout = ({ cancelRegion, captionDelayDescTxt, captionDelayTxt, captionDescTxt, captionHintTxt, captionQuestHeaderTxt, captionRewardAmountTxt, captionRewardCaptionTxt, captionTimeleftTxt, layout, linkRegion, onAcceptButton, srcHourglassIcon, srcQuestPicBitmap }: QuestLayoutProps) => {
+export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDelayTxt, captionDescTxt, captionHintTxt, captionLinkCatalog, captionLinkNavigator, captionLinkRoom, captionQuestHeaderTxt, captionRewardAmountTxt, captionRewardCaptionTxt, captionTimeleftTxt, layout, onAcceptButton, onCancelRegion, onLinkRegion, srcHourglassIcon, srcQuestPicBitmap, visibleDelayDescTxt, visibleDelayTxt, visibleHintTxt, visibleLinkCatalog, visibleLinkNavigator, visibleLinkRegion, visibleLinkRoom }: QuestLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -91,7 +102,19 @@ export const QuestLayout = ({ cancelRegion, captionDelayDescTxt, captionDelayTxt
                 >
                     <ThemeText text={captionRewardAmountTxt ?? '200'} />
                 </Region>
-                <QuestLayoutCancelRegion {...cancelRegion} />
+                <Region
+                    name="cancel_region"
+                    onPointerTap={onCancelRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 271, width: 100, bottom: 15, height: 18 }}
+                >
+                    <Region
+                        name="cancel_txt"
+                        layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionCancelTxt ?? t('quests.list.reject')} />
+                    </Region>
+                </Region>
                 <ThemeImage
                     name="quest_pic_bitmap"
                     src={srcQuestPicBitmap}
@@ -102,108 +125,70 @@ export const QuestLayout = ({ cancelRegion, captionDelayDescTxt, captionDelayTxt
                     name="currency_icon"
                     layout={{ position: 'absolute', left: 169, width: 22, bottom: 12, height: 22 }}
                 />
-                <Region
-                    name="hint_txt"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 98, right: 9, top: 72, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHintTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 255 }}
-                    />
-                </Region>
-                <QuestLayoutLinkRegion {...linkRegion} />
-                <Region
-                    name="delay_desc_txt"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 98, right: 9, top: 53, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText text={captionDelayDescTxt ?? t('quests.list.nextquestavailable')} />
-                </Region>
-                <Region
-                    name="delay_txt"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 98, right: 144, top: 71, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDelayTxt ?? '7 hours'}
-                        textOptions={{ fill: '#0090bd' }}
-                    />
-                </Region>
+                {(visibleHintTxt ?? false) && (
+                    <Region
+                        name="hint_txt"
+                        layout={{ position: 'absolute', left: 98, right: 9, top: 72, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionHintTxt ?? 'Search around hotel and locate this very valuable dino egg jhg jhg jhg jh gjhg jhg jhg jhg jh gjhg jhg jhg jhg jhg jhgjhgjh gjhg jh gjhg jh gjhg jhg jhg jhg jhg jhg'}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 255 }}
+                        />
+                    </Region>
+                )}
+                {(visibleLinkRegion ?? false) && (
+                    <Region
+                        name="link_region"
+                        onPointerTap={onLinkRegion}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: 98, width: 155, top: 72, height: 18 }}
+                    >
+                        {(visibleLinkCatalog ?? false) && (
+                            <Region
+                                name="link_catalog"
+                                layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText text={captionLinkCatalog ?? t('quests.list.opencatalog')} />
+                            </Region>
+                        )}
+                        {(visibleLinkNavigator ?? false) && (
+                            <Region
+                                name="link_navigator"
+                                layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText text={captionLinkNavigator ?? t('quests.list.opennavigator')} />
+                            </Region>
+                        )}
+                        {(visibleLinkRoom ?? false) && (
+                            <Region
+                                name="link_room"
+                                layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText text={captionLinkRoom ?? t('quests.gotocampaignroom')} />
+                            </Region>
+                        )}
+                    </Region>
+                )}
+                {(visibleDelayDescTxt ?? false) && (
+                    <Region
+                        name="delay_desc_txt"
+                        layout={{ position: 'absolute', left: 98, right: 9, top: 53, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionDelayDescTxt ?? t('quests.list.nextquestavailable')} />
+                    </Region>
+                )}
+                {(visibleDelayTxt ?? false) && (
+                    <Region
+                        name="delay_txt"
+                        layout={{ position: 'absolute', left: 98, right: 144, top: 71, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionDelayTxt ?? '7 hours'}
+                            textOptions={{ fill: '#0090bd' }}
+                        />
+                    </Region>
+                )}
             </Border>
-        </Region>
-    );
-};
-
-/** Named region `cancel_region` of QuestLayout - configured through the parent's `cancelRegion` prop. */
-export interface QuestLayoutCancelRegionProps {
-    captionCancelTxt?: string;
-    layout?: BoxLayout;
-    onCancelRegion?: () => void;
-}
-
-export const QuestLayoutCancelRegion = ({ captionCancelTxt, layout, onCancelRegion }: QuestLayoutCancelRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="cancel_region"
-            onPointerTap={onCancelRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 271, width: 100, bottom: 15, height: 18, ...layout }}
-        >
-            <Region
-                name="cancel_txt"
-                layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionCancelTxt ?? t('quests.list.reject')} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `link_region` of QuestLayout - configured through the parent's `linkRegion` prop. */
-export interface QuestLayoutLinkRegionProps {
-    captionLinkCatalog?: string;
-    captionLinkNavigator?: string;
-    captionLinkRoom?: string;
-    layout?: BoxLayout;
-    onLinkRegion?: () => void;
-    visibleLinkRegion?: boolean;
-}
-
-export const QuestLayoutLinkRegion = ({ captionLinkCatalog, captionLinkNavigator, captionLinkRoom, layout, onLinkRegion, visibleLinkRegion }: QuestLayoutLinkRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="link_region"
-            visible={visibleLinkRegion ?? false}
-            onPointerTap={onLinkRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 98, width: 155, top: 72, height: 18, ...layout }}
-        >
-            <Region
-                name="link_catalog"
-                visible={false}
-                layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionLinkCatalog ?? t('quests.list.opencatalog')} />
-            </Region>
-            <Region
-                name="link_navigator"
-                visible={false}
-                layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionLinkNavigator ?? t('quests.list.opennavigator')} />
-            </Region>
-            <Region
-                name="link_room"
-                visible={false}
-                layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionLinkRoom ?? t('quests.gotocampaignroom')} />
-            </Region>
         </Region>
     );
 };

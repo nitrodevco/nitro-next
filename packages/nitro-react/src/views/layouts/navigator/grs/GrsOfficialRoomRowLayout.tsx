@@ -14,50 +14,14 @@ export const GrsOfficialRoomRowLayout = ({ cont, layout }: GrsOfficialRoomRowLay
     );
 };
 
-/** Named region `enter_room` of GrsOfficialRoomRowLayout - configured through the parent's `enterRoom` prop. */
-export interface GrsOfficialRoomRowLayoutEnterRoomProps {
+/** Named region `image_cont` of GrsOfficialRoomRowLayout - configured through the parent's `imageCont` prop. */
+export interface GrsOfficialRoomRowLayoutImageContProps {
+    captionPicText?: string;
     layout?: BoxLayout;
     srcEnterRoomA?: string;
     srcEnterRoomL?: string;
     srcEnterRoomM?: string;
     srcEnterRoomR?: string;
-}
-
-export const GrsOfficialRoomRowLayoutEnterRoom = ({ layout, srcEnterRoomA, srcEnterRoomL, srcEnterRoomM, srcEnterRoomR }: GrsOfficialRoomRowLayoutEnterRoomProps) => {
-    return (
-        <Region
-            name="enter_room"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 64, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                name="enter_room_l"
-                src={srcEnterRoomL}
-                layout={{ position: 'absolute', left: 0, width: 6, top: 0, height: 64 }}
-            />
-            <ThemeImage
-                name="enter_room_m"
-                src={srcEnterRoomM}
-                layout={{ position: 'absolute', left: 6, right: 6, top: 0, height: 64 }}
-            />
-            <ThemeImage
-                name="enter_room_r"
-                src={srcEnterRoomR}
-                layout={{ position: 'absolute', right: 0, width: 6, top: 0, height: 64 }}
-            />
-            <ThemeImage
-                name="enter_room_a"
-                src={srcEnterRoomA}
-                layout={{ position: 'absolute', width: 48, top: 0, height: 64 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `image_cont` of GrsOfficialRoomRowLayout - configured through the parent's `imageCont` prop. */
-export interface GrsOfficialRoomRowLayoutImageContProps {
-    captionPicText?: string;
-    enterRoom?: GrsOfficialRoomRowLayoutEnterRoomProps;
-    layout?: BoxLayout;
     srcRicoRndL?: string;
     srcRicoRndLB?: string;
     srcRicoRndM?: string;
@@ -66,7 +30,7 @@ export interface GrsOfficialRoomRowLayoutImageContProps {
     srcRoomImage?: string;
 }
 
-export const GrsOfficialRoomRowLayoutImageCont = ({ captionPicText, enterRoom, layout, srcRicoRndL, srcRicoRndLB, srcRicoRndM, srcRicoRndR, srcRicoRndRB, srcRoomImage }: GrsOfficialRoomRowLayoutImageContProps) => {
+export const GrsOfficialRoomRowLayoutImageCont = ({ captionPicText, layout, srcEnterRoomA, srcEnterRoomL, srcEnterRoomM, srcEnterRoomR, srcRicoRndL, srcRicoRndLB, srcRicoRndM, srcRicoRndR, srcRicoRndRB, srcRoomImage }: GrsOfficialRoomRowLayoutImageContProps) => {
     return (
         <Region
             name="image_cont"
@@ -119,37 +83,29 @@ export const GrsOfficialRoomRowLayoutImageCont = ({ captionPicText, enterRoom, l
                 src={srcRicoRndRB}
                 layout={{ position: 'absolute', right: 0, width: 6, top: 0, height: 64 }}
             />
-            <GrsOfficialRoomRowLayoutEnterRoom {...enterRoom} />
-        </Region>
-    );
-};
-
-/** Named region `details_container` of GrsOfficialRoomRowLayout - configured through the parent's `detailsContainer` prop. */
-export interface GrsOfficialRoomRowLayoutDetailsContainerProps {
-    captionEntryCaption?: string;
-    captionEntryDesc?: string;
-    layout?: BoxLayout;
-}
-
-export const GrsOfficialRoomRowLayoutDetailsContainer = ({ captionEntryCaption, captionEntryDesc, layout }: GrsOfficialRoomRowLayoutDetailsContainerProps) => {
-    return (
-        <Region
-            name="details_container"
-            layout={{ position: 'absolute', left: 75, right: 1, top: 0, height: 66, ...layout }}
-        >
             <Region
-                name="entry_caption"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                name="enter_room"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 64, justifyContent: 'center' }}
             >
-                <ThemeText text={captionEntryCaption ?? 'PH Room Name: Neque porro quisquam est que'} />
-            </Region>
-            <Region
-                name="entry_desc"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionEntryDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
-                    textOptions={{ fill: '#808080', wordWrap: true, wordWrapWidth: 195 }}
+                <ThemeImage
+                    name="enter_room_l"
+                    src={srcEnterRoomL}
+                    layout={{ position: 'absolute', left: 0, width: 6, top: 0, height: 64 }}
+                />
+                <ThemeImage
+                    name="enter_room_m"
+                    src={srcEnterRoomM}
+                    layout={{ position: 'absolute', left: 6, right: 6, top: 0, height: 64 }}
+                />
+                <ThemeImage
+                    name="enter_room_r"
+                    src={srcEnterRoomR}
+                    layout={{ position: 'absolute', right: 0, width: 6, top: 0, height: 64 }}
+                />
+                <ThemeImage
+                    name="enter_room_a"
+                    src={srcEnterRoomA}
+                    layout={{ position: 'absolute', width: 48, top: 0, height: 64 }}
                 />
             </Region>
         </Region>
@@ -159,8 +115,9 @@ export const GrsOfficialRoomRowLayoutDetailsContainer = ({ captionEntryCaption, 
 /** Named region `cont` of GrsOfficialRoomRowLayout - configured through the parent's `cont` prop. */
 export interface GrsOfficialRoomRowLayoutContProps {
     captionArrowLabel?: string;
+    captionEntryCaption?: string;
+    captionEntryDesc?: string;
     captionFolderNameText?: string;
-    detailsContainer?: GrsOfficialRoomRowLayoutDetailsContainerProps;
     imageCont?: GrsOfficialRoomRowLayoutImageContProps;
     layout?: BoxLayout;
     onCont?: () => void;
@@ -174,7 +131,7 @@ export interface GrsOfficialRoomRowLayoutContProps {
     srcRicoRndRB?: string;
 }
 
-export const GrsOfficialRoomRowLayoutCont = ({ captionArrowLabel, captionFolderNameText, detailsContainer, imageCont, layout, onCont, srcArrowDownWhite, srcArrowRightWhite, srcFolderImage, srcRicoRndL, srcRicoRndLB, srcRicoRndM, srcRicoRndR, srcRicoRndRB }: GrsOfficialRoomRowLayoutContProps) => {
+export const GrsOfficialRoomRowLayoutCont = ({ captionArrowLabel, captionEntryCaption, captionEntryDesc, captionFolderNameText, imageCont, layout, onCont, srcArrowDownWhite, srcArrowRightWhite, srcFolderImage, srcRicoRndL, srcRicoRndLB, srcRicoRndM, srcRicoRndR, srcRicoRndRB }: GrsOfficialRoomRowLayoutContProps) => {
     return (
         <Region
             name="cont"
@@ -264,7 +221,26 @@ export const GrsOfficialRoomRowLayoutCont = ({ captionArrowLabel, captionFolderN
                 />
             </Border>
             <GrsOfficialRoomRowLayoutImageCont {...imageCont} />
-            <GrsOfficialRoomRowLayoutDetailsContainer {...detailsContainer} />
+            <Region
+                name="details_container"
+                layout={{ position: 'absolute', left: 75, right: 1, top: 0, height: 66 }}
+            >
+                <Region
+                    name="entry_caption"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionEntryCaption ?? 'PH Room Name: Neque porro quisquam est que'} />
+                </Region>
+                <Region
+                    name="entry_desc"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionEntryDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
+                        textOptions={{ fill: '#808080', wordWrap: true, wordWrapWidth: 195 }}
+                    />
+                </Region>
+            </Region>
         </Region>
     );
 };

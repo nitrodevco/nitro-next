@@ -15,66 +15,18 @@ export const InstantFriendRequestLayout = ({ layout, masterContainer }: InstantF
     );
 };
 
-/** Named region `profile_region` of InstantFriendRequestLayout - configured through the parent's `profileRegion` prop. */
-export interface InstantFriendRequestLayoutProfileRegionProps {
-    captionText?: string;
-    layout?: BoxLayout;
-    onProfileRegion?: () => void;
-}
-
-export const InstantFriendRequestLayoutProfileRegion = ({ captionText, layout, onProfileRegion }: InstantFriendRequestLayoutProfileRegionProps) => {
-    return (
-        <Region
-            name="profile_region"
-            layout={{ position: 'absolute', left: 25, width: 142, top: 5, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-            onPointerTap={onProfileRegion}
-            cursor="pointer"
-        >
-            <ThemeText
-                text={captionText ?? ''}
-                textStyle="text-style-u-bold"
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 142 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `decline_button` of InstantFriendRequestLayout - configured through the parent's `declineButton` prop. */
-export interface InstantFriendRequestLayoutDeclineButtonProps {
-    layout?: BoxLayout;
-    onDeclineButton?: () => void;
-}
-
-export const InstantFriendRequestLayoutDeclineButton = ({ layout, onDeclineButton }: InstantFriendRequestLayoutDeclineButtonProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="decline_button"
-            layout={{ position: 'absolute', left: 8, width: 152, bottom: 27, height: 16, minWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-            onPointerTap={onDeclineButton}
-            cursor="pointer"
-        >
-            <ThemeText
-                text={t('widget.friendrequest.decline')}
-                textStyle="text-style-u-regular"
-                textOptions={{ fill: '#ffffff' }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `master_container` of InstantFriendRequestLayout - configured through the parent's `masterContainer` prop. */
 export interface InstantFriendRequestLayoutMasterContainerProps {
-    declineButton?: InstantFriendRequestLayoutDeclineButtonProps;
+    captionText?: string;
     layout?: BoxLayout;
     onAcceptButton?: () => void;
     onCloseButton?: () => void;
+    onDeclineButton?: () => void;
     onMasterContainer?: () => void;
-    profileRegion?: InstantFriendRequestLayoutProfileRegionProps;
+    onProfileRegion?: () => void;
 }
 
-export const InstantFriendRequestLayoutMasterContainer = ({ declineButton, layout, onAcceptButton, onCloseButton, onMasterContainer, profileRegion }: InstantFriendRequestLayoutMasterContainerProps) => {
+export const InstantFriendRequestLayoutMasterContainer = ({ captionText, layout, onAcceptButton, onCloseButton, onDeclineButton, onMasterContainer, onProfileRegion }: InstantFriendRequestLayoutMasterContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -95,8 +47,30 @@ export const InstantFriendRequestLayoutMasterContainer = ({ declineButton, layou
                     name="profile_icon"
                     layout={{ position: 'absolute', left: 5, width: 15, top: 10, height: 15 }}
                 />
-                <InstantFriendRequestLayoutProfileRegion {...profileRegion} />
-                <InstantFriendRequestLayoutDeclineButton {...declineButton} />
+                <Region
+                    name="profile_region"
+                    layout={{ position: 'absolute', left: 25, width: 142, top: 5, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    onPointerTap={onProfileRegion}
+                    cursor="pointer"
+                >
+                    <ThemeText
+                        text={captionText ?? ''}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 142 }}
+                    />
+                </Region>
+                <Region
+                    name="decline_button"
+                    layout={{ position: 'absolute', left: 8, width: 152, bottom: 27, height: 16, minWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    onPointerTap={onDeclineButton}
+                    cursor="pointer"
+                >
+                    <ThemeText
+                        text={t('widget.friendrequest.decline')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
                 <ContainerButton
                     variant="3"
                     name="accept_button"

@@ -16,58 +16,6 @@ export const FeedDisplayLayout = ({ layout, notifications }: FeedDisplayLayoutPr
     );
 };
 
-/** Named region `settings_toggle` of FeedDisplayLayout - configured through the parent's `settingsToggle` prop. */
-export interface FeedDisplayLayoutSettingsToggleProps {
-    layout?: BoxLayout;
-    onSettingsToggle?: () => void;
-}
-
-export const FeedDisplayLayoutSettingsToggle = ({ layout, onSettingsToggle }: FeedDisplayLayoutSettingsToggleProps) => {
-    return (
-        <Region
-            name="settings_toggle"
-            onPointerTap={onSettingsToggle}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 15, top: 5, height: 25, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, right: 35, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-                <ThemeText
-                    text="_settings"
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff', align: 'right' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `info` of FeedDisplayLayout - configured through the parent's `info` prop. */
-export interface FeedDisplayLayoutInfoProps {
-    layout?: BoxLayout;
-    onInfo?: () => void;
-    onInfoToggle?: () => void;
-}
-
-export const FeedDisplayLayoutInfo = ({ layout, onInfo, onInfoToggle }: FeedDisplayLayoutInfoProps) => {
-    return (
-        <Region
-            name="info"
-            onPointerTap={onInfo}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 12, width: 48, bottom: 15, height: 25, ...layout }}
-        >
-            <Button
-                variant="3"
-                name="info_toggle"
-                onPointerTap={onInfoToggle}
-                layout={{ position: 'absolute', left: 0, width: 48, top: 0, height: 25 }}
-            >
-                _info
-            </Button>
-        </Region>
-    );
-};
-
 /** Row template `list_urgent` of FeedDisplayLayout - pass real rows through its `items…` slot. */
 export interface FeedDisplayLayoutListUrgentItemProps {
     layout?: BoxLayout;
@@ -124,105 +72,57 @@ export const FeedDisplayLayoutListNotificationsItem = ({ layout }: FeedDisplayLa
     );
 };
 
-/** Named region `list` of FeedDisplayLayout - configured through the parent's `list` prop. */
-export interface FeedDisplayLayoutListProps {
+/** Named region `pane_feeds` of FeedDisplayLayout - configured through the parent's `paneFeeds` prop. */
+export interface FeedDisplayLayoutPaneFeedsProps {
     itemsList?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const FeedDisplayLayoutList = ({ itemsList, layout }: FeedDisplayLayoutListProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 6, right: 19, top: 0, bottom: 0, ...layout }}
-        >
-            <Region
-                name="list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            >
-                {itemsList ?? (
-                    <>
-                        <FeedDisplayLayoutListUrgentItem />
-                        <FeedDisplayLayoutListActionsItem />
-                        <FeedDisplayLayoutListPersistentItem />
-                        <FeedDisplayLayoutListNotificationsItem />
-                    </>
-                )}
-            </Region>
-        </ScrollArea>
-    );
-};
-
-/** Named region `pane_notifications` of FeedDisplayLayout - configured through the parent's `paneNotifications` prop. */
-export interface FeedDisplayLayoutPaneNotificationsProps {
-    layout?: BoxLayout;
-    list?: FeedDisplayLayoutListProps;
-}
-
-export const FeedDisplayLayoutPaneNotifications = ({ layout, list }: FeedDisplayLayoutPaneNotificationsProps) => {
-    return (
-        <Region
-            name="pane_notifications"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
-        >
-            <FeedDisplayLayoutList {...list} />
-            {/* <scrollbar_vertical> for list - rendered by that list's ScrollArea */}
-        </Region>
-    );
-};
-
-/** Named region `list` of FeedDisplayLayout - configured through the parent's `list` prop. */
-export interface FeedDisplayLayoutList2Props {
-    layout?: BoxLayout;
-}
-
-export const FeedDisplayLayoutList2 = ({ layout }: FeedDisplayLayoutList2Props) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 6, right: 19, top: 0, bottom: 0, ...layout }}
-        >
-            <Region
-                name="list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
-/** Named region `pane_stream` of FeedDisplayLayout - configured through the parent's `paneStream` prop. */
-export interface FeedDisplayLayoutPaneStreamProps {
-    layout?: BoxLayout;
-    list?: FeedDisplayLayoutList2Props;
-}
-
-export const FeedDisplayLayoutPaneStream = ({ layout, list }: FeedDisplayLayoutPaneStreamProps) => {
-    return (
-        <Region
-            name="pane_stream"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
-        >
-            <FeedDisplayLayoutList2 {...list} />
-            {/* <scrollbar_vertical> for list - rendered by that list's ScrollArea */}
-        </Region>
-    );
-};
-
-/** Named region `pane_feeds` of FeedDisplayLayout - configured through the parent's `paneFeeds` prop. */
-export interface FeedDisplayLayoutPaneFeedsProps {
-    layout?: BoxLayout;
-    paneNotifications?: FeedDisplayLayoutPaneNotificationsProps;
-    paneStream?: FeedDisplayLayoutPaneStreamProps;
-}
-
-export const FeedDisplayLayoutPaneFeeds = ({ layout, paneNotifications, paneStream }: FeedDisplayLayoutPaneFeedsProps) => {
+export const FeedDisplayLayoutPaneFeeds = ({ itemsList, layout }: FeedDisplayLayoutPaneFeedsProps) => {
     return (
         <Region
             name="pane_feeds"
             layout={{ position: 'absolute', left: 0, right: 0, top: 25, bottom: 50, ...layout }}
         >
-            <FeedDisplayLayoutPaneNotifications {...paneNotifications} />
-            <FeedDisplayLayoutPaneStream {...paneStream} />
+            <Region
+                name="pane_notifications"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+            >
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 6, right: 19, top: 0, bottom: 0 }}
+                >
+                    <Region
+                        name="list"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    >
+                        {itemsList ?? (
+                            <>
+                                <FeedDisplayLayoutListUrgentItem />
+                                <FeedDisplayLayoutListActionsItem />
+                                <FeedDisplayLayoutListPersistentItem />
+                                <FeedDisplayLayoutListNotificationsItem />
+                            </>
+                        )}
+                    </Region>
+                </ScrollArea>
+                {/* <scrollbar_vertical> for list - rendered by that list's ScrollArea */}
+            </Region>
+            <Region
+                name="pane_stream"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+            >
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 6, right: 19, top: 0, bottom: 0 }}
+                >
+                    <Region
+                        name="list"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    />
+                </ScrollArea>
+                {/* <scrollbar_vertical> for list - rendered by that list's ScrollArea */}
+            </Region>
         </Region>
     );
 };
@@ -398,179 +298,136 @@ export interface FeedDisplayLayoutPaneInfoProps {
 
 export const FeedDisplayLayoutPaneInfo = ({ layout, visiblePaneInfo, welcomeList }: FeedDisplayLayoutPaneInfoProps) => {
     return (
-        <Region
-            name="pane_info"
-            visible={visiblePaneInfo ?? false}
-            layout={{ position: 'absolute', left: 40, right: 0, top: 25, bottom: 10, ...layout }}
-        >
-            <Border
-                variant="0"
-                name="page_welcome_texts"
-                layout={{ position: 'absolute', left: 5, right: 0, top: 0, bottom: 5 }}
+        (visiblePaneInfo ?? false) && (
+            <Region
+                name="pane_info"
+                layout={{ position: 'absolute', left: 40, right: 0, top: 25, bottom: 10, ...layout }}
             >
-                <FeedDisplayLayoutWelcomeList {...welcomeList} />
-            </Border>
-        </Region>
-    );
-};
-
-/** Named region `settings_all` of FeedDisplayLayout - configured through the parent's `settingsAll` prop. */
-export interface FeedDisplayLayoutSettingsAllProps {
-    layout?: BoxLayout;
-}
-
-export const FeedDisplayLayoutSettingsAll = ({ layout }: FeedDisplayLayoutSettingsAllProps) => {
-    return (
-        <Region
-            name="settings_all"
-            layout={{ width: 260, height: 50, flexShrink: 0, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text="_show_all"
-                    textStyle="text-style-u-regular"
-                />
+                <Border
+                    variant="0"
+                    name="page_welcome_texts"
+                    layout={{ position: 'absolute', left: 5, right: 0, top: 0, bottom: 5 }}
+                >
+                    <FeedDisplayLayoutWelcomeList {...welcomeList} />
+                </Border>
             </Region>
-            <Icon
-                variant="8"
-                name="selected"
-                layout={{ position: 'absolute', left: 20, width: 15, top: 15, height: 15 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `settings_friends` of FeedDisplayLayout - configured through the parent's `settingsFriends` prop. */
-export interface FeedDisplayLayoutSettingsFriendsProps {
-    layout?: BoxLayout;
-}
-
-export const FeedDisplayLayoutSettingsFriends = ({ layout }: FeedDisplayLayoutSettingsFriendsProps) => {
-    return (
-        <Region
-            name="settings_friends"
-            layout={{ width: 260, height: 50, flexShrink: 0, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text="_show_friends"
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <Icon
-                variant="8"
-                name="selected"
-                layout={{ position: 'absolute', left: 20, width: 15, top: 15, height: 15 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `settings_me` of FeedDisplayLayout - configured through the parent's `settingsMe` prop. */
-export interface FeedDisplayLayoutSettingsMeProps {
-    layout?: BoxLayout;
-}
-
-export const FeedDisplayLayoutSettingsMe = ({ layout }: FeedDisplayLayoutSettingsMeProps) => {
-    return (
-        <Region
-            name="settings_me"
-            layout={{ width: 260, height: 50, flexShrink: 0, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text="_show_me"
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <Icon
-                variant="8"
-                name="selected"
-                layout={{ position: 'absolute', left: 20, width: 15, top: 15, height: 15 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `settings_hotel` of FeedDisplayLayout - configured through the parent's `settingsHotel` prop. */
-export interface FeedDisplayLayoutSettingsHotelProps {
-    layout?: BoxLayout;
-}
-
-export const FeedDisplayLayoutSettingsHotel = ({ layout }: FeedDisplayLayoutSettingsHotelProps) => {
-    return (
-        <Region
-            name="settings_hotel"
-            layout={{ width: 260, height: 50, flexShrink: 0, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text="_show_hotel"
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <Icon
-                variant="8"
-                name="selected"
-                layout={{ position: 'absolute', left: 20, width: 15, top: 15, height: 15 }}
-            />
-        </Region>
+        )
     );
 };
 
 /** Named region `pane_settings` of FeedDisplayLayout - configured through the parent's `paneSettings` prop. */
 export interface FeedDisplayLayoutPaneSettingsProps {
     layout?: BoxLayout;
-    settingsAll?: FeedDisplayLayoutSettingsAllProps;
-    settingsFriends?: FeedDisplayLayoutSettingsFriendsProps;
-    settingsHotel?: FeedDisplayLayoutSettingsHotelProps;
-    settingsMe?: FeedDisplayLayoutSettingsMeProps;
     visiblePaneSettings?: boolean;
 }
 
-export const FeedDisplayLayoutPaneSettings = ({ layout, settingsAll, settingsFriends, settingsHotel, settingsMe, visiblePaneSettings }: FeedDisplayLayoutPaneSettingsProps) => {
+export const FeedDisplayLayoutPaneSettings = ({ layout, visiblePaneSettings }: FeedDisplayLayoutPaneSettingsProps) => {
     return (
-        <Region
-            name="pane_settings"
-            visible={visiblePaneSettings ?? false}
-            layout={{ position: 'absolute', left: 0, right: 0, top: 25, bottom: 2, ...layout }}
-        >
-            <Border
-                variant="3"
-                name="modal_overlay"
-                tintColor="#000000"
-                blend={0.6}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -2 }}
-            />
-            <Border
-                variant="3"
-                name="item_list_border"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 220 }}
-            />
-            <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 252, flexDirection: 'column' }}>
-                <FeedDisplayLayoutSettingsAll {...settingsAll} />
-                <FeedDisplayLayoutSettingsFriends {...settingsFriends} />
-                <FeedDisplayLayoutSettingsMe {...settingsMe} />
-                <FeedDisplayLayoutSettingsHotel {...settingsHotel} />
+        (visiblePaneSettings ?? false) && (
+            <Region
+                name="pane_settings"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 25, bottom: 2, ...layout }}
+            >
+                <Border
+                    variant="3"
+                    name="modal_overlay"
+                    tintColor="#000000"
+                    blend={0.6}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: -2 }}
+                />
+                <Border
+                    variant="3"
+                    name="item_list_border"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 220 }}
+                />
+                <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 252, flexDirection: 'column' }}>
+                    <Region
+                        name="settings_all"
+                        layout={{ width: 260, height: 50, flexShrink: 0 }}
+                    >
+                        <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <ThemeText
+                                text="_show_all"
+                                textStyle="text-style-u-regular"
+                            />
+                        </Region>
+                        <Icon
+                            variant="8"
+                            name="selected"
+                            layout={{ position: 'absolute', left: 20, width: 15, top: 15, height: 15 }}
+                        />
+                    </Region>
+                    <Region
+                        name="settings_friends"
+                        layout={{ width: 260, height: 50, flexShrink: 0 }}
+                    >
+                        <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <ThemeText
+                                text="_show_friends"
+                                textStyle="text-style-u-regular"
+                            />
+                        </Region>
+                        <Icon
+                            variant="8"
+                            name="selected"
+                            layout={{ position: 'absolute', left: 20, width: 15, top: 15, height: 15 }}
+                        />
+                    </Region>
+                    <Region
+                        name="settings_me"
+                        layout={{ width: 260, height: 50, flexShrink: 0 }}
+                    >
+                        <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <ThemeText
+                                text="_show_me"
+                                textStyle="text-style-u-regular"
+                            />
+                        </Region>
+                        <Icon
+                            variant="8"
+                            name="selected"
+                            layout={{ position: 'absolute', left: 20, width: 15, top: 15, height: 15 }}
+                        />
+                    </Region>
+                    <Region
+                        name="settings_hotel"
+                        layout={{ width: 260, height: 50, flexShrink: 0 }}
+                    >
+                        <Region layout={{ position: 'absolute', left: 30, right: 20, top: 15, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <ThemeText
+                                text="_show_hotel"
+                                textStyle="text-style-u-regular"
+                            />
+                        </Region>
+                        <Icon
+                            variant="8"
+                            name="selected"
+                            layout={{ position: 'absolute', left: 20, width: 15, top: 15, height: 15 }}
+                        />
+                    </Region>
+                </Region>
             </Region>
-        </Region>
+        )
     );
 };
 
 /** Named region `notifications` of FeedDisplayLayout - configured through the parent's `notifications` prop. */
 export interface FeedDisplayLayoutNotificationsProps {
-    info?: FeedDisplayLayoutInfoProps;
     layout?: BoxLayout;
+    onInfo?: () => void;
+    onInfoToggle?: () => void;
     onMinimizeToggle?: () => void;
     onNotificationFeedButton?: () => void;
+    onSettingsToggle?: () => void;
     onStreamFeedButton?: () => void;
     paneFeeds?: FeedDisplayLayoutPaneFeedsProps;
     paneInfo?: FeedDisplayLayoutPaneInfoProps;
     paneSettings?: FeedDisplayLayoutPaneSettingsProps;
-    settingsToggle?: FeedDisplayLayoutSettingsToggleProps;
+    visiblePaneInfo?: boolean;
+    visiblePaneSettings?: boolean;
 }
 
-export const FeedDisplayLayoutNotifications = ({ info, layout, onMinimizeToggle, onNotificationFeedButton, onStreamFeedButton, paneFeeds, paneInfo, paneSettings, settingsToggle }: FeedDisplayLayoutNotificationsProps) => {
+export const FeedDisplayLayoutNotifications = ({ layout, onInfo, onInfoToggle, onMinimizeToggle, onNotificationFeedButton, onSettingsToggle, onStreamFeedButton, paneFeeds, paneInfo, paneSettings, visiblePaneInfo, visiblePaneSettings }: FeedDisplayLayoutNotificationsProps) => {
     return (
         <Region
             name="notifications"
@@ -613,16 +470,47 @@ export const FeedDisplayLayoutNotifications = ({ info, layout, onMinimizeToggle,
                 tintColor="#58544d"
                 layout={{ position: 'absolute', left: 40, right: 0, top: 0, bottom: 0 }}
             >
-                <FeedDisplayLayoutSettingsToggle {...settingsToggle} />
+                <Region
+                    name="settings_toggle"
+                    onPointerTap={onSettingsToggle}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, right: 15, top: 5, height: 25 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 0, right: 35, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+                        <ThemeText
+                            text="_settings"
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'right' }}
+                        />
+                    </Region>
+                </Region>
                 <Icon
                     variant="7"
                     name="settings_drop_icon"
                     layout={{ position: 'absolute', left: 213, width: 10, top: 13, height: 10 }}
                 />
-                <FeedDisplayLayoutInfo {...info} />
+                <Region
+                    name="info"
+                    onPointerTap={onInfo}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', right: 12, width: 48, bottom: 15, height: 25 }}
+                >
+                    <Button
+                        variant="3"
+                        name="info_toggle"
+                        onPointerTap={onInfoToggle}
+                        layout={{ position: 'absolute', left: 0, width: 48, top: 0, height: 25 }}
+                    >
+                        _info
+                    </Button>
+                </Region>
                 <FeedDisplayLayoutPaneFeeds {...paneFeeds} />
-                <FeedDisplayLayoutPaneInfo {...paneInfo} />
-                <FeedDisplayLayoutPaneSettings {...paneSettings} />
+                {(visiblePaneInfo ?? false) && (
+                    <FeedDisplayLayoutPaneInfo {...paneInfo} />
+                )}
+                {(visiblePaneSettings ?? false) && (
+                    <FeedDisplayLayoutPaneSettings {...paneSettings} />
+                )}
             </Border>
         </Region>
     );

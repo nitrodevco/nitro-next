@@ -18,29 +18,9 @@ export const LayoutSingleBundle_1587Layout = ({ ctlgSingleBundle, layout }: Layo
     );
 };
 
-/** Named region `bundleGrid` of LayoutSingleBundle_1587Layout - configured through the parent's `bundleGrid` prop. */
-export interface LayoutSingleBundle_1587LayoutBundleGridProps {
-    layout?: BoxLayout;
-}
-
-export const LayoutSingleBundle_1587LayoutBundleGrid = ({ layout }: LayoutSingleBundle_1587LayoutBundleGridProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 4, width: 178, top: 3, bottom: 6, ...layout }}
-        >
-            <Region
-                name="bundleGrid"
-                layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
 /** Named region `ctlg_single_bundle` of LayoutSingleBundle_1587Layout - configured through the parent's `ctlgSingleBundle` prop. */
 export interface LayoutSingleBundle_1587LayoutCtlgSingleBundleProps {
     addOnBadgeViewWidget?: AddOnBadgeViewWidgetProps;
-    bundleGrid?: LayoutSingleBundle_1587LayoutBundleGridProps;
     captionCtlgDescription?: string;
     captionCtlgSpecialTxt?: string;
     captionCtlgText1?: string;
@@ -51,7 +31,7 @@ export interface LayoutSingleBundle_1587LayoutCtlgSingleBundleProps {
     srcCtlgTeaserimg1?: string;
 }
 
-export const LayoutSingleBundle_1587LayoutCtlgSingleBundle = ({ addOnBadgeViewWidget, bundleGrid, captionCtlgDescription, captionCtlgSpecialTxt, captionCtlgText1, layout, purchaseWidget, simplePriceWidget, srcCtlgSpecialImg, srcCtlgTeaserimg1 }: LayoutSingleBundle_1587LayoutCtlgSingleBundleProps) => {
+export const LayoutSingleBundle_1587LayoutCtlgSingleBundle = ({ addOnBadgeViewWidget, captionCtlgDescription, captionCtlgSpecialTxt, captionCtlgText1, layout, purchaseWidget, simplePriceWidget, srcCtlgSpecialImg, srcCtlgTeaserimg1 }: LayoutSingleBundle_1587LayoutCtlgSingleBundleProps) => {
     const t = useTranslation();
 
     return (
@@ -82,7 +62,15 @@ export const LayoutSingleBundle_1587LayoutCtlgSingleBundle = ({ addOnBadgeViewWi
                 name="bundleGridScrollWidget"
                 layout={{ position: 'absolute', left: 164, width: 186, top: 117, bottom: 96 }}
             >
-                <LayoutSingleBundle_1587LayoutBundleGrid {...bundleGrid} />
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 4, width: 178, top: 3, bottom: 6 }}
+                >
+                    <Region
+                        name="bundleGrid"
+                        layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
+                    />
+                </ScrollArea>
             </Border>
             <ThemeImage
                 name="ctlg_teaserimg_1"

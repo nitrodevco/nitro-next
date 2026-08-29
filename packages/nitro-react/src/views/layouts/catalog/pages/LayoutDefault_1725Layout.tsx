@@ -23,9 +23,10 @@ export interface LayoutDefault_1725LayoutProps {
     specialInfoWidget?: SpecialInfoWidgetProps;
     spinnerWidget?: SpinnerWidget2Props;
     totalPriceWidget?: TotalPriceWidget2Props;
+    visibleLimitedItemWidget?: boolean;
 }
 
-export const LayoutDefault_1725Layout = ({ activityPointDisplayWidget, bundlePurchaseExtraInfoWidget, itemGridWidget, layout, limitedItemWidget, productViewWidget, purchaseWidget, soldLtdItemsWidget, specialInfoWidget, spinnerWidget, totalPriceWidget }: LayoutDefault_1725LayoutProps) => {
+export const LayoutDefault_1725Layout = ({ activityPointDisplayWidget, bundlePurchaseExtraInfoWidget, itemGridWidget, layout, limitedItemWidget, productViewWidget, purchaseWidget, soldLtdItemsWidget, specialInfoWidget, spinnerWidget, totalPriceWidget, visibleLimitedItemWidget }: LayoutDefault_1725LayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}>
@@ -61,10 +62,12 @@ export const LayoutDefault_1725Layout = ({ activityPointDisplayWidget, bundlePur
                     layout={{ position: 'absolute', left: 180, width: 180, top: 275, height: 25 }}
                     {...totalPriceWidget}
                 />
-                <LimitedItemWidget2
-                    layout={{ position: 'absolute', left: 187, width: 174, top: 122, height: 40 }}
-                    {...limitedItemWidget}
-                />
+                {(visibleLimitedItemWidget ?? false) && (
+                    <LimitedItemWidget2
+                        layout={{ position: 'absolute', left: 187, width: 174, top: 122, height: 40 }}
+                        {...limitedItemWidget}
+                    />
+                )}
                 <SoldLtdItemsWidget
                     layout={{ position: 'absolute', left: 0, width: 360, top: 425, height: 30 }}
                     {...soldLtdItemsWidget}

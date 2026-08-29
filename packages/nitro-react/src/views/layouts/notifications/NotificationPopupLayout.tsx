@@ -10,9 +10,10 @@ export interface NotificationPopupLayoutProps {
     onLink?: () => void;
     srcIllustration?: string;
     visibleAction?: boolean;
+    visibleLink?: boolean;
 }
 
-export const NotificationPopupLayout = ({ captionLink, captionMessage, layout, onAction, onClose, onLink, srcIllustration, visibleAction }: NotificationPopupLayoutProps) => {
+export const NotificationPopupLayout = ({ captionLink, captionMessage, layout, onAction, onClose, onLink, srcIllustration, visibleAction, visibleLink }: NotificationPopupLayoutProps) => {
     return (
         <Frame
             variant="3"
@@ -36,25 +37,27 @@ export const NotificationPopupLayout = ({ captionLink, captionMessage, layout, o
                             textOptions={{ wordWrap: true, wordWrapWidth: 293 }}
                         />
                     </Region>
-                    <Region
-                        name="link"
-                        visible={false}
-                        layout={{ width: 293, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        onPointerTap={onLink}
-                        cursor="pointer"
-                    >
-                        <ThemeText
-                            text={captionLink ?? ''}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 293, align: 'center' }}
+                    {(visibleLink ?? false) && (
+                        <Region
+                            name="link"
+                            layout={{ width: 293, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                            onPointerTap={onLink}
+                            cursor="pointer"
+                        >
+                            <ThemeText
+                                text={captionLink ?? ''}
+                                textOptions={{ wordWrap: true, wordWrapWidth: 293, align: 'center' }}
+                            />
+                        </Region>
+                    )}
+                    {(visibleAction ?? false) && (
+                        <Button
+                            variant="3"
+                            name="action"
+                            onPointerTap={onAction}
+                            layout={{ width: 20, height: 30, flexShrink: 0 }}
                         />
-                    </Region>
-                    <Button
-                        variant="3"
-                        name="action"
-                        onPointerTap={onAction}
-                        visible={visibleAction ?? false}
-                        layout={{ width: 20, height: 30, flexShrink: 0 }}
-                    />
+                    )}
                 </Region>
             </Region>
         </Frame>

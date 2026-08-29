@@ -108,29 +108,13 @@ export const RecyclerPrizesWidgetLevelItemLayoutHeaderBarItem = ({ itemsHeaderBa
     );
 };
 
-/** Named region `itemGrid` of RecyclerPrizesWidgetLevelItemLayout - configured through the parent's `itemGrid` prop. */
-export interface RecyclerPrizesWidgetLevelItemLayoutItemGridProps {
-    layout?: BoxLayout;
-}
-
-export const RecyclerPrizesWidgetLevelItemLayoutItemGrid = ({ layout }: RecyclerPrizesWidgetLevelItemLayoutItemGridProps) => {
-    return (
-        <Region
-            name="itemGrid"
-            backgroundColor="#eaeaea"
-            layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 36, flexDirection: 'row', flexWrap: 'wrap', gap: 2, ...layout }}
-        />
-    );
-};
-
 /** Named region `content` of RecyclerPrizesWidgetLevelItemLayout - configured through the parent's `content` prop. */
 export interface RecyclerPrizesWidgetLevelItemLayoutContentProps {
-    itemGrid?: RecyclerPrizesWidgetLevelItemLayoutItemGridProps;
     itemsContent?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const RecyclerPrizesWidgetLevelItemLayoutContent = ({ itemGrid, itemsContent, layout }: RecyclerPrizesWidgetLevelItemLayoutContentProps) => {
+export const RecyclerPrizesWidgetLevelItemLayoutContent = ({ itemsContent, layout }: RecyclerPrizesWidgetLevelItemLayoutContentProps) => {
     return (
         <Region
             name="content"
@@ -147,7 +131,11 @@ export const RecyclerPrizesWidgetLevelItemLayoutContent = ({ itemGrid, itemsCont
                 backgroundColor="#eaeaea"
                 layout={{ width: 338, height: 44, flexShrink: 0 }}
             >
-                <RecyclerPrizesWidgetLevelItemLayoutItemGrid {...itemGrid} />
+                <Region
+                    name="itemGrid"
+                    backgroundColor="#eaeaea"
+                    layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 36, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
+                />
             </Region>
         </Region>
     );

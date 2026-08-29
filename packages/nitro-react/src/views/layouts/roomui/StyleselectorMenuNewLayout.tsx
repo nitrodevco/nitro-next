@@ -4,13 +4,11 @@ import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 /** Generated from `1050_styleselector_menu_new_xml` (layout "styleselector_menu_new", 67x70) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface StyleselectorMenuNewLayoutProps {
     captionFontSizeTitle?: string;
-    divider?: StyleselectorMenuNewLayoutDividerProps;
-    fontSizeList?: StyleselectorMenuNewLayoutFontSizeListProps;
-    itemgrid?: StyleselectorMenuNewLayoutItemgridProps;
     layout?: BoxLayout;
+    visibleDivider?: boolean;
 }
 
-export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, divider, fontSizeList, itemgrid, layout }: StyleselectorMenuNewLayoutProps) => {
+export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, layout, visibleDivider }: StyleselectorMenuNewLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -21,8 +19,17 @@ export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, divider, font
                 blend={0.8}
                 layout={{ position: 'absolute', left: 0, width: 67, top: 0, height: 70 }}
             >
-                <StyleselectorMenuNewLayoutItemgrid {...itemgrid} />
-                <StyleselectorMenuNewLayoutDivider {...divider} />
+                <Region
+                    name="itemgrid"
+                    layout={{ position: 'absolute', left: 6, width: 55, top: 5, height: 33, flexDirection: 'row', flexWrap: 'wrap', gap: 1 }}
+                />
+                {(visibleDivider ?? false) && (
+                    <Region
+                        name="divider"
+                        backgroundColor="#c7c7c7"
+                        layout={{ position: 'absolute', right: 6, width: 55, bottom: 21, height: 1 }}
+                    />
+                )}
                 <Border
                     variant="2"
                     tintColor="#000000"
@@ -38,53 +45,11 @@ export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, divider, font
                         textOptions={{ fill: '#999999' }}
                     />
                 </Region>
-                <StyleselectorMenuNewLayoutFontSizeList {...fontSizeList} />
+                <Region
+                    name="font_size_list"
+                    layout={{ position: 'absolute', right: 31, width: 85, bottom: 4, height: 18, flexDirection: 'row', gap: 2 }}
+                />
             </Border>
         </Region>
-    );
-};
-
-/** Named region `itemgrid` of StyleselectorMenuNewLayout - configured through the parent's `itemgrid` prop. */
-export interface StyleselectorMenuNewLayoutItemgridProps {
-    layout?: BoxLayout;
-}
-
-export const StyleselectorMenuNewLayoutItemgrid = ({ layout }: StyleselectorMenuNewLayoutItemgridProps) => {
-    return (
-        <Region
-            name="itemgrid"
-            layout={{ position: 'absolute', left: 6, width: 55, top: 5, height: 33, flexDirection: 'row', flexWrap: 'wrap', gap: 1, ...layout }}
-        />
-    );
-};
-
-/** Named region `divider` of StyleselectorMenuNewLayout - configured through the parent's `divider` prop. */
-export interface StyleselectorMenuNewLayoutDividerProps {
-    layout?: BoxLayout;
-    visibleDivider?: boolean;
-}
-
-export const StyleselectorMenuNewLayoutDivider = ({ layout, visibleDivider }: StyleselectorMenuNewLayoutDividerProps) => {
-    return (
-        <Region
-            name="divider"
-            visible={visibleDivider ?? false}
-            backgroundColor="#c7c7c7"
-            layout={{ position: 'absolute', right: 6, width: 55, bottom: 21, height: 1, ...layout }}
-        />
-    );
-};
-
-/** Named region `font_size_list` of StyleselectorMenuNewLayout - configured through the parent's `fontSizeList` prop. */
-export interface StyleselectorMenuNewLayoutFontSizeListProps {
-    layout?: BoxLayout;
-}
-
-export const StyleselectorMenuNewLayoutFontSizeList = ({ layout }: StyleselectorMenuNewLayoutFontSizeListProps) => {
-    return (
-        <Region
-            name="font_size_list"
-            layout={{ position: 'absolute', right: 31, width: 85, bottom: 4, height: 18, flexDirection: 'row', gap: 2, ...layout }}
-        />
     );
 };

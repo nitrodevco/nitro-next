@@ -6,11 +6,11 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `44_all_friends_tab_xml` (layout "all_friends_tab", 127x36) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface AllFriendsTabLayoutProps {
+    itemsTabContent?: ReactNode;
     layout?: BoxLayout;
-    tabContent?: AllFriendsTabLayoutTabContentProps;
 }
 
-export const AllFriendsTabLayout = ({ layout, tabContent }: AllFriendsTabLayoutProps) => {
+export const AllFriendsTabLayout = ({ itemsTabContent, layout }: AllFriendsTabLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 127, height: 36, ...layout }}>
             <Border
@@ -19,7 +19,14 @@ export const AllFriendsTabLayout = ({ layout, tabContent }: AllFriendsTabLayoutP
                 tintColor="#74dbfa"
                 layout={{ position: 'absolute', left: 0, width: 127, top: 0, height: 36 }}
             >
-                <AllFriendsTabLayoutTabContent {...tabContent} />
+                <Region
+                    name="tab_content"
+                    layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 31, minHeight: 30, flexDirection: 'column' }}
+                >
+                    {itemsTabContent ?? (
+                        <AllFriendsTabLayoutHeaderItem />
+                    )}
+                </Region>
             </Border>
         </Region>
     );
@@ -58,25 +65,6 @@ export const AllFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeader, 
                     textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 77 }}
                 />
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `tab_content` of AllFriendsTabLayout - configured through the parent's `tabContent` prop. */
-export interface AllFriendsTabLayoutTabContentProps {
-    itemsTabContent?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const AllFriendsTabLayoutTabContent = ({ itemsTabContent, layout }: AllFriendsTabLayoutTabContentProps) => {
-    return (
-        <Region
-            name="tab_content"
-            layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 31, minHeight: 30, flexDirection: 'column', ...layout }}
-        >
-            {itemsTabContent ?? (
-                <AllFriendsTabLayoutHeaderItem />
-            )}
         </Region>
     );
 };

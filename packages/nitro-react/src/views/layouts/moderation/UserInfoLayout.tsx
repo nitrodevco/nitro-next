@@ -5,9 +5,10 @@ export interface UserInfoLayoutProps {
     captionLoadingTxt?: string;
     fields?: UserInfoLayoutFieldsProps;
     layout?: BoxLayout;
+    visibleLoadingTxt?: boolean;
 }
 
-export const UserInfoLayout = ({ captionLoadingTxt, fields, layout }: UserInfoLayoutProps) => {
+export const UserInfoLayout = ({ captionLoadingTxt, fields, layout, visibleLoadingTxt }: UserInfoLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 280, height: 194, ...layout }}>
             <Border
@@ -15,206 +16,23 @@ export const UserInfoLayout = ({ captionLoadingTxt, fields, layout }: UserInfoLa
                 name="user_info"
                 layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 202 }}
             >
-                <Region
-                    name="loading_txt"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 120, width: 70, top: 45, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    backgroundColor="#ffffff"
-                >
-                    <ThemeText text={captionLoadingTxt ?? 'Loading...'} />
-                </Region>
+                {(visibleLoadingTxt ?? false) && (
+                    <Region
+                        name="loading_txt"
+                        layout={{ position: 'absolute', left: 120, width: 70, top: 45, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        backgroundColor="#ffffff"
+                    >
+                        <ThemeText text={captionLoadingTxt ?? 'Loading...'} />
+                    </Region>
+                )}
                 <UserInfoLayoutFields {...fields} />
             </Border>
         </Region>
     );
 };
 
-/** Named region `shade1` of UserInfoLayout - configured through the parent's `shade1` prop. */
-export interface UserInfoLayoutShade1Props {
-    layout?: BoxLayout;
-}
-
-export const UserInfoLayoutShade1 = ({ layout }: UserInfoLayoutShade1Props) => {
-    return (
-        <Region
-            name="shade1"
-            backgroundColor="#a2d6ea"
-            layout={{ position: 'absolute', left: 0, width: 187, top: 0, height: 13, ...layout }}
-        />
-    );
-};
-
-/** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
-export interface UserInfoLayoutShade2Props {
-    layout?: BoxLayout;
-}
-
-export const UserInfoLayoutShade2 = ({ layout }: UserInfoLayoutShade2Props) => {
-    return (
-        <Region
-            name="shade2"
-            backgroundColor="#a2d6ea"
-            layout={{ position: 'absolute', left: 0, width: 187, top: 26, height: 13, ...layout }}
-        />
-    );
-};
-
-/** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
-export interface UserInfoLayoutShade22Props {
-    layout?: BoxLayout;
-}
-
-export const UserInfoLayoutShade22 = ({ layout }: UserInfoLayoutShade22Props) => {
-    return (
-        <Region
-            name="shade2"
-            backgroundColor="#a2d6ea"
-            layout={{ position: 'absolute', left: 0, width: 187, top: 52, height: 13, ...layout }}
-        />
-    );
-};
-
-/** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
-export interface UserInfoLayoutShade23Props {
-    layout?: BoxLayout;
-}
-
-export const UserInfoLayoutShade23 = ({ layout }: UserInfoLayoutShade23Props) => {
-    return (
-        <Region
-            name="shade2"
-            backgroundColor="#a2d6ea"
-            layout={{ position: 'absolute', left: 0, width: 187, top: 78, height: 13, ...layout }}
-        />
-    );
-};
-
-/** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
-export interface UserInfoLayoutShade24Props {
-    layout?: BoxLayout;
-}
-
-export const UserInfoLayoutShade24 = ({ layout }: UserInfoLayoutShade24Props) => {
-    return (
-        <Region
-            name="shade2"
-            backgroundColor="#a2d6ea"
-            layout={{ position: 'absolute', left: 0, width: 187, top: 104, height: 13, ...layout }}
-        />
-    );
-};
-
-/** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
-export interface UserInfoLayoutShade25Props {
-    layout?: BoxLayout;
-}
-
-export const UserInfoLayoutShade25 = ({ layout }: UserInfoLayoutShade25Props) => {
-    return (
-        <Region
-            name="shade2"
-            backgroundColor="#a2d6ea"
-            layout={{ position: 'absolute', left: 0, width: 187, top: 130, height: 13, ...layout }}
-        />
-    );
-};
-
-/** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
-export interface UserInfoLayoutShade26Props {
-    layout?: BoxLayout;
-}
-
-export const UserInfoLayoutShade26 = ({ layout }: UserInfoLayoutShade26Props) => {
-    return (
-        <Region
-            name="shade2"
-            backgroundColor="#a2d6ea"
-            layout={{ position: 'absolute', left: 0, width: 187, top: 156, height: 13, ...layout }}
-        />
-    );
-};
-
-/** Named region `shade2` of UserInfoLayout - configured through the parent's `shade2` prop. */
-export interface UserInfoLayoutShade27Props {
-    layout?: BoxLayout;
-}
-
-export const UserInfoLayoutShade27 = ({ layout }: UserInfoLayoutShade27Props) => {
-    return (
-        <Region
-            name="shade2"
-            backgroundColor="#a2d6ea"
-            layout={{ position: 'absolute', left: 0, width: 187, top: 182, height: 13, ...layout }}
-        />
-    );
-};
-
-/** Named region `buttons` of UserInfoLayout - configured through the parent's `buttons` prop. */
-export interface UserInfoLayoutButtonsProps {
-    layout?: BoxLayout;
-    onButtons?: () => void;
-    onChatlogBut?: () => void;
-    onHabboinfotoolBut?: () => void;
-    onMessageBut?: () => void;
-    onModactionBut?: () => void;
-    onRoomvisitsBut?: () => void;
-}
-
-export const UserInfoLayoutButtons = ({ layout, onButtons, onChatlogBut, onHabboinfotoolBut, onMessageBut, onModactionBut, onRoomvisitsBut }: UserInfoLayoutButtonsProps) => {
-    return (
-        <Region
-            name="buttons"
-            onPointerTap={onButtons}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 190, width: 80, top: 0, height: 122, ...layout }}
-        >
-            <Button
-                variant="0"
-                name="chatlog_but"
-                onPointerTap={onChatlogBut}
-                layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 21, minWidth: 80, maxWidth: 80 }}
-            >
-                Room Chat
-            </Button>
-            <Button
-                variant="0"
-                name="message_but"
-                onPointerTap={onMessageBut}
-                layout={{ position: 'absolute', left: 0, width: 80, top: 22, height: 21, maxWidth: 80 }}
-            >
-                Send Message
-            </Button>
-            <Button
-                variant="0"
-                name="roomvisits_but"
-                onPointerTap={onRoomvisitsBut}
-                layout={{ position: 'absolute', left: 0, width: 80, top: 44, height: 21, minWidth: 80, maxWidth: 80 }}
-            >
-                Room Visits
-            </Button>
-            <Button
-                variant="0"
-                name="modaction_but"
-                onPointerTap={onModactionBut}
-                layout={{ position: 'absolute', left: 0, width: 80, top: 88, height: 21, minWidth: 80, maxWidth: 80 }}
-            >
-                Mod Action
-            </Button>
-            <Button
-                variant="0"
-                name="habboinfotool_but"
-                onPointerTap={onHabboinfotoolBut}
-                layout={{ position: 'absolute', left: 0, width: 80, top: 66, height: 21, minWidth: 80, maxWidth: 80 }}
-            >
-                Habbo Info
-            </Button>
-        </Region>
-    );
-};
-
 /** Named region `fields` of UserInfoLayout - configured through the parent's `fields` prop. */
 export interface UserInfoLayoutFieldsProps {
-    buttons?: UserInfoLayoutButtonsProps;
     captionAbusiveCfhCountTxt?: string;
     captionBanCountTxt?: string;
     captionCautionCountTxt?: string;
@@ -235,18 +53,16 @@ export interface UserInfoLayoutFieldsProps {
     captionViewIdBansTxt?: string;
     captionViewTradingLockCountTxt?: string;
     layout?: BoxLayout;
+    onButtons?: () => void;
+    onChatlogBut?: () => void;
     onFields?: () => void;
-    shade1?: UserInfoLayoutShade1Props;
-    shade2?: UserInfoLayoutShade2Props;
-    shade22?: UserInfoLayoutShade22Props;
-    shade23?: UserInfoLayoutShade23Props;
-    shade24?: UserInfoLayoutShade24Props;
-    shade25?: UserInfoLayoutShade25Props;
-    shade26?: UserInfoLayoutShade26Props;
-    shade27?: UserInfoLayoutShade27Props;
+    onHabboinfotoolBut?: () => void;
+    onMessageBut?: () => void;
+    onModactionBut?: () => void;
+    onRoomvisitsBut?: () => void;
 }
 
-export const UserInfoLayoutFields = ({ buttons, captionAbusiveCfhCountTxt, captionBanCountTxt, captionCautionCountTxt, captionCfhCountTxt, captionEmailAddressTxt, captionIdBansTxt, captionLastLoginTxt, captionLastPurchaseTxt, captionLastSanctionTimeTxt, captionNameTxt, captionOnlineTxt, captionRegisteredTxt, captionTradingLockCountTxt, captionTradingLockExpiryTxt, captionUserClassTxt, captionViewBanCountTxt, captionViewCautionCountTxt, captionViewIdBansTxt, captionViewTradingLockCountTxt, layout, onFields, shade1, shade2, shade22, shade23, shade24, shade25, shade26, shade27 }: UserInfoLayoutFieldsProps) => {
+export const UserInfoLayoutFields = ({ captionAbusiveCfhCountTxt, captionBanCountTxt, captionCautionCountTxt, captionCfhCountTxt, captionEmailAddressTxt, captionIdBansTxt, captionLastLoginTxt, captionLastPurchaseTxt, captionLastSanctionTimeTxt, captionNameTxt, captionOnlineTxt, captionRegisteredTxt, captionTradingLockCountTxt, captionTradingLockExpiryTxt, captionUserClassTxt, captionViewBanCountTxt, captionViewCautionCountTxt, captionViewIdBansTxt, captionViewTradingLockCountTxt, layout, onButtons, onChatlogBut, onFields, onHabboinfotoolBut, onMessageBut, onModactionBut, onRoomvisitsBut }: UserInfoLayoutFieldsProps) => {
     return (
         <Region
             name="fields"
@@ -254,14 +70,46 @@ export const UserInfoLayoutFields = ({ buttons, captionAbusiveCfhCountTxt, capti
             cursor="pointer"
             layout={{ position: 'absolute', left: 5, width: 270, top: 5, height: 194, ...layout }}
         >
-            <UserInfoLayoutShade1 {...shade1} />
-            <UserInfoLayoutShade2 {...shade2} />
-            <UserInfoLayoutShade22 {...shade22} />
-            <UserInfoLayoutShade23 {...shade23} />
-            <UserInfoLayoutShade24 {...shade24} />
-            <UserInfoLayoutShade25 {...shade25} />
-            <UserInfoLayoutShade26 {...shade26} />
-            <UserInfoLayoutShade27 {...shade27} />
+            <Region
+                name="shade1"
+                backgroundColor="#a2d6ea"
+                layout={{ position: 'absolute', left: 0, width: 187, top: 0, height: 13 }}
+            />
+            <Region
+                name="shade2"
+                backgroundColor="#a2d6ea"
+                layout={{ position: 'absolute', left: 0, width: 187, top: 26, height: 13 }}
+            />
+            <Region
+                name="shade2"
+                backgroundColor="#a2d6ea"
+                layout={{ position: 'absolute', left: 0, width: 187, top: 52, height: 13 }}
+            />
+            <Region
+                name="shade2"
+                backgroundColor="#a2d6ea"
+                layout={{ position: 'absolute', left: 0, width: 187, top: 78, height: 13 }}
+            />
+            <Region
+                name="shade2"
+                backgroundColor="#a2d6ea"
+                layout={{ position: 'absolute', left: 0, width: 187, top: 104, height: 13 }}
+            />
+            <Region
+                name="shade2"
+                backgroundColor="#a2d6ea"
+                layout={{ position: 'absolute', left: 0, width: 187, top: 130, height: 13 }}
+            />
+            <Region
+                name="shade2"
+                backgroundColor="#a2d6ea"
+                layout={{ position: 'absolute', left: 0, width: 187, top: 156, height: 13 }}
+            />
+            <Region
+                name="shade2"
+                backgroundColor="#a2d6ea"
+                layout={{ position: 'absolute', left: 0, width: 187, top: 182, height: 13 }}
+            />
             <Region layout={{ position: 'absolute', left: 0, width: 70, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text="Name" />
             </Region>
@@ -418,7 +266,53 @@ export const UserInfoLayoutFields = ({ buttons, captionAbusiveCfhCountTxt, capti
             >
                 <ThemeText text={captionViewIdBansTxt ?? 'view'} />
             </Region>
-            <UserInfoLayoutButtons {...buttons} />
+            <Region
+                name="buttons"
+                onPointerTap={onButtons}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 190, width: 80, top: 0, height: 122 }}
+            >
+                <Button
+                    variant="0"
+                    name="chatlog_but"
+                    onPointerTap={onChatlogBut}
+                    layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 21, minWidth: 80, maxWidth: 80 }}
+                >
+                    Room Chat
+                </Button>
+                <Button
+                    variant="0"
+                    name="message_but"
+                    onPointerTap={onMessageBut}
+                    layout={{ position: 'absolute', left: 0, width: 80, top: 22, height: 21, maxWidth: 80 }}
+                >
+                    Send Message
+                </Button>
+                <Button
+                    variant="0"
+                    name="roomvisits_but"
+                    onPointerTap={onRoomvisitsBut}
+                    layout={{ position: 'absolute', left: 0, width: 80, top: 44, height: 21, minWidth: 80, maxWidth: 80 }}
+                >
+                    Room Visits
+                </Button>
+                <Button
+                    variant="0"
+                    name="modaction_but"
+                    onPointerTap={onModactionBut}
+                    layout={{ position: 'absolute', left: 0, width: 80, top: 88, height: 21, minWidth: 80, maxWidth: 80 }}
+                >
+                    Mod Action
+                </Button>
+                <Button
+                    variant="0"
+                    name="habboinfotool_but"
+                    onPointerTap={onHabboinfotoolBut}
+                    layout={{ position: 'absolute', left: 0, width: 80, top: 66, height: 21, minWidth: 80, maxWidth: 80 }}
+                >
+                    Habbo Info
+                </Button>
+            </Region>
         </Region>
     );
 };

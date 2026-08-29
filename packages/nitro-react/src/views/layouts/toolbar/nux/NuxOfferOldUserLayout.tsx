@@ -3,14 +3,16 @@ import { BoxLayout, ButtonThick, Frame, Region, ThemeImage, ThemeText } from '#b
 
 /** Generated from `1224_nux_offer_old_user_xml` (layout "nux_offer_old_user", 456x220) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NuxOfferOldUserLayoutProps {
+    captionBtnSkip?: string;
     captionTxtBody?: string;
     layout?: BoxLayout;
+    onBtnGo?: () => void;
+    onBtnSkip?: () => void;
     onClose?: () => void;
     srcClubIcon?: string;
-    userInputButtons?: NuxOfferOldUserLayoutUserInputButtonsProps;
 }
 
-export const NuxOfferOldUserLayout = ({ captionTxtBody, layout, onClose, srcClubIcon, userInputButtons }: NuxOfferOldUserLayoutProps) => {
+export const NuxOfferOldUserLayout = ({ captionBtnSkip, captionTxtBody, layout, onBtnGo, onBtnSkip, onClose, srcClubIcon }: NuxOfferOldUserLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -54,48 +56,32 @@ export const NuxOfferOldUserLayout = ({ captionTxtBody, layout, onClose, srcClub
                         textOptions={{ fill: '#333333', wordWrap: true, wordWrapWidth: 434 }}
                     />
                 </Region>
-                <NuxOfferOldUserLayoutUserInputButtons {...userInputButtons} />
+                <Region
+                    name="user_input_buttons"
+                    layout={{ position: 'absolute', left: 138, right: 10, bottom: 6, height: 30 }}
+                >
+                    <Region
+                        name="btnSkip"
+                        layout={{ position: 'absolute', left: 0, width: 158, bottom: 0, height: 30, maxWidth: 158, minHeight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        onPointerTap={onBtnSkip}
+                        cursor="pointer"
+                    >
+                        <ThemeText
+                            text={captionBtnSkip ?? t('nux.offer.old.user.button.skip')}
+                            textOptions={{ fill: '#333333' }}
+                        />
+                    </Region>
+                    <ButtonThick
+                        variant="6"
+                        name="btnGo"
+                        tintColor="#1da100"
+                        onPointerTap={onBtnGo}
+                        layout={{ position: 'absolute', left: 168, width: 130, top: 0, height: 30, minWidth: 130, maxWidth: 130 }}
+                    >
+                        {t('nux.offer.old.user.button.verify')}
+                    </ButtonThick>
+                </Region>
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `user_input_buttons` of NuxOfferOldUserLayout - configured through the parent's `userInputButtons` prop. */
-export interface NuxOfferOldUserLayoutUserInputButtonsProps {
-    captionBtnSkip?: string;
-    layout?: BoxLayout;
-    onBtnGo?: () => void;
-    onBtnSkip?: () => void;
-}
-
-export const NuxOfferOldUserLayoutUserInputButtons = ({ captionBtnSkip, layout, onBtnGo, onBtnSkip }: NuxOfferOldUserLayoutUserInputButtonsProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="user_input_buttons"
-            layout={{ position: 'absolute', left: 138, right: 10, bottom: 6, height: 30, ...layout }}
-        >
-            <Region
-                name="btnSkip"
-                layout={{ position: 'absolute', left: 0, width: 158, bottom: 0, height: 30, maxWidth: 158, minHeight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                onPointerTap={onBtnSkip}
-                cursor="pointer"
-            >
-                <ThemeText
-                    text={captionBtnSkip ?? t('nux.offer.old.user.button.skip')}
-                    textOptions={{ fill: '#333333' }}
-                />
-            </Region>
-            <ButtonThick
-                variant="6"
-                name="btnGo"
-                tintColor="#1da100"
-                onPointerTap={onBtnGo}
-                layout={{ position: 'absolute', left: 168, width: 130, top: 0, height: 30, minWidth: 130, maxWidth: 130 }}
-            >
-                {t('nux.offer.old.user.button.verify')}
-            </ButtonThick>
-        </Region>
     );
 };

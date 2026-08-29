@@ -6,14 +6,17 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1105_petpackage_new_xml` (layout "petpackage_new", 475x250) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PetpackageNewLayoutProps {
-    cancel?: PetpackageNewLayoutCancelProps;
+    captionCancel?: string;
+    captionPetpackageHeaderDescription?: string;
+    captionPetpackageHeaderTitle?: string;
     layout?: BoxLayout;
+    onCancel?: () => void;
     onClose?: () => void;
     onPickName?: () => void;
-    petpackageHeaderBackgroundBorder?: PetpackageNewLayoutPetpackageHeaderBackgroundBorderProps;
+    srcPetpackageHeaderIcon?: string;
 }
 
-export const PetpackageNewLayout = ({ cancel, layout, onClose, onPickName, petpackageHeaderBackgroundBorder }: PetpackageNewLayoutProps) => {
+export const PetpackageNewLayout = ({ captionCancel, captionPetpackageHeaderDescription, captionPetpackageHeaderTitle, layout, onCancel, onClose, onPickName, srcPetpackageHeaderIcon }: PetpackageNewLayoutProps) => {
     const t = useTranslation();
     const [ inputValue, setInputValue ] = useState('');
 
@@ -27,7 +30,46 @@ export const PetpackageNewLayout = ({ cancel, layout, onClose, onPickName, petpa
             onClose={onClose}
             layout={{ width: 475, height: 250, ...layout }}
         >
-            <PetpackageNewLayoutPetpackageHeaderBackgroundBorder {...petpackageHeaderBackgroundBorder} />
+            <Region
+                name="petpackage.header.background.border"
+                backgroundColor="#376275"
+                layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 100 }}
+            >
+                <Region
+                    name="petpackage.header.background.body"
+                    backgroundColor="#0e3f52"
+                    layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 95 }}
+                />
+                <ThemeImage
+                    name="petpackage.header.icon"
+                    src={srcPetpackageHeaderIcon ?? '${image.library.url}client_static/petpackage_box.png'}
+                    layout={{ position: 'absolute', left: 3, width: 85, top: 5, height: 93 }}
+                />
+                <Region
+                    name="petpackage.header"
+                    layout={{ position: 'absolute', left: 0, width: 475, top: 0, height: 90 }}
+                >
+                    <Region
+                        name="petpackage.header.title"
+                        layout={{ position: 'absolute', left: 95, width: 280, top: 11, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionPetpackageHeaderTitle ?? t('petpackage.header.title')}
+                            textStyle="text-style-u-headline-big"
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                    <Region
+                        name="petpackage.header.description"
+                        layout={{ position: 'absolute', left: 95, width: 354, top: 41, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionPetpackageHeaderDescription ?? t('widgets.petpackage.name.select')}
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 354 }}
+                        />
+                    </Region>
+                </Region>
+            </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 475, top: 90, height: 124 }}>
                 <Border
                     variant="0"
@@ -47,7 +89,23 @@ export const PetpackageNewLayout = ({ cancel, layout, onClose, onPickName, petpa
                     />
                 </Border>
                 <Region layout={{ position: 'absolute', left: 0, width: 475, top: 64, height: 51 }}>
-                    <PetpackageNewLayoutCancel {...cancel} />
+                    <Region
+                        name="cancel"
+                        onPointerTap={onCancel}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: 107, width: 101, bottom: 8, height: 32, justifyContent: 'center' }}
+                    >
+                        <Region
+                            name="cancel"
+                            layout={{ position: 'absolute', width: 83, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionCancel ?? t('generic.cancel')}
+                                textStyle="text-style-u-regular"
+                                textOptions={{ fill: '#333333' }}
+                            />
+                        </Region>
+                    </Region>
                     <ButtonThick
                         variant="5"
                         name="pick_name"
@@ -60,115 +118,5 @@ export const PetpackageNewLayout = ({ cancel, layout, onClose, onPickName, petpa
                 </Region>
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `petpackage.header.background.body` of PetpackageNewLayout - configured through the parent's `petpackageHeaderBackgroundBody` prop. */
-export interface PetpackageNewLayoutPetpackageHeaderBackgroundBodyProps {
-    layout?: BoxLayout;
-}
-
-export const PetpackageNewLayoutPetpackageHeaderBackgroundBody = ({ layout }: PetpackageNewLayoutPetpackageHeaderBackgroundBodyProps) => {
-    return (
-        <Region
-            name="petpackage.header.background.body"
-            backgroundColor="#0e3f52"
-            layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 95, ...layout }}
-        />
-    );
-};
-
-/** Named region `petpackage.header` of PetpackageNewLayout - configured through the parent's `petpackageHeader` prop. */
-export interface PetpackageNewLayoutPetpackageHeaderProps {
-    captionPetpackageHeaderDescription?: string;
-    captionPetpackageHeaderTitle?: string;
-    layout?: BoxLayout;
-}
-
-export const PetpackageNewLayoutPetpackageHeader = ({ captionPetpackageHeaderDescription, captionPetpackageHeaderTitle, layout }: PetpackageNewLayoutPetpackageHeaderProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="petpackage.header"
-            layout={{ position: 'absolute', left: 0, width: 475, top: 0, height: 90, ...layout }}
-        >
-            <Region
-                name="petpackage.header.title"
-                layout={{ position: 'absolute', left: 95, width: 280, top: 11, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPetpackageHeaderTitle ?? t('petpackage.header.title')}
-                    textStyle="text-style-u-headline-big"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-            <Region
-                name="petpackage.header.description"
-                layout={{ position: 'absolute', left: 95, width: 354, top: 41, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPetpackageHeaderDescription ?? t('widgets.petpackage.name.select')}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 354 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `petpackage.header.background.border` of PetpackageNewLayout - configured through the parent's `petpackageHeaderBackgroundBorder` prop. */
-export interface PetpackageNewLayoutPetpackageHeaderBackgroundBorderProps {
-    layout?: BoxLayout;
-    petpackageHeader?: PetpackageNewLayoutPetpackageHeaderProps;
-    petpackageHeaderBackgroundBody?: PetpackageNewLayoutPetpackageHeaderBackgroundBodyProps;
-    srcPetpackageHeaderIcon?: string;
-}
-
-export const PetpackageNewLayoutPetpackageHeaderBackgroundBorder = ({ layout, petpackageHeader, petpackageHeaderBackgroundBody, srcPetpackageHeaderIcon }: PetpackageNewLayoutPetpackageHeaderBackgroundBorderProps) => {
-    return (
-        <Region
-            name="petpackage.header.background.border"
-            backgroundColor="#376275"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 100, ...layout }}
-        >
-            <PetpackageNewLayoutPetpackageHeaderBackgroundBody {...petpackageHeaderBackgroundBody} />
-            <ThemeImage
-                name="petpackage.header.icon"
-                src={srcPetpackageHeaderIcon ?? '${image.library.url}client_static/petpackage_box.png'}
-                layout={{ position: 'absolute', left: 3, width: 85, top: 5, height: 93 }}
-            />
-            <PetpackageNewLayoutPetpackageHeader {...petpackageHeader} />
-        </Region>
-    );
-};
-
-/** Named region `cancel` of PetpackageNewLayout - configured through the parent's `cancel` prop. */
-export interface PetpackageNewLayoutCancelProps {
-    captionCancel?: string;
-    layout?: BoxLayout;
-    onCancel?: () => void;
-}
-
-export const PetpackageNewLayoutCancel = ({ captionCancel, layout, onCancel }: PetpackageNewLayoutCancelProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="cancel"
-            onPointerTap={onCancel}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 107, width: 101, bottom: 8, height: 32, justifyContent: 'center', ...layout }}
-        >
-            <Region
-                name="cancel"
-                layout={{ position: 'absolute', width: 83, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCancel ?? t('generic.cancel')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#333333' }}
-                />
-            </Region>
-        </Region>
     );
 };

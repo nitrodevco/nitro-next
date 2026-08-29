@@ -9,16 +9,46 @@ export interface MarketPlaceWidgetLayoutProps {
     captionStatusText?: string;
     layout?: BoxLayout;
     offerList?: MarketPlaceWidgetLayoutOfferListProps;
-    searchSelector?: MarketPlaceWidgetLayoutSearchSelectorProps;
+    onSearchAdvanced?: () => void;
+    onSearchByActivity?: () => void;
+    onSearchByValue?: () => void;
 }
 
-export const MarketPlaceWidgetLayout = ({ captionStatusText, layout, offerList, searchSelector }: MarketPlaceWidgetLayoutProps) => {
+export const MarketPlaceWidgetLayout = ({ captionStatusText, layout, offerList, onSearchAdvanced, onSearchByActivity, onSearchByValue }: MarketPlaceWidgetLayoutProps) => {
     const t = useTranslation();
 
     return (
         <Region layout={{ position: 'relative', width: 360, height: 390, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 390 }}>
-                <MarketPlaceWidgetLayoutSearchSelector {...searchSelector} />
+                <Region
+                    name="search_selector"
+                    layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 25 }}
+                >
+                    <ButtonGroupLeft
+                        variant="100"
+                        name="search_by_activity"
+                        onPointerTap={onSearchByActivity}
+                        layout={{ position: 'absolute', left: 0, right: 233, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
+                    >
+                        {t('catalog.marketplace.search_by_activity')}
+                    </ButtonGroupLeft>
+                    <ButtonGroupCenter
+                        variant="100"
+                        name="search_by_value"
+                        onPointerTap={onSearchByValue}
+                        layout={{ position: 'absolute', left: 107, right: 127, top: 0, height: 25, minWidth: 106, maxWidth: 106 }}
+                    >
+                        {t('catalog.marketplace.search_by_value')}
+                    </ButtonGroupCenter>
+                    <ButtonGroupRight
+                        variant="100"
+                        name="search_advanced"
+                        onPointerTap={onSearchAdvanced}
+                        layout={{ position: 'absolute', left: 213, right: 20, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
+                    >
+                        {t('catalog.marketplace.search_advanced')}
+                    </ButtonGroupRight>
+                </Region>
                 <Border
                     variant="100"
                     name="search_container"
@@ -39,103 +69,23 @@ export const MarketPlaceWidgetLayout = ({ captionStatusText, layout, offerList, 
     );
 };
 
-/** Named region `search_selector` of MarketPlaceWidgetLayout - configured through the parent's `searchSelector` prop. */
-export interface MarketPlaceWidgetLayoutSearchSelectorProps {
-    layout?: BoxLayout;
-    onSearchAdvanced?: () => void;
-    onSearchByActivity?: () => void;
-    onSearchByValue?: () => void;
-}
-
-export const MarketPlaceWidgetLayoutSearchSelector = ({ layout, onSearchAdvanced, onSearchByActivity, onSearchByValue }: MarketPlaceWidgetLayoutSearchSelectorProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="search_selector"
-            layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 25, ...layout }}
-        >
-            <ButtonGroupLeft
-                variant="100"
-                name="search_by_activity"
-                onPointerTap={onSearchByActivity}
-                layout={{ position: 'absolute', left: 0, right: 233, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
-            >
-                {t('catalog.marketplace.search_by_activity')}
-            </ButtonGroupLeft>
-            <ButtonGroupCenter
-                variant="100"
-                name="search_by_value"
-                onPointerTap={onSearchByValue}
-                layout={{ position: 'absolute', left: 107, right: 127, top: 0, height: 25, minWidth: 106, maxWidth: 106 }}
-            >
-                {t('catalog.marketplace.search_by_value')}
-            </ButtonGroupCenter>
-            <ButtonGroupRight
-                variant="100"
-                name="search_advanced"
-                onPointerTap={onSearchAdvanced}
-                layout={{ position: 'absolute', left: 213, right: 20, top: 0, height: 25, minWidth: 107, maxWidth: 107 }}
-            >
-                {t('catalog.marketplace.search_advanced')}
-            </ButtonGroupRight>
-        </Region>
-    );
-};
-
-/** Named region `image_container` of MarketPlaceWidgetLayout - configured through the parent's `imageContainer` prop. */
-export interface MarketPlaceWidgetLayoutImageContainerProps {
-    layout?: BoxLayout;
-    srcItemImage?: string;
-    srcUniqueItemBackgroundBitmap?: string;
-}
-
-export const MarketPlaceWidgetLayoutImageContainer = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap }: MarketPlaceWidgetLayoutImageContainerProps) => {
-    return (
-        <Region
-            name="image_container"
-            layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
-        >
-            <ThemeImage
-                name="unique_item_background_bitmap"
-                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                visible={false}
-            />
-            <ThemeImage
-                name="item_image"
-                src={srcItemImage}
-                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
-            />
-            <WidgetSlot
-                widgetType="limited_item_overlay_grid"
-                name="unique_item_overlay_widget"
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            />
-            <WidgetSlot
-                widgetType="rarity_item_overlay_grid"
-                name="rarity_item_overlay_widget"
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            />
-        </Region>
-    );
-};
-
 /** Row template `offer_item` of MarketPlaceWidgetLayout - pass real rows through its `items…` slot. */
 export interface MarketPlaceWidgetLayoutOfferItemItemProps {
     captionItemDesc?: string;
     captionItemName?: string;
     captionItemPrice?: string;
     captionOfferCount?: string;
-    imageContainer?: MarketPlaceWidgetLayoutImageContainerProps;
     layout?: BoxLayout;
     onBuyButton?: () => void;
     onMoreButton?: () => void;
+    srcItemImage?: string;
+    srcUniqueItemBackgroundBitmap?: string;
+    visibleRarityItemOverlayWidget?: boolean;
+    visibleUniqueItemBackgroundBitmap?: boolean;
+    visibleUniqueItemOverlayWidget?: boolean;
 }
 
-export const MarketPlaceWidgetLayoutOfferItemItem = ({ captionItemDesc, captionItemName, captionItemPrice, captionOfferCount, imageContainer, layout, onBuyButton, onMoreButton }: MarketPlaceWidgetLayoutOfferItemItemProps) => {
+export const MarketPlaceWidgetLayoutOfferItemItem = ({ captionItemDesc, captionItemName, captionItemPrice, captionOfferCount, layout, onBuyButton, onMoreButton, srcItemImage, srcUniqueItemBackgroundBitmap, visibleRarityItemOverlayWidget, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayWidget }: MarketPlaceWidgetLayoutOfferItemItemProps) => {
     const t = useTranslation();
 
     return (
@@ -145,7 +95,37 @@ export const MarketPlaceWidgetLayoutOfferItemItem = ({ captionItemDesc, captionI
             tintColor="#e3e3e3"
             layout={{ width: 340, height: 58, flexShrink: 0, ...layout }}
         >
-            <MarketPlaceWidgetLayoutImageContainer {...imageContainer} />
+            <Region
+                name="image_container"
+                layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40 }}
+            >
+                {(visibleUniqueItemBackgroundBitmap ?? false) && (
+                    <ThemeImage
+                        name="unique_item_background_bitmap"
+                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+                <ThemeImage
+                    name="item_image"
+                    src={srcItemImage}
+                    layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
+                />
+                {(visibleUniqueItemOverlayWidget ?? false) && (
+                    <WidgetSlot
+                        widgetType="limited_item_overlay_grid"
+                        name="unique_item_overlay_widget"
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+                {(visibleRarityItemOverlayWidget ?? false) && (
+                    <WidgetSlot
+                        widgetType="rarity_item_overlay_grid"
+                        name="rarity_item_overlay_widget"
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+            </Region>
             <Region
                 name="item_name"
                 layout={{ position: 'absolute', left: 57, width: 74, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

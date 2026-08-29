@@ -4,12 +4,11 @@ import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 /** Generated from `972_room_loading_bar_xml` (layout "room_interstitial", 20x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RoomLoadingBarLayoutProps {
     captionLoadingText?: string;
-    image?: RoomLoadingBarLayoutImageProps;
     layout?: BoxLayout;
-    region?: RoomLoadingBarLayoutRegionProps;
+    onRegion?: () => void;
 }
 
-export const RoomLoadingBarLayout = ({ captionLoadingText, image, layout, region }: RoomLoadingBarLayoutProps) => {
+export const RoomLoadingBarLayout = ({ captionLoadingText, layout, onRegion }: RoomLoadingBarLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -18,8 +17,17 @@ export const RoomLoadingBarLayout = ({ captionLoadingText, image, layout, region
                 variant="0"
                 layout={{ position: 'absolute', left: 0, width: 240, top: 0, height: 146, justifyContent: 'center' }}
             >
-                <RoomLoadingBarLayoutImage {...image} />
-                <RoomLoadingBarLayoutRegion {...region} />
+                <Region
+                    name="image"
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 10, bottom: 45 }}
+                />
+                <Region
+                    name="region"
+                    tooltip={t('ads.interstitial.tooltip')}
+                    onPointerTap={onRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 10, right: 10, top: 10, bottom: 45 }}
+                />
                 <Region
                     name="loading_text"
                     layout={{ position: 'absolute', width: 220, bottom: 20, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
@@ -31,39 +39,5 @@ export const RoomLoadingBarLayout = ({ captionLoadingText, image, layout, region
                 </Region>
             </Border>
         </Region>
-    );
-};
-
-/** Named region `image` of RoomLoadingBarLayout - configured through the parent's `image` prop. */
-export interface RoomLoadingBarLayoutImageProps {
-    layout?: BoxLayout;
-}
-
-export const RoomLoadingBarLayoutImage = ({ layout }: RoomLoadingBarLayoutImageProps) => {
-    return (
-        <Region
-            name="image"
-            layout={{ position: 'absolute', left: 10, right: 10, top: 10, bottom: 45, ...layout }}
-        />
-    );
-};
-
-/** Named region `region` of RoomLoadingBarLayout - configured through the parent's `region` prop. */
-export interface RoomLoadingBarLayoutRegionProps {
-    layout?: BoxLayout;
-    onRegion?: () => void;
-}
-
-export const RoomLoadingBarLayoutRegion = ({ layout, onRegion }: RoomLoadingBarLayoutRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="region"
-            tooltip={t('ads.interstitial.tooltip')}
-            onPointerTap={onRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 10, right: 10, top: 10, bottom: 45, ...layout }}
-        />
     );
 };

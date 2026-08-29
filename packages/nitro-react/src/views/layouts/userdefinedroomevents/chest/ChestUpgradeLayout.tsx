@@ -180,99 +180,19 @@ export const ChestUpgradeLayoutNewCapacityItem = ({ captionNewCapacity, layout }
     );
 };
 
-/** Named region `properties_itemlist` of ChestUpgradeLayout - configured through the parent's `propertiesItemlist` prop. */
-export interface ChestUpgradeLayoutPropertiesItemlistProps {
-    itemsPropertiesItemlist?: ReactNode;
-    layout?: BoxLayout;
-    onAmountSelectionDropmenu?: () => void;
-}
-
-export const ChestUpgradeLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout, onAmountSelectionDropmenu }: ChestUpgradeLayoutPropertiesItemlistProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="properties_itemlist"
-            layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 132, flexDirection: 'column', gap: 4, ...layout }}
-        >
-            {itemsPropertiesItemlist ?? (
-                <>
-                    <ChestUpgradeLayoutProductNameItem />
-                    <ChestUpgradeLayoutCurrentCapacityItem />
-                    <ChestUpgradeLayoutNewCapacityItem />
-                </>
-            )}
-            <Region layout={{ width: 276, height: 25, flexShrink: 0, flexDirection: 'row', gap: 5 }}>
-                <Region layout={{ width: 213, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('wiredchests.upgrade.capacity.amount')} />
-                </Region>
-                <Dropmenu
-                    variant="3"
-                    name="amount_selection_dropmenu"
-                    onPointerTap={onAmountSelectionDropmenu}
-                    layout={{ width: 58, height: 25, flexShrink: 0 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `purchase_cost_box` of ChestUpgradeLayout - configured through the parent's `purchaseCostBox` prop. */
-export interface ChestUpgradeLayoutPurchaseCostBoxProps {
+/** Named region `content` of ChestUpgradeLayout - configured through the parent's `content` prop. */
+export interface ChestUpgradeLayoutContentProps {
     captionPlus?: string;
     captionPriceCredits?: string;
     captionPriceDiamonds?: string;
-    layout?: BoxLayout;
-}
-
-export const ChestUpgradeLayoutPurchaseCostBox = ({ captionPlus, captionPriceCredits, captionPriceDiamonds, layout }: ChestUpgradeLayoutPurchaseCostBoxProps) => {
-    return (
-        <Region
-            name="purchase_cost_box"
-            layout={{ width: 88, height: 25, flexShrink: 0, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 25, flexDirection: 'row', gap: 2 }}>
-                <Region
-                    name="price_credits"
-                    layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText text={captionPriceCredits ?? '0'} />
-                </Region>
-                <Icon
-                    variant="34"
-                    layout={{ width: 22, height: 22, flexShrink: 0 }}
-                />
-                <Region
-                    name="plus"
-                    layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText text={captionPlus ?? ' '} />
-                </Region>
-                <Region
-                    name="price_diamonds"
-                    layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText text={captionPriceDiamonds ?? '0'} />
-                </Region>
-                <Icon
-                    variant="41"
-                    layout={{ width: 22, height: 22, flexShrink: 0 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `content` of ChestUpgradeLayout - configured through the parent's `content` prop. */
-export interface ChestUpgradeLayoutContentProps {
     itemsContent?: ReactNode;
+    itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
-    propertiesItemlist?: ChestUpgradeLayoutPropertiesItemlistProps;
-    purchaseCostBox?: ChestUpgradeLayoutPurchaseCostBoxProps;
+    onAmountSelectionDropmenu?: () => void;
     srcProductImage?: string;
 }
 
-export const ChestUpgradeLayoutContent = ({ itemsContent, layout, propertiesItemlist, purchaseCostBox, srcProductImage }: ChestUpgradeLayoutContentProps) => {
+export const ChestUpgradeLayoutContent = ({ captionPlus, captionPriceCredits, captionPriceDiamonds, itemsContent, itemsPropertiesItemlist, layout, onAmountSelectionDropmenu, srcProductImage }: ChestUpgradeLayoutContentProps) => {
     const t = useTranslation();
 
     return (
@@ -298,7 +218,29 @@ export const ChestUpgradeLayoutContent = ({ itemsContent, layout, propertiesItem
                         layout={{ position: 'absolute', left: 1, width: 126, top: 1, height: 152 }}
                     />
                 </Border>
-                <ChestUpgradeLayoutPropertiesItemlist {...propertiesItemlist} />
+                <Region
+                    name="properties_itemlist"
+                    layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 132, flexDirection: 'column', gap: 4 }}
+                >
+                    {itemsPropertiesItemlist ?? (
+                        <>
+                            <ChestUpgradeLayoutProductNameItem />
+                            <ChestUpgradeLayoutCurrentCapacityItem />
+                            <ChestUpgradeLayoutNewCapacityItem />
+                        </>
+                    )}
+                    <Region layout={{ width: 276, height: 25, flexShrink: 0, flexDirection: 'row', gap: 5 }}>
+                        <Region layout={{ width: 213, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <ThemeText text={t('wiredchests.upgrade.capacity.amount')} />
+                        </Region>
+                        <Dropmenu
+                            variant="3"
+                            name="amount_selection_dropmenu"
+                            onPointerTap={onAmountSelectionDropmenu}
+                            layout={{ width: 58, height: 25, flexShrink: 0 }}
+                        />
+                    </Region>
+                </Region>
                 <Region layout={{ position: 'absolute', left: 142, width: 356, top: 137, height: 22, flexDirection: 'row' }}>
                     <Region layout={{ width: 268, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
@@ -306,7 +248,39 @@ export const ChestUpgradeLayoutContent = ({ itemsContent, layout, propertiesItem
                             textStyle="text-style-u-regular"
                         />
                     </Region>
-                    <ChestUpgradeLayoutPurchaseCostBox {...purchaseCostBox} />
+                    <Region
+                        name="purchase_cost_box"
+                        layout={{ width: 88, height: 25, flexShrink: 0 }}
+                    >
+                        <Region layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 25, flexDirection: 'row', gap: 2 }}>
+                            <Region
+                                name="price_credits"
+                                layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText text={captionPriceCredits ?? '0'} />
+                            </Region>
+                            <Icon
+                                variant="34"
+                                layout={{ width: 22, height: 22, flexShrink: 0 }}
+                            />
+                            <Region
+                                name="plus"
+                                layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText text={captionPlus ?? ' '} />
+                            </Region>
+                            <Region
+                                name="price_diamonds"
+                                layout={{ width: 12, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText text={captionPriceDiamonds ?? '0'} />
+                            </Region>
+                            <Icon
+                                variant="41"
+                                layout={{ width: 22, height: 22, flexShrink: 0 }}
+                            />
+                        </Region>
+                    </Region>
                 </Region>
             </Region>
         </Region>

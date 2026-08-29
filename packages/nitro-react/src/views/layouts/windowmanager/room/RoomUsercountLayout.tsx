@@ -5,11 +5,11 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `2481_room_usercount_xml` (layout "room_info_usercount", 40x18) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RoomUsercountLayoutProps {
+    itemsUsercount?: ReactNode;
     layout?: BoxLayout;
-    usercount?: RoomUsercountLayoutUsercountProps;
 }
 
-export const RoomUsercountLayout = ({ layout, usercount }: RoomUsercountLayoutProps) => {
+export const RoomUsercountLayout = ({ itemsUsercount, layout }: RoomUsercountLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 40, height: 18, ...layout }}>
             <Border
@@ -18,7 +18,17 @@ export const RoomUsercountLayout = ({ layout, usercount }: RoomUsercountLayoutPr
                 tintColor="#000000"
                 layout={{ position: 'absolute', width: 40, bottom: 0, height: 18, justifyContent: 'center' }}
             >
-                <RoomUsercountLayoutUsercount {...usercount} />
+                <Region
+                    name="usercount"
+                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
+                >
+                    {itemsUsercount ?? (
+                        <>
+                            <RoomUsercountLayoutRoomUsercountIconItem />
+                            <RoomUsercountLayoutRoomUsercountItem />
+                        </>
+                    )}
+                </Region>
             </Border>
         </Region>
     );
@@ -57,28 +67,6 @@ export const RoomUsercountLayoutRoomUsercountItem = ({ captionRoomUsercount, lay
                 textStyle="text-style-u-bold"
                 textOptions={{ fill: '#ffffff' }}
             />
-        </Region>
-    );
-};
-
-/** Named region `usercount` of RoomUsercountLayout - configured through the parent's `usercount` prop. */
-export interface RoomUsercountLayoutUsercountProps {
-    itemsUsercount?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const RoomUsercountLayoutUsercount = ({ itemsUsercount, layout }: RoomUsercountLayoutUsercountProps) => {
-    return (
-        <Region
-            name="usercount"
-            layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1, ...layout }}
-        >
-            {itemsUsercount ?? (
-                <>
-                    <RoomUsercountLayoutRoomUsercountIconItem />
-                    <RoomUsercountLayoutRoomUsercountItem />
-                </>
-            )}
         </Region>
     );
 };

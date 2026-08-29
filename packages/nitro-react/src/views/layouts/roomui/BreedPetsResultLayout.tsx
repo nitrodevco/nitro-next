@@ -64,22 +64,24 @@ export const BreedPetsResultLayoutDescriptionItem = ({ captionDescription, layou
 export interface BreedPetsResultLayoutDescriptionSorryItemProps {
     captionDescriptionSorry?: string;
     layout?: BoxLayout;
+    visibleDescriptionSorry?: boolean;
 }
 
-export const BreedPetsResultLayoutDescriptionSorryItem = ({ captionDescriptionSorry, layout }: BreedPetsResultLayoutDescriptionSorryItemProps) => {
+export const BreedPetsResultLayoutDescriptionSorryItem = ({ captionDescriptionSorry, layout, visibleDescriptionSorry }: BreedPetsResultLayoutDescriptionSorryItemProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="description_sorry"
-            visible={false}
-            layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionDescriptionSorry ?? t('breedpetsresult.widget.text.sorry')}
-                textOptions={{ wordWrap: true, wordWrapWidth: 254 }}
-            />
-        </Region>
+        (visibleDescriptionSorry ?? false) && (
+            <Region
+                name="description_sorry"
+                layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            >
+                <ThemeText
+                    text={captionDescriptionSorry ?? t('breedpetsresult.widget.text.sorry')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 254 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -110,23 +112,25 @@ export const BreedPetsResultLayoutInfoItem = ({ captionInfo, layout }: BreedPets
 export interface BreedPetsResultLayoutInfoSorryItemProps {
     captionInfoSorry?: string;
     layout?: BoxLayout;
+    visibleInfoSorry?: boolean;
 }
 
-export const BreedPetsResultLayoutInfoSorryItem = ({ captionInfoSorry, layout }: BreedPetsResultLayoutInfoSorryItemProps) => {
+export const BreedPetsResultLayoutInfoSorryItem = ({ captionInfoSorry, layout, visibleInfoSorry }: BreedPetsResultLayoutInfoSorryItemProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="info_sorry"
-            visible={false}
-            layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionInfoSorry ?? t('breedpetsresult.widget.info.sorry')}
-                textStyle="text-style-u-italic"
-                textOptions={{ wordWrap: true, wordWrapWidth: 254 }}
-            />
-        </Region>
+        (visibleInfoSorry ?? false) && (
+            <Region
+                name="info_sorry"
+                layout={{ width: 254, height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            >
+                <ThemeText
+                    text={captionInfoSorry ?? t('breedpetsresult.widget.info.sorry')}
+                    textStyle="text-style-u-italic"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 254 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -224,23 +228,25 @@ export const BreedPetsResultLayoutSeedDescriptionItem = ({ captionSeedDescriptio
 export interface BreedPetsResultLayoutInfoMutate1ItemProps {
     captionInfoMutate1?: string;
     layout?: BoxLayout;
+    visibleInfoMutate1?: boolean;
 }
 
-export const BreedPetsResultLayoutInfoMutate1Item = ({ captionInfoMutate1, layout }: BreedPetsResultLayoutInfoMutate1ItemProps) => {
+export const BreedPetsResultLayoutInfoMutate1Item = ({ captionInfoMutate1, layout, visibleInfoMutate1 }: BreedPetsResultLayoutInfoMutate1ItemProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="info_mutate1"
-            visible={false}
-            layout={{ width: 122, height: 33, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
-        >
-            <ThemeText
-                text={captionInfoMutate1 ?? t('breedpetsresult.widget.info.mutation')}
-                textStyle="text-style-u-italic"
-                textOptions={{ wordWrap: true, wordWrapWidth: 122, align: 'center' }}
-            />
-        </Region>
+        (visibleInfoMutate1 ?? false) && (
+            <Region
+                name="info_mutate1"
+                layout={{ width: 122, height: 33, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
+            >
+                <ThemeText
+                    text={captionInfoMutate1 ?? t('breedpetsresult.widget.info.mutation')}
+                    textStyle="text-style-u-italic"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 122, align: 'center' }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -363,23 +369,25 @@ export const BreedPetsResultLayoutSeedDescriptionItem2 = ({ captionSeedDescripti
 export interface BreedPetsResultLayoutInfoMutate2ItemProps {
     captionInfoMutate2?: string;
     layout?: BoxLayout;
+    visibleInfoMutate2?: boolean;
 }
 
-export const BreedPetsResultLayoutInfoMutate2Item = ({ captionInfoMutate2, layout }: BreedPetsResultLayoutInfoMutate2ItemProps) => {
+export const BreedPetsResultLayoutInfoMutate2Item = ({ captionInfoMutate2, layout, visibleInfoMutate2 }: BreedPetsResultLayoutInfoMutate2ItemProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="info_mutate2"
-            visible={false}
-            layout={{ width: 122, height: 33, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
-        >
-            <ThemeText
-                text={captionInfoMutate2 ?? t('breedpetsresult.widget.info.mutation')}
-                textStyle="text-style-u-italic"
-                textOptions={{ wordWrap: true, wordWrapWidth: 122, align: 'center' }}
-            />
-        </Region>
+        (visibleInfoMutate2 ?? false) && (
+            <Region
+                name="info_mutate2"
+                layout={{ width: 122, height: 33, flexShrink: 0, minWidth: 122, maxWidth: 122, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
+            >
+                <ThemeText
+                    text={captionInfoMutate2 ?? t('breedpetsresult.widget.info.mutation')}
+                    textStyle="text-style-u-italic"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 122, align: 'center' }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -441,16 +449,17 @@ export const BreedPetsResultLayoutPlaceButton1Item = ({ layout, onPlaceButton1, 
     const t = useTranslation();
 
     return (
-        <ButtonThick
-            variant="5"
-            name="place_button1"
-            tintColor="#00aa00"
-            onPointerTap={onPlaceButton1}
-            visible={visiblePlaceButton1 ?? false}
-            layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
-        >
-            {t('breedpetsresult.widget.seed2.use')}
-        </ButtonThick>
+        (visiblePlaceButton1 ?? false) && (
+            <ButtonThick
+                variant="5"
+                name="place_button1"
+                tintColor="#00aa00"
+                onPointerTap={onPlaceButton1}
+                layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
+            >
+                {t('breedpetsresult.widget.seed2.use')}
+            </ButtonThick>
+        )
     );
 };
 
@@ -465,15 +474,16 @@ export const BreedPetsResultLayoutPickButton1Item = ({ layout, onPickButton1, vi
     const t = useTranslation();
 
     return (
-        <Button
-            variant="3"
-            name="pick_button1"
-            onPointerTap={onPickButton1}
-            visible={visiblePickButton1 ?? false}
-            layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
-        >
-            {t('breedpetsresult.widget.seed2.pick')}
-        </Button>
+        (visiblePickButton1 ?? false) && (
+            <Button
+                variant="3"
+                name="pick_button1"
+                onPointerTap={onPickButton1}
+                layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
+            >
+                {t('breedpetsresult.widget.seed2.pick')}
+            </Button>
+        )
     );
 };
 
@@ -510,16 +520,17 @@ export const BreedPetsResultLayoutPlaceButton2Item = ({ layout, onPlaceButton2, 
     const t = useTranslation();
 
     return (
-        <ButtonThick
-            variant="5"
-            name="place_button2"
-            tintColor="#00aa00"
-            onPointerTap={onPlaceButton2}
-            visible={visiblePlaceButton2 ?? false}
-            layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
-        >
-            {t('breedpetsresult.widget.seed2.use')}
-        </ButtonThick>
+        (visiblePlaceButton2 ?? false) && (
+            <ButtonThick
+                variant="5"
+                name="place_button2"
+                tintColor="#00aa00"
+                onPointerTap={onPlaceButton2}
+                layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
+            >
+                {t('breedpetsresult.widget.seed2.use')}
+            </ButtonThick>
+        )
     );
 };
 
@@ -534,15 +545,16 @@ export const BreedPetsResultLayoutPickButton2Item = ({ layout, onPickButton2, vi
     const t = useTranslation();
 
     return (
-        <Button
-            variant="3"
-            name="pick_button2"
-            onPointerTap={onPickButton2}
-            visible={visiblePickButton2 ?? false}
-            layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
-        >
-            {t('breedpetsresult.widget.seed2.pick')}
-        </Button>
+        (visiblePickButton2 ?? false) && (
+            <Button
+                variant="3"
+                name="pick_button2"
+                onPointerTap={onPickButton2}
+                layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
+            >
+                {t('breedpetsresult.widget.seed2.pick')}
+            </Button>
+        )
     );
 };
 

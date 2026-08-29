@@ -1,5 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
-import { LoyaltyVipBuyWidget, LoyaltyVipBuyWidgetProps } from '#base/views/layouts/catalog/widgets/LoyaltyVipBuyWidget';
+import { LoyaltyVipBuyWidget2, LoyaltyVipBuyWidget2Props } from '#base/views/layouts/catalog/widgets/LoyaltyVipBuyWidget2';
 
 /** Generated from `1714_layout_loyalty_vip_buy_xml` (layout "ctlg_loyalty_vip_buy", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutLoyaltyVipBuy_1714LayoutProps {
@@ -18,7 +18,7 @@ export const LayoutLoyaltyVipBuy_1714Layout = ({ ctlgLoyaltyVipBuy, layout }: La
 /** Named region `ctlg_loyalty_vip_buy` of LayoutLoyaltyVipBuy_1714Layout - configured through the parent's `ctlgLoyaltyVipBuy` prop. */
 export interface LayoutLoyaltyVipBuy_1714LayoutCtlgLoyaltyVipBuyProps {
     layout?: BoxLayout;
-    loyaltyVipBuyWidget?: LoyaltyVipBuyWidgetProps;
+    loyaltyVipBuyWidget?: LoyaltyVipBuyWidget2Props;
 }
 
 export const LayoutLoyaltyVipBuy_1714LayoutCtlgLoyaltyVipBuy = ({ layout, loyaltyVipBuyWidget }: LayoutLoyaltyVipBuy_1714LayoutCtlgLoyaltyVipBuyProps) => {
@@ -28,7 +28,7 @@ export const LayoutLoyaltyVipBuy_1714LayoutCtlgLoyaltyVipBuy = ({ layout, loyalt
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
         >
-            <LoyaltyVipBuyWidget
+            <LoyaltyVipBuyWidget2
                 layout={{ position: 'absolute', left: 13, width: 320, top: 67, height: 345 }}
                 {...loyaltyVipBuyWidget}
             />

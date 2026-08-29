@@ -32,22 +32,24 @@ export const UserCreateLayout = ({ layout, list, onClose }: UserCreateLayoutProp
 export interface UserCreateLayoutCreateErrorItemProps {
     captionCreateError?: string;
     layout?: BoxLayout;
+    visibleCreateError?: boolean;
 }
 
-export const UserCreateLayoutCreateErrorItem = ({ captionCreateError, layout }: UserCreateLayoutCreateErrorItemProps) => {
+export const UserCreateLayoutCreateErrorItem = ({ captionCreateError, layout, visibleCreateError }: UserCreateLayoutCreateErrorItemProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="create_error"
-            visible={false}
-            layout={{ width: 264, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionCreateError ?? t('guide.help.request.user.create.input.error')}
-                textOptions={{ fill: '#ff0000', wordWrap: true, wordWrapWidth: 264 }}
-            />
-        </Region>
+        (visibleCreateError ?? false) && (
+            <Region
+                name="create_error"
+                layout={{ width: 264, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            >
+                <ThemeText
+                    text={captionCreateError ?? t('guide.help.request.user.create.input.error')}
+                    textOptions={{ fill: '#ff0000', wordWrap: true, wordWrapWidth: 264 }}
+                />
+            </Region>
+        )
     );
 };
 

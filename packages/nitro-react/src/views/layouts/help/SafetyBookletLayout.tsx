@@ -10,9 +10,12 @@ export interface SafetyBookletLayoutProps {
     onFrameClose?: () => void;
     pageContainer?: SafetyBookletLayoutPageContainerProps;
     srcSafetyImage?: string;
+    visibleFinalPage?: boolean;
+    visibleFinalPageNoQuestions?: boolean;
+    visiblePageContainer?: boolean;
 }
 
-export const SafetyBookletLayout = ({ finalPage, finalPageNoQuestions, layout, onFrameClose, pageContainer, srcSafetyImage }: SafetyBookletLayoutProps) => {
+export const SafetyBookletLayout = ({ finalPage, finalPageNoQuestions, layout, onFrameClose, pageContainer, srcSafetyImage, visibleFinalPage, visibleFinalPageNoQuestions, visiblePageContainer }: SafetyBookletLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -37,9 +40,15 @@ export const SafetyBookletLayout = ({ finalPage, finalPageNoQuestions, layout, o
                                 layout={{ width: 30, height: 30, flexShrink: 0 }}
                             />
                         </Region>
-                        <SafetyBookletLayoutPageContainer {...pageContainer} />
-                        <SafetyBookletLayoutFinalPage {...finalPage} />
-                        <SafetyBookletLayoutFinalPageNoQuestions {...finalPageNoQuestions} />
+                        {(visiblePageContainer ?? false) && (
+                            <SafetyBookletLayoutPageContainer {...pageContainer} />
+                        )}
+                        {(visibleFinalPage ?? false) && (
+                            <SafetyBookletLayoutFinalPage {...finalPage} />
+                        )}
+                        {(visibleFinalPageNoQuestions ?? false) && (
+                            <SafetyBookletLayoutFinalPageNoQuestions {...finalPageNoQuestions} />
+                        )}
                         <Border
                             variant="102"
                             name="safety.quiz.explanation"
@@ -98,97 +107,98 @@ export const SafetyBookletLayoutPageContainer = ({ captionDescription, captionTi
     const t = useTranslation();
 
     return (
-        <Region
-            name="page_container"
-            visible={visiblePageContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 500, top: 60, height: 420, ...layout }}
-        >
-            <WidgetSlot
-                widgetType="separator"
-                options={{ 'separator:vertical': 'true' }}
-                layout={{ position: 'absolute', left: 240, width: 20, top: 50, height: 280 }}
-            />
-            <ThemeImage
-                name="illustration"
-                src={srcIllustration}
-                layout={{ position: 'absolute', left: 0, width: 250, top: 50, height: 280 }}
-            />
-            <Region layout={{ position: 'absolute', left: 270, width: 210, top: 80, height: 250, flexDirection: 'column', gap: 20 }}>
-                <Region
-                    name="title"
-                    layout={{ width: 210, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTitle ?? 'Title'}
-                        textStyle="text-style-il-heading-1"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
-                    />
+        (visiblePageContainer ?? false) && (
+            <Region
+                name="page_container"
+                layout={{ position: 'absolute', left: 0, width: 500, top: 60, height: 420, ...layout }}
+            >
+                <WidgetSlot
+                    widgetType="separator"
+                    options={{ 'separator:vertical': 'true' }}
+                    layout={{ position: 'absolute', left: 240, width: 20, top: 50, height: 280 }}
+                />
+                <ThemeImage
+                    name="illustration"
+                    src={srcIllustration}
+                    layout={{ position: 'absolute', left: 0, width: 250, top: 50, height: 280 }}
+                />
+                <Region layout={{ position: 'absolute', left: 270, width: 210, top: 80, height: 250, flexDirection: 'column', gap: 20 }}>
+                    <Region
+                        name="title"
+                        layout={{ width: 210, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionTitle ?? 'Title'}
+                            textStyle="text-style-il-heading-1"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
+                        />
+                    </Region>
+                    <Region
+                        name="description"
+                        layout={{ width: 210, height: 53, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionDescription ?? 'Keep your full name, address, phone numbers, photos and school name secret so nobody can scam, bully you or place you in danger.'}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
+                        />
+                    </Region>
                 </Region>
-                <Region
-                    name="description"
-                    layout={{ width: 210, height: 53, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                <ContainerButton
+                    variant="101"
+                    name="previous_button"
+                    tintColor="#bbbbbb"
+                    onPointerTap={onPreviousButton}
+                    layout={{ position: 'absolute', left: 21, width: 197, top: 350, height: 60 }}
                 >
-                    <ThemeText
-                        text={captionDescription ?? 'Keep your full name, address, phone numbers, photos and school name secret so nobody can scam, bully you or place you in danger.'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
-                    />
-                </Region>
+                    <Region layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}>
+                        <Region layout={{ width: 15, height: 30, flexShrink: 0 }} />
+                        <ThemeImage
+                            src={layoutImage('help_habboway_prev.png')}
+                            layout={{ width: 20, height: 30, flexShrink: 0 }}
+                        />
+                        <WidgetSlot
+                            widgetType="separator"
+                            options={{ 'separator:vertical': 'true' }}
+                            layout={{ width: 2, height: 22, flexShrink: 0 }}
+                        />
+                        <Region layout={{ width: 140, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <ThemeText
+                                text={t('habbo.way.previous.button')}
+                                textStyle="text-style-il-button"
+                            />
+                        </Region>
+                        <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
+                    </Region>
+                </ContainerButton>
+                <ContainerButton
+                    variant="101"
+                    name="next_button"
+                    tintColor="#bbbbbb"
+                    onPointerTap={onNextButton}
+                    layout={{ position: 'absolute', right: 19, width: 178, top: 350, height: 60 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}>
+                        <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
+                        <Region layout={{ width: 121, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <ThemeText
+                                text={t('habbo.way.next.button')}
+                                textStyle="text-style-il-button"
+                            />
+                        </Region>
+                        <WidgetSlot
+                            widgetType="separator"
+                            options={{ 'separator:vertical': 'true' }}
+                            layout={{ width: 2, height: 22, flexShrink: 0 }}
+                        />
+                        <ThemeImage
+                            src={layoutImage('help_habboway_next.png')}
+                            layout={{ width: 20, height: 30, flexShrink: 0 }}
+                        />
+                        <Region layout={{ width: 15, height: 30, flexShrink: 0 }} />
+                    </Region>
+                </ContainerButton>
             </Region>
-            <ContainerButton
-                variant="101"
-                name="previous_button"
-                tintColor="#bbbbbb"
-                onPointerTap={onPreviousButton}
-                layout={{ position: 'absolute', left: 21, width: 197, top: 350, height: 60 }}
-            >
-                <Region layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}>
-                    <Region layout={{ width: 15, height: 30, flexShrink: 0 }} />
-                    <ThemeImage
-                        src={layoutImage('help_habboway_prev.png')}
-                        layout={{ width: 20, height: 30, flexShrink: 0 }}
-                    />
-                    <WidgetSlot
-                        widgetType="separator"
-                        options={{ 'separator:vertical': 'true' }}
-                        layout={{ width: 2, height: 22, flexShrink: 0 }}
-                    />
-                    <Region layout={{ width: 140, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('habbo.way.previous.button')}
-                            textStyle="text-style-il-button"
-                        />
-                    </Region>
-                    <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
-                </Region>
-            </ContainerButton>
-            <ContainerButton
-                variant="101"
-                name="next_button"
-                tintColor="#bbbbbb"
-                onPointerTap={onNextButton}
-                layout={{ position: 'absolute', right: 19, width: 178, top: 350, height: 60 }}
-            >
-                <Region layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}>
-                    <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
-                    <Region layout={{ width: 121, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('habbo.way.next.button')}
-                            textStyle="text-style-il-button"
-                        />
-                    </Region>
-                    <WidgetSlot
-                        widgetType="separator"
-                        options={{ 'separator:vertical': 'true' }}
-                        layout={{ width: 2, height: 22, flexShrink: 0 }}
-                    />
-                    <ThemeImage
-                        src={layoutImage('help_habboway_next.png')}
-                        layout={{ width: 20, height: 30, flexShrink: 0 }}
-                    />
-                    <Region layout={{ width: 15, height: 30, flexShrink: 0 }} />
-                </Region>
-            </ContainerButton>
-        </Region>
+        )
     );
 };
 
@@ -205,70 +215,71 @@ export const SafetyBookletLayoutFinalPage = ({ layout, onBackButton, onQuizButto
     const t = useTranslation();
 
     return (
-        <Region
-            name="final_page"
-            visible={visibleFinalPage ?? false}
-            layout={{ position: 'absolute', left: 0, width: 500, top: 60, height: 420, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 10, width: 480, top: 48, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                <ThemeText
-                    text={t('safety.booklet.end.title')}
-                    textStyle="text-style-il-heading-1"
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-            <Region layout={{ position: 'absolute', left: 100, width: 300, top: 275, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('safety.booklet.end.content')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 300 }}
-                />
-            </Region>
-            <WidgetSlot
-                widgetType="separator"
-                layout={{ position: 'absolute', left: 10, width: 480, top: 320, height: 30 }}
-            />
-            <ContainerButton
-                variant="101"
-                name="back_button"
-                tintColor="#bbbbbb"
-                onPointerTap={onBackButton}
-                layout={{ position: 'absolute', left: 21, width: 177, top: 350, height: 60 }}
+        (visibleFinalPage ?? false) && (
+            <Region
+                name="final_page"
+                layout={{ position: 'absolute', left: 0, width: 500, top: 60, height: 420, ...layout }}
             >
-                <Region layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}>
-                    <Region layout={{ width: 15, height: 30, flexShrink: 0 }} />
-                    <ThemeImage
-                        name="illustration"
-                        src={srcIllustration ?? layoutImage('help_habboway_prev.png')}
-                        layout={{ width: 20, height: 30, flexShrink: 0 }}
+                <Region layout={{ position: 'absolute', left: 10, width: 480, top: 48, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <ThemeText
+                        text={t('safety.booklet.end.title')}
+                        textStyle="text-style-il-heading-1"
+                        textOptions={{ align: 'center' }}
                     />
-                    <WidgetSlot
-                        widgetType="separator"
-                        options={{ 'separator:vertical': 'true' }}
-                        layout={{ width: 2, height: 22, flexShrink: 0 }}
-                    />
-                    <Region layout={{ width: 120, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('habbo.way.back.button')}
-                            textStyle="text-style-il-button"
-                        />
-                    </Region>
-                    <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
                 </Region>
-            </ContainerButton>
-            <Button
-                variant="101"
-                name="quiz_button"
-                tintColor="#bbbbbb"
-                onPointerTap={onQuizButton}
-                layout={{ position: 'absolute', right: 19, width: 162, top: 350, height: 60 }}
-            >
-                {t('habbo.way.quiz.button')}
-            </Button>
-            <ThemeImage
-                src="${image.library.url}safetyquiz/start_quiz.png"
-                layout={{ position: 'absolute', left: 150, width: 200, top: 62, height: 210 }}
-            />
-        </Region>
+                <Region layout={{ position: 'absolute', left: 100, width: 300, top: 275, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('safety.booklet.end.content')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 300 }}
+                    />
+                </Region>
+                <WidgetSlot
+                    widgetType="separator"
+                    layout={{ position: 'absolute', left: 10, width: 480, top: 320, height: 30 }}
+                />
+                <ContainerButton
+                    variant="101"
+                    name="back_button"
+                    tintColor="#bbbbbb"
+                    onPointerTap={onBackButton}
+                    layout={{ position: 'absolute', left: 21, width: 177, top: 350, height: 60 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}>
+                        <Region layout={{ width: 15, height: 30, flexShrink: 0 }} />
+                        <ThemeImage
+                            name="illustration"
+                            src={srcIllustration ?? layoutImage('help_habboway_prev.png')}
+                            layout={{ width: 20, height: 30, flexShrink: 0 }}
+                        />
+                        <WidgetSlot
+                            widgetType="separator"
+                            options={{ 'separator:vertical': 'true' }}
+                            layout={{ width: 2, height: 22, flexShrink: 0 }}
+                        />
+                        <Region layout={{ width: 120, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <ThemeText
+                                text={t('habbo.way.back.button')}
+                                textStyle="text-style-il-button"
+                            />
+                        </Region>
+                        <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
+                    </Region>
+                </ContainerButton>
+                <Button
+                    variant="101"
+                    name="quiz_button"
+                    tintColor="#bbbbbb"
+                    onPointerTap={onQuizButton}
+                    layout={{ position: 'absolute', right: 19, width: 162, top: 350, height: 60 }}
+                >
+                    {t('habbo.way.quiz.button')}
+                </Button>
+                <ThemeImage
+                    src="${image.library.url}safetyquiz/start_quiz.png"
+                    layout={{ position: 'absolute', left: 150, width: 200, top: 62, height: 210 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -285,69 +296,70 @@ export const SafetyBookletLayoutFinalPageNoQuestions = ({ layout, onBackButton, 
     const t = useTranslation();
 
     return (
-        <Region
-            name="final_page_no_questions"
-            visible={visibleFinalPageNoQuestions ?? false}
-            layout={{ position: 'absolute', left: 0, width: 500, top: 60, height: 420, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 10, width: 480, top: 48, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                <ThemeText
-                    text={t('safety.booklet.ok.title')}
-                    textStyle="text-style-il-heading-1"
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-            <Region layout={{ position: 'absolute', left: 100, width: 300, top: 275, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('safety.booklet.ok.content')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 300 }}
-                />
-            </Region>
-            <WidgetSlot
-                widgetType="separator"
-                layout={{ position: 'absolute', left: 10, width: 480, top: 320, height: 30 }}
-            />
-            <ContainerButton
-                variant="101"
-                name="back_button"
-                tintColor="#bbbbbb"
-                onPointerTap={onBackButton}
-                layout={{ position: 'absolute', left: 21, width: 177, top: 350, height: 60 }}
+        (visibleFinalPageNoQuestions ?? false) && (
+            <Region
+                name="final_page_no_questions"
+                layout={{ position: 'absolute', left: 0, width: 500, top: 60, height: 420, ...layout }}
             >
-                <Region layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}>
-                    <Region layout={{ width: 15, height: 30, flexShrink: 0 }} />
-                    <ThemeImage
-                        name="illustration"
-                        src={srcIllustration ?? layoutImage('help_habboway_prev.png')}
-                        layout={{ width: 20, height: 30, flexShrink: 0 }}
+                <Region layout={{ position: 'absolute', left: 10, width: 480, top: 48, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <ThemeText
+                        text={t('safety.booklet.ok.title')}
+                        textStyle="text-style-il-heading-1"
+                        textOptions={{ align: 'center' }}
                     />
-                    <WidgetSlot
-                        widgetType="separator"
-                        options={{ 'separator:vertical': 'true' }}
-                        layout={{ width: 2, height: 22, flexShrink: 0 }}
-                    />
-                    <Region layout={{ width: 120, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('habbo.way.back.button')}
-                            textStyle="text-style-il-button"
-                        />
-                    </Region>
-                    <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
                 </Region>
-            </ContainerButton>
-            <Button
-                variant="101"
-                name="ok_button"
-                tintColor="#bbbbbb"
-                onPointerTap={onOkButton}
-                layout={{ position: 'absolute', right: 19, width: 162, top: 350, height: 60 }}
-            >
-                {t('habbo.way.ok.button')}
-            </Button>
-            <ThemeImage
-                src="${image.library.url}safetyquiz/start_quiz.png"
-                layout={{ position: 'absolute', left: 150, width: 200, top: 62, height: 210 }}
-            />
-        </Region>
+                <Region layout={{ position: 'absolute', left: 100, width: 300, top: 275, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('safety.booklet.ok.content')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 300 }}
+                    />
+                </Region>
+                <WidgetSlot
+                    widgetType="separator"
+                    layout={{ position: 'absolute', left: 10, width: 480, top: 320, height: 30 }}
+                />
+                <ContainerButton
+                    variant="101"
+                    name="back_button"
+                    tintColor="#bbbbbb"
+                    onPointerTap={onBackButton}
+                    layout={{ position: 'absolute', left: 21, width: 177, top: 350, height: 60 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 0, top: 15, flexDirection: 'row' }}>
+                        <Region layout={{ width: 15, height: 30, flexShrink: 0 }} />
+                        <ThemeImage
+                            name="illustration"
+                            src={srcIllustration ?? layoutImage('help_habboway_prev.png')}
+                            layout={{ width: 20, height: 30, flexShrink: 0 }}
+                        />
+                        <WidgetSlot
+                            widgetType="separator"
+                            options={{ 'separator:vertical': 'true' }}
+                            layout={{ width: 2, height: 22, flexShrink: 0 }}
+                        />
+                        <Region layout={{ width: 120, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <ThemeText
+                                text={t('habbo.way.back.button')}
+                                textStyle="text-style-il-button"
+                            />
+                        </Region>
+                        <Region layout={{ width: 20, height: 30, flexShrink: 0 }} />
+                    </Region>
+                </ContainerButton>
+                <Button
+                    variant="101"
+                    name="ok_button"
+                    tintColor="#bbbbbb"
+                    onPointerTap={onOkButton}
+                    layout={{ position: 'absolute', right: 19, width: 162, top: 350, height: 60 }}
+                >
+                    {t('habbo.way.ok.button')}
+                </Button>
+                <ThemeImage
+                    src="${image.library.url}safetyquiz/start_quiz.png"
+                    layout={{ position: 'absolute', left: 150, width: 200, top: 62, height: 210 }}
+                />
+            </Region>
+        )
     );
 };

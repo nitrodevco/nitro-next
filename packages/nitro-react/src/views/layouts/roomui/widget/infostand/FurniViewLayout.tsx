@@ -6,15 +6,17 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `937_furni_view_xml` (layout "furni_view", 429x97) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface FurniViewLayoutProps {
-    buttonList?: FurniViewLayoutButtonListProps;
+    captionName?: string;
     infostandElementList?: FurniViewLayoutInfostandElementListProps;
+    itemsButtonList?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
     onSetValues?: () => void;
-    variableList?: FurniViewLayoutVariableListProps;
 }
 
-export const FurniViewLayout = ({ buttonList, infostandElementList, layout, onClose, onSetValues, variableList }: FurniViewLayoutProps) => {
+export const FurniViewLayout = ({ captionName, infostandElementList, itemsButtonList, layout, onClose, onSetValues }: FurniViewLayoutProps) => {
+    const [ valueValue, setValueValue ] = useState('');
+
     return (
         <Region layout={{ position: 'relative', width: 429, height: 97, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 429, top: 0, height: 97, flexDirection: 'column', gap: 10 }}>
@@ -49,10 +51,49 @@ export const FurniViewLayout = ({ buttonList, infostandElementList, layout, onCl
                         >
                             Set values
                         </Button>
-                        <FurniViewLayoutVariableList {...variableList} />
+                        <Region
+                            name="variable_list"
+                            layout={{ position: 'absolute', left: 0, top: 32, flexDirection: 'column' }}
+                        >
+                            <Region layout={{ width: 183, height: 26, flexShrink: 0 }}>
+                                <Region
+                                    name="name"
+                                    layout={{ position: 'absolute', left: 1, width: 41, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                >
+                                    <ThemeText
+                                        text={captionName ?? 'Name:'}
+                                        textOptions={{ fill: '#ffffff' }}
+                                    />
+                                </Region>
+                                <TextInput
+                                    value={valueValue}
+                                    onChange={setValueValue}
+                                    layout={{ position: 'absolute', left: 80, width: 100, top: 2, height: 17 }}
+                                />
+                                <Border
+                                    variant="3"
+                                    tintColor="#cccccc"
+                                    layout={{ position: 'absolute', left: 80, width: 100, top: 0, height: 20 }}
+                                />
+                            </Region>
+                        </Region>
                     </Border>
                 </Border>
-                <FurniViewLayoutButtonList {...buttonList} />
+                <Region
+                    name="button_list"
+                    layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10 }}
+                >
+                    {itemsButtonList ?? (
+                        <>
+                            <FurniViewLayoutMoveItem />
+                            <FurniViewLayoutRotateItem />
+                            <FurniViewLayoutPickupItem />
+                            <FurniViewLayoutSaveBrandingConfigurationItem />
+                            <FurniViewLayoutUseItem />
+                            <FurniViewLayoutWiredInspectItem />
+                        </>
+                    )}
+                </Region>
             </Region>
         </Region>
     );
@@ -82,20 +123,22 @@ export const FurniViewLayoutNameTextItem = ({ captionNameText, layout }: FurniVi
 export interface FurniViewLayoutNameExtraTextItemProps {
     captionNameExtraText?: string;
     layout?: BoxLayout;
+    visibleNameExtraText?: boolean;
 }
 
-export const FurniViewLayoutNameExtraTextItem = ({ captionNameExtraText, layout }: FurniViewLayoutNameExtraTextItemProps) => {
+export const FurniViewLayoutNameExtraTextItem = ({ captionNameExtraText, layout, visibleNameExtraText }: FurniViewLayoutNameExtraTextItemProps) => {
     return (
-        <Region
-            name="name_extra_text"
-            visible={false}
-            layout={{ width: 159, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionNameExtraText ?? 'Chest name'}
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 159 }}
-            />
-        </Region>
+        (visibleNameExtraText ?? false) && (
+            <Region
+                name="name_extra_text"
+                layout={{ width: 159, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            >
+                <ThemeText
+                    text={captionNameExtraText ?? 'Chest name'}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 159 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -183,121 +226,103 @@ export interface FurniViewLayoutUniqueItemBackgroundContainerProps {
 
 export const FurniViewLayoutUniqueItemBackgroundContainer = ({ layout, srcUniqueItemBackgroundBottom, srcUniqueItemBackgroundBottom2, srcUniqueItemBackgroundBottom3, srcUniqueItemBackgroundBottom4, srcUniqueItemBackgroundBottom5, srcUniqueItemBackgroundMid, srcUniqueItemBackgroundTop, visibleUniqueItemBackgroundContainer }: FurniViewLayoutUniqueItemBackgroundContainerProps) => {
     return (
-        <Region
-            name="unique_item_background_container"
-            visible={visibleUniqueItemBackgroundContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, minHeight: 45, ...layout }}
-        >
-            <ThemeImage
-                name="unique_item_background_bottom"
-                src={srcUniqueItemBackgroundBottom ?? layoutImage('unique_item_large_iron.png')}
-                layout={{ position: 'absolute', left: 8, width: 5, top: -1, height: 9 }}
-            />
-            <ThemeImage
-                name="unique_item_background_bottom"
-                src={srcUniqueItemBackgroundBottom2 ?? layoutImage('unique_item_large_iron.png')}
-                layout={{ position: 'absolute', left: 155, width: 5, top: -1, height: 9 }}
-            />
-            <ThemeImage
-                name="unique_item_background_mid"
-                src={srcUniqueItemBackgroundMid ?? layoutImage('unique_item_large_glass_mid.png')}
-                layout={{ position: 'absolute', left: 0, width: 170, top: 5, bottom: 5 }}
-            />
-            <ThemeImage
-                name="unique_item_background_top"
-                src={srcUniqueItemBackgroundTop ?? layoutImage('unique_item_large_glass_top.png')}
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 5 }}
-            />
-            <ThemeImage
-                name="unique_item_background_bottom"
-                src={srcUniqueItemBackgroundBottom3 ?? layoutImage('unique_item_large_glass_bottom.png')}
-                layout={{ position: 'absolute', left: 0, width: 170, bottom: 0, height: 5 }}
-            />
-            <ThemeImage
-                name="unique_item_background_bottom"
-                src={srcUniqueItemBackgroundBottom4 ?? layoutImage('unique_item_large_iron.png')}
-                layout={{ position: 'absolute', left: 8, width: 5, bottom: -2, height: 9 }}
-            />
-            <ThemeImage
-                name="unique_item_background_bottom"
-                src={srcUniqueItemBackgroundBottom5 ?? layoutImage('unique_item_large_iron.png')}
-                layout={{ position: 'absolute', left: 155, width: 5, bottom: -2, height: 9 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `unique_item_overlay_container` of FurniViewLayout - configured through the parent's `uniqueItemOverlayContainer` prop. */
-export interface FurniViewLayoutUniqueItemOverlayContainerProps {
-    layout?: BoxLayout;
-    visibleUniqueItemOverlayContainer?: boolean;
-}
-
-export const FurniViewLayoutUniqueItemOverlayContainer = ({ layout, visibleUniqueItemOverlayContainer }: FurniViewLayoutUniqueItemOverlayContainerProps) => {
-    return (
-        <Region
-            name="unique_item_overlay_container"
-            visible={visibleUniqueItemOverlayContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, minHeight: 45, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('unique_item_large_glass_shine.png')}
-                layout={{ position: 'absolute', left: 0, width: 170, top: 5, bottom: 5 }}
-            />
-            <WidgetSlot
-                widgetType="limited_item_overlay_preview"
-                name="unique_item_plaque_widget"
-                layout={{ position: 'absolute', left: 128, width: 40, top: 6, height: 40 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `rarity_item_overlay_container` of FurniViewLayout - configured through the parent's `rarityItemOverlayContainer` prop. */
-export interface FurniViewLayoutRarityItemOverlayContainerProps {
-    layout?: BoxLayout;
-    visibleRarityItemOverlayContainer?: boolean;
-}
-
-export const FurniViewLayoutRarityItemOverlayContainer = ({ layout, visibleRarityItemOverlayContainer }: FurniViewLayoutRarityItemOverlayContainerProps) => {
-    return (
-        <Region
-            name="rarity_item_overlay_container"
-            visible={visibleRarityItemOverlayContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, ...layout }}
-        >
-            <WidgetSlot
-                widgetType="rarity_item_overlay_preview"
-                name="rarity_item_overlay_widget"
-                layout={{ position: 'absolute', left: 128, width: 40, top: 6, height: 40 }}
-            />
-        </Region>
+        (visibleUniqueItemBackgroundContainer ?? false) && (
+            <Region
+                name="unique_item_background_container"
+                layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, minHeight: 45, ...layout }}
+            >
+                <ThemeImage
+                    name="unique_item_background_bottom"
+                    src={srcUniqueItemBackgroundBottom ?? layoutImage('unique_item_large_iron.png')}
+                    layout={{ position: 'absolute', left: 8, width: 5, top: -1, height: 9 }}
+                />
+                <ThemeImage
+                    name="unique_item_background_bottom"
+                    src={srcUniqueItemBackgroundBottom2 ?? layoutImage('unique_item_large_iron.png')}
+                    layout={{ position: 'absolute', left: 155, width: 5, top: -1, height: 9 }}
+                />
+                <ThemeImage
+                    name="unique_item_background_mid"
+                    src={srcUniqueItemBackgroundMid ?? layoutImage('unique_item_large_glass_mid.png')}
+                    layout={{ position: 'absolute', left: 0, width: 170, top: 5, bottom: 5 }}
+                />
+                <ThemeImage
+                    name="unique_item_background_top"
+                    src={srcUniqueItemBackgroundTop ?? layoutImage('unique_item_large_glass_top.png')}
+                    layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 5 }}
+                />
+                <ThemeImage
+                    name="unique_item_background_bottom"
+                    src={srcUniqueItemBackgroundBottom3 ?? layoutImage('unique_item_large_glass_bottom.png')}
+                    layout={{ position: 'absolute', left: 0, width: 170, bottom: 0, height: 5 }}
+                />
+                <ThemeImage
+                    name="unique_item_background_bottom"
+                    src={srcUniqueItemBackgroundBottom4 ?? layoutImage('unique_item_large_iron.png')}
+                    layout={{ position: 'absolute', left: 8, width: 5, bottom: -2, height: 9 }}
+                />
+                <ThemeImage
+                    name="unique_item_background_bottom"
+                    src={srcUniqueItemBackgroundBottom5 ?? layoutImage('unique_item_large_iron.png')}
+                    layout={{ position: 'absolute', left: 155, width: 5, bottom: -2, height: 9 }}
+                />
+            </Region>
+        )
     );
 };
 
 /** Row template `image_container` of FurniViewLayout - pass real rows through its `items…` slot. */
 export interface FurniViewLayoutImageContainerItemProps {
     layout?: BoxLayout;
-    rarityItemOverlayContainer?: FurniViewLayoutRarityItemOverlayContainerProps;
     srcImage?: string;
     uniqueItemBackgroundContainer?: FurniViewLayoutUniqueItemBackgroundContainerProps;
-    uniqueItemOverlayContainer?: FurniViewLayoutUniqueItemOverlayContainerProps;
+    visibleRarityItemOverlayContainer?: boolean;
+    visibleUniqueItemBackgroundContainer?: boolean;
+    visibleUniqueItemOverlayContainer?: boolean;
 }
 
-export const FurniViewLayoutImageContainerItem = ({ layout, rarityItemOverlayContainer, srcImage, uniqueItemBackgroundContainer, uniqueItemOverlayContainer }: FurniViewLayoutImageContainerItemProps) => {
+export const FurniViewLayoutImageContainerItem = ({ layout, srcImage, uniqueItemBackgroundContainer, visibleRarityItemOverlayContainer, visibleUniqueItemBackgroundContainer, visibleUniqueItemOverlayContainer }: FurniViewLayoutImageContainerItemProps) => {
     return (
         <Region
             name="image_container"
             layout={{ width: 170, height: 130, flexShrink: 0, minHeight: 45, ...layout }}
         >
-            <FurniViewLayoutUniqueItemBackgroundContainer {...uniqueItemBackgroundContainer} />
+            {(visibleUniqueItemBackgroundContainer ?? false) && (
+                <FurniViewLayoutUniqueItemBackgroundContainer {...uniqueItemBackgroundContainer} />
+            )}
             <ThemeImage
                 name="image"
                 src={srcImage}
                 layout={{ position: 'absolute', left: 5, width: 140, top: 5, minHeight: 45 }}
             />
-            <FurniViewLayoutUniqueItemOverlayContainer {...uniqueItemOverlayContainer} />
-            <FurniViewLayoutRarityItemOverlayContainer {...rarityItemOverlayContainer} />
+            {(visibleUniqueItemOverlayContainer ?? false) && (
+                <Region
+                    name="unique_item_overlay_container"
+                    layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, minHeight: 45 }}
+                >
+                    <ThemeImage
+                        src={layoutImage('unique_item_large_glass_shine.png')}
+                        layout={{ position: 'absolute', left: 0, width: 170, top: 5, bottom: 5 }}
+                    />
+                    <WidgetSlot
+                        widgetType="limited_item_overlay_preview"
+                        name="unique_item_plaque_widget"
+                        layout={{ position: 'absolute', left: 128, width: 40, top: 6, height: 40 }}
+                    />
+                </Region>
+            )}
+            {(visibleRarityItemOverlayContainer ?? false) && (
+                <Region
+                    name="rarity_item_overlay_container"
+                    layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0 }}
+                >
+                    <WidgetSlot
+                        widgetType="rarity_item_overlay_preview"
+                        name="rarity_item_overlay_widget"
+                        layout={{ position: 'absolute', left: 128, width: 40, top: 6, height: 40 }}
+                    />
+                </Region>
+            )}
         </Region>
     );
 };
@@ -345,9 +370,11 @@ export interface FurniViewLayoutOwnerRegionItemProps {
     onOwnerRegion?: () => void;
     srcBcwIcon?: string;
     srcTempIcon?: string;
+    visibleBcwIcon?: boolean;
+    visibleTempIcon?: boolean;
 }
 
-export const FurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwnerRegion, srcBcwIcon, srcTempIcon }: FurniViewLayoutOwnerRegionItemProps) => {
+export const FurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwnerRegion, srcBcwIcon, srcTempIcon, visibleBcwIcon, visibleTempIcon }: FurniViewLayoutOwnerRegionItemProps) => {
     return (
         <Region
             name="owner_region"
@@ -360,12 +387,13 @@ export const FurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwn
                 name="owner_link"
                 layout={{ position: 'absolute', left: 0, width: 20, top: 2, height: 15 }}
             />
-            <ThemeImage
-                name="bcw_icon"
-                src={srcBcwIcon ?? '${image.library.url}/catalogue/icon_193.png'}
-                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
-                visible={false}
-            />
+            {(visibleBcwIcon ?? false) && (
+                <ThemeImage
+                    name="bcw_icon"
+                    src={srcBcwIcon ?? '${image.library.url}/catalogue/icon_193.png'}
+                    layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
+                />
+            )}
             <Region
                 name="owner_name"
                 layout={{ position: 'absolute', left: 20, width: 150, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -375,12 +403,13 @@ export const FurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwn
                     textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 150 }}
                 />
             </Region>
-            <ThemeImage
-                name="temp_icon"
-                src={srcTempIcon ?? '${image.library.url}catalogue/icon_80.png'}
-                layout={{ position: 'absolute', marginLeft: -77.5, marginRight: 77.5, width: 15, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 15 }}
-                visible={false}
-            />
+            {(visibleTempIcon ?? false) && (
+                <ThemeImage
+                    name="temp_icon"
+                    src={srcTempIcon ?? '${image.library.url}catalogue/icon_80.png'}
+                    layout={{ position: 'absolute', marginLeft: -77.5, marginRight: 77.5, width: 15, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 15 }}
+                />
+            )}
         </Region>
     );
 };
@@ -635,20 +664,22 @@ export const FurniViewLayoutFurniDetailsSpacerItem = ({ layout }: FurniViewLayou
 export interface FurniViewLayoutChestItemCountItemProps {
     captionChestItemCount?: string;
     layout?: BoxLayout;
+    visibleChestItemCount?: boolean;
 }
 
-export const FurniViewLayoutChestItemCountItem = ({ captionChestItemCount, layout }: FurniViewLayoutChestItemCountItemProps) => {
+export const FurniViewLayoutChestItemCountItem = ({ captionChestItemCount, layout, visibleChestItemCount }: FurniViewLayoutChestItemCountItemProps) => {
     return (
-        <Region
-            name="chest_item_count"
-            visible={false}
-            layout={{ width: 170, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionChestItemCount ?? 'Items:'}
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
-            />
-        </Region>
+        (visibleChestItemCount ?? false) && (
+            <Region
+                name="chest_item_count"
+                layout={{ width: 170, height: 13, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            >
+                <ThemeText
+                    text={captionChestItemCount ?? 'Items:'}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -703,45 +734,6 @@ export const FurniViewLayoutInfostandElementList = ({ itemsInfostandElementList,
                     <FurniViewLayoutFurniDetailsTextItem />
                 </>
             )}
-        </Region>
-    );
-};
-
-/** Named region `variable_list` of FurniViewLayout - configured through the parent's `variableList` prop. */
-export interface FurniViewLayoutVariableListProps {
-    captionName?: string;
-    layout?: BoxLayout;
-}
-
-export const FurniViewLayoutVariableList = ({ captionName, layout }: FurniViewLayoutVariableListProps) => {
-    const [ valueValue, setValueValue ] = useState('');
-
-    return (
-        <Region
-            name="variable_list"
-            layout={{ position: 'absolute', left: 0, top: 32, flexDirection: 'column', ...layout }}
-        >
-            <Region layout={{ width: 183, height: 26, flexShrink: 0 }}>
-                <Region
-                    name="name"
-                    layout={{ position: 'absolute', left: 1, width: 41, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionName ?? 'Name:'}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-                <TextInput
-                    value={valueValue}
-                    onChange={setValueValue}
-                    layout={{ position: 'absolute', left: 80, width: 100, top: 2, height: 17 }}
-                />
-                <Border
-                    variant="3"
-                    tintColor="#cccccc"
-                    layout={{ position: 'absolute', left: 80, width: 100, top: 0, height: 20 }}
-                />
-            </Region>
         </Region>
     );
 };
@@ -869,31 +861,5 @@ export const FurniViewLayoutWiredInspectItem = ({ layout, onWiredInspect }: Furn
         >
             {t('infostand.button.wired_inspect')}
         </Button>
-    );
-};
-
-/** Named region `button_list` of FurniViewLayout - configured through the parent's `buttonList` prop. */
-export interface FurniViewLayoutButtonListProps {
-    itemsButtonList?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const FurniViewLayoutButtonList = ({ itemsButtonList, layout }: FurniViewLayoutButtonListProps) => {
-    return (
-        <Region
-            name="button_list"
-            layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
-        >
-            {itemsButtonList ?? (
-                <>
-                    <FurniViewLayoutMoveItem />
-                    <FurniViewLayoutRotateItem />
-                    <FurniViewLayoutPickupItem />
-                    <FurniViewLayoutSaveBrandingConfigurationItem />
-                    <FurniViewLayoutUseItem />
-                    <FurniViewLayoutWiredInspectItem />
-                </>
-            )}
-        </Region>
     );
 };

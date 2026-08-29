@@ -9,15 +9,19 @@ export interface MarketplacePurchaseConfirmationLayoutProps {
     captionItemName?: string;
     captionItemPrice?: string;
     captionOfferCount?: string;
-    disclaimer?: MarketplacePurchaseConfirmationLayoutDisclaimerProps;
-    imageContainer?: MarketplacePurchaseConfirmationLayoutImageContainerProps;
     layout?: BoxLayout;
     onBuyButton?: () => void;
     onCancelButton?: () => void;
     onClose?: () => void;
+    onSpendingDisclaimer?: () => void;
+    srcItemImage?: string;
+    srcUniqueItemBackgroundBitmap?: string;
+    visibleRarityItemOverlayWidget?: boolean;
+    visibleUniqueItemBackgroundBitmap?: boolean;
+    visibleUniqueItemOverlayWidget?: boolean;
 }
 
-export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, captionItemAveragePrice, captionItemName, captionItemPrice, captionOfferCount, disclaimer, imageContainer, layout, onBuyButton, onCancelButton, onClose }: MarketplacePurchaseConfirmationLayoutProps) => {
+export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, captionItemAveragePrice, captionItemName, captionItemPrice, captionOfferCount, layout, onBuyButton, onCancelButton, onClose, onSpendingDisclaimer, srcItemImage, srcUniqueItemBackgroundBitmap, visibleRarityItemOverlayWidget, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayWidget }: MarketplacePurchaseConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -34,7 +38,37 @@ export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, capti
                     tintColor="#f1f1f1"
                     layout={{ position: 'absolute', left: 12, width: 48, top: 12, height: 48 }}
                 >
-                    <MarketplacePurchaseConfirmationLayoutImageContainer {...imageContainer} />
+                    <Region
+                        name="image_container"
+                        layout={{ position: 'absolute', left: 4, width: 40, top: 4, height: 40 }}
+                    >
+                        {(visibleUniqueItemBackgroundBitmap ?? false) && (
+                            <ThemeImage
+                                name="unique_item_background_bitmap"
+                                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
+                                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                            />
+                        )}
+                        <ThemeImage
+                            name="item_image"
+                            src={srcItemImage}
+                            layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
+                        />
+                        {(visibleUniqueItemOverlayWidget ?? false) && (
+                            <WidgetSlot
+                                widgetType="limited_item_overlay_grid"
+                                name="unique_item_overlay_widget"
+                                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                            />
+                        )}
+                        {(visibleRarityItemOverlayWidget ?? false) && (
+                            <WidgetSlot
+                                widgetType="rarity_item_overlay_grid"
+                                name="rarity_item_overlay_widget"
+                                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                            />
+                        )}
+                    </Region>
                 </Border>
                 <Region
                     name="item_name"
@@ -101,79 +135,25 @@ export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, capti
                 >
                     {t('catalog.purchase_confirmation.cancel')}
                 </Button>
-                <MarketplacePurchaseConfirmationLayoutDisclaimer {...disclaimer} />
+                <Region
+                    name="disclaimer"
+                    layout={{ position: 'absolute', left: 9, width: 252, top: 163, height: 24 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 17, width: 231, top: 1, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('disclaimer.credit_spending')}
+                            textStyle="text-style-u-small"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 231 }}
+                        />
+                    </Region>
+                    <CheckBox
+                        variant="3"
+                        name="spending_disclaimer"
+                        onPointerTap={onSpendingDisclaimer}
+                        layout={{ position: 'absolute', left: 0, width: 252, top: 0, height: 24 }}
+                    />
+                </Region>
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `image_container` of MarketplacePurchaseConfirmationLayout - configured through the parent's `imageContainer` prop. */
-export interface MarketplacePurchaseConfirmationLayoutImageContainerProps {
-    layout?: BoxLayout;
-    srcItemImage?: string;
-    srcUniqueItemBackgroundBitmap?: string;
-}
-
-export const MarketplacePurchaseConfirmationLayoutImageContainer = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap }: MarketplacePurchaseConfirmationLayoutImageContainerProps) => {
-    return (
-        <Region
-            name="image_container"
-            layout={{ position: 'absolute', left: 4, width: 40, top: 4, height: 40, ...layout }}
-        >
-            <ThemeImage
-                name="unique_item_background_bitmap"
-                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                visible={false}
-            />
-            <ThemeImage
-                name="item_image"
-                src={srcItemImage}
-                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
-            />
-            <WidgetSlot
-                widgetType="limited_item_overlay_grid"
-                name="unique_item_overlay_widget"
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            />
-            <WidgetSlot
-                widgetType="rarity_item_overlay_grid"
-                name="rarity_item_overlay_widget"
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `disclaimer` of MarketplacePurchaseConfirmationLayout - configured through the parent's `disclaimer` prop. */
-export interface MarketplacePurchaseConfirmationLayoutDisclaimerProps {
-    layout?: BoxLayout;
-    onSpendingDisclaimer?: () => void;
-}
-
-export const MarketplacePurchaseConfirmationLayoutDisclaimer = ({ layout, onSpendingDisclaimer }: MarketplacePurchaseConfirmationLayoutDisclaimerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="disclaimer"
-            layout={{ position: 'absolute', left: 9, width: 252, top: 163, height: 24, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 17, width: 231, top: 1, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('disclaimer.credit_spending')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 231 }}
-                />
-            </Region>
-            <CheckBox
-                variant="3"
-                name="spending_disclaimer"
-                onPointerTap={onSpendingDisclaimer}
-                layout={{ position: 'absolute', left: 0, width: 252, top: 0, height: 24 }}
-            />
-        </Region>
     );
 };

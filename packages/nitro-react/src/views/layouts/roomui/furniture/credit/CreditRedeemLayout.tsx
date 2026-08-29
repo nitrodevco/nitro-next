@@ -5,13 +5,13 @@ import { Border, BoxLayout, Button, ButtonThick, Frame, Region, ThemeText } from
 export interface CreditRedeemLayoutProps {
     captionExchangeText?: string;
     layout?: BoxLayout;
-    link?: CreditRedeemLayoutLinkProps;
     onCancel?: () => void;
     onClose?: () => void;
     onExchange?: () => void;
+    onLink?: () => void;
 }
 
-export const CreditRedeemLayout = ({ captionExchangeText, layout, link, onCancel, onClose, onExchange }: CreditRedeemLayoutProps) => {
+export const CreditRedeemLayout = ({ captionExchangeText, layout, onCancel, onClose, onExchange, onLink }: CreditRedeemLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -53,34 +53,20 @@ export const CreditRedeemLayout = ({ captionExchangeText, layout, link, onCancel
                         textOptions={{ wordWrap: true, wordWrapWidth: 265 }}
                     />
                 </Region>
-                <CreditRedeemLayoutLink {...link} />
+                <Region
+                    name="link"
+                    onPointerTap={onLink}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 20, width: 158, top: 60, height: 17 }}
+                >
+                    <Region
+                        layout={{ position: 'absolute', left: 0, width: 153, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        backgroundColor="#ffffff"
+                    >
+                        <ThemeText text={t('catelog.redeem.dialog.readmore.description')} />
+                    </Region>
+                </Region>
             </Border>
         </Frame>
-    );
-};
-
-/** Named region `link` of CreditRedeemLayout - configured through the parent's `link` prop. */
-export interface CreditRedeemLayoutLinkProps {
-    layout?: BoxLayout;
-    onLink?: () => void;
-}
-
-export const CreditRedeemLayoutLink = ({ layout, onLink }: CreditRedeemLayoutLinkProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="link"
-            onPointerTap={onLink}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 20, width: 158, top: 60, height: 17, ...layout }}
-        >
-            <Region
-                layout={{ position: 'absolute', left: 0, width: 153, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                backgroundColor="#ffffff"
-            >
-                <ThemeText text={t('catelog.redeem.dialog.readmore.description')} />
-            </Region>
-        </Region>
     );
 };

@@ -5,33 +5,18 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 /**
  * Catalog widget `loyaltyVipBuyWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
- * (LayoutLoyaltyVipBuy_1714Layout); each passes its own placement through `layout`.
+ * (LayoutLoyaltyVipBuy_1620Layout); each passes its own placement through `layout`.
  */
-/** Named region `item_list_vip` of LoyaltyVipBuyWidget - configured through the parent's `itemListVip` prop. */
-export interface LoyaltyVipBuyWidgetItemListVipProps {
-    layout?: BoxLayout;
-}
-
-export const LoyaltyVipBuyWidgetItemListVip = ({ layout }: LoyaltyVipBuyWidgetItemListVipProps) => {
-    return (
-        <Region
-            name="item_list_vip"
-            layout={{ position: 'absolute', left: 19, width: 286, top: 170, height: 157, minWidth: 286, maxWidth: 286, flexDirection: 'column', gap: 4, ...layout }}
-        />
-    );
-};
-
 /** Named region `loyaltyVipBuyWidget` of LoyaltyVipBuyWidget - configured through the parent's `loyaltyVipBuyWidget` prop. */
 export interface LoyaltyVipBuyWidgetProps extends CatalogWidgetFlags {
     captionVipInfo?: string;
     captionVipLink?: string;
     captionVipTitle?: string;
-    itemListVip?: LoyaltyVipBuyWidgetItemListVipProps;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
 }
 
-export const LoyaltyVipBuyWidget = ({ captionVipInfo, captionVipLink, captionVipTitle, itemListVip, layout, srcCtlgTeaserimg1 }: LoyaltyVipBuyWidgetProps) => {
+export const LoyaltyVipBuyWidget = ({ captionVipInfo, captionVipLink, captionVipTitle, layout, srcCtlgTeaserimg1 }: LoyaltyVipBuyWidgetProps) => {
     const t = useTranslation();
 
     return (
@@ -39,10 +24,10 @@ export const LoyaltyVipBuyWidget = ({ captionVipInfo, captionVipLink, captionVip
             name="loyaltyVipBuyWidget"
             layout={{ position: 'absolute', justifyContent: 'center', ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 161, width: 158, top: 3, height: 165, minWidth: 158, maxWidth: 158, minHeight: 165, maxHeight: 165, flexDirection: 'column', gap: 4 }}>
+            <Region layout={{ position: 'absolute', left: 161, width: 188, top: 3, height: 165, flexDirection: 'column', gap: 4 }}>
                 <Region
                     name="vip_title"
-                    layout={{ width: 158, height: 17, flexShrink: 0, minWidth: 158, maxWidth: 158, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ width: 158, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionVipTitle ?? t('catalog.vip.buy.title')}
@@ -51,7 +36,7 @@ export const LoyaltyVipBuyWidget = ({ captionVipInfo, captionVipLink, captionVip
                 </Region>
                 <Region
                     name="vip_info"
-                    layout={{ width: 158, height: 17, flexShrink: 0, minWidth: 158, maxWidth: 158, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    layout={{ width: 158, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
                         text={captionVipInfo ?? t('catalog.vip.buy.info')}
@@ -65,15 +50,18 @@ export const LoyaltyVipBuyWidget = ({ captionVipInfo, captionVipLink, captionVip
                 layout={{ position: 'absolute', left: 3, width: 152, top: 3, height: 161 }}
             />
             <Region
+                name="item_list_vip"
+                layout={{ position: 'absolute', left: 19, width: 316, top: 170, bottom: 33, flexDirection: 'column', gap: 4 }}
+            />
+            <Region
                 name="vip_link"
-                layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 286, top: 330, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 286, bottom: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
                 <ThemeText
                     text={captionVipLink ?? t('catalog.vip.buy.link')}
                     textOptions={{ fill: '#038ef4', align: 'center' }}
                 />
             </Region>
-            <LoyaltyVipBuyWidgetItemListVip {...itemListVip} />
         </Region>
     );
 };

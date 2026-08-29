@@ -7,19 +7,24 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `3196_floor_plan_editor_bc_xml` (layout "floor_plan_editor_bc", 662x600) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface FloorPlanEditorBcLayoutProps {
     controlsContainer?: FloorPlanEditorBcLayoutControlsContainerProps;
-    heightmapWrapper?: FloorPlanEditorBcLayoutHeightmapWrapperProps;
+    itemsHeightmapWrapper?: ReactNode;
+    itemsLeftButtons?: ReactNode;
+    itemsPreviewWrapper?: ReactNode;
+    itemsRightButtons?: ReactNode;
+    itemsWallHeightControls?: ReactNode;
     layout?: BoxLayout;
-    mainButtons?: FloorPlanEditorBcLayoutMainButtonsProps;
-    mouseCapturer?: FloorPlanEditorBcLayoutMouseCapturerProps;
     onClose?: () => void;
-    previewWrapper?: FloorPlanEditorBcLayoutPreviewWrapperProps;
+    onMouseCapturer?: () => void;
+    onZoom?: () => void;
     roomControlsItemlist?: FloorPlanEditorBcLayoutRoomControlsItemlistProps;
     srcRefresh?: string;
-    wallHeightControls?: FloorPlanEditorBcLayoutWallHeightControlsProps;
-    zoom?: FloorPlanEditorBcLayoutZoomProps;
+    srcWallHeightSlider?: string;
+    srcWallHeightSliderTrack?: string;
+    srcZoom?: string;
+    visibleRefresh?: boolean;
 }
 
-export const FloorPlanEditorBcLayout = ({ controlsContainer, heightmapWrapper, layout, mainButtons, mouseCapturer, onClose, previewWrapper, roomControlsItemlist, srcRefresh, wallHeightControls, zoom }: FloorPlanEditorBcLayoutProps) => {
+export const FloorPlanEditorBcLayout = ({ controlsContainer, itemsHeightmapWrapper, itemsLeftButtons, itemsPreviewWrapper, itemsRightButtons, itemsWallHeightControls, layout, onClose, onMouseCapturer, onZoom, roomControlsItemlist, srcRefresh, srcWallHeightSlider, srcWallHeightSliderTrack, srcZoom, visibleRefresh }: FloorPlanEditorBcLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -64,11 +69,41 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, heightmapWrapper, l
                     tintColor="#000000"
                     layout={{ position: 'absolute', left: 0, right: 12, top: 132, bottom: 12 }}
                 />
-                <FloorPlanEditorBcLayoutHeightmapWrapper {...heightmapWrapper} />
-                <FloorPlanEditorBcLayoutMouseCapturer {...mouseCapturer} />
+                <ScrollArea
+                    orientation="horizontal"
+                    layout={{ position: 'absolute', left: 0, right: 13, top: 132, bottom: 12 }}
+                >
+                    <Region
+                        name="heightmap_wrapper"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    >
+                        {itemsHeightmapWrapper ?? (
+                            <FloorPlanEditorBcLayoutHeightmapBitmapItem />
+                        )}
+                        <Region layout={{ width: 30, height: 29, flexShrink: 0 }} />
+                        <Region layout={{ width: 15, height: 29, flexShrink: 0 }} />
+                    </Region>
+                </ScrollArea>
+                <Region
+                    name="mouse_capturer"
+                    onPointerTap={onMouseCapturer}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, right: 13, top: 132, bottom: 12 }}
+                />
                 {/* <scrollbar_vertical> for heightmap_wrapper - rendered by that list's ScrollArea */}
                 {/* <scrollbar_horizontal> for heightmap_wrapper - rendered by that list's ScrollArea */}
-                <FloorPlanEditorBcLayoutZoom {...zoom} />
+                <Region
+                    name="zoom"
+                    onPointerTap={onZoom}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 12, width: 20, bottom: 22, height: 26 }}
+                >
+                    <ThemeImage
+                        name="zoom"
+                        src={srcZoom ?? layoutImage('roomtools_magnifier.png')}
+                        layout={{ position: 'absolute', left: -4, width: 30, top: -3, height: 30 }}
+                    />
+                </Region>
                 <Region layout={{ position: 'absolute', left: 1034, width: 30, top: 108, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText text="hi :)" />
                 </Region>
@@ -80,23 +115,83 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, heightmapWrapper, l
                 layout={{ position: 'absolute', right: 7, width: 289, top: 57, bottom: 94 }}
             >
                 <FloorPlanEditorBcLayoutRoomControlsItemlist {...roomControlsItemlist} />
-                <FloorPlanEditorBcLayoutWallHeightControls {...wallHeightControls} />
+                <Region
+                    name="wall_height_controls"
+                    layout={{ position: 'absolute', left: 7, width: 269, top: 97, height: 30, flexDirection: 'row' }}
+                >
+                    {itemsWallHeightControls ?? (
+                        <>
+                            <FloorPlanEditorBcLayoutWallsFixedHeightEnabledCheckboxItem />
+                            <FloorPlanEditorBcLayoutWallHeightTextItem />
+                            <FloorPlanEditorBcLayoutWallHeightNumberItem />
+                        </>
+                    )}
+                    <Region layout={{ width: 118, height: 30, flexShrink: 0 }}>
+                        <ThemeImage
+                            name="wall_height_slider"
+                            src={srcWallHeightSlider ?? layoutImage('icons_toolbar_divider.png')}
+                            layout={{ position: 'absolute', left: 2, width: 111, top: 0, height: 30 }}
+                        />
+                        <ThemeImage
+                            name="wall_height_slider_track"
+                            src={srcWallHeightSliderTrack ?? layoutImage('avatar_editor_avatar_editor_download_icon.png')}
+                            layout={{ position: 'absolute', left: 0, width: 12, top: 7, height: 16 }}
+                        />
+                    </Region>
+                </Region>
                 <Border
                     variant="3"
                     name="preview_bitmap_border"
                     layout={{ position: 'absolute', left: 0, width: 275, top: 133, bottom: 14 }}
                 />
-                <FloorPlanEditorBcLayoutPreviewWrapper {...previewWrapper} />
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 1, width: 273, top: 135, bottom: 14 }}
+                >
+                    <Region
+                        name="preview_wrapper"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    >
+                        {itemsPreviewWrapper ?? (
+                            <FloorPlanEditorBcLayoutPreviewBitmapItem />
+                        )}
+                    </Region>
+                </ScrollArea>
                 {/* <scrollbar_horizontal> for preview_wrapper - rendered by that list's ScrollArea */}
                 {/* <scrollbar_vertical> for preview_wrapper - rendered by that list's ScrollArea */}
-                <ThemeImage
-                    name="refresh"
-                    src={srcRefresh ?? layoutImage('inventory_furni_recycle_icon.png')}
-                    layout={{ position: 'absolute', left: 6, width: 30, top: 372, height: 30 }}
-                    visible={false}
-                />
+                {(visibleRefresh ?? false) && (
+                    <ThemeImage
+                        name="refresh"
+                        src={srcRefresh ?? layoutImage('inventory_furni_recycle_icon.png')}
+                        layout={{ position: 'absolute', left: 6, width: 30, top: 372, height: 30 }}
+                    />
+                )}
             </Border>
-            <FloorPlanEditorBcLayoutMainButtons {...mainButtons} />
+            <Region
+                name="main_buttons"
+                layout={{ position: 'absolute', left: 10, right: 9, bottom: 42, height: 40 }}
+            >
+                <Region
+                    name="left_buttons"
+                    layout={{ position: 'absolute', left: 2, width: 120, top: 0, height: 40, flexDirection: 'row', gap: 5 }}
+                >
+                    {itemsLeftButtons ?? (
+                        <FloorPlanEditorBcLayoutReloadItem />
+                    )}
+                </Region>
+                <Region
+                    name="right_buttons"
+                    layout={{ position: 'absolute', right: 2, width: 376, top: 0, height: 40, flexDirection: 'row', gap: 8 }}
+                >
+                    {itemsRightButtons ?? (
+                        <>
+                            <FloorPlanEditorBcLayoutImportExportItem />
+                            <FloorPlanEditorBcLayoutCancelItem />
+                            <FloorPlanEditorBcLayoutSaveItem />
+                        </>
+                    )}
+                </Region>
+            </Region>
         </Frame>
     );
 };
@@ -325,73 +420,6 @@ export const FloorPlanEditorBcLayoutHeightmapBitmapItem = ({ layout, srcHeightma
     );
 };
 
-/** Named region `heightmap_wrapper` of FloorPlanEditorBcLayout - configured through the parent's `heightmapWrapper` prop. */
-export interface FloorPlanEditorBcLayoutHeightmapWrapperProps {
-    itemsHeightmapWrapper?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const FloorPlanEditorBcLayoutHeightmapWrapper = ({ itemsHeightmapWrapper, layout }: FloorPlanEditorBcLayoutHeightmapWrapperProps) => {
-    return (
-        <ScrollArea
-            orientation="horizontal"
-            layout={{ position: 'absolute', left: 0, right: 13, top: 132, bottom: 12, ...layout }}
-        >
-            <Region
-                name="heightmap_wrapper"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            >
-                {itemsHeightmapWrapper ?? (
-                    <FloorPlanEditorBcLayoutHeightmapBitmapItem />
-                )}
-                <Region layout={{ width: 30, height: 29, flexShrink: 0 }} />
-                <Region layout={{ width: 15, height: 29, flexShrink: 0 }} />
-            </Region>
-        </ScrollArea>
-    );
-};
-
-/** Named region `mouse_capturer` of FloorPlanEditorBcLayout - configured through the parent's `mouseCapturer` prop. */
-export interface FloorPlanEditorBcLayoutMouseCapturerProps {
-    layout?: BoxLayout;
-    onMouseCapturer?: () => void;
-}
-
-export const FloorPlanEditorBcLayoutMouseCapturer = ({ layout, onMouseCapturer }: FloorPlanEditorBcLayoutMouseCapturerProps) => {
-    return (
-        <Region
-            name="mouse_capturer"
-            onPointerTap={onMouseCapturer}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 13, top: 132, bottom: 12, ...layout }}
-        />
-    );
-};
-
-/** Named region `zoom` of FloorPlanEditorBcLayout - configured through the parent's `zoom` prop. */
-export interface FloorPlanEditorBcLayoutZoomProps {
-    layout?: BoxLayout;
-    onZoom?: () => void;
-    srcZoom?: string;
-}
-
-export const FloorPlanEditorBcLayoutZoom = ({ layout, onZoom, srcZoom }: FloorPlanEditorBcLayoutZoomProps) => {
-    return (
-        <Region
-            name="zoom"
-            onPointerTap={onZoom}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 12, width: 20, bottom: 22, height: 26, ...layout }}
-        >
-            <ThemeImage
-                name="zoom"
-                src={srcZoom ?? layoutImage('roomtools_magnifier.png')}
-                layout={{ position: 'absolute', left: -4, width: 30, top: -3, height: 30 }}
-            />
-        </Region>
-    );
-};
-
 /** Row template `enterdirection_container` of FloorPlanEditorBcLayout - pass real rows through its `items…` slot. */
 export interface FloorPlanEditorBcLayoutEnterdirectionContainerItemProps {
     layout?: BoxLayout;
@@ -545,43 +573,6 @@ export const FloorPlanEditorBcLayoutWallHeightNumberItem = ({ captionWallHeightN
     );
 };
 
-/** Named region `wall_height_controls` of FloorPlanEditorBcLayout - configured through the parent's `wallHeightControls` prop. */
-export interface FloorPlanEditorBcLayoutWallHeightControlsProps {
-    itemsWallHeightControls?: ReactNode;
-    layout?: BoxLayout;
-    srcWallHeightSlider?: string;
-    srcWallHeightSliderTrack?: string;
-}
-
-export const FloorPlanEditorBcLayoutWallHeightControls = ({ itemsWallHeightControls, layout, srcWallHeightSlider, srcWallHeightSliderTrack }: FloorPlanEditorBcLayoutWallHeightControlsProps) => {
-    return (
-        <Region
-            name="wall_height_controls"
-            layout={{ position: 'absolute', left: 7, width: 269, top: 97, height: 30, flexDirection: 'row', ...layout }}
-        >
-            {itemsWallHeightControls ?? (
-                <>
-                    <FloorPlanEditorBcLayoutWallsFixedHeightEnabledCheckboxItem />
-                    <FloorPlanEditorBcLayoutWallHeightTextItem />
-                    <FloorPlanEditorBcLayoutWallHeightNumberItem />
-                </>
-            )}
-            <Region layout={{ width: 118, height: 30, flexShrink: 0 }}>
-                <ThemeImage
-                    name="wall_height_slider"
-                    src={srcWallHeightSlider ?? layoutImage('icons_toolbar_divider.png')}
-                    layout={{ position: 'absolute', left: 2, width: 111, top: 0, height: 30 }}
-                />
-                <ThemeImage
-                    name="wall_height_slider_track"
-                    src={srcWallHeightSliderTrack ?? layoutImage('avatar_editor_avatar_editor_download_icon.png')}
-                    layout={{ position: 'absolute', left: 0, width: 12, top: 7, height: 16 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
 /** Row template `preview_bitmap` of FloorPlanEditorBcLayout - pass real rows through its `items…` slot. */
 export interface FloorPlanEditorBcLayoutPreviewBitmapItemProps {
     layout?: BoxLayout;
@@ -595,30 +586,6 @@ export const FloorPlanEditorBcLayoutPreviewBitmapItem = ({ layout, srcPreviewBit
             src={srcPreviewBitmap}
             layout={{ width: 273, height: 300, flexShrink: 0, ...layout }}
         />
-    );
-};
-
-/** Named region `preview_wrapper` of FloorPlanEditorBcLayout - configured through the parent's `previewWrapper` prop. */
-export interface FloorPlanEditorBcLayoutPreviewWrapperProps {
-    itemsPreviewWrapper?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const FloorPlanEditorBcLayoutPreviewWrapper = ({ itemsPreviewWrapper, layout }: FloorPlanEditorBcLayoutPreviewWrapperProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 1, width: 273, top: 135, bottom: 14, ...layout }}
-        >
-            <Region
-                name="preview_wrapper"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            >
-                {itemsPreviewWrapper ?? (
-                    <FloorPlanEditorBcLayoutPreviewBitmapItem />
-                )}
-            </Region>
-        </ScrollArea>
     );
 };
 
@@ -641,25 +608,6 @@ export const FloorPlanEditorBcLayoutReloadItem = ({ layout, onReload }: FloorPla
         >
             {t('floor.plan.editor.reload')}
         </ButtonThick>
-    );
-};
-
-/** Named region `left_buttons` of FloorPlanEditorBcLayout - configured through the parent's `leftButtons` prop. */
-export interface FloorPlanEditorBcLayoutLeftButtonsProps {
-    itemsLeftButtons?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const FloorPlanEditorBcLayoutLeftButtons = ({ itemsLeftButtons, layout }: FloorPlanEditorBcLayoutLeftButtonsProps) => {
-    return (
-        <Region
-            name="left_buttons"
-            layout={{ position: 'absolute', left: 2, width: 120, top: 0, height: 40, flexDirection: 'row', gap: 5, ...layout }}
-        >
-            {itemsLeftButtons ?? (
-                <FloorPlanEditorBcLayoutReloadItem />
-            )}
-        </Region>
     );
 };
 
@@ -727,47 +675,5 @@ export const FloorPlanEditorBcLayoutSaveItem = ({ layout, onSave }: FloorPlanEdi
         >
             {t('floor.plan.editor.save')}
         </ButtonThick>
-    );
-};
-
-/** Named region `right_buttons` of FloorPlanEditorBcLayout - configured through the parent's `rightButtons` prop. */
-export interface FloorPlanEditorBcLayoutRightButtonsProps {
-    itemsRightButtons?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const FloorPlanEditorBcLayoutRightButtons = ({ itemsRightButtons, layout }: FloorPlanEditorBcLayoutRightButtonsProps) => {
-    return (
-        <Region
-            name="right_buttons"
-            layout={{ position: 'absolute', right: 2, width: 376, top: 0, height: 40, flexDirection: 'row', gap: 8, ...layout }}
-        >
-            {itemsRightButtons ?? (
-                <>
-                    <FloorPlanEditorBcLayoutImportExportItem />
-                    <FloorPlanEditorBcLayoutCancelItem />
-                    <FloorPlanEditorBcLayoutSaveItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
-/** Named region `main_buttons` of FloorPlanEditorBcLayout - configured through the parent's `mainButtons` prop. */
-export interface FloorPlanEditorBcLayoutMainButtonsProps {
-    layout?: BoxLayout;
-    leftButtons?: FloorPlanEditorBcLayoutLeftButtonsProps;
-    rightButtons?: FloorPlanEditorBcLayoutRightButtonsProps;
-}
-
-export const FloorPlanEditorBcLayoutMainButtons = ({ layout, leftButtons, rightButtons }: FloorPlanEditorBcLayoutMainButtonsProps) => {
-    return (
-        <Region
-            name="main_buttons"
-            layout={{ position: 'absolute', left: 10, right: 9, bottom: 42, height: 40, ...layout }}
-        >
-            <FloorPlanEditorBcLayoutLeftButtons {...leftButtons} />
-            <FloorPlanEditorBcLayoutRightButtons {...rightButtons} />
-        </Region>
     );
 };

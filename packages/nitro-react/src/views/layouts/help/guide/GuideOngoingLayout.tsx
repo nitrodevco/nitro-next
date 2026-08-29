@@ -6,7 +6,6 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface GuideOngoingLayoutProps {
     captionCloseLink?: string;
     captionReportLink?: string;
-    chatList?: GuideOngoingLayoutChatListProps;
     layout?: BoxLayout;
     onClose?: () => void;
     onCloseLink?: () => void;
@@ -15,7 +14,7 @@ export interface GuideOngoingLayoutProps {
     onVisitButton?: () => void;
 }
 
-export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, chatList, layout, onClose, onCloseLink, onInviteButton, onReportLink, onVisitButton }: GuideOngoingLayoutProps) => {
+export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, layout, onClose, onCloseLink, onInviteButton, onReportLink, onVisitButton }: GuideOngoingLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -63,7 +62,22 @@ export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, chatLi
                 src={layoutImage('illumina_horizontal_separator.png')}
                 layout={{ position: 'absolute', left: 0, width: 280, top: 37, height: 2 }}
             />
-            <GuideOngoingLayoutChatList {...chatList} />
+            <ScrollArea
+                orientation="vertical"
+                layout={{ position: 'absolute', left: 5, width: 270, top: 38, bottom: 118 }}
+            >
+                <Region
+                    name="chat_list"
+                    layout={{ flexDirection: 'column', width: '100%' }}
+                >
+                    <Region layout={{ width: 140, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('guide.help.common.typing')}
+                            textOptions={{ fill: '#555555' }}
+                        />
+                    </Region>
+                </Region>
+            </ScrollArea>
             <Region layout={{ position: 'absolute', left: 0, width: 280, bottom: 44, height: 75 }}>
                 <ThemeImage
                     src={layoutImage('illumina_horizontal_separator.png')}
@@ -88,33 +102,5 @@ export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, chatLi
                 </Region>
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `chat_list` of GuideOngoingLayout - configured through the parent's `chatList` prop. */
-export interface GuideOngoingLayoutChatListProps {
-    layout?: BoxLayout;
-}
-
-export const GuideOngoingLayoutChatList = ({ layout }: GuideOngoingLayoutChatListProps) => {
-    const t = useTranslation();
-
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 5, width: 270, top: 38, bottom: 118, ...layout }}
-        >
-            <Region
-                name="chat_list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            >
-                <Region layout={{ width: 140, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('guide.help.common.typing')}
-                        textOptions={{ fill: '#555555' }}
-                    />
-                </Region>
-            </Region>
-        </ScrollArea>
     );
 };

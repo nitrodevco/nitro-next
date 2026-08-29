@@ -3,15 +3,16 @@ import { BoxLayout, Button, Frame, Region, ThemeText } from '#base/theme';
 
 /** Generated from `3013_doorbell_xml` (layout "doorbell", 270x182) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface Doorbell_3013LayoutProps {
-    cancelRegion?: Doorbell_3013LayoutCancelRegionProps;
+    captionCancel?: string;
     captionInfo?: string;
     captionRoomName?: string;
     layout?: BoxLayout;
+    onCancelRegion?: () => void;
     onClose?: () => void;
     onRing?: () => void;
 }
 
-export const Doorbell_3013Layout = ({ cancelRegion, captionInfo, captionRoomName, layout, onClose, onRing }: Doorbell_3013LayoutProps) => {
+export const Doorbell_3013Layout = ({ captionCancel, captionInfo, captionRoomName, layout, onCancelRegion, onClose, onRing }: Doorbell_3013LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -41,7 +42,19 @@ export const Doorbell_3013Layout = ({ cancelRegion, captionInfo, captionRoomName
                 backgroundColor="#eaece8"
                 layout={{ position: 'absolute', left: 10, width: 240, top: 108, height: 36 }}
             >
-                <Doorbell_3013LayoutCancelRegion {...cancelRegion} />
+                <Region
+                    name="cancel_region"
+                    onPointerTap={onCancelRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, right: 154, top: 0, height: 36 }}
+                >
+                    <Region
+                        name="cancel"
+                        layout={{ position: 'absolute', left: 3, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionCancel ?? t('generic.cancel')} />
+                    </Region>
+                </Region>
                 <Button
                     variant="3"
                     name="ring"
@@ -52,32 +65,5 @@ export const Doorbell_3013Layout = ({ cancelRegion, captionInfo, captionRoomName
                 </Button>
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `cancel_region` of Doorbell_3013Layout - configured through the parent's `cancelRegion` prop. */
-export interface Doorbell_3013LayoutCancelRegionProps {
-    captionCancel?: string;
-    layout?: BoxLayout;
-    onCancelRegion?: () => void;
-}
-
-export const Doorbell_3013LayoutCancelRegion = ({ captionCancel, layout, onCancelRegion }: Doorbell_3013LayoutCancelRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="cancel_region"
-            onPointerTap={onCancelRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 154, top: 0, height: 36, ...layout }}
-        >
-            <Region
-                name="cancel"
-                layout={{ position: 'absolute', left: 3, top: 8, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionCancel ?? t('generic.cancel')} />
-            </Region>
-        </Region>
     );
 };

@@ -31,22 +31,24 @@ export const ReportWindowLayout = ({ layout, list, onClose }: ReportWindowLayout
 export interface ReportWindowLayoutReportErrorItemProps {
     captionReportError?: string;
     layout?: BoxLayout;
+    visibleReportError?: boolean;
 }
 
-export const ReportWindowLayoutReportErrorItem = ({ captionReportError, layout }: ReportWindowLayoutReportErrorItemProps) => {
+export const ReportWindowLayoutReportErrorItem = ({ captionReportError, layout, visibleReportError }: ReportWindowLayoutReportErrorItemProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="report_error"
-            visible={false}
-            layout={{ width: 264, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionReportError ?? t('guide.help.request.emergency.desc.error')}
-                textOptions={{ fill: '#ff0000', wordWrap: true, wordWrapWidth: 264 }}
-            />
-        </Region>
+        (visibleReportError ?? false) && (
+            <Region
+                name="report_error"
+                layout={{ width: 264, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            >
+                <ThemeText
+                    text={captionReportError ?? t('guide.help.request.emergency.desc.error')}
+                    textOptions={{ fill: '#ff0000', wordWrap: true, wordWrapWidth: 264 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -98,9 +100,10 @@ export interface ReportWindowLayoutListProps {
     layout?: BoxLayout;
     onSubmitButton?: () => void;
     onUrgentHelpLink?: () => void;
+    visibleUrgentHelpLink?: boolean;
 }
 
-export const ReportWindowLayoutList = ({ captionUrgentHelpLink, itemsList, layout, onSubmitButton, onUrgentHelpLink }: ReportWindowLayoutListProps) => {
+export const ReportWindowLayoutList = ({ captionUrgentHelpLink, itemsList, layout, onSubmitButton, onUrgentHelpLink, visibleUrgentHelpLink }: ReportWindowLayoutListProps) => {
     const t = useTranslation();
 
     return (
@@ -134,19 +137,20 @@ export const ReportWindowLayoutList = ({ captionUrgentHelpLink, itemsList, layou
                         textOptions={{ wordWrap: true, wordWrapWidth: 250, align: 'center' }}
                     />
                 </Region>
-                <Region
-                    name="urgent_help_link"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 10, width: 250, top: 41, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    onPointerTap={onUrgentHelpLink}
-                    cursor="pointer"
-                >
-                    <ThemeText
-                        text={captionUrgentHelpLink ?? t('guide.help.request.emergency.help.link')}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                {(visibleUrgentHelpLink ?? false) && (
+                    <Region
+                        name="urgent_help_link"
+                        layout={{ position: 'absolute', left: 10, width: 250, top: 41, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        onPointerTap={onUrgentHelpLink}
+                        cursor="pointer"
+                    >
+                        <ThemeText
+                            text={captionUrgentHelpLink ?? t('guide.help.request.emergency.help.link')}
+                            textStyle="text-style-il-regular-white"
+                            textOptions={{ align: 'center' }}
+                        />
+                    </Region>
+                )}
                 <Button
                     variant="101"
                     name="submit_button"

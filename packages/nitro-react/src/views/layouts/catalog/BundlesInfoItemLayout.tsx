@@ -16,52 +16,19 @@ export const BundlesInfoItemLayout = ({ infoContainer, layout }: BundlesInfoItem
     );
 };
 
-/** Named region `underline_container` of BundlesInfoItemLayout - configured through the parent's `underlineContainer` prop. */
-export interface BundlesInfoItemLayoutUnderlineContainerProps {
-    layout?: BoxLayout;
-}
-
-export const BundlesInfoItemLayoutUnderlineContainer = ({ layout }: BundlesInfoItemLayoutUnderlineContainerProps) => {
-    return (
-        <Region
-            name="underline_container"
-            backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 45, width: 88, top: 84, height: 1, ...layout }}
-        />
-    );
-};
-
-/** Named region `click_region` of BundlesInfoItemLayout - configured through the parent's `clickRegion` prop. */
-export interface BundlesInfoItemLayoutClickRegionProps {
-    layout?: BoxLayout;
-    onClickRegion?: () => void;
-}
-
-export const BundlesInfoItemLayoutClickRegion = ({ layout, onClickRegion }: BundlesInfoItemLayoutClickRegionProps) => {
-    return (
-        <Region
-            name="click_region"
-            onPointerTap={onClickRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 182, top: 1, height: 142, ...layout }}
-        />
-    );
-};
-
 /** Named region `info_container` of BundlesInfoItemLayout - configured through the parent's `infoContainer` prop. */
 export interface BundlesInfoItemLayoutInfoContainerProps {
     captionEqualsBundleText?: string;
     captionFooterText?: string;
     captionFreeText?: string;
     captionHeaderText?: string;
-    clickRegion?: BundlesInfoItemLayoutClickRegionProps;
     layout?: BoxLayout;
+    onClickRegion?: () => void;
     srcBackgroundBitmap?: string;
     srcFormulaBitmap?: string;
-    underlineContainer?: BundlesInfoItemLayoutUnderlineContainerProps;
 }
 
-export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, captionFooterText, captionFreeText, captionHeaderText, clickRegion, layout, srcBackgroundBitmap, srcFormulaBitmap, underlineContainer }: BundlesInfoItemLayoutInfoContainerProps) => {
+export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, captionFooterText, captionFreeText, captionHeaderText, layout, onClickRegion, srcBackgroundBitmap, srcFormulaBitmap }: BundlesInfoItemLayoutInfoContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -88,7 +55,11 @@ export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, ca
                 src={srcFormulaBitmap ?? '${image.library.catalogue.url}clakboard_formula.png'}
                 layout={{ position: 'absolute', left: 33, width: 115, top: 44, height: 41 }}
             />
-            <BundlesInfoItemLayoutUnderlineContainer {...underlineContainer} />
+            <Region
+                name="underline_container"
+                backgroundColor="#ffffff"
+                layout={{ position: 'absolute', left: 45, width: 88, top: 84, height: 1 }}
+            />
             <Region
                 name="free_text"
                 layout={{ position: 'absolute', left: 103, width: 166, top: 67, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -117,7 +88,12 @@ export const BundlesInfoItemLayoutInfoContainer = ({ captionEqualsBundleText, ca
                     textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174, align: 'center' }}
                 />
             </Region>
-            <BundlesInfoItemLayoutClickRegion {...clickRegion} />
+            <Region
+                name="click_region"
+                onPointerTap={onClickRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 182, top: 1, height: 142 }}
+            />
         </Region>
     );
 };

@@ -6,13 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `891_jukebox_view_xml` (layout "furni_view", 429x345) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface JukeboxViewLayoutProps {
-    buttonList?: JukeboxViewLayoutButtonListProps;
     infostandElementList?: JukeboxViewLayoutInfostandElementListProps;
+    itemsButtonList?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const JukeboxViewLayout = ({ buttonList, infostandElementList, layout, onClose }: JukeboxViewLayoutProps) => {
+export const JukeboxViewLayout = ({ infostandElementList, itemsButtonList, layout, onClose }: JukeboxViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 429, height: 345, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 429, top: 0, height: 345, flexDirection: 'column', gap: 10 }}>
@@ -29,7 +29,19 @@ export const JukeboxViewLayout = ({ buttonList, infostandElementList, layout, on
                     />
                     <JukeboxViewLayoutInfostandElementList {...infostandElementList} />
                 </Border>
-                <JukeboxViewLayoutButtonList {...buttonList} />
+                <Region
+                    name="button_list"
+                    layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10 }}
+                >
+                    {itemsButtonList ?? (
+                        <>
+                            <JukeboxViewLayoutMoveItem />
+                            <JukeboxViewLayoutRotateItem />
+                            <JukeboxViewLayoutPickupItem />
+                            <JukeboxViewLayoutUseItem />
+                        </>
+                    )}
+                </Region>
             </Region>
         </Region>
     );
@@ -488,29 +500,5 @@ export const JukeboxViewLayoutUseItem = ({ layout, onUse }: JukeboxViewLayoutUse
         >
             {t('infostand.button.use')}
         </Button>
-    );
-};
-
-/** Named region `button_list` of JukeboxViewLayout - configured through the parent's `buttonList` prop. */
-export interface JukeboxViewLayoutButtonListProps {
-    itemsButtonList?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const JukeboxViewLayoutButtonList = ({ itemsButtonList, layout }: JukeboxViewLayoutButtonListProps) => {
-    return (
-        <Region
-            name="button_list"
-            layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
-        >
-            {itemsButtonList ?? (
-                <>
-                    <JukeboxViewLayoutMoveItem />
-                    <JukeboxViewLayoutRotateItem />
-                    <JukeboxViewLayoutPickupItem />
-                    <JukeboxViewLayoutUseItem />
-                </>
-            )}
-        </Region>
     );
 };

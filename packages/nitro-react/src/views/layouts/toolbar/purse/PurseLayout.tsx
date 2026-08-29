@@ -6,17 +6,24 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1258_purse_xml` (layout "grid_purse", 230x77) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PurseLayoutProps {
-    earningsButton?: PurseLayoutEarningsButtonProps;
-    hcJoinButton?: PurseLayoutHcJoinButtonProps;
+    captionDays?: string;
+    captionEarnings?: string;
+    captionJoin?: string;
     layout?: BoxLayout;
+    onEarningsButton?: () => void;
+    onHcJoinButton?: () => void;
     onHelpButton?: () => void;
     onLogoutButton?: () => void;
     onSettingsButton?: () => void;
     purseItemlist?: PurseLayoutPurseItemlistProps;
     srcBetaSign?: string;
+    srcEarningsUnseenIndicator?: string;
+    visibleBetaSign?: boolean;
+    visibleEarningsUnseenIndicator?: boolean;
+    visibleJoin?: boolean;
 }
 
-export const PurseLayout = ({ earningsButton, hcJoinButton, layout, onHelpButton, onLogoutButton, onSettingsButton, purseItemlist, srcBetaSign }: PurseLayoutProps) => {
+export const PurseLayout = ({ captionDays, captionEarnings, captionJoin, layout, onEarningsButton, onHcJoinButton, onHelpButton, onLogoutButton, onSettingsButton, purseItemlist, srcBetaSign, srcEarningsUnseenIndicator, visibleBetaSign, visibleEarningsUnseenIndicator, visibleJoin }: PurseLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -27,13 +34,7 @@ export const PurseLayout = ({ earningsButton, hcJoinButton, layout, onHelpButton
                     tintColor="#686661"
                     layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 76 }}
                 />
-                <Border
-                    variant="3"
-                    tintColor="#201e19"
-                    blend={0.8}
-                    visible={false}
-                    layout={{ position: 'absolute', left: 3, width: 114, top: 3, height: 69 }}
-                />
+                {/* `border` is hidden and has no name to show it by */}
                 <PurseLayoutPurseItemlist {...purseItemlist} />
                 <Border
                     variant="2"
@@ -41,14 +42,77 @@ export const PurseLayout = ({ earningsButton, hcJoinButton, layout, onHelpButton
                     blend={0.8}
                     layout={{ position: 'absolute', left: 64, width: 101, top: 7, height: 28 }}
                 />
-                <PurseLayoutHcJoinButton {...hcJoinButton} />
+                <Region
+                    name="hc_join_button"
+                    tooltip={t('catalog.club.hc')}
+                    dynamicStyle="brightness_and_shadow_under"
+                    onPointerTap={onHcJoinButton}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 64, width: 101, top: 8, height: 26, justifyContent: 'center' }}
+                >
+                    {(visibleJoin ?? false) && (
+                        <Region
+                            name="join"
+                            layout={{ position: 'absolute', width: 25, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionJoin ?? 'join'}
+                                textStyle="text-style-u-bold"
+                                textOptions={{ fill: '#00c1c4' }}
+                            />
+                        </Region>
+                    )}
+                    <Region
+                        name="days"
+                        layout={{ position: 'absolute', left: 25, width: 50, top: 4, height: 28, maxWidth: 50, minHeight: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionDays ?? '23 d.'}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#00c1c4', wordWrap: true, wordWrapWidth: 50 }}
+                        />
+                    </Region>
+                    <ThemeImage
+                        src={layoutImage('pursearea_hc_icon.png')}
+                        layout={{ position: 'absolute', left: 5, width: 20, top: 4, height: 18 }}
+                    />
+                </Region>
                 <Border
                     variant="2"
                     tintColor="#3b3933"
                     blend={0.8}
                     layout={{ position: 'absolute', left: 64, width: 101, top: 39, height: 28 }}
                 />
-                <PurseLayoutEarningsButton {...earningsButton} />
+                <Region
+                    name="earnings_button"
+                    tooltip={t('earnings.title')}
+                    dynamicStyle="brightness_and_shadow_under"
+                    onPointerTap={onEarningsButton}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 64, width: 101, top: 40, height: 26 }}
+                >
+                    <Region
+                        name="earnings"
+                        layout={{ position: 'absolute', left: 25, width: 79, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionEarnings ?? t('earnings.title')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#00c1c4' }}
+                        />
+                    </Region>
+                    <ThemeImage
+                        src={layoutImage('pursearea_icon_earnings.png')}
+                        layout={{ position: 'absolute', left: 5, width: 20, top: 4, height: 18 }}
+                    />
+                    {(visibleEarningsUnseenIndicator ?? false) && (
+                        <ThemeImage
+                            name="earnings_unseen_indicator"
+                            src={srcEarningsUnseenIndicator ?? layoutImage('pursearea_unseen_indicator.png')}
+                            layout={{ position: 'absolute', left: 1, width: 10, top: 0, height: 11 }}
+                        />
+                    )}
+                </Region>
                 <Region
                     backgroundColor="#444444"
                     layout={{ position: 'absolute', left: 169, width: 1, top: 11, height: 55, minHeight: 23 }}
@@ -94,12 +158,13 @@ export const PurseLayout = ({ earningsButton, hcJoinButton, layout, onHelpButton
                         />
                     </ContainerButton>
                 </Region>
-                <ThemeImage
-                    name="beta_sign"
-                    src={srcBetaSign ?? layoutImage('common_beta_sign.png')}
-                    layout={{ position: 'absolute', left: 0, width: 35, top: 55, height: 16 }}
-                    visible={false}
-                />
+                {(visibleBetaSign ?? false) && (
+                    <ThemeImage
+                        name="beta_sign"
+                        src={srcBetaSign ?? layoutImage('common_beta_sign.png')}
+                        layout={{ position: 'absolute', left: 0, width: 35, top: 55, height: 16 }}
+                    />
+                )}
             </Region>
         </Region>
     );
@@ -235,99 +300,6 @@ export const PurseLayoutPurseItemlist = ({ itemsPurseItemlist, layout }: PurseLa
                     <PurseLayoutDucketCountButtonItem />
                 </>
             )}
-        </Region>
-    );
-};
-
-/** Named region `hc_join_button` of PurseLayout - configured through the parent's `hcJoinButton` prop. */
-export interface PurseLayoutHcJoinButtonProps {
-    captionDays?: string;
-    captionJoin?: string;
-    layout?: BoxLayout;
-    onHcJoinButton?: () => void;
-}
-
-export const PurseLayoutHcJoinButton = ({ captionDays, captionJoin, layout, onHcJoinButton }: PurseLayoutHcJoinButtonProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="hc_join_button"
-            tooltip={t('catalog.club.hc')}
-            dynamicStyle="brightness_and_shadow_under"
-            onPointerTap={onHcJoinButton}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 64, width: 101, top: 8, height: 26, justifyContent: 'center', ...layout }}
-        >
-            <Region
-                name="join"
-                visible={false}
-                layout={{ position: 'absolute', width: 25, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionJoin ?? 'join'}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#00c1c4' }}
-                />
-            </Region>
-            <Region
-                name="days"
-                layout={{ position: 'absolute', left: 25, width: 50, top: 4, height: 28, maxWidth: 50, minHeight: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionDays ?? '23 d.'}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#00c1c4', wordWrap: true, wordWrapWidth: 50 }}
-                />
-            </Region>
-            <ThemeImage
-                src={layoutImage('pursearea_hc_icon.png')}
-                layout={{ position: 'absolute', left: 5, width: 20, top: 4, height: 18 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `earnings_button` of PurseLayout - configured through the parent's `earningsButton` prop. */
-export interface PurseLayoutEarningsButtonProps {
-    captionEarnings?: string;
-    layout?: BoxLayout;
-    onEarningsButton?: () => void;
-    srcEarningsUnseenIndicator?: string;
-}
-
-export const PurseLayoutEarningsButton = ({ captionEarnings, layout, onEarningsButton, srcEarningsUnseenIndicator }: PurseLayoutEarningsButtonProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="earnings_button"
-            tooltip={t('earnings.title')}
-            dynamicStyle="brightness_and_shadow_under"
-            onPointerTap={onEarningsButton}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 64, width: 101, top: 40, height: 26, ...layout }}
-        >
-            <Region
-                name="earnings"
-                layout={{ position: 'absolute', left: 25, width: 79, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionEarnings ?? t('earnings.title')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#00c1c4' }}
-                />
-            </Region>
-            <ThemeImage
-                src={layoutImage('pursearea_icon_earnings.png')}
-                layout={{ position: 'absolute', left: 5, width: 20, top: 4, height: 18 }}
-            />
-            <ThemeImage
-                name="earnings_unseen_indicator"
-                src={srcEarningsUnseenIndicator ?? layoutImage('pursearea_unseen_indicator.png')}
-                layout={{ position: 'absolute', left: 1, width: 10, top: 0, height: 11 }}
-                visible={false}
-            />
         </Region>
     );
 };

@@ -5,18 +5,18 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1260_calendar_xml` (layout "calendar", 1033x607) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface CalendarLayoutProps {
-    btnBack?: CalendarLayoutBtnBackProps;
-    btnForward?: CalendarLayoutBtnForwardProps;
     captionInfoBody?: string;
     captionInfoHeading?: string;
     layout?: BoxLayout;
+    onBtnBack?: () => void;
     onBtnForceOpen?: () => void;
+    onBtnForward?: () => void;
     onClose?: () => void;
     spinnerContainer?: CalendarLayoutSpinnerContainerProps;
     visibleBtnForceOpen?: boolean;
 }
 
-export const CalendarLayout = ({ btnBack, btnForward, captionInfoBody, captionInfoHeading, layout, onBtnForceOpen, onClose, spinnerContainer, visibleBtnForceOpen }: CalendarLayoutProps) => {
+export const CalendarLayout = ({ captionInfoBody, captionInfoHeading, layout, onBtnBack, onBtnForceOpen, onBtnForward, onClose, spinnerContainer, visibleBtnForceOpen }: CalendarLayoutProps) => {
     return (
         <Frame
             variant="3"
@@ -55,72 +55,57 @@ export const CalendarLayout = ({ btnBack, btnForward, captionInfoBody, captionIn
                     />
                 </Region>
             </Region>
-            <CalendarLayoutBtnForward {...btnForward} />
-            <CalendarLayoutBtnBack {...btnBack} />
-            <Button
-                variant="6"
-                name="btn_force_open"
-                tintColor="#299f3a"
-                onPointerTap={onBtnForceOpen}
-                visible={visibleBtnForceOpen ?? false}
-                layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 30, minWidth: 120, maxWidth: 120 }}
+            <Region
+                name="btn_forward"
+                onPointerTap={onBtnForward}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 991, width: 33, top: 325, height: 34 }}
             >
-                FORCE OPEN
-            </Button>
+                <ThemeImage
+                    src={layoutImage('icons_forward.png')}
+                    layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
+                />
+            </Region>
+            <Region
+                name="btn_back"
+                onPointerTap={onBtnBack}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 4, width: 33, top: 325, height: 34 }}
+            >
+                <ThemeImage
+                    src={layoutImage('icons_back.png')}
+                    layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
+                />
+            </Region>
+            {(visibleBtnForceOpen ?? false) && (
+                <Button
+                    variant="6"
+                    name="btn_force_open"
+                    tintColor="#299f3a"
+                    onPointerTap={onBtnForceOpen}
+                    layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 30, minWidth: 120, maxWidth: 120 }}
+                >
+                    FORCE OPEN
+                </Button>
+            )}
         </Frame>
-    );
-};
-
-/** Named region `btn_present` of CalendarLayout - configured through the parent's `btnPresent` prop. */
-export interface CalendarLayoutBtnPresentProps {
-    layout?: BoxLayout;
-    srcBitmapBg?: string;
-    srcBitmapIcon?: string;
-    srcBitmapIcon2?: string;
-    srcBitmapOpenedBg?: string;
-}
-
-export const CalendarLayoutBtnPresent = ({ layout, srcBitmapBg, srcBitmapIcon, srcBitmapIcon2, srcBitmapOpenedBg }: CalendarLayoutBtnPresentProps) => {
-    return (
-        <Region
-            name="btn_present"
-            layout={{ position: 'absolute', left: 7, width: 192, top: 115, height: 192, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                name="bitmap_bg"
-                src={srcBitmapBg}
-                layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
-            />
-            <ThemeImage
-                name="bitmap_opened_bg"
-                src={srcBitmapOpenedBg ?? layoutImage('campaign_calendar_opened.png')}
-                layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
-                visible={false}
-            />
-            <ThemeImage
-                name="bitmap_icon2"
-                src={srcBitmapIcon2}
-                layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
-            />
-            <ThemeImage
-                name="bitmap_icon"
-                src={srcBitmapIcon}
-                layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
-            />
-        </Region>
     );
 };
 
 /** Row template `btn_slot` of CalendarLayout - pass real rows through its `items…` slot. */
 export interface CalendarLayoutBtnSlotItemProps {
-    btnPresent?: CalendarLayoutBtnPresentProps;
     layout?: BoxLayout;
     onBtnSlot?: () => void;
+    srcBitmapBg?: string;
+    srcBitmapIcon?: string;
+    srcBitmapIcon2?: string;
     srcBitmapItem?: string;
     srcBitmapLock?: string;
+    srcBitmapOpenedBg?: string;
+    visibleBitmapOpenedBg?: boolean;
 }
 
-export const CalendarLayoutBtnSlotItem = ({ btnPresent, layout, onBtnSlot, srcBitmapItem, srcBitmapLock }: CalendarLayoutBtnSlotItemProps) => {
+export const CalendarLayoutBtnSlotItem = ({ layout, onBtnSlot, srcBitmapBg, srcBitmapIcon, srcBitmapIcon2, srcBitmapItem, srcBitmapLock, srcBitmapOpenedBg, visibleBitmapOpenedBg }: CalendarLayoutBtnSlotItemProps) => {
     return (
         <Region
             name="btn_slot"
@@ -133,7 +118,33 @@ export const CalendarLayoutBtnSlotItem = ({ btnPresent, layout, onBtnSlot, srcBi
                 src={srcBitmapItem ?? layoutImage('campaign_calendar_day_generic_bg.png')}
                 layout={{ position: 'absolute', left: 0, width: 202, top: 0, height: 447 }}
             />
-            <CalendarLayoutBtnPresent {...btnPresent} />
+            <Region
+                name="btn_present"
+                layout={{ position: 'absolute', left: 7, width: 192, top: 115, height: 192, justifyContent: 'center' }}
+            >
+                <ThemeImage
+                    name="bitmap_bg"
+                    src={srcBitmapBg}
+                    layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
+                />
+                {(visibleBitmapOpenedBg ?? false) && (
+                    <ThemeImage
+                        name="bitmap_opened_bg"
+                        src={srcBitmapOpenedBg ?? layoutImage('campaign_calendar_opened.png')}
+                        layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
+                    />
+                )}
+                <ThemeImage
+                    name="bitmap_icon2"
+                    src={srcBitmapIcon2}
+                    layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
+                />
+                <ThemeImage
+                    name="bitmap_icon"
+                    src={srcBitmapIcon}
+                    layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
+                />
+            </Region>
             <ThemeImage
                 name="bitmap_lock"
                 src={srcBitmapLock ?? layoutImage('campaign_calendar_generic_lock.png')}
@@ -210,50 +221,6 @@ export const CalendarLayoutSpinnerContainer = ({ calendarItemlist, layout, srcGr
                 name="gradient2"
                 src={srcGradient2}
                 layout={{ position: 'absolute', left: 618, width: 408, top: 15, bottom: 1 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `btn_forward` of CalendarLayout - configured through the parent's `btnForward` prop. */
-export interface CalendarLayoutBtnForwardProps {
-    layout?: BoxLayout;
-    onBtnForward?: () => void;
-}
-
-export const CalendarLayoutBtnForward = ({ layout, onBtnForward }: CalendarLayoutBtnForwardProps) => {
-    return (
-        <Region
-            name="btn_forward"
-            onPointerTap={onBtnForward}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 991, width: 33, top: 325, height: 34, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('icons_forward.png')}
-                layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `btn_back` of CalendarLayout - configured through the parent's `btnBack` prop. */
-export interface CalendarLayoutBtnBackProps {
-    layout?: BoxLayout;
-    onBtnBack?: () => void;
-}
-
-export const CalendarLayoutBtnBack = ({ layout, onBtnBack }: CalendarLayoutBtnBackProps) => {
-    return (
-        <Region
-            name="btn_back"
-            onPointerTap={onBtnBack}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 4, width: 33, top: 325, height: 34, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('icons_back.png')}
-                layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
             />
         </Region>
     );

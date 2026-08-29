@@ -7,31 +7,16 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
  * (LayoutVipBuy_1585Layout); each passes its own placement through `layout`.
  */
-/** Named region `item_list_vip` of VipBuyWidget - configured through the parent's `itemListVip` prop. */
-export interface VipBuyWidgetItemListVipProps {
-    layout?: BoxLayout;
-}
-
-export const VipBuyWidgetItemListVip = ({ layout }: VipBuyWidgetItemListVipProps) => {
-    return (
-        <Region
-            name="item_list_vip"
-            layout={{ position: 'absolute', left: 19, width: 286, top: 170, height: 157, minWidth: 286, maxWidth: 286, flexDirection: 'column', gap: 4, ...layout }}
-        />
-    );
-};
-
 /** Named region `vipBuyWidget` of VipBuyWidget - configured through the parent's `vipBuyWidget` prop. */
 export interface VipBuyWidgetProps extends CatalogWidgetFlags {
     captionVipInfo?: string;
     captionVipLink?: string;
     captionVipTitle?: string;
-    itemListVip?: VipBuyWidgetItemListVipProps;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
 }
 
-export const VipBuyWidget = ({ captionVipInfo, captionVipLink, captionVipTitle, itemListVip, layout, srcCtlgTeaserimg1 }: VipBuyWidgetProps) => {
+export const VipBuyWidget = ({ captionVipInfo, captionVipLink, captionVipTitle, layout, srcCtlgTeaserimg1 }: VipBuyWidgetProps) => {
     const t = useTranslation();
 
     return (
@@ -73,7 +58,10 @@ export const VipBuyWidget = ({ captionVipInfo, captionVipLink, captionVipTitle, 
                     textOptions={{ fill: '#038ef4', align: 'center' }}
                 />
             </Region>
-            <VipBuyWidgetItemListVip {...itemListVip} />
+            <Region
+                name="item_list_vip"
+                layout={{ position: 'absolute', left: 19, width: 286, top: 170, height: 157, minWidth: 286, maxWidth: 286, flexDirection: 'column', gap: 4 }}
+            />
         </Region>
     );
 };

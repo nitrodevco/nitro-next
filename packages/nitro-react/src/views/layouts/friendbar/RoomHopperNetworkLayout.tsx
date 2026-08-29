@@ -9,13 +9,12 @@ export interface RoomHopperNetworkLayoutProps {
     captionTitle?: string;
     layout?: BoxLayout;
     onButton?: () => void;
-    spacing?: RoomHopperNetworkLayoutSpacingProps;
     srcBitmap?: string;
     srcBorderBar?: string;
     srcHdrLine?: string;
 }
 
-export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTitle, layout, onButton, spacing, srcBitmap, srcBorderBar, srcHdrLine }: RoomHopperNetworkLayoutProps) => {
+export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTitle, layout, onButton, srcBitmap, srcBorderBar, srcHdrLine }: RoomHopperNetworkLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -53,7 +52,10 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
                             textStyle="text-style-il-heading-1"
                         />
                     </Region>
-                    <RoomHopperNetworkLayoutSpacing {...spacing} />
+                    <Region
+                        name="spacing"
+                        layout={{ width: 30, height: 6, flexShrink: 0 }}
+                    />
                     <Region
                         backgroundColor="#000000"
                         layout={{ width: 250, height: 120, flexShrink: 0 }}
@@ -84,19 +86,5 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
                 </Region>
             </Region>
         </Region>
-    );
-};
-
-/** Named region `spacing` of RoomHopperNetworkLayout - configured through the parent's `spacing` prop. */
-export interface RoomHopperNetworkLayoutSpacingProps {
-    layout?: BoxLayout;
-}
-
-export const RoomHopperNetworkLayoutSpacing = ({ layout }: RoomHopperNetworkLayoutSpacingProps) => {
-    return (
-        <Region
-            name="spacing"
-            layout={{ width: 30, height: 6, flexShrink: 0, ...layout }}
-        />
     );
 };

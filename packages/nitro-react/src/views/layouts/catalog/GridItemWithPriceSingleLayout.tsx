@@ -5,24 +5,25 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1635_gridItem_with_price_single_xml` (layout "gridItem_with_price", 53x74) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GridItemWithPriceSingleLayoutProps {
+    itemsTotalpriceContainer?: ReactNode;
     layout?: BoxLayout;
     smallContainer?: GridItemWithPriceSingleLayoutSmallContainerProps;
     srcBadgeAddOn?: string;
-    totalpriceContainer?: GridItemWithPriceSingleLayoutTotalpriceContainerProps;
+    srcImageWide?: string;
     visibleBg?: boolean;
-    wideContainer?: GridItemWithPriceSingleLayoutWideContainerProps;
 }
 
-export const GridItemWithPriceSingleLayout = ({ layout, smallContainer, srcBadgeAddOn, totalpriceContainer, visibleBg, wideContainer }: GridItemWithPriceSingleLayoutProps) => {
+export const GridItemWithPriceSingleLayout = ({ itemsTotalpriceContainer, layout, smallContainer, srcBadgeAddOn, srcImageWide, visibleBg }: GridItemWithPriceSingleLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 53, height: 74, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 74, minWidth: 53, maxWidth: 73 }}>
-                <Border
-                    variant="3"
-                    name="bg"
-                    visible={visibleBg ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 62 }}
-                />
+                {(visibleBg ?? false) && (
+                    <Border
+                        variant="3"
+                        name="bg"
+                        layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 62 }}
+                    />
+                )}
                 <Border
                     variant="2"
                     tintColor="#a1a19b"
@@ -40,36 +41,34 @@ export const GridItemWithPriceSingleLayout = ({ layout, smallContainer, srcBadge
                         />
                     </Border>
                 </Border>
-                <GridItemWithPriceSingleLayoutWideContainer {...wideContainer} />
+                <Region
+                    name="wide_container"
+                    layout={{ position: 'absolute', left: 6, width: 60, top: 2, height: 36 }}
+                >
+                    <ThemeImage
+                        name="image_wide"
+                        src={srcImageWide}
+                        layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 36 }}
+                    />
+                </Region>
                 <ThemeImage
                     name="badge_add_on"
                     src={srcBadgeAddOn}
                     layout={{ position: 'absolute', left: 8, width: 10, top: 2, height: 10 }}
                 />
                 <GridItemWithPriceSingleLayoutSmallContainer {...smallContainer} />
-                <GridItemWithPriceSingleLayoutTotalpriceContainer {...totalpriceContainer} />
+                <Region
+                    name="totalprice_container"
+                    layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1 }}
+                >
+                    {itemsTotalpriceContainer ?? (
+                        <>
+                            <GridItemWithPriceSingleLayoutAmountTextRightItem />
+                            <GridItemWithPriceSingleLayoutCurrencyIndicatorBitmapRightItem />
+                        </>
+                    )}
+                </Region>
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `wide_container` of GridItemWithPriceSingleLayout - configured through the parent's `wideContainer` prop. */
-export interface GridItemWithPriceSingleLayoutWideContainerProps {
-    layout?: BoxLayout;
-    srcImageWide?: string;
-}
-
-export const GridItemWithPriceSingleLayoutWideContainer = ({ layout, srcImageWide }: GridItemWithPriceSingleLayoutWideContainerProps) => {
-    return (
-        <Region
-            name="wide_container"
-            layout={{ position: 'absolute', left: 6, width: 60, top: 2, height: 36, ...layout }}
-        >
-            <ThemeImage
-                name="image_wide"
-                src={srcImageWide}
-                layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 36 }}
-            />
         </Region>
     );
 };
@@ -83,9 +82,12 @@ export interface GridItemWithPriceSingleLayoutSmallContainerProps {
     srcImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
     srcUniqueItemSoldOutBitmap?: string;
+    visibleUniqueItemBackgroundBitmap?: boolean;
+    visibleUniqueItemOverlayContainer?: boolean;
+    visibleUniqueItemSoldOutBitmap?: boolean;
 }
 
-export const GridItemWithPriceSingleLayoutSmallContainer = ({ captionBundleCounter, captionMultiCounter, layout, onSmallContainer, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap }: GridItemWithPriceSingleLayoutSmallContainerProps) => {
+export const GridItemWithPriceSingleLayoutSmallContainer = ({ captionBundleCounter, captionMultiCounter, layout, onSmallContainer, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer, visibleUniqueItemSoldOutBitmap }: GridItemWithPriceSingleLayoutSmallContainerProps) => {
     return (
         <Region
             name="small_container"
@@ -93,23 +95,25 @@ export const GridItemWithPriceSingleLayoutSmallContainer = ({ captionBundleCount
             cursor="pointer"
             layout={{ position: 'absolute', left: 8, width: 36, top: 2, height: 36, ...layout }}
         >
-            <ThemeImage
-                name="unique_item_background_bitmap"
-                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                visible={false}
-            />
+            {(visibleUniqueItemBackgroundBitmap ?? false) && (
+                <ThemeImage
+                    name="unique_item_background_bitmap"
+                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
+                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                />
+            )}
             <ThemeImage
                 name="image"
                 src={srcImage}
                 layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
             />
-            <WidgetSlot
-                widgetType="limited_item_overlay_grid"
-                name="unique_item_overlay_container"
-                visible={false}
-                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-            />
+            {(visibleUniqueItemOverlayContainer ?? false) && (
+                <WidgetSlot
+                    widgetType="limited_item_overlay_grid"
+                    name="unique_item_overlay_container"
+                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                />
+            )}
             <Icon
                 variant="0"
                 name="clubLevelIcon"
@@ -140,17 +144,14 @@ export const GridItemWithPriceSingleLayoutSmallContainer = ({ captionBundleCount
                     />
                 </Region>
             </Border>
-            <ThemeImage
-                name="unique_item_sold_out_bitmap"
-                src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_tile.png')}
-                layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
-                visible={false}
-            />
-            <ThemeImage
-                src={layoutImage('inventory_thumb_selected_outline.png')}
-                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                visible={false}
-            />
+            {(visibleUniqueItemSoldOutBitmap ?? false) && (
+                <ThemeImage
+                    name="unique_item_sold_out_bitmap"
+                    src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_tile.png')}
+                    layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
+                />
+            )}
+            {/* `static_bitmap` is hidden and has no name to show it by */}
         </Region>
     );
 };
@@ -184,27 +185,5 @@ export const GridItemWithPriceSingleLayoutCurrencyIndicatorBitmapRightItem = ({ 
             name="currency_indicator_bitmap_right"
             layout={{ width: 15, height: 15, flexShrink: 0, ...layout }}
         />
-    );
-};
-
-/** Named region `totalprice_container` of GridItemWithPriceSingleLayout - configured through the parent's `totalpriceContainer` prop. */
-export interface GridItemWithPriceSingleLayoutTotalpriceContainerProps {
-    itemsTotalpriceContainer?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const GridItemWithPriceSingleLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout }: GridItemWithPriceSingleLayoutTotalpriceContainerProps) => {
-    return (
-        <Region
-            name="totalprice_container"
-            layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1, ...layout }}
-        >
-            {itemsTotalpriceContainer ?? (
-                <>
-                    <GridItemWithPriceSingleLayoutAmountTextRightItem />
-                    <GridItemWithPriceSingleLayoutCurrencyIndicatorBitmapRightItem />
-                </>
-            )}
-        </Region>
     );
 };

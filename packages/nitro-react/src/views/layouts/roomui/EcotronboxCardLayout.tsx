@@ -3,20 +3,6 @@ import { BoxLayout, Button, ButtonThick, Region, ThemeImage, ThemeText } from '#
 
 /** Generated from `893_ecotronbox_card_xml` (layout "ecotron_box_card", 257x114) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface EcotronboxCardLayoutProps {
-    ecotronboxContainer?: EcotronboxCardLayoutEcotronboxContainerProps;
-    layout?: BoxLayout;
-}
-
-export const EcotronboxCardLayout = ({ ecotronboxContainer, layout }: EcotronboxCardLayoutProps) => {
-    return (
-        <Region layout={{ position: 'relative', width: 257, height: 114, ...layout }}>
-            <EcotronboxCardLayoutEcotronboxContainer {...ecotronboxContainer} />
-        </Region>
-    );
-};
-
-/** Named region `ecotronbox_container` of EcotronboxCardLayout - configured through the parent's `ecotronboxContainer` prop. */
-export interface EcotronboxCardLayoutEcotronboxContainerProps {
     captionEcotronboxCardDate?: string;
     captionEcotronboxCardMsg?: string;
     layout?: BoxLayout;
@@ -27,59 +13,61 @@ export interface EcotronboxCardLayoutEcotronboxContainerProps {
     srcEcotronboxCardPreview?: string;
 }
 
-export const EcotronboxCardLayoutEcotronboxContainer = ({ captionEcotronboxCardDate, captionEcotronboxCardMsg, layout, onEcotronboxCardBtnClose, onEcotronboxCardBtnOpen, onEcotronboxContainer, srcEcotronboxCardBg, srcEcotronboxCardPreview }: EcotronboxCardLayoutEcotronboxContainerProps) => {
+export const EcotronboxCardLayout = ({ captionEcotronboxCardDate, captionEcotronboxCardMsg, layout, onEcotronboxCardBtnClose, onEcotronboxCardBtnOpen, onEcotronboxContainer, srcEcotronboxCardBg, srcEcotronboxCardPreview }: EcotronboxCardLayoutProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="ecotronbox_container"
-            onPointerTap={onEcotronboxContainer}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 257, top: 0, height: 114, ...layout }}
-        >
-            <ThemeImage
-                name="ecotronbox_card_bg"
-                src={srcEcotronboxCardBg ?? '${image.library.url}Giftcards/ecotronbox_card_bg.png'}
+        <Region layout={{ position: 'relative', width: 257, height: 114, ...layout }}>
+            <Region
+                name="ecotronbox_container"
+                onPointerTap={onEcotronboxContainer}
+                cursor="pointer"
                 layout={{ position: 'absolute', left: 0, width: 257, top: 0, height: 114 }}
-            />
-            <ThemeImage
-                name="ecotronbox_card_preview"
-                src={srcEcotronboxCardPreview}
-                layout={{ position: 'absolute', left: 7, width: 39, top: 38, height: 39 }}
-            />
-            <ButtonThick
-                variant="0"
-                name="ecotronbox_card_btn_open"
-                onPointerTap={onEcotronboxCardBtnOpen}
-                layout={{ position: 'absolute', left: 47, width: 191, top: 90, height: 22 }}
             >
-                {t('widget.furni.ecotronbox.open')}
-            </ButtonThick>
-            <Button
-                variant="0"
-                name="ecotronbox_card_btn_close"
-                onPointerTap={onEcotronboxCardBtnClose}
-                layout={{ position: 'absolute', left: 200, width: 85, top: 90, height: 22 }}
-            >
-                {t('generic.close')}
-            </Button>
-            <Region
-                name="ecotronbox_card_msg"
-                layout={{ position: 'absolute', left: 49, width: 139, top: 39, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionEcotronboxCardMsg ?? t('widget.furni.ecotronbox.title')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 139 }}
+                <ThemeImage
+                    name="ecotronbox_card_bg"
+                    src={srcEcotronboxCardBg ?? '${image.library.url}Giftcards/ecotronbox_card_bg.png'}
+                    layout={{ position: 'absolute', left: 0, width: 257, top: 0, height: 114 }}
                 />
-            </Region>
-            <Region
-                name="ecotronbox_card_date"
-                layout={{ position: 'absolute', left: 12, width: 104, top: 9, height: 12, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionEcotronboxCardDate ?? ''}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 104 }}
+                <ThemeImage
+                    name="ecotronbox_card_preview"
+                    src={srcEcotronboxCardPreview}
+                    layout={{ position: 'absolute', left: 7, width: 39, top: 38, height: 39 }}
                 />
+                <ButtonThick
+                    variant="0"
+                    name="ecotronbox_card_btn_open"
+                    onPointerTap={onEcotronboxCardBtnOpen}
+                    layout={{ position: 'absolute', left: 47, width: 191, top: 90, height: 22 }}
+                >
+                    {t('widget.furni.ecotronbox.open')}
+                </ButtonThick>
+                <Button
+                    variant="0"
+                    name="ecotronbox_card_btn_close"
+                    onPointerTap={onEcotronboxCardBtnClose}
+                    layout={{ position: 'absolute', left: 200, width: 85, top: 90, height: 22 }}
+                >
+                    {t('generic.close')}
+                </Button>
+                <Region
+                    name="ecotronbox_card_msg"
+                    layout={{ position: 'absolute', left: 49, width: 139, top: 39, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionEcotronboxCardMsg ?? t('widget.furni.ecotronbox.title')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 139 }}
+                    />
+                </Region>
+                <Region
+                    name="ecotronbox_card_date"
+                    layout={{ position: 'absolute', left: 12, width: 104, top: 9, height: 12, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionEcotronboxCardDate ?? ''}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 104 }}
+                    />
+                </Region>
             </Region>
         </Region>
     );

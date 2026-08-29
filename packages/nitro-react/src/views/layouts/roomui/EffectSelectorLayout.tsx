@@ -4,12 +4,12 @@ import { BoxLayout, Frame, Region, ScrollArea, ThemeText } from '#base/theme';
 
 /** Generated from `994_effect_selector_xml` (layout "effect_selector", 280x270) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface EffectSelectorLayoutProps {
-    effectList?: EffectSelectorLayoutEffectListProps;
+    itemsEffectList?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const EffectSelectorLayout = ({ effectList, layout, onClose }: EffectSelectorLayoutProps) => {
+export const EffectSelectorLayout = ({ itemsEffectList, layout, onClose }: EffectSelectorLayoutProps) => {
     return (
         <Frame
             variant="3"
@@ -22,7 +22,19 @@ export const EffectSelectorLayout = ({ effectList, layout, onClose }: EffectSele
                 backgroundColor="#ffffff"
                 layout={{ position: 'absolute', left: 4, right: 20, top: 17, bottom: 38 }}
             />
-            <EffectSelectorLayoutEffectList {...effectList} />
+            <ScrollArea
+                orientation="vertical"
+                layout={{ position: 'absolute', left: 4, right: 20, top: 17, bottom: 38 }}
+            >
+                <Region
+                    name="effect_list"
+                    layout={{ flexDirection: 'column', width: '100%' }}
+                >
+                    {itemsEffectList ?? (
+                        <EffectSelectorLayout_0Item />
+                    )}
+                </Region>
+            </ScrollArea>
         </Frame>
     );
 };
@@ -44,29 +56,5 @@ export const EffectSelectorLayout_0Item = ({ caption_0, layout }: EffectSelector
                 textStyle="text-style-u-regular"
             />
         </Region>
-    );
-};
-
-/** Named region `effect_list` of EffectSelectorLayout - configured through the parent's `effectList` prop. */
-export interface EffectSelectorLayoutEffectListProps {
-    itemsEffectList?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const EffectSelectorLayoutEffectList = ({ itemsEffectList, layout }: EffectSelectorLayoutEffectListProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 4, right: 20, top: 17, bottom: 38, ...layout }}
-        >
-            <Region
-                name="effect_list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            >
-                {itemsEffectList ?? (
-                    <EffectSelectorLayout_0Item />
-                )}
-            </Region>
-        </ScrollArea>
     );
 };

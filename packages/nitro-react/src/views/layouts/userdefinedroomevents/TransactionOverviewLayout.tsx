@@ -8,11 +8,10 @@ export interface TransactionOverviewLayoutProps {
     footer?: TransactionOverviewLayoutFooterProps;
     header?: TransactionOverviewLayoutHeaderProps;
     layout?: BoxLayout;
-    middle?: TransactionOverviewLayoutMiddleProps;
     onClose?: () => void;
 }
 
-export const TransactionOverviewLayout = ({ footer, header, layout, middle, onClose }: TransactionOverviewLayoutProps) => {
+export const TransactionOverviewLayout = ({ footer, header, layout, onClose }: TransactionOverviewLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -24,7 +23,15 @@ export const TransactionOverviewLayout = ({ footer, header, layout, middle, onCl
             layout={{ width: 880, height: 391, ...layout }}
         >
             <TransactionOverviewLayoutHeader {...header} />
-            <TransactionOverviewLayoutMiddle {...middle} />
+            <Region
+                name="middle"
+                layout={{ position: 'absolute', left: 1, right: 1, top: 62, bottom: 95 }}
+            >
+                <Region
+                    name="table_view"
+                    layout={{ position: 'absolute', left: 13, right: 13, top: 0, bottom: 0 }}
+                />
+            </Region>
             <TransactionOverviewLayoutFooter {...footer} />
         </Frame>
     );
@@ -148,38 +155,17 @@ export const TransactionOverviewLayoutPairItem2 = ({ itemsPair, layout }: Transa
     );
 };
 
-/** Named region `key_value_pairs` of TransactionOverviewLayout - configured through the parent's `keyValuePairs` prop. */
-export interface TransactionOverviewLayoutKeyValuePairsProps {
-    itemsKeyValuePairs?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const TransactionOverviewLayoutKeyValuePairs = ({ itemsKeyValuePairs, layout }: TransactionOverviewLayoutKeyValuePairsProps) => {
-    return (
-        <Region
-            name="key_value_pairs"
-            layout={{ position: 'absolute', left: 15, width: 400, top: 13, height: 42, flexDirection: 'column', gap: 2, ...layout }}
-        >
-            {itemsKeyValuePairs ?? (
-                <>
-                    <TransactionOverviewLayoutPairItem />
-                    <TransactionOverviewLayoutPairItem2 />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Named region `header` of TransactionOverviewLayout - configured through the parent's `header` prop. */
 export interface TransactionOverviewLayoutHeaderProps {
     captionWarningText?: string;
-    keyValuePairs?: TransactionOverviewLayoutKeyValuePairsProps;
+    itemsKeyValuePairs?: ReactNode;
     layout?: BoxLayout;
     onRefreshBtn?: () => void;
     visibleSearchingIcon?: boolean;
+    visibleWarningText?: boolean;
 }
 
-export const TransactionOverviewLayoutHeader = ({ captionWarningText, keyValuePairs, layout, onRefreshBtn, visibleSearchingIcon }: TransactionOverviewLayoutHeaderProps) => {
+export const TransactionOverviewLayoutHeader = ({ captionWarningText, itemsKeyValuePairs, layout, onRefreshBtn, visibleSearchingIcon, visibleWarningText }: TransactionOverviewLayoutHeaderProps) => {
     const t = useTranslation();
 
     return (
@@ -187,17 +173,28 @@ export const TransactionOverviewLayoutHeader = ({ captionWarningText, keyValuePa
             name="header"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 62, ...layout }}
         >
+            {(visibleWarningText ?? false) && (
+                <Region
+                    name="warning_text"
+                    layout={{ position: 'absolute', left: 10, right: 9, top: 10, bottom: -6, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionWarningText ?? ''}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 861 }}
+                    />
+                </Region>
+            )}
             <Region
-                name="warning_text"
-                visible={false}
-                layout={{ position: 'absolute', left: 10, right: 9, top: 10, bottom: -6, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                name="key_value_pairs"
+                layout={{ position: 'absolute', left: 15, width: 400, top: 13, height: 42, flexDirection: 'column', gap: 2 }}
             >
-                <ThemeText
-                    text={captionWarningText ?? ''}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 861 }}
-                />
+                {itemsKeyValuePairs ?? (
+                    <>
+                        <TransactionOverviewLayoutPairItem />
+                        <TransactionOverviewLayoutPairItem2 />
+                    </>
+                )}
             </Region>
-            <TransactionOverviewLayoutKeyValuePairs {...keyValuePairs} />
             <Button
                 variant="3"
                 name="refresh_btn"
@@ -206,47 +203,13 @@ export const TransactionOverviewLayoutHeader = ({ captionWarningText, keyValuePa
             >
                 {t('wiredchests.logs.refresh')}
             </Button>
-            <Region
-                visible={visibleSearchingIcon ?? false}
-                layout={{ position: 'absolute', left: 777, width: 15, top: 20, height: 15 }}
-            >
+            {(visibleSearchingIcon ?? false) && (
                 <Icon
                     variant="23"
                     name="searching_icon"
-                    layout={{ width: '100%', height: '100%' }}
+                    layout={{ position: 'absolute', left: 777, width: 15, top: 20, height: 15 }}
                 />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `table_view` of TransactionOverviewLayout - configured through the parent's `tableView` prop. */
-export interface TransactionOverviewLayoutTableViewProps {
-    layout?: BoxLayout;
-}
-
-export const TransactionOverviewLayoutTableView = ({ layout }: TransactionOverviewLayoutTableViewProps) => {
-    return (
-        <Region
-            name="table_view"
-            layout={{ position: 'absolute', left: 13, right: 13, top: 0, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `middle` of TransactionOverviewLayout - configured through the parent's `middle` prop. */
-export interface TransactionOverviewLayoutMiddleProps {
-    layout?: BoxLayout;
-    tableView?: TransactionOverviewLayoutTableViewProps;
-}
-
-export const TransactionOverviewLayoutMiddle = ({ layout, tableView }: TransactionOverviewLayoutMiddleProps) => {
-    return (
-        <Region
-            name="middle"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 62, bottom: 95, ...layout }}
-        >
-            <TransactionOverviewLayoutTableView {...tableView} />
+            )}
         </Region>
     );
 };
@@ -302,28 +265,6 @@ export const TransactionOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn
     );
 };
 
-/** Named region `footer_buttons_left` of TransactionOverviewLayout - configured through the parent's `footerButtonsLeft` prop. */
-export interface TransactionOverviewLayoutFooterButtonsLeftProps {
-    itemsFooterButtonsLeft?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const TransactionOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout }: TransactionOverviewLayoutFooterButtonsLeftProps) => {
-    return (
-        <Region
-            name="footer_buttons_left"
-            layout={{ position: 'absolute', left: 17, width: 113, top: 0, height: 30, flexDirection: 'row', gap: 13, ...layout }}
-        >
-            {itemsFooterButtonsLeft ?? (
-                <>
-                    <TransactionOverviewLayoutFirstPageBtnItem />
-                    <TransactionOverviewLayoutPrevPageBtnItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Row template `next_page_btn` of TransactionOverviewLayout - pass real rows through its `items…` slot. */
 export interface TransactionOverviewLayoutNextPageBtnItemProps {
     layout?: BoxLayout;
@@ -375,38 +316,16 @@ export const TransactionOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn
     );
 };
 
-/** Named region `footer_buttons_right` of TransactionOverviewLayout - configured through the parent's `footerButtonsRight` prop. */
-export interface TransactionOverviewLayoutFooterButtonsRightProps {
-    itemsFooterButtonsRight?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const TransactionOverviewLayoutFooterButtonsRight = ({ itemsFooterButtonsRight, layout }: TransactionOverviewLayoutFooterButtonsRightProps) => {
-    return (
-        <Region
-            name="footer_buttons_right"
-            layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10, ...layout }}
-        >
-            {itemsFooterButtonsRight ?? (
-                <>
-                    <TransactionOverviewLayoutNextPageBtnItem />
-                    <TransactionOverviewLayoutLastPageBtnItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Named region `pagination` of TransactionOverviewLayout - configured through the parent's `pagination` prop. */
 export interface TransactionOverviewLayoutPaginationProps {
     captionPaginaTextEnd?: string;
     captionPaginaTextStart?: string;
-    footerButtonsLeft?: TransactionOverviewLayoutFooterButtonsLeftProps;
-    footerButtonsRight?: TransactionOverviewLayoutFooterButtonsRightProps;
+    itemsFooterButtonsLeft?: ReactNode;
+    itemsFooterButtonsRight?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const TransactionOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, footerButtonsLeft, footerButtonsRight, layout }: TransactionOverviewLayoutPaginationProps) => {
+export const TransactionOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, itemsFooterButtonsLeft, itemsFooterButtonsRight, layout }: TransactionOverviewLayoutPaginationProps) => {
     const [ paginaNumberInputValue, setPaginaNumberInputValue ] = useState('');
 
     return (
@@ -414,8 +333,28 @@ export const TransactionOverviewLayoutPagination = ({ captionPaginaTextEnd, capt
             name="pagination"
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 14, height: 30, justifyContent: 'center', ...layout }}
         >
-            <TransactionOverviewLayoutFooterButtonsLeft {...footerButtonsLeft} />
-            <TransactionOverviewLayoutFooterButtonsRight {...footerButtonsRight} />
+            <Region
+                name="footer_buttons_left"
+                layout={{ position: 'absolute', left: 17, width: 113, top: 0, height: 30, flexDirection: 'row', gap: 13 }}
+            >
+                {itemsFooterButtonsLeft ?? (
+                    <>
+                        <TransactionOverviewLayoutFirstPageBtnItem />
+                        <TransactionOverviewLayoutPrevPageBtnItem />
+                    </>
+                )}
+            </Region>
+            <Region
+                name="footer_buttons_right"
+                layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10 }}
+            >
+                {itemsFooterButtonsRight ?? (
+                    <>
+                        <TransactionOverviewLayoutNextPageBtnItem />
+                        <TransactionOverviewLayoutLastPageBtnItem />
+                    </>
+                )}
+            </Region>
             <Region layout={{ position: 'absolute', width: 256, top: 4, height: 25, flexDirection: 'row', gap: 2 }}>
                 <Region
                     name="pagina_text_start"

@@ -2,7 +2,7 @@ import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeText } from '#base/theme';
 import { ItemGridWidget, ItemGridWidgetProps } from '#base/views/layouts/catalog/widgets/ItemGridWidget';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
-import { SongDiskProductViewWidget2, SongDiskProductViewWidget2Props } from '#base/views/layouts/catalog/widgets/SongDiskProductViewWidget2';
+import { SongDiskProductViewWidget, SongDiskProductViewWidgetProps } from '#base/views/layouts/catalog/widgets/SongDiskProductViewWidget';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
 
 /** Generated from `1654_layout_soundmachine_xml` (layout "ctlg_soundmachine", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -25,7 +25,7 @@ export interface LayoutSoundmachine_1654LayoutCtlgSoundmachineProps {
     itemGridWidget?: ItemGridWidgetProps;
     layout?: BoxLayout;
     purchaseWidget?: PurchaseWidgetProps;
-    songDiskProductViewWidget?: SongDiskProductViewWidget2Props;
+    songDiskProductViewWidget?: SongDiskProductViewWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
 }
 
@@ -51,7 +51,7 @@ export const LayoutSoundmachine_1654LayoutCtlgSoundmachine = ({ captionCtlgSelec
                 layout={{ position: 'absolute', left: 5, width: 170, top: 150, height: 275 }}
                 {...itemGridWidget}
             />
-            <SongDiskProductViewWidget2
+            <SongDiskProductViewWidget
                 layout={{ position: 'absolute', left: 180, width: 175, top: 154, height: 274 }}
                 {...songDiskProductViewWidget}
             />

@@ -10,9 +10,10 @@ export interface RoomQueueLayoutProps {
     onChangeButton?: () => void;
     onClose?: () => void;
     visibleChangeButton?: boolean;
+    visibleSpectatorInfo?: boolean;
 }
 
-export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout, onCancelButton, onChangeButton, onClose, visibleChangeButton }: RoomQueueLayoutProps) => {
+export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout, onCancelButton, onChangeButton, onClose, visibleChangeButton, visibleSpectatorInfo }: RoomQueueLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -34,16 +35,17 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
                         textOptions={{ wordWrap: true, wordWrapWidth: 217, align: 'center' }}
                     />
                 </Region>
-                <Region
-                    name="spectator_info"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 21, width: 266, top: 68, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSpectatorInfo ?? t('room.queue.spectator.info')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 266 }}
-                    />
-                </Region>
+                {(visibleSpectatorInfo ?? false) && (
+                    <Region
+                        name="spectator_info"
+                        layout={{ position: 'absolute', left: 21, width: 266, top: 68, height: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionSpectatorInfo ?? t('room.queue.spectator.info')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 266 }}
+                        />
+                    </Region>
+                )}
                 <Button
                     variant="3"
                     name="cancel_button"
@@ -52,15 +54,16 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
                 >
                     {t('room.queue.button.exit')}
                 </Button>
-                <Button
-                    variant="3"
-                    name="change_button"
-                    onPointerTap={onChangeButton}
-                    visible={visibleChangeButton ?? false}
-                    layout={{ position: 'absolute', marginLeft: 41.5, marginRight: -41.5, width: 178, top: 140, height: 26 }}
-                >
-                    {t('room.queue.spectatormode')}
-                </Button>
+                {(visibleChangeButton ?? false) && (
+                    <Button
+                        variant="3"
+                        name="change_button"
+                        onPointerTap={onChangeButton}
+                        layout={{ position: 'absolute', marginLeft: 41.5, marginRight: -41.5, width: 178, top: 140, height: 26 }}
+                    >
+                        {t('room.queue.spectatormode')}
+                    </Button>
+                )}
             </Region>
         </Frame>
     );

@@ -4,17 +4,19 @@ import { Border, BoxLayout, Button, Region, ThemeImage, ThemeText } from '#base/
 /** Generated from `60_habbo_way_promo_xml` (layout "landing_view", 500x245) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface HabboWayPromoLayoutProps {
     captionCaptionTxt?: string;
+    captionCounterInfoTxt?: string;
+    captionCounterTxt?: string;
     captionInfoTxt?: string;
     captionInfoTxt2?: string;
     captionPsTitleTxt?: string;
-    col1?: HabboWayPromoLayoutCol1Props;
     layout?: BoxLayout;
     onGoButton?: () => void;
-    spacing?: HabboWayPromoLayoutSpacingProps;
     srcCounterBg?: string;
+    srcCounterBg2?: string;
+    srcTeaserImage?: string;
 }
 
-export const HabboWayPromoLayout = ({ captionCaptionTxt, captionInfoTxt, captionInfoTxt2, captionPsTitleTxt, col1, layout, onGoButton, spacing, srcCounterBg }: HabboWayPromoLayoutProps) => {
+export const HabboWayPromoLayout = ({ captionCaptionTxt, captionCounterInfoTxt, captionCounterTxt, captionInfoTxt, captionInfoTxt2, captionPsTitleTxt, layout, onGoButton, srcCounterBg, srcCounterBg2, srcTeaserImage }: HabboWayPromoLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -23,7 +25,41 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionInfoTxt, caption
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 245 }}
             >
-                <HabboWayPromoLayoutCol1 {...col1} />
+                <Region
+                    name="col1"
+                    backgroundColor="#000000"
+                    layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 245 }}
+                >
+                    <ThemeImage
+                        name="teaser_image"
+                        src={srcTeaserImage ?? '${image.library.url}reception/reception_widget_habboway.png'}
+                        layout={{ position: 'absolute', left: 0, width: 198, top: 0, height: 158 }}
+                    />
+                    <ThemeImage
+                        name="counter_bg"
+                        src={srcCounterBg ?? '${image.library.url}reception/reception_counter_bg.png'}
+                        layout={{ position: 'absolute', left: 35, width: 137, top: 178, height: 23 }}
+                    />
+                    <Region
+                        name="counter_info_txt"
+                        layout={{ position: 'absolute', left: 6, width: 201, top: 210, height: 14, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionCounterInfoTxt ?? t('landing.view.habbowaypromo.counterinfo')}
+                            textStyle="text-style-il-heading-3"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 201, align: 'center' }}
+                        />
+                    </Region>
+                    <Region
+                        name="counter_txt"
+                        layout={{ position: 'absolute', left: 38, width: 140, top: 180, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionCounterTxt ?? '00000000'}
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                </Region>
                 <Region layout={{ position: 'absolute', left: 230, width: 270, top: 0, height: 190, flexDirection: 'column' }}>
                     <Region
                         name="caption_txt"
@@ -34,7 +70,11 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionInfoTxt, caption
                             textStyle="text-style-il-heading-1"
                         />
                     </Region>
-                    <HabboWayPromoLayoutSpacing {...spacing} />
+                    <Region
+                        name="spacing"
+                        backgroundColor="#000000"
+                        layout={{ width: 250, height: 6, flexShrink: 0 }}
+                    />
                     <Region
                         name="info_txt"
                         layout={{ width: 270, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -68,7 +108,7 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionInfoTxt, caption
                     >
                         <ThemeImage
                             name="counter_bg"
-                            src={srcCounterBg ?? '${image.library.url}album1584/ACH_HabboWayGraduate1.png'}
+                            src={srcCounterBg2 ?? '${image.library.url}album1584/ACH_HabboWayGraduate1.png'}
                             layout={{ position: 'absolute', left: 16, width: 38, top: 17, height: 38 }}
                         />
                         <Region
@@ -84,71 +124,5 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionInfoTxt, caption
                 </Region>
             </Region>
         </Region>
-    );
-};
-
-/** Named region `col1` of HabboWayPromoLayout - configured through the parent's `col1` prop. */
-export interface HabboWayPromoLayoutCol1Props {
-    captionCounterInfoTxt?: string;
-    captionCounterTxt?: string;
-    layout?: BoxLayout;
-    srcCounterBg?: string;
-    srcTeaserImage?: string;
-}
-
-export const HabboWayPromoLayoutCol1 = ({ captionCounterInfoTxt, captionCounterTxt, layout, srcCounterBg, srcTeaserImage }: HabboWayPromoLayoutCol1Props) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="col1"
-            backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 245, ...layout }}
-        >
-            <ThemeImage
-                name="teaser_image"
-                src={srcTeaserImage ?? '${image.library.url}reception/reception_widget_habboway.png'}
-                layout={{ position: 'absolute', left: 0, width: 198, top: 0, height: 158 }}
-            />
-            <ThemeImage
-                name="counter_bg"
-                src={srcCounterBg ?? '${image.library.url}reception/reception_counter_bg.png'}
-                layout={{ position: 'absolute', left: 35, width: 137, top: 178, height: 23 }}
-            />
-            <Region
-                name="counter_info_txt"
-                layout={{ position: 'absolute', left: 6, width: 201, top: 210, height: 14, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionCounterInfoTxt ?? t('landing.view.habbowaypromo.counterinfo')}
-                    textStyle="text-style-il-heading-3"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 201, align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="counter_txt"
-                layout={{ position: 'absolute', left: 38, width: 140, top: 180, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCounterTxt ?? '00000000'}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `spacing` of HabboWayPromoLayout - configured through the parent's `spacing` prop. */
-export interface HabboWayPromoLayoutSpacingProps {
-    layout?: BoxLayout;
-}
-
-export const HabboWayPromoLayoutSpacing = ({ layout }: HabboWayPromoLayoutSpacingProps) => {
-    return (
-        <Region
-            name="spacing"
-            backgroundColor="#000000"
-            layout={{ width: 250, height: 6, flexShrink: 0, ...layout }}
-        />
     );
 };

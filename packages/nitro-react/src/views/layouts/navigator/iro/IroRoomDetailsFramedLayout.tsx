@@ -7,15 +7,22 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `2999_iro_room_details_framed_xml` (layout "roominfo", 236x411) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IroRoomDetailsFramedLayoutProps {
     buttonsCont?: IroRoomDetailsFramedLayoutButtonsContProps;
-    embedInfo?: IroRoomDetailsFramedLayoutEmbedInfoProps;
+    captionEmbedInfoTxt?: string;
+    captionPublicSpaceDesc?: string;
+    captionPublicSpaceName?: string;
     layout?: BoxLayout;
     onClose?: () => void;
-    publicSpaceDetails?: IroRoomDetailsFramedLayoutPublicSpaceDetailsProps;
+    onEmbedInfoRegion?: () => void;
+    onPublicSpaceDetails?: () => void;
     roomDetails?: IroRoomDetailsFramedLayoutRoomDetailsProps;
+    srcIconWeblink?: string;
+    visibleEmbedInfo?: boolean;
+    visiblePublicSpaceDetails?: boolean;
 }
 
-export const IroRoomDetailsFramedLayout = ({ buttonsCont, embedInfo, layout, onClose, publicSpaceDetails, roomDetails }: IroRoomDetailsFramedLayoutProps) => {
+export const IroRoomDetailsFramedLayout = ({ buttonsCont, captionEmbedInfoTxt, captionPublicSpaceDesc, captionPublicSpaceName, layout, onClose, onEmbedInfoRegion, onPublicSpaceDetails, roomDetails, srcIconWeblink, visibleEmbedInfo, visiblePublicSpaceDetails }: IroRoomDetailsFramedLayoutProps) => {
     const t = useTranslation();
+    const [ embedSrcTxtValue, setEmbedSrcTxtValue ] = useState('');
 
     return (
         <Frame
@@ -27,542 +34,178 @@ export const IroRoomDetailsFramedLayout = ({ buttonsCont, embedInfo, layout, onC
             onClose={onClose}
             layout={{ width: 236, height: 411, ...layout }}
         >
-            <IroRoomDetailsFramedLayoutEmbedInfo {...embedInfo} />
-            <IroRoomDetailsFramedLayoutPublicSpaceDetails {...publicSpaceDetails} />
+            {(visibleEmbedInfo ?? false) && (
+                <Region
+                    name="embed_info"
+                    layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 79 }}
+                >
+                    <ThemeImage
+                        name="icon_weblink"
+                        src={srcIconWeblink}
+                        layout={{ position: 'absolute', left: 11, width: 17, top: 5, height: 15 }}
+                    />
+                    <Region layout={{ position: 'absolute', left: 29, width: 143, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('navigator.embed.caption')}
+                            textStyle="text-style-u-regular"
+                        />
+                    </Region>
+                    <Region
+                        name="embed_info_txt"
+                        layout={{ position: 'absolute', left: 9, width: 216, top: 20, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionEmbedInfoTxt ?? t('navigator.embed.info')}
+                            textStyle="text-style-u-small"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 216 }}
+                        />
+                    </Region>
+                    <TextInput
+                        value={embedSrcTxtValue}
+                        onChange={setEmbedSrcTxtValue}
+                        layout={{ position: 'absolute', left: 11, width: 208, top: 57, height: 15 }}
+                    />
+                    <Region
+                        name="embed_info_region"
+                        onPointerTap={onEmbedInfoRegion}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 79 }}
+                    />
+                </Region>
+            )}
+            {(visiblePublicSpaceDetails ?? false) && (
+                <Region
+                    name="public_space_details"
+                    onPointerTap={onPublicSpaceDetails}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 100 }}
+                >
+                    <Region
+                        name="public_space_name"
+                        layout={{ position: 'absolute', left: 5, width: 220, top: 3, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionPublicSpaceName ?? 'Public space name placeholder Diipa Daapa Zaapa'}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
+                        />
+                    </Region>
+                    <Region
+                        name="public_space_desc"
+                        layout={{ position: 'absolute', left: 5, width: 220, top: 31, height: 53, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionPublicSpaceDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
+                        />
+                    </Region>
+                </Region>
+            )}
             <IroRoomDetailsFramedLayoutRoomDetails {...roomDetails} />
             <IroRoomDetailsFramedLayoutButtonsCont {...buttonsCont} />
         </Frame>
     );
 };
 
-/** Named region `embed_info_region` of IroRoomDetailsFramedLayout - configured through the parent's `embedInfoRegion` prop. */
-export interface IroRoomDetailsFramedLayoutEmbedInfoRegionProps {
-    layout?: BoxLayout;
-    onEmbedInfoRegion?: () => void;
-}
-
-export const IroRoomDetailsFramedLayoutEmbedInfoRegion = ({ layout, onEmbedInfoRegion }: IroRoomDetailsFramedLayoutEmbedInfoRegionProps) => {
-    return (
-        <Region
-            name="embed_info_region"
-            onPointerTap={onEmbedInfoRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 79, ...layout }}
-        />
-    );
-};
-
-/** Named region `embed_info` of IroRoomDetailsFramedLayout - configured through the parent's `embedInfo` prop. */
-export interface IroRoomDetailsFramedLayoutEmbedInfoProps {
-    captionEmbedInfoTxt?: string;
-    embedInfoRegion?: IroRoomDetailsFramedLayoutEmbedInfoRegionProps;
-    layout?: BoxLayout;
-    srcIconWeblink?: string;
-    visibleEmbedInfo?: boolean;
-}
-
-export const IroRoomDetailsFramedLayoutEmbedInfo = ({ captionEmbedInfoTxt, embedInfoRegion, layout, srcIconWeblink, visibleEmbedInfo }: IroRoomDetailsFramedLayoutEmbedInfoProps) => {
-    const t = useTranslation();
-    const [ embedSrcTxtValue, setEmbedSrcTxtValue ] = useState('');
-
-    return (
-        <Region
-            name="embed_info"
-            visible={visibleEmbedInfo ?? false}
-            layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 79, ...layout }}
-        >
-            <ThemeImage
-                name="icon_weblink"
-                src={srcIconWeblink}
-                layout={{ position: 'absolute', left: 11, width: 17, top: 5, height: 15 }}
-            />
-            <Region layout={{ position: 'absolute', left: 29, width: 143, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('navigator.embed.caption')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <Region
-                name="embed_info_txt"
-                layout={{ position: 'absolute', left: 9, width: 216, top: 20, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionEmbedInfoTxt ?? t('navigator.embed.info')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 216 }}
-                />
-            </Region>
-            <TextInput
-                value={embedSrcTxtValue}
-                onChange={setEmbedSrcTxtValue}
-                layout={{ position: 'absolute', left: 11, width: 208, top: 57, height: 15 }}
-            />
-            <IroRoomDetailsFramedLayoutEmbedInfoRegion {...embedInfoRegion} />
-        </Region>
-    );
-};
-
-/** Named region `public_space_details` of IroRoomDetailsFramedLayout - configured through the parent's `publicSpaceDetails` prop. */
-export interface IroRoomDetailsFramedLayoutPublicSpaceDetailsProps {
-    captionPublicSpaceDesc?: string;
-    captionPublicSpaceName?: string;
-    layout?: BoxLayout;
-    onPublicSpaceDetails?: () => void;
-    visiblePublicSpaceDetails?: boolean;
-}
-
-export const IroRoomDetailsFramedLayoutPublicSpaceDetails = ({ captionPublicSpaceDesc, captionPublicSpaceName, layout, onPublicSpaceDetails, visiblePublicSpaceDetails }: IroRoomDetailsFramedLayoutPublicSpaceDetailsProps) => {
-    return (
-        <Region
-            name="public_space_details"
-            visible={visiblePublicSpaceDetails ?? false}
-            onPointerTap={onPublicSpaceDetails}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 100, ...layout }}
-        >
-            <Region
-                name="public_space_name"
-                layout={{ position: 'absolute', left: 5, width: 220, top: 3, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPublicSpaceName ?? 'Public space name placeholder Diipa Daapa Zaapa'}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                />
-            </Region>
-            <Region
-                name="public_space_desc"
-                layout={{ position: 'absolute', left: 5, width: 220, top: 31, height: 53, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPublicSpaceDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `remove_rights_region` of IroRoomDetailsFramedLayout - configured through the parent's `removeRightsRegion` prop. */
-export interface IroRoomDetailsFramedLayoutRemoveRightsRegionProps {
-    layout?: BoxLayout;
-    onRemoveRightsRegion?: () => void;
-    srcRemoveRights?: string;
-}
-
-export const IroRoomDetailsFramedLayoutRemoveRightsRegion = ({ layout, onRemoveRightsRegion, srcRemoveRights }: IroRoomDetailsFramedLayoutRemoveRightsRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="remove_rights_region"
-            tooltip={t('navigator.roominfo.removerights.tooltip')}
-            onPointerTap={onRemoveRightsRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 49, width: 18, top: 1, height: 22, ...layout }}
-        >
-            <ThemeImage
-                name="remove_rights"
-                src={srcRemoveRights}
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 22 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `make_home_region` of IroRoomDetailsFramedLayout - configured through the parent's `makeHomeRegion` prop. */
-export interface IroRoomDetailsFramedLayoutMakeHomeRegionProps {
-    layout?: BoxLayout;
-    onMakeHomeRegion?: () => void;
-    srcMakeHome?: string;
-}
-
-export const IroRoomDetailsFramedLayoutMakeHomeRegion = ({ layout, onMakeHomeRegion, srcMakeHome }: IroRoomDetailsFramedLayoutMakeHomeRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="make_home_region"
-            tooltip={t('navigator.roominfo.makehome.tooltip')}
-            onPointerTap={onMakeHomeRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 27, width: 18, top: 1, height: 16, ...layout }}
-        >
-            <ThemeImage
-                name="make_home"
-                src={srcMakeHome}
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `favourite_region` of IroRoomDetailsFramedLayout - configured through the parent's `favouriteRegion` prop. */
-export interface IroRoomDetailsFramedLayoutFavouriteRegionProps {
-    layout?: BoxLayout;
-    onFavouriteRegion?: () => void;
-    srcFavourite?: string;
-}
-
-export const IroRoomDetailsFramedLayoutFavouriteRegion = ({ layout, onFavouriteRegion, srcFavourite }: IroRoomDetailsFramedLayoutFavouriteRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="favourite_region"
-            tooltip={t('navigator.favourite.tooltip')}
-            onPointerTap={onFavouriteRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 6, width: 18, top: 1, height: 16, ...layout }}
-        >
-            <ThemeImage
-                name="favourite"
-                src={srcFavourite}
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `make_favourite_region` of IroRoomDetailsFramedLayout - configured through the parent's `makeFavouriteRegion` prop. */
-export interface IroRoomDetailsFramedLayoutMakeFavouriteRegionProps {
-    layout?: BoxLayout;
-    onMakeFavouriteRegion?: () => void;
-    srcMakeFavourite?: string;
-}
-
-export const IroRoomDetailsFramedLayoutMakeFavouriteRegion = ({ layout, onMakeFavouriteRegion, srcMakeFavourite }: IroRoomDetailsFramedLayoutMakeFavouriteRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="make_favourite_region"
-            tooltip={t('navigator.makefavourite.tooltip')}
-            onPointerTap={onMakeFavouriteRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 6, width: 18, top: 1, height: 16, ...layout }}
-        >
-            <ThemeImage
-                name="make_favourite"
-                src={srcMakeFavourite}
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `user_info_region` of IroRoomDetailsFramedLayout - configured through the parent's `userInfoRegion` prop. */
-export interface IroRoomDetailsFramedLayoutUserInfoRegionProps {
-    layout?: BoxLayout;
-}
-
-export const IroRoomDetailsFramedLayoutUserInfoRegion = ({ layout }: IroRoomDetailsFramedLayoutUserInfoRegionProps) => {
-    return (
-        <Region
-            name="user_info_region"
-            layout={{ position: 'absolute', left: 50, width: 15, top: 0, height: 15, ...layout }}
-        >
-            <Icon
-                variant="21"
-                name="icon_eye_off"
-                layout={{ position: 'absolute', left: 0, width: 15, top: 4, height: 11 }}
-            />
-            <Icon
-                variant="22"
-                name="icon_eye_over"
-                layout={{ position: 'absolute', left: 0, width: 15, top: 4, height: 11 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `owner_name_cont` of IroRoomDetailsFramedLayout - configured through the parent's `ownerNameCont` prop. */
-export interface IroRoomDetailsFramedLayoutOwnerNameContProps {
-    captionOwnerCaption?: string;
-    captionOwnerName?: string;
-    layout?: BoxLayout;
-    onOwnerNameCont?: () => void;
-    userInfoRegion?: IroRoomDetailsFramedLayoutUserInfoRegionProps;
-}
-
-export const IroRoomDetailsFramedLayoutOwnerNameCont = ({ captionOwnerCaption, captionOwnerName, layout, onOwnerNameCont, userInfoRegion }: IroRoomDetailsFramedLayoutOwnerNameContProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="owner_name_cont"
-            tooltip={t('infostand.profile.link.tooltip')}
-            onPointerTap={onOwnerNameCont}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 230, top: 34, height: 16, ...layout }}
-        >
-            <Region
-                name="owner_caption"
-                layout={{ position: 'absolute', left: 5, width: 168, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionOwnerCaption ?? t('navigator.roomownercaption')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#777777' }}
-                />
-            </Region>
-            <IroRoomDetailsFramedLayoutUserInfoRegion {...userInfoRegion} />
-            <Region
-                name="owner_name"
-                layout={{ position: 'absolute', left: 67, width: 97, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionOwnerName ?? 'PH Owner Name'}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `tags` of IroRoomDetailsFramedLayout - configured through the parent's `tags` prop. */
-export interface IroRoomDetailsFramedLayoutTagsProps {
-    layout?: BoxLayout;
-    onTags?: () => void;
-}
-
-export const IroRoomDetailsFramedLayoutTags = ({ layout, onTags }: IroRoomDetailsFramedLayoutTagsProps) => {
-    return (
-        <Region
-            name="tags"
-            onPointerTap={onTags}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 5, width: 220, top: 37, height: 100, ...layout }}
-        />
-    );
-};
-
-/** Named region `rating_region` of IroRoomDetailsFramedLayout - configured through the parent's `ratingRegion` prop. */
-export interface IroRoomDetailsFramedLayoutRatingRegionProps {
-    layout?: BoxLayout;
-    onRatingRegion?: () => void;
-    srcThumbUp?: string;
-}
-
-export const IroRoomDetailsFramedLayoutRatingRegion = ({ layout, onRatingRegion, srcThumbUp }: IroRoomDetailsFramedLayoutRatingRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="rating_region"
-            tooltip={t('navigator.rateroom')}
-            onPointerTap={onRatingRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 202, width: 18, top: 0, height: 16, ...layout }}
-        >
-            <ThemeImage
-                name="thumb_up"
-                src={srcThumbUp}
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `rating_cont` of IroRoomDetailsFramedLayout - configured through the parent's `ratingCont` prop. */
-export interface IroRoomDetailsFramedLayoutRatingContProps {
-    captionRatingCaption?: string;
-    captionRatingTxt?: string;
-    layout?: BoxLayout;
-    onRatingCont?: () => void;
-    ratingRegion?: IroRoomDetailsFramedLayoutRatingRegionProps;
-}
-
-export const IroRoomDetailsFramedLayoutRatingCont = ({ captionRatingCaption, captionRatingTxt, layout, onRatingCont, ratingRegion }: IroRoomDetailsFramedLayoutRatingContProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="rating_cont"
-            onPointerTap={onRatingCont}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 5, width: 220, top: 110, height: 16, ...layout }}
-        >
-            <IroRoomDetailsFramedLayoutRatingRegion {...ratingRegion} />
-            <Region
-                name="rating_caption"
-                layout={{ position: 'absolute', left: 0, width: 124, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRatingCaption ?? t('navigator.roomrating')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#777777' }}
-                />
-            </Region>
-            <Region
-                name="rating_txt"
-                layout={{ position: 'absolute', left: 70, width: 43, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRatingTxt ?? 'PH 123'}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `ranking_cont` of IroRoomDetailsFramedLayout - configured through the parent's `rankingCont` prop. */
-export interface IroRoomDetailsFramedLayoutRankingContProps {
-    captionRankingCaption?: string;
-    captionRankingTxt?: string;
-    layout?: BoxLayout;
-    onRankingCont?: () => void;
-}
-
-export const IroRoomDetailsFramedLayoutRankingCont = ({ captionRankingCaption, captionRankingTxt, layout, onRankingCont }: IroRoomDetailsFramedLayoutRankingContProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="ranking_cont"
-            onPointerTap={onRankingCont}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 5, width: 220, top: 125, height: 16, ...layout }}
-        >
-            <Region
-                name="ranking_caption"
-                layout={{ position: 'absolute', left: 0, width: 134, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRankingCaption ?? t('navigator.roomranking')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#777777' }}
-                />
-            </Region>
-            <Region
-                name="ranking_txt"
-                layout={{ position: 'absolute', left: 70, width: 43, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRankingTxt ?? 'PH 123'}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `padding_cont` of IroRoomDetailsFramedLayout - configured through the parent's `paddingCont` prop. */
-export interface IroRoomDetailsFramedLayoutPaddingContProps {
-    layout?: BoxLayout;
-}
-
-export const IroRoomDetailsFramedLayoutPaddingCont = ({ layout }: IroRoomDetailsFramedLayoutPaddingContProps) => {
-    return (
-        <Region
-            name="padding_cont"
-            layout={{ position: 'absolute', left: 5, width: 220, top: 185, height: 10, ...layout }}
-        />
-    );
-};
-
-/** Named region `thumbnail_edges` of IroRoomDetailsFramedLayout - configured through the parent's `thumbnailEdges` prop. */
-export interface IroRoomDetailsFramedLayoutThumbnailEdgesProps {
-    layout?: BoxLayout;
-    srcThumbnailImage?: string;
-}
-
-export const IroRoomDetailsFramedLayoutThumbnailEdges = ({ layout, srcThumbnailImage }: IroRoomDetailsFramedLayoutThumbnailEdgesProps) => {
-    return (
-        <Region
-            name="thumbnail_edges"
-            backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 57, width: 112, top: 1, height: 112, ...layout }}
-        >
-            <ThemeImage
-                name="thumbnail_image"
-                src={srcThumbnailImage ?? layoutImage('newnavigator_default_room.png')}
-                layout={{ position: 'absolute', left: 1, width: 110, top: 1, height: 110 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `add_thumbnail_region` of IroRoomDetailsFramedLayout - configured through the parent's `addThumbnailRegion` prop. */
-export interface IroRoomDetailsFramedLayoutAddThumbnailRegionProps {
-    layout?: BoxLayout;
-    onAddThumbnailRegion?: () => void;
-}
-
-export const IroRoomDetailsFramedLayoutAddThumbnailRegion = ({ layout, onAddThumbnailRegion }: IroRoomDetailsFramedLayoutAddThumbnailRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="add_thumbnail_region"
-            tooltip={t('tooltip.navigator.room.info.add.thumbnail')}
-            onPointerTap={onAddThumbnailRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 144, width: 24, top: 89, height: 26, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('roomtools_camera.png')}
-                layout={{ position: 'absolute', left: 0, width: 26, top: 0, height: 26 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `thumbnail_container` of IroRoomDetailsFramedLayout - configured through the parent's `thumbnailContainer` prop. */
-export interface IroRoomDetailsFramedLayoutThumbnailContainerProps {
-    addThumbnailRegion?: IroRoomDetailsFramedLayoutAddThumbnailRegionProps;
-    layout?: BoxLayout;
-    thumbnailEdges?: IroRoomDetailsFramedLayoutThumbnailEdgesProps;
-}
-
-export const IroRoomDetailsFramedLayoutThumbnailContainer = ({ addThumbnailRegion, layout, thumbnailEdges }: IroRoomDetailsFramedLayoutThumbnailContainerProps) => {
-    return (
-        <Region
-            name="thumbnail_container"
-            layout={{ position: 'absolute', left: 1, width: 227, top: 140, height: 114, ...layout }}
-        >
-            <IroRoomDetailsFramedLayoutThumbnailEdges {...thumbnailEdges} />
-            <IroRoomDetailsFramedLayoutAddThumbnailRegion {...addThumbnailRegion} />
-        </Region>
-    );
-};
-
 /** Named region `room_details` of IroRoomDetailsFramedLayout - configured through the parent's `roomDetails` prop. */
 export interface IroRoomDetailsFramedLayoutRoomDetailsProps {
+    captionOwnerCaption?: string;
+    captionOwnerName?: string;
+    captionRankingCaption?: string;
+    captionRankingTxt?: string;
+    captionRatingCaption?: string;
+    captionRatingTxt?: string;
     captionRoomDesc?: string;
     captionRoomName?: string;
-    favouriteRegion?: IroRoomDetailsFramedLayoutFavouriteRegionProps;
     layout?: BoxLayout;
-    makeFavouriteRegion?: IroRoomDetailsFramedLayoutMakeFavouriteRegionProps;
-    makeHomeRegion?: IroRoomDetailsFramedLayoutMakeHomeRegionProps;
-    ownerNameCont?: IroRoomDetailsFramedLayoutOwnerNameContProps;
-    paddingCont?: IroRoomDetailsFramedLayoutPaddingContProps;
-    rankingCont?: IroRoomDetailsFramedLayoutRankingContProps;
-    ratingCont?: IroRoomDetailsFramedLayoutRatingContProps;
-    removeRightsRegion?: IroRoomDetailsFramedLayoutRemoveRightsRegionProps;
+    onAddThumbnailRegion?: () => void;
+    onFavouriteRegion?: () => void;
+    onMakeFavouriteRegion?: () => void;
+    onMakeHomeRegion?: () => void;
+    onOwnerNameCont?: () => void;
+    onRankingCont?: () => void;
+    onRatingCont?: () => void;
+    onRatingRegion?: () => void;
+    onRemoveRightsRegion?: () => void;
+    onTags?: () => void;
+    srcFavourite?: string;
     srcHome?: string;
-    tags?: IroRoomDetailsFramedLayoutTagsProps;
-    thumbnailContainer?: IroRoomDetailsFramedLayoutThumbnailContainerProps;
+    srcMakeFavourite?: string;
+    srcMakeHome?: string;
+    srcRemoveRights?: string;
+    srcThumbnailImage?: string;
+    srcThumbUp?: string;
+    visibleHome?: boolean;
 }
 
-export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionRoomDesc, captionRoomName, favouriteRegion, layout, makeFavouriteRegion, makeHomeRegion, ownerNameCont, paddingCont, rankingCont, ratingCont, removeRightsRegion, srcHome, tags, thumbnailContainer }: IroRoomDetailsFramedLayoutRoomDetailsProps) => {
+export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionOwnerCaption, captionOwnerName, captionRankingCaption, captionRankingTxt, captionRatingCaption, captionRatingTxt, captionRoomDesc, captionRoomName, layout, onAddThumbnailRegion, onFavouriteRegion, onMakeFavouriteRegion, onMakeHomeRegion, onOwnerNameCont, onRankingCont, onRatingCont, onRatingRegion, onRemoveRightsRegion, onTags, srcFavourite, srcHome, srcMakeFavourite, srcMakeHome, srcRemoveRights, srcThumbnailImage, srcThumbUp, visibleHome }: IroRoomDetailsFramedLayoutRoomDetailsProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="room_details"
             layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 256, ...layout }}
         >
-            <IroRoomDetailsFramedLayoutRemoveRightsRegion {...removeRightsRegion} />
-            <IroRoomDetailsFramedLayoutMakeHomeRegion {...makeHomeRegion} />
-            <ThemeImage
-                name="home"
-                src={srcHome}
-                layout={{ position: 'absolute', left: 185, width: 18, top: 1, height: 18 }}
-                visible={false}
-            />
-            <IroRoomDetailsFramedLayoutFavouriteRegion {...favouriteRegion} />
-            <IroRoomDetailsFramedLayoutMakeFavouriteRegion {...makeFavouriteRegion} />
+            <Region
+                name="remove_rights_region"
+                tooltip={t('navigator.roominfo.removerights.tooltip')}
+                onPointerTap={onRemoveRightsRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 49, width: 18, top: 1, height: 22 }}
+            >
+                <ThemeImage
+                    name="remove_rights"
+                    src={srcRemoveRights}
+                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 22 }}
+                />
+            </Region>
+            <Region
+                name="make_home_region"
+                tooltip={t('navigator.roominfo.makehome.tooltip')}
+                onPointerTap={onMakeHomeRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 27, width: 18, top: 1, height: 16 }}
+            >
+                <ThemeImage
+                    name="make_home"
+                    src={srcMakeHome}
+                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
+                />
+            </Region>
+            {(visibleHome ?? false) && (
+                <ThemeImage
+                    name="home"
+                    src={srcHome}
+                    layout={{ position: 'absolute', left: 185, width: 18, top: 1, height: 18 }}
+                />
+            )}
+            <Region
+                name="favourite_region"
+                tooltip={t('navigator.favourite.tooltip')}
+                onPointerTap={onFavouriteRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 6, width: 18, top: 1, height: 16 }}
+            >
+                <ThemeImage
+                    name="favourite"
+                    src={srcFavourite}
+                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
+                />
+            </Region>
+            <Region
+                name="make_favourite_region"
+                tooltip={t('navigator.makefavourite.tooltip')}
+                onPointerTap={onMakeFavouriteRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 6, width: 18, top: 1, height: 16 }}
+            >
+                <ThemeImage
+                    name="make_favourite"
+                    src={srcMakeFavourite}
+                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
+                />
+            </Region>
             <Region
                 name="room_name"
                 layout={{ position: 'absolute', left: 5, width: 153, top: 3, height: 31, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -573,8 +216,54 @@ export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionRoomDesc, caption
                     textOptions={{ wordWrap: true, wordWrapWidth: 153 }}
                 />
             </Region>
-            <IroRoomDetailsFramedLayoutOwnerNameCont {...ownerNameCont} />
-            <IroRoomDetailsFramedLayoutTags {...tags} />
+            <Region
+                name="owner_name_cont"
+                tooltip={t('infostand.profile.link.tooltip')}
+                onPointerTap={onOwnerNameCont}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 230, top: 34, height: 16 }}
+            >
+                <Region
+                    name="owner_caption"
+                    layout={{ position: 'absolute', left: 5, width: 168, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionOwnerCaption ?? t('navigator.roomownercaption')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#777777' }}
+                    />
+                </Region>
+                <Region
+                    name="user_info_region"
+                    layout={{ position: 'absolute', left: 50, width: 15, top: 0, height: 15 }}
+                >
+                    <Icon
+                        variant="21"
+                        name="icon_eye_off"
+                        layout={{ position: 'absolute', left: 0, width: 15, top: 4, height: 11 }}
+                    />
+                    <Icon
+                        variant="22"
+                        name="icon_eye_over"
+                        layout={{ position: 'absolute', left: 0, width: 15, top: 4, height: 11 }}
+                    />
+                </Region>
+                <Region
+                    name="owner_name"
+                    layout={{ position: 'absolute', left: 67, width: 97, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionOwnerName ?? 'PH Owner Name'}
+                        textStyle="text-style-u-regular"
+                    />
+                </Region>
+            </Region>
+            <Region
+                name="tags"
+                onPointerTap={onTags}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 5, width: 220, top: 37, height: 100 }}
+            />
             <Region
                 name="room_desc"
                 layout={{ position: 'absolute', left: 5, width: 220, top: 52, height: 82, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -585,10 +274,103 @@ export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionRoomDesc, caption
                     textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
                 />
             </Region>
-            <IroRoomDetailsFramedLayoutRatingCont {...ratingCont} />
-            <IroRoomDetailsFramedLayoutRankingCont {...rankingCont} />
-            <IroRoomDetailsFramedLayoutPaddingCont {...paddingCont} />
-            <IroRoomDetailsFramedLayoutThumbnailContainer {...thumbnailContainer} />
+            <Region
+                name="rating_cont"
+                onPointerTap={onRatingCont}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 5, width: 220, top: 110, height: 16 }}
+            >
+                <Region
+                    name="rating_region"
+                    tooltip={t('navigator.rateroom')}
+                    onPointerTap={onRatingRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', right: 202, width: 18, top: 0, height: 16 }}
+                >
+                    <ThemeImage
+                        name="thumb_up"
+                        src={srcThumbUp}
+                        layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
+                    />
+                </Region>
+                <Region
+                    name="rating_caption"
+                    layout={{ position: 'absolute', left: 0, width: 124, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionRatingCaption ?? t('navigator.roomrating')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#777777' }}
+                    />
+                </Region>
+                <Region
+                    name="rating_txt"
+                    layout={{ position: 'absolute', left: 70, width: 43, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionRatingTxt ?? 'PH 123'}
+                        textStyle="text-style-u-regular"
+                    />
+                </Region>
+            </Region>
+            <Region
+                name="ranking_cont"
+                onPointerTap={onRankingCont}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 5, width: 220, top: 125, height: 16 }}
+            >
+                <Region
+                    name="ranking_caption"
+                    layout={{ position: 'absolute', left: 0, width: 134, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionRankingCaption ?? t('navigator.roomranking')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#777777' }}
+                    />
+                </Region>
+                <Region
+                    name="ranking_txt"
+                    layout={{ position: 'absolute', left: 70, width: 43, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionRankingTxt ?? 'PH 123'}
+                        textStyle="text-style-u-regular"
+                    />
+                </Region>
+            </Region>
+            <Region
+                name="padding_cont"
+                layout={{ position: 'absolute', left: 5, width: 220, top: 185, height: 10 }}
+            />
+            <Region
+                name="thumbnail_container"
+                layout={{ position: 'absolute', left: 1, width: 227, top: 140, height: 114 }}
+            >
+                <Region
+                    name="thumbnail_edges"
+                    backgroundColor="#000000"
+                    layout={{ position: 'absolute', left: 57, width: 112, top: 1, height: 112 }}
+                >
+                    <ThemeImage
+                        name="thumbnail_image"
+                        src={srcThumbnailImage ?? layoutImage('newnavigator_default_room.png')}
+                        layout={{ position: 'absolute', left: 1, width: 110, top: 1, height: 110 }}
+                    />
+                </Region>
+                <Region
+                    name="add_thumbnail_region"
+                    tooltip={t('tooltip.navigator.room.info.add.thumbnail')}
+                    onPointerTap={onAddThumbnailRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 144, width: 24, top: 89, height: 26 }}
+                >
+                    <ThemeImage
+                        src={layoutImage('roomtools_camera.png')}
+                        layout={{ position: 'absolute', left: 0, width: 26, top: 0, height: 26 }}
+                    />
+                </Region>
+            </Region>
         </Region>
     );
 };

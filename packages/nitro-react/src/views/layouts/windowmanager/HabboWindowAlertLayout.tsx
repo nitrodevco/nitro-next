@@ -4,13 +4,13 @@ import { BoxLayout, Button, ButtonThick, Frame, Region, ThemeText } from '#base/
 
 /** Generated from `2424_habbo_window_alert_xml` (layout "habbo_window_alert", 278x141) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface HabboWindowAlertLayoutProps {
-    alertButtonList?: HabboWindowAlertLayoutAlertButtonListProps;
     captionAlertSummary?: string;
+    itemsAlertButtonList?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const HabboWindowAlertLayout = ({ alertButtonList, captionAlertSummary, layout, onClose }: HabboWindowAlertLayoutProps) => {
+export const HabboWindowAlertLayout = ({ captionAlertSummary, itemsAlertButtonList, layout, onClose }: HabboWindowAlertLayoutProps) => {
     return (
         <Frame
             variant="3"
@@ -32,7 +32,18 @@ export const HabboWindowAlertLayout = ({ alertButtonList, captionAlertSummary, l
                         textOptions={{ wordWrap: true, wordWrapWidth: 210 }}
                     />
                 </Region>
-                <HabboWindowAlertLayoutAlertButtonList {...alertButtonList} />
+                <Region
+                    name="_alert_button_list"
+                    layout={{ position: 'absolute', marginLeft: -5.5, marginRight: 5.5, width: 215, bottom: 36, height: 24, minHeight: 22, flexDirection: 'row', gap: 32 }}
+                >
+                    {itemsAlertButtonList ?? (
+                        <>
+                            <HabboWindowAlertLayoutAlertButtonCancelItem />
+                            <HabboWindowAlertLayoutAlertButtonCustomItem />
+                            <HabboWindowAlertLayoutAlertButtonOkItem />
+                        </>
+                    )}
+                </Region>
             </Region>
         </Frame>
     );
@@ -97,28 +108,5 @@ export const HabboWindowAlertLayoutAlertButtonOkItem = ({ layout, onAlertButtonO
         >
             Ok
         </ButtonThick>
-    );
-};
-
-/** Named region `_alert_button_list` of HabboWindowAlertLayout - configured through the parent's `alertButtonList` prop. */
-export interface HabboWindowAlertLayoutAlertButtonListProps {
-    itemsAlertButtonList?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const HabboWindowAlertLayoutAlertButtonList = ({ itemsAlertButtonList, layout }: HabboWindowAlertLayoutAlertButtonListProps) => {
-    return (
-        <Region
-            name="_alert_button_list"
-            layout={{ position: 'absolute', marginLeft: -5.5, marginRight: 5.5, width: 215, bottom: 36, height: 24, minHeight: 22, flexDirection: 'row', gap: 32, ...layout }}
-        >
-            {itemsAlertButtonList ?? (
-                <>
-                    <HabboWindowAlertLayoutAlertButtonCancelItem />
-                    <HabboWindowAlertLayoutAlertButtonCustomItem />
-                    <HabboWindowAlertLayoutAlertButtonOkItem />
-                </>
-            )}
-        </Region>
     );
 };

@@ -120,88 +120,19 @@ export const RoomSettingsLayoutTagCategoryContainer = ({ captionCategoryLabel, c
     );
 };
 
-/** Named region `advanced_container` of RoomSettingsLayout - configured through the parent's `advancedContainer` prop. */
-export interface RoomSettingsLayoutAdvancedContainerProps {
+/** Row template `tab_container_1` of RoomSettingsLayout - pass real rows through its `items…` slot. */
+export interface RoomSettingsLayoutTabContainer1ItemProps {
+    captionDescriptionLabel?: string;
+    captionRemoveLink?: string;
+    captionRoomNameLabel?: string;
     captionWalkThroughText?: string;
     layout?: BoxLayout;
     onAllowWalkThroughCheckbox?: () => void;
-}
-
-export const RoomSettingsLayoutAdvancedContainer = ({ captionWalkThroughText, layout, onAllowWalkThroughCheckbox }: RoomSettingsLayoutAdvancedContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="advanced_container"
-            layout={{ position: 'absolute', left: 0, width: 216, top: 239, height: 82, ...layout }}
-        >
-            <CheckBox
-                variant="0"
-                name="allow_walk_through_checkbox"
-                onPointerTap={onAllowWalkThroughCheckbox}
-                layout={{ position: 'absolute', left: 2, width: 20, top: 59, height: 20 }}
-            />
-            <Region
-                name="walk_through_text"
-                layout={{ position: 'absolute', left: 18, width: 249, top: 58, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionWalkThroughText ?? t('navigator.roomsettings.allow_walk_through')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `remove_link_region` of RoomSettingsLayout - configured through the parent's `removeLinkRegion` prop. */
-export interface RoomSettingsLayoutRemoveLinkRegionProps {
-    captionRemoveLink?: string;
-    layout?: BoxLayout;
     onRemoveLinkRegion?: () => void;
-}
-
-export const RoomSettingsLayoutRemoveLinkRegion = ({ captionRemoveLink, layout, onRemoveLinkRegion }: RoomSettingsLayoutRemoveLinkRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="remove_link_region"
-            onPointerTap={onRemoveLinkRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', width: 189, top: 334, height: 22, ...layout }}
-        >
-            <Region
-                name="remove_link"
-                layout={{ position: 'absolute', left: 15, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRemoveLink ?? t('navigator.roomsettings.delete')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#bb2200' }}
-                />
-            </Region>
-            <Icon
-                variant="9"
-                name="remove_icon"
-                tintColor="#bb2200"
-                layout={{ position: 'absolute', left: 0, width: 20, top: 2, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Row template `tab_container_1` of RoomSettingsLayout - pass real rows through its `items…` slot. */
-export interface RoomSettingsLayoutTabContainer1ItemProps {
-    advancedContainer?: RoomSettingsLayoutAdvancedContainerProps;
-    captionDescriptionLabel?: string;
-    captionRoomNameLabel?: string;
-    layout?: BoxLayout;
-    removeLinkRegion?: RoomSettingsLayoutRemoveLinkRegionProps;
     tagCategoryContainer?: RoomSettingsLayoutTagCategoryContainerProps;
 }
 
-export const RoomSettingsLayoutTabContainer1Item = ({ advancedContainer, captionDescriptionLabel, captionRoomNameLabel, layout, removeLinkRegion, tagCategoryContainer }: RoomSettingsLayoutTabContainer1ItemProps) => {
+export const RoomSettingsLayoutTabContainer1Item = ({ captionDescriptionLabel, captionRemoveLink, captionRoomNameLabel, captionWalkThroughText, layout, onAllowWalkThroughCheckbox, onRemoveLinkRegion, tagCategoryContainer }: RoomSettingsLayoutTabContainer1ItemProps) => {
     const t = useTranslation();
     const [ roomNameValue, setRoomNameValue ] = useState('');
     const [ descriptionValue, setDescriptionValue ] = useState('');
@@ -242,51 +173,49 @@ export const RoomSettingsLayoutTabContainer1Item = ({ advancedContainer, caption
                 layout={{ position: 'absolute', left: 0, width: 300, top: 51, height: 39, overflow: 'hidden' }}
             />
             <RoomSettingsLayoutTagCategoryContainer {...tagCategoryContainer} />
-            <RoomSettingsLayoutAdvancedContainer {...advancedContainer} />
-            <RoomSettingsLayoutRemoveLinkRegion {...removeLinkRegion} />
-        </Region>
-    );
-};
-
-/** Named region `doormode` of RoomSettingsLayout - configured through the parent's `doormode` prop. */
-export interface RoomSettingsLayoutDoormodeProps {
-    layout?: BoxLayout;
-    onDoormodeDoorbell?: () => void;
-    onDoormodeInvisible?: () => void;
-    onDoormodeOpen?: () => void;
-    onDoormodePassword?: () => void;
-}
-
-export const RoomSettingsLayoutDoormode = ({ layout, onDoormodeDoorbell, onDoormodeInvisible, onDoormodeOpen, onDoormodePassword }: RoomSettingsLayoutDoormodeProps) => {
-    return (
-        <Region
-            name="doormode"
-            layout={{ position: 'absolute', left: 5, width: 274, top: 18, height: 80, ...layout }}
-        >
-            <RadioButton
-                variant="0"
-                name="doormode_open"
-                onPointerTap={onDoormodeOpen}
-                layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 20 }}
-            />
-            <RadioButton
-                variant="0"
-                name="doormode_doorbell"
-                onPointerTap={onDoormodeDoorbell}
-                layout={{ position: 'absolute', left: 0, width: 270, top: 20, height: 20 }}
-            />
-            <RadioButton
-                variant="0"
-                name="doormode_invisible"
-                onPointerTap={onDoormodeInvisible}
-                layout={{ position: 'absolute', left: 0, width: 270, top: 40, height: 20 }}
-            />
-            <RadioButton
-                variant="0"
-                name="doormode_password"
-                onPointerTap={onDoormodePassword}
-                layout={{ position: 'absolute', left: 0, width: 270, top: 60, height: 20 }}
-            />
+            <Region
+                name="advanced_container"
+                layout={{ position: 'absolute', left: 0, width: 216, top: 239, height: 82 }}
+            >
+                <CheckBox
+                    variant="0"
+                    name="allow_walk_through_checkbox"
+                    onPointerTap={onAllowWalkThroughCheckbox}
+                    layout={{ position: 'absolute', left: 2, width: 20, top: 59, height: 20 }}
+                />
+                <Region
+                    name="walk_through_text"
+                    layout={{ position: 'absolute', left: 18, width: 249, top: 58, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionWalkThroughText ?? t('navigator.roomsettings.allow_walk_through')}
+                        textStyle="text-style-u-regular"
+                    />
+                </Region>
+            </Region>
+            <Region
+                name="remove_link_region"
+                onPointerTap={onRemoveLinkRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', width: 189, top: 334, height: 22 }}
+            >
+                <Region
+                    name="remove_link"
+                    layout={{ position: 'absolute', left: 15, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionRemoveLink ?? t('navigator.roomsettings.delete')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#bb2200' }}
+                    />
+                </Region>
+                <Icon
+                    variant="9"
+                    name="remove_icon"
+                    tintColor="#bb2200"
+                    layout={{ position: 'absolute', left: 0, width: 20, top: 2, height: 20 }}
+                />
+            </Region>
         </Region>
     );
 };
@@ -298,11 +227,14 @@ export interface RoomSettingsLayoutDoormodeContainerProps {
     captionDoormodeLabel?: string;
     captionDoormodeOpenLabel?: string;
     captionDoormodePasswordLabel?: string;
-    doormode?: RoomSettingsLayoutDoormodeProps;
     layout?: BoxLayout;
+    onDoormodeDoorbell?: () => void;
+    onDoormodeInvisible?: () => void;
+    onDoormodeOpen?: () => void;
+    onDoormodePassword?: () => void;
 }
 
-export const RoomSettingsLayoutDoormodeContainer = ({ captionDoormodeDoorbellLabel, captionDoormodeInvisibleLabel, captionDoormodeLabel, captionDoormodeOpenLabel, captionDoormodePasswordLabel, doormode, layout }: RoomSettingsLayoutDoormodeContainerProps) => {
+export const RoomSettingsLayoutDoormodeContainer = ({ captionDoormodeDoorbellLabel, captionDoormodeInvisibleLabel, captionDoormodeLabel, captionDoormodeOpenLabel, captionDoormodePasswordLabel, layout, onDoormodeDoorbell, onDoormodeInvisible, onDoormodeOpen, onDoormodePassword }: RoomSettingsLayoutDoormodeContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -319,7 +251,35 @@ export const RoomSettingsLayoutDoormodeContainer = ({ captionDoormodeDoorbellLab
                     textStyle="text-style-u-bold"
                 />
             </Region>
-            <RoomSettingsLayoutDoormode {...doormode} />
+            <Region
+                name="doormode"
+                layout={{ position: 'absolute', left: 5, width: 274, top: 18, height: 80 }}
+            >
+                <RadioButton
+                    variant="0"
+                    name="doormode_open"
+                    onPointerTap={onDoormodeOpen}
+                    layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 20 }}
+                />
+                <RadioButton
+                    variant="0"
+                    name="doormode_doorbell"
+                    onPointerTap={onDoormodeDoorbell}
+                    layout={{ position: 'absolute', left: 0, width: 270, top: 20, height: 20 }}
+                />
+                <RadioButton
+                    variant="0"
+                    name="doormode_invisible"
+                    onPointerTap={onDoormodeInvisible}
+                    layout={{ position: 'absolute', left: 0, width: 270, top: 40, height: 20 }}
+                />
+                <RadioButton
+                    variant="0"
+                    name="doormode_password"
+                    onPointerTap={onDoormodePassword}
+                    layout={{ position: 'absolute', left: 0, width: 270, top: 60, height: 20 }}
+                />
+            </Region>
             <Region
                 name="doormode_open_label"
                 layout={{ position: 'absolute', left: 20, width: 230, top: 17, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -360,70 +320,22 @@ export const RoomSettingsLayoutDoormodeContainer = ({ captionDoormodeDoorbellLab
     );
 };
 
-/** Named region `password_container` of RoomSettingsLayout - configured through the parent's `passwordContainer` prop. */
-export interface RoomSettingsLayoutPasswordContainerProps {
-    captionPasswordConfirmLabel?: string;
-    captionPasswordLabel?: string;
-    layout?: BoxLayout;
-}
-
-export const RoomSettingsLayoutPasswordContainer = ({ captionPasswordConfirmLabel, captionPasswordLabel, layout }: RoomSettingsLayoutPasswordContainerProps) => {
-    const t = useTranslation();
-    const [ passwordValue, setPasswordValue ] = useState('');
-    const [ passwordConfirmValue, setPasswordConfirmValue ] = useState('');
-
-    return (
-        <Region
-            name="password_container"
-            layout={{ position: 'absolute', left: 41, width: 195, top: 188, height: 68, ...layout }}
-        >
-            <Region
-                name="password_label"
-                layout={{ position: 'absolute', left: 0, width: 189, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPasswordLabel ?? t('navigator.roomsettings.password')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <TextInput
-                value={passwordValue}
-                onChange={setPasswordValue}
-                backgroundColor="#fbfbf9"
-                layout={{ position: 'absolute', left: 1, width: 193, top: 15, height: 15, overflow: 'hidden' }}
-            />
-            <Region
-                name="password__confirm_label"
-                layout={{ position: 'absolute', left: 0, width: 234, top: 32, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPasswordConfirmLabel ?? t('navigator.roomsettings.passwordconfirm')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <TextInput
-                value={passwordConfirmValue}
-                onChange={setPasswordConfirmValue}
-                backgroundColor="#fbfbf9"
-                layout={{ position: 'absolute', left: 1, width: 193, top: 48, height: 15, overflow: 'hidden' }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `normal_access_container` of RoomSettingsLayout - configured through the parent's `normalAccessContainer` prop. */
 export interface RoomSettingsLayoutNormalAccessContainerProps {
+    captionPasswordConfirmLabel?: string;
+    captionPasswordLabel?: string;
     captionRoomAccessTabCaption?: string;
     captionRoomAccessTabInfo?: string;
     doormodeContainer?: RoomSettingsLayoutDoormodeContainerProps;
     layout?: BoxLayout;
     onBuildersFaqButton?: () => void;
-    passwordContainer?: RoomSettingsLayoutPasswordContainerProps;
     visibleDoormodeOverrideInfo?: boolean;
 }
 
-export const RoomSettingsLayoutNormalAccessContainer = ({ captionRoomAccessTabCaption, captionRoomAccessTabInfo, doormodeContainer, layout, onBuildersFaqButton, passwordContainer, visibleDoormodeOverrideInfo }: RoomSettingsLayoutNormalAccessContainerProps) => {
+export const RoomSettingsLayoutNormalAccessContainer = ({ captionPasswordConfirmLabel, captionPasswordLabel, captionRoomAccessTabCaption, captionRoomAccessTabInfo, doormodeContainer, layout, onBuildersFaqButton, visibleDoormodeOverrideInfo }: RoomSettingsLayoutNormalAccessContainerProps) => {
     const t = useTranslation();
+    const [ passwordValue, setPasswordValue ] = useState('');
+    const [ passwordConfirmValue, setPasswordConfirmValue ] = useState('');
 
     return (
         <Region
@@ -450,35 +362,70 @@ export const RoomSettingsLayoutNormalAccessContainer = ({ captionRoomAccessTabCa
                 />
             </Region>
             <RoomSettingsLayoutDoormodeContainer {...doormodeContainer} />
-            <RoomSettingsLayoutPasswordContainer {...passwordContainer} />
-            <Border
-                variant="0"
-                name="doormode_override_info"
-                visible={visibleDoormodeOverrideInfo ?? false}
-                layout={{ position: 'absolute', left: 0, width: 308, top: 88, height: 166, justifyContent: 'center' }}
+            <Region
+                name="password_container"
+                layout={{ position: 'absolute', left: 41, width: 195, top: 188, height: 68 }}
             >
-                <Region layout={{ position: 'absolute', left: 5, width: 295, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('notification.builders_club.room_locked.title')}
-                        textStyle="text-style-u-headline-small"
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 5, width: 298, top: 42, height: 79, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('notification.builders_club.room_locked.message')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 298 }}
-                    />
-                </Region>
-                <Button
-                    variant="3"
-                    name="builders_faq_button"
-                    onPointerTap={onBuildersFaqButton}
-                    textStyle="text-style-button-shiny-regular"
-                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 287, top: 122, height: 30 }}
+                <Region
+                    name="password_label"
+                    layout={{ position: 'absolute', left: 0, width: 189, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    {t('notification.builders_club.room_locked.linkTitle')}
-                </Button>
-            </Border>
+                    <ThemeText
+                        text={captionPasswordLabel ?? t('navigator.roomsettings.password')}
+                        textStyle="text-style-u-regular"
+                    />
+                </Region>
+                <TextInput
+                    value={passwordValue}
+                    onChange={setPasswordValue}
+                    backgroundColor="#fbfbf9"
+                    layout={{ position: 'absolute', left: 1, width: 193, top: 15, height: 15, overflow: 'hidden' }}
+                />
+                <Region
+                    name="password__confirm_label"
+                    layout={{ position: 'absolute', left: 0, width: 234, top: 32, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionPasswordConfirmLabel ?? t('navigator.roomsettings.passwordconfirm')}
+                        textStyle="text-style-u-regular"
+                    />
+                </Region>
+                <TextInput
+                    value={passwordConfirmValue}
+                    onChange={setPasswordConfirmValue}
+                    backgroundColor="#fbfbf9"
+                    layout={{ position: 'absolute', left: 1, width: 193, top: 48, height: 15, overflow: 'hidden' }}
+                />
+            </Region>
+            {(visibleDoormodeOverrideInfo ?? false) && (
+                <Border
+                    variant="0"
+                    name="doormode_override_info"
+                    layout={{ position: 'absolute', left: 0, width: 308, top: 88, height: 166, justifyContent: 'center' }}
+                >
+                    <Region layout={{ position: 'absolute', left: 5, width: 295, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('notification.builders_club.room_locked.title')}
+                            textStyle="text-style-u-headline-small"
+                        />
+                    </Region>
+                    <Region layout={{ position: 'absolute', left: 5, width: 298, top: 42, height: 79, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('notification.builders_club.room_locked.message')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 298 }}
+                        />
+                    </Region>
+                    <Button
+                        variant="3"
+                        name="builders_faq_button"
+                        onPointerTap={onBuildersFaqButton}
+                        textStyle="text-style-button-shiny-regular"
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 287, top: 122, height: 30 }}
+                    >
+                        {t('notification.builders_club.room_locked.linkTitle')}
+                    </Button>
+                </Border>
+            )}
         </Region>
     );
 };
@@ -625,91 +572,19 @@ export const RoomSettingsLayoutTabContainer2Item = ({ flexibleContent, layout, n
     );
 };
 
-/** Named region `guild_rights_container` of RoomSettingsLayout - configured through the parent's `guildRightsContainer` prop. */
-export interface RoomSettingsLayoutGuildRightsContainerProps {
-    layout?: BoxLayout;
-    visibleGuildRightsContainer?: boolean;
-}
-
-export const RoomSettingsLayoutGuildRightsContainer = ({ layout, visibleGuildRightsContainer }: RoomSettingsLayoutGuildRightsContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="guild_rights_container"
-            visible={visibleGuildRightsContainer ?? false}
-            layout={{ position: 'absolute', left: 6, right: -62, top: 0, height: 367, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 215, top: 3, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('navigator.flatctrls.guild.caption')}
-                    textStyle="text-style-u-headline-small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 215 }}
-                />
-            </Region>
-            <Region layout={{ position: 'absolute', left: 0, width: 309, top: 42, height: 240, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('navigator.flatctrls.guild.info')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 309 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `users_with_rights_item_list` of RoomSettingsLayout - configured through the parent's `usersWithRightsItemList` prop. */
-export interface RoomSettingsLayoutUsersWithRightsItemListProps {
-    layout?: BoxLayout;
-}
-
-export const RoomSettingsLayoutUsersWithRightsItemList = ({ layout }: RoomSettingsLayoutUsersWithRightsItemListProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 4, right: 25, top: 4, bottom: 39, ...layout }}
-        >
-            <Region
-                name="users_with_rights_item_list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
-/** Named region `friends_item_list` of RoomSettingsLayout - configured through the parent's `friendsItemList` prop. */
-export interface RoomSettingsLayoutFriendsItemListProps {
-    layout?: BoxLayout;
-}
-
-export const RoomSettingsLayoutFriendsItemList = ({ layout }: RoomSettingsLayoutFriendsItemListProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 4, right: 25, top: 4, bottom: 4, ...layout }}
-        >
-            <Region
-                name="friends_item_list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
 /** Named region `normal_rights_container` of RoomSettingsLayout - configured through the parent's `normalRightsContainer` prop. */
 export interface RoomSettingsLayoutNormalRightsContainerProps {
     captionFriendsTxt?: string;
     captionSearchTxt?: string;
     captionUsersWithRightsTxt?: string;
-    friendsItemList?: RoomSettingsLayoutFriendsItemListProps;
     layout?: BoxLayout;
     onRemoveAllFlatCtrls?: () => void;
-    usersWithRightsItemList?: RoomSettingsLayoutUsersWithRightsItemListProps;
     visibleFriendsCont?: boolean;
+    visibleFriendsTxt?: boolean;
     visibleUsersWithRightsCont?: boolean;
 }
 
-export const RoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, captionSearchTxt, captionUsersWithRightsTxt, friendsItemList, layout, onRemoveAllFlatCtrls, usersWithRightsItemList, visibleFriendsCont, visibleUsersWithRightsCont }: RoomSettingsLayoutNormalRightsContainerProps) => {
+export const RoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, captionSearchTxt, captionUsersWithRightsTxt, layout, onRemoveAllFlatCtrls, visibleFriendsCont, visibleFriendsTxt, visibleUsersWithRightsCont }: RoomSettingsLayoutNormalRightsContainerProps) => {
     const t = useTranslation();
     const [ filterUsersInputValue, setFilterUsersInputValue ] = useState('');
 
@@ -749,64 +624,105 @@ export const RoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, cap
                     textOptions={{ wordWrap: true, wordWrapWidth: 150 }}
                 />
             </Region>
-            <Region
-                name="friends_txt"
-                visible={false}
-                layout={{ position: 'absolute', marginLeft: 54, marginRight: -54, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionFriendsTxt ?? t('navigator.flatctrls.friends')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 150 }}
-                />
-            </Region>
-            <Border
-                variant="0"
-                name="users_with_rights_cont"
-                tintColor="#ffffff"
-                visible={visibleUsersWithRightsCont ?? false}
-                layout={{ position: 'absolute', left: 0, width: 150, top: 74, bottom: 4 }}
-            >
-                <RoomSettingsLayoutUsersWithRightsItemList {...usersWithRightsItemList} />
-                {/* <scrollbar_vertical> for users_with_rights_item_list - rendered by that list's ScrollArea */}
-                <ButtonThick
-                    variant="3"
-                    name="remove_all_flat_ctrls"
-                    onPointerTap={onRemoveAllFlatCtrls}
-                    textStyle="text-style-button-shiny-bold"
-                    layout={{ position: 'absolute', left: 4, width: 142, bottom: 4, height: 29, minWidth: 142, maxWidth: 142 }}
+            {(visibleFriendsTxt ?? false) && (
+                <Region
+                    name="friends_txt"
+                    layout={{ position: 'absolute', marginLeft: 54, marginRight: -54, width: 150, top: 44, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
-                    {t('navigator.flatctrls.clear')}
-                </ButtonThick>
-            </Border>
-            <Border
-                variant="0"
-                name="friends_cont"
-                tintColor="#ffffff"
-                visible={visibleFriendsCont ?? false}
-                layout={{ position: 'absolute', left: 173, width: 150, top: 74, bottom: 4 }}
-            >
-                <RoomSettingsLayoutFriendsItemList {...friendsItemList} />
-                {/* <scrollbar_vertical> for friends_item_list - rendered by that list's ScrollArea */}
-            </Border>
+                    <ThemeText
+                        text={captionFriendsTxt ?? t('navigator.flatctrls.friends')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 150 }}
+                    />
+                </Region>
+            )}
+            {(visibleUsersWithRightsCont ?? false) && (
+                <Border
+                    variant="0"
+                    name="users_with_rights_cont"
+                    tintColor="#ffffff"
+                    layout={{ position: 'absolute', left: 0, width: 150, top: 74, bottom: 4 }}
+                >
+                    <ScrollArea
+                        orientation="vertical"
+                        layout={{ position: 'absolute', left: 4, right: 25, top: 4, bottom: 39 }}
+                    >
+                        <Region
+                            name="users_with_rights_item_list"
+                            layout={{ flexDirection: 'column', width: '100%' }}
+                        />
+                    </ScrollArea>
+                    {/* <scrollbar_vertical> for users_with_rights_item_list - rendered by that list's ScrollArea */}
+                    <ButtonThick
+                        variant="3"
+                        name="remove_all_flat_ctrls"
+                        onPointerTap={onRemoveAllFlatCtrls}
+                        textStyle="text-style-button-shiny-bold"
+                        layout={{ position: 'absolute', left: 4, width: 142, bottom: 4, height: 29, minWidth: 142, maxWidth: 142 }}
+                    >
+                        {t('navigator.flatctrls.clear')}
+                    </ButtonThick>
+                </Border>
+            )}
+            {(visibleFriendsCont ?? false) && (
+                <Border
+                    variant="0"
+                    name="friends_cont"
+                    tintColor="#ffffff"
+                    layout={{ position: 'absolute', left: 173, width: 150, top: 74, bottom: 4 }}
+                >
+                    <ScrollArea
+                        orientation="vertical"
+                        layout={{ position: 'absolute', left: 4, right: 25, top: 4, bottom: 4 }}
+                    >
+                        <Region
+                            name="friends_item_list"
+                            layout={{ flexDirection: 'column', width: '100%' }}
+                        />
+                    </ScrollArea>
+                    {/* <scrollbar_vertical> for friends_item_list - rendered by that list's ScrollArea */}
+                </Border>
+            )}
         </Region>
     );
 };
 
 /** Row template `tab_container_3` of RoomSettingsLayout - pass real rows through its `items…` slot. */
 export interface RoomSettingsLayoutTabContainer3ItemProps {
-    guildRightsContainer?: RoomSettingsLayoutGuildRightsContainerProps;
     layout?: BoxLayout;
     normalRightsContainer?: RoomSettingsLayoutNormalRightsContainerProps;
+    visibleGuildRightsContainer?: boolean;
 }
 
-export const RoomSettingsLayoutTabContainer3Item = ({ guildRightsContainer, layout, normalRightsContainer }: RoomSettingsLayoutTabContainer3ItemProps) => {
+export const RoomSettingsLayoutTabContainer3Item = ({ layout, normalRightsContainer, visibleGuildRightsContainer }: RoomSettingsLayoutTabContainer3ItemProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="tab_container_3"
             layout={{ width: 324, height: 367, flexShrink: 0, ...layout }}
         >
-            <RoomSettingsLayoutGuildRightsContainer {...guildRightsContainer} />
+            {(visibleGuildRightsContainer ?? false) && (
+                <Region
+                    name="guild_rights_container"
+                    layout={{ position: 'absolute', left: 6, right: -62, top: 0, height: 367 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 0, width: 215, top: 3, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('navigator.flatctrls.guild.caption')}
+                            textStyle="text-style-u-headline-small"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 215 }}
+                        />
+                    </Region>
+                    <Region layout={{ position: 'absolute', left: 0, width: 309, top: 42, height: 240, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('navigator.flatctrls.guild.info')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 309 }}
+                        />
+                    </Region>
+                </Region>
+            )}
             <RoomSettingsLayoutNormalRightsContainer {...normalRightsContainer} />
         </Region>
     );
@@ -1003,190 +919,32 @@ export const RoomSettingsLayoutTabContainer4Item = ({ captionChatSettingsText, c
     );
 };
 
-/** Named region `moderation_mute_selector` of RoomSettingsLayout - configured through the parent's `moderationMuteSelector` prop. */
-export interface RoomSettingsLayoutModerationMuteSelectorProps {
-    captionModerationMuteNoneLabel?: string;
-    captionModerationMuteRightsLabel?: string;
-    layout?: BoxLayout;
-    onModerationMuteNone?: () => void;
-    onModerationMuteRights?: () => void;
-}
-
-export const RoomSettingsLayoutModerationMuteSelector = ({ captionModerationMuteNoneLabel, captionModerationMuteRightsLabel, layout, onModerationMuteNone, onModerationMuteRights }: RoomSettingsLayoutModerationMuteSelectorProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="moderation_mute_selector"
-            layout={{ position: 'absolute', left: 0, width: 291, top: 75, height: 31, ...layout }}
-        >
-            <RadioButton
-                variant="0"
-                name="moderation_mute_none"
-                onPointerTap={onModerationMuteNone}
-                layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 20 }}
-            />
-            <Region
-                name="moderation_mute_none_label"
-                layout={{ position: 'absolute', left: 15, width: 93, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionModerationMuteNoneLabel ?? t('navigator.roomsettings.moderation.none')} />
-            </Region>
-            <Region
-                name="moderation_mute_rights_label"
-                layout={{ position: 'absolute', left: 95, width: 162, top: -4, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionModerationMuteRightsLabel ?? t('navigator.roomsettings.moderation.rights')} />
-            </Region>
-            <RadioButton
-                variant="0"
-                name="moderation_mute_rights"
-                onPointerTap={onModerationMuteRights}
-                layout={{ position: 'absolute', left: 80, width: 147, top: 0, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `moderation_kick_selector` of RoomSettingsLayout - configured through the parent's `moderationKickSelector` prop. */
-export interface RoomSettingsLayoutModerationKickSelectorProps {
-    captionModerationKickAllLabel?: string;
-    captionModerationKickNoneLabel?: string;
-    captionModerationKickRightsHeader?: string;
-    layout?: BoxLayout;
-    onModerationKickAll?: () => void;
-    onModerationKickNone?: () => void;
-    onModerationKickRights?: () => void;
-}
-
-export const RoomSettingsLayoutModerationKickSelector = ({ captionModerationKickAllLabel, captionModerationKickNoneLabel, captionModerationKickRightsHeader, layout, onModerationKickAll, onModerationKickNone, onModerationKickRights }: RoomSettingsLayoutModerationKickSelectorProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="moderation_kick_selector"
-            layout={{ position: 'absolute', left: 0, width: 325, top: 130, height: 26, ...layout }}
-        >
-            <RadioButton
-                variant="0"
-                name="moderation_kick_none"
-                onPointerTap={onModerationKickNone}
-                layout={{ position: 'absolute', left: 0, width: 104, top: 0, height: 19 }}
-            />
-            <Region
-                name="moderation_kick_none_label"
-                layout={{ position: 'absolute', left: 15, width: 66, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionModerationKickNoneLabel ?? t('navigator.roomsettings.moderation.none')} />
-            </Region>
-            <Region
-                name="moderation_kick_rights_header"
-                layout={{ position: 'absolute', left: 96, width: 123, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionModerationKickRightsHeader ?? t('navigator.roomsettings.moderation.rights')} />
-            </Region>
-            <Region
-                name="moderation_kick_all_label"
-                layout={{ position: 'absolute', left: 245, width: 93, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionModerationKickAllLabel ?? t('navigator.roomsettings.moderation.all')} />
-            </Region>
-            <RadioButton
-                variant="0"
-                name="moderation_kick_rights"
-                onPointerTap={onModerationKickRights}
-                layout={{ position: 'absolute', left: 80, width: 90, top: 0, height: 20 }}
-            />
-            <RadioButton
-                variant="0"
-                name="moderation_kick_all"
-                onPointerTap={onModerationKickAll}
-                layout={{ position: 'absolute', left: 230, width: 107, top: 0, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `moderation_ban_selector` of RoomSettingsLayout - configured through the parent's `moderationBanSelector` prop. */
-export interface RoomSettingsLayoutModerationBanSelectorProps {
-    captionModerationBanNoneLabel?: string;
-    captionModerationBanRights?: string;
-    layout?: BoxLayout;
-    onModerationBanNone?: () => void;
-    onModerationBanRights?: () => void;
-}
-
-export const RoomSettingsLayoutModerationBanSelector = ({ captionModerationBanNoneLabel, captionModerationBanRights, layout, onModerationBanNone, onModerationBanRights }: RoomSettingsLayoutModerationBanSelectorProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="moderation_ban_selector"
-            layout={{ position: 'absolute', left: 0, width: 293, top: 180, height: 23, ...layout }}
-        >
-            <Region
-                name="moderation_ban_none_label"
-                layout={{ position: 'absolute', left: 15, width: 93, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionModerationBanNoneLabel ?? t('navigator.roomsettings.moderation.none')} />
-            </Region>
-            <RadioButton
-                variant="0"
-                name="moderation_ban_none"
-                onPointerTap={onModerationBanNone}
-                layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 20 }}
-            />
-            <Region
-                name="moderation_ban_rights"
-                layout={{ position: 'absolute', left: 95, width: 197, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionModerationBanRights ?? t('navigator.roomsettings.moderation.rights')} />
-            </Region>
-            <RadioButton
-                variant="0"
-                name="moderation_ban_rights"
-                onPointerTap={onModerationBanRights}
-                layout={{ position: 'absolute', left: 80, width: 177, top: 0, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `moderation_banned_users` of RoomSettingsLayout - configured through the parent's `moderationBannedUsers` prop. */
-export interface RoomSettingsLayoutModerationBannedUsersProps {
-    layout?: BoxLayout;
-}
-
-export const RoomSettingsLayoutModerationBannedUsers = ({ layout }: RoomSettingsLayoutModerationBannedUsersProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 3, width: 129, top: 4, height: 146, ...layout }}
-        >
-            <Region
-                name="moderation_banned_users"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
 /** Row template `tab_container_5` of RoomSettingsLayout - pass real rows through its `items…` slot. */
 export interface RoomSettingsLayoutTabContainer5ItemProps {
     captionModerationBanHeader?: string;
     captionModerationBannedUsersLabel?: string;
+    captionModerationBanNoneLabel?: string;
+    captionModerationBanRights?: string;
     captionModerationHeader?: string;
+    captionModerationKickAllLabel?: string;
     captionModerationKickHeader?: string;
+    captionModerationKickNoneLabel?: string;
+    captionModerationKickRightsHeader?: string;
     captionModerationMuteHeader?: string;
+    captionModerationMuteNoneLabel?: string;
+    captionModerationMuteRightsLabel?: string;
     layout?: BoxLayout;
-    moderationBannedUsers?: RoomSettingsLayoutModerationBannedUsersProps;
-    moderationBanSelector?: RoomSettingsLayoutModerationBanSelectorProps;
-    moderationKickSelector?: RoomSettingsLayoutModerationKickSelectorProps;
-    moderationMuteSelector?: RoomSettingsLayoutModerationMuteSelectorProps;
+    onModerationBanNone?: () => void;
+    onModerationBanRights?: () => void;
+    onModerationKickAll?: () => void;
+    onModerationKickNone?: () => void;
+    onModerationKickRights?: () => void;
+    onModerationMuteNone?: () => void;
+    onModerationMuteRights?: () => void;
     onModerationUnbanBtn?: () => void;
 }
 
-export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader, captionModerationBannedUsersLabel, captionModerationHeader, captionModerationKickHeader, captionModerationMuteHeader, layout, moderationBannedUsers, moderationBanSelector, moderationKickSelector, moderationMuteSelector, onModerationUnbanBtn }: RoomSettingsLayoutTabContainer5ItemProps) => {
+export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader, captionModerationBannedUsersLabel, captionModerationBanNoneLabel, captionModerationBanRights, captionModerationHeader, captionModerationKickAllLabel, captionModerationKickHeader, captionModerationKickNoneLabel, captionModerationKickRightsHeader, captionModerationMuteHeader, captionModerationMuteNoneLabel, captionModerationMuteRightsLabel, layout, onModerationBanNone, onModerationBanRights, onModerationKickAll, onModerationKickNone, onModerationKickRights, onModerationMuteNone, onModerationMuteRights, onModerationUnbanBtn }: RoomSettingsLayoutTabContainer5ItemProps) => {
     const t = useTranslation();
 
     return (
@@ -1209,27 +967,131 @@ export const RoomSettingsLayoutTabContainer5Item = ({ captionModerationBanHeader
             >
                 <ThemeText text={captionModerationMuteHeader ?? t('navigator.roomsettings.moderation.mute.header')} />
             </Region>
-            <RoomSettingsLayoutModerationMuteSelector {...moderationMuteSelector} />
+            <Region
+                name="moderation_mute_selector"
+                layout={{ position: 'absolute', left: 0, width: 291, top: 75, height: 31 }}
+            >
+                <RadioButton
+                    variant="0"
+                    name="moderation_mute_none"
+                    onPointerTap={onModerationMuteNone}
+                    layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 20 }}
+                />
+                <Region
+                    name="moderation_mute_none_label"
+                    layout={{ position: 'absolute', left: 15, width: 93, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionModerationMuteNoneLabel ?? t('navigator.roomsettings.moderation.none')} />
+                </Region>
+                <Region
+                    name="moderation_mute_rights_label"
+                    layout={{ position: 'absolute', left: 95, width: 162, top: -4, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionModerationMuteRightsLabel ?? t('navigator.roomsettings.moderation.rights')} />
+                </Region>
+                <RadioButton
+                    variant="0"
+                    name="moderation_mute_rights"
+                    onPointerTap={onModerationMuteRights}
+                    layout={{ position: 'absolute', left: 80, width: 147, top: 0, height: 20 }}
+                />
+            </Region>
             <Region
                 name="moderation_kick_header"
                 layout={{ position: 'absolute', left: 0, width: 273, top: 110, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionModerationKickHeader ?? t('navigator.roomsettings.moderation.kick.header')} />
             </Region>
-            <RoomSettingsLayoutModerationKickSelector {...moderationKickSelector} />
+            <Region
+                name="moderation_kick_selector"
+                layout={{ position: 'absolute', left: 0, width: 325, top: 130, height: 26 }}
+            >
+                <RadioButton
+                    variant="0"
+                    name="moderation_kick_none"
+                    onPointerTap={onModerationKickNone}
+                    layout={{ position: 'absolute', left: 0, width: 104, top: 0, height: 19 }}
+                />
+                <Region
+                    name="moderation_kick_none_label"
+                    layout={{ position: 'absolute', left: 15, width: 66, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionModerationKickNoneLabel ?? t('navigator.roomsettings.moderation.none')} />
+                </Region>
+                <Region
+                    name="moderation_kick_rights_header"
+                    layout={{ position: 'absolute', left: 96, width: 123, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionModerationKickRightsHeader ?? t('navigator.roomsettings.moderation.rights')} />
+                </Region>
+                <Region
+                    name="moderation_kick_all_label"
+                    layout={{ position: 'absolute', left: 245, width: 93, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionModerationKickAllLabel ?? t('navigator.roomsettings.moderation.all')} />
+                </Region>
+                <RadioButton
+                    variant="0"
+                    name="moderation_kick_rights"
+                    onPointerTap={onModerationKickRights}
+                    layout={{ position: 'absolute', left: 80, width: 90, top: 0, height: 20 }}
+                />
+                <RadioButton
+                    variant="0"
+                    name="moderation_kick_all"
+                    onPointerTap={onModerationKickAll}
+                    layout={{ position: 'absolute', left: 230, width: 107, top: 0, height: 20 }}
+                />
+            </Region>
             <Region
                 name="moderation_ban_header"
                 layout={{ position: 'absolute', left: 0, width: 292, top: 160, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionModerationBanHeader ?? t('navigator.roomsettings.moderation.ban.header')} />
             </Region>
-            <RoomSettingsLayoutModerationBanSelector {...moderationBanSelector} />
+            <Region
+                name="moderation_ban_selector"
+                layout={{ position: 'absolute', left: 0, width: 293, top: 180, height: 23 }}
+            >
+                <Region
+                    name="moderation_ban_none_label"
+                    layout={{ position: 'absolute', left: 15, width: 93, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionModerationBanNoneLabel ?? t('navigator.roomsettings.moderation.none')} />
+                </Region>
+                <RadioButton
+                    variant="0"
+                    name="moderation_ban_none"
+                    onPointerTap={onModerationBanNone}
+                    layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 20 }}
+                />
+                <Region
+                    name="moderation_ban_rights"
+                    layout={{ position: 'absolute', left: 95, width: 197, top: -4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionModerationBanRights ?? t('navigator.roomsettings.moderation.rights')} />
+                </Region>
+                <RadioButton
+                    variant="0"
+                    name="moderation_ban_rights"
+                    onPointerTap={onModerationBanRights}
+                    layout={{ position: 'absolute', left: 80, width: 177, top: 0, height: 20 }}
+                />
+            </Region>
             <Border
                 variant="0"
                 name="moderation_banned_users_cont"
                 layout={{ position: 'absolute', left: 0, width: 172, top: 210, height: 156 }}
             >
-                <RoomSettingsLayoutModerationBannedUsers {...moderationBannedUsers} />
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 3, width: 129, top: 4, height: 146 }}
+                >
+                    <Region
+                        name="moderation_banned_users"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    />
+                </ScrollArea>
                 {/* <scrollbar_vertical> for moderation_banned_users - rendered by that list's ScrollArea */}
             </Border>
             <Region

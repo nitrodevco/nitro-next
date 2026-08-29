@@ -33,9 +33,10 @@ export interface LayoutGuildCustomFurni_1680LayoutCtlgDefault3x3Props {
     productViewWidget?: ProductViewWidgetProps;
     purchaseWidget?: PurchaseWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
+    visibleCtlgSelectproduct?: boolean;
 }
 
-export const LayoutGuildCustomFurni_1680LayoutCtlgDefault3x3 = ({ activityPointDisplayWidget, captionCtlgSelectproduct, guildBadgeViewWidget, guildSelectorWidget, itemGridWidget, layout, productViewWidget, purchaseWidget, specialInfoWidget }: LayoutGuildCustomFurni_1680LayoutCtlgDefault3x3Props) => {
+export const LayoutGuildCustomFurni_1680LayoutCtlgDefault3x3 = ({ activityPointDisplayWidget, captionCtlgSelectproduct, guildBadgeViewWidget, guildSelectorWidget, itemGridWidget, layout, productViewWidget, purchaseWidget, specialInfoWidget, visibleCtlgSelectproduct }: LayoutGuildCustomFurni_1680LayoutCtlgDefault3x3Props) => {
     const t = useTranslation();
 
     return (
@@ -43,17 +44,18 @@ export const LayoutGuildCustomFurni_1680LayoutCtlgDefault3x3 = ({ activityPointD
             name="ctlg_default_3x3"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
-            <Region
-                name="ctlg_selectproduct"
-                visible={false}
-                layout={{ position: 'absolute', left: 5, width: 107, top: 134, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ fill: '#666666' }}
-                />
-            </Region>
+            {(visibleCtlgSelectproduct ?? false) && (
+                <Region
+                    name="ctlg_selectproduct"
+                    layout={{ position: 'absolute', left: 5, width: 107, top: 134, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
+                        textStyle="text-style-u-small"
+                        textOptions={{ fill: '#666666' }}
+                    />
+                </Region>
+            )}
             <ItemGridWidget
                 layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 90 }}
                 {...itemGridWidget}

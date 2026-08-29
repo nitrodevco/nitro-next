@@ -17,52 +17,26 @@ export const FriendsFooterLayout = ({ footer, layout }: FriendsFooterLayoutProps
     );
 };
 
-/** Named region `clear_input_region` of FriendsFooterLayout - configured through the parent's `clearInputRegion` prop. */
-export interface FriendsFooterLayoutClearInputRegionProps {
-    layout?: BoxLayout;
-    onClearInputRegion?: () => void;
-    visibleClearInputRegion?: boolean;
-}
-
-export const FriendsFooterLayoutClearInputRegion = ({ layout, onClearInputRegion, visibleClearInputRegion }: FriendsFooterLayoutClearInputRegionProps) => {
-    return (
-        <Region
-            name="clear_input_region"
-            visible={visibleClearInputRegion ?? false}
-            onPointerTap={onClearInputRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 35, width: 16, top: 7, height: 16, ...layout }}
-        >
-            <Region
-                backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 2, width: 11, top: 2, height: 11 }}
-            />
-            <ThemeImage
-                src={layoutImage('var_picker_cancel_search.png')}
-                layout={{ position: 'absolute', right: 4, width: 9, top: 3, height: 9 }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `footer` of FriendsFooterLayout - configured through the parent's `footer` prop. */
 export interface FriendsFooterLayoutFooterProps {
-    clearInputRegion?: FriendsFooterLayoutClearInputRegionProps;
     layout?: BoxLayout;
     onButtonOpenHomepage?: () => void;
     onButtonOpenMinimail?: () => void;
     onButtonRemoveFriend?: () => void;
     onButtonRoomInvite?: () => void;
     onButtonSearch?: () => void;
+    onClearInputRegion?: () => void;
     srcIcon?: string;
     srcIcon2?: string;
     srcIcon3?: string;
     srcIcon4?: string;
     srcIcon5?: string;
     visibleButtonOpenMinimail?: boolean;
+    visibleClearInputRegion?: boolean;
+    visibleFriendSearch?: boolean;
 }
 
-export const FriendsFooterLayoutFooter = ({ clearInputRegion, layout, onButtonOpenHomepage, onButtonOpenMinimail, onButtonRemoveFriend, onButtonRoomInvite, onButtonSearch, srcIcon, srcIcon2, srcIcon3, srcIcon4, srcIcon5, visibleButtonOpenMinimail }: FriendsFooterLayoutFooterProps) => {
+export const FriendsFooterLayoutFooter = ({ layout, onButtonOpenHomepage, onButtonOpenMinimail, onButtonRemoveFriend, onButtonRoomInvite, onButtonSearch, onClearInputRegion, srcIcon, srcIcon2, srcIcon3, srcIcon4, srcIcon5, visibleButtonOpenMinimail, visibleClearInputRegion, visibleFriendSearch }: FriendsFooterLayoutFooterProps) => {
     const [ friendSearchValue, setFriendSearchValue ] = useState('');
 
     return (
@@ -77,19 +51,20 @@ export const FriendsFooterLayoutFooter = ({ clearInputRegion, layout, onButtonOp
                 tintColor="#d9d9d9"
                 layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 31 }}
             >
-                <ContainerButton
-                    variant="0"
-                    name="button_open_minimail"
-                    onPointerTap={onButtonOpenMinimail}
-                    visible={visibleButtonOpenMinimail ?? false}
-                    layout={{ position: 'absolute', left: 5, width: 32, top: 4, height: 22 }}
-                >
-                    <ThemeImage
-                        name="icon"
-                        src={srcIcon}
-                        layout={{ position: 'absolute', left: 8, width: 19, top: 4, height: 14 }}
-                    />
-                </ContainerButton>
+                {(visibleButtonOpenMinimail ?? false) && (
+                    <ContainerButton
+                        variant="0"
+                        name="button_open_minimail"
+                        onPointerTap={onButtonOpenMinimail}
+                        layout={{ position: 'absolute', left: 5, width: 32, top: 4, height: 22 }}
+                    >
+                        <ThemeImage
+                            name="icon"
+                            src={srcIcon}
+                            layout={{ position: 'absolute', left: 8, width: 19, top: 4, height: 14 }}
+                        />
+                    </ContainerButton>
+                )}
                 <ContainerButton
                     variant="0"
                     name="button_room_invite"
@@ -126,12 +101,30 @@ export const FriendsFooterLayoutFooter = ({ clearInputRegion, layout, onButtonOp
                         layout={{ position: 'absolute', left: 5, width: 13, top: 4, height: 13 }}
                     />
                 </ContainerButton>
-                <TextInput
-                    value={friendSearchValue}
-                    onChange={setFriendSearchValue}
-                    layout={{ position: 'absolute', left: 76, right: 34, top: 5, height: 19 }}
-                />
-                <FriendsFooterLayoutClearInputRegion {...clearInputRegion} />
+                {(visibleFriendSearch ?? false) && (
+                    <TextInput
+                        value={friendSearchValue}
+                        onChange={setFriendSearchValue}
+                        layout={{ position: 'absolute', left: 76, right: 34, top: 5, height: 19 }}
+                    />
+                )}
+                {(visibleClearInputRegion ?? false) && (
+                    <Region
+                        name="clear_input_region"
+                        onPointerTap={onClearInputRegion}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', right: 35, width: 16, top: 7, height: 16 }}
+                    >
+                        <Region
+                            backgroundColor="#ffffff"
+                            layout={{ position: 'absolute', left: 2, width: 11, top: 2, height: 11 }}
+                        />
+                        <ThemeImage
+                            src={layoutImage('var_picker_cancel_search.png')}
+                            layout={{ position: 'absolute', right: 4, width: 9, top: 3, height: 9 }}
+                        />
+                    </Region>
+                )}
                 <ContainerButton
                     variant="0"
                     name="button_remove_friend"

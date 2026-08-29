@@ -6,13 +6,13 @@ export interface MeMenuSettingsMenu_1256LayoutProps {
     captionIdentityText?: string;
     captionSettingsTitle?: string;
     layout?: BoxLayout;
-    line?: MeMenuSettingsMenu_1256LayoutLineProps;
     onBack?: () => void;
     onCharacterSettings?: () => void;
     onSoundSettings?: () => void;
+    visibleIdentityText?: boolean;
 }
 
-export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSettingsTitle, layout, line, onBack, onCharacterSettings, onSoundSettings }: MeMenuSettingsMenu_1256LayoutProps) => {
+export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSettingsTitle, layout, onBack, onCharacterSettings, onSoundSettings, visibleIdentityText }: MeMenuSettingsMenu_1256LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -32,7 +32,10 @@ export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSett
                         textOptions={{ fill: '#ffffff' }}
                     />
                 </Region>
-                <MeMenuSettingsMenu_1256LayoutLine {...line} />
+                <Region
+                    name="line"
+                    layout={{ position: 'absolute', left: 5, width: 160, top: 22, height: 1 }}
+                />
                 <Button
                     variant="3"
                     name="character_settings"
@@ -49,16 +52,17 @@ export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSett
                 >
                     {t('widget.memenu.settings.audio')}
                 </Button>
-                <Region
-                    name="identity_text"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 11, width: 159, top: 81, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionIdentityText ?? t('widget.memenu.settings.no_identity')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 159 }}
-                    />
-                </Region>
+                {(visibleIdentityText ?? false) && (
+                    <Region
+                        name="identity_text"
+                        layout={{ position: 'absolute', left: 11, width: 159, top: 81, height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionIdentityText ?? t('widget.memenu.settings.no_identity')}
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 159 }}
+                        />
+                    </Region>
+                )}
                 <Button
                     variant="3"
                     name="back"
@@ -69,19 +73,5 @@ export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSett
                 </Button>
             </Border>
         </Region>
-    );
-};
-
-/** Named region `line` of MeMenuSettingsMenu_1256Layout - configured through the parent's `line` prop. */
-export interface MeMenuSettingsMenu_1256LayoutLineProps {
-    layout?: BoxLayout;
-}
-
-export const MeMenuSettingsMenu_1256LayoutLine = ({ layout }: MeMenuSettingsMenu_1256LayoutLineProps) => {
-    return (
-        <Region
-            name="line"
-            layout={{ position: 'absolute', left: 5, width: 160, top: 22, height: 1, ...layout }}
-        />
     );
 };

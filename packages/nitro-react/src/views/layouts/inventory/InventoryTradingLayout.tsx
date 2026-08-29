@@ -6,23 +6,24 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1388_inventory_trading_xml` (layout "inventory_trading", 478x371) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface InventoryTradingLayoutProps {
-    buttonContainer?: InventoryTradingLayoutButtonContainerProps;
     captionHelpText?: string;
     captionInfoTextHighlighted?: string;
     captionOtherSilver?: string;
     captionSilverFeeInfoText?: string;
     captionYourSilver?: string;
+    itemsRequirementContainer?: ReactNode;
     layout?: BoxLayout;
     offers0?: InventoryTradingLayoutOffers0Props;
     offers1?: InventoryTradingLayoutOffers1Props;
+    onButtonAccept?: () => void;
+    onButtonCancel?: () => void;
     onSilverMinusButton?: () => void;
     onSilverPlusButton?: () => void;
-    requirementContainer?: InventoryTradingLayoutRequirementContainerProps;
     srcArrowLeft?: string;
     srcArrowRight?: string;
 }
 
-export const InventoryTradingLayout = ({ buttonContainer, captionHelpText, captionInfoTextHighlighted, captionOtherSilver, captionSilverFeeInfoText, captionYourSilver, layout, offers0, offers1, onSilverMinusButton, onSilverPlusButton, requirementContainer, srcArrowLeft, srcArrowRight }: InventoryTradingLayoutProps) => {
+export const InventoryTradingLayout = ({ captionHelpText, captionInfoTextHighlighted, captionOtherSilver, captionSilverFeeInfoText, captionYourSilver, itemsRequirementContainer, layout, offers0, offers1, onButtonAccept, onButtonCancel, onSilverMinusButton, onSilverPlusButton, srcArrowLeft, srcArrowRight }: InventoryTradingLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -45,11 +46,7 @@ export const InventoryTradingLayout = ({ buttonContainer, captionHelpText, capti
                     </Region>
                     <InventoryTradingLayoutOffers0 {...offers0} />
                     <InventoryTradingLayoutOffers1 {...offers1} />
-                    <ThemeImage
-                        src={layoutImage('inventory_trading_trading_split_icon.png')}
-                        layout={{ position: 'absolute', left: 212, width: 53, top: 95, height: 42 }}
-                        visible={false}
-                    />
+                    {/* `static_bitmap` is hidden and has no name to show it by */}
                     <WidgetSlot
                         widgetType="separator"
                         options={{ 'separator:vertical': 'true' }}
@@ -93,7 +90,18 @@ export const InventoryTradingLayout = ({ buttonContainer, captionHelpText, capti
                             textOptions={{ align: 'center' }}
                         />
                     </Region>
-                    <InventoryTradingLayoutRequirementContainer {...requirementContainer} />
+                    <Region
+                        name="requirement_container"
+                        layout={{ position: 'absolute', left: 212, right: 205, top: 29, minHeight: 25, maxHeight: 25, flexDirection: 'row', gap: 5 }}
+                    >
+                        {itemsRequirementContainer ?? (
+                            <InventoryTradingLayoutSilverProgressHtmlItem />
+                        )}
+                        <ThemeImage
+                            src={layoutImage('pursearea_mid_silver_icon.png')}
+                            layout={{ width: 24, height: 24, flexShrink: 0 }}
+                        />
+                    </Region>
                     <Region
                         name="your_silver"
                         layout={{ position: 'absolute', left: 97, width: 40, top: 29, height: 24, minWidth: 40, maxWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
@@ -126,7 +134,27 @@ export const InventoryTradingLayout = ({ buttonContainer, captionHelpText, capti
                         <ThemeText text={captionInfoTextHighlighted ?? ''} />
                     </Region>
                 </Border>
-                <InventoryTradingLayoutButtonContainer {...buttonContainer} />
+                <Region
+                    name="button_container"
+                    layout={{ position: 'absolute', left: 0, width: 478, top: 341, height: 32 }}
+                >
+                    <Button
+                        variant="3"
+                        name="button_accept"
+                        onPointerTap={onButtonAccept}
+                        layout={{ position: 'absolute', left: 5, width: 157, top: 0, height: 28 }}
+                    >
+                        {t('inventory.trading.accept')}
+                    </Button>
+                    <Button
+                        variant="3"
+                        name="button_cancel"
+                        onPointerTap={onButtonCancel}
+                        layout={{ position: 'absolute', right: 7, width: 56, top: 0, height: 28 }}
+                    >
+                        {t('generic.cancel')}
+                    </Button>
+                </Region>
             </Region>
         </Region>
     );
@@ -166,28 +194,6 @@ export const InventoryTradingLayoutPlainTextItem = ({ captionPlainText, layout }
             layout={{ width: 167, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionPlainText ?? t('inventory.trading.areoffering')} />
-        </Region>
-    );
-};
-
-/** Named region `text_list_0` of InventoryTradingLayout - configured through the parent's `textList0` prop. */
-export interface InventoryTradingLayoutTextList0Props {
-    itemsTextList0?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const InventoryTradingLayoutTextList0 = ({ itemsTextList0, layout }: InventoryTradingLayoutTextList0Props) => {
-    return (
-        <Region
-            name="text_list_0"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row', ...layout }}
-        >
-            {itemsTextList0 ?? (
-                <>
-                    <InventoryTradingLayoutBoldTextItem />
-                    <InventoryTradingLayoutPlainTextItem />
-                </>
-            )}
         </Region>
     );
 };
@@ -275,12 +281,13 @@ export interface InventoryTradingLayoutOffers0Props {
     captionContentText1B?: string;
     captionInfoText0?: string;
     itemGridBorder0?: InventoryTradingLayoutItemGridBorder0Props;
+    itemsTextList0?: ReactNode;
     layout?: BoxLayout;
     srcLock0?: string;
-    textList0?: InventoryTradingLayoutTextList0Props;
+    visibleInfoText0?: boolean;
 }
 
-export const InventoryTradingLayoutOffers0 = ({ captionContentText1A, captionContentText1B, captionInfoText0, itemGridBorder0, layout, srcLock0, textList0 }: InventoryTradingLayoutOffers0Props) => {
+export const InventoryTradingLayoutOffers0 = ({ captionContentText1A, captionContentText1B, captionInfoText0, itemGridBorder0, itemsTextList0, layout, srcLock0, visibleInfoText0 }: InventoryTradingLayoutOffers0Props) => {
     const t = useTranslation();
 
     return (
@@ -288,18 +295,29 @@ export const InventoryTradingLayoutOffers0 = ({ captionContentText1A, captionCon
             name="offers_0"
             layout={{ position: 'absolute', left: 17, width: 200, top: 29, height: 200, ...layout }}
         >
-            <InventoryTradingLayoutTextList0 {...textList0} />
-            <InventoryTradingLayoutItemGridBorder0 {...itemGridBorder0} />
             <Region
-                name="info_text_0"
-                visible={false}
-                layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                name="text_list_0"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row' }}
             >
-                <ThemeText
-                    text={captionInfoText0 ?? t('inventory.trading.warning.own_account_disabled')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
-                />
+                {itemsTextList0 ?? (
+                    <>
+                        <InventoryTradingLayoutBoldTextItem />
+                        <InventoryTradingLayoutPlainTextItem />
+                    </>
+                )}
             </Region>
+            <InventoryTradingLayoutItemGridBorder0 {...itemGridBorder0} />
+            {(visibleInfoText0 ?? false) && (
+                <Region
+                    name="info_text_0"
+                    layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionInfoText0 ?? t('inventory.trading.warning.own_account_disabled')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
+                    />
+                </Region>
+            )}
             <Region
                 name="content_text_1_a"
                 layout={{ position: 'absolute', left: 80, width: 4, top: 162, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -355,28 +373,6 @@ export const InventoryTradingLayoutPlainTextItem2 = ({ captionPlainText, layout 
             layout={{ width: 157, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionPlainText ?? t('inventory.trading.isoffering')} />
-        </Region>
-    );
-};
-
-/** Named region `text_list_1` of InventoryTradingLayout - configured through the parent's `textList1` prop. */
-export interface InventoryTradingLayoutTextList1Props {
-    itemsTextList1?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const InventoryTradingLayoutTextList1 = ({ itemsTextList1, layout }: InventoryTradingLayoutTextList1Props) => {
-    return (
-        <Region
-            name="text_list_1"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row', ...layout }}
-        >
-            {itemsTextList1 ?? (
-                <>
-                    <InventoryTradingLayoutBoldTextItem2 />
-                    <InventoryTradingLayoutPlainTextItem2 />
-                </>
-            )}
         </Region>
     );
 };
@@ -464,12 +460,13 @@ export interface InventoryTradingLayoutOffers1Props {
     captionContentText2B?: string;
     captionInfoText1?: string;
     itemGridBorder1?: InventoryTradingLayoutItemGridBorder1Props;
+    itemsTextList1?: ReactNode;
     layout?: BoxLayout;
     srcLock1?: string;
-    textList1?: InventoryTradingLayoutTextList1Props;
+    visibleInfoText1?: boolean;
 }
 
-export const InventoryTradingLayoutOffers1 = ({ captionContentText2A, captionContentText2B, captionInfoText1, itemGridBorder1, layout, srcLock1, textList1 }: InventoryTradingLayoutOffers1Props) => {
+export const InventoryTradingLayoutOffers1 = ({ captionContentText2A, captionContentText2B, captionInfoText1, itemGridBorder1, itemsTextList1, layout, srcLock1, visibleInfoText1 }: InventoryTradingLayoutOffers1Props) => {
     const t = useTranslation();
 
     return (
@@ -477,18 +474,29 @@ export const InventoryTradingLayoutOffers1 = ({ captionContentText2A, captionCon
             name="offers_1"
             layout={{ position: 'absolute', left: 263, width: 200, top: 29, height: 200, ...layout }}
         >
-            <InventoryTradingLayoutTextList1 {...textList1} />
-            <InventoryTradingLayoutItemGridBorder1 {...itemGridBorder1} />
             <Region
-                name="info_text_1"
-                visible={false}
-                layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                name="text_list_1"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row' }}
             >
-                <ThemeText
-                    text={captionInfoText1 ?? t('inventory.trading.warning.others_account_disabled')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
-                />
+                {itemsTextList1 ?? (
+                    <>
+                        <InventoryTradingLayoutBoldTextItem2 />
+                        <InventoryTradingLayoutPlainTextItem2 />
+                    </>
+                )}
             </Region>
+            <InventoryTradingLayoutItemGridBorder1 {...itemGridBorder1} />
+            {(visibleInfoText1 ?? false) && (
+                <Region
+                    name="info_text_1"
+                    layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionInfoText1 ?? t('inventory.trading.warning.others_account_disabled')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
+                    />
+                </Region>
+            )}
             <Region
                 name="content_text_2_a"
                 layout={{ position: 'absolute', left: 80, width: 4, top: 162, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -523,64 +531,6 @@ export const InventoryTradingLayoutSilverProgressHtmlItem = ({ captionSilverProg
             layout={{ width: 32, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionSilverProgressHtml ?? '<font color="#AC232A">0</font>/10'} />
-        </Region>
-    );
-};
-
-/** Named region `requirement_container` of InventoryTradingLayout - configured through the parent's `requirementContainer` prop. */
-export interface InventoryTradingLayoutRequirementContainerProps {
-    itemsRequirementContainer?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const InventoryTradingLayoutRequirementContainer = ({ itemsRequirementContainer, layout }: InventoryTradingLayoutRequirementContainerProps) => {
-    return (
-        <Region
-            name="requirement_container"
-            layout={{ position: 'absolute', left: 212, right: 205, top: 29, minHeight: 25, maxHeight: 25, flexDirection: 'row', gap: 5, ...layout }}
-        >
-            {itemsRequirementContainer ?? (
-                <InventoryTradingLayoutSilverProgressHtmlItem />
-            )}
-            <ThemeImage
-                src={layoutImage('pursearea_mid_silver_icon.png')}
-                layout={{ width: 24, height: 24, flexShrink: 0 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `button_container` of InventoryTradingLayout - configured through the parent's `buttonContainer` prop. */
-export interface InventoryTradingLayoutButtonContainerProps {
-    layout?: BoxLayout;
-    onButtonAccept?: () => void;
-    onButtonCancel?: () => void;
-}
-
-export const InventoryTradingLayoutButtonContainer = ({ layout, onButtonAccept, onButtonCancel }: InventoryTradingLayoutButtonContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="button_container"
-            layout={{ position: 'absolute', left: 0, width: 478, top: 341, height: 32, ...layout }}
-        >
-            <Button
-                variant="3"
-                name="button_accept"
-                onPointerTap={onButtonAccept}
-                layout={{ position: 'absolute', left: 5, width: 157, top: 0, height: 28 }}
-            >
-                {t('inventory.trading.accept')}
-            </Button>
-            <Button
-                variant="3"
-                name="button_cancel"
-                onPointerTap={onButtonCancel}
-                layout={{ position: 'absolute', right: 7, width: 56, top: 0, height: 28 }}
-            >
-                {t('generic.cancel')}
-            </Button>
         </Region>
     );
 };

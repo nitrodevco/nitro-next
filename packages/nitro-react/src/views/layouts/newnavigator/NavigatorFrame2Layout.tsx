@@ -6,17 +6,16 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `138_navigator_frame_2_xml` (layout "navigator_frame_2", 578x628) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NavigatorFrame2LayoutProps {
+    itemsQuicklinksList?: ReactNode;
     layout?: BoxLayout;
     leftPaneHide?: NavigatorFrame2LayoutLeftPaneHideProps;
     onClose?: () => void;
+    onTempBack?: () => void;
     onTopViewSelectTabButton?: () => void;
-    quicklinksList?: NavigatorFrame2LayoutQuicklinksListProps;
     rightPane?: NavigatorFrame2LayoutRightPaneProps;
-    tempBack?: NavigatorFrame2LayoutTempBackProps;
-    whiteBackground?: NavigatorFrame2LayoutWhiteBackgroundProps;
 }
 
-export const NavigatorFrame2Layout = ({ layout, leftPaneHide, onClose, onTopViewSelectTabButton, quicklinksList, rightPane, tempBack, whiteBackground }: NavigatorFrame2LayoutProps) => {
+export const NavigatorFrame2Layout = ({ itemsQuicklinksList, layout, leftPaneHide, onClose, onTempBack, onTopViewSelectTabButton, rightPane }: NavigatorFrame2LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -32,17 +31,44 @@ export const NavigatorFrame2Layout = ({ layout, leftPaneHide, onClose, onTopView
                 tintColor="#eceae0"
                 layout={{ position: 'absolute', left: -3, right: 4, top: -3, bottom: 53 }}
             />
-            <NavigatorFrame2LayoutWhiteBackground {...whiteBackground} />
+            <Region
+                name="white_background"
+                backgroundColor="#ffffff"
+                layout={{ position: 'absolute', left: -2, right: 4, top: -5, height: 33 }}
+            />
             <Border
                 variant="2"
                 name="left_pane"
                 layout={{ position: 'absolute', left: 6, width: 141, top: 35, bottom: 55 }}
             >
                 <NavigatorFrame2LayoutLeftPaneHide {...leftPaneHide} />
-                <NavigatorFrame2LayoutQuicklinksList {...quicklinksList} />
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 5, width: 136, top: 25, bottom: 4 }}
+                >
+                    <Region
+                        name="quicklinks_list"
+                        layout={{ flexDirection: 'column', gap: 2, width: '100%' }}
+                    >
+                        {itemsQuicklinksList ?? (
+                            <NavigatorFrame2LayoutQuickLinkItem />
+                        )}
+                    </Region>
+                </ScrollArea>
             </Border>
             <NavigatorFrame2LayoutRightPane {...rightPane} />
-            <NavigatorFrame2LayoutTempBack {...tempBack} />
+            <Region
+                name="temp_back"
+                tooltip={t('navigator.tooltip.left.show.hide')}
+                onPointerTap={onTempBack}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 4, width: 28, top: 2, height: 25 }}
+            >
+                <ThemeImage
+                    src={layoutImage('newnavigator_button_quicklink_add.png')}
+                    layout={{ position: 'absolute', left: 10, width: 18, top: 2, height: 19 }}
+                />
+            </Region>
             <ThemeImage
                 src={layoutImage('talent_task_progress_bg.png')}
                 layout={{ position: 'absolute', left: -2, right: -5, top: 28, height: 1 }}
@@ -66,87 +92,16 @@ export const NavigatorFrame2Layout = ({ layout, leftPaneHide, onClose, onTopView
     );
 };
 
-/** Named region `white_background` of NavigatorFrame2Layout - configured through the parent's `whiteBackground` prop. */
-export interface NavigatorFrame2LayoutWhiteBackgroundProps {
-    layout?: BoxLayout;
-}
-
-export const NavigatorFrame2LayoutWhiteBackground = ({ layout }: NavigatorFrame2LayoutWhiteBackgroundProps) => {
-    return (
-        <Region
-            name="white_background"
-            backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: -2, right: 4, top: -5, height: 33, ...layout }}
-        />
-    );
-};
-
-/** Named region `left_hide_container` of NavigatorFrame2Layout - configured through the parent's `leftHideContainer` prop. */
-export interface NavigatorFrame2LayoutLeftHideContainerProps {
-    layout?: BoxLayout;
-}
-
-export const NavigatorFrame2LayoutLeftHideContainer = ({ layout }: NavigatorFrame2LayoutLeftHideContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="left_hide_container"
-            layout={{ position: 'absolute', left: 0, width: 136, top: 0, height: 18, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('newnavigator_button_quicklink_add.png')}
-                layout={{ position: 'absolute', left: 3, width: 18, top: 3, height: 18 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 149, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('navigator.quick.links.title')}
-                    textStyle="text-style-id-heading-2"
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `left_show_container` of NavigatorFrame2Layout - configured through the parent's `leftShowContainer` prop. */
-export interface NavigatorFrame2LayoutLeftShowContainerProps {
-    layout?: BoxLayout;
-    visibleLeftShowContainer?: boolean;
-}
-
-export const NavigatorFrame2LayoutLeftShowContainer = ({ layout, visibleLeftShowContainer }: NavigatorFrame2LayoutLeftShowContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="left_show_container"
-            visible={visibleLeftShowContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 136, top: 0, height: 18, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('newnavigator_button_quicklink_add.png')}
-                layout={{ position: 'absolute', left: 3, width: 12, top: 3, height: 12 }}
-            />
-            <Region layout={{ position: 'absolute', left: 20, width: 136, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('navigator.quick.links.title')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
 /** Named region `left_pane_hide` of NavigatorFrame2Layout - configured through the parent's `leftPaneHide` prop. */
 export interface NavigatorFrame2LayoutLeftPaneHideProps {
     layout?: BoxLayout;
-    leftHideContainer?: NavigatorFrame2LayoutLeftHideContainerProps;
-    leftShowContainer?: NavigatorFrame2LayoutLeftShowContainerProps;
     onLeftPaneHide?: () => void;
+    visibleLeftShowContainer?: boolean;
 }
 
-export const NavigatorFrame2LayoutLeftPaneHide = ({ layout, leftHideContainer, leftShowContainer, onLeftPaneHide }: NavigatorFrame2LayoutLeftPaneHideProps) => {
+export const NavigatorFrame2LayoutLeftPaneHide = ({ layout, onLeftPaneHide, visibleLeftShowContainer }: NavigatorFrame2LayoutLeftPaneHideProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="left_pane_hide"
@@ -159,8 +114,39 @@ export const NavigatorFrame2LayoutLeftPaneHide = ({ layout, leftHideContainer, l
                 tintColor="#fba800"
                 layout={{ position: 'absolute', left: 6, width: 141, top: 0, height: 27 }}
             >
-                <NavigatorFrame2LayoutLeftHideContainer {...leftHideContainer} />
-                <NavigatorFrame2LayoutLeftShowContainer {...leftShowContainer} />
+                <Region
+                    name="left_hide_container"
+                    layout={{ position: 'absolute', left: 0, width: 136, top: 0, height: 18 }}
+                >
+                    <ThemeImage
+                        src={layoutImage('newnavigator_button_quicklink_add.png')}
+                        layout={{ position: 'absolute', left: 3, width: 18, top: 3, height: 18 }}
+                    />
+                    <Region layout={{ position: 'absolute', left: 20, width: 149, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('navigator.quick.links.title')}
+                            textStyle="text-style-id-heading-2"
+                        />
+                    </Region>
+                </Region>
+                {(visibleLeftShowContainer ?? false) && (
+                    <Region
+                        name="left_show_container"
+                        layout={{ position: 'absolute', left: 0, width: 136, top: 0, height: 18 }}
+                    >
+                        <ThemeImage
+                            src={layoutImage('newnavigator_button_quicklink_add.png')}
+                            layout={{ position: 'absolute', left: 3, width: 12, top: 3, height: 12 }}
+                        />
+                        <Region layout={{ position: 'absolute', left: 20, width: 136, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <ThemeText
+                                text={t('navigator.quick.links.title')}
+                                textStyle="text-style-u-bold"
+                                textOptions={{ fill: '#ffffff' }}
+                            />
+                        </Region>
+                    </Region>
+                )}
             </Border>
         </Region>
     );
@@ -192,206 +178,35 @@ export const NavigatorFrame2LayoutQuickLinkItem = ({ captionQuickLinkText, layou
             >
                 <ThemeText text={captionQuickLinkText ?? 'quick link ph oijasdf oaijs dfodisjf'} />
             </Region>
-            <ContainerButton
-                variant="0"
-                name="remove_quick_link"
-                tooltip={t('navigator.tooltip.remove.saved.search')}
-                onPointerTap={onRemoveQuickLink}
-                visible={visibleRemoveQuickLink ?? false}
-                layout={{ position: 'absolute', left: 115, width: 16, top: 1, height: 16 }}
-            >
-                <ThemeImage
-                    src={layoutImage('newnavigator_icon_ql_remove.png')}
-                    layout={{ position: 'absolute', left: 3, width: 10, top: 3, height: 10 }}
-                />
-            </ContainerButton>
-        </Region>
-    );
-};
-
-/** Named region `quicklinks_list` of NavigatorFrame2Layout - configured through the parent's `quicklinksList` prop. */
-export interface NavigatorFrame2LayoutQuicklinksListProps {
-    itemsQuicklinksList?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const NavigatorFrame2LayoutQuicklinksList = ({ itemsQuicklinksList, layout }: NavigatorFrame2LayoutQuicklinksListProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 5, width: 136, top: 25, bottom: 4, ...layout }}
-        >
-            <Region
-                name="quicklinks_list"
-                layout={{ flexDirection: 'column', gap: 2, width: '100%' }}
-            >
-                {itemsQuicklinksList ?? (
-                    <NavigatorFrame2LayoutQuickLinkItem />
-                )}
-            </Region>
-        </ScrollArea>
-    );
-};
-
-/** Named region `create_room` of NavigatorFrame2Layout - configured through the parent's `createRoom` prop. */
-export interface NavigatorFrame2LayoutCreateRoomProps {
-    layout?: BoxLayout;
-    onCreateRoom?: () => void;
-}
-
-export const NavigatorFrame2LayoutCreateRoom = ({ layout, onCreateRoom }: NavigatorFrame2LayoutCreateRoomProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="create_room"
-            tooltip={t('navigator.tooltip.create.room')}
-            onPointerTap={onCreateRoom}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('newnavigator_create_room.png')}
-                layout={{ position: 'absolute', left: 0, width: 186, top: 0, height: 59 }}
-            />
-            <Region layout={{ position: 'absolute', left: 60, width: 125, top: 22, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                <ThemeText
-                    text={t('navigator.create.room')}
-                    textStyle="text-style-id-heading-2"
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `random_room` of NavigatorFrame2Layout - configured through the parent's `randomRoom` prop. */
-export interface NavigatorFrame2LayoutRandomRoomProps {
-    layout?: BoxLayout;
-    onRandomRoom?: () => void;
-}
-
-export const NavigatorFrame2LayoutRandomRoom = ({ layout, onRandomRoom }: NavigatorFrame2LayoutRandomRoomProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="random_room"
-            tooltip={t('navigator.tooltip.random.room')}
-            onPointerTap={onRandomRoom}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('newnavigator_random_room.png')}
-                layout={{ position: 'absolute', left: 0, width: 186, top: 0, height: 59 }}
-            />
-            <Region layout={{ position: 'absolute', left: 60, width: 125, top: 22, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                <ThemeText
-                    text={t('navigator.random.room')}
-                    textStyle="text-style-id-heading-2"
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `promote_room` of NavigatorFrame2Layout - configured through the parent's `promoteRoom` prop. */
-export interface NavigatorFrame2LayoutPromoteRoomProps {
-    layout?: BoxLayout;
-    onPromoteRoom?: () => void;
-}
-
-export const NavigatorFrame2LayoutPromoteRoom = ({ layout, onPromoteRoom }: NavigatorFrame2LayoutPromoteRoomProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="promote_room"
-            tooltip={t('navigator.tooltip.promote.room')}
-            onPointerTap={onPromoteRoom}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('newnavigator_promote_room.png')}
-                layout={{ position: 'absolute', left: 0, width: 186, top: 0, height: 59 }}
-            />
-            <Region layout={{ position: 'absolute', left: 60, width: 125, top: 22, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                <ThemeText
-                    text={t('navigator.promote.room')}
-                    textStyle="text-style-id-heading-2"
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `clear_search_button` of NavigatorFrame2Layout - configured through the parent's `clearSearchButton` prop. */
-export interface NavigatorFrame2LayoutClearSearchButtonProps {
-    layout?: BoxLayout;
-    onClearSearchButton?: () => void;
-    srcSearchClearIcon?: string;
-}
-
-export const NavigatorFrame2LayoutClearSearchButton = ({ layout, onClearSearchButton, srcSearchClearIcon }: NavigatorFrame2LayoutClearSearchButtonProps) => {
-    return (
-        <Region
-            name="clear_search_button"
-            onPointerTap={onClearSearchButton}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 215, width: 20, top: 4, height: 20, ...layout }}
-        >
-            <ThemeImage
-                name="search.clear.icon"
-                src={srcSearchClearIcon ?? layoutImage('common_small_pen.png')}
-                layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `refreshButtonContainer` of NavigatorFrame2Layout - configured through the parent's `refreshButtonContainer` prop. */
-export interface NavigatorFrame2LayoutRefreshButtonContainerProps {
-    layout?: BoxLayout;
-    onRefreshButton?: () => void;
-    visibleRefreshButtonContainer?: boolean;
-}
-
-export const NavigatorFrame2LayoutRefreshButtonContainer = ({ layout, onRefreshButton, visibleRefreshButtonContainer }: NavigatorFrame2LayoutRefreshButtonContainerProps) => {
-    return (
-        <Region
-            name="refreshButtonContainer"
-            visible={visibleRefreshButtonContainer ?? false}
-            layout={{ position: 'absolute', left: 375, width: 25, top: 10, height: 25, ...layout }}
-        >
-            <Button
-                variant="5"
-                name="refreshButton"
-                tintColor="#7cc561"
-                onPointerTap={onRefreshButton}
-                textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 0, width: 25, top: 0, height: 23 }}
-            />
-            <ThemeImage
-                src={layoutImage('newnavigator_refresh_search_icon.png')}
-                layout={{ position: 'absolute', left: 5, width: 17, top: 5, height: 12 }}
-            />
+            {(visibleRemoveQuickLink ?? false) && (
+                <ContainerButton
+                    variant="0"
+                    name="remove_quick_link"
+                    tooltip={t('navigator.tooltip.remove.saved.search')}
+                    onPointerTap={onRemoveQuickLink}
+                    layout={{ position: 'absolute', left: 115, width: 16, top: 1, height: 16 }}
+                >
+                    <ThemeImage
+                        src={layoutImage('newnavigator_icon_ql_remove.png')}
+                        layout={{ position: 'absolute', left: 3, width: 10, top: 3, height: 10 }}
+                    />
+                </ContainerButton>
+            )}
         </Region>
     );
 };
 
 /** Named region `search_tools` of NavigatorFrame2Layout - configured through the parent's `searchTools` prop. */
 export interface NavigatorFrame2LayoutSearchToolsProps {
-    clearSearchButton?: NavigatorFrame2LayoutClearSearchButtonProps;
     layout?: BoxLayout;
+    onClearSearchButton?: () => void;
     onFilterTypeDropMenu?: () => void;
-    refreshButtonContainer?: NavigatorFrame2LayoutRefreshButtonContainerProps;
+    onRefreshButton?: () => void;
+    srcSearchClearIcon?: string;
+    visibleRefreshButtonContainer?: boolean;
 }
 
-export const NavigatorFrame2LayoutSearchTools = ({ clearSearchButton, layout, onFilterTypeDropMenu, refreshButtonContainer }: NavigatorFrame2LayoutSearchToolsProps) => {
+export const NavigatorFrame2LayoutSearchTools = ({ layout, onClearSearchButton, onFilterTypeDropMenu, onRefreshButton, srcSearchClearIcon, visibleRefreshButtonContainer }: NavigatorFrame2LayoutSearchToolsProps) => {
     const t = useTranslation();
     const [ searchInputValue, setSearchInputValue ] = useState('');
 
@@ -416,62 +231,38 @@ export const NavigatorFrame2LayoutSearchTools = ({ clearSearchButton, layout, on
                     onChange={setSearchInputValue}
                     layout={{ position: 'absolute', left: 6, width: 235, top: 4, height: 16 }}
                 />
-                <NavigatorFrame2LayoutClearSearchButton {...clearSearchButton} />
+                <Region
+                    name="clear_search_button"
+                    onPointerTap={onClearSearchButton}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 215, width: 20, top: 4, height: 20 }}
+                >
+                    <ThemeImage
+                        name="search.clear.icon"
+                        src={srcSearchClearIcon ?? layoutImage('common_small_pen.png')}
+                        layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
+                    />
+                </Region>
             </Border>
-            <NavigatorFrame2LayoutRefreshButtonContainer {...refreshButtonContainer} />
-        </Region>
-    );
-};
-
-/** Named region `category_collapse` of NavigatorFrame2Layout - configured through the parent's `categoryCollapse` prop. */
-export interface NavigatorFrame2LayoutCategoryCollapseProps {
-    layout?: BoxLayout;
-    onCategoryCollapse?: () => void;
-}
-
-export const NavigatorFrame2LayoutCategoryCollapse = ({ layout, onCategoryCollapse }: NavigatorFrame2LayoutCategoryCollapseProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="category_collapse"
-            tooltip={t('navigator.tooltip.category.collapse')}
-            onPointerTap={onCategoryCollapse}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 5, width: 11, top: 7, height: 19, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('newnavigator_button_category_collapse.png')}
-                layout={{ position: 'absolute', left: 0, width: 11, top: 0, height: 19 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `category_name_region` of NavigatorFrame2Layout - configured through the parent's `categoryNameRegion` prop. */
-export interface NavigatorFrame2LayoutCategoryNameRegionProps {
-    captionCategoryName?: string;
-    layout?: BoxLayout;
-    onCategoryNameRegion?: () => void;
-}
-
-export const NavigatorFrame2LayoutCategoryNameRegion = ({ captionCategoryName, layout, onCategoryNameRegion }: NavigatorFrame2LayoutCategoryNameRegionProps) => {
-    return (
-        <Region
-            name="category_name_region"
-            onPointerTap={onCategoryNameRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 142, top: 0, height: 27, ...layout }}
-        >
-            <Region
-                name="category_name"
-                layout={{ position: 'absolute', left: 20, width: 122, top: 5, height: 19, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCategoryName ?? 'Category Name PH'}
-                    textOptions={{ fill: '#0f557b' }}
-                />
-            </Region>
+            {(visibleRefreshButtonContainer ?? false) && (
+                <Region
+                    name="refreshButtonContainer"
+                    layout={{ position: 'absolute', left: 375, width: 25, top: 10, height: 25 }}
+                >
+                    <Button
+                        variant="5"
+                        name="refreshButton"
+                        tintColor="#7cc561"
+                        onPointerTap={onRefreshButton}
+                        textStyle="text-style-button-shiny-regular"
+                        layout={{ position: 'absolute', left: 0, width: 25, top: 0, height: 23 }}
+                    />
+                    <ThemeImage
+                        src={layoutImage('newnavigator_refresh_search_icon.png')}
+                        layout={{ position: 'absolute', left: 5, width: 17, top: 5, height: 12 }}
+                    />
+                </Region>
+            )}
         </Region>
     );
 };
@@ -628,43 +419,52 @@ export const NavigatorFrame2LayoutCategoryControlsItemlist = ({ itemsCategoryCon
 
 /** Named region `category_header` of NavigatorFrame2Layout - configured through the parent's `categoryHeader` prop. */
 export interface NavigatorFrame2LayoutCategoryHeaderProps {
-    categoryCollapse?: NavigatorFrame2LayoutCategoryCollapseProps;
+    captionCategoryName?: string;
     categoryControlsItemlist?: NavigatorFrame2LayoutCategoryControlsItemlistProps;
-    categoryNameRegion?: NavigatorFrame2LayoutCategoryNameRegionProps;
     layout?: BoxLayout;
+    onCategoryCollapse?: () => void;
+    onCategoryNameRegion?: () => void;
 }
 
-export const NavigatorFrame2LayoutCategoryHeader = ({ categoryCollapse, categoryControlsItemlist, categoryNameRegion, layout }: NavigatorFrame2LayoutCategoryHeaderProps) => {
+export const NavigatorFrame2LayoutCategoryHeader = ({ captionCategoryName, categoryControlsItemlist, layout, onCategoryCollapse, onCategoryNameRegion }: NavigatorFrame2LayoutCategoryHeaderProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="category_header"
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30, ...layout }}
         >
-            <NavigatorFrame2LayoutCategoryCollapse {...categoryCollapse} />
-            <NavigatorFrame2LayoutCategoryNameRegion {...categoryNameRegion} />
+            <Region
+                name="category_collapse"
+                tooltip={t('navigator.tooltip.category.collapse')}
+                onPointerTap={onCategoryCollapse}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 5, width: 11, top: 7, height: 19 }}
+            >
+                <ThemeImage
+                    src={layoutImage('newnavigator_button_category_collapse.png')}
+                    layout={{ position: 'absolute', left: 0, width: 11, top: 0, height: 19 }}
+                />
+            </Region>
+            <Region
+                name="category_name_region"
+                onPointerTap={onCategoryNameRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 142, top: 0, height: 27 }}
+            >
+                <Region
+                    name="category_name"
+                    layout={{ position: 'absolute', left: 20, width: 122, top: 5, height: 19, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionCategoryName ?? 'Category Name PH'}
+                        textOptions={{ fill: '#0f557b' }}
+                    />
+                </Region>
+            </Region>
             <NavigatorFrame2LayoutCategoryControlsItemlist {...categoryControlsItemlist} />
         </Region>
-    );
-};
-
-/** Named region `go_to_room_region` of NavigatorFrame2Layout - configured through the parent's `goToRoomRegion` prop. */
-export interface NavigatorFrame2LayoutGoToRoomRegionProps {
-    layout?: BoxLayout;
-    onGoToRoomRegion?: () => void;
-}
-
-export const NavigatorFrame2LayoutGoToRoomRegion = ({ layout, onGoToRoomRegion }: NavigatorFrame2LayoutGoToRoomRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="go_to_room_region"
-            tooltip={t('navigator.tooltip.go.to.room')}
-            onPointerTap={onGoToRoomRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 146, ...layout }}
-        />
     );
 };
 
@@ -705,62 +505,21 @@ export const NavigatorFrame2LayoutRoomUsercountItem = ({ captionRoomUsercount, l
     );
 };
 
-/** Named region `usercount` of NavigatorFrame2Layout - configured through the parent's `usercount` prop. */
-export interface NavigatorFrame2LayoutUsercountProps {
-    itemsUsercount?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const NavigatorFrame2LayoutUsercount = ({ itemsUsercount, layout }: NavigatorFrame2LayoutUsercountProps) => {
-    return (
-        <Region
-            name="usercount"
-            layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1, ...layout }}
-        >
-            {itemsUsercount ?? (
-                <>
-                    <NavigatorFrame2LayoutRoomUsercountIconItem />
-                    <NavigatorFrame2LayoutRoomUsercountItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
-/** Named region `info_popup_click_region` of NavigatorFrame2Layout - configured through the parent's `infoPopupClickRegion` prop. */
-export interface NavigatorFrame2LayoutInfoPopupClickRegionProps {
-    layout?: BoxLayout;
-    onInfoPopupClickRegion?: () => void;
-}
-
-export const NavigatorFrame2LayoutInfoPopupClickRegion = ({ layout, onInfoPopupClickRegion }: NavigatorFrame2LayoutInfoPopupClickRegionProps) => {
-    return (
-        <Region
-            name="info_popup_click_region"
-            onPointerTap={onInfoPopupClickRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 98, width: 18, top: 120, height: 18, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('newnavigator_button_show_room_info.png')}
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
-            />
-        </Region>
-    );
-};
-
 /** Row template `navigator_entry_tile` of NavigatorFrame2Layout - pass real rows through its `items…` slot. */
 export interface NavigatorFrame2LayoutNavigatorEntryTileItemProps {
     captionRoomName?: string;
-    goToRoomRegion?: NavigatorFrame2LayoutGoToRoomRegionProps;
-    infoPopupClickRegion?: NavigatorFrame2LayoutInfoPopupClickRegionProps;
+    itemsUsercount?: ReactNode;
     layout?: BoxLayout;
+    onGoToRoomRegion?: () => void;
+    onInfoPopupClickRegion?: () => void;
     srcDoormodeIcon?: string;
     srcRoomPicPlaceholder?: string;
-    usercount?: NavigatorFrame2LayoutUsercountProps;
+    visibleRoomGroupBadge?: boolean;
 }
 
-export const NavigatorFrame2LayoutNavigatorEntryTileItem = ({ captionRoomName, goToRoomRegion, infoPopupClickRegion, layout, srcDoormodeIcon, srcRoomPicPlaceholder, usercount }: NavigatorFrame2LayoutNavigatorEntryTileItemProps) => {
+export const NavigatorFrame2LayoutNavigatorEntryTileItem = ({ captionRoomName, itemsUsercount, layout, onGoToRoomRegion, onInfoPopupClickRegion, srcDoormodeIcon, srcRoomPicPlaceholder, visibleRoomGroupBadge }: NavigatorFrame2LayoutNavigatorEntryTileItemProps) => {
+    const t = useTranslation();
+
     return (
         <Border
             variant="10"
@@ -777,14 +536,21 @@ export const NavigatorFrame2LayoutNavigatorEntryTileItem = ({ captionRoomName, g
                 src={srcRoomPicPlaceholder ?? layoutImage('newnavigator_default_room.png')}
                 layout={{ position: 'absolute', left: 8, width: 106, top: 7, height: 106 }}
             />
-            <WidgetSlot
-                widgetType="badge_image"
-                name="room_group_badge"
-                visible={false}
-                options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                layout={{ position: 'absolute', left: 4, width: 50, top: -3, height: 61 }}
+            {(visibleRoomGroupBadge ?? false) && (
+                <WidgetSlot
+                    widgetType="badge_image"
+                    name="room_group_badge"
+                    options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
+                    layout={{ position: 'absolute', left: 4, width: 50, top: -3, height: 61 }}
+                />
+            )}
+            <Region
+                name="go_to_room_region"
+                tooltip={t('navigator.tooltip.go.to.room')}
+                onPointerTap={onGoToRoomRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 146 }}
             />
-            <NavigatorFrame2LayoutGoToRoomRegion {...goToRoomRegion} />
             <Region
                 name="room_name"
                 layout={{ position: 'absolute', left: 0, width: 100, top: 116, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -801,14 +567,34 @@ export const NavigatorFrame2LayoutNavigatorEntryTileItem = ({ captionRoomName, g
                 tintColor="#000000"
                 layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 40, bottom: 35, height: 18, justifyContent: 'center' }}
             >
-                <NavigatorFrame2LayoutUsercount {...usercount} />
+                <Region
+                    name="usercount"
+                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
+                >
+                    {itemsUsercount ?? (
+                        <>
+                            <NavigatorFrame2LayoutRoomUsercountIconItem />
+                            <NavigatorFrame2LayoutRoomUsercountItem />
+                        </>
+                    )}
+                </Region>
             </Border>
             <ThemeImage
                 name="doormode_icon"
                 src={srcDoormodeIcon}
                 layout={{ position: 'absolute', left: 92, width: 16, top: 96, height: 14 }}
             />
-            <NavigatorFrame2LayoutInfoPopupClickRegion {...infoPopupClickRegion} />
+            <Region
+                name="info_popup_click_region"
+                onPointerTap={onInfoPopupClickRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 98, width: 18, top: 120, height: 18 }}
+            >
+                <ThemeImage
+                    src={layoutImage('newnavigator_button_show_room_info.png')}
+                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
+                />
+            </Region>
         </Border>
     );
 };
@@ -869,61 +655,17 @@ export const NavigatorFrame2LayoutRoomUsercountItem2 = ({ captionRoomUsercount, 
     );
 };
 
-/** Named region `usercount` of NavigatorFrame2Layout - configured through the parent's `usercount` prop. */
-export interface NavigatorFrame2LayoutUsercount2Props {
-    itemsUsercount?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const NavigatorFrame2LayoutUsercount2 = ({ itemsUsercount, layout }: NavigatorFrame2LayoutUsercount2Props) => {
-    return (
-        <Region
-            name="usercount"
-            layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1, ...layout }}
-        >
-            {itemsUsercount ?? (
-                <>
-                    <NavigatorFrame2LayoutRoomUsercountIconItem2 />
-                    <NavigatorFrame2LayoutRoomUsercountItem2 />
-                </>
-            )}
-        </Region>
-    );
-};
-
-/** Named region `info_popup_click_region` of NavigatorFrame2Layout - configured through the parent's `infoPopupClickRegion` prop. */
-export interface NavigatorFrame2LayoutInfoPopupClickRegion2Props {
-    layout?: BoxLayout;
-    onInfoPopupClickRegion?: () => void;
-}
-
-export const NavigatorFrame2LayoutInfoPopupClickRegion2 = ({ layout, onInfoPopupClickRegion }: NavigatorFrame2LayoutInfoPopupClickRegion2Props) => {
-    return (
-        <Region
-            name="info_popup_click_region"
-            onPointerTap={onInfoPopupClickRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 4, width: 18, top: 0, height: 18, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('newnavigator_button_show_room_info.png')}
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `room_info_container` of NavigatorFrame2Layout - configured through the parent's `roomInfoContainer` prop. */
 export interface NavigatorFrame2LayoutRoomInfoContainerProps {
     captionRoomName?: string;
-    infoPopupClickRegion?: NavigatorFrame2LayoutInfoPopupClickRegion2Props;
+    itemsUsercount?: ReactNode;
     layout?: BoxLayout;
+    onInfoPopupClickRegion?: () => void;
     srcDoormodeIcon?: string;
     srcGrouphomeIcon?: string;
-    usercount?: NavigatorFrame2LayoutUsercount2Props;
 }
 
-export const NavigatorFrame2LayoutRoomInfoContainer = ({ captionRoomName, infoPopupClickRegion, layout, srcDoormodeIcon, srcGrouphomeIcon, usercount }: NavigatorFrame2LayoutRoomInfoContainerProps) => {
+export const NavigatorFrame2LayoutRoomInfoContainer = ({ captionRoomName, itemsUsercount, layout, onInfoPopupClickRegion, srcDoormodeIcon, srcGrouphomeIcon }: NavigatorFrame2LayoutRoomInfoContainerProps) => {
     return (
         <Region
             name="room_info_container"
@@ -935,7 +677,17 @@ export const NavigatorFrame2LayoutRoomInfoContainer = ({ captionRoomName, infoPo
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 18, justifyContent: 'center' }}
             >
-                <NavigatorFrame2LayoutUsercount2 {...usercount} />
+                <Region
+                    name="usercount"
+                    layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 31, top: 1, height: 15, flexDirection: 'row', gap: 1 }}
+                >
+                    {itemsUsercount ?? (
+                        <>
+                            <NavigatorFrame2LayoutRoomUsercountIconItem2 />
+                            <NavigatorFrame2LayoutRoomUsercountItem2 />
+                        </>
+                    )}
+                </Region>
             </Border>
             <Region
                 name="room_name"
@@ -943,7 +695,17 @@ export const NavigatorFrame2LayoutRoomInfoContainer = ({ captionRoomName, infoPo
             >
                 <ThemeText text={captionRoomName ?? 'Room Name PH'} />
             </Region>
-            <NavigatorFrame2LayoutInfoPopupClickRegion2 {...infoPopupClickRegion} />
+            <Region
+                name="info_popup_click_region"
+                onPointerTap={onInfoPopupClickRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 4, width: 18, top: 0, height: 18 }}
+            >
+                <ThemeImage
+                    src={layoutImage('newnavigator_button_show_room_info.png')}
+                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
+                />
+            </Region>
             <ThemeImage
                 name="doormode_icon"
                 src={srcDoormodeIcon}
@@ -958,31 +720,14 @@ export const NavigatorFrame2LayoutRoomInfoContainer = ({ captionRoomName, infoPo
     );
 };
 
-/** Named region `go_to_room_region` of NavigatorFrame2Layout - configured through the parent's `goToRoomRegion` prop. */
-export interface NavigatorFrame2LayoutGoToRoomRegion2Props {
-    layout?: BoxLayout;
-    onGoToRoomRegion?: () => void;
-}
-
-export const NavigatorFrame2LayoutGoToRoomRegion2 = ({ layout, onGoToRoomRegion }: NavigatorFrame2LayoutGoToRoomRegion2Props) => {
-    return (
-        <Region
-            name="go_to_room_region"
-            onPointerTap={onGoToRoomRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 357, top: 0, height: 20, ...layout }}
-        />
-    );
-};
-
 /** Row template `navigator_entry_row_container` of NavigatorFrame2Layout - pass real rows through its `items…` slot. */
 export interface NavigatorFrame2LayoutNavigatorEntryRowContainerItemProps {
-    goToRoomRegion?: NavigatorFrame2LayoutGoToRoomRegion2Props;
     layout?: BoxLayout;
+    onGoToRoomRegion?: () => void;
     roomInfoContainer?: NavigatorFrame2LayoutRoomInfoContainerProps;
 }
 
-export const NavigatorFrame2LayoutNavigatorEntryRowContainerItem = ({ goToRoomRegion, layout, roomInfoContainer }: NavigatorFrame2LayoutNavigatorEntryRowContainerItemProps) => {
+export const NavigatorFrame2LayoutNavigatorEntryRowContainerItem = ({ layout, onGoToRoomRegion, roomInfoContainer }: NavigatorFrame2LayoutNavigatorEntryRowContainerItemProps) => {
     return (
         <Border
             variant="3"
@@ -990,7 +735,12 @@ export const NavigatorFrame2LayoutNavigatorEntryRowContainerItem = ({ goToRoomRe
             layout={{ width: 383, height: 20, flexShrink: 0, ...layout }}
         >
             <NavigatorFrame2LayoutRoomInfoContainer {...roomInfoContainer} />
-            <NavigatorFrame2LayoutGoToRoomRegion2 {...goToRoomRegion} />
+            <Region
+                name="go_to_room_region"
+                onPointerTap={onGoToRoomRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 357, top: 0, height: 20 }}
+            />
         </Border>
     );
 };
@@ -1054,61 +804,6 @@ export const NavigatorFrame2LayoutCategoryContainerItem = ({ categoryContentBack
     );
 };
 
-/** Named region `category_expand` of NavigatorFrame2Layout - configured through the parent's `categoryExpand` prop. */
-export interface NavigatorFrame2LayoutCategoryExpandProps {
-    layout?: BoxLayout;
-    onCategoryExpand?: () => void;
-}
-
-export const NavigatorFrame2LayoutCategoryExpand = ({ layout, onCategoryExpand }: NavigatorFrame2LayoutCategoryExpandProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="category_expand"
-            tooltip={t('navigator.tooltip.category.expand')}
-            onPointerTap={onCategoryExpand}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 5, width: 11, top: 4, height: 18, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('newnavigator_button_category_expand.png')}
-                layout={{ position: 'absolute', left: 0, width: 11, top: 0, height: 19 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `category_name_region` of NavigatorFrame2Layout - configured through the parent's `categoryNameRegion` prop. */
-export interface NavigatorFrame2LayoutCategoryNameRegion2Props {
-    captionCategoryName?: string;
-    categoryExpand?: NavigatorFrame2LayoutCategoryExpandProps;
-    layout?: BoxLayout;
-    onCategoryNameRegion?: () => void;
-}
-
-export const NavigatorFrame2LayoutCategoryNameRegion2 = ({ captionCategoryName, categoryExpand, layout, onCategoryNameRegion }: NavigatorFrame2LayoutCategoryNameRegion2Props) => {
-    return (
-        <Region
-            name="category_name_region"
-            onPointerTap={onCategoryNameRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 209, top: 0, height: 27, ...layout }}
-        >
-            <NavigatorFrame2LayoutCategoryExpand {...categoryExpand} />
-            <Region
-                name="category_name"
-                layout={{ position: 'absolute', left: 20, width: 189, top: 5, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCategoryName ?? 'Collapsed Category Name PH'}
-                    textOptions={{ fill: '#0f557b' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
 /** Row template `category_show_more` of NavigatorFrame2Layout - pass real rows through its `items…` slot. */
 export interface NavigatorFrame2LayoutCategoryShowMoreItem2Props {
     layout?: BoxLayout;
@@ -1159,44 +854,63 @@ export const NavigatorFrame2LayoutCategoryAddQuickLinkItem2 = ({ layout, onCateg
     );
 };
 
-/** Named region `category_controls_itemlist` of NavigatorFrame2Layout - configured through the parent's `categoryControlsItemlist` prop. */
-export interface NavigatorFrame2LayoutCategoryControlsItemlist2Props {
-    itemsCategoryControlsItemlist?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const NavigatorFrame2LayoutCategoryControlsItemlist2 = ({ itemsCategoryControlsItemlist, layout }: NavigatorFrame2LayoutCategoryControlsItemlist2Props) => {
-    return (
-        <Region
-            name="category_controls_itemlist"
-            layout={{ position: 'absolute', right: 4, width: 36, top: 1, height: 24, flexDirection: 'row', gap: 5, ...layout }}
-        >
-            {itemsCategoryControlsItemlist ?? (
-                <>
-                    <NavigatorFrame2LayoutCategoryShowMoreItem2 />
-                    <NavigatorFrame2LayoutCategoryAddQuickLinkItem2 />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Named region `category_header` of NavigatorFrame2Layout - configured through the parent's `categoryHeader` prop. */
 export interface NavigatorFrame2LayoutCategoryHeader2Props {
-    categoryControlsItemlist?: NavigatorFrame2LayoutCategoryControlsItemlist2Props;
-    categoryNameRegion?: NavigatorFrame2LayoutCategoryNameRegion2Props;
+    captionCategoryName?: string;
+    itemsCategoryControlsItemlist?: ReactNode;
     layout?: BoxLayout;
+    onCategoryExpand?: () => void;
+    onCategoryNameRegion?: () => void;
 }
 
-export const NavigatorFrame2LayoutCategoryHeader2 = ({ categoryControlsItemlist, categoryNameRegion, layout }: NavigatorFrame2LayoutCategoryHeader2Props) => {
+export const NavigatorFrame2LayoutCategoryHeader2 = ({ captionCategoryName, itemsCategoryControlsItemlist, layout, onCategoryExpand, onCategoryNameRegion }: NavigatorFrame2LayoutCategoryHeader2Props) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="category_header"
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 26, ...layout }}
         >
-            <NavigatorFrame2LayoutCategoryNameRegion2 {...categoryNameRegion} />
-            <NavigatorFrame2LayoutCategoryControlsItemlist2 {...categoryControlsItemlist} />
+            <Region
+                name="category_name_region"
+                onPointerTap={onCategoryNameRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 209, top: 0, height: 27 }}
+            >
+                <Region
+                    name="category_expand"
+                    tooltip={t('navigator.tooltip.category.expand')}
+                    onPointerTap={onCategoryExpand}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 5, width: 11, top: 4, height: 18 }}
+                >
+                    <ThemeImage
+                        src={layoutImage('newnavigator_button_category_expand.png')}
+                        layout={{ position: 'absolute', left: 0, width: 11, top: 0, height: 19 }}
+                    />
+                </Region>
+                <Region
+                    name="category_name"
+                    layout={{ position: 'absolute', left: 20, width: 189, top: 5, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionCategoryName ?? 'Collapsed Category Name PH'}
+                        textOptions={{ fill: '#0f557b' }}
+                    />
+                </Region>
+            </Region>
+            <Region
+                name="category_controls_itemlist"
+                layout={{ position: 'absolute', right: 4, width: 36, top: 1, height: 24, flexDirection: 'row', gap: 5 }}
+            >
+                {itemsCategoryControlsItemlist ?? (
+                    <>
+                        <NavigatorFrame2LayoutCategoryShowMoreItem2 />
+                        <NavigatorFrame2LayoutCategoryAddQuickLinkItem2 />
+                    </>
+                )}
+            </Region>
         </Region>
     );
 };
@@ -1269,36 +983,21 @@ export const NavigatorFrame2LayoutBlockResults = ({ itemsBlockResults, layout }:
     );
 };
 
-/** Named region `search_waiting_for_results_mask` of NavigatorFrame2Layout - configured through the parent's `searchWaitingForResultsMask` prop. */
-export interface NavigatorFrame2LayoutSearchWaitingForResultsMaskProps {
-    layout?: BoxLayout;
-    visibleSearchWaitingForResultsMask?: boolean;
-}
-
-export const NavigatorFrame2LayoutSearchWaitingForResultsMask = ({ layout, visibleSearchWaitingForResultsMask }: NavigatorFrame2LayoutSearchWaitingForResultsMaskProps) => {
-    return (
-        <Region
-            name="search_waiting_for_results_mask"
-            visible={visibleSearchWaitingForResultsMask ?? false}
-            backgroundColor="#eceae0"
-            layout={{ position: 'absolute', left: 0, right: 18, top: 42, bottom: 77, ...layout }}
-        />
-    );
-};
-
 /** Named region `right_pane` of NavigatorFrame2Layout - configured through the parent's `rightPane` prop. */
 export interface NavigatorFrame2LayoutRightPaneProps {
     blockResults?: NavigatorFrame2LayoutBlockResultsProps;
-    createRoom?: NavigatorFrame2LayoutCreateRoomProps;
     layout?: BoxLayout;
-    promoteRoom?: NavigatorFrame2LayoutPromoteRoomProps;
-    randomRoom?: NavigatorFrame2LayoutRandomRoomProps;
+    onCreateRoom?: () => void;
+    onPromoteRoom?: () => void;
+    onRandomRoom?: () => void;
     searchTools?: NavigatorFrame2LayoutSearchToolsProps;
-    searchWaitingForResultsMask?: NavigatorFrame2LayoutSearchWaitingForResultsMaskProps;
     visiblePromoteRoomBorder?: boolean;
+    visibleSearchWaitingForResultsMask?: boolean;
 }
 
-export const NavigatorFrame2LayoutRightPane = ({ blockResults, createRoom, layout, promoteRoom, randomRoom, searchTools, searchWaitingForResultsMask, visiblePromoteRoomBorder }: NavigatorFrame2LayoutRightPaneProps) => {
+export const NavigatorFrame2LayoutRightPane = ({ blockResults, layout, onCreateRoom, onPromoteRoom, onRandomRoom, searchTools, visiblePromoteRoomBorder, visibleSearchWaitingForResultsMask }: NavigatorFrame2LayoutRightPaneProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="right_pane"
@@ -1309,51 +1008,87 @@ export const NavigatorFrame2LayoutRightPane = ({ blockResults, createRoom, layou
                 name="create_room_border"
                 layout={{ position: 'absolute', left: 0, width: 189, bottom: 0, height: 60 }}
             >
-                <NavigatorFrame2LayoutCreateRoom {...createRoom} />
+                <Region
+                    name="create_room"
+                    tooltip={t('navigator.tooltip.create.room')}
+                    onPointerTap={onCreateRoom}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
+                >
+                    <ThemeImage
+                        src={layoutImage('newnavigator_create_room.png')}
+                        layout={{ position: 'absolute', left: 0, width: 186, top: 0, height: 59 }}
+                    />
+                    <Region layout={{ position: 'absolute', left: 60, width: 125, top: 22, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                        <ThemeText
+                            text={t('navigator.create.room')}
+                            textStyle="text-style-id-heading-2"
+                            textOptions={{ align: 'center' }}
+                        />
+                    </Region>
+                </Region>
             </Border>
             <Border
                 variant="5"
                 name="random_room_border"
                 layout={{ position: 'absolute', left: 205, width: 189, bottom: 0, height: 60 }}
             >
-                <NavigatorFrame2LayoutRandomRoom {...randomRoom} />
+                <Region
+                    name="random_room"
+                    tooltip={t('navigator.tooltip.random.room')}
+                    onPointerTap={onRandomRoom}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
+                >
+                    <ThemeImage
+                        src={layoutImage('newnavigator_random_room.png')}
+                        layout={{ position: 'absolute', left: 0, width: 186, top: 0, height: 59 }}
+                    />
+                    <Region layout={{ position: 'absolute', left: 60, width: 125, top: 22, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                        <ThemeText
+                            text={t('navigator.random.room')}
+                            textStyle="text-style-id-heading-2"
+                            textOptions={{ align: 'center' }}
+                        />
+                    </Region>
+                </Region>
             </Border>
-            <Border
-                variant="5"
-                name="promote_room_border"
-                visible={visiblePromoteRoomBorder ?? false}
-                layout={{ position: 'absolute', left: 205, width: 189, bottom: 0, height: 60 }}
-            >
-                <NavigatorFrame2LayoutPromoteRoom {...promoteRoom} />
-            </Border>
+            {(visiblePromoteRoomBorder ?? false) && (
+                <Border
+                    variant="5"
+                    name="promote_room_border"
+                    layout={{ position: 'absolute', left: 205, width: 189, bottom: 0, height: 60 }}
+                >
+                    <Region
+                        name="promote_room"
+                        tooltip={t('navigator.tooltip.promote.room')}
+                        onPointerTap={onPromoteRoom}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
+                    >
+                        <ThemeImage
+                            src={layoutImage('newnavigator_promote_room.png')}
+                            layout={{ position: 'absolute', left: 0, width: 186, top: 0, height: 59 }}
+                        />
+                        <Region layout={{ position: 'absolute', left: 60, width: 125, top: 22, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <ThemeText
+                                text={t('navigator.promote.room')}
+                                textStyle="text-style-id-heading-2"
+                                textOptions={{ align: 'center' }}
+                            />
+                        </Region>
+                    </Region>
+                </Border>
+            )}
             <NavigatorFrame2LayoutSearchTools {...searchTools} />
             <NavigatorFrame2LayoutBlockResults {...blockResults} />
-            <NavigatorFrame2LayoutSearchWaitingForResultsMask {...searchWaitingForResultsMask} />
-        </Region>
-    );
-};
-
-/** Named region `temp_back` of NavigatorFrame2Layout - configured through the parent's `tempBack` prop. */
-export interface NavigatorFrame2LayoutTempBackProps {
-    layout?: BoxLayout;
-    onTempBack?: () => void;
-}
-
-export const NavigatorFrame2LayoutTempBack = ({ layout, onTempBack }: NavigatorFrame2LayoutTempBackProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="temp_back"
-            tooltip={t('navigator.tooltip.left.show.hide')}
-            onPointerTap={onTempBack}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 4, width: 28, top: 2, height: 25, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('newnavigator_button_quicklink_add.png')}
-                layout={{ position: 'absolute', left: 10, width: 18, top: 2, height: 19 }}
-            />
+            {(visibleSearchWaitingForResultsMask ?? false) && (
+                <Region
+                    name="search_waiting_for_results_mask"
+                    backgroundColor="#eceae0"
+                    layout={{ position: 'absolute', left: 0, right: 18, top: 42, bottom: 77 }}
+                />
+            )}
         </Region>
     );
 };

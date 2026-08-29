@@ -6,15 +6,20 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1234_verify_xml` (layout "verify", 477x248) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface VerifyLayoutProps {
-    inputBorder?: VerifyLayoutInputBorderProps;
+    captionDidNotReceiveCodeLink?: string;
+    captionRetryWaitLabel?: string;
     layout?: BoxLayout;
     onClose?: () => void;
+    onDidNotReceiveCodeLink?: () => void;
+    onOkButton?: () => void;
+    srcPen?: string;
     srcPhone?: string;
-    userInputButtonsContainer?: VerifyLayoutUserInputButtonsContainerProps;
+    visibleRetryWaitLabel?: boolean;
 }
 
-export const VerifyLayout = ({ inputBorder, layout, onClose, srcPhone, userInputButtonsContainer }: VerifyLayoutProps) => {
+export const VerifyLayout = ({ captionDidNotReceiveCodeLink, captionRetryWaitLabel, layout, onClose, onDidNotReceiveCodeLink, onOkButton, srcPen, srcPhone, visibleRetryWaitLabel }: VerifyLayoutProps) => {
     const t = useTranslation();
+    const [ verificationCodeInputValue, setVerificationCodeInputValue ] = useState('');
 
     return (
         <Frame
@@ -48,100 +53,69 @@ export const VerifyLayout = ({ inputBorder, layout, onClose, srcPhone, userInput
                         layout={{ position: 'absolute', left: 16, width: 32, top: 2, height: 69 }}
                     />
                 </Region>
-                <VerifyLayoutInputBorder {...inputBorder} />
-                <VerifyLayoutUserInputButtonsContainer {...userInputButtonsContainer} />
+                <Region
+                    name="input_border"
+                    layout={{ position: 'absolute', left: 8, right: 5, top: 99, height: 50 }}
+                >
+                    <Border
+                        variant="4"
+                        layout={{ position: 'absolute', left: 12, width: 266, top: 7, height: 35 }}
+                    >
+                        <TextInput
+                            value={verificationCodeInputValue}
+                            onChange={setVerificationCodeInputValue}
+                            layout={{ position: 'absolute', left: 6, width: 255, top: 3, height: 26 }}
+                        />
+                        <ThemeImage
+                            name="pen"
+                            src={srcPen ?? layoutImage('common_small_pen.png')}
+                            layout={{ position: 'absolute', left: 243, width: 17, top: 9, height: 18 }}
+                        />
+                    </Border>
+                    <ButtonThick
+                        variant="5"
+                        name="ok_button"
+                        tintColor="#6fcf6f"
+                        onPointerTap={onOkButton}
+                        layout={{ position: 'absolute', left: 293, width: 160, top: 5, height: 38 }}
+                    >
+                        {t('phone.number.verify.try')}
+                    </ButtonThick>
+                </Region>
+                <Region
+                    name="user_input_buttons_container"
+                    layout={{ position: 'absolute', left: 8, right: 6, top: 159, height: 42, justifyContent: 'center' }}
+                >
+                    <Border
+                        variant="3"
+                        layout={{ position: 'absolute', left: 0, width: 457, top: 0, height: 42 }}
+                    />
+                    <Region
+                        name="did_not_receive_code_link"
+                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 450, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        onPointerTap={onDidNotReceiveCodeLink}
+                        cursor="pointer"
+                    >
+                        <ThemeText
+                            text={captionDidNotReceiveCodeLink ?? t('phone.number.verify.did.not.receive.code')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ align: 'center' }}
+                        />
+                    </Region>
+                    {(visibleRetryWaitLabel ?? false) && (
+                        <Region
+                            name="retry_wait_label"
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 436, top: 12, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionRetryWaitLabel ?? 'HeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHehee'}
+                                textStyle="text-style-u-bold"
+                                textOptions={{ fill: '#777777' }}
+                            />
+                        </Region>
+                    )}
+                </Region>
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `input_border` of VerifyLayout - configured through the parent's `inputBorder` prop. */
-export interface VerifyLayoutInputBorderProps {
-    layout?: BoxLayout;
-    onOkButton?: () => void;
-    srcPen?: string;
-}
-
-export const VerifyLayoutInputBorder = ({ layout, onOkButton, srcPen }: VerifyLayoutInputBorderProps) => {
-    const t = useTranslation();
-    const [ verificationCodeInputValue, setVerificationCodeInputValue ] = useState('');
-
-    return (
-        <Region
-            name="input_border"
-            layout={{ position: 'absolute', left: 8, right: 5, top: 99, height: 50, ...layout }}
-        >
-            <Border
-                variant="4"
-                layout={{ position: 'absolute', left: 12, width: 266, top: 7, height: 35 }}
-            >
-                <TextInput
-                    value={verificationCodeInputValue}
-                    onChange={setVerificationCodeInputValue}
-                    layout={{ position: 'absolute', left: 6, width: 255, top: 3, height: 26 }}
-                />
-                <ThemeImage
-                    name="pen"
-                    src={srcPen ?? layoutImage('common_small_pen.png')}
-                    layout={{ position: 'absolute', left: 243, width: 17, top: 9, height: 18 }}
-                />
-            </Border>
-            <ButtonThick
-                variant="5"
-                name="ok_button"
-                tintColor="#6fcf6f"
-                onPointerTap={onOkButton}
-                layout={{ position: 'absolute', left: 293, width: 160, top: 5, height: 38 }}
-            >
-                {t('phone.number.verify.try')}
-            </ButtonThick>
-        </Region>
-    );
-};
-
-/** Named region `user_input_buttons_container` of VerifyLayout - configured through the parent's `userInputButtonsContainer` prop. */
-export interface VerifyLayoutUserInputButtonsContainerProps {
-    captionDidNotReceiveCodeLink?: string;
-    captionRetryWaitLabel?: string;
-    layout?: BoxLayout;
-    onDidNotReceiveCodeLink?: () => void;
-}
-
-export const VerifyLayoutUserInputButtonsContainer = ({ captionDidNotReceiveCodeLink, captionRetryWaitLabel, layout, onDidNotReceiveCodeLink }: VerifyLayoutUserInputButtonsContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="user_input_buttons_container"
-            layout={{ position: 'absolute', left: 8, right: 6, top: 159, height: 42, justifyContent: 'center', ...layout }}
-        >
-            <Border
-                variant="3"
-                layout={{ position: 'absolute', left: 0, width: 457, top: 0, height: 42 }}
-            />
-            <Region
-                name="did_not_receive_code_link"
-                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 450, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                onPointerTap={onDidNotReceiveCodeLink}
-                cursor="pointer"
-            >
-                <ThemeText
-                    text={captionDidNotReceiveCodeLink ?? t('phone.number.verify.did.not.receive.code')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="retry_wait_label"
-                visible={false}
-                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 436, top: 12, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRetryWaitLabel ?? 'HeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHeheeHehee'}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#777777' }}
-                />
-            </Region>
-        </Region>
     );
 };

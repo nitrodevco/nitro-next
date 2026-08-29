@@ -7,25 +7,29 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface MintGridItemLayoutProps {
     captionBundleCounter?: string;
     captionMultiCounter?: string;
+    itemsTotalpriceContainer?: ReactNode;
     layout?: BoxLayout;
     srcBadgeAddOn?: string;
     srcImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
     srcUniqueItemSoldOutBitmap?: string;
-    totalpriceContainer?: MintGridItemLayoutTotalpriceContainerProps;
     visibleBg?: boolean;
+    visibleUniqueItemBackgroundBitmap?: boolean;
+    visibleUniqueItemOverlayContainer?: boolean;
+    visibleUniqueItemSoldOutBitmap?: boolean;
 }
 
-export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, layout, srcBadgeAddOn, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, totalpriceContainer, visibleBg }: MintGridItemLayoutProps) => {
+export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, itemsTotalpriceContainer, layout, srcBadgeAddOn, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, visibleBg, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer, visibleUniqueItemSoldOutBitmap }: MintGridItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 53, height: 74, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 74 }}>
-                <Border
-                    variant="3"
-                    name="bg"
-                    visible={visibleBg ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 62 }}
-                />
+                {(visibleBg ?? false) && (
+                    <Border
+                        variant="3"
+                        name="bg"
+                        layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 62 }}
+                    />
+                )}
                 <Border
                     variant="2"
                     tintColor="#a1a19b"
@@ -44,23 +48,25 @@ export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, 
                     </Border>
                 </Border>
                 <Region layout={{ position: 'absolute', left: 8, width: 36, top: 2, height: 36 }}>
-                    <ThemeImage
-                        name="unique_item_background_bitmap"
-                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                        visible={false}
-                    />
+                    {(visibleUniqueItemBackgroundBitmap ?? false) && (
+                        <ThemeImage
+                            name="unique_item_background_bitmap"
+                            src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
+                            layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                        />
+                    )}
                     <ThemeImage
                         name="image"
                         src={srcImage}
                         layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
                     />
-                    <WidgetSlot
-                        widgetType="limited_item_overlay_grid"
-                        name="unique_item_overlay_container"
-                        visible={false}
-                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                    />
+                    {(visibleUniqueItemOverlayContainer ?? false) && (
+                        <WidgetSlot
+                            widgetType="limited_item_overlay_grid"
+                            name="unique_item_overlay_container"
+                            layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                        />
+                    )}
                     <Icon
                         variant="0"
                         name="clubLevelIcon"
@@ -96,19 +102,26 @@ export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, 
                         src={srcBadgeAddOn}
                         layout={{ position: 'absolute', left: 0, width: 10, top: 0, height: 10 }}
                     />
-                    <ThemeImage
-                        name="unique_item_sold_out_bitmap"
-                        src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_tile.png')}
-                        layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
-                        visible={false}
-                    />
-                    <ThemeImage
-                        src={layoutImage('inventory_thumb_selected_outline.png')}
-                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                        visible={false}
-                    />
+                    {(visibleUniqueItemSoldOutBitmap ?? false) && (
+                        <ThemeImage
+                            name="unique_item_sold_out_bitmap"
+                            src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_tile.png')}
+                            layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
+                        />
+                    )}
+                    {/* `static_bitmap` is hidden and has no name to show it by */}
                 </Region>
-                <MintGridItemLayoutTotalpriceContainer {...totalpriceContainer} />
+                <Region
+                    name="totalprice_container"
+                    layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1 }}
+                >
+                    {itemsTotalpriceContainer ?? (
+                        <>
+                            <MintGridItemLayoutAmountTextRightItem />
+                            <MintGridItemLayoutCurrencyIndicatorBitmapRightItem />
+                        </>
+                    )}
+                </Region>
             </Region>
         </Region>
     );
@@ -143,27 +156,5 @@ export const MintGridItemLayoutCurrencyIndicatorBitmapRightItem = ({ layout }: M
             name="currency_indicator_bitmap_right"
             layout={{ width: 15, height: 15, flexShrink: 0, ...layout }}
         />
-    );
-};
-
-/** Named region `totalprice_container` of MintGridItemLayout - configured through the parent's `totalpriceContainer` prop. */
-export interface MintGridItemLayoutTotalpriceContainerProps {
-    itemsTotalpriceContainer?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const MintGridItemLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout }: MintGridItemLayoutTotalpriceContainerProps) => {
-    return (
-        <Region
-            name="totalprice_container"
-            layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1, ...layout }}
-        >
-            {itemsTotalpriceContainer ?? (
-                <>
-                    <MintGridItemLayoutAmountTextRightItem />
-                    <MintGridItemLayoutCurrencyIndicatorBitmapRightItem />
-                </>
-            )}
-        </Region>
     );
 };

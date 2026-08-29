@@ -222,64 +222,17 @@ export const PurchaseConfirmationLayoutFreeQuantityItem = ({ captionFreeQuantity
     );
 };
 
-/** Named region `purchase_cost_box` of PurchaseConfirmationLayout - configured through the parent's `purchaseCostBox` prop. */
-export interface PurchaseConfirmationLayoutPurchaseCostBoxProps {
-    layout?: BoxLayout;
-}
-
-export const PurchaseConfirmationLayoutPurchaseCostBox = ({ layout }: PurchaseConfirmationLayoutPurchaseCostBoxProps) => {
-    return (
-        <Region
-            name="purchase_cost_box"
-            layout={{ width: 20, height: 22, flexShrink: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `properties_itemlist` of PurchaseConfirmationLayout - configured through the parent's `propertiesItemlist` prop. */
-export interface PurchaseConfirmationLayoutPropertiesItemlistProps {
-    itemsPropertiesItemlist?: ReactNode;
-    layout?: BoxLayout;
-    purchaseCostBox?: PurchaseConfirmationLayoutPurchaseCostBoxProps;
-}
-
-export const PurchaseConfirmationLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout, purchaseCostBox }: PurchaseConfirmationLayoutPropertiesItemlistProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="properties_itemlist"
-            layout={{ position: 'absolute', left: 143, width: 176, alignSelf: 'center', marginTop: -19.5, marginBottom: 19.5, height: 116, flexDirection: 'column', gap: 7, ...layout }}
-        >
-            {itemsPropertiesItemlist ?? (
-                <>
-                    <PurchaseConfirmationLayoutProductNameItem />
-                    <PurchaseConfirmationLayoutQuantityItem />
-                    <PurchaseConfirmationLayoutFreeQuantityItem />
-                </>
-            )}
-            <Region layout={{ flexShrink: 0, flexDirection: 'row' }}>
-                <Region layout={{ width: 268, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('catalog.purchase.confirmation.dialog.cost')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
-                <PurchaseConfirmationLayoutPurchaseCostBox {...purchaseCostBox} />
-            </Region>
-        </Region>
-    );
-};
-
 /** Named region `content` of PurchaseConfirmationLayout - configured through the parent's `content` prop. */
 export interface PurchaseConfirmationLayoutContentProps {
     itemsContent?: ReactNode;
+    itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
-    propertiesItemlist?: PurchaseConfirmationLayoutPropertiesItemlistProps;
     srcProductImage?: string;
 }
 
-export const PurchaseConfirmationLayoutContent = ({ itemsContent, layout, propertiesItemlist, srcProductImage }: PurchaseConfirmationLayoutContentProps) => {
+export const PurchaseConfirmationLayoutContent = ({ itemsContent, itemsPropertiesItemlist, layout, srcProductImage }: PurchaseConfirmationLayoutContentProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="content"
@@ -310,7 +263,30 @@ export const PurchaseConfirmationLayoutContent = ({ itemsContent, layout, proper
                             layout={{ position: 'absolute', left: 0, width: 126, top: 0, height: 152 }}
                         />
                     </Border>
-                    <PurchaseConfirmationLayoutPropertiesItemlist {...propertiesItemlist} />
+                    <Region
+                        name="properties_itemlist"
+                        layout={{ position: 'absolute', left: 143, width: 176, alignSelf: 'center', marginTop: -19.5, marginBottom: 19.5, height: 116, flexDirection: 'column', gap: 7 }}
+                    >
+                        {itemsPropertiesItemlist ?? (
+                            <>
+                                <PurchaseConfirmationLayoutProductNameItem />
+                                <PurchaseConfirmationLayoutQuantityItem />
+                                <PurchaseConfirmationLayoutFreeQuantityItem />
+                            </>
+                        )}
+                        <Region layout={{ flexShrink: 0, flexDirection: 'row' }}>
+                            <Region layout={{ width: 268, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                <ThemeText
+                                    text={t('catalog.purchase.confirmation.dialog.cost')}
+                                    textStyle="text-style-u-regular"
+                                />
+                            </Region>
+                            <Region
+                                name="purchase_cost_box"
+                                layout={{ width: 20, height: 22, flexShrink: 0 }}
+                            />
+                        </Region>
+                    </Region>
                 </Region>
             </Region>
         </Region>

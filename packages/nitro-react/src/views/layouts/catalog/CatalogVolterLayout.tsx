@@ -32,52 +32,15 @@ export const CatalogVolterLayoutListTemplateItem = ({ layout }: CatalogVolterLay
     );
 };
 
-/** Named region `background` of CatalogVolterLayout - configured through the parent's `background` prop. */
-export interface CatalogVolterLayoutBackgroundProps {
-    layout?: BoxLayout;
-}
-
-export const CatalogVolterLayoutBackground = ({ layout }: CatalogVolterLayoutBackgroundProps) => {
-    return (
-        <Region
-            name="background"
-            backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 20, ...layout }}
-        />
-    );
-};
-
-/** Named region `iconBackground` of CatalogVolterLayout - configured through the parent's `iconBackground` prop. */
-export interface CatalogVolterLayoutIconBackgroundProps {
-    layout?: BoxLayout;
-}
-
-export const CatalogVolterLayoutIconBackground = ({ layout }: CatalogVolterLayoutIconBackgroundProps) => {
-    return (
-        <Region
-            name="iconBackground"
-            backgroundColor="#eeeeee"
-            layout={{ position: 'absolute', left: 0, width: 22, top: 0, height: 20, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('catalogue_color_picker_27x22_color.png')}
-                layout={{ position: 'absolute', left: 0, width: 22, top: 0, height: 20 }}
-            />
-        </Region>
-    );
-};
-
 /** Row template `item_template` of CatalogVolterLayout - pass real rows through its `items…` slot. */
 export interface CatalogVolterLayoutItemTemplateItemProps {
-    background?: CatalogVolterLayoutBackgroundProps;
     captionItemTitle?: string;
-    iconBackground?: CatalogVolterLayoutIconBackgroundProps;
     layout?: BoxLayout;
     onItemTemplate?: () => void;
     srcIcon?: string;
 }
 
-export const CatalogVolterLayoutItemTemplateItem = ({ background, captionItemTitle, iconBackground, layout, onItemTemplate, srcIcon }: CatalogVolterLayoutItemTemplateItemProps) => {
+export const CatalogVolterLayoutItemTemplateItem = ({ captionItemTitle, layout, onItemTemplate, srcIcon }: CatalogVolterLayoutItemTemplateItemProps) => {
     return (
         <Region
             name="item_template"
@@ -86,8 +49,21 @@ export const CatalogVolterLayoutItemTemplateItem = ({ background, captionItemTit
             cursor="pointer"
             layout={{ width: 158, height: 21, flexShrink: 0, ...layout }}
         >
-            <CatalogVolterLayoutBackground {...background} />
-            <CatalogVolterLayoutIconBackground {...iconBackground} />
+            <Region
+                name="background"
+                backgroundColor="#ffffff"
+                layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 20 }}
+            />
+            <Region
+                name="iconBackground"
+                backgroundColor="#eeeeee"
+                layout={{ position: 'absolute', left: 0, width: 22, top: 0, height: 20 }}
+            >
+                <ThemeImage
+                    src={layoutImage('catalogue_color_picker_27x22_color.png')}
+                    layout={{ position: 'absolute', left: 0, width: 22, top: 0, height: 20 }}
+                />
+            </Region>
             <ThemeImage
                 name="icon"
                 src={srcIcon ?? '${image.library.url}catalogue/icon_1.png'}
@@ -109,31 +85,15 @@ export const CatalogVolterLayoutItemTemplateItem = ({ background, captionItemTit
     );
 };
 
-/** Named region `background` of CatalogVolterLayout - configured through the parent's `background` prop. */
-export interface CatalogVolterLayoutBackground2Props {
-    layout?: BoxLayout;
-}
-
-export const CatalogVolterLayoutBackground2 = ({ layout }: CatalogVolterLayoutBackground2Props) => {
-    return (
-        <Region
-            name="background"
-            backgroundColor="#d2f0f3"
-            layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 20, ...layout }}
-        />
-    );
-};
-
 /** Row template `subitem_template` of CatalogVolterLayout - pass real rows through its `items…` slot. */
 export interface CatalogVolterLayoutSubitemTemplateItemProps {
-    background?: CatalogVolterLayoutBackground2Props;
     captionItemTitle?: string;
     layout?: BoxLayout;
     onSubitemTemplate?: () => void;
     srcIcon?: string;
 }
 
-export const CatalogVolterLayoutSubitemTemplateItem = ({ background, captionItemTitle, layout, onSubitemTemplate, srcIcon }: CatalogVolterLayoutSubitemTemplateItemProps) => {
+export const CatalogVolterLayoutSubitemTemplateItem = ({ captionItemTitle, layout, onSubitemTemplate, srcIcon }: CatalogVolterLayoutSubitemTemplateItemProps) => {
     return (
         <Region
             name="subitem_template"
@@ -142,7 +102,11 @@ export const CatalogVolterLayoutSubitemTemplateItem = ({ background, captionItem
             cursor="pointer"
             layout={{ width: 158, height: 21, flexShrink: 0, ...layout }}
         >
-            <CatalogVolterLayoutBackground2 {...background} />
+            <Region
+                name="background"
+                backgroundColor="#d2f0f3"
+                layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 20 }}
+            />
             <ThemeImage
                 name="icon"
                 src={srcIcon ?? '${image.library.url}catalogue/icon_2.png'}
@@ -186,25 +150,10 @@ export const CatalogVolterLayoutNavigationList = ({ itemsNavigationList, layout 
     );
 };
 
-/** Named region `layoutContainer` of CatalogVolterLayout - configured through the parent's `layoutContainer` prop. */
-export interface CatalogVolterLayoutLayoutContainerProps {
-    layout?: BoxLayout;
-}
-
-export const CatalogVolterLayoutLayoutContainer = ({ layout }: CatalogVolterLayoutLayoutContainerProps) => {
-    return (
-        <Region
-            name="layoutContainer"
-            layout={{ position: 'absolute', left: 6, width: 360, top: 40, height: 460, ...layout }}
-        />
-    );
-};
-
 /** Named region `catalog_main_container` of CatalogVolterLayout - configured through the parent's `catalogMainContainer` prop. */
 export interface CatalogVolterLayoutCatalogMainContainerProps {
     captionCatalogHeaderDescription?: string;
     layout?: BoxLayout;
-    layoutContainer?: CatalogVolterLayoutLayoutContainerProps;
     navigationList?: CatalogVolterLayoutNavigationListProps;
     onCatalogMainContainer?: () => void;
     onNavigatorMain?: () => void;
@@ -212,7 +161,7 @@ export interface CatalogVolterLayoutCatalogMainContainerProps {
     srcLayoutBackground?: string;
 }
 
-export const CatalogVolterLayoutCatalogMainContainer = ({ captionCatalogHeaderDescription, layout, layoutContainer, navigationList, onCatalogMainContainer, onNavigatorMain, srcCatalogHeaderImage, srcLayoutBackground }: CatalogVolterLayoutCatalogMainContainerProps) => {
+export const CatalogVolterLayoutCatalogMainContainer = ({ captionCatalogHeaderDescription, layout, navigationList, onCatalogMainContainer, onNavigatorMain, srcCatalogHeaderImage, srcLayoutBackground }: CatalogVolterLayoutCatalogMainContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -244,7 +193,10 @@ export const CatalogVolterLayoutCatalogMainContainer = ({ captionCatalogHeaderDe
                 src={srcLayoutBackground ?? layoutImage('catalogue_background.png')}
                 layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 516 }}
             />
-            <CatalogVolterLayoutLayoutContainer {...layoutContainer} />
+            <Region
+                name="layoutContainer"
+                layout={{ position: 'absolute', left: 6, width: 360, top: 40, height: 460 }}
+            />
             <ThemeImage
                 name="catalog.header.image"
                 src={srcCatalogHeaderImage ?? '${image.library.url}catalogue/catalog_header_roombuilder.gif'}

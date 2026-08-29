@@ -14,62 +14,19 @@ export const SearchEntryLayout = ({ entry, layout }: SearchEntryLayoutProps) => 
     );
 };
 
-/** Named region `bg_region` of SearchEntryLayout - configured through the parent's `bgRegion` prop. */
-export interface SearchEntryLayoutBgRegionProps {
-    layout?: BoxLayout;
-    onBgRegion?: () => void;
-}
-
-export const SearchEntryLayoutBgRegion = ({ layout, onBgRegion }: SearchEntryLayoutBgRegionProps) => {
-    return (
-        <Region
-            name="bg_region"
-            onPointerTap={onBgRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20, ...layout }}
-        />
-    );
-};
-
-/** Named region `user_info_region` of SearchEntryLayout - configured through the parent's `userInfoRegion` prop. */
-export interface SearchEntryLayoutUserInfoRegionProps {
-    layout?: BoxLayout;
-}
-
-export const SearchEntryLayoutUserInfoRegion = ({ layout }: SearchEntryLayoutUserInfoRegionProps) => {
-    return (
-        <Region
-            name="user_info_region"
-            layout={{ position: 'absolute', left: 21, width: 15, top: 5, height: 11, ...layout }}
-        >
-            <Icon
-                variant="21"
-                name="icon_eye_off"
-                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 11 }}
-            />
-            <Icon
-                variant="22"
-                name="icon_eye_over"
-                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 11 }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `entry` of SearchEntryLayout - configured through the parent's `entry` prop. */
 export interface SearchEntryLayoutEntryProps {
-    bgRegion?: SearchEntryLayoutBgRegionProps;
     captionCaption?: string;
     captionName?: string;
     layout?: BoxLayout;
+    onBgRegion?: () => void;
     onEntry?: () => void;
     srcAskForFriend?: string;
     srcFace?: string;
     srcStartChat?: string;
-    userInfoRegion?: SearchEntryLayoutUserInfoRegionProps;
 }
 
-export const SearchEntryLayoutEntry = ({ bgRegion, captionCaption, captionName, layout, onEntry, srcAskForFriend, srcFace, srcStartChat, userInfoRegion }: SearchEntryLayoutEntryProps) => {
+export const SearchEntryLayoutEntry = ({ captionCaption, captionName, layout, onBgRegion, onEntry, srcAskForFriend, srcFace, srcStartChat }: SearchEntryLayoutEntryProps) => {
     return (
         <Region
             name="entry"
@@ -78,14 +35,33 @@ export const SearchEntryLayoutEntry = ({ bgRegion, captionCaption, captionName, 
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 20, ...layout }}
         >
-            <SearchEntryLayoutBgRegion {...bgRegion} />
+            <Region
+                name="bg_region"
+                onPointerTap={onBgRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
+            />
             <Region
                 name="caption"
                 layout={{ position: 'absolute', left: 5, width: 200, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText text={captionCaption ?? 'PH CAPTION'} />
             </Region>
-            <SearchEntryLayoutUserInfoRegion {...userInfoRegion} />
+            <Region
+                name="user_info_region"
+                layout={{ position: 'absolute', left: 21, width: 15, top: 5, height: 11 }}
+            >
+                <Icon
+                    variant="21"
+                    name="icon_eye_off"
+                    layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 11 }}
+                />
+                <Icon
+                    variant="22"
+                    name="icon_eye_over"
+                    layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 11 }}
+                />
+            </Region>
             <Region
                 name="name"
                 layout={{ position: 'absolute', left: 37, width: 200, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

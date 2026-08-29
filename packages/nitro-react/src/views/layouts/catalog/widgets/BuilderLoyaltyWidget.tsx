@@ -7,29 +7,14 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
  * (LayoutBuildersClubLoyaltyLayout); each passes its own placement through `layout`.
  */
-/** Named region `item_cost_box` of BuilderLoyaltyWidget - configured through the parent's `itemCostBox` prop. */
-export interface BuilderLoyaltyWidgetItemCostBoxProps {
-    layout?: BoxLayout;
-}
-
-export const BuilderLoyaltyWidgetItemCostBox = ({ layout }: BuilderLoyaltyWidgetItemCostBoxProps) => {
-    return (
-        <Region
-            name="item_cost_box"
-            layout={{ width: 20, height: 22, flexShrink: 0, ...layout }}
-        />
-    );
-};
-
 /** Named region `loyalty_list` of BuilderLoyaltyWidget - configured through the parent's `loyaltyList` prop. */
 export interface BuilderLoyaltyWidgetLoyaltyListProps {
     captionItemHeader?: string;
-    itemCostBox?: BuilderLoyaltyWidgetItemCostBoxProps;
     layout?: BoxLayout;
     onItemBuy?: () => void;
 }
 
-export const BuilderLoyaltyWidgetLoyaltyList = ({ captionItemHeader, itemCostBox, layout, onItemBuy }: BuilderLoyaltyWidgetLoyaltyListProps) => {
+export const BuilderLoyaltyWidgetLoyaltyList = ({ captionItemHeader, layout, onItemBuy }: BuilderLoyaltyWidgetLoyaltyListProps) => {
     const t = useTranslation();
 
     return (
@@ -67,7 +52,10 @@ export const BuilderLoyaltyWidgetLoyaltyList = ({ captionItemHeader, itemCostBox
                         </Region>
                     </Border>
                     <Region layout={{ position: 'absolute', left: 9, width: 125, top: 45, height: 24, flexDirection: 'row', gap: 3 }}>
-                        <BuilderLoyaltyWidgetItemCostBox {...itemCostBox} />
+                        <Region
+                            name="item_cost_box"
+                            layout={{ width: 20, height: 22, flexShrink: 0 }}
+                        />
                     </Region>
                     <ButtonThick
                         variant="5"

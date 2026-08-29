@@ -171,179 +171,109 @@ export const RosRoomSettingsLayoutTagCategoryContainer = ({ captionCategoryLabel
     );
 };
 
-/** Named region `advanced_container` of RosRoomSettingsLayout - configured through the parent's `advancedContainer` prop. */
-export interface RosRoomSettingsLayoutAdvancedContainerProps {
+/** Named region `tab_container_1` of RosRoomSettingsLayout - configured through the parent's `tabContainer1` prop. */
+export interface RosRoomSettingsLayoutTabContainer1Props {
+    captionDescriptionLabel?: string;
+    captionRemoveLink?: string;
+    captionRoomNameLabel?: string;
     captionWalkThroughText?: string;
     layout?: BoxLayout;
     onAllowWalkThroughCheckbox?: () => void;
-}
-
-export const RosRoomSettingsLayoutAdvancedContainer = ({ captionWalkThroughText, layout, onAllowWalkThroughCheckbox }: RosRoomSettingsLayoutAdvancedContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="advanced_container"
-            layout={{ position: 'absolute', left: 0, width: 218, top: 253, height: 82, ...layout }}
-        >
-            <CheckBox
-                variant="0"
-                name="allow_walk_through_checkbox"
-                onPointerTap={onAllowWalkThroughCheckbox}
-                layout={{ position: 'absolute', left: 2, width: 20, top: 59, height: 20 }}
-            />
-            <Region
-                name="walk_through_text"
-                layout={{ position: 'absolute', left: 18, width: 249, top: 58, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionWalkThroughText ?? t('navigator.roomsettings.allow_walk_through')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `remove_link_region` of RosRoomSettingsLayout - configured through the parent's `removeLinkRegion` prop. */
-export interface RosRoomSettingsLayoutRemoveLinkRegionProps {
-    captionRemoveLink?: string;
-    layout?: BoxLayout;
     onRemoveLinkRegion?: () => void;
-}
-
-export const RosRoomSettingsLayoutRemoveLinkRegion = ({ captionRemoveLink, layout, onRemoveLinkRegion }: RosRoomSettingsLayoutRemoveLinkRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="remove_link_region"
-            onPointerTap={onRemoveLinkRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 60, width: 180, top: 339, height: 18, justifyContent: 'center', ...layout }}
-        >
-            <Region
-                name="remove_link"
-                layout={{ position: 'absolute', marginLeft: -4, marginRight: 4, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRemoveLink ?? t('navigator.roomsettings.delete')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#bb2200' }}
-                />
-            </Region>
-            <Icon
-                variant="9"
-                name="remove_icon"
-                tintColor="#bb2200"
-                layout={{ position: 'absolute', left: 0, width: 20, top: 2, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `tab_container_1` of RosRoomSettingsLayout - configured through the parent's `tabContainer1` prop. */
-export interface RosRoomSettingsLayoutTabContainer1Props {
-    advancedContainer?: RosRoomSettingsLayoutAdvancedContainerProps;
-    captionDescriptionLabel?: string;
-    captionRoomNameLabel?: string;
-    layout?: BoxLayout;
     onTabContainer1?: () => void;
-    removeLinkRegion?: RosRoomSettingsLayoutRemoveLinkRegionProps;
     tagCategoryContainer?: RosRoomSettingsLayoutTagCategoryContainerProps;
     visibleTabContainer1?: boolean;
 }
 
-export const RosRoomSettingsLayoutTabContainer1 = ({ advancedContainer, captionDescriptionLabel, captionRoomNameLabel, layout, onTabContainer1, removeLinkRegion, tagCategoryContainer, visibleTabContainer1 }: RosRoomSettingsLayoutTabContainer1Props) => {
+export const RosRoomSettingsLayoutTabContainer1 = ({ captionDescriptionLabel, captionRemoveLink, captionRoomNameLabel, captionWalkThroughText, layout, onAllowWalkThroughCheckbox, onRemoveLinkRegion, onTabContainer1, tagCategoryContainer, visibleTabContainer1 }: RosRoomSettingsLayoutTabContainer1Props) => {
     const t = useTranslation();
     const [ roomNameValue, setRoomNameValue ] = useState('');
     const [ descriptionValue, setDescriptionValue ] = useState('');
 
     return (
-        <Region
-            name="tab_container_1"
-            visible={visibleTabContainer1 ?? false}
-            onPointerTap={onTabContainer1}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 6, width: 321, top: 0, height: 360, ...layout }}
-        >
+        (visibleTabContainer1 ?? false) && (
             <Region
-                name="room_name_label"
-                layout={{ position: 'absolute', left: 0, width: 119, top: -3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                name="tab_container_1"
+                onPointerTap={onTabContainer1}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 6, width: 321, top: 0, height: 360, ...layout }}
             >
-                <ThemeText
-                    text={captionRoomNameLabel ?? t('navigator.roomname')}
-                    textStyle="text-style-u-bold"
+                <Region
+                    name="room_name_label"
+                    layout={{ position: 'absolute', left: 0, width: 119, top: -3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionRoomNameLabel ?? t('navigator.roomname')}
+                        textStyle="text-style-u-bold"
+                    />
+                </Region>
+                <TextInput
+                    value={roomNameValue}
+                    onChange={setRoomNameValue}
+                    backgroundColor="#fbfbf9"
+                    layout={{ position: 'absolute', left: 0, width: 300, top: 14, height: 20 }}
                 />
-            </Region>
-            <TextInput
-                value={roomNameValue}
-                onChange={setRoomNameValue}
-                backgroundColor="#fbfbf9"
-                layout={{ position: 'absolute', left: 0, width: 300, top: 14, height: 20 }}
-            />
-            <Region
-                name="description_label"
-                layout={{ position: 'absolute', left: 0, width: 163, top: 35, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionDescriptionLabel ?? t('navigator.roomsettings.desc')}
-                    textStyle="text-style-u-bold"
+                <Region
+                    name="description_label"
+                    layout={{ position: 'absolute', left: 0, width: 163, top: 35, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionDescriptionLabel ?? t('navigator.roomsettings.desc')}
+                        textStyle="text-style-u-bold"
+                    />
+                </Region>
+                <TextInput
+                    value={descriptionValue}
+                    onChange={setDescriptionValue}
+                    backgroundColor="#fbfbf9"
+                    layout={{ position: 'absolute', left: 0, width: 300, top: 51, height: 39 }}
                 />
+                <RosRoomSettingsLayoutTagCategoryContainer {...tagCategoryContainer} />
+                <Region
+                    name="advanced_container"
+                    layout={{ position: 'absolute', left: 0, width: 218, top: 253, height: 82 }}
+                >
+                    <CheckBox
+                        variant="0"
+                        name="allow_walk_through_checkbox"
+                        onPointerTap={onAllowWalkThroughCheckbox}
+                        layout={{ position: 'absolute', left: 2, width: 20, top: 59, height: 20 }}
+                    />
+                    <Region
+                        name="walk_through_text"
+                        layout={{ position: 'absolute', left: 18, width: 249, top: 58, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionWalkThroughText ?? t('navigator.roomsettings.allow_walk_through')}
+                            textStyle="text-style-u-regular"
+                        />
+                    </Region>
+                </Region>
+                <Region
+                    name="remove_link_region"
+                    onPointerTap={onRemoveLinkRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 60, width: 180, top: 339, height: 18, justifyContent: 'center' }}
+                >
+                    <Region
+                        name="remove_link"
+                        layout={{ position: 'absolute', marginLeft: -4, marginRight: 4, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionRemoveLink ?? t('navigator.roomsettings.delete')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#bb2200' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="9"
+                        name="remove_icon"
+                        tintColor="#bb2200"
+                        layout={{ position: 'absolute', left: 0, width: 20, top: 2, height: 20 }}
+                    />
+                </Region>
             </Region>
-            <TextInput
-                value={descriptionValue}
-                onChange={setDescriptionValue}
-                backgroundColor="#fbfbf9"
-                layout={{ position: 'absolute', left: 0, width: 300, top: 51, height: 39 }}
-            />
-            <RosRoomSettingsLayoutTagCategoryContainer {...tagCategoryContainer} />
-            <RosRoomSettingsLayoutAdvancedContainer {...advancedContainer} />
-            <RosRoomSettingsLayoutRemoveLinkRegion {...removeLinkRegion} />
-        </Region>
-    );
-};
-
-/** Named region `doormode` of RosRoomSettingsLayout - configured through the parent's `doormode` prop. */
-export interface RosRoomSettingsLayoutDoormodeProps {
-    layout?: BoxLayout;
-    onDoormodeDoorbell?: () => void;
-    onDoormodeInvisible?: () => void;
-    onDoormodeOpen?: () => void;
-    onDoormodePassword?: () => void;
-}
-
-export const RosRoomSettingsLayoutDoormode = ({ layout, onDoormodeDoorbell, onDoormodeInvisible, onDoormodeOpen, onDoormodePassword }: RosRoomSettingsLayoutDoormodeProps) => {
-    return (
-        <Region
-            name="doormode"
-            layout={{ position: 'absolute', left: 5, width: 274, top: 18, height: 80, ...layout }}
-        >
-            <RadioButton
-                variant="0"
-                name="doormode_open"
-                onPointerTap={onDoormodeOpen}
-                layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 20 }}
-            />
-            <RadioButton
-                variant="0"
-                name="doormode_doorbell"
-                onPointerTap={onDoormodeDoorbell}
-                layout={{ position: 'absolute', left: 0, width: 270, top: 20, height: 20 }}
-            />
-            <RadioButton
-                variant="0"
-                name="doormode_invisible"
-                onPointerTap={onDoormodeInvisible}
-                layout={{ position: 'absolute', left: 0, width: 270, top: 40, height: 20 }}
-            />
-            <RadioButton
-                variant="0"
-                name="doormode_password"
-                onPointerTap={onDoormodePassword}
-                layout={{ position: 'absolute', left: 0, width: 270, top: 60, height: 20 }}
-            />
-        </Region>
+        )
     );
 };
 
@@ -354,11 +284,14 @@ export interface RosRoomSettingsLayoutDoormodeContainerProps {
     captionDoormodeLabel?: string;
     captionDoormodeOpenLabel?: string;
     captionDoormodePasswordLabel?: string;
-    doormode?: RosRoomSettingsLayoutDoormodeProps;
     layout?: BoxLayout;
+    onDoormodeDoorbell?: () => void;
+    onDoormodeInvisible?: () => void;
+    onDoormodeOpen?: () => void;
+    onDoormodePassword?: () => void;
 }
 
-export const RosRoomSettingsLayoutDoormodeContainer = ({ captionDoormodeDoorbellLabel, captionDoormodeInvisibleLabel, captionDoormodeLabel, captionDoormodeOpenLabel, captionDoormodePasswordLabel, doormode, layout }: RosRoomSettingsLayoutDoormodeContainerProps) => {
+export const RosRoomSettingsLayoutDoormodeContainer = ({ captionDoormodeDoorbellLabel, captionDoormodeInvisibleLabel, captionDoormodeLabel, captionDoormodeOpenLabel, captionDoormodePasswordLabel, layout, onDoormodeDoorbell, onDoormodeInvisible, onDoormodeOpen, onDoormodePassword }: RosRoomSettingsLayoutDoormodeContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -375,7 +308,35 @@ export const RosRoomSettingsLayoutDoormodeContainer = ({ captionDoormodeDoorbell
                     textStyle="text-style-u-bold"
                 />
             </Region>
-            <RosRoomSettingsLayoutDoormode {...doormode} />
+            <Region
+                name="doormode"
+                layout={{ position: 'absolute', left: 5, width: 274, top: 18, height: 80 }}
+            >
+                <RadioButton
+                    variant="0"
+                    name="doormode_open"
+                    onPointerTap={onDoormodeOpen}
+                    layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 20 }}
+                />
+                <RadioButton
+                    variant="0"
+                    name="doormode_doorbell"
+                    onPointerTap={onDoormodeDoorbell}
+                    layout={{ position: 'absolute', left: 0, width: 270, top: 20, height: 20 }}
+                />
+                <RadioButton
+                    variant="0"
+                    name="doormode_invisible"
+                    onPointerTap={onDoormodeInvisible}
+                    layout={{ position: 'absolute', left: 0, width: 270, top: 40, height: 20 }}
+                />
+                <RadioButton
+                    variant="0"
+                    name="doormode_password"
+                    onPointerTap={onDoormodePassword}
+                    layout={{ position: 'absolute', left: 0, width: 270, top: 60, height: 20 }}
+                />
+            </Region>
             <Region
                 name="doormode_open_label"
                 layout={{ position: 'absolute', left: 20, width: 230, top: 17, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -416,70 +377,22 @@ export const RosRoomSettingsLayoutDoormodeContainer = ({ captionDoormodeDoorbell
     );
 };
 
-/** Named region `password_container` of RosRoomSettingsLayout - configured through the parent's `passwordContainer` prop. */
-export interface RosRoomSettingsLayoutPasswordContainerProps {
-    captionPasswordConfirmLabel?: string;
-    captionPasswordLabel?: string;
-    layout?: BoxLayout;
-}
-
-export const RosRoomSettingsLayoutPasswordContainer = ({ captionPasswordConfirmLabel, captionPasswordLabel, layout }: RosRoomSettingsLayoutPasswordContainerProps) => {
-    const t = useTranslation();
-    const [ passwordValue, setPasswordValue ] = useState('');
-    const [ passwordConfirmValue, setPasswordConfirmValue ] = useState('');
-
-    return (
-        <Region
-            name="password_container"
-            layout={{ position: 'absolute', left: 41, width: 195, top: 188, height: 68, ...layout }}
-        >
-            <Region
-                name="password_label"
-                layout={{ position: 'absolute', left: 0, width: 189, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPasswordLabel ?? t('navigator.roomsettings.password')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <TextInput
-                value={passwordValue}
-                onChange={setPasswordValue}
-                backgroundColor="#fbfbf9"
-                layout={{ position: 'absolute', left: 1, width: 193, top: 15, height: 15 }}
-            />
-            <Region
-                name="password__confirm_label"
-                layout={{ position: 'absolute', left: 0, width: 234, top: 32, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionPasswordConfirmLabel ?? t('navigator.roomsettings.passwordconfirm')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <TextInput
-                value={passwordConfirmValue}
-                onChange={setPasswordConfirmValue}
-                backgroundColor="#fbfbf9"
-                layout={{ position: 'absolute', left: 1, width: 193, top: 48, height: 15 }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `normal_access_container` of RosRoomSettingsLayout - configured through the parent's `normalAccessContainer` prop. */
 export interface RosRoomSettingsLayoutNormalAccessContainerProps {
+    captionPasswordConfirmLabel?: string;
+    captionPasswordLabel?: string;
     captionRoomAccessTabCaption?: string;
     captionRoomAccessTabInfo?: string;
     doormodeContainer?: RosRoomSettingsLayoutDoormodeContainerProps;
     layout?: BoxLayout;
     onBuildersFaqButton?: () => void;
-    passwordContainer?: RosRoomSettingsLayoutPasswordContainerProps;
     visibleDoormodeOverrideInfo?: boolean;
 }
 
-export const RosRoomSettingsLayoutNormalAccessContainer = ({ captionRoomAccessTabCaption, captionRoomAccessTabInfo, doormodeContainer, layout, onBuildersFaqButton, passwordContainer, visibleDoormodeOverrideInfo }: RosRoomSettingsLayoutNormalAccessContainerProps) => {
+export const RosRoomSettingsLayoutNormalAccessContainer = ({ captionPasswordConfirmLabel, captionPasswordLabel, captionRoomAccessTabCaption, captionRoomAccessTabInfo, doormodeContainer, layout, onBuildersFaqButton, visibleDoormodeOverrideInfo }: RosRoomSettingsLayoutNormalAccessContainerProps) => {
     const t = useTranslation();
+    const [ passwordValue, setPasswordValue ] = useState('');
+    const [ passwordConfirmValue, setPasswordConfirmValue ] = useState('');
 
     return (
         <Region
@@ -506,34 +419,69 @@ export const RosRoomSettingsLayoutNormalAccessContainer = ({ captionRoomAccessTa
                 />
             </Region>
             <RosRoomSettingsLayoutDoormodeContainer {...doormodeContainer} />
-            <RosRoomSettingsLayoutPasswordContainer {...passwordContainer} />
-            <Border
-                variant="0"
-                name="doormode_override_info"
-                visible={visibleDoormodeOverrideInfo ?? false}
-                layout={{ position: 'absolute', left: 0, width: 308, top: 88, height: 166, justifyContent: 'center' }}
+            <Region
+                name="password_container"
+                layout={{ position: 'absolute', left: 41, width: 195, top: 188, height: 68 }}
             >
-                <Region layout={{ position: 'absolute', left: 5, width: 295, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('notification.builders_club.room_locked.title')}
-                        textStyle="text-style-u-headline-small"
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 5, width: 298, top: 42, height: 79, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('notification.builders_club.room_locked.message')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 298 }}
-                    />
-                </Region>
-                <Button
-                    variant="3"
-                    name="builders_faq_button"
-                    onPointerTap={onBuildersFaqButton}
-                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 287, top: 122, height: 30 }}
+                <Region
+                    name="password_label"
+                    layout={{ position: 'absolute', left: 0, width: 189, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    {t('notification.builders_club.room_locked.linkTitle')}
-                </Button>
-            </Border>
+                    <ThemeText
+                        text={captionPasswordLabel ?? t('navigator.roomsettings.password')}
+                        textStyle="text-style-u-regular"
+                    />
+                </Region>
+                <TextInput
+                    value={passwordValue}
+                    onChange={setPasswordValue}
+                    backgroundColor="#fbfbf9"
+                    layout={{ position: 'absolute', left: 1, width: 193, top: 15, height: 15 }}
+                />
+                <Region
+                    name="password__confirm_label"
+                    layout={{ position: 'absolute', left: 0, width: 234, top: 32, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionPasswordConfirmLabel ?? t('navigator.roomsettings.passwordconfirm')}
+                        textStyle="text-style-u-regular"
+                    />
+                </Region>
+                <TextInput
+                    value={passwordConfirmValue}
+                    onChange={setPasswordConfirmValue}
+                    backgroundColor="#fbfbf9"
+                    layout={{ position: 'absolute', left: 1, width: 193, top: 48, height: 15 }}
+                />
+            </Region>
+            {(visibleDoormodeOverrideInfo ?? false) && (
+                <Border
+                    variant="0"
+                    name="doormode_override_info"
+                    layout={{ position: 'absolute', left: 0, width: 308, top: 88, height: 166, justifyContent: 'center' }}
+                >
+                    <Region layout={{ position: 'absolute', left: 5, width: 295, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('notification.builders_club.room_locked.title')}
+                            textStyle="text-style-u-headline-small"
+                        />
+                    </Region>
+                    <Region layout={{ position: 'absolute', left: 5, width: 298, top: 42, height: 79, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('notification.builders_club.room_locked.message')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 298 }}
+                        />
+                    </Region>
+                    <Button
+                        variant="3"
+                        name="builders_faq_button"
+                        onPointerTap={onBuildersFaqButton}
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 287, top: 122, height: 30 }}
+                    >
+                        {t('notification.builders_club.room_locked.linkTitle')}
+                    </Button>
+                </Border>
+            )}
         </Region>
     );
 };
@@ -672,93 +620,17 @@ export interface RosRoomSettingsLayoutTabContainer2Props {
 
 export const RosRoomSettingsLayoutTabContainer2 = ({ flexibleContent, layout, normalAccessContainer, onTabContainer2, visibleTabContainer2 }: RosRoomSettingsLayoutTabContainer2Props) => {
     return (
-        <Region
-            name="tab_container_2"
-            visible={visibleTabContainer2 ?? false}
-            onPointerTap={onTabContainer2}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 6, width: 321, top: 0, height: 366, ...layout }}
-        >
-            <RosRoomSettingsLayoutNormalAccessContainer {...normalAccessContainer} />
-            <RosRoomSettingsLayoutFlexibleContent {...flexibleContent} />
-        </Region>
-    );
-};
-
-/** Named region `guild_rights_container` of RosRoomSettingsLayout - configured through the parent's `guildRightsContainer` prop. */
-export interface RosRoomSettingsLayoutGuildRightsContainerProps {
-    layout?: BoxLayout;
-    visibleGuildRightsContainer?: boolean;
-}
-
-export const RosRoomSettingsLayoutGuildRightsContainer = ({ layout, visibleGuildRightsContainer }: RosRoomSettingsLayoutGuildRightsContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="guild_rights_container"
-            visible={visibleGuildRightsContainer ?? false}
-            layout={{ position: 'absolute', left: 6, right: 6, top: 0, height: 367, ...layout }}
-        >
+        (visibleTabContainer2 ?? false) && (
             <Region
-                visible={false}
-                layout={{ position: 'absolute', left: 0, width: 215, top: 3, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                name="tab_container_2"
+                onPointerTap={onTabContainer2}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 6, width: 321, top: 0, height: 366, ...layout }}
             >
-                <ThemeText
-                    text={t('navigator.flatctrls.guild.caption')}
-                    textStyle="text-style-u-headline-small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 215 }}
-                />
+                <RosRoomSettingsLayoutNormalAccessContainer {...normalAccessContainer} />
+                <RosRoomSettingsLayoutFlexibleContent {...flexibleContent} />
             </Region>
-            <Region
-                visible={false}
-                layout={{ position: 'absolute', left: 0, width: 309, top: 42, height: 240, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={t('navigator.flatctrls.guild.info')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 309 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `users_with_rights_item_list` of RosRoomSettingsLayout - configured through the parent's `usersWithRightsItemList` prop. */
-export interface RosRoomSettingsLayoutUsersWithRightsItemListProps {
-    layout?: BoxLayout;
-}
-
-export const RosRoomSettingsLayoutUsersWithRightsItemList = ({ layout }: RosRoomSettingsLayoutUsersWithRightsItemListProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 4, right: 25, top: 4, bottom: 39, ...layout }}
-        >
-            <Region
-                name="users_with_rights_item_list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
-/** Named region `friends_item_list` of RosRoomSettingsLayout - configured through the parent's `friendsItemList` prop. */
-export interface RosRoomSettingsLayoutFriendsItemListProps {
-    layout?: BoxLayout;
-}
-
-export const RosRoomSettingsLayoutFriendsItemList = ({ layout }: RosRoomSettingsLayoutFriendsItemListProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 4, right: 25, top: 4, bottom: 4, ...layout }}
-        >
-            <Region
-                name="friends_item_list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            />
-        </ScrollArea>
+        )
     );
 };
 
@@ -767,13 +639,11 @@ export interface RosRoomSettingsLayoutNormalRightsContainerProps {
     captionFriendsTxt?: string;
     captionSearchTxt?: string;
     captionUsersWithRightsTxt?: string;
-    friendsItemList?: RosRoomSettingsLayoutFriendsItemListProps;
     layout?: BoxLayout;
     onRemoveAllFlatCtrls?: () => void;
-    usersWithRightsItemList?: RosRoomSettingsLayoutUsersWithRightsItemListProps;
 }
 
-export const RosRoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, captionSearchTxt, captionUsersWithRightsTxt, friendsItemList, layout, onRemoveAllFlatCtrls, usersWithRightsItemList }: RosRoomSettingsLayoutNormalRightsContainerProps) => {
+export const RosRoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, captionSearchTxt, captionUsersWithRightsTxt, layout, onRemoveAllFlatCtrls }: RosRoomSettingsLayoutNormalRightsContainerProps) => {
     const t = useTranslation();
     const [ filterUsersInputValue, setFilterUsersInputValue ] = useState('');
 
@@ -829,7 +699,15 @@ export const RosRoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, 
                 tintColor="#ffffff"
                 layout={{ position: 'absolute', left: 0, width: 150, top: 74, bottom: 4 }}
             >
-                <RosRoomSettingsLayoutUsersWithRightsItemList {...usersWithRightsItemList} />
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 4, right: 25, top: 4, bottom: 39 }}
+                >
+                    <Region
+                        name="users_with_rights_item_list"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    />
+                </ScrollArea>
                 {/* <scrollbar_vertical> for users_with_rights_item_list - rendered by that list's ScrollArea */}
                 <ButtonThick
                     variant="3"
@@ -846,7 +724,15 @@ export const RosRoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, 
                 tintColor="#ffffff"
                 layout={{ position: 'absolute', left: 173, width: 150, top: 74, bottom: 4 }}
             >
-                <RosRoomSettingsLayoutFriendsItemList {...friendsItemList} />
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 4, right: 25, top: 4, bottom: 4 }}
+                >
+                    <Region
+                        name="friends_item_list"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    />
+                </ScrollArea>
                 {/* <scrollbar_vertical> for friends_item_list - rendered by that list's ScrollArea */}
             </Border>
         </Region>
@@ -855,22 +741,31 @@ export const RosRoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, 
 
 /** Named region `tab_container_3` of RosRoomSettingsLayout - configured through the parent's `tabContainer3` prop. */
 export interface RosRoomSettingsLayoutTabContainer3Props {
-    guildRightsContainer?: RosRoomSettingsLayoutGuildRightsContainerProps;
     layout?: BoxLayout;
     normalRightsContainer?: RosRoomSettingsLayoutNormalRightsContainerProps;
+    visibleGuildRightsContainer?: boolean;
     visibleTabContainer3?: boolean;
 }
 
-export const RosRoomSettingsLayoutTabContainer3 = ({ guildRightsContainer, layout, normalRightsContainer, visibleTabContainer3 }: RosRoomSettingsLayoutTabContainer3Props) => {
+export const RosRoomSettingsLayoutTabContainer3 = ({ layout, normalRightsContainer, visibleGuildRightsContainer, visibleTabContainer3 }: RosRoomSettingsLayoutTabContainer3Props) => {
     return (
-        <Region
-            name="tab_container_3"
-            visible={visibleTabContainer3 ?? false}
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 367, ...layout }}
-        >
-            <RosRoomSettingsLayoutGuildRightsContainer {...guildRightsContainer} />
-            <RosRoomSettingsLayoutNormalRightsContainer {...normalRightsContainer} />
-        </Region>
+        (visibleTabContainer3 ?? false) && (
+            <Region
+                name="tab_container_3"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 367, ...layout }}
+            >
+                {(visibleGuildRightsContainer ?? false) && (
+                    <Region
+                        name="guild_rights_container"
+                        layout={{ position: 'absolute', left: 6, right: 6, top: 0, height: 367 }}
+                    >
+                        {/* `text` is hidden and has no name to show it by */}
+                        {/* `text` is hidden and has no name to show it by */}
+                    </Region>
+                )}
+                <RosRoomSettingsLayoutNormalRightsContainer {...normalRightsContainer} />
+            </Region>
+        )
     );
 };
 
@@ -1065,313 +960,263 @@ export const RosRoomSettingsLayoutTabContainer4 = ({ captionChatSettingsText, ca
     );
 };
 
-/** Named region `moderation_mute_selector` of RosRoomSettingsLayout - configured through the parent's `moderationMuteSelector` prop. */
-export interface RosRoomSettingsLayoutModerationMuteSelectorProps {
-    captionModerationMuteNoneLabel?: string;
-    captionModerationMuteRightsLabel?: string;
-    layout?: BoxLayout;
-    onModerationMuteNone?: () => void;
-    onModerationMuteRights?: () => void;
-    visibleModerationMuteSelector?: boolean;
-}
-
-export const RosRoomSettingsLayoutModerationMuteSelector = ({ captionModerationMuteNoneLabel, captionModerationMuteRightsLabel, layout, onModerationMuteNone, onModerationMuteRights, visibleModerationMuteSelector }: RosRoomSettingsLayoutModerationMuteSelectorProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="moderation_mute_selector"
-            visible={visibleModerationMuteSelector ?? false}
-            layout={{ position: 'absolute', left: 10, width: 291, top: 61, height: 31, ...layout }}
-        >
-            <RadioButton
-                variant="0"
-                name="moderation_mute_none"
-                onPointerTap={onModerationMuteNone}
-                layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 20 }}
-            />
-            <RadioButton
-                variant="0"
-                name="moderation_mute_rights"
-                onPointerTap={onModerationMuteRights}
-                layout={{ position: 'absolute', left: 110, width: 147, top: 0, height: 20 }}
-            />
-            <Region
-                name="moderation_mute_none_label"
-                layout={{ position: 'absolute', left: 15, width: 93, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionModerationMuteNoneLabel ?? t('navigator.roomsettings.moderation.none')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <Region
-                name="moderation_mute_rights_label"
-                layout={{ position: 'absolute', left: 125, width: 162, top: -2, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionModerationMuteRightsLabel ?? t('navigator.roomsettings.moderation.rights')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `moderation_kick_selector` of RosRoomSettingsLayout - configured through the parent's `moderationKickSelector` prop. */
-export interface RosRoomSettingsLayoutModerationKickSelectorProps {
-    captionModerationKickAllLabel?: string;
-    captionModerationKickNoneLabel?: string;
-    captionModerationKickRightsHeader?: string;
-    layout?: BoxLayout;
-    onModerationKickAll?: () => void;
-    onModerationKickNone?: () => void;
-    onModerationKickRights?: () => void;
-    visibleModerationKickSelector?: boolean;
-}
-
-export const RosRoomSettingsLayoutModerationKickSelector = ({ captionModerationKickAllLabel, captionModerationKickNoneLabel, captionModerationKickRightsHeader, layout, onModerationKickAll, onModerationKickNone, onModerationKickRights, visibleModerationKickSelector }: RosRoomSettingsLayoutModerationKickSelectorProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="moderation_kick_selector"
-            visible={visibleModerationKickSelector ?? false}
-            layout={{ position: 'absolute', left: 10, width: 325, top: 112, height: 26, ...layout }}
-        >
-            <Region
-                name="moderation_kick_all_label"
-                layout={{ position: 'absolute', left: 15, width: 93, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionModerationKickAllLabel ?? t('navigator.roomsettings.moderation.all')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <RadioButton
-                variant="0"
-                name="moderation_kick_all"
-                onPointerTap={onModerationKickAll}
-                layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 20 }}
-            />
-            <Region
-                name="moderation_kick_rights_header"
-                layout={{ position: 'absolute', left: 126, width: 123, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionModerationKickRightsHeader ?? t('navigator.roomsettings.moderation.rights')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <RadioButton
-                variant="0"
-                name="moderation_kick_none"
-                onPointerTap={onModerationKickNone}
-                layout={{ position: 'absolute', left: 240, width: 104, top: 0, height: 19 }}
-            />
-            <Region
-                name="moderation_kick_none_label"
-                layout={{ position: 'absolute', left: 255, width: 66, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionModerationKickNoneLabel ?? t('navigator.roomsettings.moderation.none')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <RadioButton
-                variant="0"
-                name="moderation_kick_rights"
-                onPointerTap={onModerationKickRights}
-                layout={{ position: 'absolute', left: 110, width: 90, top: 0, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `moderation_ban_selector` of RosRoomSettingsLayout - configured through the parent's `moderationBanSelector` prop. */
-export interface RosRoomSettingsLayoutModerationBanSelectorProps {
-    captionModerationBanNoneLabel?: string;
-    captionModerationBanRights?: string;
-    layout?: BoxLayout;
-    onModerationBanNone?: () => void;
-    onModerationBanRights?: () => void;
-    visibleModerationBanSelector?: boolean;
-}
-
-export const RosRoomSettingsLayoutModerationBanSelector = ({ captionModerationBanNoneLabel, captionModerationBanRights, layout, onModerationBanNone, onModerationBanRights, visibleModerationBanSelector }: RosRoomSettingsLayoutModerationBanSelectorProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="moderation_ban_selector"
-            visible={visibleModerationBanSelector ?? false}
-            layout={{ position: 'absolute', left: 10, width: 293, top: 161, height: 23, ...layout }}
-        >
-            <Region
-                name="moderation_ban_none_label"
-                layout={{ position: 'absolute', left: 15, width: 93, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionModerationBanNoneLabel ?? t('navigator.roomsettings.moderation.none')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <RadioButton
-                variant="0"
-                name="moderation_ban_none"
-                onPointerTap={onModerationBanNone}
-                layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 20 }}
-            />
-            <RadioButton
-                variant="0"
-                name="moderation_ban_rights"
-                onPointerTap={onModerationBanRights}
-                layout={{ position: 'absolute', left: 110, width: 177, top: 0, height: 20 }}
-            />
-            <Region
-                name="moderation_ban_rights"
-                layout={{ position: 'absolute', left: 125, width: 197, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionModerationBanRights ?? t('navigator.roomsettings.moderation.rights')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `moderation_banned_users` of RosRoomSettingsLayout - configured through the parent's `moderationBannedUsers` prop. */
-export interface RosRoomSettingsLayoutModerationBannedUsersProps {
-    layout?: BoxLayout;
-}
-
-export const RosRoomSettingsLayoutModerationBannedUsers = ({ layout }: RosRoomSettingsLayoutModerationBannedUsersProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 3, width: 129, top: 4, height: 146, ...layout }}
-        >
-            <Region
-                name="moderation_banned_users"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
 /** Named region `tab_container_5` of RosRoomSettingsLayout - configured through the parent's `tabContainer5` prop. */
 export interface RosRoomSettingsLayoutTabContainer5Props {
     captionModerationBanHeader?: string;
     captionModerationBannedUsersLabel?: string;
+    captionModerationBanNoneLabel?: string;
+    captionModerationBanRights?: string;
     captionModerationHeader?: string;
+    captionModerationKickAllLabel?: string;
     captionModerationKickHeader?: string;
+    captionModerationKickNoneLabel?: string;
+    captionModerationKickRightsHeader?: string;
     captionModerationMuteHeader?: string;
+    captionModerationMuteNoneLabel?: string;
+    captionModerationMuteRightsLabel?: string;
     layout?: BoxLayout;
-    moderationBannedUsers?: RosRoomSettingsLayoutModerationBannedUsersProps;
-    moderationBanSelector?: RosRoomSettingsLayoutModerationBanSelectorProps;
-    moderationKickSelector?: RosRoomSettingsLayoutModerationKickSelectorProps;
-    moderationMuteSelector?: RosRoomSettingsLayoutModerationMuteSelectorProps;
     onModerationBanDropdown?: () => void;
+    onModerationBanNone?: () => void;
+    onModerationBanRights?: () => void;
+    onModerationKickAll?: () => void;
     onModerationKickDropdown?: () => void;
+    onModerationKickNone?: () => void;
+    onModerationKickRights?: () => void;
     onModerationMuteDropdown?: () => void;
+    onModerationMuteNone?: () => void;
+    onModerationMuteRights?: () => void;
     onModerationUnbanBtn?: () => void;
+    visibleModerationBanSelector?: boolean;
+    visibleModerationKickSelector?: boolean;
+    visibleModerationMuteSelector?: boolean;
     visibleTabContainer5?: boolean;
 }
 
-export const RosRoomSettingsLayoutTabContainer5 = ({ captionModerationBanHeader, captionModerationBannedUsersLabel, captionModerationHeader, captionModerationKickHeader, captionModerationMuteHeader, layout, moderationBannedUsers, moderationBanSelector, moderationKickSelector, moderationMuteSelector, onModerationBanDropdown, onModerationKickDropdown, onModerationMuteDropdown, onModerationUnbanBtn, visibleTabContainer5 }: RosRoomSettingsLayoutTabContainer5Props) => {
+export const RosRoomSettingsLayoutTabContainer5 = ({ captionModerationBanHeader, captionModerationBannedUsersLabel, captionModerationBanNoneLabel, captionModerationBanRights, captionModerationHeader, captionModerationKickAllLabel, captionModerationKickHeader, captionModerationKickNoneLabel, captionModerationKickRightsHeader, captionModerationMuteHeader, captionModerationMuteNoneLabel, captionModerationMuteRightsLabel, layout, onModerationBanDropdown, onModerationBanNone, onModerationBanRights, onModerationKickAll, onModerationKickDropdown, onModerationKickNone, onModerationKickRights, onModerationMuteDropdown, onModerationMuteNone, onModerationMuteRights, onModerationUnbanBtn, visibleModerationBanSelector, visibleModerationKickSelector, visibleModerationMuteSelector, visibleTabContainer5 }: RosRoomSettingsLayoutTabContainer5Props) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="tab_container_5"
-            visible={visibleTabContainer5 ?? false}
-            layout={{ position: 'absolute', left: 0, right: -4, top: 0, height: 367, ...layout }}
-        >
+        (visibleTabContainer5 ?? false) && (
             <Region
-                name="moderation_header"
-                layout={{ position: 'absolute', left: 6, width: 317, top: 5, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                name="tab_container_5"
+                layout={{ position: 'absolute', left: 0, right: -4, top: 0, height: 367, ...layout }}
             >
-                <ThemeText
-                    text={captionModerationHeader ?? t('navigator.roomsettings.moderation.header')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 317 }}
+                <Region
+                    name="moderation_header"
+                    layout={{ position: 'absolute', left: 6, width: 317, top: 5, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionModerationHeader ?? t('navigator.roomsettings.moderation.header')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 317 }}
+                    />
+                </Region>
+                <Region
+                    name="moderation_mute_header"
+                    layout={{ position: 'absolute', left: 7, width: 276, top: 42, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionModerationMuteHeader ?? t('navigator.roomsettings.moderation.mute.header')}
+                        textStyle="text-style-u-bold"
+                    />
+                </Region>
+                {(visibleModerationMuteSelector ?? false) && (
+                    <Region
+                        name="moderation_mute_selector"
+                        layout={{ position: 'absolute', left: 10, width: 291, top: 61, height: 31 }}
+                    >
+                        <RadioButton
+                            variant="0"
+                            name="moderation_mute_none"
+                            onPointerTap={onModerationMuteNone}
+                            layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 20 }}
+                        />
+                        <RadioButton
+                            variant="0"
+                            name="moderation_mute_rights"
+                            onPointerTap={onModerationMuteRights}
+                            layout={{ position: 'absolute', left: 110, width: 147, top: 0, height: 20 }}
+                        />
+                        <Region
+                            name="moderation_mute_none_label"
+                            layout={{ position: 'absolute', left: 15, width: 93, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionModerationMuteNoneLabel ?? t('navigator.roomsettings.moderation.none')}
+                                textStyle="text-style-u-regular"
+                            />
+                        </Region>
+                        <Region
+                            name="moderation_mute_rights_label"
+                            layout={{ position: 'absolute', left: 125, width: 162, top: -2, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionModerationMuteRightsLabel ?? t('navigator.roomsettings.moderation.rights')}
+                                textStyle="text-style-u-regular"
+                            />
+                        </Region>
+                    </Region>
+                )}
+                <Region
+                    name="moderation_kick_header"
+                    layout={{ position: 'absolute', left: 7, width: 273, top: 92, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionModerationKickHeader ?? t('navigator.roomsettings.moderation.kick.header')}
+                        textStyle="text-style-u-bold"
+                    />
+                </Region>
+                {(visibleModerationKickSelector ?? false) && (
+                    <Region
+                        name="moderation_kick_selector"
+                        layout={{ position: 'absolute', left: 10, width: 325, top: 112, height: 26 }}
+                    >
+                        <Region
+                            name="moderation_kick_all_label"
+                            layout={{ position: 'absolute', left: 15, width: 93, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionModerationKickAllLabel ?? t('navigator.roomsettings.moderation.all')}
+                                textStyle="text-style-u-regular"
+                            />
+                        </Region>
+                        <RadioButton
+                            variant="0"
+                            name="moderation_kick_all"
+                            onPointerTap={onModerationKickAll}
+                            layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 20 }}
+                        />
+                        <Region
+                            name="moderation_kick_rights_header"
+                            layout={{ position: 'absolute', left: 126, width: 123, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionModerationKickRightsHeader ?? t('navigator.roomsettings.moderation.rights')}
+                                textStyle="text-style-u-regular"
+                            />
+                        </Region>
+                        <RadioButton
+                            variant="0"
+                            name="moderation_kick_none"
+                            onPointerTap={onModerationKickNone}
+                            layout={{ position: 'absolute', left: 240, width: 104, top: 0, height: 19 }}
+                        />
+                        <Region
+                            name="moderation_kick_none_label"
+                            layout={{ position: 'absolute', left: 255, width: 66, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionModerationKickNoneLabel ?? t('navigator.roomsettings.moderation.none')}
+                                textStyle="text-style-u-regular"
+                            />
+                        </Region>
+                        <RadioButton
+                            variant="0"
+                            name="moderation_kick_rights"
+                            onPointerTap={onModerationKickRights}
+                            layout={{ position: 'absolute', left: 110, width: 90, top: 0, height: 20 }}
+                        />
+                    </Region>
+                )}
+                <Region
+                    name="moderation_ban_header"
+                    layout={{ position: 'absolute', left: 7, width: 292, top: 142, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionModerationBanHeader ?? t('navigator.roomsettings.moderation.ban.header')}
+                        textStyle="text-style-u-bold"
+                    />
+                </Region>
+                {(visibleModerationBanSelector ?? false) && (
+                    <Region
+                        name="moderation_ban_selector"
+                        layout={{ position: 'absolute', left: 10, width: 293, top: 161, height: 23 }}
+                    >
+                        <Region
+                            name="moderation_ban_none_label"
+                            layout={{ position: 'absolute', left: 15, width: 93, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionModerationBanNoneLabel ?? t('navigator.roomsettings.moderation.none')}
+                                textStyle="text-style-u-regular"
+                            />
+                        </Region>
+                        <RadioButton
+                            variant="0"
+                            name="moderation_ban_none"
+                            onPointerTap={onModerationBanNone}
+                            layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 20 }}
+                        />
+                        <RadioButton
+                            variant="0"
+                            name="moderation_ban_rights"
+                            onPointerTap={onModerationBanRights}
+                            layout={{ position: 'absolute', left: 110, width: 177, top: 0, height: 20 }}
+                        />
+                        <Region
+                            name="moderation_ban_rights"
+                            layout={{ position: 'absolute', left: 125, width: 197, top: -2, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionModerationBanRights ?? t('navigator.roomsettings.moderation.rights')}
+                                textStyle="text-style-u-regular"
+                            />
+                        </Region>
+                    </Region>
+                )}
+                <Border
+                    variant="0"
+                    name="moderation_banned_users_cont"
+                    layout={{ position: 'absolute', left: 8, width: 172, top: 200, height: 156 }}
+                >
+                    <ScrollArea
+                        orientation="vertical"
+                        layout={{ position: 'absolute', left: 3, width: 129, top: 4, height: 146 }}
+                    >
+                        <Region
+                            name="moderation_banned_users"
+                            layout={{ flexDirection: 'column', width: '100%' }}
+                        />
+                    </ScrollArea>
+                    {/* <scrollbar_vertical> for moderation_banned_users - rendered by that list's ScrollArea */}
+                </Border>
+                <Region
+                    name="moderation_banned_users_label"
+                    layout={{ position: 'absolute', left: 190, width: 125, top: 236, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionModerationBannedUsersLabel ?? t('navigator.roomsettings.moderation.banned.users')}
+                        textStyle="text-style-u-regular"
+                    />
+                </Region>
+                <Button
+                    variant="3"
+                    name="moderation_unban_btn"
+                    onPointerTap={onModerationUnbanBtn}
+                    layout={{ position: 'absolute', left: 190, width: 257, top: 261, height: 32 }}
+                >
+                    {t('navigator.roomsettings.moderation.unban')}
+                </Button>
+                <Dropmenu
+                    variant="2"
+                    name="moderation_mute_dropdown"
+                    onPointerTap={onModerationMuteDropdown}
+                    layout={{ position: 'absolute', left: 10, width: 276, top: 61, height: 24 }}
+                />
+                <Dropmenu
+                    variant="2"
+                    name="moderation_kick_dropdown"
+                    onPointerTap={onModerationKickDropdown}
+                    layout={{ position: 'absolute', left: 10, width: 276, top: 112, height: 24 }}
+                />
+                <Dropmenu
+                    variant="2"
+                    name="moderation_ban_dropdown"
+                    onPointerTap={onModerationBanDropdown}
+                    layout={{ position: 'absolute', left: 10, width: 276, top: 161, height: 24 }}
                 />
             </Region>
-            <Region
-                name="moderation_mute_header"
-                layout={{ position: 'absolute', left: 7, width: 276, top: 42, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionModerationMuteHeader ?? t('navigator.roomsettings.moderation.mute.header')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
-            <RosRoomSettingsLayoutModerationMuteSelector {...moderationMuteSelector} />
-            <Region
-                name="moderation_kick_header"
-                layout={{ position: 'absolute', left: 7, width: 273, top: 92, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionModerationKickHeader ?? t('navigator.roomsettings.moderation.kick.header')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
-            <RosRoomSettingsLayoutModerationKickSelector {...moderationKickSelector} />
-            <Region
-                name="moderation_ban_header"
-                layout={{ position: 'absolute', left: 7, width: 292, top: 142, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionModerationBanHeader ?? t('navigator.roomsettings.moderation.ban.header')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
-            <RosRoomSettingsLayoutModerationBanSelector {...moderationBanSelector} />
-            <Border
-                variant="0"
-                name="moderation_banned_users_cont"
-                layout={{ position: 'absolute', left: 8, width: 172, top: 200, height: 156 }}
-            >
-                <RosRoomSettingsLayoutModerationBannedUsers {...moderationBannedUsers} />
-                {/* <scrollbar_vertical> for moderation_banned_users - rendered by that list's ScrollArea */}
-            </Border>
-            <Region
-                name="moderation_banned_users_label"
-                layout={{ position: 'absolute', left: 190, width: 125, top: 236, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionModerationBannedUsersLabel ?? t('navigator.roomsettings.moderation.banned.users')}
-                    textStyle="text-style-u-regular"
-                />
-            </Region>
-            <Button
-                variant="3"
-                name="moderation_unban_btn"
-                onPointerTap={onModerationUnbanBtn}
-                layout={{ position: 'absolute', left: 190, width: 257, top: 261, height: 32 }}
-            >
-                {t('navigator.roomsettings.moderation.unban')}
-            </Button>
-            <Dropmenu
-                variant="2"
-                name="moderation_mute_dropdown"
-                onPointerTap={onModerationMuteDropdown}
-                layout={{ position: 'absolute', left: 10, width: 276, top: 61, height: 24 }}
-            />
-            <Dropmenu
-                variant="2"
-                name="moderation_kick_dropdown"
-                onPointerTap={onModerationKickDropdown}
-                layout={{ position: 'absolute', left: 10, width: 276, top: 112, height: 24 }}
-            />
-            <Dropmenu
-                variant="2"
-                name="moderation_ban_dropdown"
-                onPointerTap={onModerationBanDropdown}
-                layout={{ position: 'absolute', left: 10, width: 276, top: 161, height: 24 }}
-            />
-        </Region>
+        )
     );
 };
 
@@ -1384,9 +1229,13 @@ export interface RosRoomSettingsLayoutContentContainerProps {
     tabContainer3?: RosRoomSettingsLayoutTabContainer3Props;
     tabContainer4?: RosRoomSettingsLayoutTabContainer4Props;
     tabContainer5?: RosRoomSettingsLayoutTabContainer5Props;
+    visibleTabContainer1?: boolean;
+    visibleTabContainer2?: boolean;
+    visibleTabContainer3?: boolean;
+    visibleTabContainer5?: boolean;
 }
 
-export const RosRoomSettingsLayoutContentContainer = ({ layout, onContentContainer, tabContainer1, tabContainer2, tabContainer3, tabContainer4, tabContainer5 }: RosRoomSettingsLayoutContentContainerProps) => {
+export const RosRoomSettingsLayoutContentContainer = ({ layout, onContentContainer, tabContainer1, tabContainer2, tabContainer3, tabContainer4, tabContainer5, visibleTabContainer1, visibleTabContainer2, visibleTabContainer3, visibleTabContainer5 }: RosRoomSettingsLayoutContentContainerProps) => {
     return (
         <Region
             name="content_container"
@@ -1394,11 +1243,19 @@ export const RosRoomSettingsLayoutContentContainer = ({ layout, onContentContain
             cursor="pointer"
             layout={{ position: 'absolute', left: 10, width: 327, top: 42, height: 369, ...layout }}
         >
-            <RosRoomSettingsLayoutTabContainer1 {...tabContainer1} />
-            <RosRoomSettingsLayoutTabContainer2 {...tabContainer2} />
-            <RosRoomSettingsLayoutTabContainer3 {...tabContainer3} />
+            {(visibleTabContainer1 ?? false) && (
+                <RosRoomSettingsLayoutTabContainer1 {...tabContainer1} />
+            )}
+            {(visibleTabContainer2 ?? false) && (
+                <RosRoomSettingsLayoutTabContainer2 {...tabContainer2} />
+            )}
+            {(visibleTabContainer3 ?? false) && (
+                <RosRoomSettingsLayoutTabContainer3 {...tabContainer3} />
+            )}
             <RosRoomSettingsLayoutTabContainer4 {...tabContainer4} />
-            <RosRoomSettingsLayoutTabContainer5 {...tabContainer5} />
+            {(visibleTabContainer5 ?? false) && (
+                <RosRoomSettingsLayoutTabContainer5 {...tabContainer5} />
+            )}
         </Region>
     );
 };

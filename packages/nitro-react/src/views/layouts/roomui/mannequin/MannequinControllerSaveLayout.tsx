@@ -3,15 +3,16 @@ import { BoxLayout, ButtonThick, Icon, Region, ThemeImage, ThemeText } from '#ba
 
 /** Generated from `866_mannequin_controller_save_xml` (layout "mannequin_owner_save", 386x180) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MannequinControllerSaveLayoutProps {
-    backRegion?: MannequinControllerSaveLayoutBackRegionProps;
+    captionBackText?: string;
     captionDescription?: string;
     captionOutfitNameShow?: string;
     layout?: BoxLayout;
+    onBackRegion?: () => void;
     onSaveButton?: () => void;
     srcPreviewImage?: string;
 }
 
-export const MannequinControllerSaveLayout = ({ backRegion, captionDescription, captionOutfitNameShow, layout, onSaveButton, srcPreviewImage }: MannequinControllerSaveLayoutProps) => {
+export const MannequinControllerSaveLayout = ({ captionBackText, captionDescription, captionOutfitNameShow, layout, onBackRegion, onSaveButton, srcPreviewImage }: MannequinControllerSaveLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -54,35 +55,22 @@ export const MannequinControllerSaveLayout = ({ backRegion, captionDescription, 
                     name="club_icon"
                     layout={{ position: 'absolute', left: 80, width: 43, top: 110, height: 29 }}
                 />
-                <MannequinControllerSaveLayoutBackRegion {...backRegion} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `back_region` of MannequinControllerSaveLayout - configured through the parent's `backRegion` prop. */
-export interface MannequinControllerSaveLayoutBackRegionProps {
-    captionBackText?: string;
-    layout?: BoxLayout;
-    onBackRegion?: () => void;
-}
-
-export const MannequinControllerSaveLayoutBackRegion = ({ captionBackText, layout, onBackRegion }: MannequinControllerSaveLayoutBackRegionProps) => {
-    return (
-        <Region
-            name="back_region"
-            onPointerTap={onBackRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 15, width: 151, top: 147, height: 20, ...layout }}
-        >
-            <Region
-                name="back_text"
-                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionBackText ?? 'mannequin.widget.back'}
-                    textStyle="text-style-u-regular"
-                />
+                <Region
+                    name="back_region"
+                    onPointerTap={onBackRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 15, width: 151, top: 147, height: 20 }}
+                >
+                    <Region
+                        name="back_text"
+                        layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionBackText ?? 'mannequin.widget.back'}
+                            textStyle="text-style-u-regular"
+                        />
+                    </Region>
+                </Region>
             </Region>
         </Region>
     );

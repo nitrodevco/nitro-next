@@ -91,41 +91,16 @@ export const UserViewLayoutImagesSpacerItem = ({ layout }: UserViewLayoutImagesS
     );
 };
 
-/** Named region `avatar_image_profile_link` of UserViewLayout - configured through the parent's `avatarImageProfileLink` prop. */
-export interface UserViewLayoutAvatarImageProfileLinkProps {
-    layout?: BoxLayout;
-    onAvatarImageProfileLink?: () => void;
-}
-
-export const UserViewLayoutAvatarImageProfileLink = ({ layout, onAvatarImageProfileLink }: UserViewLayoutAvatarImageProfileLinkProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="avatar_image_profile_link"
-            tooltip={t('infostand.profile.link.tooltip')}
-            onPointerTap={onAvatarImageProfileLink}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 17, width: 66, top: 2, height: 127, justifyContent: 'center', ...layout }}
-        >
-            <WidgetSlot
-                widgetType="avatar_image"
-                name="avatar_image"
-                visible={false}
-                options={{ 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
-                layout={{ position: 'absolute', width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 84 }}
-            />
-        </Region>
-    );
-};
-
 /** Row template `image_and_badges_container` of UserViewLayout - pass real rows through its `items…` slot. */
 export interface UserViewLayoutImageAndBadgesContainerItemProps {
-    avatarImageProfileLink?: UserViewLayoutAvatarImageProfileLinkProps;
     layout?: BoxLayout;
+    onAvatarImageProfileLink?: () => void;
+    visibleAvatarImage?: boolean;
 }
 
-export const UserViewLayoutImageAndBadgesContainerItem = ({ avatarImageProfileLink, layout }: UserViewLayoutImageAndBadgesContainerItemProps) => {
+export const UserViewLayoutImageAndBadgesContainerItem = ({ layout, onAvatarImageProfileLink, visibleAvatarImage }: UserViewLayoutImageAndBadgesContainerItemProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="image_and_badges_container"
@@ -138,7 +113,22 @@ export const UserViewLayoutImageAndBadgesContainerItem = ({ avatarImageProfileLi
                 tintColor="#666666"
                 layout={{ position: 'absolute', left: 16, width: 67, top: 0, height: 130 }}
             />
-            <UserViewLayoutAvatarImageProfileLink {...avatarImageProfileLink} />
+            <Region
+                name="avatar_image_profile_link"
+                tooltip={t('infostand.profile.link.tooltip')}
+                onPointerTap={onAvatarImageProfileLink}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 17, width: 66, top: 2, height: 127, justifyContent: 'center' }}
+            >
+                {(visibleAvatarImage ?? false) && (
+                    <WidgetSlot
+                        widgetType="avatar_image"
+                        name="avatar_image"
+                        options={{ 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
+                        layout={{ position: 'absolute', width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 84 }}
+                    />
+                )}
+            </Region>
             <WidgetSlot
                 widgetType="badge_image"
                 name="badge_0"
@@ -234,12 +224,13 @@ export interface UserViewLayoutBadgesRankSpacerItemProps {
 
 export const UserViewLayoutBadgesRankSpacerItem = ({ layout, visibleBadgesRankSpacer }: UserViewLayoutBadgesRankSpacerItemProps) => {
     return (
-        <Region
-            name="badges_rank_spacer"
-            visible={visibleBadgesRankSpacer ?? false}
-            backgroundColor="#333333"
-            layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
-        />
+        (visibleBadgesRankSpacer ?? false) && (
+            <Region
+                name="badges_rank_spacer"
+                backgroundColor="#333333"
+                layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
+            />
+        )
     );
 };
 
@@ -248,24 +239,26 @@ export interface UserViewLayoutBadgesRankRegionItemProps {
     captionBadgesRankText?: string;
     layout?: BoxLayout;
     onBadgesRankRegion?: () => void;
+    visibleBadgesRankRegion?: boolean;
 }
 
-export const UserViewLayoutBadgesRankRegionItem = ({ captionBadgesRankText, layout, onBadgesRankRegion }: UserViewLayoutBadgesRankRegionItemProps) => {
+export const UserViewLayoutBadgesRankRegionItem = ({ captionBadgesRankText, layout, onBadgesRankRegion, visibleBadgesRankRegion }: UserViewLayoutBadgesRankRegionItemProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="badges_rank_region"
-            visible={false}
-            layout={{ width: 170, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-            onPointerTap={onBadgesRankRegion}
-            cursor="pointer"
-        >
-            <ThemeText
-                text={captionBadgesRankText ?? t('infostand.text.badges_rank')}
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
-            />
-        </Region>
+        (visibleBadgesRankRegion ?? false) && (
+            <Region
+                name="badges_rank_region"
+                layout={{ width: 170, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+                onPointerTap={onBadgesRankRegion}
+                cursor="pointer"
+            >
+                <ThemeText
+                    text={captionBadgesRankText ?? t('infostand.text.badges_rank')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -277,12 +270,13 @@ export interface UserViewLayoutScoreSpacerItemProps {
 
 export const UserViewLayoutScoreSpacerItem = ({ layout, visibleScoreSpacer }: UserViewLayoutScoreSpacerItemProps) => {
     return (
-        <Region
-            name="score_spacer"
-            visible={visibleScoreSpacer ?? false}
-            backgroundColor="#333333"
-            layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
-        />
+        (visibleScoreSpacer ?? false) && (
+            <Region
+                name="score_spacer"
+                backgroundColor="#333333"
+                layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
+            />
+        )
     );
 };
 
@@ -290,22 +284,24 @@ export const UserViewLayoutScoreSpacerItem = ({ layout, visibleScoreSpacer }: Us
 export interface UserViewLayoutScoreTextItemProps {
     captionScoreText?: string;
     layout?: BoxLayout;
+    visibleScoreText?: boolean;
 }
 
-export const UserViewLayoutScoreTextItem = ({ captionScoreText, layout }: UserViewLayoutScoreTextItemProps) => {
+export const UserViewLayoutScoreTextItem = ({ captionScoreText, layout, visibleScoreText }: UserViewLayoutScoreTextItemProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="score_text"
-            visible={false}
-            layout={{ width: 170, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionScoreText ?? t('infostand.text.achievement_score')}
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
-            />
-        </Region>
+        (visibleScoreText ?? false) && (
+            <Region
+                name="score_text"
+                layout={{ width: 170, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            >
+                <ThemeText
+                    text={captionScoreText ?? t('infostand.text.achievement_score')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -313,20 +309,22 @@ export const UserViewLayoutScoreTextItem = ({ captionScoreText, layout }: UserVi
 export interface UserViewLayoutScoreValueItemProps {
     captionScoreValue?: string;
     layout?: BoxLayout;
+    visibleScoreValue?: boolean;
 }
 
-export const UserViewLayoutScoreValueItem = ({ captionScoreValue, layout }: UserViewLayoutScoreValueItemProps) => {
+export const UserViewLayoutScoreValueItem = ({ captionScoreValue, layout, visibleScoreValue }: UserViewLayoutScoreValueItemProps) => {
     return (
-        <Region
-            name="score_value"
-            visible={false}
-            layout={{ width: 170, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionScoreValue ?? ''}
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
-            />
-        </Region>
+        (visibleScoreValue ?? false) && (
+            <Region
+                name="score_value"
+                layout={{ width: 170, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            >
+                <ThemeText
+                    text={captionScoreValue ?? ''}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -338,12 +336,13 @@ export interface UserViewLayoutHanditemSpacerItemProps {
 
 export const UserViewLayoutHanditemSpacerItem = ({ layout, visibleHanditemSpacer }: UserViewLayoutHanditemSpacerItemProps) => {
     return (
-        <Region
-            name="handitem_spacer"
-            visible={visibleHanditemSpacer ?? false}
-            backgroundColor="#333333"
-            layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
-        />
+        (visibleHanditemSpacer ?? false) && (
+            <Region
+                name="handitem_spacer"
+                backgroundColor="#333333"
+                layout={{ width: 170, height: 1, flexShrink: 0, ...layout }}
+            />
+        )
     );
 };
 
@@ -351,22 +350,24 @@ export const UserViewLayoutHanditemSpacerItem = ({ layout, visibleHanditemSpacer
 export interface UserViewLayoutHanditemTxtItemProps {
     captionHanditemTxt?: string;
     layout?: BoxLayout;
+    visibleHanditemTxt?: boolean;
 }
 
-export const UserViewLayoutHanditemTxtItem = ({ captionHanditemTxt, layout }: UserViewLayoutHanditemTxtItemProps) => {
+export const UserViewLayoutHanditemTxtItem = ({ captionHanditemTxt, layout, visibleHanditemTxt }: UserViewLayoutHanditemTxtItemProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="handitem_txt"
-            visible={false}
-            layout={{ width: 170, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionHanditemTxt ?? t('infostand.text.handitem')}
-                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
-            />
-        </Region>
+        (visibleHanditemTxt ?? false) && (
+            <Region
+                name="handitem_txt"
+                layout={{ width: 170, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            >
+                <ThemeText
+                    text={captionHanditemTxt ?? t('infostand.text.handitem')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -436,26 +437,28 @@ export const UserViewLayoutHeartOthersItem = ({ captionHeartOthers, layout }: Us
 export interface UserViewLayoutRelationshipHeartItemProps {
     itemsRelationshipHeart?: ReactNode;
     layout?: BoxLayout;
+    visibleRelationshipHeart?: boolean;
 }
 
-export const UserViewLayoutRelationshipHeartItem = ({ itemsRelationshipHeart, layout }: UserViewLayoutRelationshipHeartItemProps) => {
+export const UserViewLayoutRelationshipHeartItem = ({ itemsRelationshipHeart, layout, visibleRelationshipHeart }: UserViewLayoutRelationshipHeartItemProps) => {
     return (
-        <Region
-            name="relationship_heart"
-            visible={false}
-            layout={{ width: 172, height: 16, flexShrink: 0, flexDirection: 'row', ...layout }}
-        >
-            {itemsRelationshipHeart ?? (
-                <>
-                    <UserViewLayoutHeartRandomusernameItem />
-                    <UserViewLayoutHeartOthersItem />
-                </>
-            )}
-            <ThemeImage
-                src={layoutImage('relationship_status_heart.png')}
-                layout={{ width: 17, height: 14, flexShrink: 0 }}
-            />
-        </Region>
+        (visibleRelationshipHeart ?? false) && (
+            <Region
+                name="relationship_heart"
+                layout={{ width: 172, height: 16, flexShrink: 0, flexDirection: 'row', ...layout }}
+            >
+                {itemsRelationshipHeart ?? (
+                    <>
+                        <UserViewLayoutHeartRandomusernameItem />
+                        <UserViewLayoutHeartOthersItem />
+                    </>
+                )}
+                <ThemeImage
+                    src={layoutImage('relationship_status_heart.png')}
+                    layout={{ width: 17, height: 14, flexShrink: 0 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -510,26 +513,28 @@ export const UserViewLayoutSmileOthersItem = ({ captionSmileOthers, layout }: Us
 export interface UserViewLayoutRelationshipSmileItemProps {
     itemsRelationshipSmile?: ReactNode;
     layout?: BoxLayout;
+    visibleRelationshipSmile?: boolean;
 }
 
-export const UserViewLayoutRelationshipSmileItem = ({ itemsRelationshipSmile, layout }: UserViewLayoutRelationshipSmileItemProps) => {
+export const UserViewLayoutRelationshipSmileItem = ({ itemsRelationshipSmile, layout, visibleRelationshipSmile }: UserViewLayoutRelationshipSmileItemProps) => {
     return (
-        <Region
-            name="relationship_smile"
-            visible={false}
-            layout={{ width: 172, height: 16, flexShrink: 0, flexDirection: 'row', ...layout }}
-        >
-            {itemsRelationshipSmile ?? (
-                <>
-                    <UserViewLayoutSmileRandomusernameItem />
-                    <UserViewLayoutSmileOthersItem />
-                </>
-            )}
-            <ThemeImage
-                src={layoutImage('relationship_status_smile.png')}
-                layout={{ width: 17, height: 14, flexShrink: 0 }}
-            />
-        </Region>
+        (visibleRelationshipSmile ?? false) && (
+            <Region
+                name="relationship_smile"
+                layout={{ width: 172, height: 16, flexShrink: 0, flexDirection: 'row', ...layout }}
+            >
+                {itemsRelationshipSmile ?? (
+                    <>
+                        <UserViewLayoutSmileRandomusernameItem />
+                        <UserViewLayoutSmileOthersItem />
+                    </>
+                )}
+                <ThemeImage
+                    src={layoutImage('relationship_status_smile.png')}
+                    layout={{ width: 17, height: 14, flexShrink: 0 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -584,26 +589,28 @@ export const UserViewLayoutBobbaOthersItem = ({ captionBobbaOthers, layout }: Us
 export interface UserViewLayoutRelationshipBobbaItemProps {
     itemsRelationshipBobba?: ReactNode;
     layout?: BoxLayout;
+    visibleRelationshipBobba?: boolean;
 }
 
-export const UserViewLayoutRelationshipBobbaItem = ({ itemsRelationshipBobba, layout }: UserViewLayoutRelationshipBobbaItemProps) => {
+export const UserViewLayoutRelationshipBobbaItem = ({ itemsRelationshipBobba, layout, visibleRelationshipBobba }: UserViewLayoutRelationshipBobbaItemProps) => {
     return (
-        <Region
-            name="relationship_bobba"
-            visible={false}
-            layout={{ width: 172, height: 16, flexShrink: 0, flexDirection: 'row', ...layout }}
-        >
-            {itemsRelationshipBobba ?? (
-                <>
-                    <UserViewLayoutBobbaRandomusernameItem />
-                    <UserViewLayoutBobbaOthersItem />
-                </>
-            )}
-            <ThemeImage
-                src={layoutImage('relationship_status_bobba.png')}
-                layout={{ width: 17, height: 14, flexShrink: 0 }}
-            />
-        </Region>
+        (visibleRelationshipBobba ?? false) && (
+            <Region
+                name="relationship_bobba"
+                layout={{ width: 172, height: 16, flexShrink: 0, flexDirection: 'row', ...layout }}
+            >
+                {itemsRelationshipBobba ?? (
+                    <>
+                        <UserViewLayoutBobbaRandomusernameItem />
+                        <UserViewLayoutBobbaOthersItem />
+                    </>
+                )}
+                <ThemeImage
+                    src={layoutImage('relationship_status_bobba.png')}
+                    layout={{ width: 17, height: 14, flexShrink: 0 }}
+                />
+            </Region>
+        )
     );
 };
 

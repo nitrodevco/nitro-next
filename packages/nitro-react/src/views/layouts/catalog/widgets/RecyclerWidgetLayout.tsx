@@ -19,108 +19,52 @@ export const RecyclerWidgetLayout = ({ layout, normal, onPatFrankBtn, srcEmoji1,
         <Region layout={{ position: 'relative', width: 360, height: 208, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 208 }}>
                 <RecyclerWidgetLayoutNormal {...normal} />
-                <Border
-                    variant="3"
-                    name="disabled_border"
-                    tintColor="#888888"
-                    blend={0.7}
-                    visible={visibleDisabledBorder ?? false}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                >
-                    <ThemeImage
-                        src={layoutImage('image_frank_dont_know.png')}
-                        layout={{ position: 'absolute', left: 235, width: 118, bottom: -67, height: 176 }}
-                    />
-                    <Bubble
-                        variant="7"
-                        pointer="right"
-                        layout={{ position: 'absolute', left: 107, width: 155, bottom: 29, height: 81 }}
-                    >
-                        <Region layout={{ position: 'absolute', left: 4, width: 107, top: 4, minWidth: 107, maxWidth: 107, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('recycler.broken')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 107 }}
-                            />
-                        </Region>
-                        <ThemeImage
-                            name="emoji_1"
-                            src={srcEmoji1 ?? layoutImage('franks_emotions_sad.png')}
-                            layout={{ position: 'absolute', left: 115, width: 20, top: 5, height: 20 }}
-                        />
-                    </Bubble>
-                    <Button
+                {(visibleDisabledBorder ?? false) && (
+                    <Border
                         variant="3"
-                        name="pat_frank_btn"
-                        onPointerTap={onPatFrankBtn}
-                        textStyle="text-style-button-shiny-regular"
-                        layout={{ position: 'absolute', right: 10, width: 115, top: 11, height: 30 }}
+                        name="disabled_border"
+                        tintColor="#888888"
+                        blend={0.7}
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                     >
-                        {t('recycler.pat_frank')}
-                    </Button>
-                    <ThemeImage
-                        name="emoji_2_template"
-                        src={srcEmoji2Template ?? layoutImage('franks_emotions_heart.png')}
-                        layout={{ position: 'absolute', left: 32, width: 40, bottom: -42, height: 40 }}
-                    />
-                </Border>
+                        <ThemeImage
+                            src={layoutImage('image_frank_dont_know.png')}
+                            layout={{ position: 'absolute', left: 235, width: 118, bottom: -67, height: 176 }}
+                        />
+                        <Bubble
+                            variant="7"
+                            pointer="right"
+                            layout={{ position: 'absolute', left: 107, width: 155, bottom: 29, height: 81 }}
+                        >
+                            <Region layout={{ position: 'absolute', left: 4, width: 107, top: 4, minWidth: 107, maxWidth: 107, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                                <ThemeText
+                                    text={t('recycler.broken')}
+                                    textOptions={{ wordWrap: true, wordWrapWidth: 107 }}
+                                />
+                            </Region>
+                            <ThemeImage
+                                name="emoji_1"
+                                src={srcEmoji1 ?? layoutImage('franks_emotions_sad.png')}
+                                layout={{ position: 'absolute', left: 115, width: 20, top: 5, height: 20 }}
+                            />
+                        </Bubble>
+                        <Button
+                            variant="3"
+                            name="pat_frank_btn"
+                            onPointerTap={onPatFrankBtn}
+                            textStyle="text-style-button-shiny-regular"
+                            layout={{ position: 'absolute', right: 10, width: 115, top: 11, height: 30 }}
+                        >
+                            {t('recycler.pat_frank')}
+                        </Button>
+                        <ThemeImage
+                            name="emoji_2_template"
+                            src={srcEmoji2Template ?? layoutImage('franks_emotions_heart.png')}
+                            layout={{ position: 'absolute', left: 32, width: 40, bottom: -42, height: 40 }}
+                        />
+                    </Border>
+                )}
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `spacer` of RecyclerWidgetLayout - configured through the parent's `spacer` prop. */
-export interface RecyclerWidgetLayoutSpacerProps {
-    layout?: BoxLayout;
-}
-
-export const RecyclerWidgetLayoutSpacer = ({ layout }: RecyclerWidgetLayoutSpacerProps) => {
-    return (
-        <Region
-            name="spacer"
-            layout={{ width: 2, height: 30, flexShrink: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `spacer` of RecyclerWidgetLayout - configured through the parent's `spacer` prop. */
-export interface RecyclerWidgetLayoutSpacer2Props {
-    layout?: BoxLayout;
-    visibleSpacer?: boolean;
-}
-
-export const RecyclerWidgetLayoutSpacer2 = ({ layout, visibleSpacer }: RecyclerWidgetLayoutSpacer2Props) => {
-    return (
-        <Region
-            name="spacer"
-            visible={visibleSpacer ?? false}
-            layout={{ width: 10, height: 30, flexShrink: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `layout` of RecyclerWidgetLayout - configured through the parent's `layout` prop. */
-export interface RecyclerWidgetLayoutLayoutProps {
-    layout?: BoxLayout;
-}
-
-export const RecyclerWidgetLayoutLayout = ({ layout }: RecyclerWidgetLayoutLayoutProps) => {
-    return (
-        <Region
-            name="layout"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 115, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('recycler_furnimatic_container_left.png')}
-                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 115 }}
-            />
-            <ThemeImage
-                src={layoutImage('recycler_furnimatic_container_slice.png')}
-                layout={{ position: 'absolute', left: 15, right: 12, top: 0, height: 115 }}
-            />
-            <ThemeImage
-                src={layoutImage('recycler_furnimatic_container_right.png')}
-                layout={{ position: 'absolute', right: 0, width: 13, top: 0, height: 115 }}
-            />
         </Region>
     );
 };
@@ -287,141 +231,109 @@ export const RecyclerWidgetLayoutSlots = ({ layout, srcSlotBg1, srcSlotBg10, src
 /** Named region `slots_wrapper` of RecyclerWidgetLayout - configured through the parent's `slotsWrapper` prop. */
 export interface RecyclerWidgetLayoutSlotsWrapperProps {
     layout?: BoxLayout;
-    layout2?: RecyclerWidgetLayoutLayoutProps;
     slots?: RecyclerWidgetLayoutSlotsProps;
 }
 
-export const RecyclerWidgetLayoutSlotsWrapper = ({ layout, layout2, slots }: RecyclerWidgetLayoutSlotsWrapperProps) => {
+export const RecyclerWidgetLayoutSlotsWrapper = ({ layout, slots }: RecyclerWidgetLayoutSlotsWrapperProps) => {
     return (
         <Region
             name="slots_wrapper"
             layout={{ position: 'absolute', left: 16, right: 159, bottom: -33, height: 156, ...layout }}
         >
-            <RecyclerWidgetLayoutLayout {...layout2} />
-            <RecyclerWidgetLayoutSlots {...slots} />
-        </Region>
-    );
-};
-
-/** Named region `layout` of RecyclerWidgetLayout - configured through the parent's `layout` prop. */
-export interface RecyclerWidgetLayoutLayout2Props {
-    layout?: BoxLayout;
-}
-
-export const RecyclerWidgetLayoutLayout2 = ({ layout }: RecyclerWidgetLayoutLayout2Props) => {
-    return (
-        <Region
-            name="layout"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 115, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('recycler_furnimatic_container_left.png')}
-                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 115 }}
-            />
-            <ThemeImage
-                src={layoutImage('recycler_furnimatic_container_slice.png')}
-                layout={{ position: 'absolute', left: 15, right: 12, top: 0, height: 115 }}
-            />
-            <ThemeImage
-                src={layoutImage('recycler_furnimatic_container_right.png')}
-                layout={{ position: 'absolute', right: 0, width: 13, top: 0, height: 115 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `indicator_pointer` of RecyclerWidgetLayout - configured through the parent's `indicatorPointer` prop. */
-export interface RecyclerWidgetLayoutIndicatorPointerProps {
-    layout?: BoxLayout;
-    srcPointerArrow?: string;
-    srcPointerBase?: string;
-}
-
-export const RecyclerWidgetLayoutIndicatorPointer = ({ layout, srcPointerArrow, srcPointerBase }: RecyclerWidgetLayoutIndicatorPointerProps) => {
-    return (
-        <Region
-            name="indicator_pointer"
-            layout={{ position: 'absolute', left: 37, width: 50, top: 43, height: 50, ...layout }}
-        >
-            <ThemeImage
-                name="pointer_arrow"
-                src={srcPointerArrow ?? layoutImage('recycler_furnimatic_indicator_pointer_arrow.png')}
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
-            />
-            <ThemeImage
-                name="pointer_base"
-                src={srcPointerBase ?? layoutImage('recycler_furnimatic_indicator_pointer_base.png')}
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `abort_region` of RecyclerWidgetLayout - configured through the parent's `abortRegion` prop. */
-export interface RecyclerWidgetLayoutAbortRegionProps {
-    layout?: BoxLayout;
-    onAbortRegion?: () => void;
-    visibleAbortRegion?: boolean;
-}
-
-export const RecyclerWidgetLayoutAbortRegion = ({ layout, onAbortRegion, visibleAbortRegion }: RecyclerWidgetLayoutAbortRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="abort_region"
-            visible={visibleAbortRegion ?? false}
-            onPointerTap={onAbortRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', width: 65, top: 91, height: 17, minHeight: 17, maxHeight: 17, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 65, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('catalog.recycler.button.abort')} />
+            <Region
+                name="layout"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 115 }}
+            >
+                <ThemeImage
+                    src={layoutImage('recycler_furnimatic_container_left.png')}
+                    layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 115 }}
+                />
+                <ThemeImage
+                    src={layoutImage('recycler_furnimatic_container_slice.png')}
+                    layout={{ position: 'absolute', left: 15, right: 12, top: 0, height: 115 }}
+                />
+                <ThemeImage
+                    src={layoutImage('recycler_furnimatic_container_right.png')}
+                    layout={{ position: 'absolute', right: 0, width: 13, top: 0, height: 115 }}
+                />
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `indicator` of RecyclerWidgetLayout - configured through the parent's `indicator` prop. */
-export interface RecyclerWidgetLayoutIndicatorProps {
-    abortRegion?: RecyclerWidgetLayoutAbortRegionProps;
-    indicatorPointer?: RecyclerWidgetLayoutIndicatorPointerProps;
-    layout?: BoxLayout;
-    srcIndicator?: string;
-}
-
-export const RecyclerWidgetLayoutIndicator = ({ abortRegion, indicatorPointer, layout, srcIndicator }: RecyclerWidgetLayoutIndicatorProps) => {
-    return (
-        <Region
-            name="indicator"
-            layout={{ position: 'absolute', left: 1, width: 123, top: 0, height: 115, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                name="indicator"
-                src={srcIndicator ?? layoutImage('recycler_furnimatic_indicator.png')}
-                layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 115 }}
-            />
-            <RecyclerWidgetLayoutIndicatorPointer {...indicatorPointer} />
-            <RecyclerWidgetLayoutAbortRegion {...abortRegion} />
+            <RecyclerWidgetLayoutSlots {...slots} />
         </Region>
     );
 };
 
 /** Named region `indicator_wrapper` of RecyclerWidgetLayout - configured through the parent's `indicatorWrapper` prop. */
 export interface RecyclerWidgetLayoutIndicatorWrapperProps {
-    indicator?: RecyclerWidgetLayoutIndicatorProps;
     layout?: BoxLayout;
-    layout2?: RecyclerWidgetLayoutLayout2Props;
+    onAbortRegion?: () => void;
+    srcIndicator?: string;
+    srcPointerArrow?: string;
+    srcPointerBase?: string;
+    visibleAbortRegion?: boolean;
 }
 
-export const RecyclerWidgetLayoutIndicatorWrapper = ({ indicator, layout, layout2 }: RecyclerWidgetLayoutIndicatorWrapperProps) => {
+export const RecyclerWidgetLayoutIndicatorWrapper = ({ layout, onAbortRegion, srcIndicator, srcPointerArrow, srcPointerBase, visibleAbortRegion }: RecyclerWidgetLayoutIndicatorWrapperProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="indicator_wrapper"
             layout={{ position: 'absolute', left: 214, right: 23, bottom: 8, height: 115, minWidth: 123, maxWidth: 123, minHeight: 115, maxHeight: 115, ...layout }}
         >
-            <RecyclerWidgetLayoutLayout2 {...layout2} />
-            <RecyclerWidgetLayoutIndicator {...indicator} />
+            <Region
+                name="layout"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 115 }}
+            >
+                <ThemeImage
+                    src={layoutImage('recycler_furnimatic_container_left.png')}
+                    layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 115 }}
+                />
+                <ThemeImage
+                    src={layoutImage('recycler_furnimatic_container_slice.png')}
+                    layout={{ position: 'absolute', left: 15, right: 12, top: 0, height: 115 }}
+                />
+                <ThemeImage
+                    src={layoutImage('recycler_furnimatic_container_right.png')}
+                    layout={{ position: 'absolute', right: 0, width: 13, top: 0, height: 115 }}
+                />
+            </Region>
+            <Region
+                name="indicator"
+                layout={{ position: 'absolute', left: 1, width: 123, top: 0, height: 115, justifyContent: 'center' }}
+            >
+                <ThemeImage
+                    name="indicator"
+                    src={srcIndicator ?? layoutImage('recycler_furnimatic_indicator.png')}
+                    layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 115 }}
+                />
+                <Region
+                    name="indicator_pointer"
+                    layout={{ position: 'absolute', left: 37, width: 50, top: 43, height: 50 }}
+                >
+                    <ThemeImage
+                        name="pointer_arrow"
+                        src={srcPointerArrow ?? layoutImage('recycler_furnimatic_indicator_pointer_arrow.png')}
+                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                    />
+                    <ThemeImage
+                        name="pointer_base"
+                        src={srcPointerBase ?? layoutImage('recycler_furnimatic_indicator_pointer_base.png')}
+                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                    />
+                </Region>
+                {(visibleAbortRegion ?? false) && (
+                    <Region
+                        name="abort_region"
+                        onPointerTap={onAbortRegion}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', width: 65, top: 91, height: 17, minHeight: 17, maxHeight: 17 }}
+                    >
+                        <Region layout={{ position: 'absolute', left: 0, width: 65, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <ThemeText text={t('catalog.recycler.button.abort')} />
+                        </Region>
+                    </Region>
+                )}
+            </Region>
         </Region>
     );
 };
@@ -433,11 +345,10 @@ export interface RecyclerWidgetLayoutNormalProps {
     layout?: BoxLayout;
     onRecyclerRecycle?: () => void;
     slotsWrapper?: RecyclerWidgetLayoutSlotsWrapperProps;
-    spacer?: RecyclerWidgetLayoutSpacerProps;
-    spacer2?: RecyclerWidgetLayoutSpacer2Props;
+    visibleSpacer?: boolean;
 }
 
-export const RecyclerWidgetLayoutNormal = ({ captionDucketCost, indicatorWrapper, layout, onRecyclerRecycle, slotsWrapper, spacer, spacer2 }: RecyclerWidgetLayoutNormalProps) => {
+export const RecyclerWidgetLayoutNormal = ({ captionDucketCost, indicatorWrapper, layout, onRecyclerRecycle, slotsWrapper, visibleSpacer }: RecyclerWidgetLayoutNormalProps) => {
     const t = useTranslation();
 
     return (
@@ -452,13 +363,21 @@ export const RecyclerWidgetLayoutNormal = ({ captionDucketCost, indicatorWrapper
                 >
                     <ThemeText text={captionDucketCost ?? '50'} />
                 </Region>
-                <RecyclerWidgetLayoutSpacer {...spacer} />
+                <Region
+                    name="spacer"
+                    layout={{ width: 2, height: 30, flexShrink: 0 }}
+                />
                 <Icon
                     variant="32"
                     name="ducket_icon"
                     layout={{ width: 23, height: 21, flexShrink: 0 }}
                 />
-                <RecyclerWidgetLayoutSpacer2 {...spacer2} />
+                {(visibleSpacer ?? false) && (
+                    <Region
+                        name="spacer"
+                        layout={{ width: 10, height: 30, flexShrink: 0 }}
+                    />
+                )}
             </Region>
             <Button
                 variant="6"

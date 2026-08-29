@@ -3,7 +3,7 @@ import { ActivityPointDisplayWidget, ActivityPointDisplayWidgetProps } from '#ba
 import { ProductViewWidget, ProductViewWidgetProps } from '#base/views/layouts/catalog/widgets/ProductViewWidget';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 import { RoomPreviewWidget, RoomPreviewWidgetProps } from '#base/views/layouts/catalog/widgets/RoomPreviewWidget';
-import { SpacesNewWidget, SpacesNewWidgetProps } from '#base/views/layouts/catalog/widgets/SpacesNewWidget';
+import { SpacesNewWidget2, SpacesNewWidget2Props } from '#base/views/layouts/catalog/widgets/SpacesNewWidget2';
 
 /** Generated from `1576_layout_spaces_new_xml` (layout "ctlg_spaces_new", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutSpacesNew_1576LayoutProps {
@@ -26,7 +26,7 @@ export interface LayoutSpacesNew_1576LayoutCtlgSpacesNewProps {
     productViewWidget?: ProductViewWidgetProps;
     purchaseWidget?: PurchaseWidgetProps;
     roomPreviewWidget?: RoomPreviewWidgetProps;
-    spacesNewWidget?: SpacesNewWidgetProps;
+    spacesNewWidget?: SpacesNewWidget2Props;
 }
 
 export const LayoutSpacesNew_1576LayoutCtlgSpacesNew = ({ activityPointDisplayWidget, layout, productViewWidget, purchaseWidget, roomPreviewWidget, spacesNewWidget }: LayoutSpacesNew_1576LayoutCtlgSpacesNewProps) => {
@@ -48,7 +48,7 @@ export const LayoutSpacesNew_1576LayoutCtlgSpacesNew = ({ activityPointDisplayWi
                 layout={{ position: 'absolute', left: 180, width: 175, top: 205, height: 28 }}
                 {...activityPointDisplayWidget}
             />
-            <SpacesNewWidget
+            <SpacesNewWidget2
                 fixed
                 layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 35 }}
                 {...spacesNewWidget}

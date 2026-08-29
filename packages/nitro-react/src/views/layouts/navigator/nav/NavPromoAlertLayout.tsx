@@ -4,13 +4,14 @@ import { BoxLayout, Button, Frame, Icon, Region, ThemeText } from '#base/theme';
 /** Generated from `2995_nav_promo_alert_xml` (layout "simple_alert", 224x182) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NavPromoAlertLayoutProps {
     captionBodyText?: string;
+    captionPromoText?: string;
     layout?: BoxLayout;
     onClose?: () => void;
     onOk?: () => void;
-    promoContainer?: NavPromoAlertLayoutPromoContainerProps;
+    onPromoContainer?: () => void;
 }
 
-export const NavPromoAlertLayout = ({ captionBodyText, layout, onClose, onOk, promoContainer }: NavPromoAlertLayoutProps) => {
+export const NavPromoAlertLayout = ({ captionBodyText, captionPromoText, layout, onClose, onOk, onPromoContainer }: NavPromoAlertLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -40,41 +41,26 @@ export const NavPromoAlertLayout = ({ captionBodyText, layout, onClose, onOk, pr
             >
                 {t('generic.ok')}
             </Button>
-            <NavPromoAlertLayoutPromoContainer {...promoContainer} />
-        </Frame>
-    );
-};
-
-/** Named region `promo_container` of NavPromoAlertLayout - configured through the parent's `promoContainer` prop. */
-export interface NavPromoAlertLayoutPromoContainerProps {
-    captionPromoText?: string;
-    layout?: BoxLayout;
-    onPromoContainer?: () => void;
-}
-
-export const NavPromoAlertLayoutPromoContainer = ({ captionPromoText, layout, onPromoContainer }: NavPromoAlertLayoutPromoContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="promo_container"
-            onPointerTap={onPromoContainer}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 7, width: 199, top: 72, height: 43, ...layout }}
-        >
-            <Icon
-                variant="16"
-                layout={{ position: 'absolute', left: 0, width: 44, top: 3, height: 43 }}
-            />
             <Region
-                name="promo_text"
-                layout={{ position: 'absolute', left: 46, width: 144, top: 6, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                name="promo_container"
+                onPointerTap={onPromoContainer}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 7, width: 199, top: 72, height: 43 }}
             >
-                <ThemeText
-                    text={captionPromoText ?? t('002_lorem_ipsum_content')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 144 }}
+                <Icon
+                    variant="16"
+                    layout={{ position: 'absolute', left: 0, width: 44, top: 3, height: 43 }}
                 />
+                <Region
+                    name="promo_text"
+                    layout={{ position: 'absolute', left: 46, width: 144, top: 6, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionPromoText ?? t('002_lorem_ipsum_content')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 144 }}
+                    />
+                </Region>
             </Region>
-        </Region>
+        </Frame>
     );
 };

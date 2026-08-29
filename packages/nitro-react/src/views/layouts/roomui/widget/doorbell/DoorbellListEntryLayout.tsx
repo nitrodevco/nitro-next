@@ -2,13 +2,13 @@ import { BoxLayout, Icon, Region, ThemeText } from '#base/theme';
 
 /** Generated from `963_doorbell_list_entry_xml` (layout "list_entry", 200x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface DoorbellListEntryLayoutProps {
-    accept?: DoorbellListEntryLayoutAcceptProps;
     captionUserName?: string;
-    deny?: DoorbellListEntryLayoutDenyProps;
     layout?: BoxLayout;
+    onAccept?: () => void;
+    onDeny?: () => void;
 }
 
-export const DoorbellListEntryLayout = ({ accept, captionUserName, deny, layout }: DoorbellListEntryLayoutProps) => {
+export const DoorbellListEntryLayout = ({ captionUserName, layout, onAccept, onDeny }: DoorbellListEntryLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 200, height: 20, ...layout }}>
             <Region
@@ -21,55 +21,31 @@ export const DoorbellListEntryLayout = ({ accept, captionUserName, deny, layout 
                 >
                     <ThemeText text={captionUserName ?? 'username'} />
                 </Region>
-                <DoorbellListEntryLayoutAccept {...accept} />
-                <DoorbellListEntryLayoutDeny {...deny} />
+                <Region
+                    name="accept"
+                    onPointerTap={onAccept}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 155, width: 18, top: 4, height: 15 }}
+                >
+                    <Icon
+                        variant="8"
+                        tintColor="#00bb00"
+                        layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 15 }}
+                    />
+                </Region>
+                <Region
+                    name="deny"
+                    onPointerTap={onDeny}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 180, width: 15, top: 4, height: 13 }}
+                >
+                    <Icon
+                        variant="9"
+                        tintColor="#ff0000"
+                        layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 13 }}
+                    />
+                </Region>
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `accept` of DoorbellListEntryLayout - configured through the parent's `accept` prop. */
-export interface DoorbellListEntryLayoutAcceptProps {
-    layout?: BoxLayout;
-    onAccept?: () => void;
-}
-
-export const DoorbellListEntryLayoutAccept = ({ layout, onAccept }: DoorbellListEntryLayoutAcceptProps) => {
-    return (
-        <Region
-            name="accept"
-            onPointerTap={onAccept}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 155, width: 18, top: 4, height: 15, ...layout }}
-        >
-            <Icon
-                variant="8"
-                tintColor="#00bb00"
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 15 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `deny` of DoorbellListEntryLayout - configured through the parent's `deny` prop. */
-export interface DoorbellListEntryLayoutDenyProps {
-    layout?: BoxLayout;
-    onDeny?: () => void;
-}
-
-export const DoorbellListEntryLayoutDeny = ({ layout, onDeny }: DoorbellListEntryLayoutDenyProps) => {
-    return (
-        <Region
-            name="deny"
-            onPointerTap={onDeny}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 180, width: 15, top: 4, height: 13, ...layout }}
-        >
-            <Icon
-                variant="9"
-                tintColor="#ff0000"
-                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 13 }}
-            />
         </Region>
     );
 };

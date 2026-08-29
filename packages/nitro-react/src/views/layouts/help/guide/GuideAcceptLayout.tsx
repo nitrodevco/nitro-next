@@ -10,9 +10,10 @@ export interface GuideAcceptLayoutProps {
     layout?: BoxLayout;
     onClose?: () => void;
     srcFrankGreeting?: string;
+    visibleFrankGreeting?: boolean;
 }
 
-export const GuideAcceptLayout = ({ itemlist, layout, onClose, srcFrankGreeting }: GuideAcceptLayoutProps) => {
+export const GuideAcceptLayout = ({ itemlist, layout, onClose, srcFrankGreeting, visibleFrankGreeting }: GuideAcceptLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -46,12 +47,13 @@ export const GuideAcceptLayout = ({ itemlist, layout, onClose, srcFrankGreeting 
                     layout={{ position: 'absolute', left: 10, width: 63, top: 10, height: 37 }}
                 />
             </Border>
-            <ThemeImage
-                name="frank_greeting"
-                src={srcFrankGreeting ?? layoutImage('help_frank_greeting.png')}
-                layout={{ position: 'absolute', left: -10, width: 230, bottom: -19, height: 140 }}
-                visible={false}
-            />
+            {(visibleFrankGreeting ?? false) && (
+                <ThemeImage
+                    name="frank_greeting"
+                    src={srcFrankGreeting ?? layoutImage('help_frank_greeting.png')}
+                    layout={{ position: 'absolute', left: -10, width: 230, bottom: -19, height: 140 }}
+                />
+            )}
         </Frame>
     );
 };

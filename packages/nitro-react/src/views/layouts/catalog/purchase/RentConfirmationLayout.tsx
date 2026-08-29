@@ -6,15 +6,17 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1553_rent_confirmation_xml` (layout "rent_confirmation", 370x300) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RentConfirmationLayoutProps {
-    contentList?: RentConfirmationLayoutContentListProps;
+    captionPriceAmount?: string;
+    itemsContentList?: ReactNode;
     layout?: BoxLayout;
     onCancelButton?: () => void;
     onClose?: () => void;
     onOkButton?: () => void;
     srcImage?: string;
+    srcPriceType?: string;
 }
 
-export const RentConfirmationLayout = ({ contentList, layout, onCancelButton, onClose, onOkButton, srcImage }: RentConfirmationLayoutProps) => {
+export const RentConfirmationLayout = ({ captionPriceAmount, itemsContentList, layout, onCancelButton, onClose, onOkButton, srcImage, srcPriceType }: RentConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -52,7 +54,39 @@ export const RentConfirmationLayout = ({ contentList, layout, onCancelButton, on
             >
                 {t('generic.ok')}
             </ButtonThick>
-            <RentConfirmationLayoutContentList {...contentList} />
+            <Region
+                name="content_list"
+                layout={{ position: 'absolute', left: 200, alignSelf: 'center', marginTop: -40.5, marginBottom: 40.5, flexDirection: 'column', gap: 10 }}
+            >
+                {itemsContentList ?? (
+                    <>
+                        <RentConfirmationLayoutRentalDescriptionItem />
+                        <RentConfirmationLayoutFurniNameItem />
+                    </>
+                )}
+                <Region layout={{ width: 150, height: 19, flexShrink: 0, flexDirection: 'row', gap: 3 }}>
+                    <Region layout={{ width: 237, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('catalog.purchase.confirmation.dialog.cost')}
+                            textStyle="text-style-u-regular"
+                        />
+                    </Region>
+                    <Region
+                        name="price_amount"
+                        layout={{ width: 22, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionPriceAmount ?? '000'}
+                            textStyle="text-style-u-regular"
+                        />
+                    </Region>
+                    <ThemeImage
+                        name="price_type"
+                        src={srcPriceType ?? layoutImage('toolbar_duckat_icon_0.png')}
+                        layout={{ width: 17, height: 18, flexShrink: 0 }}
+                    />
+                </Region>
+            </Region>
         </Frame>
     );
 };
@@ -96,54 +130,6 @@ export const RentConfirmationLayoutFurniNameItem = ({ captionFurniName, layout }
                 textStyle="text-style-u-bold"
                 textOptions={{ wordWrap: true, wordWrapWidth: 150 }}
             />
-        </Region>
-    );
-};
-
-/** Named region `content_list` of RentConfirmationLayout - configured through the parent's `contentList` prop. */
-export interface RentConfirmationLayoutContentListProps {
-    captionPriceAmount?: string;
-    itemsContentList?: ReactNode;
-    layout?: BoxLayout;
-    srcPriceType?: string;
-}
-
-export const RentConfirmationLayoutContentList = ({ captionPriceAmount, itemsContentList, layout, srcPriceType }: RentConfirmationLayoutContentListProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="content_list"
-            layout={{ position: 'absolute', left: 200, alignSelf: 'center', marginTop: -40.5, marginBottom: 40.5, flexDirection: 'column', gap: 10, ...layout }}
-        >
-            {itemsContentList ?? (
-                <>
-                    <RentConfirmationLayoutRentalDescriptionItem />
-                    <RentConfirmationLayoutFurniNameItem />
-                </>
-            )}
-            <Region layout={{ width: 150, height: 19, flexShrink: 0, flexDirection: 'row', gap: 3 }}>
-                <Region layout={{ width: 237, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('catalog.purchase.confirmation.dialog.cost')}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
-                <Region
-                    name="price_amount"
-                    layout={{ width: 22, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPriceAmount ?? '000'}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
-                <ThemeImage
-                    name="price_type"
-                    src={srcPriceType ?? layoutImage('toolbar_duckat_icon_0.png')}
-                    layout={{ width: 17, height: 18, flexShrink: 0 }}
-                />
-            </Region>
         </Region>
     );
 };

@@ -11,18 +11,22 @@ export interface GridItemLayoutProps {
     srcUniqueItemBackgroundBitmap?: string;
     srcUniqueItemSoldOutBitmap?: string;
     visibleBg?: boolean;
+    visibleUniqueItemBackgroundBitmap?: boolean;
+    visibleUniqueItemOverlayContainer?: boolean;
+    visibleUniqueItemSoldOutBitmap?: boolean;
 }
 
-export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layout, srcBadgeAddOn, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, visibleBg }: GridItemLayoutProps) => {
+export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layout, srcBadgeAddOn, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, visibleBg, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer, visibleUniqueItemSoldOutBitmap }: GridItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 36, height: 36, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}>
-                <Border
-                    variant="3"
-                    name="bg"
-                    visible={visibleBg ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                />
+                {(visibleBg ?? false) && (
+                    <Border
+                        variant="3"
+                        name="bg"
+                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                    />
+                )}
                 <Border
                     variant="2"
                     tintColor="#a1a19b"
@@ -40,23 +44,25 @@ export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layo
                         />
                     </Border>
                 </Border>
-                <ThemeImage
-                    name="unique_item_background_bitmap"
-                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                    visible={false}
-                />
+                {(visibleUniqueItemBackgroundBitmap ?? false) && (
+                    <ThemeImage
+                        name="unique_item_background_bitmap"
+                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
+                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                    />
+                )}
                 <ThemeImage
                     name="image"
                     src={srcImage}
                     layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
                 />
-                <WidgetSlot
-                    widgetType="limited_item_overlay_grid"
-                    name="unique_item_overlay_container"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                />
+                {(visibleUniqueItemOverlayContainer ?? false) && (
+                    <WidgetSlot
+                        widgetType="limited_item_overlay_grid"
+                        name="unique_item_overlay_container"
+                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                    />
+                )}
                 <Icon
                     variant="0"
                     name="clubLevelIcon"
@@ -92,17 +98,14 @@ export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layo
                     src={srcBadgeAddOn}
                     layout={{ position: 'absolute', left: 0, width: 10, top: 0, height: 10 }}
                 />
-                <ThemeImage
-                    name="unique_item_sold_out_bitmap"
-                    src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_tile.png')}
-                    layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
-                    visible={false}
-                />
-                <ThemeImage
-                    src={layoutImage('inventory_thumb_selected_outline.png')}
-                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                    visible={false}
-                />
+                {(visibleUniqueItemSoldOutBitmap ?? false) && (
+                    <ThemeImage
+                        name="unique_item_sold_out_bitmap"
+                        src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_tile.png')}
+                        layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
+                    />
+                )}
+                {/* `static_bitmap` is hidden and has no name to show it by */}
             </Region>
         </Region>
     );

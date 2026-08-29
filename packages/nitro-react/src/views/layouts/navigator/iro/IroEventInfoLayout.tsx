@@ -15,83 +15,6 @@ export const IroEventInfoLayout = ({ eventInfoWindow, layout }: IroEventInfoLayo
     );
 };
 
-/** Named region `bg_region` of IroEventInfoLayout - configured through the parent's `bgRegion` prop. */
-export interface IroEventInfoLayoutBgRegionProps {
-    layout?: BoxLayout;
-    onBgRegion?: () => void;
-}
-
-export const IroEventInfoLayoutBgRegion = ({ layout, onBgRegion }: IroEventInfoLayoutBgRegionProps) => {
-    return (
-        <Region
-            name="bg_region"
-            onPointerTap={onBgRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `modify_link_region` of IroEventInfoLayout - configured through the parent's `modifyLinkRegion` prop. */
-export interface IroEventInfoLayoutModifyLinkRegionProps {
-    captionModifyLink?: string;
-    layout?: BoxLayout;
-    onModifyLinkRegion?: () => void;
-}
-
-export const IroEventInfoLayoutModifyLinkRegion = ({ captionModifyLink, layout, onModifyLinkRegion }: IroEventInfoLayoutModifyLinkRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="modify_link_region"
-            onPointerTap={onModifyLinkRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 88, top: 110, height: 18, justifyContent: 'center', ...layout }}
-        >
-            <Region
-                name="modify_link"
-                layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionModifyLink ?? t('navigator.roominfo.editevent')}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `extend_event_region` of IroEventInfoLayout - configured through the parent's `extendEventRegion` prop. */
-export interface IroEventInfoLayoutExtendEventRegionProps {
-    captionModifyLink?: string;
-    layout?: BoxLayout;
-    onExtendEventRegion?: () => void;
-}
-
-export const IroEventInfoLayoutExtendEventRegion = ({ captionModifyLink, layout, onExtendEventRegion }: IroEventInfoLayoutExtendEventRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="extend_event_region"
-            onPointerTap={onExtendEventRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 88, width: 88, top: 110, height: 18, justifyContent: 'center', ...layout }}
-        >
-            <Region
-                name="modify_link"
-                layout={{ position: 'absolute', width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-            >
-                <ThemeText
-                    text={captionModifyLink ?? t('roomad.extend.event')}
-                    textOptions={{ fill: '#ffffff', align: 'right' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
 /** Named region `content_cont` of IroEventInfoLayout - configured through the parent's `contentCont` prop. */
 export interface IroEventInfoLayoutContentContProps {
     captionCreateLink?: string;
@@ -99,13 +22,15 @@ export interface IroEventInfoLayoutContentContProps {
     captionGetEvent?: string;
     captionHeaderTxt?: string;
     captionInProgressTxt?: string;
-    extendEventRegion?: IroEventInfoLayoutExtendEventRegionProps;
+    captionModifyLink?: string;
+    captionModifyLink2?: string;
     layout?: BoxLayout;
-    modifyLinkRegion?: IroEventInfoLayoutModifyLinkRegionProps;
+    onExtendEventRegion?: () => void;
+    onModifyLinkRegion?: () => void;
     srcEventIcon?: string;
 }
 
-export const IroEventInfoLayoutContentCont = ({ captionCreateLink, captionDescTxt, captionGetEvent, captionHeaderTxt, captionInProgressTxt, extendEventRegion, layout, modifyLinkRegion, srcEventIcon }: IroEventInfoLayoutContentContProps) => {
+export const IroEventInfoLayoutContentCont = ({ captionCreateLink, captionDescTxt, captionGetEvent, captionHeaderTxt, captionInProgressTxt, captionModifyLink, captionModifyLink2, layout, onExtendEventRegion, onModifyLinkRegion, srcEventIcon }: IroEventInfoLayoutContentContProps) => {
     const t = useTranslation();
 
     return (
@@ -159,8 +84,38 @@ export const IroEventInfoLayoutContentCont = ({ captionCreateLink, captionDescTx
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Region>
-            <IroEventInfoLayoutModifyLinkRegion {...modifyLinkRegion} />
-            <IroEventInfoLayoutExtendEventRegion {...extendEventRegion} />
+            <Region
+                name="modify_link_region"
+                onPointerTap={onModifyLinkRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 88, top: 110, height: 18, justifyContent: 'center' }}
+            >
+                <Region
+                    name="modify_link"
+                    layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionModifyLink ?? t('navigator.roominfo.editevent')}
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+            </Region>
+            <Region
+                name="extend_event_region"
+                onPointerTap={onExtendEventRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 88, width: 88, top: 110, height: 18, justifyContent: 'center' }}
+            >
+                <Region
+                    name="modify_link"
+                    layout={{ position: 'absolute', width: 88, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                >
+                    <ThemeText
+                        text={captionModifyLink2 ?? t('roomad.extend.event')}
+                        textOptions={{ fill: '#ffffff', align: 'right' }}
+                    />
+                </Region>
+            </Region>
             <ThemeImage
                 name="event_icon"
                 src={srcEventIcon ?? '${image.library.url}Events/event_icon.png'}
@@ -172,15 +127,15 @@ export const IroEventInfoLayoutContentCont = ({ captionCreateLink, captionDescTx
 
 /** Named region `event_info_window` of IroEventInfoLayout - configured through the parent's `eventInfoWindow` prop. */
 export interface IroEventInfoLayoutEventInfoWindowProps {
-    bgRegion?: IroEventInfoLayoutBgRegionProps;
     contentCont?: IroEventInfoLayoutContentContProps;
     layout?: BoxLayout;
+    onBgRegion?: () => void;
     srcEventBgContracted?: string;
     srcEventBgOwner?: string;
     srcEventBgVisitor?: string;
 }
 
-export const IroEventInfoLayoutEventInfoWindow = ({ bgRegion, contentCont, layout, srcEventBgContracted, srcEventBgOwner, srcEventBgVisitor }: IroEventInfoLayoutEventInfoWindowProps) => {
+export const IroEventInfoLayoutEventInfoWindow = ({ contentCont, layout, onBgRegion, srcEventBgContracted, srcEventBgOwner, srcEventBgVisitor }: IroEventInfoLayoutEventInfoWindowProps) => {
     return (
         <Region
             name="event_info_window"
@@ -201,7 +156,12 @@ export const IroEventInfoLayoutEventInfoWindow = ({ bgRegion, contentCont, layou
                 src={srcEventBgContracted ?? '${image.library.url}Events/event_bg_contracted.png'}
                 layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 25 }}
             />
-            <IroEventInfoLayoutBgRegion {...bgRegion} />
+            <Region
+                name="bg_region"
+                onPointerTap={onBgRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+            />
             <IroEventInfoLayoutContentCont {...contentCont} />
         </Region>
     );

@@ -3,18 +3,18 @@ import { BoxLayout, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `1102_niko_trophy_xml` (layout "niko_trophy", 428x325) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NikoTrophyLayoutProps {
-    appstoreRegion?: NikoTrophyLayoutAppstoreRegionProps;
     captionDate?: string;
     captionHtmlTextbox?: string;
     captionStoreLink?: string;
     layout?: BoxLayout;
-    nikotrophyBackground?: NikoTrophyLayoutNikotrophyBackgroundProps;
+    onAppstoreRegion?: () => void;
     onClose?: () => void;
     onStoreLink?: () => void;
     srcPreviewImage?: string;
+    srcStoreImage?: string;
 }
 
-export const NikoTrophyLayout = ({ appstoreRegion, captionDate, captionHtmlTextbox, captionStoreLink, layout, nikotrophyBackground, onClose, onStoreLink, srcPreviewImage }: NikoTrophyLayoutProps) => {
+export const NikoTrophyLayout = ({ captionDate, captionHtmlTextbox, captionStoreLink, layout, onAppstoreRegion, onClose, onStoreLink, srcPreviewImage, srcStoreImage }: NikoTrophyLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -27,7 +27,11 @@ export const NikoTrophyLayout = ({ appstoreRegion, captionDate, captionHtmlTextb
             onClose={onClose}
             layout={{ width: 428, height: 325, ...layout }}
         >
-            <NikoTrophyLayoutNikotrophyBackground {...nikotrophyBackground} />
+            <Region
+                name="nikotrophy.background"
+                backgroundColor="#36494e"
+                layout={{ position: 'absolute', left: 0, width: 428, top: 0, height: 169 }}
+            />
             <ThemeImage
                 name="preview_image"
                 src={srcPreviewImage}
@@ -62,49 +66,19 @@ export const NikoTrophyLayout = ({ appstoreRegion, captionDate, captionHtmlTextb
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Region>
-            <NikoTrophyLayoutAppstoreRegion {...appstoreRegion} />
+            <Region
+                name="appstore_region"
+                tooltip={t('trophy.niko.link.tooltip')}
+                onPointerTap={onAppstoreRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 38, width: 346, top: 173, height: 110 }}
+            >
+                <ThemeImage
+                    name="store_image"
+                    src={srcStoreImage}
+                    layout={{ position: 'absolute', left: 15, width: 320, top: 10, height: 92 }}
+                />
+            </Region>
         </Frame>
-    );
-};
-
-/** Named region `nikotrophy.background` of NikoTrophyLayout - configured through the parent's `nikotrophyBackground` prop. */
-export interface NikoTrophyLayoutNikotrophyBackgroundProps {
-    layout?: BoxLayout;
-}
-
-export const NikoTrophyLayoutNikotrophyBackground = ({ layout }: NikoTrophyLayoutNikotrophyBackgroundProps) => {
-    return (
-        <Region
-            name="nikotrophy.background"
-            backgroundColor="#36494e"
-            layout={{ position: 'absolute', left: 0, width: 428, top: 0, height: 169, ...layout }}
-        />
-    );
-};
-
-/** Named region `appstore_region` of NikoTrophyLayout - configured through the parent's `appstoreRegion` prop. */
-export interface NikoTrophyLayoutAppstoreRegionProps {
-    layout?: BoxLayout;
-    onAppstoreRegion?: () => void;
-    srcStoreImage?: string;
-}
-
-export const NikoTrophyLayoutAppstoreRegion = ({ layout, onAppstoreRegion, srcStoreImage }: NikoTrophyLayoutAppstoreRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="appstore_region"
-            tooltip={t('trophy.niko.link.tooltip')}
-            onPointerTap={onAppstoreRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 38, width: 346, top: 173, height: 110, ...layout }}
-        >
-            <ThemeImage
-                name="store_image"
-                src={srcStoreImage}
-                layout={{ position: 'absolute', left: 15, width: 320, top: 10, height: 92 }}
-            />
-        </Region>
     );
 };

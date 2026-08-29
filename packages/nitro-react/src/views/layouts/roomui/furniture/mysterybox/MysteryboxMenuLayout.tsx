@@ -35,79 +35,39 @@ export const MysteryboxMenuLayoutUseItem = ({ captionLabel, layout, onButton, vi
     const t = useTranslation();
 
     return (
-        <Region
-            name="use"
-            visible={visibleGroups?.action ?? true}
-            layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
-                visible={visibleGroups?.action ?? true}
-                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+        (visibleGroups?.action ?? true) && (
+            <Region
+                name="use"
+                layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionLabel ?? t('mysterybox.context.other.use')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </ContainerButton>
-        </Region>
-    );
-};
-
-/** Named region `buttons` of MysteryboxMenuLayout - configured through the parent's `buttons` prop. */
-export interface MysteryboxMenuLayoutButtonsProps {
-    itemsButtons?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const MysteryboxMenuLayoutButtons = ({ itemsButtons, layout }: MysteryboxMenuLayoutButtonsProps) => {
-    return (
-        <Region
-            name="buttons"
-            layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 26, flexDirection: 'column', gap: 1, ...layout }}
-        >
-            {itemsButtons ?? (
-                <MysteryboxMenuLayoutUseItem />
-            )}
-        </Region>
-    );
-};
-
-/** Named region `minimize` of MysteryboxMenuLayout - configured through the parent's `minimize` prop. */
-export interface MysteryboxMenuLayoutMinimizeProps {
-    layout?: BoxLayout;
-    onMinimize?: () => void;
-}
-
-export const MysteryboxMenuLayoutMinimize = ({ layout, onMinimize }: MysteryboxMenuLayoutMinimizeProps) => {
-    return (
-        <Region
-            name="minimize"
-            onPointerTap={onMinimize}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 4, width: 100, bottom: 3, height: 18, ...layout }}
-        >
-            <Icon
-                variant="7"
-                name="icon"
-                layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
-            />
-        </Region>
+                {(visibleGroups?.action ?? true) && (
+                    <ContainerButton
+                        variant="3"
+                        name="button"
+                        tintColor="#2d2a27"
+                        onPointerTap={onButton}
+                        layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('mysterybox.context.other.use')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </ContainerButton>
+                )}
+            </Region>
+        )
     );
 };
 
 /** Named region `border` of MysteryboxMenuLayout - configured through the parent's `border` prop. */
 export interface MysteryboxMenuLayoutBorderProps {
-    buttons?: MysteryboxMenuLayoutButtonsProps;
+    itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    minimize?: MysteryboxMenuLayoutMinimizeProps;
+    onMinimize?: () => void;
 }
 
-export const MysteryboxMenuLayoutBorder = ({ buttons, layout, minimize }: MysteryboxMenuLayoutBorderProps) => {
+export const MysteryboxMenuLayoutBorder = ({ itemsButtons, layout, onMinimize }: MysteryboxMenuLayoutBorderProps) => {
     const t = useTranslation();
 
     return (
@@ -128,8 +88,26 @@ export const MysteryboxMenuLayoutBorder = ({ buttons, layout, minimize }: Myster
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
             />
-            <MysteryboxMenuLayoutButtons {...buttons} />
-            <MysteryboxMenuLayoutMinimize {...minimize} />
+            <Region
+                name="buttons"
+                layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 26, flexDirection: 'column', gap: 1 }}
+            >
+                {itemsButtons ?? (
+                    <MysteryboxMenuLayoutUseItem />
+                )}
+            </Region>
+            <Region
+                name="minimize"
+                onPointerTap={onMinimize}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 4, width: 100, bottom: 3, height: 18 }}
+            >
+                <Icon
+                    variant="7"
+                    name="icon"
+                    layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
+                />
+            </Region>
         </Region>
     );
 };

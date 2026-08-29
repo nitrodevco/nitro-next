@@ -16,18 +16,30 @@ export interface ForumSettingsLayoutProps {
     captionLabel3?: string;
     captionLabel32?: string;
     captionLabel33?: string;
+    captionTopHeaderText?: string;
+    captionTopText?: string;
     layout?: BoxLayout;
-    moderateSelector?: ForumSettingsLayoutModerateSelectorProps;
+    on_0?: () => void;
+    on_02?: () => void;
+    on_03?: () => void;
+    on_1?: () => void;
+    on_12?: () => void;
+    on_13?: () => void;
+    on_2?: () => void;
+    on_22?: () => void;
+    on_23?: () => void;
+    on_24?: () => void;
+    on_3?: () => void;
+    on_32?: () => void;
+    on_33?: () => void;
     onCancelBtn?: () => void;
     onClose?: () => void;
     onOkBtn?: () => void;
-    postMessageSelector?: ForumSettingsLayoutPostMessageSelectorProps;
-    postThreadSelector?: ForumSettingsLayoutPostThreadSelectorProps;
-    readSelector?: ForumSettingsLayoutReadSelectorProps;
-    topPart?: ForumSettingsLayoutTopPartProps;
+    onTopClickArea?: () => void;
+    onTopPart?: () => void;
 }
 
-export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabel03, captionLabel1, captionLabel12, captionLabel13, captionLabel2, captionLabel22, captionLabel23, captionLabel24, captionLabel3, captionLabel32, captionLabel33, layout, moderateSelector, onCancelBtn, onClose, onOkBtn, postMessageSelector, postThreadSelector, readSelector, topPart }: ForumSettingsLayoutProps) => {
+export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabel03, captionLabel1, captionLabel12, captionLabel13, captionLabel2, captionLabel22, captionLabel23, captionLabel24, captionLabel3, captionLabel32, captionLabel33, captionTopHeaderText, captionTopText, layout, on_0, on_02, on_03, on_1, on_12, on_13, on_2, on_22, on_23, on_24, on_3, on_32, on_33, onCancelBtn, onClose, onOkBtn, onTopClickArea, onTopPart }: ForumSettingsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -38,7 +50,50 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
             onClose={onClose}
             layout={{ width: 350, height: 545, ...layout }}
         >
-            <ForumSettingsLayoutTopPart {...topPart} />
+            <Region
+                name="top_part"
+                backgroundColor="#0e3f52"
+                onPointerTap={onTopPart}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: -5, right: 7, top: 8, height: 80 }}
+            >
+                <Region
+                    name="top_click_area"
+                    onPointerTap={onTopClickArea}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80 }}
+                />
+                <Region
+                    name="icon_background"
+                    backgroundColor="#000000"
+                    layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80 }}
+                >
+                    <WidgetSlot
+                        widgetType="badge_image"
+                        name="group_icon"
+                        layout={{ position: 'absolute', left: 20, width: 40, top: 20, height: 40 }}
+                    />
+                </Region>
+                <Region
+                    name="top_header_text"
+                    layout={{ position: 'absolute', left: 90, width: 678, top: 10, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionTopHeaderText ?? 'Super-duper long group title'}
+                        textStyle="text-style-u-headline-big"
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+                <Region
+                    name="top_text"
+                    layout={{ position: 'absolute', left: 90, right: 4, top: 40, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionTopText ?? 'Super-duper long goup description, maybe even multiline, but takes a few lines anyway'}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 254 }}
+                    />
+                </Region>
+            </Region>
             <ContainerButton
                 variant="3"
                 name="cancel_btn"
@@ -86,7 +141,29 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                 >
                     <ThemeText text={captionLabel2 ?? t('groupforum.permissions.option_group_admins')} />
                 </Region>
-                <ForumSettingsLayoutReadSelector {...readSelector} />
+                <Region
+                    name="read_selector"
+                    layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 60 }}
+                >
+                    <RadioButton
+                        variant="3"
+                        name="0"
+                        onPointerTap={on_0}
+                        layout={{ position: 'absolute', left: 0, width: 424, top: 3, height: 20 }}
+                    />
+                    <RadioButton
+                        variant="3"
+                        name="1"
+                        onPointerTap={on_1}
+                        layout={{ position: 'absolute', left: 0, width: 424, top: 23, height: 20 }}
+                    />
+                    <RadioButton
+                        variant="3"
+                        name="2"
+                        onPointerTap={on_2}
+                        layout={{ position: 'absolute', left: 0, width: 424, top: 43, height: 20 }}
+                    />
+                </Region>
             </Region>
             <Region layout={{ position: 'absolute', left: 3, width: 444, top: 190, height: 100 }}>
                 <Region layout={{ position: 'absolute', left: 0, right: 188, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -116,7 +193,35 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                 >
                     <ThemeText text={captionLabel3 ?? t('groupforum.permissions.option_owner')} />
                 </Region>
-                <ForumSettingsLayoutPostMessageSelector {...postMessageSelector} />
+                <Region
+                    name="post_message_selector"
+                    layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 80 }}
+                >
+                    <RadioButton
+                        variant="3"
+                        name="0"
+                        onPointerTap={on_02}
+                        layout={{ position: 'absolute', left: 0, width: 424, top: 3, height: 20 }}
+                    />
+                    <RadioButton
+                        variant="3"
+                        name="1"
+                        onPointerTap={on_12}
+                        layout={{ position: 'absolute', left: 0, width: 424, top: 23, height: 20 }}
+                    />
+                    <RadioButton
+                        variant="3"
+                        name="2"
+                        onPointerTap={on_22}
+                        layout={{ position: 'absolute', left: 0, width: 424, top: 43, height: 20 }}
+                    />
+                    <RadioButton
+                        variant="3"
+                        name="3"
+                        onPointerTap={on_3}
+                        layout={{ position: 'absolute', left: 0, width: 424, top: 63, height: 20 }}
+                    />
+                </Region>
             </Region>
             <Region layout={{ position: 'absolute', left: 3, width: 444, top: 300, height: 100 }}>
                 <Region layout={{ position: 'absolute', left: 0, right: 201, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -146,7 +251,35 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                 >
                     <ThemeText text={captionLabel32 ?? t('groupforum.permissions.option_owner')} />
                 </Region>
-                <ForumSettingsLayoutPostThreadSelector {...postThreadSelector} />
+                <Region
+                    name="post_thread_selector"
+                    layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 80 }}
+                >
+                    <RadioButton
+                        variant="3"
+                        name="0"
+                        onPointerTap={on_03}
+                        layout={{ position: 'absolute', left: 0, width: 424, top: 3, height: 20 }}
+                    />
+                    <RadioButton
+                        variant="3"
+                        name="1"
+                        onPointerTap={on_13}
+                        layout={{ position: 'absolute', left: 0, width: 424, top: 23, height: 20 }}
+                    />
+                    <RadioButton
+                        variant="3"
+                        name="2"
+                        onPointerTap={on_23}
+                        layout={{ position: 'absolute', left: 0, width: 424, top: 43, height: 20 }}
+                    />
+                    <RadioButton
+                        variant="3"
+                        name="3"
+                        onPointerTap={on_32}
+                        layout={{ position: 'absolute', left: 0, width: 424, top: 63, height: 20 }}
+                    />
+                </Region>
             </Region>
             <Region layout={{ position: 'absolute', left: 3, width: 444, top: 410, height: 60 }}>
                 <Region layout={{ position: 'absolute', left: 0, right: 212, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -164,241 +297,24 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                 >
                     <ThemeText text={captionLabel33 ?? t('groupforum.permissions.option_owner')} />
                 </Region>
-                <ForumSettingsLayoutModerateSelector {...moderateSelector} />
+                <Region
+                    name="moderate_selector"
+                    layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 40 }}
+                >
+                    <RadioButton
+                        variant="3"
+                        name="2"
+                        onPointerTap={on_24}
+                        layout={{ position: 'absolute', left: 0, width: 424, top: 3, height: 20 }}
+                    />
+                    <RadioButton
+                        variant="3"
+                        name="3"
+                        onPointerTap={on_33}
+                        layout={{ position: 'absolute', left: 0, width: 424, top: 23, height: 20 }}
+                    />
+                </Region>
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `top_click_area` of ForumSettingsLayout - configured through the parent's `topClickArea` prop. */
-export interface ForumSettingsLayoutTopClickAreaProps {
-    layout?: BoxLayout;
-    onTopClickArea?: () => void;
-}
-
-export const ForumSettingsLayoutTopClickArea = ({ layout, onTopClickArea }: ForumSettingsLayoutTopClickAreaProps) => {
-    return (
-        <Region
-            name="top_click_area"
-            onPointerTap={onTopClickArea}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80, ...layout }}
-        />
-    );
-};
-
-/** Named region `icon_background` of ForumSettingsLayout - configured through the parent's `iconBackground` prop. */
-export interface ForumSettingsLayoutIconBackgroundProps {
-    layout?: BoxLayout;
-}
-
-export const ForumSettingsLayoutIconBackground = ({ layout }: ForumSettingsLayoutIconBackgroundProps) => {
-    return (
-        <Region
-            name="icon_background"
-            backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80, ...layout }}
-        >
-            <WidgetSlot
-                widgetType="badge_image"
-                name="group_icon"
-                layout={{ position: 'absolute', left: 20, width: 40, top: 20, height: 40 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `top_part` of ForumSettingsLayout - configured through the parent's `topPart` prop. */
-export interface ForumSettingsLayoutTopPartProps {
-    captionTopHeaderText?: string;
-    captionTopText?: string;
-    iconBackground?: ForumSettingsLayoutIconBackgroundProps;
-    layout?: BoxLayout;
-    onTopPart?: () => void;
-    topClickArea?: ForumSettingsLayoutTopClickAreaProps;
-}
-
-export const ForumSettingsLayoutTopPart = ({ captionTopHeaderText, captionTopText, iconBackground, layout, onTopPart, topClickArea }: ForumSettingsLayoutTopPartProps) => {
-    return (
-        <Region
-            name="top_part"
-            backgroundColor="#0e3f52"
-            onPointerTap={onTopPart}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: -5, right: 7, top: 8, height: 80, ...layout }}
-        >
-            <ForumSettingsLayoutTopClickArea {...topClickArea} />
-            <ForumSettingsLayoutIconBackground {...iconBackground} />
-            <Region
-                name="top_header_text"
-                layout={{ position: 'absolute', left: 90, width: 678, top: 10, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTopHeaderText ?? 'Super-duper long group title'}
-                    textStyle="text-style-u-headline-big"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-            <Region
-                name="top_text"
-                layout={{ position: 'absolute', left: 90, right: 4, top: 40, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTopText ?? 'Super-duper long goup description, maybe even multiline, but takes a few lines anyway'}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 254 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `read_selector` of ForumSettingsLayout - configured through the parent's `readSelector` prop. */
-export interface ForumSettingsLayoutReadSelectorProps {
-    layout?: BoxLayout;
-    on_0?: () => void;
-    on_1?: () => void;
-    on_2?: () => void;
-}
-
-export const ForumSettingsLayoutReadSelector = ({ layout, on_0, on_1, on_2 }: ForumSettingsLayoutReadSelectorProps) => {
-    return (
-        <Region
-            name="read_selector"
-            layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 60, ...layout }}
-        >
-            <RadioButton
-                variant="3"
-                name="0"
-                onPointerTap={on_0}
-                layout={{ position: 'absolute', left: 0, width: 424, top: 3, height: 20 }}
-            />
-            <RadioButton
-                variant="3"
-                name="1"
-                onPointerTap={on_1}
-                layout={{ position: 'absolute', left: 0, width: 424, top: 23, height: 20 }}
-            />
-            <RadioButton
-                variant="3"
-                name="2"
-                onPointerTap={on_2}
-                layout={{ position: 'absolute', left: 0, width: 424, top: 43, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `post_message_selector` of ForumSettingsLayout - configured through the parent's `postMessageSelector` prop. */
-export interface ForumSettingsLayoutPostMessageSelectorProps {
-    layout?: BoxLayout;
-    on_0?: () => void;
-    on_1?: () => void;
-    on_2?: () => void;
-    on_3?: () => void;
-}
-
-export const ForumSettingsLayoutPostMessageSelector = ({ layout, on_0, on_1, on_2, on_3 }: ForumSettingsLayoutPostMessageSelectorProps) => {
-    return (
-        <Region
-            name="post_message_selector"
-            layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 80, ...layout }}
-        >
-            <RadioButton
-                variant="3"
-                name="0"
-                onPointerTap={on_0}
-                layout={{ position: 'absolute', left: 0, width: 424, top: 3, height: 20 }}
-            />
-            <RadioButton
-                variant="3"
-                name="1"
-                onPointerTap={on_1}
-                layout={{ position: 'absolute', left: 0, width: 424, top: 23, height: 20 }}
-            />
-            <RadioButton
-                variant="3"
-                name="2"
-                onPointerTap={on_2}
-                layout={{ position: 'absolute', left: 0, width: 424, top: 43, height: 20 }}
-            />
-            <RadioButton
-                variant="3"
-                name="3"
-                onPointerTap={on_3}
-                layout={{ position: 'absolute', left: 0, width: 424, top: 63, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `post_thread_selector` of ForumSettingsLayout - configured through the parent's `postThreadSelector` prop. */
-export interface ForumSettingsLayoutPostThreadSelectorProps {
-    layout?: BoxLayout;
-    on_0?: () => void;
-    on_1?: () => void;
-    on_2?: () => void;
-    on_3?: () => void;
-}
-
-export const ForumSettingsLayoutPostThreadSelector = ({ layout, on_0, on_1, on_2, on_3 }: ForumSettingsLayoutPostThreadSelectorProps) => {
-    return (
-        <Region
-            name="post_thread_selector"
-            layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 80, ...layout }}
-        >
-            <RadioButton
-                variant="3"
-                name="0"
-                onPointerTap={on_0}
-                layout={{ position: 'absolute', left: 0, width: 424, top: 3, height: 20 }}
-            />
-            <RadioButton
-                variant="3"
-                name="1"
-                onPointerTap={on_1}
-                layout={{ position: 'absolute', left: 0, width: 424, top: 23, height: 20 }}
-            />
-            <RadioButton
-                variant="3"
-                name="2"
-                onPointerTap={on_2}
-                layout={{ position: 'absolute', left: 0, width: 424, top: 43, height: 20 }}
-            />
-            <RadioButton
-                variant="3"
-                name="3"
-                onPointerTap={on_3}
-                layout={{ position: 'absolute', left: 0, width: 424, top: 63, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `moderate_selector` of ForumSettingsLayout - configured through the parent's `moderateSelector` prop. */
-export interface ForumSettingsLayoutModerateSelectorProps {
-    layout?: BoxLayout;
-    on_2?: () => void;
-    on_3?: () => void;
-}
-
-export const ForumSettingsLayoutModerateSelector = ({ layout, on_2, on_3 }: ForumSettingsLayoutModerateSelectorProps) => {
-    return (
-        <Region
-            name="moderate_selector"
-            layout={{ position: 'absolute', left: 20, width: 424, top: 20, height: 40, ...layout }}
-        >
-            <RadioButton
-                variant="3"
-                name="2"
-                onPointerTap={on_2}
-                layout={{ position: 'absolute', left: 0, width: 424, top: 3, height: 20 }}
-            />
-            <RadioButton
-                variant="3"
-                name="3"
-                onPointerTap={on_3}
-                layout={{ position: 'absolute', left: 0, width: 424, top: 23, height: 20 }}
-            />
-        </Region>
     );
 };

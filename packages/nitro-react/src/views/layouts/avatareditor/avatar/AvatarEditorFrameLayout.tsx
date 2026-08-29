@@ -4,11 +4,10 @@ import { BoxLayout, Frame, Region } from '#base/theme';
 /** Generated from `3114_AvatarEditorFrame_xml` (layout "memenu_clothes", 210x155) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface AvatarEditorFrameLayoutProps {
     layout?: BoxLayout;
-    maincontent?: AvatarEditorFrameLayoutMaincontentProps;
     onClose?: () => void;
 }
 
-export const AvatarEditorFrameLayout = ({ layout, maincontent, onClose }: AvatarEditorFrameLayoutProps) => {
+export const AvatarEditorFrameLayout = ({ layout, onClose }: AvatarEditorFrameLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -21,21 +20,10 @@ export const AvatarEditorFrameLayout = ({ layout, maincontent, onClose }: Avatar
             onClose={onClose}
             layout={{ width: 210, height: 155, ...layout }}
         >
-            <AvatarEditorFrameLayoutMaincontent {...maincontent} />
+            <Region
+                name="maincontent"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 33, bottom: 2 }}
+            />
         </Frame>
-    );
-};
-
-/** Named region `maincontent` of AvatarEditorFrameLayout - configured through the parent's `maincontent` prop. */
-export interface AvatarEditorFrameLayoutMaincontentProps {
-    layout?: BoxLayout;
-}
-
-export const AvatarEditorFrameLayoutMaincontent = ({ layout }: AvatarEditorFrameLayoutMaincontentProps) => {
-    return (
-        <Region
-            name="maincontent"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 33, bottom: 2, ...layout }}
-        />
     );
 };

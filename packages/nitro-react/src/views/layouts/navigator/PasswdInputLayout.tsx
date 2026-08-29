@@ -5,15 +5,16 @@ import { BoxLayout, Button, Frame, Region, TextInput, ThemeText } from '#base/th
 
 /** Generated from `3000_passwd_input_xml` (layout "passwd_input", 237x217) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PasswdInputLayoutProps {
-    cancelRegion?: PasswdInputLayoutCancelRegionProps;
+    captionCancel?: string;
     captionInfo?: string;
     captionRoomName?: string;
     layout?: BoxLayout;
+    onCancelRegion?: () => void;
     onClose?: () => void;
     onTry?: () => void;
 }
 
-export const PasswdInputLayout = ({ cancelRegion, captionInfo, captionRoomName, layout, onClose, onTry }: PasswdInputLayoutProps) => {
+export const PasswdInputLayout = ({ captionCancel, captionInfo, captionRoomName, layout, onCancelRegion, onClose, onTry }: PasswdInputLayoutProps) => {
     const t = useTranslation();
     const [ passwordInputValue, setPasswordInputValue ] = useState('');
 
@@ -52,7 +53,19 @@ export const PasswdInputLayout = ({ cancelRegion, captionInfo, captionRoomName, 
                 backgroundColor="#eaece8"
                 layout={{ position: 'absolute', left: 10, width: 207, top: 142, height: 34 }}
             >
-                <PasswdInputLayoutCancelRegion {...cancelRegion} />
+                <Region
+                    name="cancel_region"
+                    onPointerTap={onCancelRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, right: 124, top: 5, height: 26 }}
+                >
+                    <Region
+                        name="cancel"
+                        layout={{ position: 'absolute', left: 0, width: 83, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionCancel ?? t('generic.cancel')} />
+                    </Region>
+                </Region>
                 <Button
                     variant="3"
                     name="try"
@@ -63,32 +76,5 @@ export const PasswdInputLayout = ({ cancelRegion, captionInfo, captionRoomName, 
                 </Button>
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `cancel_region` of PasswdInputLayout - configured through the parent's `cancelRegion` prop. */
-export interface PasswdInputLayoutCancelRegionProps {
-    captionCancel?: string;
-    layout?: BoxLayout;
-    onCancelRegion?: () => void;
-}
-
-export const PasswdInputLayoutCancelRegion = ({ captionCancel, layout, onCancelRegion }: PasswdInputLayoutCancelRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="cancel_region"
-            onPointerTap={onCancelRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 124, top: 5, height: 26, ...layout }}
-        >
-            <Region
-                name="cancel"
-                layout={{ position: 'absolute', left: 0, width: 83, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionCancel ?? t('generic.cancel')} />
-            </Region>
-        </Region>
     );
 };

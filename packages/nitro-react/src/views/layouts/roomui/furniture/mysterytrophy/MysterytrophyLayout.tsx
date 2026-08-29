@@ -6,14 +6,17 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `945_mysterytrophy_xml` (layout "mysterytrophy", 475x270) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MysterytrophyLayoutProps {
-    cancel?: MysterytrophyLayoutCancelProps;
+    captionCancel?: string;
+    captionMysterytrophyHeaderDescription?: string;
+    captionMysterytrophyHeaderTitle?: string;
     layout?: BoxLayout;
-    mysterytrophyHeaderBackgroundBorder?: MysterytrophyLayoutMysterytrophyHeaderBackgroundBorderProps;
+    onCancel?: () => void;
     onClose?: () => void;
     onOk?: () => void;
+    srcMysterytrophyHeaderIcon?: string;
 }
 
-export const MysterytrophyLayout = ({ cancel, layout, mysterytrophyHeaderBackgroundBorder, onClose, onOk }: MysterytrophyLayoutProps) => {
+export const MysterytrophyLayout = ({ captionCancel, captionMysterytrophyHeaderDescription, captionMysterytrophyHeaderTitle, layout, onCancel, onClose, onOk, srcMysterytrophyHeaderIcon }: MysterytrophyLayoutProps) => {
     const t = useTranslation();
     const [ inputValue, setInputValue ] = useState('');
 
@@ -27,7 +30,46 @@ export const MysterytrophyLayout = ({ cancel, layout, mysterytrophyHeaderBackgro
             onClose={onClose}
             layout={{ width: 475, height: 270, ...layout }}
         >
-            <MysterytrophyLayoutMysterytrophyHeaderBackgroundBorder {...mysterytrophyHeaderBackgroundBorder} />
+            <Region
+                name="mysterytrophy.header.background.border"
+                backgroundColor="#376275"
+                layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 100 }}
+            >
+                <Region
+                    name="mysterytrophy.header.background.body"
+                    backgroundColor="#0e3f52"
+                    layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 95 }}
+                />
+                <ThemeImage
+                    name="mysterytrophy.header.icon"
+                    src={srcMysterytrophyHeaderIcon ?? '${image.library.url}client_static/alert_mystTrophy.png'}
+                    layout={{ position: 'absolute', left: 3, width: 85, top: 5, height: 93 }}
+                />
+                <Region
+                    name="mysterytrophy.header"
+                    layout={{ position: 'absolute', left: 0, width: 475, top: 0, height: 90 }}
+                >
+                    <Region
+                        name="mysterytrophy.header.title"
+                        layout={{ position: 'absolute', left: 95, width: 317, top: 11, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionMysterytrophyHeaderTitle ?? t('mysterytrophy.header.title')}
+                            textStyle="text-style-u-headline-big"
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                    <Region
+                        name="mysterytrophy.header.description"
+                        layout={{ position: 'absolute', left: 95, width: 354, top: 41, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionMysterytrophyHeaderDescription ?? t('mysterytrophy.header.description')}
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 354 }}
+                        />
+                    </Region>
+                </Region>
+            </Region>
             <Region layout={{ position: 'absolute', left: 0, width: 475, top: 100, height: 90 }}>
                 <Border
                     variant="0"
@@ -48,7 +90,23 @@ export const MysterytrophyLayout = ({ cancel, layout, mysterytrophyHeaderBackgro
                 </Border>
             </Region>
             <Region layout={{ position: 'absolute', left: -1, width: 475, top: 186, height: 51 }}>
-                <MysterytrophyLayoutCancel {...cancel} />
+                <Region
+                    name="cancel"
+                    onPointerTap={onCancel}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 177, width: 101, bottom: 8, height: 32, justifyContent: 'center' }}
+                >
+                    <Region
+                        name="cancel"
+                        layout={{ position: 'absolute', width: 83, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionCancel ?? t('generic.cancel')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#333333' }}
+                        />
+                    </Region>
+                </Region>
                 <ButtonThick
                     variant="5"
                     name="ok"
@@ -60,115 +118,5 @@ export const MysterytrophyLayout = ({ cancel, layout, mysterytrophyHeaderBackgro
                 </ButtonThick>
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `mysterytrophy.header.background.body` of MysterytrophyLayout - configured through the parent's `mysterytrophyHeaderBackgroundBody` prop. */
-export interface MysterytrophyLayoutMysterytrophyHeaderBackgroundBodyProps {
-    layout?: BoxLayout;
-}
-
-export const MysterytrophyLayoutMysterytrophyHeaderBackgroundBody = ({ layout }: MysterytrophyLayoutMysterytrophyHeaderBackgroundBodyProps) => {
-    return (
-        <Region
-            name="mysterytrophy.header.background.body"
-            backgroundColor="#0e3f52"
-            layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 95, ...layout }}
-        />
-    );
-};
-
-/** Named region `mysterytrophy.header` of MysterytrophyLayout - configured through the parent's `mysterytrophyHeader` prop. */
-export interface MysterytrophyLayoutMysterytrophyHeaderProps {
-    captionMysterytrophyHeaderDescription?: string;
-    captionMysterytrophyHeaderTitle?: string;
-    layout?: BoxLayout;
-}
-
-export const MysterytrophyLayoutMysterytrophyHeader = ({ captionMysterytrophyHeaderDescription, captionMysterytrophyHeaderTitle, layout }: MysterytrophyLayoutMysterytrophyHeaderProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="mysterytrophy.header"
-            layout={{ position: 'absolute', left: 0, width: 475, top: 0, height: 90, ...layout }}
-        >
-            <Region
-                name="mysterytrophy.header.title"
-                layout={{ position: 'absolute', left: 95, width: 317, top: 11, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionMysterytrophyHeaderTitle ?? t('mysterytrophy.header.title')}
-                    textStyle="text-style-u-headline-big"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-            <Region
-                name="mysterytrophy.header.description"
-                layout={{ position: 'absolute', left: 95, width: 354, top: 41, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionMysterytrophyHeaderDescription ?? t('mysterytrophy.header.description')}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 354 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `mysterytrophy.header.background.border` of MysterytrophyLayout - configured through the parent's `mysterytrophyHeaderBackgroundBorder` prop. */
-export interface MysterytrophyLayoutMysterytrophyHeaderBackgroundBorderProps {
-    layout?: BoxLayout;
-    mysterytrophyHeader?: MysterytrophyLayoutMysterytrophyHeaderProps;
-    mysterytrophyHeaderBackgroundBody?: MysterytrophyLayoutMysterytrophyHeaderBackgroundBodyProps;
-    srcMysterytrophyHeaderIcon?: string;
-}
-
-export const MysterytrophyLayoutMysterytrophyHeaderBackgroundBorder = ({ layout, mysterytrophyHeader, mysterytrophyHeaderBackgroundBody, srcMysterytrophyHeaderIcon }: MysterytrophyLayoutMysterytrophyHeaderBackgroundBorderProps) => {
-    return (
-        <Region
-            name="mysterytrophy.header.background.border"
-            backgroundColor="#376275"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 100, ...layout }}
-        >
-            <MysterytrophyLayoutMysterytrophyHeaderBackgroundBody {...mysterytrophyHeaderBackgroundBody} />
-            <ThemeImage
-                name="mysterytrophy.header.icon"
-                src={srcMysterytrophyHeaderIcon ?? '${image.library.url}client_static/alert_mystTrophy.png'}
-                layout={{ position: 'absolute', left: 3, width: 85, top: 5, height: 93 }}
-            />
-            <MysterytrophyLayoutMysterytrophyHeader {...mysterytrophyHeader} />
-        </Region>
-    );
-};
-
-/** Named region `cancel` of MysterytrophyLayout - configured through the parent's `cancel` prop. */
-export interface MysterytrophyLayoutCancelProps {
-    captionCancel?: string;
-    layout?: BoxLayout;
-    onCancel?: () => void;
-}
-
-export const MysterytrophyLayoutCancel = ({ captionCancel, layout, onCancel }: MysterytrophyLayoutCancelProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="cancel"
-            onPointerTap={onCancel}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 177, width: 101, bottom: 8, height: 32, justifyContent: 'center', ...layout }}
-        >
-            <Region
-                name="cancel"
-                layout={{ position: 'absolute', width: 83, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCancel ?? t('generic.cancel')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#333333' }}
-                />
-            </Region>
-        </Region>
     );
 };

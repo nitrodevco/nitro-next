@@ -18,58 +18,22 @@ export const MarketPlaceOwnItemsWidgetLayout = ({ layout, marketPlaceContent }: 
     );
 };
 
-/** Named region `image_container` of MarketPlaceOwnItemsWidgetLayout - configured through the parent's `imageContainer` prop. */
-export interface MarketPlaceOwnItemsWidgetLayoutImageContainerProps {
-    layout?: BoxLayout;
-    srcItemImage?: string;
-    srcUniqueItemBackgroundBitmap?: string;
-}
-
-export const MarketPlaceOwnItemsWidgetLayoutImageContainer = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap }: MarketPlaceOwnItemsWidgetLayoutImageContainerProps) => {
-    return (
-        <Region
-            name="image_container"
-            layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
-        >
-            <ThemeImage
-                name="unique_item_background_bitmap"
-                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                visible={false}
-            />
-            <ThemeImage
-                name="item_image"
-                src={srcItemImage}
-                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
-            />
-            <WidgetSlot
-                widgetType="limited_item_overlay_grid"
-                name="unique_item_overlay_widget"
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            />
-            <WidgetSlot
-                widgetType="rarity_item_overlay_grid"
-                name="rarity_item_overlay_widget"
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            />
-        </Region>
-    );
-};
-
 /** Row template `ongoing_item` of MarketPlaceOwnItemsWidgetLayout - pass real rows through its `items…` slot. */
 export interface MarketPlaceOwnItemsWidgetLayoutOngoingItemItemProps {
     captionItemDesc?: string;
     captionItemName?: string;
     captionItemPrice?: string;
     captionItemTime?: string;
-    imageContainer?: MarketPlaceOwnItemsWidgetLayoutImageContainerProps;
     layout?: BoxLayout;
     onPickButton?: () => void;
+    srcItemImage?: string;
+    srcUniqueItemBackgroundBitmap?: string;
+    visibleRarityItemOverlayWidget?: boolean;
+    visibleUniqueItemBackgroundBitmap?: boolean;
+    visibleUniqueItemOverlayWidget?: boolean;
 }
 
-export const MarketPlaceOwnItemsWidgetLayoutOngoingItemItem = ({ captionItemDesc, captionItemName, captionItemPrice, captionItemTime, imageContainer, layout, onPickButton }: MarketPlaceOwnItemsWidgetLayoutOngoingItemItemProps) => {
+export const MarketPlaceOwnItemsWidgetLayoutOngoingItemItem = ({ captionItemDesc, captionItemName, captionItemPrice, captionItemTime, layout, onPickButton, srcItemImage, srcUniqueItemBackgroundBitmap, visibleRarityItemOverlayWidget, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayWidget }: MarketPlaceOwnItemsWidgetLayoutOngoingItemItemProps) => {
     const t = useTranslation();
 
     return (
@@ -79,7 +43,37 @@ export const MarketPlaceOwnItemsWidgetLayoutOngoingItemItem = ({ captionItemDesc
             tintColor="#e3e3e3"
             layout={{ width: 320, height: 58, flexShrink: 0, ...layout }}
         >
-            <MarketPlaceOwnItemsWidgetLayoutImageContainer {...imageContainer} />
+            <Region
+                name="image_container"
+                layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40 }}
+            >
+                {(visibleUniqueItemBackgroundBitmap ?? false) && (
+                    <ThemeImage
+                        name="unique_item_background_bitmap"
+                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+                <ThemeImage
+                    name="item_image"
+                    src={srcItemImage}
+                    layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
+                />
+                {(visibleUniqueItemOverlayWidget ?? false) && (
+                    <WidgetSlot
+                        widgetType="limited_item_overlay_grid"
+                        name="unique_item_overlay_widget"
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+                {(visibleRarityItemOverlayWidget ?? false) && (
+                    <WidgetSlot
+                        widgetType="rarity_item_overlay_grid"
+                        name="rarity_item_overlay_widget"
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+            </Region>
             <Region
                 name="item_name"
                 layout={{ position: 'absolute', left: 58, width: 74, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -128,57 +122,21 @@ export const MarketPlaceOwnItemsWidgetLayoutOngoingItemItem = ({ captionItemDesc
     );
 };
 
-/** Named region `image_container` of MarketPlaceOwnItemsWidgetLayout - configured through the parent's `imageContainer` prop. */
-export interface MarketPlaceOwnItemsWidgetLayoutImageContainer2Props {
-    layout?: BoxLayout;
-    srcItemImage?: string;
-    srcUniqueItemBackgroundBitmap?: string;
-}
-
-export const MarketPlaceOwnItemsWidgetLayoutImageContainer2 = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap }: MarketPlaceOwnItemsWidgetLayoutImageContainer2Props) => {
-    return (
-        <Region
-            name="image_container"
-            layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
-        >
-            <ThemeImage
-                name="unique_item_background_bitmap"
-                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                visible={false}
-            />
-            <ThemeImage
-                name="item_image"
-                src={srcItemImage}
-                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
-            />
-            <WidgetSlot
-                widgetType="limited_item_overlay_grid"
-                name="unique_item_overlay_widget"
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            />
-            <WidgetSlot
-                widgetType="rarity_item_overlay_grid"
-                name="rarity_item_overlay_widget"
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            />
-        </Region>
-    );
-};
-
 /** Row template `sold_item` of MarketPlaceOwnItemsWidgetLayout - pass real rows through its `items…` slot. */
 export interface MarketPlaceOwnItemsWidgetLayoutSoldItemItemProps {
     captionItemDesc?: string;
     captionItemName?: string;
     captionItemPrice?: string;
     captionItemSold?: string;
-    imageContainer?: MarketPlaceOwnItemsWidgetLayoutImageContainer2Props;
     layout?: BoxLayout;
+    srcItemImage?: string;
+    srcUniqueItemBackgroundBitmap?: string;
+    visibleRarityItemOverlayWidget?: boolean;
+    visibleUniqueItemBackgroundBitmap?: boolean;
+    visibleUniqueItemOverlayWidget?: boolean;
 }
 
-export const MarketPlaceOwnItemsWidgetLayoutSoldItemItem = ({ captionItemDesc, captionItemName, captionItemPrice, captionItemSold, imageContainer, layout }: MarketPlaceOwnItemsWidgetLayoutSoldItemItemProps) => {
+export const MarketPlaceOwnItemsWidgetLayoutSoldItemItem = ({ captionItemDesc, captionItemName, captionItemPrice, captionItemSold, layout, srcItemImage, srcUniqueItemBackgroundBitmap, visibleRarityItemOverlayWidget, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayWidget }: MarketPlaceOwnItemsWidgetLayoutSoldItemItemProps) => {
     const t = useTranslation();
 
     return (
@@ -188,7 +146,37 @@ export const MarketPlaceOwnItemsWidgetLayoutSoldItemItem = ({ captionItemDesc, c
             tintColor="#e3e3e3"
             layout={{ width: 320, height: 58, flexShrink: 0, ...layout }}
         >
-            <MarketPlaceOwnItemsWidgetLayoutImageContainer2 {...imageContainer} />
+            <Region
+                name="image_container"
+                layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40 }}
+            >
+                {(visibleUniqueItemBackgroundBitmap ?? false) && (
+                    <ThemeImage
+                        name="unique_item_background_bitmap"
+                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+                <ThemeImage
+                    name="item_image"
+                    src={srcItemImage}
+                    layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
+                />
+                {(visibleUniqueItemOverlayWidget ?? false) && (
+                    <WidgetSlot
+                        widgetType="limited_item_overlay_grid"
+                        name="unique_item_overlay_widget"
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+                {(visibleRarityItemOverlayWidget ?? false) && (
+                    <WidgetSlot
+                        widgetType="rarity_item_overlay_grid"
+                        name="rarity_item_overlay_widget"
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+            </Region>
             <Region
                 name="item_name"
                 layout={{ position: 'absolute', left: 58, width: 74, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -229,56 +217,20 @@ export const MarketPlaceOwnItemsWidgetLayoutSoldItemItem = ({ captionItemDesc, c
     );
 };
 
-/** Named region `image_container` of MarketPlaceOwnItemsWidgetLayout - configured through the parent's `imageContainer` prop. */
-export interface MarketPlaceOwnItemsWidgetLayoutImageContainer3Props {
-    layout?: BoxLayout;
-    srcItemImage?: string;
-    srcUniqueItemBackgroundBitmap?: string;
-}
-
-export const MarketPlaceOwnItemsWidgetLayoutImageContainer3 = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap }: MarketPlaceOwnItemsWidgetLayoutImageContainer3Props) => {
-    return (
-        <Region
-            name="image_container"
-            layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
-        >
-            <ThemeImage
-                name="unique_item_background_bitmap"
-                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                visible={false}
-            />
-            <ThemeImage
-                name="item_image"
-                src={srcItemImage}
-                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
-            />
-            <WidgetSlot
-                widgetType="limited_item_overlay_grid"
-                name="unique_item_overlay_widget"
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            />
-            <WidgetSlot
-                widgetType="rarity_item_overlay_grid"
-                name="rarity_item_overlay_widget"
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            />
-        </Region>
-    );
-};
-
 /** Row template `expired_item` of MarketPlaceOwnItemsWidgetLayout - pass real rows through its `items…` slot. */
 export interface MarketPlaceOwnItemsWidgetLayoutExpiredItemItemProps {
     captionItemDesc?: string;
     captionItemExpired?: string;
     captionItemName?: string;
-    imageContainer?: MarketPlaceOwnItemsWidgetLayoutImageContainer3Props;
     layout?: BoxLayout;
+    srcItemImage?: string;
+    srcUniqueItemBackgroundBitmap?: string;
+    visibleRarityItemOverlayWidget?: boolean;
+    visibleUniqueItemBackgroundBitmap?: boolean;
+    visibleUniqueItemOverlayWidget?: boolean;
 }
 
-export const MarketPlaceOwnItemsWidgetLayoutExpiredItemItem = ({ captionItemDesc, captionItemExpired, captionItemName, imageContainer, layout }: MarketPlaceOwnItemsWidgetLayoutExpiredItemItemProps) => {
+export const MarketPlaceOwnItemsWidgetLayoutExpiredItemItem = ({ captionItemDesc, captionItemExpired, captionItemName, layout, srcItemImage, srcUniqueItemBackgroundBitmap, visibleRarityItemOverlayWidget, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayWidget }: MarketPlaceOwnItemsWidgetLayoutExpiredItemItemProps) => {
     const t = useTranslation();
 
     return (
@@ -288,7 +240,37 @@ export const MarketPlaceOwnItemsWidgetLayoutExpiredItemItem = ({ captionItemDesc
             tintColor="#e3e3e3"
             layout={{ width: 320, height: 58, flexShrink: 0, ...layout }}
         >
-            <MarketPlaceOwnItemsWidgetLayoutImageContainer3 {...imageContainer} />
+            <Region
+                name="image_container"
+                layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40 }}
+            >
+                {(visibleUniqueItemBackgroundBitmap ?? false) && (
+                    <ThemeImage
+                        name="unique_item_background_bitmap"
+                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+                <ThemeImage
+                    name="item_image"
+                    src={srcItemImage}
+                    layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
+                />
+                {(visibleUniqueItemOverlayWidget ?? false) && (
+                    <WidgetSlot
+                        widgetType="limited_item_overlay_grid"
+                        name="unique_item_overlay_widget"
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+                {(visibleRarityItemOverlayWidget ?? false) && (
+                    <WidgetSlot
+                        widgetType="rarity_item_overlay_grid"
+                        name="rarity_item_overlay_widget"
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+            </Region>
             <Region
                 name="item_name"
                 layout={{ position: 'absolute', left: 58, width: 74, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

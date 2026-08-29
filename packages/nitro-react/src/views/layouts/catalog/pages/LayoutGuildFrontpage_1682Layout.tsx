@@ -4,20 +4,6 @@ import { BuyGuildWidget, BuyGuildWidgetProps } from '#base/views/layouts/catalog
 
 /** Generated from `1682_layout_guild_frontpage_xml` (layout "ctlg_guild_frontpage", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutGuildFrontpage_1682LayoutProps {
-    ctlgGuildFrontpage?: LayoutGuildFrontpage_1682LayoutCtlgGuildFrontpageProps;
-    layout?: BoxLayout;
-}
-
-export const LayoutGuildFrontpage_1682Layout = ({ ctlgGuildFrontpage, layout }: LayoutGuildFrontpage_1682LayoutProps) => {
-    return (
-        <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
-            <LayoutGuildFrontpage_1682LayoutCtlgGuildFrontpage {...ctlgGuildFrontpage} />
-        </Region>
-    );
-};
-
-/** Named region `ctlg_guild_frontpage` of LayoutGuildFrontpage_1682Layout - configured through the parent's `ctlgGuildFrontpage` prop. */
-export interface LayoutGuildFrontpage_1682LayoutCtlgGuildFrontpageProps {
     buyGuildWidget?: BuyGuildWidgetProps;
     captionCtlgDescription?: string;
     captionCtlgSpecialTxt?: string;
@@ -25,41 +11,43 @@ export interface LayoutGuildFrontpage_1682LayoutCtlgGuildFrontpageProps {
     srcCtlgTeaserimg1?: string;
 }
 
-export const LayoutGuildFrontpage_1682LayoutCtlgGuildFrontpage = ({ buyGuildWidget, captionCtlgDescription, captionCtlgSpecialTxt, layout, srcCtlgTeaserimg1 }: LayoutGuildFrontpage_1682LayoutCtlgGuildFrontpageProps) => {
+export const LayoutGuildFrontpage_1682Layout = ({ buyGuildWidget, captionCtlgDescription, captionCtlgSpecialTxt, layout, srcCtlgTeaserimg1 }: LayoutGuildFrontpage_1682LayoutProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="ctlg_guild_frontpage"
-            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
-        >
-            <ThemeImage
-                name="ctlg_teaserimg_1"
-                src={srcCtlgTeaserimg1}
-                layout={{ position: 'absolute', left: 0, width: 359, top: 288, height: 163 }}
-            />
+        <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
             <Region
-                name="ctlg_special_txt"
-                layout={{ position: 'absolute', left: 15, width: 74, top: 152, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                name="ctlg_guild_frontpage"
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
             >
-                <ThemeText
-                    text={captionCtlgSpecialTxt ?? t('lorem.title')}
-                    textStyle="text-style-u-bold"
+                <ThemeImage
+                    name="ctlg_teaserimg_1"
+                    src={srcCtlgTeaserimg1}
+                    layout={{ position: 'absolute', left: 0, width: 359, top: 288, height: 163 }}
+                />
+                <Region
+                    name="ctlg_special_txt"
+                    layout={{ position: 'absolute', left: 15, width: 74, top: 152, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionCtlgSpecialTxt ?? t('lorem.title')}
+                        textStyle="text-style-u-bold"
+                    />
+                </Region>
+                <Region
+                    name="ctlg_description"
+                    layout={{ position: 'absolute', left: 15, width: 335, top: 176, height: 82, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionCtlgDescription ?? t('lorem.header')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 335 }}
+                    />
+                </Region>
+                <BuyGuildWidget
+                    layout={{ position: 'absolute', left: 49, width: 267, top: 251, height: 45 }}
+                    {...buyGuildWidget}
                 />
             </Region>
-            <Region
-                name="ctlg_description"
-                layout={{ position: 'absolute', left: 15, width: 335, top: 176, height: 82, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgDescription ?? t('lorem.header')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 335 }}
-                />
-            </Region>
-            <BuyGuildWidget
-                layout={{ position: 'absolute', left: 49, width: 267, top: 251, height: 45 }}
-                {...buyGuildWidget}
-            />
         </Region>
     );
 };

@@ -15,24 +15,8 @@ export const ProgressBarLayout = ({ layout, progressBarCont }: ProgressBarLayout
     );
 };
 
-/** Named region `bar_a_bkg` of ProgressBarLayout - configured through the parent's `barABkg` prop. */
-export interface ProgressBarLayoutBarABkgProps {
-    layout?: BoxLayout;
-}
-
-export const ProgressBarLayoutBarABkg = ({ layout }: ProgressBarLayoutBarABkgProps) => {
-    return (
-        <Region
-            name="bar_a_bkg"
-            backgroundColor="#ffff00"
-            layout={{ position: 'absolute', left: 4, width: 1, top: 3, height: 17, ...layout }}
-        />
-    );
-};
-
 /** Named region `progress_bar_cont` of ProgressBarLayout - configured through the parent's `progressBarCont` prop. */
 export interface ProgressBarLayoutProgressBarContProps {
-    barABkg?: ProgressBarLayoutBarABkgProps;
     captionProgressTxt?: string;
     layout?: BoxLayout;
     srcBarAC?: string;
@@ -42,7 +26,7 @@ export interface ProgressBarLayoutProgressBarContProps {
     srcBarR?: string;
 }
 
-export const ProgressBarLayoutProgressBarCont = ({ barABkg, captionProgressTxt, layout, srcBarAC, srcBarAR, srcBarC, srcBarL, srcBarR }: ProgressBarLayoutProgressBarContProps) => {
+export const ProgressBarLayoutProgressBarCont = ({ captionProgressTxt, layout, srcBarAC, srcBarAR, srcBarC, srcBarL, srcBarR }: ProgressBarLayoutProgressBarContProps) => {
     return (
         <Region
             name="progress_bar_cont"
@@ -63,7 +47,11 @@ export const ProgressBarLayoutProgressBarCont = ({ barABkg, captionProgressTxt, 
                 src={srcBarR ?? layoutImage('achievement_ach_progressbar3.png')}
                 layout={{ position: 'absolute', left: 5, width: 4, top: 0, height: 23 }}
             />
-            <ProgressBarLayoutBarABkg {...barABkg} />
+            <Region
+                name="bar_a_bkg"
+                backgroundColor="#ffff00"
+                layout={{ position: 'absolute', left: 4, width: 1, top: 3, height: 17 }}
+            />
             <ThemeImage
                 name="bar_a_c"
                 src={srcBarAC ?? layoutImage('achievement_ach_progressbar4.png')}

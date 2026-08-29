@@ -4,16 +4,20 @@ import { BoxLayout, Button, CheckBox, Dropmenu, Frame, Region, ScrollArea, TextI
 
 /** Generated from `1124_issue_handler_xml` (layout "issue_handler", 750x615) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IssueHandlerLayoutProps {
-    buttons?: IssueHandlerLayoutButtonsProps;
-    chatCont?: IssueHandlerLayoutChatContProps;
+    captionHandleNextText?: string;
+    captionSanctionLabel?: string;
     issueCont?: IssueHandlerLayoutIssueContProps;
     layout?: BoxLayout;
     onCfhTopics?: () => void;
     onClose?: () => void;
-    sanctioninfo?: IssueHandlerLayoutSanctioninfoProps;
+    onCloseResolved?: () => void;
+    onCloseSanction?: () => void;
+    onCloseUseless?: () => void;
+    onHandleNextCheckbox?: () => void;
+    onRelease?: () => void;
 }
 
-export const IssueHandlerLayout = ({ buttons, chatCont, issueCont, layout, onCfhTopics, onClose, sanctioninfo }: IssueHandlerLayoutProps) => {
+export const IssueHandlerLayout = ({ captionHandleNextText, captionSanctionLabel, issueCont, layout, onCfhTopics, onClose, onCloseResolved, onCloseSanction, onCloseUseless, onHandleNextCheckbox, onRelease }: IssueHandlerLayoutProps) => {
     return (
         <Frame
             variant="0"
@@ -30,107 +34,93 @@ export const IssueHandlerLayout = ({ buttons, chatCont, issueCont, layout, onCfh
             >
                 CFH TOPICS:
             </Dropmenu>
-            <IssueHandlerLayoutSanctioninfo {...sanctioninfo} />
-            <IssueHandlerLayoutButtons {...buttons} />
+            <Region
+                name="sanctioninfo"
+                layout={{ position: 'absolute', left: 524, width: 215, top: 42, height: 18, maxHeight: 47 }}
+            >
+                <Region
+                    name="sanction_label"
+                    layout={{ position: 'absolute', left: 0, width: 215, top: 0, height: 17, maxWidth: 215, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionSanctionLabel ?? ''}
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+            </Region>
+            <Region
+                name="buttons"
+                layout={{ position: 'absolute', left: 290, width: 444, top: 15, height: 75 }}
+            >
+                <Button
+                    variant="0"
+                    name="close_useless"
+                    tintColor="#ff9090"
+                    onPointerTap={onCloseUseless}
+                    layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 22, minWidth: 110, maxWidth: 110 }}
+                >
+                    Close as useless
+                </Button>
+                <Button
+                    variant="0"
+                    name="close_resolved"
+                    onPointerTap={onCloseResolved}
+                    layout={{ position: 'absolute', left: 0, width: 110, top: 50, height: 22, minWidth: 110, maxWidth: 110 }}
+                >
+                    Close as resolved
+                </Button>
+                <Button
+                    variant="0"
+                    name="release"
+                    onPointerTap={onRelease}
+                    layout={{ position: 'absolute', left: 316, width: 110, top: 50, height: 22, minWidth: 110, maxWidth: 110 }}
+                >
+                    Release
+                </Button>
+                <CheckBox
+                    variant="0"
+                    name="handle_next_checkbox"
+                    onPointerTap={onHandleNextCheckbox}
+                    layout={{ position: 'absolute', left: 120, width: 17, top: 53, height: 17 }}
+                >
+                    Issue handling
+                </CheckBox>
+                <Region
+                    name="handle_next_text"
+                    layout={{ position: 'absolute', left: 138, width: 153, top: 53, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionHandleNextText ?? 'Automatically open next issue'}
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+                <Button
+                    variant="0"
+                    name="close_sanction"
+                    onPointerTap={onCloseSanction}
+                    layout={{ position: 'absolute', left: 120, width: 110, top: 25, height: 22, minWidth: 110, maxWidth: 110 }}
+                >
+                    Default Sanction
+                </Button>
+            </Region>
             <IssueHandlerLayoutIssueCont {...issueCont} />
-            <IssueHandlerLayoutChatCont {...chatCont} />
+            <Region
+                name="chat_cont"
+                backgroundColor="#418db0"
+                layout={{ position: 'absolute', left: 290, width: 445, top: 95, bottom: 75 }}
+            >
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 0, width: 420, top: 0, bottom: 5 }}
+                >
+                    <Region
+                        name="evidence_list"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    />
+                </ScrollArea>
+                {/* <scrollbar_vertical> for evidence_list - rendered by that list's ScrollArea */}
+            </Region>
         </Frame>
-    );
-};
-
-/** Named region `sanctioninfo` of IssueHandlerLayout - configured through the parent's `sanctioninfo` prop. */
-export interface IssueHandlerLayoutSanctioninfoProps {
-    captionSanctionLabel?: string;
-    layout?: BoxLayout;
-}
-
-export const IssueHandlerLayoutSanctioninfo = ({ captionSanctionLabel, layout }: IssueHandlerLayoutSanctioninfoProps) => {
-    return (
-        <Region
-            name="sanctioninfo"
-            layout={{ position: 'absolute', left: 524, width: 215, top: 42, height: 18, maxHeight: 47, ...layout }}
-        >
-            <Region
-                name="sanction_label"
-                layout={{ position: 'absolute', left: 0, width: 215, top: 0, height: 17, maxWidth: 215, maxHeight: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionSanctionLabel ?? ''}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `buttons` of IssueHandlerLayout - configured through the parent's `buttons` prop. */
-export interface IssueHandlerLayoutButtonsProps {
-    captionHandleNextText?: string;
-    layout?: BoxLayout;
-    onCloseResolved?: () => void;
-    onCloseSanction?: () => void;
-    onCloseUseless?: () => void;
-    onHandleNextCheckbox?: () => void;
-    onRelease?: () => void;
-}
-
-export const IssueHandlerLayoutButtons = ({ captionHandleNextText, layout, onCloseResolved, onCloseSanction, onCloseUseless, onHandleNextCheckbox, onRelease }: IssueHandlerLayoutButtonsProps) => {
-    return (
-        <Region
-            name="buttons"
-            layout={{ position: 'absolute', left: 290, width: 444, top: 15, height: 75, ...layout }}
-        >
-            <Button
-                variant="0"
-                name="close_useless"
-                tintColor="#ff9090"
-                onPointerTap={onCloseUseless}
-                layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 22, minWidth: 110, maxWidth: 110 }}
-            >
-                Close as useless
-            </Button>
-            <Button
-                variant="0"
-                name="close_resolved"
-                onPointerTap={onCloseResolved}
-                layout={{ position: 'absolute', left: 0, width: 110, top: 50, height: 22, minWidth: 110, maxWidth: 110 }}
-            >
-                Close as resolved
-            </Button>
-            <Button
-                variant="0"
-                name="release"
-                onPointerTap={onRelease}
-                layout={{ position: 'absolute', left: 316, width: 110, top: 50, height: 22, minWidth: 110, maxWidth: 110 }}
-            >
-                Release
-            </Button>
-            <CheckBox
-                variant="0"
-                name="handle_next_checkbox"
-                onPointerTap={onHandleNextCheckbox}
-                layout={{ position: 'absolute', left: 120, width: 17, top: 53, height: 17 }}
-            >
-                Issue handling
-            </CheckBox>
-            <Region
-                name="handle_next_text"
-                layout={{ position: 'absolute', left: 138, width: 153, top: 53, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionHandleNextText ?? 'Automatically open next issue'}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-            <Button
-                variant="0"
-                name="close_sanction"
-                onPointerTap={onCloseSanction}
-                layout={{ position: 'absolute', left: 120, width: 110, top: 25, height: 22, minWidth: 110, maxWidth: 110 }}
-            >
-                Default Sanction
-            </Button>
-        </Region>
     );
 };
 
@@ -335,44 +325,6 @@ export const IssueHandlerLayoutIssueCont = ({ itemsIssueCont, layout }: IssueHan
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `evidence_list` of IssueHandlerLayout - configured through the parent's `evidenceList` prop. */
-export interface IssueHandlerLayoutEvidenceListProps {
-    layout?: BoxLayout;
-}
-
-export const IssueHandlerLayoutEvidenceList = ({ layout }: IssueHandlerLayoutEvidenceListProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 0, width: 420, top: 0, bottom: 5, ...layout }}
-        >
-            <Region
-                name="evidence_list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
-/** Named region `chat_cont` of IssueHandlerLayout - configured through the parent's `chatCont` prop. */
-export interface IssueHandlerLayoutChatContProps {
-    evidenceList?: IssueHandlerLayoutEvidenceListProps;
-    layout?: BoxLayout;
-}
-
-export const IssueHandlerLayoutChatCont = ({ evidenceList, layout }: IssueHandlerLayoutChatContProps) => {
-    return (
-        <Region
-            name="chat_cont"
-            backgroundColor="#418db0"
-            layout={{ position: 'absolute', left: 290, width: 445, top: 95, bottom: 75, ...layout }}
-        >
-            <IssueHandlerLayoutEvidenceList {...evidenceList} />
-            {/* <scrollbar_vertical> for evidence_list - rendered by that list's ScrollArea */}
         </Region>
     );
 };

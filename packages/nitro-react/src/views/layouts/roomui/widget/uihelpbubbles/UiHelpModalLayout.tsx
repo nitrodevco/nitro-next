@@ -4,10 +4,9 @@ import { BoxLayout, Region, ThemeImage } from '#base/theme';
 export interface UiHelpModalLayoutProps {
     layout?: BoxLayout;
     srcBitmap?: string;
-    uiContainer?: UiHelpModalLayoutUiContainerProps;
 }
 
-export const UiHelpModalLayout = ({ layout, srcBitmap, uiContainer }: UiHelpModalLayoutProps) => {
+export const UiHelpModalLayout = ({ layout, srcBitmap }: UiHelpModalLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 150, height: 100, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
@@ -17,22 +16,11 @@ export const UiHelpModalLayout = ({ layout, srcBitmap, uiContainer }: UiHelpModa
                     tint="#24231e"
                     layout={{ position: 'absolute', left: 0, right: 1, top: 0, bottom: 1 }}
                 />
-                <UiHelpModalLayoutUiContainer {...uiContainer} />
+                <Region
+                    name="ui_container"
+                    layout={{ position: 'absolute', left: 0, right: 4, top: 0, bottom: 6 }}
+                />
             </Region>
         </Region>
-    );
-};
-
-/** Named region `ui_container` of UiHelpModalLayout - configured through the parent's `uiContainer` prop. */
-export interface UiHelpModalLayoutUiContainerProps {
-    layout?: BoxLayout;
-}
-
-export const UiHelpModalLayoutUiContainer = ({ layout }: UiHelpModalLayoutUiContainerProps) => {
-    return (
-        <Region
-            name="ui_container"
-            layout={{ position: 'absolute', left: 0, right: 4, top: 0, bottom: 6, ...layout }}
-        />
     );
 };

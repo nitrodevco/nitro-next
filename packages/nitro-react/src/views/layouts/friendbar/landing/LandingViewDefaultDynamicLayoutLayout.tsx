@@ -20,26 +20,10 @@ export const LandingViewDefaultDynamicLayoutLayout = ({ contentBackground, layou
     );
 };
 
-/** Named region `moving_objects_container` of LandingViewDefaultDynamicLayoutLayout - configured through the parent's `movingObjectsContainer` prop. */
-export interface LandingViewDefaultDynamicLayoutLayoutMovingObjectsContainerProps {
-    layout?: BoxLayout;
-}
-
-export const LandingViewDefaultDynamicLayoutLayoutMovingObjectsContainer = ({ layout }: LandingViewDefaultDynamicLayoutLayoutMovingObjectsContainerProps) => {
-    return (
-        <Region
-            name="moving_objects_container"
-            backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
-        />
-    );
-};
-
 /** Named region `content_background` of LandingViewDefaultDynamicLayoutLayout - configured through the parent's `contentBackground` prop. */
 export interface LandingViewDefaultDynamicLayoutLayoutContentBackgroundProps {
     captionWarning?: string;
     layout?: BoxLayout;
-    movingObjectsContainer?: LandingViewDefaultDynamicLayoutLayoutMovingObjectsContainerProps;
     srcBackgroundGradient?: string;
     srcBackgroundGradientTop?: string;
     srcBackgroundHorizon?: string;
@@ -48,9 +32,10 @@ export interface LandingViewDefaultDynamicLayoutLayoutContentBackgroundProps {
     srcBackgroundRight?: string;
     srcLeftRightDivider?: string;
     srcLogo?: string;
+    visibleLeftRightDivider?: boolean;
 }
 
-export const LandingViewDefaultDynamicLayoutLayoutContentBackground = ({ captionWarning, layout, movingObjectsContainer, srcBackgroundGradient, srcBackgroundGradientTop, srcBackgroundHorizon, srcBackgroundHotelTop, srcBackgroundLeft, srcBackgroundRight, srcLeftRightDivider, srcLogo }: LandingViewDefaultDynamicLayoutLayoutContentBackgroundProps) => {
+export const LandingViewDefaultDynamicLayoutLayoutContentBackground = ({ captionWarning, layout, srcBackgroundGradient, srcBackgroundGradientTop, srcBackgroundHorizon, srcBackgroundHotelTop, srcBackgroundLeft, srcBackgroundRight, srcLeftRightDivider, srcLogo, visibleLeftRightDivider }: LandingViewDefaultDynamicLayoutLayoutContentBackgroundProps) => {
     return (
         <Region
             name="content_background"
@@ -72,18 +57,23 @@ export const LandingViewDefaultDynamicLayoutLayoutContentBackground = ({ caption
                 src={srcBackgroundRight}
                 layout={{ position: 'absolute', right: 1, width: 526, bottom: 38, height: 407 }}
             />
-            <ThemeImage
-                name="left-right_divider"
-                src={srcLeftRightDivider ?? layoutImage('landing_view_reception_horizontal.png')}
-                layout={{ position: 'absolute', left: 890, width: 2, top: 1, height: 670 }}
-                visible={false}
-            />
+            {(visibleLeftRightDivider ?? false) && (
+                <ThemeImage
+                    name="left-right_divider"
+                    src={srcLeftRightDivider ?? layoutImage('landing_view_reception_horizontal.png')}
+                    layout={{ position: 'absolute', left: 890, width: 2, top: 1, height: 670 }}
+                />
+            )}
             <ThemeImage
                 name="background_horizon"
                 src={srcBackgroundHorizon}
                 layout={{ position: 'absolute', left: 0, width: 693, bottom: 38, height: 341 }}
             />
-            <LandingViewDefaultDynamicLayoutLayoutMovingObjectsContainer {...movingObjectsContainer} />
+            <Region
+                name="moving_objects_container"
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+            />
             <Icon
                 variant="0"
                 name="placeholder_dynamic_widget_slots"

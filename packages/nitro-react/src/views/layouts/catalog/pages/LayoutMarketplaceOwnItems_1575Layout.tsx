@@ -1,5 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
-import { MarketPlaceOwnItemsWidget2, MarketPlaceOwnItemsWidget2Props } from '#base/views/layouts/catalog/widgets/MarketPlaceOwnItemsWidget2';
+import { MarketPlaceOwnItemsWidget, MarketPlaceOwnItemsWidgetProps } from '#base/views/layouts/catalog/widgets/MarketPlaceOwnItemsWidget';
 
 /** Generated from `1575_layout_marketplace_own_items_xml` (layout "ctlg_marketplace", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutMarketplaceOwnItems_1575LayoutProps {
@@ -18,7 +18,7 @@ export const LayoutMarketplaceOwnItems_1575Layout = ({ ctlgMarketplaceOwnItems, 
 /** Named region `ctlg_marketplace_own_items` of LayoutMarketplaceOwnItems_1575Layout - configured through the parent's `ctlgMarketplaceOwnItems` prop. */
 export interface LayoutMarketplaceOwnItems_1575LayoutCtlgMarketplaceOwnItemsProps {
     layout?: BoxLayout;
-    marketPlaceOwnItemsWidget?: MarketPlaceOwnItemsWidget2Props;
+    marketPlaceOwnItemsWidget?: MarketPlaceOwnItemsWidgetProps;
 }
 
 export const LayoutMarketplaceOwnItems_1575LayoutCtlgMarketplaceOwnItems = ({ layout, marketPlaceOwnItemsWidget }: LayoutMarketplaceOwnItems_1575LayoutCtlgMarketplaceOwnItemsProps) => {
@@ -28,7 +28,7 @@ export const LayoutMarketplaceOwnItems_1575LayoutCtlgMarketplaceOwnItems = ({ la
             backgroundColor="#ffffff"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
-            <MarketPlaceOwnItemsWidget2
+            <MarketPlaceOwnItemsWidget
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 {...marketPlaceOwnItemsWidget}
             />

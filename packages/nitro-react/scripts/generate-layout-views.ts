@@ -315,6 +315,8 @@ interface FileContext {
 
 interface EmitContext {
     file: FileContext;
+    /** Set by `emit` when it re-enters itself for the element it has just wrapped in a `{cond && (...)}`. */
+    conditionalDone?: boolean;
     imports: Set<string>;
     usesTranslation: boolean;
     props: Map<string, string>;
@@ -568,7 +570,7 @@ const overrideProp = (ctx: EmitContext, el: Element, prefix: string, type: strin
 };
 
 /** The `ThemeLayoutMeta` props shared by every themed component. */
-const metaProps = (ctx: EmitContext, el: Element, includeVisible = true): string[] => {
+const metaProps = (ctx: EmitContext, el: Element): string[] => {
     const props: string[] = [];
 
     if (el.attrs.name) props.push(`name=${jsxStr(el.attrs.name)}`);
@@ -577,12 +579,6 @@ const metaProps = (ctx: EmitContext, el: Element, includeVisible = true): string
 
     if (tooltip) props.push(`tooltip={${tooltip}}`);
     if (el.attrs.dynamic_style) props.push(`dynamicStyle=${jsxStr(el.attrs.dynamic_style)}`);
-
-    if (includeVisible) {
-        const visible = visibilityExpr(ctx, el, { defaultHidden: el.attrs.visible === 'false' });
-
-        if (visible) props.push(`visible={${visible}}`);
-    }
 
     return props;
 };
@@ -635,8 +631,9 @@ const visibilityExpr = (ctx: EmitContext, el: Element, { defaultHidden, override
     else if (defaultHidden) conditions.push('false');
 
     if (!conditions.length) return undefined;
-    if (conditions.length === 1) return conditions[0].replace(/^\((.*)\)$/, '$1');
 
+    // Each condition keeps its own parentheses: the result is the left operand of the
+    // `cond && (...)` render guard, and `a ?? b && c` would bind the wrong way.
     return conditions.join(' && ');
 };
 
@@ -815,7 +812,7 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
 
 const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
     const assetName = el.vars.asset_uri ?? el.vars.bitmap_asset_name ?? '';
-    const props = [ ...metaProps(ctx, el, false) ];
+    const props = [ ...metaProps(ctx, el) ];
     let src: string | undefined;
 
     if (assetName.startsWith('${')) {
@@ -852,11 +849,7 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
     ctx.imports.add('ThemeImage');
     props.push(`layout={${boxLayout(el, parent, {}, { autoSize: true })}}`);
 
-    const visible = visibilityExpr(ctx, el, { defaultHidden: el.attrs.visible === 'false' });
-
-    if (visible) props.push(`visible={${visible}}`);
-
-    // ThemeImage takes `visible` itself; only a drop shadow still needs a Region around it.
+    // Only a drop shadow needs a Region around the image.
     const image = openTag('ThemeImage', props, el.dropShadow ? indent + INDENT : indent, true);
 
     if (!el.dropShadow) return image;
@@ -979,35 +972,25 @@ const emitInput = (ctx: EmitContext, el: Element, parent: ParentBox, indent: str
     return openTag('TextInput', props, indent, true);
 };
 
-/** Components whose root Box takes `visible` directly - no wrapper Region needed to hide them. */
-const VISIBLE_AWARE = new Set([ 'Border', 'Button', 'ButtonThick', 'CheckBox', 'RadioButton', 'TabButton', 'TabContent', 'TabContext', 'Dropmenu', 'Droplist', 'Bubble', 'CloseButton', 'ContainerButton', 'Scaler', 'Header', 'Tooltip' ]);
+/** Components whose root Box takes `visible` directly (kept for hand-written views; generated code renders conditionally instead). */
+export const VISIBLE_AWARE = new Set([ 'Border', 'Button', 'ButtonThick', 'CheckBox', 'RadioButton', 'TabButton', 'TabContent', 'TabContext', 'Dropmenu', 'Droplist', 'Bubble', 'CloseButton', 'ContainerButton', 'Scaler', 'Header', 'Tooltip' ]);
 
 const emitThemed = (ctx: EmitContext, component: string, el: Element, parent: ParentBox, indent: string, extraProps: string[], children: (childIndent: string) => string[]): string[] => {
     ctx.imports.add(component);
 
-    const hidden = el.attrs.visible === 'false';
-    const props = [ ...variantProp(el), ...metaProps(ctx, el, false), ...tintProp(ctx, el), ...extraProps ];
-    // Elements the Flash code toggled at runtime (anything hidden by default, plus every named
-    // bubble - see FriendRequestsTab.as showing its `bubble` on select) get a `visible<Name>` prop.
-    const visibleOverride = el.attrs.name && (hidden || el.tag === 'bubble') ? overrideProp(ctx, el, 'visible', 'boolean') : undefined;
-    const visible = visibilityExpr(ctx, el, { defaultHidden: hidden, override: visibleOverride });
+    const props = [ ...variantProp(el), ...metaProps(ctx, el), ...tintProp(ctx, el), ...extraProps ];
     const blend = blendProp(el);
 
-    if (!el.dropShadow && !blend.length && (!visible || VISIBLE_AWARE.has(component))) {
-        return wrap(component, [ ...props, ...(visible ? [ `visible={${visible}}` ] : []), `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, children(indent + INDENT));
-    }
+    if (!el.dropShadow && !blend.length) return wrap(component, [ ...props, `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, children(indent + INDENT));
 
-    // Components that don't forward `visible`/`dropShadow` to their Box get a Region wrapper carrying them instead.
+    // Components don't take `dropShadow`/`blendMode` themselves - a Region wrapper carries them.
     ctx.imports.add('Region');
 
     // The children render inside the component, not the wrapper - a centred child's
     // `justifyContent` belongs on the inner layout here, never on the wrapper's.
     const inner = wrap(component, [ ...props, `layout={${layoutLiteral({ width: '\'100%\'', height: '\'100%\'', ...centerExtra(el) })}}` ], indent + INDENT, children(indent + INDENT + INDENT));
-    const wrapperProps = [ ...dropShadowProp(el), ...blend ];
 
-    if (visible) wrapperProps.push(`visible={${visible}}`);
-
-    return wrap('Region', [ ...wrapperProps, `layout={${boxLayout(el, parent)}}` ], indent, inner);
+    return wrap('Region', [ ...dropShadowProp(el), ...blend, `layout={${boxLayout(el, parent)}}` ], indent, inner);
 };
 
 const REGION_TAGS = new Set([ 'container', 'region', 'background', 'boxsizer', 'display_object_wrapper', 'selector', 'gradient' ]);
@@ -1083,7 +1066,7 @@ const sharedWidget = (page: FileContext, el: Element, parent: ParentBox): string
             '',
             `export const ${draft} = ({ layout, ...widget }: ${draft}Props) => {`,
             `${INDENT}return (`,
-            ...wrap('Region', [ ...metaProps(ctx, el, false), ...dropShadowProp(el), 'layout={{ position: \'absolute\', ...layout }}' ], INDENT + INDENT, [
+            ...wrap('Region', [ ...metaProps(ctx, el), ...dropShadowProp(el), 'layout={{ position: \'absolute\', ...layout }}' ], INDENT + INDENT, [
                 `${INDENT}${INDENT}${INDENT}<${wraps.componentName}`,
                 `${INDENT}${INDENT}${INDENT}${INDENT}{...widget}`,
                 `${INDENT}${INDENT}${INDENT}${INDENT}layout={{ position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' }}`,
@@ -1128,8 +1111,38 @@ const sharedWidget = (page: FileContext, el: Element, parent: ParentBox): string
  * `asRoot` marks the element a sub-component is being generated *for* - it renders inline
  * there instead of being extracted again (which would recurse forever).
  */
+/** How big a named region has to be (elements in its subtree) before it's worth its own component. */
+const COMPLEX_REGION_SIZE = 8;
+
+const subtreeSize = (el: Element): number => 1 + el.children.reduce((sum, child) => sum + subtreeSize(child), 0);
+
 const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, asRoot = false): string[] => {
     const { tag } = el;
+
+    // Visibility is a render condition, not a prop: a hidden element (or one gated by a toolbar
+    // context / menu group) is wrapped in `{cond && (...)}` so it isn't mounted at all. Named
+    // hidden elements (and every named bubble - see FriendRequestsTab.as showing its `bubble` on
+    // select) get a `visible<Name>` prop to flip that condition.
+    const conditionalDone = ctx.conditionalDone;
+
+    ctx.conditionalDone = false;
+
+    if (!conditionalDone && !SKIPPED_TAGS.has(tag)) {
+        const hidden = el.attrs.visible === 'false';
+        const override = el.attrs.name && (hidden || tag === 'bubble') ? overrideProp(ctx, el, 'visible', 'boolean') : undefined;
+        const condition = visibilityExpr(ctx, el, { defaultHidden: hidden, override });
+
+        if (condition === 'false') return [ `${indent}{/* \`${el.attrs.name || tag}\` is hidden and has no name to show it by */}` ];
+
+        if (condition) {
+            ctx.conditionalDone = true;
+
+            const lines = emit(ctx, el, parent, indent + INDENT, asRoot);
+
+            // A sub-component's root is already the `return (...)` expression - no braces there.
+            return asRoot ? [ `${indent}${condition} && (`, ...lines, `${indent})` ] : [ `${indent}{${condition} && (`, ...lines, `${indent})}` ];
+        }
+    }
 
     // Every named structural node (a `container`/`region`/list the Flash code addressed by
     // name) becomes its own component; the parent renders it and exposes one prop, named after
@@ -1144,7 +1157,9 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         return [ `${indent}<${token}`, ...widgetFlagProps(el).map(flag => `${indent}${INDENT}${flag}`), `${indent}${INDENT}layout={${boxLayout(el, parent)}}`, `${indent}${INDENT}{...${prop}}`, `${indent}/>` ];
     }
 
-    if (!asRoot && el.attrs.name && (REGION_TAGS.has(tag) || LIST_TAGS[tag])) {
+    // Only a region big enough to be worth reading on its own becomes a component; a small
+    // named container stays inline and its props (handlers, overrides) land on the parent.
+    if (!asRoot && el.attrs.name && (REGION_TAGS.has(tag) || LIST_TAGS[tag]) && subtreeSize(el) >= COMPLEX_REGION_SIZE) {
         const component = generateSubComponent(ctx.file, el, parent, 'region');
         const prop = uniqueProp(ctx, camel(el.attrs.name));
 
@@ -1163,7 +1178,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         // Not every chrome component takes the full ThemeProps surface (the horizontal slider
         // pieces and the buttons are plain PointerHandlerProps + variant/layout) - `meta` marks
         // the ones that do, so name/tags/params are only passed where they type-check.
-        const props = [ ...variantProp(el), ...(meta ? [ ...metaProps(ctx, el, false), ...tintProp(ctx, el) ] : []), ...(chromeProps ?? []) ];
+        const props = [ ...variantProp(el), ...(meta ? [ ...metaProps(ctx, el), ...tintProp(ctx, el) ] : []), ...(chromeProps ?? []) ];
 
         if (tag === 'header' && el.attrs.caption) props.push(`caption=${jsxStr(decode(el.attrs.caption))}`);
 
@@ -1209,14 +1224,8 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
 
             ctx.imports.add('Region');
 
-            const props = [ ...metaProps(ctx, el, false), ...dropShadowProp(el), ...blendProp(el) ];
+            const props = [ ...metaProps(ctx, el), ...dropShadowProp(el), ...blendProp(el) ];
             const color = hexColor(el.attrs.color);
-            const hidden = el.attrs.visible === 'false';
-            const visibleOverride = hidden && el.attrs.name ? overrideProp(ctx, el, 'visible', 'boolean') : undefined;
-            const visible = visibilityExpr(ctx, el, { defaultHidden: hidden, override: visibleOverride });
-
-            if (visible) props.push(`visible={${visible}}`);
-
             if (color && (el.attrs.background === 'true' || tag === 'background' || tag === 'gradient')) props.push(`backgroundColor={${recolorExpr(ctx, el, color)}}`);
 
             // A named `region` with the low `params` bit set is a click target in the Flash client

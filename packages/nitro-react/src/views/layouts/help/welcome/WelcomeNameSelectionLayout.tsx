@@ -11,10 +11,10 @@ export interface WelcomeNameSelectionLayoutProps {
     onCancelSelectionButton?: () => void;
     onCheckNameButton?: () => void;
     onSelectNameButton?: () => void;
-    suggestions?: WelcomeNameSelectionLayoutSuggestionsProps;
+    onSuggestions?: () => void;
 }
 
-export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoText, layout, onCancelSelectionButton, onCheckNameButton, onSelectNameButton, suggestions }: WelcomeNameSelectionLayoutProps) => {
+export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoText, layout, onCancelSelectionButton, onCheckNameButton, onSelectNameButton, onSuggestions }: WelcomeNameSelectionLayoutProps) => {
     const t = useTranslation();
     const [ inputValue, setInputValue ] = useState('');
 
@@ -62,7 +62,12 @@ export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoT
                         textOptions={{ wordWrap: true, wordWrapWidth: 280 }}
                     />
                 </Region>
-                <WelcomeNameSelectionLayoutSuggestions {...suggestions} />
+                <Region
+                    name="suggestions"
+                    onPointerTap={onSuggestions}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 10, width: 280, top: 116, height: 31 }}
+                />
                 <Button
                     variant="3"
                     name="select_name_button"
@@ -83,22 +88,5 @@ export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoT
                 </Button>
             </Region>
         </Region>
-    );
-};
-
-/** Named region `suggestions` of WelcomeNameSelectionLayout - configured through the parent's `suggestions` prop. */
-export interface WelcomeNameSelectionLayoutSuggestionsProps {
-    layout?: BoxLayout;
-    onSuggestions?: () => void;
-}
-
-export const WelcomeNameSelectionLayoutSuggestions = ({ layout, onSuggestions }: WelcomeNameSelectionLayoutSuggestionsProps) => {
-    return (
-        <Region
-            name="suggestions"
-            onPointerTap={onSuggestions}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 10, width: 280, top: 116, height: 31, ...layout }}
-        />
     );
 };

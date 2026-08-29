@@ -8,9 +8,10 @@ export interface ItemPopupLayoutProps {
     srcArrowPointer?: string;
     srcItemImage?: string;
     srcNftOverlayIcon?: string;
+    visibleNftOverlayIcon?: boolean;
 }
 
-export const ItemPopupLayout = ({ captionItemNameText, layout, srcArrowPointer, srcItemImage, srcNftOverlayIcon }: ItemPopupLayoutProps) => {
+export const ItemPopupLayout = ({ captionItemNameText, layout, srcArrowPointer, srcItemImage, srcNftOverlayIcon, visibleNftOverlayIcon }: ItemPopupLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 203, height: 90, ...layout }}>
             <Border
@@ -38,12 +39,13 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, srcArrowPointer, 
                     src={srcArrowPointer}
                     layout={{ position: 'absolute', left: 180, width: 18, top: 6, height: 24 }}
                 />
-                <ThemeImage
-                    name="nft_overlay_icon"
-                    src={srcNftOverlayIcon ?? layoutImage('collectables_icon_curator_stamp_small.png')}
-                    layout={{ position: 'absolute', left: 17, width: 20, top: 171, height: 20 }}
-                    visible={false}
-                />
+                {(visibleNftOverlayIcon ?? false) && (
+                    <ThemeImage
+                        name="nft_overlay_icon"
+                        src={srcNftOverlayIcon ?? layoutImage('collectables_icon_curator_stamp_small.png')}
+                        layout={{ position: 'absolute', left: 17, width: 20, top: 171, height: 20 }}
+                    />
+                )}
                 <WidgetSlot
                     widgetType="limited_item_overlay_preview"
                     name="unique_item_overlay_widget"

@@ -15,44 +15,23 @@ export const CameraFilterbuttonLayout = ({ layout, region }: CameraFilterbuttonL
     );
 };
 
-/** Named region `remove_effect_button` of CameraFilterbuttonLayout - configured through the parent's `removeEffectButton` prop. */
-export interface CameraFilterbuttonLayoutRemoveEffectButtonProps {
-    layout?: BoxLayout;
-    onRemoveEffectButton?: () => void;
-    visibleRemoveEffectButton?: boolean;
-}
-
-export const CameraFilterbuttonLayoutRemoveEffectButton = ({ layout, onRemoveEffectButton, visibleRemoveEffectButton }: CameraFilterbuttonLayoutRemoveEffectButtonProps) => {
-    return (
-        <Region
-            name="remove_effect_button"
-            dynamicStyle="brightness_and_shadow_under"
-            visible={visibleRemoveEffectButton ?? false}
-            onPointerTap={onRemoveEffectButton}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 43, width: 19, top: 0, height: 19, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('camera_cam_close_x.png')}
-                layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19 }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `region` of CameraFilterbuttonLayout - configured through the parent's `region` prop. */
 export interface CameraFilterbuttonLayoutRegionProps {
     layout?: BoxLayout;
     onRegion?: () => void;
-    removeEffectButton?: CameraFilterbuttonLayoutRemoveEffectButtonProps;
+    onRemoveEffectButton?: () => void;
     srcActiveIndicator?: string;
     srcContent?: string;
     srcLockIndicator?: string;
     srcOutline?: string;
     srcSelectedIndicator?: string;
+    visibleActiveIndicator?: boolean;
+    visibleLockIndicator?: boolean;
+    visibleRemoveEffectButton?: boolean;
+    visibleSelectedIndicator?: boolean;
 }
 
-export const CameraFilterbuttonLayoutRegion = ({ layout, onRegion, removeEffectButton, srcActiveIndicator, srcContent, srcLockIndicator, srcOutline, srcSelectedIndicator }: CameraFilterbuttonLayoutRegionProps) => {
+export const CameraFilterbuttonLayoutRegion = ({ layout, onRegion, onRemoveEffectButton, srcActiveIndicator, srcContent, srcLockIndicator, srcOutline, srcSelectedIndicator, visibleActiveIndicator, visibleLockIndicator, visibleRemoveEffectButton, visibleSelectedIndicator }: CameraFilterbuttonLayoutRegionProps) => {
     return (
         <Region
             name="region"
@@ -70,25 +49,41 @@ export const CameraFilterbuttonLayoutRegion = ({ layout, onRegion, removeEffectB
                 src={srcContent}
                 layout={{ position: 'absolute', left: 3, width: 56, top: 3, height: 56 }}
             />
-            <ThemeImage
-                name="lock_indicator"
-                src={srcLockIndicator ?? layoutImage('camera_locked.png')}
-                layout={{ position: 'absolute', left: 2, width: 59, top: 0, height: 60 }}
-                visible={false}
-            />
-            <ThemeImage
-                name="active_indicator"
-                src={srcActiveIndicator ?? layoutImage('camera_fx_button_active.png')}
-                layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 62 }}
-                visible={false}
-            />
-            <ThemeImage
-                name="selected_indicator"
-                src={srcSelectedIndicator ?? layoutImage('camera_fx_button_selected.png')}
-                layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 62 }}
-                visible={false}
-            />
-            <CameraFilterbuttonLayoutRemoveEffectButton {...removeEffectButton} />
+            {(visibleLockIndicator ?? false) && (
+                <ThemeImage
+                    name="lock_indicator"
+                    src={srcLockIndicator ?? layoutImage('camera_locked.png')}
+                    layout={{ position: 'absolute', left: 2, width: 59, top: 0, height: 60 }}
+                />
+            )}
+            {(visibleActiveIndicator ?? false) && (
+                <ThemeImage
+                    name="active_indicator"
+                    src={srcActiveIndicator ?? layoutImage('camera_fx_button_active.png')}
+                    layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 62 }}
+                />
+            )}
+            {(visibleSelectedIndicator ?? false) && (
+                <ThemeImage
+                    name="selected_indicator"
+                    src={srcSelectedIndicator ?? layoutImage('camera_fx_button_selected.png')}
+                    layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 62 }}
+                />
+            )}
+            {(visibleRemoveEffectButton ?? false) && (
+                <Region
+                    name="remove_effect_button"
+                    dynamicStyle="brightness_and_shadow_under"
+                    onPointerTap={onRemoveEffectButton}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 43, width: 19, top: 0, height: 19 }}
+                >
+                    <ThemeImage
+                        src={layoutImage('camera_cam_close_x.png')}
+                        layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19 }}
+                    />
+                </Region>
+            )}
         </Region>
     );
 };

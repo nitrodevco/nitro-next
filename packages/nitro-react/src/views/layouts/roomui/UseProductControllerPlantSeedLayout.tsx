@@ -4,16 +4,16 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1092_use_product_controller_plant_seed_xml` (layout "use_product_plant_seed", 386x180) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface UseProductControllerPlantSeedLayoutProps {
-    cancelText?: UseProductControllerPlantSeedLayoutCancelTextProps;
     captionDescription?: string;
     captionInfo?: string;
     layout?: BoxLayout;
+    onCancelText?: () => void;
     onSaveButton?: () => void;
     srcPreviewImage?: string;
     srcPreviewImageBg?: string;
 }
 
-export const UseProductControllerPlantSeedLayout = ({ cancelText, captionDescription, captionInfo, layout, onSaveButton, srcPreviewImage, srcPreviewImageBg }: UseProductControllerPlantSeedLayoutProps) => {
+export const UseProductControllerPlantSeedLayout = ({ captionDescription, captionInfo, layout, onCancelText, onSaveButton, srcPreviewImage, srcPreviewImageBg }: UseProductControllerPlantSeedLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -46,7 +46,12 @@ export const UseProductControllerPlantSeedLayout = ({ cancelText, captionDescrip
                         textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
                     />
                 </Region>
-                <UseProductControllerPlantSeedLayoutCancelText {...cancelText} />
+                <Region
+                    name="cancel_text"
+                    onPointerTap={onCancelText}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25 }}
+                />
                 <Region layout={{ position: 'absolute', left: 160, width: 70, top: 120, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText text={t('useproduct.widget.cancel')} />
                 </Region>
@@ -62,22 +67,5 @@ export const UseProductControllerPlantSeedLayout = ({ cancelText, captionDescrip
                 </Region>
             </Region>
         </Region>
-    );
-};
-
-/** Named region `cancel_text` of UseProductControllerPlantSeedLayout - configured through the parent's `cancelText` prop. */
-export interface UseProductControllerPlantSeedLayoutCancelTextProps {
-    layout?: BoxLayout;
-    onCancelText?: () => void;
-}
-
-export const UseProductControllerPlantSeedLayoutCancelText = ({ layout, onCancelText }: UseProductControllerPlantSeedLayoutCancelTextProps) => {
-    return (
-        <Region
-            name="cancel_text"
-            onPointerTap={onCancelText}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25, ...layout }}
-        />
     );
 };

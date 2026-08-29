@@ -5,14 +5,16 @@ import { BoxLayout, Button, ContainerButton, Frame, Icon, Region, ThemeText } fr
 
 /** Generated from `845_rentablespace_xml` (layout "rentablespace", 256x224) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RentablespaceLayoutProps {
-    errorView?: RentablespaceLayoutErrorViewProps;
+    itemsErrorView?: ReactNode;
+    itemsRentedView?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
-    rentedView?: RentablespaceLayoutRentedViewProps;
     rentView?: RentablespaceLayoutRentViewProps;
+    visibleErrorView?: boolean;
+    visibleRentedView?: boolean;
 }
 
-export const RentablespaceLayout = ({ errorView, layout, onClose, rentedView, rentView }: RentablespaceLayoutProps) => {
+export const RentablespaceLayout = ({ itemsErrorView, itemsRentedView, layout, onClose, rentView, visibleErrorView, visibleRentedView }: RentablespaceLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -24,8 +26,35 @@ export const RentablespaceLayout = ({ errorView, layout, onClose, rentedView, re
             layout={{ width: 256, height: 224, ...layout }}
         >
             <RentablespaceLayoutRentView {...rentView} />
-            <RentablespaceLayoutRentedView {...rentedView} />
-            <RentablespaceLayoutErrorView {...errorView} />
+            {(visibleRentedView ?? false) && (
+                <Region
+                    name="rented_view"
+                    layout={{ position: 'absolute', left: 2, top: 4, flexDirection: 'column', gap: 5 }}
+                >
+                    {itemsRentedView ?? (
+                        <>
+                            <RentablespaceLayoutRentedToLabelItem />
+                            <RentablespaceLayoutRenterNameItem />
+                            <RentablespaceLayoutTimeLabelItem />
+                            <RentablespaceLayoutTimeRemainingLabelItem />
+                            <RentablespaceLayoutCancelRentButtonItem />
+                        </>
+                    )}
+                </Region>
+            )}
+            {(visibleErrorView ?? false) && (
+                <Region
+                    name="error_view"
+                    layout={{ position: 'absolute', left: 0, minWidth: 253, top: 0, minHeight: 182, flexDirection: 'column' }}
+                >
+                    {itemsErrorView ?? (
+                        <>
+                            <RentablespaceLayoutErrorMessageItem />
+                            <RentablespaceLayoutErrorButtonCloseItem />
+                        </>
+                    )}
+                </Region>
+            )}
         </Frame>
     );
 };
@@ -253,41 +282,16 @@ export const RentablespaceLayoutCancelRentButtonItem = ({ layout, onCancelRentBu
     const t = useTranslation();
 
     return (
-        <Button
-            variant="3"
-            name="cancel_rent_button"
-            onPointerTap={onCancelRentButton}
-            visible={visibleCancelRentButton ?? false}
-            layout={{ width: 204, height: 30, flexShrink: 0, ...layout }}
-        >
-            {t('rentablespace.widget.cancel_rent')}
-        </Button>
-    );
-};
-
-/** Named region `rented_view` of RentablespaceLayout - configured through the parent's `rentedView` prop. */
-export interface RentablespaceLayoutRentedViewProps {
-    itemsRentedView?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const RentablespaceLayoutRentedView = ({ itemsRentedView, layout }: RentablespaceLayoutRentedViewProps) => {
-    return (
-        <Region
-            name="rented_view"
-            visible={false}
-            layout={{ position: 'absolute', left: 2, top: 4, flexDirection: 'column', gap: 5, ...layout }}
-        >
-            {itemsRentedView ?? (
-                <>
-                    <RentablespaceLayoutRentedToLabelItem />
-                    <RentablespaceLayoutRenterNameItem />
-                    <RentablespaceLayoutTimeLabelItem />
-                    <RentablespaceLayoutTimeRemainingLabelItem />
-                    <RentablespaceLayoutCancelRentButtonItem />
-                </>
-            )}
-        </Region>
+        (visibleCancelRentButton ?? false) && (
+            <Button
+                variant="3"
+                name="cancel_rent_button"
+                onPointerTap={onCancelRentButton}
+                layout={{ width: 204, height: 30, flexShrink: 0, ...layout }}
+            >
+                {t('rentablespace.widget.cancel_rent')}
+            </Button>
+        )
     );
 };
 
@@ -329,28 +333,5 @@ export const RentablespaceLayoutErrorButtonCloseItem = ({ layout, onErrorButtonC
         >
             {t('rentablespace.widget.close')}
         </Button>
-    );
-};
-
-/** Named region `error_view` of RentablespaceLayout - configured through the parent's `errorView` prop. */
-export interface RentablespaceLayoutErrorViewProps {
-    itemsErrorView?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const RentablespaceLayoutErrorView = ({ itemsErrorView, layout }: RentablespaceLayoutErrorViewProps) => {
-    return (
-        <Region
-            name="error_view"
-            visible={false}
-            layout={{ position: 'absolute', left: 0, minWidth: 253, top: 0, minHeight: 182, flexDirection: 'column', ...layout }}
-        >
-            {itemsErrorView ?? (
-                <>
-                    <RentablespaceLayoutErrorMessageItem />
-                    <RentablespaceLayoutErrorButtonCloseItem />
-                </>
-            )}
-        </Region>
     );
 };

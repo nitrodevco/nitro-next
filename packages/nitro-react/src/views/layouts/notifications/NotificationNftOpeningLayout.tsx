@@ -3,13 +3,12 @@ import { Border, BoxLayout, Button, Region, ThemeImage, ThemeText, WidgetSlot } 
 
 /** Generated from `2986_notification_nft_opening_xml` (layout "notification_nft_opening", 190x110) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NotificationNftOpeningLayoutProps {
-    bottom?: NotificationNftOpeningLayoutBottomProps;
     captionNftPrizeDescription?: string;
-    header?: NotificationNftOpeningLayoutHeaderProps;
     layout?: BoxLayout;
+    onRarityText?: () => void;
 }
 
-export const NotificationNftOpeningLayout = ({ bottom, captionNftPrizeDescription, header, layout }: NotificationNftOpeningLayoutProps) => {
+export const NotificationNftOpeningLayout = ({ captionNftPrizeDescription, layout, onRarityText }: NotificationNftOpeningLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -19,7 +18,26 @@ export const NotificationNftOpeningLayout = ({ bottom, captionNftPrizeDescriptio
                 tintColor="#006154"
                 layout={{ position: 'absolute', left: 0, width: 190, top: 0, height: 110 }}
             >
-                <NotificationNftOpeningLayoutHeader {...header} />
+                <Region
+                    name="header"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
+                >
+                    <Border
+                        variant="2"
+                        tintColor="#012723"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
+                    />
+                    <Region
+                        backgroundColor="#012723"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 10 }}
+                    />
+                    <Region layout={{ position: 'absolute', left: 7, width: 194, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('collectibles.reward_box.notif.title')}
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                </Region>
                 <WidgetSlot
                     widgetType="product_icon"
                     name="icon_widget"
@@ -38,67 +56,23 @@ export const NotificationNftOpeningLayout = ({ bottom, captionNftPrizeDescriptio
                     src={undefined}
                     layout={{ position: 'absolute', left: 8, width: 50, alignSelf: 'center', height: 50 }}
                 />
-                <NotificationNftOpeningLayoutBottom {...bottom} />
-            </Border>
-        </Region>
-    );
-};
-
-/** Named region `header` of NotificationNftOpeningLayout - configured through the parent's `header` prop. */
-export interface NotificationNftOpeningLayoutHeaderProps {
-    layout?: BoxLayout;
-}
-
-export const NotificationNftOpeningLayoutHeader = ({ layout }: NotificationNftOpeningLayoutHeaderProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="header"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24, ...layout }}
-        >
-            <Border
-                variant="2"
-                tintColor="#012723"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
-            />
-            <Region
-                backgroundColor="#012723"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 10 }}
-            />
-            <Region layout={{ position: 'absolute', left: 7, width: 194, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('collectibles.reward_box.notif.title')}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `bottom` of NotificationNftOpeningLayout - configured through the parent's `bottom` prop. */
-export interface NotificationNftOpeningLayoutBottomProps {
-    layout?: BoxLayout;
-    onRarityText?: () => void;
-}
-
-export const NotificationNftOpeningLayoutBottom = ({ layout, onRarityText }: NotificationNftOpeningLayoutBottomProps) => {
-    return (
-        <Region
-            name="bottom"
-            layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 30, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 6, right: 6, top: 0, height: 25 }}>
-                <Button
-                    variant="3"
-                    name="rarity_text"
-                    tintColor="#f5d634"
-                    onPointerTap={onRarityText}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25, minWidth: 178 }}
+                <Region
+                    name="bottom"
+                    layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 30 }}
                 >
-                    {'Rarity: '}
-                </Button>
-            </Region>
+                    <Region layout={{ position: 'absolute', left: 6, right: 6, top: 0, height: 25 }}>
+                        <Button
+                            variant="3"
+                            name="rarity_text"
+                            tintColor="#f5d634"
+                            onPointerTap={onRarityText}
+                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25, minWidth: 178 }}
+                        >
+                            {'Rarity: '}
+                        </Button>
+                    </Region>
+                </Region>
+            </Border>
         </Region>
     );
 };

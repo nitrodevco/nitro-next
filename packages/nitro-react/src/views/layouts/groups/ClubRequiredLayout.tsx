@@ -3,15 +3,17 @@ import { BoxLayout, ButtonThick, Frame, Icon, Region, ThemeText } from '#base/th
 
 /** Generated from `1199_club_required_xml` (layout "Group info window", 428x215) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ClubRequiredLayoutProps {
-    cancelLinkRegion?: ClubRequiredLayoutCancelLinkRegionProps;
+    captionCancelLink?: string;
     captionInfoTxt?: string;
+    captionMoreInfoLink?: string;
     layout?: BoxLayout;
-    moreInfoLinkRegion?: ClubRequiredLayoutMoreInfoLinkRegionProps;
+    onCancelLinkRegion?: () => void;
     onClose?: () => void;
     onJoinButton?: () => void;
+    onMoreInfoLinkRegion?: () => void;
 }
 
-export const ClubRequiredLayout = ({ cancelLinkRegion, captionInfoTxt, layout, moreInfoLinkRegion, onClose, onJoinButton }: ClubRequiredLayoutProps) => {
+export const ClubRequiredLayout = ({ captionCancelLink, captionInfoTxt, captionMoreInfoLink, layout, onCancelLinkRegion, onClose, onJoinButton, onMoreInfoLinkRegion }: ClubRequiredLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -42,8 +44,36 @@ export const ClubRequiredLayout = ({ cancelLinkRegion, captionInfoTxt, layout, m
                     textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 265 }}
                 />
             </Region>
-            <ClubRequiredLayoutMoreInfoLinkRegion {...moreInfoLinkRegion} />
-            <ClubRequiredLayoutCancelLinkRegion {...cancelLinkRegion} />
+            <Region
+                name="more_info_link_region"
+                onPointerTap={onMoreInfoLinkRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 131, width: 282, top: 83, height: 18 }}
+            >
+                <Region
+                    name="more_info_link"
+                    layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionMoreInfoLink ?? t('group.hcrequired.moreinfo')}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#0078ff' }}
+                    />
+                </Region>
+            </Region>
+            <Region
+                name="cancel_link_region"
+                onPointerTap={onCancelLinkRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 35, width: 152, top: 145, height: 18 }}
+            >
+                <Region
+                    name="cancel_link"
+                    layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionCancelLink ?? t('generic.cancel')} />
+                </Region>
+            </Region>
             <ButtonThick
                 variant="3"
                 name="join_button"
@@ -53,63 +83,5 @@ export const ClubRequiredLayout = ({ cancelLinkRegion, captionInfoTxt, layout, m
                 {t('group.hcrequired.join')}
             </ButtonThick>
         </Frame>
-    );
-};
-
-/** Named region `more_info_link_region` of ClubRequiredLayout - configured through the parent's `moreInfoLinkRegion` prop. */
-export interface ClubRequiredLayoutMoreInfoLinkRegionProps {
-    captionMoreInfoLink?: string;
-    layout?: BoxLayout;
-    onMoreInfoLinkRegion?: () => void;
-}
-
-export const ClubRequiredLayoutMoreInfoLinkRegion = ({ captionMoreInfoLink, layout, onMoreInfoLinkRegion }: ClubRequiredLayoutMoreInfoLinkRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="more_info_link_region"
-            onPointerTap={onMoreInfoLinkRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 131, width: 282, top: 83, height: 18, ...layout }}
-        >
-            <Region
-                name="more_info_link"
-                layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionMoreInfoLink ?? t('group.hcrequired.moreinfo')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#0078ff' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `cancel_link_region` of ClubRequiredLayout - configured through the parent's `cancelLinkRegion` prop. */
-export interface ClubRequiredLayoutCancelLinkRegionProps {
-    captionCancelLink?: string;
-    layout?: BoxLayout;
-    onCancelLinkRegion?: () => void;
-}
-
-export const ClubRequiredLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion }: ClubRequiredLayoutCancelLinkRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="cancel_link_region"
-            onPointerTap={onCancelLinkRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 35, width: 152, top: 145, height: 18, ...layout }}
-        >
-            <Region
-                name="cancel_link"
-                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionCancelLink ?? t('generic.cancel')} />
-            </Region>
-        </Region>
     );
 };

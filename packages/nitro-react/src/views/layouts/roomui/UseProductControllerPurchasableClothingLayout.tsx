@@ -3,14 +3,14 @@ import { BoxLayout, ButtonThick, Region, ThemeText, WidgetSlot } from '#base/the
 
 /** Generated from `1011_use_product_controller_purchasable_clothing_xml` (layout "use_product_purchasable_clothing", 386x180) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface UseProductControllerPurchasableClothingLayoutProps {
-    cancelText?: UseProductControllerPurchasableClothingLayoutCancelTextProps;
     captionDescription?: string;
     captionInfo?: string;
     layout?: BoxLayout;
+    onCancelText?: () => void;
     onSaveButton?: () => void;
 }
 
-export const UseProductControllerPurchasableClothingLayout = ({ cancelText, captionDescription, captionInfo, layout, onSaveButton }: UseProductControllerPurchasableClothingLayoutProps) => {
+export const UseProductControllerPurchasableClothingLayout = ({ captionDescription, captionInfo, layout, onCancelText, onSaveButton }: UseProductControllerPurchasableClothingLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -38,7 +38,12 @@ export const UseProductControllerPurchasableClothingLayout = ({ cancelText, capt
                         textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
                     />
                 </Region>
-                <UseProductControllerPurchasableClothingLayoutCancelText {...cancelText} />
+                <Region
+                    name="cancel_text"
+                    onPointerTap={onCancelText}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25 }}
+                />
                 <Region layout={{ position: 'absolute', left: 160, width: 70, top: 120, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText text={t('useproduct.widget.cancel')} />
                 </Region>
@@ -54,22 +59,5 @@ export const UseProductControllerPurchasableClothingLayout = ({ cancelText, capt
                 </Region>
             </Region>
         </Region>
-    );
-};
-
-/** Named region `cancel_text` of UseProductControllerPurchasableClothingLayout - configured through the parent's `cancelText` prop. */
-export interface UseProductControllerPurchasableClothingLayoutCancelTextProps {
-    layout?: BoxLayout;
-    onCancelText?: () => void;
-}
-
-export const UseProductControllerPurchasableClothingLayoutCancelText = ({ layout, onCancelText }: UseProductControllerPurchasableClothingLayoutCancelTextProps) => {
-    return (
-        <Region
-            name="cancel_text"
-            onPointerTap={onCancelText}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25, ...layout }}
-        />
     );
 };

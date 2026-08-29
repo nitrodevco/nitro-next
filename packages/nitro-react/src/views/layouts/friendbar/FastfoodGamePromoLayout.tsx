@@ -6,13 +6,12 @@ export interface FastfoodGamePromoLayoutProps {
     captionCaptionTxt?: string;
     captionInfoTxt?: string;
     captionTitleTxt?: string;
-    col1?: FastfoodGamePromoLayoutCol1Props;
     layout?: BoxLayout;
     onGoButton?: () => void;
-    spacing?: FastfoodGamePromoLayoutSpacingProps;
+    srcTeaserImage?: string;
 }
 
-export const FastfoodGamePromoLayout = ({ captionCaptionTxt, captionInfoTxt, captionTitleTxt, col1, layout, onGoButton, spacing }: FastfoodGamePromoLayoutProps) => {
+export const FastfoodGamePromoLayout = ({ captionCaptionTxt, captionInfoTxt, captionTitleTxt, layout, onGoButton, srcTeaserImage }: FastfoodGamePromoLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -21,7 +20,17 @@ export const FastfoodGamePromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 245 }}
             >
-                <FastfoodGamePromoLayoutCol1 {...col1} />
+                <Region
+                    name="col1"
+                    backgroundColor="#000000"
+                    layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 245 }}
+                >
+                    <ThemeImage
+                        name="teaser_image"
+                        src={srcTeaserImage ?? '${image.library.url}reception/fastfood_promo.png'}
+                        layout={{ position: 'absolute', left: 10, width: 200, top: 0, height: 250 }}
+                    />
+                </Region>
                 <Region layout={{ position: 'absolute', left: 230, width: 270, top: 30, height: 111, flexDirection: 'column' }}>
                     <Region
                         name="caption_txt"
@@ -32,7 +41,11 @@ export const FastfoodGamePromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                             textStyle="text-style-il-heading-1"
                         />
                     </Region>
-                    <FastfoodGamePromoLayoutSpacing {...spacing} />
+                    <Region
+                        name="spacing"
+                        backgroundColor="#000000"
+                        layout={{ width: 250, height: 6, flexShrink: 0 }}
+                    />
                     <Region
                         name="title_txt"
                         layout={{ width: 270, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -63,42 +76,5 @@ export const FastfoodGamePromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                 </Region>
             </Region>
         </Region>
-    );
-};
-
-/** Named region `col1` of FastfoodGamePromoLayout - configured through the parent's `col1` prop. */
-export interface FastfoodGamePromoLayoutCol1Props {
-    layout?: BoxLayout;
-    srcTeaserImage?: string;
-}
-
-export const FastfoodGamePromoLayoutCol1 = ({ layout, srcTeaserImage }: FastfoodGamePromoLayoutCol1Props) => {
-    return (
-        <Region
-            name="col1"
-            backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 245, ...layout }}
-        >
-            <ThemeImage
-                name="teaser_image"
-                src={srcTeaserImage ?? '${image.library.url}reception/fastfood_promo.png'}
-                layout={{ position: 'absolute', left: 10, width: 200, top: 0, height: 250 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `spacing` of FastfoodGamePromoLayout - configured through the parent's `spacing` prop. */
-export interface FastfoodGamePromoLayoutSpacingProps {
-    layout?: BoxLayout;
-}
-
-export const FastfoodGamePromoLayoutSpacing = ({ layout }: FastfoodGamePromoLayoutSpacingProps) => {
-    return (
-        <Region
-            name="spacing"
-            backgroundColor="#000000"
-            layout={{ width: 250, height: 6, flexShrink: 0, ...layout }}
-        />
     );
 };

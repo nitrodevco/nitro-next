@@ -35,79 +35,39 @@ export const FriendfurniMenuLayoutUseItem = ({ captionLabel, layout, onButton, v
     const t = useTranslation();
 
     return (
-        <Region
-            name="use"
-            visible={visibleGroups?.action ?? true}
-            layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
-                visible={visibleGroups?.action ?? true}
-                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+        (visibleGroups?.action ?? true) && (
+            <Region
+                name="use"
+                layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionLabel ?? t('friendfurni.context.use')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </ContainerButton>
-        </Region>
-    );
-};
-
-/** Named region `buttons` of FriendfurniMenuLayout - configured through the parent's `buttons` prop. */
-export interface FriendfurniMenuLayoutButtonsProps {
-    itemsButtons?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const FriendfurniMenuLayoutButtons = ({ itemsButtons, layout }: FriendfurniMenuLayoutButtonsProps) => {
-    return (
-        <Region
-            name="buttons"
-            layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 26, flexDirection: 'column', gap: 1, ...layout }}
-        >
-            {itemsButtons ?? (
-                <FriendfurniMenuLayoutUseItem />
-            )}
-        </Region>
-    );
-};
-
-/** Named region `minimize` of FriendfurniMenuLayout - configured through the parent's `minimize` prop. */
-export interface FriendfurniMenuLayoutMinimizeProps {
-    layout?: BoxLayout;
-    onMinimize?: () => void;
-}
-
-export const FriendfurniMenuLayoutMinimize = ({ layout, onMinimize }: FriendfurniMenuLayoutMinimizeProps) => {
-    return (
-        <Region
-            name="minimize"
-            onPointerTap={onMinimize}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 4, width: 100, bottom: 3, height: 18, ...layout }}
-        >
-            <Icon
-                variant="7"
-                name="icon"
-                layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
-            />
-        </Region>
+                {(visibleGroups?.action ?? true) && (
+                    <ContainerButton
+                        variant="3"
+                        name="button"
+                        tintColor="#2d2a27"
+                        onPointerTap={onButton}
+                        layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('friendfurni.context.use')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </ContainerButton>
+                )}
+            </Region>
+        )
     );
 };
 
 /** Named region `border` of FriendfurniMenuLayout - configured through the parent's `border` prop. */
 export interface FriendfurniMenuLayoutBorderProps {
-    buttons?: FriendfurniMenuLayoutButtonsProps;
+    itemsButtons?: ReactNode;
     layout?: BoxLayout;
-    minimize?: FriendfurniMenuLayoutMinimizeProps;
+    onMinimize?: () => void;
 }
 
-export const FriendfurniMenuLayoutBorder = ({ buttons, layout, minimize }: FriendfurniMenuLayoutBorderProps) => {
+export const FriendfurniMenuLayoutBorder = ({ itemsButtons, layout, onMinimize }: FriendfurniMenuLayoutBorderProps) => {
     const t = useTranslation();
 
     return (
@@ -128,8 +88,26 @@ export const FriendfurniMenuLayoutBorder = ({ buttons, layout, minimize }: Frien
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
             />
-            <FriendfurniMenuLayoutButtons {...buttons} />
-            <FriendfurniMenuLayoutMinimize {...minimize} />
+            <Region
+                name="buttons"
+                layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 26, flexDirection: 'column', gap: 1 }}
+            >
+                {itemsButtons ?? (
+                    <FriendfurniMenuLayoutUseItem />
+                )}
+            </Region>
+            <Region
+                name="minimize"
+                onPointerTap={onMinimize}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 4, width: 100, bottom: 3, height: 18 }}
+            >
+                <Icon
+                    variant="7"
+                    name="icon"
+                    layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
+                />
+            </Region>
         </Region>
     );
 };

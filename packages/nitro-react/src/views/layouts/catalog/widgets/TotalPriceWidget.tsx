@@ -9,29 +9,13 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
  * (LayoutDefault_1595Layout); each passes its own placement through `layout`.
  */
-/** Named region `strike` of TotalPriceWidget - configured through the parent's `strike` prop. */
-export interface TotalPriceWidgetStrikeProps {
-    layout?: BoxLayout;
-}
-
-export const TotalPriceWidgetStrike = ({ layout }: TotalPriceWidgetStrikeProps) => {
-    return (
-        <Region
-            name="strike"
-            backgroundColor="#ff0000"
-            layout={{ position: 'absolute', left: 0, width: 10, top: 10, height: 2, ...layout }}
-        />
-    );
-};
-
 /** Row template `total_left` of TotalPriceWidget - pass real rows through its `items…` slot. */
 export interface TotalPriceWidgetTotalLeftItemProps {
     captionText?: string;
     layout?: BoxLayout;
-    strike?: TotalPriceWidgetStrikeProps;
 }
 
-export const TotalPriceWidgetTotalLeftItem = ({ captionText, layout, strike }: TotalPriceWidgetTotalLeftItemProps) => {
+export const TotalPriceWidgetTotalLeftItem = ({ captionText, layout }: TotalPriceWidgetTotalLeftItemProps) => {
     return (
         <Region
             name="total_left"
@@ -46,7 +30,11 @@ export const TotalPriceWidgetTotalLeftItem = ({ captionText, layout, strike }: T
                     textOptions={{ fill: '#999999' }}
                 />
             </Region>
-            <TotalPriceWidgetStrike {...strike} />
+            <Region
+                name="strike"
+                backgroundColor="#ff0000"
+                layout={{ position: 'absolute', left: 0, width: 10, top: 10, height: 2 }}
+            />
         </Region>
     );
 };
@@ -100,29 +88,13 @@ export const TotalPriceWidgetPlusItem = ({ captionPlus, layout }: TotalPriceWidg
     );
 };
 
-/** Named region `strike` of TotalPriceWidget - configured through the parent's `strike` prop. */
-export interface TotalPriceWidgetStrike2Props {
-    layout?: BoxLayout;
-}
-
-export const TotalPriceWidgetStrike2 = ({ layout }: TotalPriceWidgetStrike2Props) => {
-    return (
-        <Region
-            name="strike"
-            backgroundColor="#ff0000"
-            layout={{ position: 'absolute', left: 0, width: 10, top: 10, height: 2, ...layout }}
-        />
-    );
-};
-
 /** Row template `total_right` of TotalPriceWidget - pass real rows through its `items…` slot. */
 export interface TotalPriceWidgetTotalRightItemProps {
     captionText?: string;
     layout?: BoxLayout;
-    strike?: TotalPriceWidgetStrike2Props;
 }
 
-export const TotalPriceWidgetTotalRightItem = ({ captionText, layout, strike }: TotalPriceWidgetTotalRightItemProps) => {
+export const TotalPriceWidgetTotalRightItem = ({ captionText, layout }: TotalPriceWidgetTotalRightItemProps) => {
     return (
         <Region
             name="total_right"
@@ -137,7 +109,11 @@ export const TotalPriceWidgetTotalRightItem = ({ captionText, layout, strike }: 
                     textOptions={{ fill: '#999999' }}
                 />
             </Region>
-            <TotalPriceWidgetStrike2 {...strike} />
+            <Region
+                name="strike"
+                backgroundColor="#ff0000"
+                layout={{ position: 'absolute', left: 0, width: 10, top: 10, height: 2 }}
+            />
         </Region>
     );
 };

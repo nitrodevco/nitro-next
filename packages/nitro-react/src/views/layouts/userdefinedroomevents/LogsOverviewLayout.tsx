@@ -8,11 +8,10 @@ export interface LogsOverviewLayoutProps {
     footer?: LogsOverviewLayoutFooterProps;
     header?: LogsOverviewLayoutHeaderProps;
     layout?: BoxLayout;
-    middle?: LogsOverviewLayoutMiddleProps;
     onClose?: () => void;
 }
 
-export const LogsOverviewLayout = ({ footer, header, layout, middle, onClose }: LogsOverviewLayoutProps) => {
+export const LogsOverviewLayout = ({ footer, header, layout, onClose }: LogsOverviewLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -24,122 +23,35 @@ export const LogsOverviewLayout = ({ footer, header, layout, middle, onClose }: 
             layout={{ width: 700, height: 508, ...layout }}
         >
             <LogsOverviewLayoutHeader {...header} />
-            <LogsOverviewLayoutMiddle {...middle} />
+            <Region
+                name="middle"
+                layout={{ position: 'absolute', left: 1, right: 1, top: 97, bottom: 95 }}
+            >
+                <Region
+                    name="table_view"
+                    layout={{ position: 'absolute', left: 13, right: 13, top: 0, bottom: 0 }}
+                />
+            </Region>
             <LogsOverviewLayoutFooter {...footer} />
         </Frame>
     );
 };
 
-/** Named region `filter_cont` of LogsOverviewLayout - configured through the parent's `filterCont` prop. */
-export interface LogsOverviewLayoutFilterContProps {
+/** Named region `header` of LogsOverviewLayout - configured through the parent's `header` prop. */
+export interface LogsOverviewLayoutHeaderProps {
     captionFilterKey?: string;
-    layout?: BoxLayout;
-}
-
-export const LogsOverviewLayoutFilterCont = ({ captionFilterKey, layout }: LogsOverviewLayoutFilterContProps) => {
-    const t = useTranslation();
-    const [ filterInputValue, setFilterInputValue ] = useState('');
-
-    return (
-        <Region
-            name="filter_cont"
-            layout={{ position: 'absolute', left: 15, width: 314, top: 60, height: 25, ...layout }}
-        >
-            <Region
-                name="filter_key"
-                layout={{ position: 'absolute', left: 0, width: 38, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionFilterKey ?? t('wiredmenu.logs_overview.filter')} />
-            </Region>
-            <Border
-                variant="4"
-                layout={{ position: 'absolute', left: 45, width: 269, top: 0, height: 25 }}
-            >
-                <TextInput
-                    value={filterInputValue}
-                    onChange={setFilterInputValue}
-                    maxLength={400}
-                    layout={{ position: 'absolute', left: 6, width: 257, top: 4, height: 18 }}
-                />
-            </Border>
-        </Region>
-    );
-};
-
-/** Named region `log_source_cont` of LogsOverviewLayout - configured through the parent's `logSourceCont` prop. */
-export interface LogsOverviewLayoutLogSourceContProps {
+    captionInfoText?: string;
+    captionLogLevelKey?: string;
     captionLogSourceKey?: string;
     layout?: BoxLayout;
+    onAutoRefreshCbx?: () => void;
+    onLogLevelMenu?: () => void;
     onLogSourceMenu?: () => void;
 }
 
-export const LogsOverviewLayoutLogSourceCont = ({ captionLogSourceKey, layout, onLogSourceMenu }: LogsOverviewLayoutLogSourceContProps) => {
+export const LogsOverviewLayoutHeader = ({ captionFilterKey, captionInfoText, captionLogLevelKey, captionLogSourceKey, layout, onAutoRefreshCbx, onLogLevelMenu, onLogSourceMenu }: LogsOverviewLayoutHeaderProps) => {
     const t = useTranslation();
-
-    return (
-        <Region
-            name="log_source_cont"
-            layout={{ position: 'absolute', left: 349, width: 164, top: 60, height: 25, ...layout }}
-        >
-            <Region
-                name="log_source_key"
-                layout={{ position: 'absolute', left: 0, width: 68, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionLogSourceKey ?? t('wiredmenu.logs_overview.log_source')} />
-            </Region>
-            <Dropmenu
-                variant="3"
-                name="log_source_menu"
-                onPointerTap={onLogSourceMenu}
-                layout={{ position: 'absolute', left: 74, width: 90, top: 0, height: 25 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `log_level_cont` of LogsOverviewLayout - configured through the parent's `logLevelCont` prop. */
-export interface LogsOverviewLayoutLogLevelContProps {
-    captionLogLevelKey?: string;
-    layout?: BoxLayout;
-    onLogLevelMenu?: () => void;
-}
-
-export const LogsOverviewLayoutLogLevelCont = ({ captionLogLevelKey, layout, onLogLevelMenu }: LogsOverviewLayoutLogLevelContProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="log_level_cont"
-            layout={{ position: 'absolute', left: 534, width: 154, top: 60, height: 25, ...layout }}
-        >
-            <Region
-                name="log_level_key"
-                layout={{ position: 'absolute', left: 0, width: 56, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionLogLevelKey ?? t('wiredmenu.logs_overview.log_level')} />
-            </Region>
-            <Dropmenu
-                variant="3"
-                name="log_level_menu"
-                onPointerTap={onLogLevelMenu}
-                layout={{ position: 'absolute', left: 62, width: 90, top: 0, height: 25 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `header` of LogsOverviewLayout - configured through the parent's `header` prop. */
-export interface LogsOverviewLayoutHeaderProps {
-    captionInfoText?: string;
-    filterCont?: LogsOverviewLayoutFilterContProps;
-    layout?: BoxLayout;
-    logLevelCont?: LogsOverviewLayoutLogLevelContProps;
-    logSourceCont?: LogsOverviewLayoutLogSourceContProps;
-    onAutoRefreshCbx?: () => void;
-}
-
-export const LogsOverviewLayoutHeader = ({ captionInfoText, filterCont, layout, logLevelCont, logSourceCont, onAutoRefreshCbx }: LogsOverviewLayoutHeaderProps) => {
-    const t = useTranslation();
+    const [ filterInputValue, setFilterInputValue ] = useState('');
 
     return (
         <Region
@@ -160,7 +72,28 @@ export const LogsOverviewLayoutHeader = ({ captionInfoText, filterCont, layout, 
                     />
                 </Region>
             </Border>
-            <LogsOverviewLayoutFilterCont {...filterCont} />
+            <Region
+                name="filter_cont"
+                layout={{ position: 'absolute', left: 15, width: 314, top: 60, height: 25 }}
+            >
+                <Region
+                    name="filter_key"
+                    layout={{ position: 'absolute', left: 0, width: 38, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionFilterKey ?? t('wiredmenu.logs_overview.filter')} />
+                </Region>
+                <Border
+                    variant="4"
+                    layout={{ position: 'absolute', left: 45, width: 269, top: 0, height: 25 }}
+                >
+                    <TextInput
+                        value={filterInputValue}
+                        onChange={setFilterInputValue}
+                        maxLength={400}
+                        layout={{ position: 'absolute', left: 6, width: 257, top: 4, height: 18 }}
+                    />
+                </Border>
+            </Region>
             <CheckBox
                 variant="3"
                 name="auto_refresh_cbx"
@@ -170,39 +103,40 @@ export const LogsOverviewLayoutHeader = ({ captionInfoText, filterCont, layout, 
             <Region layout={{ position: 'absolute', left: 614, width: 90, top: 18, height: 29, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                 <ThemeText text={t('wiredmenu.logs_overview.auto_refresh')} />
             </Region>
-            <LogsOverviewLayoutLogSourceCont {...logSourceCont} />
-            <LogsOverviewLayoutLogLevelCont {...logLevelCont} />
-        </Region>
-    );
-};
-
-/** Named region `table_view` of LogsOverviewLayout - configured through the parent's `tableView` prop. */
-export interface LogsOverviewLayoutTableViewProps {
-    layout?: BoxLayout;
-}
-
-export const LogsOverviewLayoutTableView = ({ layout }: LogsOverviewLayoutTableViewProps) => {
-    return (
-        <Region
-            name="table_view"
-            layout={{ position: 'absolute', left: 13, right: 13, top: 0, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `middle` of LogsOverviewLayout - configured through the parent's `middle` prop. */
-export interface LogsOverviewLayoutMiddleProps {
-    layout?: BoxLayout;
-    tableView?: LogsOverviewLayoutTableViewProps;
-}
-
-export const LogsOverviewLayoutMiddle = ({ layout, tableView }: LogsOverviewLayoutMiddleProps) => {
-    return (
-        <Region
-            name="middle"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 97, bottom: 95, ...layout }}
-        >
-            <LogsOverviewLayoutTableView {...tableView} />
+            <Region
+                name="log_source_cont"
+                layout={{ position: 'absolute', left: 349, width: 164, top: 60, height: 25 }}
+            >
+                <Region
+                    name="log_source_key"
+                    layout={{ position: 'absolute', left: 0, width: 68, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionLogSourceKey ?? t('wiredmenu.logs_overview.log_source')} />
+                </Region>
+                <Dropmenu
+                    variant="3"
+                    name="log_source_menu"
+                    onPointerTap={onLogSourceMenu}
+                    layout={{ position: 'absolute', left: 74, width: 90, top: 0, height: 25 }}
+                />
+            </Region>
+            <Region
+                name="log_level_cont"
+                layout={{ position: 'absolute', left: 534, width: 154, top: 60, height: 25 }}
+            >
+                <Region
+                    name="log_level_key"
+                    layout={{ position: 'absolute', left: 0, width: 56, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionLogLevelKey ?? t('wiredmenu.logs_overview.log_level')} />
+                </Region>
+                <Dropmenu
+                    variant="3"
+                    name="log_level_menu"
+                    onPointerTap={onLogLevelMenu}
+                    layout={{ position: 'absolute', left: 62, width: 90, top: 0, height: 25 }}
+                />
+            </Region>
         </Region>
     );
 };
@@ -258,28 +192,6 @@ export const LogsOverviewLayoutPrevPageBtnItem = ({ layout, onPrevPageBtn }: Log
     );
 };
 
-/** Named region `footer_buttons_left` of LogsOverviewLayout - configured through the parent's `footerButtonsLeft` prop. */
-export interface LogsOverviewLayoutFooterButtonsLeftProps {
-    itemsFooterButtonsLeft?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const LogsOverviewLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout }: LogsOverviewLayoutFooterButtonsLeftProps) => {
-    return (
-        <Region
-            name="footer_buttons_left"
-            layout={{ position: 'absolute', left: 17, width: 113, top: 0, height: 30, flexDirection: 'row', gap: 13, ...layout }}
-        >
-            {itemsFooterButtonsLeft ?? (
-                <>
-                    <LogsOverviewLayoutFirstPageBtnItem />
-                    <LogsOverviewLayoutPrevPageBtnItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Row template `next_page_btn` of LogsOverviewLayout - pass real rows through its `items…` slot. */
 export interface LogsOverviewLayoutNextPageBtnItemProps {
     layout?: BoxLayout;
@@ -331,38 +243,16 @@ export const LogsOverviewLayoutLastPageBtnItem = ({ layout, onLastPageBtn }: Log
     );
 };
 
-/** Named region `footer_buttons_right` of LogsOverviewLayout - configured through the parent's `footerButtonsRight` prop. */
-export interface LogsOverviewLayoutFooterButtonsRightProps {
-    itemsFooterButtonsRight?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const LogsOverviewLayoutFooterButtonsRight = ({ itemsFooterButtonsRight, layout }: LogsOverviewLayoutFooterButtonsRightProps) => {
-    return (
-        <Region
-            name="footer_buttons_right"
-            layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10, ...layout }}
-        >
-            {itemsFooterButtonsRight ?? (
-                <>
-                    <LogsOverviewLayoutNextPageBtnItem />
-                    <LogsOverviewLayoutLastPageBtnItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Named region `pagination` of LogsOverviewLayout - configured through the parent's `pagination` prop. */
 export interface LogsOverviewLayoutPaginationProps {
     captionPaginaTextEnd?: string;
     captionPaginaTextStart?: string;
-    footerButtonsLeft?: LogsOverviewLayoutFooterButtonsLeftProps;
-    footerButtonsRight?: LogsOverviewLayoutFooterButtonsRightProps;
+    itemsFooterButtonsLeft?: ReactNode;
+    itemsFooterButtonsRight?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, footerButtonsLeft, footerButtonsRight, layout }: LogsOverviewLayoutPaginationProps) => {
+export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPaginaTextStart, itemsFooterButtonsLeft, itemsFooterButtonsRight, layout }: LogsOverviewLayoutPaginationProps) => {
     const [ paginaNumberInputValue, setPaginaNumberInputValue ] = useState('');
 
     return (
@@ -370,8 +260,28 @@ export const LogsOverviewLayoutPagination = ({ captionPaginaTextEnd, captionPagi
             name="pagination"
             layout={{ position: 'absolute', left: 0, right: 0, bottom: 14, height: 30, justifyContent: 'center', ...layout }}
         >
-            <LogsOverviewLayoutFooterButtonsLeft {...footerButtonsLeft} />
-            <LogsOverviewLayoutFooterButtonsRight {...footerButtonsRight} />
+            <Region
+                name="footer_buttons_left"
+                layout={{ position: 'absolute', left: 17, width: 113, top: 0, height: 30, flexDirection: 'row', gap: 13 }}
+            >
+                {itemsFooterButtonsLeft ?? (
+                    <>
+                        <LogsOverviewLayoutFirstPageBtnItem />
+                        <LogsOverviewLayoutPrevPageBtnItem />
+                    </>
+                )}
+            </Region>
+            <Region
+                name="footer_buttons_right"
+                layout={{ position: 'absolute', right: 17, width: 110, top: 0, height: 30, flexDirection: 'row', gap: 10 }}
+            >
+                {itemsFooterButtonsRight ?? (
+                    <>
+                        <LogsOverviewLayoutNextPageBtnItem />
+                        <LogsOverviewLayoutLastPageBtnItem />
+                    </>
+                )}
+            </Region>
             <Region layout={{ position: 'absolute', width: 210, top: 4, height: 25, flexDirection: 'row', gap: 2 }}>
                 <Region
                     name="pagina_text_start"

@@ -4,11 +4,9 @@ import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 export interface NotificationsBrowserLayoutProps {
     captionTitle?: string;
     layout?: BoxLayout;
-    notifications?: NotificationsBrowserLayoutNotificationsProps;
-    separator?: NotificationsBrowserLayoutSeparatorProps;
 }
 
-export const NotificationsBrowserLayout = ({ captionTitle, layout, notifications, separator }: NotificationsBrowserLayoutProps) => {
+export const NotificationsBrowserLayout = ({ captionTitle, layout }: NotificationsBrowserLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Border
@@ -25,38 +23,16 @@ export const NotificationsBrowserLayout = ({ captionTitle, layout, notifications
                         textOptions={{ fill: '#777215' }}
                     />
                 </Region>
-                <NotificationsBrowserLayoutSeparator {...separator} />
-                <NotificationsBrowserLayoutNotifications {...notifications} />
+                <Region
+                    name="separator"
+                    backgroundColor="#2f2f2f"
+                    layout={{ position: 'absolute', left: 5, width: 240, top: 26, height: 1 }}
+                />
+                <Region
+                    name="notifications"
+                    layout={{ position: 'absolute', left: 11, width: 230, top: 32, height: 290, flexDirection: 'column' }}
+                />
             </Border>
         </Region>
-    );
-};
-
-/** Named region `separator` of NotificationsBrowserLayout - configured through the parent's `separator` prop. */
-export interface NotificationsBrowserLayoutSeparatorProps {
-    layout?: BoxLayout;
-}
-
-export const NotificationsBrowserLayoutSeparator = ({ layout }: NotificationsBrowserLayoutSeparatorProps) => {
-    return (
-        <Region
-            name="separator"
-            backgroundColor="#2f2f2f"
-            layout={{ position: 'absolute', left: 5, width: 240, top: 26, height: 1, ...layout }}
-        />
-    );
-};
-
-/** Named region `notifications` of NotificationsBrowserLayout - configured through the parent's `notifications` prop. */
-export interface NotificationsBrowserLayoutNotificationsProps {
-    layout?: BoxLayout;
-}
-
-export const NotificationsBrowserLayoutNotifications = ({ layout }: NotificationsBrowserLayoutNotificationsProps) => {
-    return (
-        <Region
-            name="notifications"
-            layout={{ position: 'absolute', left: 11, width: 230, top: 32, height: 290, flexDirection: 'column', ...layout }}
-        />
     );
 };

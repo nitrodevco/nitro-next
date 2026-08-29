@@ -10,28 +10,29 @@ export interface VariableValueInfoBubbleLayoutProps {
 export const VariableValueInfoBubbleLayout = ({ captionValue, layout, visibleBorder }: VariableValueInfoBubbleLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 60, height: 39, ...layout }}>
-            <Bubble
-                variant="5"
-                name="border"
-                tintColor="#ade6ff"
-                visible={visibleBorder ?? true}
-                layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 39 }}
-            >
-                <ThemeImage
-                    src={undefined}
-                    layout={{ position: 'absolute', left: 2, width: 16, top: 4, height: 14 }}
-                />
-                <Region
-                    name="value"
-                    layout={{ position: 'absolute', left: 11, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            {(visibleBorder ?? true) && (
+                <Bubble
+                    variant="5"
+                    name="border"
+                    tintColor="#ade6ff"
+                    layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 39 }}
                 >
-                    <ThemeText
-                        text={captionValue ?? '505'}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff' }}
+                    <ThemeImage
+                        src={undefined}
+                        layout={{ position: 'absolute', left: 2, width: 16, top: 4, height: 14 }}
                     />
-                </Region>
-            </Bubble>
+                    <Region
+                        name="value"
+                        layout={{ position: 'absolute', left: 11, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionValue ?? '505'}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                </Bubble>
+            )}
         </Region>
     );
 };

@@ -3,20 +3,27 @@ import { BoxLayout, CloseButton, Region, Scaler, ThemeText } from '#base/theme';
 /** Generated from `2541_illumina_light_frame_xml` (layout "illumina_light_frame", 50x50) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IlluminaLightFrameLayoutProps {
     captionHeaderTitleText?: string;
-    contentArea?: IlluminaLightFrameLayoutContentAreaProps;
     layout?: BoxLayout;
     onHeaderButtonClose?: () => void;
-    titlebar?: IlluminaLightFrameLayoutTitlebarProps;
+    onTitlebar?: () => void;
 }
 
-export const IlluminaLightFrameLayout = ({ captionHeaderTitleText, contentArea, layout, onHeaderButtonClose, titlebar }: IlluminaLightFrameLayoutProps) => {
+export const IlluminaLightFrameLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClose, onTitlebar }: IlluminaLightFrameLayoutProps) => {
     return (
         <Region
             dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.35, blur: 20 }}
             layout={{ position: 'relative', width: 50, height: 50, ...layout }}
         >
-            <IlluminaLightFrameLayoutContentArea {...contentArea} />
-            <IlluminaLightFrameLayoutTitlebar {...titlebar} />
+            <Region
+                name="content_area"
+                layout={{ position: 'absolute', left: 1, right: 1, top: 30, bottom: 1 }}
+            />
+            <Region
+                name="titlebar"
+                onPointerTap={onTitlebar}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
+            />
             <Region
                 name="header_title_text"
                 layout={{ position: 'absolute', left: 8, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -37,36 +44,5 @@ export const IlluminaLightFrameLayout = ({ captionHeaderTitleText, contentArea, 
                 layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 10 }}
             />
         </Region>
-    );
-};
-
-/** Named region `content_area` of IlluminaLightFrameLayout - configured through the parent's `contentArea` prop. */
-export interface IlluminaLightFrameLayoutContentAreaProps {
-    layout?: BoxLayout;
-}
-
-export const IlluminaLightFrameLayoutContentArea = ({ layout }: IlluminaLightFrameLayoutContentAreaProps) => {
-    return (
-        <Region
-            name="content_area"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 30, bottom: 1, ...layout }}
-        />
-    );
-};
-
-/** Named region `titlebar` of IlluminaLightFrameLayout - configured through the parent's `titlebar` prop. */
-export interface IlluminaLightFrameLayoutTitlebarProps {
-    layout?: BoxLayout;
-    onTitlebar?: () => void;
-}
-
-export const IlluminaLightFrameLayoutTitlebar = ({ layout, onTitlebar }: IlluminaLightFrameLayoutTitlebarProps) => {
-    return (
-        <Region
-            name="titlebar"
-            onPointerTap={onTitlebar}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30, ...layout }}
-        />
     );
 };

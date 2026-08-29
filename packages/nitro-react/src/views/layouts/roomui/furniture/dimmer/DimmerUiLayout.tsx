@@ -65,95 +65,18 @@ export const DimmerUiLayout = ({ captionOffText, layout, onApplyButton, onClose,
     );
 };
 
-/** Named region `color_grid` of DimmerUiLayout - configured through the parent's `colorGrid` prop. */
-export interface DimmerUiLayoutColorGridProps {
-    layout?: BoxLayout;
-}
-
-export const DimmerUiLayoutColorGrid = ({ layout }: DimmerUiLayoutColorGridProps) => {
-    return (
-        <Region
-            name="color_grid"
-            layout={{ position: 'absolute', left: 0, width: 210, top: 0, height: 30, flexDirection: 'row', flexWrap: 'wrap', gap: 2, ...layout }}
-        />
-    );
-};
-
-/** Named region `color_grid_container` of DimmerUiLayout - configured through the parent's `colorGridContainer` prop. */
-export interface DimmerUiLayoutColorGridContainerProps {
-    colorGrid?: DimmerUiLayoutColorGridProps;
+/** Named region `tab_content` of DimmerUiLayout - configured through the parent's `tabContent` prop. */
+export interface DimmerUiLayoutTabContentProps {
+    captionDimmerInfo?: string;
+    captionTypeText?: string;
     layout?: BoxLayout;
     onColorGridContainer?: () => void;
-}
-
-export const DimmerUiLayoutColorGridContainer = ({ colorGrid, layout, onColorGridContainer }: DimmerUiLayoutColorGridContainerProps) => {
-    return (
-        <Region
-            name="color_grid_container"
-            onPointerTap={onColorGridContainer}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 2, width: 210, top: 1, height: 30, ...layout }}
-        >
-            <DimmerUiLayoutColorGrid {...colorGrid} />
-        </Region>
-    );
-};
-
-/** Named region `slider_movement_area` of DimmerUiLayout - configured through the parent's `sliderMovementArea` prop. */
-export interface DimmerUiLayoutSliderMovementAreaProps {
-    layout?: BoxLayout;
+    onTypeCheckbox?: () => void;
+    srcSliderBase?: string;
     srcSliderButton?: string;
 }
 
-export const DimmerUiLayoutSliderMovementArea = ({ layout, srcSliderButton }: DimmerUiLayoutSliderMovementAreaProps) => {
-    return (
-        <Region
-            name="slider_movement_area"
-            layout={{ position: 'absolute', left: 0, width: 206, top: 1, height: 17, ...layout }}
-        >
-            <ThemeImage
-                name="slider_button"
-                src={srcSliderButton}
-                layout={{ position: 'absolute', left: 0, width: 12, top: 7, height: 17 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `brightness_container` of DimmerUiLayout - configured through the parent's `brightnessContainer` prop. */
-export interface DimmerUiLayoutBrightnessContainerProps {
-    layout?: BoxLayout;
-    sliderMovementArea?: DimmerUiLayoutSliderMovementAreaProps;
-    srcSliderBase?: string;
-}
-
-export const DimmerUiLayoutBrightnessContainer = ({ layout, sliderMovementArea, srcSliderBase }: DimmerUiLayoutBrightnessContainerProps) => {
-    return (
-        <Region
-            name="brightness_container"
-            layout={{ position: 'absolute', left: 4, width: 206, top: 35, height: 18, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                name="slider_base"
-                src={srcSliderBase}
-                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 201, alignSelf: 'center', marginTop: -3, marginBottom: 3, height: 12 }}
-            />
-            <DimmerUiLayoutSliderMovementArea {...sliderMovementArea} />
-        </Region>
-    );
-};
-
-/** Named region `tab_content` of DimmerUiLayout - configured through the parent's `tabContent` prop. */
-export interface DimmerUiLayoutTabContentProps {
-    brightnessContainer?: DimmerUiLayoutBrightnessContainerProps;
-    captionDimmerInfo?: string;
-    captionTypeText?: string;
-    colorGridContainer?: DimmerUiLayoutColorGridContainerProps;
-    layout?: BoxLayout;
-    onTypeCheckbox?: () => void;
-}
-
-export const DimmerUiLayoutTabContent = ({ brightnessContainer, captionDimmerInfo, captionTypeText, colorGridContainer, layout, onTypeCheckbox }: DimmerUiLayoutTabContentProps) => {
+export const DimmerUiLayoutTabContent = ({ captionDimmerInfo, captionTypeText, layout, onColorGridContainer, onTypeCheckbox, srcSliderBase, srcSliderButton }: DimmerUiLayoutTabContentProps) => {
     const t = useTranslation();
 
     return (
@@ -161,8 +84,37 @@ export const DimmerUiLayoutTabContent = ({ brightnessContainer, captionDimmerInf
             name="tab_content"
             layout={{ position: 'absolute', left: 17, width: 228, top: 34, height: 118, ...layout }}
         >
-            <DimmerUiLayoutColorGridContainer {...colorGridContainer} />
-            <DimmerUiLayoutBrightnessContainer {...brightnessContainer} />
+            <Region
+                name="color_grid_container"
+                onPointerTap={onColorGridContainer}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 2, width: 210, top: 1, height: 30 }}
+            >
+                <Region
+                    name="color_grid"
+                    layout={{ position: 'absolute', left: 0, width: 210, top: 0, height: 30, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
+                />
+            </Region>
+            <Region
+                name="brightness_container"
+                layout={{ position: 'absolute', left: 4, width: 206, top: 35, height: 18, justifyContent: 'center' }}
+            >
+                <ThemeImage
+                    name="slider_base"
+                    src={srcSliderBase}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 201, alignSelf: 'center', marginTop: -3, marginBottom: 3, height: 12 }}
+                />
+                <Region
+                    name="slider_movement_area"
+                    layout={{ position: 'absolute', left: 0, width: 206, top: 1, height: 17 }}
+                >
+                    <ThemeImage
+                        name="slider_button"
+                        src={srcSliderButton}
+                        layout={{ position: 'absolute', left: 0, width: 12, top: 7, height: 17 }}
+                    />
+                </Region>
+            </Region>
             <CheckBox
                 variant="0"
                 name="type_checkbox"

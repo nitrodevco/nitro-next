@@ -5,12 +5,14 @@ import { Border, BoxLayout, Frame, Region, TextInput, ThemeText } from '#base/th
 
 /** Generated from `878_vimeo_viewer_xml` (layout "vimeo_viewer", 451x356) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface VimeoViewerLayoutProps {
+    captionNoVideosLabel?: string;
     layout?: BoxLayout;
     onClose?: () => void;
-    videoBackground?: VimeoViewerLayoutVideoBackgroundProps;
+    visibleVideoWrapper?: boolean;
 }
 
-export const VimeoViewerLayout = ({ layout, onClose, videoBackground }: VimeoViewerLayoutProps) => {
+export const VimeoViewerLayout = ({ captionNoVideosLabel, layout, onClose, visibleVideoWrapper }: VimeoViewerLayoutProps) => {
+    const t = useTranslation();
     const [ videoIdValue, setVideoIdValue ] = useState('');
 
     return (
@@ -22,7 +24,27 @@ export const VimeoViewerLayout = ({ layout, onClose, videoBackground }: VimeoVie
             onClose={onClose}
             layout={{ width: 451, height: 356, ...layout }}
         >
-            <VimeoViewerLayoutVideoBackground {...videoBackground} />
+            <Region
+                name="video_background"
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 7, right: 13, top: 6, bottom: 48, justifyContent: 'center' }}
+            >
+                <Region
+                    name="no_videos_label"
+                    layout={{ position: 'absolute', width: 187, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionNoVideosLabel ?? t('widget.furni.video_viewer.no_videos')}
+                        textStyle="text-style-il-regular-white"
+                    />
+                </Region>
+                {(visibleVideoWrapper ?? false) && (
+                    <Region
+                        name="video_wrapper"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                    />
+                )}
+            </Region>
             <Border
                 variant="3"
                 name="video_id_editor"
@@ -41,51 +63,5 @@ export const VimeoViewerLayout = ({ layout, onClose, videoBackground }: VimeoVie
                 />
             </Border>
         </Frame>
-    );
-};
-
-/** Named region `video_wrapper` of VimeoViewerLayout - configured through the parent's `videoWrapper` prop. */
-export interface VimeoViewerLayoutVideoWrapperProps {
-    layout?: BoxLayout;
-    visibleVideoWrapper?: boolean;
-}
-
-export const VimeoViewerLayoutVideoWrapper = ({ layout, visibleVideoWrapper }: VimeoViewerLayoutVideoWrapperProps) => {
-    return (
-        <Region
-            name="video_wrapper"
-            visible={visibleVideoWrapper ?? false}
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `video_background` of VimeoViewerLayout - configured through the parent's `videoBackground` prop. */
-export interface VimeoViewerLayoutVideoBackgroundProps {
-    captionNoVideosLabel?: string;
-    layout?: BoxLayout;
-    videoWrapper?: VimeoViewerLayoutVideoWrapperProps;
-}
-
-export const VimeoViewerLayoutVideoBackground = ({ captionNoVideosLabel, layout, videoWrapper }: VimeoViewerLayoutVideoBackgroundProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="video_background"
-            backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 7, right: 13, top: 6, bottom: 48, justifyContent: 'center', ...layout }}
-        >
-            <Region
-                name="no_videos_label"
-                layout={{ position: 'absolute', width: 187, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionNoVideosLabel ?? t('widget.furni.video_viewer.no_videos')}
-                    textStyle="text-style-il-regular-white"
-                />
-            </Region>
-            <VimeoViewerLayoutVideoWrapper {...videoWrapper} />
-        </Region>
     );
 };

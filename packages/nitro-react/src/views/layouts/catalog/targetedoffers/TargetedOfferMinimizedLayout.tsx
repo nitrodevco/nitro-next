@@ -4,14 +4,44 @@ import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `1564_targeted_offer_minimized_xml` (layout "targetedoffers_minimized", 192x51) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface TargetedOfferMinimizedLayoutProps {
+    itemsItemlist?: ReactNode;
     layout?: BoxLayout;
-    targetedoffersMinimized?: TargetedOfferMinimizedLayoutTargetedoffersMinimizedProps;
+    onTargetedoffersMinimized?: () => void;
+    srcBmpIcon?: string;
 }
 
-export const TargetedOfferMinimizedLayout = ({ layout, targetedoffersMinimized }: TargetedOfferMinimizedLayoutProps) => {
+export const TargetedOfferMinimizedLayout = ({ itemsItemlist, layout, onTargetedoffersMinimized, srcBmpIcon }: TargetedOfferMinimizedLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 192, height: 51, ...layout }}>
-            <TargetedOfferMinimizedLayoutTargetedoffersMinimized {...targetedoffersMinimized} />
+            <Region
+                name="targetedoffers_minimized"
+                onPointerTap={onTargetedoffersMinimized}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 51 }}
+            >
+                <Border
+                    variant="9"
+                    tintColor="#686661"
+                    layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 51 }}
+                >
+                    <Region
+                        name="itemlist"
+                        layout={{ position: 'absolute', left: 0, top: 6, flexDirection: 'column', gap: 2 }}
+                    >
+                        {itemsItemlist ?? (
+                            <>
+                                <TargetedOfferMinimizedLayoutTxtTitleItem />
+                                <TargetedOfferMinimizedLayoutTxtTimeLeftItem />
+                            </>
+                        )}
+                    </Region>
+                    <ThemeImage
+                        name="bmp_icon"
+                        src={srcBmpIcon}
+                        layout={{ position: 'absolute', left: 6, width: 40, top: 6, height: 40 }}
+                    />
+                </Border>
+            </Region>
         </Region>
     );
 };
@@ -53,60 +83,6 @@ export const TargetedOfferMinimizedLayoutTxtTimeLeftItem = ({ captionTxtTimeLeft
                 text={captionTxtTimeLeft ?? ''}
                 textStyle="text-style-il-regular-white"
             />
-        </Region>
-    );
-};
-
-/** Named region `itemlist` of TargetedOfferMinimizedLayout - configured through the parent's `itemlist` prop. */
-export interface TargetedOfferMinimizedLayoutItemlistProps {
-    itemsItemlist?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const TargetedOfferMinimizedLayoutItemlist = ({ itemsItemlist, layout }: TargetedOfferMinimizedLayoutItemlistProps) => {
-    return (
-        <Region
-            name="itemlist"
-            layout={{ position: 'absolute', left: 0, top: 6, flexDirection: 'column', gap: 2, ...layout }}
-        >
-            {itemsItemlist ?? (
-                <>
-                    <TargetedOfferMinimizedLayoutTxtTitleItem />
-                    <TargetedOfferMinimizedLayoutTxtTimeLeftItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
-/** Named region `targetedoffers_minimized` of TargetedOfferMinimizedLayout - configured through the parent's `targetedoffersMinimized` prop. */
-export interface TargetedOfferMinimizedLayoutTargetedoffersMinimizedProps {
-    itemlist?: TargetedOfferMinimizedLayoutItemlistProps;
-    layout?: BoxLayout;
-    onTargetedoffersMinimized?: () => void;
-    srcBmpIcon?: string;
-}
-
-export const TargetedOfferMinimizedLayoutTargetedoffersMinimized = ({ itemlist, layout, onTargetedoffersMinimized, srcBmpIcon }: TargetedOfferMinimizedLayoutTargetedoffersMinimizedProps) => {
-    return (
-        <Region
-            name="targetedoffers_minimized"
-            onPointerTap={onTargetedoffersMinimized}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 51, ...layout }}
-        >
-            <Border
-                variant="9"
-                tintColor="#686661"
-                layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 51 }}
-            >
-                <TargetedOfferMinimizedLayoutItemlist {...itemlist} />
-                <ThemeImage
-                    name="bmp_icon"
-                    src={srcBmpIcon}
-                    layout={{ position: 'absolute', left: 6, width: 40, top: 6, height: 40 }}
-                />
-            </Border>
         </Region>
     );
 };

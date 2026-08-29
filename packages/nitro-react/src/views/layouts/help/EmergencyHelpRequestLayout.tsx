@@ -6,18 +6,19 @@ import { Border, BoxLayout, Button, Frame, RadioButton, Region, ScrollArea, Them
 /** Generated from `2927_emergency_help_request_xml` (layout "emergency_help_request", 593x491) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface EmergencyHelpRequestLayoutProps {
     captionUrgentHelpLink?: string;
+    itemsRoomPanel?: ReactNode;
+    itemsTopicSelector?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
-    onLink?: () => void;
     onSubmitButton?: () => void;
     onSubmitButton2?: () => void;
     onUrgentHelpLink?: () => void;
-    roomPanel?: EmergencyHelpRequestLayoutRoomPanelProps;
-    topicSelector?: EmergencyHelpRequestLayoutTopicSelectorProps;
     userPanel?: EmergencyHelpRequestLayoutUserPanelProps;
+    visibleUrgentHelpLink?: boolean;
+    visibleUserPanel?: boolean;
 }
 
-export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, layout, onClose, onLink, onSubmitButton, onSubmitButton2, onUrgentHelpLink, roomPanel, topicSelector, userPanel }: EmergencyHelpRequestLayoutProps) => {
+export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, itemsRoomPanel, itemsTopicSelector, layout, onClose, onSubmitButton, onSubmitButton2, onUrgentHelpLink, userPanel, visibleUrgentHelpLink, visibleUserPanel }: EmergencyHelpRequestLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -49,10 +50,36 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, layout, onCl
                     options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${help.emergency.main.step.one.entry.instruction}', 'illumina_input:multiline': 'true', 'illumina_input:max_chars': '700' }}
                     layout={{ width: 279, height: 94, flexShrink: 0 }}
                 />
-                <EmergencyHelpRequestLayoutTopicSelector {...topicSelector} />
+                <Region
+                    name="topic_selector"
+                    layout={{ flexShrink: 0, flexDirection: 'column', gap: 5 }}
+                >
+                    {itemsTopicSelector ?? (
+                        <>
+                            <EmergencyHelpRequestLayout_121Item />
+                            <EmergencyHelpRequestLayout_122Item />
+                            <EmergencyHelpRequestLayout_124Item />
+                            <EmergencyHelpRequestLayout_123Item />
+                        </>
+                    )}
+                </Region>
             </Region>
-            <EmergencyHelpRequestLayoutUserPanel {...userPanel} />
-            <EmergencyHelpRequestLayoutRoomPanel {...roomPanel} />
+            {(visibleUserPanel ?? false) && (
+                <EmergencyHelpRequestLayoutUserPanel {...userPanel} />
+            )}
+            <Region
+                name="room_panel"
+                layout={{ position: 'absolute', left: 309, minWidth: 282, top: 8, minHeight: 378, flexDirection: 'column', gap: 8 }}
+            >
+                {itemsRoomPanel ?? (
+                    <>
+                        <EmergencyHelpRequestLayoutRoomPanelTitleItem />
+                        <EmergencyHelpRequestLayoutRoomReportInfoItem />
+                        <EmergencyHelpRequestLayoutRoomNameItem />
+                        <EmergencyHelpRequestLayoutRoomDescriptionItem />
+                    </>
+                )}
+            </Region>
             <Border
                 variant="104"
                 name="submit_box_wide"
@@ -65,17 +92,7 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, layout, onCl
                         textStyle="text-style-il-regular-white"
                     />
                 </Region>
-                <Region
-                    visible={false}
-                    layout={{ position: 'absolute', left: 17, width: 397, top: 28, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    onPointerTap={onLink}
-                    cursor="pointer"
-                >
-                    <ThemeText
-                        text={t('help.emergency.main.submit.explanation')}
-                        textStyle="text-style-il-regular-white"
-                    />
-                </Region>
+                {/* `link` is hidden and has no name to show it by */}
                 <Button
                     variant="100"
                     name="submit_button"
@@ -98,19 +115,20 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, layout, onCl
                         textOptions={{ wordWrap: true, wordWrapWidth: 250, align: 'center' }}
                     />
                 </Region>
-                <Region
-                    name="urgent_help_link"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 10, width: 250, top: 41, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    onPointerTap={onUrgentHelpLink}
-                    cursor="pointer"
-                >
-                    <ThemeText
-                        text={captionUrgentHelpLink ?? t('guide.help.request.emergency.help.link')}
-                        textStyle="text-style-il-regular-white"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                {(visibleUrgentHelpLink ?? false) && (
+                    <Region
+                        name="urgent_help_link"
+                        layout={{ position: 'absolute', left: 10, width: 250, top: 41, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        onPointerTap={onUrgentHelpLink}
+                        cursor="pointer"
+                    >
+                        <ThemeText
+                            text={captionUrgentHelpLink ?? t('guide.help.request.emergency.help.link')}
+                            textStyle="text-style-il-regular-white"
+                            textOptions={{ align: 'center' }}
+                        />
+                    </Region>
+                )}
                 <Button
                     variant="101"
                     name="submit_button"
@@ -215,30 +233,6 @@ export const EmergencyHelpRequestLayout_123Item = ({ layout, on_123 }: Emergency
     );
 };
 
-/** Named region `topic_selector` of EmergencyHelpRequestLayout - configured through the parent's `topicSelector` prop. */
-export interface EmergencyHelpRequestLayoutTopicSelectorProps {
-    itemsTopicSelector?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const EmergencyHelpRequestLayoutTopicSelector = ({ itemsTopicSelector, layout }: EmergencyHelpRequestLayoutTopicSelectorProps) => {
-    return (
-        <Region
-            name="topic_selector"
-            layout={{ flexShrink: 0, flexDirection: 'column', gap: 5, ...layout }}
-        >
-            {itemsTopicSelector ?? (
-                <>
-                    <EmergencyHelpRequestLayout_121Item />
-                    <EmergencyHelpRequestLayout_122Item />
-                    <EmergencyHelpRequestLayout_124Item />
-                    <EmergencyHelpRequestLayout_123Item />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Row template `user_list` of EmergencyHelpRequestLayout - pass real rows through its `items…` slot. */
 export interface EmergencyHelpRequestLayoutUserListItemProps {
     captionRoomName?: string;
@@ -296,34 +290,36 @@ export const EmergencyHelpRequestLayoutUserListItem = ({ captionRoomName, captio
 export interface EmergencyHelpRequestLayoutUserPanelProps {
     itemsUserPanel?: ReactNode;
     layout?: BoxLayout;
+    visibleUserPanel?: boolean;
 }
 
-export const EmergencyHelpRequestLayoutUserPanel = ({ itemsUserPanel, layout }: EmergencyHelpRequestLayoutUserPanelProps) => {
+export const EmergencyHelpRequestLayoutUserPanel = ({ itemsUserPanel, layout, visibleUserPanel }: EmergencyHelpRequestLayoutUserPanelProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="user_panel"
-            visible={false}
-            layout={{ position: 'absolute', left: 309, minWidth: 282, top: 8, minHeight: 378, flexDirection: 'column', gap: 8, ...layout }}
-        >
-            {itemsUserPanel ?? (
-                <EmergencyHelpRequestLayoutUserListItem />
-            )}
-            <Region layout={{ width: 237, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('help.emergency.main.step.two.title')}
-                    textStyle="text-style-il-heading-1"
-                    textOptions={{ fill: '#555555' }}
-                />
+        (visibleUserPanel ?? false) && (
+            <Region
+                name="user_panel"
+                layout={{ position: 'absolute', left: 309, minWidth: 282, top: 8, minHeight: 378, flexDirection: 'column', gap: 8, ...layout }}
+            >
+                {itemsUserPanel ?? (
+                    <EmergencyHelpRequestLayoutUserListItem />
+                )}
+                <Region layout={{ width: 237, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('help.emergency.main.step.two.title')}
+                        textStyle="text-style-il-heading-1"
+                        textOptions={{ fill: '#555555' }}
+                    />
+                </Region>
+                <Region layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('help.emergency.main.step.two.description')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
+                    />
+                </Region>
             </Region>
-            <Region layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('help.emergency.main.step.two.description')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
-                />
-            </Region>
-        </Region>
+        )
     );
 };
 
@@ -408,30 +404,6 @@ export const EmergencyHelpRequestLayoutRoomDescriptionItem = ({ captionRoomDescr
                 text={captionRoomDescription ?? 'room description'}
                 textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
             />
-        </Region>
-    );
-};
-
-/** Named region `room_panel` of EmergencyHelpRequestLayout - configured through the parent's `roomPanel` prop. */
-export interface EmergencyHelpRequestLayoutRoomPanelProps {
-    itemsRoomPanel?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const EmergencyHelpRequestLayoutRoomPanel = ({ itemsRoomPanel, layout }: EmergencyHelpRequestLayoutRoomPanelProps) => {
-    return (
-        <Region
-            name="room_panel"
-            layout={{ position: 'absolute', left: 309, minWidth: 282, top: 8, minHeight: 378, flexDirection: 'column', gap: 8, ...layout }}
-        >
-            {itemsRoomPanel ?? (
-                <>
-                    <EmergencyHelpRequestLayoutRoomPanelTitleItem />
-                    <EmergencyHelpRequestLayoutRoomReportInfoItem />
-                    <EmergencyHelpRequestLayoutRoomNameItem />
-                    <EmergencyHelpRequestLayoutRoomDescriptionItem />
-                </>
-            )}
         </Region>
     );
 };

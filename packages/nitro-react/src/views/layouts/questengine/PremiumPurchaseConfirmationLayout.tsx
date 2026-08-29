@@ -6,13 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `105_premium_purchase_confirmation_xml` (layout "reward_track_premium_purchase_confirmation", 390x352) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PremiumPurchaseConfirmationLayoutProps {
-    buttons?: PremiumPurchaseConfirmationLayoutButtonsProps;
     content?: PremiumPurchaseConfirmationLayoutContentProps;
+    itemsButtons?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const PremiumPurchaseConfirmationLayout = ({ buttons, content, layout, onClose }: PremiumPurchaseConfirmationLayoutProps) => {
+export const PremiumPurchaseConfirmationLayout = ({ content, itemsButtons, layout, onClose }: PremiumPurchaseConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -24,7 +24,17 @@ export const PremiumPurchaseConfirmationLayout = ({ buttons, content, layout, on
             layout={{ width: 390, height: 352, ...layout }}
         >
             <PremiumPurchaseConfirmationLayoutContent {...content} />
-            <PremiumPurchaseConfirmationLayoutButtons {...buttons} />
+            <Region
+                name="buttons"
+                layout={{ position: 'absolute', left: 12, right: 12, bottom: 36, minHeight: 27, flexDirection: 'row', gap: 146 }}
+            >
+                {itemsButtons ?? (
+                    <>
+                        <PremiumPurchaseConfirmationLayoutCancelButtonItem />
+                        <PremiumPurchaseConfirmationLayoutConfirmButtonItem />
+                    </>
+                )}
+            </Region>
         </Frame>
     );
 };
@@ -389,39 +399,14 @@ export const PremiumPurchaseConfirmationLayoutDiamondsIconItem = ({ layout }: Pr
     );
 };
 
-/** Named region `price` of PremiumPurchaseConfirmationLayout - configured through the parent's `price` prop. */
-export interface PremiumPurchaseConfirmationLayoutPriceProps {
-    itemsPrice?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const PremiumPurchaseConfirmationLayoutPrice = ({ itemsPrice, layout }: PremiumPurchaseConfirmationLayoutPriceProps) => {
-    return (
-        <Region
-            name="price"
-            layout={{ position: 'absolute', right: 15, width: 87, top: 8, height: 22, flexDirection: 'row', gap: 3, ...layout }}
-        >
-            {itemsPrice ?? (
-                <>
-                    <PremiumPurchaseConfirmationLayoutPriceCreditsItem />
-                    <PremiumPurchaseConfirmationLayoutCreditsIconItem />
-                    <PremiumPurchaseConfirmationLayoutPlusTxtItem />
-                    <PremiumPurchaseConfirmationLayoutPriceDiamondsItem />
-                    <PremiumPurchaseConfirmationLayoutDiamondsIconItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Named region `content` of PremiumPurchaseConfirmationLayout - configured through the parent's `content` prop. */
 export interface PremiumPurchaseConfirmationLayoutContentProps {
+    itemsPrice?: ReactNode;
     layout?: BoxLayout;
-    price?: PremiumPurchaseConfirmationLayoutPriceProps;
     topBody?: PremiumPurchaseConfirmationLayoutTopBodyProps;
 }
 
-export const PremiumPurchaseConfirmationLayoutContent = ({ layout, price, topBody }: PremiumPurchaseConfirmationLayoutContentProps) => {
+export const PremiumPurchaseConfirmationLayoutContent = ({ itemsPrice, layout, topBody }: PremiumPurchaseConfirmationLayoutContentProps) => {
     const t = useTranslation();
 
     return (
@@ -442,7 +427,20 @@ export const PremiumPurchaseConfirmationLayoutContent = ({ layout, price, topBod
                         textOptions={{ fill: '#57356b' }}
                     />
                 </Region>
-                <PremiumPurchaseConfirmationLayoutPrice {...price} />
+                <Region
+                    name="price"
+                    layout={{ position: 'absolute', right: 15, width: 87, top: 8, height: 22, flexDirection: 'row', gap: 3 }}
+                >
+                    {itemsPrice ?? (
+                        <>
+                            <PremiumPurchaseConfirmationLayoutPriceCreditsItem />
+                            <PremiumPurchaseConfirmationLayoutCreditsIconItem />
+                            <PremiumPurchaseConfirmationLayoutPlusTxtItem />
+                            <PremiumPurchaseConfirmationLayoutPriceDiamondsItem />
+                            <PremiumPurchaseConfirmationLayoutDiamondsIconItem />
+                        </>
+                    )}
+                </Region>
             </Border>
         </Region>
     );
@@ -490,27 +488,5 @@ export const PremiumPurchaseConfirmationLayoutConfirmButtonItem = ({ layout, onC
         >
             {t('reward_track.premium.confirm.buy')}
         </Button>
-    );
-};
-
-/** Named region `buttons` of PremiumPurchaseConfirmationLayout - configured through the parent's `buttons` prop. */
-export interface PremiumPurchaseConfirmationLayoutButtonsProps {
-    itemsButtons?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const PremiumPurchaseConfirmationLayoutButtons = ({ itemsButtons, layout }: PremiumPurchaseConfirmationLayoutButtonsProps) => {
-    return (
-        <Region
-            name="buttons"
-            layout={{ position: 'absolute', left: 12, right: 12, bottom: 36, minHeight: 27, flexDirection: 'row', gap: 146, ...layout }}
-        >
-            {itemsButtons ?? (
-                <>
-                    <PremiumPurchaseConfirmationLayoutCancelButtonItem />
-                    <PremiumPurchaseConfirmationLayoutConfirmButtonItem />
-                </>
-            )}
-        </Region>
     );
 };

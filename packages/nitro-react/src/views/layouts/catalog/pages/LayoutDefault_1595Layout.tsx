@@ -1,5 +1,4 @@
-import { useTranslation } from '#base/context';
-import { BoxLayout, Region, ThemeText } from '#base/theme';
+import { BoxLayout, Region } from '#base/theme';
 import { ActivityPointDisplayWidget, ActivityPointDisplayWidgetProps } from '#base/views/layouts/catalog/widgets/ActivityPointDisplayWidget';
 import { BuilderWidget, BuilderWidgetProps } from '#base/views/layouts/catalog/widgets/BuilderWidget';
 import { ColourGridWidget, ColourGridWidgetProps } from '#base/views/layouts/catalog/widgets/ColourGridWidget';
@@ -40,26 +39,16 @@ export interface LayoutDefault_1595LayoutContainerProps {
     specialInfoWidget?: SpecialInfoWidgetProps;
     spinnerWidget?: SpinnerWidgetProps;
     totalPriceWidget?: TotalPriceWidgetProps;
+    visibleColourGridWidget?: boolean;
 }
 
-export const LayoutDefault_1595LayoutContainer = ({ activityPointDisplayWidget, builderWidget, colourGridWidget, itemGridWidget, layout, limitedItemWidget, productViewWidget, purchaseWidget, soldLtdItemsWidget, specialInfoWidget, spinnerWidget, totalPriceWidget }: LayoutDefault_1595LayoutContainerProps) => {
-    const t = useTranslation();
-
+export const LayoutDefault_1595LayoutContainer = ({ activityPointDisplayWidget, builderWidget, colourGridWidget, itemGridWidget, layout, limitedItemWidget, productViewWidget, purchaseWidget, soldLtdItemsWidget, specialInfoWidget, spinnerWidget, totalPriceWidget, visibleColourGridWidget }: LayoutDefault_1595LayoutContainerProps) => {
     return (
         <Region
             name="container"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
-            <Region
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 122, top: 243, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={t('catalog_selectproduct')}
-                    textStyle="text-style-u-italic"
-                    textOptions={{ fill: '#666666' }}
-                />
-            </Region>
+            {/* `label` is hidden and has no name to show it by */}
             <ProductViewWidget
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
                 {...productViewWidget}
@@ -68,10 +57,12 @@ export const LayoutDefault_1595LayoutContainer = ({ activityPointDisplayWidget, 
                 layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 60 }}
                 {...itemGridWidget}
             />
-            <ColourGridWidget
-                layout={{ position: 'absolute', left: 182, width: 176, bottom: 60, height: 155 }}
-                {...colourGridWidget}
-            />
+            {(visibleColourGridWidget ?? false) && (
+                <ColourGridWidget
+                    layout={{ position: 'absolute', left: 182, width: 176, bottom: 60, height: 155 }}
+                    {...colourGridWidget}
+                />
+            )}
             <PurchaseWidget
                 layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
                 {...purchaseWidget}

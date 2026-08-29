@@ -31,10 +31,11 @@ export interface LayoutGuildForumLayoutCtlgDefault3x3Props {
     layout?: BoxLayout;
     purchaseWidget?: PurchaseWidgetProps;
     simplePriceWidget?: SimplePriceWidget2Props;
+    visibleCtlgSelectproduct?: boolean;
     warningWidget?: WarningWidgetProps;
 }
 
-export const LayoutGuildForumLayoutCtlgDefault3x3 = ({ captionCtlgDescription, captionCtlgSelectproduct, firstProductAutoSelectorWidget, guildBadgeViewWidget, guildForumSelectorWidget, layout, purchaseWidget, simplePriceWidget, warningWidget }: LayoutGuildForumLayoutCtlgDefault3x3Props) => {
+export const LayoutGuildForumLayoutCtlgDefault3x3 = ({ captionCtlgDescription, captionCtlgSelectproduct, firstProductAutoSelectorWidget, guildBadgeViewWidget, guildForumSelectorWidget, layout, purchaseWidget, simplePriceWidget, visibleCtlgSelectproduct, warningWidget }: LayoutGuildForumLayoutCtlgDefault3x3Props) => {
     const t = useTranslation();
 
     return (
@@ -46,17 +47,18 @@ export const LayoutGuildForumLayoutCtlgDefault3x3 = ({ captionCtlgDescription, c
                 layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
                 {...firstProductAutoSelectorWidget}
             />
-            <Region
-                name="ctlg_selectproduct"
-                visible={false}
-                layout={{ position: 'absolute', left: 5, width: 107, top: 134, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ fill: '#666666' }}
-                />
-            </Region>
+            {(visibleCtlgSelectproduct ?? false) && (
+                <Region
+                    name="ctlg_selectproduct"
+                    layout={{ position: 'absolute', left: 5, width: 107, top: 134, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
+                        textStyle="text-style-u-small"
+                        textOptions={{ fill: '#666666' }}
+                    />
+                </Region>
+            )}
             <Region
                 name="ctlg_description"
                 layout={{ position: 'absolute', left: 0, width: 260, top: 10, bottom: 124, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}

@@ -23,35 +23,6 @@ export const UseProductMenuLayout = ({ border, layout }: UseProductMenuLayoutPro
     );
 };
 
-/** Named region `profile_link` of UseProductMenuLayout - configured through the parent's `profileLink` prop. */
-export interface UseProductMenuLayoutProfileLinkProps {
-    captionName?: string;
-    layout?: BoxLayout;
-    onProfileLink?: () => void;
-}
-
-export const UseProductMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: UseProductMenuLayoutProfileLinkProps) => {
-    return (
-        <Region
-            name="profile_link"
-            onPointerTap={onProfileLink}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center', ...layout }}
-        >
-            <Region
-                name="name"
-                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionName ?? 'my_name_here'}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
 /** Row template `use_product` of UseProductMenuLayout - pass real rows through its `items…` slot. */
 export interface UseProductMenuLayoutUseProductItemProps {
     captionLabel?: string;
@@ -64,26 +35,28 @@ export const UseProductMenuLayoutUseProductItem = ({ captionLabel, layout, onBut
     const t = useTranslation();
 
     return (
-        <Region
-            name="use_product"
-            visible={visibleGroups?.action ?? true}
-            layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
-                visible={visibleGroups?.action ?? true}
-                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+        (visibleGroups?.action ?? true) && (
+            <Region
+                name="use_product"
+                layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionLabel ?? t('infostand.button.useproduct')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </ContainerButton>
-        </Region>
+                {(visibleGroups?.action ?? true) && (
+                    <ContainerButton
+                        variant="3"
+                        name="button"
+                        tintColor="#2d2a27"
+                        onPointerTap={onButton}
+                        layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.useproduct')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </ContainerButton>
+                )}
+            </Region>
+        )
     );
 };
 
@@ -99,26 +72,28 @@ export const UseProductMenuLayoutUseProductShampooItem = ({ captionLabel, layout
     const t = useTranslation();
 
     return (
-        <Region
-            name="use_product_shampoo"
-            visible={visibleGroups?.action ?? true}
-            layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
-                visible={visibleGroups?.action ?? true}
-                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+        (visibleGroups?.action ?? true) && (
+            <Region
+                name="use_product_shampoo"
+                layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionLabel ?? t('infostand.button.useproduct_shampoo')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </ContainerButton>
-        </Region>
+                {(visibleGroups?.action ?? true) && (
+                    <ContainerButton
+                        variant="3"
+                        name="button"
+                        tintColor="#2d2a27"
+                        onPointerTap={onButton}
+                        layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.useproduct_shampoo')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </ContainerButton>
+                )}
+            </Region>
+        )
     );
 };
 
@@ -134,26 +109,28 @@ export const UseProductMenuLayoutUseProductCustomPartItem = ({ captionLabel, lay
     const t = useTranslation();
 
     return (
-        <Region
-            name="use_product_custom_part"
-            visible={visibleGroups?.action ?? true}
-            layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
-                visible={visibleGroups?.action ?? true}
-                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+        (visibleGroups?.action ?? true) && (
+            <Region
+                name="use_product_custom_part"
+                layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionLabel ?? t('infostand.button.useproduct_custom_part')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </ContainerButton>
-        </Region>
+                {(visibleGroups?.action ?? true) && (
+                    <ContainerButton
+                        variant="3"
+                        name="button"
+                        tintColor="#2d2a27"
+                        onPointerTap={onButton}
+                        layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.useproduct_custom_part')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </ContainerButton>
+                )}
+            </Region>
+        )
     );
 };
 
@@ -169,26 +146,28 @@ export const UseProductMenuLayoutUseProductCustomPartShampooItem = ({ captionLab
     const t = useTranslation();
 
     return (
-        <Region
-            name="use_product_custom_part_shampoo"
-            visible={visibleGroups?.action ?? true}
-            layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
-                visible={visibleGroups?.action ?? true}
-                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+        (visibleGroups?.action ?? true) && (
+            <Region
+                name="use_product_custom_part_shampoo"
+                layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionLabel ?? t('infostand.button.useproduct_custom_part_shampoo')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </ContainerButton>
-        </Region>
+                {(visibleGroups?.action ?? true) && (
+                    <ContainerButton
+                        variant="3"
+                        name="button"
+                        tintColor="#2d2a27"
+                        onPointerTap={onButton}
+                        layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.useproduct_custom_part_shampoo')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </ContainerButton>
+                )}
+            </Region>
+        )
     );
 };
 
@@ -204,26 +183,28 @@ export const UseProductMenuLayoutUseProductSaddleItem = ({ captionLabel, layout,
     const t = useTranslation();
 
     return (
-        <Region
-            name="use_product_saddle"
-            visible={visibleGroups?.action ?? true}
-            layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
-                visible={visibleGroups?.action ?? true}
-                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+        (visibleGroups?.action ?? true) && (
+            <Region
+                name="use_product_saddle"
+                layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionLabel ?? t('infostand.button.useproduct_saddle')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </ContainerButton>
-        </Region>
+                {(visibleGroups?.action ?? true) && (
+                    <ContainerButton
+                        variant="3"
+                        name="button"
+                        tintColor="#2d2a27"
+                        onPointerTap={onButton}
+                        layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.useproduct_saddle')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </ContainerButton>
+                )}
+            </Region>
+        )
     );
 };
 
@@ -239,26 +220,28 @@ export const UseProductMenuLayoutReplaceProductSaddleItem = ({ captionLabel, lay
     const t = useTranslation();
 
     return (
-        <Region
-            name="replace_product_saddle"
-            visible={visibleGroups?.action ?? true}
-            layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
-                visible={visibleGroups?.action ?? true}
-                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+        (visibleGroups?.action ?? true) && (
+            <Region
+                name="replace_product_saddle"
+                layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionLabel ?? t('infostand.button.replaceproduct_saddle')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </ContainerButton>
-        </Region>
+                {(visibleGroups?.action ?? true) && (
+                    <ContainerButton
+                        variant="3"
+                        name="button"
+                        tintColor="#2d2a27"
+                        onPointerTap={onButton}
+                        layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.replaceproduct_saddle')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </ContainerButton>
+                )}
+            </Region>
+        )
     );
 };
 
@@ -274,26 +257,28 @@ export const UseProductMenuLayoutReviveMonsterplantItem = ({ captionLabel, layou
     const t = useTranslation();
 
     return (
-        <Region
-            name="revive_monsterplant"
-            visible={visibleGroups?.action ?? true}
-            layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
-                visible={visibleGroups?.action ?? true}
-                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+        (visibleGroups?.action ?? true) && (
+            <Region
+                name="revive_monsterplant"
+                layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionLabel ?? t('infostand.button.revive_monsterplant')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </ContainerButton>
-        </Region>
+                {(visibleGroups?.action ?? true) && (
+                    <ContainerButton
+                        variant="3"
+                        name="button"
+                        tintColor="#2d2a27"
+                        onPointerTap={onButton}
+                        layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.revive_monsterplant')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </ContainerButton>
+                )}
+            </Region>
+        )
     );
 };
 
@@ -309,26 +294,28 @@ export const UseProductMenuLayoutRebreedMonsterplantItem = ({ captionLabel, layo
     const t = useTranslation();
 
     return (
-        <Region
-            name="rebreed_monsterplant"
-            visible={visibleGroups?.action ?? true}
-            layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
-                visible={visibleGroups?.action ?? true}
-                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+        (visibleGroups?.action ?? true) && (
+            <Region
+                name="rebreed_monsterplant"
+                layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionLabel ?? t('infostand.button.rebreed_monsterplant')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </ContainerButton>
-        </Region>
+                {(visibleGroups?.action ?? true) && (
+                    <ContainerButton
+                        variant="3"
+                        name="button"
+                        tintColor="#2d2a27"
+                        onPointerTap={onButton}
+                        layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.rebreed_monsterplant')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </ContainerButton>
+                )}
+            </Region>
+        )
     );
 };
 
@@ -344,26 +331,28 @@ export const UseProductMenuLayoutFertilizeMonsterplantItem = ({ captionLabel, la
     const t = useTranslation();
 
     return (
-        <Region
-            name="fertilize_monsterplant"
-            visible={visibleGroups?.action ?? true}
-            layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ContainerButton
-                variant="3"
-                name="button"
-                tintColor="#2d2a27"
-                onPointerTap={onButton}
-                visible={visibleGroups?.action ?? true}
-                layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+        (visibleGroups?.action ?? true) && (
+            <Region
+                name="fertilize_monsterplant"
+                layout={{ width: 102, height: 26, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionLabel ?? t('infostand.button.fertilize_monsterplant')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </ContainerButton>
-        </Region>
+                {(visibleGroups?.action ?? true) && (
+                    <ContainerButton
+                        variant="3"
+                        name="button"
+                        tintColor="#2d2a27"
+                        onPointerTap={onButton}
+                        layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
+                    >
+                        <ThemeText
+                            text={captionLabel ?? t('infostand.button.fertilize_monsterplant')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </ContainerButton>
+                )}
+            </Region>
+        )
     );
 };
 
@@ -396,50 +385,55 @@ export const UseProductMenuLayoutButtons = ({ itemsButtons, layout }: UseProduct
     );
 };
 
-/** Named region `minimize` of UseProductMenuLayout - configured through the parent's `minimize` prop. */
-export interface UseProductMenuLayoutMinimizeProps {
-    layout?: BoxLayout;
-    onMinimize?: () => void;
-}
-
-export const UseProductMenuLayoutMinimize = ({ layout, onMinimize }: UseProductMenuLayoutMinimizeProps) => {
-    return (
-        <Region
-            name="minimize"
-            onPointerTap={onMinimize}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 2, width: 100, bottom: 3, height: 18, ...layout }}
-        >
-            <Icon
-                variant="7"
-                name="icon"
-                layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `border` of UseProductMenuLayout - configured through the parent's `border` prop. */
 export interface UseProductMenuLayoutBorderProps {
     buttons?: UseProductMenuLayoutButtonsProps;
+    captionName?: string;
     layout?: BoxLayout;
-    minimize?: UseProductMenuLayoutMinimizeProps;
-    profileLink?: UseProductMenuLayoutProfileLinkProps;
+    onMinimize?: () => void;
+    onProfileLink?: () => void;
 }
 
-export const UseProductMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: UseProductMenuLayoutBorderProps) => {
+export const UseProductMenuLayoutBorder = ({ buttons, captionName, layout, onMinimize, onProfileLink }: UseProductMenuLayoutBorderProps) => {
     return (
         <Region
             name="border"
             layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 292, justifyContent: 'center', ...layout }}
         >
-            <UseProductMenuLayoutProfileLink {...profileLink} />
+            <Region
+                name="profile_link"
+                onPointerTap={onProfileLink}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center' }}
+            >
+                <Region
+                    name="name"
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionName ?? 'my_name_here'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+            </Region>
             <Region
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
             />
             <UseProductMenuLayoutButtons {...buttons} />
-            <UseProductMenuLayoutMinimize {...minimize} />
+            <Region
+                name="minimize"
+                onPointerTap={onMinimize}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 2, width: 100, bottom: 3, height: 18 }}
+            >
+                <Icon
+                    variant="7"
+                    name="icon"
+                    layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
+                />
+            </Region>
         </Region>
     );
 };

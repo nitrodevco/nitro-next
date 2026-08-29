@@ -15,9 +15,11 @@ export interface BuilderAddonsWidgetAddonsListProps {
     layout?: BoxLayout;
     onItemBuy?: () => void;
     srcDiamondsIcon?: string;
+    visibleDiamondsIcon?: boolean;
+    visibleDiamondsPrice?: boolean;
 }
 
-export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionItemHeader, captionItemPrice, layout, onItemBuy, srcDiamondsIcon }: BuilderAddonsWidgetAddonsListProps) => {
+export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionItemHeader, captionItemPrice, layout, onItemBuy, srcDiamondsIcon, visibleDiamondsIcon, visibleDiamondsPrice }: BuilderAddonsWidgetAddonsListProps) => {
     const t = useTranslation();
 
     return (
@@ -68,22 +70,24 @@ export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionIte
                             src={layoutImage('pursearea_credits_icon.png')}
                             layout={{ width: 15, height: 15, flexShrink: 0 }}
                         />
-                        <Region
-                            name="diamonds_price"
-                            visible={false}
-                            layout={{ width: 28, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionDiamondsPrice ?? '999'}
-                                textStyle="text-style-u-headline-small"
+                        {(visibleDiamondsPrice ?? false) && (
+                            <Region
+                                name="diamonds_price"
+                                layout={{ width: 28, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText
+                                    text={captionDiamondsPrice ?? '999'}
+                                    textStyle="text-style-u-headline-small"
+                                />
+                            </Region>
+                        )}
+                        {(visibleDiamondsIcon ?? false) && (
+                            <ThemeImage
+                                name="diamonds_icon"
+                                src={srcDiamondsIcon ?? layoutImage('pursearea_diamond_icon.png')}
+                                layout={{ width: 15, height: 15, flexShrink: 0 }}
                             />
-                        </Region>
-                        <ThemeImage
-                            name="diamonds_icon"
-                            src={srcDiamondsIcon ?? layoutImage('pursearea_diamond_icon.png')}
-                            layout={{ width: 15, height: 15, flexShrink: 0 }}
-                            visible={false}
-                        />
+                        )}
                     </Region>
                     <ButtonThick
                         variant="5"

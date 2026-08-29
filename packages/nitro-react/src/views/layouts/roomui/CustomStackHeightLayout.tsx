@@ -12,11 +12,11 @@ export interface CustomStackHeightLayoutProps {
     onButtonMoveDown?: () => void;
     onButtonMoveUp?: () => void;
     onClose?: () => void;
+    onMultiwalkCheckbox?: () => void;
     onSliderButton?: () => void;
-    walktileContainer?: CustomStackHeightLayoutWalktileContainerProps;
 }
 
-export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAboveStack, onButtonFloorLevel, onButtonMoveDown, onButtonMoveUp, onClose, onSliderButton, walktileContainer }: CustomStackHeightLayoutProps) => {
+export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAboveStack, onButtonFloorLevel, onButtonMoveDown, onButtonMoveUp, onClose, onMultiwalkCheckbox, onSliderButton }: CustomStackHeightLayoutProps) => {
     const t = useTranslation();
     const [ inputHeightValue, setInputHeightValue ] = useState('');
 
@@ -74,7 +74,23 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
                     layout={{ position: 'absolute', left: 7, width: 45, top: 7, height: 20 }}
                 />
             </Border>
-            <CustomStackHeightLayoutWalktileContainer {...walktileContainer} />
+            <Region
+                name="walktile_container"
+                layout={{ position: 'absolute', left: 0, width: 318, top: 149, height: 24 }}
+            >
+                <CheckBox
+                    variant="102"
+                    name="multiwalk_checkbox"
+                    onPointerTap={onMultiwalkCheckbox}
+                    layout={{ position: 'absolute', left: 13, width: 17, top: 3, height: 16 }}
+                />
+                <Region layout={{ position: 'absolute', left: 31, width: 282, top: 2, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('widget.custom.multiwalk_mode.text')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 282 }}
+                    />
+                </Region>
+            </Region>
             <ContainerButton
                 variant="102"
                 name="button_move_down"
@@ -104,35 +120,5 @@ export const CustomStackHeightLayout = ({ captionHeightText, layout, onButtonAbo
                 />
             </ContainerButton>
         </Frame>
-    );
-};
-
-/** Named region `walktile_container` of CustomStackHeightLayout - configured through the parent's `walktileContainer` prop. */
-export interface CustomStackHeightLayoutWalktileContainerProps {
-    layout?: BoxLayout;
-    onMultiwalkCheckbox?: () => void;
-}
-
-export const CustomStackHeightLayoutWalktileContainer = ({ layout, onMultiwalkCheckbox }: CustomStackHeightLayoutWalktileContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="walktile_container"
-            layout={{ position: 'absolute', left: 0, width: 318, top: 149, height: 24, ...layout }}
-        >
-            <CheckBox
-                variant="102"
-                name="multiwalk_checkbox"
-                onPointerTap={onMultiwalkCheckbox}
-                layout={{ position: 'absolute', left: 13, width: 17, top: 3, height: 16 }}
-            />
-            <Region layout={{ position: 'absolute', left: 31, width: 282, top: 2, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('widget.custom.multiwalk_mode.text')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 282 }}
-                />
-            </Region>
-        </Region>
     );
 };

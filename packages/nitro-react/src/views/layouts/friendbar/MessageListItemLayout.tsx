@@ -15,168 +15,69 @@ export const MessageListItemLayout = ({ containerLayer, layout }: MessageListIte
     );
 };
 
-/** Named region `message_text_container` of MessageListItemLayout - configured through the parent's `messageTextContainer` prop. */
-export interface MessageListItemLayoutMessageTextContainerProps {
-    captionMessageText?: string;
-    layout?: BoxLayout;
-}
-
-export const MessageListItemLayoutMessageTextContainer = ({ captionMessageText, layout }: MessageListItemLayoutMessageTextContainerProps) => {
-    return (
-        <Region
-            name="message_text_container"
-            layout={{ position: 'absolute', left: 130, right: 0, top: 0, height: 100, minHeight: 100, ...layout }}
-        >
-            <Region
-                name="message_text"
-                layout={{ position: 'absolute', left: 6, right: 0, top: 2, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionMessageText ?? 'Message text'}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 534 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `avatar_image` of MessageListItemLayout - configured through the parent's `avatarImage` prop. */
-export interface MessageListItemLayoutAvatarImageProps {
+/** Named region `msg_container` of MessageListItemLayout - configured through the parent's `msgContainer` prop. */
+export interface MessageListItemLayoutMsgContainerProps {
     captionAuthor?: string;
     captionAuthorPostCount?: string;
+    captionMessageText?: string;
     layout?: BoxLayout;
     onAvatarImage?: () => void;
 }
 
-export const MessageListItemLayoutAvatarImage = ({ captionAuthor, captionAuthorPostCount, layout, onAvatarImage }: MessageListItemLayoutAvatarImageProps) => {
-    return (
-        <Region
-            name="avatar_image"
-            backgroundColor="#c7eff8"
-            onPointerTap={onAvatarImage}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 130, top: 0, bottom: 0, minHeight: 100, ...layout }}
-        >
-            <Region
-                name="author"
-                layout={{ position: 'absolute', left: 2, right: 2, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionAuthor ?? 'AuthorName'}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
-            <WidgetSlot
-                widgetType="avatar_image"
-                name="avatar_widget"
-                layout={{ position: 'absolute', left: -20, width: 90, top: 10, height: 130 }}
-            />
-            <WidgetSlot
-                widgetType="badge_image"
-                name="badge_widget"
-                options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                layout={{ position: 'absolute', left: 75, width: 40, top: 60, height: 40 }}
-            />
-            <Region
-                name="author_post_count"
-                layout={{ position: 'absolute', left: 2, width: 126, top: 23, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionAuthorPostCount ?? 'AuthorPosts'} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `msg_container` of MessageListItemLayout - configured through the parent's `msgContainer` prop. */
-export interface MessageListItemLayoutMsgContainerProps {
-    avatarImage?: MessageListItemLayoutAvatarImageProps;
-    layout?: BoxLayout;
-    messageTextContainer?: MessageListItemLayoutMessageTextContainerProps;
-}
-
-export const MessageListItemLayoutMsgContainer = ({ avatarImage, layout, messageTextContainer }: MessageListItemLayoutMsgContainerProps) => {
+export const MessageListItemLayoutMsgContainer = ({ captionAuthor, captionAuthorPostCount, captionMessageText, layout, onAvatarImage }: MessageListItemLayoutMsgContainerProps) => {
     return (
         <Region
             name="msg_container"
             layout={{ position: 'absolute', left: 0, right: 0, top: 26, bottom: 0, ...layout }}
         >
-            <MessageListItemLayoutMessageTextContainer {...messageTextContainer} />
-            <MessageListItemLayoutAvatarImage {...avatarImage} />
-        </Region>
-    );
-};
-
-/** Named region `delete_message` of MessageListItemLayout - configured through the parent's `deleteMessage` prop. */
-export interface MessageListItemLayoutDeleteMessageProps {
-    layout?: BoxLayout;
-    onDeleteMessage?: () => void;
-    srcIcon?: string;
-}
-
-export const MessageListItemLayoutDeleteMessage = ({ layout, onDeleteMessage, srcIcon }: MessageListItemLayoutDeleteMessageProps) => {
-    return (
-        <Region
-            name="delete_message"
-            backgroundColor="#de4537"
-            onPointerTap={onDeleteMessage}
-            cursor="pointer"
-            layout={{ width: 22, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ThemeImage
-                name="icon"
-                src={srcIcon ?? layoutImage('forum_forum_hide.png')}
-                layout={{ position: 'absolute', left: 4, width: 16, top: 5, height: 16 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `report_message` of MessageListItemLayout - configured through the parent's `reportMessage` prop. */
-export interface MessageListItemLayoutReportMessageProps {
-    layout?: BoxLayout;
-    onReportMessage?: () => void;
-    srcIcon?: string;
-}
-
-export const MessageListItemLayoutReportMessage = ({ layout, onReportMessage, srcIcon }: MessageListItemLayoutReportMessageProps) => {
-    return (
-        <Region
-            name="report_message"
-            backgroundColor="#ff9c65"
-            onPointerTap={onReportMessage}
-            cursor="pointer"
-            layout={{ width: 22, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ThemeImage
-                name="icon"
-                src={srcIcon ?? layoutImage('forum_forum_report.png')}
-                layout={{ position: 'absolute', left: 2, width: 17, top: 6, height: 15 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `reply_message` of MessageListItemLayout - configured through the parent's `replyMessage` prop. */
-export interface MessageListItemLayoutReplyMessageProps {
-    layout?: BoxLayout;
-    onReplyMessage?: () => void;
-    srcIcon?: string;
-}
-
-export const MessageListItemLayoutReplyMessage = ({ layout, onReplyMessage, srcIcon }: MessageListItemLayoutReplyMessageProps) => {
-    return (
-        <Region
-            name="reply_message"
-            backgroundColor="#45a3d9"
-            onPointerTap={onReplyMessage}
-            cursor="pointer"
-            layout={{ width: 22, height: 26, flexShrink: 0, ...layout }}
-        >
-            <ThemeImage
-                name="icon"
-                src={srcIcon ?? layoutImage('forum_reply.png')}
-                layout={{ position: 'absolute', left: 2, width: 17, top: 6, height: 15 }}
-            />
+            <Region
+                name="message_text_container"
+                layout={{ position: 'absolute', left: 130, right: 0, top: 0, height: 100, minHeight: 100 }}
+            >
+                <Region
+                    name="message_text"
+                    layout={{ position: 'absolute', left: 6, right: 0, top: 2, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionMessageText ?? 'Message text'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 534 }}
+                    />
+                </Region>
+            </Region>
+            <Region
+                name="avatar_image"
+                backgroundColor="#c7eff8"
+                onPointerTap={onAvatarImage}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 130, top: 0, bottom: 0, minHeight: 100 }}
+            >
+                <Region
+                    name="author"
+                    layout={{ position: 'absolute', left: 2, right: 2, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionAuthor ?? 'AuthorName'}
+                        textStyle="text-style-u-bold"
+                    />
+                </Region>
+                <WidgetSlot
+                    widgetType="avatar_image"
+                    name="avatar_widget"
+                    layout={{ position: 'absolute', left: -20, width: 90, top: 10, height: 130 }}
+                />
+                <WidgetSlot
+                    widgetType="badge_image"
+                    name="badge_widget"
+                    options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
+                    layout={{ position: 'absolute', left: 75, width: 40, top: 60, height: 40 }}
+                />
+                <Region
+                    name="author_post_count"
+                    layout={{ position: 'absolute', left: 2, width: 126, top: 23, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionAuthorPostCount ?? 'AuthorPosts'} />
+                </Region>
+            </Region>
         </Region>
     );
 };
@@ -185,13 +86,16 @@ export const MessageListItemLayoutReplyMessage = ({ layout, onReplyMessage, srcI
 export interface MessageListItemLayoutTextsContainerProps {
     captionDate?: string;
     captionReplyNum?: string;
-    deleteMessage?: MessageListItemLayoutDeleteMessageProps;
     layout?: BoxLayout;
-    replyMessage?: MessageListItemLayoutReplyMessageProps;
-    reportMessage?: MessageListItemLayoutReportMessageProps;
+    onDeleteMessage?: () => void;
+    onReplyMessage?: () => void;
+    onReportMessage?: () => void;
+    srcIcon?: string;
+    srcIcon2?: string;
+    srcIcon3?: string;
 }
 
-export const MessageListItemLayoutTextsContainer = ({ captionDate, captionReplyNum, deleteMessage, layout, replyMessage, reportMessage }: MessageListItemLayoutTextsContainerProps) => {
+export const MessageListItemLayoutTextsContainer = ({ captionDate, captionReplyNum, layout, onDeleteMessage, onReplyMessage, onReportMessage, srcIcon, srcIcon2, srcIcon3 }: MessageListItemLayoutTextsContainerProps) => {
     return (
         <Region
             name="texts_container"
@@ -217,9 +121,45 @@ export const MessageListItemLayoutTextsContainer = ({ captionDate, captionReplyN
                         textOptions={{ fill: '#eeeeee', align: 'right' }}
                     />
                 </Region>
-                <MessageListItemLayoutDeleteMessage {...deleteMessage} />
-                <MessageListItemLayoutReportMessage {...reportMessage} />
-                <MessageListItemLayoutReplyMessage {...replyMessage} />
+                <Region
+                    name="delete_message"
+                    backgroundColor="#de4537"
+                    onPointerTap={onDeleteMessage}
+                    cursor="pointer"
+                    layout={{ width: 22, height: 26, flexShrink: 0 }}
+                >
+                    <ThemeImage
+                        name="icon"
+                        src={srcIcon ?? layoutImage('forum_forum_hide.png')}
+                        layout={{ position: 'absolute', left: 4, width: 16, top: 5, height: 16 }}
+                    />
+                </Region>
+                <Region
+                    name="report_message"
+                    backgroundColor="#ff9c65"
+                    onPointerTap={onReportMessage}
+                    cursor="pointer"
+                    layout={{ width: 22, height: 26, flexShrink: 0 }}
+                >
+                    <ThemeImage
+                        name="icon"
+                        src={srcIcon2 ?? layoutImage('forum_forum_report.png')}
+                        layout={{ position: 'absolute', left: 2, width: 17, top: 6, height: 15 }}
+                    />
+                </Region>
+                <Region
+                    name="reply_message"
+                    backgroundColor="#45a3d9"
+                    onPointerTap={onReplyMessage}
+                    cursor="pointer"
+                    layout={{ width: 22, height: 26, flexShrink: 0 }}
+                >
+                    <ThemeImage
+                        name="icon"
+                        src={srcIcon3 ?? layoutImage('forum_reply.png')}
+                        layout={{ position: 'absolute', left: 2, width: 17, top: 6, height: 15 }}
+                    />
+                </Region>
             </Region>
         </Region>
     );

@@ -3,12 +3,11 @@ import { BoxLayout, Region, ScrollArea, ThemeText } from '#base/theme';
 /** Generated from `1775_dropmenu_3_xml` (layout "habbo_window_layout_dropmenu_3", 40x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface Dropmenu3LayoutProps {
     captionDROPLISTTITLETEXT?: string;
-    dROPLISTITEMLIST?: Dropmenu3LayoutDROPLISTITEMLISTProps;
-    dROPLISTREGION?: Dropmenu3LayoutDROPLISTREGIONProps;
     layout?: BoxLayout;
+    onDROPLISTREGION?: () => void;
 }
 
-export const Dropmenu3Layout = ({ captionDROPLISTTITLETEXT, dROPLISTITEMLIST, dROPLISTREGION, layout }: Dropmenu3LayoutProps) => {
+export const Dropmenu3Layout = ({ captionDROPLISTTITLETEXT, layout, onDROPLISTREGION }: Dropmenu3LayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 40, height: 20, ...layout }}>
             <Region
@@ -20,44 +19,21 @@ export const Dropmenu3Layout = ({ captionDROPLISTTITLETEXT, dROPLISTITEMLIST, dR
                     textStyle="text-style-u-regular"
                 />
             </Region>
-            <Dropmenu3LayoutDROPLISTITEMLIST {...dROPLISTITEMLIST} />
-            <Dropmenu3LayoutDROPLISTREGION {...dROPLISTREGION} />
-        </Region>
-    );
-};
-
-/** Named region `_DROPLIST_ITEMLIST` of Dropmenu3Layout - configured through the parent's `dROPLISTITEMLIST` prop. */
-export interface Dropmenu3LayoutDROPLISTITEMLISTProps {
-    layout?: BoxLayout;
-}
-
-export const Dropmenu3LayoutDROPLISTITEMLIST = ({ layout }: Dropmenu3LayoutDROPLISTITEMLISTProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 14, ...layout }}
-        >
+            <ScrollArea
+                orientation="vertical"
+                layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 14 }}
+            >
+                <Region
+                    name="_DROPLIST_ITEMLIST"
+                    layout={{ flexDirection: 'column', width: '100%' }}
+                />
+            </ScrollArea>
             <Region
-                name="_DROPLIST_ITEMLIST"
-                layout={{ flexDirection: 'column', width: '100%' }}
+                name="_DROPLIST_REGION"
+                onPointerTap={onDROPLISTREGION}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 6, right: 6, top: 2, height: 18 }}
             />
-        </ScrollArea>
-    );
-};
-
-/** Named region `_DROPLIST_REGION` of Dropmenu3Layout - configured through the parent's `dROPLISTREGION` prop. */
-export interface Dropmenu3LayoutDROPLISTREGIONProps {
-    layout?: BoxLayout;
-    onDROPLISTREGION?: () => void;
-}
-
-export const Dropmenu3LayoutDROPLISTREGION = ({ layout, onDROPLISTREGION }: Dropmenu3LayoutDROPLISTREGIONProps) => {
-    return (
-        <Region
-            name="_DROPLIST_REGION"
-            onPointerTap={onDROPLISTREGION}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 6, right: 6, top: 2, height: 18, ...layout }}
-        />
+        </Region>
     );
 };

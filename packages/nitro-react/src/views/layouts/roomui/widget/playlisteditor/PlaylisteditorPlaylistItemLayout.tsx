@@ -15,55 +15,20 @@ export const PlaylisteditorPlaylistItemLayout = ({ layout, playlistItem }: Playl
     );
 };
 
-/** Named region `action_buttons` of PlaylisteditorPlaylistItemLayout - configured through the parent's `actionButtons` prop. */
-export interface PlaylisteditorPlaylistItemLayoutActionButtonsProps {
-    layout?: BoxLayout;
-    onButtonRemoveFromPlaylist?: () => void;
-    srcButtonRemoveFromPlaylistImage?: string;
-}
-
-export const PlaylisteditorPlaylistItemLayoutActionButtons = ({ layout, onButtonRemoveFromPlaylist, srcButtonRemoveFromPlaylistImage }: PlaylisteditorPlaylistItemLayoutActionButtonsProps) => {
-    return (
-        <Region
-            name="action_buttons"
-            layout={{ position: 'absolute', left: 4, width: 44, top: 4, height: 44, ...layout }}
-        >
-            <Border
-                variant="2"
-                name="button_border"
-                tintColor="#658da0"
-                layout={{ position: 'absolute', left: 0, width: 44, top: 0, height: 44 }}
-            >
-                <ContainerButton
-                    variant="0"
-                    name="button_remove_from_playlist"
-                    onPointerTap={onButtonRemoveFromPlaylist}
-                    layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 36 }}
-                >
-                    <ThemeImage
-                        name="button_remove_from_playlist_image"
-                        src={srcButtonRemoveFromPlaylistImage}
-                        layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 3 }}
-                    />
-                </ContainerButton>
-            </Border>
-        </Region>
-    );
-};
-
 /** Named region `playlist_item` of PlaylisteditorPlaylistItemLayout - configured through the parent's `playlistItem` prop. */
 export interface PlaylisteditorPlaylistItemLayoutPlaylistItemProps {
-    actionButtons?: PlaylisteditorPlaylistItemLayoutActionButtonsProps;
     captionSongAuthorText?: string;
     captionSongTitleText?: string;
     layout?: BoxLayout;
+    onButtonRemoveFromPlaylist?: () => void;
     onPlaylistItem?: () => void;
     srcAuthorNameIconBitmap?: string;
+    srcButtonRemoveFromPlaylistImage?: string;
     srcDiskImage?: string;
     srcSongNameIconBitmap?: string;
 }
 
-export const PlaylisteditorPlaylistItemLayoutPlaylistItem = ({ actionButtons, captionSongAuthorText, captionSongTitleText, layout, onPlaylistItem, srcAuthorNameIconBitmap, srcDiskImage, srcSongNameIconBitmap }: PlaylisteditorPlaylistItemLayoutPlaylistItemProps) => {
+export const PlaylisteditorPlaylistItemLayoutPlaylistItem = ({ captionSongAuthorText, captionSongTitleText, layout, onButtonRemoveFromPlaylist, onPlaylistItem, srcAuthorNameIconBitmap, srcButtonRemoveFromPlaylistImage, srcDiskImage, srcSongNameIconBitmap }: PlaylisteditorPlaylistItemLayoutPlaylistItemProps) => {
     return (
         <Region
             name="playlist_item"
@@ -87,7 +52,30 @@ export const PlaylisteditorPlaylistItemLayoutPlaylistItem = ({ actionButtons, ca
                 src={srcDiskImage}
                 layout={{ position: 'absolute', left: 7, width: 38, top: 7, height: 38 }}
             />
-            <PlaylisteditorPlaylistItemLayoutActionButtons {...actionButtons} />
+            <Region
+                name="action_buttons"
+                layout={{ position: 'absolute', left: 4, width: 44, top: 4, height: 44 }}
+            >
+                <Border
+                    variant="2"
+                    name="button_border"
+                    tintColor="#658da0"
+                    layout={{ position: 'absolute', left: 0, width: 44, top: 0, height: 44 }}
+                >
+                    <ContainerButton
+                        variant="0"
+                        name="button_remove_from_playlist"
+                        onPointerTap={onButtonRemoveFromPlaylist}
+                        layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 36 }}
+                    >
+                        <ThemeImage
+                            name="button_remove_from_playlist_image"
+                            src={srcButtonRemoveFromPlaylistImage}
+                            layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 3 }}
+                        />
+                    </ContainerButton>
+                </Border>
+            </Region>
             <Region
                 name="song_title_text"
                 layout={{ position: 'absolute', left: 70, width: 4, top: 11, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

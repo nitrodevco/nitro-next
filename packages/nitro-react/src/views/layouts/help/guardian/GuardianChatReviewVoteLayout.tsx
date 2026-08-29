@@ -8,15 +8,15 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface GuardianChatReviewVoteLayoutProps {
     captionIncidentTime?: string;
     chatlog?: GuardianChatReviewVoteLayoutChatlogProps;
-    closeLink?: GuardianChatReviewVoteLayoutCloseLinkProps;
     layout?: BoxLayout;
     onClose?: () => void;
-    voteBad?: GuardianChatReviewVoteLayoutVoteBadProps;
-    voteOk?: GuardianChatReviewVoteLayoutVoteOkProps;
-    voteVeryBad?: GuardianChatReviewVoteLayoutVoteVeryBadProps;
+    onCloseLink?: () => void;
+    onVoteBad?: () => void;
+    onVoteOk?: () => void;
+    onVoteVeryBad?: () => void;
 }
 
-export const GuardianChatReviewVoteLayout = ({ captionIncidentTime, chatlog, closeLink, layout, onClose, voteBad, voteOk, voteVeryBad }: GuardianChatReviewVoteLayoutProps) => {
+export const GuardianChatReviewVoteLayout = ({ captionIncidentTime, chatlog, layout, onClose, onCloseLink, onVoteBad, onVoteOk, onVoteVeryBad }: GuardianChatReviewVoteLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -75,7 +75,18 @@ export const GuardianChatReviewVoteLayout = ({ captionIncidentTime, chatlog, clo
                                 textOptions={{ fill: '#444444' }}
                             />
                         </Region>
-                        <GuardianChatReviewVoteLayoutVoteOk {...voteOk} />
+                        <Region
+                            name="vote_ok"
+                            tooltip={t('guide.bully.request.guide.vote.ok.tooltip')}
+                            onPointerTap={onVoteOk}
+                            cursor="pointer"
+                            layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77, justifyContent: 'center' }}
+                        >
+                            <ThemeImage
+                                src={layoutImage('help_chat_review_vote_ok.png')}
+                                layout={{ position: 'absolute', width: 76, alignSelf: 'center', height: 77 }}
+                            />
+                        </Region>
                     </Region>
                     <Region layout={{ width: 76, height: 91, flexShrink: 0, justifyContent: 'center' }}>
                         <Region layout={{ position: 'absolute', width: 68, top: 75, height: 16, maxWidth: 68, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -84,7 +95,18 @@ export const GuardianChatReviewVoteLayout = ({ captionIncidentTime, chatlog, clo
                                 textOptions={{ fill: '#444444' }}
                             />
                         </Region>
-                        <GuardianChatReviewVoteLayoutVoteBad {...voteBad} />
+                        <Region
+                            name="vote_bad"
+                            tooltip={t('guide.bully.request.guide.vote.bad.tooltip')}
+                            onPointerTap={onVoteBad}
+                            cursor="pointer"
+                            layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77, justifyContent: 'center' }}
+                        >
+                            <ThemeImage
+                                src={layoutImage('help_chat_review_vote_bad.png')}
+                                layout={{ position: 'absolute', width: 76, alignSelf: 'center', height: 77 }}
+                            />
+                        </Region>
                     </Region>
                     <Region layout={{ width: 76, height: 91, flexShrink: 0, justifyContent: 'center' }}>
                         <Region layout={{ position: 'absolute', width: 68, top: 75, height: 16, maxWidth: 68, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -93,14 +115,38 @@ export const GuardianChatReviewVoteLayout = ({ captionIncidentTime, chatlog, clo
                                 textOptions={{ fill: '#444444' }}
                             />
                         </Region>
-                        <GuardianChatReviewVoteLayoutVoteVeryBad {...voteVeryBad} />
+                        <Region
+                            name="vote_very_bad"
+                            tooltip={t('guide.bully.request.guide.vote.very_bad.tooltip')}
+                            onPointerTap={onVoteVeryBad}
+                            cursor="pointer"
+                            layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77, justifyContent: 'center' }}
+                        >
+                            <ThemeImage
+                                src={layoutImage('help_chat_review_vote_very_bad.png')}
+                                layout={{ position: 'absolute', width: 76, alignSelf: 'center', height: 77 }}
+                            />
+                        </Region>
                     </Region>
                 </Region>
                 <ThemeImage
                     src={layoutImage('illumina_light_separator_horizontal.png')}
                     layout={{ position: 'absolute', left: 6, width: 265, top: 144, height: 3 }}
                 />
-                <GuardianChatReviewVoteLayoutCloseLink {...closeLink} />
+                <Region
+                    name="close_link"
+                    onPointerTap={onCloseLink}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, width: 277, top: 149, height: 24, justifyContent: 'center' }}
+                >
+                    <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 188, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('guide.bully.request.guide.vote.close')}
+                            textStyle="text-style-il-link-regular"
+                            textOptions={{ fill: '#222222' }}
+                        />
+                    </Region>
+                </Region>
             </Region>
         </Frame>
     );
@@ -206,107 +252,5 @@ export const GuardianChatReviewVoteLayoutChatlog = ({ itemsChatlog, layout }: Gu
                 )}
             </Region>
         </ScrollArea>
-    );
-};
-
-/** Named region `vote_ok` of GuardianChatReviewVoteLayout - configured through the parent's `voteOk` prop. */
-export interface GuardianChatReviewVoteLayoutVoteOkProps {
-    layout?: BoxLayout;
-    onVoteOk?: () => void;
-}
-
-export const GuardianChatReviewVoteLayoutVoteOk = ({ layout, onVoteOk }: GuardianChatReviewVoteLayoutVoteOkProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="vote_ok"
-            tooltip={t('guide.bully.request.guide.vote.ok.tooltip')}
-            onPointerTap={onVoteOk}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('help_chat_review_vote_ok.png')}
-                layout={{ position: 'absolute', width: 76, alignSelf: 'center', height: 77 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `vote_bad` of GuardianChatReviewVoteLayout - configured through the parent's `voteBad` prop. */
-export interface GuardianChatReviewVoteLayoutVoteBadProps {
-    layout?: BoxLayout;
-    onVoteBad?: () => void;
-}
-
-export const GuardianChatReviewVoteLayoutVoteBad = ({ layout, onVoteBad }: GuardianChatReviewVoteLayoutVoteBadProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="vote_bad"
-            tooltip={t('guide.bully.request.guide.vote.bad.tooltip')}
-            onPointerTap={onVoteBad}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('help_chat_review_vote_bad.png')}
-                layout={{ position: 'absolute', width: 76, alignSelf: 'center', height: 77 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `vote_very_bad` of GuardianChatReviewVoteLayout - configured through the parent's `voteVeryBad` prop. */
-export interface GuardianChatReviewVoteLayoutVoteVeryBadProps {
-    layout?: BoxLayout;
-    onVoteVeryBad?: () => void;
-}
-
-export const GuardianChatReviewVoteLayoutVoteVeryBad = ({ layout, onVoteVeryBad }: GuardianChatReviewVoteLayoutVoteVeryBadProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="vote_very_bad"
-            tooltip={t('guide.bully.request.guide.vote.very_bad.tooltip')}
-            onPointerTap={onVoteVeryBad}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 76, top: 0, height: 77, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('help_chat_review_vote_very_bad.png')}
-                layout={{ position: 'absolute', width: 76, alignSelf: 'center', height: 77 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `close_link` of GuardianChatReviewVoteLayout - configured through the parent's `closeLink` prop. */
-export interface GuardianChatReviewVoteLayoutCloseLinkProps {
-    layout?: BoxLayout;
-    onCloseLink?: () => void;
-}
-
-export const GuardianChatReviewVoteLayoutCloseLink = ({ layout, onCloseLink }: GuardianChatReviewVoteLayoutCloseLinkProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="close_link"
-            onPointerTap={onCloseLink}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 277, top: 149, height: 24, justifyContent: 'center', ...layout }}
-        >
-            <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 188, top: 2, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('guide.bully.request.guide.vote.close')}
-                    textStyle="text-style-il-link-regular"
-                    textOptions={{ fill: '#222222' }}
-                />
-            </Region>
-        </Region>
     );
 };

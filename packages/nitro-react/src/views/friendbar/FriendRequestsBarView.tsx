@@ -37,10 +37,10 @@ const FriendRequestRow = ({ request, onAccept, onDecline }: { request: IFriendRe
 
     return (
         <FriendRequestsTabLayoutRequestEntityItem
-            regionProfile={{ srcCanvas: faceUrl || undefined }}
-            regionProfileName={{ captionName: request.name }}
+            srcCanvas={faceUrl || undefined}
+            captionName={request.name}
             onButtonAccept={onAccept}
-            clickAreaDiscard={{ onClickAreaDiscard: onDecline }}
+            onClickAreaDiscard={onDecline}
         />
     );
 };
@@ -84,7 +84,7 @@ export const FriendRequestsBarView = () => {
             layout={{ position: 'absolute', left: 260, bottom: 346 }}
             captionBadgeCounter={String(list.length)}
             visibleBubble={isOpen}
-            tabContent={{ itemsTabContent: <FriendRequestsTabLayoutHeaderItem onHeader={() => setIsOpen(open => !open)} /> }}
+            itemsTabContent={<FriendRequestsTabLayoutHeaderItem onHeader={() => setIsOpen(open => !open)} />}
             requestEntityList={{
                 itemsRequestEntityList: list.map(request => (
                     <FriendRequestRow
@@ -97,7 +97,7 @@ export const FriendRequestsBarView = () => {
             }}
             onButtonClose={() => setIsOpen(false)}
             onButtonAcceptAll={() => accept(allIds)}
-            clickAreaDiscardAll={{ onClickAreaDiscardAll: () => decline(allIds, true) }}
+            onClickAreaDiscardAll={() => decline(allIds, true)}
         />
     );
 };

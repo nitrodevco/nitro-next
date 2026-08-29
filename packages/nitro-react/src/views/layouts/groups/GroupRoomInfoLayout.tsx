@@ -4,14 +4,14 @@ import { BoxLayout, ButtonThick, Region, ThemeImage, ThemeText, WidgetSlot } fro
 /** Generated from `1184_group_room_info_xml` (layout "Group room info", 195x119) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GroupRoomInfoLayoutProps {
     contentCont?: GroupRoomInfoLayoutContentContProps;
-    infoRegion?: GroupRoomInfoLayoutInfoRegionProps;
     layout?: BoxLayout;
+    onInfoRegion?: () => void;
+    onTitleRegion?: () => void;
     srcBgContracted?: string;
     srcBgExpanded?: string;
-    titleRegion?: GroupRoomInfoLayoutTitleRegionProps;
 }
 
-export const GroupRoomInfoLayout = ({ contentCont, infoRegion, layout, srcBgContracted, srcBgExpanded, titleRegion }: GroupRoomInfoLayoutProps) => {
+export const GroupRoomInfoLayout = ({ contentCont, layout, onInfoRegion, onTitleRegion, srcBgContracted, srcBgExpanded }: GroupRoomInfoLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 195, height: 119, ...layout }}>
             <Region layout={{ position: 'absolute', right: 0, width: 195, top: 0, height: 119 }}>
@@ -25,45 +25,21 @@ export const GroupRoomInfoLayout = ({ contentCont, infoRegion, layout, srcBgCont
                     src={srcBgContracted ?? '${image.library.url}Events/event_bg_contracted.png'}
                     layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 25 }}
                 />
-                <GroupRoomInfoLayoutTitleRegion {...titleRegion} />
-                <GroupRoomInfoLayoutInfoRegion {...infoRegion} />
+                <Region
+                    name="title_region"
+                    onPointerTap={onTitleRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25 }}
+                />
+                <Region
+                    name="info_region"
+                    onPointerTap={onInfoRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 28, height: 47 }}
+                />
                 <GroupRoomInfoLayoutContentCont {...contentCont} />
             </Region>
         </Region>
-    );
-};
-
-/** Named region `title_region` of GroupRoomInfoLayout - configured through the parent's `titleRegion` prop. */
-export interface GroupRoomInfoLayoutTitleRegionProps {
-    layout?: BoxLayout;
-    onTitleRegion?: () => void;
-}
-
-export const GroupRoomInfoLayoutTitleRegion = ({ layout, onTitleRegion }: GroupRoomInfoLayoutTitleRegionProps) => {
-    return (
-        <Region
-            name="title_region"
-            onPointerTap={onTitleRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 25, ...layout }}
-        />
-    );
-};
-
-/** Named region `info_region` of GroupRoomInfoLayout - configured through the parent's `infoRegion` prop. */
-export interface GroupRoomInfoLayoutInfoRegionProps {
-    layout?: BoxLayout;
-    onInfoRegion?: () => void;
-}
-
-export const GroupRoomInfoLayoutInfoRegion = ({ layout, onInfoRegion }: GroupRoomInfoLayoutInfoRegionProps) => {
-    return (
-        <Region
-            name="info_region"
-            onPointerTap={onInfoRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 28, height: 47, ...layout }}
-        />
     );
 };
 

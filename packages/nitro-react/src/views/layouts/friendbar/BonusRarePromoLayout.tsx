@@ -4,13 +4,17 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `39_bonus_rare_promo_xml` (layout "bonus_rare_promo", 602x75) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface BonusRarePromoLayoutProps {
-    buttonContainer?: BonusRarePromoLayoutButtonContainerProps;
     layout?: BoxLayout;
     midContainer?: BonusRarePromoLayoutMidContainerProps;
-    teaserImageContainer?: BonusRarePromoLayoutTeaserImageContainerProps;
+    onBuyButton?: () => void;
+    srcPreview?: string;
+    srcPromoImage?: string;
+    visiblePreview?: boolean;
 }
 
-export const BonusRarePromoLayout = ({ buttonContainer, layout, midContainer, teaserImageContainer }: BonusRarePromoLayoutProps) => {
+export const BonusRarePromoLayout = ({ layout, midContainer, onBuyButton, srcPreview, srcPromoImage, visiblePreview }: BonusRarePromoLayoutProps) => {
+    const t = useTranslation();
+
     return (
         <Region layout={{ position: 'relative', width: 602, height: 75, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 602, top: 0, height: 75 }}>
@@ -20,9 +24,37 @@ export const BonusRarePromoLayout = ({ buttonContainer, layout, midContainer, te
                     layout={{ position: 'absolute', left: 1, width: 600, top: 5, height: 63 }}
                 >
                     <Region layout={{ position: 'absolute', left: 0, width: 600, top: 0, height: 63, flexDirection: 'row' }}>
-                        <BonusRarePromoLayoutTeaserImageContainer {...teaserImageContainer} />
+                        <Region
+                            name="teaser_image_container"
+                            layout={{ width: 96, height: 63, flexShrink: 0 }}
+                        >
+                            {(visiblePreview ?? false) && (
+                                <ThemeImage
+                                    name="preview"
+                                    src={srcPreview}
+                                    layout={{ position: 'absolute', left: 27, width: 44, top: 12, height: 38 }}
+                                />
+                            )}
+                            <ThemeImage
+                                name="promo_image"
+                                src={srcPromoImage}
+                                layout={{ position: 'absolute', left: 8, width: 80, top: -9, height: 80 }}
+                            />
+                        </Region>
                         <BonusRarePromoLayoutMidContainer {...midContainer} />
-                        <BonusRarePromoLayoutButtonContainer {...buttonContainer} />
+                        <Region
+                            name="button_container"
+                            layout={{ width: 200, height: 56, flexShrink: 0 }}
+                        >
+                            <Button
+                                variant="100"
+                                name="buy_button"
+                                onPointerTap={onBuyButton}
+                                layout={{ position: 'absolute', right: 0, width: 200, top: 5, height: 51, maxWidth: 200 }}
+                            >
+                                {t('landing.view.bonus.rare.open.credits.page')}
+                            </Button>
+                        </Region>
                     </Region>
                 </Border>
             </Region>
@@ -30,54 +62,8 @@ export const BonusRarePromoLayout = ({ buttonContainer, layout, midContainer, te
     );
 };
 
-/** Named region `teaser_image_container` of BonusRarePromoLayout - configured through the parent's `teaserImageContainer` prop. */
-export interface BonusRarePromoLayoutTeaserImageContainerProps {
-    layout?: BoxLayout;
-    srcPreview?: string;
-    srcPromoImage?: string;
-}
-
-export const BonusRarePromoLayoutTeaserImageContainer = ({ layout, srcPreview, srcPromoImage }: BonusRarePromoLayoutTeaserImageContainerProps) => {
-    return (
-        <Region
-            name="teaser_image_container"
-            layout={{ width: 96, height: 63, flexShrink: 0, ...layout }}
-        >
-            <ThemeImage
-                name="preview"
-                src={srcPreview}
-                layout={{ position: 'absolute', left: 27, width: 44, top: 12, height: 38 }}
-                visible={false}
-            />
-            <ThemeImage
-                name="promo_image"
-                src={srcPromoImage}
-                layout={{ position: 'absolute', left: 8, width: 80, top: -9, height: 80 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `bar_a_bkg` of BonusRarePromoLayout - configured through the parent's `barABkg` prop. */
-export interface BonusRarePromoLayoutBarABkgProps {
-    layout?: BoxLayout;
-    visibleBarABkg?: boolean;
-}
-
-export const BonusRarePromoLayoutBarABkg = ({ layout, visibleBarABkg }: BonusRarePromoLayoutBarABkgProps) => {
-    return (
-        <Region
-            name="bar_a_bkg"
-            visible={visibleBarABkg ?? false}
-            backgroundColor="#ffff00"
-            layout={{ position: 'absolute', left: 4, right: 6, top: 3, height: 17, ...layout }}
-        />
-    );
-};
-
 /** Named region `progress_bar_cont` of BonusRarePromoLayout - configured through the parent's `progressBarCont` prop. */
 export interface BonusRarePromoLayoutProgressBarContProps {
-    barABkg?: BonusRarePromoLayoutBarABkgProps;
     captionStatus?: string;
     layout?: BoxLayout;
     srcBarAC?: string;
@@ -85,9 +71,10 @@ export interface BonusRarePromoLayoutProgressBarContProps {
     srcBarC?: string;
     srcBarL?: string;
     srcBarR?: string;
+    visibleBarABkg?: boolean;
 }
 
-export const BonusRarePromoLayoutProgressBarCont = ({ barABkg, captionStatus, layout, srcBarAC, srcBarAR, srcBarC, srcBarL, srcBarR }: BonusRarePromoLayoutProgressBarContProps) => {
+export const BonusRarePromoLayoutProgressBarCont = ({ captionStatus, layout, srcBarAC, srcBarAR, srcBarC, srcBarL, srcBarR, visibleBarABkg }: BonusRarePromoLayoutProgressBarContProps) => {
     const t = useTranslation();
 
     return (
@@ -110,7 +97,13 @@ export const BonusRarePromoLayoutProgressBarCont = ({ barABkg, captionStatus, la
                 src={srcBarR ?? layoutImage('achievement_ach_progressbar3.png')}
                 layout={{ position: 'absolute', right: 3, width: 4, top: 0, height: 23 }}
             />
-            <BonusRarePromoLayoutBarABkg {...barABkg} />
+            {(visibleBarABkg ?? false) && (
+                <Region
+                    name="bar_a_bkg"
+                    backgroundColor="#ffff00"
+                    layout={{ position: 'absolute', left: 4, right: 6, top: 3, height: 17 }}
+                />
+            )}
             <ThemeImage
                 name="bar_a_c"
                 src={srcBarAC ?? layoutImage('achievement_ach_progressbar4.png')}
@@ -161,32 +154,6 @@ export const BonusRarePromoLayoutMidContainer = ({ captionHeader, colorableTextC
                 />
             </Region>
             <BonusRarePromoLayoutProgressBarCont {...progressBarCont} />
-        </Region>
-    );
-};
-
-/** Named region `button_container` of BonusRarePromoLayout - configured through the parent's `buttonContainer` prop. */
-export interface BonusRarePromoLayoutButtonContainerProps {
-    layout?: BoxLayout;
-    onBuyButton?: () => void;
-}
-
-export const BonusRarePromoLayoutButtonContainer = ({ layout, onBuyButton }: BonusRarePromoLayoutButtonContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="button_container"
-            layout={{ width: 200, height: 56, flexShrink: 0, ...layout }}
-        >
-            <Button
-                variant="100"
-                name="buy_button"
-                onPointerTap={onBuyButton}
-                layout={{ position: 'absolute', right: 0, width: 200, top: 5, height: 51, maxWidth: 200 }}
-            >
-                {t('landing.view.bonus.rare.open.credits.page')}
-            </Button>
         </Region>
     );
 };

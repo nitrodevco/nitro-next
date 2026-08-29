@@ -4,22 +4,47 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `420_snowwar_ending_xml` (layout "snowwar_ending", 882x510) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface SnowwarEndingLayoutProps {
-    buttonsContainer?: SnowwarEndingLayoutButtonsContainerProps;
-    headerContainer?: SnowwarEndingLayoutHeaderContainerProps;
+    captionArenaName?: string;
+    captionEndingInformation?: string;
+    captionEndingInformationStroke?: string;
+    captionLeaveLink?: string;
+    captionLoadingText?: string;
+    captionLoadingTextStroke?: string;
+    captionMostHitsLabel?: string;
+    captionMostHitsLabelStroke?: string;
+    captionMostKillsLabel?: string;
+    captionMostKillsLabelStroke?: string;
+    captionPlayerName?: string;
+    captionPlayerName2?: string;
+    captionTeam1Score?: string;
+    captionTeam1ScoreStroke?: string;
+    captionTeam2Score?: string;
+    captionTeam2ScoreStroke?: string;
     layout?: BoxLayout;
-    leaveLinkRegion?: SnowwarEndingLayoutLeaveLinkRegionProps;
-    loadingContainer?: SnowwarEndingLayoutLoadingContainerProps;
-    mostHitsContainer?: SnowwarEndingLayoutMostHitsContainerProps;
-    mostKillsContainer?: SnowwarEndingLayoutMostKillsContainerProps;
+    onButtonBuyGames?: () => void;
+    onButtonPlayAgain?: () => void;
+    onButtonRematch?: () => void;
+    onLeaveLinkRegion?: () => void;
+    srcArenaPreview?: string;
+    srcBackgroundImage?: string;
+    srcBackgroundImage2?: string;
+    srcMainLoadingIcon?: string;
+    srcPlayerImage?: string;
+    srcPlayerImage2?: string;
     srcSnowwarLogo?: string;
+    srcTeam1ScoreBackground?: string;
+    srcTeam2ScoreBackground?: string;
     statusContainer?: SnowwarEndingLayoutStatusContainerProps;
-    team1PlayersList?: SnowwarEndingLayoutTeam1PlayersListProps;
-    team1ScoreContainer?: SnowwarEndingLayoutTeam1ScoreContainerProps;
-    team2PlayersList?: SnowwarEndingLayoutTeam2PlayersListProps;
-    team2ScoreContainer?: SnowwarEndingLayoutTeam2ScoreContainerProps;
+    strokeTextColor?: string;
+    visibleButtonBuyGames?: boolean;
+    visibleButtonPlayAgain?: boolean;
+    visibleButtonsContainer?: boolean;
+    visibleLoadingContainer?: boolean;
 }
 
-export const SnowwarEndingLayout = ({ buttonsContainer, headerContainer, layout, leaveLinkRegion, loadingContainer, mostHitsContainer, mostKillsContainer, srcSnowwarLogo, statusContainer, team1PlayersList, team1ScoreContainer, team2PlayersList, team2ScoreContainer }: SnowwarEndingLayoutProps) => {
+export const SnowwarEndingLayout = ({ captionArenaName, captionEndingInformation, captionEndingInformationStroke, captionLeaveLink, captionLoadingText, captionLoadingTextStroke, captionMostHitsLabel, captionMostHitsLabelStroke, captionMostKillsLabel, captionMostKillsLabelStroke, captionPlayerName, captionPlayerName2, captionTeam1Score, captionTeam1ScoreStroke, captionTeam2Score, captionTeam2ScoreStroke, layout, onButtonBuyGames, onButtonPlayAgain, onButtonRematch, onLeaveLinkRegion, srcArenaPreview, srcBackgroundImage, srcBackgroundImage2, srcMainLoadingIcon, srcPlayerImage, srcPlayerImage2, srcSnowwarLogo, srcTeam1ScoreBackground, srcTeam2ScoreBackground, statusContainer, strokeTextColor, visibleButtonBuyGames, visibleButtonPlayAgain, visibleButtonsContainer, visibleLoadingContainer }: SnowwarEndingLayoutProps) => {
+    const t = useTranslation();
+
     return (
         <Region layout={{ position: 'relative', width: 882, height: 510, ...layout }}>
             <Region
@@ -31,47 +56,286 @@ export const SnowwarEndingLayout = ({ buttonsContainer, headerContainer, layout,
                     src={srcSnowwarLogo ?? layoutImage('snowstorm_logo.png')}
                     layout={{ position: 'absolute', width: 308, top: 0, height: 83 }}
                 />
-                <SnowwarEndingLayoutTeam1PlayersList {...team1PlayersList} />
-                <SnowwarEndingLayoutTeam2PlayersList {...team2PlayersList} />
+                <Region
+                    name="team1PlayersList"
+                    layout={{ position: 'absolute', left: 0, width: 289, top: 115, height: 318, flexDirection: 'column', gap: 2 }}
+                />
+                <Region
+                    name="team2PlayersList"
+                    layout={{ position: 'absolute', right: 0, width: 289, top: 115, height: 318, flexDirection: 'column', gap: 2 }}
+                />
                 <SnowwarEndingLayoutStatusContainer {...statusContainer} />
-                <SnowwarEndingLayoutButtonsContainer {...buttonsContainer} />
-                <SnowwarEndingLayoutLeaveLinkRegion {...leaveLinkRegion} />
-                <SnowwarEndingLayoutMostKillsContainer {...mostKillsContainer} />
-                <SnowwarEndingLayoutMostHitsContainer {...mostHitsContainer} />
-                <SnowwarEndingLayoutTeam1ScoreContainer {...team1ScoreContainer} />
-                <SnowwarEndingLayoutTeam2ScoreContainer {...team2ScoreContainer} />
-                <SnowwarEndingLayoutHeaderContainer {...headerContainer} />
-                <SnowwarEndingLayoutLoadingContainer {...loadingContainer} />
+                {(visibleButtonsContainer ?? false) && (
+                    <Region
+                        name="buttonsContainer"
+                        layout={{ position: 'absolute', width: 180, top: 430, height: 50, justifyContent: 'center' }}
+                    >
+                        {(visibleButtonPlayAgain ?? false) && (
+                            <ButtonThick
+                                variant="5"
+                                name="button_play_again"
+                                tintColor="#00ff00"
+                                onPointerTap={onButtonPlayAgain}
+                                layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
+                            >
+                                {t('snowwar.new_game')}
+                            </ButtonThick>
+                        )}
+                        <ButtonThick
+                            variant="5"
+                            name="button_rematch"
+                            tintColor="#00ff00"
+                            onPointerTap={onButtonRematch}
+                            layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
+                        >
+                            Rematch
+                        </ButtonThick>
+                        {(visibleButtonBuyGames ?? false) && (
+                            <ButtonThick
+                                variant="5"
+                                name="button_buy_games"
+                                tintColor="#00ff00"
+                                onPointerTap={onButtonBuyGames}
+                                layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
+                            >
+                                {t('snowwar.buy_x_games')}
+                            </ButtonThick>
+                        )}
+                    </Region>
+                )}
+                <Region
+                    name="leave_link_region"
+                    onPointerTap={onLeaveLinkRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 127, top: 405, height: 17 }}
+                >
+                    <Icon
+                        variant="4"
+                        tintColor="#000000"
+                        layout={{ position: 'absolute', left: 0, width: 10, top: 5, height: 10 }}
+                    />
+                    <Region
+                        name="leave_link"
+                        layout={{ position: 'absolute', left: 5, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionLeaveLink ?? t('snowwar.leave_game')}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                </Region>
+                <Region
+                    name="mostKillsContainer"
+                    layout={{ position: 'absolute', left: 300, width: 130, top: 180, height: 117, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        name="backgroundImage"
+                        src={srcBackgroundImage ?? layoutImage('blue_square.png')}
+                        layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
+                    />
+                    <Region
+                        name="mostKillsLabel_stroke"
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionMostKillsLabelStroke ?? t('snowwar.most_kills')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: strokeTextColor, align: 'center' }}
+                        />
+                    </Region>
+                    <Region
+                        name="mostKillsLabel"
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionMostKillsLabel ?? t('snowwar.most_kills')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Region
+                        name="playerName"
+                        layout={{ position: 'absolute', width: 130, top: 92, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionPlayerName ?? 'yyyy yyyyyy'}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: strokeTextColor ?? '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <ThemeImage
+                        name="playerImage"
+                        src={srcPlayerImage}
+                        layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
+                    />
+                </Region>
+                <Region
+                    name="mostHitsContainer"
+                    layout={{ position: 'absolute', left: 450, width: 130, top: 180, height: 117, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        name="backgroundImage"
+                        src={srcBackgroundImage2 ?? layoutImage('red_square.png')}
+                        layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
+                    />
+                    <Region
+                        name="mostHitsLabel_stroke"
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionMostHitsLabelStroke ?? t('snowwar.most_hits')}
+                            textOptions={{ fill: strokeTextColor, align: 'center' }}
+                        />
+                    </Region>
+                    <Region
+                        name="mostHitsLabel"
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionMostHitsLabel ?? t('snowwar.most_hits')}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Region
+                        name="playerName"
+                        layout={{ position: 'absolute', width: 130, top: 92, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionPlayerName2 ?? 'xxxxx xxxxx'}
+                            textOptions={{ fill: strokeTextColor ?? '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <ThemeImage
+                        name="playerImage"
+                        src={srcPlayerImage2}
+                        layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
+                    />
+                </Region>
+                <Region
+                    name="team1ScoreContainer"
+                    layout={{ position: 'absolute', left: 203, width: 80, top: 10, height: 101 }}
+                >
+                    <ThemeImage
+                        name="team1ScoreBackground"
+                        src={srcTeam1ScoreBackground ?? layoutImage('blue_glove.png')}
+                        layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 101 }}
+                    />
+                    <Region
+                        name="team1Score_stroke"
+                        layout={{ position: 'absolute', left: 13, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionTeam1ScoreStroke ?? '245'}
+                            textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
+                        />
+                    </Region>
+                    <Region
+                        name="team1Score"
+                        layout={{ position: 'absolute', left: 13, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionTeam1Score ?? '245'}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </Region>
+                <Region
+                    name="team2ScoreContainer"
+                    layout={{ position: 'absolute', left: 598, width: 80, top: 10, height: 101 }}
+                >
+                    <ThemeImage
+                        name="team2ScoreBackground"
+                        src={srcTeam2ScoreBackground ?? layoutImage('red_glove.png')}
+                        layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 101 }}
+                    />
+                    <Region
+                        name="team2Score_stroke"
+                        layout={{ position: 'absolute', left: 20, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionTeam2ScoreStroke ?? '245'}
+                            textOptions={{ fill: strokeTextColor ?? '#fd6859', align: 'center' }}
+                        />
+                    </Region>
+                    <Region
+                        name="team2Score"
+                        layout={{ position: 'absolute', left: 20, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionTeam2Score ?? '245'}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </Region>
+                <Region
+                    name="headerContainer"
+                    layout={{ position: 'absolute', width: 450, top: 118, height: 35 }}
+                >
+                    <Region
+                        name="endingInformation_stroke"
+                        layout={{ position: 'absolute', left: 0, width: 450, top: 0, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionEndingInformationStroke ?? 'Blue team wins!'}
+                            textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
+                        />
+                    </Region>
+                    <Region
+                        name="endingInformation"
+                        layout={{ position: 'absolute', left: 0, width: 450, top: 0, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionEndingInformation ?? 'Blue team wins!'}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </Region>
+                {(visibleLoadingContainer ?? false) && (
+                    <Region
+                        name="loadingContainer"
+                        layout={{ position: 'absolute', left: 337, width: 208, top: 167, height: 235, justifyContent: 'center' }}
+                    >
+                        <Region
+                            name="loadingText_stroke"
+                            layout={{ position: 'absolute', width: 208, top: 0, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        >
+                            <ThemeText
+                                text={captionLoadingTextStroke ?? t('snowwar.waiting_players')}
+                                textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
+                            />
+                        </Region>
+                        <Region
+                            name="loadingText"
+                            layout={{ position: 'absolute', width: 208, top: 0, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        >
+                            <ThemeText
+                                text={captionLoadingText ?? t('snowwar.waiting_players')}
+                                textOptions={{ fill: '#ffffff', align: 'center' }}
+                            />
+                        </Region>
+                        <ThemeImage
+                            name="arenaPreview"
+                            src={srcArenaPreview}
+                            layout={{ position: 'absolute', left: 0, width: 208, top: 35, height: 100 }}
+                        />
+                        <Region
+                            name="arenaName"
+                            layout={{ position: 'absolute', width: 4, top: 140, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionArenaName ?? ''}
+                                textOptions={{ fill: '#1077ac' }}
+                            />
+                        </Region>
+                        <ThemeImage
+                            name="mainLoadingIcon"
+                            src={srcMainLoadingIcon}
+                            layout={{ position: 'absolute', width: 50, top: 180, height: 50 }}
+                        />
+                    </Region>
+                )}
             </Region>
         </Region>
-    );
-};
-
-/** Named region `team1PlayersList` of SnowwarEndingLayout - configured through the parent's `team1PlayersList` prop. */
-export interface SnowwarEndingLayoutTeam1PlayersListProps {
-    layout?: BoxLayout;
-}
-
-export const SnowwarEndingLayoutTeam1PlayersList = ({ layout }: SnowwarEndingLayoutTeam1PlayersListProps) => {
-    return (
-        <Region
-            name="team1PlayersList"
-            layout={{ position: 'absolute', left: 0, width: 289, top: 115, height: 318, flexDirection: 'column', gap: 2, ...layout }}
-        />
-    );
-};
-
-/** Named region `team2PlayersList` of SnowwarEndingLayout - configured through the parent's `team2PlayersList` prop. */
-export interface SnowwarEndingLayoutTeam2PlayersListProps {
-    layout?: BoxLayout;
-}
-
-export const SnowwarEndingLayoutTeam2PlayersList = ({ layout }: SnowwarEndingLayoutTeam2PlayersListProps) => {
-    return (
-        <Region
-            name="team2PlayersList"
-            layout={{ position: 'absolute', right: 0, width: 289, top: 115, height: 318, flexDirection: 'column', gap: 2, ...layout }}
-        />
     );
 };
 
@@ -83,9 +347,10 @@ export interface SnowwarEndingLayoutStatusContainerProps {
     captionStatusTextGetVip?: string;
     layout?: BoxLayout;
     onStatusContainer?: () => void;
+    visibleStatusTextGetMoreGames?: boolean;
 }
 
-export const SnowwarEndingLayoutStatusContainer = ({ captionGamesLeft, captionGamesLeftStroke, captionStatusTextGetMoreGames, captionStatusTextGetVip, layout, onStatusContainer }: SnowwarEndingLayoutStatusContainerProps) => {
+export const SnowwarEndingLayoutStatusContainer = ({ captionGamesLeft, captionGamesLeftStroke, captionStatusTextGetMoreGames, captionStatusTextGetVip, layout, onStatusContainer, visibleStatusTextGetMoreGames }: SnowwarEndingLayoutStatusContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -129,409 +394,17 @@ export const SnowwarEndingLayoutStatusContainer = ({ captionGamesLeft, captionGa
                     textOptions={{ align: 'center' }}
                 />
             </Region>
-            <Region
-                name="status.text_get_more_games"
-                visible={false}
-                layout={{ position: 'absolute', width: 297, top: 27, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionStatusTextGetMoreGames ?? t('snowwar.buy_x_games')}
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `buttonsContainer` of SnowwarEndingLayout - configured through the parent's `buttonsContainer` prop. */
-export interface SnowwarEndingLayoutButtonsContainerProps {
-    layout?: BoxLayout;
-    onButtonBuyGames?: () => void;
-    onButtonPlayAgain?: () => void;
-    onButtonRematch?: () => void;
-    visibleButtonBuyGames?: boolean;
-    visibleButtonPlayAgain?: boolean;
-    visibleButtonsContainer?: boolean;
-}
-
-export const SnowwarEndingLayoutButtonsContainer = ({ layout, onButtonBuyGames, onButtonPlayAgain, onButtonRematch, visibleButtonBuyGames, visibleButtonPlayAgain, visibleButtonsContainer }: SnowwarEndingLayoutButtonsContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="buttonsContainer"
-            visible={visibleButtonsContainer ?? false}
-            layout={{ position: 'absolute', width: 180, top: 430, height: 50, justifyContent: 'center', ...layout }}
-        >
-            <ButtonThick
-                variant="5"
-                name="button_play_again"
-                tintColor="#00ff00"
-                onPointerTap={onButtonPlayAgain}
-                visible={visibleButtonPlayAgain ?? false}
-                layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
-            >
-                {t('snowwar.new_game')}
-            </ButtonThick>
-            <ButtonThick
-                variant="5"
-                name="button_rematch"
-                tintColor="#00ff00"
-                onPointerTap={onButtonRematch}
-                layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
-            >
-                Rematch
-            </ButtonThick>
-            <ButtonThick
-                variant="5"
-                name="button_buy_games"
-                tintColor="#00ff00"
-                onPointerTap={onButtonBuyGames}
-                visible={visibleButtonBuyGames ?? false}
-                layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
-            >
-                {t('snowwar.buy_x_games')}
-            </ButtonThick>
-        </Region>
-    );
-};
-
-/** Named region `leave_link_region` of SnowwarEndingLayout - configured through the parent's `leaveLinkRegion` prop. */
-export interface SnowwarEndingLayoutLeaveLinkRegionProps {
-    captionLeaveLink?: string;
-    layout?: BoxLayout;
-    onLeaveLinkRegion?: () => void;
-}
-
-export const SnowwarEndingLayoutLeaveLinkRegion = ({ captionLeaveLink, layout, onLeaveLinkRegion }: SnowwarEndingLayoutLeaveLinkRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="leave_link_region"
-            onPointerTap={onLeaveLinkRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 127, top: 405, height: 17, ...layout }}
-        >
-            <Icon
-                variant="4"
-                tintColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 10, top: 5, height: 10 }}
-            />
-            <Region
-                name="leave_link"
-                layout={{ position: 'absolute', left: 5, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionLeaveLink ?? t('snowwar.leave_game')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `mostKillsContainer` of SnowwarEndingLayout - configured through the parent's `mostKillsContainer` prop. */
-export interface SnowwarEndingLayoutMostKillsContainerProps {
-    captionMostKillsLabel?: string;
-    captionMostKillsLabelStroke?: string;
-    captionPlayerName?: string;
-    layout?: BoxLayout;
-    srcBackgroundImage?: string;
-    srcPlayerImage?: string;
-    strokeTextColor?: string;
-}
-
-export const SnowwarEndingLayoutMostKillsContainer = ({ captionMostKillsLabel, captionMostKillsLabelStroke, captionPlayerName, layout, srcBackgroundImage, srcPlayerImage, strokeTextColor }: SnowwarEndingLayoutMostKillsContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="mostKillsContainer"
-            layout={{ position: 'absolute', left: 300, width: 130, top: 180, height: 117, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                name="backgroundImage"
-                src={srcBackgroundImage ?? layoutImage('blue_square.png')}
-                layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
-            />
-            <Region
-                name="mostKillsLabel_stroke"
-                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionMostKillsLabelStroke ?? t('snowwar.most_kills')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: strokeTextColor, align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="mostKillsLabel"
-                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionMostKillsLabel ?? t('snowwar.most_kills')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="playerName"
-                layout={{ position: 'absolute', width: 130, top: 92, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionPlayerName ?? 'yyyy yyyyyy'}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: strokeTextColor ?? '#ffffff', align: 'center' }}
-                />
-            </Region>
-            <ThemeImage
-                name="playerImage"
-                src={srcPlayerImage}
-                layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `mostHitsContainer` of SnowwarEndingLayout - configured through the parent's `mostHitsContainer` prop. */
-export interface SnowwarEndingLayoutMostHitsContainerProps {
-    captionMostHitsLabel?: string;
-    captionMostHitsLabelStroke?: string;
-    captionPlayerName?: string;
-    layout?: BoxLayout;
-    srcBackgroundImage?: string;
-    srcPlayerImage?: string;
-    strokeTextColor?: string;
-}
-
-export const SnowwarEndingLayoutMostHitsContainer = ({ captionMostHitsLabel, captionMostHitsLabelStroke, captionPlayerName, layout, srcBackgroundImage, srcPlayerImage, strokeTextColor }: SnowwarEndingLayoutMostHitsContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="mostHitsContainer"
-            layout={{ position: 'absolute', left: 450, width: 130, top: 180, height: 117, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                name="backgroundImage"
-                src={srcBackgroundImage ?? layoutImage('red_square.png')}
-                layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
-            />
-            <Region
-                name="mostHitsLabel_stroke"
-                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionMostHitsLabelStroke ?? t('snowwar.most_hits')}
-                    textOptions={{ fill: strokeTextColor, align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="mostHitsLabel"
-                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 115, top: 2, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionMostHitsLabel ?? t('snowwar.most_hits')}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="playerName"
-                layout={{ position: 'absolute', width: 130, top: 92, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionPlayerName ?? 'xxxxx xxxxx'}
-                    textOptions={{ fill: strokeTextColor ?? '#ffffff', align: 'center' }}
-                />
-            </Region>
-            <ThemeImage
-                name="playerImage"
-                src={srcPlayerImage}
-                layout={{ position: 'absolute', width: 70, top: 26, height: 70 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `team1ScoreContainer` of SnowwarEndingLayout - configured through the parent's `team1ScoreContainer` prop. */
-export interface SnowwarEndingLayoutTeam1ScoreContainerProps {
-    captionTeam1Score?: string;
-    captionTeam1ScoreStroke?: string;
-    layout?: BoxLayout;
-    srcTeam1ScoreBackground?: string;
-    strokeTextColor?: string;
-}
-
-export const SnowwarEndingLayoutTeam1ScoreContainer = ({ captionTeam1Score, captionTeam1ScoreStroke, layout, srcTeam1ScoreBackground, strokeTextColor }: SnowwarEndingLayoutTeam1ScoreContainerProps) => {
-    return (
-        <Region
-            name="team1ScoreContainer"
-            layout={{ position: 'absolute', left: 203, width: 80, top: 10, height: 101, ...layout }}
-        >
-            <ThemeImage
-                name="team1ScoreBackground"
-                src={srcTeam1ScoreBackground ?? layoutImage('blue_glove.png')}
-                layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 101 }}
-            />
-            <Region
-                name="team1Score_stroke"
-                layout={{ position: 'absolute', left: 13, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionTeam1ScoreStroke ?? '245'}
-                    textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="team1Score"
-                layout={{ position: 'absolute', left: 13, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionTeam1Score ?? '245'}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `team2ScoreContainer` of SnowwarEndingLayout - configured through the parent's `team2ScoreContainer` prop. */
-export interface SnowwarEndingLayoutTeam2ScoreContainerProps {
-    captionTeam2Score?: string;
-    captionTeam2ScoreStroke?: string;
-    layout?: BoxLayout;
-    srcTeam2ScoreBackground?: string;
-    strokeTextColor?: string;
-}
-
-export const SnowwarEndingLayoutTeam2ScoreContainer = ({ captionTeam2Score, captionTeam2ScoreStroke, layout, srcTeam2ScoreBackground, strokeTextColor }: SnowwarEndingLayoutTeam2ScoreContainerProps) => {
-    return (
-        <Region
-            name="team2ScoreContainer"
-            layout={{ position: 'absolute', left: 598, width: 80, top: 10, height: 101, ...layout }}
-        >
-            <ThemeImage
-                name="team2ScoreBackground"
-                src={srcTeam2ScoreBackground ?? layoutImage('red_glove.png')}
-                layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 101 }}
-            />
-            <Region
-                name="team2Score_stroke"
-                layout={{ position: 'absolute', left: 20, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionTeam2ScoreStroke ?? '245'}
-                    textOptions={{ fill: strokeTextColor ?? '#fd6859', align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="team2Score"
-                layout={{ position: 'absolute', left: 20, width: 49, top: 41, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionTeam2Score ?? '245'}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `headerContainer` of SnowwarEndingLayout - configured through the parent's `headerContainer` prop. */
-export interface SnowwarEndingLayoutHeaderContainerProps {
-    captionEndingInformation?: string;
-    captionEndingInformationStroke?: string;
-    layout?: BoxLayout;
-    strokeTextColor?: string;
-}
-
-export const SnowwarEndingLayoutHeaderContainer = ({ captionEndingInformation, captionEndingInformationStroke, layout, strokeTextColor }: SnowwarEndingLayoutHeaderContainerProps) => {
-    return (
-        <Region
-            name="headerContainer"
-            layout={{ position: 'absolute', width: 450, top: 118, height: 35, ...layout }}
-        >
-            <Region
-                name="endingInformation_stroke"
-                layout={{ position: 'absolute', left: 0, width: 450, top: 0, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionEndingInformationStroke ?? 'Blue team wins!'}
-                    textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="endingInformation"
-                layout={{ position: 'absolute', left: 0, width: 450, top: 0, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionEndingInformation ?? 'Blue team wins!'}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `loadingContainer` of SnowwarEndingLayout - configured through the parent's `loadingContainer` prop. */
-export interface SnowwarEndingLayoutLoadingContainerProps {
-    captionArenaName?: string;
-    captionLoadingText?: string;
-    captionLoadingTextStroke?: string;
-    layout?: BoxLayout;
-    srcArenaPreview?: string;
-    srcMainLoadingIcon?: string;
-    strokeTextColor?: string;
-    visibleLoadingContainer?: boolean;
-}
-
-export const SnowwarEndingLayoutLoadingContainer = ({ captionArenaName, captionLoadingText, captionLoadingTextStroke, layout, srcArenaPreview, srcMainLoadingIcon, strokeTextColor, visibleLoadingContainer }: SnowwarEndingLayoutLoadingContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="loadingContainer"
-            visible={visibleLoadingContainer ?? false}
-            layout={{ position: 'absolute', left: 337, width: 208, top: 167, height: 235, justifyContent: 'center', ...layout }}
-        >
-            <Region
-                name="loadingText_stroke"
-                layout={{ position: 'absolute', width: 208, top: 0, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionLoadingTextStroke ?? t('snowwar.waiting_players')}
-                    textOptions={{ fill: strokeTextColor ?? '#1077ac', align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="loadingText"
-                layout={{ position: 'absolute', width: 208, top: 0, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionLoadingText ?? t('snowwar.waiting_players')}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
-            <ThemeImage
-                name="arenaPreview"
-                src={srcArenaPreview}
-                layout={{ position: 'absolute', left: 0, width: 208, top: 35, height: 100 }}
-            />
-            <Region
-                name="arenaName"
-                layout={{ position: 'absolute', width: 4, top: 140, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionArenaName ?? ''}
-                    textOptions={{ fill: '#1077ac' }}
-                />
-            </Region>
-            <ThemeImage
-                name="mainLoadingIcon"
-                src={srcMainLoadingIcon}
-                layout={{ position: 'absolute', width: 50, top: 180, height: 50 }}
-            />
+            {(visibleStatusTextGetMoreGames ?? false) && (
+                <Region
+                    name="status.text_get_more_games"
+                    layout={{ position: 'absolute', width: 297, top: 27, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionStatusTextGetMoreGames ?? t('snowwar.buy_x_games')}
+                        textOptions={{ align: 'center' }}
+                    />
+                </Region>
+            )}
         </Region>
     );
 };

@@ -15,49 +15,10 @@ export const MemenuEffectInactiveLayout = ({ layout, selectedBorder }: MemenuEff
     );
 };
 
-/** Named region `effect_amount_bg2` of MemenuEffectInactiveLayout - configured through the parent's `effectAmountBg2` prop. */
-export interface MemenuEffectInactiveLayoutEffectAmountBg2Props {
-    captionEffectAmount?: string;
-    layout?: BoxLayout;
-}
-
-export const MemenuEffectInactiveLayoutEffectAmountBg2 = ({ captionEffectAmount, layout }: MemenuEffectInactiveLayoutEffectAmountBg2Props) => {
-    return (
-        <Region
-            name="effect_amount_bg2"
-            layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-            backgroundColor="#666666"
-        >
-            <ThemeText
-                text={captionEffectAmount ?? '99'}
-                textOptions={{ fill: '#eeeeee' }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `effect_amount_bg1` of MemenuEffectInactiveLayout - configured through the parent's `effectAmountBg1` prop. */
-export interface MemenuEffectInactiveLayoutEffectAmountBg1Props {
-    effectAmountBg2?: MemenuEffectInactiveLayoutEffectAmountBg2Props;
-    layout?: BoxLayout;
-}
-
-export const MemenuEffectInactiveLayoutEffectAmountBg1 = ({ effectAmountBg2, layout }: MemenuEffectInactiveLayoutEffectAmountBg1Props) => {
-    return (
-        <Region
-            name="effect_amount_bg1"
-            backgroundColor="#dddddd"
-            layout={{ position: 'absolute', left: 24, width: 20, top: 4, height: 15, ...layout }}
-        >
-            <MemenuEffectInactiveLayoutEffectAmountBg2 {...effectAmountBg2} />
-        </Region>
-    );
-};
-
 /** Named region `selected_border` of MemenuEffectInactiveLayout - configured through the parent's `selectedBorder` prop. */
 export interface MemenuEffectInactiveLayoutSelectedBorderProps {
+    captionEffectAmount?: string;
     captionEffectName?: string;
-    effectAmountBg1?: MemenuEffectInactiveLayoutEffectAmountBg1Props;
     layout?: BoxLayout;
     onActivateEffect?: () => void;
     onSelectedBorder?: () => void;
@@ -65,7 +26,7 @@ export interface MemenuEffectInactiveLayoutSelectedBorderProps {
     srcEffectIconBg?: string;
 }
 
-export const MemenuEffectInactiveLayoutSelectedBorder = ({ captionEffectName, effectAmountBg1, layout, onActivateEffect, onSelectedBorder, srcEffectIcon, srcEffectIconBg }: MemenuEffectInactiveLayoutSelectedBorderProps) => {
+export const MemenuEffectInactiveLayoutSelectedBorder = ({ captionEffectAmount, captionEffectName, layout, onActivateEffect, onSelectedBorder, srcEffectIcon, srcEffectIconBg }: MemenuEffectInactiveLayoutSelectedBorderProps) => {
     const t = useTranslation();
 
     return (
@@ -107,7 +68,22 @@ export const MemenuEffectInactiveLayoutSelectedBorder = ({ captionEffectName, ef
                 >
                     {t('widgets.memenu.effects.activate')}
                 </Button>
-                <MemenuEffectInactiveLayoutEffectAmountBg1 {...effectAmountBg1} />
+                <Region
+                    name="effect_amount_bg1"
+                    backgroundColor="#dddddd"
+                    layout={{ position: 'absolute', left: 24, width: 20, top: 4, height: 15 }}
+                >
+                    <Region
+                        name="effect_amount_bg2"
+                        layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        backgroundColor="#666666"
+                    >
+                        <ThemeText
+                            text={captionEffectAmount ?? '99'}
+                            textOptions={{ fill: '#eeeeee' }}
+                        />
+                    </Region>
+                </Region>
             </Border>
         </Region>
     );

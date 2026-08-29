@@ -7,46 +7,16 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
  * (LayoutClubBuy_1655Layout); each passes its own placement through `layout`.
  */
-/** Named region `item_list_hc` of ClubBuyWidget2 - configured through the parent's `itemListHc` prop. */
-export interface ClubBuyWidget2ItemListHcProps {
-    layout?: BoxLayout;
-}
-
-export const ClubBuyWidget2ItemListHc = ({ layout }: ClubBuyWidget2ItemListHcProps) => {
-    return (
-        <Region
-            name="item_list_hc"
-            layout={{ position: 'absolute', left: 0, width: 171, top: 155, bottom: 55, flexDirection: 'column', gap: 4, ...layout }}
-        />
-    );
-};
-
-/** Named region `item_list_vip` of ClubBuyWidget2 - configured through the parent's `itemListVip` prop. */
-export interface ClubBuyWidget2ItemListVipProps {
-    layout?: BoxLayout;
-}
-
-export const ClubBuyWidget2ItemListVip = ({ layout }: ClubBuyWidget2ItemListVipProps) => {
-    return (
-        <Region
-            name="item_list_vip"
-            layout={{ position: 'absolute', left: 180, width: 171, top: 155, bottom: 55, flexDirection: 'column', gap: 4, ...layout }}
-        />
-    );
-};
-
 /** Named region `clubBuyWidget` of ClubBuyWidget2 - configured through the parent's `clubBuyWidget` prop. */
 export interface ClubBuyWidget2Props extends CatalogWidgetFlags {
     captionClubHeader?: string;
     captionClubInfo?: string;
     captionClubLink?: string;
     captionClubRemaining?: string;
-    itemListHc?: ClubBuyWidget2ItemListHcProps;
-    itemListVip?: ClubBuyWidget2ItemListVipProps;
     layout?: BoxLayout;
 }
 
-export const ClubBuyWidget2 = ({ captionClubHeader, captionClubInfo, captionClubLink, captionClubRemaining, itemListHc, itemListVip, layout }: ClubBuyWidget2Props) => {
+export const ClubBuyWidget2 = ({ captionClubHeader, captionClubInfo, captionClubLink, captionClubRemaining, layout }: ClubBuyWidget2Props) => {
     const t = useTranslation();
 
     return (
@@ -97,8 +67,14 @@ export const ClubBuyWidget2 = ({ captionClubHeader, captionClubInfo, captionClub
                 name="icon_vip"
                 layout={{ position: 'absolute', left: 40, width: 85, top: 104, height: 40 }}
             />
-            <ClubBuyWidget2ItemListHc {...itemListHc} />
-            <ClubBuyWidget2ItemListVip {...itemListVip} />
+            <Region
+                name="item_list_hc"
+                layout={{ position: 'absolute', left: 0, width: 171, top: 155, bottom: 55, flexDirection: 'column', gap: 4 }}
+            />
+            <Region
+                name="item_list_vip"
+                layout={{ position: 'absolute', left: 180, width: 171, top: 155, bottom: 55, flexDirection: 'column', gap: 4 }}
+            />
             <Region
                 name="club_link"
                 layout={{ position: 'absolute', width: 340, bottom: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}

@@ -7,14 +7,14 @@ export interface LovelockEngravingLayoutProps {
     captionHeader?: string;
     captionNameLeft?: string;
     captionNameRight?: string;
-    headerButtonClose?: LovelockEngravingLayoutHeaderButtonCloseProps;
     layout?: BoxLayout;
+    onHeaderButtonClose?: () => void;
     srcAvatarLeft?: string;
     srcAvatarRight?: string;
     srcBackground?: string;
 }
 
-export const LovelockEngravingLayout = ({ captionDate, captionHeader, captionNameLeft, captionNameRight, headerButtonClose, layout, srcAvatarLeft, srcAvatarRight, srcBackground }: LovelockEngravingLayoutProps) => {
+export const LovelockEngravingLayout = ({ captionDate, captionHeader, captionNameLeft, captionNameRight, layout, onHeaderButtonClose, srcAvatarLeft, srcAvatarRight, srcBackground }: LovelockEngravingLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -75,25 +75,13 @@ export const LovelockEngravingLayout = ({ captionDate, captionHeader, captionNam
                         textOptions={{ fill: '#59224a', align: 'center' }}
                     />
                 </Region>
-                <LovelockEngravingLayoutHeaderButtonClose {...headerButtonClose} />
+                <Region
+                    name="header_button_close"
+                    onPointerTap={onHeaderButtonClose}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 330, width: 21, top: 33, height: 17 }}
+                />
             </Region>
         </Region>
-    );
-};
-
-/** Named region `header_button_close` of LovelockEngravingLayout - configured through the parent's `headerButtonClose` prop. */
-export interface LovelockEngravingLayoutHeaderButtonCloseProps {
-    layout?: BoxLayout;
-    onHeaderButtonClose?: () => void;
-}
-
-export const LovelockEngravingLayoutHeaderButtonClose = ({ layout, onHeaderButtonClose }: LovelockEngravingLayoutHeaderButtonCloseProps) => {
-    return (
-        <Region
-            name="header_button_close"
-            onPointerTap={onHeaderButtonClose}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 330, width: 21, top: 33, height: 17, ...layout }}
-        />
     );
 };

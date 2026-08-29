@@ -146,41 +146,29 @@ export const DynamicWidgetGridLayoutWidgetSlot5RootItem = ({ itemsWidgetSlot5Roo
     );
 };
 
-/** Named region `widget_slots_center_right` of DynamicWidgetGridLayout - configured through the parent's `widgetSlotsCenterRight` prop. */
-export interface DynamicWidgetGridLayoutWidgetSlotsCenterRightProps {
+/** Row template `widget_slots_right` of DynamicWidgetGridLayout - pass real rows through its `items…` slot. */
+export interface DynamicWidgetGridLayoutWidgetSlotsRightItemProps {
     itemsWidgetSlotsCenterRight?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const DynamicWidgetGridLayoutWidgetSlotsCenterRight = ({ itemsWidgetSlotsCenterRight, layout }: DynamicWidgetGridLayoutWidgetSlotsCenterRightProps) => {
-    return (
-        <Region
-            name="widget_slots_center_right"
-            layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', gap: 50, ...layout }}
-        >
-            {itemsWidgetSlotsCenterRight ?? (
-                <>
-                    <DynamicWidgetGridLayoutWidgetSlot3Item />
-                    <DynamicWidgetGridLayoutWidgetSlot5RootItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
-/** Row template `widget_slots_right` of DynamicWidgetGridLayout - pass real rows through its `items…` slot. */
-export interface DynamicWidgetGridLayoutWidgetSlotsRightItemProps {
-    layout?: BoxLayout;
-    widgetSlotsCenterRight?: DynamicWidgetGridLayoutWidgetSlotsCenterRightProps;
-}
-
-export const DynamicWidgetGridLayoutWidgetSlotsRightItem = ({ layout, widgetSlotsCenterRight }: DynamicWidgetGridLayoutWidgetSlotsRightItemProps) => {
+export const DynamicWidgetGridLayoutWidgetSlotsRightItem = ({ itemsWidgetSlotsCenterRight, layout }: DynamicWidgetGridLayoutWidgetSlotsRightItemProps) => {
     return (
         <Region
             name="widget_slots_right"
             layout={{ width: 250, height: 52, flexShrink: 0, maxWidth: 250, ...layout }}
         >
-            <DynamicWidgetGridLayoutWidgetSlotsCenterRight {...widgetSlotsCenterRight} />
+            <Region
+                name="widget_slots_center_right"
+                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', gap: 50 }}
+            >
+                {itemsWidgetSlotsCenterRight ?? (
+                    <>
+                        <DynamicWidgetGridLayoutWidgetSlot3Item />
+                        <DynamicWidgetGridLayoutWidgetSlot5RootItem />
+                    </>
+                )}
+            </Region>
         </Region>
     );
 };

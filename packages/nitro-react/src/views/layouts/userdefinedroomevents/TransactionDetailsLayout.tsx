@@ -165,65 +165,25 @@ export const TransactionDetailsLayoutFurniTransactionsPairItem = ({ layout }: Tr
     );
 };
 
-/** Named region `number_container_inner_border` of TransactionDetailsLayout - configured through the parent's `numberContainerInnerBorder` prop. */
-export interface TransactionDetailsLayoutNumberContainerInnerBorderProps {
-    captionFurniQuantity?: string;
-    layout?: BoxLayout;
-}
-
-export const TransactionDetailsLayoutNumberContainerInnerBorder = ({ captionFurniQuantity, layout }: TransactionDetailsLayoutNumberContainerInnerBorderProps) => {
-    return (
-        <Region
-            name="number_container_inner_border"
-            backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14, ...layout }}
-        >
-            <Region
-                name="furni_quantity"
-                layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionFurniQuantity ?? '0'}
-                    textStyle="text-style-regular"
-                    textOptions={{ fill: '#2f6982' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `number_container` of TransactionDetailsLayout - configured through the parent's `numberContainer` prop. */
-export interface TransactionDetailsLayoutNumberContainerProps {
-    layout?: BoxLayout;
-    numberContainerInnerBorder?: TransactionDetailsLayoutNumberContainerInnerBorderProps;
-    visibleNumberContainer?: boolean;
-}
-
-export const TransactionDetailsLayoutNumberContainer = ({ layout, numberContainerInnerBorder, visibleNumberContainer }: TransactionDetailsLayoutNumberContainerProps) => {
-    return (
-        <Region
-            name="number_container"
-            visible={visibleNumberContainer ?? false}
-            backgroundColor="#2f6982"
-            layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16, ...layout }}
-        >
-            <TransactionDetailsLayoutNumberContainerInnerBorder {...numberContainerInnerBorder} />
-        </Region>
-    );
-};
-
 /** Row template `furni_template` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutFurniTemplateItemProps {
+    captionFurniQuantity?: string;
     captionIncompleteText?: string;
     layout?: BoxLayout;
-    numberContainer?: TransactionDetailsLayoutNumberContainerProps;
     onFurniTemplate?: () => void;
     srcCoinsIcon?: string;
     srcOutlineFocus?: string;
     srcUniqueItemBackgroundBitmap?: string;
+    visibleCoinsIcon?: boolean;
+    visibleIncompleteText?: boolean;
+    visibleNumberContainer?: boolean;
+    visibleOutlineFocus?: boolean;
+    visibleRarityItemOverlayContainer?: boolean;
+    visibleUniqueItemBackgroundBitmap?: boolean;
+    visibleUniqueItemOverlayContainer?: boolean;
 }
 
-export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteText, layout, numberContainer, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap }: TransactionDetailsLayoutFurniTemplateItemProps) => {
+export const TransactionDetailsLayoutFurniTemplateItem = ({ captionFurniQuantity, captionIncompleteText, layout, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap, visibleCoinsIcon, visibleIncompleteText, visibleNumberContainer, visibleOutlineFocus, visibleRarityItemOverlayContainer, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer }: TransactionDetailsLayoutFurniTemplateItemProps) => {
     return (
         <Region
             name="furni_template"
@@ -237,53 +197,82 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteTex
                 tintColor="#cbcbcb"
                 layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
             >
-                <ThemeImage
-                    name="coins_icon"
-                    src={srcCoinsIcon ?? layoutImage('inventory_furni_icon_credits.png')}
-                    layout={{ position: 'absolute', left: 7, width: 25, top: 11, height: 18 }}
-                    visible={false}
-                />
-                <ThemeImage
-                    name="unique_item_background_bitmap"
-                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                    visible={false}
-                />
+                {(visibleCoinsIcon ?? false) && (
+                    <ThemeImage
+                        name="coins_icon"
+                        src={srcCoinsIcon ?? layoutImage('inventory_furni_icon_credits.png')}
+                        layout={{ position: 'absolute', left: 7, width: 25, top: 11, height: 18 }}
+                    />
+                )}
+                {(visibleUniqueItemBackgroundBitmap ?? false) && (
+                    <ThemeImage
+                        name="unique_item_background_bitmap"
+                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
                 <WidgetSlot
                     widgetType="product_icon"
                     name="furni_icon"
                     layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
                 />
-                <TransactionDetailsLayoutNumberContainer {...numberContainer} />
-                <WidgetSlot
-                    widgetType="limited_item_overlay_grid"
-                    name="unique_item_overlay_container"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                />
-                <WidgetSlot
-                    widgetType="rarity_item_overlay_grid"
-                    name="rarity_item_overlay_container"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                />
-                <Region
-                    name="incomplete_text"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 3, width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionIncompleteText ?? ' 5'}
-                        textOptions={{ fill: '#666666', align: 'center' }}
+                {(visibleNumberContainer ?? false) && (
+                    <Region
+                        name="number_container"
+                        backgroundColor="#2f6982"
+                        layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16 }}
+                    >
+                        <Region
+                            name="number_container_inner_border"
+                            backgroundColor="#ffffff"
+                            layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14 }}
+                        >
+                            <Region
+                                name="furni_quantity"
+                                layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText
+                                    text={captionFurniQuantity ?? '0'}
+                                    textStyle="text-style-regular"
+                                    textOptions={{ fill: '#2f6982' }}
+                                />
+                            </Region>
+                        </Region>
+                    </Region>
+                )}
+                {(visibleUniqueItemOverlayContainer ?? false) && (
+                    <WidgetSlot
+                        widgetType="limited_item_overlay_grid"
+                        name="unique_item_overlay_container"
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                     />
-                </Region>
+                )}
+                {(visibleRarityItemOverlayContainer ?? false) && (
+                    <WidgetSlot
+                        widgetType="rarity_item_overlay_grid"
+                        name="rarity_item_overlay_container"
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+                {(visibleIncompleteText ?? false) && (
+                    <Region
+                        name="incomplete_text"
+                        layout={{ position: 'absolute', left: 3, width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionIncompleteText ?? ' 5'}
+                            textOptions={{ fill: '#666666', align: 'center' }}
+                        />
+                    </Region>
+                )}
             </Border>
-            <ThemeImage
-                name="outline_focus"
-                src={srcOutlineFocus ?? layoutImage('inventory_thumb_selected_outline.png')}
-                layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
-                visible={false}
-            />
+            {(visibleOutlineFocus ?? false) && (
+                <ThemeImage
+                    name="outline_focus"
+                    src={srcOutlineFocus ?? layoutImage('inventory_thumb_selected_outline.png')}
+                    layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
+                />
+            )}
         </Region>
     );
 };
@@ -353,65 +342,25 @@ export const TransactionDetailsLayoutWithdrawalsContainer = ({ captionEmptyText,
     );
 };
 
-/** Named region `number_container_inner_border` of TransactionDetailsLayout - configured through the parent's `numberContainerInnerBorder` prop. */
-export interface TransactionDetailsLayoutNumberContainerInnerBorder2Props {
-    captionFurniQuantity?: string;
-    layout?: BoxLayout;
-}
-
-export const TransactionDetailsLayoutNumberContainerInnerBorder2 = ({ captionFurniQuantity, layout }: TransactionDetailsLayoutNumberContainerInnerBorder2Props) => {
-    return (
-        <Region
-            name="number_container_inner_border"
-            backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14, ...layout }}
-        >
-            <Region
-                name="furni_quantity"
-                layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionFurniQuantity ?? '0'}
-                    textStyle="text-style-regular"
-                    textOptions={{ fill: '#2f6982' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `number_container` of TransactionDetailsLayout - configured through the parent's `numberContainer` prop. */
-export interface TransactionDetailsLayoutNumberContainer2Props {
-    layout?: BoxLayout;
-    numberContainerInnerBorder?: TransactionDetailsLayoutNumberContainerInnerBorder2Props;
-    visibleNumberContainer?: boolean;
-}
-
-export const TransactionDetailsLayoutNumberContainer2 = ({ layout, numberContainerInnerBorder, visibleNumberContainer }: TransactionDetailsLayoutNumberContainer2Props) => {
-    return (
-        <Region
-            name="number_container"
-            visible={visibleNumberContainer ?? false}
-            backgroundColor="#2f6982"
-            layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16, ...layout }}
-        >
-            <TransactionDetailsLayoutNumberContainerInnerBorder2 {...numberContainerInnerBorder} />
-        </Region>
-    );
-};
-
 /** Row template `furni_template` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutFurniTemplateItem2Props {
+    captionFurniQuantity?: string;
     captionIncompleteText?: string;
     layout?: BoxLayout;
-    numberContainer?: TransactionDetailsLayoutNumberContainer2Props;
     onFurniTemplate?: () => void;
     srcCoinsIcon?: string;
     srcOutlineFocus?: string;
     srcUniqueItemBackgroundBitmap?: string;
+    visibleCoinsIcon?: boolean;
+    visibleIncompleteText?: boolean;
+    visibleNumberContainer?: boolean;
+    visibleOutlineFocus?: boolean;
+    visibleRarityItemOverlayContainer?: boolean;
+    visibleUniqueItemBackgroundBitmap?: boolean;
+    visibleUniqueItemOverlayContainer?: boolean;
 }
 
-export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteText, layout, numberContainer, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap }: TransactionDetailsLayoutFurniTemplateItem2Props) => {
+export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionFurniQuantity, captionIncompleteText, layout, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap, visibleCoinsIcon, visibleIncompleteText, visibleNumberContainer, visibleOutlineFocus, visibleRarityItemOverlayContainer, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer }: TransactionDetailsLayoutFurniTemplateItem2Props) => {
     return (
         <Region
             name="furni_template"
@@ -425,53 +374,82 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteTe
                 tintColor="#cbcbcb"
                 layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
             >
-                <ThemeImage
-                    name="coins_icon"
-                    src={srcCoinsIcon ?? layoutImage('inventory_furni_icon_credits.png')}
-                    layout={{ position: 'absolute', left: 7, width: 25, top: 11, height: 18 }}
-                    visible={false}
-                />
-                <ThemeImage
-                    name="unique_item_background_bitmap"
-                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                    visible={false}
-                />
+                {(visibleCoinsIcon ?? false) && (
+                    <ThemeImage
+                        name="coins_icon"
+                        src={srcCoinsIcon ?? layoutImage('inventory_furni_icon_credits.png')}
+                        layout={{ position: 'absolute', left: 7, width: 25, top: 11, height: 18 }}
+                    />
+                )}
+                {(visibleUniqueItemBackgroundBitmap ?? false) && (
+                    <ThemeImage
+                        name="unique_item_background_bitmap"
+                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
                 <WidgetSlot
                     widgetType="product_icon"
                     name="furni_icon"
                     layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
                 />
-                <TransactionDetailsLayoutNumberContainer2 {...numberContainer} />
-                <WidgetSlot
-                    widgetType="limited_item_overlay_grid"
-                    name="unique_item_overlay_container"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                />
-                <WidgetSlot
-                    widgetType="rarity_item_overlay_grid"
-                    name="rarity_item_overlay_container"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                />
-                <Region
-                    name="incomplete_text"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 3, width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionIncompleteText ?? ' 5'}
-                        textOptions={{ fill: '#666666', align: 'center' }}
+                {(visibleNumberContainer ?? false) && (
+                    <Region
+                        name="number_container"
+                        backgroundColor="#2f6982"
+                        layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16 }}
+                    >
+                        <Region
+                            name="number_container_inner_border"
+                            backgroundColor="#ffffff"
+                            layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14 }}
+                        >
+                            <Region
+                                name="furni_quantity"
+                                layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText
+                                    text={captionFurniQuantity ?? '0'}
+                                    textStyle="text-style-regular"
+                                    textOptions={{ fill: '#2f6982' }}
+                                />
+                            </Region>
+                        </Region>
+                    </Region>
+                )}
+                {(visibleUniqueItemOverlayContainer ?? false) && (
+                    <WidgetSlot
+                        widgetType="limited_item_overlay_grid"
+                        name="unique_item_overlay_container"
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                     />
-                </Region>
+                )}
+                {(visibleRarityItemOverlayContainer ?? false) && (
+                    <WidgetSlot
+                        widgetType="rarity_item_overlay_grid"
+                        name="rarity_item_overlay_container"
+                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                    />
+                )}
+                {(visibleIncompleteText ?? false) && (
+                    <Region
+                        name="incomplete_text"
+                        layout={{ position: 'absolute', left: 3, width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionIncompleteText ?? ' 5'}
+                            textOptions={{ fill: '#666666', align: 'center' }}
+                        />
+                    </Region>
+                )}
             </Border>
-            <ThemeImage
-                name="outline_focus"
-                src={srcOutlineFocus ?? layoutImage('inventory_thumb_selected_outline.png')}
-                layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
-                visible={false}
-            />
+            {(visibleOutlineFocus ?? false) && (
+                <ThemeImage
+                    name="outline_focus"
+                    src={srcOutlineFocus ?? layoutImage('inventory_thumb_selected_outline.png')}
+                    layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
+                />
+            )}
         </Region>
     );
 };
@@ -505,9 +483,10 @@ export interface TransactionDetailsLayoutDepositsContainerProps {
     captionEmptyText?: string;
     itemGrid?: TransactionDetailsLayoutItemGrid2Props;
     layout?: BoxLayout;
+    visibleEmptyText?: boolean;
 }
 
-export const TransactionDetailsLayoutDepositsContainer = ({ captionEmptyText, itemGrid, layout }: TransactionDetailsLayoutDepositsContainerProps) => {
+export const TransactionDetailsLayoutDepositsContainer = ({ captionEmptyText, itemGrid, layout, visibleEmptyText }: TransactionDetailsLayoutDepositsContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -527,16 +506,17 @@ export const TransactionDetailsLayoutDepositsContainer = ({ captionEmptyText, it
                 layout={{ position: 'absolute', left: 0, width: 165, top: 20, height: 141 }}
             >
                 <TransactionDetailsLayoutItemGrid2 {...itemGrid} />
-                <Region
-                    name="empty_text"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionEmptyText ?? t('wiredchests.log_details.transactions.none_placeholder')}
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
+                {(visibleEmptyText ?? false) && (
+                    <Region
+                        name="empty_text"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionEmptyText ?? t('wiredchests.log_details.transactions.none_placeholder')}
+                            textOptions={{ align: 'center' }}
+                        />
+                    </Region>
+                )}
             </Border>
         </Region>
     );
@@ -574,51 +554,6 @@ export const TransactionDetailsLayoutSpacingItem = ({ layout }: TransactionDetai
             name="spacing"
             layout={{ width: 380, height: 5, flexShrink: 0, ...layout }}
         />
-    );
-};
-
-/** Named region `extra_pair` of TransactionDetailsLayout - configured through the parent's `extraPair` prop. */
-export interface TransactionDetailsLayoutExtraPairProps {
-    layout?: BoxLayout;
-}
-
-export const TransactionDetailsLayoutExtraPair = ({ layout }: TransactionDetailsLayoutExtraPairProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="extra_pair"
-            layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 20, flexDirection: 'row', gap: 2, ...layout }}
-        >
-            <Region layout={{ width: 37, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredchests.log_details.extra')} />
-            </Region>
-            <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text="-" />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `extra_info_button` of TransactionDetailsLayout - configured through the parent's `extraInfoButton` prop. */
-export interface TransactionDetailsLayoutExtraInfoButtonProps {
-    layout?: BoxLayout;
-    onExtraInfoButton?: () => void;
-}
-
-export const TransactionDetailsLayoutExtraInfoButton = ({ layout, onExtraInfoButton }: TransactionDetailsLayoutExtraInfoButtonProps) => {
-    return (
-        <Region
-            name="extra_info_button"
-            onPointerTap={onExtraInfoButton}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 3, width: 20, top: 0, height: 20, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('icons_info_grey.png')}
-                layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 18 }}
-            />
-        </Region>
     );
 };
 
@@ -724,57 +659,67 @@ export const TransactionDetailsLayoutDesc3Item = ({ captionDesc3, layout }: Tran
     );
 };
 
-/** Named region `extra_info_bubble_texts` of TransactionDetailsLayout - configured through the parent's `extraInfoBubbleTexts` prop. */
-export interface TransactionDetailsLayoutExtraInfoBubbleTextsProps {
-    itemsExtraInfoBubbleTexts?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const TransactionDetailsLayoutExtraInfoBubbleTexts = ({ itemsExtraInfoBubbleTexts, layout }: TransactionDetailsLayoutExtraInfoBubbleTextsProps) => {
-    return (
-        <Region
-            name="extra_info_bubble_texts"
-            layout={{ position: 'absolute', left: 8, right: 24, top: 8, height: 147, flexDirection: 'column', gap: 1, ...layout }}
-        >
-            {itemsExtraInfoBubbleTexts ?? (
-                <>
-                    <TransactionDetailsLayoutTitleItem />
-                    <TransactionDetailsLayoutSpacerItem />
-                    <TransactionDetailsLayoutDesc1Item />
-                    <TransactionDetailsLayoutDesc2Item />
-                    <TransactionDetailsLayoutDesc3Item />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Row template `extra_container` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutExtraContainerItemProps {
-    extraInfoBubbleTexts?: TransactionDetailsLayoutExtraInfoBubbleTextsProps;
-    extraInfoButton?: TransactionDetailsLayoutExtraInfoButtonProps;
-    extraPair?: TransactionDetailsLayoutExtraPairProps;
+    itemsExtraInfoBubbleTexts?: ReactNode;
     layout?: BoxLayout;
+    onExtraInfoButton?: () => void;
     visibleExtraInfoBubble?: boolean;
 }
 
-export const TransactionDetailsLayoutExtraContainerItem = ({ extraInfoBubbleTexts, extraInfoButton, extraPair, layout, visibleExtraInfoBubble }: TransactionDetailsLayoutExtraContainerItemProps) => {
+export const TransactionDetailsLayoutExtraContainerItem = ({ itemsExtraInfoBubbleTexts, layout, onExtraInfoButton, visibleExtraInfoBubble }: TransactionDetailsLayoutExtraContainerItemProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="extra_container"
             layout={{ width: 380, height: 20, flexShrink: 0, ...layout }}
         >
-            <TransactionDetailsLayoutExtraPair {...extraPair} />
-            <TransactionDetailsLayoutExtraInfoButton {...extraInfoButton} />
-            <Bubble
-                variant="7"
-                name="extra_info_bubble"
-                pointer="left"
-                visible={visibleExtraInfoBubble ?? false}
-                layout={{ position: 'absolute', left: 379, width: 325, top: -79, height: 179 }}
+            <Region
+                name="extra_pair"
+                layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 20, flexDirection: 'row', gap: 2 }}
             >
-                <TransactionDetailsLayoutExtraInfoBubbleTexts {...extraInfoBubbleTexts} />
-            </Bubble>
+                <Region layout={{ width: 37, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredchests.log_details.extra')} />
+                </Region>
+                <Region layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text="-" />
+                </Region>
+            </Region>
+            <Region
+                name="extra_info_button"
+                onPointerTap={onExtraInfoButton}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 3, width: 20, top: 0, height: 20 }}
+            >
+                <ThemeImage
+                    src={layoutImage('icons_info_grey.png')}
+                    layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 18 }}
+                />
+            </Region>
+            {(visibleExtraInfoBubble ?? false) && (
+                <Bubble
+                    variant="7"
+                    name="extra_info_bubble"
+                    pointer="left"
+                    layout={{ position: 'absolute', left: 379, width: 325, top: -79, height: 179 }}
+                >
+                    <Region
+                        name="extra_info_bubble_texts"
+                        layout={{ position: 'absolute', left: 8, right: 24, top: 8, height: 147, flexDirection: 'column', gap: 1 }}
+                    >
+                        {itemsExtraInfoBubbleTexts ?? (
+                            <>
+                                <TransactionDetailsLayoutTitleItem />
+                                <TransactionDetailsLayoutSpacerItem />
+                                <TransactionDetailsLayoutDesc1Item />
+                                <TransactionDetailsLayoutDesc2Item />
+                                <TransactionDetailsLayoutDesc3Item />
+                            </>
+                        )}
+                    </Region>
+                </Bubble>
+            )}
         </Region>
     );
 };

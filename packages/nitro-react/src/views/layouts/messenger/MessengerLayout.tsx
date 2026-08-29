@@ -6,20 +6,23 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `3094_messenger_xml` (layout "messenger", 510x385) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MessengerLayoutProps {
-    avatarList?: MessengerLayoutAvatarListProps;
-    avatarsScrollLeft?: MessengerLayoutAvatarsScrollLeftProps;
-    avatarsScrollRight?: MessengerLayoutAvatarsScrollRightProps;
-    buttonStrip?: MessengerLayoutButtonStripProps;
     captionSeparatorLabel?: string;
     conversation?: MessengerLayoutConversationProps;
+    itemsButtonStrip?: ReactNode;
     layout?: BoxLayout;
+    onAvatarClickRegion?: () => void;
+    onAvatarsScrollLeft?: () => void;
+    onAvatarsScrollRight?: () => void;
     onCloseConversationButton?: () => void;
     onFrame?: () => void;
     onHabbiconButton?: () => void;
+    srcChatIndicator?: string;
     srcHabbiconButtonIcon?: string;
+    visibleChatIndicator?: boolean;
+    visibleGroupBadgeImage?: boolean;
 }
 
-export const MessengerLayout = ({ avatarList, avatarsScrollLeft, avatarsScrollRight, buttonStrip, captionSeparatorLabel, conversation, layout, onCloseConversationButton, onFrame, onHabbiconButton, srcHabbiconButtonIcon }: MessengerLayoutProps) => {
+export const MessengerLayout = ({ captionSeparatorLabel, conversation, itemsButtonStrip, layout, onAvatarClickRegion, onAvatarsScrollLeft, onAvatarsScrollRight, onCloseConversationButton, onFrame, onHabbiconButton, srcChatIndicator, srcHabbiconButtonIcon, visibleChatIndicator, visibleGroupBadgeImage }: MessengerLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -33,9 +36,65 @@ export const MessengerLayout = ({ avatarList, avatarsScrollLeft, avatarsScrollRi
                     onClose={onFrame}
                     layout={{ position: 'absolute', left: 0, width: 282, top: 0, height: 385, minWidth: 282, minHeight: 275 }}
                 >
-                    <MessengerLayoutAvatarList {...avatarList} />
-                    <MessengerLayoutAvatarsScrollLeft {...avatarsScrollLeft} />
-                    <MessengerLayoutAvatarsScrollRight {...avatarsScrollRight} />
+                    <Region
+                        name="avatar_list"
+                        layout={{ position: 'absolute', left: 16, right: 18, top: 0, height: 40 }}
+                    >
+                        <Border
+                            variant="102"
+                            layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 35 }}
+                        >
+                            <WidgetSlot
+                                widgetType="avatar_image"
+                                name="avatar_image"
+                                options={{ 'avatar_image:scale': 'sh', 'avatar_image:only_head': 'true' }}
+                                layout={{ position: 'absolute', left: -3, width: 45, top: -14, height: 72 }}
+                            />
+                            {(visibleGroupBadgeImage ?? false) && (
+                                <WidgetSlot
+                                    widgetType="badge_image"
+                                    name="group_badge_image"
+                                    options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '0.5', 'badge_image:zoom_y': '0.5', 'badge_image:fit_size_to_contents': 'true' }}
+                                    layout={{ position: 'absolute', left: 8, width: 20, top: 8, height: 20 }}
+                                />
+                            )}
+                            {(visibleChatIndicator ?? false) && (
+                                <ThemeImage
+                                    name="chat_indicator"
+                                    src={srcChatIndicator ?? layoutImage('common_chat_indicator.png')}
+                                    layout={{ position: 'absolute', left: 19, width: 13, top: 6, height: 12 }}
+                                />
+                            )}
+                            <Region
+                                name="avatar_click_region"
+                                onPointerTap={onAvatarClickRegion}
+                                cursor="pointer"
+                                layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 35 }}
+                            />
+                        </Border>
+                    </Region>
+                    <Region
+                        name="avatars_scroll_left"
+                        onPointerTap={onAvatarsScrollLeft}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 35 }}
+                    >
+                        <ThemeImage
+                            src={layoutImage('help_habboway_prev.png')}
+                            layout={{ position: 'absolute', left: 7, width: 8, top: 0, height: 35 }}
+                        />
+                    </Region>
+                    <Region
+                        name="avatars_scroll_right"
+                        onPointerTap={onAvatarsScrollRight}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', right: 2, width: 15, top: 0, height: 35 }}
+                    >
+                        <ThemeImage
+                            src={layoutImage('help_habboway_next.png')}
+                            layout={{ position: 'absolute', left: 1, width: 8, top: 0, height: 35 }}
+                        />
+                    </Region>
                     <WidgetSlot
                         widgetType="separator"
                         layout={{ position: 'absolute', left: 0, right: 1, top: 39, height: 15 }}
@@ -51,7 +110,18 @@ export const MessengerLayout = ({ avatarList, avatarsScrollLeft, avatarsScrollRi
                             />
                         </Region>
                     </WidgetSlot>
-                    <MessengerLayoutButtonStrip {...buttonStrip} />
+                    <Region
+                        name="button_strip"
+                        layout={{ position: 'absolute', left: 7, right: 9, top: 57, height: 21, flexDirection: 'row', gap: 4 }}
+                    >
+                        {itemsButtonStrip ?? (
+                            <>
+                                <MessengerLayoutFollowButtonItem />
+                                <MessengerLayoutProfileButtonItem />
+                                <MessengerLayoutReportButtonItem />
+                            </>
+                        )}
+                    </Region>
                     <CloseButton
                         variant="100"
                         name="close_conversation_button"
@@ -80,109 +150,6 @@ export const MessengerLayout = ({ avatarList, avatarsScrollLeft, avatarsScrollRi
                     />
                 </Frame>
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `avatar_click_region` of MessengerLayout - configured through the parent's `avatarClickRegion` prop. */
-export interface MessengerLayoutAvatarClickRegionProps {
-    layout?: BoxLayout;
-    onAvatarClickRegion?: () => void;
-}
-
-export const MessengerLayoutAvatarClickRegion = ({ layout, onAvatarClickRegion }: MessengerLayoutAvatarClickRegionProps) => {
-    return (
-        <Region
-            name="avatar_click_region"
-            onPointerTap={onAvatarClickRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 35, ...layout }}
-        />
-    );
-};
-
-/** Named region `avatar_list` of MessengerLayout - configured through the parent's `avatarList` prop. */
-export interface MessengerLayoutAvatarListProps {
-    avatarClickRegion?: MessengerLayoutAvatarClickRegionProps;
-    layout?: BoxLayout;
-    srcChatIndicator?: string;
-}
-
-export const MessengerLayoutAvatarList = ({ avatarClickRegion, layout, srcChatIndicator }: MessengerLayoutAvatarListProps) => {
-    return (
-        <Region
-            name="avatar_list"
-            layout={{ position: 'absolute', left: 16, right: 18, top: 0, height: 40, ...layout }}
-        >
-            <Border
-                variant="102"
-                layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 35 }}
-            >
-                <WidgetSlot
-                    widgetType="avatar_image"
-                    name="avatar_image"
-                    options={{ 'avatar_image:scale': 'sh', 'avatar_image:only_head': 'true' }}
-                    layout={{ position: 'absolute', left: -3, width: 45, top: -14, height: 72 }}
-                />
-                <WidgetSlot
-                    widgetType="badge_image"
-                    name="group_badge_image"
-                    visible={false}
-                    options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '0.5', 'badge_image:zoom_y': '0.5', 'badge_image:fit_size_to_contents': 'true' }}
-                    layout={{ position: 'absolute', left: 8, width: 20, top: 8, height: 20 }}
-                />
-                <ThemeImage
-                    name="chat_indicator"
-                    src={srcChatIndicator ?? layoutImage('common_chat_indicator.png')}
-                    layout={{ position: 'absolute', left: 19, width: 13, top: 6, height: 12 }}
-                    visible={false}
-                />
-                <MessengerLayoutAvatarClickRegion {...avatarClickRegion} />
-            </Border>
-        </Region>
-    );
-};
-
-/** Named region `avatars_scroll_left` of MessengerLayout - configured through the parent's `avatarsScrollLeft` prop. */
-export interface MessengerLayoutAvatarsScrollLeftProps {
-    layout?: BoxLayout;
-    onAvatarsScrollLeft?: () => void;
-}
-
-export const MessengerLayoutAvatarsScrollLeft = ({ layout, onAvatarsScrollLeft }: MessengerLayoutAvatarsScrollLeftProps) => {
-    return (
-        <Region
-            name="avatars_scroll_left"
-            onPointerTap={onAvatarsScrollLeft}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 35, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('help_habboway_prev.png')}
-                layout={{ position: 'absolute', left: 7, width: 8, top: 0, height: 35 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `avatars_scroll_right` of MessengerLayout - configured through the parent's `avatarsScrollRight` prop. */
-export interface MessengerLayoutAvatarsScrollRightProps {
-    layout?: BoxLayout;
-    onAvatarsScrollRight?: () => void;
-}
-
-export const MessengerLayoutAvatarsScrollRight = ({ layout, onAvatarsScrollRight }: MessengerLayoutAvatarsScrollRightProps) => {
-    return (
-        <Region
-            name="avatars_scroll_right"
-            onPointerTap={onAvatarsScrollRight}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 2, width: 15, top: 0, height: 35, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('help_habboway_next.png')}
-                layout={{ position: 'absolute', left: 1, width: 8, top: 0, height: 35 }}
-            />
         </Region>
     );
 };
@@ -257,29 +224,6 @@ export const MessengerLayoutReportButtonItem = ({ layout, onReportButton }: Mess
         >
             {t('messenger.window.button.report')}
         </Button>
-    );
-};
-
-/** Named region `button_strip` of MessengerLayout - configured through the parent's `buttonStrip` prop. */
-export interface MessengerLayoutButtonStripProps {
-    itemsButtonStrip?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const MessengerLayoutButtonStrip = ({ itemsButtonStrip, layout }: MessengerLayoutButtonStripProps) => {
-    return (
-        <Region
-            name="button_strip"
-            layout={{ position: 'absolute', left: 7, right: 9, top: 57, height: 21, flexDirection: 'row', gap: 4, ...layout }}
-        >
-            {itemsButtonStrip ?? (
-                <>
-                    <MessengerLayoutFollowButtonItem />
-                    <MessengerLayoutProfileButtonItem />
-                    <MessengerLayoutReportButtonItem />
-                </>
-            )}
-        </Region>
     );
 };
 

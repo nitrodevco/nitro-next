@@ -70,69 +70,20 @@ export const DailytasksLayoutExtraContItem = ({ layout, onUnclaimedBtn }: Dailyt
     );
 };
 
-/** Named region `info_hover_region` of DailytasksLayout - configured through the parent's `infoHoverRegion` prop. */
-export interface DailytasksLayoutInfoHoverRegionProps {
-    layout?: BoxLayout;
-    onInfoHoverRegion?: () => void;
-}
-
-export const DailytasksLayoutInfoHoverRegion = ({ layout, onInfoHoverRegion }: DailytasksLayoutInfoHoverRegionProps) => {
-    return (
-        <Region
-            name="info_hover_region"
-            onPointerTap={onInfoHoverRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 254, width: 14, top: 4, height: 22, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 1, width: 12, top: 0, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text="?"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `completion_cont` of DailytasksLayout - configured through the parent's `completionCont` prop. */
-export interface DailytasksLayoutCompletionContProps {
-    layout?: BoxLayout;
-}
-
-export const DailytasksLayoutCompletionCont = ({ layout }: DailytasksLayoutCompletionContProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="completion_cont"
-            layout={{ position: 'absolute', left: 76, width: 198, top: 83, height: 29, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('common_icon_task_completed_s.png')}
-                layout={{ position: 'absolute', left: 178, width: 20, top: 3, height: 22 }}
-            />
-            <Region layout={{ position: 'absolute', right: 23, width: 143, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('dailytasks.task.complete')}
-                    textOptions={{ fill: '#24850b' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
 /** Named region `left_cont` of DailytasksLayout - configured through the parent's `leftCont` prop. */
 export interface DailytasksLayoutLeftContProps {
     captionTaskDescTxt?: string;
     captionTaskTitleTxt?: string;
-    completionCont?: DailytasksLayoutCompletionContProps;
-    infoHoverRegion?: DailytasksLayoutInfoHoverRegionProps;
     layout?: BoxLayout;
+    onInfoHoverRegion?: () => void;
     srcTaskBitmap?: string;
     srcTaskStaticBitmap?: string;
+    visibleTaskBitmap?: boolean;
 }
 
-export const DailytasksLayoutLeftCont = ({ captionTaskDescTxt, captionTaskTitleTxt, completionCont, infoHoverRegion, layout, srcTaskBitmap, srcTaskStaticBitmap }: DailytasksLayoutLeftContProps) => {
+export const DailytasksLayoutLeftCont = ({ captionTaskDescTxt, captionTaskTitleTxt, layout, onInfoHoverRegion, srcTaskBitmap, srcTaskStaticBitmap, visibleTaskBitmap }: DailytasksLayoutLeftContProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="left_cont"
@@ -153,14 +104,27 @@ export const DailytasksLayoutLeftCont = ({ captionTaskDescTxt, captionTaskTitleT
                         textOptions={{ fill: '#ffffff' }}
                     />
                 </Region>
-                <DailytasksLayoutInfoHoverRegion {...infoHoverRegion} />
+                <Region
+                    name="info_hover_region"
+                    onPointerTap={onInfoHoverRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 254, width: 14, top: 4, height: 22 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 1, width: 12, top: 0, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text="?"
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                </Region>
             </Border>
-            <ThemeImage
-                name="task_bitmap"
-                src={srcTaskBitmap}
-                layout={{ position: 'absolute', left: 0, width: 76, top: 28, height: 76, minWidth: 76, maxWidth: 76, minHeight: 76, maxHeight: 76 }}
-                visible={false}
-            />
+            {(visibleTaskBitmap ?? false) && (
+                <ThemeImage
+                    name="task_bitmap"
+                    src={srcTaskBitmap}
+                    layout={{ position: 'absolute', left: 0, width: 76, top: 28, height: 76, minWidth: 76, maxWidth: 76, minHeight: 76, maxHeight: 76 }}
+                />
+            )}
             <ThemeImage
                 name="task_static_bitmap"
                 src={srcTaskStaticBitmap}
@@ -175,7 +139,21 @@ export const DailytasksLayoutLeftCont = ({ captionTaskDescTxt, captionTaskTitleT
                     textOptions={{ wordWrap: true, wordWrapWidth: 198 }}
                 />
             </Region>
-            <DailytasksLayoutCompletionCont {...completionCont} />
+            <Region
+                name="completion_cont"
+                layout={{ position: 'absolute', left: 76, width: 198, top: 83, height: 29 }}
+            >
+                <ThemeImage
+                    src={layoutImage('common_icon_task_completed_s.png')}
+                    layout={{ position: 'absolute', left: 178, width: 20, top: 3, height: 22 }}
+                />
+                <Region layout={{ position: 'absolute', right: 23, width: 143, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('dailytasks.task.complete')}
+                        textOptions={{ fill: '#24850b' }}
+                    />
+                </Region>
+            </Region>
         </Region>
     );
 };
@@ -185,9 +163,10 @@ export interface DailytasksLayoutRewardTemplateItemProps {
     captionRewardAmountText?: string;
     layout?: BoxLayout;
     srcRewardBitmap?: string;
+    visibleRewardBitmap?: boolean;
 }
 
-export const DailytasksLayoutRewardTemplateItem = ({ captionRewardAmountText, layout, srcRewardBitmap }: DailytasksLayoutRewardTemplateItemProps) => {
+export const DailytasksLayoutRewardTemplateItem = ({ captionRewardAmountText, layout, srcRewardBitmap, visibleRewardBitmap }: DailytasksLayoutRewardTemplateItemProps) => {
     return (
         <Region
             name="reward_template"
@@ -198,12 +177,13 @@ export const DailytasksLayoutRewardTemplateItem = ({ captionRewardAmountText, la
                 name="reward_display_widget"
                 layout={{ position: 'absolute', left: 2, width: 40, top: 1, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
-            <ThemeImage
-                name="reward_bitmap"
-                src={srcRewardBitmap}
-                layout={{ position: 'absolute', left: 0, width: 44, top: 0, height: 50, minWidth: 44, maxWidth: 44, minHeight: 50, maxHeight: 50 }}
-                visible={false}
-            />
+            {(visibleRewardBitmap ?? false) && (
+                <ThemeImage
+                    name="reward_bitmap"
+                    src={srcRewardBitmap}
+                    layout={{ position: 'absolute', left: 0, width: 44, top: 0, height: 50, minWidth: 44, maxWidth: 44, minHeight: 50, maxHeight: 50 }}
+                />
+            )}
             <Border
                 variant="3"
                 name="reward_amount_border"
@@ -225,104 +205,17 @@ export const DailytasksLayoutRewardTemplateItem = ({ captionRewardAmountText, la
     );
 };
 
-/** Named region `rewards_list` of DailytasksLayout - configured through the parent's `rewardsList` prop. */
-export interface DailytasksLayoutRewardsListProps {
+/** Named region `right_cont` of DailytasksLayout - configured through the parent's `rightCont` prop. */
+export interface DailytasksLayoutRightContProps {
+    captionClaimTxt?: string;
+    captionRewardTitleText?: string;
     itemsRewardsList?: ReactNode;
     layout?: BoxLayout;
-}
-
-export const DailytasksLayoutRewardsList = ({ itemsRewardsList, layout }: DailytasksLayoutRewardsListProps) => {
-    return (
-        <Region
-            name="rewards_list"
-            layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, top: 28, flexDirection: 'row', gap: 4, ...layout }}
-        >
-            {itemsRewardsList ?? (
-                <DailytasksLayoutRewardTemplateItem />
-            )}
-        </Region>
-    );
-};
-
-/** Named region `claim_button_container` of DailytasksLayout - configured through the parent's `claimButtonContainer` prop. */
-export interface DailytasksLayoutClaimButtonContainerProps {
-    captionClaimTxt?: string;
-    layout?: BoxLayout;
     onClaimButton?: () => void;
-}
-
-export const DailytasksLayoutClaimButtonContainer = ({ captionClaimTxt, layout, onClaimButton }: DailytasksLayoutClaimButtonContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="claim_button_container"
-            layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 23, justifyContent: 'center', ...layout }}
-        >
-            <Button
-                variant="5"
-                name="claim_button"
-                tintColor="#01a101"
-                onPointerTap={onClaimButton}
-                layout={{ position: 'absolute', width: 110, top: 0, height: 23, minWidth: 110, maxWidth: 110 }}
-            />
-            <Region
-                name="claim_txt"
-                layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 91, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionClaimTxt ?? t('dailytasks.claim')}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `progress_bar_wrapper` of DailytasksLayout - configured through the parent's `progressBarWrapper` prop. */
-export interface DailytasksLayoutProgressBarWrapperProps {
-    layout?: BoxLayout;
     visibleProgressBarWrapper?: boolean;
 }
 
-export const DailytasksLayoutProgressBarWrapper = ({ layout, visibleProgressBarWrapper }: DailytasksLayoutProgressBarWrapperProps) => {
-    return (
-        <Region
-            name="progress_bar_wrapper"
-            visible={visibleProgressBarWrapper ?? false}
-            layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 23, minWidth: 110, maxWidth: 110, minHeight: 23, maxHeight: 23, ...layout }}
-        />
-    );
-};
-
-/** Named region `right_bottom_cont` of DailytasksLayout - configured through the parent's `rightBottomCont` prop. */
-export interface DailytasksLayoutRightBottomContProps {
-    claimButtonContainer?: DailytasksLayoutClaimButtonContainerProps;
-    layout?: BoxLayout;
-    progressBarWrapper?: DailytasksLayoutProgressBarWrapperProps;
-}
-
-export const DailytasksLayoutRightBottomCont = ({ claimButtonContainer, layout, progressBarWrapper }: DailytasksLayoutRightBottomContProps) => {
-    return (
-        <Region
-            name="right_bottom_cont"
-            layout={{ position: 'absolute', left: 0, width: 110, top: 84, height: 29, ...layout }}
-        >
-            <DailytasksLayoutClaimButtonContainer {...claimButtonContainer} />
-            <DailytasksLayoutProgressBarWrapper {...progressBarWrapper} />
-        </Region>
-    );
-};
-
-/** Named region `right_cont` of DailytasksLayout - configured through the parent's `rightCont` prop. */
-export interface DailytasksLayoutRightContProps {
-    captionRewardTitleText?: string;
-    layout?: BoxLayout;
-    rewardsList?: DailytasksLayoutRewardsListProps;
-    rightBottomCont?: DailytasksLayoutRightBottomContProps;
-}
-
-export const DailytasksLayoutRightCont = ({ captionRewardTitleText, layout, rewardsList, rightBottomCont }: DailytasksLayoutRightContProps) => {
+export const DailytasksLayoutRightCont = ({ captionClaimTxt, captionRewardTitleText, itemsRewardsList, layout, onClaimButton, visibleProgressBarWrapper }: DailytasksLayoutRightContProps) => {
     const t = useTranslation();
 
     return (
@@ -346,8 +239,46 @@ export const DailytasksLayoutRightCont = ({ captionRewardTitleText, layout, rewa
                     />
                 </Region>
             </Border>
-            <DailytasksLayoutRewardsList {...rewardsList} />
-            <DailytasksLayoutRightBottomCont {...rightBottomCont} />
+            <Region
+                name="rewards_list"
+                layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, top: 28, flexDirection: 'row', gap: 4 }}
+            >
+                {itemsRewardsList ?? (
+                    <DailytasksLayoutRewardTemplateItem />
+                )}
+            </Region>
+            <Region
+                name="right_bottom_cont"
+                layout={{ position: 'absolute', left: 0, width: 110, top: 84, height: 29 }}
+            >
+                <Region
+                    name="claim_button_container"
+                    layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 23, justifyContent: 'center' }}
+                >
+                    <Button
+                        variant="5"
+                        name="claim_button"
+                        tintColor="#01a101"
+                        onPointerTap={onClaimButton}
+                        layout={{ position: 'absolute', width: 110, top: 0, height: 23, minWidth: 110, maxWidth: 110 }}
+                    />
+                    <Region
+                        name="claim_txt"
+                        layout={{ position: 'absolute', marginLeft: -6.5, marginRight: 6.5, width: 91, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionClaimTxt ?? t('dailytasks.claim')}
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                </Region>
+                {(visibleProgressBarWrapper ?? false) && (
+                    <Region
+                        name="progress_bar_wrapper"
+                        layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 23, minWidth: 110, maxWidth: 110, minHeight: 23, maxHeight: 23 }}
+                    />
+                )}
+            </Region>
         </Region>
     );
 };

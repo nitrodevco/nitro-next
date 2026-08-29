@@ -15,50 +15,20 @@ export const NewFeatureNotificationCountdownLayout = ({ layout, mainRegion }: Ne
     );
 };
 
-/** Named region `cancel_link_region` of NewFeatureNotificationCountdownLayout - configured through the parent's `cancelLinkRegion` prop. */
-export interface NewFeatureNotificationCountdownLayoutCancelLinkRegionProps {
+/** Named region `main_region` of NewFeatureNotificationCountdownLayout - configured through the parent's `mainRegion` prop. */
+export interface NewFeatureNotificationCountdownLayoutMainRegionProps {
+    captionDesc?: string;
     layout?: BoxLayout;
     onCancelLinkRegion?: () => void;
+    onMainRegion?: () => void;
     srcCancelImg?: string;
     srcCancelImg2?: string;
+    srcStaticBitmap?: string;
+    visibleCancelImg?: boolean;
     visibleCancelLinkRegion?: boolean;
 }
 
-export const NewFeatureNotificationCountdownLayoutCancelLinkRegion = ({ layout, onCancelLinkRegion, srcCancelImg, srcCancelImg2, visibleCancelLinkRegion }: NewFeatureNotificationCountdownLayoutCancelLinkRegionProps) => {
-    return (
-        <Region
-            name="cancel_link_region"
-            visible={visibleCancelLinkRegion ?? false}
-            onPointerTap={onCancelLinkRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 174, width: 10, top: 9, height: 10, ...layout }}
-        >
-            <ThemeImage
-                name="cancel_img"
-                src={srcCancelImg ?? layoutImage('common_close_x.png')}
-                layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 9 }}
-            />
-            <ThemeImage
-                name="cancel_img"
-                src={srcCancelImg2 ?? layoutImage('common_close_x.png')}
-                tint="#000000"
-                layout={{ position: 'absolute', left: 1, width: 9, top: 0, height: 9 }}
-                visible={false}
-            />
-        </Region>
-    );
-};
-
-/** Named region `main_region` of NewFeatureNotificationCountdownLayout - configured through the parent's `mainRegion` prop. */
-export interface NewFeatureNotificationCountdownLayoutMainRegionProps {
-    cancelLinkRegion?: NewFeatureNotificationCountdownLayoutCancelLinkRegionProps;
-    captionDesc?: string;
-    layout?: BoxLayout;
-    onMainRegion?: () => void;
-    srcStaticBitmap?: string;
-}
-
-export const NewFeatureNotificationCountdownLayoutMainRegion = ({ cancelLinkRegion, captionDesc, layout, onMainRegion, srcStaticBitmap }: NewFeatureNotificationCountdownLayoutMainRegionProps) => {
+export const NewFeatureNotificationCountdownLayoutMainRegion = ({ captionDesc, layout, onCancelLinkRegion, onMainRegion, srcCancelImg, srcCancelImg2, srcStaticBitmap, visibleCancelImg, visibleCancelLinkRegion }: NewFeatureNotificationCountdownLayoutMainRegionProps) => {
     return (
         <Region
             name="main_region"
@@ -93,7 +63,28 @@ export const NewFeatureNotificationCountdownLayoutMainRegion = ({ cancelLinkRegi
                     options={{ 'countdown:running': 'true', 'countdown:color_style': '1' }}
                     layout={{ position: 'absolute', left: 46, width: 99, bottom: 6, height: 37 }}
                 />
-                <NewFeatureNotificationCountdownLayoutCancelLinkRegion {...cancelLinkRegion} />
+                {(visibleCancelLinkRegion ?? false) && (
+                    <Region
+                        name="cancel_link_region"
+                        onPointerTap={onCancelLinkRegion}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: 174, width: 10, top: 9, height: 10 }}
+                    >
+                        <ThemeImage
+                            name="cancel_img"
+                            src={srcCancelImg ?? layoutImage('common_close_x.png')}
+                            layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 9 }}
+                        />
+                        {(visibleCancelImg ?? false) && (
+                            <ThemeImage
+                                name="cancel_img"
+                                src={srcCancelImg2 ?? layoutImage('common_close_x.png')}
+                                tint="#000000"
+                                layout={{ position: 'absolute', left: 1, width: 9, top: 0, height: 9 }}
+                            />
+                        )}
+                    </Region>
+                )}
             </Border>
         </Region>
     );

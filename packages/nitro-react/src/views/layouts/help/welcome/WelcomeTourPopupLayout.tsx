@@ -1,16 +1,17 @@
 import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Button, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
+import { BoxLayout, Button, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `2906_welcome_tour_popup_xml` (layout "welcome_tour_popup", 435x222) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface WelcomeTourPopupLayoutProps {
     layout?: BoxLayout;
     onClose?: () => void;
+    onRefuseTour?: () => void;
     onTakeTour?: () => void;
-    refuseTour?: WelcomeTourPopupLayoutRefuseTourProps;
+    visibleRefuseTour?: boolean;
 }
 
-export const WelcomeTourPopupLayout = ({ layout, onClose, onTakeTour, refuseTour }: WelcomeTourPopupLayoutProps) => {
+export const WelcomeTourPopupLayout = ({ layout, onClose, onRefuseTour, onTakeTour, visibleRefuseTour }: WelcomeTourPopupLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -49,49 +50,18 @@ export const WelcomeTourPopupLayout = ({ layout, onClose, onTakeTour, refuseTour
                 >
                     {t('help.tour.popup.action.accept')}
                 </Button>
-                <WelcomeTourPopupLayoutRefuseTour {...refuseTour} />
-                <Border
-                    variant="3"
-                    blend={0.7}
-                    visible={false}
-                    layout={{ position: 'absolute', left: 1, width: 304, top: 88, height: 45 }}
-                >
-                    <Region layout={{ position: 'absolute', left: 11, width: 283, top: 9, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.tour.popup.hint')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 283 }}
-                        />
+                {(visibleRefuseTour ?? false) && (
+                    <Region
+                        name="refuse_tour"
+                        onPointerTap={onRefuseTour}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', width: 168, top: 57, height: 16 }}
+                    >
+                        {/* `text` is hidden and has no name to show it by */}
                     </Region>
-                </Border>
+                )}
+                {/* `border` is hidden and has no name to show it by */}
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `refuse_tour` of WelcomeTourPopupLayout - configured through the parent's `refuseTour` prop. */
-export interface WelcomeTourPopupLayoutRefuseTourProps {
-    layout?: BoxLayout;
-    onRefuseTour?: () => void;
-    visibleRefuseTour?: boolean;
-}
-
-export const WelcomeTourPopupLayoutRefuseTour = ({ layout, onRefuseTour, visibleRefuseTour }: WelcomeTourPopupLayoutRefuseTourProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="refuse_tour"
-            visible={visibleRefuseTour ?? false}
-            onPointerTap={onRefuseTour}
-            cursor="pointer"
-            layout={{ position: 'absolute', width: 168, top: 57, height: 16, ...layout }}
-        >
-            <Region
-                visible={false}
-                layout={{ position: 'absolute', left: 0, width: 168, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={t('help.tour.popup.action.refuse')} />
-            </Region>
-        </Region>
     );
 };

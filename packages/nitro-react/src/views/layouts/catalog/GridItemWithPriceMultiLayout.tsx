@@ -5,25 +5,26 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1717_gridItem_with_price_multi_xml` (layout "gridItem_with_price_multi", 53x74) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GridItemWithPriceMultiLayoutProps {
+    itemsTotalpriceContainer?: ReactNode;
+    itemsTotalpriceContainer2?: ReactNode;
     layout?: BoxLayout;
     smallContainer?: GridItemWithPriceMultiLayoutSmallContainerProps;
     srcBadgeAddOn?: string;
-    totalpriceContainer?: GridItemWithPriceMultiLayoutTotalpriceContainerProps;
-    totalpriceContainer2?: GridItemWithPriceMultiLayoutTotalpriceContainer2Props;
+    srcImageWide?: string;
     visibleBg?: boolean;
-    wideContainer?: GridItemWithPriceMultiLayoutWideContainerProps;
 }
 
-export const GridItemWithPriceMultiLayout = ({ layout, smallContainer, srcBadgeAddOn, totalpriceContainer, totalpriceContainer2, visibleBg, wideContainer }: GridItemWithPriceMultiLayoutProps) => {
+export const GridItemWithPriceMultiLayout = ({ itemsTotalpriceContainer, itemsTotalpriceContainer2, layout, smallContainer, srcBadgeAddOn, srcImageWide, visibleBg }: GridItemWithPriceMultiLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 53, height: 74, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 74, minWidth: 53, maxWidth: 73 }}>
-                <Border
-                    variant="3"
-                    name="bg"
-                    visible={visibleBg ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 74 }}
-                />
+                {(visibleBg ?? false) && (
+                    <Border
+                        variant="3"
+                        name="bg"
+                        layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 74 }}
+                    />
+                )}
                 <Border
                     variant="2"
                     tintColor="#a1a19b"
@@ -41,37 +42,46 @@ export const GridItemWithPriceMultiLayout = ({ layout, smallContainer, srcBadgeA
                         />
                     </Border>
                 </Border>
-                <GridItemWithPriceMultiLayoutWideContainer {...wideContainer} />
+                <Region
+                    name="wide_container"
+                    layout={{ position: 'absolute', left: 6, width: 60, top: 2, height: 36 }}
+                >
+                    <ThemeImage
+                        name="image_wide"
+                        src={srcImageWide}
+                        layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 36 }}
+                    />
+                </Region>
                 <ThemeImage
                     name="badge_add_on"
                     src={srcBadgeAddOn}
                     layout={{ position: 'absolute', left: 8, width: 10, top: 2, height: 10 }}
                 />
                 <GridItemWithPriceMultiLayoutSmallContainer {...smallContainer} />
-                <GridItemWithPriceMultiLayoutTotalpriceContainer {...totalpriceContainer} />
-                <GridItemWithPriceMultiLayoutTotalpriceContainer2 {...totalpriceContainer2} />
+                <Region
+                    name="totalprice_container"
+                    layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1 }}
+                >
+                    {itemsTotalpriceContainer ?? (
+                        <>
+                            <GridItemWithPriceMultiLayoutAmountTextLeftItem />
+                            <GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapLeftItem />
+                        </>
+                    )}
+                </Region>
+                <Region
+                    name="totalprice_container"
+                    layout={{ position: 'absolute', right: 2, top: 51, flexDirection: 'row', gap: 1 }}
+                >
+                    {itemsTotalpriceContainer2 ?? (
+                        <>
+                            <GridItemWithPriceMultiLayoutPlusItem />
+                            <GridItemWithPriceMultiLayoutAmountTextRightItem />
+                            <GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapRightItem />
+                        </>
+                    )}
+                </Region>
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `wide_container` of GridItemWithPriceMultiLayout - configured through the parent's `wideContainer` prop. */
-export interface GridItemWithPriceMultiLayoutWideContainerProps {
-    layout?: BoxLayout;
-    srcImageWide?: string;
-}
-
-export const GridItemWithPriceMultiLayoutWideContainer = ({ layout, srcImageWide }: GridItemWithPriceMultiLayoutWideContainerProps) => {
-    return (
-        <Region
-            name="wide_container"
-            layout={{ position: 'absolute', left: 6, width: 60, top: 2, height: 36, ...layout }}
-        >
-            <ThemeImage
-                name="image_wide"
-                src={srcImageWide}
-                layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 36 }}
-            />
         </Region>
     );
 };
@@ -85,9 +95,12 @@ export interface GridItemWithPriceMultiLayoutSmallContainerProps {
     srcImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
     srcUniqueItemSoldOutBitmap?: string;
+    visibleUniqueItemBackgroundBitmap?: boolean;
+    visibleUniqueItemOverlayContainer?: boolean;
+    visibleUniqueItemSoldOutBitmap?: boolean;
 }
 
-export const GridItemWithPriceMultiLayoutSmallContainer = ({ captionBundleCounter, captionMultiCounter, layout, onSmallContainer, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap }: GridItemWithPriceMultiLayoutSmallContainerProps) => {
+export const GridItemWithPriceMultiLayoutSmallContainer = ({ captionBundleCounter, captionMultiCounter, layout, onSmallContainer, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer, visibleUniqueItemSoldOutBitmap }: GridItemWithPriceMultiLayoutSmallContainerProps) => {
     return (
         <Region
             name="small_container"
@@ -95,23 +108,25 @@ export const GridItemWithPriceMultiLayoutSmallContainer = ({ captionBundleCounte
             cursor="pointer"
             layout={{ position: 'absolute', left: 8, width: 36, top: 2, height: 36, ...layout }}
         >
-            <ThemeImage
-                name="unique_item_background_bitmap"
-                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                visible={false}
-            />
+            {(visibleUniqueItemBackgroundBitmap ?? false) && (
+                <ThemeImage
+                    name="unique_item_background_bitmap"
+                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
+                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                />
+            )}
             <ThemeImage
                 name="image"
                 src={srcImage}
                 layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
             />
-            <WidgetSlot
-                widgetType="limited_item_overlay_grid"
-                name="unique_item_overlay_container"
-                visible={false}
-                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-            />
+            {(visibleUniqueItemOverlayContainer ?? false) && (
+                <WidgetSlot
+                    widgetType="limited_item_overlay_grid"
+                    name="unique_item_overlay_container"
+                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                />
+            )}
             <Icon
                 variant="0"
                 name="clubLevelIcon"
@@ -142,17 +157,14 @@ export const GridItemWithPriceMultiLayoutSmallContainer = ({ captionBundleCounte
                     />
                 </Region>
             </Border>
-            <ThemeImage
-                name="unique_item_sold_out_bitmap"
-                src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_tile.png')}
-                layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
-                visible={false}
-            />
-            <ThemeImage
-                src={layoutImage('inventory_thumb_selected_outline.png')}
-                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                visible={false}
-            />
+            {(visibleUniqueItemSoldOutBitmap ?? false) && (
+                <ThemeImage
+                    name="unique_item_sold_out_bitmap"
+                    src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_tile.png')}
+                    layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
+                />
+            )}
+            {/* `static_bitmap` is hidden and has no name to show it by */}
         </Region>
     );
 };
@@ -186,28 +198,6 @@ export const GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapLeftItem = ({ la
             name="currency_indicator_bitmap_left"
             layout={{ width: 14, height: 15, flexShrink: 0, ...layout }}
         />
-    );
-};
-
-/** Named region `totalprice_container` of GridItemWithPriceMultiLayout - configured through the parent's `totalpriceContainer` prop. */
-export interface GridItemWithPriceMultiLayoutTotalpriceContainerProps {
-    itemsTotalpriceContainer?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const GridItemWithPriceMultiLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout }: GridItemWithPriceMultiLayoutTotalpriceContainerProps) => {
-    return (
-        <Region
-            name="totalprice_container"
-            layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1, ...layout }}
-        >
-            {itemsTotalpriceContainer ?? (
-                <>
-                    <GridItemWithPriceMultiLayoutAmountTextLeftItem />
-                    <GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapLeftItem />
-                </>
-            )}
-        </Region>
     );
 };
 
@@ -257,28 +247,5 @@ export const GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapRightItem = ({ l
             name="currency_indicator_bitmap_right"
             layout={{ width: 14, height: 15, flexShrink: 0, ...layout }}
         />
-    );
-};
-
-/** Named region `totalprice_container` of GridItemWithPriceMultiLayout - configured through the parent's `totalpriceContainer` prop. */
-export interface GridItemWithPriceMultiLayoutTotalpriceContainer2Props {
-    itemsTotalpriceContainer?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const GridItemWithPriceMultiLayoutTotalpriceContainer2 = ({ itemsTotalpriceContainer, layout }: GridItemWithPriceMultiLayoutTotalpriceContainer2Props) => {
-    return (
-        <Region
-            name="totalprice_container"
-            layout={{ position: 'absolute', right: 2, top: 51, flexDirection: 'row', gap: 1, ...layout }}
-        >
-            {itemsTotalpriceContainer ?? (
-                <>
-                    <GridItemWithPriceMultiLayoutPlusItem />
-                    <GridItemWithPriceMultiLayoutAmountTextRightItem />
-                    <GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapRightItem />
-                </>
-            )}
-        </Region>
     );
 };

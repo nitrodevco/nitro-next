@@ -145,45 +145,15 @@ export const UseProductControllerRebreedMonsterplantLayoutPlantItemlistItem = ({
     );
 };
 
-/** Named region `separator` of UseProductControllerRebreedMonsterplantLayout - configured through the parent's `separator` prop. */
-export interface UseProductControllerRebreedMonsterplantLayoutSeparatorProps {
-    layout?: BoxLayout;
-}
-
-export const UseProductControllerRebreedMonsterplantLayoutSeparator = ({ layout }: UseProductControllerRebreedMonsterplantLayoutSeparatorProps) => {
-    return (
-        <Region
-            name="separator"
-            layout={{ width: 130, height: 17, flexShrink: 0, minWidth: 130, maxWidth: 130, ...layout }}
-        />
-    );
-};
-
-/** Named region `separator` of UseProductControllerRebreedMonsterplantLayout - configured through the parent's `separator` prop. */
-export interface UseProductControllerRebreedMonsterplantLayoutSeparator2Props {
-    layout?: BoxLayout;
-}
-
-export const UseProductControllerRebreedMonsterplantLayoutSeparator2 = ({ layout }: UseProductControllerRebreedMonsterplantLayoutSeparator2Props) => {
-    return (
-        <Region
-            name="separator"
-            layout={{ width: 130, height: 10, flexShrink: 0, minWidth: 130, maxWidth: 130, ...layout }}
-        />
-    );
-};
-
 /** Row template `preview_list` of UseProductControllerRebreedMonsterplantLayout - pass real rows through its `items…` slot. */
 export interface UseProductControllerRebreedMonsterplantLayoutPreviewListItemProps {
     captionDescription?: string;
     captionInfo?: string;
     itemsPreviewList?: ReactNode;
     layout?: BoxLayout;
-    separator?: UseProductControllerRebreedMonsterplantLayoutSeparatorProps;
-    separator2?: UseProductControllerRebreedMonsterplantLayoutSeparator2Props;
 }
 
-export const UseProductControllerRebreedMonsterplantLayoutPreviewListItem = ({ captionDescription, captionInfo, itemsPreviewList, layout, separator, separator2 }: UseProductControllerRebreedMonsterplantLayoutPreviewListItemProps) => {
+export const UseProductControllerRebreedMonsterplantLayoutPreviewListItem = ({ captionDescription, captionInfo, itemsPreviewList, layout }: UseProductControllerRebreedMonsterplantLayoutPreviewListItemProps) => {
     const t = useTranslation();
 
     return (
@@ -195,7 +165,10 @@ export const UseProductControllerRebreedMonsterplantLayoutPreviewListItem = ({ c
                 <UseProductControllerRebreedMonsterplantLayoutPlantItemlistItem />
             )}
             <Region layout={{ flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'column', gap: 1 }}>
-                <UseProductControllerRebreedMonsterplantLayoutSeparator {...separator} />
+                <Region
+                    name="separator"
+                    layout={{ width: 130, height: 17, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
+                />
                 <Region
                     name="description"
                     layout={{ width: 130, height: 57, flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -205,7 +178,10 @@ export const UseProductControllerRebreedMonsterplantLayoutPreviewListItem = ({ c
                         textOptions={{ wordWrap: true, wordWrapWidth: 130 }}
                     />
                 </Region>
-                <UseProductControllerRebreedMonsterplantLayoutSeparator2 {...separator2} />
+                <Region
+                    name="separator"
+                    layout={{ width: 130, height: 10, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
+                />
                 <Region
                     name="info"
                     layout={{ width: 130, height: 30, flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}

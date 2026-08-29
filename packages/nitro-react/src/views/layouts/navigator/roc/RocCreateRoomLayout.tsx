@@ -5,13 +5,13 @@ import { BoxLayout, Button, ButtonThick, Dropmenu, Frame, Region, ScrollArea, Te
 
 /** Generated from `3031_roc_create_room_xml` (layout "roc_create_room", 585x367) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RocCreateRoomLayoutProps {
+    captionChooseLayoutCaption?: string;
     layout?: BoxLayout;
     onClose?: () => void;
-    roomLayoutContainer?: RocCreateRoomLayoutRoomLayoutContainerProps;
     roomSettingsContainer?: RocCreateRoomLayoutRoomSettingsContainerProps;
 }
 
-export const RocCreateRoomLayout = ({ layout, onClose, roomLayoutContainer, roomSettingsContainer }: RocCreateRoomLayoutProps) => {
+export const RocCreateRoomLayout = ({ captionChooseLayoutCaption, layout, onClose, roomSettingsContainer }: RocCreateRoomLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -25,7 +25,27 @@ export const RocCreateRoomLayout = ({ layout, onClose, roomLayoutContainer, room
             layout={{ width: 585, height: 367, ...layout }}
         >
             <RocCreateRoomLayoutRoomSettingsContainer {...roomSettingsContainer} />
-            <RocCreateRoomLayoutRoomLayoutContainer {...roomLayoutContainer} />
+            <Region
+                name="room_layout_container"
+                layout={{ position: 'absolute', left: 270, width: 300, top: 15, height: 315 }}
+            >
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 0, right: 10, top: 20, bottom: 0 }}
+                >
+                    <Region
+                        name="layout_item_list"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    />
+                </ScrollArea>
+                {/* <scrollbar_vertical> for layout_item_list - rendered by that list's ScrollArea */}
+                <Region
+                    name="choose_layout_caption"
+                    layout={{ position: 'absolute', left: 0, width: 257, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionChooseLayoutCaption ?? t('navigator.createroom.chooselayoutcaption')} />
+                </Region>
+            </Region>
         </Frame>
     );
 };
@@ -130,52 +150,6 @@ export const RocCreateRoomLayoutRoomSettingsContainer = ({ captionCreateCategory
             >
                 {t('generic.cancel')}
             </Button>
-        </Region>
-    );
-};
-
-/** Named region `layout_item_list` of RocCreateRoomLayout - configured through the parent's `layoutItemList` prop. */
-export interface RocCreateRoomLayoutLayoutItemListProps {
-    layout?: BoxLayout;
-}
-
-export const RocCreateRoomLayoutLayoutItemList = ({ layout }: RocCreateRoomLayoutLayoutItemListProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 0, right: 10, top: 20, bottom: 0, ...layout }}
-        >
-            <Region
-                name="layout_item_list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
-/** Named region `room_layout_container` of RocCreateRoomLayout - configured through the parent's `roomLayoutContainer` prop. */
-export interface RocCreateRoomLayoutRoomLayoutContainerProps {
-    captionChooseLayoutCaption?: string;
-    layout?: BoxLayout;
-    layoutItemList?: RocCreateRoomLayoutLayoutItemListProps;
-}
-
-export const RocCreateRoomLayoutRoomLayoutContainer = ({ captionChooseLayoutCaption, layout, layoutItemList }: RocCreateRoomLayoutRoomLayoutContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="room_layout_container"
-            layout={{ position: 'absolute', left: 270, width: 300, top: 15, height: 315, ...layout }}
-        >
-            <RocCreateRoomLayoutLayoutItemList {...layoutItemList} />
-            {/* <scrollbar_vertical> for layout_item_list - rendered by that list's ScrollArea */}
-            <Region
-                name="choose_layout_caption"
-                layout={{ position: 'absolute', left: 0, width: 257, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionChooseLayoutCaption ?? t('navigator.createroom.chooselayoutcaption')} />
-            </Region>
         </Region>
     );
 };

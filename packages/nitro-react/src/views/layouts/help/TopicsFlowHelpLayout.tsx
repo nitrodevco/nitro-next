@@ -7,23 +7,33 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `2921_topics_flow_help_xml` (layout "report", 448x522) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface TopicsFlowHelpLayoutProps {
     captionButtonText?: string;
+    captionChangeUser?: string;
     captionContinueButton?: string;
+    captionReportedUserName?: string;
+    captionUserInfoTitle?: string;
     chatContainer?: TopicsFlowHelpLayoutChatContainerProps;
     helpContainer?: TopicsFlowHelpLayoutHelpContainerProps;
+    itemsReasonList?: ReactNode;
     layout?: BoxLayout;
     messageContainer?: TopicsFlowHelpLayoutMessageContainerProps;
     onBackButton?: () => void;
+    onChangeUser?: () => void;
     onClose?: () => void;
     onContinueButton?: () => void;
-    reasonContainer?: TopicsFlowHelpLayoutReasonContainerProps;
+    onSubmitButton?: () => void;
     startContainer?: TopicsFlowHelpLayoutStartContainerProps;
-    summaryContainer?: TopicsFlowHelpLayoutSummaryContainerProps;
-    user?: TopicsFlowHelpLayoutUserProps;
     usersContainer?: TopicsFlowHelpLayoutUsersContainerProps;
     visibleBackButton?: boolean;
+    visibleChatContainer?: boolean;
+    visibleMessageContainer?: boolean;
+    visibleReasonContainer?: boolean;
+    visibleStartContainer?: boolean;
+    visibleSummaryContainer?: boolean;
+    visibleUser?: boolean;
+    visibleUsersContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayout = ({ captionButtonText, captionContinueButton, chatContainer, helpContainer, layout, messageContainer, onBackButton, onClose, onContinueButton, reasonContainer, startContainer, summaryContainer, user, usersContainer, visibleBackButton }: TopicsFlowHelpLayoutProps) => {
+export const TopicsFlowHelpLayout = ({ captionButtonText, captionChangeUser, captionContinueButton, captionReportedUserName, captionUserInfoTitle, chatContainer, helpContainer, itemsReasonList, layout, messageContainer, onBackButton, onChangeUser, onClose, onContinueButton, onSubmitButton, startContainer, usersContainer, visibleBackButton, visibleChatContainer, visibleMessageContainer, visibleReasonContainer, visibleStartContainer, visibleSummaryContainer, visibleUser, visibleUsersContainer }: TopicsFlowHelpLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -34,7 +44,9 @@ export const TopicsFlowHelpLayout = ({ captionButtonText, captionContinueButton,
             onClose={onClose}
             layout={{ width: 448, height: 522, ...layout }}
         >
-            <TopicsFlowHelpLayoutStartContainer {...startContainer} />
+            {(visibleStartContainer ?? false) && (
+                <TopicsFlowHelpLayoutStartContainer {...startContainer} />
+            )}
             <TopicsFlowHelpLayoutHelpContainer {...helpContainer} />
             <ContainerButton
                 variant="5"
@@ -49,26 +61,141 @@ export const TopicsFlowHelpLayout = ({ captionButtonText, captionContinueButton,
                     textOptions={{ fill: '#ffffff', align: 'center' }}
                 />
             </ContainerButton>
-            <TopicsFlowHelpLayoutUsersContainer {...usersContainer} />
-            <TopicsFlowHelpLayoutUser {...user} />
-            <TopicsFlowHelpLayoutReasonContainer {...reasonContainer} />
-            <TopicsFlowHelpLayoutMessageContainer {...messageContainer} />
-            <TopicsFlowHelpLayoutChatContainer {...chatContainer} />
-            <ContainerButton
-                variant="5"
-                name="back_button"
-                tintColor="#aaaaaa"
-                onPointerTap={onBackButton}
-                visible={visibleBackButton ?? false}
-                layout={{ position: 'absolute', left: 30, width: 189, top: 435, height: 41 }}
-            >
-                <ThemeText
-                    text={captionButtonText ?? t('generic.back')}
-                    textStyle="text-style-u-headline-medium"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </ContainerButton>
-            <TopicsFlowHelpLayoutSummaryContainer {...summaryContainer} />
+            {(visibleUsersContainer ?? false) && (
+                <TopicsFlowHelpLayoutUsersContainer {...usersContainer} />
+            )}
+            {(visibleUser ?? false) && (
+                <Region
+                    name="user"
+                    layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 90 }}
+                >
+                    <Region
+                        backgroundColor="#8899a2"
+                        layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 90 }}
+                    />
+                    <Region
+                        backgroundColor="#000000"
+                        layout={{ position: 'absolute', left: 0, width: 446, top: 89, height: 1 }}
+                    />
+                    <WidgetSlot
+                        widgetType="avatar_image"
+                        name="reported_user_avatar"
+                        options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
+                        layout={{ position: 'absolute', left: 50, width: 33, top: 23, height: 34 }}
+                    />
+                    <Region
+                        name="user_info_title"
+                        layout={{ position: 'absolute', left: 110, width: 160, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionUserInfoTitle ?? t('help.cfh.selected_user.title')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#efefef' }}
+                        />
+                    </Region>
+                    <Region
+                        name="reported_user_name"
+                        layout={{ position: 'absolute', left: 110, width: 93, top: 30, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionReportedUserName ?? 'UserName'}
+                            textStyle="text-style-u-headline-big"
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                    <Region
+                        name="change_user"
+                        layout={{ position: 'absolute', left: 110, width: 256, top: 60, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        onPointerTap={onChangeUser}
+                        cursor="pointer"
+                    >
+                        <ThemeText
+                            text={captionChangeUser ?? t('help.cfh.selected_user.change')}
+                            textStyle="text-style-id-link-strong"
+                            textOptions={{ fill: '#efefef' }}
+                        />
+                    </Region>
+                </Region>
+            )}
+            {(visibleReasonContainer ?? false) && (
+                <Region
+                    name="reason_container"
+                    layout={{ position: 'absolute', left: 0, width: 445, top: 90, height: 340 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 30, width: 405, top: 12, height: 59, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('help.cfh.pick.topic')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 405 }}
+                        />
+                    </Region>
+                    <ScrollArea
+                        orientation="vertical"
+                        layout={{ position: 'absolute', left: 30, width: 385, top: 70, height: 270 }}
+                    >
+                        <Region
+                            name="reason_list"
+                            layout={{ flexDirection: 'column', gap: 5, width: '100%' }}
+                        >
+                            {itemsReasonList ?? (
+                                <TopicsFlowHelpLayoutReasonPrototypeItem />
+                            )}
+                        </Region>
+                    </ScrollArea>
+                </Region>
+            )}
+            {(visibleMessageContainer ?? false) && (
+                <TopicsFlowHelpLayoutMessageContainer {...messageContainer} />
+            )}
+            {(visibleChatContainer ?? false) && (
+                <TopicsFlowHelpLayoutChatContainer {...chatContainer} />
+            )}
+            {(visibleBackButton ?? false) && (
+                <ContainerButton
+                    variant="5"
+                    name="back_button"
+                    tintColor="#aaaaaa"
+                    onPointerTap={onBackButton}
+                    layout={{ position: 'absolute', left: 30, width: 189, top: 435, height: 41 }}
+                >
+                    <ThemeText
+                        text={captionButtonText ?? t('generic.back')}
+                        textStyle="text-style-u-headline-medium"
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
+                </ContainerButton>
+            )}
+            {(visibleSummaryContainer ?? false) && (
+                <Region
+                    name="summary_container"
+                    layout={{ position: 'absolute', left: 0, width: 444, top: 100, height: 380 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 30, width: 164, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('help.cfh.button.send')}
+                            textStyle="text-style-u-headline-medium"
+                        />
+                    </Region>
+                    <Region layout={{ position: 'absolute', left: 30, width: 390, top: 50, height: 107, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('help.main.summary')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 390 }}
+                        />
+                    </Region>
+                    <ContainerButton
+                        variant="5"
+                        name="submit_button"
+                        tintColor="#aa0000"
+                        onPointerTap={onSubmitButton}
+                        layout={{ position: 'absolute', left: 229, width: 189, top: 335, height: 41 }}
+                    >
+                        <ThemeText
+                            text={t('help.emergency.chat_report.submit.button')}
+                            textStyle="text-style-u-headline-medium"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </ContainerButton>
+                </Region>
+            )}
         </Frame>
     );
 };
@@ -94,121 +221,114 @@ export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionRepo
     const t = useTranslation();
 
     return (
-        <Region
-            name="start_container"
-            visible={visibleStartContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 480, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('help_help_duck.png')}
-                layout={{ position: 'absolute', left: 32, width: 124, top: 59, height: 126 }}
-            />
-            <Region layout={{ position: 'absolute', left: 32, width: 382, top: 22, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('help.main.frame.title')}
-                    textStyle="text-style-u-headline-big"
+        (visibleStartContainer ?? false) && (
+            <Region
+                name="start_container"
+                layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 480, ...layout }}
+            >
+                <ThemeImage
+                    src={layoutImage('help_help_duck.png')}
+                    layout={{ position: 'absolute', left: 32, width: 124, top: 59, height: 126 }}
                 />
-            </Region>
-            <Region layout={{ position: 'absolute', left: 170, width: 250, top: 61, height: 117, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('help.main.frame.description')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
-                />
-            </Region>
-            <Region layout={{ position: 'absolute', left: 32, width: 380, top: 230, height: 150, flexDirection: 'column', gap: 5 }}>
-                <ContainerButton
-                    variant="6"
-                    name="button_habbo_help"
-                    tintColor="#00aa00"
-                    onPointerTap={onButtonHabboHelp}
-                    visible={visibleButtonHabboHelp ?? false}
-                    layout={{ width: 380, height: 40, flexShrink: 0 }}
-                >
-                    <Region
-                        visible={false}
-                        layout={{ position: 'absolute', left: 0, width: 365, top: 7, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                <Region layout={{ position: 'absolute', left: 32, width: 382, top: 22, height: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('help.main.frame.title')}
+                        textStyle="text-style-u-headline-big"
+                    />
+                </Region>
+                <Region layout={{ position: 'absolute', left: 170, width: 250, top: 61, height: 117, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('help.main.frame.description')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
+                    />
+                </Region>
+                <Region layout={{ position: 'absolute', left: 32, width: 380, top: 230, height: 150, flexDirection: 'column', gap: 5 }}>
+                    {(visibleButtonHabboHelp ?? false) && (
+                        <ContainerButton
+                            variant="6"
+                            name="button_habbo_help"
+                            tintColor="#00aa00"
+                            onPointerTap={onButtonHabboHelp}
+                            layout={{ width: 380, height: 40, flexShrink: 0 }}
+                        >
+                            {/* `text` is hidden and has no name to show it by */}
+                        </ContainerButton>
+                    )}
+                    <ContainerButton
+                        variant="6"
+                        name="button_user_report"
+                        tintColor="#00aa00"
+                        onPointerTap={onButtonUserReport}
+                        layout={{ width: 380, height: 40, flexShrink: 0 }}
                     >
                         <ThemeText
-                            text={t('help.main.help.title')}
+                            text={t('help.main.bully.subtitle')}
                             textStyle="text-style-u-headline-medium"
                             textOptions={{ fill: '#ffffff', align: 'center' }}
                         />
-                    </Region>
-                </ContainerButton>
-                <ContainerButton
-                    variant="6"
-                    name="button_user_report"
-                    tintColor="#00aa00"
-                    onPointerTap={onButtonUserReport}
-                    layout={{ width: 380, height: 40, flexShrink: 0 }}
+                    </ContainerButton>
+                    <ContainerButton
+                        variant="6"
+                        name="button_account"
+                        tintColor="#00aa00"
+                        onPointerTap={onButtonAccount}
+                        layout={{ width: 380, height: 40, flexShrink: 0 }}
+                    >
+                        <ThemeText
+                            text={t('help.main.self.tips.title')}
+                            textStyle="text-style-u-headline-medium"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </ContainerButton>
+                </Region>
+                <ThemeImage
+                    src={layoutImage('icons_link_icon.png')}
+                    layout={{ position: 'absolute', left: 32, width: 18, top: 378, height: 19 }}
+                />
+                <Region
+                    name="faq_link"
+                    layout={{ position: 'absolute', left: 54, width: 354, top: 377, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    onPointerTap={onFaqLink}
+                    cursor="pointer"
                 >
                     <ThemeText
-                        text={t('help.main.bully.subtitle')}
-                        textStyle="text-style-u-headline-medium"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                        text={captionFaqLink ?? t('help.main.faq.link.text')}
+                        textStyle="text-style-u-bold"
                     />
-                </ContainerButton>
-                <ContainerButton
-                    variant="6"
-                    name="button_account"
-                    tintColor="#00aa00"
-                    onPointerTap={onButtonAccount}
-                    layout={{ width: 380, height: 40, flexShrink: 0 }}
+                </Region>
+                <ThemeImage
+                    src={layoutImage('icons_link_icon.png')}
+                    layout={{ position: 'absolute', left: 32, width: 18, top: 406, height: 19 }}
+                />
+                <Region
+                    name="sanction_info_link"
+                    layout={{ position: 'absolute', left: 54, width: 354, top: 404, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    onPointerTap={onSanctionInfoLink}
+                    cursor="pointer"
                 >
                     <ThemeText
-                        text={t('help.main.self.tips.title')}
-                        textStyle="text-style-u-headline-medium"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                        text={captionSanctionInfoLink ?? t('help.main.my.sanction.status')}
+                        textStyle="text-style-u-bold"
                     />
-                </ContainerButton>
-            </Region>
-            <ThemeImage
-                src={layoutImage('icons_link_icon.png')}
-                layout={{ position: 'absolute', left: 32, width: 18, top: 378, height: 19 }}
-            />
-            <Region
-                name="faq_link"
-                layout={{ position: 'absolute', left: 54, width: 354, top: 377, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                onPointerTap={onFaqLink}
-                cursor="pointer"
-            >
-                <ThemeText
-                    text={captionFaqLink ?? t('help.main.faq.link.text')}
-                    textStyle="text-style-u-bold"
+                </Region>
+                <ThemeImage
+                    name="reports_status_bitmap"
+                    src={srcReportsStatusBitmap ?? layoutImage('icons_link_icon.png')}
+                    layout={{ position: 'absolute', left: 32, width: 18, top: 434, height: 19 }}
                 />
+                <Region
+                    name="reports_status"
+                    layout={{ position: 'absolute', left: 54, width: 354, top: 432, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    onPointerTap={onReportsStatus}
+                    cursor="pointer"
+                >
+                    <ThemeText
+                        text={captionReportsStatus ?? t('help.main.my.reports.status')}
+                        textStyle="text-style-u-bold"
+                    />
+                </Region>
             </Region>
-            <ThemeImage
-                src={layoutImage('icons_link_icon.png')}
-                layout={{ position: 'absolute', left: 32, width: 18, top: 406, height: 19 }}
-            />
-            <Region
-                name="sanction_info_link"
-                layout={{ position: 'absolute', left: 54, width: 354, top: 404, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                onPointerTap={onSanctionInfoLink}
-                cursor="pointer"
-            >
-                <ThemeText
-                    text={captionSanctionInfoLink ?? t('help.main.my.sanction.status')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
-            <ThemeImage
-                name="reports_status_bitmap"
-                src={srcReportsStatusBitmap ?? layoutImage('icons_link_icon.png')}
-                layout={{ position: 'absolute', left: 32, width: 18, top: 434, height: 19 }}
-            />
-            <Region
-                name="reports_status"
-                layout={{ position: 'absolute', left: 54, width: 354, top: 432, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                onPointerTap={onReportsStatus}
-                cursor="pointer"
-            >
-                <ThemeText
-                    text={captionReportsStatus ?? t('help.main.my.reports.status')}
-                    textStyle="text-style-u-bold"
-                />
-            </Region>
-        </Region>
+        )
     );
 };
 
@@ -340,132 +460,44 @@ export const TopicsFlowHelpLayoutUserPrototypeItem = ({ captionRoomName, caption
     );
 };
 
-/** Named region `user_list` of TopicsFlowHelpLayout - configured through the parent's `userList` prop. */
-export interface TopicsFlowHelpLayoutUserListProps {
-    itemsUserList?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const TopicsFlowHelpLayoutUserList = ({ itemsUserList, layout }: TopicsFlowHelpLayoutUserListProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 30, width: 400, top: 100, height: 330, ...layout }}
-        >
-            <Region
-                name="user_list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            >
-                {itemsUserList ?? (
-                    <TopicsFlowHelpLayoutUserPrototypeItem />
-                )}
-            </Region>
-        </ScrollArea>
-    );
-};
-
 /** Named region `users_container` of TopicsFlowHelpLayout - configured through the parent's `usersContainer` prop. */
 export interface TopicsFlowHelpLayoutUsersContainerProps {
+    itemsUserList?: ReactNode;
     layout?: BoxLayout;
-    userList?: TopicsFlowHelpLayoutUserListProps;
     visibleUsersContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutUsersContainer = ({ layout, userList, visibleUsersContainer }: TopicsFlowHelpLayoutUsersContainerProps) => {
+export const TopicsFlowHelpLayoutUsersContainer = ({ itemsUserList, layout, visibleUsersContainer }: TopicsFlowHelpLayoutUsersContainerProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="users_container"
-            visible={visibleUsersContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 430, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 30, width: 278, top: 30, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('help.emergency.main.step.two.title')}
-                    textStyle="text-style-u-headline-medium"
-                />
-            </Region>
+        (visibleUsersContainer ?? false) && (
             <Region
-                visible={false}
-                layout={{ position: 'absolute', left: 30, width: 380, top: 60, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                name="users_container"
+                layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 430, ...layout }}
             >
-                <ThemeText
-                    text={t('help.emergency.main.step.two.description')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
-                />
+                <Region layout={{ position: 'absolute', left: 30, width: 278, top: 30, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('help.emergency.main.step.two.title')}
+                        textStyle="text-style-u-headline-medium"
+                    />
+                </Region>
+                {/* `text` is hidden and has no name to show it by */}
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 30, width: 400, top: 100, height: 330 }}
+                >
+                    <Region
+                        name="user_list"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    >
+                        {itemsUserList ?? (
+                            <TopicsFlowHelpLayoutUserPrototypeItem />
+                        )}
+                    </Region>
+                </ScrollArea>
             </Region>
-            <TopicsFlowHelpLayoutUserList {...userList} />
-        </Region>
-    );
-};
-
-/** Named region `user` of TopicsFlowHelpLayout - configured through the parent's `user` prop. */
-export interface TopicsFlowHelpLayoutUserProps {
-    captionChangeUser?: string;
-    captionReportedUserName?: string;
-    captionUserInfoTitle?: string;
-    layout?: BoxLayout;
-    onChangeUser?: () => void;
-    visibleUser?: boolean;
-}
-
-export const TopicsFlowHelpLayoutUser = ({ captionChangeUser, captionReportedUserName, captionUserInfoTitle, layout, onChangeUser, visibleUser }: TopicsFlowHelpLayoutUserProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="user"
-            visible={visibleUser ?? false}
-            layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 90, ...layout }}
-        >
-            <Region
-                backgroundColor="#8899a2"
-                layout={{ position: 'absolute', left: 0, width: 446, top: 0, height: 90 }}
-            />
-            <Region
-                backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 446, top: 89, height: 1 }}
-            />
-            <WidgetSlot
-                widgetType="avatar_image"
-                name="reported_user_avatar"
-                options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
-                layout={{ position: 'absolute', left: 50, width: 33, top: 23, height: 34 }}
-            />
-            <Region
-                name="user_info_title"
-                layout={{ position: 'absolute', left: 110, width: 160, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionUserInfoTitle ?? t('help.cfh.selected_user.title')}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#efefef' }}
-                />
-            </Region>
-            <Region
-                name="reported_user_name"
-                layout={{ position: 'absolute', left: 110, width: 93, top: 30, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionReportedUserName ?? 'UserName'}
-                    textStyle="text-style-u-headline-big"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-            <Region
-                name="change_user"
-                layout={{ position: 'absolute', left: 110, width: 256, top: 60, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                onPointerTap={onChangeUser}
-                cursor="pointer"
-            >
-                <ThemeText
-                    text={captionChangeUser ?? t('help.cfh.selected_user.change')}
-                    textStyle="text-style-id-link-strong"
-                    textOptions={{ fill: '#efefef' }}
-                />
-            </Region>
-        </Region>
+        )
     );
 };
 
@@ -494,147 +526,83 @@ export const TopicsFlowHelpLayoutReasonPrototypeItem = ({ captionName, layout, o
     );
 };
 
-/** Named region `reason_list` of TopicsFlowHelpLayout - configured through the parent's `reasonList` prop. */
-export interface TopicsFlowHelpLayoutReasonListProps {
-    itemsReasonList?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const TopicsFlowHelpLayoutReasonList = ({ itemsReasonList, layout }: TopicsFlowHelpLayoutReasonListProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 30, width: 385, top: 70, height: 270, ...layout }}
-        >
-            <Region
-                name="reason_list"
-                layout={{ flexDirection: 'column', gap: 5, width: '100%' }}
-            >
-                {itemsReasonList ?? (
-                    <TopicsFlowHelpLayoutReasonPrototypeItem />
-                )}
-            </Region>
-        </ScrollArea>
-    );
-};
-
-/** Named region `reason_container` of TopicsFlowHelpLayout - configured through the parent's `reasonContainer` prop. */
-export interface TopicsFlowHelpLayoutReasonContainerProps {
-    layout?: BoxLayout;
-    reasonList?: TopicsFlowHelpLayoutReasonListProps;
-    visibleReasonContainer?: boolean;
-}
-
-export const TopicsFlowHelpLayoutReasonContainer = ({ layout, reasonList, visibleReasonContainer }: TopicsFlowHelpLayoutReasonContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="reason_container"
-            visible={visibleReasonContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 445, top: 90, height: 340, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 30, width: 405, top: 12, height: 59, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('help.cfh.pick.topic')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 405 }}
-                />
-            </Region>
-            <TopicsFlowHelpLayoutReasonList {...reasonList} />
-        </Region>
-    );
-};
-
-/** Named region `unlawful_message_content` of TopicsFlowHelpLayout - configured through the parent's `unlawfulMessageContent` prop. */
-export interface TopicsFlowHelpLayoutUnlawfulMessageContentProps {
-    captionUnlawfulMessageConfirmLabel?: string;
-    layout?: BoxLayout;
-    onUnlawfulMessageConfirm?: () => void;
-}
-
-export const TopicsFlowHelpLayoutUnlawfulMessageContent = ({ captionUnlawfulMessageConfirmLabel, layout, onUnlawfulMessageConfirm }: TopicsFlowHelpLayoutUnlawfulMessageContentProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="unlawful_message_content"
-            layout={{ position: 'absolute', left: 30, width: 390, top: 230, height: 100, ...layout }}
-        >
-            <WidgetSlot
-                widgetType="illumina_input"
-                name="help_message_name"
-                options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${connection.login.name}' }}
-                layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 29 }}
-            />
-            <WidgetSlot
-                widgetType="illumina_input"
-                name="help_message_email"
-                options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${connection.login.email}' }}
-                layout={{ position: 'absolute', left: 200, width: 188, top: 0, height: 29 }}
-            />
-            <CheckBox
-                variant="3"
-                name="unlawful_message_confirm"
-                onPointerTap={onUnlawfulMessageConfirm}
-                layout={{ position: 'absolute', left: 0, width: 30, top: 40, height: 30 }}
-            />
-            <Region
-                name="unlawful_message_confirm_label"
-                layout={{ position: 'absolute', left: 20, width: 370, top: 40, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionUnlawfulMessageConfirmLabel ?? t('help.cfh.unlawful_activity.confirm_label')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 370 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
 /** Named region `message_container` of TopicsFlowHelpLayout - configured through the parent's `messageContainer` prop. */
 export interface TopicsFlowHelpLayoutMessageContainerProps {
     captionMessageContainerDescription?: string;
     captionMessagePhaseTitle?: string;
+    captionUnlawfulMessageConfirmLabel?: string;
     layout?: BoxLayout;
-    unlawfulMessageContent?: TopicsFlowHelpLayoutUnlawfulMessageContentProps;
+    onUnlawfulMessageConfirm?: () => void;
     visibleMessageContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutMessageContainer = ({ captionMessageContainerDescription, captionMessagePhaseTitle, layout, unlawfulMessageContent, visibleMessageContainer }: TopicsFlowHelpLayoutMessageContainerProps) => {
+export const TopicsFlowHelpLayoutMessageContainer = ({ captionMessageContainerDescription, captionMessagePhaseTitle, captionUnlawfulMessageConfirmLabel, layout, onUnlawfulMessageConfirm, visibleMessageContainer }: TopicsFlowHelpLayoutMessageContainerProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="message_container"
-            visible={visibleMessageContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 445, top: 100, height: 330, ...layout }}
-        >
+        (visibleMessageContainer ?? false) && (
             <Region
-                name="message_phase_title"
-                layout={{ position: 'absolute', left: 30, width: 278, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                name="message_container"
+                layout={{ position: 'absolute', left: 0, width: 445, top: 100, height: 330, ...layout }}
             >
-                <ThemeText
-                    text={captionMessagePhaseTitle ?? t('help.emergency.main.step.one.title')}
-                    textStyle="text-style-u-headline-medium"
+                <Region
+                    name="message_phase_title"
+                    layout={{ position: 'absolute', left: 30, width: 278, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionMessagePhaseTitle ?? t('help.emergency.main.step.one.title')}
+                        textStyle="text-style-u-headline-medium"
+                    />
+                </Region>
+                <Region
+                    name="message_container_description"
+                    layout={{ position: 'absolute', left: 30, width: 380, top: 50, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionMessageContainerDescription ?? t('help.emergency.main.step.one.description')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
+                    />
+                </Region>
+                <WidgetSlot
+                    widgetType="illumina_input"
+                    name="help_message"
+                    options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${help.emergency.main.step.one.entry.instruction}', 'illumina_input:multiline': 'true' }}
+                    layout={{ position: 'absolute', left: 30, width: 390, top: 100, height: 120 }}
                 />
+                <Region
+                    name="unlawful_message_content"
+                    layout={{ position: 'absolute', left: 30, width: 390, top: 230, height: 100 }}
+                >
+                    <WidgetSlot
+                        widgetType="illumina_input"
+                        name="help_message_name"
+                        options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${connection.login.name}' }}
+                        layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 29 }}
+                    />
+                    <WidgetSlot
+                        widgetType="illumina_input"
+                        name="help_message_email"
+                        options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${connection.login.email}' }}
+                        layout={{ position: 'absolute', left: 200, width: 188, top: 0, height: 29 }}
+                    />
+                    <CheckBox
+                        variant="3"
+                        name="unlawful_message_confirm"
+                        onPointerTap={onUnlawfulMessageConfirm}
+                        layout={{ position: 'absolute', left: 0, width: 30, top: 40, height: 30 }}
+                    />
+                    <Region
+                        name="unlawful_message_confirm_label"
+                        layout={{ position: 'absolute', left: 20, width: 370, top: 40, bottom: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionUnlawfulMessageConfirmLabel ?? t('help.cfh.unlawful_activity.confirm_label')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 370 }}
+                        />
+                    </Region>
+                </Region>
             </Region>
-            <Region
-                name="message_container_description"
-                layout={{ position: 'absolute', left: 30, width: 380, top: 50, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionMessageContainerDescription ?? t('help.emergency.main.step.one.description')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
-                />
-            </Region>
-            <WidgetSlot
-                widgetType="illumina_input"
-                name="help_message"
-                options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${help.emergency.main.step.one.entry.instruction}', 'illumina_input:multiline': 'true' }}
-                layout={{ position: 'absolute', left: 30, width: 390, top: 100, height: 120 }}
-            />
-            <TopicsFlowHelpLayoutUnlawfulMessageContent {...unlawfulMessageContent} />
-        </Region>
+        )
     );
 };
 
@@ -675,109 +643,53 @@ export const TopicsFlowHelpLayoutChatPrototypeItem = ({ captionChatText, layout,
     );
 };
 
-/** Named region `chat_list` of TopicsFlowHelpLayout - configured through the parent's `chatList` prop. */
-export interface TopicsFlowHelpLayoutChatListProps {
-    itemsChatList?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const TopicsFlowHelpLayoutChatList = ({ itemsChatList, layout }: TopicsFlowHelpLayoutChatListProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 5, width: 380, top: 5, height: 209, ...layout }}
-        >
-            <Region
-                name="chat_list"
-                layout={{ flexDirection: 'column', gap: 2, width: '100%' }}
-            >
-                {itemsChatList ?? (
-                    <TopicsFlowHelpLayoutChatPrototypeItem />
-                )}
-            </Region>
-        </ScrollArea>
-    );
-};
-
 /** Named region `chat_container` of TopicsFlowHelpLayout - configured through the parent's `chatContainer` prop. */
 export interface TopicsFlowHelpLayoutChatContainerProps {
-    chatList?: TopicsFlowHelpLayoutChatListProps;
+    itemsChatList?: ReactNode;
     layout?: BoxLayout;
     visibleChatContainer?: boolean;
 }
 
-export const TopicsFlowHelpLayoutChatContainer = ({ chatList, layout, visibleChatContainer }: TopicsFlowHelpLayoutChatContainerProps) => {
+export const TopicsFlowHelpLayoutChatContainer = ({ itemsChatList, layout, visibleChatContainer }: TopicsFlowHelpLayoutChatContainerProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="chat_container"
-            visible={visibleChatContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 444, top: 100, height: 330, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 30, width: 287, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('help.emergency.chat_report.subtitle')}
-                    textStyle="text-style-u-headline-medium"
-                />
-            </Region>
-            <Region layout={{ position: 'absolute', left: 30, width: 380, top: 40, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('help.emergency.chat_report.description')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
-                />
-            </Region>
-            <Border
-                variant="105"
-                layout={{ position: 'absolute', left: 30, width: 390, top: 100, height: 220 }}
+        (visibleChatContainer ?? false) && (
+            <Region
+                name="chat_container"
+                layout={{ position: 'absolute', left: 0, width: 444, top: 100, height: 330, ...layout }}
             >
-                <TopicsFlowHelpLayoutChatList {...chatList} />
-            </Border>
-        </Region>
-    );
-};
-
-/** Named region `summary_container` of TopicsFlowHelpLayout - configured through the parent's `summaryContainer` prop. */
-export interface TopicsFlowHelpLayoutSummaryContainerProps {
-    layout?: BoxLayout;
-    onSubmitButton?: () => void;
-    visibleSummaryContainer?: boolean;
-}
-
-export const TopicsFlowHelpLayoutSummaryContainer = ({ layout, onSubmitButton, visibleSummaryContainer }: TopicsFlowHelpLayoutSummaryContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="summary_container"
-            visible={visibleSummaryContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 444, top: 100, height: 380, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 30, width: 164, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('help.cfh.button.send')}
-                    textStyle="text-style-u-headline-medium"
-                />
+                <Region layout={{ position: 'absolute', left: 30, width: 287, top: 20, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('help.emergency.chat_report.subtitle')}
+                        textStyle="text-style-u-headline-medium"
+                    />
+                </Region>
+                <Region layout={{ position: 'absolute', left: 30, width: 380, top: 40, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('help.emergency.chat_report.description')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
+                    />
+                </Region>
+                <Border
+                    variant="105"
+                    layout={{ position: 'absolute', left: 30, width: 390, top: 100, height: 220 }}
+                >
+                    <ScrollArea
+                        orientation="vertical"
+                        layout={{ position: 'absolute', left: 5, width: 380, top: 5, height: 209 }}
+                    >
+                        <Region
+                            name="chat_list"
+                            layout={{ flexDirection: 'column', gap: 2, width: '100%' }}
+                        >
+                            {itemsChatList ?? (
+                                <TopicsFlowHelpLayoutChatPrototypeItem />
+                            )}
+                        </Region>
+                    </ScrollArea>
+                </Border>
             </Region>
-            <Region layout={{ position: 'absolute', left: 30, width: 390, top: 50, height: 107, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('help.main.summary')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 390 }}
-                />
-            </Region>
-            <ContainerButton
-                variant="5"
-                name="submit_button"
-                tintColor="#aa0000"
-                onPointerTap={onSubmitButton}
-                layout={{ position: 'absolute', left: 229, width: 189, top: 335, height: 41 }}
-            >
-                <ThemeText
-                    text={t('help.emergency.chat_report.submit.button')}
-                    textStyle="text-style-u-headline-medium"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </ContainerButton>
-        </Region>
+        )
     );
 };

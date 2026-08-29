@@ -19,32 +19,16 @@ export const LandingViewFurnimaticLayout = ({ contentBackground, layout }: Landi
     );
 };
 
-/** Named region `moving_objects_container` of LandingViewFurnimaticLayout - configured through the parent's `movingObjectsContainer` prop. */
-export interface LandingViewFurnimaticLayoutMovingObjectsContainerProps {
-    layout?: BoxLayout;
-}
-
-export const LandingViewFurnimaticLayoutMovingObjectsContainer = ({ layout }: LandingViewFurnimaticLayoutMovingObjectsContainerProps) => {
-    return (
-        <Region
-            name="moving_objects_container"
-            backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
-        />
-    );
-};
-
 /** Named region `content_background` of LandingViewFurnimaticLayout - configured through the parent's `contentBackground` prop. */
 export interface LandingViewFurnimaticLayoutContentBackgroundProps {
     layout?: BoxLayout;
-    movingObjectsContainer?: LandingViewFurnimaticLayoutMovingObjectsContainerProps;
     srcBackgroundHorizon?: string;
     srcBackgroundLeft?: string;
     srcBackgroundRight?: string;
     srcLogo?: string;
 }
 
-export const LandingViewFurnimaticLayoutContentBackground = ({ layout, movingObjectsContainer, srcBackgroundHorizon, srcBackgroundLeft, srcBackgroundRight, srcLogo }: LandingViewFurnimaticLayoutContentBackgroundProps) => {
+export const LandingViewFurnimaticLayoutContentBackground = ({ layout, srcBackgroundHorizon, srcBackgroundLeft, srcBackgroundRight, srcLogo }: LandingViewFurnimaticLayoutContentBackgroundProps) => {
     return (
         <Region
             name="content_background"
@@ -56,7 +40,11 @@ export const LandingViewFurnimaticLayoutContentBackground = ({ layout, movingObj
                 src={srcBackgroundHorizon ?? '${image.library.url}reception/furnimatic_backdrop_bg.png'}
                 layout={{ position: 'absolute', marginLeft: -81.5, marginRight: 81.5, width: 1019, alignSelf: 'center', marginTop: 15, marginBottom: -15, height: 852 }}
             />
-            <LandingViewFurnimaticLayoutMovingObjectsContainer {...movingObjectsContainer} />
+            <Region
+                name="moving_objects_container"
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+            />
             <Icon
                 variant="0"
                 name="placeholder_dynamic_widget_slots"

@@ -14,56 +14,8 @@ export const CampaignLayout = ({ campaignContainer, layout }: CampaignLayoutProp
     );
 };
 
-/** Named region `bg` of CampaignLayout - configured through the parent's `bg` prop. */
-export interface CampaignLayoutBgProps {
-    layout?: BoxLayout;
-}
-
-export const CampaignLayoutBg = ({ layout }: CampaignLayoutBgProps) => {
-    return (
-        <Region
-            name="bg"
-            backgroundColor="#646464"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `bg_top` of CampaignLayout - configured through the parent's `bgTop` prop. */
-export interface CampaignLayoutBgTopProps {
-    layout?: BoxLayout;
-}
-
-export const CampaignLayoutBgTop = ({ layout }: CampaignLayoutBgTopProps) => {
-    return (
-        <Region
-            name="bg_top"
-            backgroundColor="#bbbbbb"
-            layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2, ...layout }}
-        />
-    );
-};
-
-/** Named region `bg_bottom` of CampaignLayout - configured through the parent's `bgBottom` prop. */
-export interface CampaignLayoutBgBottomProps {
-    layout?: BoxLayout;
-}
-
-export const CampaignLayoutBgBottom = ({ layout }: CampaignLayoutBgBottomProps) => {
-    return (
-        <Region
-            name="bg_bottom"
-            backgroundColor="#ababab"
-            layout={{ position: 'absolute', left: 2, right: 2, bottom: 2, height: 54, ...layout }}
-        />
-    );
-};
-
 /** Named region `campaign_container` of CampaignLayout - configured through the parent's `campaignContainer` prop. */
 export interface CampaignLayoutCampaignContainerProps {
-    bg?: CampaignLayoutBgProps;
-    bgBottom?: CampaignLayoutBgBottomProps;
-    bgTop?: CampaignLayoutBgTopProps;
     captionCampaignHeaderTxt?: string;
     captionCompletionTxt?: string;
     layout?: BoxLayout;
@@ -73,15 +25,27 @@ export interface CampaignLayoutCampaignContainerProps {
     srcCompletionBgRedBitmap?: string;
 }
 
-export const CampaignLayoutCampaignContainer = ({ bg, bgBottom, bgTop, captionCampaignHeaderTxt, captionCompletionTxt, layout, srcCampaignPicBitmap, srcCompletionBgBlueBitmap, srcCompletionBgGreenBitmap, srcCompletionBgRedBitmap }: CampaignLayoutCampaignContainerProps) => {
+export const CampaignLayoutCampaignContainer = ({ captionCampaignHeaderTxt, captionCompletionTxt, layout, srcCampaignPicBitmap, srcCompletionBgBlueBitmap, srcCompletionBgGreenBitmap, srcCompletionBgRedBitmap }: CampaignLayoutCampaignContainerProps) => {
     return (
         <Region
             name="campaign_container"
             layout={{ position: 'absolute', left: 0, width: 103, top: 0, height: 114, justifyContent: 'center', ...layout }}
         >
-            <CampaignLayoutBg {...bg} />
-            <CampaignLayoutBgTop {...bgTop} />
-            <CampaignLayoutBgBottom {...bgBottom} />
+            <Region
+                name="bg"
+                backgroundColor="#646464"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+            />
+            <Region
+                name="bg_top"
+                backgroundColor="#bbbbbb"
+                layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
+            />
+            <Region
+                name="bg_bottom"
+                backgroundColor="#ababab"
+                layout={{ position: 'absolute', left: 2, right: 2, bottom: 2, height: 54 }}
+            />
             <Region
                 name="campaign_header_txt"
                 layout={{ position: 'absolute', width: 95, top: 12, height: 17, maxWidth: 95, maxHeight: 29, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}

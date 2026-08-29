@@ -2,7 +2,7 @@ import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeText } from '#base/theme';
 import { ItemGridWidget, ItemGridWidgetProps } from '#base/views/layouts/catalog/widgets/ItemGridWidget';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
-import { SongDiskProductViewWidget, SongDiskProductViewWidgetProps } from '#base/views/layouts/catalog/widgets/SongDiskProductViewWidget';
+import { SongDiskProductViewWidget2, SongDiskProductViewWidget2Props } from '#base/views/layouts/catalog/widgets/SongDiskProductViewWidget2';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
 
 /** Generated from `1627_layout_soundmachine_xml` (layout "ctlg_soundmachine", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -25,11 +25,12 @@ export interface LayoutSoundmachine_1627LayoutCtlgSoundmachineProps {
     itemGridWidget?: ItemGridWidgetProps;
     layout?: BoxLayout;
     purchaseWidget?: PurchaseWidgetProps;
-    songDiskProductViewWidget?: SongDiskProductViewWidgetProps;
+    songDiskProductViewWidget?: SongDiskProductViewWidget2Props;
     specialInfoWidget?: SpecialInfoWidgetProps;
+    visibleCtlgSelectproduct?: boolean;
 }
 
-export const LayoutSoundmachine_1627LayoutCtlgSoundmachine = ({ captionCtlgSelectproduct, itemGridWidget, layout, purchaseWidget, songDiskProductViewWidget, specialInfoWidget }: LayoutSoundmachine_1627LayoutCtlgSoundmachineProps) => {
+export const LayoutSoundmachine_1627LayoutCtlgSoundmachine = ({ captionCtlgSelectproduct, itemGridWidget, layout, purchaseWidget, songDiskProductViewWidget, specialInfoWidget, visibleCtlgSelectproduct }: LayoutSoundmachine_1627LayoutCtlgSoundmachineProps) => {
     const t = useTranslation();
 
     return (
@@ -37,22 +38,23 @@ export const LayoutSoundmachine_1627LayoutCtlgSoundmachine = ({ captionCtlgSelec
             name="ctlg_soundmachine"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
-            <Region
-                name="ctlg_selectproduct"
-                visible={false}
-                layout={{ position: 'absolute', left: 6, width: 130, top: 130, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 130 }}
-                />
-            </Region>
+            {(visibleCtlgSelectproduct ?? false) && (
+                <Region
+                    name="ctlg_selectproduct"
+                    layout={{ position: 'absolute', left: 6, width: 130, top: 130, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
+                        textStyle="text-style-u-small"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 130 }}
+                    />
+                </Region>
+            )}
             <ItemGridWidget
                 layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 35 }}
                 {...itemGridWidget}
             />
-            <SongDiskProductViewWidget
+            <SongDiskProductViewWidget2
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
                 {...songDiskProductViewWidget}
             />

@@ -4,26 +4,30 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `372_snowwar_leaderboard_xml` (layout "snowwar_leaderboard", 437x511) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface SnowwarLeaderboardLayoutProps {
-    allTimeRegion?: SnowwarLeaderboardLayoutAllTimeRegionProps;
-    borderContainer?: SnowwarLeaderboardLayoutBorderContainerProps;
+    captionAllTimeText?: string;
     captionChangeFriendsView?: string;
     captionChangeGroupView?: string;
     captionChangeView?: string;
     captionResetText?: string;
     captionResetTextStroke?: string;
+    captionThisWeekText?: string;
     layout?: BoxLayout;
-    list?: SnowwarLeaderboardLayoutListProps;
-    nextWeek?: SnowwarLeaderboardLayoutNextWeekProps;
+    onAllTimeRegion?: () => void;
     onChangeFriendsView?: () => void;
     onChangeGroupView?: () => void;
     onChangeView?: () => void;
     onClose?: () => void;
-    previousWeek?: SnowwarLeaderboardLayoutPreviousWeekProps;
+    onNextWeek?: () => void;
+    onPreviousWeek?: () => void;
+    onScrollDown?: () => void;
+    onScrollUp?: () => void;
+    onThisWeekRegion?: () => void;
+    srcAllTimeImage?: string;
     srcBackground?: string;
-    thisWeekRegion?: SnowwarLeaderboardLayoutThisWeekRegionProps;
+    srcThisWeekImage?: string;
 }
 
-export const SnowwarLeaderboardLayout = ({ allTimeRegion, borderContainer, captionChangeFriendsView, captionChangeGroupView, captionChangeView, captionResetText, captionResetTextStroke, layout, list, nextWeek, onChangeFriendsView, onChangeGroupView, onChangeView, onClose, previousWeek, srcBackground, thisWeekRegion }: SnowwarLeaderboardLayoutProps) => {
+export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFriendsView, captionChangeGroupView, captionChangeView, captionResetText, captionResetTextStroke, captionThisWeekText, layout, onAllTimeRegion, onChangeFriendsView, onChangeGroupView, onChangeView, onClose, onNextWeek, onPreviousWeek, onScrollDown, onScrollUp, onThisWeekRegion, srcAllTimeImage, srcBackground, srcThisWeekImage }: SnowwarLeaderboardLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -39,9 +43,83 @@ export const SnowwarLeaderboardLayout = ({ allTimeRegion, borderContainer, capti
                     src={srcBackground ?? layoutImage('leaderboard_bg.png')}
                     layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 39 }}
                 />
-                <SnowwarLeaderboardLayoutThisWeekRegion {...thisWeekRegion} />
-                <SnowwarLeaderboardLayoutAllTimeRegion {...allTimeRegion} />
-                <SnowwarLeaderboardLayoutBorderContainer {...borderContainer} />
+                <Region
+                    name="this_week_region"
+                    backgroundColor="#000000"
+                    onPointerTap={onThisWeekRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 107, width: 119, top: 0, height: 28 }}
+                >
+                    <ThemeImage
+                        name="this_week_image"
+                        src={srcThisWeekImage ?? layoutImage('left_black.png')}
+                        layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 28 }}
+                    />
+                    <Region
+                        name="this_week_text"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionThisWeekText ?? t('snowwar.leaderboard.this_week')}
+                            textOptions={{ align: 'center' }}
+                        />
+                    </Region>
+                </Region>
+                <Region
+                    name="all_time_region"
+                    backgroundColor="#000000"
+                    onPointerTap={onAllTimeRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 226, width: 119, top: 0, height: 28 }}
+                >
+                    <ThemeImage
+                        name="all_time_image"
+                        src={srcAllTimeImage ?? layoutImage('right_blue.png')}
+                        layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 28 }}
+                    />
+                    <Region
+                        name="all_time_text"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionAllTimeText ?? t('snowwar.leaderboard.all_time')}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </Region>
+                <Region
+                    name="borderContainer"
+                    layout={{ position: 'absolute', left: 40, width: 350, alignSelf: 'center', marginTop: -31, marginBottom: 31, height: 389, justifyContent: 'center' }}
+                >
+                    <Border
+                        variant="0"
+                        name="listBorder"
+                        blend={0.5}
+                        layout={{ position: 'absolute', width: 350, top: 28, height: 336 }}
+                    />
+                    <Region
+                        name="scrollUp"
+                        onPointerTap={onScrollUp}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', width: 58, top: 1, height: 28 }}
+                    >
+                        <ThemeImage
+                            src={undefined}
+                            layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 28 }}
+                        />
+                    </Region>
+                    <Region
+                        name="scrollDown"
+                        onPointerTap={onScrollDown}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', width: 58, bottom: 0, height: 28 }}
+                    >
+                        <ThemeImage
+                            src={undefined}
+                            layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 28 }}
+                        />
+                    </Region>
+                </Region>
                 <Region
                     name="changeView"
                     layout={{ position: 'absolute', left: 0, width: 150, top: 445, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
@@ -53,9 +131,32 @@ export const SnowwarLeaderboardLayout = ({ allTimeRegion, borderContainer, capti
                         textOptions={{ align: 'center' }}
                     />
                 </Region>
-                <SnowwarLeaderboardLayoutList {...list} />
-                <SnowwarLeaderboardLayoutPreviousWeek {...previousWeek} />
-                <SnowwarLeaderboardLayoutNextWeek {...nextWeek} />
+                <Region
+                    name="list"
+                    layout={{ position: 'absolute', marginLeft: -3.5, marginRight: 3.5, width: 356, alignSelf: 'center', marginTop: -29.5, marginBottom: 29.5, height: 336, flexDirection: 'column' }}
+                />
+                <Region
+                    name="previousWeek"
+                    onPointerTap={onPreviousWeek}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 17, width: 14, top: 199, height: 18 }}
+                >
+                    <ThemeImage
+                        src={layoutImage('scroll_left.png')}
+                        layout={{ position: 'absolute', left: 0, width: 14, top: 0, height: 18 }}
+                    />
+                </Region>
+                <Region
+                    name="nextWeek"
+                    onPointerTap={onNextWeek}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 400, width: 14, top: 199, height: 18 }}
+                >
+                    <ThemeImage
+                        src={layoutImage('scroll_right.png')}
+                        layout={{ position: 'absolute', left: 0, width: 14, top: 0, height: 18 }}
+                    />
+                </Region>
                 <Region
                     name="reset_text_stroke"
                     layout={{ position: 'absolute', left: 251, width: 49, top: 397, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -98,206 +199,5 @@ export const SnowwarLeaderboardLayout = ({ allTimeRegion, borderContainer, capti
                 </Region>
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `this_week_region` of SnowwarLeaderboardLayout - configured through the parent's `thisWeekRegion` prop. */
-export interface SnowwarLeaderboardLayoutThisWeekRegionProps {
-    captionThisWeekText?: string;
-    layout?: BoxLayout;
-    onThisWeekRegion?: () => void;
-    srcThisWeekImage?: string;
-}
-
-export const SnowwarLeaderboardLayoutThisWeekRegion = ({ captionThisWeekText, layout, onThisWeekRegion, srcThisWeekImage }: SnowwarLeaderboardLayoutThisWeekRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="this_week_region"
-            backgroundColor="#000000"
-            onPointerTap={onThisWeekRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 107, width: 119, top: 0, height: 28, ...layout }}
-        >
-            <ThemeImage
-                name="this_week_image"
-                src={srcThisWeekImage ?? layoutImage('left_black.png')}
-                layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 28 }}
-            />
-            <Region
-                name="this_week_text"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionThisWeekText ?? t('snowwar.leaderboard.this_week')}
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `all_time_region` of SnowwarLeaderboardLayout - configured through the parent's `allTimeRegion` prop. */
-export interface SnowwarLeaderboardLayoutAllTimeRegionProps {
-    captionAllTimeText?: string;
-    layout?: BoxLayout;
-    onAllTimeRegion?: () => void;
-    srcAllTimeImage?: string;
-}
-
-export const SnowwarLeaderboardLayoutAllTimeRegion = ({ captionAllTimeText, layout, onAllTimeRegion, srcAllTimeImage }: SnowwarLeaderboardLayoutAllTimeRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="all_time_region"
-            backgroundColor="#000000"
-            onPointerTap={onAllTimeRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 226, width: 119, top: 0, height: 28, ...layout }}
-        >
-            <ThemeImage
-                name="all_time_image"
-                src={srcAllTimeImage ?? layoutImage('right_blue.png')}
-                layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 28 }}
-            />
-            <Region
-                name="all_time_text"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 5, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionAllTimeText ?? t('snowwar.leaderboard.all_time')}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `scrollUp` of SnowwarLeaderboardLayout - configured through the parent's `scrollUp` prop. */
-export interface SnowwarLeaderboardLayoutScrollUpProps {
-    layout?: BoxLayout;
-    onScrollUp?: () => void;
-}
-
-export const SnowwarLeaderboardLayoutScrollUp = ({ layout, onScrollUp }: SnowwarLeaderboardLayoutScrollUpProps) => {
-    return (
-        <Region
-            name="scrollUp"
-            onPointerTap={onScrollUp}
-            cursor="pointer"
-            layout={{ position: 'absolute', width: 58, top: 1, height: 28, ...layout }}
-        >
-            <ThemeImage
-                src={undefined}
-                layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 28 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `scrollDown` of SnowwarLeaderboardLayout - configured through the parent's `scrollDown` prop. */
-export interface SnowwarLeaderboardLayoutScrollDownProps {
-    layout?: BoxLayout;
-    onScrollDown?: () => void;
-}
-
-export const SnowwarLeaderboardLayoutScrollDown = ({ layout, onScrollDown }: SnowwarLeaderboardLayoutScrollDownProps) => {
-    return (
-        <Region
-            name="scrollDown"
-            onPointerTap={onScrollDown}
-            cursor="pointer"
-            layout={{ position: 'absolute', width: 58, bottom: 0, height: 28, ...layout }}
-        >
-            <ThemeImage
-                src={undefined}
-                layout={{ position: 'absolute', left: 0, width: 58, top: 0, height: 28 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `borderContainer` of SnowwarLeaderboardLayout - configured through the parent's `borderContainer` prop. */
-export interface SnowwarLeaderboardLayoutBorderContainerProps {
-    layout?: BoxLayout;
-    scrollDown?: SnowwarLeaderboardLayoutScrollDownProps;
-    scrollUp?: SnowwarLeaderboardLayoutScrollUpProps;
-}
-
-export const SnowwarLeaderboardLayoutBorderContainer = ({ layout, scrollDown, scrollUp }: SnowwarLeaderboardLayoutBorderContainerProps) => {
-    return (
-        <Region
-            name="borderContainer"
-            layout={{ position: 'absolute', left: 40, width: 350, alignSelf: 'center', marginTop: -31, marginBottom: 31, height: 389, justifyContent: 'center', ...layout }}
-        >
-            <Border
-                variant="0"
-                name="listBorder"
-                blend={0.5}
-                layout={{ position: 'absolute', width: 350, top: 28, height: 336 }}
-            />
-            <SnowwarLeaderboardLayoutScrollUp {...scrollUp} />
-            <SnowwarLeaderboardLayoutScrollDown {...scrollDown} />
-        </Region>
-    );
-};
-
-/** Named region `list` of SnowwarLeaderboardLayout - configured through the parent's `list` prop. */
-export interface SnowwarLeaderboardLayoutListProps {
-    layout?: BoxLayout;
-}
-
-export const SnowwarLeaderboardLayoutList = ({ layout }: SnowwarLeaderboardLayoutListProps) => {
-    return (
-        <Region
-            name="list"
-            layout={{ position: 'absolute', marginLeft: -3.5, marginRight: 3.5, width: 356, alignSelf: 'center', marginTop: -29.5, marginBottom: 29.5, height: 336, flexDirection: 'column', ...layout }}
-        />
-    );
-};
-
-/** Named region `previousWeek` of SnowwarLeaderboardLayout - configured through the parent's `previousWeek` prop. */
-export interface SnowwarLeaderboardLayoutPreviousWeekProps {
-    layout?: BoxLayout;
-    onPreviousWeek?: () => void;
-}
-
-export const SnowwarLeaderboardLayoutPreviousWeek = ({ layout, onPreviousWeek }: SnowwarLeaderboardLayoutPreviousWeekProps) => {
-    return (
-        <Region
-            name="previousWeek"
-            onPointerTap={onPreviousWeek}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 17, width: 14, top: 199, height: 18, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('scroll_left.png')}
-                layout={{ position: 'absolute', left: 0, width: 14, top: 0, height: 18 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `nextWeek` of SnowwarLeaderboardLayout - configured through the parent's `nextWeek` prop. */
-export interface SnowwarLeaderboardLayoutNextWeekProps {
-    layout?: BoxLayout;
-    onNextWeek?: () => void;
-}
-
-export const SnowwarLeaderboardLayoutNextWeek = ({ layout, onNextWeek }: SnowwarLeaderboardLayoutNextWeekProps) => {
-    return (
-        <Region
-            name="nextWeek"
-            onPointerTap={onNextWeek}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 400, width: 14, top: 199, height: 18, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('scroll_right.png')}
-                layout={{ position: 'absolute', left: 0, width: 14, top: 0, height: 18 }}
-            />
-        </Region>
     );
 };

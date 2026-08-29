@@ -17,21 +17,6 @@ export const MemenuDanceLayout = ({ danceContainer, layout }: MemenuDanceLayoutP
     );
 };
 
-/** Named region `line` of MemenuDanceLayout - configured through the parent's `line` prop. */
-export interface MemenuDanceLayoutLineProps {
-    layout?: BoxLayout;
-}
-
-export const MemenuDanceLayoutLine = ({ layout }: MemenuDanceLayoutLineProps) => {
-    return (
-        <Region
-            name="line"
-            backgroundColor="#2f2f2f"
-            layout={{ position: 'absolute', left: 5, width: 152, top: 22, height: 1, ...layout }}
-        />
-    );
-};
-
 /** Row template `club_info` of MemenuDanceLayout - pass real rows through its `items…` slot. */
 export interface MemenuDanceLayoutClubInfoItemProps {
     captionClubInfo?: string;
@@ -54,36 +39,16 @@ export const MemenuDanceLayoutClubInfoItem = ({ captionClubInfo, layout }: Memen
     );
 };
 
-/** Named region `buttonContainer` of MemenuDanceLayout - configured through the parent's `buttonContainer` prop. */
-export interface MemenuDanceLayoutButtonContainerProps {
-    itemsButtonContainer?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const MemenuDanceLayoutButtonContainer = ({ itemsButtonContainer, layout }: MemenuDanceLayoutButtonContainerProps) => {
-    return (
-        <Region
-            name="buttonContainer"
-            layout={{ position: 'absolute', left: 9, width: 145, top: 33, height: 140, flexDirection: 'column', gap: 4, ...layout }}
-        >
-            {itemsButtonContainer ?? (
-                <MemenuDanceLayoutClubInfoItem />
-            )}
-        </Region>
-    );
-};
-
 /** Named region `dance_container` of MemenuDanceLayout - configured through the parent's `danceContainer` prop. */
 export interface MemenuDanceLayoutDanceContainerProps {
-    buttonContainer?: MemenuDanceLayoutButtonContainerProps;
     captionDanceTitle?: string;
+    itemsButtonContainer?: ReactNode;
     layout?: BoxLayout;
-    line?: MemenuDanceLayoutLineProps;
     onBackBtn?: () => void;
     onStopDancingButton?: () => void;
 }
 
-export const MemenuDanceLayoutDanceContainer = ({ buttonContainer, captionDanceTitle, layout, line, onBackBtn, onStopDancingButton }: MemenuDanceLayoutDanceContainerProps) => {
+export const MemenuDanceLayoutDanceContainer = ({ captionDanceTitle, itemsButtonContainer, layout, onBackBtn, onStopDancingButton }: MemenuDanceLayoutDanceContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -105,8 +70,19 @@ export const MemenuDanceLayoutDanceContainer = ({ buttonContainer, captionDanceT
                         textOptions={{ fill: '#ffffff' }}
                     />
                 </Region>
-                <MemenuDanceLayoutLine {...line} />
-                <MemenuDanceLayoutButtonContainer {...buttonContainer} />
+                <Region
+                    name="line"
+                    backgroundColor="#2f2f2f"
+                    layout={{ position: 'absolute', left: 5, width: 152, top: 22, height: 1 }}
+                />
+                <Region
+                    name="buttonContainer"
+                    layout={{ position: 'absolute', left: 9, width: 145, top: 33, height: 140, flexDirection: 'column', gap: 4 }}
+                >
+                    {itemsButtonContainer ?? (
+                        <MemenuDanceLayoutClubInfoItem />
+                    )}
+                </Region>
             </Border>
             <Button
                 variant="1"

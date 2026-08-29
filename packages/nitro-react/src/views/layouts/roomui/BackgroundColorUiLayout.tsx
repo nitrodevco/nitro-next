@@ -105,36 +105,15 @@ export const BackgroundColorUiLayoutSpacerItem = ({ layout }: BackgroundColorUiL
     );
 };
 
-/** Named region `slider_movement_area` of BackgroundColorUiLayout - configured through the parent's `sliderMovementArea` prop. */
-export interface BackgroundColorUiLayoutSliderMovementAreaProps {
-    layout?: BoxLayout;
-    srcSliderButton?: string;
-}
-
-export const BackgroundColorUiLayoutSliderMovementArea = ({ layout, srcSliderButton }: BackgroundColorUiLayoutSliderMovementAreaProps) => {
-    return (
-        <Region
-            name="slider_movement_area"
-            layout={{ position: 'absolute', left: 0, width: 206, top: 13, height: 17, ...layout }}
-        >
-            <ThemeImage
-                name="slider_button"
-                src={srcSliderButton}
-                layout={{ position: 'absolute', left: 0, width: 12, top: 7, height: 17 }}
-            />
-        </Region>
-    );
-};
-
 /** Row template `hue_container` of BackgroundColorUiLayout - pass real rows through its `items…` slot. */
 export interface BackgroundColorUiLayoutHueContainerItemProps {
     captionParameter?: string;
     layout?: BoxLayout;
-    sliderMovementArea?: BackgroundColorUiLayoutSliderMovementAreaProps;
     srcSliderBase?: string;
+    srcSliderButton?: string;
 }
 
-export const BackgroundColorUiLayoutHueContainerItem = ({ captionParameter, layout, sliderMovementArea, srcSliderBase }: BackgroundColorUiLayoutHueContainerItemProps) => {
+export const BackgroundColorUiLayoutHueContainerItem = ({ captionParameter, layout, srcSliderBase, srcSliderButton }: BackgroundColorUiLayoutHueContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -156,28 +135,16 @@ export const BackgroundColorUiLayoutHueContainerItem = ({ captionParameter, layo
                 src={srcSliderBase}
                 layout={{ position: 'absolute', marginLeft: -23, marginRight: 23, width: 201, alignSelf: 'center', marginTop: -3, marginBottom: 3, height: 12 }}
             />
-            <BackgroundColorUiLayoutSliderMovementArea {...sliderMovementArea} />
-        </Region>
-    );
-};
-
-/** Named region `slider_movement_area` of BackgroundColorUiLayout - configured through the parent's `sliderMovementArea` prop. */
-export interface BackgroundColorUiLayoutSliderMovementArea2Props {
-    layout?: BoxLayout;
-    srcSliderButton?: string;
-}
-
-export const BackgroundColorUiLayoutSliderMovementArea2 = ({ layout, srcSliderButton }: BackgroundColorUiLayoutSliderMovementArea2Props) => {
-    return (
-        <Region
-            name="slider_movement_area"
-            layout={{ position: 'absolute', left: 0, width: 206, top: 13, height: 17, ...layout }}
-        >
-            <ThemeImage
-                name="slider_button"
-                src={srcSliderButton}
-                layout={{ position: 'absolute', left: 0, width: 12, top: 7, height: 17 }}
-            />
+            <Region
+                name="slider_movement_area"
+                layout={{ position: 'absolute', left: 0, width: 206, top: 13, height: 17 }}
+            >
+                <ThemeImage
+                    name="slider_button"
+                    src={srcSliderButton}
+                    layout={{ position: 'absolute', left: 0, width: 12, top: 7, height: 17 }}
+                />
+            </Region>
         </Region>
     );
 };
@@ -186,11 +153,11 @@ export const BackgroundColorUiLayoutSliderMovementArea2 = ({ layout, srcSliderBu
 export interface BackgroundColorUiLayoutSaturationContainerItemProps {
     captionParameter?: string;
     layout?: BoxLayout;
-    sliderMovementArea?: BackgroundColorUiLayoutSliderMovementArea2Props;
     srcSliderBase?: string;
+    srcSliderButton?: string;
 }
 
-export const BackgroundColorUiLayoutSaturationContainerItem = ({ captionParameter, layout, sliderMovementArea, srcSliderBase }: BackgroundColorUiLayoutSaturationContainerItemProps) => {
+export const BackgroundColorUiLayoutSaturationContainerItem = ({ captionParameter, layout, srcSliderBase, srcSliderButton }: BackgroundColorUiLayoutSaturationContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -212,28 +179,16 @@ export const BackgroundColorUiLayoutSaturationContainerItem = ({ captionParamete
                 src={srcSliderBase}
                 layout={{ position: 'absolute', marginLeft: -23, marginRight: 23, width: 201, alignSelf: 'center', marginTop: -3, marginBottom: 3, height: 12 }}
             />
-            <BackgroundColorUiLayoutSliderMovementArea2 {...sliderMovementArea} />
-        </Region>
-    );
-};
-
-/** Named region `slider_movement_area` of BackgroundColorUiLayout - configured through the parent's `sliderMovementArea` prop. */
-export interface BackgroundColorUiLayoutSliderMovementArea3Props {
-    layout?: BoxLayout;
-    srcSliderButton?: string;
-}
-
-export const BackgroundColorUiLayoutSliderMovementArea3 = ({ layout, srcSliderButton }: BackgroundColorUiLayoutSliderMovementArea3Props) => {
-    return (
-        <Region
-            name="slider_movement_area"
-            layout={{ position: 'absolute', left: 0, width: 206, top: 13, height: 17, ...layout }}
-        >
-            <ThemeImage
-                name="slider_button"
-                src={srcSliderButton}
-                layout={{ position: 'absolute', left: 0, width: 12, top: 7, height: 17 }}
-            />
+            <Region
+                name="slider_movement_area"
+                layout={{ position: 'absolute', left: 0, width: 206, top: 13, height: 17 }}
+            >
+                <ThemeImage
+                    name="slider_button"
+                    src={srcSliderButton}
+                    layout={{ position: 'absolute', left: 0, width: 12, top: 7, height: 17 }}
+                />
+            </Region>
         </Region>
     );
 };
@@ -242,11 +197,11 @@ export const BackgroundColorUiLayoutSliderMovementArea3 = ({ layout, srcSliderBu
 export interface BackgroundColorUiLayoutLightnessContainerItemProps {
     captionParameter?: string;
     layout?: BoxLayout;
-    sliderMovementArea?: BackgroundColorUiLayoutSliderMovementArea3Props;
     srcSliderBase?: string;
+    srcSliderButton?: string;
 }
 
-export const BackgroundColorUiLayoutLightnessContainerItem = ({ captionParameter, layout, sliderMovementArea, srcSliderBase }: BackgroundColorUiLayoutLightnessContainerItemProps) => {
+export const BackgroundColorUiLayoutLightnessContainerItem = ({ captionParameter, layout, srcSliderBase, srcSliderButton }: BackgroundColorUiLayoutLightnessContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -268,7 +223,16 @@ export const BackgroundColorUiLayoutLightnessContainerItem = ({ captionParameter
                 src={srcSliderBase}
                 layout={{ position: 'absolute', marginLeft: -23, marginRight: 23, width: 201, alignSelf: 'center', marginTop: -3, marginBottom: 3, height: 12 }}
             />
-            <BackgroundColorUiLayoutSliderMovementArea3 {...sliderMovementArea} />
+            <Region
+                name="slider_movement_area"
+                layout={{ position: 'absolute', left: 0, width: 206, top: 13, height: 17 }}
+            >
+                <ThemeImage
+                    name="slider_button"
+                    src={srcSliderButton}
+                    layout={{ position: 'absolute', left: 0, width: 12, top: 7, height: 17 }}
+                />
+            </Region>
         </Region>
     );
 };

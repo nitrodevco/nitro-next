@@ -8,20 +8,87 @@ export interface MarketplaceSearchAdvancedLayoutProps {
     layout?: BoxLayout;
     onCombineUniquesCheckbox?: () => void;
     onSearchButton?: () => void;
-    priceContainer?: MarketplaceSearchAdvancedLayoutPriceContainerProps;
-    sortContainer?: MarketplaceSearchAdvancedLayoutSortContainerProps;
-    textSearchContainer?: MarketplaceSearchAdvancedLayoutTextSearchContainerProps;
+    onSortDropmenu?: () => void;
 }
 
-export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckbox, onSearchButton, priceContainer, sortContainer, textSearchContainer }: MarketplaceSearchAdvancedLayoutProps) => {
+export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckbox, onSearchButton, onSortDropmenu }: MarketplaceSearchAdvancedLayoutProps) => {
     const t = useTranslation();
+    const [ searchInputValue, setSearchInputValue ] = useState('');
+    const [ minPriceInputValue, setMinPriceInputValue ] = useState('');
+    const [ maxPriceInputValue, setMaxPriceInputValue ] = useState('');
 
     return (
         <Region layout={{ position: 'relative', width: 360, height: 120, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 120 }}>
-                <MarketplaceSearchAdvancedLayoutTextSearchContainer {...textSearchContainer} />
-                <MarketplaceSearchAdvancedLayoutPriceContainer {...priceContainer} />
-                <MarketplaceSearchAdvancedLayoutSortContainer {...sortContainer} />
+                <Region
+                    name="text_search_container"
+                    layout={{ position: 'absolute', left: 10, width: 340, top: 10, height: 20 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('catalog.marketplace.search_name')}
+                            textOptions={{ fill: '#666666' }}
+                        />
+                    </Region>
+                    <Border
+                        variant="0"
+                        layout={{ position: 'absolute', left: 120, width: 220, top: 0, height: 20 }}
+                    >
+                        <TextInput
+                            value={searchInputValue}
+                            onChange={setSearchInputValue}
+                            layout={{ position: 'absolute', left: 6, width: 210, top: 2, height: 16 }}
+                        />
+                    </Border>
+                </Region>
+                <Region
+                    name="price_container"
+                    layout={{ position: 'absolute', left: 10, width: 340, top: 35, height: 20 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('catalog.marketplace.search_price')}
+                            textOptions={{ fill: '#666666' }}
+                        />
+                    </Region>
+                    <Border
+                        variant="0"
+                        layout={{ position: 'absolute', left: 120, width: 70, top: 0, height: 20 }}
+                    >
+                        <TextInput
+                            value={minPriceInputValue}
+                            onChange={setMinPriceInputValue}
+                            layout={{ position: 'absolute', left: 6, width: 60, top: 3, height: 16 }}
+                        />
+                    </Border>
+                    <Border
+                        variant="0"
+                        layout={{ position: 'absolute', left: 270, width: 70, top: 0, height: 20 }}
+                    >
+                        <TextInput
+                            value={maxPriceInputValue}
+                            onChange={setMaxPriceInputValue}
+                            layout={{ position: 'absolute', left: 6, width: 60, top: 3, height: 16 }}
+                        />
+                    </Border>
+                </Region>
+                <Region
+                    name="sort_container"
+                    layout={{ position: 'absolute', left: 10, width: 340, top: 60, height: 24 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('catalog.marketplace.sort_order')}
+                            textOptions={{ fill: '#666666' }}
+                        />
+                    </Region>
+                    <Dropmenu
+                        variant="3"
+                        name="sort_dropmenu"
+                        onPointerTap={onSortDropmenu}
+                        layout={{ position: 'absolute', left: 120, width: 220, top: 0, height: 24 }}
+                    />
+                </Region>
                 <CheckBox
                     variant="3"
                     name="combine_uniques_checkbox"
@@ -43,115 +110,6 @@ export const MarketplaceSearchAdvancedLayout = ({ layout, onCombineUniquesCheckb
                     {t('generic.search')}
                 </Button>
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `text_search_container` of MarketplaceSearchAdvancedLayout - configured through the parent's `textSearchContainer` prop. */
-export interface MarketplaceSearchAdvancedLayoutTextSearchContainerProps {
-    layout?: BoxLayout;
-}
-
-export const MarketplaceSearchAdvancedLayoutTextSearchContainer = ({ layout }: MarketplaceSearchAdvancedLayoutTextSearchContainerProps) => {
-    const t = useTranslation();
-    const [ searchInputValue, setSearchInputValue ] = useState('');
-
-    return (
-        <Region
-            name="text_search_container"
-            layout={{ position: 'absolute', left: 10, width: 340, top: 10, height: 20, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('catalog.marketplace.search_name')}
-                    textOptions={{ fill: '#666666' }}
-                />
-            </Region>
-            <Border
-                variant="0"
-                layout={{ position: 'absolute', left: 120, width: 220, top: 0, height: 20 }}
-            >
-                <TextInput
-                    value={searchInputValue}
-                    onChange={setSearchInputValue}
-                    layout={{ position: 'absolute', left: 6, width: 210, top: 2, height: 16 }}
-                />
-            </Border>
-        </Region>
-    );
-};
-
-/** Named region `price_container` of MarketplaceSearchAdvancedLayout - configured through the parent's `priceContainer` prop. */
-export interface MarketplaceSearchAdvancedLayoutPriceContainerProps {
-    layout?: BoxLayout;
-}
-
-export const MarketplaceSearchAdvancedLayoutPriceContainer = ({ layout }: MarketplaceSearchAdvancedLayoutPriceContainerProps) => {
-    const t = useTranslation();
-    const [ minPriceInputValue, setMinPriceInputValue ] = useState('');
-    const [ maxPriceInputValue, setMaxPriceInputValue ] = useState('');
-
-    return (
-        <Region
-            name="price_container"
-            layout={{ position: 'absolute', left: 10, width: 340, top: 35, height: 20, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('catalog.marketplace.search_price')}
-                    textOptions={{ fill: '#666666' }}
-                />
-            </Region>
-            <Border
-                variant="0"
-                layout={{ position: 'absolute', left: 120, width: 70, top: 0, height: 20 }}
-            >
-                <TextInput
-                    value={minPriceInputValue}
-                    onChange={setMinPriceInputValue}
-                    layout={{ position: 'absolute', left: 6, width: 60, top: 3, height: 16 }}
-                />
-            </Border>
-            <Border
-                variant="0"
-                layout={{ position: 'absolute', left: 270, width: 70, top: 0, height: 20 }}
-            >
-                <TextInput
-                    value={maxPriceInputValue}
-                    onChange={setMaxPriceInputValue}
-                    layout={{ position: 'absolute', left: 6, width: 60, top: 3, height: 16 }}
-                />
-            </Border>
-        </Region>
-    );
-};
-
-/** Named region `sort_container` of MarketplaceSearchAdvancedLayout - configured through the parent's `sortContainer` prop. */
-export interface MarketplaceSearchAdvancedLayoutSortContainerProps {
-    layout?: BoxLayout;
-    onSortDropmenu?: () => void;
-}
-
-export const MarketplaceSearchAdvancedLayoutSortContainer = ({ layout, onSortDropmenu }: MarketplaceSearchAdvancedLayoutSortContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="sort_container"
-            layout={{ position: 'absolute', left: 10, width: 340, top: 60, height: 24, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 102, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('catalog.marketplace.sort_order')}
-                    textOptions={{ fill: '#666666' }}
-                />
-            </Region>
-            <Dropmenu
-                variant="3"
-                name="sort_dropmenu"
-                onPointerTap={onSortDropmenu}
-                layout={{ position: 'absolute', left: 120, width: 220, top: 0, height: 24 }}
-            />
         </Region>
     );
 };

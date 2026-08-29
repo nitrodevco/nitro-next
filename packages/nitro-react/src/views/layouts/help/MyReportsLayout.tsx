@@ -12,15 +12,11 @@ export interface MyReportsLayoutProps {
     layout?: BoxLayout;
     onAppealButton?: () => void;
     onClose?: () => void;
-    reportsTableCont?: MyReportsLayoutReportsTableContProps;
-    spacer?: MyReportsLayoutSpacerProps;
-    spacer2?: MyReportsLayoutSpacer2Props;
-    spacer3?: MyReportsLayoutSpacer3Props;
-    spacer4?: MyReportsLayoutSpacer4Props;
+    visibleSpacer?: boolean;
     visibleStatusInfoBubble?: boolean;
 }
 
-export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captionCreatedKeyTxt, captionDecisionDateTxt, captionReportedDateTxt, captionSanctionInfoTxt, layout, onAppealButton, onClose, reportsTableCont, spacer, spacer2, spacer3, spacer4, visibleStatusInfoBubble }: MyReportsLayoutProps) => {
+export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captionCreatedKeyTxt, captionDecisionDateTxt, captionReportedDateTxt, captionSanctionInfoTxt, layout, onAppealButton, onClose, visibleSpacer, visibleStatusInfoBubble }: MyReportsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -31,165 +27,111 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
             onClose={onClose}
             layout={{ width: 538, height: 220, ...layout }}
         >
-            <MyReportsLayoutReportsTableCont {...reportsTableCont} />
-            <Bubble
-                variant="7"
-                name="status_info_bubble"
-                pointer="left"
-                visible={visibleStatusInfoBubble ?? true}
-                layout={{ position: 'absolute', left: 529, width: 292, top: -24, height: 189 }}
-            >
-                <Region layout={{ position: 'absolute', left: 8, width: 260, top: 8, height: 158, flexDirection: 'column' }}>
-                    <Region layout={{ width: 155, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('report.status.info.title')}
-                            textStyle="text-style-u-bold"
-                        />
-                    </Region>
-                    <MyReportsLayoutSpacer {...spacer} />
-                    <Region layout={{ width: 223, height: 17, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
-                        <Region
-                            name="created_key_txt"
-                            layout={{ width: 158, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
+            <Region
+                name="reports_table_cont"
+                layout={{ position: 'absolute', left: 4, right: 3, top: 3, bottom: 41 }}
+            />
+            {(visibleStatusInfoBubble ?? true) && (
+                <Bubble
+                    variant="7"
+                    name="status_info_bubble"
+                    pointer="left"
+                    layout={{ position: 'absolute', left: 529, width: 292, top: -24, height: 189 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 8, width: 260, top: 8, height: 158, flexDirection: 'column' }}>
+                        <Region layout={{ width: 155, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <ThemeText
-                                text={captionCreatedKeyTxt ?? t('report.status.info.reported')}
+                                text={t('report.status.info.title')}
                                 textStyle="text-style-u-bold"
                             />
                         </Region>
                         <Region
-                            name="reported_date_txt"
-                            layout={{ width: 63, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText text={captionReportedDateTxt ?? '18.09.2024'} />
+                            name="spacer"
+                            layout={{ width: 0, height: 8, flexShrink: 0 }}
+                        />
+                        <Region layout={{ width: 223, height: 17, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
+                            <Region
+                                name="created_key_txt"
+                                layout={{ width: 158, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText
+                                    text={captionCreatedKeyTxt ?? t('report.status.info.reported')}
+                                    textStyle="text-style-u-bold"
+                                />
+                            </Region>
+                            <Region
+                                name="reported_date_txt"
+                                layout={{ width: 63, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText text={captionReportedDateTxt ?? '18.09.2024'} />
+                            </Region>
                         </Region>
-                    </Region>
-                    <Region layout={{ width: 219, height: 17, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
-                        <Region layout={{ width: 154, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <Region layout={{ width: 219, height: 17, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
+                            <Region layout={{ width: 154, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                <ThemeText
+                                    text={t('report.status.info.decision')}
+                                    textStyle="text-style-u-bold"
+                                />
+                            </Region>
+                            <Region
+                                name="decision_date_txt"
+                                layout={{ width: 63, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            >
+                                <ThemeText text={captionDecisionDateTxt ?? '18.09.2024'} />
+                            </Region>
+                        </Region>
+                        <Region
+                            name="spacer"
+                            layout={{ width: 0, height: 8, flexShrink: 0 }}
+                        />
+                        <Region
+                            name="action_txt"
+                            layout={{ width: 143, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
                             <ThemeText
-                                text={t('report.status.info.decision')}
+                                text={captionActionTxt ?? t('report.status.info.action')}
                                 textStyle="text-style-u-bold"
                             />
                         </Region>
                         <Region
-                            name="decision_date_txt"
-                            layout={{ width: 63, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            name="action_desc_txt"
+                            layout={{ width: 260, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
-                            <ThemeText text={captionDecisionDateTxt ?? '18.09.2024'} />
+                            <ThemeText
+                                text={captionActionDescTxt ?? t('report.status.info.auto_moderated.no_action')}
+                                textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                            />
                         </Region>
-                    </Region>
-                    <MyReportsLayoutSpacer2 {...spacer2} />
-                    <Region
-                        name="action_txt"
-                        layout={{ width: 143, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionActionTxt ?? t('report.status.info.action')}
-                            textStyle="text-style-u-bold"
+                        {(visibleSpacer ?? false) && (
+                            <Region
+                                name="spacer"
+                                layout={{ width: 0, height: 8, flexShrink: 0 }}
+                            />
+                        )}
+                        <Region
+                            name="sanction_info_txt"
+                            layout={{ width: 260, height: 17, flexShrink: 0, minWidth: 260, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionSanctionInfoTxt ?? 'asdasd'}
+                                textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                            />
+                        </Region>
+                        <Region
+                            name="spacer"
+                            layout={{ width: 0, height: 8, flexShrink: 0 }}
                         />
+                        <Button
+                            variant="3"
+                            name="appeal_button"
+                            onPointerTap={onAppealButton}
+                            layout={{ width: 173, height: 30, flexShrink: 0 }}
+                        >
+                            {t('report.status.button.appeal')}
+                        </Button>
                     </Region>
-                    <Region
-                        name="action_desc_txt"
-                        layout={{ width: 260, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionActionDescTxt ?? t('report.status.info.auto_moderated.no_action')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                        />
-                    </Region>
-                    <MyReportsLayoutSpacer3 {...spacer3} />
-                    <Region
-                        name="sanction_info_txt"
-                        layout={{ width: 260, height: 17, flexShrink: 0, minWidth: 260, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionSanctionInfoTxt ?? 'asdasd'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                        />
-                    </Region>
-                    <MyReportsLayoutSpacer4 {...spacer4} />
-                    <Button
-                        variant="3"
-                        name="appeal_button"
-                        onPointerTap={onAppealButton}
-                        layout={{ width: 173, height: 30, flexShrink: 0 }}
-                    >
-                        {t('report.status.button.appeal')}
-                    </Button>
-                </Region>
-            </Bubble>
+                </Bubble>
+            )}
         </Frame>
-    );
-};
-
-/** Named region `reports_table_cont` of MyReportsLayout - configured through the parent's `reportsTableCont` prop. */
-export interface MyReportsLayoutReportsTableContProps {
-    layout?: BoxLayout;
-}
-
-export const MyReportsLayoutReportsTableCont = ({ layout }: MyReportsLayoutReportsTableContProps) => {
-    return (
-        <Region
-            name="reports_table_cont"
-            layout={{ position: 'absolute', left: 4, right: 3, top: 3, bottom: 41, ...layout }}
-        />
-    );
-};
-
-/** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
-export interface MyReportsLayoutSpacerProps {
-    layout?: BoxLayout;
-}
-
-export const MyReportsLayoutSpacer = ({ layout }: MyReportsLayoutSpacerProps) => {
-    return (
-        <Region
-            name="spacer"
-            layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
-export interface MyReportsLayoutSpacer2Props {
-    layout?: BoxLayout;
-}
-
-export const MyReportsLayoutSpacer2 = ({ layout }: MyReportsLayoutSpacer2Props) => {
-    return (
-        <Region
-            name="spacer"
-            layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
-export interface MyReportsLayoutSpacer3Props {
-    layout?: BoxLayout;
-    visibleSpacer?: boolean;
-}
-
-export const MyReportsLayoutSpacer3 = ({ layout, visibleSpacer }: MyReportsLayoutSpacer3Props) => {
-    return (
-        <Region
-            name="spacer"
-            visible={visibleSpacer ?? false}
-            layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
-export interface MyReportsLayoutSpacer4Props {
-    layout?: BoxLayout;
-}
-
-export const MyReportsLayoutSpacer4 = ({ layout }: MyReportsLayoutSpacer4Props) => {
-    return (
-        <Region
-            name="spacer"
-            layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
-        />
     );
 };

@@ -27,48 +27,17 @@ export const ChestGenericLayout = ({ layout, mainList, onClose }: ChestGenericLa
     );
 };
 
-/** Named region `layout_1` of ChestGenericLayout - configured through the parent's `layout1` prop. */
-export interface ChestGenericLayoutLayout1Props {
-    layout?: BoxLayout;
-}
-
-export const ChestGenericLayoutLayout1 = ({ layout }: ChestGenericLayoutLayout1Props) => {
-    return (
-        <Region
-            name="layout_1"
-            backgroundColor="#dadada"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 0, ...layout }}
-        />
-    );
-};
-
-/** Named region `splitter` of ChestGenericLayout - configured through the parent's `splitter` prop. */
-export interface ChestGenericLayoutSplitterProps {
-    layout?: BoxLayout;
-}
-
-export const ChestGenericLayoutSplitter = ({ layout }: ChestGenericLayoutSplitterProps) => {
-    return (
-        <Region
-            name="splitter"
-            backgroundColor="#c0c0c0"
-            layout={{ position: 'absolute', left: 1, right: 1, bottom: 0, height: 1, ...layout }}
-        />
-    );
-};
-
 /** Row template `header` of ChestGenericLayout - pass real rows through its `items…` slot. */
 export interface ChestGenericLayoutHeaderItemProps {
     captionDesc?: string;
     captionWarningText?: string;
     layout?: BoxLayout;
-    layout1?: ChestGenericLayoutLayout1Props;
     onNotificationSettingsButton?: () => void;
     onSettingsButton?: () => void;
-    splitter?: ChestGenericLayoutSplitterProps;
+    visibleWarningText?: boolean;
 }
 
-export const ChestGenericLayoutHeaderItem = ({ captionDesc, captionWarningText, layout, layout1, onNotificationSettingsButton, onSettingsButton, splitter }: ChestGenericLayoutHeaderItemProps) => {
+export const ChestGenericLayoutHeaderItem = ({ captionDesc, captionWarningText, layout, onNotificationSettingsButton, onSettingsButton, visibleWarningText }: ChestGenericLayoutHeaderItemProps) => {
     const t = useTranslation();
 
     return (
@@ -76,8 +45,16 @@ export const ChestGenericLayoutHeaderItem = ({ captionDesc, captionWarningText, 
             name="header"
             layout={{ width: 460, height: 51, flexShrink: 0, ...layout }}
         >
-            <ChestGenericLayoutLayout1 {...layout1} />
-            <ChestGenericLayoutSplitter {...splitter} />
+            <Region
+                name="layout_1"
+                backgroundColor="#dadada"
+                layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 0 }}
+            />
+            <Region
+                name="splitter"
+                backgroundColor="#c0c0c0"
+                layout={{ position: 'absolute', left: 1, right: 1, bottom: 0, height: 1 }}
+            />
             <Region
                 name="desc"
                 layout={{ position: 'absolute', left: 10, right: 70, top: 10, minHeight: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -87,16 +64,17 @@ export const ChestGenericLayoutHeaderItem = ({ captionDesc, captionWarningText, 
                     textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
                 />
             </Region>
-            <Region
-                name="warning_text"
-                visible={false}
-                layout={{ position: 'absolute', left: 10, right: 44, top: 10, bottom: -6, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionWarningText ?? ''}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 406 }}
-                />
-            </Region>
+            {(visibleWarningText ?? false) && (
+                <Region
+                    name="warning_text"
+                    layout={{ position: 'absolute', left: 10, right: 44, top: 10, bottom: -6, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionWarningText ?? ''}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 406 }}
+                    />
+                </Region>
+            )}
             <ContainerButton
                 variant="7"
                 name="notification_settings_button"
@@ -138,58 +116,6 @@ export const ChestGenericLayoutChestContentsItem = ({ layout }: ChestGenericLayo
             name="chest_contents"
             layout={{ width: 458, height: 254, flexShrink: 0, ...layout }}
         />
-    );
-};
-
-/** Named region `layout_1` of ChestGenericLayout - configured through the parent's `layout1` prop. */
-export interface ChestGenericLayoutLayout12Props {
-    layout?: BoxLayout;
-}
-
-export const ChestGenericLayoutLayout12 = ({ layout }: ChestGenericLayoutLayout12Props) => {
-    return (
-        <Region
-            name="layout_1"
-            backgroundColor="#dadada"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 13, ...layout }}
-        />
-    );
-};
-
-/** Named region `splitter` of ChestGenericLayout - configured through the parent's `splitter` prop. */
-export interface ChestGenericLayoutSplitter2Props {
-    layout?: BoxLayout;
-}
-
-export const ChestGenericLayoutSplitter2 = ({ layout }: ChestGenericLayoutSplitter2Props) => {
-    return (
-        <Region
-            name="splitter"
-            backgroundColor="#c0c0c0"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 1, ...layout }}
-        />
-    );
-};
-
-/** Named region `lock_info_button` of ChestGenericLayout - configured through the parent's `lockInfoButton` prop. */
-export interface ChestGenericLayoutLockInfoButtonProps {
-    layout?: BoxLayout;
-    onLockInfoButton?: () => void;
-}
-
-export const ChestGenericLayoutLockInfoButton = ({ layout, onLockInfoButton }: ChestGenericLayoutLockInfoButtonProps) => {
-    return (
-        <Region
-            name="lock_info_button"
-            onPointerTap={onLockInfoButton}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 19, width: 18, top: 6, height: 18, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('icons_info_grey.png')}
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
-            />
-        </Region>
     );
 };
 
@@ -654,30 +580,6 @@ export const ChestGenericLayoutCapacityInputBorderItem = ({ layout }: ChestGener
     );
 };
 
-/** Named region `capacity_override_container` of ChestGenericLayout - configured through the parent's `capacityOverrideContainer` prop. */
-export interface ChestGenericLayoutCapacityOverrideContainerProps {
-    itemsCapacityOverrideContainer?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const ChestGenericLayoutCapacityOverrideContainer = ({ itemsCapacityOverrideContainer, layout }: ChestGenericLayoutCapacityOverrideContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="capacity_override_container"
-            layout={{ position: 'absolute', left: 0, width: 156, top: 2, height: 22, flexDirection: 'row', gap: 6, ...layout }}
-        >
-            {itemsCapacityOverrideContainer ?? (
-                <ChestGenericLayoutCapacityInputBorderItem />
-            )}
-            <Region layout={{ width: 85, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText text={t('wiredchests.capacity')} />
-            </Region>
-        </Region>
-    );
-};
-
 /** Row template `max_capacity_txt` of ChestGenericLayout - pass real rows through its `items…` slot. */
 export interface ChestGenericLayoutMaxCapacityTxtItemProps {
     captionMaxCapacityTxt?: string;
@@ -722,53 +624,16 @@ export const ChestGenericLayoutUpgradeCapacityRegionItem = ({ layout, onUpgradeC
     );
 };
 
-/** Named region `upgrade_capacity_container` of ChestGenericLayout - configured through the parent's `upgradeCapacityContainer` prop. */
-export interface ChestGenericLayoutUpgradeCapacityContainerProps {
-    itemsUpgradeCapacityContainer?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const ChestGenericLayoutUpgradeCapacityContainer = ({ itemsUpgradeCapacityContainer, layout }: ChestGenericLayoutUpgradeCapacityContainerProps) => {
-    return (
-        <Region
-            name="upgrade_capacity_container"
-            layout={{ position: 'absolute', right: 16, width: 200, top: 0, height: 25, flexDirection: 'row', gap: 6, ...layout }}
-        >
-            {itemsUpgradeCapacityContainer ?? (
-                <>
-                    <ChestGenericLayoutMaxCapacityTxtItem />
-                    <ChestGenericLayoutUpgradeCapacityRegionItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
-/** Named region `splitter` of ChestGenericLayout - configured through the parent's `splitter` prop. */
-export interface ChestGenericLayoutSplitter3Props {
-    layout?: BoxLayout;
-}
-
-export const ChestGenericLayoutSplitter3 = ({ layout }: ChestGenericLayoutSplitter3Props) => {
-    return (
-        <Region
-            name="splitter"
-            backgroundColor="#b0b0b0"
-            layout={{ position: 'absolute', left: 0, right: 14, top: 29, height: 1, ...layout }}
-        />
-    );
-};
-
 /** Row template `capacity_options` of ChestGenericLayout - pass real rows through its `items…` slot. */
 export interface ChestGenericLayoutCapacityOptionsItemProps {
-    capacityOverrideContainer?: ChestGenericLayoutCapacityOverrideContainerProps;
     captionItemCountText?: string;
+    itemsCapacityOverrideContainer?: ReactNode;
+    itemsUpgradeCapacityContainer?: ReactNode;
     layout?: BoxLayout;
-    splitter?: ChestGenericLayoutSplitter3Props;
-    upgradeCapacityContainer?: ChestGenericLayoutUpgradeCapacityContainerProps;
+    visibleItemCountText?: boolean;
 }
 
-export const ChestGenericLayoutCapacityOptionsItem = ({ capacityOverrideContainer, captionItemCountText, layout, splitter, upgradeCapacityContainer }: ChestGenericLayoutCapacityOptionsItemProps) => {
+export const ChestGenericLayoutCapacityOptionsItem = ({ captionItemCountText, itemsCapacityOverrideContainer, itemsUpgradeCapacityContainer, layout, visibleItemCountText }: ChestGenericLayoutCapacityOptionsItemProps) => {
     const t = useTranslation();
 
     return (
@@ -776,16 +641,41 @@ export const ChestGenericLayoutCapacityOptionsItem = ({ capacityOverrideContaine
             name="capacity_options"
             layout={{ width: 443, height: 30, flexShrink: 0, ...layout }}
         >
+            {(visibleItemCountText ?? false) && (
+                <Region
+                    name="item_count_text"
+                    layout={{ position: 'absolute', left: 0, width: 184, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionItemCountText ?? t('wiredchests.space_used')} />
+                </Region>
+            )}
             <Region
-                name="item_count_text"
-                visible={false}
-                layout={{ position: 'absolute', left: 0, width: 184, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                name="capacity_override_container"
+                layout={{ position: 'absolute', left: 0, width: 156, top: 2, height: 22, flexDirection: 'row', gap: 6 }}
             >
-                <ThemeText text={captionItemCountText ?? t('wiredchests.space_used')} />
+                {itemsCapacityOverrideContainer ?? (
+                    <ChestGenericLayoutCapacityInputBorderItem />
+                )}
+                <Region layout={{ width: 85, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('wiredchests.capacity')} />
+                </Region>
             </Region>
-            <ChestGenericLayoutCapacityOverrideContainer {...capacityOverrideContainer} />
-            <ChestGenericLayoutUpgradeCapacityContainer {...upgradeCapacityContainer} />
-            <ChestGenericLayoutSplitter3 {...splitter} />
+            <Region
+                name="upgrade_capacity_container"
+                layout={{ position: 'absolute', right: 16, width: 200, top: 0, height: 25, flexDirection: 'row', gap: 6 }}
+            >
+                {itemsUpgradeCapacityContainer ?? (
+                    <>
+                        <ChestGenericLayoutMaxCapacityTxtItem />
+                        <ChestGenericLayoutUpgradeCapacityRegionItem />
+                    </>
+                )}
+            </Region>
+            <Region
+                name="splitter"
+                backgroundColor="#b0b0b0"
+                layout={{ position: 'absolute', left: 0, right: 14, top: 29, height: 1 }}
+            />
         </Region>
     );
 };
@@ -854,28 +744,6 @@ export const ChestGenericLayoutStartDepositBtnItem = ({ layout, onStartDepositBt
     );
 };
 
-/** Named region `footer_buttons_left` of ChestGenericLayout - configured through the parent's `footerButtonsLeft` prop. */
-export interface ChestGenericLayoutFooterButtonsLeftProps {
-    itemsFooterButtonsLeft?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const ChestGenericLayoutFooterButtonsLeft = ({ itemsFooterButtonsLeft, layout }: ChestGenericLayoutFooterButtonsLeftProps) => {
-    return (
-        <Region
-            name="footer_buttons_left"
-            layout={{ position: 'absolute', left: 17, width: 194, top: 0, height: 30, flexDirection: 'row', gap: 13, ...layout }}
-        >
-            {itemsFooterButtonsLeft ?? (
-                <>
-                    <ChestGenericLayoutWithdrawAllBtnItem />
-                    <ChestGenericLayoutStartDepositBtnItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Row template `view_logs_btn` of ChestGenericLayout - pass real rows through its `items…` slot. */
 export interface ChestGenericLayoutViewLogsBtnItemProps {
     layout?: BoxLayout;
@@ -897,92 +765,97 @@ export const ChestGenericLayoutViewLogsBtnItem = ({ layout, onViewLogsBtn }: Che
     );
 };
 
-/** Named region `footer_buttons_left` of ChestGenericLayout - configured through the parent's `footerButtonsLeft` prop. */
-export interface ChestGenericLayoutFooterButtonsLeft2Props {
-    itemsFooterButtonsLeft?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const ChestGenericLayoutFooterButtonsLeft2 = ({ itemsFooterButtonsLeft, layout }: ChestGenericLayoutFooterButtonsLeft2Props) => {
-    return (
-        <Region
-            name="footer_buttons_left"
-            layout={{ position: 'absolute', right: 17, width: 73, top: 0, height: 30, flexDirection: 'row', gap: 10, ...layout }}
-        >
-            {itemsFooterButtonsLeft ?? (
-                <ChestGenericLayoutViewLogsBtnItem />
-            )}
-        </Region>
-    );
-};
-
-/** Named region `button_row` of ChestGenericLayout - configured through the parent's `buttonRow` prop. */
-export interface ChestGenericLayoutButtonRowProps {
-    captionItemCountTextBottom?: string;
-    footerButtonsLeft?: ChestGenericLayoutFooterButtonsLeftProps;
-    footerButtonsLeft2?: ChestGenericLayoutFooterButtonsLeft2Props;
-    layout?: BoxLayout;
-}
-
-export const ChestGenericLayoutButtonRow = ({ captionItemCountTextBottom, footerButtonsLeft, footerButtonsLeft2, layout }: ChestGenericLayoutButtonRowProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="button_row"
-            layout={{ position: 'absolute', left: 0, right: 0, bottom: 6, height: 30, ...layout }}
-        >
-            <ChestGenericLayoutFooterButtonsLeft {...footerButtonsLeft} />
-            <ChestGenericLayoutFooterButtonsLeft2 {...footerButtonsLeft2} />
-            <Region
-                name="item_count_text_bottom"
-                visible={false}
-                layout={{ position: 'absolute', right: 15, width: 184, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionItemCountTextBottom ?? t('wiredchests.space_used')} />
-            </Region>
-        </Region>
-    );
-};
-
 /** Row template `footer` of ChestGenericLayout - pass real rows through its `items…` slot. */
 export interface ChestGenericLayoutFooterItemProps {
-    buttonRow?: ChestGenericLayoutButtonRowProps;
+    captionItemCountTextBottom?: string;
     footerOptions?: ChestGenericLayoutFooterOptionsProps;
+    itemsFooterButtonsLeft?: ReactNode;
+    itemsFooterButtonsLeft2?: ReactNode;
     layout?: BoxLayout;
-    layout1?: ChestGenericLayoutLayout12Props;
     lockInfoBubbleTexts?: ChestGenericLayoutLockInfoBubbleTextsProps;
-    lockInfoButton?: ChestGenericLayoutLockInfoButtonProps;
-    splitter?: ChestGenericLayoutSplitter2Props;
+    onLockInfoButton?: () => void;
+    visibleItemCountTextBottom?: boolean;
     visibleLockInfoBubble?: boolean;
 }
 
-export const ChestGenericLayoutFooterItem = ({ buttonRow, footerOptions, layout, layout1, lockInfoBubbleTexts, lockInfoButton, splitter, visibleLockInfoBubble }: ChestGenericLayoutFooterItemProps) => {
+export const ChestGenericLayoutFooterItem = ({ captionItemCountTextBottom, footerOptions, itemsFooterButtonsLeft, itemsFooterButtonsLeft2, layout, lockInfoBubbleTexts, onLockInfoButton, visibleItemCountTextBottom, visibleLockInfoBubble }: ChestGenericLayoutFooterItemProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="footer"
             layout={{ width: 460, height: 123, flexShrink: 0, ...layout }}
         >
-            <ChestGenericLayoutLayout12 {...layout1} />
+            <Region
+                name="layout_1"
+                backgroundColor="#dadada"
+                layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 13 }}
+            />
             <Border
                 variant="2"
                 name="layout_2"
                 tintColor="#dadada"
                 layout={{ position: 'absolute', left: 1, right: 1, bottom: 0, height: 36 }}
             />
-            <ChestGenericLayoutSplitter2 {...splitter} />
-            <ChestGenericLayoutLockInfoButton {...lockInfoButton} />
-            <Bubble
-                variant="7"
-                name="lock_info_bubble"
-                pointer="left"
-                visible={visibleLockInfoBubble ?? false}
-                layout={{ position: 'absolute', left: 440, width: 385, top: -245, height: 536 }}
+            <Region
+                name="splitter"
+                backgroundColor="#c0c0c0"
+                layout={{ position: 'absolute', left: 1, right: 1, top: 0, height: 1 }}
+            />
+            <Region
+                name="lock_info_button"
+                onPointerTap={onLockInfoButton}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 19, width: 18, top: 6, height: 18 }}
             >
-                <ChestGenericLayoutLockInfoBubbleTexts {...lockInfoBubbleTexts} />
-            </Bubble>
+                <ThemeImage
+                    src={layoutImage('icons_info_grey.png')}
+                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
+                />
+            </Region>
+            {(visibleLockInfoBubble ?? false) && (
+                <Bubble
+                    variant="7"
+                    name="lock_info_bubble"
+                    pointer="left"
+                    layout={{ position: 'absolute', left: 440, width: 385, top: -245, height: 536 }}
+                >
+                    <ChestGenericLayoutLockInfoBubbleTexts {...lockInfoBubbleTexts} />
+                </Bubble>
+            )}
             <ChestGenericLayoutFooterOptions {...footerOptions} />
-            <ChestGenericLayoutButtonRow {...buttonRow} />
+            <Region
+                name="button_row"
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 6, height: 30 }}
+            >
+                <Region
+                    name="footer_buttons_left"
+                    layout={{ position: 'absolute', left: 17, width: 194, top: 0, height: 30, flexDirection: 'row', gap: 13 }}
+                >
+                    {itemsFooterButtonsLeft ?? (
+                        <>
+                            <ChestGenericLayoutWithdrawAllBtnItem />
+                            <ChestGenericLayoutStartDepositBtnItem />
+                        </>
+                    )}
+                </Region>
+                <Region
+                    name="footer_buttons_left"
+                    layout={{ position: 'absolute', right: 17, width: 73, top: 0, height: 30, flexDirection: 'row', gap: 10 }}
+                >
+                    {itemsFooterButtonsLeft2 ?? (
+                        <ChestGenericLayoutViewLogsBtnItem />
+                    )}
+                </Region>
+                {(visibleItemCountTextBottom ?? false) && (
+                    <Region
+                        name="item_count_text_bottom"
+                        layout={{ position: 'absolute', right: 15, width: 184, top: 7, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionItemCountTextBottom ?? t('wiredchests.space_used')} />
+                    </Region>
+                )}
+            </Region>
         </Region>
     );
 };

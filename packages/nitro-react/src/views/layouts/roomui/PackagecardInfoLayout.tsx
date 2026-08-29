@@ -29,61 +29,18 @@ export const PackagecardInfoLayout = ({ elementList, layout, onClose }: Packagec
     );
 };
 
-/** Named region `avatar_image_region` of PackagecardInfoLayout - configured through the parent's `avatarImageRegion` prop. */
-export interface PackagecardInfoLayoutAvatarImageRegionProps {
-    layout?: BoxLayout;
-    onAvatarImageRegion?: () => void;
-    srcAvatarImage?: string;
-}
-
-export const PackagecardInfoLayoutAvatarImageRegion = ({ layout, onAvatarImageRegion, srcAvatarImage }: PackagecardInfoLayoutAvatarImageRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="avatar_image_region"
-            tooltip={t('widget.furni.present.sender.profile_tooltip')}
-            onPointerTap={onAvatarImageRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', width: 60, alignSelf: 'center', height: 149, ...layout }}
-        >
-            <ThemeImage
-                name="avatar_image"
-                src={srcAvatarImage}
-                layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 149 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `avatar_image_container` of PackagecardInfoLayout - configured through the parent's `avatarImageContainer` prop. */
-export interface PackagecardInfoLayoutAvatarImageContainerProps {
-    avatarImageRegion?: PackagecardInfoLayoutAvatarImageRegionProps;
-    layout?: BoxLayout;
-}
-
-export const PackagecardInfoLayoutAvatarImageContainer = ({ avatarImageRegion, layout }: PackagecardInfoLayoutAvatarImageContainerProps) => {
-    return (
-        <Region
-            name="avatar_image_container"
-            layout={{ position: 'absolute', left: 15, width: 60, top: 5, height: 149, minWidth: 60, maxWidth: 60, minHeight: 149, maxHeight: 149, justifyContent: 'center', ...layout }}
-        >
-            <PackagecardInfoLayoutAvatarImageRegion {...avatarImageRegion} />
-        </Region>
-    );
-};
-
 /** Row template `gift_card_container` of PackagecardInfoLayout - pass real rows through its `items…` slot. */
 export interface PackagecardInfoLayoutGiftCardContainerItemProps {
-    avatarImageContainer?: PackagecardInfoLayoutAvatarImageContainerProps;
     captionMessageFrom?: string;
     captionMessageText?: string;
     layout?: BoxLayout;
+    onAvatarImageRegion?: () => void;
     onMessageFrom?: () => void;
+    srcAvatarImage?: string;
     srcGiftCard?: string;
 }
 
-export const PackagecardInfoLayoutGiftCardContainerItem = ({ avatarImageContainer, captionMessageFrom, captionMessageText, layout, onMessageFrom, srcGiftCard }: PackagecardInfoLayoutGiftCardContainerItemProps) => {
+export const PackagecardInfoLayoutGiftCardContainerItem = ({ captionMessageFrom, captionMessageText, layout, onAvatarImageRegion, onMessageFrom, srcAvatarImage, srcGiftCard }: PackagecardInfoLayoutGiftCardContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -96,7 +53,24 @@ export const PackagecardInfoLayoutGiftCardContainerItem = ({ avatarImageContaine
                 src={srcGiftCard ?? layoutImage('catalogue_giftcard_blank.png')}
                 layout={{ position: 'absolute', left: 10, width: 306, top: 10, height: 149 }}
             />
-            <PackagecardInfoLayoutAvatarImageContainer {...avatarImageContainer} />
+            <Region
+                name="avatar_image_container"
+                layout={{ position: 'absolute', left: 15, width: 60, top: 5, height: 149, minWidth: 60, maxWidth: 60, minHeight: 149, maxHeight: 149, justifyContent: 'center' }}
+            >
+                <Region
+                    name="avatar_image_region"
+                    tooltip={t('widget.furni.present.sender.profile_tooltip')}
+                    onPointerTap={onAvatarImageRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', width: 60, alignSelf: 'center', height: 149 }}
+                >
+                    <ThemeImage
+                        name="avatar_image"
+                        src={srcAvatarImage}
+                        layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 149 }}
+                    />
+                </Region>
+            </Region>
             <Region
                 name="message_text"
                 layout={{ position: 'absolute', left: 95, width: 190, top: 31, height: 100, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}

@@ -5,14 +5,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `2975_notification_wired_xml` (layout "notification_wired", 190x60) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NotificationWiredLayoutProps {
     captionDescription?: string;
-    header?: NotificationWiredLayoutHeaderProps;
     layout?: BoxLayout;
     onButton?: () => void;
-    spacing?: NotificationWiredLayoutSpacingProps;
     visibleButton?: boolean;
 }
 
-export const NotificationWiredLayout = ({ captionDescription, header, layout, onButton, spacing, visibleButton }: NotificationWiredLayoutProps) => {
+export const NotificationWiredLayout = ({ captionDescription, layout, onButton, visibleButton }: NotificationWiredLayoutProps) => {
+    const t = useTranslation();
+
     return (
         <Region layout={{ position: 'relative', width: 190, height: 60, ...layout }}>
             <Border
@@ -24,7 +24,26 @@ export const NotificationWiredLayout = ({ captionDescription, header, layout, on
                     src={layoutImage('illumina_wired_bg_right.png')}
                     layout={{ position: 'absolute', left: 0, width: 240, bottom: -81, height: 160 }}
                 />
-                <NotificationWiredLayoutHeader {...header} />
+                <Region
+                    name="header"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
+                >
+                    <Border
+                        variant="2"
+                        tintColor="#1e3044"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
+                    />
+                    <Region
+                        backgroundColor="#1e3044"
+                        layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 10 }}
+                    />
+                    <Region layout={{ position: 'absolute', left: 7, width: 177, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                        <ThemeText
+                            text={t('product.type.wired')}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </Region>
                 <Region layout={{ position: 'absolute', left: 0, width: 190, top: 31, height: 23, flexDirection: 'column' }}>
                     <Region
                         name="description"
@@ -35,18 +54,22 @@ export const NotificationWiredLayout = ({ captionDescription, header, layout, on
                             textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174, align: 'center' }}
                         />
                     </Region>
-                    <NotificationWiredLayoutSpacing {...spacing} />
-                    <Button
-                        variant="106"
-                        name="button"
-                        tintColor="#6e8cb7"
-                        onPointerTap={onButton}
-                        textStyle="text-style-il-button"
-                        visible={visibleButton ?? false}
-                        layout={{ width: 65, height: 25, flexShrink: 0, minHeight: 25, maxHeight: 25 }}
-                    >
-                        Disable
-                    </Button>
+                    <Region
+                        name="spacing"
+                        layout={{ width: 30, height: 7, flexShrink: 0, flexDirection: 'column' }}
+                    />
+                    {(visibleButton ?? false) && (
+                        <Button
+                            variant="106"
+                            name="button"
+                            tintColor="#6e8cb7"
+                            onPointerTap={onButton}
+                            textStyle="text-style-il-button"
+                            layout={{ width: 65, height: 25, flexShrink: 0, minHeight: 25, maxHeight: 25 }}
+                        >
+                            Disable
+                        </Button>
+                    )}
                 </Region>
                 <ThemeImage
                     src={undefined}
@@ -54,51 +77,5 @@ export const NotificationWiredLayout = ({ captionDescription, header, layout, on
                 />
             </Border>
         </Region>
-    );
-};
-
-/** Named region `header` of NotificationWiredLayout - configured through the parent's `header` prop. */
-export interface NotificationWiredLayoutHeaderProps {
-    layout?: BoxLayout;
-}
-
-export const NotificationWiredLayoutHeader = ({ layout }: NotificationWiredLayoutHeaderProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="header"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24, ...layout }}
-        >
-            <Border
-                variant="2"
-                tintColor="#1e3044"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 24 }}
-            />
-            <Region
-                backgroundColor="#1e3044"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 15, height: 10 }}
-            />
-            <Region layout={{ position: 'absolute', left: 7, width: 177, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                <ThemeText
-                    text={t('product.type.wired')}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `spacing` of NotificationWiredLayout - configured through the parent's `spacing` prop. */
-export interface NotificationWiredLayoutSpacingProps {
-    layout?: BoxLayout;
-}
-
-export const NotificationWiredLayoutSpacing = ({ layout }: NotificationWiredLayoutSpacingProps) => {
-    return (
-        <Region
-            name="spacing"
-            layout={{ width: 30, height: 7, flexShrink: 0, flexDirection: 'column', ...layout }}
-        />
     );
 };

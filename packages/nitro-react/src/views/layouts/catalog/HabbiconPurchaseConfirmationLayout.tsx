@@ -101,29 +101,6 @@ export const HabbiconPurchaseConfirmationLayoutReceiveRowItem = ({ captionReceiv
     );
 };
 
-/** Named region `properties_itemlist` of HabbiconPurchaseConfirmationLayout - configured through the parent's `propertiesItemlist` prop. */
-export interface HabbiconPurchaseConfirmationLayoutPropertiesItemlistProps {
-    itemsPropertiesItemlist?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const HabbiconPurchaseConfirmationLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout }: HabbiconPurchaseConfirmationLayoutPropertiesItemlistProps) => {
-    return (
-        <Region
-            name="properties_itemlist"
-            layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 89, flexDirection: 'column', gap: 6, ...layout }}
-        >
-            {itemsPropertiesItemlist ?? (
-                <>
-                    <HabbiconPurchaseConfirmationLayoutProductNameItem />
-                    <HabbiconPurchaseConfirmationLayoutDescriptionTextItem />
-                    <HabbiconPurchaseConfirmationLayoutReceiveRowItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Row template `price_label` of HabbiconPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface HabbiconPurchaseConfirmationLayoutPriceLabelItemProps {
     captionPriceLabel?: string;
@@ -203,38 +180,16 @@ export const HabbiconPurchaseConfirmationLayoutPriceValueItem = ({ itemsPriceVal
     );
 };
 
-/** Named region `price_line` of HabbiconPurchaseConfirmationLayout - configured through the parent's `priceLine` prop. */
-export interface HabbiconPurchaseConfirmationLayoutPriceLineProps {
-    itemsPriceLine?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const HabbiconPurchaseConfirmationLayoutPriceLine = ({ itemsPriceLine, layout }: HabbiconPurchaseConfirmationLayoutPriceLineProps) => {
-    return (
-        <Region
-            name="price_line"
-            layout={{ position: 'absolute', left: 144, width: 280, top: 134, height: 22, flexDirection: 'row', gap: 6, ...layout }}
-        >
-            {itemsPriceLine ?? (
-                <>
-                    <HabbiconPurchaseConfirmationLayoutPriceLabelItem />
-                    <HabbiconPurchaseConfirmationLayoutPriceValueItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Row template `top_body` of HabbiconPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface HabbiconPurchaseConfirmationLayoutTopBodyItemProps {
     captionPreviewLabel?: string;
+    itemsPriceLine?: ReactNode;
+    itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
-    priceLine?: HabbiconPurchaseConfirmationLayoutPriceLineProps;
-    propertiesItemlist?: HabbiconPurchaseConfirmationLayoutPropertiesItemlistProps;
     srcProductImage?: string;
 }
 
-export const HabbiconPurchaseConfirmationLayoutTopBodyItem = ({ captionPreviewLabel, layout, priceLine, propertiesItemlist, srcProductImage }: HabbiconPurchaseConfirmationLayoutTopBodyItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutTopBodyItem = ({ captionPreviewLabel, itemsPriceLine, itemsPropertiesItemlist, layout, srcProductImage }: HabbiconPurchaseConfirmationLayoutTopBodyItemProps) => {
     const t = useTranslation();
 
     return (
@@ -270,8 +225,29 @@ export const HabbiconPurchaseConfirmationLayoutTopBodyItem = ({ captionPreviewLa
                     />
                 </Region>
             </Border>
-            <HabbiconPurchaseConfirmationLayoutPropertiesItemlist {...propertiesItemlist} />
-            <HabbiconPurchaseConfirmationLayoutPriceLine {...priceLine} />
+            <Region
+                name="properties_itemlist"
+                layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 89, flexDirection: 'column', gap: 6 }}
+            >
+                {itemsPropertiesItemlist ?? (
+                    <>
+                        <HabbiconPurchaseConfirmationLayoutProductNameItem />
+                        <HabbiconPurchaseConfirmationLayoutDescriptionTextItem />
+                        <HabbiconPurchaseConfirmationLayoutReceiveRowItem />
+                    </>
+                )}
+            </Region>
+            <Region
+                name="price_line"
+                layout={{ position: 'absolute', left: 144, width: 280, top: 134, height: 22, flexDirection: 'row', gap: 6 }}
+            >
+                {itemsPriceLine ?? (
+                    <>
+                        <HabbiconPurchaseConfirmationLayoutPriceLabelItem />
+                        <HabbiconPurchaseConfirmationLayoutPriceValueItem />
+                    </>
+                )}
+            </Region>
         </Region>
     );
 };

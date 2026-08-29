@@ -26,46 +26,8 @@ export const MakeMarketplaceOfferLayout = ({ layout, mainBorder, onClose }: Make
     );
 };
 
-/** Named region `buttons` of MakeMarketplaceOfferLayout - configured through the parent's `buttons` prop. */
-export interface MakeMarketplaceOfferLayoutButtonsProps {
-    layout?: BoxLayout;
-    onCancelMakeOfferButton?: () => void;
-    onMakeOfferButton?: () => void;
-}
-
-export const MakeMarketplaceOfferLayoutButtons = ({ layout, onCancelMakeOfferButton, onMakeOfferButton }: MakeMarketplaceOfferLayoutButtonsProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="buttons"
-            layout={{ width: 270, height: 30, flexShrink: 0, ...layout }}
-        >
-            <Button
-                variant="3"
-                name="cancel_make_offer_button"
-                onPointerTap={onCancelMakeOfferButton}
-                textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', right: 2, width: 130, top: 0, height: 28, maxWidth: 130 }}
-            >
-                {t('inventory.marketplace.make_offer.cancel')}
-            </Button>
-            <Button
-                variant="3"
-                name="make_offer_button"
-                onPointerTap={onMakeOfferButton}
-                textStyle="text-style-button-shiny-regular"
-                layout={{ position: 'absolute', left: 0, width: 130, top: 0, height: 28, maxWidth: 130 }}
-            >
-                {t('inventory.marketplace.make_offer.post')}
-            </Button>
-        </Region>
-    );
-};
-
 /** Named region `main_border` of MakeMarketplaceOfferLayout - configured through the parent's `mainBorder` prop. */
 export interface MakeMarketplaceOfferLayoutMainBorderProps {
-    buttons?: MakeMarketplaceOfferLayoutButtonsProps;
     captionAmountRequest?: string;
     captionAveragePrice?: string;
     captionExpirationInfo?: string;
@@ -76,11 +38,16 @@ export interface MakeMarketplaceOfferLayoutMainBorderProps {
     captionPriceRequest?: string;
     captionSuggestedPrice?: string;
     layout?: BoxLayout;
+    onCancelMakeOfferButton?: () => void;
     onCopySuggestedPriceButton?: () => void;
+    onMakeOfferButton?: () => void;
     srcFurniImage?: string;
+    visibleFurniDesc?: boolean;
+    visibleRarityItemOverlayWidget?: boolean;
+    visibleUniqueItemOverlayWidget?: boolean;
 }
 
-export const MakeMarketplaceOfferLayoutMainBorder = ({ buttons, captionAmountRequest, captionAveragePrice, captionExpirationInfo, captionFinalPrice, captionFurniDesc, captionFurniName, captionLowestPrice, captionPriceRequest, captionSuggestedPrice, layout, onCopySuggestedPriceButton, srcFurniImage }: MakeMarketplaceOfferLayoutMainBorderProps) => {
+export const MakeMarketplaceOfferLayoutMainBorder = ({ captionAmountRequest, captionAveragePrice, captionExpirationInfo, captionFinalPrice, captionFurniDesc, captionFurniName, captionLowestPrice, captionPriceRequest, captionSuggestedPrice, layout, onCancelMakeOfferButton, onCopySuggestedPriceButton, onMakeOfferButton, srcFurniImage, visibleFurniDesc, visibleRarityItemOverlayWidget, visibleUniqueItemOverlayWidget }: MakeMarketplaceOfferLayoutMainBorderProps) => {
     const t = useTranslation();
     const [ priceInputValue, setPriceInputValue ] = useState('');
     const [ amountInputValue, setAmountInputValue ] = useState('');
@@ -101,18 +68,20 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ buttons, captionAmountReq
                     layout={{ position: 'absolute', left: 0, width: 70, top: 0, height: 70 }}
                 />
             </Border>
-            <WidgetSlot
-                widgetType="limited_item_overlay_preview"
-                name="unique_item_overlay_widget"
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            />
-            <WidgetSlot
-                widgetType="rarity_item_overlay_grid"
-                name="rarity_item_overlay_widget"
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            />
+            {(visibleUniqueItemOverlayWidget ?? false) && (
+                <WidgetSlot
+                    widgetType="limited_item_overlay_preview"
+                    name="unique_item_overlay_widget"
+                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                />
+            )}
+            {(visibleRarityItemOverlayWidget ?? false) && (
+                <WidgetSlot
+                    widgetType="rarity_item_overlay_grid"
+                    name="rarity_item_overlay_widget"
+                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                />
+            )}
             <Region
                 name="furni_name"
                 layout={{ position: 'absolute', left: 88, width: 190, top: 13, height: 56, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -123,16 +92,17 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ buttons, captionAmountReq
                     textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
                 />
             </Region>
-            <Region
-                name="furni_desc"
-                visible={false}
-                layout={{ position: 'absolute', left: 88, width: 190, top: 34, height: 49, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionFurniDesc ?? t('002_lorem_ipsum_content')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
-                />
-            </Region>
+            {(visibleFurniDesc ?? false) && (
+                <Region
+                    name="furni_desc"
+                    layout={{ position: 'absolute', left: 88, width: 190, top: 34, height: 49, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionFurniDesc ?? t('002_lorem_ipsum_content')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 190 }}
+                    />
+                </Region>
+            )}
             <Region
                 name="expiration_info"
                 layout={{ position: 'absolute', left: 10, width: 268, top: 87, height: 39, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -227,7 +197,29 @@ export const MakeMarketplaceOfferLayoutMainBorder = ({ buttons, captionAmountReq
                         />
                     </Region>
                 </Border>
-                <MakeMarketplaceOfferLayoutButtons {...buttons} />
+                <Region
+                    name="buttons"
+                    layout={{ width: 270, height: 30, flexShrink: 0 }}
+                >
+                    <Button
+                        variant="3"
+                        name="cancel_make_offer_button"
+                        onPointerTap={onCancelMakeOfferButton}
+                        textStyle="text-style-button-shiny-regular"
+                        layout={{ position: 'absolute', right: 2, width: 130, top: 0, height: 28, maxWidth: 130 }}
+                    >
+                        {t('inventory.marketplace.make_offer.cancel')}
+                    </Button>
+                    <Button
+                        variant="3"
+                        name="make_offer_button"
+                        onPointerTap={onMakeOfferButton}
+                        textStyle="text-style-button-shiny-regular"
+                        layout={{ position: 'absolute', left: 0, width: 130, top: 0, height: 28, maxWidth: 130 }}
+                    >
+                        {t('inventory.marketplace.make_offer.post')}
+                    </Button>
+                </Region>
             </Region>
         </Region>
     );

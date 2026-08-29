@@ -1,6 +1,6 @@
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeText } from '#base/theme';
-import { RecyclerPrizesWidget2, RecyclerPrizesWidget2Props } from '#base/views/layouts/catalog/widgets/RecyclerPrizesWidget2';
+import { RecyclerPrizesWidget, RecyclerPrizesWidgetProps } from '#base/views/layouts/catalog/widgets/RecyclerPrizesWidget';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
 
 /** Generated from `1543_layout_recycler_prizes_xml` (layout "ctlg_recycler_prizes", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -21,7 +21,7 @@ export const LayoutRecyclerPrizes_1543Layout = ({ ctlgDefault3x3, layout }: Layo
 export interface LayoutRecyclerPrizes_1543LayoutCtlgDefault3x3Props {
     captionCtlgSelectproduct?: string;
     layout?: BoxLayout;
-    recyclerPrizesWidget?: RecyclerPrizesWidget2Props;
+    recyclerPrizesWidget?: RecyclerPrizesWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
 }
 
@@ -46,7 +46,7 @@ export const LayoutRecyclerPrizes_1543LayoutCtlgDefault3x3 = ({ captionCtlgSelec
                 layout={{ position: 'absolute', left: 180, width: 142, top: 116, height: 73 }}
                 {...specialInfoWidget}
             />
-            <RecyclerPrizesWidget2
+            <RecyclerPrizesWidget
                 layout={{ position: 'absolute', left: 0, width: 360, top: 146, height: 314 }}
                 {...recyclerPrizesWidget}
             />

@@ -156,39 +156,17 @@ export const ChestWiredUpgradeLayoutWarningItem = ({ captionWarning, layout }: C
     );
 };
 
-/** Named region `properties_itemlist` of ChestWiredUpgradeLayout - configured through the parent's `propertiesItemlist` prop. */
-export interface ChestWiredUpgradeLayoutPropertiesItemlistProps {
-    itemsPropertiesItemlist?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const ChestWiredUpgradeLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout }: ChestWiredUpgradeLayoutPropertiesItemlistProps) => {
-    return (
-        <Region
-            name="properties_itemlist"
-            layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 67, flexDirection: 'column', gap: 4, ...layout }}
-        >
-            {itemsPropertiesItemlist ?? (
-                <>
-                    <ChestWiredUpgradeLayoutProductNameItem />
-                    <ChestWiredUpgradeLayoutWarningItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Named region `content` of ChestWiredUpgradeLayout - configured through the parent's `content` prop. */
 export interface ChestWiredUpgradeLayoutContentProps {
     captionFree?: string;
     itemsContent?: ReactNode;
+    itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
-    propertiesItemlist?: ChestWiredUpgradeLayoutPropertiesItemlistProps;
     srcProductImage?: string;
     srcWiredIcon?: string;
 }
 
-export const ChestWiredUpgradeLayoutContent = ({ captionFree, itemsContent, layout, propertiesItemlist, srcProductImage, srcWiredIcon }: ChestWiredUpgradeLayoutContentProps) => {
+export const ChestWiredUpgradeLayoutContent = ({ captionFree, itemsContent, itemsPropertiesItemlist, layout, srcProductImage, srcWiredIcon }: ChestWiredUpgradeLayoutContentProps) => {
     const t = useTranslation();
 
     return (
@@ -219,7 +197,17 @@ export const ChestWiredUpgradeLayoutContent = ({ captionFree, itemsContent, layo
                         layout={{ position: 'absolute', left: 89, width: 30, top: 7, height: 30 }}
                     />
                 </Border>
-                <ChestWiredUpgradeLayoutPropertiesItemlist {...propertiesItemlist} />
+                <Region
+                    name="properties_itemlist"
+                    layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 67, flexDirection: 'column', gap: 4 }}
+                >
+                    {itemsPropertiesItemlist ?? (
+                        <>
+                            <ChestWiredUpgradeLayoutProductNameItem />
+                            <ChestWiredUpgradeLayoutWarningItem />
+                        </>
+                    )}
+                </Region>
                 <Region layout={{ position: 'absolute', left: 142, width: 307, top: 137, height: 22, flexDirection: 'row' }}>
                     <Region layout={{ width: 268, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText

@@ -26,8 +26,9 @@ export const AchievementResolutionProgressLayout = ({ elementList, layout, onClo
     );
 };
 
-/** Named region `progress_container` of AchievementResolutionProgressLayout - configured through the parent's `progressContainer` prop. */
-export interface AchievementResolutionProgressLayoutProgressContainerProps {
+/** Row template `progress_main_container` of AchievementResolutionProgressLayout - pass real rows through its `items…` slot. */
+export interface AchievementResolutionProgressLayoutProgressMainContainerItemProps {
+    captionProgressText?: string;
     layout?: BoxLayout;
     srcAchievedLeft?: string;
     srcAchievedMid?: string;
@@ -37,54 +38,7 @@ export interface AchievementResolutionProgressLayoutProgressContainerProps {
     srcUnachievedRight?: string;
 }
 
-export const AchievementResolutionProgressLayoutProgressContainer = ({ layout, srcAchievedLeft, srcAchievedMid, srcAchievedRight, srcUnachievedLeft, srcUnachievedMid, srcUnachievedRight }: AchievementResolutionProgressLayoutProgressContainerProps) => {
-    return (
-        <Region
-            name="progress_container"
-            layout={{ position: 'absolute', left: 0, width: 404, top: 0, height: 16, ...layout }}
-        >
-            <ThemeImage
-                name="unachieved_left"
-                src={srcUnachievedLeft ?? layoutImage('talent_unachieved_left.png')}
-                layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 16 }}
-            />
-            <ThemeImage
-                name="unachieved_mid"
-                src={srcUnachievedMid ?? layoutImage('talent_unachieved_mid.png')}
-                layout={{ position: 'absolute', left: 4, width: 396, top: 0, height: 16 }}
-            />
-            <ThemeImage
-                name="unachieved_right"
-                src={srcUnachievedRight ?? layoutImage('talent_unachieved_right.png')}
-                layout={{ position: 'absolute', left: 396, width: 4, top: 0, height: 16 }}
-            />
-            <ThemeImage
-                name="achieved_left"
-                src={srcAchievedLeft ?? layoutImage('talent_achieved_left.png')}
-                layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 16 }}
-            />
-            <ThemeImage
-                name="achieved_mid"
-                src={srcAchievedMid ?? layoutImage('talent_achieved_mid.png')}
-                layout={{ position: 'absolute', left: 4, width: 396, top: 0, height: 16 }}
-            />
-            <ThemeImage
-                name="achieved_right"
-                src={srcAchievedRight ?? layoutImage('talent_achieved_right.png')}
-                layout={{ position: 'absolute', left: 396, width: 4, top: 0, height: 16 }}
-            />
-        </Region>
-    );
-};
-
-/** Row template `progress_main_container` of AchievementResolutionProgressLayout - pass real rows through its `items…` slot. */
-export interface AchievementResolutionProgressLayoutProgressMainContainerItemProps {
-    captionProgressText?: string;
-    layout?: BoxLayout;
-    progressContainer?: AchievementResolutionProgressLayoutProgressContainerProps;
-}
-
-export const AchievementResolutionProgressLayoutProgressMainContainerItem = ({ captionProgressText, layout, progressContainer }: AchievementResolutionProgressLayoutProgressMainContainerItemProps) => {
+export const AchievementResolutionProgressLayoutProgressMainContainerItem = ({ captionProgressText, layout, srcAchievedLeft, srcAchievedMid, srcAchievedRight, srcUnachievedLeft, srcUnachievedMid, srcUnachievedRight }: AchievementResolutionProgressLayoutProgressMainContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -92,7 +46,41 @@ export const AchievementResolutionProgressLayoutProgressMainContainerItem = ({ c
             name="progress_main_container"
             layout={{ width: 404, height: 42, flexShrink: 0, ...layout }}
         >
-            <AchievementResolutionProgressLayoutProgressContainer {...progressContainer} />
+            <Region
+                name="progress_container"
+                layout={{ position: 'absolute', left: 0, width: 404, top: 0, height: 16 }}
+            >
+                <ThemeImage
+                    name="unachieved_left"
+                    src={srcUnachievedLeft ?? layoutImage('talent_unachieved_left.png')}
+                    layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 16 }}
+                />
+                <ThemeImage
+                    name="unachieved_mid"
+                    src={srcUnachievedMid ?? layoutImage('talent_unachieved_mid.png')}
+                    layout={{ position: 'absolute', left: 4, width: 396, top: 0, height: 16 }}
+                />
+                <ThemeImage
+                    name="unachieved_right"
+                    src={srcUnachievedRight ?? layoutImage('talent_unachieved_right.png')}
+                    layout={{ position: 'absolute', left: 396, width: 4, top: 0, height: 16 }}
+                />
+                <ThemeImage
+                    name="achieved_left"
+                    src={srcAchievedLeft ?? layoutImage('talent_achieved_left.png')}
+                    layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 16 }}
+                />
+                <ThemeImage
+                    name="achieved_mid"
+                    src={srcAchievedMid ?? layoutImage('talent_achieved_mid.png')}
+                    layout={{ position: 'absolute', left: 4, width: 396, top: 0, height: 16 }}
+                />
+                <ThemeImage
+                    name="achieved_right"
+                    src={srcAchievedRight ?? layoutImage('talent_achieved_right.png')}
+                    layout={{ position: 'absolute', left: 396, width: 4, top: 0, height: 16 }}
+                />
+            </Region>
             <Region
                 name="progress_text"
                 layout={{ position: 'absolute', left: 0, width: 404, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}

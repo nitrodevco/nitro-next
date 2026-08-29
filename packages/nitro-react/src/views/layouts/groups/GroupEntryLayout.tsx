@@ -16,88 +16,21 @@ export const GroupEntryLayout = ({ groupEntryContainer, layout }: GroupEntryLayo
     );
 };
 
-/** Named region `bg_region` of GroupEntryLayout - configured through the parent's `bgRegion` prop. */
-export interface GroupEntryLayoutBgRegionProps {
-    layout?: BoxLayout;
-    onBgRegion?: () => void;
-}
-
-export const GroupEntryLayoutBgRegion = ({ layout, onBgRegion }: GroupEntryLayoutBgRegionProps) => {
-    return (
-        <Region
-            name="bg_region"
-            onPointerTap={onBgRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60, ...layout }}
-        />
-    );
-};
-
-/** Named region `clear_favourite` of GroupEntryLayout - configured through the parent's `clearFavourite` prop. */
-export interface GroupEntryLayoutClearFavouriteProps {
-    layout?: BoxLayout;
-    onClearFavourite?: () => void;
-    srcIcon?: string;
-}
-
-export const GroupEntryLayoutClearFavourite = ({ layout, onClearFavourite, srcIcon }: GroupEntryLayoutClearFavouriteProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="clear_favourite"
-            tooltip={t('group.clearfavourite')}
-            onPointerTap={onClearFavourite}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 43, width: 18, top: 1, height: 16, ...layout }}
-        >
-            <ThemeImage
-                name="icon"
-                src={srcIcon ?? layoutImage('extended_profile_clear_favourite.png')}
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `make_favourite` of GroupEntryLayout - configured through the parent's `makeFavourite` prop. */
-export interface GroupEntryLayoutMakeFavouriteProps {
-    layout?: BoxLayout;
-    onMakeFavourite?: () => void;
-    srcIcon?: string;
-}
-
-export const GroupEntryLayoutMakeFavourite = ({ layout, onMakeFavourite, srcIcon }: GroupEntryLayoutMakeFavouriteProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="make_favourite"
-            tooltip={t('group.makefavourite')}
-            onPointerTap={onMakeFavourite}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 43, width: 18, top: 1, height: 16, ...layout }}
-        >
-            <ThemeImage
-                name="icon"
-                src={srcIcon ?? layoutImage('extended_profile_make_favourite.png')}
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `group_entry_container` of GroupEntryLayout - configured through the parent's `groupEntryContainer` prop. */
 export interface GroupEntryLayoutGroupEntryContainerProps {
-    bgRegion?: GroupEntryLayoutBgRegionProps;
-    clearFavourite?: GroupEntryLayoutClearFavouriteProps;
     layout?: BoxLayout;
-    makeFavourite?: GroupEntryLayoutMakeFavouriteProps;
+    onBgRegion?: () => void;
+    onClearFavourite?: () => void;
+    onMakeFavourite?: () => void;
     srcBgSelectedBitmap?: string;
     srcBgUnselectedBitmap?: string;
+    srcIcon?: string;
+    srcIcon2?: string;
 }
 
-export const GroupEntryLayoutGroupEntryContainer = ({ bgRegion, clearFavourite, layout, makeFavourite, srcBgSelectedBitmap, srcBgUnselectedBitmap }: GroupEntryLayoutGroupEntryContainerProps) => {
+export const GroupEntryLayoutGroupEntryContainer = ({ layout, onBgRegion, onClearFavourite, onMakeFavourite, srcBgSelectedBitmap, srcBgUnselectedBitmap, srcIcon, srcIcon2 }: GroupEntryLayoutGroupEntryContainerProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="group_entry_container"
@@ -119,9 +52,38 @@ export const GroupEntryLayoutGroupEntryContainer = ({ bgRegion, clearFavourite, 
                 options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                 layout={{ position: 'absolute', left: 11, width: 40, top: 10, height: 40 }}
             />
-            <GroupEntryLayoutBgRegion {...bgRegion} />
-            <GroupEntryLayoutClearFavourite {...clearFavourite} />
-            <GroupEntryLayoutMakeFavourite {...makeFavourite} />
+            <Region
+                name="bg_region"
+                onPointerTap={onBgRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60 }}
+            />
+            <Region
+                name="clear_favourite"
+                tooltip={t('group.clearfavourite')}
+                onPointerTap={onClearFavourite}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 43, width: 18, top: 1, height: 16 }}
+            >
+                <ThemeImage
+                    name="icon"
+                    src={srcIcon ?? layoutImage('extended_profile_clear_favourite.png')}
+                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
+                />
+            </Region>
+            <Region
+                name="make_favourite"
+                tooltip={t('group.makefavourite')}
+                onPointerTap={onMakeFavourite}
+                cursor="pointer"
+                layout={{ position: 'absolute', right: 43, width: 18, top: 1, height: 16 }}
+            >
+                <ThemeImage
+                    name="icon"
+                    src={srcIcon2 ?? layoutImage('extended_profile_make_favourite.png')}
+                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 16 }}
+                />
+            </Region>
         </Region>
     );
 };

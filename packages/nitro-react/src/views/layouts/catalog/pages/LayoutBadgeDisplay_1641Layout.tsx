@@ -5,7 +5,7 @@ import { LimitedItemWidget, LimitedItemWidgetProps } from '#base/views/layouts/c
 import { ProductViewWidget, ProductViewWidgetProps } from '#base/views/layouts/catalog/widgets/ProductViewWidget';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
-import { UserBadgeSelectorWidget, UserBadgeSelectorWidgetProps } from '#base/views/layouts/catalog/widgets/UserBadgeSelectorWidget';
+import { UserBadgeSelectorWidget2, UserBadgeSelectorWidget2Props } from '#base/views/layouts/catalog/widgets/UserBadgeSelectorWidget2';
 
 /** Generated from `1641_layout_badge_display_xml` (layout "ctlg_badge_display", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutBadgeDisplay_1641LayoutProps {
@@ -31,7 +31,7 @@ export interface LayoutBadgeDisplay_1641LayoutCtlgBadgedisplayProps {
     productViewWidget?: ProductViewWidgetProps;
     purchaseWidget?: PurchaseWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
-    userBadgeSelectorWidget?: UserBadgeSelectorWidgetProps;
+    userBadgeSelectorWidget?: UserBadgeSelectorWidget2Props;
 }
 
 export const LayoutBadgeDisplay_1641LayoutCtlgBadgedisplay = ({ captionCtlgSelectbadge, captionCtlgSelectproduct, itemGridWidget, layout, limitedItemWidget, productViewWidget, purchaseWidget, specialInfoWidget, userBadgeSelectorWidget }: LayoutBadgeDisplay_1641LayoutCtlgBadgedisplayProps) => {
@@ -80,7 +80,7 @@ export const LayoutBadgeDisplay_1641LayoutCtlgBadgedisplay = ({ captionCtlgSelec
                     textStyle="text-style-u-small"
                 />
             </Region>
-            <UserBadgeSelectorWidget
+            <UserBadgeSelectorWidget2
                 layout={{ position: 'absolute', left: 4, width: 170, top: 242, height: 175 }}
                 {...userBadgeSelectorWidget}
             />

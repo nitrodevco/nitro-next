@@ -46,24 +46,26 @@ export const TalentTrackLayout = ({ captionFrameSubtitle, captionFrameTitle, lay
                         layout={{ position: 'absolute', right: 0, width: 24, top: 20, height: 280 }}
                     />
                     <TalentTrackLayoutProgressContainer {...progressContainer} />
-                    <Button
-                        variant="102"
-                        name="button_track_citizenship"
-                        onPointerTap={onButtonTrackCitizenship}
-                        visible={visibleButtonTrackCitizenship ?? false}
-                        layout={{ position: 'absolute', left: 10, width: 36, top: 10, height: 32 }}
-                    >
-                        C
-                    </Button>
-                    <Button
-                        variant="102"
-                        name="button_track_helper"
-                        onPointerTap={onButtonTrackHelper}
-                        visible={visibleButtonTrackHelper ?? false}
-                        layout={{ position: 'absolute', left: 51, width: 36, top: 10, height: 32 }}
-                    >
-                        H
-                    </Button>
+                    {(visibleButtonTrackCitizenship ?? false) && (
+                        <Button
+                            variant="102"
+                            name="button_track_citizenship"
+                            onPointerTap={onButtonTrackCitizenship}
+                            layout={{ position: 'absolute', left: 10, width: 36, top: 10, height: 32 }}
+                        >
+                            C
+                        </Button>
+                    )}
+                    {(visibleButtonTrackHelper ?? false) && (
+                        <Button
+                            variant="102"
+                            name="button_track_helper"
+                            onPointerTap={onButtonTrackHelper}
+                            layout={{ position: 'absolute', left: 51, width: 36, top: 10, height: 32 }}
+                        >
+                            H
+                        </Button>
+                    )}
                 </Frame>
                 <Region layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 53, minWidth: 100 }}>
                     <Region
@@ -419,9 +421,10 @@ export interface TalentTrackLayoutLevelRewardItemProps {
     rewardList?: TalentTrackLayoutRewardListProps;
     srcAchieved?: string;
     srcLocked?: string;
+    visibleDescriptionLocked?: boolean;
 }
 
-export const TalentTrackLayoutLevelRewardItem = ({ captionDescriptionAchieved, captionDescriptionLocked, captionTitleAchieved, captionTitleLocked, captionUnlocked, layout, rewardList, srcAchieved, srcLocked }: TalentTrackLayoutLevelRewardItemProps) => {
+export const TalentTrackLayoutLevelRewardItem = ({ captionDescriptionAchieved, captionDescriptionLocked, captionTitleAchieved, captionTitleLocked, captionUnlocked, layout, rewardList, srcAchieved, srcLocked, visibleDescriptionLocked }: TalentTrackLayoutLevelRewardItemProps) => {
     const t = useTranslation();
 
     return (
@@ -474,16 +477,17 @@ export const TalentTrackLayoutLevelRewardItem = ({ captionDescriptionAchieved, c
                         textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
                     />
                 </Region>
-                <Region
-                    name="description_locked"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 10, width: 330, top: 38, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDescriptionLocked ?? 'Reward description locked'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
-                    />
-                </Region>
+                {(visibleDescriptionLocked ?? false) && (
+                    <Region
+                        name="description_locked"
+                        layout={{ position: 'absolute', left: 10, width: 330, top: 38, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionDescriptionLocked ?? 'Reward description locked'}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 330 }}
+                        />
+                    </Region>
+                )}
                 <TalentTrackLayoutRewardList {...rewardList} />
             </Border>
             <ThemeImage
@@ -554,75 +558,21 @@ export const TalentTrackLayoutTaskAchievedItem = ({ captionDescription, captionT
     );
 };
 
-/** Named region `task_progress` of TalentTrackLayout - configured through the parent's `taskProgress` prop. */
-export interface TalentTrackLayoutTaskProgressProps {
+/** Row template `task_ongoing` of TalentTrackLayout - pass real rows through its `items…` slot. */
+export interface TalentTrackLayoutTaskOngoingItemProps {
+    captionDescription?: string;
+    captionTitle?: string;
     layout?: BoxLayout;
+    onTaskOngoingRegion?: () => void;
     srcTaskProgressBg?: string;
     srcTaskProgressFg?: string;
     srcTaskProgressLeft?: string;
     srcTaskProgressRight?: string;
 }
 
-export const TalentTrackLayoutTaskProgress = ({ layout, srcTaskProgressBg, srcTaskProgressFg, srcTaskProgressLeft, srcTaskProgressRight }: TalentTrackLayoutTaskProgressProps) => {
-    return (
-        <Region
-            name="task_progress"
-            layout={{ position: 'absolute', left: 5, width: 50, top: 48, height: 6, ...layout }}
-        >
-            <ThemeImage
-                name="task_progress_left"
-                src={srcTaskProgressLeft ?? layoutImage('talent_task_progress_left.png')}
-                layout={{ position: 'absolute', left: 0, width: 2, top: 0, height: 6 }}
-            />
-            <ThemeImage
-                name="task_progress_right"
-                src={srcTaskProgressRight ?? layoutImage('talent_task_progress_right.png')}
-                layout={{ position: 'absolute', left: 48, width: 2, top: 0, height: 6 }}
-            />
-            <ThemeImage
-                name="task_progress_bg"
-                src={srcTaskProgressBg ?? layoutImage('talent_task_progress_bg.png')}
-                layout={{ position: 'absolute', left: 2, width: 46, top: 0, height: 6 }}
-            />
-            <ThemeImage
-                name="task_progress_fg"
-                src={srcTaskProgressFg ?? layoutImage('talent_task_progress_fg.png')}
-                layout={{ position: 'absolute', left: 1, width: 48, top: 0, height: 6 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `task_ongoing_region` of TalentTrackLayout - configured through the parent's `taskOngoingRegion` prop. */
-export interface TalentTrackLayoutTaskOngoingRegionProps {
-    layout?: BoxLayout;
-    onTaskOngoingRegion?: () => void;
-}
-
-export const TalentTrackLayoutTaskOngoingRegion = ({ layout, onTaskOngoingRegion }: TalentTrackLayoutTaskOngoingRegionProps) => {
+export const TalentTrackLayoutTaskOngoingItem = ({ captionDescription, captionTitle, layout, onTaskOngoingRegion, srcTaskProgressBg, srcTaskProgressFg, srcTaskProgressLeft, srcTaskProgressRight }: TalentTrackLayoutTaskOngoingItemProps) => {
     const t = useTranslation();
 
-    return (
-        <Region
-            name="task_ongoing_region"
-            tooltip={t('talent.track.common.view.progress.tooltip')}
-            onPointerTap={onTaskOngoingRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 210, top: 0, height: 80, ...layout }}
-        />
-    );
-};
-
-/** Row template `task_ongoing` of TalentTrackLayout - pass real rows through its `items…` slot. */
-export interface TalentTrackLayoutTaskOngoingItemProps {
-    captionDescription?: string;
-    captionTitle?: string;
-    layout?: BoxLayout;
-    taskOngoingRegion?: TalentTrackLayoutTaskOngoingRegionProps;
-    taskProgress?: TalentTrackLayoutTaskProgressProps;
-}
-
-export const TalentTrackLayoutTaskOngoingItem = ({ captionDescription, captionTitle, layout, taskOngoingRegion, taskProgress }: TalentTrackLayoutTaskOngoingItemProps) => {
     return (
         <Region
             name="task_ongoing"
@@ -658,9 +608,39 @@ export const TalentTrackLayoutTaskOngoingItem = ({ captionDescription, captionTi
                         textOptions={{ wordWrap: true, wordWrapWidth: 145 }}
                     />
                 </Region>
-                <TalentTrackLayoutTaskProgress {...taskProgress} />
+                <Region
+                    name="task_progress"
+                    layout={{ position: 'absolute', left: 5, width: 50, top: 48, height: 6 }}
+                >
+                    <ThemeImage
+                        name="task_progress_left"
+                        src={srcTaskProgressLeft ?? layoutImage('talent_task_progress_left.png')}
+                        layout={{ position: 'absolute', left: 0, width: 2, top: 0, height: 6 }}
+                    />
+                    <ThemeImage
+                        name="task_progress_right"
+                        src={srcTaskProgressRight ?? layoutImage('talent_task_progress_right.png')}
+                        layout={{ position: 'absolute', left: 48, width: 2, top: 0, height: 6 }}
+                    />
+                    <ThemeImage
+                        name="task_progress_bg"
+                        src={srcTaskProgressBg ?? layoutImage('talent_task_progress_bg.png')}
+                        layout={{ position: 'absolute', left: 2, width: 46, top: 0, height: 6 }}
+                    />
+                    <ThemeImage
+                        name="task_progress_fg"
+                        src={srcTaskProgressFg ?? layoutImage('talent_task_progress_fg.png')}
+                        layout={{ position: 'absolute', left: 1, width: 48, top: 0, height: 6 }}
+                    />
+                </Region>
             </Border>
-            <TalentTrackLayoutTaskOngoingRegion {...taskOngoingRegion} />
+            <Region
+                name="task_ongoing_region"
+                tooltip={t('talent.track.common.view.progress.tooltip')}
+                onPointerTap={onTaskOngoingRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 210, top: 0, height: 80 }}
+            />
         </Region>
     );
 };
@@ -737,35 +717,23 @@ export const TalentTrackLayoutTaskListTop = ({ itemsTaskListTop, layout }: Talen
     );
 };
 
-/** Named region `task_list_bottom` of TalentTrackLayout - configured through the parent's `taskListBottom` prop. */
-export interface TalentTrackLayoutTaskListBottomProps {
-    layout?: BoxLayout;
-}
-
-export const TalentTrackLayoutTaskListBottom = ({ layout }: TalentTrackLayoutTaskListBottomProps) => {
-    return (
-        <Region
-            name="task_list_bottom"
-            layout={{ position: 'absolute', left: 0, top: 80, flexDirection: 'row', gap: 10, ...layout }}
-        />
-    );
-};
-
 /** Row template `level_task` of TalentTrackLayout - pass real rows through its `items…` slot. */
 export interface TalentTrackLayoutLevelTaskItemProps {
     layout?: BoxLayout;
-    taskListBottom?: TalentTrackLayoutTaskListBottomProps;
     taskListTop?: TalentTrackLayoutTaskListTopProps;
 }
 
-export const TalentTrackLayoutLevelTaskItem = ({ layout, taskListBottom, taskListTop }: TalentTrackLayoutLevelTaskItemProps) => {
+export const TalentTrackLayoutLevelTaskItem = ({ layout, taskListTop }: TalentTrackLayoutLevelTaskItemProps) => {
     return (
         <Region
             name="level_task"
             layout={{ width: 600, height: 180, flexShrink: 0, ...layout }}
         >
             <TalentTrackLayoutTaskListTop {...taskListTop} />
-            <TalentTrackLayoutTaskListBottom {...taskListBottom} />
+            <Region
+                name="task_list_bottom"
+                layout={{ position: 'absolute', left: 0, top: 80, flexDirection: 'row', gap: 10 }}
+            />
         </Region>
     );
 };
@@ -792,46 +760,19 @@ export const TalentTrackLayoutStatusList = ({ itemsStatusList, layout }: TalentT
     );
 };
 
-/** Named region `action_overlay` of TalentTrackLayout - configured through the parent's `actionOverlay` prop. */
-export interface TalentTrackLayoutActionOverlayProps {
-    layout?: BoxLayout;
-    visibleActionOverlay?: boolean;
-}
-
-export const TalentTrackLayoutActionOverlay = ({ layout, visibleActionOverlay }: TalentTrackLayoutActionOverlayProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="action_overlay"
-            visible={visibleActionOverlay ?? false}
-            layout={{ position: 'absolute', left: -2, width: 214, top: -1, height: 84, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('talent_action_overlay.png')}
-                layout={{ position: 'absolute', left: 0, width: 214, top: 0, height: 84 }}
-            />
-            <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 133, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('talent.track.action.overlay')}
-                    textStyle="text-style-il-regular-white"
-                />
-            </Region>
-        </Region>
-    );
-};
-
 /** Row template `level_pane` of TalentTrackLayout - pass real rows through its `items…` slot. */
 export interface TalentTrackLayoutLevelPaneItemProps {
-    actionOverlay?: TalentTrackLayoutActionOverlayProps;
     captionLevelDescription?: string;
     captionLevelTitle?: string;
     layout?: BoxLayout;
     srcLevelIllustration?: string;
     statusList?: TalentTrackLayoutStatusListProps;
+    visibleActionOverlay?: boolean;
 }
 
-export const TalentTrackLayoutLevelPaneItem = ({ actionOverlay, captionLevelDescription, captionLevelTitle, layout, srcLevelIllustration, statusList }: TalentTrackLayoutLevelPaneItemProps) => {
+export const TalentTrackLayoutLevelPaneItem = ({ captionLevelDescription, captionLevelTitle, layout, srcLevelIllustration, statusList, visibleActionOverlay }: TalentTrackLayoutLevelPaneItemProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="level_pane"
@@ -867,7 +808,23 @@ export const TalentTrackLayoutLevelPaneItem = ({ actionOverlay, captionLevelDesc
                 />
             </Region>
             <TalentTrackLayoutStatusList {...statusList} />
-            <TalentTrackLayoutActionOverlay {...actionOverlay} />
+            {(visibleActionOverlay ?? false) && (
+                <Region
+                    name="action_overlay"
+                    layout={{ position: 'absolute', left: -2, width: 214, top: -1, height: 84, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        src={layoutImage('talent_action_overlay.png')}
+                        layout={{ position: 'absolute', left: 0, width: 214, top: 0, height: 84 }}
+                    />
+                    <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 133, top: 4, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('talent.track.action.overlay')}
+                            textStyle="text-style-il-regular-white"
+                        />
+                    </Region>
+                </Region>
+            )}
         </Region>
     );
 };

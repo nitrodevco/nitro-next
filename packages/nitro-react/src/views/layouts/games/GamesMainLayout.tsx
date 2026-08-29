@@ -6,14 +6,18 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `334_games_main_xml` (layout "games_main", 413x530) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GamesMainLayoutProps {
+    captionCancelLink?: string;
+    captionWaitText?: string;
+    captionWaitTextStroke?: string;
     layout?: BoxLayout;
+    onCancelLinkRegion?: () => void;
     onClose?: () => void;
     quickPlayContainer?: GamesMainLayoutQuickPlayContainerProps;
-    snowwarLobbyCont?: GamesMainLayoutSnowwarLobbyContProps;
     srcQuickPlayBackground?: string;
+    visibleSnowwarLobbyCont?: boolean;
 }
 
-export const GamesMainLayout = ({ layout, onClose, quickPlayContainer, snowwarLobbyCont, srcQuickPlayBackground }: GamesMainLayoutProps) => {
+export const GamesMainLayout = ({ captionCancelLink, captionWaitText, captionWaitTextStroke, layout, onCancelLinkRegion, onClose, quickPlayContainer, srcQuickPlayBackground, visibleSnowwarLobbyCont }: GamesMainLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -30,70 +34,66 @@ export const GamesMainLayout = ({ layout, onClose, quickPlayContainer, snowwarLo
                 layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 355 }}
             />
             <GamesMainLayoutQuickPlayContainer {...quickPlayContainer} />
-            <GamesMainLayoutSnowwarLobbyCont {...snowwarLobbyCont} />
+            {(visibleSnowwarLobbyCont ?? false) && (
+                <Region
+                    name="snowwar_lobby_cont"
+                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, height: 436 }}
+                >
+                    <Region
+                        name="wait_text_stroke"
+                        layout={{ position: 'absolute', left: 40, width: 335, top: 118, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionWaitTextStroke ?? 'Waiting for players...'}
+                            textOptions={{ fill: '#1077ac', align: 'center' }}
+                        />
+                    </Region>
+                    <Region
+                        name="wait_text"
+                        layout={{ position: 'absolute', left: 40, width: 335, top: 118, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionWaitText ?? 'Waiting for players...'}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    <Region
+                        name="players_grid"
+                        layout={{ position: 'absolute', left: 40, width: 335, top: 178, height: 130, flexDirection: 'row', flexWrap: 'wrap', gap: 3 }}
+                    />
+                    <Region
+                        name="cancel_link_region"
+                        onPointerTap={onCancelLinkRegion}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: 178, width: 63, top: 385, height: 23 }}
+                    >
+                        <Region
+                            name="cancel_link"
+                            layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText text={captionCancelLink ?? t('generic.cancel')} />
+                        </Region>
+                    </Region>
+                </Region>
+            )}
         </Frame>
-    );
-};
-
-/** Named region `header_text_container` of GamesMainLayout - configured through the parent's `headerTextContainer` prop. */
-export interface GamesMainLayoutHeaderTextContainerProps {
-    captionHeader?: string;
-    captionHeader2?: string;
-    captionHeaderStroke?: string;
-    layout?: BoxLayout;
-}
-
-export const GamesMainLayoutHeaderTextContainer = ({ captionHeader, captionHeader2, captionHeaderStroke, layout }: GamesMainLayoutHeaderTextContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="header_text_container"
-            layout={{ position: 'absolute', left: 70, width: 279, top: 107, height: 165, ...layout }}
-        >
-            <Region
-                name="header_stroke"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 139, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionHeaderStroke ?? t('snowwar.descriptionHeader')}
-                    textOptions={{ fill: '#1077ac', align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="header"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 139, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionHeader ?? t('snowwar.descriptionHeader')}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="header"
-                layout={{ position: 'absolute', left: 18, right: 18, top: 30, bottom: 117, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionHeader2 ?? t('snowwar.descriptionBody')}
-                    textOptions={{ fill: '#1077ac', wordWrap: true, wordWrapWidth: 243, align: 'center' }}
-                />
-            </Region>
-        </Region>
     );
 };
 
 /** Named region `teaser_container` of GamesMainLayout - configured through the parent's `teaserContainer` prop. */
 export interface GamesMainLayoutTeaserContainerProps {
+    captionHeader?: string;
+    captionHeader2?: string;
+    captionHeaderStroke?: string;
     captionInstructionsLink?: string;
     captionLeaderboardLink?: string;
-    headerTextContainer?: GamesMainLayoutHeaderTextContainerProps;
     layout?: BoxLayout;
     onInstructionsLink?: () => void;
     onLeaderboardLink?: () => void;
     srcQuickPlayTeaser?: string;
 }
 
-export const GamesMainLayoutTeaserContainer = ({ captionInstructionsLink, captionLeaderboardLink, headerTextContainer, layout, onInstructionsLink, onLeaderboardLink, srcQuickPlayTeaser }: GamesMainLayoutTeaserContainerProps) => {
+export const GamesMainLayoutTeaserContainer = ({ captionHeader, captionHeader2, captionHeaderStroke, captionInstructionsLink, captionLeaderboardLink, layout, onInstructionsLink, onLeaderboardLink, srcQuickPlayTeaser }: GamesMainLayoutTeaserContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -106,7 +106,38 @@ export const GamesMainLayoutTeaserContainer = ({ captionInstructionsLink, captio
                 src={srcQuickPlayTeaser ?? layoutImage('quick_play_teaser.png')}
                 layout={{ position: 'absolute', left: 0, width: 407, top: 160, height: 130 }}
             />
-            <GamesMainLayoutHeaderTextContainer {...headerTextContainer} />
+            <Region
+                name="header_text_container"
+                layout={{ position: 'absolute', left: 70, width: 279, top: 107, height: 165 }}
+            >
+                <Region
+                    name="header_stroke"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 139, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionHeaderStroke ?? t('snowwar.descriptionHeader')}
+                        textOptions={{ fill: '#1077ac', align: 'center' }}
+                    />
+                </Region>
+                <Region
+                    name="header"
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 139, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionHeader ?? t('snowwar.descriptionHeader')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
+                </Region>
+                <Region
+                    name="header"
+                    layout={{ position: 'absolute', left: 18, right: 18, top: 30, bottom: 117, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionHeader2 ?? t('snowwar.descriptionBody')}
+                        textOptions={{ fill: '#1077ac', wordWrap: true, wordWrapWidth: 243, align: 'center' }}
+                    />
+                </Region>
+            </Region>
             <Region
                 name="instructions_link"
                 layout={{ position: 'absolute', width: 407, top: 280, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
@@ -129,50 +160,6 @@ export const GamesMainLayoutTeaserContainer = ({ captionInstructionsLink, captio
                     textOptions={{ fill: '#1077ac', align: 'center' }}
                 />
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `instructions_prev` of GamesMainLayout - configured through the parent's `instructionsPrev` prop. */
-export interface GamesMainLayoutInstructionsPrevProps {
-    layout?: BoxLayout;
-    onInstructionsPrev?: () => void;
-}
-
-export const GamesMainLayoutInstructionsPrev = ({ layout, onInstructionsPrev }: GamesMainLayoutInstructionsPrevProps) => {
-    return (
-        <Region
-            name="instructions_prev"
-            onPointerTap={onInstructionsPrev}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 10, width: 50, top: 140, height: 50, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('scroll_left.png')}
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `instructions_next` of GamesMainLayout - configured through the parent's `instructionsNext` prop. */
-export interface GamesMainLayoutInstructionsNextProps {
-    layout?: BoxLayout;
-    onInstructionsNext?: () => void;
-}
-
-export const GamesMainLayoutInstructionsNext = ({ layout, onInstructionsNext }: GamesMainLayoutInstructionsNextProps) => {
-    return (
-        <Region
-            name="instructions_next"
-            onPointerTap={onInstructionsNext}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 345, width: 50, top: 140, height: 50, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('scroll_right.png')}
-                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
-            />
         </Region>
     );
 };
@@ -316,53 +303,74 @@ export const GamesMainLayoutPageList = ({ itemsPageList, layout }: GamesMainLayo
 export interface GamesMainLayoutInstructionsContainerProps {
     captionInstructionsBack?: string;
     captionInstructionText?: string;
-    instructionsNext?: GamesMainLayoutInstructionsNextProps;
-    instructionsPrev?: GamesMainLayoutInstructionsPrevProps;
     layout?: BoxLayout;
     onInstructionsBack?: () => void;
+    onInstructionsNext?: () => void;
+    onInstructionsPrev?: () => void;
     pageList?: GamesMainLayoutPageListProps;
     srcInstructionsImage?: string;
     visibleInstructionsContainer?: boolean;
 }
 
-export const GamesMainLayoutInstructionsContainer = ({ captionInstructionsBack, captionInstructionText, instructionsNext, instructionsPrev, layout, onInstructionsBack, pageList, srcInstructionsImage, visibleInstructionsContainer }: GamesMainLayoutInstructionsContainerProps) => {
+export const GamesMainLayoutInstructionsContainer = ({ captionInstructionsBack, captionInstructionText, layout, onInstructionsBack, onInstructionsNext, onInstructionsPrev, pageList, srcInstructionsImage, visibleInstructionsContainer }: GamesMainLayoutInstructionsContainerProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="instructions_container"
-            visible={visibleInstructionsContainer ?? false}
-            layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 436, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                name="instructions_image"
-                src={srcInstructionsImage}
-                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 250, top: 80, height: 166 }}
-            />
+        (visibleInstructionsContainer ?? false) && (
             <Region
-                name="instructions_back"
-                layout={{ position: 'absolute', left: 18, width: 160, top: 324, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                onPointerTap={onInstructionsBack}
-                cursor="pointer"
+                name="instructions_container"
+                layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 436, justifyContent: 'center', ...layout }}
             >
-                <ThemeText
-                    text={captionInstructionsBack ?? t('snowwar.instructions.back')}
-                    textOptions={{ fill: '#1077ac' }}
+                <ThemeImage
+                    name="instructions_image"
+                    src={srcInstructionsImage}
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 250, top: 80, height: 166 }}
                 />
+                <Region
+                    name="instructions_back"
+                    layout={{ position: 'absolute', left: 18, width: 160, top: 324, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    onPointerTap={onInstructionsBack}
+                    cursor="pointer"
+                >
+                    <ThemeText
+                        text={captionInstructionsBack ?? t('snowwar.instructions.back')}
+                        textOptions={{ fill: '#1077ac' }}
+                    />
+                </Region>
+                <Region
+                    name="instructions_prev"
+                    onPointerTap={onInstructionsPrev}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 10, width: 50, top: 140, height: 50 }}
+                >
+                    <ThemeImage
+                        src={layoutImage('scroll_left.png')}
+                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                    />
+                </Region>
+                <Region
+                    name="instructions_next"
+                    onPointerTap={onInstructionsNext}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 345, width: 50, top: 140, height: 50 }}
+                >
+                    <ThemeImage
+                        src={layoutImage('scroll_right.png')}
+                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
+                    />
+                </Region>
+                <Region
+                    name="instruction_text"
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 280, top: 269, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionInstructionText ?? 'lorem ipsum'}
+                        textOptions={{ fill: '#1077ac', wordWrap: true, wordWrapWidth: 280, align: 'center' }}
+                    />
+                </Region>
+                <GamesMainLayoutPageList {...pageList} />
             </Region>
-            <GamesMainLayoutInstructionsPrev {...instructionsPrev} />
-            <GamesMainLayoutInstructionsNext {...instructionsNext} />
-            <Region
-                name="instruction_text"
-                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 280, top: 269, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionInstructionText ?? 'lorem ipsum'}
-                    textOptions={{ fill: '#1077ac', wordWrap: true, wordWrapWidth: 280, align: 'center' }}
-                />
-            </Region>
-            <GamesMainLayoutPageList {...pageList} />
-        </Region>
+        )
     );
 };
 
@@ -443,52 +451,18 @@ export const GamesMainLayoutGamesLeftRegion = ({ captionGamesLeft, captionGamesL
     );
 };
 
-/** Named region `games_vip_region` of GamesMainLayout - configured through the parent's `gamesVipRegion` prop. */
-export interface GamesMainLayoutGamesVipRegionProps {
+/** Named region `footer_container` of GamesMainLayout - configured through the parent's `footerContainer` prop. */
+export interface GamesMainLayoutFooterContainerProps {
     captionGamesLobbyGetVip?: string;
+    captionPlayText?: string;
+    gamesLeftRegion?: GamesMainLayoutGamesLeftRegionProps;
     layout?: BoxLayout;
     onGamesVipRegion?: () => void;
+    onPlayButton?: () => void;
     srcHcIcon?: string;
 }
 
-export const GamesMainLayoutGamesVipRegion = ({ captionGamesLobbyGetVip, layout, onGamesVipRegion, srcHcIcon }: GamesMainLayoutGamesVipRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="games_vip_region"
-            onPointerTap={onGamesVipRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 202, width: 187, top: -2, height: 44, maxWidth: 200, ...layout }}
-        >
-            <ThemeImage
-                name="hc_icon"
-                src={srcHcIcon ?? layoutImage('hc_icon.png')}
-                layout={{ position: 'absolute', left: 0, width: 24, top: 6, height: 24 }}
-            />
-            <Region
-                name="games.lobby.get.vip"
-                layout={{ position: 'absolute', left: 31, width: 158, top: 2, height: 35, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionGamesLobbyGetVip ?? t('snowwar.get_more_games')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 158 }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `footer_container` of GamesMainLayout - configured through the parent's `footerContainer` prop. */
-export interface GamesMainLayoutFooterContainerProps {
-    captionPlayText?: string;
-    gamesLeftRegion?: GamesMainLayoutGamesLeftRegionProps;
-    gamesVipRegion?: GamesMainLayoutGamesVipRegionProps;
-    layout?: BoxLayout;
-    onPlayButton?: () => void;
-}
-
-export const GamesMainLayoutFooterContainer = ({ captionPlayText, gamesLeftRegion, gamesVipRegion, layout, onPlayButton }: GamesMainLayoutFooterContainerProps) => {
+export const GamesMainLayoutFooterContainer = ({ captionGamesLobbyGetVip, captionPlayText, gamesLeftRegion, layout, onGamesVipRegion, onPlayButton, srcHcIcon }: GamesMainLayoutFooterContainerProps) => {
     const t = useTranslation();
 
     return (
@@ -497,7 +471,27 @@ export const GamesMainLayoutFooterContainer = ({ captionPlayText, gamesLeftRegio
             layout={{ position: 'absolute', left: 0, width: 407, top: 364, height: 124, ...layout }}
         >
             <GamesMainLayoutGamesLeftRegion {...gamesLeftRegion} />
-            <GamesMainLayoutGamesVipRegion {...gamesVipRegion} />
+            <Region
+                name="games_vip_region"
+                onPointerTap={onGamesVipRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 202, width: 187, top: -2, height: 44, maxWidth: 200 }}
+            >
+                <ThemeImage
+                    name="hc_icon"
+                    src={srcHcIcon ?? layoutImage('hc_icon.png')}
+                    layout={{ position: 'absolute', left: 0, width: 24, top: 6, height: 24 }}
+                />
+                <Region
+                    name="games.lobby.get.vip"
+                    layout={{ position: 'absolute', left: 31, width: 158, top: 2, height: 35, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionGamesLobbyGetVip ?? t('snowwar.get_more_games')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 158 }}
+                    />
+                </Region>
+            </Region>
             <ContainerButton
                 variant="3"
                 name="play.button"
@@ -520,99 +514,20 @@ export interface GamesMainLayoutQuickPlayContainerProps {
     instructionsContainer?: GamesMainLayoutInstructionsContainerProps;
     layout?: BoxLayout;
     teaserContainer?: GamesMainLayoutTeaserContainerProps;
+    visibleInstructionsContainer?: boolean;
 }
 
-export const GamesMainLayoutQuickPlayContainer = ({ footerContainer, instructionsContainer, layout, teaserContainer }: GamesMainLayoutQuickPlayContainerProps) => {
+export const GamesMainLayoutQuickPlayContainer = ({ footerContainer, instructionsContainer, layout, teaserContainer, visibleInstructionsContainer }: GamesMainLayoutQuickPlayContainerProps) => {
     return (
         <Region
             name="quick_play_container"
             layout={{ position: 'absolute', left: 0, right: 6, top: 0, height: 485, ...layout }}
         >
             <GamesMainLayoutTeaserContainer {...teaserContainer} />
-            <GamesMainLayoutInstructionsContainer {...instructionsContainer} />
+            {(visibleInstructionsContainer ?? false) && (
+                <GamesMainLayoutInstructionsContainer {...instructionsContainer} />
+            )}
             <GamesMainLayoutFooterContainer {...footerContainer} />
-        </Region>
-    );
-};
-
-/** Named region `players_grid` of GamesMainLayout - configured through the parent's `playersGrid` prop. */
-export interface GamesMainLayoutPlayersGridProps {
-    layout?: BoxLayout;
-}
-
-export const GamesMainLayoutPlayersGrid = ({ layout }: GamesMainLayoutPlayersGridProps) => {
-    return (
-        <Region
-            name="players_grid"
-            layout={{ position: 'absolute', left: 40, width: 335, top: 178, height: 130, flexDirection: 'row', flexWrap: 'wrap', gap: 3, ...layout }}
-        />
-    );
-};
-
-/** Named region `cancel_link_region` of GamesMainLayout - configured through the parent's `cancelLinkRegion` prop. */
-export interface GamesMainLayoutCancelLinkRegionProps {
-    captionCancelLink?: string;
-    layout?: BoxLayout;
-    onCancelLinkRegion?: () => void;
-}
-
-export const GamesMainLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion }: GamesMainLayoutCancelLinkRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="cancel_link_region"
-            onPointerTap={onCancelLinkRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 178, width: 63, top: 385, height: 23, ...layout }}
-        >
-            <Region
-                name="cancel_link"
-                layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionCancelLink ?? t('generic.cancel')} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `snowwar_lobby_cont` of GamesMainLayout - configured through the parent's `snowwarLobbyCont` prop. */
-export interface GamesMainLayoutSnowwarLobbyContProps {
-    cancelLinkRegion?: GamesMainLayoutCancelLinkRegionProps;
-    captionWaitText?: string;
-    captionWaitTextStroke?: string;
-    layout?: BoxLayout;
-    playersGrid?: GamesMainLayoutPlayersGridProps;
-    visibleSnowwarLobbyCont?: boolean;
-}
-
-export const GamesMainLayoutSnowwarLobbyCont = ({ cancelLinkRegion, captionWaitText, captionWaitTextStroke, layout, playersGrid, visibleSnowwarLobbyCont }: GamesMainLayoutSnowwarLobbyContProps) => {
-    return (
-        <Region
-            name="snowwar_lobby_cont"
-            visible={visibleSnowwarLobbyCont ?? false}
-            layout={{ position: 'absolute', left: 0, right: 6, top: 0, height: 436, ...layout }}
-        >
-            <Region
-                name="wait_text_stroke"
-                layout={{ position: 'absolute', left: 40, width: 335, top: 118, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionWaitTextStroke ?? 'Waiting for players...'}
-                    textOptions={{ fill: '#1077ac', align: 'center' }}
-                />
-            </Region>
-            <Region
-                name="wait_text"
-                layout={{ position: 'absolute', left: 40, width: 335, top: 118, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionWaitText ?? 'Waiting for players...'}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
-            <GamesMainLayoutPlayersGrid {...playersGrid} />
-            <GamesMainLayoutCancelLinkRegion {...cancelLinkRegion} />
         </Region>
     );
 };

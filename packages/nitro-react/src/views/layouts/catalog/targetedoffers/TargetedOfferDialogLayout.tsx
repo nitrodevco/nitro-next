@@ -16,7 +16,7 @@ export interface TargetedOfferDialogLayoutProps {
     captionTxtTimeLeftLabel1?: string;
     captionTxtTimeLeftLabel2?: string;
     captionTxtTitle?: string;
-    itemlistButtonbar?: TargetedOfferDialogLayoutItemlistButtonbarProps;
+    itemsItemlistButtonbar?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
     srcBmpIllustration?: string;
@@ -24,7 +24,7 @@ export interface TargetedOfferDialogLayoutProps {
     srcPricebg?: string;
 }
 
-export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlusCharacter, captionTxtPriceActivityPoints, captionTxtPriceCredits, captionTxtPriceLabel, captionTxtStatus, captionTxtTimeLeft, captionTxtTimeLeftLabel1, captionTxtTimeLeftLabel2, captionTxtTitle, itemlistButtonbar, layout, onClose, srcBmpIllustration, srcCreditIcon, srcPricebg }: TargetedOfferDialogLayoutProps) => {
+export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlusCharacter, captionTxtPriceActivityPoints, captionTxtPriceCredits, captionTxtPriceLabel, captionTxtStatus, captionTxtTimeLeft, captionTxtTimeLeftLabel1, captionTxtTimeLeftLabel2, captionTxtTitle, itemsItemlistButtonbar, layout, onClose, srcBmpIllustration, srcCreditIcon, srcPricebg }: TargetedOfferDialogLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -129,7 +129,18 @@ export const TargetedOfferDialogLayout = ({ captionTxtDescription, captionTxtPlu
                             textOptions={{ align: 'center' }}
                         />
                     </Region>
-                    <TargetedOfferDialogLayoutItemlistButtonbar {...itemlistButtonbar} />
+                    <Region
+                        name="itemlist_buttonbar"
+                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, top: 38, flexDirection: 'row', gap: 10 }}
+                    >
+                        {itemsItemlistButtonbar ?? (
+                            <>
+                                <TargetedOfferDialogLayoutCntQuantityItem />
+                                <TargetedOfferDialogLayoutBtnGetCreditsItem />
+                                <TargetedOfferDialogLayoutBtnBuyItem />
+                            </>
+                        )}
+                    </Region>
                 </Region>
                 <Border
                     variant="3"
@@ -249,28 +260,5 @@ export const TargetedOfferDialogLayoutBtnBuyItem = ({ layout, onBtnBuy }: Target
         >
             {t('targeted.offer.button.buy')}
         </ButtonThick>
-    );
-};
-
-/** Named region `itemlist_buttonbar` of TargetedOfferDialogLayout - configured through the parent's `itemlistButtonbar` prop. */
-export interface TargetedOfferDialogLayoutItemlistButtonbarProps {
-    itemsItemlistButtonbar?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const TargetedOfferDialogLayoutItemlistButtonbar = ({ itemsItemlistButtonbar, layout }: TargetedOfferDialogLayoutItemlistButtonbarProps) => {
-    return (
-        <Region
-            name="itemlist_buttonbar"
-            layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, top: 38, flexDirection: 'row', gap: 10, ...layout }}
-        >
-            {itemsItemlistButtonbar ?? (
-                <>
-                    <TargetedOfferDialogLayoutCntQuantityItem />
-                    <TargetedOfferDialogLayoutBtnGetCreditsItem />
-                    <TargetedOfferDialogLayoutBtnBuyItem />
-                </>
-            )}
-        </Region>
     );
 };

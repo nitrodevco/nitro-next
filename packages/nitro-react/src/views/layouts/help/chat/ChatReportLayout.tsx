@@ -3,13 +3,13 @@ import { BoxLayout, Button, Frame, Region, ScrollArea, ThemeText } from '#base/t
 
 /** Generated from `2923_chat_report_xml` (layout "chat_report", 380x491) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ChatReportLayoutProps {
+    captionRoomName?: string;
     layout?: BoxLayout;
     onClose?: () => void;
     onSubmitButton?: () => void;
-    roomItems?: ChatReportLayoutRoomItemsProps;
 }
 
-export const ChatReportLayout = ({ layout, onClose, onSubmitButton, roomItems }: ChatReportLayoutProps) => {
+export const ChatReportLayout = ({ captionRoomName, layout, onClose, onSubmitButton }: ChatReportLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -36,7 +36,31 @@ export const ChatReportLayout = ({ layout, onClose, onSubmitButton, roomItems }:
                             textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
                         />
                     </Region>
-                    <ChatReportLayoutRoomItems {...roomItems} />
+                    <ScrollArea
+                        orientation="vertical"
+                        layout={{ width: 332, height: 350, flexShrink: 0 }}
+                    >
+                        <Region
+                            name="room_items"
+                            layout={{ flexDirection: 'column', width: '100%' }}
+                        >
+                            <Region layout={{ width: 317, height: 24, flexShrink: 0 }}>
+                                <Region
+                                    name="room_name"
+                                    layout={{ position: 'absolute', left: 0, width: 280, top: 8, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                                >
+                                    <ThemeText
+                                        text={captionRoomName ?? ''}
+                                        textStyle="text-style-il-border"
+                                    />
+                                </Region>
+                                <Region
+                                    name="chat_items"
+                                    layout={{ position: 'absolute', left: 9, right: 1, top: 23, bottom: 0, flexDirection: 'column' }}
+                                />
+                            </Region>
+                        </Region>
+                    </ScrollArea>
                 </Region>
                 <Button
                     variant="101"
@@ -49,53 +73,5 @@ export const ChatReportLayout = ({ layout, onClose, onSubmitButton, roomItems }:
                 </Button>
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `chat_items` of ChatReportLayout - configured through the parent's `chatItems` prop. */
-export interface ChatReportLayoutChatItemsProps {
-    layout?: BoxLayout;
-}
-
-export const ChatReportLayoutChatItems = ({ layout }: ChatReportLayoutChatItemsProps) => {
-    return (
-        <Region
-            name="chat_items"
-            layout={{ position: 'absolute', left: 9, right: 1, top: 23, bottom: 0, flexDirection: 'column', ...layout }}
-        />
-    );
-};
-
-/** Named region `room_items` of ChatReportLayout - configured through the parent's `roomItems` prop. */
-export interface ChatReportLayoutRoomItemsProps {
-    captionRoomName?: string;
-    chatItems?: ChatReportLayoutChatItemsProps;
-    layout?: BoxLayout;
-}
-
-export const ChatReportLayoutRoomItems = ({ captionRoomName, chatItems, layout }: ChatReportLayoutRoomItemsProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ width: 332, height: 350, flexShrink: 0, ...layout }}
-        >
-            <Region
-                name="room_items"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            >
-                <Region layout={{ width: 317, height: 24, flexShrink: 0 }}>
-                    <Region
-                        name="room_name"
-                        layout={{ position: 'absolute', left: 0, width: 280, top: 8, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionRoomName ?? ''}
-                            textStyle="text-style-il-border"
-                        />
-                    </Region>
-                    <ChatReportLayoutChatItems {...chatItems} />
-                </Region>
-            </Region>
-        </ScrollArea>
     );
 };

@@ -5,13 +5,13 @@ import { Border, BoxLayout, Button, CloseButton, Icon, Region, ThemeImage, Theme
 
 /** Generated from `980_crackable_furni_view_xml` (layout "crackable_furni_view", 429x306) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface CrackableFurniViewLayoutProps {
-    buttonList?: CrackableFurniViewLayoutButtonListProps;
     infostandElementList?: CrackableFurniViewLayoutInfostandElementListProps;
+    itemsButtonList?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const CrackableFurniViewLayout = ({ buttonList, infostandElementList, layout, onClose }: CrackableFurniViewLayoutProps) => {
+export const CrackableFurniViewLayout = ({ infostandElementList, itemsButtonList, layout, onClose }: CrackableFurniViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 429, height: 306, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 429, top: 0, height: 306, flexDirection: 'column', gap: 10 }}>
@@ -28,7 +28,19 @@ export const CrackableFurniViewLayout = ({ buttonList, infostandElementList, lay
                     />
                     <CrackableFurniViewLayoutInfostandElementList {...infostandElementList} />
                 </Border>
-                <CrackableFurniViewLayoutButtonList {...buttonList} />
+                <Region
+                    name="button_list"
+                    layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10 }}
+                >
+                    {itemsButtonList ?? (
+                        <>
+                            <CrackableFurniViewLayoutMoveItem />
+                            <CrackableFurniViewLayoutRotateItem />
+                            <CrackableFurniViewLayoutPickupItem />
+                            <CrackableFurniViewLayoutUseItem />
+                        </>
+                    )}
+                </Region>
             </Region>
         </Region>
     );
@@ -418,29 +430,5 @@ export const CrackableFurniViewLayoutUseItem = ({ layout, onUse }: CrackableFurn
         >
             {t('infostand.button.use')}
         </Button>
-    );
-};
-
-/** Named region `button_list` of CrackableFurniViewLayout - configured through the parent's `buttonList` prop. */
-export interface CrackableFurniViewLayoutButtonListProps {
-    itemsButtonList?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const CrackableFurniViewLayoutButtonList = ({ itemsButtonList, layout }: CrackableFurniViewLayoutButtonListProps) => {
-    return (
-        <Region
-            name="button_list"
-            layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
-        >
-            {itemsButtonList ?? (
-                <>
-                    <CrackableFurniViewLayoutMoveItem />
-                    <CrackableFurniViewLayoutRotateItem />
-                    <CrackableFurniViewLayoutPickupItem />
-                    <CrackableFurniViewLayoutUseItem />
-                </>
-            )}
-        </Region>
     );
 };

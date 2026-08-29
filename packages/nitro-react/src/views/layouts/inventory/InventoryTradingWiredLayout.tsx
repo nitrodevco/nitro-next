@@ -7,19 +7,24 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `1337_inventory_trading_wired_xml` (layout "inventory_trading_wired", 478x274) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface InventoryTradingWiredLayoutProps {
     bubbleContents?: InventoryTradingWiredLayoutBubbleContentsProps;
-    buttonContainer?: InventoryTradingWiredLayoutButtonContainerProps;
     captionInfoText?: string;
+    captionSecondsLeftText?: string;
     layout?: BoxLayout;
     offers0?: InventoryTradingWiredLayoutOffers0Props;
     offers1?: InventoryTradingWiredLayoutOffers1Props;
-    offers1PaymentPlaceholder?: InventoryTradingWiredLayoutOffers1PaymentPlaceholderProps;
-    requirementsButton?: InventoryTradingWiredLayoutRequirementsButtonProps;
+    onButtonAccept?: () => void;
+    onButtonCancel?: () => void;
+    onRequirementsButton?: () => void;
     srcLock0?: string;
+    srcPaymentLayoutImage?: string;
     srcTradeTypeSplitter?: string;
+    visibleOffers1PaymentPlaceholder?: boolean;
     visibleTradeRequirementsBubble?: boolean;
 }
 
-export const InventoryTradingWiredLayout = ({ bubbleContents, buttonContainer, captionInfoText, layout, offers0, offers1, offers1PaymentPlaceholder, requirementsButton, srcLock0, srcTradeTypeSplitter, visibleTradeRequirementsBubble }: InventoryTradingWiredLayoutProps) => {
+export const InventoryTradingWiredLayout = ({ bubbleContents, captionInfoText, captionSecondsLeftText, layout, offers0, offers1, onButtonAccept, onButtonCancel, onRequirementsButton, srcLock0, srcPaymentLayoutImage, srcTradeTypeSplitter, visibleOffers1PaymentPlaceholder, visibleTradeRequirementsBubble }: InventoryTradingWiredLayoutProps) => {
+    const t = useTranslation();
+
     return (
         <Region layout={{ position: 'relative', width: 478, height: 274, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 478, top: 0, height: 274 }}>
@@ -45,37 +50,85 @@ export const InventoryTradingWiredLayout = ({ bubbleContents, buttonContainer, c
                         layout={{ position: 'absolute', left: 223, width: 32, top: 192, height: 34 }}
                     />
                     <InventoryTradingWiredLayoutOffers1 {...offers1} />
-                    <InventoryTradingWiredLayoutOffers1PaymentPlaceholder {...offers1PaymentPlaceholder} />
+                    {(visibleOffers1PaymentPlaceholder ?? false) && (
+                        <Region
+                            name="offers_1_payment_placeholder"
+                            layout={{ position: 'absolute', left: 263, width: 200, top: 29, height: 200, justifyContent: 'center' }}
+                        >
+                            <ThemeImage
+                                name="payment_layout_image"
+                                src={srcPaymentLayoutImage ?? layoutImage('wired_chests_images_generic_payments.png')}
+                                layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 170, alignSelf: 'center', marginTop: -4.5, marginBottom: 4.5, height: 173 }}
+                            />
+                        </Region>
+                    )}
                     <ThemeImage
                         name="trade_type_splitter"
                         src={srcTradeTypeSplitter ?? layoutImage('inventory_trading_trading_split_icon.png')}
                         layout={{ position: 'absolute', left: 212, width: 53, top: 95, height: 42 }}
                     />
-                    <WidgetSlot
-                        widgetType="separator"
-                        visible={false}
-                        options={{ 'separator:vertical': 'true' }}
-                        layout={{ position: 'absolute', left: 224, width: 30, top: 40, height: 160 }}
-                    />
-                    <InventoryTradingWiredLayoutRequirementsButton {...requirementsButton} />
-                    <Bubble
-                        variant="7"
-                        name="trade_requirements_bubble"
-                        pointer="left"
-                        visible={visibleTradeRequirementsBubble ?? true}
-                        layout={{ position: 'absolute', left: 475, width: 430, top: 9, height: 281 }}
+                    {/* `widget` is hidden and has no name to show it by */}
+                    <Region
+                        name="requirements_button"
+                        onPointerTap={onRequirementsButton}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', left: 453, width: 18, top: 6, height: 18 }}
                     >
-                        <Border
-                            variant="2"
-                            name="highlight_border"
-                            tintColor="#4fbce3"
-                            blend={0}
-                            layout={{ position: 'absolute', left: 0, right: 15, top: 0, bottom: 15 }}
+                        <ThemeImage
+                            src={layoutImage('icons_info_grey.png')}
+                            layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
                         />
-                        <InventoryTradingWiredLayoutBubbleContents {...bubbleContents} />
-                    </Bubble>
+                    </Region>
+                    {(visibleTradeRequirementsBubble ?? true) && (
+                        <Bubble
+                            variant="7"
+                            name="trade_requirements_bubble"
+                            pointer="left"
+                            layout={{ position: 'absolute', left: 475, width: 430, top: 9, height: 281 }}
+                        >
+                            <Border
+                                variant="2"
+                                name="highlight_border"
+                                tintColor="#4fbce3"
+                                blend={0}
+                                layout={{ position: 'absolute', left: 0, right: 15, top: 0, bottom: 15 }}
+                            />
+                            <InventoryTradingWiredLayoutBubbleContents {...bubbleContents} />
+                        </Bubble>
+                    )}
                 </Border>
-                <InventoryTradingWiredLayoutButtonContainer {...buttonContainer} />
+                <Region
+                    name="button_container"
+                    layout={{ position: 'absolute', left: 0, width: 478, top: 240, height: 32 }}
+                >
+                    <Region layout={{ position: 'absolute', left: 5, width: 299, top: 0, height: 28, flexDirection: 'row', gap: 6 }}>
+                        <Button
+                            variant="3"
+                            name="button_accept"
+                            onPointerTap={onButtonAccept}
+                            layout={{ width: 157, height: 28, flexShrink: 0 }}
+                        >
+                            {t('inventory.trading.accept')}
+                        </Button>
+                        <Region
+                            name="seconds_left_text"
+                            layout={{ width: 136, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionSecondsLeftText ?? t('inventory.wired_trading.seconds_left')}
+                                textOptions={{ fill: '#bf272a' }}
+                            />
+                        </Region>
+                    </Region>
+                    <Button
+                        variant="3"
+                        name="button_cancel"
+                        onPointerTap={onButtonCancel}
+                        layout={{ position: 'absolute', right: 7, width: 56, top: 0, height: 28 }}
+                    >
+                        {t('generic.cancel')}
+                    </Button>
+                </Region>
             </Region>
         </Region>
     );
@@ -96,25 +149,6 @@ export const InventoryTradingWiredLayoutPlainTextItem = ({ captionPlainText, lay
             layout={{ width: 95, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionPlainText ?? t('inventory.wired_trading.offering')} />
-        </Region>
-    );
-};
-
-/** Named region `text_list_0` of InventoryTradingWiredLayout - configured through the parent's `textList0` prop. */
-export interface InventoryTradingWiredLayoutTextList0Props {
-    itemsTextList0?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const InventoryTradingWiredLayoutTextList0 = ({ itemsTextList0, layout }: InventoryTradingWiredLayoutTextList0Props) => {
-    return (
-        <Region
-            name="text_list_0"
-            layout={{ position: 'absolute', left: 52, right: 53, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row', ...layout }}
-        >
-            {itemsTextList0 ?? (
-                <InventoryTradingWiredLayoutPlainTextItem />
-            )}
         </Region>
     );
 };
@@ -202,11 +236,12 @@ export interface InventoryTradingWiredLayoutOffers0Props {
     captionContentText1B?: string;
     captionInfoText0?: string;
     itemGridBorder0?: InventoryTradingWiredLayoutItemGridBorder0Props;
+    itemsTextList0?: ReactNode;
     layout?: BoxLayout;
-    textList0?: InventoryTradingWiredLayoutTextList0Props;
+    visibleInfoText0?: boolean;
 }
 
-export const InventoryTradingWiredLayoutOffers0 = ({ captionContentText1A, captionContentText1B, captionInfoText0, itemGridBorder0, layout, textList0 }: InventoryTradingWiredLayoutOffers0Props) => {
+export const InventoryTradingWiredLayoutOffers0 = ({ captionContentText1A, captionContentText1B, captionInfoText0, itemGridBorder0, itemsTextList0, layout, visibleInfoText0 }: InventoryTradingWiredLayoutOffers0Props) => {
     const t = useTranslation();
 
     return (
@@ -214,18 +249,26 @@ export const InventoryTradingWiredLayoutOffers0 = ({ captionContentText1A, capti
             name="offers_0"
             layout={{ position: 'absolute', left: 17, width: 200, top: 29, height: 200, ...layout }}
         >
-            <InventoryTradingWiredLayoutTextList0 {...textList0} />
-            <InventoryTradingWiredLayoutItemGridBorder0 {...itemGridBorder0} />
             <Region
-                name="info_text_0"
-                visible={false}
-                layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                name="text_list_0"
+                layout={{ position: 'absolute', left: 52, right: 53, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row' }}
             >
-                <ThemeText
-                    text={captionInfoText0 ?? t('inventory.trading.warning.own_account_disabled')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
-                />
+                {itemsTextList0 ?? (
+                    <InventoryTradingWiredLayoutPlainTextItem />
+                )}
             </Region>
+            <InventoryTradingWiredLayoutItemGridBorder0 {...itemGridBorder0} />
+            {(visibleInfoText0 ?? false) && (
+                <Region
+                    name="info_text_0"
+                    layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionInfoText0 ?? t('inventory.trading.warning.own_account_disabled')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
+                    />
+                </Region>
+            )}
             <Region
                 name="content_text_1_a"
                 layout={{ position: 'absolute', left: 0, width: 200, top: 162, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
@@ -263,25 +306,6 @@ export const InventoryTradingWiredLayoutPlainTextItem2 = ({ captionPlainText, la
             layout={{ width: 90, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
         >
             <ThemeText text={captionPlainText ?? t('inventory.wired_trading.receiving')} />
-        </Region>
-    );
-};
-
-/** Named region `text_list_1` of InventoryTradingWiredLayout - configured through the parent's `textList1` prop. */
-export interface InventoryTradingWiredLayoutTextList1Props {
-    itemsTextList1?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const InventoryTradingWiredLayoutTextList1 = ({ itemsTextList1, layout }: InventoryTradingWiredLayoutTextList1Props) => {
-    return (
-        <Region
-            name="text_list_1"
-            layout={{ position: 'absolute', left: 54, right: 56, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row', ...layout }}
-        >
-            {itemsTextList1 ?? (
-                <InventoryTradingWiredLayoutPlainTextItem2 />
-            )}
         </Region>
     );
 };
@@ -369,11 +393,12 @@ export interface InventoryTradingWiredLayoutOffers1Props {
     captionContentText2B?: string;
     captionInfoText1?: string;
     itemGridBorder1?: InventoryTradingWiredLayoutItemGridBorder1Props;
+    itemsTextList1?: ReactNode;
     layout?: BoxLayout;
-    textList1?: InventoryTradingWiredLayoutTextList1Props;
+    visibleInfoText1?: boolean;
 }
 
-export const InventoryTradingWiredLayoutOffers1 = ({ captionContentText2A, captionContentText2B, captionInfoText1, itemGridBorder1, layout, textList1 }: InventoryTradingWiredLayoutOffers1Props) => {
+export const InventoryTradingWiredLayoutOffers1 = ({ captionContentText2A, captionContentText2B, captionInfoText1, itemGridBorder1, itemsTextList1, layout, visibleInfoText1 }: InventoryTradingWiredLayoutOffers1Props) => {
     const t = useTranslation();
 
     return (
@@ -381,18 +406,26 @@ export const InventoryTradingWiredLayoutOffers1 = ({ captionContentText2A, capti
             name="offers_1"
             layout={{ position: 'absolute', left: 263, width: 200, top: 29, height: 200, ...layout }}
         >
-            <InventoryTradingWiredLayoutTextList1 {...textList1} />
-            <InventoryTradingWiredLayoutItemGridBorder1 {...itemGridBorder1} />
             <Region
-                name="info_text_1"
-                visible={false}
-                layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                name="text_list_1"
+                layout={{ position: 'absolute', left: 54, right: 56, top: 2, minWidth: 10, maxWidth: 200, flexDirection: 'row' }}
             >
-                <ThemeText
-                    text={captionInfoText1 ?? t('inventory.trading.warning.others_account_disabled')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
-                />
+                {itemsTextList1 ?? (
+                    <InventoryTradingWiredLayoutPlainTextItem2 />
+                )}
             </Region>
+            <InventoryTradingWiredLayoutItemGridBorder1 {...itemGridBorder1} />
+            {(visibleInfoText1 ?? false) && (
+                <Region
+                    name="info_text_1"
+                    layout={{ position: 'absolute', left: 34, width: 132, top: 23, height: 132, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionInfoText1 ?? t('inventory.trading.warning.others_account_disabled')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
+                    />
+                </Region>
+            )}
             <Region
                 name="content_text_2_a"
                 layout={{ position: 'absolute', left: 0, width: 200, top: 162, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
@@ -411,51 +444,6 @@ export const InventoryTradingWiredLayoutOffers1 = ({ captionContentText2A, capti
                     textOptions={{ align: 'center' }}
                 />
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `offers_1_payment_placeholder` of InventoryTradingWiredLayout - configured through the parent's `offers1PaymentPlaceholder` prop. */
-export interface InventoryTradingWiredLayoutOffers1PaymentPlaceholderProps {
-    layout?: BoxLayout;
-    srcPaymentLayoutImage?: string;
-    visibleOffers1PaymentPlaceholder?: boolean;
-}
-
-export const InventoryTradingWiredLayoutOffers1PaymentPlaceholder = ({ layout, srcPaymentLayoutImage, visibleOffers1PaymentPlaceholder }: InventoryTradingWiredLayoutOffers1PaymentPlaceholderProps) => {
-    return (
-        <Region
-            name="offers_1_payment_placeholder"
-            visible={visibleOffers1PaymentPlaceholder ?? false}
-            layout={{ position: 'absolute', left: 263, width: 200, top: 29, height: 200, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                name="payment_layout_image"
-                src={srcPaymentLayoutImage ?? layoutImage('wired_chests_images_generic_payments.png')}
-                layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 170, alignSelf: 'center', marginTop: -4.5, marginBottom: 4.5, height: 173 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `requirements_button` of InventoryTradingWiredLayout - configured through the parent's `requirementsButton` prop. */
-export interface InventoryTradingWiredLayoutRequirementsButtonProps {
-    layout?: BoxLayout;
-    onRequirementsButton?: () => void;
-}
-
-export const InventoryTradingWiredLayoutRequirementsButton = ({ layout, onRequirementsButton }: InventoryTradingWiredLayoutRequirementsButtonProps) => {
-    return (
-        <Region
-            name="requirements_button"
-            onPointerTap={onRequirementsButton}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 453, width: 18, top: 6, height: 18, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('icons_info_grey.png')}
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
-            />
         </Region>
     );
 };
@@ -674,9 +662,13 @@ export interface InventoryTradingWiredLayoutOfferingRequirementsTemplateProps {
     captionOfferingsTitle?: string;
     layout?: BoxLayout;
     rulesList?: InventoryTradingWiredLayoutRulesListProps;
+    visibleAnyAllText?: boolean;
+    visibleAnyCoinsText?: boolean;
+    visibleAnyFurniText?: boolean;
+    visibleCustomText?: boolean;
 }
 
-export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captionAnyAllText, captionAnyCoinsText, captionAnyFurniText, captionCustomText, captionOfferingsTitle, layout, rulesList }: InventoryTradingWiredLayoutOfferingRequirementsTemplateProps) => {
+export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captionAnyAllText, captionAnyCoinsText, captionAnyFurniText, captionCustomText, captionOfferingsTitle, layout, rulesList, visibleAnyAllText, visibleAnyCoinsText, visibleAnyFurniText, visibleCustomText }: InventoryTradingWiredLayoutOfferingRequirementsTemplateProps) => {
     const t = useTranslation();
 
     return (
@@ -699,46 +691,50 @@ export const InventoryTradingWiredLayoutOfferingRequirementsTemplate = ({ captio
                 tintColor="#f7f7f7"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 24, bottom: 2 }}
             >
-                <Region
-                    name="custom_text"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionCustomText ?? 'Entrance to the game and free candies'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 160, align: 'center' }}
-                    />
-                </Region>
-                <Region
-                    name="any_furni_text"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAnyFurniText ?? t('inventory.wired_trading.requirements.donation.furni')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 160 }}
-                    />
-                </Region>
-                <Region
-                    name="any_coins_text"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAnyCoinsText ?? t('inventory.wired_trading.requirements.donation.coins')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 160 }}
-                    />
-                </Region>
-                <Region
-                    name="any_all_text"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionAnyAllText ?? t('inventory.wired_trading.requirements.donation.all')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 160 }}
-                    />
-                </Region>
+                {(visibleCustomText ?? false) && (
+                    <Region
+                        name="custom_text"
+                        layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionCustomText ?? 'Entrance to the game and free candies'}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 160, align: 'center' }}
+                        />
+                    </Region>
+                )}
+                {(visibleAnyFurniText ?? false) && (
+                    <Region
+                        name="any_furni_text"
+                        layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionAnyFurniText ?? t('inventory.wired_trading.requirements.donation.furni')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 160 }}
+                        />
+                    </Region>
+                )}
+                {(visibleAnyCoinsText ?? false) && (
+                    <Region
+                        name="any_coins_text"
+                        layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionAnyCoinsText ?? t('inventory.wired_trading.requirements.donation.coins')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 160 }}
+                        />
+                    </Region>
+                )}
+                {(visibleAnyAllText ?? false) && (
+                    <Region
+                        name="any_all_text"
+                        layout={{ position: 'absolute', left: 10, right: 10, alignSelf: 'center', marginTop: -12, marginBottom: 12, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionAnyAllText ?? t('inventory.wired_trading.requirements.donation.all')}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 160 }}
+                        />
+                    </Region>
+                )}
                 <InventoryTradingWiredLayoutRulesList {...rulesList} />
             </Border>
         </Region>
@@ -853,22 +849,24 @@ export const InventoryTradingWiredLayoutRequirementsMetContainerItem = ({ captio
 export interface InventoryTradingWiredLayoutAdditionalTextItemProps {
     captionAdditionalText?: string;
     layout?: BoxLayout;
+    visibleAdditionalText?: boolean;
 }
 
-export const InventoryTradingWiredLayoutAdditionalTextItem = ({ captionAdditionalText, layout }: InventoryTradingWiredLayoutAdditionalTextItemProps) => {
+export const InventoryTradingWiredLayoutAdditionalTextItem = ({ captionAdditionalText, layout, visibleAdditionalText }: InventoryTradingWiredLayoutAdditionalTextItemProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="additional_text"
-            visible={false}
-            layout={{ width: 390, height: 32, flexShrink: 0, minWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionAdditionalText ?? t('inventory.wired_trading.requirements.auto_mode_hint_trade')}
-                textOptions={{ wordWrap: true, wordWrapWidth: 390 }}
-            />
-        </Region>
+        (visibleAdditionalText ?? false) && (
+            <Region
+                name="additional_text"
+                layout={{ width: 390, height: 32, flexShrink: 0, minWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            >
+                <ThemeText
+                    text={captionAdditionalText ?? t('inventory.wired_trading.requirements.auto_mode_hint_trade')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 390 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -876,22 +874,24 @@ export const InventoryTradingWiredLayoutAdditionalTextItem = ({ captionAdditiona
 export interface InventoryTradingWiredLayoutDisclaimerTextItemProps {
     captionDisclaimerText?: string;
     layout?: BoxLayout;
+    visibleDisclaimerText?: boolean;
 }
 
-export const InventoryTradingWiredLayoutDisclaimerTextItem = ({ captionDisclaimerText, layout }: InventoryTradingWiredLayoutDisclaimerTextItemProps) => {
+export const InventoryTradingWiredLayoutDisclaimerTextItem = ({ captionDisclaimerText, layout, visibleDisclaimerText }: InventoryTradingWiredLayoutDisclaimerTextItemProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="disclaimer_text"
-            visible={false}
-            layout={{ width: 390, height: 32, flexShrink: 0, minWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
-        >
-            <ThemeText
-                text={captionDisclaimerText ?? t('inventory.wired_trading.requirements.receive_text_disclaimer')}
-                textOptions={{ fill: '#bf272a', wordWrap: true, wordWrapWidth: 390 }}
-            />
-        </Region>
+        (visibleDisclaimerText ?? false) && (
+            <Region
+                name="disclaimer_text"
+                layout={{ width: 390, height: 32, flexShrink: 0, minWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
+            >
+                <ThemeText
+                    text={captionDisclaimerText ?? t('inventory.wired_trading.requirements.receive_text_disclaimer')}
+                    textOptions={{ fill: '#bf272a', wordWrap: true, wordWrapWidth: 390 }}
+                />
+            </Region>
+        )
     );
 };
 
@@ -917,53 +917,6 @@ export const InventoryTradingWiredLayoutBubbleContents = ({ itemsBubbleContents,
                     <InventoryTradingWiredLayoutDisclaimerTextItem />
                 </>
             )}
-        </Region>
-    );
-};
-
-/** Named region `button_container` of InventoryTradingWiredLayout - configured through the parent's `buttonContainer` prop. */
-export interface InventoryTradingWiredLayoutButtonContainerProps {
-    captionSecondsLeftText?: string;
-    layout?: BoxLayout;
-    onButtonAccept?: () => void;
-    onButtonCancel?: () => void;
-}
-
-export const InventoryTradingWiredLayoutButtonContainer = ({ captionSecondsLeftText, layout, onButtonAccept, onButtonCancel }: InventoryTradingWiredLayoutButtonContainerProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="button_container"
-            layout={{ position: 'absolute', left: 0, width: 478, top: 240, height: 32, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 5, width: 299, top: 0, height: 28, flexDirection: 'row', gap: 6 }}>
-                <Button
-                    variant="3"
-                    name="button_accept"
-                    onPointerTap={onButtonAccept}
-                    layout={{ width: 157, height: 28, flexShrink: 0 }}
-                >
-                    {t('inventory.trading.accept')}
-                </Button>
-                <Region
-                    name="seconds_left_text"
-                    layout={{ width: 136, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionSecondsLeftText ?? t('inventory.wired_trading.seconds_left')}
-                        textOptions={{ fill: '#bf272a' }}
-                    />
-                </Region>
-            </Region>
-            <Button
-                variant="3"
-                name="button_cancel"
-                onPointerTap={onButtonCancel}
-                layout={{ position: 'absolute', right: 7, width: 56, top: 0, height: 28 }}
-            >
-                {t('generic.cancel')}
-            </Button>
         </Region>
     );
 };

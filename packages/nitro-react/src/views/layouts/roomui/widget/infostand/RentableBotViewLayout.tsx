@@ -76,41 +76,13 @@ export const RentableBotViewLayoutImagesSpacerItem = ({ layout }: RentableBotVie
     );
 };
 
-/** Named region `avatar_image_profile_link` of RentableBotViewLayout - configured through the parent's `avatarImageProfileLink` prop. */
-export interface RentableBotViewLayoutAvatarImageProfileLinkProps {
+/** Row template `description_container` of RentableBotViewLayout - pass real rows through its `items…` slot. */
+export interface RentableBotViewLayoutDescriptionContainerItemProps {
     layout?: BoxLayout;
     onAvatarImageProfileLink?: () => void;
 }
 
-export const RentableBotViewLayoutAvatarImageProfileLink = ({ layout, onAvatarImageProfileLink }: RentableBotViewLayoutAvatarImageProfileLinkProps) => {
-    return (
-        <Region
-            name="avatar_image_profile_link"
-            onPointerTap={onAvatarImageProfileLink}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 17, width: 66, top: 2, height: 127, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('infostand_bot_info_bg.png')}
-                layout={{ position: 'absolute', left: 0, width: 66, top: 0, height: 127 }}
-            />
-            <WidgetSlot
-                widgetType="avatar_image"
-                name="avatar_image"
-                options={{ 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
-                layout={{ position: 'absolute', width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 84 }}
-            />
-        </Region>
-    );
-};
-
-/** Row template `description_container` of RentableBotViewLayout - pass real rows through its `items…` slot. */
-export interface RentableBotViewLayoutDescriptionContainerItemProps {
-    avatarImageProfileLink?: RentableBotViewLayoutAvatarImageProfileLinkProps;
-    layout?: BoxLayout;
-}
-
-export const RentableBotViewLayoutDescriptionContainerItem = ({ avatarImageProfileLink, layout }: RentableBotViewLayoutDescriptionContainerItemProps) => {
+export const RentableBotViewLayoutDescriptionContainerItem = ({ layout, onAvatarImageProfileLink }: RentableBotViewLayoutDescriptionContainerItemProps) => {
     return (
         <Region
             name="description_container"
@@ -123,7 +95,23 @@ export const RentableBotViewLayoutDescriptionContainerItem = ({ avatarImageProfi
                 tintColor="#666666"
                 layout={{ position: 'absolute', left: 16, width: 67, top: 0, height: 130 }}
             />
-            <RentableBotViewLayoutAvatarImageProfileLink {...avatarImageProfileLink} />
+            <Region
+                name="avatar_image_profile_link"
+                onPointerTap={onAvatarImageProfileLink}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 17, width: 66, top: 2, height: 127, justifyContent: 'center' }}
+            >
+                <ThemeImage
+                    src={layoutImage('infostand_bot_info_bg.png')}
+                    layout={{ position: 'absolute', left: 0, width: 66, top: 0, height: 127 }}
+                />
+                <WidgetSlot
+                    widgetType="avatar_image"
+                    name="avatar_image"
+                    options={{ 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
+                    layout={{ position: 'absolute', width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 84 }}
+                />
+            </Region>
             <WidgetSlot
                 widgetType="badge_image"
                 name="badge"
@@ -240,203 +228,121 @@ export const RentableBotViewLayoutInfostandElementList = ({ itemsInfostandElemen
     );
 };
 
-/** Named region `whisper` of RentableBotViewLayout - configured through the parent's `whisper` prop. */
-export interface RentableBotViewLayoutWhisperProps {
+/** Named region `button_list` of RentableBotViewLayout - configured through the parent's `buttonList` prop. */
+export interface RentableBotViewLayoutButtonListProps {
     layout?: BoxLayout;
+    onIgnore?: () => void;
+    onIgnore2?: () => void;
+    onMove?: () => void;
+    onMove2?: () => void;
+    onPick?: () => void;
+    onPick2?: () => void;
+    onRotate?: () => void;
+    onRotate2?: () => void;
+    onUnignore?: () => void;
+    onUnignore2?: () => void;
     onWhisper?: () => void;
     onWhisper2?: () => void;
 }
 
-export const RentableBotViewLayoutWhisper = ({ layout, onWhisper, onWhisper2 }: RentableBotViewLayoutWhisperProps) => {
+export const RentableBotViewLayoutButtonList = ({ layout, onIgnore, onIgnore2, onMove, onMove2, onPick, onPick2, onRotate, onRotate2, onUnignore, onUnignore2, onWhisper, onWhisper2 }: RentableBotViewLayoutButtonListProps) => {
     const t = useTranslation();
 
-    return (
-        <Region
-            name="whisper"
-            onPointerTap={onWhisper}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 25, ...layout }}
-        >
-            <Button
-                variant="1"
-                name="whisper"
-                onPointerTap={onWhisper2}
-                layout={{ position: 'absolute', left: 0, width: 145, top: 0, height: 25, minHeight: 22 }}
-            >
-                {t('infostand.button.whisper')}
-            </Button>
-        </Region>
-    );
-};
-
-/** Named region `ignore` of RentableBotViewLayout - configured through the parent's `ignore` prop. */
-export interface RentableBotViewLayoutIgnoreProps {
-    layout?: BoxLayout;
-    onIgnore?: () => void;
-    onIgnore2?: () => void;
-}
-
-export const RentableBotViewLayoutIgnore = ({ layout, onIgnore, onIgnore2 }: RentableBotViewLayoutIgnoreProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="ignore"
-            onPointerTap={onIgnore}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 110, width: 100, top: 0, height: 25, ...layout }}
-        >
-            <Button
-                variant="1"
-                name="ignore"
-                onPointerTap={onIgnore2}
-                layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 25, minHeight: 22 }}
-            >
-                {t('infostand.button.ignore')}
-            </Button>
-        </Region>
-    );
-};
-
-/** Named region `unignore` of RentableBotViewLayout - configured through the parent's `unignore` prop. */
-export interface RentableBotViewLayoutUnignoreProps {
-    layout?: BoxLayout;
-    onUnignore?: () => void;
-    onUnignore2?: () => void;
-}
-
-export const RentableBotViewLayoutUnignore = ({ layout, onUnignore, onUnignore2 }: RentableBotViewLayoutUnignoreProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="unignore"
-            onPointerTap={onUnignore}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 220, width: 100, top: 0, height: 25, ...layout }}
-        >
-            <Button
-                variant="1"
-                name="unignore"
-                onPointerTap={onUnignore2}
-                layout={{ position: 'absolute', left: 0, width: 149, top: 0, height: 25, minHeight: 22 }}
-            >
-                {t('infostand.button.unignore')}
-            </Button>
-        </Region>
-    );
-};
-
-/** Named region `move` of RentableBotViewLayout - configured through the parent's `move` prop. */
-export interface RentableBotViewLayoutMoveProps {
-    layout?: BoxLayout;
-    onMove?: () => void;
-    onMove2?: () => void;
-}
-
-export const RentableBotViewLayoutMove = ({ layout, onMove, onMove2 }: RentableBotViewLayoutMoveProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="move"
-            onPointerTap={onMove}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 330, width: 132, top: 0, height: 25, ...layout }}
-        >
-            <Button
-                variant="1"
-                name="move"
-                onPointerTap={onMove2}
-                layout={{ position: 'absolute', left: 0, width: 132, top: 0, height: 25, minHeight: 22 }}
-            >
-                {t('infostand.button.move')}
-            </Button>
-        </Region>
-    );
-};
-
-/** Named region `rotate` of RentableBotViewLayout - configured through the parent's `rotate` prop. */
-export interface RentableBotViewLayoutRotateProps {
-    layout?: BoxLayout;
-    onRotate?: () => void;
-    onRotate2?: () => void;
-}
-
-export const RentableBotViewLayoutRotate = ({ layout, onRotate, onRotate2 }: RentableBotViewLayoutRotateProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="rotate"
-            onPointerTap={onRotate}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 472, width: 139, top: 0, height: 25, ...layout }}
-        >
-            <Button
-                variant="1"
-                name="rotate"
-                onPointerTap={onRotate2}
-                layout={{ position: 'absolute', left: 0, width: 139, top: 0, height: 25, minHeight: 22 }}
-            >
-                {t('infostand.button.rotate')}
-            </Button>
-        </Region>
-    );
-};
-
-/** Named region `pick` of RentableBotViewLayout - configured through the parent's `pick` prop. */
-export interface RentableBotViewLayoutPickProps {
-    layout?: BoxLayout;
-    onPick?: () => void;
-    onPick2?: () => void;
-}
-
-export const RentableBotViewLayoutPick = ({ layout, onPick, onPick2 }: RentableBotViewLayoutPickProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="pick"
-            onPointerTap={onPick}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 621, width: 137, top: 0, height: 25, ...layout }}
-        >
-            <Button
-                variant="1"
-                name="pick"
-                onPointerTap={onPick2}
-                layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 25, minHeight: 22 }}
-            >
-                {t('infostand.button.pickup')}
-            </Button>
-        </Region>
-    );
-};
-
-/** Named region `button_list` of RentableBotViewLayout - configured through the parent's `buttonList` prop. */
-export interface RentableBotViewLayoutButtonListProps {
-    ignore?: RentableBotViewLayoutIgnoreProps;
-    layout?: BoxLayout;
-    move?: RentableBotViewLayoutMoveProps;
-    pick?: RentableBotViewLayoutPickProps;
-    rotate?: RentableBotViewLayoutRotateProps;
-    unignore?: RentableBotViewLayoutUnignoreProps;
-    whisper?: RentableBotViewLayoutWhisperProps;
-}
-
-export const RentableBotViewLayoutButtonList = ({ ignore, layout, move, pick, rotate, unignore, whisper }: RentableBotViewLayoutButtonListProps) => {
     return (
         <Region
             name="button_list"
             layout={{ width: 1800, height: 25, flexShrink: 0, ...layout }}
         >
-            <RentableBotViewLayoutWhisper {...whisper} />
-            <RentableBotViewLayoutIgnore {...ignore} />
-            <RentableBotViewLayoutUnignore {...unignore} />
-            <RentableBotViewLayoutMove {...move} />
-            <RentableBotViewLayoutRotate {...rotate} />
-            <RentableBotViewLayoutPick {...pick} />
+            <Region
+                name="whisper"
+                onPointerTap={onWhisper}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 100, top: 0, height: 25 }}
+            >
+                <Button
+                    variant="1"
+                    name="whisper"
+                    onPointerTap={onWhisper2}
+                    layout={{ position: 'absolute', left: 0, width: 145, top: 0, height: 25, minHeight: 22 }}
+                >
+                    {t('infostand.button.whisper')}
+                </Button>
+            </Region>
+            <Region
+                name="ignore"
+                onPointerTap={onIgnore}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 110, width: 100, top: 0, height: 25 }}
+            >
+                <Button
+                    variant="1"
+                    name="ignore"
+                    onPointerTap={onIgnore2}
+                    layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 25, minHeight: 22 }}
+                >
+                    {t('infostand.button.ignore')}
+                </Button>
+            </Region>
+            <Region
+                name="unignore"
+                onPointerTap={onUnignore}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 220, width: 100, top: 0, height: 25 }}
+            >
+                <Button
+                    variant="1"
+                    name="unignore"
+                    onPointerTap={onUnignore2}
+                    layout={{ position: 'absolute', left: 0, width: 149, top: 0, height: 25, minHeight: 22 }}
+                >
+                    {t('infostand.button.unignore')}
+                </Button>
+            </Region>
+            <Region
+                name="move"
+                onPointerTap={onMove}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 330, width: 132, top: 0, height: 25 }}
+            >
+                <Button
+                    variant="1"
+                    name="move"
+                    onPointerTap={onMove2}
+                    layout={{ position: 'absolute', left: 0, width: 132, top: 0, height: 25, minHeight: 22 }}
+                >
+                    {t('infostand.button.move')}
+                </Button>
+            </Region>
+            <Region
+                name="rotate"
+                onPointerTap={onRotate}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 472, width: 139, top: 0, height: 25 }}
+            >
+                <Button
+                    variant="1"
+                    name="rotate"
+                    onPointerTap={onRotate2}
+                    layout={{ position: 'absolute', left: 0, width: 139, top: 0, height: 25, minHeight: 22 }}
+                >
+                    {t('infostand.button.rotate')}
+                </Button>
+            </Region>
+            <Region
+                name="pick"
+                onPointerTap={onPick}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 621, width: 137, top: 0, height: 25 }}
+            >
+                <Button
+                    variant="1"
+                    name="pick"
+                    onPointerTap={onPick2}
+                    layout={{ position: 'absolute', left: 0, width: 137, top: 0, height: 25, minHeight: 22 }}
+                >
+                    {t('infostand.button.pickup')}
+                </Button>
+            </Region>
         </Region>
     );
 };

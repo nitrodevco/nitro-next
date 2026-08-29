@@ -5,12 +5,12 @@ import { BoxLayout, Button, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `1_campaign_promo_xml` (layout "campaing_promo", 500x130) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface CampaignPromoLayoutProps {
-    content?: CampaignPromoLayoutContentProps;
+    itemsContent?: ReactNode;
     layout?: BoxLayout;
     srcPromoBackground?: string;
 }
 
-export const CampaignPromoLayout = ({ content, layout, srcPromoBackground }: CampaignPromoLayoutProps) => {
+export const CampaignPromoLayout = ({ itemsContent, layout, srcPromoBackground }: CampaignPromoLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 500, height: 130, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 130, maxWidth: 500 }}>
@@ -19,7 +19,20 @@ export const CampaignPromoLayout = ({ content, layout, srcPromoBackground }: Cam
                     src={srcPromoBackground}
                     layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 130 }}
                 />
-                <CampaignPromoLayoutContent {...content} />
+                <Region
+                    name="content"
+                    layout={{ position: 'absolute', left: 161, width: 275, top: 16, height: 96, flexDirection: 'column' }}
+                >
+                    {itemsContent ?? (
+                        <>
+                            <CampaignPromoLayoutPromoTitleItem />
+                            <CampaignPromoLayoutSpacingItem />
+                            <CampaignPromoLayoutPromoTextItem />
+                            <CampaignPromoLayoutSpacingItem2 />
+                            <CampaignPromoLayoutButtonItem />
+                        </>
+                    )}
+                </Region>
             </Region>
         </Region>
     );
@@ -115,30 +128,5 @@ export const CampaignPromoLayoutButtonItem = ({ layout, onButton }: CampaignProm
         >
             {t('landing.view.campaign.promo.button')}
         </Button>
-    );
-};
-
-/** Named region `content` of CampaignPromoLayout - configured through the parent's `content` prop. */
-export interface CampaignPromoLayoutContentProps {
-    itemsContent?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const CampaignPromoLayoutContent = ({ itemsContent, layout }: CampaignPromoLayoutContentProps) => {
-    return (
-        <Region
-            name="content"
-            layout={{ position: 'absolute', left: 161, width: 275, top: 16, height: 96, flexDirection: 'column', ...layout }}
-        >
-            {itemsContent ?? (
-                <>
-                    <CampaignPromoLayoutPromoTitleItem />
-                    <CampaignPromoLayoutSpacingItem />
-                    <CampaignPromoLayoutPromoTextItem />
-                    <CampaignPromoLayoutSpacingItem2 />
-                    <CampaignPromoLayoutButtonItem />
-                </>
-            )}
-        </Region>
     );
 };

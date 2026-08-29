@@ -37,13 +37,13 @@ export const ToolbarMeMenuPixi: ForwardRefExoticComponent<ToolbarMeMenuPixiProps
             layout={{ position: 'absolute', left: 4, bottom: 58, padding: 6 }}
         >
             <MemenuMainSimpleLayout buttons={{
-                profile: { srcProfileIcon: icon('profile'), onProfile: choose() },
-                minimail: { srcMinimailIcon: icon('minimail'), onMinimail: choose() },
-                rooms: { srcRoomsIcon: icon('gohome'), onRooms: choose(() => showWindow('navigator')) },
-                settings: { srcSettingsIcon: icon('settings'), onSettings: choose() },
-                achievements: { srcAchievementsIcon: icon('achievements'), onAchievements: choose() },
-                talents: { srcTalentsIcon: icon('compass'), onTalents: choose() },
-                guide: { srcGuideIcon: icon('lighthouse'), onGuide: choose() },
+                srcProfileIcon: icon('profile'), onProfile: choose(),
+                srcMinimailIcon: icon('minimail'), onMinimail: choose(),
+                srcRoomsIcon: icon('gohome'), onRooms: choose(() => showWindow('navigator')),
+                srcSettingsIcon: icon('settings'), onSettings: choose(),
+                srcAchievementsIcon: icon('achievements'), onAchievements: choose(),
+                srcTalentsIcon: icon('compass'), onTalents: choose(),
+                srcGuideIcon: icon('lighthouse'), onGuide: choose(),
             }}
             />
         </Border>

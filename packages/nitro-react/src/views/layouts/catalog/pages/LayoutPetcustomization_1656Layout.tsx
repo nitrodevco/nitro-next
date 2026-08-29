@@ -25,9 +25,10 @@ export interface LayoutPetcustomization_1656LayoutCtlgPetcustomizationProps {
     layout?: BoxLayout;
     petPreviewWidget?: PetPreviewWidgetProps;
     purchaseWidget?: PurchaseWidgetProps;
+    visibleCtlgSelectproduct?: boolean;
 }
 
-export const LayoutPetcustomization_1656LayoutCtlgPetcustomization = ({ captionCtlgSelectproduct, itemGridWidget, layout, petPreviewWidget, purchaseWidget }: LayoutPetcustomization_1656LayoutCtlgPetcustomizationProps) => {
+export const LayoutPetcustomization_1656LayoutCtlgPetcustomization = ({ captionCtlgSelectproduct, itemGridWidget, layout, petPreviewWidget, purchaseWidget, visibleCtlgSelectproduct }: LayoutPetcustomization_1656LayoutCtlgPetcustomizationProps) => {
     const t = useTranslation();
 
     return (
@@ -35,17 +36,18 @@ export const LayoutPetcustomization_1656LayoutCtlgPetcustomization = ({ captionC
             name="ctlg_petcustomization"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
-            <Region
-                name="ctlg_selectproduct"
-                visible={false}
-                layout={{ position: 'absolute', left: 8, width: 107, top: 133, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ fill: '#666666' }}
-                />
-            </Region>
+            {(visibleCtlgSelectproduct ?? false) && (
+                <Region
+                    name="ctlg_selectproduct"
+                    layout={{ position: 'absolute', left: 8, width: 107, top: 133, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
+                        textStyle="text-style-u-small"
+                        textOptions={{ fill: '#666666' }}
+                    />
+                </Region>
+            )}
             <ItemGridWidget
                 layout={{ position: 'absolute', left: 0, width: 360, top: 245, bottom: 35 }}
                 {...itemGridWidget}

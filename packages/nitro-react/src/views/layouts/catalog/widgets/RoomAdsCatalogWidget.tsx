@@ -10,30 +10,15 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
  * (LayoutRoomads_1600Layout); each passes its own placement through `layout`.
  */
-/** Named region `price_container` of RoomAdsCatalogWidget - configured through the parent's `priceContainer` prop. */
-export interface RoomAdsCatalogWidgetPriceContainerProps {
-    layout?: BoxLayout;
-}
-
-export const RoomAdsCatalogWidgetPriceContainer = ({ layout }: RoomAdsCatalogWidgetPriceContainerProps) => {
-    return (
-        <Region
-            name="price_container"
-            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 44, top: 3, height: 18, ...layout }}
-        />
-    );
-};
-
 /** Named region `roomAdsCatalogWidget` of RoomAdsCatalogWidget - configured through the parent's `roomAdsCatalogWidget` prop. */
 export interface RoomAdsCatalogWidgetProps extends CatalogWidgetFlags {
     captionCtlgText1?: string;
     layout?: BoxLayout;
     onRoomDropMenu?: () => void;
-    priceContainer?: RoomAdsCatalogWidgetPriceContainerProps;
     purchaseWidget?: PurchaseWidgetProps;
 }
 
-export const RoomAdsCatalogWidget = ({ captionCtlgText1, layout, onRoomDropMenu, priceContainer, purchaseWidget }: RoomAdsCatalogWidgetProps) => {
+export const RoomAdsCatalogWidget = ({ captionCtlgText1, layout, onRoomDropMenu, purchaseWidget }: RoomAdsCatalogWidgetProps) => {
     const t = useTranslation();
     const [ nameInputTextValue, setNameInputTextValue ] = useState('');
     const [ descInputTextValue, setDescInputTextValue ] = useState('');
@@ -104,7 +89,10 @@ export const RoomAdsCatalogWidget = ({ captionCtlgText1, layout, onRoomDropMenu,
                 name="totalprice_widget_border"
                 layout={{ position: 'absolute', left: 10, width: 131, top: 396, height: 26, justifyContent: 'center' }}
             >
-                <RoomAdsCatalogWidgetPriceContainer {...priceContainer} />
+                <Region
+                    name="price_container"
+                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 44, top: 3, height: 18 }}
+                />
             </Border>
             <PurchaseWidget
                 noGiftOption

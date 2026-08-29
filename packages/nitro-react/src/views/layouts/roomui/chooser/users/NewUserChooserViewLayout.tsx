@@ -8,14 +8,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface NewUserChooserViewLayoutProps {
     captionAmountIndicator?: string;
     captionSearchPlaceholder?: string;
-    clearButton?: NewUserChooserViewLayoutClearButtonProps;
     layout?: BoxLayout;
+    onClearButton?: () => void;
     onClose?: () => void;
     onTypeDropdown?: () => void;
-    tableContainer?: NewUserChooserViewLayoutTableContainerProps;
+    visibleClearButton?: boolean;
 }
 
-export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearchPlaceholder, clearButton, layout, onClose, onTypeDropdown, tableContainer }: NewUserChooserViewLayoutProps) => {
+export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearchPlaceholder, layout, onClearButton, onClose, onTypeDropdown, visibleClearButton }: NewUserChooserViewLayoutProps) => {
     const t = useTranslation();
     const [ textInputValue, setTextInputValue ] = useState('');
 
@@ -46,7 +46,19 @@ export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearch
                     textColor="#666666"
                     layout={{ position: 'absolute', left: 6, right: 23, top: 4, bottom: 4 }}
                 />
-                <NewUserChooserViewLayoutClearButton {...clearButton} />
+                {(visibleClearButton ?? false) && (
+                    <Region
+                        name="clear_button"
+                        onPointerTap={onClearButton}
+                        cursor="pointer"
+                        layout={{ position: 'absolute', right: 2, width: 20, top: 3, height: 20 }}
+                    >
+                        <ThemeImage
+                            src={layoutImage('icons_close.png')}
+                            layout={{ position: 'absolute', left: 4, width: 11, top: 4, height: 12 }}
+                        />
+                    </Region>
+                )}
             </Border>
             <Dropmenu
                 variant="3"
@@ -56,7 +68,10 @@ export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearch
             >
                 {t('new_user_chooser.usertype.all')}
             </Dropmenu>
-            <NewUserChooserViewLayoutTableContainer {...tableContainer} />
+            <Region
+                name="table_container"
+                layout={{ position: 'absolute', left: 6, right: 18, top: 53, bottom: 61 }}
+            />
             <Region
                 name="amount_indicator"
                 layout={{ position: 'absolute', left: 6, width: 212, bottom: 37, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -64,43 +79,5 @@ export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearch
                 <ThemeText text={captionAmountIndicator ?? t('new_user_chooser.amount_indicator')} />
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `clear_button` of NewUserChooserViewLayout - configured through the parent's `clearButton` prop. */
-export interface NewUserChooserViewLayoutClearButtonProps {
-    layout?: BoxLayout;
-    onClearButton?: () => void;
-    visibleClearButton?: boolean;
-}
-
-export const NewUserChooserViewLayoutClearButton = ({ layout, onClearButton, visibleClearButton }: NewUserChooserViewLayoutClearButtonProps) => {
-    return (
-        <Region
-            name="clear_button"
-            visible={visibleClearButton ?? false}
-            onPointerTap={onClearButton}
-            cursor="pointer"
-            layout={{ position: 'absolute', right: 2, width: 20, top: 3, height: 20, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('icons_close.png')}
-                layout={{ position: 'absolute', left: 4, width: 11, top: 4, height: 12 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `table_container` of NewUserChooserViewLayout - configured through the parent's `tableContainer` prop. */
-export interface NewUserChooserViewLayoutTableContainerProps {
-    layout?: BoxLayout;
-}
-
-export const NewUserChooserViewLayoutTableContainer = ({ layout }: NewUserChooserViewLayoutTableContainerProps) => {
-    return (
-        <Region
-            name="table_container"
-            layout={{ position: 'absolute', left: 6, right: 18, top: 53, bottom: 61, ...layout }}
-        />
     );
 };

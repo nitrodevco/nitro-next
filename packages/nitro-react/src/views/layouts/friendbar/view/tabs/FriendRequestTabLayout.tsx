@@ -7,18 +7,18 @@ import { Border, BoxLayout, Bubble, CloseButton, ContainerButton, Icon, Region, 
 export interface FriendRequestTabLayoutProps {
     captionCaption?: string;
     captionCaption2?: string;
+    captionLinkReject?: string;
     captionMessage?: string;
-    clickRegionReject?: FriendRequestTabLayoutClickRegionRejectProps;
-    icons?: FriendRequestTabLayoutIconsProps;
+    itemsPieces?: ReactNode;
     layout?: BoxLayout;
     onButtonAccept?: () => void;
     onButtonClose?: () => void;
     onButtonProfile?: () => void;
-    pieces?: FriendRequestTabLayoutPiecesProps;
+    onClickRegionReject?: () => void;
     visibleBubble?: boolean;
 }
 
-export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captionMessage, clickRegionReject, icons, layout, onButtonAccept, onButtonClose, onButtonProfile, pieces, visibleBubble }: FriendRequestTabLayoutProps) => {
+export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captionLinkReject, captionMessage, itemsPieces, layout, onButtonAccept, onButtonClose, onButtonProfile, onClickRegionReject, visibleBubble }: FriendRequestTabLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -29,106 +29,107 @@ export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captio
                 tintColor="#fac919"
                 layout={{ position: 'absolute', left: 0, width: 127, top: 107, height: 36 }}
             >
-                <FriendRequestTabLayoutPieces {...pieces} />
-                <Bubble
-                    variant="0"
-                    name="bubble"
-                    tintColor="#fac919"
-                    visible={visibleBubble ?? true}
-                    layout={{ position: 'absolute', left: -6, width: 139, top: -133, height: 140, justifyContent: 'center' }}
+                <Region
+                    name="pieces"
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 7, bottom: -1, minHeight: 30, flexDirection: 'column' }}
                 >
-                    <Region
-                        name="message"
-                        layout={{ position: 'absolute', left: 5, right: 41, top: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    {itemsPieces ?? (
+                        <FriendRequestTabLayoutHeaderItem />
+                    )}
+                </Region>
+                {(visibleBubble ?? true) && (
+                    <Bubble
+                        variant="0"
+                        name="bubble"
+                        tintColor="#fac919"
+                        layout={{ position: 'absolute', left: -6, width: 139, top: -133, height: 140, justifyContent: 'center' }}
                     >
-                        <ThemeText
-                            text={captionMessage ?? t('friendbar.request.title')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 93 }}
-                        />
-                    </Region>
-                    <CloseButton
-                        variant="3"
-                        name="button_close"
-                        onPointerTap={onButtonClose}
-                        layout={{ position: 'absolute', right: 19, width: 19, top: 3, height: 20 }}
-                    />
-                    <ContainerButton
-                        variant="3"
-                        name="button_accept"
-                        onPointerTap={onButtonAccept}
-                        layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 96, bottom: 77, height: 27, maxWidth: 110 }}
-                    >
-                        <Icon
-                            variant="8"
-                            name="icon"
-                            tintColor="#00a900"
-                            layout={{ position: 'absolute', left: 7, width: 17, top: 6, height: 16 }}
-                        />
                         <Region
-                            name="caption"
-                            layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            name="message"
+                            layout={{ position: 'absolute', left: 5, right: 41, top: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
-                                text={captionCaption ?? t('friendbar.request.accept')}
-                                textStyle="text-style-button-shiny-bold"
-                                textOptions={{ align: 'center' }}
+                                text={captionMessage ?? t('friendbar.request.title')}
+                                textStyle="text-style-u-bold"
+                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 93 }}
                             />
                         </Region>
-                    </ContainerButton>
-                    <ContainerButton
-                        variant="3"
-                        name="button_profile"
-                        onPointerTap={onButtonProfile}
-                        layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 96, bottom: 47, height: 27, maxWidth: 110 }}
-                    >
-                        <Icon
-                            variant="21"
-                            name="icon"
-                            tintColor="#00a900"
-                            layout={{ position: 'absolute', left: 7, width: 17, top: 8, height: 16 }}
+                        <CloseButton
+                            variant="3"
+                            name="button_close"
+                            onPointerTap={onButtonClose}
+                            layout={{ position: 'absolute', right: 19, width: 19, top: 3, height: 20 }}
                         />
-                        <Region
-                            name="caption"
-                            layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        <ContainerButton
+                            variant="3"
+                            name="button_accept"
+                            onPointerTap={onButtonAccept}
+                            layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 96, bottom: 77, height: 27, maxWidth: 110 }}
                         >
-                            <ThemeText
-                                text={captionCaption2 ?? t('friendbar.request.profile')}
-                                textStyle="text-style-button-shiny-bold"
-                                textOptions={{ align: 'center' }}
+                            <Icon
+                                variant="8"
+                                name="icon"
+                                tintColor="#00a900"
+                                layout={{ position: 'absolute', left: 7, width: 17, top: 6, height: 16 }}
                             />
+                            <Region
+                                name="caption"
+                                layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                                <ThemeText
+                                    text={captionCaption ?? t('friendbar.request.accept')}
+                                    textStyle="text-style-button-shiny-bold"
+                                    textOptions={{ align: 'center' }}
+                                />
+                            </Region>
+                        </ContainerButton>
+                        <ContainerButton
+                            variant="3"
+                            name="button_profile"
+                            onPointerTap={onButtonProfile}
+                            layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 96, bottom: 47, height: 27, maxWidth: 110 }}
+                        >
+                            <Icon
+                                variant="21"
+                                name="icon"
+                                tintColor="#00a900"
+                                layout={{ position: 'absolute', left: 7, width: 17, top: 8, height: 16 }}
+                            />
+                            <Region
+                                name="caption"
+                                layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                                <ThemeText
+                                    text={captionCaption2 ?? t('friendbar.request.profile')}
+                                    textStyle="text-style-button-shiny-bold"
+                                    textOptions={{ align: 'center' }}
+                                />
+                            </Region>
+                        </ContainerButton>
+                        <Region
+                            name="click_region_reject"
+                            onPointerTap={onClickRegionReject}
+                            cursor="pointer"
+                            layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 118, bottom: 26, height: 15 }}
+                        >
+                            <Region
+                                name="link_reject"
+                                layout={{ position: 'absolute', left: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                                <ThemeText
+                                    text={captionLinkReject ?? t('friendbar.request.decline')}
+                                    textStyle="text-style-u-small"
+                                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                                />
+                            </Region>
                         </Region>
-                    </ContainerButton>
-                    <FriendRequestTabLayoutClickRegionReject {...clickRegionReject} />
-                </Bubble>
-                <FriendRequestTabLayoutIcons {...icons} />
-            </Border>
-        </Region>
-    );
-};
-
-/** Named region `region_profile` of FriendRequestTabLayout - configured through the parent's `regionProfile` prop. */
-export interface FriendRequestTabLayoutRegionProfileProps {
-    layout?: BoxLayout;
-    onRegionProfile?: () => void;
-    srcCanvas?: string;
-}
-
-export const FriendRequestTabLayoutRegionProfile = ({ layout, onRegionProfile, srcCanvas }: FriendRequestTabLayoutRegionProfileProps) => {
-    return (
-        <Region
-            name="region_profile"
-            onPointerTap={onRegionProfile}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 86, top: 0, height: 24, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: -11, width: 50, top: -25, height: 70, justifyContent: 'center' }}>
-                <ThemeImage
-                    name="canvas"
-                    src={srcCanvas}
-                    layout={{ position: 'absolute', width: 10, alignSelf: 'center', height: 10 }}
+                    </Bubble>
+                )}
+                <Region
+                    name="icons"
+                    layout={{ position: 'absolute', right: 10, width: 0, top: -13, height: 25, flexDirection: 'row', gap: 2 }}
                 />
-            </Region>
+            </Border>
         </Region>
     );
 };
@@ -138,10 +139,11 @@ export interface FriendRequestTabLayoutHeaderItemProps {
     captionName?: string;
     layout?: BoxLayout;
     onHeader?: () => void;
-    regionProfile?: FriendRequestTabLayoutRegionProfileProps;
+    onRegionProfile?: () => void;
+    srcCanvas?: string;
 }
 
-export const FriendRequestTabLayoutHeaderItem = ({ captionName, layout, onHeader, regionProfile }: FriendRequestTabLayoutHeaderItemProps) => {
+export const FriendRequestTabLayoutHeaderItem = ({ captionName, layout, onHeader, onRegionProfile, srcCanvas }: FriendRequestTabLayoutHeaderItemProps) => {
     return (
         <Region
             name="header"
@@ -159,71 +161,20 @@ export const FriendRequestTabLayoutHeaderItem = ({ captionName, layout, onHeader
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Region>
-            <FriendRequestTabLayoutRegionProfile {...regionProfile} />
-        </Region>
-    );
-};
-
-/** Named region `pieces` of FriendRequestTabLayout - configured through the parent's `pieces` prop. */
-export interface FriendRequestTabLayoutPiecesProps {
-    itemsPieces?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const FriendRequestTabLayoutPieces = ({ itemsPieces, layout }: FriendRequestTabLayoutPiecesProps) => {
-    return (
-        <Region
-            name="pieces"
-            layout={{ position: 'absolute', left: 3, right: 3, top: 7, bottom: -1, minHeight: 30, flexDirection: 'column', ...layout }}
-        >
-            {itemsPieces ?? (
-                <FriendRequestTabLayoutHeaderItem />
-            )}
-        </Region>
-    );
-};
-
-/** Named region `click_region_reject` of FriendRequestTabLayout - configured through the parent's `clickRegionReject` prop. */
-export interface FriendRequestTabLayoutClickRegionRejectProps {
-    captionLinkReject?: string;
-    layout?: BoxLayout;
-    onClickRegionReject?: () => void;
-}
-
-export const FriendRequestTabLayoutClickRegionReject = ({ captionLinkReject, layout, onClickRegionReject }: FriendRequestTabLayoutClickRegionRejectProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="click_region_reject"
-            onPointerTap={onClickRegionReject}
-            cursor="pointer"
-            layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 118, bottom: 26, height: 15, ...layout }}
-        >
             <Region
-                name="link_reject"
-                layout={{ position: 'absolute', left: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                name="region_profile"
+                onPointerTap={onRegionProfile}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: 86, top: 0, height: 24 }}
             >
-                <ThemeText
-                    text={captionLinkReject ?? t('friendbar.request.decline')}
-                    textStyle="text-style-u-small"
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
+                <Region layout={{ position: 'absolute', left: -11, width: 50, top: -25, height: 70, justifyContent: 'center' }}>
+                    <ThemeImage
+                        name="canvas"
+                        src={srcCanvas}
+                        layout={{ position: 'absolute', width: 10, alignSelf: 'center', height: 10 }}
+                    />
+                </Region>
             </Region>
         </Region>
-    );
-};
-
-/** Named region `icons` of FriendRequestTabLayout - configured through the parent's `icons` prop. */
-export interface FriendRequestTabLayoutIconsProps {
-    layout?: BoxLayout;
-}
-
-export const FriendRequestTabLayoutIcons = ({ layout }: FriendRequestTabLayoutIconsProps) => {
-    return (
-        <Region
-            name="icons"
-            layout={{ position: 'absolute', right: 10, width: 0, top: -13, height: 25, flexDirection: 'row', gap: 2, ...layout }}
-        />
     );
 };

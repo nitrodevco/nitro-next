@@ -9,9 +9,10 @@ export interface GrsMainWindowLayoutProps {
     layout?: BoxLayout;
     onClose?: () => void;
     tabbedview?: GrsMainWindowLayoutTabbedviewProps;
+    visibleLoadingText?: boolean;
 }
 
-export const GrsMainWindowLayout = ({ captionLoadingText, layout, onClose, tabbedview }: GrsMainWindowLayoutProps) => {
+export const GrsMainWindowLayout = ({ captionLoadingText, layout, onClose, tabbedview, visibleLoadingText }: GrsMainWindowLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -26,165 +27,16 @@ export const GrsMainWindowLayout = ({ captionLoadingText, layout, onClose, tabbe
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
                 <GrsMainWindowLayoutTabbedview {...tabbedview} />
-                <Region
-                    name="loading_text"
-                    visible={false}
-                    layout={{ position: 'absolute', marginLeft: -29.5, marginRight: 29.5, width: 104, top: 210, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText text={captionLoadingText ?? t('navigator.loading')} />
-                </Region>
+                {(visibleLoadingText ?? false) && (
+                    <Region
+                        name="loading_text"
+                        layout={{ position: 'absolute', marginLeft: -29.5, marginRight: 29.5, width: 104, top: 210, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionLoadingText ?? t('navigator.loading')} />
+                    </Region>
+                )}
             </Region>
         </Frame>
-    );
-};
-
-/** Named region `item_list` of GrsMainWindowLayout - configured through the parent's `itemList` prop. */
-export interface GrsMainWindowLayoutItemListProps {
-    layout?: BoxLayout;
-}
-
-export const GrsMainWindowLayoutItemList = ({ layout }: GrsMainWindowLayoutItemListProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0, ...layout }}
-        >
-            <Region
-                name="item_list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
-/** Named region `guest_rooms` of GrsMainWindowLayout - configured through the parent's `guestRooms` prop. */
-export interface GrsMainWindowLayoutGuestRoomsProps {
-    captionNoRoomsFound?: string;
-    itemList?: GrsMainWindowLayoutItemListProps;
-    layout?: BoxLayout;
-}
-
-export const GrsMainWindowLayoutGuestRooms = ({ captionNoRoomsFound, itemList, layout }: GrsMainWindowLayoutGuestRoomsProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="guest_rooms"
-            backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
-        >
-            <GrsMainWindowLayoutItemList {...itemList} />
-            {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
-            <Region
-                name="no_rooms_found"
-                layout={{ position: 'absolute', width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionNoRoomsFound ?? t('navigator.noroomsfound')}
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `item_list` of GrsMainWindowLayout - configured through the parent's `itemList` prop. */
-export interface GrsMainWindowLayoutItemList2Props {
-    layout?: BoxLayout;
-}
-
-export const GrsMainWindowLayoutItemList2 = ({ layout }: GrsMainWindowLayoutItemList2Props) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0, ...layout }}
-        >
-            <Region
-                name="item_list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
-/** Named region `room_ads` of GrsMainWindowLayout - configured through the parent's `roomAds` prop. */
-export interface GrsMainWindowLayoutRoomAdsProps {
-    captionNoRoomsFound?: string;
-    itemList?: GrsMainWindowLayoutItemList2Props;
-    layout?: BoxLayout;
-}
-
-export const GrsMainWindowLayoutRoomAds = ({ captionNoRoomsFound, itemList, layout }: GrsMainWindowLayoutRoomAdsProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="room_ads"
-            backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
-        >
-            <GrsMainWindowLayoutItemList2 {...itemList} />
-            {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
-            <Region
-                name="no_rooms_found"
-                layout={{ position: 'absolute', width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionNoRoomsFound ?? t('navigator.noroomsfound')}
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `item_list` of GrsMainWindowLayout - configured through the parent's `itemList` prop. */
-export interface GrsMainWindowLayoutItemList3Props {
-    layout?: BoxLayout;
-}
-
-export const GrsMainWindowLayoutItemList3 = ({ layout }: GrsMainWindowLayoutItemList3Props) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0, ...layout }}
-        >
-            <Region
-                name="item_list"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            />
-        </ScrollArea>
-    );
-};
-
-/** Named region `popular_tags` of GrsMainWindowLayout - configured through the parent's `popularTags` prop. */
-export interface GrsMainWindowLayoutPopularTagsProps {
-    captionNoTagsFound?: string;
-    itemList?: GrsMainWindowLayoutItemList3Props;
-    layout?: BoxLayout;
-}
-
-export const GrsMainWindowLayoutPopularTags = ({ captionNoTagsFound, itemList, layout }: GrsMainWindowLayoutPopularTagsProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="popular_tags"
-            backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, justifyContent: 'center', ...layout }}
-        >
-            <GrsMainWindowLayoutItemList3 {...itemList} />
-            {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
-            <Region
-                name="no_tags_found"
-                layout={{ position: 'absolute', width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionNoTagsFound ?? t('navigator.notagsfound')}
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-        </Region>
     );
 };
 
@@ -203,202 +55,119 @@ export const GrsMainWindowLayoutPromotedRoomsItem = ({ layout }: GrsMainWindowLa
     );
 };
 
-/** Named region `item_list_official` of GrsMainWindowLayout - configured through the parent's `itemListOfficial` prop. */
-export interface GrsMainWindowLayoutItemListOfficialProps {
+/** Named region `list_content` of GrsMainWindowLayout - configured through the parent's `listContent` prop. */
+export interface GrsMainWindowLayoutListContentProps {
+    captionNoRoomsFound?: string;
+    captionNoRoomsFound2?: string;
+    captionNoTagsFound?: string;
     itemsItemListOfficial?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const GrsMainWindowLayoutItemListOfficial = ({ itemsItemListOfficial, layout }: GrsMainWindowLayoutItemListOfficialProps) => {
-    return (
-        <ScrollArea
-            orientation="vertical"
-            layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0, ...layout }}
-        >
-            <Region
-                name="item_list_official"
-                layout={{ flexDirection: 'column', width: '100%' }}
-            >
-                {itemsItemListOfficial ?? (
-                    <GrsMainWindowLayoutPromotedRoomsItem />
-                )}
-            </Region>
-        </ScrollArea>
-    );
-};
+export const GrsMainWindowLayoutListContent = ({ captionNoRoomsFound, captionNoRoomsFound2, captionNoTagsFound, itemsItemListOfficial, layout }: GrsMainWindowLayoutListContentProps) => {
+    const t = useTranslation();
 
-/** Named region `official_rooms` of GrsMainWindowLayout - configured through the parent's `officialRooms` prop. */
-export interface GrsMainWindowLayoutOfficialRoomsProps {
-    itemListOfficial?: GrsMainWindowLayoutItemListOfficialProps;
-    layout?: BoxLayout;
-}
-
-export const GrsMainWindowLayoutOfficialRooms = ({ itemListOfficial, layout }: GrsMainWindowLayoutOfficialRoomsProps) => {
-    return (
-        <Region
-            name="official_rooms"
-            backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, ...layout }}
-        >
-            <GrsMainWindowLayoutItemListOfficial {...itemListOfficial} />
-            {/* <scrollbar_vertical> for item_list_official - rendered by that list's ScrollArea */}
-        </Region>
-    );
-};
-
-/** Named region `list_content` of GrsMainWindowLayout - configured through the parent's `listContent` prop. */
-export interface GrsMainWindowLayoutListContentProps {
-    guestRooms?: GrsMainWindowLayoutGuestRoomsProps;
-    layout?: BoxLayout;
-    officialRooms?: GrsMainWindowLayoutOfficialRoomsProps;
-    popularTags?: GrsMainWindowLayoutPopularTagsProps;
-    roomAds?: GrsMainWindowLayoutRoomAdsProps;
-}
-
-export const GrsMainWindowLayoutListContent = ({ guestRooms, layout, officialRooms, popularTags, roomAds }: GrsMainWindowLayoutListContentProps) => {
     return (
         <Region
             name="list_content"
             backgroundColor="#ffff00"
             layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 288, ...layout }}
         >
-            <GrsMainWindowLayoutGuestRooms {...guestRooms} />
-            <GrsMainWindowLayoutRoomAds {...roomAds} />
-            <GrsMainWindowLayoutPopularTags {...popularTags} />
-            <GrsMainWindowLayoutOfficialRooms {...officialRooms} />
-        </Region>
-    );
-};
-
-/** Named region `me_header` of GrsMainWindowLayout - configured through the parent's `meHeader` prop. */
-export interface GrsMainWindowLayoutMeHeaderProps {
-    layout?: BoxLayout;
-    onMeHeader?: () => void;
-    onMeSubNavi?: () => void;
-    visibleMeHeader?: boolean;
-}
-
-export const GrsMainWindowLayoutMeHeader = ({ layout, onMeHeader, onMeSubNavi, visibleMeHeader }: GrsMainWindowLayoutMeHeaderProps) => {
-    return (
-        <Region
-            name="me_header"
-            visible={visibleMeHeader ?? false}
-            onPointerTap={onMeHeader}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 20, ...layout }}
-        >
-            <Dropmenu
-                variant="0"
-                name="meSubNavi"
-                onPointerTap={onMeSubNavi}
-                layout={{ position: 'absolute', left: 0, width: 293, top: 0, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `rooms_header` of GrsMainWindowLayout - configured through the parent's `roomsHeader` prop. */
-export interface GrsMainWindowLayoutRoomsHeaderProps {
-    layout?: BoxLayout;
-    onRoomCtgFilter?: () => void;
-    onRoomsHeader?: () => void;
-    visibleRoomsHeader?: boolean;
-}
-
-export const GrsMainWindowLayoutRoomsHeader = ({ layout, onRoomCtgFilter, onRoomsHeader, visibleRoomsHeader }: GrsMainWindowLayoutRoomsHeaderProps) => {
-    return (
-        <Region
-            name="rooms_header"
-            visible={visibleRoomsHeader ?? false}
-            onPointerTap={onRoomsHeader}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 20, ...layout }}
-        >
-            <Dropmenu
-                variant="0"
-                name="roomCtgFilter"
-                onPointerTap={onRoomCtgFilter}
-                layout={{ position: 'absolute', left: 0, width: 293, top: 0, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `room_ad_header` of GrsMainWindowLayout - configured through the parent's `roomAdHeader` prop. */
-export interface GrsMainWindowLayoutRoomAdHeaderProps {
-    layout?: BoxLayout;
-    onRoomAdFilter?: () => void;
-    onRoomAdHeader?: () => void;
-    visibleRoomAdHeader?: boolean;
-}
-
-export const GrsMainWindowLayoutRoomAdHeader = ({ layout, onRoomAdFilter, onRoomAdHeader, visibleRoomAdHeader }: GrsMainWindowLayoutRoomAdHeaderProps) => {
-    return (
-        <Region
-            name="room_ad_header"
-            visible={visibleRoomAdHeader ?? false}
-            onPointerTap={onRoomAdHeader}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 20, ...layout }}
-        >
-            <Dropmenu
-                variant="0"
-                name="roomAdFilter"
-                onPointerTap={onRoomAdFilter}
-                layout={{ position: 'absolute', left: 0, width: 293, top: 0, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `room_competitions_header` of GrsMainWindowLayout - configured through the parent's `roomCompetitionsHeader` prop. */
-export interface GrsMainWindowLayoutRoomCompetitionsHeaderProps {
-    layout?: BoxLayout;
-    onNextButton?: () => void;
-    onPrevButton?: () => void;
-    onRoomCompetitionsHeader?: () => void;
-}
-
-export const GrsMainWindowLayoutRoomCompetitionsHeader = ({ layout, onNextButton, onPrevButton, onRoomCompetitionsHeader }: GrsMainWindowLayoutRoomCompetitionsHeaderProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="room_competitions_header"
-            onPointerTap={onRoomCompetitionsHeader}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 33, justifyContent: 'center', ...layout }}
-        >
-            <Region layout={{ position: 'absolute', marginLeft: -6, marginRight: 6, width: 295, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                <ThemeText
-                    text={t('navigator.roomcompetitionspager')}
-                    textOptions={{ align: 'center' }}
-                />
+            <Region
+                name="guest_rooms"
+                backgroundColor="#ffffff"
+                layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, justifyContent: 'center' }}
+            >
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0 }}
+                >
+                    <Region
+                        name="item_list"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    />
+                </ScrollArea>
+                {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
+                <Region
+                    name="no_rooms_found"
+                    layout={{ position: 'absolute', width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionNoRoomsFound ?? t('navigator.noroomsfound')}
+                        textOptions={{ align: 'center' }}
+                    />
+                </Region>
             </Region>
-            <ContainerButton
-                variant="0"
-                name="prev_button"
-                onPointerTap={onPrevButton}
-                layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
+            <Region
+                name="room_ads"
+                backgroundColor="#ffffff"
+                layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, justifyContent: 'center' }}
             >
-                <Icon
-                    variant="4"
-                    tintColor="#000000"
-                    layout={{ position: 'absolute', left: 12, width: 5, top: 10, height: 9 }}
-                />
-            </ContainerButton>
-            <ContainerButton
-                variant="0"
-                name="next_button"
-                onPointerTap={onNextButton}
-                layout={{ position: 'absolute', left: 262, width: 30, top: 0, height: 30 }}
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0 }}
+                >
+                    <Region
+                        name="item_list"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    />
+                </ScrollArea>
+                {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
+                <Region
+                    name="no_rooms_found"
+                    layout={{ position: 'absolute', width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionNoRoomsFound2 ?? t('navigator.noroomsfound')}
+                        textOptions={{ align: 'center' }}
+                    />
+                </Region>
+            </Region>
+            <Region
+                name="popular_tags"
+                backgroundColor="#ffffff"
+                layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0, justifyContent: 'center' }}
             >
-                <Icon
-                    variant="5"
-                    tintColor="#000000"
-                    layout={{ position: 'absolute', left: 12, width: 5, top: 10, height: 9 }}
-                />
-            </ContainerButton>
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0 }}
+                >
+                    <Region
+                        name="item_list"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    />
+                </ScrollArea>
+                {/* <scrollbar_vertical> for item_list - rendered by that list's ScrollArea */}
+                <Region
+                    name="no_tags_found"
+                    layout={{ position: 'absolute', width: 295, top: 100, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionNoTagsFound ?? t('navigator.notagsfound')}
+                        textOptions={{ align: 'center' }}
+                    />
+                </Region>
+            </Region>
+            <Region
+                name="official_rooms"
+                backgroundColor="#ffffff"
+                layout={{ position: 'absolute', left: 0, width: 295, top: 0, bottom: 0 }}
+            >
+                <ScrollArea
+                    orientation="vertical"
+                    layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0 }}
+                >
+                    <Region
+                        name="item_list_official"
+                        layout={{ flexDirection: 'column', width: '100%' }}
+                    >
+                        {itemsItemListOfficial ?? (
+                            <GrsMainWindowLayoutPromotedRoomsItem />
+                        )}
+                    </Region>
+                </ScrollArea>
+                {/* <scrollbar_vertical> for item_list_official - rendered by that list's ScrollArea */}
+            </Region>
         </Region>
     );
 };
@@ -406,14 +175,24 @@ export const GrsMainWindowLayoutRoomCompetitionsHeader = ({ layout, onNextButton
 /** Named region `custom_content` of GrsMainWindowLayout - configured through the parent's `customContent` prop. */
 export interface GrsMainWindowLayoutCustomContentProps {
     layout?: BoxLayout;
-    meHeader?: GrsMainWindowLayoutMeHeaderProps;
     onCustomContent?: () => void;
-    roomAdHeader?: GrsMainWindowLayoutRoomAdHeaderProps;
-    roomCompetitionsHeader?: GrsMainWindowLayoutRoomCompetitionsHeaderProps;
-    roomsHeader?: GrsMainWindowLayoutRoomsHeaderProps;
+    onMeHeader?: () => void;
+    onMeSubNavi?: () => void;
+    onNextButton?: () => void;
+    onPrevButton?: () => void;
+    onRoomAdFilter?: () => void;
+    onRoomAdHeader?: () => void;
+    onRoomCompetitionsHeader?: () => void;
+    onRoomCtgFilter?: () => void;
+    onRoomsHeader?: () => void;
+    visibleMeHeader?: boolean;
+    visibleRoomAdHeader?: boolean;
+    visibleRoomsHeader?: boolean;
 }
 
-export const GrsMainWindowLayoutCustomContent = ({ layout, meHeader, onCustomContent, roomAdHeader, roomCompetitionsHeader, roomsHeader }: GrsMainWindowLayoutCustomContentProps) => {
+export const GrsMainWindowLayoutCustomContent = ({ layout, onCustomContent, onMeHeader, onMeSubNavi, onNextButton, onPrevButton, onRoomAdFilter, onRoomAdHeader, onRoomCompetitionsHeader, onRoomCtgFilter, onRoomsHeader, visibleMeHeader, visibleRoomAdHeader, visibleRoomsHeader }: GrsMainWindowLayoutCustomContentProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="custom_content"
@@ -421,166 +200,111 @@ export const GrsMainWindowLayoutCustomContent = ({ layout, meHeader, onCustomCon
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 50, ...layout }}
         >
-            <GrsMainWindowLayoutMeHeader {...meHeader} />
-            <GrsMainWindowLayoutRoomsHeader {...roomsHeader} />
-            <GrsMainWindowLayoutRoomAdHeader {...roomAdHeader} />
-            <GrsMainWindowLayoutRoomCompetitionsHeader {...roomCompetitionsHeader} />
-        </Region>
-    );
-};
-
-/** Named region `me_footer` of GrsMainWindowLayout - configured through the parent's `meFooter` prop. */
-export interface GrsMainWindowLayoutMeFooterProps {
-    captionMoreRoomsCaption?: string;
-    layout?: BoxLayout;
-    onCreateRoomBut?: () => void;
-    onMeFooter?: () => void;
-    srcCreateRoom?: string;
-}
-
-export const GrsMainWindowLayoutMeFooter = ({ captionMoreRoomsCaption, layout, onCreateRoomBut, onMeFooter, srcCreateRoom }: GrsMainWindowLayoutMeFooterProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="me_footer"
-            onPointerTap={onMeFooter}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 37, ...layout }}
-        >
-            <Border
-                variant="0"
-                name="more_rooms_container"
-                tintColor="#cccccc"
-                layout={{ position: 'absolute', left: 0, width: 294, top: 8, height: 29 }}
-            >
-                <ThemeImage
-                    name="create_room"
-                    src={srcCreateRoom}
-                    layout={{ position: 'absolute', left: 4, width: 23, top: 3, height: 23 }}
-                />
+            {(visibleMeHeader ?? false) && (
                 <Region
-                    name="more_rooms_caption"
-                    layout={{ position: 'absolute', left: 32, width: 146, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    name="me_header"
+                    onPointerTap={onMeHeader}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 20 }}
                 >
-                    <ThemeText text={captionMoreRoomsCaption ?? t('navigator.moreroomscaption')} />
-                </Region>
-                <Button
-                    variant="0"
-                    name="create_room_but"
-                    onPointerTap={onCreateRoomBut}
-                    layout={{ position: 'absolute', left: 187, width: 102, top: 4, height: 21, minWidth: 102, maxWidth: 102 }}
-                >
-                    {t('navigator.createroom')}
-                </Button>
-            </Border>
-        </Region>
-    );
-};
-
-/** Named region `ad_cont` of GrsMainWindowLayout - configured through the parent's `adCont` prop. */
-export interface GrsMainWindowLayoutAdContProps {
-    layout?: BoxLayout;
-    onAdCont?: () => void;
-}
-
-export const GrsMainWindowLayoutAdCont = ({ layout, onAdCont }: GrsMainWindowLayoutAdContProps) => {
-    return (
-        <Region
-            name="ad_cont"
-            backgroundColor="#ffffff"
-            onPointerTap={onAdCont}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 271, top: 16, height: 68, ...layout }}
-        />
-    );
-};
-
-/** Named region `ad_footer` of GrsMainWindowLayout - configured through the parent's `adFooter` prop. */
-export interface GrsMainWindowLayoutAdFooterProps {
-    adCont?: GrsMainWindowLayoutAdContProps;
-    captionAdCaption?: string;
-    layout?: BoxLayout;
-    onAdFooter?: () => void;
-}
-
-export const GrsMainWindowLayoutAdFooter = ({ adCont, captionAdCaption, layout, onAdFooter }: GrsMainWindowLayoutAdFooterProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="ad_footer"
-            onPointerTap={onAdFooter}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 85, ...layout }}
-        >
-            <Region
-                name="ad_caption"
-                layout={{ position: 'absolute', left: 6, width: 121, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionAdCaption ?? t('navigator.adcaption')} />
-            </Region>
-            <GrsMainWindowLayoutAdCont {...adCont} />
-        </Region>
-    );
-};
-
-/** Named region `room_ads_footer` of GrsMainWindowLayout - configured through the parent's `roomAdsFooter` prop. */
-export interface GrsMainWindowLayoutRoomAdsFooterProps {
-    captionGetEventCaption?: string;
-    layout?: BoxLayout;
-    onGetEventBut?: () => void;
-    onRoomAdsFooter?: () => void;
-}
-
-export const GrsMainWindowLayoutRoomAdsFooter = ({ captionGetEventCaption, layout, onGetEventBut, onRoomAdsFooter }: GrsMainWindowLayoutRoomAdsFooterProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="room_ads_footer"
-            onPointerTap={onRoomAdsFooter}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 37, ...layout }}
-        >
-            <Border
-                variant="0"
-                name="link_to_navigator_container"
-                tintColor="#cccccc"
-                layout={{ position: 'absolute', left: 0, width: 294, top: 8, height: 29 }}
-            >
-                <Region
-                    name="get_event_caption"
-                    layout={{ position: 'absolute', left: 5, width: 150, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionGetEventCaption ?? t('roomad.get.event.caption')}
-                        textStyle="text-style-il-regular"
+                    <Dropmenu
+                        variant="0"
+                        name="meSubNavi"
+                        onPointerTap={onMeSubNavi}
+                        layout={{ position: 'absolute', left: 0, width: 293, top: 0, height: 20 }}
                     />
                 </Region>
-                <Button
-                    variant="0"
-                    name="get_event_but"
-                    onPointerTap={onGetEventBut}
-                    layout={{ position: 'absolute', left: 187, width: 102, top: 4, height: 21, minWidth: 102, maxWidth: 102 }}
+            )}
+            {(visibleRoomsHeader ?? false) && (
+                <Region
+                    name="rooms_header"
+                    onPointerTap={onRoomsHeader}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 20 }}
                 >
-                    {t('roomad.get.event')}
-                </Button>
-            </Border>
+                    <Dropmenu
+                        variant="0"
+                        name="roomCtgFilter"
+                        onPointerTap={onRoomCtgFilter}
+                        layout={{ position: 'absolute', left: 0, width: 293, top: 0, height: 20 }}
+                    />
+                </Region>
+            )}
+            {(visibleRoomAdHeader ?? false) && (
+                <Region
+                    name="room_ad_header"
+                    onPointerTap={onRoomAdHeader}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 20 }}
+                >
+                    <Dropmenu
+                        variant="0"
+                        name="roomAdFilter"
+                        onPointerTap={onRoomAdFilter}
+                        layout={{ position: 'absolute', left: 0, width: 293, top: 0, height: 20 }}
+                    />
+                </Region>
+            )}
+            <Region
+                name="room_competitions_header"
+                onPointerTap={onRoomCompetitionsHeader}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 33, justifyContent: 'center' }}
+            >
+                <Region layout={{ position: 'absolute', marginLeft: -6, marginRight: 6, width: 295, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <ThemeText
+                        text={t('navigator.roomcompetitionspager')}
+                        textOptions={{ align: 'center' }}
+                    />
+                </Region>
+                <ContainerButton
+                    variant="0"
+                    name="prev_button"
+                    onPointerTap={onPrevButton}
+                    layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
+                >
+                    <Icon
+                        variant="4"
+                        tintColor="#000000"
+                        layout={{ position: 'absolute', left: 12, width: 5, top: 10, height: 9 }}
+                    />
+                </ContainerButton>
+                <ContainerButton
+                    variant="0"
+                    name="next_button"
+                    onPointerTap={onNextButton}
+                    layout={{ position: 'absolute', left: 262, width: 30, top: 0, height: 30 }}
+                >
+                    <Icon
+                        variant="5"
+                        tintColor="#000000"
+                        layout={{ position: 'absolute', left: 12, width: 5, top: 10, height: 9 }}
+                    />
+                </ContainerButton>
+            </Region>
         </Region>
     );
 };
 
 /** Named region `custom_footer` of GrsMainWindowLayout - configured through the parent's `customFooter` prop. */
 export interface GrsMainWindowLayoutCustomFooterProps {
-    adFooter?: GrsMainWindowLayoutAdFooterProps;
+    captionAdCaption?: string;
+    captionGetEventCaption?: string;
+    captionMoreRoomsCaption?: string;
     layout?: BoxLayout;
-    meFooter?: GrsMainWindowLayoutMeFooterProps;
+    onAdCont?: () => void;
+    onAdFooter?: () => void;
+    onCreateRoomBut?: () => void;
     onCustomFooter?: () => void;
-    roomAdsFooter?: GrsMainWindowLayoutRoomAdsFooterProps;
+    onGetEventBut?: () => void;
+    onMeFooter?: () => void;
+    onRoomAdsFooter?: () => void;
+    srcCreateRoom?: string;
 }
 
-export const GrsMainWindowLayoutCustomFooter = ({ adFooter, layout, meFooter, onCustomFooter, roomAdsFooter }: GrsMainWindowLayoutCustomFooterProps) => {
+export const GrsMainWindowLayoutCustomFooter = ({ captionAdCaption, captionGetEventCaption, captionMoreRoomsCaption, layout, onAdCont, onAdFooter, onCreateRoomBut, onCustomFooter, onGetEventBut, onMeFooter, onRoomAdsFooter, srcCreateRoom }: GrsMainWindowLayoutCustomFooterProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="custom_footer"
@@ -588,9 +312,90 @@ export const GrsMainWindowLayoutCustomFooter = ({ adFooter, layout, meFooter, on
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 307, bottom: 668, height: 0, ...layout }}
         >
-            <GrsMainWindowLayoutMeFooter {...meFooter} />
-            <GrsMainWindowLayoutAdFooter {...adFooter} />
-            <GrsMainWindowLayoutRoomAdsFooter {...roomAdsFooter} />
+            <Region
+                name="me_footer"
+                onPointerTap={onMeFooter}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 37 }}
+            >
+                <Border
+                    variant="0"
+                    name="more_rooms_container"
+                    tintColor="#cccccc"
+                    layout={{ position: 'absolute', left: 0, width: 294, top: 8, height: 29 }}
+                >
+                    <ThemeImage
+                        name="create_room"
+                        src={srcCreateRoom}
+                        layout={{ position: 'absolute', left: 4, width: 23, top: 3, height: 23 }}
+                    />
+                    <Region
+                        name="more_rooms_caption"
+                        layout={{ position: 'absolute', left: 32, width: 146, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionMoreRoomsCaption ?? t('navigator.moreroomscaption')} />
+                    </Region>
+                    <Button
+                        variant="0"
+                        name="create_room_but"
+                        onPointerTap={onCreateRoomBut}
+                        layout={{ position: 'absolute', left: 187, width: 102, top: 4, height: 21, minWidth: 102, maxWidth: 102 }}
+                    >
+                        {t('navigator.createroom')}
+                    </Button>
+                </Border>
+            </Region>
+            <Region
+                name="ad_footer"
+                onPointerTap={onAdFooter}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 85 }}
+            >
+                <Region
+                    name="ad_caption"
+                    layout={{ position: 'absolute', left: 6, width: 121, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionAdCaption ?? t('navigator.adcaption')} />
+                </Region>
+                <Region
+                    name="ad_cont"
+                    backgroundColor="#ffffff"
+                    onPointerTap={onAdCont}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 0, width: 271, top: 16, height: 68 }}
+                />
+            </Region>
+            <Region
+                name="room_ads_footer"
+                onPointerTap={onRoomAdsFooter}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, width: 307, top: 0, height: 37 }}
+            >
+                <Border
+                    variant="0"
+                    name="link_to_navigator_container"
+                    tintColor="#cccccc"
+                    layout={{ position: 'absolute', left: 0, width: 294, top: 8, height: 29 }}
+                >
+                    <Region
+                        name="get_event_caption"
+                        layout={{ position: 'absolute', left: 5, width: 150, top: 8, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionGetEventCaption ?? t('roomad.get.event.caption')}
+                            textStyle="text-style-il-regular"
+                        />
+                    </Region>
+                    <Button
+                        variant="0"
+                        name="get_event_but"
+                        onPointerTap={onGetEventBut}
+                        layout={{ position: 'absolute', left: 187, width: 102, top: 4, height: 21, minWidth: 102, maxWidth: 102 }}
+                    >
+                        {t('roomad.get.event')}
+                    </Button>
+                </Border>
+            </Region>
         </Region>
     );
 };

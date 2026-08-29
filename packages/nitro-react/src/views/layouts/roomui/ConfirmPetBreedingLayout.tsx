@@ -5,13 +5,13 @@ import { Border, BoxLayout, Button, Frame, Region, TextInput, ThemeImage, ThemeT
 
 /** Generated from `1017_confirm_pet_breeding_xml` (layout "confirm_pet_breeding", 320x623) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ConfirmPetBreedingLayoutProps {
-    buttonList?: ConfirmPetBreedingLayoutButtonListProps;
     elementList?: ConfirmPetBreedingLayoutElementListProps;
+    itemsButtonList?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const ConfirmPetBreedingLayout = ({ buttonList, elementList, layout, onClose }: ConfirmPetBreedingLayoutProps) => {
+export const ConfirmPetBreedingLayout = ({ elementList, itemsButtonList, layout, onClose }: ConfirmPetBreedingLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -22,7 +22,17 @@ export const ConfirmPetBreedingLayout = ({ buttonList, elementList, layout, onCl
             layout={{ width: 320, height: 623, ...layout }}
         >
             <ConfirmPetBreedingLayoutElementList {...elementList} />
-            <ConfirmPetBreedingLayoutButtonList {...buttonList} />
+            <Region
+                name="button_list"
+                layout={{ position: 'absolute', left: 10, top: 524, minWidth: 295, maxWidth: 295, flexDirection: 'column', gap: 3 }}
+            >
+                {itemsButtonList ?? (
+                    <>
+                        <ConfirmPetBreedingLayoutSaveButtonItem />
+                        <ConfirmPetBreedingLayoutCancelButtonItem />
+                    </>
+                )}
+            </Region>
         </Frame>
     );
 };
@@ -363,27 +373,12 @@ export const ConfirmPetBreedingLayoutBreedingTitleItem = ({ captionBreedingTitle
     );
 };
 
-/** Named region `breeds1` of ConfirmPetBreedingLayout - configured through the parent's `breeds1` prop. */
-export interface ConfirmPetBreedingLayoutBreeds1Props {
-    layout?: BoxLayout;
-}
-
-export const ConfirmPetBreedingLayoutBreeds1 = ({ layout }: ConfirmPetBreedingLayoutBreeds1Props) => {
-    return (
-        <Region
-            name="breeds1"
-            layout={{ position: 'absolute', left: 90, width: 200, top: 0, height: 25, flexDirection: 'row', gap: 2, ...layout }}
-        />
-    );
-};
-
 /** Row template `rarityCategory1.container` of ConfirmPetBreedingLayout - pass real rows through its `items…` slot. */
 export interface ConfirmPetBreedingLayoutRarityCategory1ContainerItemProps {
-    breeds1?: ConfirmPetBreedingLayoutBreeds1Props;
     layout?: BoxLayout;
 }
 
-export const ConfirmPetBreedingLayoutRarityCategory1ContainerItem = ({ breeds1, layout }: ConfirmPetBreedingLayoutRarityCategory1ContainerItemProps) => {
+export const ConfirmPetBreedingLayoutRarityCategory1ContainerItem = ({ layout }: ConfirmPetBreedingLayoutRarityCategory1ContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -397,32 +392,20 @@ export const ConfirmPetBreedingLayoutRarityCategory1ContainerItem = ({ breeds1, 
                     textStyle="text-style-il-heading-3"
                 />
             </Region>
-            <ConfirmPetBreedingLayoutBreeds1 {...breeds1} />
+            <Region
+                name="breeds1"
+                layout={{ position: 'absolute', left: 90, width: 200, top: 0, height: 25, flexDirection: 'row', gap: 2 }}
+            />
         </Region>
-    );
-};
-
-/** Named region `breeds2` of ConfirmPetBreedingLayout - configured through the parent's `breeds2` prop. */
-export interface ConfirmPetBreedingLayoutBreeds2Props {
-    layout?: BoxLayout;
-}
-
-export const ConfirmPetBreedingLayoutBreeds2 = ({ layout }: ConfirmPetBreedingLayoutBreeds2Props) => {
-    return (
-        <Region
-            name="breeds2"
-            layout={{ position: 'absolute', left: 90, width: 200, top: 0, height: 25, flexDirection: 'row', gap: 2, ...layout }}
-        />
     );
 };
 
 /** Row template `rarityCategory2.container` of ConfirmPetBreedingLayout - pass real rows through its `items…` slot. */
 export interface ConfirmPetBreedingLayoutRarityCategory2ContainerItemProps {
-    breeds2?: ConfirmPetBreedingLayoutBreeds2Props;
     layout?: BoxLayout;
 }
 
-export const ConfirmPetBreedingLayoutRarityCategory2ContainerItem = ({ breeds2, layout }: ConfirmPetBreedingLayoutRarityCategory2ContainerItemProps) => {
+export const ConfirmPetBreedingLayoutRarityCategory2ContainerItem = ({ layout }: ConfirmPetBreedingLayoutRarityCategory2ContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -436,32 +419,20 @@ export const ConfirmPetBreedingLayoutRarityCategory2ContainerItem = ({ breeds2, 
                     textStyle="text-style-il-heading-3"
                 />
             </Region>
-            <ConfirmPetBreedingLayoutBreeds2 {...breeds2} />
+            <Region
+                name="breeds2"
+                layout={{ position: 'absolute', left: 90, width: 200, top: 0, height: 25, flexDirection: 'row', gap: 2 }}
+            />
         </Region>
-    );
-};
-
-/** Named region `breeds3` of ConfirmPetBreedingLayout - configured through the parent's `breeds3` prop. */
-export interface ConfirmPetBreedingLayoutBreeds3Props {
-    layout?: BoxLayout;
-}
-
-export const ConfirmPetBreedingLayoutBreeds3 = ({ layout }: ConfirmPetBreedingLayoutBreeds3Props) => {
-    return (
-        <Region
-            name="breeds3"
-            layout={{ position: 'absolute', left: 90, width: 200, top: 0, height: 25, flexDirection: 'row', gap: 2, ...layout }}
-        />
     );
 };
 
 /** Row template `rarityCategory3.container` of ConfirmPetBreedingLayout - pass real rows through its `items…` slot. */
 export interface ConfirmPetBreedingLayoutRarityCategory3ContainerItemProps {
-    breeds3?: ConfirmPetBreedingLayoutBreeds3Props;
     layout?: BoxLayout;
 }
 
-export const ConfirmPetBreedingLayoutRarityCategory3ContainerItem = ({ breeds3, layout }: ConfirmPetBreedingLayoutRarityCategory3ContainerItemProps) => {
+export const ConfirmPetBreedingLayoutRarityCategory3ContainerItem = ({ layout }: ConfirmPetBreedingLayoutRarityCategory3ContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -475,32 +446,20 @@ export const ConfirmPetBreedingLayoutRarityCategory3ContainerItem = ({ breeds3, 
                     textStyle="text-style-il-heading-3"
                 />
             </Region>
-            <ConfirmPetBreedingLayoutBreeds3 {...breeds3} />
+            <Region
+                name="breeds3"
+                layout={{ position: 'absolute', left: 90, width: 200, top: 0, height: 25, flexDirection: 'row', gap: 2 }}
+            />
         </Region>
-    );
-};
-
-/** Named region `breeds4` of ConfirmPetBreedingLayout - configured through the parent's `breeds4` prop. */
-export interface ConfirmPetBreedingLayoutBreeds4Props {
-    layout?: BoxLayout;
-}
-
-export const ConfirmPetBreedingLayoutBreeds4 = ({ layout }: ConfirmPetBreedingLayoutBreeds4Props) => {
-    return (
-        <Region
-            name="breeds4"
-            layout={{ position: 'absolute', left: 90, width: 200, top: 0, height: 20, flexDirection: 'row', gap: 2, ...layout }}
-        />
     );
 };
 
 /** Row template `rarityCategory4.container` of ConfirmPetBreedingLayout - pass real rows through its `items…` slot. */
 export interface ConfirmPetBreedingLayoutRarityCategory4ContainerItemProps {
-    breeds4?: ConfirmPetBreedingLayoutBreeds4Props;
     layout?: BoxLayout;
 }
 
-export const ConfirmPetBreedingLayoutRarityCategory4ContainerItem = ({ breeds4, layout }: ConfirmPetBreedingLayoutRarityCategory4ContainerItemProps) => {
+export const ConfirmPetBreedingLayoutRarityCategory4ContainerItem = ({ layout }: ConfirmPetBreedingLayoutRarityCategory4ContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -514,7 +473,10 @@ export const ConfirmPetBreedingLayoutRarityCategory4ContainerItem = ({ breeds4, 
                     textStyle="text-style-il-heading-3"
                 />
             </Region>
-            <ConfirmPetBreedingLayoutBreeds4 {...breeds4} />
+            <Region
+                name="breeds4"
+                layout={{ position: 'absolute', left: 90, width: 200, top: 0, height: 20, flexDirection: 'row', gap: 2 }}
+            />
         </Region>
     );
 };
@@ -642,28 +604,6 @@ export const ConfirmPetBreedingLayoutCancelButtonItem = ({ layout, onCancelButto
                     textOptions={{ align: 'center' }}
                 />
             </Region>
-        </Region>
-    );
-};
-
-/** Named region `button_list` of ConfirmPetBreedingLayout - configured through the parent's `buttonList` prop. */
-export interface ConfirmPetBreedingLayoutButtonListProps {
-    itemsButtonList?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const ConfirmPetBreedingLayoutButtonList = ({ itemsButtonList, layout }: ConfirmPetBreedingLayoutButtonListProps) => {
-    return (
-        <Region
-            name="button_list"
-            layout={{ position: 'absolute', left: 10, top: 524, minWidth: 295, maxWidth: 295, flexDirection: 'column', gap: 3, ...layout }}
-        >
-            {itemsButtonList ?? (
-                <>
-                    <ConfirmPetBreedingLayoutSaveButtonItem />
-                    <ConfirmPetBreedingLayoutCancelButtonItem />
-                </>
-            )}
         </Region>
     );
 };

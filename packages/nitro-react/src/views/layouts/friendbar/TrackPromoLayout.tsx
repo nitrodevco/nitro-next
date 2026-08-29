@@ -20,13 +20,7 @@ export const TrackPromoLayout = ({ captionTitleTxt, layout, srcPixelIcon }: Trac
                     tintColor="#686661"
                     layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
                 />
-                <Border
-                    variant="3"
-                    tintColor="#201e19"
-                    blend={0.8}
-                    visible={false}
-                    layout={{ position: 'absolute', left: 3, width: 186, top: 3, height: 22 }}
-                />
+                {/* `border` is hidden and has no name to show it by */}
                 <Border
                     variant="6"
                     tintColor="#596f8d"

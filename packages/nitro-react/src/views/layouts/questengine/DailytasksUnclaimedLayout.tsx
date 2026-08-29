@@ -5,12 +5,12 @@ import { BoxLayout, Frame, Region, ScrollArea } from '#base/theme';
 
 /** Generated from `121_dailytasks_unclaimed_xml` (layout "dailytasks_unclaimed", 452x426) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface DailytasksUnclaimedLayoutProps {
+    itemsMainCont?: ReactNode;
     layout?: BoxLayout;
-    mainCont?: DailytasksUnclaimedLayoutMainContProps;
     onClose?: () => void;
 }
 
-export const DailytasksUnclaimedLayout = ({ layout, mainCont, onClose }: DailytasksUnclaimedLayoutProps) => {
+export const DailytasksUnclaimedLayout = ({ itemsMainCont, layout, onClose }: DailytasksUnclaimedLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -23,7 +23,17 @@ export const DailytasksUnclaimedLayout = ({ layout, mainCont, onClose }: Dailyta
             onClose={onClose}
             layout={{ width: 452, height: 426, ...layout }}
         >
-            <DailytasksUnclaimedLayoutMainCont {...mainCont} />
+            <Region
+                name="main_cont"
+                layout={{ position: 'absolute', left: 0, top: 0, minWidth: 452, maxWidth: 452, flexDirection: 'column', gap: 4 }}
+            >
+                {itemsMainCont ?? (
+                    <>
+                        <DailytasksUnclaimedLayoutSpacingItem />
+                        <DailytasksUnclaimedLayoutTasksListItem />
+                    </>
+                )}
+            </Region>
         </Frame>
     );
 };
@@ -58,27 +68,5 @@ export const DailytasksUnclaimedLayoutTasksListItem = ({ layout }: DailytasksUnc
                 layout={{ flexDirection: 'column', gap: 8, width: '100%' }}
             />
         </ScrollArea>
-    );
-};
-
-/** Named region `main_cont` of DailytasksUnclaimedLayout - configured through the parent's `mainCont` prop. */
-export interface DailytasksUnclaimedLayoutMainContProps {
-    itemsMainCont?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const DailytasksUnclaimedLayoutMainCont = ({ itemsMainCont, layout }: DailytasksUnclaimedLayoutMainContProps) => {
-    return (
-        <Region
-            name="main_cont"
-            layout={{ position: 'absolute', left: 0, top: 0, minWidth: 452, maxWidth: 452, flexDirection: 'column', gap: 4, ...layout }}
-        >
-            {itemsMainCont ?? (
-                <>
-                    <DailytasksUnclaimedLayoutSpacingItem />
-                    <DailytasksUnclaimedLayoutTasksListItem />
-                </>
-            )}
-        </Region>
     );
 };

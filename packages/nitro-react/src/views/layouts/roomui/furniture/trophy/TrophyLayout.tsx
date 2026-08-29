@@ -14,62 +14,19 @@ export const TrophyLayout = ({ layout, trophyContainer }: TrophyLayoutProps) => 
     );
 };
 
-/** Named region `close` of TrophyLayout - configured through the parent's `close` prop. */
-export interface TrophyLayoutCloseProps {
-    layout?: BoxLayout;
-    onClose?: () => void;
-}
-
-export const TrophyLayoutClose = ({ layout, onClose }: TrophyLayoutCloseProps) => {
-    return (
-        <Region
-            name="close"
-            onPointerTap={onClose}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 318, width: 18, top: 3, height: 20, ...layout }}
-        />
-    );
-};
-
-/** Named region `title_bg` of TrophyLayout - configured through the parent's `titleBg` prop. */
-export interface TrophyLayoutTitleBgProps {
-    captionTitle?: string;
-    layout?: BoxLayout;
-}
-
-export const TrophyLayoutTitleBg = ({ captionTitle, layout }: TrophyLayoutTitleBgProps) => {
-    return (
-        <Region
-            name="title_bg"
-            backgroundColor="#ff0000"
-            layout={{ position: 'absolute', left: 110, width: 120, top: 4, height: 18, justifyContent: 'center', ...layout }}
-        >
-            <Region
-                name="title"
-                layout={{ position: 'absolute', width: 120, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionTitle ?? 'Trophy'}
-                    textOptions={{ align: 'center' }}
-                />
-            </Region>
-        </Region>
-    );
-};
-
 /** Named region `trophy_container` of TrophyLayout - configured through the parent's `trophyContainer` prop. */
 export interface TrophyLayoutTrophyContainerProps {
     captionDate?: string;
     captionGreeting?: string;
     captionName?: string;
-    close?: TrophyLayoutCloseProps;
+    captionTitle?: string;
     layout?: BoxLayout;
+    onClose?: () => void;
     onTrophyContainer?: () => void;
     srcTrophyBg?: string;
-    titleBg?: TrophyLayoutTitleBgProps;
 }
 
-export const TrophyLayoutTrophyContainer = ({ captionDate, captionGreeting, captionName, close, layout, onTrophyContainer, srcTrophyBg, titleBg }: TrophyLayoutTrophyContainerProps) => {
+export const TrophyLayoutTrophyContainer = ({ captionDate, captionGreeting, captionName, captionTitle, layout, onClose, onTrophyContainer, srcTrophyBg }: TrophyLayoutTrophyContainerProps) => {
     return (
         <Region
             name="trophy_container"
@@ -106,8 +63,27 @@ export const TrophyLayoutTrophyContainer = ({ captionDate, captionGreeting, capt
             >
                 <ThemeText text={captionName ?? 'kateislonger'} />
             </Region>
-            <TrophyLayoutClose {...close} />
-            <TrophyLayoutTitleBg {...titleBg} />
+            <Region
+                name="close"
+                onPointerTap={onClose}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 318, width: 18, top: 3, height: 20 }}
+            />
+            <Region
+                name="title_bg"
+                backgroundColor="#ff0000"
+                layout={{ position: 'absolute', left: 110, width: 120, top: 4, height: 18, justifyContent: 'center' }}
+            >
+                <Region
+                    name="title"
+                    layout={{ position: 'absolute', width: 120, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionTitle ?? 'Trophy'}
+                        textOptions={{ align: 'center' }}
+                    />
+                </Region>
+            </Region>
         </Region>
     );
 };

@@ -1,7 +1,7 @@
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeText } from '#base/theme';
 import { ItemGridWidget, ItemGridWidgetProps } from '#base/views/layouts/catalog/widgets/ItemGridWidget';
-import { PetPreviewWidget3, PetPreviewWidget3Props } from '#base/views/layouts/catalog/widgets/PetPreviewWidget3';
+import { PetPreviewWidget2, PetPreviewWidget2Props } from '#base/views/layouts/catalog/widgets/PetPreviewWidget2';
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 
 /** Generated from `1713_layout_petcustomization_xml` (layout "ctlg_petcustomization", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -23,7 +23,7 @@ export interface LayoutPetcustomization_1713LayoutCtlgPetcustomizationProps {
     captionCtlgSelectproduct?: string;
     itemGridWidget?: ItemGridWidgetProps;
     layout?: BoxLayout;
-    petPreviewWidget?: PetPreviewWidget3Props;
+    petPreviewWidget?: PetPreviewWidget2Props;
     purchaseWidget?: PurchaseWidgetProps;
 }
 
@@ -49,7 +49,7 @@ export const LayoutPetcustomization_1713LayoutCtlgPetcustomization = ({ captionC
                 layout={{ position: 'absolute', left: 5, width: 170, top: 150, height: 275 }}
                 {...itemGridWidget}
             />
-            <PetPreviewWidget3
+            <PetPreviewWidget2
                 layout={{ position: 'absolute', left: 180, width: 175, top: 150, height: 275 }}
                 {...petPreviewWidget}
             />

@@ -4,75 +4,98 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `335_snowwar_results_player_team_2_xml` (layout "snowwar_results_player_team_2", 289x62) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface SnowwarResultsPlayerTeam2LayoutProps {
-    layout?: BoxLayout;
-    playerDataContainer?: SnowwarResultsPlayerTeam2LayoutPlayerDataContainerProps;
-    playerImageContainer?: SnowwarResultsPlayerTeam2LayoutPlayerImageContainerProps;
-    playerScoreContainer?: SnowwarResultsPlayerTeam2LayoutPlayerScoreContainerProps;
-}
-
-export const SnowwarResultsPlayerTeam2Layout = ({ layout, playerDataContainer, playerImageContainer, playerScoreContainer }: SnowwarResultsPlayerTeam2LayoutProps) => {
-    return (
-        <Region layout={{ position: 'relative', width: 289, height: 62, ...layout }}>
-            <Region layout={{ position: 'absolute', left: 0, width: 289, top: 0, height: 62, flexDirection: 'row' }}>
-                <SnowwarResultsPlayerTeam2LayoutPlayerScoreContainer {...playerScoreContainer} />
-                <SnowwarResultsPlayerTeam2LayoutPlayerDataContainer {...playerDataContainer} />
-                <SnowwarResultsPlayerTeam2LayoutPlayerImageContainer {...playerImageContainer} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `playerScoreContainer` of SnowwarResultsPlayerTeam2Layout - configured through the parent's `playerScoreContainer` prop. */
-export interface SnowwarResultsPlayerTeam2LayoutPlayerScoreContainerProps {
     captionPlayerScore?: string;
     captionPlayerScoreStroke?: string;
     layout?: BoxLayout;
+    onAddFriend?: () => void;
+    playerDataContainer?: SnowwarResultsPlayerTeam2LayoutPlayerDataContainerProps;
     srcLoadingIcon?: string;
+    srcPlayerImage?: string;
+    srcPlayerImageBackground?: string;
     srcPlayerScoreBackground?: string;
     srcPlayerScoreGlow?: string;
     strokeTextColor?: string;
+    visibleAddFriend?: boolean;
+    visibleLoadingIcon?: boolean;
 }
 
-export const SnowwarResultsPlayerTeam2LayoutPlayerScoreContainer = ({ captionPlayerScore, captionPlayerScoreStroke, layout, srcLoadingIcon, srcPlayerScoreBackground, srcPlayerScoreGlow, strokeTextColor }: SnowwarResultsPlayerTeam2LayoutPlayerScoreContainerProps) => {
+export const SnowwarResultsPlayerTeam2Layout = ({ captionPlayerScore, captionPlayerScoreStroke, layout, onAddFriend, playerDataContainer, srcLoadingIcon, srcPlayerImage, srcPlayerImageBackground, srcPlayerScoreBackground, srcPlayerScoreGlow, strokeTextColor, visibleAddFriend, visibleLoadingIcon }: SnowwarResultsPlayerTeam2LayoutProps) => {
+    const t = useTranslation();
+
     return (
-        <Region
-            name="playerScoreContainer"
-            layout={{ width: 61, height: 62, flexShrink: 0, justifyContent: 'center', ...layout }}
-        >
-            <ThemeImage
-                name="playerScoreBackground"
-                src={srcPlayerScoreBackground ?? layoutImage('red_ball.png')}
-                layout={{ position: 'absolute', left: 0, width: 59, top: 0, height: 59 }}
-            />
-            <ThemeImage
-                name="playerScoreGlow"
-                src={srcPlayerScoreGlow}
-                layout={{ position: 'absolute', left: 0, width: 61, top: 0, height: 62 }}
-            />
-            <Region
-                name="playerScore_stroke"
-                layout={{ position: 'absolute', left: 0, width: 60, top: 17, height: 24, minWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionPlayerScoreStroke ?? '102'}
-                    textOptions={{ fill: strokeTextColor ?? '#fd6859', align: 'center' }}
-                />
+        <Region layout={{ position: 'relative', width: 289, height: 62, ...layout }}>
+            <Region layout={{ position: 'absolute', left: 0, width: 289, top: 0, height: 62, flexDirection: 'row' }}>
+                <Region
+                    name="playerScoreContainer"
+                    layout={{ width: 61, height: 62, flexShrink: 0, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        name="playerScoreBackground"
+                        src={srcPlayerScoreBackground ?? layoutImage('red_ball.png')}
+                        layout={{ position: 'absolute', left: 0, width: 59, top: 0, height: 59 }}
+                    />
+                    <ThemeImage
+                        name="playerScoreGlow"
+                        src={srcPlayerScoreGlow}
+                        layout={{ position: 'absolute', left: 0, width: 61, top: 0, height: 62 }}
+                    />
+                    <Region
+                        name="playerScore_stroke"
+                        layout={{ position: 'absolute', left: 0, width: 60, top: 17, height: 24, minWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionPlayerScoreStroke ?? '102'}
+                            textOptions={{ fill: strokeTextColor ?? '#fd6859', align: 'center' }}
+                        />
+                    </Region>
+                    <Region
+                        name="playerScore"
+                        layout={{ position: 'absolute', left: 0, width: 60, top: 17, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionPlayerScore ?? '102'}
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                    {(visibleLoadingIcon ?? false) && (
+                        <ThemeImage
+                            name="loadingIcon"
+                            src={srcLoadingIcon}
+                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, top: 5, height: 50 }}
+                        />
+                    )}
+                </Region>
+                <SnowwarResultsPlayerTeam2LayoutPlayerDataContainer {...playerDataContainer} />
+                <Region
+                    name="playerImageContainer"
+                    layout={{ width: 64, height: 62, flexShrink: 0 }}
+                >
+                    <ThemeImage
+                        name="playerImageBackground"
+                        src={srcPlayerImageBackground ?? layoutImage('red_square.png')}
+                        layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 62 }}
+                    />
+                    <ThemeImage
+                        name="playerImage"
+                        src={srcPlayerImage}
+                        layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 62 }}
+                    />
+                    {(visibleAddFriend ?? false) && (
+                        <Region
+                            name="addFriend"
+                            tooltip={t('snowwar.add_friend.tooltip')}
+                            onPointerTap={onAddFriend}
+                            cursor="pointer"
+                            layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 62 }}
+                        >
+                            <ThemeImage
+                                src={layoutImage('add_friend_icon_red.png')}
+                                layout={{ position: 'absolute', left: 41, width: 20, top: 3, height: 20 }}
+                            />
+                        </Region>
+                    )}
+                </Region>
             </Region>
-            <Region
-                name="playerScore"
-                layout={{ position: 'absolute', left: 0, width: 60, top: 17, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionPlayerScore ?? '102'}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
-            <ThemeImage
-                name="loadingIcon"
-                src={srcLoadingIcon}
-                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, top: 5, height: 50 }}
-                visible={false}
-            />
         </Region>
     );
 };
@@ -169,95 +192,25 @@ export const SnowwarResultsPlayerTeam2LayoutPlayerStats = ({ captionPlayerHits, 
     );
 };
 
-/** Named region `playerTotalStats` of SnowwarResultsPlayerTeam2Layout - configured through the parent's `playerTotalStats` prop. */
-export interface SnowwarResultsPlayerTeam2LayoutPlayerTotalStatsProps {
-    captionTotalScore?: string;
-    captionTotalScoreLabel?: string;
-    captionTotalScoreStroke?: string;
-    layout?: BoxLayout;
-    strokeTextColor?: string;
-}
-
-export const SnowwarResultsPlayerTeam2LayoutPlayerTotalStats = ({ captionTotalScore, captionTotalScoreLabel, captionTotalScoreStroke, layout, strokeTextColor }: SnowwarResultsPlayerTeam2LayoutPlayerTotalStatsProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="playerTotalStats"
-            layout={{ position: 'absolute', left: 13, width: 140, top: 24, height: 35, ...layout }}
-        >
-            <Region layout={{ position: 'absolute', left: 0, width: 148, top: 9, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={captionTotalScoreLabel ?? t('snowwar.stats.total_score')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
-            <Region layout={{ position: 'absolute', left: 100, width: 54, top: 9, height: 17 }}>
-                <Region
-                    name="totalScore_stroke"
-                    layout={{ position: 'absolute', left: 0, width: 54, top: 0, height: 17, minWidth: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTotalScoreStroke ?? '20'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: strokeTextColor ?? '#cc6666' }}
-                    />
-                </Region>
-                <Region
-                    name="totalScore"
-                    layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 17, minWidth: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTotalScore ?? '20'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `scoreTooltip` of SnowwarResultsPlayerTeam2Layout - configured through the parent's `scoreTooltip` prop. */
-export interface SnowwarResultsPlayerTeam2LayoutScoreTooltipProps {
-    layout?: BoxLayout;
-    onScoreTooltip?: () => void;
-    srcSkillLevel?: string;
-    visibleScoreTooltip?: boolean;
-}
-
-export const SnowwarResultsPlayerTeam2LayoutScoreTooltip = ({ layout, onScoreTooltip, srcSkillLevel, visibleScoreTooltip }: SnowwarResultsPlayerTeam2LayoutScoreTooltipProps) => {
-    return (
-        <Region
-            name="scoreTooltip"
-            visible={visibleScoreTooltip ?? false}
-            onPointerTap={onScoreTooltip}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 7, width: 150, top: 33, height: 13, ...layout }}
-        >
-            <ThemeImage
-                name="skillLevel"
-                src={srcSkillLevel}
-                layout={{ position: 'absolute', left: 0, width: 150, top: 0, height: 13 }}
-            />
-        </Region>
-    );
-};
-
 /** Named region `playerDataContainer` of SnowwarResultsPlayerTeam2Layout - configured through the parent's `playerDataContainer` prop. */
 export interface SnowwarResultsPlayerTeam2LayoutPlayerDataContainerProps {
     captionPlayerName?: string;
     captionPlayerNameStroke?: string;
+    captionTotalScore?: string;
+    captionTotalScoreLabel?: string;
+    captionTotalScoreStroke?: string;
     layout?: BoxLayout;
+    onScoreTooltip?: () => void;
     playerStats?: SnowwarResultsPlayerTeam2LayoutPlayerStatsProps;
-    playerTotalStats?: SnowwarResultsPlayerTeam2LayoutPlayerTotalStatsProps;
-    scoreTooltip?: SnowwarResultsPlayerTeam2LayoutScoreTooltipProps;
     srcPlayerDataBackground?: string;
+    srcSkillLevel?: string;
     strokeTextColor?: string;
+    visibleScoreTooltip?: boolean;
 }
 
-export const SnowwarResultsPlayerTeam2LayoutPlayerDataContainer = ({ captionPlayerName, captionPlayerNameStroke, layout, playerStats, playerTotalStats, scoreTooltip, srcPlayerDataBackground, strokeTextColor }: SnowwarResultsPlayerTeam2LayoutPlayerDataContainerProps) => {
+export const SnowwarResultsPlayerTeam2LayoutPlayerDataContainer = ({ captionPlayerName, captionPlayerNameStroke, captionTotalScore, captionTotalScoreLabel, captionTotalScoreStroke, layout, onScoreTooltip, playerStats, srcPlayerDataBackground, srcSkillLevel, strokeTextColor, visibleScoreTooltip }: SnowwarResultsPlayerTeam2LayoutPlayerDataContainerProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="playerDataContainer"
@@ -287,64 +240,54 @@ export const SnowwarResultsPlayerTeam2LayoutPlayerDataContainer = ({ captionPlay
                 />
             </Region>
             <SnowwarResultsPlayerTeam2LayoutPlayerStats {...playerStats} />
-            <SnowwarResultsPlayerTeam2LayoutPlayerTotalStats {...playerTotalStats} />
-            <SnowwarResultsPlayerTeam2LayoutScoreTooltip {...scoreTooltip} />
-        </Region>
-    );
-};
-
-/** Named region `addFriend` of SnowwarResultsPlayerTeam2Layout - configured through the parent's `addFriend` prop. */
-export interface SnowwarResultsPlayerTeam2LayoutAddFriendProps {
-    layout?: BoxLayout;
-    onAddFriend?: () => void;
-    visibleAddFriend?: boolean;
-}
-
-export const SnowwarResultsPlayerTeam2LayoutAddFriend = ({ layout, onAddFriend, visibleAddFriend }: SnowwarResultsPlayerTeam2LayoutAddFriendProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="addFriend"
-            tooltip={t('snowwar.add_friend.tooltip')}
-            visible={visibleAddFriend ?? false}
-            onPointerTap={onAddFriend}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 62, ...layout }}
-        >
-            <ThemeImage
-                src={layoutImage('add_friend_icon_red.png')}
-                layout={{ position: 'absolute', left: 41, width: 20, top: 3, height: 20 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `playerImageContainer` of SnowwarResultsPlayerTeam2Layout - configured through the parent's `playerImageContainer` prop. */
-export interface SnowwarResultsPlayerTeam2LayoutPlayerImageContainerProps {
-    addFriend?: SnowwarResultsPlayerTeam2LayoutAddFriendProps;
-    layout?: BoxLayout;
-    srcPlayerImage?: string;
-    srcPlayerImageBackground?: string;
-}
-
-export const SnowwarResultsPlayerTeam2LayoutPlayerImageContainer = ({ addFriend, layout, srcPlayerImage, srcPlayerImageBackground }: SnowwarResultsPlayerTeam2LayoutPlayerImageContainerProps) => {
-    return (
-        <Region
-            name="playerImageContainer"
-            layout={{ width: 64, height: 62, flexShrink: 0, ...layout }}
-        >
-            <ThemeImage
-                name="playerImageBackground"
-                src={srcPlayerImageBackground ?? layoutImage('red_square.png')}
-                layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 62 }}
-            />
-            <ThemeImage
-                name="playerImage"
-                src={srcPlayerImage}
-                layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 62 }}
-            />
-            <SnowwarResultsPlayerTeam2LayoutAddFriend {...addFriend} />
+            <Region
+                name="playerTotalStats"
+                layout={{ position: 'absolute', left: 13, width: 140, top: 24, height: 35 }}
+            >
+                <Region layout={{ position: 'absolute', left: 0, width: 148, top: 9, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={captionTotalScoreLabel ?? t('snowwar.stats.total_score')}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+                <Region layout={{ position: 'absolute', left: 100, width: 54, top: 9, height: 17 }}>
+                    <Region
+                        name="totalScore_stroke"
+                        layout={{ position: 'absolute', left: 0, width: 54, top: 0, height: 17, minWidth: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionTotalScoreStroke ?? '20'}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: strokeTextColor ?? '#cc6666' }}
+                        />
+                    </Region>
+                    <Region
+                        name="totalScore"
+                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 17, minWidth: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionTotalScore ?? '20'}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                </Region>
+            </Region>
+            {(visibleScoreTooltip ?? false) && (
+                <Region
+                    name="scoreTooltip"
+                    onPointerTap={onScoreTooltip}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 7, width: 150, top: 33, height: 13 }}
+                >
+                    <ThemeImage
+                        name="skillLevel"
+                        src={srcSkillLevel}
+                        layout={{ position: 'absolute', left: 0, width: 150, top: 0, height: 13 }}
+                    />
+                </Region>
+            )}
         </Region>
     );
 };

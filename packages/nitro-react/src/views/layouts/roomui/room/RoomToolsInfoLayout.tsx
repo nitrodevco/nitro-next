@@ -36,36 +36,14 @@ export const RoomToolsInfoLayout = ({ captionRoomName, layout, ownerNameAndTags 
     );
 };
 
-/** Named region `tag1_region` of RoomToolsInfoLayout - configured through the parent's `tag1Region` prop. */
-export interface RoomToolsInfoLayoutTag1RegionProps {
+/** Row template `tag1_border` of RoomToolsInfoLayout - pass real rows through its `items…` slot. */
+export interface RoomToolsInfoLayoutTag1BorderItemProps {
     captionTag1?: string;
     layout?: BoxLayout;
     onTag1Region?: () => void;
 }
 
-export const RoomToolsInfoLayoutTag1Region = ({ captionTag1, layout, onTag1Region }: RoomToolsInfoLayoutTag1RegionProps) => {
-    return (
-        <Region
-            name="tag1_region"
-            layout={{ position: 'absolute', left: 1, width: 29, top: -1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-            onPointerTap={onTag1Region}
-            cursor="pointer"
-        >
-            <ThemeText
-                text={captionTag1 ?? '#jobs'}
-                textOptions={{ fill: '#1b79ab' }}
-            />
-        </Region>
-    );
-};
-
-/** Row template `tag1_border` of RoomToolsInfoLayout - pass real rows through its `items…` slot. */
-export interface RoomToolsInfoLayoutTag1BorderItemProps {
-    layout?: BoxLayout;
-    tag1Region?: RoomToolsInfoLayoutTag1RegionProps;
-}
-
-export const RoomToolsInfoLayoutTag1BorderItem = ({ layout, tag1Region }: RoomToolsInfoLayoutTag1BorderItemProps) => {
+export const RoomToolsInfoLayoutTag1BorderItem = ({ captionTag1, layout, onTag1Region }: RoomToolsInfoLayoutTag1BorderItemProps) => {
     return (
         <Border
             variant="3"
@@ -73,41 +51,29 @@ export const RoomToolsInfoLayoutTag1BorderItem = ({ layout, tag1Region }: RoomTo
             tintColor="#1c2935"
             layout={{ width: 30, height: 13, flexShrink: 0, ...layout }}
         >
-            <RoomToolsInfoLayoutTag1Region {...tag1Region} />
+            <Region
+                name="tag1_region"
+                layout={{ position: 'absolute', left: 1, width: 29, top: -1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                onPointerTap={onTag1Region}
+                cursor="pointer"
+            >
+                <ThemeText
+                    text={captionTag1 ?? '#jobs'}
+                    textOptions={{ fill: '#1b79ab' }}
+                />
+            </Region>
         </Border>
-    );
-};
-
-/** Named region `tag2_region` of RoomToolsInfoLayout - configured through the parent's `tag2Region` prop. */
-export interface RoomToolsInfoLayoutTag2RegionProps {
-    captionTag2?: string;
-    layout?: BoxLayout;
-    onTag2Region?: () => void;
-}
-
-export const RoomToolsInfoLayoutTag2Region = ({ captionTag2, layout, onTag2Region }: RoomToolsInfoLayoutTag2RegionProps) => {
-    return (
-        <Region
-            name="tag2_region"
-            layout={{ position: 'absolute', left: 1, width: 34, top: -1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
-            onPointerTap={onTag2Region}
-            cursor="pointer"
-        >
-            <ThemeText
-                text={captionTag2 ?? '#party'}
-                textOptions={{ fill: '#1b79ab' }}
-            />
-        </Region>
     );
 };
 
 /** Row template `tag2_border` of RoomToolsInfoLayout - pass real rows through its `items…` slot. */
 export interface RoomToolsInfoLayoutTag2BorderItemProps {
+    captionTag2?: string;
     layout?: BoxLayout;
-    tag2Region?: RoomToolsInfoLayoutTag2RegionProps;
+    onTag2Region?: () => void;
 }
 
-export const RoomToolsInfoLayoutTag2BorderItem = ({ layout, tag2Region }: RoomToolsInfoLayoutTag2BorderItemProps) => {
+export const RoomToolsInfoLayoutTag2BorderItem = ({ captionTag2, layout, onTag2Region }: RoomToolsInfoLayoutTag2BorderItemProps) => {
     return (
         <Border
             variant="3"
@@ -115,41 +81,29 @@ export const RoomToolsInfoLayoutTag2BorderItem = ({ layout, tag2Region }: RoomTo
             tintColor="#1c2935"
             layout={{ width: 35, height: 13, flexShrink: 0, ...layout }}
         >
-            <RoomToolsInfoLayoutTag2Region {...tag2Region} />
+            <Region
+                name="tag2_region"
+                layout={{ position: 'absolute', left: 1, width: 34, top: -1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                onPointerTap={onTag2Region}
+                cursor="pointer"
+            >
+                <ThemeText
+                    text={captionTag2 ?? '#party'}
+                    textOptions={{ fill: '#1b79ab' }}
+                />
+            </Region>
         </Border>
-    );
-};
-
-/** Named region `tags` of RoomToolsInfoLayout - configured through the parent's `tags` prop. */
-export interface RoomToolsInfoLayoutTagsProps {
-    itemsTags?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const RoomToolsInfoLayoutTags = ({ itemsTags, layout }: RoomToolsInfoLayoutTagsProps) => {
-    return (
-        <Region
-            name="tags"
-            layout={{ position: 'absolute', left: 0, top: 25, maxWidth: 230, flexDirection: 'row', gap: 4, ...layout }}
-        >
-            {itemsTags ?? (
-                <>
-                    <RoomToolsInfoLayoutTag1BorderItem />
-                    <RoomToolsInfoLayoutTag2BorderItem />
-                </>
-            )}
-        </Region>
     );
 };
 
 /** Named region `owner_name_and_tags` of RoomToolsInfoLayout - configured through the parent's `ownerNameAndTags` prop. */
 export interface RoomToolsInfoLayoutOwnerNameAndTagsProps {
     captionRoomOwner?: string;
+    itemsTags?: ReactNode;
     layout?: BoxLayout;
-    tags?: RoomToolsInfoLayoutTagsProps;
 }
 
-export const RoomToolsInfoLayoutOwnerNameAndTags = ({ captionRoomOwner, layout, tags }: RoomToolsInfoLayoutOwnerNameAndTagsProps) => {
+export const RoomToolsInfoLayoutOwnerNameAndTags = ({ captionRoomOwner, itemsTags, layout }: RoomToolsInfoLayoutOwnerNameAndTagsProps) => {
     return (
         <Region
             name="owner_name_and_tags"
@@ -165,7 +119,17 @@ export const RoomToolsInfoLayoutOwnerNameAndTags = ({ captionRoomOwner, layout, 
                     textOptions={{ fill: '#999999' }}
                 />
             </Region>
-            <RoomToolsInfoLayoutTags {...tags} />
+            <Region
+                name="tags"
+                layout={{ position: 'absolute', left: 0, top: 25, maxWidth: 230, flexDirection: 'row', gap: 4 }}
+            >
+                {itemsTags ?? (
+                    <>
+                        <RoomToolsInfoLayoutTag1BorderItem />
+                        <RoomToolsInfoLayoutTag2BorderItem />
+                    </>
+                )}
+            </Region>
         </Region>
     );
 };

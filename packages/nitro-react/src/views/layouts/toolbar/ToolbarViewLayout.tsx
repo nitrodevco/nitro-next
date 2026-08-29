@@ -40,30 +40,31 @@ export interface ToolbarViewLayoutRECEPTIONItemProps {
 
 export const ToolbarViewLayoutRECEPTIONItem = ({ context, layout, onRECEPTION, srcIconsToolbarReception }: ToolbarViewLayoutRECEPTIONItemProps) => {
     return (
-        <Region
-            name="RECEPTION"
-            visible={context === undefined || [ 'room', 'gameCenter' ].includes(context)}
-            onPointerTap={onRECEPTION}
-            cursor="pointer"
-            layout={{ width: 76, height: 70, flexShrink: 0, ...layout }}
-        >
-            <Border
-                variant="2"
-                name="bg_reception"
-                tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 8, justifyContent: 'center' }}
+        (context === undefined || [ 'room', 'gameCenter' ].includes(context)) && (
+            <Region
+                name="RECEPTION"
+                onPointerTap={onRECEPTION}
+                cursor="pointer"
+                layout={{ width: 76, height: 70, flexShrink: 0, ...layout }}
             >
+                <Border
+                    variant="2"
+                    name="bg_reception"
+                    tintColor="#57544d"
+                    layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 8, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        name="icons_toolbar_reception"
+                        src={srcIconsToolbarReception ?? layoutImage('icons_toolbar_reception_normal.png')}
+                        layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
+                    />
+                </Border>
                 <ThemeImage
-                    name="icons_toolbar_reception"
-                    src={srcIconsToolbarReception ?? layoutImage('icons_toolbar_reception_normal.png')}
-                    layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
+                    src={layoutImage('icons_toolbar_divider.png')}
+                    layout={{ position: 'absolute', left: 0, width: 76, top: 64, height: 2 }}
                 />
-            </Border>
-            <ThemeImage
-                src={layoutImage('icons_toolbar_divider.png')}
-                layout={{ position: 'absolute', left: 0, width: 76, top: 64, height: 2 }}
-            />
-        </Region>
+            </Region>
+        )
     );
 };
 
@@ -77,30 +78,31 @@ export interface ToolbarViewLayoutHOMEItemProps {
 
 export const ToolbarViewLayoutHOMEItem = ({ context, layout, onHOME, srcIconsToolbarHome }: ToolbarViewLayoutHOMEItemProps) => {
     return (
-        <Region
-            name="HOME"
-            visible={context === undefined || [ 'hotel' ].includes(context)}
-            onPointerTap={onHOME}
-            cursor="pointer"
-            layout={{ width: 76, height: 70, flexShrink: 0, ...layout }}
-        >
-            <Border
-                variant="2"
-                name="bg_home"
-                tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 8, justifyContent: 'center' }}
+        (context === undefined || [ 'hotel' ].includes(context)) && (
+            <Region
+                name="HOME"
+                onPointerTap={onHOME}
+                cursor="pointer"
+                layout={{ width: 76, height: 70, flexShrink: 0, ...layout }}
             >
+                <Border
+                    variant="2"
+                    name="bg_home"
+                    tintColor="#57544d"
+                    layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 8, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        name="icons_toolbar_home"
+                        src={srcIconsToolbarHome ?? layoutImage('icons_toolbar_home_normal.png')}
+                        layout={{ position: 'absolute', width: 60, top: -2, height: 60 }}
+                    />
+                </Border>
                 <ThemeImage
-                    name="icons_toolbar_home"
-                    src={srcIconsToolbarHome ?? layoutImage('icons_toolbar_home_normal.png')}
-                    layout={{ position: 'absolute', width: 60, top: -2, height: 60 }}
+                    src={layoutImage('icons_toolbar_divider.png')}
+                    layout={{ position: 'absolute', left: 0, width: 76, top: 64, height: 2 }}
                 />
-            </Border>
-            <ThemeImage
-                src={layoutImage('icons_toolbar_divider.png')}
-                layout={{ position: 'absolute', left: 0, width: 76, top: 64, height: 2 }}
-            />
-        </Region>
+            </Region>
+        )
     );
 };
 
@@ -117,35 +119,36 @@ export const ToolbarViewLayoutNAVIGATORItem = ({ captionText, context, layout, o
     const t = useTranslation();
 
     return (
-        <Region
-            name="NAVIGATOR"
-            visible={context === undefined || [ 'hotel', 'room', 'gameCenter' ].includes(context)}
-            onPointerTap={onNAVIGATOR}
-            cursor="pointer"
-            layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
-        >
-            <Border
-                variant="2"
-                name="bg_navigator"
-                tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
-            >
-                <ThemeImage
-                    name="icons_toolbar_navigator"
-                    src={srcIconsToolbarNavigator ?? layoutImage('icons_toolbar_navigator_normal.png')}
-                    layout={{ position: 'absolute', width: 60, top: -2, height: 60 }}
-                />
-            </Border>
+        (context === undefined || [ 'hotel', 'room', 'gameCenter' ].includes(context)) && (
             <Region
-                name="text"
-                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                name="NAVIGATOR"
+                onPointerTap={onNAVIGATOR}
+                cursor="pointer"
+                layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionText ?? t('toolbar.icon.label.navigator')}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
+                <Border
+                    variant="2"
+                    name="bg_navigator"
+                    tintColor="#57544d"
+                    layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        name="icons_toolbar_navigator"
+                        src={srcIconsToolbarNavigator ?? layoutImage('icons_toolbar_navigator_normal.png')}
+                        layout={{ position: 'absolute', width: 60, top: -2, height: 60 }}
+                    />
+                </Border>
+                <Region
+                    name="text"
+                    layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionText ?? t('toolbar.icon.label.navigator')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
+                </Region>
             </Region>
-        </Region>
+        )
     );
 };
 
@@ -162,35 +165,36 @@ export const ToolbarViewLayoutQUESTSItem = ({ captionText, context, layout, onQU
     const t = useTranslation();
 
     return (
-        <Region
-            name="QUESTS"
-            visible={context === undefined || [ 'room' ].includes(context)}
-            onPointerTap={onQUESTS}
-            cursor="pointer"
-            layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
-        >
-            <Border
-                variant="2"
-                name="bg_quests"
-                tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
-            >
-                <ThemeImage
-                    name="icons_toolbar_quests"
-                    src={srcIconsToolbarQuests ?? layoutImage('icons_toolbar_quests_normal.png')}
-                    layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
-                />
-            </Border>
+        (context === undefined || [ 'room' ].includes(context)) && (
             <Region
-                name="text"
-                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                name="QUESTS"
+                onPointerTap={onQUESTS}
+                cursor="pointer"
+                layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionText ?? t('toolbar.icon.label.quests')}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
+                <Border
+                    variant="2"
+                    name="bg_quests"
+                    tintColor="#57544d"
+                    layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        name="icons_toolbar_quests"
+                        src={srcIconsToolbarQuests ?? layoutImage('icons_toolbar_quests_normal.png')}
+                        layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
+                    />
+                </Border>
+                <Region
+                    name="text"
+                    layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionText ?? t('toolbar.icon.label.quests')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
+                </Region>
             </Region>
-        </Region>
+        )
     );
 };
 
@@ -207,35 +211,36 @@ export const ToolbarViewLayoutGAMESItem = ({ captionText, context, layout, onGAM
     const t = useTranslation();
 
     return (
-        <Region
-            name="GAMES"
-            visible={context === undefined || [ 'room', 'hotel' ].includes(context)}
-            onPointerTap={onGAMES}
-            cursor="pointer"
-            layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
-        >
-            <Border
-                variant="2"
-                name="bg_games"
-                tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
-            >
-                <ThemeImage
-                    name="icons_toolbar_games"
-                    src={srcIconsToolbarGames ?? layoutImage('icons_toolbar_games_normal.png')}
-                    layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
-                />
-            </Border>
+        (context === undefined || [ 'room', 'hotel' ].includes(context)) && (
             <Region
-                name="text"
-                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                name="GAMES"
+                onPointerTap={onGAMES}
+                cursor="pointer"
+                layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionText ?? t('toolbar.icon.label.games')}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
+                <Border
+                    variant="2"
+                    name="bg_games"
+                    tintColor="#57544d"
+                    layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        name="icons_toolbar_games"
+                        src={srcIconsToolbarGames ?? layoutImage('icons_toolbar_games_normal.png')}
+                        layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
+                    />
+                </Border>
+                <Region
+                    name="text"
+                    layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionText ?? t('toolbar.icon.label.games')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
+                </Region>
             </Region>
-        </Region>
+        )
     );
 };
 
@@ -252,35 +257,36 @@ export const ToolbarViewLayoutSTORIESItem = ({ captionText, context, layout, onS
     const t = useTranslation();
 
     return (
-        <Region
-            name="STORIES"
-            visible={context === undefined || [ 'hotel' ].includes(context)}
-            onPointerTap={onSTORIES}
-            cursor="pointer"
-            layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
-        >
-            <Border
-                variant="2"
-                name="bg_stories"
-                tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
-            >
-                <ThemeImage
-                    name="icons_toolbar_stories"
-                    src={srcIconsToolbarStories ?? layoutImage('icons_toolbar_stories_normal.png')}
-                    layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
-                />
-            </Border>
+        (context === undefined || [ 'hotel' ].includes(context)) && (
             <Region
-                name="text"
-                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                name="STORIES"
+                onPointerTap={onSTORIES}
+                cursor="pointer"
+                layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionText ?? t('toolbar.icon.label.stories')}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
+                <Border
+                    variant="2"
+                    name="bg_stories"
+                    tintColor="#57544d"
+                    layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        name="icons_toolbar_stories"
+                        src={srcIconsToolbarStories ?? layoutImage('icons_toolbar_stories_normal.png')}
+                        layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
+                    />
+                </Border>
+                <Region
+                    name="text"
+                    layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionText ?? t('toolbar.icon.label.stories')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
+                </Region>
             </Region>
-        </Region>
+        )
     );
 };
 
@@ -340,35 +346,36 @@ export const ToolbarViewLayoutCATALOGUEItem = ({ captionText, context, layout, o
     const t = useTranslation();
 
     return (
-        <Region
-            name="CATALOGUE"
-            visible={context === undefined || [ 'room', 'hotel', 'gameCenter' ].includes(context)}
-            onPointerTap={onCATALOGUE}
-            cursor="pointer"
-            layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
-        >
-            <Border
-                variant="2"
-                name="bg_catalogue"
-                tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
-            >
-                <ThemeImage
-                    name="icons_toolbar_catalogue"
-                    src={srcIconsToolbarCatalogue ?? layoutImage('icons_toolbar_catalogue_normal.png')}
-                    layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
-                />
-            </Border>
+        (context === undefined || [ 'room', 'hotel', 'gameCenter' ].includes(context)) && (
             <Region
-                name="text"
-                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                name="CATALOGUE"
+                onPointerTap={onCATALOGUE}
+                cursor="pointer"
+                layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionText ?? t('toolbar.icon.label.catalogue')}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
+                <Border
+                    variant="2"
+                    name="bg_catalogue"
+                    tintColor="#57544d"
+                    layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        name="icons_toolbar_catalogue"
+                        src={srcIconsToolbarCatalogue ?? layoutImage('icons_toolbar_catalogue_normal.png')}
+                        layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
+                    />
+                </Border>
+                <Region
+                    name="text"
+                    layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionText ?? t('toolbar.icon.label.catalogue')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
+                </Region>
             </Region>
-        </Region>
+        )
     );
 };
 
@@ -385,35 +392,36 @@ export const ToolbarViewLayoutBUILDERItem = ({ captionText, context, layout, onB
     const t = useTranslation();
 
     return (
-        <Region
-            name="BUILDER"
-            visible={context === undefined || [ 'room', 'hotel' ].includes(context)}
-            onPointerTap={onBUILDER}
-            cursor="pointer"
-            layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
-        >
-            <Border
-                variant="2"
-                name="bg_builder"
-                tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
-            >
-                <ThemeImage
-                    name="icons_toolbar_builder"
-                    src={srcIconsToolbarBuilder ?? layoutImage('icons_toolbar_builder_normal.png')}
-                    layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
-                />
-            </Border>
+        (context === undefined || [ 'room', 'hotel' ].includes(context)) && (
             <Region
-                name="text"
-                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                name="BUILDER"
+                onPointerTap={onBUILDER}
+                cursor="pointer"
+                layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionText ?? t('toolbar.icon.label.builder')}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
+                <Border
+                    variant="2"
+                    name="bg_builder"
+                    tintColor="#57544d"
+                    layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        name="icons_toolbar_builder"
+                        src={srcIconsToolbarBuilder ?? layoutImage('icons_toolbar_builder_normal.png')}
+                        layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
+                    />
+                </Border>
+                <Region
+                    name="text"
+                    layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionText ?? t('toolbar.icon.label.builder')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
+                </Region>
             </Region>
-        </Region>
+        )
     );
 };
 
@@ -430,35 +438,36 @@ export const ToolbarViewLayoutINVENTORYItem = ({ captionText, context, layout, o
     const t = useTranslation();
 
     return (
-        <Region
-            name="INVENTORY"
-            visible={context === undefined || [ 'room' ].includes(context)}
-            onPointerTap={onINVENTORY}
-            cursor="pointer"
-            layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
-        >
-            <Border
-                variant="2"
-                name="bg_inventory"
-                tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
-            >
-                <ThemeImage
-                    name="icons_toolbar_inventory"
-                    src={srcIconsToolbarInventory ?? layoutImage('icons_toolbar_inventory_normal.png')}
-                    layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
-                />
-            </Border>
+        (context === undefined || [ 'room' ].includes(context)) && (
             <Region
-                name="text"
-                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                name="INVENTORY"
+                onPointerTap={onINVENTORY}
+                cursor="pointer"
+                layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionText ?? t('toolbar.icon.label.inventory')}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
+                <Border
+                    variant="2"
+                    name="bg_inventory"
+                    tintColor="#57544d"
+                    layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        name="icons_toolbar_inventory"
+                        src={srcIconsToolbarInventory ?? layoutImage('icons_toolbar_inventory_normal.png')}
+                        layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
+                    />
+                </Border>
+                <Region
+                    name="text"
+                    layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionText ?? t('toolbar.icon.label.inventory')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
+                </Region>
             </Region>
-        </Region>
+        )
     );
 };
 
@@ -470,47 +479,50 @@ export interface ToolbarViewLayoutMEMENUItemProps {
     onMEMENU?: () => void;
     srcGuideIcon?: string;
     srcIconMeMenu?: string;
+    visibleGuideIcon?: boolean;
 }
 
-export const ToolbarViewLayoutMEMENUItem = ({ captionText, context, layout, onMEMENU, srcGuideIcon, srcIconMeMenu }: ToolbarViewLayoutMEMENUItemProps) => {
+export const ToolbarViewLayoutMEMENUItem = ({ captionText, context, layout, onMEMENU, srcGuideIcon, srcIconMeMenu, visibleGuideIcon }: ToolbarViewLayoutMEMENUItemProps) => {
     const t = useTranslation();
 
     return (
-        <Region
-            name="MEMENU"
-            visible={context === undefined || [ 'room', 'hotel', 'gameCenter' ].includes(context)}
-            onPointerTap={onMEMENU}
-            cursor="pointer"
-            layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
-        >
-            <Border
-                variant="2"
-                name="bg_memenu"
-                tintColor="#57544d"
-                layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
-            >
-                <ThemeImage
-                    name="icon_me_menu"
-                    src={srcIconMeMenu}
-                    layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
-                />
-            </Border>
+        (context === undefined || [ 'room', 'hotel', 'gameCenter' ].includes(context)) && (
             <Region
-                name="text"
-                layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                name="MEMENU"
+                onPointerTap={onMEMENU}
+                cursor="pointer"
+                layout={{ width: 76, height: 80, flexShrink: 0, ...layout }}
             >
-                <ThemeText
-                    text={captionText ?? t('toolbar.icon.label.memenu')}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
+                <Border
+                    variant="2"
+                    name="bg_memenu"
+                    tintColor="#57544d"
+                    layout={{ position: 'absolute', left: 3, width: 70, top: 5, bottom: 0, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        name="icon_me_menu"
+                        src={srcIconMeMenu}
+                        layout={{ position: 'absolute', width: 60, top: 0, height: 60 }}
+                    />
+                </Border>
+                <Region
+                    name="text"
+                    layout={{ position: 'absolute', right: 0, width: 76, bottom: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionText ?? t('toolbar.icon.label.memenu')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
+                </Region>
+                {(visibleGuideIcon ?? false) && (
+                    <ThemeImage
+                        name="guide_icon"
+                        src={srcGuideIcon ?? layoutImage('help_guide_icon.png')}
+                        layout={{ position: 'absolute', left: 60, width: 13, top: 38, height: 26 }}
+                    />
+                )}
             </Region>
-            <ThemeImage
-                name="guide_icon"
-                src={srcGuideIcon ?? layoutImage('help_guide_icon.png')}
-                layout={{ position: 'absolute', left: 60, width: 13, top: 38, height: 26 }}
-                visible={false}
-            />
-        </Region>
+        )
     );
 };
 

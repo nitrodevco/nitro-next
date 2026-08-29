@@ -207,59 +207,16 @@ export const PackagecardNewOpenedLayoutButtonListItem = ({ itemsButtonList, layo
     );
 };
 
-/** Named region `avatar_image_region` of PackagecardNewOpenedLayout - configured through the parent's `avatarImageRegion` prop. */
-export interface PackagecardNewOpenedLayoutAvatarImageRegionProps {
+/** Row template `give_container` of PackagecardNewOpenedLayout - pass real rows through its `items…` slot. */
+export interface PackagecardNewOpenedLayoutGiveContainerItemProps {
     layout?: BoxLayout;
     onAvatarImageRegion?: () => void;
+    onGiveContainer?: () => void;
+    onGiveGiftButton?: () => void;
     srcAvatarImage?: string;
 }
 
-export const PackagecardNewOpenedLayoutAvatarImageRegion = ({ layout, onAvatarImageRegion, srcAvatarImage }: PackagecardNewOpenedLayoutAvatarImageRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="avatar_image_region"
-            tooltip={t('widget.furni.present.sender.profile_tooltip')}
-            onPointerTap={onAvatarImageRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', width: 45, alignSelf: 'center', height: 45, ...layout }}
-        >
-            <ThemeImage
-                name="avatar_image"
-                src={srcAvatarImage}
-                layout={{ position: 'absolute', left: 0, width: 45, top: 0, height: 45 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `avatar_image_container` of PackagecardNewOpenedLayout - configured through the parent's `avatarImageContainer` prop. */
-export interface PackagecardNewOpenedLayoutAvatarImageContainerProps {
-    avatarImageRegion?: PackagecardNewOpenedLayoutAvatarImageRegionProps;
-    layout?: BoxLayout;
-}
-
-export const PackagecardNewOpenedLayoutAvatarImageContainer = ({ avatarImageRegion, layout }: PackagecardNewOpenedLayoutAvatarImageContainerProps) => {
-    return (
-        <Region
-            name="avatar_image_container"
-            layout={{ position: 'absolute', right: 1, width: 45, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 45, justifyContent: 'center', ...layout }}
-        >
-            <PackagecardNewOpenedLayoutAvatarImageRegion {...avatarImageRegion} />
-        </Region>
-    );
-};
-
-/** Row template `give_container` of PackagecardNewOpenedLayout - pass real rows through its `items…` slot. */
-export interface PackagecardNewOpenedLayoutGiveContainerItemProps {
-    avatarImageContainer?: PackagecardNewOpenedLayoutAvatarImageContainerProps;
-    layout?: BoxLayout;
-    onGiveContainer?: () => void;
-    onGiveGiftButton?: () => void;
-}
-
-export const PackagecardNewOpenedLayoutGiveContainerItem = ({ avatarImageContainer, layout, onGiveContainer, onGiveGiftButton }: PackagecardNewOpenedLayoutGiveContainerItemProps) => {
+export const PackagecardNewOpenedLayoutGiveContainerItem = ({ layout, onAvatarImageRegion, onGiveContainer, onGiveGiftButton, srcAvatarImage }: PackagecardNewOpenedLayoutGiveContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -279,7 +236,24 @@ export const PackagecardNewOpenedLayoutGiveContainerItem = ({ avatarImageContain
             >
                 {t('widget.furni.present.give_gift')}
             </ButtonThick>
-            <PackagecardNewOpenedLayoutAvatarImageContainer {...avatarImageContainer} />
+            <Region
+                name="avatar_image_container"
+                layout={{ position: 'absolute', right: 1, width: 45, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 45, justifyContent: 'center' }}
+            >
+                <Region
+                    name="avatar_image_region"
+                    tooltip={t('widget.furni.present.sender.profile_tooltip')}
+                    onPointerTap={onAvatarImageRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', width: 45, alignSelf: 'center', height: 45 }}
+                >
+                    <ThemeImage
+                        name="avatar_image"
+                        src={srcAvatarImage}
+                        layout={{ position: 'absolute', left: 0, width: 45, top: 0, height: 45 }}
+                    />
+                </Region>
+            </Region>
         </Region>
     );
 };

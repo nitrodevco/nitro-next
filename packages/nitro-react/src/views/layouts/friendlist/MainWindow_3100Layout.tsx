@@ -35,23 +35,6 @@ export const MainWindow_3100Layout = ({ content, layout, onClose }: MainWindow_3
     );
 };
 
-/** Named region `conversationstab` of MainWindow_3100Layout - configured through the parent's `conversationstab` prop. */
-export interface MainWindow_3100LayoutConversationstabProps {
-    layout?: BoxLayout;
-    onConversationstab?: () => void;
-}
-
-export const MainWindow_3100LayoutConversationstab = ({ layout, onConversationstab }: MainWindow_3100LayoutConversationstabProps) => {
-    return (
-        <Region
-            name="conversationstab"
-            onPointerTap={onConversationstab}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 600, ...layout }}
-        />
-    );
-};
-
 /** Named region `hdr` of MainWindow_3100Layout - configured through the parent's `hdr` prop. */
 export interface MainWindow_3100LayoutHdrProps {
     layout?: BoxLayout;
@@ -120,48 +103,13 @@ export const MainWindow_3100LayoutHdr = ({ layout, onButtonExtendedProfile, onBu
     );
 };
 
-/** Named region `msg_list` of MainWindow_3100Layout - configured through the parent's `msgList` prop. */
-export interface MainWindow_3100LayoutMsgListProps {
-    layout?: BoxLayout;
-}
-
-export const MainWindow_3100LayoutMsgList = ({ layout }: MainWindow_3100LayoutMsgListProps) => {
-    return (
-        <Region
-            name="msg_list"
-            backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 0, right: 22, top: 0, bottom: 0, flexDirection: 'column', ...layout }}
-        />
-    );
-};
-
-/** Named region `list` of MainWindow_3100Layout - configured through the parent's `list` prop. */
-export interface MainWindow_3100LayoutListProps {
-    layout?: BoxLayout;
-    msgList?: MainWindow_3100LayoutMsgListProps;
-}
-
-export const MainWindow_3100LayoutList = ({ layout, msgList }: MainWindow_3100LayoutListProps) => {
-    return (
-        <Region
-            name="list"
-            backgroundColor="#ffffff"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 32, bottom: 1, ...layout }}
-        >
-            <MainWindow_3100LayoutMsgList {...msgList} />
-            {/* <scrollbar_vertical> for ? - rendered by that list's ScrollArea */}
-        </Region>
-    );
-};
-
 /** Named region `conversation` of MainWindow_3100Layout - configured through the parent's `conversation` prop. */
 export interface MainWindow_3100LayoutConversationProps {
     hdr?: MainWindow_3100LayoutHdrProps;
     layout?: BoxLayout;
-    list?: MainWindow_3100LayoutListProps;
 }
 
-export const MainWindow_3100LayoutConversation = ({ hdr, layout, list }: MainWindow_3100LayoutConversationProps) => {
+export const MainWindow_3100LayoutConversation = ({ hdr, layout }: MainWindow_3100LayoutConversationProps) => {
     return (
         <Region
             name="conversation"
@@ -169,37 +117,32 @@ export const MainWindow_3100LayoutConversation = ({ hdr, layout, list }: MainWin
             layout={{ position: 'absolute', left: 5, right: 5, top: 31, bottom: 5, ...layout }}
         >
             <MainWindow_3100LayoutHdr {...hdr} />
-            <MainWindow_3100LayoutList {...list} />
+            <Region
+                name="list"
+                backgroundColor="#ffffff"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 32, bottom: 1 }}
+            >
+                <Region
+                    name="msg_list"
+                    backgroundColor="#ffffff"
+                    layout={{ position: 'absolute', left: 0, right: 22, top: 0, bottom: 0, flexDirection: 'column' }}
+                />
+                {/* <scrollbar_vertical> for ? - rendered by that list's ScrollArea */}
+            </Region>
         </Region>
-    );
-};
-
-/** Named region `bg` of MainWindow_3100Layout - configured through the parent's `bg` prop. */
-export interface MainWindow_3100LayoutBgProps {
-    layout?: BoxLayout;
-}
-
-export const MainWindow_3100LayoutBg = ({ layout }: MainWindow_3100LayoutBgProps) => {
-    return (
-        <Region
-            name="bg"
-            backgroundColor="#000000"
-            layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 1, ...layout }}
-        />
     );
 };
 
 /** Named region `content` of MainWindow_3100Layout - configured through the parent's `content` prop. */
 export interface MainWindow_3100LayoutContentProps {
-    bg?: MainWindow_3100LayoutBgProps;
     conversation?: MainWindow_3100LayoutConversationProps;
-    conversationstab?: MainWindow_3100LayoutConversationstabProps;
     layout?: BoxLayout;
     onContent?: () => void;
+    onConversationstab?: () => void;
     srcConvoBg?: string;
 }
 
-export const MainWindow_3100LayoutContent = ({ bg, conversation, conversationstab, layout, onContent, srcConvoBg }: MainWindow_3100LayoutContentProps) => {
+export const MainWindow_3100LayoutContent = ({ conversation, layout, onContent, onConversationstab, srcConvoBg }: MainWindow_3100LayoutContentProps) => {
     return (
         <Region
             name="content"
@@ -213,9 +156,18 @@ export const MainWindow_3100LayoutContent = ({ bg, conversation, conversationsta
                 src={srcConvoBg}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 31 }}
             />
-            <MainWindow_3100LayoutConversationstab {...conversationstab} />
+            <Region
+                name="conversationstab"
+                onPointerTap={onConversationstab}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 600 }}
+            />
             <MainWindow_3100LayoutConversation {...conversation} />
-            <MainWindow_3100LayoutBg {...bg} />
+            <Region
+                name="bg"
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 1 }}
+            />
         </Region>
     );
 };

@@ -4,11 +4,12 @@ import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 /** Generated from `2964_safety_locked_notification_xml` (layout "safety_locked_notification", 192x80) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface SafetyLockedNotificationLayoutProps {
     captionInfoText?: string;
+    captionUnlockLink?: string;
     layout?: BoxLayout;
-    unlockLinkRegion?: SafetyLockedNotificationLayoutUnlockLinkRegionProps;
+    onUnlockLinkRegion?: () => void;
 }
 
-export const SafetyLockedNotificationLayout = ({ captionInfoText, layout, unlockLinkRegion }: SafetyLockedNotificationLayoutProps) => {
+export const SafetyLockedNotificationLayout = ({ captionInfoText, captionUnlockLink, layout, onUnlockLinkRegion }: SafetyLockedNotificationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -27,38 +28,23 @@ export const SafetyLockedNotificationLayout = ({ captionInfoText, layout, unlock
                         textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 174 }}
                     />
                 </Region>
-                <SafetyLockedNotificationLayoutUnlockLinkRegion {...unlockLinkRegion} />
+                <Region
+                    name="unlock_link_region"
+                    onPointerTap={onUnlockLinkRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 8, width: 35, top: 51, height: 18 }}
+                >
+                    <Region
+                        name="unlock_link"
+                        layout={{ position: 'absolute', left: 0, width: 147, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionUnlockLink ?? t('notifications.button.safety_locked_unlock')}
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                </Region>
             </Border>
-        </Region>
-    );
-};
-
-/** Named region `unlock_link_region` of SafetyLockedNotificationLayout - configured through the parent's `unlockLinkRegion` prop. */
-export interface SafetyLockedNotificationLayoutUnlockLinkRegionProps {
-    captionUnlockLink?: string;
-    layout?: BoxLayout;
-    onUnlockLinkRegion?: () => void;
-}
-
-export const SafetyLockedNotificationLayoutUnlockLinkRegion = ({ captionUnlockLink, layout, onUnlockLinkRegion }: SafetyLockedNotificationLayoutUnlockLinkRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="unlock_link_region"
-            onPointerTap={onUnlockLinkRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 8, width: 35, top: 51, height: 18, ...layout }}
-        >
-            <Region
-                name="unlock_link"
-                layout={{ position: 'absolute', left: 0, width: 147, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionUnlockLink ?? t('notifications.button.safety_locked_unlock')}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
         </Region>
     );
 };

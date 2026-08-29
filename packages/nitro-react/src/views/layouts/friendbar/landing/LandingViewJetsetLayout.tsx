@@ -31,9 +31,10 @@ export interface LandingViewJetsetLayoutContentBackgroundProps {
     srcBackgroundRight?: string;
     srcLeftRightDivider?: string;
     srcLogo?: string;
+    visibleLeftRightDivider?: boolean;
 }
 
-export const LandingViewJetsetLayoutContentBackground = ({ layout, srcBackgroundGradientTop, srcBackgroundHorizon, srcBackgroundHorizonStretch, srcBackgroundHotelLeft, srcBackgroundHotelTop, srcBackgroundRight, srcLeftRightDivider, srcLogo }: LandingViewJetsetLayoutContentBackgroundProps) => {
+export const LandingViewJetsetLayoutContentBackground = ({ layout, srcBackgroundGradientTop, srcBackgroundHorizon, srcBackgroundHorizonStretch, srcBackgroundHotelLeft, srcBackgroundHotelTop, srcBackgroundRight, srcLeftRightDivider, srcLogo, visibleLeftRightDivider }: LandingViewJetsetLayoutContentBackgroundProps) => {
     return (
         <Region
             name="content_background"
@@ -45,12 +46,13 @@ export const LandingViewJetsetLayoutContentBackground = ({ layout, srcBackground
                 src={srcBackgroundGradientTop ?? '${image.library.url}reception/js_background_top_pixel.png'}
                 layout={{ position: 'absolute', left: 0, right: -1, top: -175, bottom: 0 }}
             />
-            <ThemeImage
-                name="left-right_divider"
-                src={srcLeftRightDivider ?? layoutImage('landing_view_reception_horizontal.png')}
-                layout={{ position: 'absolute', left: 890, width: 2, top: 1, height: 670 }}
-                visible={false}
-            />
+            {(visibleLeftRightDivider ?? false) && (
+                <ThemeImage
+                    name="left-right_divider"
+                    src={srcLeftRightDivider ?? layoutImage('landing_view_reception_horizontal.png')}
+                    layout={{ position: 'absolute', left: 890, width: 2, top: 1, height: 670 }}
+                />
+            )}
             <ThemeImage
                 name="background_horizon_stretch"
                 src={srcBackgroundHorizonStretch ?? '${image.library.url}reception/js_reception_backdrop_BG_left.png'}

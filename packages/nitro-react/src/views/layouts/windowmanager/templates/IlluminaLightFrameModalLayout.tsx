@@ -3,13 +3,12 @@ import { Border, BoxLayout, CloseButton, Region, Scaler, ThemeText } from '#base
 /** Generated from `2792_illumina_light_frame_modal_xml` (layout "illumina_light_frame_modal", 50x80) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IlluminaLightFrameModalLayoutProps {
     captionHeaderTitleText?: string;
-    contentArea?: IlluminaLightFrameModalLayoutContentAreaProps;
     layout?: BoxLayout;
     onHeaderButtonClose?: () => void;
-    titlebar?: IlluminaLightFrameModalLayoutTitlebarProps;
+    onTitlebar?: () => void;
 }
 
-export const IlluminaLightFrameModalLayout = ({ captionHeaderTitleText, contentArea, layout, onHeaderButtonClose, titlebar }: IlluminaLightFrameModalLayoutProps) => {
+export const IlluminaLightFrameModalLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClose, onTitlebar }: IlluminaLightFrameModalLayoutProps) => {
     return (
         <Region
             dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.75, blur: 80 }}
@@ -19,8 +18,16 @@ export const IlluminaLightFrameModalLayout = ({ captionHeaderTitleText, contentA
                 variant="101"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 40, bottom: 0 }}
             />
-            <IlluminaLightFrameModalLayoutContentArea {...contentArea} />
-            <IlluminaLightFrameModalLayoutTitlebar {...titlebar} />
+            <Region
+                name="content_area"
+                layout={{ position: 'absolute', left: 1, right: 1, top: 70, bottom: -9 }}
+            />
+            <Region
+                name="titlebar"
+                onPointerTap={onTitlebar}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 40, height: 30 }}
+            />
             <Region
                 name="header_title_text"
                 layout={{ position: 'absolute', left: 8, width: 20, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -41,36 +48,5 @@ export const IlluminaLightFrameModalLayout = ({ captionHeaderTitleText, contentA
                 layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 10 }}
             />
         </Region>
-    );
-};
-
-/** Named region `content_area` of IlluminaLightFrameModalLayout - configured through the parent's `contentArea` prop. */
-export interface IlluminaLightFrameModalLayoutContentAreaProps {
-    layout?: BoxLayout;
-}
-
-export const IlluminaLightFrameModalLayoutContentArea = ({ layout }: IlluminaLightFrameModalLayoutContentAreaProps) => {
-    return (
-        <Region
-            name="content_area"
-            layout={{ position: 'absolute', left: 1, right: 1, top: 70, bottom: -9, ...layout }}
-        />
-    );
-};
-
-/** Named region `titlebar` of IlluminaLightFrameModalLayout - configured through the parent's `titlebar` prop. */
-export interface IlluminaLightFrameModalLayoutTitlebarProps {
-    layout?: BoxLayout;
-    onTitlebar?: () => void;
-}
-
-export const IlluminaLightFrameModalLayoutTitlebar = ({ layout, onTitlebar }: IlluminaLightFrameModalLayoutTitlebarProps) => {
-    return (
-        <Region
-            name="titlebar"
-            onPointerTap={onTitlebar}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 0, right: 0, top: 40, height: 30, ...layout }}
-        />
     );
 };

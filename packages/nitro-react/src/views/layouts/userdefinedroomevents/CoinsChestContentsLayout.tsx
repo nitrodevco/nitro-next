@@ -50,54 +50,6 @@ export const CoinsChestContentsLayoutCoinIconItem = ({ layout }: CoinsChestConte
     );
 };
 
-/** Named region `balance_container` of CoinsChestContentsLayout - configured through the parent's `balanceContainer` prop. */
-export interface CoinsChestContentsLayoutBalanceContainerProps {
-    itemsBalanceContainer?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const CoinsChestContentsLayoutBalanceContainer = ({ itemsBalanceContainer, layout }: CoinsChestContentsLayoutBalanceContainerProps) => {
-    return (
-        <Region
-            name="balance_container"
-            layout={{ position: 'absolute', width: 24, top: 22, height: 15, flexDirection: 'row', gap: 1, ...layout }}
-        >
-            {itemsBalanceContainer ?? (
-                <>
-                    <CoinsChestContentsLayoutCoinsAmountTxtItem />
-                    <CoinsChestContentsLayoutCoinIconItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
-/** Named region `balance_cont` of CoinsChestContentsLayout - configured through the parent's `balanceCont` prop. */
-export interface CoinsChestContentsLayoutBalanceContProps {
-    balanceContainer?: CoinsChestContentsLayoutBalanceContainerProps;
-    captionBalanceTxt?: string;
-    layout?: BoxLayout;
-}
-
-export const CoinsChestContentsLayoutBalanceCont = ({ balanceContainer, captionBalanceTxt, layout }: CoinsChestContentsLayoutBalanceContProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="balance_cont"
-            layout={{ position: 'absolute', left: 9, width: 54, top: 68, height: 47, justifyContent: 'center', ...layout }}
-        >
-            <Region
-                name="balance_txt"
-                layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 45, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionBalanceTxt ?? t('wiredchests.coin_chest.balance')} />
-            </Region>
-            <CoinsChestContentsLayoutBalanceContainer {...balanceContainer} />
-        </Region>
-    );
-};
-
 /** Row template `withdraw_input` of CoinsChestContentsLayout - pass real rows through its `items…` slot. */
 export interface CoinsChestContentsLayoutWithdrawInputItemProps {
     layout?: BoxLayout;
@@ -136,37 +88,18 @@ export const CoinsChestContentsLayoutWithdrawBtnItem = ({ layout, onWithdrawBtn 
     );
 };
 
-/** Named region `withdraw_cont` of CoinsChestContentsLayout - configured through the parent's `withdrawCont` prop. */
-export interface CoinsChestContentsLayoutWithdrawContProps {
-    itemsWithdrawCont?: ReactNode;
-    layout?: BoxLayout;
-}
-
-export const CoinsChestContentsLayoutWithdrawCont = ({ itemsWithdrawCont, layout }: CoinsChestContentsLayoutWithdrawContProps) => {
-    return (
-        <Region
-            name="withdraw_cont"
-            layout={{ position: 'absolute', right: 59, bottom: 182, flexDirection: 'row', gap: 5, ...layout }}
-        >
-            {itemsWithdrawCont ?? (
-                <>
-                    <CoinsChestContentsLayoutWithdrawInputItem />
-                    <CoinsChestContentsLayoutWithdrawBtnItem />
-                </>
-            )}
-        </Region>
-    );
-};
-
 /** Named region `moving_container` of CoinsChestContentsLayout - configured through the parent's `movingContainer` prop. */
 export interface CoinsChestContentsLayoutMovingContainerProps {
-    balanceCont?: CoinsChestContentsLayoutBalanceContProps;
+    captionBalanceTxt?: string;
+    itemsBalanceContainer?: ReactNode;
+    itemsWithdrawCont?: ReactNode;
     layout?: BoxLayout;
     srcBgImg?: string;
-    withdrawCont?: CoinsChestContentsLayoutWithdrawContProps;
 }
 
-export const CoinsChestContentsLayoutMovingContainer = ({ balanceCont, layout, srcBgImg, withdrawCont }: CoinsChestContentsLayoutMovingContainerProps) => {
+export const CoinsChestContentsLayoutMovingContainer = ({ captionBalanceTxt, itemsBalanceContainer, itemsWithdrawCont, layout, srcBgImg }: CoinsChestContentsLayoutMovingContainerProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="moving_container"
@@ -177,8 +110,39 @@ export const CoinsChestContentsLayoutMovingContainer = ({ balanceCont, layout, s
                 src={srcBgImg ?? layoutImage('wired_chests_images_light_coins_chest_balance_zero.png')}
                 layout={{ position: 'absolute', left: 0, top: 0 }}
             />
-            <CoinsChestContentsLayoutBalanceCont {...balanceCont} />
-            <CoinsChestContentsLayoutWithdrawCont {...withdrawCont} />
+            <Region
+                name="balance_cont"
+                layout={{ position: 'absolute', left: 9, width: 54, top: 68, height: 47, justifyContent: 'center' }}
+            >
+                <Region
+                    name="balance_txt"
+                    layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 45, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionBalanceTxt ?? t('wiredchests.coin_chest.balance')} />
+                </Region>
+                <Region
+                    name="balance_container"
+                    layout={{ position: 'absolute', width: 24, top: 22, height: 15, flexDirection: 'row', gap: 1 }}
+                >
+                    {itemsBalanceContainer ?? (
+                        <>
+                            <CoinsChestContentsLayoutCoinsAmountTxtItem />
+                            <CoinsChestContentsLayoutCoinIconItem />
+                        </>
+                    )}
+                </Region>
+            </Region>
+            <Region
+                name="withdraw_cont"
+                layout={{ position: 'absolute', right: 59, bottom: 182, flexDirection: 'row', gap: 5 }}
+            >
+                {itemsWithdrawCont ?? (
+                    <>
+                        <CoinsChestContentsLayoutWithdrawInputItem />
+                        <CoinsChestContentsLayoutWithdrawBtnItem />
+                    </>
+                )}
+            </Region>
         </Region>
     );
 };

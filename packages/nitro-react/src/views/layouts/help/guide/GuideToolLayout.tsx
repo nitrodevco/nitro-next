@@ -28,24 +28,8 @@ export const GuideToolLayout = ({ layout, list, onClose }: GuideToolLayoutProps)
     );
 };
 
-/** Named region `disabled_screen` of GuideToolLayout - configured through the parent's `disabledScreen` prop. */
-export interface GuideToolLayoutDisabledScreenProps {
-    layout?: BoxLayout;
-}
-
-export const GuideToolLayoutDisabledScreen = ({ layout }: GuideToolLayoutDisabledScreenProps) => {
-    return (
-        <Region
-            name="disabled_screen"
-            backgroundColor="#e2e2e2"
-            layout={{ position: 'absolute', left: 0, width: 227, top: 0, height: 90, ...layout }}
-        />
-    );
-};
-
 /** Row template `handle_selection_container` of GuideToolLayout - pass real rows through its `items…` slot. */
 export interface GuideToolLayoutHandleSelectionContainerItemProps {
-    disabledScreen?: GuideToolLayoutDisabledScreenProps;
     layout?: BoxLayout;
     onHandleGuardianTickets?: () => void;
     onHandleGuideTickets?: () => void;
@@ -53,7 +37,7 @@ export interface GuideToolLayoutHandleSelectionContainerItemProps {
     srcSelectionSeparator?: string;
 }
 
-export const GuideToolLayoutHandleSelectionContainerItem = ({ disabledScreen, layout, onHandleGuardianTickets, onHandleGuideTickets, onHandleHelperTickets, srcSelectionSeparator }: GuideToolLayoutHandleSelectionContainerItemProps) => {
+export const GuideToolLayoutHandleSelectionContainerItem = ({ layout, onHandleGuardianTickets, onHandleGuideTickets, onHandleHelperTickets, srcSelectionSeparator }: GuideToolLayoutHandleSelectionContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -96,7 +80,11 @@ export const GuideToolLayoutHandleSelectionContainerItem = ({ disabledScreen, la
                 src={srcSelectionSeparator ?? layoutImage('illumina_horizontal_separator.png')}
                 layout={{ position: 'absolute', left: 0, width: 229, top: 94, height: 2 }}
             />
-            <GuideToolLayoutDisabledScreen {...disabledScreen} />
+            <Region
+                name="disabled_screen"
+                backgroundColor="#e2e2e2"
+                layout={{ position: 'absolute', left: 0, width: 227, top: 0, height: 90 }}
+            />
         </Region>
     );
 };

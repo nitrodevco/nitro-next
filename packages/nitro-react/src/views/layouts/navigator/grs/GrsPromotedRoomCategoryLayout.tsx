@@ -15,113 +15,24 @@ export const GrsPromotedRoomCategoryLayout = ({ layout, row }: GrsPromotedRoomCa
     );
 };
 
-/** Named region `leader_region` of GrsPromotedRoomCategoryLayout - configured through the parent's `leaderRegion` prop. */
-export interface GrsPromotedRoomCategoryLayoutLeaderRegionProps {
-    captionLeaderNameCaptionTxt?: string;
-    captionLeaderNameTxt?: string;
-    layout?: BoxLayout;
-    onLeaderRegion?: () => void;
-}
-
-export const GrsPromotedRoomCategoryLayoutLeaderRegion = ({ captionLeaderNameCaptionTxt, captionLeaderNameTxt, layout, onLeaderRegion }: GrsPromotedRoomCategoryLayoutLeaderRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="leader_region"
-            onPointerTap={onLeaderRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 61, width: 201, bottom: 6, height: 19, ...layout }}
-        >
-            <Region
-                name="leader_name_caption_txt"
-                layout={{ position: 'absolute', left: 0, width: 166, top: 4, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionLeaderNameCaptionTxt ?? t('navigator.promotedrooms.owner')} />
-            </Region>
-            <Region
-                name="leader_name_txt"
-                layout={{ position: 'absolute', left: 49, width: 71, top: 4, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionLeaderNameTxt ?? 'WillyWallyWolly'} />
-            </Region>
-        </Region>
-    );
-};
-
-/** Named region `toggle_open_region` of GrsPromotedRoomCategoryLayout - configured through the parent's `toggleOpenRegion` prop. */
-export interface GrsPromotedRoomCategoryLayoutToggleOpenRegionProps {
-    captionCloseTxt?: string;
-    captionOpenTxt?: string;
-    layout?: BoxLayout;
-    onToggleOpenRegion?: () => void;
-}
-
-export const GrsPromotedRoomCategoryLayoutToggleOpenRegion = ({ captionCloseTxt, captionOpenTxt, layout, onToggleOpenRegion }: GrsPromotedRoomCategoryLayoutToggleOpenRegionProps) => {
-    const t = useTranslation();
-
-    return (
-        <Region
-            name="toggle_open_region"
-            onPointerTap={onToggleOpenRegion}
-            cursor="pointer"
-            layout={{ position: 'absolute', left: 4, width: 263, top: 74, height: 17, ...layout }}
-        >
-            <Region
-                name="open_txt"
-                layout={{ position: 'absolute', left: -1, width: 191, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionOpenTxt ?? t('navigator.promotedrooms.viewtopten')} />
-            </Region>
-            <Region
-                name="close_txt"
-                layout={{ position: 'absolute', left: -1, width: 189, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionCloseTxt ?? t('navigator.promotedrooms.hidetopten')} />
-            </Region>
-            <Icon
-                variant="5"
-                name="arrow_right_icon"
-                tintColor="#000000"
-                layout={{ position: 'absolute', left: 252, width: 12, top: 5, height: 18 }}
-            />
-            <Icon
-                variant="7"
-                name="arrow_down_icon"
-                tintColor="#000000"
-                layout={{ position: 'absolute', left: 249, width: 12, top: 7, height: 18 }}
-            />
-        </Region>
-    );
-};
-
-/** Named region `item_list` of GrsPromotedRoomCategoryLayout - configured through the parent's `itemList` prop. */
-export interface GrsPromotedRoomCategoryLayoutItemListProps {
-    layout?: BoxLayout;
-}
-
-export const GrsPromotedRoomCategoryLayoutItemList = ({ layout }: GrsPromotedRoomCategoryLayoutItemListProps) => {
-    return (
-        <Region
-            name="item_list"
-            layout={{ position: 'absolute', left: 3, right: 3, top: 97, bottom: -223, flexDirection: 'column', ...layout }}
-        />
-    );
-};
-
 /** Named region `row` of GrsPromotedRoomCategoryLayout - configured through the parent's `row` prop. */
 export interface GrsPromotedRoomCategoryLayoutRowProps {
     captionCategoryNameTxt?: string;
+    captionCloseTxt?: string;
+    captionLeaderNameCaptionTxt?: string;
+    captionLeaderNameTxt?: string;
+    captionOpenTxt?: string;
     captionRoomNameTxt?: string;
-    itemList?: GrsPromotedRoomCategoryLayoutItemListProps;
     layout?: BoxLayout;
-    leaderRegion?: GrsPromotedRoomCategoryLayoutLeaderRegionProps;
     onEnterRoomButton?: () => void;
+    onLeaderRegion?: () => void;
+    onToggleOpenRegion?: () => void;
     srcNaviRoomIcon?: string;
-    toggleOpenRegion?: GrsPromotedRoomCategoryLayoutToggleOpenRegionProps;
 }
 
-export const GrsPromotedRoomCategoryLayoutRow = ({ captionCategoryNameTxt, captionRoomNameTxt, itemList, layout, leaderRegion, onEnterRoomButton, srcNaviRoomIcon, toggleOpenRegion }: GrsPromotedRoomCategoryLayoutRowProps) => {
+export const GrsPromotedRoomCategoryLayoutRow = ({ captionCategoryNameTxt, captionCloseTxt, captionLeaderNameCaptionTxt, captionLeaderNameTxt, captionOpenTxt, captionRoomNameTxt, layout, onEnterRoomButton, onLeaderRegion, onToggleOpenRegion, srcNaviRoomIcon }: GrsPromotedRoomCategoryLayoutRowProps) => {
+    const t = useTranslation();
+
     return (
         <Region
             name="row"
@@ -154,7 +65,25 @@ export const GrsPromotedRoomCategoryLayoutRow = ({ captionCategoryNameTxt, capti
                     name="avatar_image_widget"
                     layout={{ position: 'absolute', left: -13, width: 90, top: -26, height: 130 }}
                 />
-                <GrsPromotedRoomCategoryLayoutLeaderRegion {...leaderRegion} />
+                <Region
+                    name="leader_region"
+                    onPointerTap={onLeaderRegion}
+                    cursor="pointer"
+                    layout={{ position: 'absolute', left: 61, width: 201, bottom: 6, height: 19 }}
+                >
+                    <Region
+                        name="leader_name_caption_txt"
+                        layout={{ position: 'absolute', left: 0, width: 166, top: 4, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionLeaderNameCaptionTxt ?? t('navigator.promotedrooms.owner')} />
+                    </Region>
+                    <Region
+                        name="leader_name_txt"
+                        layout={{ position: 'absolute', left: 49, width: 71, top: 4, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionLeaderNameTxt ?? 'WillyWallyWolly'} />
+                    </Region>
+                </Region>
                 <Region
                     name="room_name_txt"
                     layout={{ position: 'absolute', left: 60, width: 147, top: 8, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -167,8 +96,41 @@ export const GrsPromotedRoomCategoryLayoutRow = ({ captionCategoryNameTxt, capti
                     layout={{ position: 'absolute', right: 13, width: 44, top: 3, height: 30 }}
                 />
             </ContainerButton>
-            <GrsPromotedRoomCategoryLayoutToggleOpenRegion {...toggleOpenRegion} />
-            <GrsPromotedRoomCategoryLayoutItemList {...itemList} />
+            <Region
+                name="toggle_open_region"
+                onPointerTap={onToggleOpenRegion}
+                cursor="pointer"
+                layout={{ position: 'absolute', left: 4, width: 263, top: 74, height: 17 }}
+            >
+                <Region
+                    name="open_txt"
+                    layout={{ position: 'absolute', left: -1, width: 191, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionOpenTxt ?? t('navigator.promotedrooms.viewtopten')} />
+                </Region>
+                <Region
+                    name="close_txt"
+                    layout={{ position: 'absolute', left: -1, width: 189, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionCloseTxt ?? t('navigator.promotedrooms.hidetopten')} />
+                </Region>
+                <Icon
+                    variant="5"
+                    name="arrow_right_icon"
+                    tintColor="#000000"
+                    layout={{ position: 'absolute', left: 252, width: 12, top: 5, height: 18 }}
+                />
+                <Icon
+                    variant="7"
+                    name="arrow_down_icon"
+                    tintColor="#000000"
+                    layout={{ position: 'absolute', left: 249, width: 12, top: 7, height: 18 }}
+                />
+            </Region>
+            <Region
+                name="item_list"
+                layout={{ position: 'absolute', left: 3, right: 3, top: 97, bottom: -223, flexDirection: 'column' }}
+            />
         </Region>
     );
 };

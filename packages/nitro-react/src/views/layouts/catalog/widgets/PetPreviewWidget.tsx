@@ -24,13 +24,14 @@ export const PetPreviewWidget = ({ captionCtlgDescription, captionCtlgProductNam
             name="petPreviewWidget"
             layout={{ position: 'absolute', ...layout }}
         >
-            <Border
-                variant="4"
-                name="petPreviewBackground"
-                tintColor="#cccccc"
-                visible={visiblePetPreviewBackground ?? false}
-                layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 275 }}
-            />
+            {(visiblePetPreviewBackground ?? false) && (
+                <Border
+                    variant="4"
+                    name="petPreviewBackground"
+                    tintColor="#cccccc"
+                    layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 275 }}
+                />
+            )}
             <ThemeImage
                 name="ctlg_teaserimg_1"
                 src={srcCtlgTeaserimg1}

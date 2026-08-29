@@ -18,13 +18,7 @@ export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, cap
                     tintColor="#686661"
                     layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
                 />
-                <Border
-                    variant="3"
-                    tintColor="#201e19"
-                    blend={0.8}
-                    visible={false}
-                    layout={{ position: 'absolute', left: 3, width: 186, top: 3, height: 22 }}
-                />
+                {/* `border` is hidden and has no name to show it by */}
                 <Border
                     variant="6"
                     name="seasonal_bg"
@@ -61,23 +55,24 @@ export const PurseIndicatorSeasonalLayout = ({ captionAmount, captionChange, cap
                         textOptions={{ align: 'right' }}
                     />
                 </Region>
-                <Border
-                    variant="6"
-                    name="change_overlay"
-                    tintColor="#bb7dc3"
-                    visible={visibleChangeOverlay ?? false}
-                    layout={{ position: 'absolute', left: 44, width: 33, top: 0, height: 29 }}
-                >
-                    <Region
-                        name="change"
-                        layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 29, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                {(visibleChangeOverlay ?? false) && (
+                    <Border
+                        variant="6"
+                        name="change_overlay"
+                        tintColor="#bb7dc3"
+                        layout={{ position: 'absolute', left: 44, width: 33, top: 0, height: 29 }}
                     >
-                        <ThemeText
-                            text={captionChange ?? ' 50'}
-                            textStyle="text-style-il-regular-white"
-                        />
-                    </Region>
-                </Border>
+                        <Region
+                            name="change"
+                            layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 29, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionChange ?? ' 50'}
+                                textStyle="text-style-il-regular-white"
+                            />
+                        </Region>
+                    </Border>
+                )}
             </Region>
         </Region>
     );

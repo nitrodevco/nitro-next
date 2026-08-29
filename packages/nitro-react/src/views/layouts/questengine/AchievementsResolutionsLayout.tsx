@@ -11,9 +11,10 @@ export interface AchievementsResolutionsLayoutProps {
     layout?: BoxLayout;
     onClose?: () => void;
     onSaveButton?: () => void;
+    visibleDisabledReason?: boolean;
 }
 
-export const AchievementsResolutionsLayout = ({ captionDisabledReason, elementList, layout, onClose, onSaveButton }: AchievementsResolutionsLayoutProps) => {
+export const AchievementsResolutionsLayout = ({ captionDisabledReason, elementList, layout, onClose, onSaveButton, visibleDisabledReason }: AchievementsResolutionsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -37,17 +38,18 @@ export const AchievementsResolutionsLayout = ({ captionDisabledReason, elementLi
                 >
                     {t('resolution.button.ok')}
                 </Button>
-                <Region
-                    name="disabled.reason"
-                    visible={false}
-                    layout={{ position: 'absolute', left: 5, width: 300, top: 403, height: 15, minWidth: 0, maxWidth: 300, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionDisabledReason ?? 'Disabled for reason.'}
-                        textStyle="text-style-il-border"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 300, align: 'center' }}
-                    />
-                </Region>
+                {(visibleDisabledReason ?? false) && (
+                    <Region
+                        name="disabled.reason"
+                        layout={{ position: 'absolute', left: 5, width: 300, top: 403, height: 15, minWidth: 0, maxWidth: 300, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={captionDisabledReason ?? 'Disabled for reason.'}
+                            textStyle="text-style-il-border"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 300, align: 'center' }}
+                        />
+                    </Region>
+                )}
                 <WidgetSlot
                     widgetType="countdown"
                     name="countdown_widget"

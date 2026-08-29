@@ -1,6 +1,6 @@
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeText } from '#base/theme';
-import { RecyclerPrizesWidget, RecyclerPrizesWidgetProps } from '#base/views/layouts/catalog/widgets/RecyclerPrizesWidget';
+import { RecyclerPrizesWidget2, RecyclerPrizesWidget2Props } from '#base/views/layouts/catalog/widgets/RecyclerPrizesWidget2';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
 
 /** Generated from `1537_layout_recycler_prizes_xml` (layout "ctlg_recycler_prizes", 360x659) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -21,11 +21,12 @@ export const LayoutRecyclerPrizes_1537Layout = ({ ctlgDefault3x3, layout }: Layo
 export interface LayoutRecyclerPrizes_1537LayoutCtlgDefault3x3Props {
     captionCtlgSelectproduct?: string;
     layout?: BoxLayout;
-    recyclerPrizesWidget?: RecyclerPrizesWidgetProps;
+    recyclerPrizesWidget?: RecyclerPrizesWidget2Props;
     specialInfoWidget?: SpecialInfoWidgetProps;
+    visibleCtlgSelectproduct?: boolean;
 }
 
-export const LayoutRecyclerPrizes_1537LayoutCtlgDefault3x3 = ({ captionCtlgSelectproduct, layout, recyclerPrizesWidget, specialInfoWidget }: LayoutRecyclerPrizes_1537LayoutCtlgDefault3x3Props) => {
+export const LayoutRecyclerPrizes_1537LayoutCtlgDefault3x3 = ({ captionCtlgSelectproduct, layout, recyclerPrizesWidget, specialInfoWidget, visibleCtlgSelectproduct }: LayoutRecyclerPrizes_1537LayoutCtlgDefault3x3Props) => {
     const t = useTranslation();
 
     return (
@@ -33,21 +34,22 @@ export const LayoutRecyclerPrizes_1537LayoutCtlgDefault3x3 = ({ captionCtlgSelec
             name="ctlg_default_3x3"
             layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
         >
-            <Region
-                name="ctlg_selectproduct"
-                visible={false}
-                layout={{ position: 'absolute', left: 2, width: 128, top: 133, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
-                    textStyle="text-style-u-small"
-                />
-            </Region>
+            {(visibleCtlgSelectproduct ?? false) && (
+                <Region
+                    name="ctlg_selectproduct"
+                    layout={{ position: 'absolute', left: 2, width: 128, top: 133, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionCtlgSelectproduct ?? t('catalog_selectproduct')}
+                        textStyle="text-style-u-small"
+                    />
+                </Region>
+            )}
             <SpecialInfoWidget
                 layout={{ position: 'absolute', left: 100, width: 142, top: 46, height: 73 }}
                 {...specialInfoWidget}
             />
-            <RecyclerPrizesWidget
+            <RecyclerPrizesWidget2
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
                 {...recyclerPrizesWidget}
             />
