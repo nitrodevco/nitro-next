@@ -349,7 +349,6 @@ export const MainWindow_1503LayoutFooter = ({ captionInfoText, layout, onOpenEdi
                 onPointerTap={onOpenEditCtgsBut}
                 layout={{ position: 'absolute', left: 0, width: 90, top: 7, height: 20 }}
             >
-                {t('friendlist.friends')}
                 <ThemeImage
                     name="open_edit_ctgs"
                     src={srcOpenEditCtgs}

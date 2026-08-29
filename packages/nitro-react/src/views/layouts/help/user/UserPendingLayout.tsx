@@ -97,7 +97,6 @@ export const UserPendingLayout = ({ captionRequestDescription, captionRequestTyp
                         onPointerTap={onCancelButton}
                         layout={{ width: 200, height: 48, flexShrink: 0, maxWidth: 200, minHeight: 48, maxHeight: 48 }}
                     >
-                        {t('guide.help.request.user.pending.cancel.button')}
                         <Region layout={{ position: 'absolute', left: 20, top: 11, maxWidth: 200, flexDirection: 'row', gap: 5 }}>
                             <ThemeImage
                                 src={layoutImage('help_decline_icon.png')}

@@ -1771,7 +1771,6 @@ export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout,
                     onPointerTap={onFurni}
                     layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 34 }}
                 >
-                    {t('inventory.furni')}
                     <Region layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText text={t('inventory.furni')} />
                     </Region>
@@ -1782,7 +1781,6 @@ export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout,
                     onPointerTap={onCollectibles}
                     layout={{ position: 'absolute', left: 107, width: 87, top: 0, height: 34 }}
                 >
-                    {t('inventory.collectibles')}
                     <Region layout={{ position: 'absolute', left: 0, width: 87, top: 0, height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText text={t('inventory.collectibles')} />
                     </Region>
@@ -1793,7 +1791,6 @@ export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout,
                     onPointerTap={onRentables}
                     layout={{ position: 'absolute', left: 194, width: 131, top: 0, height: 34 }}
                 >
-                    {t('inventory.rentables')}
                     <Region layout={{ position: 'absolute', left: 0, width: 131, top: 0, height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText text={t('inventory.rentables')} />
                     </Region>
@@ -1804,7 +1801,6 @@ export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout,
                     onPointerTap={onPets}
                     layout={{ position: 'absolute', left: 325, width: 155, top: 0, height: 34 }}
                 >
-                    {t('inventory.furni.tab.pets')}
                     <Region layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText text={t('inventory.furni.tab.pets')} />
                     </Region>
@@ -1815,7 +1811,6 @@ export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout,
                     onPointerTap={onBadges}
                     layout={{ position: 'absolute', left: 480, width: 64, top: 0, height: 34 }}
                 >
-                    {t('inventory.badges')}
                     <Region layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText text={t('inventory.badges')} />
                     </Region>
@@ -1826,7 +1821,6 @@ export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout,
                     onPointerTap={onBots}
                     layout={{ position: 'absolute', left: 544, width: 105, top: 0, height: 34 }}
                 >
-                    {t('inventory.bots')}
                     <Region layout={{ position: 'absolute', left: 0, width: 105, top: 0, height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText text={t('inventory.bots')} />
                     </Region>

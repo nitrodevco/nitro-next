@@ -40,7 +40,6 @@ export const WelcomeNameChangeLayout = ({ layout, onChangeNameButton, onClose, o
                         onPointerTap={onChangeNameButton}
                         layout={{ position: 'absolute', left: 4, width: 142, top: 124, height: 66 }}
                     >
-                        name_change_title
                         <Region layout={{ position: 'absolute', left: 12, width: 118, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                             <ThemeText
                                 text={t('tutorial.name_change.change')}
@@ -54,7 +53,6 @@ export const WelcomeNameChangeLayout = ({ layout, onChangeNameButton, onClose, o
                         onPointerTap={onKeepNameButton}
                         layout={{ position: 'absolute', left: 155, width: 142, top: 124, height: 66 }}
                     >
-                        name_change_title
                         <Region layout={{ position: 'absolute', left: 12, width: 108, alignSelf: 'center', height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
                             <ThemeText
                                 text={t('tutorial.name_change.keep')}

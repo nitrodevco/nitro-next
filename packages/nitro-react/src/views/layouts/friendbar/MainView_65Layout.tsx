@@ -97,7 +97,6 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                         onPointerTap={onShowFirst}
                         layout={{ position: 'absolute', right: 140, width: 25, top: 0, height: 30, justifyContent: 'center' }}
                     >
-                        {'<<'}
                         <Region layout={{ position: 'absolute', width: 17, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <ThemeText
                                 text="<<"
@@ -111,7 +110,6 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                         onPointerTap={onShowPrevious}
                         layout={{ position: 'absolute', right: 110, width: 25, top: 0, height: 30, justifyContent: 'center' }}
                     >
-                        {'<'}
                         <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 10, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <ThemeText
                                 text="<"
@@ -134,7 +132,6 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                         onPointerTap={onShowNext}
                         layout={{ position: 'absolute', right: 30, width: 25, top: 0, height: 30, justifyContent: 'center' }}
                     >
-                        {'>'}
                         <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 10, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <ThemeText
                                 text=">"
@@ -148,7 +145,6 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
                         onPointerTap={onShowLast}
                         layout={{ position: 'absolute', right: 0, width: 25, top: 0, height: 30, justifyContent: 'center' }}
                     >
-                        {'>>'}
                         <Region layout={{ position: 'absolute', width: 17, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <ThemeText
                                 text=">>"

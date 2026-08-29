@@ -1198,17 +1198,21 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
 
             return emitThemed(ctx, component, el, parent, indent, extra, captionAndChildren);
         }
+        // A container button's face is its children - the client never rendered its own
+        // `caption` (the skin has no label), so only the children are emitted.
         case 'container_button':
         case 'iconbutton':
-            return emitThemed(ctx, 'ContainerButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], captionAndChildren);
+            return emitThemed(ctx, 'ContainerButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], childrenOnly);
         case 'closebutton':
             return emitThemed(ctx, 'CloseButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'close')}}` ], none);
         case 'checkbox':
         case 'radiobutton':
             return emitThemed(ctx, tag === 'checkbox' ? 'CheckBox' : 'RadioButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], captionOnly);
         case 'tab_button':
-        case 'tab_container_button':
             return emitThemed(ctx, 'TabButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'tab')}}` ], captionAndChildren);
+        // Same as container_button: the tab's face is its children.
+        case 'tab_container_button':
+            return emitThemed(ctx, 'TabButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'tab')}}` ], childrenOnly);
         case 'tab_context':
             return emitThemed(ctx, 'TabContext', el, parent, indent, [], childrenOnly);
         case 'tab_content':

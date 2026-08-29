@@ -61,7 +61,6 @@ export const Notification_1049Layout = ({ captionTextDescription, captionTextTit
                         onPointerTap={onButtonOk}
                         layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 100, bottom: 11, height: 46, minHeight: 46, maxHeight: 46, justifyContent: 'center' }}
                     >
-                        widget.notification.header
                         <Border
                             variant="3"
                             tintColor="#006d00"

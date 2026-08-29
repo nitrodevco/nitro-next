@@ -69,7 +69,6 @@ export const NotificationGiftUnlockedLayout = ({ captionHeader, captionOpenTxt, 
                         onPointerTap={onOpenBtn}
                         layout={{ position: 'absolute', left: 53, width: 306, top: 173, height: 46, minWidth: 306, maxWidth: 306, minHeight: 46, maxHeight: 46, justifyContent: 'center' }}
                     >
-                        {t('widget.furni.teaser.gift.title')}
                         <Border
                             variant="3"
                             name="btn_bg_1"

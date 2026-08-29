@@ -210,7 +210,6 @@ export const MessengerLayoutFollowButtonItem = ({ layout, onFollowButton }: Mess
             onPointerTap={onFollowButton}
             layout={{ width: 21, height: 20, flexShrink: 0, maxHeight: 20, ...layout }}
         >
-            Follow
             <ThemeImage
                 src={layoutImage('messenger_visit_icon.png')}
                 layout={{ position: 'absolute', left: 6, width: 9, top: 5, height: 10 }}
@@ -236,7 +235,6 @@ export const MessengerLayoutProfileButtonItem = ({ layout, onProfileButton }: Me
             onPointerTap={onProfileButton}
             layout={{ width: 30, height: 20, flexShrink: 0, maxHeight: 20, ...layout }}
         >
-            Profile
             <ThemeImage
                 src={layoutImage('messenger_profile_icon.png')}
                 layout={{ position: 'absolute', left: 7, width: 16, top: 4, height: 12 }}

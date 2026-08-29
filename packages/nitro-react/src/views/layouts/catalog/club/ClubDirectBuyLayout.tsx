@@ -96,7 +96,6 @@ export const ClubDirectBuyLayout = ({ captionBoldText, captionClubBenefitsLink, 
                         onPointerTap={onBuy}
                         layout={{ position: 'absolute', left: 167, width: 81, top: 36, height: 30, minWidth: 80, minHeight: 29, justifyContent: 'center' }}
                     >
-                        Buy
                         <Region layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 25, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <ThemeText
                                 text={t('buy')}

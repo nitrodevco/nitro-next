@@ -63,7 +63,6 @@ export const NotificationTeaserLayout = ({ captionCongrats, captionDescription, 
                         onPointerTap={onTeaserOkBtn}
                         layout={{ position: 'absolute', left: 56, width: 306, top: 173, height: 46, minWidth: 306, maxWidth: 306, minHeight: 46, maxHeight: 46, justifyContent: 'center' }}
                     >
-                        OK!
                         <Border
                             variant="3"
                             name="ok_btn_bg1"

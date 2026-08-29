@@ -71,7 +71,6 @@ export const NotificationGiftLockedLayout = ({ captionHeader, captionShareTxt, c
                         onPointerTap={onPostBtn}
                         layout={{ position: 'absolute', left: 104, width: 306, top: 173, height: 46, minWidth: 306, maxWidth: 306, minHeight: 46, maxHeight: 46, justifyContent: 'center' }}
                     >
-                        {t('widget.furni.teaser.gift.title')}
                         <Border
                             variant="3"
                             name="btn_bg_1"
@@ -102,7 +101,6 @@ export const NotificationGiftLockedLayout = ({ captionHeader, captionShareTxt, c
                         onPointerTap={onSkipBtn}
                         layout={{ position: 'absolute', left: 12, width: 80, top: 182, height: 30, minWidth: 80, maxWidth: 80, minHeight: 30, maxHeight: 30 }}
                     >
-                        skip
                         <Border
                             variant="3"
                             name="skip_btn_bg1"

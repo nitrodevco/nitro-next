@@ -66,7 +66,6 @@ export const PurseLayout = ({ earningsButton, hcJoinButton, layout, onHelpButton
                         onPointerTap={onHelpButton}
                         layout={{ width: 50, height: 19, flexShrink: 0, minWidth: 50, maxWidth: 50, justifyContent: 'center' }}
                     >
-                        {t('toolbar.help')}
                         <Region layout={{ position: 'absolute', marginLeft: 10.5, marginRight: -10.5, width: 71, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <ThemeText
                                 text={t('toolbar.help')}
@@ -82,7 +81,6 @@ export const PurseLayout = ({ earningsButton, hcJoinButton, layout, onHelpButton
                         onPointerTap={onLogoutButton}
                         layout={{ width: 50, height: 19, flexShrink: 0 }}
                     >
-                        x
                         <ThemeImage
                             src={layoutImage('pursearea_logout_icon.png')}
                             layout={{ position: 'absolute', left: 18, width: 15, top: 0, height: 20 }}
@@ -96,7 +94,6 @@ export const PurseLayout = ({ earningsButton, hcJoinButton, layout, onHelpButton
                         onPointerTap={onSettingsButton}
                         layout={{ width: 50, height: 19, flexShrink: 0 }}
                     >
-                        s
                         <ThemeImage
                             src={layoutImage('pursearea_settings_icon.png')}
                             layout={{ position: 'absolute', left: -5, width: 61, top: 1, height: 18 }}
