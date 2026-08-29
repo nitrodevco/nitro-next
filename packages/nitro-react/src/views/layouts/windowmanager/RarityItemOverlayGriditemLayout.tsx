@@ -6,9 +6,10 @@ export interface RarityItemOverlayGriditemLayoutProps {
     layout?: BoxLayout;
     srcRarityItemOverlayPlaqueNumberBitmap?: string;
     srcRarityItemPlaqueBitmap?: string;
+    tintRarityItemOverlayPlaqueNumberBitmap?: string;
 }
 
-export const RarityItemOverlayGriditemLayout = ({ layout, srcRarityItemOverlayPlaqueNumberBitmap, srcRarityItemPlaqueBitmap }: RarityItemOverlayGriditemLayoutProps) => {
+export const RarityItemOverlayGriditemLayout = ({ layout, srcRarityItemOverlayPlaqueNumberBitmap, srcRarityItemPlaqueBitmap, tintRarityItemOverlayPlaqueNumberBitmap }: RarityItemOverlayGriditemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 36, height: 36, ...layout }}>
             <Region
@@ -23,6 +24,7 @@ export const RarityItemOverlayGriditemLayout = ({ layout, srcRarityItemOverlayPl
                 <ThemeImage
                     name="rarity_item_overlay_plaque_number_bitmap"
                     src={srcRarityItemOverlayPlaqueNumberBitmap}
+                    tint={tintRarityItemOverlayPlaqueNumberBitmap}
                     layout={{ position: 'absolute', left: 6, width: 24, top: 29, height: 5 }}
                 />
             </Region>

@@ -1,8 +1,12 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, ThemeImage, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `133_AchievementSimple_xml` (layout "AchievementSimple", 52x50) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface AchievementSimpleLayoutProps {
+    achievementPicBitmap?: ReactNode;
+    bgRegion?: ReactNode;
     layout?: BoxLayout;
     onBgRegion?: () => void;
     srcBgSelectedBitmap?: string;
@@ -10,7 +14,7 @@ export interface AchievementSimpleLayoutProps {
     visibleBgSelectedBitmap?: boolean;
 }
 
-export const AchievementSimpleLayout = ({ layout, onBgRegion, srcBgSelectedBitmap, srcBgUnselectedBitmap, visibleBgSelectedBitmap }: AchievementSimpleLayoutProps) => {
+export const AchievementSimpleLayout = ({ achievementPicBitmap, bgRegion, layout, onBgRegion, srcBgSelectedBitmap, srcBgUnselectedBitmap, visibleBgSelectedBitmap }: AchievementSimpleLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 52, height: 50, ...layout }}>
             <Region
@@ -34,13 +38,17 @@ export const AchievementSimpleLayout = ({ layout, onBgRegion, srcBgSelectedBitma
                     name="achievement_pic_bitmap"
                     options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                     layout={{ position: 'absolute', left: 6, width: 40, top: 5, height: 40 }}
-                />
+                >
+                    {achievementPicBitmap}
+                </WidgetSlot>
                 <Region
                     name="bg_region"
                     onPointerTap={onBgRegion}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 50 }}
-                />
+                >
+                    {bgRegion}
+                </Region>
             </Region>
         </Region>
     );

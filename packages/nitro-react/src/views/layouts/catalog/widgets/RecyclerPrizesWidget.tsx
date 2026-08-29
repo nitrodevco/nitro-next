@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
@@ -11,11 +13,14 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 export interface RecyclerPrizesWidgetProps extends CatalogWidgetFlags {
     captionCtlgDescription?: string;
     captionCtlgProductName?: string;
+    itemsBundleGrid?: ReactNode;
+    itemsItemList?: ReactNode;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
+    tintCtlgTeaserimg1?: string;
 }
 
-export const RecyclerPrizesWidget = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1 }: RecyclerPrizesWidgetProps) => {
+export const RecyclerPrizesWidget = ({ captionCtlgDescription, captionCtlgProductName, itemsBundleGrid, itemsItemList, layout, srcCtlgTeaserimg1, tintCtlgTeaserimg1 }: RecyclerPrizesWidgetProps) => {
     const t = useTranslation();
 
     return (
@@ -30,7 +35,9 @@ export const RecyclerPrizesWidget = ({ captionCtlgDescription, captionCtlgProduc
                 <Region
                     name="itemList"
                     layout={{ flexDirection: 'column', width: '100%' }}
-                />
+                >
+                    {itemsItemList}
+                </Region>
             </ScrollArea>
             <Region
                 name="productView"
@@ -39,6 +46,7 @@ export const RecyclerPrizesWidget = ({ captionCtlgDescription, captionCtlgProduc
                 <ThemeImage
                     name="ctlg_teaserimg_1"
                     src={srcCtlgTeaserimg1}
+                    tint={tintCtlgTeaserimg1}
                     layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 162 }}
                 />
                 <Region
@@ -67,7 +75,9 @@ export const RecyclerPrizesWidget = ({ captionCtlgDescription, captionCtlgProduc
                     <Region
                         name="bundleGrid"
                         layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
-                    />
+                    >
+                        {itemsBundleGrid}
+                    </Region>
                 </ScrollArea>
             </Region>
         </Region>

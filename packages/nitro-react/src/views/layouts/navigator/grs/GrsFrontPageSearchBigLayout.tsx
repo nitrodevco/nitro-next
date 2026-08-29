@@ -6,9 +6,10 @@ export interface GrsFrontPageSearchBigLayoutProps {
     layout?: BoxLayout;
     onCont?: () => void;
     srcIcon?: string;
+    tintIcon?: string;
 }
 
-export const GrsFrontPageSearchBigLayout = ({ captionCaption, layout, onCont, srcIcon }: GrsFrontPageSearchBigLayoutProps) => {
+export const GrsFrontPageSearchBigLayout = ({ captionCaption, layout, onCont, srcIcon, tintIcon }: GrsFrontPageSearchBigLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Region
@@ -34,6 +35,7 @@ export const GrsFrontPageSearchBigLayout = ({ captionCaption, layout, onCont, sr
                     <ThemeImage
                         name="icon"
                         src={srcIcon}
+                        tint={tintIcon}
                         layout={{ position: 'absolute', left: 6, width: 32, top: 2, height: 32 }}
                     />
                 </Border>

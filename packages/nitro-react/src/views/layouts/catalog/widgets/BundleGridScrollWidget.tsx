@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, ScrollArea } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
@@ -8,10 +10,11 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
  */
 /** Named region `bundleGridScrollWidget` of BundleGridScrollWidget - configured through the parent's `bundleGridScrollWidget` prop. */
 export interface BundleGridScrollWidgetProps extends CatalogWidgetFlags {
+    itemsBundleGrid?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const BundleGridScrollWidget = ({ layout }: BundleGridScrollWidgetProps) => {
+export const BundleGridScrollWidget = ({ itemsBundleGrid, layout }: BundleGridScrollWidgetProps) => {
     return (
         <Region
             name="bundleGridScrollWidget"
@@ -24,7 +27,9 @@ export const BundleGridScrollWidget = ({ layout }: BundleGridScrollWidgetProps) 
                 <Region
                     name="bundleGrid"
                     layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
-                />
+                >
+                    {itemsBundleGrid}
+                </Region>
             </ScrollArea>
         </Region>
     );

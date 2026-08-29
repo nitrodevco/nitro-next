@@ -1,11 +1,14 @@
+import { ReactNode } from 'react';
+
 import { Border, BoxLayout, Region, WidgetSlot } from '#base/theme';
 
 /** Generated from `1533_badgeGridItem_xml` (layout "badgeGridItem", 44x44) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface BadgeGridItemLayoutProps {
+    badgeWidget?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const BadgeGridItemLayout = ({ layout }: BadgeGridItemLayoutProps) => {
+export const BadgeGridItemLayout = ({ badgeWidget, layout }: BadgeGridItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 44, height: 44, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 44, top: 0, height: 44 }}>
@@ -19,7 +22,9 @@ export const BadgeGridItemLayout = ({ layout }: BadgeGridItemLayoutProps) => {
                         name="badgeWidget"
                         options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                         layout={{ position: 'absolute', left: 2, width: 40, top: 2, height: 40 }}
-                    />
+                    >
+                        {badgeWidget}
+                    </WidgetSlot>
                 </Border>
             </Region>
         </Region>

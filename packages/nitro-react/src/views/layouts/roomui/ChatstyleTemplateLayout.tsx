@@ -5,9 +5,10 @@ export interface ChatstyleTemplateLayoutProps {
     layout?: BoxLayout;
     onChatstyleRegion?: () => void;
     srcBubblePreview?: string;
+    tintBubblePreview?: string;
 }
 
-export const ChatstyleTemplateLayout = ({ layout, onChatstyleRegion, srcBubblePreview }: ChatstyleTemplateLayoutProps) => {
+export const ChatstyleTemplateLayout = ({ layout, onChatstyleRegion, srcBubblePreview, tintBubblePreview }: ChatstyleTemplateLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 55, height: 34, ...layout }}>
             <Region
@@ -24,6 +25,7 @@ export const ChatstyleTemplateLayout = ({ layout, onChatstyleRegion, srcBubblePr
                 <ThemeImage
                     name="bubble_preview"
                     src={srcBubblePreview}
+                    tint={tintBubblePreview}
                     layout={{ position: 'absolute', left: 0, width: 55, alignSelf: 'center', height: 24 }}
                 />
             </Region>

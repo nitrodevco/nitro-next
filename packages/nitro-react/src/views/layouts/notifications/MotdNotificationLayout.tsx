@@ -1,14 +1,17 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Frame, Region, ScrollArea } from '#base/theme';
 
 /** Generated from `2950_motd_notification_xml` (layout "achievement_notification", 436x227) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MotdNotificationLayoutProps {
+    itemsMessageList?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
     onClose2?: () => void;
 }
 
-export const MotdNotificationLayout = ({ layout, onClose, onClose2 }: MotdNotificationLayoutProps) => {
+export const MotdNotificationLayout = ({ itemsMessageList, layout, onClose, onClose2 }: MotdNotificationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -31,7 +34,9 @@ export const MotdNotificationLayout = ({ layout, onClose, onClose2 }: MotdNotifi
                     <Region
                         name="message_list"
                         layout={{ flexDirection: 'column', width: '100%' }}
-                    />
+                    >
+                        {itemsMessageList}
+                    </Region>
                 </ScrollArea>
             </Border>
             <Button

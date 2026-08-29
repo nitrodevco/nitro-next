@@ -1,13 +1,17 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, ScrollArea, ThemeText } from '#base/theme';
 
 /** Generated from `1732_illumina_light_dropmenu_xml` (layout "illumina_light_layout_dropmenu", 40x22) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IlluminaLightDropmenuLayoutProps {
     captionDROPLISTTITLETEXT?: string;
+    dROPLISTREGION?: ReactNode;
+    itemsDROPLISTITEMLIST?: ReactNode;
     layout?: BoxLayout;
     onDROPLISTREGION?: () => void;
 }
 
-export const IlluminaLightDropmenuLayout = ({ captionDROPLISTTITLETEXT, layout, onDROPLISTREGION }: IlluminaLightDropmenuLayoutProps) => {
+export const IlluminaLightDropmenuLayout = ({ captionDROPLISTTITLETEXT, dROPLISTREGION, itemsDROPLISTITEMLIST, layout, onDROPLISTREGION }: IlluminaLightDropmenuLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 40, height: 22, ...layout }}>
             <Region
@@ -26,14 +30,18 @@ export const IlluminaLightDropmenuLayout = ({ captionDROPLISTTITLETEXT, layout, 
                 <Region
                     name="_DROPLIST_ITEMLIST"
                     layout={{ flexDirection: 'column', width: '100%' }}
-                />
+                >
+                    {itemsDROPLISTITEMLIST}
+                </Region>
             </ScrollArea>
             <Region
                 name="_DROPLIST_REGION"
                 onPointerTap={onDROPLISTREGION}
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 6, right: 6, top: 2, height: 18 }}
-            />
+            >
+                {dROPLISTREGION}
+            </Region>
         </Region>
     );
 };

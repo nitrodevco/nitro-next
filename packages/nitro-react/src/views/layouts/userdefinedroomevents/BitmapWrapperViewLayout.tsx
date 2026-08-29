@@ -4,14 +4,16 @@ import { BoxLayout, Region, ThemeImage } from '#base/theme';
 export interface BitmapWrapperViewLayoutProps {
     layout?: BoxLayout;
     srcBitmapView?: string;
+    tintBitmapView?: string;
 }
 
-export const BitmapWrapperViewLayout = ({ layout, srcBitmapView }: BitmapWrapperViewLayoutProps) => {
+export const BitmapWrapperViewLayout = ({ layout, srcBitmapView, tintBitmapView }: BitmapWrapperViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 212, height: 105, ...layout }}>
             <ThemeImage
                 name="bitmap_view"
                 src={srcBitmapView}
+                tint={tintBitmapView}
                 layout={{ position: 'absolute', left: 0, width: 212, top: 0, height: 105 }}
             />
         </Region>

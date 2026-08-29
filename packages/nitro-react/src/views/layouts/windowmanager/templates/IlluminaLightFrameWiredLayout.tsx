@@ -1,18 +1,22 @@
+import { ReactNode } from 'react';
+
 import { Border, BoxLayout, CloseButton, Region, Scaler, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `2363_illumina_light_frame_wired_xml` (layout "illumina_light_frame_wired", 50x50) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IlluminaLightFrameWiredLayoutProps {
     captionHeaderTitleText?: string;
+    contentArea?: ReactNode;
     layout?: BoxLayout;
     onHeaderButtonClose?: () => void;
     onHeaderButtonMenu?: () => void;
     onTitlebar?: () => void;
     srcBannerLeft?: string;
     srcBannerRight?: string;
+    titlebar?: ReactNode;
 }
 
-export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClose, onHeaderButtonMenu, onTitlebar, srcBannerLeft, srcBannerRight }: IlluminaLightFrameWiredLayoutProps) => {
+export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, contentArea, layout, onHeaderButtonClose, onHeaderButtonMenu, onTitlebar, srcBannerLeft, srcBannerRight, titlebar }: IlluminaLightFrameWiredLayoutProps) => {
     return (
         <Region
             dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.35, blur: 20 }}
@@ -43,13 +47,17 @@ export const IlluminaLightFrameWiredLayout = ({ captionHeaderTitleText, layout, 
             <Region
                 name="content_area"
                 layout={{ position: 'absolute', left: 1, right: 1, top: 30, bottom: 1 }}
-            />
+            >
+                {contentArea}
+            </Region>
             <Region
                 name="titlebar"
                 onPointerTap={onTitlebar}
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
-            />
+            >
+                {titlebar}
+            </Region>
             <Region
                 name="header_title_text"
                 layout={{ position: 'absolute', marginLeft: -7, marginRight: 7, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

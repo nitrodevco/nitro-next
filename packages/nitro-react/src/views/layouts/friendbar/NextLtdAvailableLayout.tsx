@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 
@@ -5,13 +7,14 @@ import { Border, BoxLayout, Button, Region, ThemeImage, ThemeText, WidgetSlot } 
 export interface NextLtdAvailableLayoutProps {
     captionHeader?: string;
     colorableTextColor?: string;
+    countdown?: ReactNode;
     layout?: BoxLayout;
     onCatalogueButton?: () => void;
     onGet?: () => void;
     visibleGet?: boolean;
 }
 
-export const NextLtdAvailableLayout = ({ captionHeader, colorableTextColor, layout, onCatalogueButton, onGet, visibleGet }: NextLtdAvailableLayoutProps) => {
+export const NextLtdAvailableLayout = ({ captionHeader, colorableTextColor, countdown, layout, onCatalogueButton, onGet, visibleGet }: NextLtdAvailableLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -28,7 +31,9 @@ export const NextLtdAvailableLayout = ({ captionHeader, colorableTextColor, layo
                     widgetType="countdown"
                     name="countdown"
                     layout={{ position: 'absolute', left: 427, width: 99, top: 11, height: 37 }}
-                />
+                >
+                    {countdown}
+                </WidgetSlot>
                 <Region
                     name="header"
                     layout={{ position: 'absolute', left: 73, width: 151, top: 5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

@@ -1,5 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
-import { MarketPlaceWidgetLayout, MarketPlaceWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/MarketPlaceWidgetLayout';
+import { MarketPlaceWidgetLayout, MarketPlaceWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/MarketPlaceWidget/MarketPlaceWidgetLayout';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**

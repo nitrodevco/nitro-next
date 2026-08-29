@@ -22,9 +22,10 @@ export interface NewPetsWidgetProps extends CatalogWidgetFlags {
     layout?: BoxLayout;
     purchaseWidget?: PurchaseWidgetProps;
     srcCtlgTeaserimg1?: string;
+    tintCtlgTeaserimg1?: string;
 }
 
-export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionCtlgText3, captionPetBreedText, colourGridWidget, layout, purchaseWidget, srcCtlgTeaserimg1 }: NewPetsWidgetProps) => {
+export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionCtlgText3, captionPetBreedText, colourGridWidget, layout, purchaseWidget, srcCtlgTeaserimg1, tintCtlgTeaserimg1 }: NewPetsWidgetProps) => {
     const t = useTranslation();
     const [ nameInputTextValue, setNameInputTextValue ] = useState('');
 
@@ -36,6 +37,7 @@ export const NewPetsWidget = ({ addOnBadgeViewWidget, captionCtlgText2, captionC
             <ThemeImage
                 name="ctlg_teaserimg_1"
                 src={srcCtlgTeaserimg1}
+                tint={tintCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 30, height: 127 }}
             />
             <Region

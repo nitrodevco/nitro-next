@@ -7,9 +7,10 @@ export interface VideoOfferPromotionLayoutProps {
     layout?: BoxLayout;
     onTextRegion?: () => void;
     srcPromoIcon?: string;
+    tintPromoIcon?: string;
 }
 
-export const VideoOfferPromotionLayout = ({ captionPromoText, captionPromoTextShadow, layout, onTextRegion, srcPromoIcon }: VideoOfferPromotionLayoutProps) => {
+export const VideoOfferPromotionLayout = ({ captionPromoText, captionPromoTextShadow, layout, onTextRegion, srcPromoIcon, tintPromoIcon }: VideoOfferPromotionLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 192, height: 40, ...layout }}>
             <Border
@@ -46,6 +47,7 @@ export const VideoOfferPromotionLayout = ({ captionPromoText, captionPromoTextSh
                 <ThemeImage
                     name="promo_icon"
                     src={srcPromoIcon}
+                    tint={tintPromoIcon}
                     layout={{ position: 'absolute', left: 6, width: 19, top: 7, height: 20, minHeight: 20, maxHeight: 20 }}
                 />
                 <Icon

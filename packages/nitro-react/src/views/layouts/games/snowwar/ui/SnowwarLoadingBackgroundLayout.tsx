@@ -9,9 +9,14 @@ export interface SnowwarLoadingBackgroundLayoutProps {
     srcVista1?: string;
     srcVista2?: string;
     srcVista3?: string;
+    tintSky?: string;
+    tintSunshine?: string;
+    tintVista1?: string;
+    tintVista2?: string;
+    tintVista3?: string;
 }
 
-export const SnowwarLoadingBackgroundLayout = ({ layout, srcSky, srcSunshine, srcVista1, srcVista2, srcVista3 }: SnowwarLoadingBackgroundLayoutProps) => {
+export const SnowwarLoadingBackgroundLayout = ({ layout, srcSky, srcSunshine, srcVista1, srcVista2, srcVista3, tintSky, tintSunshine, tintVista1, tintVista2, tintVista3 }: SnowwarLoadingBackgroundLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 1153, height: 553, ...layout }}>
             <Region
@@ -21,26 +26,31 @@ export const SnowwarLoadingBackgroundLayout = ({ layout, srcSky, srcSunshine, sr
                 <ThemeImage
                     name="sky"
                     src={srcSky ?? layoutImage('bg_sky.png')}
+                    tint={tintSky}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 158 }}
                 />
                 <ThemeImage
                     name="sunshine"
                     src={srcSunshine ?? layoutImage('bg_sunshine.png')}
+                    tint={tintSunshine}
                     layout={{ position: 'absolute', width: 569, top: 0, height: 144 }}
                 />
                 <ThemeImage
                     name="vista_1"
                     src={srcVista1 ?? layoutImage('bg_vista_1.png')}
+                    tint={tintVista1}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 90, height: 133 }}
                 />
                 <ThemeImage
                     name="vista_2"
                     src={srcVista2 ?? layoutImage('bg_vista_2.png')}
+                    tint={tintVista2}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 125, height: 187 }}
                 />
                 <ThemeImage
                     name="vista_3"
                     src={srcVista3 ?? layoutImage('bg_vista_3.png')}
+                    tint={tintVista3}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 163, height: 274 }}
                 />
             </Region>

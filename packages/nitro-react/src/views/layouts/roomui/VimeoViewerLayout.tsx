@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Frame, Region, TextInput, ThemeText } from '#base/theme';
@@ -8,10 +8,11 @@ export interface VimeoViewerLayoutProps {
     captionNoVideosLabel?: string;
     layout?: BoxLayout;
     onClose?: () => void;
+    videoWrapper?: ReactNode;
     visibleVideoWrapper?: boolean;
 }
 
-export const VimeoViewerLayout = ({ captionNoVideosLabel, layout, onClose, visibleVideoWrapper }: VimeoViewerLayoutProps) => {
+export const VimeoViewerLayout = ({ captionNoVideosLabel, layout, onClose, videoWrapper, visibleVideoWrapper }: VimeoViewerLayoutProps) => {
     const t = useTranslation();
     const [ videoIdValue, setVideoIdValue ] = useState('');
 
@@ -42,7 +43,9 @@ export const VimeoViewerLayout = ({ captionNoVideosLabel, layout, onClose, visib
                     <Region
                         name="video_wrapper"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                    />
+                    >
+                        {videoWrapper}
+                    </Region>
                 )}
             </Region>
             <Border

@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Region, ThemeImage, ThemeText } from '#base/theme';
 
@@ -11,12 +13,13 @@ export interface HabboWayPromoLayoutProps {
     captionPsTitleTxt?: string;
     layout?: BoxLayout;
     onGoButton?: () => void;
+    spacing?: ReactNode;
     srcCounterBg?: string;
     srcCounterBg2?: string;
     srcTeaserImage?: string;
 }
 
-export const HabboWayPromoLayout = ({ captionCaptionTxt, captionCounterInfoTxt, captionCounterTxt, captionInfoTxt, captionInfoTxt2, captionPsTitleTxt, layout, onGoButton, srcCounterBg, srcCounterBg2, srcTeaserImage }: HabboWayPromoLayoutProps) => {
+export const HabboWayPromoLayout = ({ captionCaptionTxt, captionCounterInfoTxt, captionCounterTxt, captionInfoTxt, captionInfoTxt2, captionPsTitleTxt, layout, onGoButton, spacing, srcCounterBg, srcCounterBg2, srcTeaserImage }: HabboWayPromoLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -74,7 +77,9 @@ export const HabboWayPromoLayout = ({ captionCaptionTxt, captionCounterInfoTxt, 
                         name="spacing"
                         backgroundColor="#000000"
                         layout={{ width: 250, height: 6, flexShrink: 0 }}
-                    />
+                    >
+                        {spacing}
+                    </Region>
                     <Region
                         name="info_txt"
                         layout={{ width: 270, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}

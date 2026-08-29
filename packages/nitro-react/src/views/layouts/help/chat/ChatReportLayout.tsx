@@ -1,15 +1,18 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button, Frame, Region, ScrollArea, ThemeText } from '#base/theme';
 
 /** Generated from `2923_chat_report_xml` (layout "chat_report", 380x491) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ChatReportLayoutProps {
     captionRoomName?: string;
+    itemsChatItems?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
     onSubmitButton?: () => void;
 }
 
-export const ChatReportLayout = ({ captionRoomName, layout, onClose, onSubmitButton }: ChatReportLayoutProps) => {
+export const ChatReportLayout = ({ captionRoomName, itemsChatItems, layout, onClose, onSubmitButton }: ChatReportLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -57,7 +60,9 @@ export const ChatReportLayout = ({ captionRoomName, layout, onClose, onSubmitBut
                                 <Region
                                     name="chat_items"
                                     layout={{ position: 'absolute', left: 9, right: 1, top: 23, bottom: 0, flexDirection: 'column' }}
-                                />
+                                >
+                                    {itemsChatItems}
+                                </Region>
                             </Region>
                         </Region>
                     </ScrollArea>

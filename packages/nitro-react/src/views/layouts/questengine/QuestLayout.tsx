@@ -21,6 +21,7 @@ export interface QuestLayoutProps {
     onLinkRegion?: () => void;
     srcHourglassIcon?: string;
     srcQuestPicBitmap?: string;
+    tintHourglassIcon?: string;
     visibleDelayDescTxt?: boolean;
     visibleDelayTxt?: boolean;
     visibleHintTxt?: boolean;
@@ -30,7 +31,7 @@ export interface QuestLayoutProps {
     visibleLinkRoom?: boolean;
 }
 
-export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDelayTxt, captionDescTxt, captionHintTxt, captionLinkCatalog, captionLinkNavigator, captionLinkRoom, captionQuestHeaderTxt, captionRewardAmountTxt, captionRewardCaptionTxt, captionTimeleftTxt, layout, onAcceptButton, onCancelRegion, onLinkRegion, srcHourglassIcon, srcQuestPicBitmap, visibleDelayDescTxt, visibleDelayTxt, visibleHintTxt, visibleLinkCatalog, visibleLinkNavigator, visibleLinkRegion, visibleLinkRoom }: QuestLayoutProps) => {
+export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDelayTxt, captionDescTxt, captionHintTxt, captionLinkCatalog, captionLinkNavigator, captionLinkRoom, captionQuestHeaderTxt, captionRewardAmountTxt, captionRewardCaptionTxt, captionTimeleftTxt, layout, onAcceptButton, onCancelRegion, onLinkRegion, srcHourglassIcon, srcQuestPicBitmap, tintHourglassIcon, visibleDelayDescTxt, visibleDelayTxt, visibleHintTxt, visibleLinkCatalog, visibleLinkNavigator, visibleLinkRegion, visibleLinkRoom }: QuestLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -69,6 +70,7 @@ export const QuestLayout = ({ captionCancelTxt, captionDelayDescTxt, captionDela
                         <ThemeImage
                             name="hourglass_icon"
                             src={srcHourglassIcon}
+                            tint={tintHourglassIcon}
                             layout={{ width: 14, height: 20, flexShrink: 0 }}
                         />
                     </Region>

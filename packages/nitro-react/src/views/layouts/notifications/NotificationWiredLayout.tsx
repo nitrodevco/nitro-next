@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -5,12 +7,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `2975_notification_wired_xml` (layout "notification_wired", 190x60) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NotificationWiredLayoutProps {
     captionDescription?: string;
+    itemsSpacing?: ReactNode;
     layout?: BoxLayout;
     onButton?: () => void;
     visibleButton?: boolean;
 }
 
-export const NotificationWiredLayout = ({ captionDescription, layout, onButton, visibleButton }: NotificationWiredLayoutProps) => {
+export const NotificationWiredLayout = ({ captionDescription, itemsSpacing, layout, onButton, visibleButton }: NotificationWiredLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -57,7 +60,9 @@ export const NotificationWiredLayout = ({ captionDescription, layout, onButton, 
                     <Region
                         name="spacing"
                         layout={{ width: 30, height: 7, flexShrink: 0, flexDirection: 'column' }}
-                    />
+                    >
+                        {itemsSpacing}
+                    </Region>
                     {(visibleButton ?? false) && (
                         <Button
                             variant="106"

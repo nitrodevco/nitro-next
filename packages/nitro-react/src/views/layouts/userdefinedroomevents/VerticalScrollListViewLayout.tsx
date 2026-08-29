@@ -1,11 +1,14 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, ScrollArea } from '#base/theme';
 
 /** Generated from `1148_vertical_scroll_list_view_xml` (layout "vertical_scroll_list_view", 100x100) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface VerticalScrollListViewLayoutProps {
+    itemsScrollView?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const VerticalScrollListViewLayout = ({ layout }: VerticalScrollListViewLayoutProps) => {
+export const VerticalScrollListViewLayout = ({ itemsScrollView, layout }: VerticalScrollListViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 100, height: 100, ...layout }}>
             <ScrollArea
@@ -15,7 +18,9 @@ export const VerticalScrollListViewLayout = ({ layout }: VerticalScrollListViewL
                 <Region
                     name="scroll_view"
                     layout={{ flexDirection: 'column', width: '100%' }}
-                />
+                >
+                    {itemsScrollView}
+                </Region>
             </ScrollArea>
         </Region>
     );

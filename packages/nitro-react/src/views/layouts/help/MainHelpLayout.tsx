@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, CheckBox, Frame, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -18,9 +20,14 @@ export interface MainHelpLayoutProps {
     onSafetybookletLink?: () => void;
     onSelfHelpLink?: () => void;
     onSelfHelpLink2?: () => void;
+    separatorWidget?: ReactNode;
+    separatorWidget2?: ReactNode;
+    separatorWidget3?: ReactNode;
+    separatorWidget4?: ReactNode;
+    separatorWidget5?: ReactNode;
 }
 
-export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, captionSelfHelpLink, captionSelfHelpLink2, layout, onBullyButton, onClose, onEmergencyButton, onHabbowayLink, onInstructionsButton, onLeaveRoom, onSafetybookletLink, onSelfHelpLink, onSelfHelpLink2 }: MainHelpLayoutProps) => {
+export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, captionSelfHelpLink, captionSelfHelpLink2, layout, onBullyButton, onClose, onEmergencyButton, onHabbowayLink, onInstructionsButton, onLeaveRoom, onSafetybookletLink, onSelfHelpLink, onSelfHelpLink2, separatorWidget, separatorWidget2, separatorWidget3, separatorWidget4, separatorWidget5 }: MainHelpLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -35,6 +42,7 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                     widgetType="separator"
                     layout={{ width: 400, height: 20, flexShrink: 0 }}
                 >
+                    {separatorWidget}
                     <Region layout={{ position: 'absolute', left: 170, width: 157, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('help.main.help.section.title')}
@@ -76,6 +84,7 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                     widgetType="separator"
                     layout={{ width: 400, height: 20, flexShrink: 0 }}
                 >
+                    {separatorWidget2}
                     <Region layout={{ position: 'absolute', left: 170, width: 127, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('help.main2.bully.title')}
@@ -121,6 +130,7 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                     widgetType="separator"
                     layout={{ width: 409, height: 20, flexShrink: 0 }}
                 >
+                    {separatorWidget3}
                     <Region layout={{ position: 'absolute', left: 0, width: 144, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('help.main.self.section.title')}
@@ -161,7 +171,9 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                         widgetType="separator"
                         options={{ 'separator:vertical': 'true' }}
                         layout={{ position: 'absolute', left: 180, width: 30, top: 15, height: 45 }}
-                    />
+                    >
+                        {separatorWidget4}
+                    </WidgetSlot>
                     <Region layout={{ position: 'absolute', left: 210, width: 180, alignSelf: 'center', marginTop: 2, marginBottom: -2, height: 42, minWidth: 180, maxWidth: 180, flexDirection: 'column', gap: 5 }}>
                         <Region
                             name="habboway_link"
@@ -192,7 +204,9 @@ export const MainHelpLayout = ({ captionHabbowayLink, captionSafetybookletLink, 
                 <WidgetSlot
                     widgetType="separator"
                     layout={{ width: 409, height: 20, flexShrink: 0 }}
-                />
+                >
+                    {separatorWidget5}
+                </WidgetSlot>
                 <Border
                     variant="104"
                     tintColor="#ac1d19"

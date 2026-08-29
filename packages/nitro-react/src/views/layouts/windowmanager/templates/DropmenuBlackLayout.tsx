@@ -1,13 +1,17 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, ScrollArea, ThemeText } from '#base/theme';
 
 /** Generated from `1893_dropmenu_black_xml` (layout "habbo_window_layout_dropmenu", 40x22) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface DropmenuBlackLayoutProps {
     captionDROPLISTTITLETEXT?: string;
+    dROPLISTREGION?: ReactNode;
+    itemsDROPLISTITEMLIST?: ReactNode;
     layout?: BoxLayout;
     onDROPLISTREGION?: () => void;
 }
 
-export const DropmenuBlackLayout = ({ captionDROPLISTTITLETEXT, layout, onDROPLISTREGION }: DropmenuBlackLayoutProps) => {
+export const DropmenuBlackLayout = ({ captionDROPLISTTITLETEXT, dROPLISTREGION, itemsDROPLISTITEMLIST, layout, onDROPLISTREGION }: DropmenuBlackLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 40, height: 22, ...layout }}>
             <Region
@@ -27,14 +31,18 @@ export const DropmenuBlackLayout = ({ captionDROPLISTTITLETEXT, layout, onDROPLI
                 <Region
                     name="_DROPLIST_ITEMLIST"
                     layout={{ flexDirection: 'column', width: '100%' }}
-                />
+                >
+                    {itemsDROPLISTITEMLIST}
+                </Region>
             </ScrollArea>
             <Region
                 name="_DROPLIST_REGION"
                 onPointerTap={onDROPLISTREGION}
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 6, right: 6, top: 2, height: 18 }}
-            />
+            >
+                {dROPLISTREGION}
+            </Region>
         </Region>
     );
 };

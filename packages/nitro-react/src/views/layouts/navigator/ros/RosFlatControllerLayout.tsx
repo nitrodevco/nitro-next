@@ -1,8 +1,11 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Icon, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `3039_ros_flat_controller_xml` (layout "Flat controller", 111x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RosFlatControllerLayoutProps {
+    bgRegion?: ReactNode;
     captionUserNameTxt?: string;
     layout?: BoxLayout;
     onBgRegion?: () => void;
@@ -10,7 +13,7 @@ export interface RosFlatControllerLayoutProps {
     srcArrowIcon?: string;
 }
 
-export const RosFlatControllerLayout = ({ captionUserNameTxt, layout, onBgRegion, onUserInfoRegion, srcArrowIcon }: RosFlatControllerLayoutProps) => {
+export const RosFlatControllerLayout = ({ bgRegion, captionUserNameTxt, layout, onBgRegion, onUserInfoRegion, srcArrowIcon }: RosFlatControllerLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -25,7 +28,9 @@ export const RosFlatControllerLayout = ({ captionUserNameTxt, layout, onBgRegion
                     onPointerTap={onBgRegion}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, width: 111, top: 0, height: 20 }}
-                />
+                >
+                    {bgRegion}
+                </Region>
                 <Region
                     name="user_info_region"
                     tooltip={t('group.members.showinfo')}

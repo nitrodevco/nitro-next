@@ -9,9 +9,11 @@ export interface UniqueItemOverlayGriditemLayoutProps {
     srcUniqueItemOverlayPlaqueNumberBitmap?: string;
     srcUniqueItemPlaqueForegroundBitmap?: string;
     srcUniqueItemPlaqueStudsBitmap?: string;
+    tintUniqueItemOverlayPlaqueBackgroundBitmap?: string;
+    tintUniqueItemOverlayPlaqueNumberBitmap?: string;
 }
 
-export const UniqueItemOverlayGriditemLayout = ({ layout, srcUniqueItemOverlayGlazeBitmap, srcUniqueItemOverlayPlaqueBackgroundBitmap, srcUniqueItemOverlayPlaqueNumberBitmap, srcUniqueItemPlaqueForegroundBitmap, srcUniqueItemPlaqueStudsBitmap }: UniqueItemOverlayGriditemLayoutProps) => {
+export const UniqueItemOverlayGriditemLayout = ({ layout, srcUniqueItemOverlayGlazeBitmap, srcUniqueItemOverlayPlaqueBackgroundBitmap, srcUniqueItemOverlayPlaqueNumberBitmap, srcUniqueItemPlaqueForegroundBitmap, srcUniqueItemPlaqueStudsBitmap, tintUniqueItemOverlayPlaqueBackgroundBitmap, tintUniqueItemOverlayPlaqueNumberBitmap }: UniqueItemOverlayGriditemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 36, height: 36, ...layout }}>
             <Region
@@ -21,6 +23,7 @@ export const UniqueItemOverlayGriditemLayout = ({ layout, srcUniqueItemOverlayGl
                 <ThemeImage
                     name="unique_item_overlay_plaque_background_bitmap"
                     src={srcUniqueItemOverlayPlaqueBackgroundBitmap}
+                    tint={tintUniqueItemOverlayPlaqueBackgroundBitmap}
                     layout={{ position: 'absolute', left: 1, width: 34, top: 28, height: 7 }}
                 />
                 <ThemeImage
@@ -31,6 +34,7 @@ export const UniqueItemOverlayGriditemLayout = ({ layout, srcUniqueItemOverlayGl
                 <ThemeImage
                     name="unique_item_overlay_plaque_number_bitmap"
                     src={srcUniqueItemOverlayPlaqueNumberBitmap}
+                    tint={tintUniqueItemOverlayPlaqueNumberBitmap}
                     layout={{ position: 'absolute', left: 6, width: 24, top: 29, height: 5 }}
                 />
                 <ThemeImage

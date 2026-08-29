@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -8,14 +10,16 @@ export interface ExpiringCatalogPageLayoutProps {
     captionPageExpiryTitle?: string;
     captionPageHeaderTxt?: string;
     colorableTextColor?: string;
+    countdownWidget?: ReactNode;
     layout?: BoxLayout;
     onOpenCatalogButton?: () => void;
+    spacing?: ReactNode;
     srcBorderBar?: string;
     srcHdrLine?: string;
     srcPromoBitmap?: string;
 }
 
-export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpiryTitle, captionPageHeaderTxt, colorableTextColor, layout, onOpenCatalogButton, srcBorderBar, srcHdrLine, srcPromoBitmap }: ExpiringCatalogPageLayoutProps) => {
+export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpiryTitle, captionPageHeaderTxt, colorableTextColor, countdownWidget, layout, onOpenCatalogButton, spacing, srcBorderBar, srcHdrLine, srcPromoBitmap }: ExpiringCatalogPageLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -50,11 +54,15 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                         name="countdown_widget"
                         options={{ 'countdown:running': 'true' }}
                         layout={{ width: 99, height: 37, flexShrink: 0 }}
-                    />
+                    >
+                        {countdownWidget}
+                    </WidgetSlot>
                     <Region
                         name="spacing"
                         layout={{ width: 30, height: 6, flexShrink: 0 }}
-                    />
+                    >
+                        {spacing}
+                    </Region>
                     <Region
                         name="page_header_txt"
                         layout={{ width: 183, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

@@ -6,9 +6,11 @@ export interface PlaylisteditorPlaylistSubwindowAddSongsLayoutProps {
     layout?: BoxLayout;
     srcAddSongsIconImage?: string;
     srcBackgroundImage?: string;
+    tintAddSongsIconImage?: string;
+    tintBackgroundImage?: string;
 }
 
-export const PlaylisteditorPlaylistSubwindowAddSongsLayout = ({ layout, srcAddSongsIconImage, srcBackgroundImage }: PlaylisteditorPlaylistSubwindowAddSongsLayoutProps) => {
+export const PlaylisteditorPlaylistSubwindowAddSongsLayout = ({ layout, srcAddSongsIconImage, srcBackgroundImage, tintAddSongsIconImage, tintBackgroundImage }: PlaylisteditorPlaylistSubwindowAddSongsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -17,11 +19,13 @@ export const PlaylisteditorPlaylistSubwindowAddSongsLayout = ({ layout, srcAddSo
                 <ThemeImage
                     name="background_image"
                     src={srcBackgroundImage}
+                    tint={tintBackgroundImage}
                     layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 56 }}
                 />
                 <ThemeImage
                     name="add_songs_icon_image"
                     src={srcAddSongsIconImage}
+                    tint={tintAddSongsIconImage}
                     layout={{ position: 'absolute', left: 8, width: 46, top: 3, height: 46 }}
                 />
                 <Region layout={{ position: 'absolute', left: 63, width: 270, top: 1, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>

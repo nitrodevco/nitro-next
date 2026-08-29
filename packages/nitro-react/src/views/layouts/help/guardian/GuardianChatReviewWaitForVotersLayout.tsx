@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Frame, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -5,6 +7,7 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `2925_guardian_chat_review_wait_for_voters_xml` (layout "guardian_chat_review_wait_for_voters", 279x499) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GuardianChatReviewWaitForVotersLayoutProps {
     captionIncidentTime?: string;
+    countdown?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
     onCloseLink?: () => void;
@@ -14,7 +17,7 @@ export interface GuardianChatReviewWaitForVotersLayoutProps {
     srcWaitingAnimation?: string;
 }
 
-export const GuardianChatReviewWaitForVotersLayout = ({ captionIncidentTime, layout, onClose, onCloseLink, onVoteBad, onVoteOk, onVoteVeryBad, srcWaitingAnimation }: GuardianChatReviewWaitForVotersLayoutProps) => {
+export const GuardianChatReviewWaitForVotersLayout = ({ captionIncidentTime, countdown, layout, onClose, onCloseLink, onVoteBad, onVoteOk, onVoteVeryBad, srcWaitingAnimation }: GuardianChatReviewWaitForVotersLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -31,7 +34,9 @@ export const GuardianChatReviewWaitForVotersLayout = ({ captionIncidentTime, lay
                 name="countdown"
                 options={{ 'countdown:digits': '2' }}
                 layout={{ position: 'absolute', left: 207, width: 63, top: 8, height: 37 }}
-            />
+            >
+                {countdown}
+            </WidgetSlot>
             <Region layout={{ position: 'absolute', left: 14, top: 42, flexDirection: 'row' }}>
                 <Region layout={{ width: 193, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <ThemeText

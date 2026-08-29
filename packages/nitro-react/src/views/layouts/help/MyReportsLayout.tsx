@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Bubble, Button, Frame, Region, ThemeText } from '#base/theme';
 
@@ -12,11 +14,16 @@ export interface MyReportsLayoutProps {
     layout?: BoxLayout;
     onAppealButton?: () => void;
     onClose?: () => void;
+    reportsTableCont?: ReactNode;
+    spacer?: ReactNode;
+    spacer2?: ReactNode;
+    spacer3?: ReactNode;
+    spacer4?: ReactNode;
     visibleSpacer?: boolean;
     visibleStatusInfoBubble?: boolean;
 }
 
-export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captionCreatedKeyTxt, captionDecisionDateTxt, captionReportedDateTxt, captionSanctionInfoTxt, layout, onAppealButton, onClose, visibleSpacer, visibleStatusInfoBubble }: MyReportsLayoutProps) => {
+export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captionCreatedKeyTxt, captionDecisionDateTxt, captionReportedDateTxt, captionSanctionInfoTxt, layout, onAppealButton, onClose, reportsTableCont, spacer, spacer2, spacer3, spacer4, visibleSpacer, visibleStatusInfoBubble }: MyReportsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -30,7 +37,9 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
             <Region
                 name="reports_table_cont"
                 layout={{ position: 'absolute', left: 4, right: 3, top: 3, bottom: 41 }}
-            />
+            >
+                {reportsTableCont}
+            </Region>
             {(visibleStatusInfoBubble ?? true) && (
                 <Bubble
                     variant="7"
@@ -48,7 +57,9 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                         <Region
                             name="spacer"
                             layout={{ width: 0, height: 8, flexShrink: 0 }}
-                        />
+                        >
+                            {spacer}
+                        </Region>
                         <Region layout={{ width: 223, height: 17, flexShrink: 0, flexDirection: 'row', gap: 2 }}>
                             <Region
                                 name="created_key_txt"
@@ -83,7 +94,9 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                         <Region
                             name="spacer"
                             layout={{ width: 0, height: 8, flexShrink: 0 }}
-                        />
+                        >
+                            {spacer2}
+                        </Region>
                         <Region
                             name="action_txt"
                             layout={{ width: 143, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -106,7 +119,9 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                             <Region
                                 name="spacer"
                                 layout={{ width: 0, height: 8, flexShrink: 0 }}
-                            />
+                            >
+                                {spacer3}
+                            </Region>
                         )}
                         <Region
                             name="sanction_info_txt"
@@ -120,7 +135,9 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                         <Region
                             name="spacer"
                             layout={{ width: 0, height: 8, flexShrink: 0 }}
-                        />
+                        >
+                            {spacer4}
+                        </Region>
                         <Button
                             variant="3"
                             name="appeal_button"

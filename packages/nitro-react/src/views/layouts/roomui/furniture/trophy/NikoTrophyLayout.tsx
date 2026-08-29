@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
 
@@ -7,6 +9,7 @@ export interface NikoTrophyLayoutProps {
     captionHtmlTextbox?: string;
     captionStoreLink?: string;
     layout?: BoxLayout;
+    nikotrophyBackground?: ReactNode;
     onAppstoreRegion?: () => void;
     onClose?: () => void;
     onStoreLink?: () => void;
@@ -14,7 +17,7 @@ export interface NikoTrophyLayoutProps {
     srcStoreImage?: string;
 }
 
-export const NikoTrophyLayout = ({ captionDate, captionHtmlTextbox, captionStoreLink, layout, onAppstoreRegion, onClose, onStoreLink, srcPreviewImage, srcStoreImage }: NikoTrophyLayoutProps) => {
+export const NikoTrophyLayout = ({ captionDate, captionHtmlTextbox, captionStoreLink, layout, nikotrophyBackground, onAppstoreRegion, onClose, onStoreLink, srcPreviewImage, srcStoreImage }: NikoTrophyLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -31,7 +34,9 @@ export const NikoTrophyLayout = ({ captionDate, captionHtmlTextbox, captionStore
                 name="nikotrophy.background"
                 backgroundColor="#36494e"
                 layout={{ position: 'absolute', left: 0, width: 428, top: 0, height: 169 }}
-            />
+            >
+                {nikotrophyBackground}
+            </Region>
             <ThemeImage
                 name="preview_image"
                 src={srcPreviewImage}

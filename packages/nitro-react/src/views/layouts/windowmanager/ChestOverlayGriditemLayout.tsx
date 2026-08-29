@@ -7,9 +7,10 @@ export interface ChestOverlayGriditemLayoutProps {
     srcChestOverlayGlazeBitmap?: string;
     srcChestPlaqueBitmap?: string;
     srcChestPlaqueNumberBitmap?: string;
+    tintChestPlaqueNumberBitmap?: string;
 }
 
-export const ChestOverlayGriditemLayout = ({ layout, srcChestOverlayGlazeBitmap, srcChestPlaqueBitmap, srcChestPlaqueNumberBitmap }: ChestOverlayGriditemLayoutProps) => {
+export const ChestOverlayGriditemLayout = ({ layout, srcChestOverlayGlazeBitmap, srcChestPlaqueBitmap, srcChestPlaqueNumberBitmap, tintChestPlaqueNumberBitmap }: ChestOverlayGriditemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 36, height: 36, ...layout }}>
             <Region
@@ -24,6 +25,7 @@ export const ChestOverlayGriditemLayout = ({ layout, srcChestOverlayGlazeBitmap,
                 <ThemeImage
                     name="chest_plaque_number_bitmap"
                     src={srcChestPlaqueNumberBitmap}
+                    tint={tintChestPlaqueNumberBitmap}
                     layout={{ position: 'absolute', left: 6, width: 24, top: 28, height: 5 }}
                 />
                 <ThemeImage

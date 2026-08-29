@@ -8,9 +8,10 @@ export interface SearchFooterLayoutProps {
     layout?: BoxLayout;
     onSearchBut?: () => void;
     srcSearch?: string;
+    tintSearch?: string;
 }
 
-export const SearchFooterLayout = ({ layout, onSearchBut, srcSearch }: SearchFooterLayoutProps) => {
+export const SearchFooterLayout = ({ layout, onSearchBut, srcSearch, tintSearch }: SearchFooterLayoutProps) => {
     const t = useTranslation();
     const [ searchStrValue, setSearchStrValue ] = useState('');
 
@@ -42,6 +43,7 @@ export const SearchFooterLayout = ({ layout, onSearchBut, srcSearch }: SearchFoo
                         <ThemeImage
                             name="search"
                             src={srcSearch}
+                            tint={tintSearch}
                             layout={{ position: 'absolute', left: 5, width: 12, top: 4, height: 12 }}
                         />
                         <Region layout={{ position: 'absolute', left: 20, width: 50, top: 3, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>

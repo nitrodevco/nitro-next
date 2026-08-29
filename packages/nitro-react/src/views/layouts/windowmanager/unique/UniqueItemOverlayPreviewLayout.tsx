@@ -7,9 +7,11 @@ export interface UniqueItemOverlayPreviewLayoutProps {
     srcPlaque?: string;
     srcUniqueItemEditionSizeBitmap?: string;
     srcUniqueItemSerialNumberBitmap?: string;
+    tintUniqueItemEditionSizeBitmap?: string;
+    tintUniqueItemSerialNumberBitmap?: string;
 }
 
-export const UniqueItemOverlayPreviewLayout = ({ layout, srcPlaque, srcUniqueItemEditionSizeBitmap, srcUniqueItemSerialNumberBitmap }: UniqueItemOverlayPreviewLayoutProps) => {
+export const UniqueItemOverlayPreviewLayout = ({ layout, srcPlaque, srcUniqueItemEditionSizeBitmap, srcUniqueItemSerialNumberBitmap, tintUniqueItemEditionSizeBitmap, tintUniqueItemSerialNumberBitmap }: UniqueItemOverlayPreviewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 40, height: 40, ...layout }}>
             <Region
@@ -24,11 +26,13 @@ export const UniqueItemOverlayPreviewLayout = ({ layout, srcPlaque, srcUniqueIte
                 <ThemeImage
                     name="unique_item_edition_size_bitmap"
                     src={srcUniqueItemEditionSizeBitmap}
+                    tint={tintUniqueItemEditionSizeBitmap}
                     layout={{ position: 'absolute', left: 10, width: 20, top: 23, height: 5 }}
                 />
                 <ThemeImage
                     name="unique_item_serial_number_bitmap"
                     src={srcUniqueItemSerialNumberBitmap}
+                    tint={tintUniqueItemSerialNumberBitmap}
                     layout={{ position: 'absolute', left: 10, width: 20, top: 16, height: 5 }}
                 />
             </Region>

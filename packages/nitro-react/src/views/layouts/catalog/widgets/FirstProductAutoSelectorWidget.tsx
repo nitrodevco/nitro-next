@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
@@ -8,14 +10,17 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
  */
 /** Named region `firstProductAutoSelectorWidget` of FirstProductAutoSelectorWidget - configured through the parent's `firstProductAutoSelectorWidget` prop. */
 export interface FirstProductAutoSelectorWidgetProps extends CatalogWidgetFlags {
+    firstProductAutoSelectorWidget?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const FirstProductAutoSelectorWidget = ({ layout }: FirstProductAutoSelectorWidgetProps) => {
+export const FirstProductAutoSelectorWidget = ({ firstProductAutoSelectorWidget, layout }: FirstProductAutoSelectorWidgetProps) => {
     return (
         <Region
             name="firstProductAutoSelectorWidget"
             layout={{ position: 'absolute', ...layout }}
-        />
+        >
+            {firstProductAutoSelectorWidget}
+        </Region>
     );
 };

@@ -1,17 +1,19 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1238_me_menu_new_view_xml` (layout "me_menu_new_view", 546x53) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MeMenuNewViewLayoutProps {
+    captionClothesFieldText?: string;
+    captionCollectiblesFieldText?: string;
     captionFieldText?: string;
-    captionFieldText2?: string;
-    captionFieldText3?: string;
-    captionFieldText4?: string;
-    captionFieldText5?: string;
-    captionFieldText6?: string;
-    captionFieldText7?: string;
-    captionFieldText8?: string;
+    captionForumsFieldText?: string;
+    captionMinimailFieldText?: string;
+    captionProfileFieldText?: string;
+    captionRoomsFieldText?: string;
+    captionTalentsFieldText?: string;
     layout?: BoxLayout;
     onClothes?: () => void;
     onCollectibles?: () => void;
@@ -21,6 +23,7 @@ export interface MeMenuNewViewLayoutProps {
     onProfile?: () => void;
     onRooms?: () => void;
     onTalents?: () => void;
+    spacer?: ReactNode;
     srcClothesIconColor?: string;
     srcClothesIconGrey?: string;
     srcCollectiblesIconColor?: string;
@@ -39,7 +42,7 @@ export interface MeMenuNewViewLayoutProps {
     srcTalentsIconGrey?: string;
 }
 
-export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, captionFieldText3, captionFieldText4, captionFieldText5, captionFieldText6, captionFieldText7, captionFieldText8, layout, onClothes, onCollectibles, onForums, onGuide, onMinimail, onProfile, onRooms, onTalents, srcClothesIconColor, srcClothesIconGrey, srcCollectiblesIconColor, srcCollectiblesIconGrey, srcForumsIconColor, srcForumsIconGrey, srcGuideIconColor, srcGuideIconGrey, srcMinimailIconColor, srcMinimailIconGrey, srcProfileIconColor, srcProfileIconGrey, srcRoomsIconColor, srcRoomsIconGrey, srcTalentsIconColor, srcTalentsIconGrey }: MeMenuNewViewLayoutProps) => {
+export const MeMenuNewViewLayout = ({ captionClothesFieldText, captionCollectiblesFieldText, captionFieldText, captionForumsFieldText, captionMinimailFieldText, captionProfileFieldText, captionRoomsFieldText, captionTalentsFieldText, layout, onClothes, onCollectibles, onForums, onGuide, onMinimail, onProfile, onRooms, onTalents, spacer, srcClothesIconColor, srcClothesIconGrey, srcCollectiblesIconColor, srcCollectiblesIconGrey, srcForumsIconColor, srcForumsIconGrey, srcGuideIconColor, srcGuideIconGrey, srcMinimailIconColor, srcMinimailIconGrey, srcProfileIconColor, srcProfileIconGrey, srcRoomsIconColor, srcRoomsIconGrey, srcTalentsIconColor, srcTalentsIconGrey }: MeMenuNewViewLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -95,7 +98,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                                 layout={{ position: 'absolute', marginLeft: 5, marginRight: -5, width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
-                                    text={captionFieldText2 ?? t('widget.memenu.talents')}
+                                    text={captionTalentsFieldText ?? t('widget.memenu.talents')}
                                     textStyle="text-style-u-regular"
                                     textOptions={{ fill: '#ffffff' }}
                                 />
@@ -122,7 +125,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
-                                    text={captionFieldText3 ?? t('widget.memenu.minimail')}
+                                    text={captionMinimailFieldText ?? t('widget.memenu.minimail')}
                                     textStyle="text-style-u-regular"
                                     textOptions={{ fill: '#ffffff' }}
                                 />
@@ -149,7 +152,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
-                                    text={captionFieldText4 ?? t('widget.memenu.profile')}
+                                    text={captionProfileFieldText ?? t('widget.memenu.profile')}
                                     textStyle="text-style-u-regular"
                                     textOptions={{ fill: '#ffffff' }}
                                 />
@@ -176,7 +179,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
-                                    text={captionFieldText5 ?? t('widget.memenu.myrooms')}
+                                    text={captionRoomsFieldText ?? t('widget.memenu.myrooms')}
                                     textStyle="text-style-u-regular"
                                     textOptions={{ fill: '#ffffff' }}
                                 />
@@ -203,7 +206,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
-                                    text={captionFieldText6 ?? t('widget.memenu.editavatar')}
+                                    text={captionClothesFieldText ?? t('widget.memenu.editavatar')}
                                     textStyle="text-style-u-regular"
                                     textOptions={{ fill: '#ffffff' }}
                                 />
@@ -230,7 +233,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
-                                    text={captionFieldText7 ?? t('widget.memenu.forums')}
+                                    text={captionForumsFieldText ?? t('widget.memenu.forums')}
                                     textStyle="text-style-u-regular"
                                     textOptions={{ fill: '#ffffff' }}
                                 />
@@ -257,7 +260,7 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                                 layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 49, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
-                                    text={captionFieldText8 ?? t('memenu.collectibles')}
+                                    text={captionCollectiblesFieldText ?? t('memenu.collectibles')}
                                     textStyle="text-style-u-regular"
                                     textOptions={{ fill: '#ffffff' }}
                                 />
@@ -271,7 +274,9 @@ export const MeMenuNewViewLayout = ({ captionFieldText, captionFieldText2, capti
                         <Region
                             name="spacer"
                             layout={{ position: 'absolute', left: 536, width: 7, top: 2, height: 30 }}
-                        />
+                        >
+                            {spacer}
+                        </Region>
                     </Region>
                 </Region>
             </Border>

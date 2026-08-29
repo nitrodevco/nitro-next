@@ -7,9 +7,10 @@ export interface ProfilerTaskLayoutProps {
     layout?: BoxLayout;
     onCheck?: () => void;
     srcCanvas?: string;
+    tintCanvas?: string;
 }
 
-export const ProfilerTaskLayout = ({ layout, onCheck, srcCanvas }: ProfilerTaskLayoutProps) => {
+export const ProfilerTaskLayout = ({ layout, onCheck, srcCanvas, tintCanvas }: ProfilerTaskLayoutProps) => {
     const [ textValue, setTextValue ] = useState('');
     const [ captionValue, setCaptionValue ] = useState('');
 
@@ -33,6 +34,7 @@ export const ProfilerTaskLayout = ({ layout, onCheck, srcCanvas }: ProfilerTaskL
                 <ThemeImage
                     name="canvas"
                     src={srcCanvas}
+                    tint={tintCanvas}
                     layout={{ position: 'absolute', right: 10, width: 66, top: 3, height: 33, overflow: 'hidden' }}
                 />
                 <CheckBox

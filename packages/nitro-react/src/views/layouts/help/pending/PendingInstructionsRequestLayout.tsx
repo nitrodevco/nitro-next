@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Frame, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -8,9 +10,10 @@ export interface PendingInstructionsRequestLayoutProps {
     layout?: BoxLayout;
     onClose?: () => void;
     onCloseButton?: () => void;
+    timestamp?: ReactNode;
 }
 
-export const PendingInstructionsRequestLayout = ({ captionDescription, layout, onClose, onCloseButton }: PendingInstructionsRequestLayoutProps) => {
+export const PendingInstructionsRequestLayout = ({ captionDescription, layout, onClose, onCloseButton, timestamp }: PendingInstructionsRequestLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -61,7 +64,9 @@ export const PendingInstructionsRequestLayout = ({ captionDescription, layout, o
                             widgetType="updating_timestamp"
                             name="timestamp"
                             layout={{ width: 4, height: 4, flexShrink: 0 }}
-                        />
+                        >
+                            {timestamp}
+                        </WidgetSlot>
                         <Region layout={{ width: 30, height: 7, flexShrink: 0 }} />
                     </Region>
                 </Border>

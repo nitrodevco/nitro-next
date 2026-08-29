@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { Border, BoxLayout, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
@@ -5,6 +7,7 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface InventoryThumbNftLayoutProps {
     captionNumber?: string;
     layout?: BoxLayout;
+    nftIcon?: ReactNode;
     srcOutline?: string;
     srcUniqueItemBackgroundBitmap?: string;
     visibleNumberContainer?: boolean;
@@ -12,7 +15,7 @@ export interface InventoryThumbNftLayoutProps {
     visibleUniqueItemBackgroundBitmap?: boolean;
 }
 
-export const InventoryThumbNftLayout = ({ captionNumber, layout, srcOutline, srcUniqueItemBackgroundBitmap, visibleNumberContainer, visibleOutline, visibleUniqueItemBackgroundBitmap }: InventoryThumbNftLayoutProps) => {
+export const InventoryThumbNftLayout = ({ captionNumber, layout, nftIcon, srcOutline, srcUniqueItemBackgroundBitmap, visibleNumberContainer, visibleOutline, visibleUniqueItemBackgroundBitmap }: InventoryThumbNftLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 42, height: 42, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}>
@@ -32,7 +35,9 @@ export const InventoryThumbNftLayout = ({ captionNumber, layout, srcOutline, src
                         widgetType="product_icon"
                         name="nft_icon"
                         layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
-                    />
+                    >
+                        {nftIcon}
+                    </WidgetSlot>
                     {(visibleNumberContainer ?? false) && (
                         <Region
                             name="number_container"

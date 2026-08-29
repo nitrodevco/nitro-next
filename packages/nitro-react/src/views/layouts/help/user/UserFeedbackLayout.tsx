@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Frame, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -13,9 +15,10 @@ export interface UserFeedbackLayoutProps {
     onNegativeButton?: () => void;
     onPositiveButton?: () => void;
     onReportGuideLink?: () => void;
+    separatorWidget?: ReactNode;
 }
 
-export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, captionReportGuideLink, layout, onClose, onGuideNameLink, onNegativeButton, onPositiveButton, onReportGuideLink }: UserFeedbackLayoutProps) => {
+export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, captionReportGuideLink, layout, onClose, onGuideNameLink, onNegativeButton, onPositiveButton, onReportGuideLink, separatorWidget }: UserFeedbackLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -86,7 +89,9 @@ export const UserFeedbackLayout = ({ captionGuideDesc, captionGuideNameLink, cap
                 <WidgetSlot
                     widgetType="separator"
                     layout={{ width: 220, height: 10, flexShrink: 0 }}
-                />
+                >
+                    {separatorWidget}
+                </WidgetSlot>
                 <Region layout={{ width: 260, height: 1, flexShrink: 0 }}>
                     <ThemeImage
                         src={layoutImage('help_user_feedback.png')}

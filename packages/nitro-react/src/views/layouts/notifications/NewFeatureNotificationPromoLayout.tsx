@@ -8,13 +8,13 @@ export interface NewFeatureNotificationPromoLayoutProps {
     onCancelLinkRegion?: () => void;
     onMainRegion?: () => void;
     srcCancelImg?: string;
-    srcCancelImg2?: string;
+    srcCancelLinkRegionCancelImg?: string;
     srcStaticBitmap?: string;
     visibleCancelImg?: boolean;
     visibleCancelLinkRegion?: boolean;
 }
 
-export const NewFeatureNotificationPromoLayout = ({ captionDesc, layout, onCancelLinkRegion, onMainRegion, srcCancelImg, srcCancelImg2, srcStaticBitmap, visibleCancelImg, visibleCancelLinkRegion }: NewFeatureNotificationPromoLayoutProps) => {
+export const NewFeatureNotificationPromoLayout = ({ captionDesc, layout, onCancelLinkRegion, onMainRegion, srcCancelImg, srcCancelLinkRegionCancelImg, srcStaticBitmap, visibleCancelImg, visibleCancelLinkRegion }: NewFeatureNotificationPromoLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 192, height: 34, ...layout }}>
             <Region
@@ -59,7 +59,7 @@ export const NewFeatureNotificationPromoLayout = ({ captionDesc, layout, onCance
                             {(visibleCancelImg ?? false) && (
                                 <ThemeImage
                                     name="cancel_img"
-                                    src={srcCancelImg2 ?? layoutImage('common_close_x.png')}
+                                    src={srcCancelLinkRegionCancelImg ?? layoutImage('common_close_x.png')}
                                     tint="#000000"
                                     layout={{ position: 'absolute', left: 1, width: 9, top: 0, height: 9 }}
                                 />

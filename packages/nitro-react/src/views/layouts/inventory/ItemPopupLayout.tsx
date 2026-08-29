@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { Border, BoxLayout, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
@@ -5,13 +7,17 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface ItemPopupLayoutProps {
     captionItemNameText?: string;
     layout?: BoxLayout;
+    nftImage?: ReactNode;
     srcArrowPointer?: string;
     srcItemImage?: string;
     srcNftOverlayIcon?: string;
+    tintArrowPointer?: string;
+    tintItemImage?: string;
+    uniqueItemOverlayWidget?: ReactNode;
     visibleNftOverlayIcon?: boolean;
 }
 
-export const ItemPopupLayout = ({ captionItemNameText, layout, srcArrowPointer, srcItemImage, srcNftOverlayIcon, visibleNftOverlayIcon }: ItemPopupLayoutProps) => {
+export const ItemPopupLayout = ({ captionItemNameText, layout, nftImage, srcArrowPointer, srcItemImage, srcNftOverlayIcon, tintArrowPointer, tintItemImage, uniqueItemOverlayWidget, visibleNftOverlayIcon }: ItemPopupLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 203, height: 90, ...layout }}>
             <Border
@@ -22,6 +28,7 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, srcArrowPointer, 
                 <ThemeImage
                     name="item_image"
                     src={srcItemImage}
+                    tint={tintItemImage}
                     layout={{ position: 'absolute', left: 8, width: 190, top: 22, height: 55 }}
                 />
                 <Region
@@ -37,6 +44,7 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, srcArrowPointer, 
                 <ThemeImage
                     name="arrow_pointer"
                     src={srcArrowPointer}
+                    tint={tintArrowPointer}
                     layout={{ position: 'absolute', left: 180, width: 18, top: 6, height: 24 }}
                 />
                 {(visibleNftOverlayIcon ?? false) && (
@@ -50,12 +58,16 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, srcArrowPointer, 
                     widgetType="limited_item_overlay_preview"
                     name="unique_item_overlay_widget"
                     layout={{ position: 'absolute', left: 159, width: 40, top: 23, height: 40 }}
-                />
+                >
+                    {uniqueItemOverlayWidget}
+                </WidgetSlot>
                 <WidgetSlot
                     widgetType="product_image"
                     name="nft_image"
                     layout={{ position: 'absolute', left: 16, width: 170, top: 29, height: 146 }}
-                />
+                >
+                    {nftImage}
+                </WidgetSlot>
             </Border>
         </Region>
     );

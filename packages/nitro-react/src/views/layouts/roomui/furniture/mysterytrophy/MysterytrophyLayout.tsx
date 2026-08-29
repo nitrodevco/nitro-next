@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, ButtonThick, Frame, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
@@ -10,13 +10,14 @@ export interface MysterytrophyLayoutProps {
     captionMysterytrophyHeaderDescription?: string;
     captionMysterytrophyHeaderTitle?: string;
     layout?: BoxLayout;
+    mysterytrophyHeaderBackgroundBody?: ReactNode;
     onCancel?: () => void;
     onClose?: () => void;
     onOk?: () => void;
     srcMysterytrophyHeaderIcon?: string;
 }
 
-export const MysterytrophyLayout = ({ captionCancel, captionMysterytrophyHeaderDescription, captionMysterytrophyHeaderTitle, layout, onCancel, onClose, onOk, srcMysterytrophyHeaderIcon }: MysterytrophyLayoutProps) => {
+export const MysterytrophyLayout = ({ captionCancel, captionMysterytrophyHeaderDescription, captionMysterytrophyHeaderTitle, layout, mysterytrophyHeaderBackgroundBody, onCancel, onClose, onOk, srcMysterytrophyHeaderIcon }: MysterytrophyLayoutProps) => {
     const t = useTranslation();
     const [ inputValue, setInputValue ] = useState('');
 
@@ -39,7 +40,9 @@ export const MysterytrophyLayout = ({ captionCancel, captionMysterytrophyHeaderD
                     name="mysterytrophy.header.background.body"
                     backgroundColor="#0e3f52"
                     layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 95 }}
-                />
+                >
+                    {mysterytrophyHeaderBackgroundBody}
+                </Region>
                 <ThemeImage
                     name="mysterytrophy.header.icon"
                     src={srcMysterytrophyHeaderIcon ?? '${image.library.url}client_static/alert_mystTrophy.png'}

@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -12,11 +14,14 @@ export interface HabboModerationPromoLayoutProps {
     captionWrongdoersCaptionTxt?: string;
     captionWrongdoersInfoTxt?: string;
     layout?: BoxLayout;
+    spacing?: ReactNode;
+    spacing2?: ReactNode;
+    spacing3?: ReactNode;
     srcBorderBar?: string;
     srcHdrLine?: string;
 }
 
-export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCaptionTxt, captionCursingInfoTxt, captionInfoTxt, captionTitleTxt, captionWrongdoersCaptionTxt, captionWrongdoersInfoTxt, layout, srcBorderBar, srcHdrLine }: HabboModerationPromoLayoutProps) => {
+export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCaptionTxt, captionCursingInfoTxt, captionInfoTxt, captionTitleTxt, captionWrongdoersCaptionTxt, captionWrongdoersInfoTxt, layout, spacing, spacing2, spacing3, srcBorderBar, srcHdrLine }: HabboModerationPromoLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -58,7 +63,9 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                         name="spacing"
                         backgroundColor="#000000"
                         layout={{ width: 250, height: 6, flexShrink: 0 }}
-                    />
+                    >
+                        {spacing}
+                    </Region>
                     <Region
                         name="info_txt"
                         layout={{ width: 250, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -72,7 +79,9 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                         name="spacing"
                         backgroundColor="#000000"
                         layout={{ width: 250, height: 8, flexShrink: 0 }}
-                    />
+                    >
+                        {spacing2}
+                    </Region>
                     <Region
                         name="cursing_caption_txt"
                         layout={{ width: 237, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -96,7 +105,9 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                         name="spacing"
                         backgroundColor="#000000"
                         layout={{ width: 250, height: 8, flexShrink: 0 }}
-                    />
+                    >
+                        {spacing3}
+                    </Region>
                     <Region
                         name="wrongdoers_caption_txt"
                         layout={{ width: 150, height: 26, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}

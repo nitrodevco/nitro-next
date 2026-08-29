@@ -6,9 +6,10 @@ export interface SnowwarExitLayoutProps {
     layout?: BoxLayout;
     onExitButton?: () => void;
     srcBackgroundImage?: string;
+    tintBackgroundImage?: string;
 }
 
-export const SnowwarExitLayout = ({ layout, onExitButton, srcBackgroundImage }: SnowwarExitLayoutProps) => {
+export const SnowwarExitLayout = ({ layout, onExitButton, srcBackgroundImage, tintBackgroundImage }: SnowwarExitLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 68, height: 50, ...layout }}>
             <Region
@@ -20,6 +21,7 @@ export const SnowwarExitLayout = ({ layout, onExitButton, srcBackgroundImage }: 
                 <ThemeImage
                     name="backgroundImage"
                     src={srcBackgroundImage ?? layoutImage('ui_exit_down.png')}
+                    tint={tintBackgroundImage}
                     layout={{ position: 'absolute', left: 0, width: 68, top: 0, height: 50 }}
                 />
             </Region>

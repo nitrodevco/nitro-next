@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Frame, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -10,6 +12,8 @@ export interface CraftingwidgetLayoutProps {
     captionInfoText1?: string;
     captionInfoText2?: string;
     captionNumber?: string;
+    itemsItemgridInventory?: ReactNode;
+    itemsItemgridMixer?: ReactNode;
     layout?: BoxLayout;
     onBtnCancel?: () => void;
     onBtnCraft?: () => void;
@@ -19,11 +23,14 @@ export interface CraftingwidgetLayoutProps {
     onTooltip?: () => void;
     srcBitmap?: string;
     srcFurnitureIcon?: string;
+    tintBitmap?: string;
+    tintFurnitureIcon?: string;
+    tooltip?: ReactNode;
     visibleNumberContainer?: boolean;
     visibleProgressBar?: boolean;
 }
 
-export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixer, captionHeaderRecipes, captionInfoText1, captionInfoText2, captionNumber, layout, onBtnCancel, onBtnCraft, onClose, onNumberContainer, onProgressBar, onTooltip, srcBitmap, srcFurnitureIcon, visibleNumberContainer, visibleProgressBar }: CraftingwidgetLayoutProps) => {
+export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixer, captionHeaderRecipes, captionInfoText1, captionInfoText2, captionNumber, itemsItemgridInventory, itemsItemgridMixer, layout, onBtnCancel, onBtnCraft, onClose, onNumberContainer, onProgressBar, onTooltip, srcBitmap, srcFurnitureIcon, tintBitmap, tintFurnitureIcon, tooltip, visibleNumberContainer, visibleProgressBar }: CraftingwidgetLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -41,6 +48,7 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
             <ThemeImage
                 name="furniture_icon"
                 src={srcFurnitureIcon}
+                tint={tintFurnitureIcon}
                 layout={{ position: 'absolute', left: 398, width: 131, top: 198, height: 101 }}
             />
             <Region
@@ -141,6 +149,7 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
                         <ThemeImage
                             name="bitmap"
                             src={srcBitmap}
+                            tint={tintBitmap}
                             layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
                         />
                         <Region
@@ -148,7 +157,9 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
                             onPointerTap={onTooltip}
                             cursor="pointer"
                             layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
-                        />
+                        >
+                            {tooltip}
+                        </Region>
                         {(visibleNumberContainer ?? false) && (
                             <Region
                                 name="number_container"
@@ -178,12 +189,16 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
                 <Region
                     name="itemgrid_inventory"
                     layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4, width: '100%' }}
-                />
+                >
+                    {itemsItemgridInventory}
+                </Region>
             </ScrollArea>
             <Region
                 name="itemgrid_mixer"
                 layout={{ position: 'absolute', left: 294, width: 216, top: 71, height: 85, flexDirection: 'row', flexWrap: 'wrap', gap: 5 }}
-            />
+            >
+                {itemsItemgridMixer}
+            </Region>
         </Frame>
     );
 };

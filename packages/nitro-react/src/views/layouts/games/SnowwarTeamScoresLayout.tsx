@@ -10,15 +10,17 @@ export interface SnowwarTeamScoresLayoutProps {
     layout?: BoxLayout;
     srcBackgroundImage?: string;
     strokeTextColor?: string;
+    tintBackgroundImage?: string;
 }
 
-export const SnowwarTeamScoresLayout = ({ captionScoreBlue, captionScoreBlueStroke, captionScoreRed, captionScoreRedStroke, layout, srcBackgroundImage, strokeTextColor }: SnowwarTeamScoresLayoutProps) => {
+export const SnowwarTeamScoresLayout = ({ captionScoreBlue, captionScoreBlueStroke, captionScoreRed, captionScoreRedStroke, layout, srcBackgroundImage, strokeTextColor, tintBackgroundImage }: SnowwarTeamScoresLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 189, height: 147, ...layout }}>
             <Region layout={{ position: 'absolute', right: 0, width: 189, top: 0, height: 147 }}>
                 <ThemeImage
                     name="backgroundImage"
                     src={srcBackgroundImage ?? layoutImage('ui_timer_and_points.png')}
+                    tint={tintBackgroundImage}
                     layout={{ position: 'absolute', left: 0, width: 188, top: 0, height: 147 }}
                 />
                 <Region layout={{ position: 'absolute', left: 29, width: 56, top: 44, height: 27 }}>

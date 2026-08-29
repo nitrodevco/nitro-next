@@ -1,14 +1,17 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 
 /** Generated from `2986_notification_nft_opening_xml` (layout "notification_nft_opening", 190x110) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NotificationNftOpeningLayoutProps {
     captionNftPrizeDescription?: string;
+    iconWidget?: ReactNode;
     layout?: BoxLayout;
     onRarityText?: () => void;
 }
 
-export const NotificationNftOpeningLayout = ({ captionNftPrizeDescription, layout, onRarityText }: NotificationNftOpeningLayoutProps) => {
+export const NotificationNftOpeningLayout = ({ captionNftPrizeDescription, iconWidget, layout, onRarityText }: NotificationNftOpeningLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -42,7 +45,9 @@ export const NotificationNftOpeningLayout = ({ captionNftPrizeDescription, layou
                     widgetType="product_icon"
                     name="icon_widget"
                     layout={{ position: 'absolute', left: 9, width: 40, top: 31, height: 40 }}
-                />
+                >
+                    {iconWidget}
+                </WidgetSlot>
                 <Region
                     name="nft_prize_description"
                     layout={{ position: 'absolute', left: 65, width: 115, top: 29, height: 50, minHeight: 22, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}

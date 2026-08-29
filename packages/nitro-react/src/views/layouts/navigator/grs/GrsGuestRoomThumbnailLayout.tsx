@@ -1,12 +1,16 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, ThemeImage } from '#base/theme';
 
 /** Generated from `3073_grs_guest_room_thumbnail_xml` (layout "navigator_guest_room_thumbnail", 20x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GrsGuestRoomThumbnailLayoutProps {
     layout?: BoxLayout;
+    picframe?: ReactNode;
     srcEnterRoom?: string;
+    tintEnterRoom?: string;
 }
 
-export const GrsGuestRoomThumbnailLayout = ({ layout, srcEnterRoom }: GrsGuestRoomThumbnailLayoutProps) => {
+export const GrsGuestRoomThumbnailLayout = ({ layout, picframe, srcEnterRoom, tintEnterRoom }: GrsGuestRoomThumbnailLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Region
@@ -16,10 +20,13 @@ export const GrsGuestRoomThumbnailLayout = ({ layout, srcEnterRoom }: GrsGuestRo
                 <Region
                     name="picframe"
                     layout={{ position: 'absolute', left: 0, width: 64, top: 3, height: 64 }}
-                />
+                >
+                    {picframe}
+                </Region>
                 <ThemeImage
                     name="enter_room"
                     src={srcEnterRoom}
+                    tint={tintEnterRoom}
                     layout={{ position: 'absolute', left: 0, width: 64, top: 3, height: 64 }}
                 />
             </Region>

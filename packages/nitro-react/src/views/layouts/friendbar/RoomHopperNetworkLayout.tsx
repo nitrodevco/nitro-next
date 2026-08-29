@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -9,12 +11,13 @@ export interface RoomHopperNetworkLayoutProps {
     captionTitle?: string;
     layout?: BoxLayout;
     onButton?: () => void;
+    spacing?: ReactNode;
     srcBitmap?: string;
     srcBorderBar?: string;
     srcHdrLine?: string;
 }
 
-export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTitle, layout, onButton, srcBitmap, srcBorderBar, srcHdrLine }: RoomHopperNetworkLayoutProps) => {
+export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTitle, layout, onButton, spacing, srcBitmap, srcBorderBar, srcHdrLine }: RoomHopperNetworkLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -55,7 +58,9 @@ export const RoomHopperNetworkLayout = ({ captionHeader, captionInfo, captionTit
                     <Region
                         name="spacing"
                         layout={{ width: 30, height: 6, flexShrink: 0 }}
-                    />
+                    >
+                        {spacing}
+                    </Region>
                     <Region
                         backgroundColor="#000000"
                         layout={{ width: 250, height: 120, flexShrink: 0 }}

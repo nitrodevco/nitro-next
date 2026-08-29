@@ -1,12 +1,15 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region } from '#base/theme';
 
 /** Generated from `1498_tab_content_xml` (layout "tab_content", 20x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface TabContentLayoutProps {
+    itemsListContent?: ReactNode;
     layout?: BoxLayout;
     onTabContent?: () => void;
 }
 
-export const TabContentLayout = ({ layout, onTabContent }: TabContentLayoutProps) => {
+export const TabContentLayout = ({ itemsListContent, layout, onTabContent }: TabContentLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Region
@@ -24,7 +27,9 @@ export const TabContentLayout = ({ layout, onTabContent }: TabContentLayoutProps
                         name="list_content"
                         backgroundColor="#ffffff"
                         layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 95, flexDirection: 'column' }}
-                    />
+                    >
+                        {itemsListContent}
+                    </Region>
                     {/* <scrollbar_vertical> for ? - rendered by that list's ScrollArea */}
                 </Region>
             </Region>

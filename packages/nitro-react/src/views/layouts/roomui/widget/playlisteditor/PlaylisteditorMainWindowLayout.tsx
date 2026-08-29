@@ -1,15 +1,23 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Frame, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `885_playlisteditor_main_window_xml` (layout "main_window", 582x437) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PlaylisteditorMainWindowLayoutProps {
+    itemsMusicInventoryItemgrid?: ReactNode;
+    itemsPlaylistEditorItemlist?: ReactNode;
     layout?: BoxLayout;
+    nowPlayingContainer?: ReactNode;
     onClose?: () => void;
+    previewPlayContainer?: ReactNode;
     srcMusicInventorySplashImage?: string;
     srcPlaylistEditorSplashImage?: string;
+    tintMusicInventorySplashImage?: string;
+    tintPlaylistEditorSplashImage?: string;
 }
 
-export const PlaylisteditorMainWindowLayout = ({ layout, onClose, srcMusicInventorySplashImage, srcPlaylistEditorSplashImage }: PlaylisteditorMainWindowLayoutProps) => {
+export const PlaylisteditorMainWindowLayout = ({ itemsMusicInventoryItemgrid, itemsPlaylistEditorItemlist, layout, nowPlayingContainer, onClose, previewPlayContainer, srcMusicInventorySplashImage, srcPlaylistEditorSplashImage, tintMusicInventorySplashImage, tintPlaylistEditorSplashImage }: PlaylisteditorMainWindowLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -34,7 +42,9 @@ export const PlaylisteditorMainWindowLayout = ({ layout, onClose, srcMusicInvent
                     <Region
                         name="music_inventory_itemgrid"
                         layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
-                    />
+                    >
+                        {itemsMusicInventoryItemgrid}
+                    </Region>
                 </ScrollArea>
                 {/* <scrollbar_vertical> for music_inventory_itemgrid - rendered by that list's ScrollArea */}
                 <Border
@@ -45,6 +55,7 @@ export const PlaylisteditorMainWindowLayout = ({ layout, onClose, srcMusicInvent
                 <ThemeImage
                     name="music_inventory_splash_image"
                     src={srcMusicInventorySplashImage}
+                    tint={tintMusicInventorySplashImage}
                     layout={{ position: 'absolute', left: 1, right: 293, top: 1, height: 100 }}
                 />
                 <Region layout={{ position: 'absolute', left: 96, width: 234, top: 29, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -57,7 +68,9 @@ export const PlaylisteditorMainWindowLayout = ({ layout, onClose, srcMusicInvent
                 <Region
                     name="preview_play_container"
                     layout={{ position: 'absolute', left: 1, width: 278, top: 295, height: 110 }}
-                />
+                >
+                    {previewPlayContainer}
+                </Region>
             </Border>
             <Border
                 variant="0"
@@ -71,7 +84,9 @@ export const PlaylisteditorMainWindowLayout = ({ layout, onClose, srcMusicInvent
                     <Region
                         name="playlist_editor_itemlist"
                         layout={{ flexDirection: 'column', width: '100%' }}
-                    />
+                    >
+                        {itemsPlaylistEditorItemlist}
+                    </Region>
                 </ScrollArea>
                 {/* <scrollbar_vertical> for playlist_editor_itemlist - rendered by that list's ScrollArea */}
                 <Border
@@ -82,6 +97,7 @@ export const PlaylisteditorMainWindowLayout = ({ layout, onClose, srcMusicInvent
                 <ThemeImage
                     name="playlist_editor_splash_image"
                     src={srcPlaylistEditorSplashImage}
+                    tint={tintPlaylistEditorSplashImage}
                     layout={{ position: 'absolute', left: 1, width: 100, top: 1, height: 100 }}
                 />
                 <Region layout={{ position: 'absolute', left: 96, width: 217, top: 29, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -94,7 +110,9 @@ export const PlaylisteditorMainWindowLayout = ({ layout, onClose, srcMusicInvent
                 <Region
                     name="now_playing_container"
                     layout={{ position: 'absolute', left: 1, width: 261, top: 350, height: 56 }}
-                />
+                >
+                    {nowPlayingContainer}
+                </Region>
             </Border>
         </Frame>
     );

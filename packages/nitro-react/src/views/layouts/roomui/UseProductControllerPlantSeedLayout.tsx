@@ -1,9 +1,12 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, ButtonThick, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1092_use_product_controller_plant_seed_xml` (layout "use_product_plant_seed", 386x180) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface UseProductControllerPlantSeedLayoutProps {
+    cancelText?: ReactNode;
     captionDescription?: string;
     captionInfo?: string;
     layout?: BoxLayout;
@@ -11,9 +14,11 @@ export interface UseProductControllerPlantSeedLayoutProps {
     onSaveButton?: () => void;
     srcPreviewImage?: string;
     srcPreviewImageBg?: string;
+    tintPreviewImage?: string;
+    tintPreviewImageBg?: string;
 }
 
-export const UseProductControllerPlantSeedLayout = ({ captionDescription, captionInfo, layout, onCancelText, onSaveButton, srcPreviewImage, srcPreviewImageBg }: UseProductControllerPlantSeedLayoutProps) => {
+export const UseProductControllerPlantSeedLayout = ({ cancelText, captionDescription, captionInfo, layout, onCancelText, onSaveButton, srcPreviewImage, srcPreviewImageBg, tintPreviewImage, tintPreviewImageBg }: UseProductControllerPlantSeedLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -30,11 +35,13 @@ export const UseProductControllerPlantSeedLayout = ({ captionDescription, captio
                 <ThemeImage
                     name="preview_image_bg"
                     src={srcPreviewImageBg ?? layoutImage('plant_seed_preview_bg.png')}
+                    tint={tintPreviewImageBg}
                     layout={{ position: 'absolute', left: 10, width: 122, top: 10, height: 130 }}
                 />
                 <ThemeImage
                     name="preview_image"
                     src={srcPreviewImage ?? layoutImage('plant_seed_preview.png')}
+                    tint={tintPreviewImage}
                     layout={{ position: 'absolute', left: 10, width: 122, top: 10, height: 130 }}
                 />
                 <Region
@@ -51,7 +58,9 @@ export const UseProductControllerPlantSeedLayout = ({ captionDescription, captio
                     onPointerTap={onCancelText}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25 }}
-                />
+                >
+                    {cancelText}
+                </Region>
                 <Region layout={{ position: 'absolute', left: 160, width: 70, top: 120, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     {t('useproduct.widget.cancel')}
                 </Region>

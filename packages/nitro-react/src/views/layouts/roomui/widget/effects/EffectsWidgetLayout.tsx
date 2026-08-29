@@ -1,14 +1,17 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, CloseButton, Region, ScrollArea, ThemeText } from '#base/theme';
 
 /** Generated from `1052_effects_widget_xml` (layout "effects_widget", 190x85) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface EffectsWidgetLayoutProps {
     captionTitle?: string;
+    itemsList?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const EffectsWidgetLayout = ({ captionTitle, layout, onClose }: EffectsWidgetLayoutProps) => {
+export const EffectsWidgetLayout = ({ captionTitle, itemsList, layout, onClose }: EffectsWidgetLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -46,7 +49,9 @@ export const EffectsWidgetLayout = ({ captionTitle, layout, onClose }: EffectsWi
                     <Region
                         name="list"
                         layout={{ flexDirection: 'column', width: '100%' }}
-                    />
+                    >
+                        {itemsList}
+                    </Region>
                 </ScrollArea>
                 <Region
                     name="no_effects"

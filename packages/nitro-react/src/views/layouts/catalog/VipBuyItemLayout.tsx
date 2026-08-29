@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, ButtonThick, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -5,13 +7,15 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `1658_vip_buy_item_xml` (layout "vip_buy_item", 320x75) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface VipBuyItemLayoutProps {
     captionItemHeader?: string;
+    itemPrice?: ReactNode;
     layout?: BoxLayout;
     onItemBuy?: () => void;
     onItemGift?: () => void;
     srcVipIcon?: string;
+    tintVipIcon?: string;
 }
 
-export const VipBuyItemLayout = ({ captionItemHeader, layout, onItemBuy, onItemGift, srcVipIcon }: VipBuyItemLayoutProps) => {
+export const VipBuyItemLayout = ({ captionItemHeader, itemPrice, layout, onItemBuy, onItemGift, srcVipIcon, tintVipIcon }: VipBuyItemLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -44,13 +48,16 @@ export const VipBuyItemLayout = ({ captionItemHeader, layout, onItemBuy, onItemG
                     <ThemeImage
                         name="vip_icon"
                         src={srcVipIcon ?? layoutImage('vip_icon_medium.gif')}
+                        tint={tintVipIcon}
                         layout={{ position: 'absolute', left: 6, width: 33, top: 4, height: 17 }}
                     />
                 </Border>
                 <Region
                     name="item_price"
                     layout={{ position: 'absolute', left: 5, width: 112, top: 41, height: 26 }}
-                />
+                >
+                    {itemPrice}
+                </Region>
                 <ButtonThick
                     variant="5"
                     name="item_buy"

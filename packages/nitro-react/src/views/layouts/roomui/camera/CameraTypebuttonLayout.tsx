@@ -5,9 +5,10 @@ export interface CameraTypebuttonLayoutProps {
     layout?: BoxLayout;
     onRegion?: () => void;
     srcIcon?: string;
+    tintIcon?: string;
 }
 
-export const CameraTypebuttonLayout = ({ layout, onRegion, srcIcon }: CameraTypebuttonLayoutProps) => {
+export const CameraTypebuttonLayout = ({ layout, onRegion, srcIcon, tintIcon }: CameraTypebuttonLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 95, height: 37, ...layout }}>
             <Region
@@ -30,6 +31,7 @@ export const CameraTypebuttonLayout = ({ layout, onRegion, srcIcon }: CameraType
                 <ThemeImage
                     name="icon"
                     src={srcIcon}
+                    tint={tintIcon}
                     layout={{ position: 'absolute', left: 18, width: 60, top: 0, height: 37 }}
                 />
             </Region>

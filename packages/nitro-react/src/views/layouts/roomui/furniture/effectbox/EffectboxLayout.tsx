@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, ButtonThick, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
 
@@ -6,6 +8,7 @@ export interface EffectboxLayoutProps {
     captionCancel?: string;
     captionEffectboxHeaderDescription?: string;
     captionEffectboxHeaderTitle?: string;
+    effectboxHeaderBackgroundBody?: ReactNode;
     layout?: BoxLayout;
     onCancel?: () => void;
     onClose?: () => void;
@@ -13,7 +16,7 @@ export interface EffectboxLayoutProps {
     srcEffectboxHeaderIcon?: string;
 }
 
-export const EffectboxLayout = ({ captionCancel, captionEffectboxHeaderDescription, captionEffectboxHeaderTitle, layout, onCancel, onClose, onOk, srcEffectboxHeaderIcon }: EffectboxLayoutProps) => {
+export const EffectboxLayout = ({ captionCancel, captionEffectboxHeaderDescription, captionEffectboxHeaderTitle, effectboxHeaderBackgroundBody, layout, onCancel, onClose, onOk, srcEffectboxHeaderIcon }: EffectboxLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -35,7 +38,9 @@ export const EffectboxLayout = ({ captionCancel, captionEffectboxHeaderDescripti
                     name="effectbox.header.background.body"
                     backgroundColor="#0e3f52"
                     layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 95 }}
-                />
+                >
+                    {effectboxHeaderBackgroundBody}
+                </Region>
                 <ThemeImage
                     name="effectbox.header.icon"
                     src={srcEffectboxHeaderIcon ?? '${image.library.url}client_static/frank1.png'}

@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
@@ -9,13 +11,16 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 /** Named region `simplePriceWidget` of SimplePriceWidget2 - configured through the parent's `simplePriceWidget` prop. */
 export interface SimplePriceWidget2Props extends CatalogWidgetFlags {
     layout?: BoxLayout;
+    simplePriceWidget?: ReactNode;
 }
 
-export const SimplePriceWidget2 = ({ layout }: SimplePriceWidget2Props) => {
+export const SimplePriceWidget2 = ({ layout, simplePriceWidget }: SimplePriceWidget2Props) => {
     return (
         <Region
             name="simplePriceWidget"
             layout={{ position: 'absolute', ...layout }}
-        />
+        >
+            {simplePriceWidget}
+        </Region>
     );
 };

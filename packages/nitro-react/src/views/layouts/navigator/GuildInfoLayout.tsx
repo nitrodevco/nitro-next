@@ -1,14 +1,17 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeText, WidgetSlot } from '#base/theme';
 
 /** Generated from `3005_guild_info_xml` (layout "iro_tag", 230x49) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GuildInfoLayoutProps {
     captionGuildBaseTxt?: string;
+    guildBadge?: ReactNode;
     layout?: BoxLayout;
     onGuildInfo?: () => void;
 }
 
-export const GuildInfoLayout = ({ captionGuildBaseTxt, layout, onGuildInfo }: GuildInfoLayoutProps) => {
+export const GuildInfoLayout = ({ captionGuildBaseTxt, guildBadge, layout, onGuildInfo }: GuildInfoLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -24,7 +27,9 @@ export const GuildInfoLayout = ({ captionGuildBaseTxt, layout, onGuildInfo }: Gu
                     name="guild_badge"
                     options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                     layout={{ position: 'absolute', left: 0, width: 39, top: 5, height: 39 }}
-                />
+                >
+                    {guildBadge}
+                </WidgetSlot>
                 <Region
                     name="guild_base_txt"
                     layout={{ position: 'absolute', left: 45, width: 170, top: 1, height: 46, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}

@@ -4,7 +4,7 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 /**
  * Catalog widget `roomPreviewWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
- * (LayoutSpacesNew_1657Layout); each passes its own placement through `layout`.
+ * (LayoutSpacesNew_1576Layout); each passes its own placement through `layout`.
  */
 /** Named region `roomPreviewWidget` of RoomPreviewWidget2 - configured through the parent's `roomPreviewWidget` prop. */
 export interface RoomPreviewWidget2Props extends CatalogWidgetFlags {
@@ -12,9 +12,12 @@ export interface RoomPreviewWidget2Props extends CatalogWidgetFlags {
     srcCatalogFloorPreviewExample?: string;
     srcCatalogSpacePreviewWindow?: string;
     srcCatalogWallPreviewBRight?: string;
+    tintCatalogFloorPreviewExample?: string;
+    tintCatalogSpacePreviewWindow?: string;
+    tintCatalogWallPreviewBRight?: string;
 }
 
-export const RoomPreviewWidget2 = ({ layout, srcCatalogFloorPreviewExample, srcCatalogSpacePreviewWindow, srcCatalogWallPreviewBRight }: RoomPreviewWidget2Props) => {
+export const RoomPreviewWidget2 = ({ layout, srcCatalogFloorPreviewExample, srcCatalogSpacePreviewWindow, srcCatalogWallPreviewBRight, tintCatalogFloorPreviewExample, tintCatalogSpacePreviewWindow, tintCatalogWallPreviewBRight }: RoomPreviewWidget2Props) => {
     return (
         <Region
             name="roomPreviewWidget"
@@ -23,17 +26,20 @@ export const RoomPreviewWidget2 = ({ layout, srcCatalogFloorPreviewExample, srcC
             <ThemeImage
                 name="catalog_floor_preview_example"
                 src={srcCatalogFloorPreviewExample}
-                layout={{ position: 'absolute', left: 0, width: 180, top: 0, height: 277 }}
+                tint={tintCatalogFloorPreviewExample}
+                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
             />
             <ThemeImage
                 name="catalog_wall_preview_b_right"
                 src={srcCatalogWallPreviewBRight}
-                layout={{ position: 'absolute', left: 29, width: 288, top: 151, height: 147 }}
+                tint={tintCatalogWallPreviewBRight}
+                layout={{ position: 'absolute', left: 29, width: 288, top: 21, height: 147 }}
             />
             <ThemeImage
                 name="catalog_space_preview_window"
                 src={srcCatalogSpacePreviewWindow}
-                layout={{ position: 'absolute', left: 118, width: 120, top: 151, height: 118 }}
+                tint={tintCatalogSpacePreviewWindow}
+                layout={{ position: 'absolute', left: 123, width: 120, top: 51, height: 118 }}
             />
         </Region>
     );

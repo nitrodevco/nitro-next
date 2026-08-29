@@ -1,14 +1,18 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `1522_opened_to_web_popup_xml` (layout "opened_to_web_popup", 20x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface OpenedToWebPopupLayoutProps {
     captionInfoText?: string;
+    cont?: ReactNode;
     layout?: BoxLayout;
     srcOpenedToWeb?: string;
+    tintOpenedToWeb?: string;
 }
 
-export const OpenedToWebPopupLayout = ({ captionInfoText, layout, srcOpenedToWeb }: OpenedToWebPopupLayoutProps) => {
+export const OpenedToWebPopupLayout = ({ captionInfoText, cont, layout, srcOpenedToWeb, tintOpenedToWeb }: OpenedToWebPopupLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -22,7 +26,9 @@ export const OpenedToWebPopupLayout = ({ captionInfoText, layout, srcOpenedToWeb
                     name="cont"
                     backgroundColor="#ffcc66"
                     layout={{ position: 'absolute', left: 2, width: 185, top: 2, height: 41 }}
-                />
+                >
+                    {cont}
+                </Region>
                 <Region
                     name="info_text"
                     layout={{ position: 'absolute', left: 50, width: 100, top: 10, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -35,6 +41,7 @@ export const OpenedToWebPopupLayout = ({ captionInfoText, layout, srcOpenedToWeb
                 <ThemeImage
                     name="opened_to_web"
                     src={srcOpenedToWeb}
+                    tint={tintOpenedToWeb}
                     layout={{ position: 'absolute', left: 5, width: 43, top: 6, height: 34 }}
                 />
             </Region>

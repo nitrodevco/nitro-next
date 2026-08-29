@@ -1,12 +1,15 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, ThemeImage } from '#base/theme';
 
 /** Generated from `43_generic_widget_xml` (layout "landing_view", 250x30) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GenericWidgetLayoutProps {
+    itemsContentContainer?: ReactNode;
     layout?: BoxLayout;
     srcBitmap?: string;
 }
 
-export const GenericWidgetLayout = ({ layout, srcBitmap }: GenericWidgetLayoutProps) => {
+export const GenericWidgetLayout = ({ itemsContentContainer, layout, srcBitmap }: GenericWidgetLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 250, height: 30, ...layout }}>
             <Region
@@ -21,7 +24,9 @@ export const GenericWidgetLayout = ({ layout, srcBitmap }: GenericWidgetLayoutPr
                 <Region
                     name="content_container"
                     layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 20, flexDirection: 'column' }}
-                />
+                >
+                    {itemsContentContainer}
+                </Region>
             </Region>
         </Region>
     );

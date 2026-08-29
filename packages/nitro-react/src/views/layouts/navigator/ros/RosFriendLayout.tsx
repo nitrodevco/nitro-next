@@ -1,8 +1,11 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Icon, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `3057_ros_friend_xml` (layout "Friend", 111x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RosFriendLayoutProps {
+    bgRegion?: ReactNode;
     captionUserNameTxt?: string;
     layout?: BoxLayout;
     onBgRegion?: () => void;
@@ -10,7 +13,7 @@ export interface RosFriendLayoutProps {
     srcArrowIcon?: string;
 }
 
-export const RosFriendLayout = ({ captionUserNameTxt, layout, onBgRegion, onUserInfoRegion, srcArrowIcon }: RosFriendLayoutProps) => {
+export const RosFriendLayout = ({ bgRegion, captionUserNameTxt, layout, onBgRegion, onUserInfoRegion, srcArrowIcon }: RosFriendLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -25,7 +28,9 @@ export const RosFriendLayout = ({ captionUserNameTxt, layout, onBgRegion, onUser
                     onPointerTap={onBgRegion}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, width: 111, top: 0, height: 20 }}
-                />
+                >
+                    {bgRegion}
+                </Region>
                 <Region
                     name="user_info_region"
                     tooltip={t('group.members.showinfo')}

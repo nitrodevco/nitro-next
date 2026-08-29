@@ -7,9 +7,10 @@ export interface MysteryBoxRewardLayoutProps {
     onClose?: () => void;
     onCloseButton?: () => void;
     srcRewardImage?: string;
+    tintRewardImage?: string;
 }
 
-export const MysteryBoxRewardLayout = ({ layout, onClose, onCloseButton, srcRewardImage }: MysteryBoxRewardLayoutProps) => {
+export const MysteryBoxRewardLayout = ({ layout, onClose, onCloseButton, srcRewardImage, tintRewardImage }: MysteryBoxRewardLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -34,6 +35,7 @@ export const MysteryBoxRewardLayout = ({ layout, onClose, onCloseButton, srcRewa
                     <ThemeImage
                         name="reward_image"
                         src={srcRewardImage}
+                        tint={tintRewardImage}
                         layout={{ position: 'absolute', width: 1, alignSelf: 'center', height: 1 }}
                     />
                 </Region>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Dropmenu, Frame, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
@@ -12,10 +12,11 @@ export interface NewFurniChooserViewLayoutProps {
     onClearButton?: () => void;
     onClose?: () => void;
     onUsernameDropdown?: () => void;
+    tableContainer?: ReactNode;
     visibleClearButton?: boolean;
 }
 
-export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearchPlaceholder, layout, onClearButton, onClose, onUsernameDropdown, visibleClearButton }: NewFurniChooserViewLayoutProps) => {
+export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearchPlaceholder, layout, onClearButton, onClose, onUsernameDropdown, tableContainer, visibleClearButton }: NewFurniChooserViewLayoutProps) => {
     const t = useTranslation();
     const [ textInputValue, setTextInputValue ] = useState('');
 
@@ -69,7 +70,9 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
             <Region
                 name="table_container"
                 layout={{ position: 'absolute', left: 6, width: 389, top: 53, bottom: 61 }}
-            />
+            >
+                {tableContainer}
+            </Region>
             <Region
                 name="amount_indicator"
                 layout={{ position: 'absolute', left: 6, width: 215, bottom: 37, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

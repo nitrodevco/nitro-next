@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button, Frame, Region, ScrollArea, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -6,6 +8,7 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface GuideOngoingLayoutProps {
     captionCloseLink?: string;
     captionReportLink?: string;
+    inputWidget?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
     onCloseLink?: () => void;
@@ -14,7 +17,7 @@ export interface GuideOngoingLayoutProps {
     onVisitButton?: () => void;
 }
 
-export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, layout, onClose, onCloseLink, onInviteButton, onReportLink, onVisitButton }: GuideOngoingLayoutProps) => {
+export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, inputWidget, layout, onClose, onCloseLink, onInviteButton, onReportLink, onVisitButton }: GuideOngoingLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -88,7 +91,9 @@ export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, layout
                     name="input_widget"
                     options={{ 'illumina_input:empty_message': 'Click here to chat' }}
                     layout={{ position: 'absolute', left: 10, width: 260, top: 15, height: 30 }}
-                />
+                >
+                    {inputWidget}
+                </WidgetSlot>
                 <Region
                     name="close_link"
                     layout={{ position: 'absolute', left: 10, width: 260, top: 53, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}

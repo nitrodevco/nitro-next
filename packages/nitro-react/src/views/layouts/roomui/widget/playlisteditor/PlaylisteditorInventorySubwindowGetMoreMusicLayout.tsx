@@ -6,9 +6,10 @@ export interface PlaylisteditorInventorySubwindowGetMoreMusicLayoutProps {
     layout?: BoxLayout;
     onOpenCatalogButton?: () => void;
     srcGetMoreMusicBackgroundImage?: string;
+    tintGetMoreMusicBackgroundImage?: string;
 }
 
-export const PlaylisteditorInventorySubwindowGetMoreMusicLayout = ({ layout, onOpenCatalogButton, srcGetMoreMusicBackgroundImage }: PlaylisteditorInventorySubwindowGetMoreMusicLayoutProps) => {
+export const PlaylisteditorInventorySubwindowGetMoreMusicLayout = ({ layout, onOpenCatalogButton, srcGetMoreMusicBackgroundImage, tintGetMoreMusicBackgroundImage }: PlaylisteditorInventorySubwindowGetMoreMusicLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -20,6 +21,7 @@ export const PlaylisteditorInventorySubwindowGetMoreMusicLayout = ({ layout, onO
                 <ThemeImage
                     name="get_more_music_background_image"
                     src={srcGetMoreMusicBackgroundImage}
+                    tint={tintGetMoreMusicBackgroundImage}
                     layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 110 }}
                 />
                 <Region layout={{ position: 'absolute', left: 15, width: 236, top: 12, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>

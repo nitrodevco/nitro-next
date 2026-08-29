@@ -1,8 +1,11 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, ButtonThick, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `1069_use_product_controller_saddle_xml` (layout "use_product_saddle", 386x180) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface UseProductControllerSaddleLayoutProps {
+    cancelText?: ReactNode;
     captionDescription?: string;
     captionInfo?: string;
     layout?: BoxLayout;
@@ -10,9 +13,10 @@ export interface UseProductControllerSaddleLayoutProps {
     onPreviewImageRegion?: () => void;
     onSaveButton?: () => void;
     srcPreviewImage?: string;
+    tintPreviewImage?: string;
 }
 
-export const UseProductControllerSaddleLayout = ({ captionDescription, captionInfo, layout, onCancelText, onPreviewImageRegion, onSaveButton, srcPreviewImage }: UseProductControllerSaddleLayoutProps) => {
+export const UseProductControllerSaddleLayout = ({ cancelText, captionDescription, captionInfo, layout, onCancelText, onPreviewImageRegion, onSaveButton, srcPreviewImage, tintPreviewImage }: UseProductControllerSaddleLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -35,6 +39,7 @@ export const UseProductControllerSaddleLayout = ({ captionDescription, captionIn
                     <ThemeImage
                         name="preview_image"
                         src={srcPreviewImage}
+                        tint={tintPreviewImage}
                         layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 130 }}
                     />
                 </Region>
@@ -52,7 +57,9 @@ export const UseProductControllerSaddleLayout = ({ captionDescription, captionIn
                     onPointerTap={onCancelText}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25 }}
-                />
+                >
+                    {cancelText}
+                </Region>
                 <Region layout={{ position: 'absolute', left: 160, width: 70, top: 120, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     {t('useproduct.widget.cancel')}
                 </Region>

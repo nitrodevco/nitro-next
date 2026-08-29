@@ -1,12 +1,15 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region } from '#base/theme';
 
 /** Generated from `2457_room_previewer_xml` (layout "room_previewer", 162x168) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RoomPreviewerLayoutProps {
     layout?: BoxLayout;
     onRoomCanvasContainer?: () => void;
+    roomCanvas?: ReactNode;
 }
 
-export const RoomPreviewerLayout = ({ layout, onRoomCanvasContainer }: RoomPreviewerLayoutProps) => {
+export const RoomPreviewerLayout = ({ layout, onRoomCanvasContainer, roomCanvas }: RoomPreviewerLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 162, height: 168, ...layout }}>
             <Region
@@ -19,7 +22,9 @@ export const RoomPreviewerLayout = ({ layout, onRoomCanvasContainer }: RoomPrevi
                 <Region
                     name="room_canvas"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                />
+                >
+                    {roomCanvas}
+                </Region>
             </Region>
         </Region>
     );

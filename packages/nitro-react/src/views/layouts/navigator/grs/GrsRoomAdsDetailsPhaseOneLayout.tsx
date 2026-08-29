@@ -8,9 +8,12 @@ export interface GrsRoomAdsDetailsPhaseOneLayoutProps {
     srcDoormodeDoorbellSmall?: string;
     srcDoormodeInvisibleSmall?: string;
     srcDoormodePasswordSmall?: string;
+    tintDoormodeDoorbellSmall?: string;
+    tintDoormodeInvisibleSmall?: string;
+    tintDoormodePasswordSmall?: string;
 }
 
-export const GrsRoomAdsDetailsPhaseOneLayout = ({ captionAdname, layout, onDetails, srcDoormodeDoorbellSmall, srcDoormodeInvisibleSmall, srcDoormodePasswordSmall }: GrsRoomAdsDetailsPhaseOneLayoutProps) => {
+export const GrsRoomAdsDetailsPhaseOneLayout = ({ captionAdname, layout, onDetails, srcDoormodeDoorbellSmall, srcDoormodeInvisibleSmall, srcDoormodePasswordSmall, tintDoormodeDoorbellSmall, tintDoormodeInvisibleSmall, tintDoormodePasswordSmall }: GrsRoomAdsDetailsPhaseOneLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 346, height: 17, ...layout }}>
             <Region
@@ -29,16 +32,19 @@ export const GrsRoomAdsDetailsPhaseOneLayout = ({ captionAdname, layout, onDetai
                 <ThemeImage
                     name="doormode_password_small"
                     src={srcDoormodePasswordSmall}
+                    tint={tintDoormodePasswordSmall}
                     layout={{ position: 'absolute', right: 48, width: 13, top: 1, height: 16 }}
                 />
                 <ThemeImage
                     name="doormode_doorbell_small"
                     src={srcDoormodeDoorbellSmall}
+                    tint={tintDoormodeDoorbellSmall}
                     layout={{ position: 'absolute', right: 48, width: 13, top: 1, height: 16 }}
                 />
                 <ThemeImage
                     name="doormode_invisible_small"
                     src={srcDoormodeInvisibleSmall}
+                    tint={tintDoormodeInvisibleSmall}
                     layout={{ position: 'absolute', right: 48, width: 13, top: 1, height: 16 }}
                 />
             </Region>

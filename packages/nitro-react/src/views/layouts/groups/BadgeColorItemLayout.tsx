@@ -7,9 +7,12 @@ export interface BadgeColorItemLayoutProps {
     srcBackground?: string;
     srcForeground?: string;
     srcSelected?: string;
+    tintBackground?: string;
+    tintForeground?: string;
+    tintSelected?: string;
 }
 
-export const BadgeColorItemLayout = ({ layout, onContainer, srcBackground, srcForeground, srcSelected }: BadgeColorItemLayoutProps) => {
+export const BadgeColorItemLayout = ({ layout, onContainer, srcBackground, srcForeground, srcSelected, tintBackground, tintForeground, tintSelected }: BadgeColorItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 15, height: 15, ...layout }}>
             <Region
@@ -21,16 +24,19 @@ export const BadgeColorItemLayout = ({ layout, onContainer, srcBackground, srcFo
                 <ThemeImage
                     name="background"
                     src={srcBackground}
+                    tint={tintBackground}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <ThemeImage
                     name="foreground"
                     src={srcForeground}
+                    tint={tintForeground}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <ThemeImage
                     name="selected"
                     src={srcSelected}
+                    tint={tintSelected}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             </Region>

@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, WidgetSlot } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
@@ -9,10 +11,11 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 /** Named region `limitedItemWidget` of LimitedItemWidget2 - configured through the parent's `limitedItemWidget` prop. */
 export interface LimitedItemWidget2Props extends CatalogWidgetFlags {
     layout?: BoxLayout;
+    uniqueItemOverlayContainer?: ReactNode;
     visibleLimitedItemWidget?: boolean;
 }
 
-export const LimitedItemWidget2 = ({ layout, visibleLimitedItemWidget }: LimitedItemWidget2Props) => {
+export const LimitedItemWidget2 = ({ layout, uniqueItemOverlayContainer, visibleLimitedItemWidget }: LimitedItemWidget2Props) => {
     return (
         (visibleLimitedItemWidget ?? false) && (
             <Region
@@ -23,7 +26,9 @@ export const LimitedItemWidget2 = ({ layout, visibleLimitedItemWidget }: Limited
                     widgetType="limited_item_overlay_supply"
                     name="unique_item_overlay_container"
                     layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 40 }}
-                />
+                >
+                    {uniqueItemOverlayContainer}
+                </WidgetSlot>
             </Region>
         )
     );

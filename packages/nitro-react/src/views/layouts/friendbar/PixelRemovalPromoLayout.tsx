@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button, Region, ThemeImage, ThemeText } from '#base/theme';
 
@@ -8,10 +10,11 @@ export interface PixelRemovalPromoLayoutProps {
     captionTitleTxt?: string;
     layout?: BoxLayout;
     onGoButton?: () => void;
+    spacing?: ReactNode;
     srcTeaserImage?: string;
 }
 
-export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, captionTitleTxt, layout, onGoButton, srcTeaserImage }: PixelRemovalPromoLayoutProps) => {
+export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, captionTitleTxt, layout, onGoButton, spacing, srcTeaserImage }: PixelRemovalPromoLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -45,7 +48,9 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                         name="spacing"
                         backgroundColor="#000000"
                         layout={{ width: 250, height: 6, flexShrink: 0 }}
-                    />
+                    >
+                        {spacing}
+                    </Region>
                     <Region
                         name="title_txt"
                         layout={{ width: 270, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}

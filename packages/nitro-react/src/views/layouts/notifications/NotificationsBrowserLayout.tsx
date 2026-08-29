@@ -1,12 +1,16 @@
+import { ReactNode } from 'react';
+
 import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 
 /** Generated from `2982_notifications_browser_xml` (layout "notifications_browser", 20x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NotificationsBrowserLayoutProps {
     captionTitle?: string;
+    itemsNotifications?: ReactNode;
     layout?: BoxLayout;
+    separator?: ReactNode;
 }
 
-export const NotificationsBrowserLayout = ({ captionTitle, layout }: NotificationsBrowserLayoutProps) => {
+export const NotificationsBrowserLayout = ({ captionTitle, itemsNotifications, layout, separator }: NotificationsBrowserLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Border
@@ -27,11 +31,15 @@ export const NotificationsBrowserLayout = ({ captionTitle, layout }: Notificatio
                     name="separator"
                     backgroundColor="#2f2f2f"
                     layout={{ position: 'absolute', left: 5, width: 240, top: 26, height: 1 }}
-                />
+                >
+                    {separator}
+                </Region>
                 <Region
                     name="notifications"
                     layout={{ position: 'absolute', left: 11, width: 230, top: 32, height: 290, flexDirection: 'column' }}
-                />
+                >
+                    {itemsNotifications}
+                </Region>
             </Border>
         </Region>
     );

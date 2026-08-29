@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, ButtonGroupCenter, ButtonGroupLeft, ButtonGroupRight, Region, ScrollArea } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
@@ -9,13 +11,14 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
  */
 /** Named region `spacesNewWidget` of SpacesNewWidget2 - configured through the parent's `spacesNewWidget` prop. */
 export interface SpacesNewWidget2Props extends CatalogWidgetFlags {
+    itemsItemGrid?: ReactNode;
     layout?: BoxLayout;
     onGroupFloors?: () => void;
     onGroupViews?: () => void;
     onGroupWalls?: () => void;
 }
 
-export const SpacesNewWidget2 = ({ layout, onGroupFloors, onGroupViews, onGroupWalls }: SpacesNewWidget2Props) => {
+export const SpacesNewWidget2 = ({ itemsItemGrid, layout, onGroupFloors, onGroupViews, onGroupWalls }: SpacesNewWidget2Props) => {
     const t = useTranslation();
 
     return (
@@ -64,7 +67,9 @@ export const SpacesNewWidget2 = ({ layout, onGroupFloors, onGroupViews, onGroupW
                 <Region
                     name="itemGrid"
                     layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
-                />
+                >
+                    {itemsItemGrid}
+                </Region>
             </ScrollArea>
         </Region>
     );

@@ -1,15 +1,19 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Region, ThemeText } from '#base/theme';
 
 /** Generated from `884_memenu_effects_xml` (layout "memenu_effects", 175x114) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MemenuEffectsLayoutProps {
     captionInfoText?: string;
+    effectsCnvs?: ReactNode;
     layout?: BoxLayout;
+    line?: ReactNode;
     onBackBtn?: () => void;
     onEffectsCnvs?: () => void;
 }
 
-export const MemenuEffectsLayout = ({ captionInfoText, layout, onBackBtn, onEffectsCnvs }: MemenuEffectsLayoutProps) => {
+export const MemenuEffectsLayout = ({ captionInfoText, effectsCnvs, layout, line, onBackBtn, onEffectsCnvs }: MemenuEffectsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -29,13 +33,17 @@ export const MemenuEffectsLayout = ({ captionInfoText, layout, onBackBtn, onEffe
                     name="line"
                     backgroundColor="#2f2f2f"
                     layout={{ position: 'absolute', width: 153, top: 22, height: 1 }}
-                />
+                >
+                    {line}
+                </Region>
                 <Region
                     name="effects_cnvs"
                     onPointerTap={onEffectsCnvs}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 11, width: 154, top: 29, height: 48 }}
-                />
+                >
+                    {effectsCnvs}
+                </Region>
                 <Button
                     variant="1"
                     name="back_btn"

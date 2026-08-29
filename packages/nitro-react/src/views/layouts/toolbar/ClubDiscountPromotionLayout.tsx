@@ -7,9 +7,10 @@ export interface ClubDiscountPromotionLayoutProps {
     layout?: BoxLayout;
     onTextRegion?: () => void;
     srcFlashingAnimation?: string;
+    tintFlashingAnimation?: string;
 }
 
-export const ClubDiscountPromotionLayout = ({ captionPromoText, captionPromoTextShadow, layout, onTextRegion, srcFlashingAnimation }: ClubDiscountPromotionLayoutProps) => {
+export const ClubDiscountPromotionLayout = ({ captionPromoText, captionPromoTextShadow, layout, onTextRegion, srcFlashingAnimation, tintFlashingAnimation }: ClubDiscountPromotionLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 192, height: 44, ...layout }}>
             <Border
@@ -21,6 +22,7 @@ export const ClubDiscountPromotionLayout = ({ captionPromoText, captionPromoText
                 <ThemeImage
                     name="flashing_animation"
                     src={srcFlashingAnimation}
+                    tint={tintFlashingAnimation}
                     layout={{ position: 'absolute', left: 3, width: 46, top: 3, height: 37 }}
                 />
                 <Region

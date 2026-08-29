@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, WidgetSlot } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
@@ -8,10 +10,11 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
  */
 /** Named region `addOnBadgeViewWidget` of AddOnBadgeViewWidget2 - configured through the parent's `addOnBadgeViewWidget` prop. */
 export interface AddOnBadgeViewWidget2Props extends CatalogWidgetFlags {
+    badge?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const AddOnBadgeViewWidget2 = ({ layout }: AddOnBadgeViewWidget2Props) => {
+export const AddOnBadgeViewWidget2 = ({ badge, layout }: AddOnBadgeViewWidget2Props) => {
     return (
         <Region
             name="addOnBadgeViewWidget"
@@ -21,7 +24,9 @@ export const AddOnBadgeViewWidget2 = ({ layout }: AddOnBadgeViewWidget2Props) =>
                 widgetType="badge_image"
                 name="badge"
                 layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
-            />
+            >
+                {badge}
+            </WidgetSlot>
         </Region>
     );
 };

@@ -1,15 +1,21 @@
+import { ReactNode } from 'react';
+
 import { Border, BoxLayout, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1455_inventory_thumb_credits_xml` (layout "thumbnail", 42x42) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface InventoryThumbCreditsLayoutProps {
+    badge?: ReactNode;
     captionNumber?: string;
     layout?: BoxLayout;
+    rarityItemOverlayContainer?: ReactNode;
     srcBitmap?: string;
     srcOutline?: string;
     srcRecyclableContainer?: string;
     srcRentState?: string;
     srcUniqueItemBackgroundBitmap?: string;
+    tintBitmap?: string;
+    uniqueItemOverlayContainer?: ReactNode;
     visibleBadge?: boolean;
     visibleRarityItemOverlayContainer?: boolean;
     visibleRecyclableContainer?: boolean;
@@ -18,7 +24,7 @@ export interface InventoryThumbCreditsLayoutProps {
     visibleUniqueItemOverlayContainer?: boolean;
 }
 
-export const InventoryThumbCreditsLayout = ({ captionNumber, layout, srcBitmap, srcOutline, srcRecyclableContainer, srcRentState, srcUniqueItemBackgroundBitmap, visibleBadge, visibleRarityItemOverlayContainer, visibleRecyclableContainer, visibleRentState, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer }: InventoryThumbCreditsLayoutProps) => {
+export const InventoryThumbCreditsLayout = ({ badge, captionNumber, layout, rarityItemOverlayContainer, srcBitmap, srcOutline, srcRecyclableContainer, srcRentState, srcUniqueItemBackgroundBitmap, tintBitmap, uniqueItemOverlayContainer, visibleBadge, visibleRarityItemOverlayContainer, visibleRecyclableContainer, visibleRentState, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer }: InventoryThumbCreditsLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 42, height: 42, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}>
@@ -37,6 +43,7 @@ export const InventoryThumbCreditsLayout = ({ captionNumber, layout, srcBitmap, 
                     <ThemeImage
                         name="bitmap"
                         src={srcBitmap}
+                        tint={tintBitmap}
                         layout={{ position: 'absolute', left: 1, width: 38, top: 18, height: 35, minWidth: 40, maxWidth: 38 }}
                     />
                     {(visibleBadge ?? false) && (
@@ -45,7 +52,9 @@ export const InventoryThumbCreditsLayout = ({ captionNumber, layout, srcBitmap, 
                             name="badge"
                             options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                             layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
-                        />
+                        >
+                            {badge}
+                        </WidgetSlot>
                     )}
                     {(visibleRecyclableContainer ?? false) && (
                         <ThemeImage
@@ -59,14 +68,18 @@ export const InventoryThumbCreditsLayout = ({ captionNumber, layout, srcBitmap, 
                             widgetType="limited_item_overlay_grid"
                             name="unique_item_overlay_container"
                             layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                        />
+                        >
+                            {uniqueItemOverlayContainer}
+                        </WidgetSlot>
                     )}
                     {(visibleRarityItemOverlayContainer ?? false) && (
                         <WidgetSlot
                             widgetType="rarity_item_overlay_grid"
                             name="rarity_item_overlay_container"
                             layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                        />
+                        >
+                            {rarityItemOverlayContainer}
+                        </WidgetSlot>
                     )}
                     <Region
                         name="number_container"

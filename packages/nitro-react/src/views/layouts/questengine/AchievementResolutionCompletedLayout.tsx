@@ -1,15 +1,18 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Frame, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `107_AchievementResolutionCompleted_xml` (layout "AchievementResolutionCompleted", 340x273) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface AchievementResolutionCompletedLayoutProps {
+    achievementBadge?: ReactNode;
     layout?: BoxLayout;
     onCancelButton?: () => void;
     onClose?: () => void;
 }
 
-export const AchievementResolutionCompletedLayout = ({ layout, onCancelButton, onClose }: AchievementResolutionCompletedLayoutProps) => {
+export const AchievementResolutionCompletedLayout = ({ achievementBadge, layout, onCancelButton, onClose }: AchievementResolutionCompletedLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -46,7 +49,9 @@ export const AchievementResolutionCompletedLayout = ({ layout, onCancelButton, o
                         name="achievement_badge"
                         options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                         layout={{ position: 'absolute', left: 39, width: 50, top: 37, height: 50 }}
-                    />
+                    >
+                        {achievementBadge}
+                    </WidgetSlot>
                 </Region>
                 <Region
                     name="cancel_button"

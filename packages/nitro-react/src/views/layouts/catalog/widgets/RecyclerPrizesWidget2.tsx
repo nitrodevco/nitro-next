@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ScrollArea, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
@@ -11,12 +13,16 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 export interface RecyclerPrizesWidget2Props extends CatalogWidgetFlags {
     captionCtlgDescription?: string;
     captionCtlgProductName?: string;
+    itemsBundleGrid?: ReactNode;
+    itemsItemList?: ReactNode;
     layout?: BoxLayout;
+    productViewer?: ReactNode;
     srcCtlgTeaserimg1?: string;
+    tintCtlgTeaserimg1?: string;
     visibleCtlgTeaserimg1?: boolean;
 }
 
-export const RecyclerPrizesWidget2 = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1, visibleCtlgTeaserimg1 }: RecyclerPrizesWidget2Props) => {
+export const RecyclerPrizesWidget2 = ({ captionCtlgDescription, captionCtlgProductName, itemsBundleGrid, itemsItemList, layout, productViewer, srcCtlgTeaserimg1, tintCtlgTeaserimg1, visibleCtlgTeaserimg1 }: RecyclerPrizesWidget2Props) => {
     const t = useTranslation();
 
     return (
@@ -31,7 +37,9 @@ export const RecyclerPrizesWidget2 = ({ captionCtlgDescription, captionCtlgProdu
                 <Region
                     name="itemList"
                     layout={{ flexDirection: 'column', gap: 11, width: '100%' }}
-                />
+                >
+                    {itemsItemList}
+                </Region>
             </ScrollArea>
             <Region
                 name="productView"
@@ -41,11 +49,14 @@ export const RecyclerPrizesWidget2 = ({ captionCtlgDescription, captionCtlgProdu
                     widgetType="product_image"
                     name="product_viewer"
                     layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
-                />
+                >
+                    {productViewer}
+                </WidgetSlot>
                 {(visibleCtlgTeaserimg1 ?? false) && (
                     <ThemeImage
                         name="ctlg_teaserimg_1"
                         src={srcCtlgTeaserimg1}
+                        tint={tintCtlgTeaserimg1}
                         layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
                     />
                 )}
@@ -75,7 +86,9 @@ export const RecyclerPrizesWidget2 = ({ captionCtlgDescription, captionCtlgProdu
                     <Region
                         name="bundleGrid"
                         layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 2, width: '100%' }}
-                    />
+                    >
+                        {itemsBundleGrid}
+                    </Region>
                 </ScrollArea>
             </Region>
         </Region>

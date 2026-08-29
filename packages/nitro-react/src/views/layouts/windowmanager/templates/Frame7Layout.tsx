@@ -1,11 +1,14 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, FramePointerDown, Header, Region, Scaler } from '#base/theme';
 
 /** Generated from `2814_frame_7_xml` (layout "habbo_window_layout_frame_7", 64x73) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface Frame7LayoutProps {
+    contentArea?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const Frame7Layout = ({ layout }: Frame7LayoutProps) => {
+export const Frame7Layout = ({ contentArea, layout }: Frame7LayoutProps) => {
     return (
         <Region
             dropShadow={{ distance: 4, angle: 45, color: '#000000', alpha: 0.35, blur: 4 }}
@@ -18,7 +21,9 @@ export const Frame7Layout = ({ layout }: Frame7LayoutProps) => {
             <Region
                 name="content_area"
                 layout={{ position: 'absolute', left: 3, right: 3, top: 36, bottom: 12 }}
-            />
+            >
+                {contentArea}
+            </Region>
             <Scaler
                 name="_FRAME_SCALER"
                 layout={{ position: 'absolute', right: 3, width: 20, bottom: 13, height: 20 }}

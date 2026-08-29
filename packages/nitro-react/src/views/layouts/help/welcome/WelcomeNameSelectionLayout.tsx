@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Region, TextInput, ThemeText } from '#base/theme';
@@ -12,9 +12,10 @@ export interface WelcomeNameSelectionLayoutProps {
     onCheckNameButton?: () => void;
     onSelectNameButton?: () => void;
     onSuggestions?: () => void;
+    suggestions?: ReactNode;
 }
 
-export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoText, layout, onCancelSelectionButton, onCheckNameButton, onSelectNameButton, onSuggestions }: WelcomeNameSelectionLayoutProps) => {
+export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoText, layout, onCancelSelectionButton, onCheckNameButton, onSelectNameButton, onSuggestions, suggestions }: WelcomeNameSelectionLayoutProps) => {
     const t = useTranslation();
     const [ inputValue, setInputValue ] = useState('');
 
@@ -67,7 +68,9 @@ export const WelcomeNameSelectionLayout = ({ captionInfoText, captionStaticInfoT
                     onPointerTap={onSuggestions}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 10, width: 280, top: 116, height: 31 }}
-                />
+                >
+                    {suggestions}
+                </Region>
                 <Button
                     variant="3"
                     name="select_name_button"

@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button, Region, ThemeText } from '#base/theme';
 
@@ -6,12 +8,13 @@ export interface MemenuSettingsMenu_1079LayoutProps {
     captionIdentityText?: string;
     captionSettingsTitle?: string;
     layout?: BoxLayout;
+    line?: ReactNode;
     onBack?: () => void;
     onCharacterSettings?: () => void;
     onSoundSettings?: () => void;
 }
 
-export const MemenuSettingsMenu_1079Layout = ({ captionIdentityText, captionSettingsTitle, layout, onBack, onCharacterSettings, onSoundSettings }: MemenuSettingsMenu_1079LayoutProps) => {
+export const MemenuSettingsMenu_1079Layout = ({ captionIdentityText, captionSettingsTitle, layout, line, onBack, onCharacterSettings, onSoundSettings }: MemenuSettingsMenu_1079LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -33,7 +36,9 @@ export const MemenuSettingsMenu_1079Layout = ({ captionIdentityText, captionSett
                     name="line"
                     backgroundColor="#2f2f2f"
                     layout={{ position: 'absolute', left: 5, width: 160, top: 22, height: 1 }}
-                />
+                >
+                    {line}
+                </Region>
                 <Button
                     variant="1"
                     name="character_settings"

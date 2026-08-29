@@ -5,9 +5,10 @@ export interface GuildSelectorWidgetItemLayoutProps {
     captionGuildName?: string;
     layout?: BoxLayout;
     srcGuildColors?: string;
+    tintGuildColors?: string;
 }
 
-export const GuildSelectorWidgetItemLayout = ({ captionGuildName, layout, srcGuildColors }: GuildSelectorWidgetItemLayoutProps) => {
+export const GuildSelectorWidgetItemLayout = ({ captionGuildName, layout, srcGuildColors, tintGuildColors }: GuildSelectorWidgetItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 133, height: 22, ...layout }}>
             <Region
@@ -23,6 +24,7 @@ export const GuildSelectorWidgetItemLayout = ({ captionGuildName, layout, srcGui
                 <ThemeImage
                     name="guild_colors"
                     src={srcGuildColors}
+                    tint={tintGuildColors}
                     layout={{ position: 'absolute', left: 112, width: 21, top: 4, height: 14 }}
                 />
             </Region>

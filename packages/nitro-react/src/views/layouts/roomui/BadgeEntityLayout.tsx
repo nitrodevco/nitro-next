@@ -4,9 +4,10 @@ import { Border, BoxLayout, Region, ThemeImage } from '#base/theme';
 export interface BadgeEntityLayoutProps {
     layout?: BoxLayout;
     srcBadgeImage?: string;
+    tintBadgeImage?: string;
 }
 
-export const BadgeEntityLayout = ({ layout, srcBadgeImage }: BadgeEntityLayoutProps) => {
+export const BadgeEntityLayout = ({ layout, srcBadgeImage, tintBadgeImage }: BadgeEntityLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 50, height: 50, ...layout }}>
             <Border
@@ -17,6 +18,7 @@ export const BadgeEntityLayout = ({ layout, srcBadgeImage }: BadgeEntityLayoutPr
                 <ThemeImage
                     name="badge.image"
                     src={srcBadgeImage}
+                    tint={tintBadgeImage}
                     layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
                 />
             </Border>

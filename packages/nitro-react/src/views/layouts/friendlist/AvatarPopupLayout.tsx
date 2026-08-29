@@ -11,9 +11,11 @@ export interface AvatarPopupLayoutProps {
     layout?: BoxLayout;
     srcFace?: string;
     srcOffline?: string;
+    tintFace?: string;
+    tintOffline?: string;
 }
 
-export const AvatarPopupLayout = ({ captionLastAccessText, captionMottoText, captionNameTextOffline, captionNameTextOnline, captionOnlineText, layout, srcFace, srcOffline }: AvatarPopupLayoutProps) => {
+export const AvatarPopupLayout = ({ captionLastAccessText, captionMottoText, captionNameTextOffline, captionNameTextOnline, captionOnlineText, layout, srcFace, srcOffline, tintFace, tintOffline }: AvatarPopupLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -26,6 +28,7 @@ export const AvatarPopupLayout = ({ captionLastAccessText, captionMottoText, cap
                 <ThemeImage
                     name="face"
                     src={srcFace}
+                    tint={tintFace}
                     layout={{ position: 'absolute', left: 11, width: 32, top: 5, height: 72 }}
                 />
                 <Region
@@ -67,6 +70,7 @@ export const AvatarPopupLayout = ({ captionLastAccessText, captionMottoText, cap
                 <ThemeImage
                     name="offline"
                     src={srcOffline}
+                    tint={tintOffline}
                     layout={{ position: 'absolute', left: 10, width: 30, top: 8, height: 10 }}
                 />
                 <Region

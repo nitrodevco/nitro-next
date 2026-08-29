@@ -1,14 +1,17 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, ThemeImage } from '#base/theme';
 
 /** Generated from `2475_badge_image_xml` (layout "badge_image", 30x30) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface BadgeImageLayoutProps {
     layout?: BoxLayout;
     onRegion?: () => void;
+    region?: ReactNode;
     srcBitmap?: string;
     visibleRegion?: boolean;
 }
 
-export const BadgeImageLayout = ({ layout, onRegion, srcBitmap, visibleRegion }: BadgeImageLayoutProps) => {
+export const BadgeImageLayout = ({ layout, onRegion, region, srcBitmap, visibleRegion }: BadgeImageLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 30, height: 30, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
@@ -23,7 +26,9 @@ export const BadgeImageLayout = ({ layout, onRegion, srcBitmap, visibleRegion }:
                         onPointerTap={onRegion}
                         cursor="pointer"
                         layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                    />
+                    >
+                        {region}
+                    </Region>
                 )}
             </Region>
         </Region>

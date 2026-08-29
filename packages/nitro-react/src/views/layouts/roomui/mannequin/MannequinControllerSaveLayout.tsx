@@ -10,9 +10,10 @@ export interface MannequinControllerSaveLayoutProps {
     onBackRegion?: () => void;
     onSaveButton?: () => void;
     srcPreviewImage?: string;
+    tintPreviewImage?: string;
 }
 
-export const MannequinControllerSaveLayout = ({ captionBackText, captionDescription, captionOutfitNameShow, layout, onBackRegion, onSaveButton, srcPreviewImage }: MannequinControllerSaveLayoutProps) => {
+export const MannequinControllerSaveLayout = ({ captionBackText, captionDescription, captionOutfitNameShow, layout, onBackRegion, onSaveButton, srcPreviewImage, tintPreviewImage }: MannequinControllerSaveLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -29,6 +30,7 @@ export const MannequinControllerSaveLayout = ({ captionBackText, captionDescript
                 <ThemeImage
                     name="preview_image"
                     src={srcPreviewImage}
+                    tint={tintPreviewImage}
                     layout={{ position: 'absolute', left: 20, width: 83, top: 10, height: 130 }}
                 />
                 <Region

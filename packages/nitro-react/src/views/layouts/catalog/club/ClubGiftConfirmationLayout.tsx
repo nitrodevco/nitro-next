@@ -11,9 +11,10 @@ export interface ClubGiftConfirmationLayoutProps {
     onClose?: () => void;
     onSelectButton?: () => void;
     srcImage?: string;
+    tintImage?: string;
 }
 
-export const ClubGiftConfirmationLayout = ({ captionBundleCounter, captionItemName, captionMultiCounter, layout, onCancelButton, onClose, onSelectButton, srcImage }: ClubGiftConfirmationLayoutProps) => {
+export const ClubGiftConfirmationLayout = ({ captionBundleCounter, captionItemName, captionMultiCounter, layout, onCancelButton, onClose, onSelectButton, srcImage, tintImage }: ClubGiftConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -34,6 +35,7 @@ export const ClubGiftConfirmationLayout = ({ captionBundleCounter, captionItemNa
                     <ThemeImage
                         name="image"
                         src={srcImage}
+                        tint={tintImage}
                         layout={{ position: 'absolute', left: 1, width: 46, top: 1, height: 46 }}
                     />
                     <Region

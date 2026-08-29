@@ -9,9 +9,10 @@ export interface GrsCategorySelectorLayoutProps {
     onEnterCategoryButton?: () => void;
     onToggleOpenRegion?: () => void;
     srcNaviRoomIcon?: string;
+    tintNaviRoomIcon?: string;
 }
 
-export const GrsCategorySelectorLayout = ({ captionCategoryNameTxt, captionOpenTxt, layout, onEnterCategoryButton, onToggleOpenRegion, srcNaviRoomIcon }: GrsCategorySelectorLayoutProps) => {
+export const GrsCategorySelectorLayout = ({ captionCategoryNameTxt, captionOpenTxt, layout, onEnterCategoryButton, onToggleOpenRegion, srcNaviRoomIcon, tintNaviRoomIcon }: GrsCategorySelectorLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -35,6 +36,7 @@ export const GrsCategorySelectorLayout = ({ captionCategoryNameTxt, captionOpenT
                     <ThemeImage
                         name="navi_room_icon"
                         src={srcNaviRoomIcon}
+                        tint={tintNaviRoomIcon}
                         layout={{ position: 'absolute', right: 13, width: 44, top: 3, height: 30 }}
                     />
                     <Region

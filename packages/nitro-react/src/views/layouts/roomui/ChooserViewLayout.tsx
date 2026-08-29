@@ -1,13 +1,16 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Frame, Region, ScrollArea } from '#base/theme';
 
 /** Generated from `1091_chooser_view_xml` (layout "chooser_view", 203x168) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ChooserViewLayoutProps {
+    itemsItemList?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const ChooserViewLayout = ({ layout, onClose }: ChooserViewLayoutProps) => {
+export const ChooserViewLayout = ({ itemsItemList, layout, onClose }: ChooserViewLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -26,7 +29,9 @@ export const ChooserViewLayout = ({ layout, onClose }: ChooserViewLayoutProps) =
                     <Region
                         name="item_list"
                         layout={{ flexDirection: 'column', width: '100%' }}
-                    />
+                    >
+                        {itemsItemList}
+                    </Region>
                 </ScrollArea>
             </Region>
         </Frame>

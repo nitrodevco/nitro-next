@@ -12,9 +12,10 @@ export interface SingleViewWidgetProps extends CatalogWidgetFlags {
     captionCtlgProductName?: string;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
+    tintCtlgTeaserimg1?: string;
 }
 
-export const SingleViewWidget = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1 }: SingleViewWidgetProps) => {
+export const SingleViewWidget = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1, tintCtlgTeaserimg1 }: SingleViewWidgetProps) => {
     return (
         <Region
             name="singleViewWidget"
@@ -23,6 +24,7 @@ export const SingleViewWidget = ({ captionCtlgDescription, captionCtlgProductNam
             <ThemeImage
                 name="ctlg_teaserimg_1"
                 src={srcCtlgTeaserimg1}
+                tint={tintCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, width: 162, top: 0, height: 162 }}
             />
             <Region

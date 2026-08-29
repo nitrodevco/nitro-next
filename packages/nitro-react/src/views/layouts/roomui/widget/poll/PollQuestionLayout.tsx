@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, ButtonThick, Frame, Region, ScrollArea, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -12,10 +14,11 @@ export interface PollQuestionLayoutProps {
     onClose?: () => void;
     onHeaderRegion?: () => void;
     onPollQuestionButtonOk?: () => void;
+    pollQuestionAnswerContainer?: ReactNode;
     srcPollPromptImage?: string;
 }
 
-export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuestionHeadline, captionPollQuestionNumber, captionPollQuestionText, layout, onClose, onHeaderRegion, onPollQuestionButtonOk, srcPollPromptImage }: PollQuestionLayoutProps) => {
+export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuestionHeadline, captionPollQuestionNumber, captionPollQuestionText, layout, onClose, onHeaderRegion, onPollQuestionButtonOk, pollQuestionAnswerContainer, srcPollPromptImage }: PollQuestionLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -76,7 +79,9 @@ export const PollQuestionLayout = ({ captionPollQuestionCancel, captionPollQuest
                                 <Region
                                     name="poll_question_answer_container"
                                     layout={{ width: 363, height: 384, flexShrink: 0 }}
-                                />
+                                >
+                                    {pollQuestionAnswerContainer}
+                                </Region>
                             </Region>
                         </ScrollArea>
                         <Region layout={{ width: 1, height: 10, flexShrink: 0 }} />

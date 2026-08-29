@@ -3,23 +3,23 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1123_start_panel_xml` (layout "start_panel", 170x170) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface StartPanelLayoutProps {
+    captionChatlogButOffenceName?: string;
     captionOffenceName?: string;
-    captionOffenceName2?: string;
-    captionOffenceName3?: string;
-    captionOffenceName4?: string;
+    captionTicketQueueButOffenceName?: string;
+    captionUserinfoButOffenceName?: string;
     layout?: BoxLayout;
     onChatlogBut?: () => void;
     onClose?: () => void;
     onRoomToolBut?: () => void;
     onTicketQueueBut?: () => void;
     onUserinfoBut?: () => void;
+    visibleChatlogButMouseover?: boolean;
     visibleMouseover?: boolean;
-    visibleMouseover2?: boolean;
-    visibleMouseover3?: boolean;
-    visibleMouseover4?: boolean;
+    visibleTicketQueueButMouseover?: boolean;
+    visibleUserinfoButMouseover?: boolean;
 }
 
-export const StartPanelLayout = ({ captionOffenceName, captionOffenceName2, captionOffenceName3, captionOffenceName4, layout, onChatlogBut, onClose, onRoomToolBut, onTicketQueueBut, onUserinfoBut, visibleMouseover, visibleMouseover2, visibleMouseover3, visibleMouseover4 }: StartPanelLayoutProps) => {
+export const StartPanelLayout = ({ captionChatlogButOffenceName, captionOffenceName, captionTicketQueueButOffenceName, captionUserinfoButOffenceName, layout, onChatlogBut, onClose, onRoomToolBut, onTicketQueueBut, onUserinfoBut, visibleChatlogButMouseover, visibleMouseover, visibleTicketQueueButMouseover, visibleUserinfoButMouseover }: StartPanelLayoutProps) => {
     return (
         <Frame
             variant="100"
@@ -64,7 +64,7 @@ export const StartPanelLayout = ({ captionOffenceName, captionOffenceName2, capt
                     cursor="pointer"
                     layout={{ width: 155, height: 30, flexShrink: 0 }}
                 >
-                    {(visibleMouseover2 ?? false) && (
+                    {(visibleChatlogButMouseover ?? false) && (
                         <Border
                             variant="102"
                             name="mouseover"
@@ -76,7 +76,7 @@ export const StartPanelLayout = ({ captionOffenceName, captionOffenceName2, capt
                         layout={{ position: 'absolute', left: 24, width: 111, top: 7, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
-                            text={captionOffenceName2 ?? 'Chatlog for this room'}
+                            text={captionChatlogButOffenceName ?? 'Chatlog for this room'}
                             textStyle="text-style-il-button"
                         />
                     </Region>
@@ -91,7 +91,7 @@ export const StartPanelLayout = ({ captionOffenceName, captionOffenceName2, capt
                     cursor="pointer"
                     layout={{ width: 155, height: 30, flexShrink: 0 }}
                 >
-                    {(visibleMouseover3 ?? false) && (
+                    {(visibleUserinfoButMouseover ?? false) && (
                         <Border
                             variant="102"
                             name="mouseover"
@@ -103,7 +103,7 @@ export const StartPanelLayout = ({ captionOffenceName, captionOffenceName2, capt
                         layout={{ position: 'absolute', left: 24, width: 50, top: 7, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
-                            text={captionOffenceName3 ?? 'User info:'}
+                            text={captionUserinfoButOffenceName ?? 'User info:'}
                             textStyle="text-style-il-button"
                         />
                     </Region>
@@ -118,7 +118,7 @@ export const StartPanelLayout = ({ captionOffenceName, captionOffenceName2, capt
                     cursor="pointer"
                     layout={{ width: 155, height: 30, flexShrink: 0 }}
                 >
-                    {(visibleMouseover4 ?? false) && (
+                    {(visibleTicketQueueButMouseover ?? false) && (
                         <Border
                             variant="102"
                             name="mouseover"
@@ -130,7 +130,7 @@ export const StartPanelLayout = ({ captionOffenceName, captionOffenceName2, capt
                         layout={{ position: 'absolute', left: 24, width: 78, top: 7, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
-                            text={captionOffenceName4 ?? 'Ticket browser'}
+                            text={captionTicketQueueButOffenceName ?? 'Ticket browser'}
                             textStyle="text-style-il-button"
                         />
                     </Region>

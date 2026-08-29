@@ -11,9 +11,10 @@ export interface PetpackageLayoutProps {
     onCancel?: () => void;
     onPickName?: () => void;
     srcPetImage?: string;
+    tintPetImage?: string;
 }
 
-export const PetpackageLayout = ({ captionCancel, captionInfoText, layout, onCancel, onPickName, srcPetImage }: PetpackageLayoutProps) => {
+export const PetpackageLayout = ({ captionCancel, captionInfoText, layout, onCancel, onPickName, srcPetImage, tintPetImage }: PetpackageLayoutProps) => {
     const t = useTranslation();
     const [ inputValue, setInputValue ] = useState('');
 
@@ -77,6 +78,7 @@ export const PetpackageLayout = ({ captionCancel, captionInfoText, layout, onCan
                     <ThemeImage
                         name="pet_image"
                         src={srcPetImage}
+                        tint={tintPetImage}
                         layout={{ position: 'absolute', width: 60, alignSelf: 'center', height: 60, minWidth: 60, maxWidth: 60, minHeight: 60, maxHeight: 60 }}
                     />
                 </Border>

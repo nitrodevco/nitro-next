@@ -11,9 +11,10 @@ export interface EcotronboxCardLayoutProps {
     onEcotronboxContainer?: () => void;
     srcEcotronboxCardBg?: string;
     srcEcotronboxCardPreview?: string;
+    tintEcotronboxCardPreview?: string;
 }
 
-export const EcotronboxCardLayout = ({ captionEcotronboxCardDate, captionEcotronboxCardMsg, layout, onEcotronboxCardBtnClose, onEcotronboxCardBtnOpen, onEcotronboxContainer, srcEcotronboxCardBg, srcEcotronboxCardPreview }: EcotronboxCardLayoutProps) => {
+export const EcotronboxCardLayout = ({ captionEcotronboxCardDate, captionEcotronboxCardMsg, layout, onEcotronboxCardBtnClose, onEcotronboxCardBtnOpen, onEcotronboxContainer, srcEcotronboxCardBg, srcEcotronboxCardPreview, tintEcotronboxCardPreview }: EcotronboxCardLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -32,6 +33,7 @@ export const EcotronboxCardLayout = ({ captionEcotronboxCardDate, captionEcotron
                 <ThemeImage
                     name="ecotronbox_card_preview"
                     src={srcEcotronboxCardPreview}
+                    tint={tintEcotronboxCardPreview}
                     layout={{ position: 'absolute', left: 7, width: 39, top: 38, height: 39 }}
                 />
                 <ButtonThick

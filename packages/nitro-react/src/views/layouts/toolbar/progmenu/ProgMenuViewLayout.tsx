@@ -1,20 +1,23 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1239_prog_menu_view_xml` (layout "prog_menu_view", 362x53) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ProgMenuViewLayoutProps {
+    captionAchievementsFieldText?: string;
     captionFieldText?: string;
-    captionFieldText2?: string;
-    captionFieldText3?: string;
-    captionFieldText4?: string;
-    captionFieldText5?: string;
+    captionIntroductionFieldText?: string;
+    captionLeaderboardsFieldText?: string;
+    captionQuestsFieldText?: string;
     layout?: BoxLayout;
     onAchievements?: () => void;
     onDailytasks?: () => void;
     onIntroduction?: () => void;
     onLeaderboards?: () => void;
     onQuests?: () => void;
+    spacer?: ReactNode;
     srcAchievementsIconColor?: string;
     srcAchievementsIconGrey?: string;
     srcDailytasksIconColor?: string;
@@ -27,7 +30,7 @@ export interface ProgMenuViewLayoutProps {
     srcQuestsIconGrey?: string;
 }
 
-export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captionFieldText3, captionFieldText4, captionFieldText5, layout, onAchievements, onDailytasks, onIntroduction, onLeaderboards, onQuests, srcAchievementsIconColor, srcAchievementsIconGrey, srcDailytasksIconColor, srcDailytasksIconGrey, srcIntroductionIconColor, srcIntroductionIconGrey, srcLeaderboardsIconColor, srcLeaderboardsIconGrey, srcQuestsIconColor, srcQuestsIconGrey }: ProgMenuViewLayoutProps) => {
+export const ProgMenuViewLayout = ({ captionAchievementsFieldText, captionFieldText, captionIntroductionFieldText, captionLeaderboardsFieldText, captionQuestsFieldText, layout, onAchievements, onDailytasks, onIntroduction, onLeaderboards, onQuests, spacer, srcAchievementsIconColor, srcAchievementsIconGrey, srcDailytasksIconColor, srcDailytasksIconGrey, srcIntroductionIconColor, srcIntroductionIconGrey, srcLeaderboardsIconColor, srcLeaderboardsIconGrey, srcQuestsIconColor, srcQuestsIconGrey }: ProgMenuViewLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -83,7 +86,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
-                                    text={captionFieldText2 ?? t('widget.progmenu.quests')}
+                                    text={captionQuestsFieldText ?? t('widget.progmenu.quests')}
                                     textStyle="text-style-u-regular"
                                     textOptions={{ fill: '#ffffff' }}
                                 />
@@ -110,7 +113,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
-                                    text={captionFieldText3 ?? t('widget.progmenu.achievements')}
+                                    text={captionAchievementsFieldText ?? t('widget.progmenu.achievements')}
                                     textStyle="text-style-u-regular"
                                     textOptions={{ fill: '#ffffff' }}
                                 />
@@ -137,7 +140,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
-                                    text={captionFieldText4 ?? t('widget.progmenu.leaderboards')}
+                                    text={captionLeaderboardsFieldText ?? t('widget.progmenu.leaderboards')}
                                     textStyle="text-style-u-regular"
                                     textOptions={{ fill: '#ffffff' }}
                                 />
@@ -164,7 +167,7 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                                 layout={{ position: 'absolute', width: 60, top: 32, height: 14, maxWidth: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                             >
                                 <ThemeText
-                                    text={captionFieldText5 ?? t('widget.progmenu.introduction')}
+                                    text={captionIntroductionFieldText ?? t('widget.progmenu.introduction')}
                                     textStyle="text-style-u-regular"
                                     textOptions={{ fill: '#ffffff' }}
                                 />
@@ -178,7 +181,9 @@ export const ProgMenuViewLayout = ({ captionFieldText, captionFieldText2, captio
                         <Region
                             name="spacer"
                             layout={{ position: 'absolute', left: 352, width: 7, top: 2, height: 30 }}
-                        />
+                        >
+                            {spacer}
+                        </Region>
                     </Region>
                 </Region>
             </Border>

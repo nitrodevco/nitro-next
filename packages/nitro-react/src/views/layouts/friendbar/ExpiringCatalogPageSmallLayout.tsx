@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 
@@ -7,12 +9,13 @@ export interface ExpiringCatalogPageSmallLayoutProps {
     captionPageHeaderTxt?: string;
     captionTimerCaptionTxt?: string;
     colorableTextColor?: string;
+    countdownWidget?: ReactNode;
     layout?: BoxLayout;
     onOpenCatalogButton?: () => void;
     srcPromoBitmap?: string;
 }
 
-export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPageHeaderTxt, captionTimerCaptionTxt, colorableTextColor, layout, onOpenCatalogButton, srcPromoBitmap }: ExpiringCatalogPageSmallLayoutProps) => {
+export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPageHeaderTxt, captionTimerCaptionTxt, colorableTextColor, countdownWidget, layout, onOpenCatalogButton, srcPromoBitmap }: ExpiringCatalogPageSmallLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -56,7 +59,9 @@ export const ExpiringCatalogPageSmallLayout = ({ captionPageDescTxt, captionPage
                             name="countdown_widget"
                             options={{ 'countdown:running': 'true' }}
                             layout={{ position: 'absolute', left: 124, width: 99, top: 41, height: 37 }}
-                        />
+                        >
+                            {countdownWidget}
+                        </WidgetSlot>
                     </Region>
                     <Region
                         name="page_desc_txt"

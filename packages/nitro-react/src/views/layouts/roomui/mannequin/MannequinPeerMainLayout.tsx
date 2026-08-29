@@ -8,9 +8,10 @@ export interface MannequinPeerMainLayoutProps {
     layout?: BoxLayout;
     onWearButton?: () => void;
     srcPreviewImage?: string;
+    tintPreviewImage?: string;
 }
 
-export const MannequinPeerMainLayout = ({ captionDescription, captionOutfitNameShow, layout, onWearButton, srcPreviewImage }: MannequinPeerMainLayoutProps) => {
+export const MannequinPeerMainLayout = ({ captionDescription, captionOutfitNameShow, layout, onWearButton, srcPreviewImage, tintPreviewImage }: MannequinPeerMainLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -27,6 +28,7 @@ export const MannequinPeerMainLayout = ({ captionDescription, captionOutfitNameS
                 <ThemeImage
                     name="preview_image"
                     src={srcPreviewImage}
+                    tint={tintPreviewImage}
                     layout={{ position: 'absolute', left: 20, width: 83, top: 10, height: 130 }}
                 />
                 <Region

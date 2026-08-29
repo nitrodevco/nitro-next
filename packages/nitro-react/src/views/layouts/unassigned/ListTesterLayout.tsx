@@ -1,12 +1,16 @@
+import { ReactNode } from 'react';
+
 import { Border, BoxLayout, Frame, Region, ScrollArea } from '#base/theme';
 
 /** Generated from `2674_list_tester_xml` (layout "list_tester", 240x245) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ListTesterLayoutProps {
+    itemsListHorizontal?: ReactNode;
+    itemsListVertical?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const ListTesterLayout = ({ layout, onClose }: ListTesterLayoutProps) => {
+export const ListTesterLayout = ({ itemsListHorizontal, itemsListVertical, layout, onClose }: ListTesterLayoutProps) => {
     return (
         <Frame
             variant="0"
@@ -27,7 +31,9 @@ export const ListTesterLayout = ({ layout, onClose }: ListTesterLayoutProps) => 
                         name="_list_vertical"
                         backgroundColor="#eeeeee"
                         layout={{ flexDirection: 'column', width: '100%' }}
-                    />
+                    >
+                        {itemsListVertical}
+                    </Region>
                 </ScrollArea>
                 {/* <scrollbar_vertical> for _list_vertical - rendered by that list's ScrollArea */}
                 <Region layout={{ position: 'absolute', left: 6, right: 4, bottom: 5, height: 100 }}>
@@ -39,7 +45,9 @@ export const ListTesterLayout = ({ layout, onClose }: ListTesterLayoutProps) => 
                             name="_list_horizontal"
                             backgroundColor="#cceeee"
                             layout={{ flexDirection: 'row', width: '100%' }}
-                        />
+                        >
+                            {itemsListHorizontal}
+                        </Region>
                     </ScrollArea>
                     {/* <scrollbar_horizontal> for _list_horizontal - rendered by that list's ScrollArea */}
                 </Region>

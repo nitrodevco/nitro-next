@@ -4,9 +4,10 @@ import { Border, BoxLayout, Region, ThemeImage } from '#base/theme';
 export interface ClubGiftPreviewLayoutProps {
     layout?: BoxLayout;
     srcImage?: string;
+    tintImage?: string;
 }
 
-export const ClubGiftPreviewLayout = ({ layout, srcImage }: ClubGiftPreviewLayoutProps) => {
+export const ClubGiftPreviewLayout = ({ layout, srcImage, tintImage }: ClubGiftPreviewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Border
@@ -16,6 +17,7 @@ export const ClubGiftPreviewLayout = ({ layout, srcImage }: ClubGiftPreviewLayou
                 <ThemeImage
                     name="image"
                     src={srcImage}
+                    tint={tintImage}
                     layout={{ position: 'absolute', left: 20, top: 20 }}
                 />
             </Border>

@@ -11,9 +11,11 @@ export interface PackagecardLayoutProps {
     onOpen?: () => void;
     srcGiftImage?: string;
     srcImageBg?: string;
+    tintGiftImage?: string;
+    tintImageBg?: string;
 }
 
-export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, onClose2, onOpen, srcGiftImage, srcImageBg }: PackagecardLayoutProps) => {
+export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, onClose2, onOpen, srcGiftImage, srcImageBg, tintGiftImage, tintImageBg }: PackagecardLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -31,11 +33,13 @@ export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, 
                 <ThemeImage
                     name="image_bg"
                     src={srcImageBg}
+                    tint={tintImageBg}
                     layout={{ position: 'absolute', left: 10, width: 114, top: 16, height: 114 }}
                 />
                 <ThemeImage
                     name="gift_image"
                     src={srcGiftImage}
+                    tint={tintGiftImage}
                     layout={{ position: 'absolute', left: 10, width: 114, top: 16, height: 114 }}
                 />
                 <Region

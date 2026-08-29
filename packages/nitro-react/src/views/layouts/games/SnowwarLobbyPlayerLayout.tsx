@@ -7,9 +7,11 @@ export interface SnowwarLobbyPlayerLayoutProps {
     onRegion?: () => void;
     srcBgImage?: string;
     srcImage?: string;
+    tintBgImage?: string;
+    tintImage?: string;
 }
 
-export const SnowwarLobbyPlayerLayout = ({ layout, onRegion, srcBgImage, srcImage }: SnowwarLobbyPlayerLayoutProps) => {
+export const SnowwarLobbyPlayerLayout = ({ layout, onRegion, srcBgImage, srcImage, tintBgImage, tintImage }: SnowwarLobbyPlayerLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 62, height: 63, ...layout }}>
             <Region
@@ -21,11 +23,13 @@ export const SnowwarLobbyPlayerLayout = ({ layout, onRegion, srcBgImage, srcImag
                 <ThemeImage
                     name="bg_image"
                     src={srcBgImage ?? layoutImage('blue_square.png')}
+                    tint={tintBgImage}
                     layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 63 }}
                 />
                 <ThemeImage
                     name="image"
                     src={srcImage}
+                    tint={tintImage}
                     layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 63 }}
                 />
             </Region>

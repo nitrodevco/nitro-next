@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, ContainerButton, Frame, Region, ScrollArea, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -10,9 +12,10 @@ export interface UserPendingLayoutProps {
     layout?: BoxLayout;
     onCancelButton?: () => void;
     onClose?: () => void;
+    requestTimestamp?: ReactNode;
 }
 
-export const UserPendingLayout = ({ captionRequestDescription, captionRequestType, captionWaitingTime, layout, onCancelButton, onClose }: UserPendingLayoutProps) => {
+export const UserPendingLayout = ({ captionRequestDescription, captionRequestType, captionWaitingTime, layout, onCancelButton, onClose, requestTimestamp }: UserPendingLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -46,7 +49,9 @@ export const UserPendingLayout = ({ captionRequestDescription, captionRequestTyp
                         widgetType="updating_timestamp"
                         name="request_timestamp"
                         layout={{ position: 'absolute', left: 70, width: 4, top: 25, height: 4 }}
-                    />
+                    >
+                        {requestTimestamp}
+                    </WidgetSlot>
                     <ScrollArea
                         orientation="vertical"
                         layout={{ position: 'absolute', left: 70, width: 200, top: 42, height: 80 }}

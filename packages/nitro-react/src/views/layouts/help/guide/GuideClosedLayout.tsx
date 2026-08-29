@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button, Frame, Region, ThemeText, WidgetSlot } from '#base/theme';
 
@@ -9,9 +11,10 @@ export interface GuideClosedLayoutProps {
     onClose?: () => void;
     onCloseButton?: () => void;
     onReportLink?: () => void;
+    requesterAvatar?: ReactNode;
 }
 
-export const GuideClosedLayout = ({ captionCloseReason, captionReportLink, layout, onClose, onCloseButton, onReportLink }: GuideClosedLayoutProps) => {
+export const GuideClosedLayout = ({ captionCloseReason, captionReportLink, layout, onClose, onCloseButton, onReportLink, requesterAvatar }: GuideClosedLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -29,7 +32,9 @@ export const GuideClosedLayout = ({ captionCloseReason, captionReportLink, layou
                     name="requester_avatar"
                     options={{ 'avatar_image:cropped': 'true' }}
                     layout={{ position: 'absolute', left: 0, width: 34, top: 0, height: 84 }}
-                />
+                >
+                    {requesterAvatar}
+                </WidgetSlot>
             </Region>
             <Region layout={{ position: 'absolute', left: 70, top: 0, minWidth: 200, maxWidth: 200, flexDirection: 'column', gap: 5 }}>
                 <Region layout={{ width: 271, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>

@@ -1,11 +1,14 @@
+import { ReactNode } from 'react';
+
 import { Border, BoxLayout, Region } from '#base/theme';
 
 /** Generated from `1690_priceDisplayWidget_xml` (layout "priceDisplayWidget", 20x29) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PriceDisplayWidgetLayoutProps {
     layout?: BoxLayout;
+    priceBoxNew?: ReactNode;
 }
 
-export const PriceDisplayWidgetLayout = ({ layout }: PriceDisplayWidgetLayoutProps) => {
+export const PriceDisplayWidgetLayout = ({ layout, priceBoxNew }: PriceDisplayWidgetLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 29, ...layout }}>
             <Border
@@ -17,7 +20,9 @@ export const PriceDisplayWidgetLayout = ({ layout }: PriceDisplayWidgetLayoutPro
                     <Region
                         name="price_box_new"
                         layout={{ width: 9, height: 26, flexShrink: 0 }}
-                    />
+                    >
+                        {priceBoxNew}
+                    </Region>
                     <Region layout={{ width: 3, height: 10, flexShrink: 0, minWidth: 3 }} />
                 </Region>
             </Border>

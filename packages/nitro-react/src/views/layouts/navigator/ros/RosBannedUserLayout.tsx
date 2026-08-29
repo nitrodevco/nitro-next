@@ -1,15 +1,18 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Icon, Region, ThemeText } from '#base/theme';
 
 /** Generated from `3034_ros_banned_user_xml` (layout "Banned User", 111x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RosBannedUserLayoutProps {
+    bgRegion?: ReactNode;
     captionUserNameTxt?: string;
     layout?: BoxLayout;
     onBgRegion?: () => void;
     onUserInfoRegion?: () => void;
 }
 
-export const RosBannedUserLayout = ({ captionUserNameTxt, layout, onBgRegion, onUserInfoRegion }: RosBannedUserLayoutProps) => {
+export const RosBannedUserLayout = ({ bgRegion, captionUserNameTxt, layout, onBgRegion, onUserInfoRegion }: RosBannedUserLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -24,7 +27,9 @@ export const RosBannedUserLayout = ({ captionUserNameTxt, layout, onBgRegion, on
                     onPointerTap={onBgRegion}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, width: 111, top: 0, height: 20 }}
-                />
+                >
+                    {bgRegion}
+                </Region>
                 <Region
                     name="user_info_region"
                     tooltip={t('group.members.showinfo')}

@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
 import { BoxLayout, Frame, Region, TextInput, ThemeText } from '#base/theme';
 
 /** Generated from `3055_iro_event_settings_xml` (layout "rev_room_event", 241x191) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IroEventSettingsLayoutProps {
+    buttons?: ReactNode;
     captionDescLabel?: string;
     captionNameLabel?: string;
     layout?: BoxLayout;
@@ -12,7 +13,7 @@ export interface IroEventSettingsLayoutProps {
     onClose?: () => void;
 }
 
-export const IroEventSettingsLayout = ({ captionDescLabel, captionNameLabel, layout, onButtons, onClose }: IroEventSettingsLayoutProps) => {
+export const IroEventSettingsLayout = ({ buttons, captionDescLabel, captionNameLabel, layout, onButtons, onClose }: IroEventSettingsLayoutProps) => {
     const t = useTranslation();
     const [ eventNameValue, setEventNameValue ] = useState('');
     const [ eventDescValue, setEventDescValue ] = useState('');
@@ -65,7 +66,9 @@ export const IroEventSettingsLayout = ({ captionDescLabel, captionNameLabel, lay
                 onPointerTap={onButtons}
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 10, width: 220, top: 200, height: 29 }}
-            />
+            >
+                {buttons}
+            </Region>
         </Frame>
     );
 };

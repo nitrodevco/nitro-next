@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Icon, Region, ThemeText } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
@@ -13,10 +15,12 @@ export interface ClubBuyWidgetProps extends CatalogWidgetFlags {
     captionClubInfo?: string;
     captionClubLink?: string;
     captionClubRemaining?: string;
+    itemsItemListHc?: ReactNode;
+    itemsItemListVip?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const ClubBuyWidget = ({ captionClubHeader, captionClubInfo, captionClubLink, captionClubRemaining, layout }: ClubBuyWidgetProps) => {
+export const ClubBuyWidget = ({ captionClubHeader, captionClubInfo, captionClubLink, captionClubRemaining, itemsItemListHc, itemsItemListVip, layout }: ClubBuyWidgetProps) => {
     const t = useTranslation();
 
     return (
@@ -70,11 +74,15 @@ export const ClubBuyWidget = ({ captionClubHeader, captionClubInfo, captionClubL
             <Region
                 name="item_list_hc"
                 layout={{ position: 'absolute', left: 0, width: 171, top: 155, bottom: 55, flexDirection: 'column', gap: 4 }}
-            />
+            >
+                {itemsItemListHc}
+            </Region>
             <Region
                 name="item_list_vip"
                 layout={{ position: 'absolute', left: 180, width: 171, top: 155, bottom: 55, flexDirection: 'column', gap: 4 }}
-            />
+            >
+                {itemsItemListVip}
+            </Region>
             <Region
                 name="club_link"
                 layout={{ position: 'absolute', width: 340, bottom: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}

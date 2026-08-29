@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Frame, Region, ScrollArea, TextInput } from '#base/theme';
 
 /** Generated from `3068_iro_room_filter_framed_xml` (layout "iro_room_filter_framed", 250x230) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IroRoomFilterFramedLayoutProps {
+    itemsBadwordsItemlist?: ReactNode;
     layout?: BoxLayout;
     onBadwordAddBtn?: () => void;
     onBadwordRemoveBtn?: () => void;
     onClose?: () => void;
 }
 
-export const IroRoomFilterFramedLayout = ({ layout, onBadwordAddBtn, onBadwordRemoveBtn, onClose }: IroRoomFilterFramedLayoutProps) => {
+export const IroRoomFilterFramedLayout = ({ itemsBadwordsItemlist, layout, onBadwordAddBtn, onBadwordRemoveBtn, onClose }: IroRoomFilterFramedLayoutProps) => {
     const t = useTranslation();
     const [ roomfilterAddwordTxtValue, setRoomfilterAddwordTxtValue ] = useState('');
 
@@ -48,7 +49,9 @@ export const IroRoomFilterFramedLayout = ({ layout, onBadwordAddBtn, onBadwordRe
                     <Region
                         name="badwords_itemlist"
                         layout={{ flexDirection: 'column', width: '100%' }}
-                    />
+                    >
+                        {itemsBadwordsItemlist}
+                    </Region>
                 </ScrollArea>
                 {/* <scrollbar_vertical> for badwords_itemlist - rendered by that list's ScrollArea */}
             </Border>

@@ -8,9 +8,10 @@ export interface OfferCenterLayoutProps {
     layout?: BoxLayout;
     onClose?: () => void;
     srcRewardIcon?: string;
+    tintRewardIcon?: string;
 }
 
-export const OfferCenterLayout = ({ captionRewardDate, captionRewardName, layout, onClose, srcRewardIcon }: OfferCenterLayoutProps) => {
+export const OfferCenterLayout = ({ captionRewardDate, captionRewardName, layout, onClose, srcRewardIcon, tintRewardIcon }: OfferCenterLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -79,6 +80,7 @@ export const OfferCenterLayout = ({ captionRewardDate, captionRewardName, layout
                                 <ThemeImage
                                     name="reward_icon"
                                     src={srcRewardIcon}
+                                    tint={tintRewardIcon}
                                     layout={{ position: 'absolute', left: 211, width: 80, top: 4, height: 56 }}
                                 />
                             </Border>

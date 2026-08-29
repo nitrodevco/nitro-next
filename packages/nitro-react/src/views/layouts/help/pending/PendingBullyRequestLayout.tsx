@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Frame, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -9,9 +11,11 @@ export interface PendingBullyRequestLayoutProps {
     layout?: BoxLayout;
     onClose?: () => void;
     onCloseButton?: () => void;
+    timestamp?: ReactNode;
+    userAvatar?: ReactNode;
 }
 
-export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, layout, onClose, onCloseButton }: PendingBullyRequestLayoutProps) => {
+export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, layout, onClose, onCloseButton, timestamp, userAvatar }: PendingBullyRequestLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -71,12 +75,16 @@ export const PendingBullyRequestLayout = ({ captionRoomName, captionUserName, la
                         name="user_avatar"
                         options={{ 'avatar_image:scale': 'sh', 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
                         layout={{ position: 'absolute', marginLeft: -125.5, marginRight: 125.5, width: 18, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 19 }}
-                    />
+                    >
+                        {userAvatar}
+                    </WidgetSlot>
                     <WidgetSlot
                         widgetType="updating_timestamp"
                         name="timestamp"
                         layout={{ position: 'absolute', left: 13, width: 4, top: 62, height: 4 }}
-                    />
+                    >
+                        {timestamp}
+                    </WidgetSlot>
                 </Border>
                 <Region layout={{ width: 370, height: 52, flexShrink: 0, justifyContent: 'center' }}>
                     <Button

@@ -1,8 +1,11 @@
+import { ReactNode } from 'react';
+
 import { Border, BoxLayout, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `59_achievement_competition_prizes_xml` (layout "Member Entry", 270x352) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface AchievementCompetitionPrizesLayoutProps {
+    avatarImage?: ReactNode;
     captionCaptionTxt?: string;
     captionInfoTxt?: string;
     captionRank1InfoTxt?: string;
@@ -22,7 +25,7 @@ export interface AchievementCompetitionPrizesLayoutProps {
     srcRewardImage?: string;
 }
 
-export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionInfoTxt, captionRank1InfoTxt, captionRank1Txt, captionRank2InfoTxt, captionRank2Txt, captionRank3InfoTxt, captionRank3Txt, captionRewardInfoTxt, captionRewardNameTxt, captionUserRankInfoTxt, captionUserRankTxt, colorableTextColor, layout, srcBorderBar, srcBorderBar2, srcRewardImage }: AchievementCompetitionPrizesLayoutProps) => {
+export const AchievementCompetitionPrizesLayout = ({ avatarImage, captionCaptionTxt, captionInfoTxt, captionRank1InfoTxt, captionRank1Txt, captionRank2InfoTxt, captionRank2Txt, captionRank3InfoTxt, captionRank3Txt, captionRewardInfoTxt, captionRewardNameTxt, captionUserRankInfoTxt, captionUserRankTxt, colorableTextColor, layout, srcBorderBar, srcBorderBar2, srcRewardImage }: AchievementCompetitionPrizesLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 270, height: 352, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 352 }}>
@@ -147,7 +150,9 @@ export const AchievementCompetitionPrizesLayout = ({ captionCaptionTxt, captionI
                             name="avatar_image"
                             options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
                             layout={{ position: 'absolute', left: 10, width: 33, bottom: 19, height: 34 }}
-                        />
+                        >
+                            {avatarImage}
+                        </WidgetSlot>
                         <Region
                             name="user_rank_txt"
                             layout={{ position: 'absolute', left: 59, width: 118, top: 11, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

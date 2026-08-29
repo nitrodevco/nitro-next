@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
@@ -12,11 +14,12 @@ export interface VipBuyWidgetProps extends CatalogWidgetFlags {
     captionVipInfo?: string;
     captionVipLink?: string;
     captionVipTitle?: string;
+    itemsItemListVip?: ReactNode;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
 }
 
-export const VipBuyWidget = ({ captionVipInfo, captionVipLink, captionVipTitle, layout, srcCtlgTeaserimg1 }: VipBuyWidgetProps) => {
+export const VipBuyWidget = ({ captionVipInfo, captionVipLink, captionVipTitle, itemsItemListVip, layout, srcCtlgTeaserimg1 }: VipBuyWidgetProps) => {
     const t = useTranslation();
 
     return (
@@ -61,7 +64,9 @@ export const VipBuyWidget = ({ captionVipInfo, captionVipLink, captionVipTitle, 
             <Region
                 name="item_list_vip"
                 layout={{ position: 'absolute', left: 19, width: 286, top: 170, height: 157, minWidth: 286, maxWidth: 286, flexDirection: 'column', gap: 4 }}
-            />
+            >
+                {itemsItemListVip}
+            </Region>
         </Region>
     );
 };

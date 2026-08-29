@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Frame, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
@@ -17,9 +17,10 @@ export interface AvatarEditorNameChangeLayoutProps {
     onSuggestions?: () => void;
     srcHcIconImage?: string;
     srcPenImage?: string;
+    suggestions?: ReactNode;
 }
 
-export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoText, captionStaticInfoText, layout, onCancelSelectionButton, onCheckNameButton, onClose, onSelectNameButton, onSuggestions, srcHcIconImage, srcPenImage }: AvatarEditorNameChangeLayoutProps) => {
+export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoText, captionStaticInfoText, layout, onCancelSelectionButton, onCheckNameButton, onClose, onSelectNameButton, onSuggestions, srcHcIconImage, srcPenImage, suggestions }: AvatarEditorNameChangeLayoutProps) => {
     const t = useTranslation();
     const [ inputValue, setInputValue ] = useState('');
 
@@ -84,7 +85,9 @@ export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoTex
                     onPointerTap={onSuggestions}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 10, width: 280, top: 150, height: 31 }}
-                />
+                >
+                    {suggestions}
+                </Region>
                 <Button
                     variant="2"
                     name="select_name_button"

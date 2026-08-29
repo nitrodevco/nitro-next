@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, ScrollArea, ThemeText } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
@@ -11,11 +13,12 @@ export interface ClubGiftWidgetProps extends CatalogWidgetFlags {
     captionInfoText?: string;
     captionPastClubDays?: string;
     captionPastVipDays?: string;
+    itemsGiftList?: ReactNode;
     layout?: BoxLayout;
     visiblePastVipDays?: boolean;
 }
 
-export const ClubGiftWidget = ({ captionInfoText, captionPastClubDays, captionPastVipDays, layout, visiblePastVipDays }: ClubGiftWidgetProps) => {
+export const ClubGiftWidget = ({ captionInfoText, captionPastClubDays, captionPastVipDays, itemsGiftList, layout, visiblePastVipDays }: ClubGiftWidgetProps) => {
     return (
         <Region
             name="clubGiftWidget"
@@ -28,7 +31,9 @@ export const ClubGiftWidget = ({ captionInfoText, captionPastClubDays, captionPa
                 <Region
                     name="gift_list"
                     layout={{ flexDirection: 'column', gap: 1, width: '100%' }}
-                />
+                >
+                    {itemsGiftList}
+                </Region>
             </ScrollArea>
             <Region
                 name="info_text"

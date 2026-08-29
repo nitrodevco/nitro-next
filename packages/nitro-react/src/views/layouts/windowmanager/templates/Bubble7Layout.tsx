@@ -1,14 +1,17 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, BubblePointer, Region } from '#base/theme';
 
 /** Generated from `2342_bubble_7_xml` (layout "habbo_window_layout_bubble", 23x23) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface Bubble7LayoutProps {
+    contentArea?: ReactNode;
     layout?: BoxLayout;
     visibleLeft?: boolean;
     visibleRight?: boolean;
     visibleUp?: boolean;
 }
 
-export const Bubble7Layout = ({ layout, visibleLeft, visibleRight, visibleUp }: Bubble7LayoutProps) => {
+export const Bubble7Layout = ({ contentArea, layout, visibleLeft, visibleRight, visibleUp }: Bubble7LayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 23, height: 23, ...layout }}>
             {(visibleUp ?? false) && (
@@ -40,7 +43,9 @@ export const Bubble7Layout = ({ layout, visibleLeft, visibleRight, visibleUp }: 
             <Region
                 name="content_area"
                 layout={{ position: 'absolute', left: 8, right: 10, top: 8, bottom: 10 }}
-            />
+            >
+                {contentArea}
+            </Region>
         </Region>
     );
 };

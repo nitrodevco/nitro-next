@@ -1,14 +1,17 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `35_safety_quiz_promo_xml` (layout "safety_quiz_promo", 577x57) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface SafetyQuizPromoLayoutProps {
+    avatar?: ReactNode;
     layout?: BoxLayout;
     onSafetyQuizButton?: () => void;
 }
 
-export const SafetyQuizPromoLayout = ({ layout, onSafetyQuizButton }: SafetyQuizPromoLayoutProps) => {
+export const SafetyQuizPromoLayout = ({ avatar, layout, onSafetyQuizButton }: SafetyQuizPromoLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -46,7 +49,9 @@ export const SafetyQuizPromoLayout = ({ layout, onSafetyQuizButton }: SafetyQuiz
                     name="avatar"
                     options={{ 'avatar_image:only_head': 'true', 'avatar_image:direction': 'south' }}
                     layout={{ position: 'absolute', left: -8, width: 90, top: -28, height: 130 }}
-                />
+                >
+                    {avatar}
+                </WidgetSlot>
                 <ThemeImage
                     src={layoutImage('help_bandaid.png')}
                     layout={{ position: 'absolute', left: 9, width: 57, top: 34, height: 18 }}

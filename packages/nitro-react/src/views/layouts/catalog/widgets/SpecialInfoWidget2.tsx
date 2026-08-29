@@ -11,9 +11,10 @@ export interface SpecialInfoWidget2Props extends CatalogWidgetFlags {
     captionCtlgSpecialTxt?: string;
     layout?: BoxLayout;
     srcCtlgSpecialImg?: string;
+    tintCtlgSpecialImg?: string;
 }
 
-export const SpecialInfoWidget2 = ({ captionCtlgSpecialTxt, layout, srcCtlgSpecialImg }: SpecialInfoWidget2Props) => {
+export const SpecialInfoWidget2 = ({ captionCtlgSpecialTxt, layout, srcCtlgSpecialImg, tintCtlgSpecialImg }: SpecialInfoWidget2Props) => {
     return (
         <Region
             name="specialInfoWidget"
@@ -22,6 +23,7 @@ export const SpecialInfoWidget2 = ({ captionCtlgSpecialTxt, layout, srcCtlgSpeci
             <ThemeImage
                 name="ctlg_special_img"
                 src={srcCtlgSpecialImg}
+                tint={tintCtlgSpecialImg}
                 layout={{ position: 'absolute', left: 0, width: 142, top: 0, height: 73 }}
             />
             <Region

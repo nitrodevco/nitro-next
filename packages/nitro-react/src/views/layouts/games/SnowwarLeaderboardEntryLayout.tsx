@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
@@ -6,20 +8,25 @@ export interface SnowwarLeaderboardEntryLayoutProps {
     captionName?: string;
     captionRank?: string;
     captionScore?: string;
+    imageRegion?: ReactNode;
     layout?: BoxLayout;
     onImageRegion?: () => void;
     srcAvatarImage?: string;
     srcDivider?: string;
     srcHighlight?: string;
+    tintAvatarImage?: string;
+    tintDivider?: string;
+    tintHighlight?: string;
 }
 
-export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captionScore, layout, onImageRegion, srcAvatarImage, srcDivider, srcHighlight }: SnowwarLeaderboardEntryLayoutProps) => {
+export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captionScore, imageRegion, layout, onImageRegion, srcAvatarImage, srcDivider, srcHighlight, tintAvatarImage, tintDivider, tintHighlight }: SnowwarLeaderboardEntryLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 356, height: 42, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 356, top: 0, height: 42 }}>
                 <ThemeImage
                     name="highlight"
                     src={srcHighlight ?? layoutImage('leaderboard_highlighter.png')}
+                    tint={tintHighlight}
                     layout={{ position: 'absolute', left: 0, width: 356, top: 0, height: 42 }}
                 />
                 <Region
@@ -36,10 +43,13 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
                     onPointerTap={onImageRegion}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 53, width: 44, top: 1, height: 40 }}
-                />
+                >
+                    {imageRegion}
+                </Region>
                 <ThemeImage
                     name="avatarImage"
                     src={srcAvatarImage}
+                    tint={tintAvatarImage}
                     layout={{ position: 'absolute', left: 50, width: 44, top: 1, bottom: 1 }}
                 />
                 <Region
@@ -63,6 +73,7 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
                 <ThemeImage
                     name="divider"
                     src={srcDivider ?? layoutImage('leaderboard_divider.png')}
+                    tint={tintDivider}
                     layout={{ position: 'absolute', left: 0, width: 350, bottom: 0, height: 2 }}
                 />
             </Region>

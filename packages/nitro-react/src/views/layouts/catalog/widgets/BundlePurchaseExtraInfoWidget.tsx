@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
@@ -8,14 +10,17 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
  */
 /** Named region `bundlePurchaseExtraInfoWidget` of BundlePurchaseExtraInfoWidget - configured through the parent's `bundlePurchaseExtraInfoWidget` prop. */
 export interface BundlePurchaseExtraInfoWidgetProps extends CatalogWidgetFlags {
+    bundlePurchaseExtraInfoWidget?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const BundlePurchaseExtraInfoWidget = ({ layout }: BundlePurchaseExtraInfoWidgetProps) => {
+export const BundlePurchaseExtraInfoWidget = ({ bundlePurchaseExtraInfoWidget, layout }: BundlePurchaseExtraInfoWidgetProps) => {
     return (
         <Region
             name="bundlePurchaseExtraInfoWidget"
             layout={{ position: 'absolute', ...layout }}
-        />
+        >
+            {bundlePurchaseExtraInfoWidget}
+        </Region>
     );
 };

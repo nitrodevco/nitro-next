@@ -16,9 +16,10 @@ export interface SongDiskProductViewWidgetProps extends CatalogWidgetFlags {
     layout?: BoxLayout;
     onListen?: () => void;
     srcCtlgTeaserimg1?: string;
+    tintCtlgTeaserimg1?: string;
 }
 
-export const SongDiskProductViewWidget = ({ captionCtlgDescription, captionCtlgProductName, captionCtlgSongLength, captionPlayPreviewText, layout, onListen, srcCtlgTeaserimg1 }: SongDiskProductViewWidgetProps) => {
+export const SongDiskProductViewWidget = ({ captionCtlgDescription, captionCtlgProductName, captionCtlgSongLength, captionPlayPreviewText, layout, onListen, srcCtlgTeaserimg1, tintCtlgTeaserimg1 }: SongDiskProductViewWidgetProps) => {
     const t = useTranslation();
 
     return (
@@ -29,6 +30,7 @@ export const SongDiskProductViewWidget = ({ captionCtlgDescription, captionCtlgP
             <ThemeImage
                 name="ctlg_teaserimg_1"
                 src={srcCtlgTeaserimg1}
+                tint={tintCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 176 }}
             />
             <Region

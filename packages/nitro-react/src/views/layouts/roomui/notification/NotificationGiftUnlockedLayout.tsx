@@ -11,9 +11,11 @@ export interface NotificationGiftUnlockedLayoutProps {
     onOpenBtn?: () => void;
     srcDecoImg?: string;
     srcDialogBg?: string;
+    tintDecoImg?: string;
+    tintDialogBg?: string;
 }
 
-export const NotificationGiftUnlockedLayout = ({ captionHeader, captionOpenTxt, captionText, layout, onClose, onOpenBtn, srcDecoImg, srcDialogBg }: NotificationGiftUnlockedLayoutProps) => {
+export const NotificationGiftUnlockedLayout = ({ captionHeader, captionOpenTxt, captionText, layout, onClose, onOpenBtn, srcDecoImg, srcDialogBg, tintDecoImg, tintDialogBg }: NotificationGiftUnlockedLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -40,6 +42,7 @@ export const NotificationGiftUnlockedLayout = ({ captionHeader, captionOpenTxt, 
                     <ThemeImage
                         name="dialog_bg"
                         src={srcDialogBg}
+                        tint={tintDialogBg}
                         layout={{ position: 'absolute', left: 1, width: 419, bottom: 1, height: 159 }}
                     />
                 </Border>
@@ -94,6 +97,7 @@ export const NotificationGiftUnlockedLayout = ({ captionHeader, captionOpenTxt, 
                 <ThemeImage
                     name="deco_img"
                     src={srcDecoImg}
+                    tint={tintDecoImg}
                     layout={{ position: 'absolute', left: 23, width: 90, top: 16, height: 90, minWidth: 90, maxWidth: 90, minHeight: 90, maxHeight: 90 }}
                 />
             </Border>

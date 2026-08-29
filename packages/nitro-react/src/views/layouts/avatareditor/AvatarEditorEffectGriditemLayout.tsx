@@ -6,10 +6,12 @@ export interface AvatarEditorEffectGriditemLayoutProps {
     layout?: BoxLayout;
     srcBitmap?: string;
     srcProgressBar?: string;
+    tintBitmap?: string;
+    tintProgressBar?: string;
     visibleDurationContainer?: boolean;
 }
 
-export const AvatarEditorEffectGriditemLayout = ({ captionEffectAmount, layout, srcBitmap, srcProgressBar, visibleDurationContainer }: AvatarEditorEffectGriditemLayoutProps) => {
+export const AvatarEditorEffectGriditemLayout = ({ captionEffectAmount, layout, srcBitmap, srcProgressBar, tintBitmap, tintProgressBar, visibleDurationContainer }: AvatarEditorEffectGriditemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 50, height: 50, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50, justifyContent: 'center' }}>
@@ -17,6 +19,7 @@ export const AvatarEditorEffectGriditemLayout = ({ captionEffectAmount, layout, 
                 <ThemeImage
                     name="bitmap"
                     src={srcBitmap}
+                    tint={tintBitmap}
                     layout={{ position: 'absolute', width: 40, alignSelf: 'center', height: 40, maxWidth: 50, maxHeight: 50 }}
                 />
                 <Region
@@ -49,6 +52,7 @@ export const AvatarEditorEffectGriditemLayout = ({ captionEffectAmount, layout, 
                         <ThemeImage
                             name="progress_bar"
                             src={srcProgressBar}
+                            tint={tintProgressBar}
                             layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 3 }}
                         />
                     </Region>

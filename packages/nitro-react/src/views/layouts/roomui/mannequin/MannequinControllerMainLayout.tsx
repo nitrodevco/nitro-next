@@ -10,9 +10,11 @@ export interface MannequinControllerMainLayoutProps {
     onWearButton?: () => void;
     srcPreviewImage?: string;
     srcWriteDeco?: string;
+    tintPreviewImage?: string;
+    tintWriteDeco?: string;
 }
 
-export const MannequinControllerMainLayout = ({ layout, onConfigureButton, onWearButton, srcPreviewImage, srcWriteDeco }: MannequinControllerMainLayoutProps) => {
+export const MannequinControllerMainLayout = ({ layout, onConfigureButton, onWearButton, srcPreviewImage, srcWriteDeco, tintPreviewImage, tintWriteDeco }: MannequinControllerMainLayoutProps) => {
     const t = useTranslation();
     const [ outfitNameSetValue, setOutfitNameSetValue ] = useState('');
 
@@ -28,6 +30,7 @@ export const MannequinControllerMainLayout = ({ layout, onConfigureButton, onWea
                 <ThemeImage
                     name="write_deco"
                     src={srcWriteDeco}
+                    tint={tintWriteDeco}
                     layout={{ position: 'absolute', left: 330, width: 17, top: 27, height: 18 }}
                 />
                 <ButtonThick
@@ -49,6 +52,7 @@ export const MannequinControllerMainLayout = ({ layout, onConfigureButton, onWea
                 <ThemeImage
                     name="preview_image"
                     src={srcPreviewImage}
+                    tint={tintPreviewImage}
                     layout={{ position: 'absolute', left: 20, width: 83, top: 10, height: 130 }}
                 />
                 <Icon

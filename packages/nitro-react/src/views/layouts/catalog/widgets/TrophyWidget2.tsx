@@ -12,9 +12,10 @@ export interface TrophyWidget2Props extends CatalogWidgetFlags {
     onCtlgNextmodelButton?: () => void;
     onCtlgPrevmodelButton?: () => void;
     srcCtlgTeaserimg1?: string;
+    tintCtlgTeaserimg1?: string;
 }
 
-export const TrophyWidget2 = ({ layout, onCtlgNextmodelButton, onCtlgPrevmodelButton, srcCtlgTeaserimg1 }: TrophyWidget2Props) => {
+export const TrophyWidget2 = ({ layout, onCtlgNextmodelButton, onCtlgPrevmodelButton, srcCtlgTeaserimg1, tintCtlgTeaserimg1 }: TrophyWidget2Props) => {
     return (
         <Region
             name="trophyWidget"
@@ -23,6 +24,7 @@ export const TrophyWidget2 = ({ layout, onCtlgNextmodelButton, onCtlgPrevmodelBu
             <ThemeImage
                 name="ctlg_teaserimg_1"
                 src={srcCtlgTeaserimg1}
+                tint={tintCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 4, width: 102, top: 0, height: 127 }}
             />
             <ContainerButton

@@ -7,10 +7,11 @@ export interface OutfitLayoutProps {
     onButton?: () => void;
     srcBitmap?: string;
     srcOutfitGradient?: string;
+    tintBitmap?: string;
     visibleOutfitGradient?: boolean;
 }
 
-export const OutfitLayout = ({ layout, onButton, srcBitmap, srcOutfitGradient, visibleOutfitGradient }: OutfitLayoutProps) => {
+export const OutfitLayout = ({ layout, onButton, srcBitmap, srcOutfitGradient, tintBitmap, visibleOutfitGradient }: OutfitLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 35, height: 60, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 60 }}>
@@ -30,6 +31,7 @@ export const OutfitLayout = ({ layout, onButton, srcBitmap, srcOutfitGradient, v
                 <ThemeImage
                     name="bitmap"
                     src={srcBitmap}
+                    tint={tintBitmap}
                     layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 60 }}
                 />
             </Region>

@@ -1,8 +1,12 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 
 /** Generated from `1190_member_entry_xml` (layout "Member Entry", 164x35) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MemberEntryLayoutProps {
+    avatarImage?: ReactNode;
+    bgRegion?: ReactNode;
     captionActionLink?: string;
     captionMemberSinceTxt?: string;
     captionUserNameTxt?: string;
@@ -14,16 +18,16 @@ export interface MemberEntryLayoutProps {
     srcIconAdminOff?: string;
     srcIconAdminOver?: string;
     srcIconCloseDown?: string;
-    srcIconCloseDown2?: string;
     srcIconCloseOff?: string;
-    srcIconCloseOff2?: string;
     srcIconCloseOver?: string;
-    srcIconCloseOver2?: string;
     srcIconOwner?: string;
+    srcRemoveRegionIconCloseDown?: string;
+    srcRemoveRegionIconCloseOff?: string;
+    srcRemoveRegionIconCloseOver?: string;
     visibleActionLinkRegion?: boolean;
 }
 
-export const MemberEntryLayout = ({ captionActionLink, captionMemberSinceTxt, captionUserNameTxt, layout, onActionLinkRegion, onBgRegion, onBlockRegion, onRemoveRegion, srcIconAdminOff, srcIconAdminOver, srcIconCloseDown, srcIconCloseDown2, srcIconCloseOff, srcIconCloseOff2, srcIconCloseOver, srcIconCloseOver2, srcIconOwner, visibleActionLinkRegion }: MemberEntryLayoutProps) => {
+export const MemberEntryLayout = ({ avatarImage, bgRegion, captionActionLink, captionMemberSinceTxt, captionUserNameTxt, layout, onActionLinkRegion, onBgRegion, onBlockRegion, onRemoveRegion, srcIconAdminOff, srcIconAdminOver, srcIconCloseDown, srcIconCloseOff, srcIconCloseOver, srcIconOwner, srcRemoveRegionIconCloseDown, srcRemoveRegionIconCloseOff, srcRemoveRegionIconCloseOver, visibleActionLinkRegion }: MemberEntryLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -40,13 +44,17 @@ export const MemberEntryLayout = ({ captionActionLink, captionMemberSinceTxt, ca
                     onPointerTap={onBgRegion}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, width: 164, top: 0, height: 35 }}
-                />
+                >
+                    {bgRegion}
+                </Region>
                 <WidgetSlot
                     widgetType="avatar_image"
                     name="avatar_image"
                     options={{ 'avatar_image:only_head': 'true', 'avatar_image:cropped': 'true' }}
                     layout={{ position: 'absolute', right: 134, width: 33, bottom: 1, height: 34 }}
-                />
+                >
+                    {avatarImage}
+                </WidgetSlot>
                 <Region
                     name="user_name_txt"
                     layout={{ position: 'absolute', left: 33, width: 77, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -121,17 +129,17 @@ export const MemberEntryLayout = ({ captionActionLink, captionMemberSinceTxt, ca
                 >
                     <ThemeImage
                         name="icon_close_down"
-                        src={srcIconCloseDown2 ?? '${image.library.url}guilds/icon_close_down.png'}
+                        src={srcRemoveRegionIconCloseDown ?? '${image.library.url}guilds/icon_close_down.png'}
                         layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 18 }}
                     />
                     <ThemeImage
                         name="icon_close_over"
-                        src={srcIconCloseOver2 ?? '${image.library.url}guilds/icon_close_over.png'}
+                        src={srcRemoveRegionIconCloseOver ?? '${image.library.url}guilds/icon_close_over.png'}
                         layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 18 }}
                     />
                     <ThemeImage
                         name="icon_close_off"
-                        src={srcIconCloseOff2 ?? '${image.library.url}guilds/icon_close_off.png'}
+                        src={srcRemoveRegionIconCloseOff ?? '${image.library.url}guilds/icon_close_off.png'}
                         layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 18 }}
                     />
                 </Region>

@@ -11,9 +11,13 @@ export interface PlaylisteditorMusicInventoryItemLayoutProps {
     srcImageButtonPlayPause?: string;
     srcImageButtonToPlaylist?: string;
     srcTitleFaderBitmap?: string;
+    tintDiskImage?: string;
+    tintImageButtonPlayPause?: string;
+    tintImageButtonToPlaylist?: string;
+    tintTitleFaderBitmap?: string;
 }
 
-export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, layout, onButtonPlayPause, onButtonToPlaylist, srcDiskImage, srcImageButtonPlayPause, srcImageButtonToPlaylist, srcTitleFaderBitmap }: PlaylisteditorMusicInventoryItemLayoutProps) => {
+export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, layout, onButtonPlayPause, onButtonToPlaylist, srcDiskImage, srcImageButtonPlayPause, srcImageButtonToPlaylist, srcTitleFaderBitmap, tintDiskImage, tintImageButtonPlayPause, tintImageButtonToPlaylist, tintTitleFaderBitmap }: PlaylisteditorMusicInventoryItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 91, height: 104, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 91, top: 0, height: 104, justifyContent: 'center' }}>
@@ -31,6 +35,7 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, l
                 <ThemeImage
                     name="disk_image"
                     src={srcDiskImage}
+                    tint={tintDiskImage}
                     layout={{ position: 'absolute', left: 7, width: 76, top: 7, height: 76 }}
                 />
                 <Region
@@ -42,6 +47,7 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, l
                 <ThemeImage
                     name="title_fader_bitmap"
                     src={srcTitleFaderBitmap ?? layoutImage('jb_fader.png')}
+                    tint={tintTitleFaderBitmap}
                     layout={{ position: 'absolute', left: 81, width: 6, top: 86, height: 12 }}
                 />
                 <Region
@@ -62,6 +68,7 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, l
                         <ThemeImage
                             name="image_button_play_pause"
                             src={srcImageButtonPlayPause}
+                            tint={tintImageButtonPlayPause}
                             layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 3 }}
                         />
                     </ContainerButton>
@@ -74,6 +81,7 @@ export const PlaylisteditorMusicInventoryItemLayout = ({ captionSongTitleText, l
                         <ThemeImage
                             name="image_button_to_playlist"
                             src={srcImageButtonToPlaylist}
+                            tint={tintImageButtonToPlaylist}
                             layout={{ position: 'absolute', left: 3, right: 3, top: 3, bottom: 3 }}
                         />
                     </ContainerButton>

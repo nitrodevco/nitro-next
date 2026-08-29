@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, ContainerButton, Frame, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -14,9 +16,15 @@ export interface Main_2909LayoutProps {
     onQuestionButton?: () => void;
     onSafetypolicyLink?: () => void;
     onTourButton?: () => void;
+    separatorWidget?: ReactNode;
+    separatorWidget2?: ReactNode;
+    separatorWidget3?: ReactNode;
+    separatorWidget4?: ReactNode;
+    separatorWidget5?: ReactNode;
+    separatorWidget6?: ReactNode;
 }
 
-export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyButton, onFaqLink, onHabbowayLink, onPaymentLink, onQuestionButton, onSafetypolicyLink, onTourButton }: Main_2909LayoutProps) => {
+export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyButton, onFaqLink, onHabbowayLink, onPaymentLink, onQuestionButton, onSafetypolicyLink, onTourButton, separatorWidget, separatorWidget2, separatorWidget3, separatorWidget4, separatorWidget5, separatorWidget6 }: Main_2909LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -44,6 +52,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     widgetType="separator"
                     layout={{ position: 'absolute', left: 33, width: 283, top: 32, height: 25 }}
                 >
+                    {separatorWidget}
                     <Region layout={{ position: 'absolute', left: 12, width: 112, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('help.main2.bully.title')}
@@ -81,6 +90,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     widgetType="separator"
                     layout={{ position: 'absolute', left: 344, width: 263, top: 32, height: 25 }}
                 >
+                    {separatorWidget2}
                     <Region layout={{ position: 'absolute', left: 12, width: 131, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('help.main2.question.title')}
@@ -118,6 +128,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     widgetType="separator"
                     layout={{ position: 'absolute', left: 33, width: 283, top: 197, height: 25 }}
                 >
+                    {separatorWidget3}
                     <Region layout={{ position: 'absolute', left: 12, width: 110, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('help.main2.tour.title')}
@@ -200,6 +211,7 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     widgetType="separator"
                     layout={{ position: 'absolute', marginLeft: -1.5, marginRight: 1.5, width: 574, top: 367, height: 25 }}
                 >
+                    {separatorWidget4}
                     <Region layout={{ position: 'absolute', left: 12, width: 105, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('help.main2.self.title')}
@@ -229,7 +241,9 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                         widgetType="separator"
                         options={{ 'separator:vertical': 'true' }}
                         layout={{ position: 'absolute', left: 190, width: 2, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 49 }}
-                    />
+                    >
+                        {separatorWidget5}
+                    </WidgetSlot>
                     <Region
                         name="habboway_link"
                         onPointerTap={onHabbowayLink}
@@ -247,7 +261,9 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                         widgetType="separator"
                         options={{ 'separator:vertical': 'true' }}
                         layout={{ position: 'absolute', left: 384, width: 2, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 49 }}
-                    />
+                    >
+                        {separatorWidget6}
+                    </WidgetSlot>
                     <Region
                         name="faq_link"
                         onPointerTap={onFaqLink}

@@ -6,9 +6,10 @@ export interface GrsUsercountLayoutProps {
     layout?: BoxLayout;
     onUsercount?: () => void;
     srcUsercountBg?: string;
+    tintUsercountBg?: string;
 }
 
-export const GrsUsercountLayout = ({ captionTxt, layout, onUsercount, srcUsercountBg }: GrsUsercountLayoutProps) => {
+export const GrsUsercountLayout = ({ captionTxt, layout, onUsercount, srcUsercountBg, tintUsercountBg }: GrsUsercountLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 34, height: 13, ...layout }}>
             <Region
@@ -20,6 +21,7 @@ export const GrsUsercountLayout = ({ captionTxt, layout, onUsercount, srcUsercou
                 <ThemeImage
                     name="usercount_bg"
                     src={srcUsercountBg}
+                    tint={tintUsercountBg}
                     layout={{ position: 'absolute', left: 0, width: 34, top: 0, height: 13 }}
                 />
                 <Region

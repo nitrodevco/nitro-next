@@ -5,7 +5,7 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 /**
  * Catalog widget `petPreviewWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
- * (LayoutPetcustomization_1656Layout); each passes its own placement through `layout`.
+ * (LayoutPetcustomization_1713Layout); each passes its own placement through `layout`.
  */
 /** Named region `petPreviewWidget` of PetPreviewWidget - configured through the parent's `petPreviewWidget` prop. */
 export interface PetPreviewWidgetProps extends CatalogWidgetFlags {
@@ -13,10 +13,11 @@ export interface PetPreviewWidgetProps extends CatalogWidgetFlags {
     captionCtlgProductName?: string;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
+    tintCtlgTeaserimg1?: string;
     visiblePetPreviewBackground?: boolean;
 }
 
-export const PetPreviewWidget = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1, visiblePetPreviewBackground }: PetPreviewWidgetProps) => {
+export const PetPreviewWidget = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1, tintCtlgTeaserimg1, visiblePetPreviewBackground }: PetPreviewWidgetProps) => {
     const t = useTranslation();
 
     return (
@@ -35,11 +36,12 @@ export const PetPreviewWidget = ({ captionCtlgDescription, captionCtlgProductNam
             <ThemeImage
                 name="ctlg_teaserimg_1"
                 src={srcCtlgTeaserimg1}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
+                tint={tintCtlgTeaserimg1}
+                layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 275 }}
             />
             <Region
                 name="ctlg_product_name"
-                layout={{ position: 'absolute', left: 8, width: 74, top: 12, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 8, width: 74, top: 172, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCtlgProductName ?? t('lorem.title')}
@@ -48,7 +50,7 @@ export const PetPreviewWidget = ({ captionCtlgDescription, captionCtlgProductNam
             </Region>
             <Region
                 name="ctlg_description"
-                layout={{ position: 'absolute', left: 8, width: 162, top: 31, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 8, width: 162, top: 189, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
                     text={captionCtlgDescription ?? t('lorem.title')}

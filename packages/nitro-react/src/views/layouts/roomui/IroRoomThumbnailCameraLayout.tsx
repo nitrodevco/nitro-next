@@ -8,9 +8,10 @@ export interface IroRoomThumbnailCameraLayoutProps {
     onButtonCapture?: () => void;
     onClose?: () => void;
     srcViewfinder?: string;
+    tintViewfinder?: string;
 }
 
-export const IroRoomThumbnailCameraLayout = ({ layout, onButtonCancel, onButtonCapture, onClose, srcViewfinder }: IroRoomThumbnailCameraLayoutProps) => {
+export const IroRoomThumbnailCameraLayout = ({ layout, onButtonCancel, onButtonCapture, onClose, srcViewfinder, tintViewfinder }: IroRoomThumbnailCameraLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -29,6 +30,7 @@ export const IroRoomThumbnailCameraLayout = ({ layout, onButtonCancel, onButtonC
                     <ThemeImage
                         name="viewfinder"
                         src={srcViewfinder}
+                        tint={tintViewfinder}
                         layout={{ position: 'absolute', left: 1, width: 110, top: 1, height: 110 }}
                     />
                 </Region>

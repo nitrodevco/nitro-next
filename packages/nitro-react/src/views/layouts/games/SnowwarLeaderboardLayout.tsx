@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Frame, Region, ThemeImage, ThemeText } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -11,6 +13,7 @@ export interface SnowwarLeaderboardLayoutProps {
     captionResetText?: string;
     captionResetTextStroke?: string;
     captionThisWeekText?: string;
+    itemsList?: ReactNode;
     layout?: BoxLayout;
     onAllTimeRegion?: () => void;
     onChangeFriendsView?: () => void;
@@ -25,9 +28,12 @@ export interface SnowwarLeaderboardLayoutProps {
     srcAllTimeImage?: string;
     srcBackground?: string;
     srcThisWeekImage?: string;
+    tintAllTimeImage?: string;
+    tintBackground?: string;
+    tintThisWeekImage?: string;
 }
 
-export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFriendsView, captionChangeGroupView, captionChangeView, captionResetText, captionResetTextStroke, captionThisWeekText, layout, onAllTimeRegion, onChangeFriendsView, onChangeGroupView, onChangeView, onClose, onNextWeek, onPreviousWeek, onScrollDown, onScrollUp, onThisWeekRegion, srcAllTimeImage, srcBackground, srcThisWeekImage }: SnowwarLeaderboardLayoutProps) => {
+export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFriendsView, captionChangeGroupView, captionChangeView, captionResetText, captionResetTextStroke, captionThisWeekText, itemsList, layout, onAllTimeRegion, onChangeFriendsView, onChangeGroupView, onChangeView, onClose, onNextWeek, onPreviousWeek, onScrollDown, onScrollUp, onThisWeekRegion, srcAllTimeImage, srcBackground, srcThisWeekImage, tintAllTimeImage, tintBackground, tintThisWeekImage }: SnowwarLeaderboardLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -41,6 +47,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                 <ThemeImage
                     name="background"
                     src={srcBackground ?? layoutImage('leaderboard_bg.png')}
+                    tint={tintBackground}
                     layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 39 }}
                 />
                 <Region
@@ -53,6 +60,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                     <ThemeImage
                         name="this_week_image"
                         src={srcThisWeekImage ?? layoutImage('left_black.png')}
+                        tint={tintThisWeekImage}
                         layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 28 }}
                     />
                     <Region
@@ -75,6 +83,7 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                     <ThemeImage
                         name="all_time_image"
                         src={srcAllTimeImage ?? layoutImage('right_blue.png')}
+                        tint={tintAllTimeImage}
                         layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 28 }}
                     />
                     <Region
@@ -134,7 +143,9 @@ export const SnowwarLeaderboardLayout = ({ captionAllTimeText, captionChangeFrie
                 <Region
                     name="list"
                     layout={{ position: 'absolute', marginLeft: -3.5, marginRight: 3.5, width: 356, alignSelf: 'center', marginTop: -29.5, marginBottom: 29.5, height: 336, flexDirection: 'column' }}
-                />
+                >
+                    {itemsList}
+                </Region>
                 <Region
                     name="previousWeek"
                     onPointerTap={onPreviousWeek}

@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { Border, BoxLayout, Icon, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
@@ -10,13 +12,16 @@ export interface GridItemLayoutProps {
     srcImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
     srcUniqueItemSoldOutBitmap?: string;
+    tintBadgeAddOn?: string;
+    tintImage?: string;
+    uniqueItemOverlayContainer?: ReactNode;
     visibleBg?: boolean;
     visibleUniqueItemBackgroundBitmap?: boolean;
     visibleUniqueItemOverlayContainer?: boolean;
     visibleUniqueItemSoldOutBitmap?: boolean;
 }
 
-export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layout, srcBadgeAddOn, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, visibleBg, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer, visibleUniqueItemSoldOutBitmap }: GridItemLayoutProps) => {
+export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layout, srcBadgeAddOn, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, tintBadgeAddOn, tintImage, uniqueItemOverlayContainer, visibleBg, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer, visibleUniqueItemSoldOutBitmap }: GridItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 36, height: 36, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}>
@@ -54,6 +59,7 @@ export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layo
                 <ThemeImage
                     name="image"
                     src={srcImage}
+                    tint={tintImage}
                     layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
                 />
                 {(visibleUniqueItemOverlayContainer ?? false) && (
@@ -61,7 +67,9 @@ export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layo
                         widgetType="limited_item_overlay_grid"
                         name="unique_item_overlay_container"
                         layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                    />
+                    >
+                        {uniqueItemOverlayContainer}
+                    </WidgetSlot>
                 )}
                 <Icon
                     variant="0"
@@ -96,6 +104,7 @@ export const GridItemLayout = ({ captionBundleCounter, captionMultiCounter, layo
                 <ThemeImage
                     name="badge_add_on"
                     src={srcBadgeAddOn}
+                    tint={tintBadgeAddOn}
                     layout={{ position: 'absolute', left: 0, width: 10, top: 0, height: 10 }}
                 />
                 {(visibleUniqueItemSoldOutBitmap ?? false) && (

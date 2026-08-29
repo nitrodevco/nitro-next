@@ -16,9 +16,10 @@ export interface QuestCompletedDialogLayoutProps {
     srcCampaignRewardIcon?: string;
     srcRewardIcon?: string;
     srcTwinkleBitmap?: string;
+    tintTwinkleBitmap?: string;
 }
 
-export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongratsTxt, captionDescTxt, captionRewardTxt, layout, onCatalogLinkRegion, onClose, onMoreQuestsButton, onNextQuestButton, srcCampaignPicBitmap, srcCampaignRewardIcon, srcRewardIcon, srcTwinkleBitmap }: QuestCompletedDialogLayoutProps) => {
+export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongratsTxt, captionDescTxt, captionRewardTxt, layout, onCatalogLinkRegion, onClose, onMoreQuestsButton, onNextQuestButton, srcCampaignPicBitmap, srcCampaignRewardIcon, srcRewardIcon, srcTwinkleBitmap, tintTwinkleBitmap }: QuestCompletedDialogLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -51,6 +52,7 @@ export const QuestCompletedDialogLayout = ({ captionCatalogLinkTxt, captionCongr
             <ThemeImage
                 name="twinkle_bitmap"
                 src={srcTwinkleBitmap}
+                tint={tintTwinkleBitmap}
                 layout={{ position: 'absolute', left: 35, width: 70, top: 30, height: 70 }}
             />
             <Region

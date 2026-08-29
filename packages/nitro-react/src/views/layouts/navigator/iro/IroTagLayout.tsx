@@ -8,9 +8,12 @@ export interface IroTagLayoutProps {
     srcBgL?: string;
     srcBgM?: string;
     srcBgR?: string;
+    tintBgL?: string;
+    tintBgM?: string;
+    tintBgR?: string;
 }
 
-export const IroTagLayout = ({ captionTxt, layout, onTag, srcBgL, srcBgM, srcBgR }: IroTagLayoutProps) => {
+export const IroTagLayout = ({ captionTxt, layout, onTag, srcBgL, srcBgM, srcBgR, tintBgL, tintBgM, tintBgR }: IroTagLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 38, height: 14, ...layout }}>
             <Region
@@ -22,16 +25,19 @@ export const IroTagLayout = ({ captionTxt, layout, onTag, srcBgL, srcBgM, srcBgR
                 <ThemeImage
                     name="bg_l"
                     src={srcBgL}
+                    tint={tintBgL}
                     layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 14 }}
                 />
                 <ThemeImage
                     name="bg_m"
                     src={srcBgM}
+                    tint={tintBgM}
                     layout={{ position: 'absolute', left: 4, right: 6, top: 0, height: 14 }}
                 />
                 <ThemeImage
                     name="bg_r"
                     src={srcBgR}
+                    tint={tintBgR}
                     layout={{ position: 'absolute', right: 1, width: 5, top: 0, height: 14 }}
                 />
                 <Region

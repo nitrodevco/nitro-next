@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, CheckBox, Frame, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -14,14 +16,17 @@ export interface MarketplacePurchaseConfirmationLayoutProps {
     onCancelButton?: () => void;
     onClose?: () => void;
     onSpendingDisclaimer?: () => void;
+    rarityItemOverlayWidget?: ReactNode;
     srcItemImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
+    tintItemImage?: string;
+    uniqueItemOverlayWidget?: ReactNode;
     visibleRarityItemOverlayWidget?: boolean;
     visibleUniqueItemBackgroundBitmap?: boolean;
     visibleUniqueItemOverlayWidget?: boolean;
 }
 
-export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, captionItemAveragePrice, captionItemName, captionItemPrice, captionOfferCount, layout, onBuyButton, onCancelButton, onClose, onSpendingDisclaimer, srcItemImage, srcUniqueItemBackgroundBitmap, visibleRarityItemOverlayWidget, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayWidget }: MarketplacePurchaseConfirmationLayoutProps) => {
+export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, captionItemAveragePrice, captionItemName, captionItemPrice, captionOfferCount, layout, onBuyButton, onCancelButton, onClose, onSpendingDisclaimer, rarityItemOverlayWidget, srcItemImage, srcUniqueItemBackgroundBitmap, tintItemImage, uniqueItemOverlayWidget, visibleRarityItemOverlayWidget, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayWidget }: MarketplacePurchaseConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -52,6 +57,7 @@ export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, capti
                         <ThemeImage
                             name="item_image"
                             src={srcItemImage}
+                            tint={tintItemImage}
                             layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
                         />
                         {(visibleUniqueItemOverlayWidget ?? false) && (
@@ -59,14 +65,18 @@ export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, capti
                                 widgetType="limited_item_overlay_grid"
                                 name="unique_item_overlay_widget"
                                 layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                            />
+                            >
+                                {uniqueItemOverlayWidget}
+                            </WidgetSlot>
                         )}
                         {(visibleRarityItemOverlayWidget ?? false) && (
                             <WidgetSlot
                                 widgetType="rarity_item_overlay_grid"
                                 name="rarity_item_overlay_widget"
                                 layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                            />
+                            >
+                                {rarityItemOverlayWidget}
+                            </WidgetSlot>
                         )}
                     </Region>
                 </Border>

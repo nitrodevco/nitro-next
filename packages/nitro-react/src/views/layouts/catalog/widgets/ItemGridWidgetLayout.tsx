@@ -1,11 +1,14 @@
+import { ReactNode } from 'react';
+
 import { Border, BoxLayout, Region, ScrollArea } from '#base/theme';
 
 /** Generated from `1651_itemGridWidget_xml` (layout "itemGridWidget", 360x200) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ItemGridWidgetLayoutProps {
+    itemsItemGrid?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const ItemGridWidgetLayout = ({ layout }: ItemGridWidgetLayoutProps) => {
+export const ItemGridWidgetLayout = ({ itemsItemGrid, layout }: ItemGridWidgetLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 360, height: 200, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}>
@@ -21,7 +24,9 @@ export const ItemGridWidgetLayout = ({ layout }: ItemGridWidgetLayoutProps) => {
                     <Region
                         name="itemGrid"
                         layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 3, width: '100%' }}
-                    />
+                    >
+                        {itemsItemGrid}
+                    </Region>
                 </ScrollArea>
             </Region>
         </Region>

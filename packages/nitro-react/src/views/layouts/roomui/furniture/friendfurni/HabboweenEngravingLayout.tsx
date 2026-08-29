@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 
@@ -7,14 +9,17 @@ export interface HabboweenEngravingLayoutProps {
     captionHeader?: string;
     captionNameLeft?: string;
     captionNameRight?: string;
+    headerButtonClose?: ReactNode;
     layout?: BoxLayout;
     onHeaderButtonClose?: () => void;
     srcAvatarLeft?: string;
     srcAvatarRight?: string;
     srcBackground?: string;
+    tintAvatarLeft?: string;
+    tintAvatarRight?: string;
 }
 
-export const HabboweenEngravingLayout = ({ captionDate, captionHeader, captionNameLeft, captionNameRight, layout, onHeaderButtonClose, srcAvatarLeft, srcAvatarRight, srcBackground }: HabboweenEngravingLayoutProps) => {
+export const HabboweenEngravingLayout = ({ captionDate, captionHeader, captionNameLeft, captionNameRight, headerButtonClose, layout, onHeaderButtonClose, srcAvatarLeft, srcAvatarRight, srcBackground, tintAvatarLeft, tintAvatarRight }: HabboweenEngravingLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -38,11 +43,13 @@ export const HabboweenEngravingLayout = ({ captionDate, captionHeader, captionNa
                 <ThemeImage
                     name="avatar_left"
                     src={srcAvatarLeft}
+                    tint={tintAvatarLeft}
                     layout={{ position: 'absolute', left: 115, width: 70, top: 7, height: 115 }}
                 />
                 <ThemeImage
                     name="avatar_right"
                     src={srcAvatarRight}
+                    tint={tintAvatarRight}
                     layout={{ position: 'absolute', left: 186, width: 70, top: 7, height: 115 }}
                 />
                 <Region
@@ -80,7 +87,9 @@ export const HabboweenEngravingLayout = ({ captionDate, captionHeader, captionNa
                     onPointerTap={onHeaderButtonClose}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 330, width: 21, top: 33, height: 17 }}
-                />
+                >
+                    {headerButtonClose}
+                </Region>
             </Region>
         </Region>
     );

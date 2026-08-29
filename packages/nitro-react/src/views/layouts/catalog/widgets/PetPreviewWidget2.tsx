@@ -1,11 +1,10 @@
-import { useTranslation } from '#base/context';
-import { Border, BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
+import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**
  * Catalog widget `petPreviewWidget` (see CatalogWidgetEnum.as / the matching *CatalogWidget.as) - the page
  * layout reserves a container by that name and the client attaches the widget to it. Shared by 1 page
- * (LayoutPetcustomization_1713Layout); each passes its own placement through `layout`.
+ * (PetPreviewWidgetLayout); each passes its own placement through `layout`.
  */
 /** Named region `petPreviewWidget` of PetPreviewWidget2 - configured through the parent's `petPreviewWidget` prop. */
 export interface PetPreviewWidget2Props extends CatalogWidgetFlags {
@@ -13,45 +12,36 @@ export interface PetPreviewWidget2Props extends CatalogWidgetFlags {
     captionCtlgProductName?: string;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
-    visiblePetPreviewBackground?: boolean;
+    tintCtlgTeaserimg1?: string;
 }
 
-export const PetPreviewWidget2 = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1, visiblePetPreviewBackground }: PetPreviewWidget2Props) => {
-    const t = useTranslation();
-
+export const PetPreviewWidget2 = ({ captionCtlgDescription, captionCtlgProductName, layout, srcCtlgTeaserimg1, tintCtlgTeaserimg1 }: PetPreviewWidget2Props) => {
     return (
         <Region
             name="petPreviewWidget"
             layout={{ position: 'absolute', ...layout }}
         >
-            {(visiblePetPreviewBackground ?? false) && (
-                <Border
-                    variant="4"
-                    name="petPreviewBackground"
-                    tintColor="#cccccc"
-                    layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 275 }}
-                />
-            )}
             <ThemeImage
                 name="ctlg_teaserimg_1"
                 src={srcCtlgTeaserimg1}
-                layout={{ position: 'absolute', left: 0, width: 175, top: 0, height: 275 }}
+                tint={tintCtlgTeaserimg1}
+                layout={{ position: 'absolute', left: 0, width: 162, top: 0, height: 162 }}
             />
             <Region
                 name="ctlg_product_name"
-                layout={{ position: 'absolute', left: 8, width: 74, top: 172, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: 0, width: 71, top: 156, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
                 <ThemeText
-                    text={captionCtlgProductName ?? t('lorem.title')}
+                    text={captionCtlgProductName ?? 'lorem ipsum'}
                     textStyle="text-style-u-bold"
                 />
             </Region>
             <Region
                 name="ctlg_description"
-                layout={{ position: 'absolute', left: 8, width: 162, top: 189, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                layout={{ position: 'absolute', left: -2, width: 162, top: 173, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
                 <ThemeText
-                    text={captionCtlgDescription ?? t('lorem.title')}
+                    text={captionCtlgDescription ?? 'lorem ipsum'}
                     textOptions={{ wordWrap: true, wordWrapWidth: 162 }}
                 />
             </Region>

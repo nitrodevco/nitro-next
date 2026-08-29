@@ -5,14 +5,16 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface CounterLayoutProps {
     layout?: BoxLayout;
     srcCounterBitmap?: string;
+    tintCounterBitmap?: string;
 }
 
-export const CounterLayout = ({ layout, srcCounterBitmap }: CounterLayoutProps) => {
+export const CounterLayout = ({ layout, srcCounterBitmap, tintCounterBitmap }: CounterLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 164, height: 164, ...layout }}>
             <ThemeImage
                 name="counterBitmap"
                 src={srcCounterBitmap ?? layoutImage('explosion001.png')}
+                tint={tintCounterBitmap}
                 layout={{ position: 'absolute', marginLeft: 171, marginRight: -171, width: 164, alignSelf: 'center', marginTop: 131, marginBottom: -131, height: 164, minWidth: 164, minHeight: 164 }}
             />
         </Region>

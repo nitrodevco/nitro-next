@@ -1,14 +1,18 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 
 /** Generated from `972_room_loading_bar_xml` (layout "room_interstitial", 20x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RoomLoadingBarLayoutProps {
     captionLoadingText?: string;
+    image?: ReactNode;
     layout?: BoxLayout;
     onRegion?: () => void;
+    region?: ReactNode;
 }
 
-export const RoomLoadingBarLayout = ({ captionLoadingText, layout, onRegion }: RoomLoadingBarLayoutProps) => {
+export const RoomLoadingBarLayout = ({ captionLoadingText, image, layout, onRegion, region }: RoomLoadingBarLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -20,14 +24,18 @@ export const RoomLoadingBarLayout = ({ captionLoadingText, layout, onRegion }: R
                 <Region
                     name="image"
                     layout={{ position: 'absolute', left: 10, right: 10, top: 10, bottom: 45 }}
-                />
+                >
+                    {image}
+                </Region>
                 <Region
                     name="region"
                     tooltip={t('ads.interstitial.tooltip')}
                     onPointerTap={onRegion}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 10, right: 10, top: 10, bottom: 45 }}
-                />
+                >
+                    {region}
+                </Region>
                 <Region
                     name="loading_text"
                     layout={{ position: 'absolute', width: 220, bottom: 20, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}

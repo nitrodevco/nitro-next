@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
@@ -12,11 +14,12 @@ export interface LoyaltyVipBuyWidgetProps extends CatalogWidgetFlags {
     captionVipInfo?: string;
     captionVipLink?: string;
     captionVipTitle?: string;
+    itemsItemListVip?: ReactNode;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
 }
 
-export const LoyaltyVipBuyWidget = ({ captionVipInfo, captionVipLink, captionVipTitle, layout, srcCtlgTeaserimg1 }: LoyaltyVipBuyWidgetProps) => {
+export const LoyaltyVipBuyWidget = ({ captionVipInfo, captionVipLink, captionVipTitle, itemsItemListVip, layout, srcCtlgTeaserimg1 }: LoyaltyVipBuyWidgetProps) => {
     const t = useTranslation();
 
     return (
@@ -52,7 +55,9 @@ export const LoyaltyVipBuyWidget = ({ captionVipInfo, captionVipLink, captionVip
             <Region
                 name="item_list_vip"
                 layout={{ position: 'absolute', left: 19, width: 316, top: 170, bottom: 33, flexDirection: 'column', gap: 4 }}
-            />
+            >
+                {itemsItemListVip}
+            </Region>
             <Region
                 name="vip_link"
                 layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 286, bottom: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}

@@ -1,15 +1,19 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button, Frame, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 
 /** Generated from `1055_report_photo_xml` (layout "report_photo", 395x666) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ReportPhotoLayoutProps {
+    inputWidget?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
     onReportConfirm?: () => void;
     srcSelfieLoader?: string;
+    tintSelfieLoader?: string;
 }
 
-export const ReportPhotoLayout = ({ layout, onClose, onReportConfirm, srcSelfieLoader }: ReportPhotoLayoutProps) => {
+export const ReportPhotoLayout = ({ inputWidget, layout, onClose, onReportConfirm, srcSelfieLoader, tintSelfieLoader }: ReportPhotoLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -34,6 +38,7 @@ export const ReportPhotoLayout = ({ layout, onClose, onReportConfirm, srcSelfieL
             <ThemeImage
                 name="selfieLoader"
                 src={srcSelfieLoader}
+                tint={tintSelfieLoader}
                 layout={{ position: 'absolute', left: 26, width: 340, top: 55, height: 405 }}
             />
             <WidgetSlot
@@ -41,7 +46,9 @@ export const ReportPhotoLayout = ({ layout, onClose, onReportConfirm, srcSelfieL
                 name="input_widget"
                 options={{ 'illumina_input:button_caption': '', 'illumina_input:multiline': 'true' }}
                 layout={{ position: 'absolute', left: 26, width: 340, top: 471, height: 64 }}
-            />
+            >
+                {inputWidget}
+            </WidgetSlot>
             <Button
                 variant="100"
                 name="report_confirm"

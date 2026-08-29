@@ -1,13 +1,16 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Frame, Region, ScrollArea, ThemeText } from '#base/theme';
 
 /** Generated from `889_doorbell_xml` (layout "doorbell", 249x165) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface Doorbell_889LayoutProps {
+    itemsUserList?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const Doorbell_889Layout = ({ layout, onClose }: Doorbell_889LayoutProps) => {
+export const Doorbell_889Layout = ({ itemsUserList, layout, onClose }: Doorbell_889LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -36,7 +39,9 @@ export const Doorbell_889Layout = ({ layout, onClose }: Doorbell_889LayoutProps)
                     <Region
                         name="user_list"
                         layout={{ flexDirection: 'column', width: '100%' }}
-                    />
+                    >
+                        {itemsUserList}
+                    </Region>
                 </ScrollArea>
                 {/* <scrollbar_vertical> for user_list - rendered by that list's ScrollArea */}
             </Region>

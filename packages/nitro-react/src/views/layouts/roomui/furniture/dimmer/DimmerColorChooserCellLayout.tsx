@@ -7,9 +7,12 @@ export interface DimmerColorChooserCellLayoutProps {
     srcBorder?: string;
     srcChosen?: string;
     srcColor?: string;
+    tintBorder?: string;
+    tintChosen?: string;
+    tintColor?: string;
 }
 
-export const DimmerColorChooserCellLayout = ({ layout, onColorChooserCell, srcBorder, srcChosen, srcColor }: DimmerColorChooserCellLayoutProps) => {
+export const DimmerColorChooserCellLayout = ({ layout, onColorChooserCell, srcBorder, srcChosen, srcColor, tintBorder, tintChosen, tintColor }: DimmerColorChooserCellLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Region
@@ -21,16 +24,19 @@ export const DimmerColorChooserCellLayout = ({ layout, onColorChooserCell, srcBo
                 <ThemeImage
                     name="border"
                     src={srcBorder}
+                    tint={tintBorder}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <ThemeImage
                     name="color"
                     src={srcColor}
+                    tint={tintColor}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
                 <ThemeImage
                     name="chosen"
                     src={srcChosen}
+                    tint={tintChosen}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
             </Region>

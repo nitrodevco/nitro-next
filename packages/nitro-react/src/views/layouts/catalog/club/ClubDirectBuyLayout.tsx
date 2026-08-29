@@ -14,9 +14,13 @@ export interface ClubDirectBuyLayoutProps {
     srcPartnerImage?: string;
     srcTeaserImage1?: string;
     srcTeaserImage2?: string;
+    tintHeaderImage?: string;
+    tintPartnerImage?: string;
+    tintTeaserImage1?: string;
+    tintTeaserImage2?: string;
 }
 
-export const ClubDirectBuyLayout = ({ captionBoldText, captionClubBenefitsLink, captionStandardText, layout, onBuy, onClose, onClubBenefitsLink, srcHeaderImage, srcPartnerImage, srcTeaserImage1, srcTeaserImage2 }: ClubDirectBuyLayoutProps) => {
+export const ClubDirectBuyLayout = ({ captionBoldText, captionClubBenefitsLink, captionStandardText, layout, onBuy, onClose, onClubBenefitsLink, srcHeaderImage, srcPartnerImage, srcTeaserImage1, srcTeaserImage2, tintHeaderImage, tintPartnerImage, tintTeaserImage1, tintTeaserImage2 }: ClubDirectBuyLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -34,6 +38,7 @@ export const ClubDirectBuyLayout = ({ captionBoldText, captionClubBenefitsLink, 
                 <ThemeImage
                     name="header_image"
                     src={srcHeaderImage}
+                    tint={tintHeaderImage}
                     layout={{ position: 'absolute', left: 54, width: 349, top: 15, height: 43 }}
                 />
             </Region>
@@ -60,11 +65,13 @@ export const ClubDirectBuyLayout = ({ captionBoldText, captionClubBenefitsLink, 
             <ThemeImage
                 name="teaser_image_1"
                 src={srcTeaserImage1}
+                tint={tintTeaserImage1}
                 layout={{ position: 'absolute', left: -1, width: 100, top: 205, height: 197 }}
             />
             <ThemeImage
                 name="teaser_image_2"
                 src={srcTeaserImage2}
+                tint={tintTeaserImage2}
                 layout={{ position: 'absolute', left: 349, width: 100, top: 206, height: 197 }}
             />
             <Border
@@ -110,6 +117,7 @@ export const ClubDirectBuyLayout = ({ captionBoldText, captionClubBenefitsLink, 
             <ThemeImage
                 name="partner_image"
                 src={srcPartnerImage}
+                tint={tintPartnerImage}
                 layout={{ position: 'absolute', left: 99, width: 252, top: 281, height: 79 }}
             />
             <Region

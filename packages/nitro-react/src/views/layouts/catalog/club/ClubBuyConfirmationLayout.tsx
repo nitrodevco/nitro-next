@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button, ButtonThick, CheckBox, Frame, Icon, Region, ThemeText } from '#base/theme';
 
@@ -10,9 +12,10 @@ export interface ClubBuyConfirmationLayoutProps {
     onClose?: () => void;
     onSelectButton?: () => void;
     onSpendingDisclaimer?: () => void;
+    purchaseCostBox?: ReactNode;
 }
 
-export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionName, layout, onCancelButton, onClose, onSelectButton, onSpendingDisclaimer }: ClubBuyConfirmationLayoutProps) => {
+export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionName, layout, onCancelButton, onClose, onSelectButton, onSpendingDisclaimer, purchaseCostBox }: ClubBuyConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -61,7 +64,9 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
                             <Region
                                 name="purchase_cost_box"
                                 layout={{ width: 20, height: 22, flexShrink: 0 }}
-                            />
+                            >
+                                {purchaseCostBox}
+                            </Region>
                         </Region>
                     </Region>
                 </Region>

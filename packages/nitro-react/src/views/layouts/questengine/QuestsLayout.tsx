@@ -1,15 +1,18 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, ButtonThick, Frame, Region, ScrollArea, ThemeText } from '#base/theme';
 
 /** Generated from `108_Quests_xml` (layout "Quests", 512x448) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface QuestsLayoutProps {
     captionHcInfoText?: string;
+    itemsQuestList?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
     onGetHcBtn?: () => void;
 }
 
-export const QuestsLayout = ({ captionHcInfoText, layout, onClose, onGetHcBtn }: QuestsLayoutProps) => {
+export const QuestsLayout = ({ captionHcInfoText, itemsQuestList, layout, onClose, onGetHcBtn }: QuestsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -29,7 +32,9 @@ export const QuestsLayout = ({ captionHcInfoText, layout, onClose, onGetHcBtn }:
                 <Region
                     name="quest_list"
                     layout={{ flexDirection: 'column', width: '100%' }}
-                />
+                >
+                    {itemsQuestList}
+                </Region>
             </ScrollArea>
             {/* <scrollbar_vertical> for quest_list - rendered by that list's ScrollArea */}
             <Region

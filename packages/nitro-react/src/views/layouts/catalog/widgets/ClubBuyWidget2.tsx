@@ -1,5 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
-import { ClubBuyWidgetLayout, ClubBuyWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/ClubBuyWidgetLayout';
+import { ClubBuyWidgetLayout, ClubBuyWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/ClubBuyWidget/ClubBuyWidgetLayout';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**

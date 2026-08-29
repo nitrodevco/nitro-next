@@ -1,14 +1,18 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, CloseButton, Region, Scaler, ThemeText } from '#base/theme';
 
 /** Generated from `2638_illumina_purple_frame_xml` (layout "illumina_purple_frame", 50x50) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IlluminaPurpleFrameLayoutProps {
     captionHeaderTitleText?: string;
+    contentArea?: ReactNode;
     layout?: BoxLayout;
     onHeaderButtonClose?: () => void;
     onTitlebar?: () => void;
+    titlebar?: ReactNode;
 }
 
-export const IlluminaPurpleFrameLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClose, onTitlebar }: IlluminaPurpleFrameLayoutProps) => {
+export const IlluminaPurpleFrameLayout = ({ captionHeaderTitleText, contentArea, layout, onHeaderButtonClose, onTitlebar, titlebar }: IlluminaPurpleFrameLayoutProps) => {
     return (
         <Region
             dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.35, blur: 20 }}
@@ -17,13 +21,17 @@ export const IlluminaPurpleFrameLayout = ({ captionHeaderTitleText, layout, onHe
             <Region
                 name="content_area"
                 layout={{ position: 'absolute', left: 1, right: 1, top: 30, bottom: 1 }}
-            />
+            >
+                {contentArea}
+            </Region>
             <Region
                 name="titlebar"
                 onPointerTap={onTitlebar}
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
-            />
+            >
+                {titlebar}
+            </Region>
             <Region
                 name="header_title_text"
                 layout={{ position: 'absolute', left: 8, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

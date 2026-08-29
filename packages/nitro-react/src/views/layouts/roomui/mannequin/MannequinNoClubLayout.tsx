@@ -7,9 +7,10 @@ export interface MannequinNoClubLayoutProps {
     layout?: BoxLayout;
     onGetClubButton?: () => void;
     srcPreviewImage?: string;
+    tintPreviewImage?: string;
 }
 
-export const MannequinNoClubLayout = ({ captionDescription, layout, onGetClubButton, srcPreviewImage }: MannequinNoClubLayoutProps) => {
+export const MannequinNoClubLayout = ({ captionDescription, layout, onGetClubButton, srcPreviewImage, tintPreviewImage }: MannequinNoClubLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -26,6 +27,7 @@ export const MannequinNoClubLayout = ({ captionDescription, layout, onGetClubBut
                 <ThemeImage
                     name="preview_image"
                     src={srcPreviewImage}
+                    tint={tintPreviewImage}
                     layout={{ position: 'absolute', left: 20, width: 83, top: 10, height: 130 }}
                 />
                 <Region

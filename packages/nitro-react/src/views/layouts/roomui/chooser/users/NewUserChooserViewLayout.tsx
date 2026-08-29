@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Dropmenu, Frame, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
@@ -12,10 +12,11 @@ export interface NewUserChooserViewLayoutProps {
     onClearButton?: () => void;
     onClose?: () => void;
     onTypeDropdown?: () => void;
+    tableContainer?: ReactNode;
     visibleClearButton?: boolean;
 }
 
-export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearchPlaceholder, layout, onClearButton, onClose, onTypeDropdown, visibleClearButton }: NewUserChooserViewLayoutProps) => {
+export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearchPlaceholder, layout, onClearButton, onClose, onTypeDropdown, tableContainer, visibleClearButton }: NewUserChooserViewLayoutProps) => {
     const t = useTranslation();
     const [ textInputValue, setTextInputValue ] = useState('');
 
@@ -71,7 +72,9 @@ export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearch
             <Region
                 name="table_container"
                 layout={{ position: 'absolute', left: 6, right: 18, top: 53, bottom: 61 }}
-            />
+            >
+                {tableContainer}
+            </Region>
             <Region
                 name="amount_indicator"
                 layout={{ position: 'absolute', left: 6, width: 212, bottom: 37, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

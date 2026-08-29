@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
@@ -12,12 +14,13 @@ export interface VipBuyWidget2Props extends CatalogWidgetFlags {
     captionHccenterLink?: string;
     captionVipInfo?: string;
     captionVipTitle?: string;
+    itemsItemListVip?: ReactNode;
     layout?: BoxLayout;
     onHccenterLinkContainer?: () => void;
     srcCtlgTeaserimg1?: string;
 }
 
-export const VipBuyWidget2 = ({ captionHccenterLink, captionVipInfo, captionVipTitle, layout, onHccenterLinkContainer, srcCtlgTeaserimg1 }: VipBuyWidget2Props) => {
+export const VipBuyWidget2 = ({ captionHccenterLink, captionVipInfo, captionVipTitle, itemsItemListVip, layout, onHccenterLinkContainer, srcCtlgTeaserimg1 }: VipBuyWidget2Props) => {
     const t = useTranslation();
 
     return (
@@ -53,7 +56,9 @@ export const VipBuyWidget2 = ({ captionHccenterLink, captionVipInfo, captionVipT
             <Region
                 name="item_list_vip"
                 layout={{ position: 'absolute', left: 19, width: 336, top: 170, bottom: 33, flexDirection: 'column', gap: 4 }}
-            />
+            >
+                {itemsItemListVip}
+            </Region>
             <Region
                 name="hccenter_link_container"
                 onPointerTap={onHccenterLinkContainer}

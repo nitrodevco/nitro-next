@@ -10,9 +10,10 @@ export interface NestBreedingSuccessDialogLayoutProps {
     onButtonOk?: () => void;
     onClose?: () => void;
     srcPetImage?: string;
+    tintPetImage?: string;
 }
 
-export const NestBreedingSuccessDialogLayout = ({ captionPetName, captionPetRaritycategory, layout, onButtonOk, onClose, srcPetImage }: NestBreedingSuccessDialogLayoutProps) => {
+export const NestBreedingSuccessDialogLayout = ({ captionPetName, captionPetRaritycategory, layout, onButtonOk, onClose, srcPetImage, tintPetImage }: NestBreedingSuccessDialogLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -63,6 +64,7 @@ export const NestBreedingSuccessDialogLayout = ({ captionPetName, captionPetRari
                 <ThemeImage
                     name="pet_image"
                     src={srcPetImage}
+                    tint={tintPetImage}
                     layout={{ position: 'absolute', left: 146, width: 40, top: 54, height: 40 }}
                 />
             </Region>

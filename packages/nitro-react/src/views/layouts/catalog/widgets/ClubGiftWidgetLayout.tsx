@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, ScrollArea, ThemeText } from '#base/theme';
 
 /** Generated from `1631_clubGiftWidget_xml` (layout "clubGiftWidget", 340x320) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -5,11 +7,12 @@ export interface ClubGiftWidgetLayoutProps {
     captionInfoText?: string;
     captionPastClubDays?: string;
     captionPastVipDays?: string;
+    itemsGiftList?: ReactNode;
     layout?: BoxLayout;
     visiblePastVipDays?: boolean;
 }
 
-export const ClubGiftWidgetLayout = ({ captionInfoText, captionPastClubDays, captionPastVipDays, layout, visiblePastVipDays }: ClubGiftWidgetLayoutProps) => {
+export const ClubGiftWidgetLayout = ({ captionInfoText, captionPastClubDays, captionPastVipDays, itemsGiftList, layout, visiblePastVipDays }: ClubGiftWidgetLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 340, height: 320, ...layout }}>
             <Region
@@ -23,7 +26,9 @@ export const ClubGiftWidgetLayout = ({ captionInfoText, captionPastClubDays, cap
                     <Region
                         name="gift_list"
                         layout={{ flexDirection: 'column', gap: 1, width: '100%' }}
-                    />
+                    >
+                        {itemsGiftList}
+                    </Region>
                 </ScrollArea>
                 <Region
                     name="info_text"

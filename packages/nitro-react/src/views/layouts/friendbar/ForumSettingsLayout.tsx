@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, ContainerButton, Frame, RadioButton, Region, ThemeText, WidgetSlot } from '#base/theme';
 
@@ -18,6 +20,7 @@ export interface ForumSettingsLayoutProps {
     captionLabel33?: string;
     captionTopHeaderText?: string;
     captionTopText?: string;
+    groupIcon?: ReactNode;
     layout?: BoxLayout;
     on_0?: () => void;
     on_02?: () => void;
@@ -37,9 +40,10 @@ export interface ForumSettingsLayoutProps {
     onOkBtn?: () => void;
     onTopClickArea?: () => void;
     onTopPart?: () => void;
+    topClickArea?: ReactNode;
 }
 
-export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabel03, captionLabel1, captionLabel12, captionLabel13, captionLabel2, captionLabel22, captionLabel23, captionLabel24, captionLabel3, captionLabel32, captionLabel33, captionTopHeaderText, captionTopText, layout, on_0, on_02, on_03, on_1, on_12, on_13, on_2, on_22, on_23, on_24, on_3, on_32, on_33, onCancelBtn, onClose, onOkBtn, onTopClickArea, onTopPart }: ForumSettingsLayoutProps) => {
+export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabel03, captionLabel1, captionLabel12, captionLabel13, captionLabel2, captionLabel22, captionLabel23, captionLabel24, captionLabel3, captionLabel32, captionLabel33, captionTopHeaderText, captionTopText, groupIcon, layout, on_0, on_02, on_03, on_1, on_12, on_13, on_2, on_22, on_23, on_24, on_3, on_32, on_33, onCancelBtn, onClose, onOkBtn, onTopClickArea, onTopPart, topClickArea }: ForumSettingsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -62,7 +66,9 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                     onPointerTap={onTopClickArea}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80 }}
-                />
+                >
+                    {topClickArea}
+                </Region>
                 <Region
                     name="icon_background"
                     backgroundColor="#000000"
@@ -72,7 +78,9 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
                         widgetType="badge_image"
                         name="group_icon"
                         layout={{ position: 'absolute', left: 20, width: 40, top: 20, height: 40 }}
-                    />
+                    >
+                        {groupIcon}
+                    </WidgetSlot>
                 </Region>
                 <Region
                     name="top_header_text"

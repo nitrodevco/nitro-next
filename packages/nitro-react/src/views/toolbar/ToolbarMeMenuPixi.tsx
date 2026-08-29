@@ -4,7 +4,7 @@ import { forwardRef, ForwardRefExoticComponent, RefAttributes } from 'react';
 import { useSystemActions } from '#base/context';
 import { Border } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
-import { MemenuMainSimpleLayout } from '#base/views/layouts/roomui/memenu/MemenuMainSimpleLayout';
+import { MemenuMainSimpleLayout } from '#base/views/layouts/roomui/memenu/MemenuMainSimple/MemenuMainSimpleLayout';
 
 export interface ToolbarMeMenuPixiProps {
     /** Fired after any tile is chosen - the Flash menu hid itself (`hide()`) on every click. */

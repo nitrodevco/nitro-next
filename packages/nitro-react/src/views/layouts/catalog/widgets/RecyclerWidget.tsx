@@ -1,5 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
-import { RecyclerWidgetLayout, RecyclerWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/RecyclerWidgetLayout';
+import { RecyclerWidgetLayout, RecyclerWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/RecyclerWidget/RecyclerWidgetLayout';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**

@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { BoxLayout, Button, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 
@@ -8,13 +10,16 @@ export interface PixelRemovalCreditPromoLayoutProps {
     captionPixelRemovalTitle?: string;
     layout?: BoxLayout;
     onOpenCatalogButton?: () => void;
+    pixelsCountdownWidget?: ReactNode;
+    separatorWidget?: ReactNode;
     srcLeftMid?: string;
     srcLiftBottom?: string;
     srcLiftHeader?: string;
     srcPromoBitmap?: string;
+    tintPromoBitmap?: string;
 }
 
-export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageHeaderTxt, captionPixelRemovalTitle, layout, onOpenCatalogButton, srcLeftMid, srcLiftBottom, srcLiftHeader, srcPromoBitmap }: PixelRemovalCreditPromoLayoutProps) => {
+export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageHeaderTxt, captionPixelRemovalTitle, layout, onOpenCatalogButton, pixelsCountdownWidget, separatorWidget, srcLeftMid, srcLiftBottom, srcLiftHeader, srcPromoBitmap, tintPromoBitmap }: PixelRemovalCreditPromoLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -41,6 +46,7 @@ export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageH
                 <ThemeImage
                     name="promo_bitmap"
                     src={srcPromoBitmap}
+                    tint={tintPromoBitmap}
                     layout={{ position: 'absolute', left: 5, width: 120, top: 157, height: 135 }}
                 />
                 <Region
@@ -73,7 +79,9 @@ export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageH
                 <WidgetSlot
                     widgetType="separator"
                     layout={{ position: 'absolute', left: 19, width: 210, top: 121, height: 31 }}
-                />
+                >
+                    {separatorWidget}
+                </WidgetSlot>
                 <Region
                     name="pixel_removal_title"
                     layout={{ position: 'absolute', left: 9, width: 233, top: 69, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
@@ -87,7 +95,9 @@ export const PixelRemovalCreditPromoLayout = ({ captionPageDescTxt, captionPageH
                     widgetType="countdown"
                     name="pixels_countdown_widget"
                     layout={{ position: 'absolute', left: 75, width: 99, top: 86, height: 37 }}
-                />
+                >
+                    {pixelsCountdownWidget}
+                </WidgetSlot>
             </Region>
         </Region>
     );

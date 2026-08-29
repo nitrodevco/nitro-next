@@ -5,9 +5,10 @@ export interface SpacesLayoutProps {
     captionPageText?: string;
     layout?: BoxLayout;
     srcHeadline?: string;
+    tintHeadline?: string;
 }
 
-export const SpacesLayout = ({ captionPageText, layout, srcHeadline }: SpacesLayoutProps) => {
+export const SpacesLayout = ({ captionPageText, layout, srcHeadline, tintHeadline }: SpacesLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Region
@@ -17,6 +18,7 @@ export const SpacesLayout = ({ captionPageText, layout, srcHeadline }: SpacesLay
                 <ThemeImage
                     name="headline"
                     src={srcHeadline}
+                    tint={tintHeadline}
                     layout={{ position: 'absolute', left: 0, width: 339, top: 0, height: 68 }}
                 />
                 <Region

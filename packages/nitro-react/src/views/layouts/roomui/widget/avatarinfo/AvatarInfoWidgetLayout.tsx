@@ -8,10 +8,11 @@ export interface AvatarInfoWidgetLayoutProps {
     onChangeNameContainer?: () => void;
     srcPenIcon?: string;
     srcRelationshipStatus?: string;
+    tintPenIcon?: string;
     visibleBorder?: boolean;
 }
 
-export const AvatarInfoWidgetLayout = ({ captionName, layout, onChangeNameContainer, srcPenIcon, srcRelationshipStatus, visibleBorder }: AvatarInfoWidgetLayoutProps) => {
+export const AvatarInfoWidgetLayout = ({ captionName, layout, onChangeNameContainer, srcPenIcon, srcRelationshipStatus, tintPenIcon, visibleBorder }: AvatarInfoWidgetLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -54,6 +55,7 @@ export const AvatarInfoWidgetLayout = ({ captionName, layout, onChangeNameContai
                         <ThemeImage
                             name="pen_icon"
                             src={srcPenIcon}
+                            tint={tintPenIcon}
                             layout={{ position: 'absolute', left: 7, width: 12, top: 1, height: 12 }}
                         />
                     </Region>

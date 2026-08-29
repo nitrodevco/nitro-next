@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Region, ThemeText } from '#base/theme';
 
@@ -6,13 +8,14 @@ export interface MeMenuSettingsMenu_1256LayoutProps {
     captionIdentityText?: string;
     captionSettingsTitle?: string;
     layout?: BoxLayout;
+    line?: ReactNode;
     onBack?: () => void;
     onCharacterSettings?: () => void;
     onSoundSettings?: () => void;
     visibleIdentityText?: boolean;
 }
 
-export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSettingsTitle, layout, onBack, onCharacterSettings, onSoundSettings, visibleIdentityText }: MeMenuSettingsMenu_1256LayoutProps) => {
+export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSettingsTitle, layout, line, onBack, onCharacterSettings, onSoundSettings, visibleIdentityText }: MeMenuSettingsMenu_1256LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -35,7 +38,9 @@ export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSett
                 <Region
                     name="line"
                     layout={{ position: 'absolute', left: 5, width: 160, top: 22, height: 1 }}
-                />
+                >
+                    {line}
+                </Region>
                 <Button
                     variant="3"
                     name="character_settings"

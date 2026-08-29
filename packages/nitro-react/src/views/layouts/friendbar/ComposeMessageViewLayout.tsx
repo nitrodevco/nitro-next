@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
 import { BoxLayout, ContainerButton, Frame, Region, TextInput, ThemeText, WidgetSlot } from '#base/theme';
@@ -13,6 +13,7 @@ export interface ComposeMessageViewLayoutProps {
     captionThreadSubjectHeader?: string;
     captionTopHeaderText?: string;
     captionTopText?: string;
+    groupIcon?: ReactNode;
     layout?: BoxLayout;
     onCancelBtn?: () => void;
     onClose?: () => void;
@@ -20,9 +21,10 @@ export interface ComposeMessageViewLayoutProps {
     onPostBtn?: () => void;
     onTopClickArea?: () => void;
     onTopPart?: () => void;
+    topClickArea?: ReactNode;
 }
 
-export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormattingHelp, captionMessageTextHeader, captionSendMessageLabel, captionStatusText, captionThreadSubjectHeader, captionTopHeaderText, captionTopText, layout, onCancelBtn, onClose, onMessageTextContainer, onPostBtn, onTopClickArea, onTopPart }: ComposeMessageViewLayoutProps) => {
+export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormattingHelp, captionMessageTextHeader, captionSendMessageLabel, captionStatusText, captionThreadSubjectHeader, captionTopHeaderText, captionTopText, groupIcon, layout, onCancelBtn, onClose, onMessageTextContainer, onPostBtn, onTopClickArea, onTopPart, topClickArea }: ComposeMessageViewLayoutProps) => {
     const t = useTranslation();
     const [ threadSubjectValue, setThreadSubjectValue ] = useState('');
     const [ messageTextValue, setMessageTextValue ] = useState('');
@@ -47,7 +49,9 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
                     onPointerTap={onTopClickArea}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80 }}
-                />
+                >
+                    {topClickArea}
+                </Region>
                 <Region
                     name="icon_background"
                     backgroundColor="#000000"
@@ -58,7 +62,9 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
                         name="group_icon"
                         options={{ 'badge_image:type': 'group', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                         layout={{ position: 'absolute', left: 20, width: 40, top: 20, height: 40 }}
-                    />
+                    >
+                        {groupIcon}
+                    </WidgetSlot>
                 </Region>
                 <Region
                     name="top_header_text"

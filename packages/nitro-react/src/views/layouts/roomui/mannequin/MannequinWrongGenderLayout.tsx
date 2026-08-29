@@ -7,9 +7,10 @@ export interface MannequinWrongGenderLayoutProps {
     layout?: BoxLayout;
     onOkButton?: () => void;
     srcPreviewImage?: string;
+    tintPreviewImage?: string;
 }
 
-export const MannequinWrongGenderLayout = ({ captionDescription, layout, onOkButton, srcPreviewImage }: MannequinWrongGenderLayoutProps) => {
+export const MannequinWrongGenderLayout = ({ captionDescription, layout, onOkButton, srcPreviewImage, tintPreviewImage }: MannequinWrongGenderLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -26,6 +27,7 @@ export const MannequinWrongGenderLayout = ({ captionDescription, layout, onOkBut
                 <ThemeImage
                     name="preview_image"
                     src={srcPreviewImage}
+                    tint={tintPreviewImage}
                     layout={{ position: 'absolute', left: 20, width: 83, top: 10, height: 130 }}
                 />
                 <Region

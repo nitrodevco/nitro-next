@@ -14,9 +14,18 @@ export interface SnowwarSnowballsLayoutProps {
     srcBallProgress?: string;
     srcEmptyFlashImage?: string;
     srcMakeSnowballImage?: string;
+    tintBackgroundImage?: string;
+    tintBall0?: string;
+    tintBall1?: string;
+    tintBall2?: string;
+    tintBall3?: string;
+    tintBall4?: string;
+    tintBallProgress?: string;
+    tintEmptyFlashImage?: string;
+    tintMakeSnowballImage?: string;
 }
 
-export const SnowwarSnowballsLayout = ({ layout, onMakeSnowball, srcBackgroundImage, srcBall0, srcBall1, srcBall2, srcBall3, srcBall4, srcBallProgress, srcEmptyFlashImage, srcMakeSnowballImage }: SnowwarSnowballsLayoutProps) => {
+export const SnowwarSnowballsLayout = ({ layout, onMakeSnowball, srcBackgroundImage, srcBall0, srcBall1, srcBall2, srcBall3, srcBall4, srcBallProgress, srcEmptyFlashImage, srcMakeSnowballImage, tintBackgroundImage, tintBall0, tintBall1, tintBall2, tintBall3, tintBall4, tintBallProgress, tintEmptyFlashImage, tintMakeSnowballImage }: SnowwarSnowballsLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 57, height: 260, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 57, alignSelf: 'center', marginTop: 83, marginBottom: -83, height: 260 }}>
@@ -24,41 +33,49 @@ export const SnowwarSnowballsLayout = ({ layout, onMakeSnowball, srcBackgroundIm
                     <ThemeImage
                         name="backgroundImage"
                         src={srcBackgroundImage ?? layoutImage('ui_ball_indicator_bg.png')}
+                        tint={tintBackgroundImage}
                         layout={{ position: 'absolute', left: 0, width: 57, top: 0, height: 202 }}
                     />
                     <ThemeImage
                         name="ball_4"
                         src={srcBall4 ?? layoutImage('ui_ball.png')}
+                        tint={tintBall4}
                         layout={{ position: 'absolute', left: 14, width: 30, top: 14, height: 30 }}
                     />
                     <ThemeImage
                         name="ball_3"
                         src={srcBall3 ?? layoutImage('ui_ball.png')}
+                        tint={tintBall3}
                         layout={{ position: 'absolute', left: 14, width: 30, top: 50, height: 30 }}
                     />
                     <ThemeImage
                         name="ball_2"
                         src={srcBall2 ?? layoutImage('ui_ball.png')}
+                        tint={tintBall2}
                         layout={{ position: 'absolute', left: 14, width: 30, top: 86, height: 30 }}
                     />
                     <ThemeImage
                         name="ball_1"
                         src={srcBall1 ?? layoutImage('ui_ball.png')}
+                        tint={tintBall1}
                         layout={{ position: 'absolute', left: 14, width: 30, top: 122, height: 30 }}
                     />
                     <ThemeImage
                         name="ball_0"
                         src={srcBall0 ?? layoutImage('ui_ball.png')}
+                        tint={tintBall0}
                         layout={{ position: 'absolute', left: 14, width: 30, top: 158, height: 30 }}
                     />
                     <ThemeImage
                         name="ballProgress"
                         src={srcBallProgress}
+                        tint={tintBallProgress}
                         layout={{ position: 'absolute', left: 14, width: 30, top: 158, height: 30 }}
                     />
                     <ThemeImage
                         name="emptyFlashImage"
                         src={srcEmptyFlashImage}
+                        tint={tintEmptyFlashImage}
                         layout={{ position: 'absolute', left: 0, width: 57, top: 0, height: 202 }}
                     />
                 </Region>
@@ -72,6 +89,7 @@ export const SnowwarSnowballsLayout = ({ layout, onMakeSnowball, srcBackgroundIm
                     <ThemeImage
                         name="makeSnowballImage"
                         src={srcMakeSnowballImage ?? layoutImage('ui_make_balls_up.png')}
+                        tint={tintMakeSnowballImage}
                         layout={{ position: 'absolute', left: 0, width: 57, top: 0, height: 58 }}
                     />
                 </Region>

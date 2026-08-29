@@ -9,9 +9,10 @@ export interface LayoutGuildFrontpage_1668LayoutProps {
     captionCtlgSpecialTxt?: string;
     layout?: BoxLayout;
     srcCtlgTeaserimg1?: string;
+    tintCtlgTeaserimg1?: string;
 }
 
-export const LayoutGuildFrontpage_1668Layout = ({ buyGuildWidget, captionCtlgDescription, captionCtlgSpecialTxt, layout, srcCtlgTeaserimg1 }: LayoutGuildFrontpage_1668LayoutProps) => {
+export const LayoutGuildFrontpage_1668Layout = ({ buyGuildWidget, captionCtlgDescription, captionCtlgSpecialTxt, layout, srcCtlgTeaserimg1, tintCtlgTeaserimg1 }: LayoutGuildFrontpage_1668LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -23,6 +24,7 @@ export const LayoutGuildFrontpage_1668Layout = ({ buyGuildWidget, captionCtlgDes
                 <ThemeImage
                     name="ctlg_teaserimg_1"
                     src={srcCtlgTeaserimg1}
+                    tint={tintCtlgTeaserimg1}
                     layout={{ position: 'absolute', left: 0, width: 359, bottom: 9, height: 163 }}
                 />
                 <Region

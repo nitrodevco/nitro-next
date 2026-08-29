@@ -1,15 +1,20 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, ThemeImage, ThemeText } from '#base/theme';
 
 /** Generated from `1561_discountPromoItem_xml` (layout "discountPromoItem", 180x20) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface DiscountPromoItemLayoutProps {
+    background?: ReactNode;
     captionPromoText?: string;
     captionPromoTextEffect?: string;
+    clickRegion?: ReactNode;
     layout?: BoxLayout;
     onClickRegion?: () => void;
     srcIconBitmap?: string;
+    tintIconBitmap?: string;
 }
 
-export const DiscountPromoItemLayout = ({ captionPromoText, captionPromoTextEffect, layout, onClickRegion, srcIconBitmap }: DiscountPromoItemLayoutProps) => {
+export const DiscountPromoItemLayout = ({ background, captionPromoText, captionPromoTextEffect, clickRegion, layout, onClickRegion, srcIconBitmap, tintIconBitmap }: DiscountPromoItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 180, height: 20, ...layout }}>
             <Region
@@ -20,10 +25,13 @@ export const DiscountPromoItemLayout = ({ captionPromoText, captionPromoTextEffe
                     name="background"
                     backgroundColor="#009100"
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
-                />
+                >
+                    {background}
+                </Region>
                 <ThemeImage
                     name="icon_bitmap"
                     src={srcIconBitmap}
+                    tint={tintIconBitmap}
                     layout={{ position: 'absolute', left: 4, width: 15, top: 2, height: 15 }}
                 />
                 <Region
@@ -46,7 +54,9 @@ export const DiscountPromoItemLayout = ({ captionPromoText, captionPromoTextEffe
                     onPointerTap={onClickRegion}
                     cursor="pointer"
                     layout={{ position: 'absolute', left: 25, width: 152, top: 0, height: 20 }}
-                />
+                >
+                    {clickRegion}
+                </Region>
             </Region>
         </Region>
     );

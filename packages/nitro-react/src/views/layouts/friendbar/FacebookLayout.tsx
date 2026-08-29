@@ -6,9 +6,10 @@ export interface FacebookLayoutProps {
     captionName?: string;
     layout?: BoxLayout;
     srcIcon?: string;
+    tintIcon?: string;
 }
 
-export const FacebookLayout = ({ captionName, layout, srcIcon }: FacebookLayoutProps) => {
+export const FacebookLayout = ({ captionName, layout, srcIcon, tintIcon }: FacebookLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 121, height: 19, ...layout }}>
             <Region
@@ -19,6 +20,7 @@ export const FacebookLayout = ({ captionName, layout, srcIcon }: FacebookLayoutP
                 <ThemeImage
                     name="icon"
                     src={srcIcon ?? layoutImage('fb_icon_small.png')}
+                    tint={tintIcon}
                     layout={{ position: 'absolute', left: 1, width: 14, top: 2, height: 14 }}
                 />
                 <Region

@@ -1,9 +1,12 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Button, Frame, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `2888_guardian_chat_review_wait_for_results_xml` (layout "guardian_chat_review_wait_for_results", 248x280) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GuardianChatReviewWaitForResultsLayoutProps {
+    balloonWidget?: ReactNode;
     captionVoteText?: string;
     layout?: BoxLayout;
     onClose?: () => void;
@@ -12,7 +15,7 @@ export interface GuardianChatReviewWaitForResultsLayoutProps {
     srcVoteSeparator?: string;
 }
 
-export const GuardianChatReviewWaitForResultsLayout = ({ captionVoteText, layout, onClose, onCloseButton, srcVoteImage, srcVoteSeparator }: GuardianChatReviewWaitForResultsLayoutProps) => {
+export const GuardianChatReviewWaitForResultsLayout = ({ balloonWidget, captionVoteText, layout, onClose, onCloseButton, srcVoteImage, srcVoteSeparator }: GuardianChatReviewWaitForResultsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -99,6 +102,7 @@ export const GuardianChatReviewWaitForResultsLayout = ({ captionVoteText, layout
                     options={{ 'balloon:arrow_pivot': 'left, middle' }}
                     layout={{ position: 'absolute', left: 229, width: 238, top: 105, height: 25 }}
                 >
+                    {balloonWidget}
                     <Region layout={{ position: 'absolute', left: 0, width: 233, top: 0, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <ThemeText
                             text={t('guide.bully.request.guide.results.your_vote')}

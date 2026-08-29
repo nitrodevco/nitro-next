@@ -1,5 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
-import { MarketPlaceOwnItemsWidgetLayout, MarketPlaceOwnItemsWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/MarketPlaceOwnItemsWidgetLayout';
+import { MarketPlaceOwnItemsWidgetLayout, MarketPlaceOwnItemsWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/MarketPlaceOwnItemsWidget/MarketPlaceOwnItemsWidgetLayout';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**

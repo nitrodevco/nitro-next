@@ -1,5 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
-import { TotalPriceWidgetLayout, TotalPriceWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/TotalPriceWidgetLayout';
+import { TotalPriceWidgetLayout, TotalPriceWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/TotalPriceWidget/TotalPriceWidgetLayout';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**

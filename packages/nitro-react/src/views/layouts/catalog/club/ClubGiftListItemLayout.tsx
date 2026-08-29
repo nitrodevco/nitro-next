@@ -11,9 +11,10 @@ export interface ClubGiftListItemLayoutProps {
     layout?: BoxLayout;
     onSelectButton?: () => void;
     srcImage?: string;
+    tintImage?: string;
 }
 
-export const ClubGiftListItemLayout = ({ captionBundleCounter, captionGiftDesc, captionGiftName, captionMonthsRequired, captionMultiCounter, layout, onSelectButton, srcImage }: ClubGiftListItemLayoutProps) => {
+export const ClubGiftListItemLayout = ({ captionBundleCounter, captionGiftDesc, captionGiftName, captionMonthsRequired, captionMultiCounter, layout, onSelectButton, srcImage, tintImage }: ClubGiftListItemLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -65,6 +66,7 @@ export const ClubGiftListItemLayout = ({ captionBundleCounter, captionGiftDesc, 
                     <ThemeImage
                         name="image"
                         src={srcImage}
+                        tint={tintImage}
                         layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 46 }}
                     />
                     <Region

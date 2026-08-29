@@ -1,16 +1,19 @@
+import { ReactNode } from 'react';
+
 import { Border, BoxLayout, Button, CheckBox, Frame, Region, ScrollArea } from '#base/theme';
 
 /** Generated from `3198_profiler_dialog_xml` (layout "habbo_profiler_dialog_2", 470x182) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ProfilerDialogLayoutProps {
     captionFooter?: string;
     captionHeader?: string;
+    itemsList?: ReactNode;
     layout?: BoxLayout;
     onButtonGc?: () => void;
     onClose?: () => void;
     onFooterEnableToggle?: () => void;
 }
 
-export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, onButtonGc, onClose, onFooterEnableToggle }: ProfilerDialogLayoutProps) => {
+export const ProfilerDialogLayout = ({ captionFooter, captionHeader, itemsList, layout, onButtonGc, onClose, onFooterEnableToggle }: ProfilerDialogLayoutProps) => {
     return (
         <Frame
             variant="100"
@@ -36,7 +39,9 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, onB
                         <Region
                             name="list"
                             layout={{ flexDirection: 'column', width: '100%' }}
-                        />
+                        >
+                            {itemsList}
+                        </Region>
                     </ScrollArea>
                     {/* <scrollbar_vertical> for list - rendered by that list's ScrollArea */}
                     <Region

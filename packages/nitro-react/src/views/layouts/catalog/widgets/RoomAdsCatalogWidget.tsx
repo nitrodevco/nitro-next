@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Dropmenu, Region, TextInput, ThemeText } from '#base/theme';
@@ -15,10 +15,11 @@ export interface RoomAdsCatalogWidgetProps extends CatalogWidgetFlags {
     captionCtlgText1?: string;
     layout?: BoxLayout;
     onRoomDropMenu?: () => void;
+    priceContainer?: ReactNode;
     purchaseWidget?: PurchaseWidgetProps;
 }
 
-export const RoomAdsCatalogWidget = ({ captionCtlgText1, layout, onRoomDropMenu, purchaseWidget }: RoomAdsCatalogWidgetProps) => {
+export const RoomAdsCatalogWidget = ({ captionCtlgText1, layout, onRoomDropMenu, priceContainer, purchaseWidget }: RoomAdsCatalogWidgetProps) => {
     const t = useTranslation();
     const [ nameInputTextValue, setNameInputTextValue ] = useState('');
     const [ descInputTextValue, setDescInputTextValue ] = useState('');
@@ -92,7 +93,9 @@ export const RoomAdsCatalogWidget = ({ captionCtlgText1, layout, onRoomDropMenu,
                 <Region
                     name="price_container"
                     layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 44, top: 3, height: 18 }}
-                />
+                >
+                    {priceContainer}
+                </Region>
             </Border>
             <PurchaseWidget
                 noGiftOption

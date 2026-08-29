@@ -9,9 +9,10 @@ export interface Notification_1049LayoutProps {
     onButtonOk?: () => void;
     onClose?: () => void;
     srcDecoImg?: string;
+    tintDecoImg?: string;
 }
 
-export const Notification_1049Layout = ({ captionTextDescription, captionTextTitle, layout, onButtonOk, onClose, srcDecoImg }: Notification_1049LayoutProps) => {
+export const Notification_1049Layout = ({ captionTextDescription, captionTextTitle, layout, onButtonOk, onClose, srcDecoImg, tintDecoImg }: Notification_1049LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -81,6 +82,7 @@ export const Notification_1049Layout = ({ captionTextDescription, captionTextTit
                 <ThemeImage
                     name="deco_img"
                     src={srcDecoImg}
+                    tint={tintDecoImg}
                     layout={{ position: 'absolute', left: 20, width: 90, top: 15, height: 90, minWidth: 90, maxWidth: 90, minHeight: 90, maxHeight: 90 }}
                 />
             </Border>

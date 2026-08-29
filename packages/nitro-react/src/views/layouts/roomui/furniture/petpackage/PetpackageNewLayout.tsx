@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, ButtonThick, Frame, Region, TextInput, ThemeImage, ThemeText } from '#base/theme';
@@ -13,10 +13,11 @@ export interface PetpackageNewLayoutProps {
     onCancel?: () => void;
     onClose?: () => void;
     onPickName?: () => void;
+    petpackageHeaderBackgroundBody?: ReactNode;
     srcPetpackageHeaderIcon?: string;
 }
 
-export const PetpackageNewLayout = ({ captionCancel, captionPetpackageHeaderDescription, captionPetpackageHeaderTitle, layout, onCancel, onClose, onPickName, srcPetpackageHeaderIcon }: PetpackageNewLayoutProps) => {
+export const PetpackageNewLayout = ({ captionCancel, captionPetpackageHeaderDescription, captionPetpackageHeaderTitle, layout, onCancel, onClose, onPickName, petpackageHeaderBackgroundBody, srcPetpackageHeaderIcon }: PetpackageNewLayoutProps) => {
     const t = useTranslation();
     const [ inputValue, setInputValue ] = useState('');
 
@@ -39,7 +40,9 @@ export const PetpackageNewLayout = ({ captionCancel, captionPetpackageHeaderDesc
                     name="petpackage.header.background.body"
                     backgroundColor="#0e3f52"
                     layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 95 }}
-                />
+                >
+                    {petpackageHeaderBackgroundBody}
+                </Region>
                 <ThemeImage
                     name="petpackage.header.icon"
                     src={srcPetpackageHeaderIcon ?? '${image.library.url}client_static/petpackage_box.png'}

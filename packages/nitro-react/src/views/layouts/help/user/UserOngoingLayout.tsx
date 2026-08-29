@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { useTranslation } from '#base/context';
 import { Border, BoxLayout, Frame, Region, ScrollArea, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
@@ -8,6 +10,7 @@ export interface UserOngoingLayoutProps {
     captionGuideDesc?: string;
     captionGuideNameLink?: string;
     captionReportGuideLink?: string;
+    inputWidget?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
     onCloseLink?: () => void;
@@ -15,7 +18,7 @@ export interface UserOngoingLayoutProps {
     onReportGuideLink?: () => void;
 }
 
-export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionGuideNameLink, captionReportGuideLink, layout, onClose, onCloseLink, onGuideNameLink, onReportGuideLink }: UserOngoingLayoutProps) => {
+export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionGuideNameLink, captionReportGuideLink, inputWidget, layout, onClose, onCloseLink, onGuideNameLink, onReportGuideLink }: UserOngoingLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -95,7 +98,9 @@ export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionG
                     widgetType="illumina_input"
                     name="input_widget"
                     layout={{ position: 'absolute', left: 10, width: 260, top: 15, height: 30, maxWidth: 260 }}
-                />
+                >
+                    {inputWidget}
+                </WidgetSlot>
                 <Region
                     name="close_link"
                     layout={{ position: 'absolute', left: 5, width: 272, top: 50, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}

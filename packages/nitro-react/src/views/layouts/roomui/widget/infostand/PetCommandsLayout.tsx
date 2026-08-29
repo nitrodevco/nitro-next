@@ -15,10 +15,13 @@ export interface PetCommandsLayoutProps {
     srcAvatarImage?: string;
     srcStatusSkillBitmap?: string;
     srcStatusSkillIcon?: string;
+    tintAvatarImage?: string;
+    tintStatusSkillBitmap?: string;
+    tintStatusSkillIcon?: string;
     visibleStatusSkillText?: boolean;
 }
 
-export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, captionStatusSkillValueText, layout, onClose, onImageContainer, onPetCommandTemplate, onStatusSkillContainer, srcAvatarImage, srcStatusSkillBitmap, srcStatusSkillIcon, visibleStatusSkillText }: PetCommandsLayoutProps) => {
+export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, captionStatusSkillValueText, layout, onClose, onImageContainer, onPetCommandTemplate, onStatusSkillContainer, srcAvatarImage, srcStatusSkillBitmap, srcStatusSkillIcon, tintAvatarImage, tintStatusSkillBitmap, tintStatusSkillIcon, visibleStatusSkillText }: PetCommandsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -39,6 +42,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                     <ThemeImage
                         name="avatar_image"
                         src={srcAvatarImage}
+                        tint={tintAvatarImage}
                         layout={{ position: 'absolute', left: 0, width: 71, top: 0, height: 90 }}
                     />
                 </Region>
@@ -68,6 +72,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                     <ThemeImage
                         name="status_skill_bitmap"
                         src={srcStatusSkillBitmap}
+                        tint={tintStatusSkillBitmap}
                         layout={{ position: 'absolute', left: 6, width: 162, top: 1, height: 17 }}
                     />
                     <Region
@@ -79,6 +84,7 @@ export const PetCommandsLayout = ({ captionPetName, captionStatusSkillText, capt
                     <ThemeImage
                         name="status_skill_icon"
                         src={srcStatusSkillIcon ?? layoutImage('icon_pet_experience.png')}
+                        tint={tintStatusSkillIcon}
                         layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
                     />
                     {(visibleStatusSkillText ?? false) && (

@@ -1,16 +1,23 @@
+import { ReactNode } from 'react';
+
 import { Border, BoxLayout, Region, ThemeImage, ThemeText, WidgetSlot } from '#base/theme';
 import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1420_inventory_thumb_xml` (layout "thumbnail", 42x42) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface InventoryThumbLayoutProps {
+    badge?: ReactNode;
     captionNumber?: string;
+    chestOverlayContainer?: ReactNode;
     layout?: BoxLayout;
+    rarityItemOverlayContainer?: ReactNode;
     srcBitmap?: string;
     srcChestBackgroundBitmap?: string;
     srcOutline?: string;
     srcRecyclableContainer?: string;
     srcRentState?: string;
     srcUniqueItemBackgroundBitmap?: string;
+    tintBitmap?: string;
+    uniqueItemOverlayContainer?: ReactNode;
     visibleBadge?: boolean;
     visibleChestBackgroundBitmap?: boolean;
     visibleChestOverlayContainer?: boolean;
@@ -22,7 +29,7 @@ export interface InventoryThumbLayoutProps {
     visibleUniqueItemOverlayContainer?: boolean;
 }
 
-export const InventoryThumbLayout = ({ captionNumber, layout, srcBitmap, srcChestBackgroundBitmap, srcOutline, srcRecyclableContainer, srcRentState, srcUniqueItemBackgroundBitmap, visibleBadge, visibleChestBackgroundBitmap, visibleChestOverlayContainer, visibleNumberContainer, visibleRarityItemOverlayContainer, visibleRecyclableContainer, visibleRentState, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer }: InventoryThumbLayoutProps) => {
+export const InventoryThumbLayout = ({ badge, captionNumber, chestOverlayContainer, layout, rarityItemOverlayContainer, srcBitmap, srcChestBackgroundBitmap, srcOutline, srcRecyclableContainer, srcRentState, srcUniqueItemBackgroundBitmap, tintBitmap, uniqueItemOverlayContainer, visibleBadge, visibleChestBackgroundBitmap, visibleChestOverlayContainer, visibleNumberContainer, visibleRarityItemOverlayContainer, visibleRecyclableContainer, visibleRentState, visibleUniqueItemBackgroundBitmap, visibleUniqueItemOverlayContainer }: InventoryThumbLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 42, height: 42, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}>
@@ -48,6 +55,7 @@ export const InventoryThumbLayout = ({ captionNumber, layout, srcBitmap, srcChes
                     <ThemeImage
                         name="bitmap"
                         src={srcBitmap}
+                        tint={tintBitmap}
                         layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
                     />
                     {(visibleBadge ?? false) && (
@@ -56,7 +64,9 @@ export const InventoryThumbLayout = ({ captionNumber, layout, srcBitmap, srcChes
                             name="badge"
                             options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                             layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
-                        />
+                        >
+                            {badge}
+                        </WidgetSlot>
                     )}
                     {(visibleRecyclableContainer ?? false) && (
                         <ThemeImage
@@ -70,21 +80,27 @@ export const InventoryThumbLayout = ({ captionNumber, layout, srcBitmap, srcChes
                             widgetType="limited_item_overlay_grid"
                             name="unique_item_overlay_container"
                             layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                        />
+                        >
+                            {uniqueItemOverlayContainer}
+                        </WidgetSlot>
                     )}
                     {(visibleChestOverlayContainer ?? false) && (
                         <WidgetSlot
                             widgetType="chest_overlay_grid"
                             name="chest_overlay_container"
                             layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                        />
+                        >
+                            {chestOverlayContainer}
+                        </WidgetSlot>
                     )}
                     {(visibleRarityItemOverlayContainer ?? false) && (
                         <WidgetSlot
                             widgetType="rarity_item_overlay_grid"
                             name="rarity_item_overlay_container"
                             layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                        />
+                        >
+                            {rarityItemOverlayContainer}
+                        </WidgetSlot>
                     )}
                     {(visibleNumberContainer ?? false) && (
                         <Region

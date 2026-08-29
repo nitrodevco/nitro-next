@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region } from '#base/theme';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
@@ -8,14 +10,17 @@ import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
  */
 /** Named region `guildForumSelectorWidget` of GuildForumSelectorWidget - configured through the parent's `guildForumSelectorWidget` prop. */
 export interface GuildForumSelectorWidgetProps extends CatalogWidgetFlags {
+    guildForumSelectorWidget?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const GuildForumSelectorWidget = ({ layout }: GuildForumSelectorWidgetProps) => {
+export const GuildForumSelectorWidget = ({ guildForumSelectorWidget, layout }: GuildForumSelectorWidgetProps) => {
     return (
         <Region
             name="guildForumSelectorWidget"
             layout={{ position: 'absolute', ...layout }}
-        />
+        >
+            {guildForumSelectorWidget}
+        </Region>
     );
 };

@@ -11,9 +11,11 @@ export interface NotificationTeaserLayoutProps {
     onTeaserOkBtn?: () => void;
     srcDecoImg?: string;
     srcDialogBg?: string;
+    tintDecoImg?: string;
+    tintDialogBg?: string;
 }
 
-export const NotificationTeaserLayout = ({ captionCongrats, captionDescription, captionOk, layout, onClose, onTeaserOkBtn, srcDecoImg, srcDialogBg }: NotificationTeaserLayoutProps) => {
+export const NotificationTeaserLayout = ({ captionCongrats, captionDescription, captionOk, layout, onClose, onTeaserOkBtn, srcDecoImg, srcDialogBg, tintDecoImg, tintDialogBg }: NotificationTeaserLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -87,11 +89,13 @@ export const NotificationTeaserLayout = ({ captionCongrats, captionDescription, 
                 <ThemeImage
                     name="dialog_bg"
                     src={srcDialogBg}
+                    tint={tintDialogBg}
                     layout={{ position: 'absolute', left: 1, width: 418, bottom: 68, height: 160 }}
                 />
                 <ThemeImage
                     name="deco_img"
                     src={srcDecoImg}
+                    tint={tintDecoImg}
                     layout={{ position: 'absolute', left: 20, width: 90, top: 15, height: 90, minWidth: 90, maxWidth: 90, minHeight: 90, maxHeight: 90 }}
                 />
             </Border>

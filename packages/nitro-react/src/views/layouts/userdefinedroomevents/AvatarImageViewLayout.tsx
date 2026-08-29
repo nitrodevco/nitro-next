@@ -1,11 +1,14 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, WidgetSlot } from '#base/theme';
 
 /** Generated from `1135_avatar_image_view_xml` (layout "avatar_image_view", 90x120) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface AvatarImageViewLayoutProps {
+    avatarImage?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const AvatarImageViewLayout = ({ layout }: AvatarImageViewLayoutProps) => {
+export const AvatarImageViewLayout = ({ avatarImage, layout }: AvatarImageViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 90, height: 120, ...layout }}>
             <Region
@@ -17,7 +20,9 @@ export const AvatarImageViewLayout = ({ layout }: AvatarImageViewLayoutProps) =>
                     name="avatar_image"
                     options={{ 'avatar_image:direction': 'south' }}
                     layout={{ position: 'absolute', left: 0, width: 90, top: -10, height: 130 }}
-                />
+                >
+                    {avatarImage}
+                </WidgetSlot>
             </Region>
         </Region>
     );

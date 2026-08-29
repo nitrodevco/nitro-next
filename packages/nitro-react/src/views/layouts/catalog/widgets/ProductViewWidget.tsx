@@ -1,5 +1,5 @@
 import { BoxLayout, Region } from '#base/theme';
-import { ProductViewWidgetLayout, ProductViewWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/ProductViewWidgetLayout';
+import { ProductViewWidgetLayout, ProductViewWidgetLayoutProps } from '#base/views/layouts/catalog/widgets/ProductViewWidget/ProductViewWidgetLayout';
 import { CatalogWidgetFlags } from '#base/views/layouts/layoutAssets';
 
 /**

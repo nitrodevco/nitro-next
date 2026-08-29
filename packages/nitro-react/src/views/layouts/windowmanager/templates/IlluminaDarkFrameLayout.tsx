@@ -1,15 +1,19 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, CloseButton, Region, Scaler, ThemeText } from '#base/theme';
 
 /** Generated from `1803_illumina_dark_frame_xml` (layout "illumina_dark_frame", 50x50) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IlluminaDarkFrameLayoutProps {
     captionHeaderTitleText?: string;
+    contentArea?: ReactNode;
     layout?: BoxLayout;
     onHeaderButtonClose?: () => void;
     onTitlebar?: () => void;
+    titlebar?: ReactNode;
     visibleFRAMESCALER?: boolean;
 }
 
-export const IlluminaDarkFrameLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClose, onTitlebar, visibleFRAMESCALER }: IlluminaDarkFrameLayoutProps) => {
+export const IlluminaDarkFrameLayout = ({ captionHeaderTitleText, contentArea, layout, onHeaderButtonClose, onTitlebar, titlebar, visibleFRAMESCALER }: IlluminaDarkFrameLayoutProps) => {
     return (
         <Region
             dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.35, blur: 20 }}
@@ -18,13 +22,17 @@ export const IlluminaDarkFrameLayout = ({ captionHeaderTitleText, layout, onHead
             <Region
                 name="content_area"
                 layout={{ position: 'absolute', left: 1, right: 1, top: 30, bottom: 1 }}
-            />
+            >
+                {contentArea}
+            </Region>
             <Region
                 name="titlebar"
                 onPointerTap={onTitlebar}
                 cursor="pointer"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
-            />
+            >
+                {titlebar}
+            </Region>
             <Region
                 name="header_title_text"
                 layout={{ position: 'absolute', left: 8, width: 20, top: 11, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

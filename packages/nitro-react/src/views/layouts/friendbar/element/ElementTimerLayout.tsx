@@ -1,13 +1,16 @@
+import { ReactNode } from 'react';
+
 import { BoxLayout, Region, ThemeText, WidgetSlot } from '#base/theme';
 
 /** Generated from `84_element_timer_xml` (layout "element_timer", 149x56) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ElementTimerLayoutProps {
     captionTimerCaptionTxt?: string;
     colorableTextColor?: string;
+    countdownWidget?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const ElementTimerLayout = ({ captionTimerCaptionTxt, colorableTextColor, layout }: ElementTimerLayoutProps) => {
+export const ElementTimerLayout = ({ captionTimerCaptionTxt, colorableTextColor, countdownWidget, layout }: ElementTimerLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 149, height: 56, ...layout }}>
             <Region
@@ -29,7 +32,9 @@ export const ElementTimerLayout = ({ captionTimerCaptionTxt, colorableTextColor,
                     name="countdown_widget"
                     options={{ 'countdown:running': 'true' }}
                     layout={{ position: 'absolute', left: 25, width: 99, top: 19, height: 37 }}
-                />
+                >
+                    {countdownWidget}
+                </WidgetSlot>
             </Region>
         </Region>
     );

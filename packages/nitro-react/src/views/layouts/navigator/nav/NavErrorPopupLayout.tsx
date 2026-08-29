@@ -6,9 +6,10 @@ export interface NavErrorPopupLayoutProps {
     layout?: BoxLayout;
     onPopupContainer?: () => void;
     srcPopupArrowDown?: string;
+    tintPopupArrowDown?: string;
 }
 
-export const NavErrorPopupLayout = ({ captionErrorText, layout, onPopupContainer, srcPopupArrowDown }: NavErrorPopupLayoutProps) => {
+export const NavErrorPopupLayout = ({ captionErrorText, layout, onPopupContainer, srcPopupArrowDown, tintPopupArrowDown }: NavErrorPopupLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 20, height: 20, ...layout }}>
             <Region
@@ -35,6 +36,7 @@ export const NavErrorPopupLayout = ({ captionErrorText, layout, onPopupContainer
                 <ThemeImage
                     name="popup_arrow_down"
                     src={srcPopupArrowDown}
+                    tint={tintPopupArrowDown}
                     layout={{ position: 'absolute', left: 50, width: 11, top: 22, height: 11 }}
                 />
             </Region>
