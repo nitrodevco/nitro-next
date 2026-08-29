@@ -4,33 +4,14 @@ import { BoxLayout, Region, ThemeText } from '#base/theme';
 
 /** Generated from `71_message_xml` (layout "message", 121x37) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MessageLayoutProps {
-    itemsItems?: ReactNode;
     layout?: BoxLayout;
+    message?: MessageLayoutMessageProps;
 }
 
-export const MessageLayout = ({ itemsItems, layout }: MessageLayoutProps) => {
+export const MessageLayout = ({ layout, message }: MessageLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 121, height: 37, ...layout }}>
-            <Region
-                name="message"
-                tags={[ 'notification' ]}
-                params={144}
-                backgroundColor="#4c5832"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 37 }}
-            >
-                <Region
-                    name="items"
-                    params={8388752}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 31, flexDirection: 'column', gap: -1 }}
-                >
-                    {itemsItems ?? (
-                        <>
-                            <MessageLayoutTitleItem />
-                            <MessageLayoutMessageItem />
-                        </>
-                    )}
-                </Region>
-            </Region>
+            <MessageLayoutMessage {...message} />
         </Region>
     );
 };
@@ -75,6 +56,49 @@ export const MessageLayoutMessageItem = ({ captionMessage, layout }: MessageLayo
                 textStyle="text-style-u-bold"
                 textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 121 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `items` of MessageLayout - configured through the parent's `items` prop. */
+export interface MessageLayoutItemsProps {
+    itemsItems?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const MessageLayoutItems = ({ itemsItems, layout }: MessageLayoutItemsProps) => {
+    return (
+        <Region
+            name="items"
+            params={8388752}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 31, flexDirection: 'column', gap: -1, ...layout }}
+        >
+            {itemsItems ?? (
+                <>
+                    <MessageLayoutTitleItem />
+                    <MessageLayoutMessageItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `message` of MessageLayout - configured through the parent's `message` prop. */
+export interface MessageLayoutMessageProps {
+    items?: MessageLayoutItemsProps;
+    layout?: BoxLayout;
+}
+
+export const MessageLayoutMessage = ({ items, layout }: MessageLayoutMessageProps) => {
+    return (
+        <Region
+            name="message"
+            tags={[ 'notification' ]}
+            params={144}
+            backgroundColor="#4c5832"
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 37, ...layout }}
+        >
+            <MessageLayoutItems {...items} />
         </Region>
     );
 };

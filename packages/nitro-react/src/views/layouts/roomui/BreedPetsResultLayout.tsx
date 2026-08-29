@@ -5,12 +5,12 @@ import { BoxLayout, Button, ButtonThick, Frame, Region, ThemeImage, ThemeText } 
 
 /** Generated from `918_breed_pets_result_xml` (layout "breed_pets_result", 275x300) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface BreedPetsResultLayoutProps {
-    itemsElementList?: ReactNode;
+    elementList?: BreedPetsResultLayoutElementListProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const BreedPetsResultLayout = ({ itemsElementList, layout, onClose }: BreedPetsResultLayoutProps) => {
+export const BreedPetsResultLayout = ({ elementList, layout, onClose }: BreedPetsResultLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -23,29 +23,7 @@ export const BreedPetsResultLayout = ({ itemsElementList, layout, onClose }: Bre
             layout={{ width: 275, height: 300, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="element_list"
-                    params={147472}
-                    layout={{ position: 'absolute', left: 0, top: 0, minWidth: 274, maxWidth: 274, flexDirection: 'column', gap: 10 }}
-                >
-                    {itemsElementList ?? (
-                        <>
-                            <BreedPetsResultLayoutSeparatorItem />
-                            <BreedPetsResultLayoutDescriptionItem />
-                            <BreedPetsResultLayoutDescriptionSorryItem />
-                            <BreedPetsResultLayoutInfoItem />
-                            <BreedPetsResultLayoutInfoSorryItem />
-                            <BreedPetsResultLayoutPreviewListItem />
-                            <BreedPetsResultLayoutPreviewButtonlistItem />
-                            <BreedPetsResultLayoutButtonListItem />
-                            <BreedPetsResultLayoutSeparatorItem2 />
-                        </>
-                    )}
-                    <Region
-                        params={16}
-                        layout={{ width: 244, height: 1, flexShrink: 0, minHeight: 1, maxHeight: 1 }}
-                    />
-                </Region>
+                <BreedPetsResultLayoutElementList {...elementList} />
             </Region>
         </Frame>
     );
@@ -712,5 +690,39 @@ export const BreedPetsResultLayoutSeparatorItem2 = ({ layout }: BreedPetsResultL
             params={16}
             layout={{ width: 274, height: 1, flexShrink: 0, minWidth: 274, minHeight: 1, ...layout }}
         />
+    );
+};
+
+/** Named region `element_list` of BreedPetsResultLayout - configured through the parent's `elementList` prop. */
+export interface BreedPetsResultLayoutElementListProps {
+    itemsElementList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const BreedPetsResultLayoutElementList = ({ itemsElementList, layout }: BreedPetsResultLayoutElementListProps) => {
+    return (
+        <Region
+            name="element_list"
+            params={147472}
+            layout={{ position: 'absolute', left: 0, top: 0, minWidth: 274, maxWidth: 274, flexDirection: 'column', gap: 10, ...layout }}
+        >
+            {itemsElementList ?? (
+                <>
+                    <BreedPetsResultLayoutSeparatorItem />
+                    <BreedPetsResultLayoutDescriptionItem />
+                    <BreedPetsResultLayoutDescriptionSorryItem />
+                    <BreedPetsResultLayoutInfoItem />
+                    <BreedPetsResultLayoutInfoSorryItem />
+                    <BreedPetsResultLayoutPreviewListItem />
+                    <BreedPetsResultLayoutPreviewButtonlistItem />
+                    <BreedPetsResultLayoutButtonListItem />
+                    <BreedPetsResultLayoutSeparatorItem2 />
+                </>
+            )}
+            <Region
+                params={16}
+                layout={{ width: 244, height: 1, flexShrink: 0, minHeight: 1, maxHeight: 1 }}
+            />
+        </Region>
     );
 };

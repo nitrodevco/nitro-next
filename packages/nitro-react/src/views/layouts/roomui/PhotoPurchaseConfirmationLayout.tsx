@@ -5,14 +5,12 @@ import { Border, BoxLayout, Button, CheckBox, Frame, Icon, Region, ThemeImage, T
 
 /** Generated from `1060_photo_purchase_confirmation_xml` (layout "photo_purchase_confirmation", 340x686) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PhotoPurchaseConfirmationLayoutProps {
-    captionLoadingText?: string;
-    itemsContentlist?: ReactNode;
+    contentlist?: PhotoPurchaseConfirmationLayoutContentlistProps;
     layout?: BoxLayout;
     onClose?: () => void;
-    srcProductImage?: string;
 }
 
-export const PhotoPurchaseConfirmationLayout = ({ captionLoadingText, itemsContentlist, layout, onClose, srcProductImage }: PhotoPurchaseConfirmationLayoutProps) => {
+export const PhotoPurchaseConfirmationLayout = ({ contentlist, layout, onClose }: PhotoPurchaseConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -25,50 +23,7 @@ export const PhotoPurchaseConfirmationLayout = ({ captionLoadingText, itemsConte
             layout={{ width: 340, height: 686, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="contentlist"
-                    params={12732432}
-                    layout={{ position: 'absolute', left: 10, top: 39, bottom: 7, flexDirection: 'column', gap: 6 }}
-                >
-                    {itemsContentlist ?? (
-                        <>
-                            <PhotoPurchaseConfirmationLayoutStatusInfoItem />
-                            <PhotoPurchaseConfirmationLayoutCompetitionWrapperItem />
-                            <PhotoPurchaseConfirmationLayoutPurchaseWrapperItem />
-                            <PhotoPurchaseConfirmationLayoutPublishWrapperItem />
-                            <PhotoPurchaseConfirmationLayoutBadPhotoRemovalDisclaimerItem />
-                            <PhotoPurchaseConfirmationLayoutDisclaimerItem />
-                            <PhotoPurchaseConfirmationLayoutButtonsItem />
-                        </>
-                    )}
-                    <Region
-                        params={16}
-                        layout={{ width: 320, height: 320, flexShrink: 0, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="image_bg"
-                            params={16}
-                            backgroundColor="#cccccc"
-                            layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 320 }}
-                        />
-                        <Region
-                            name="loadingText"
-                            params={786640}
-                            layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 255, top: 130, height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionLoadingText ?? t('camera.loading')}
-                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                            />
-                        </Region>
-                        <ThemeImage
-                            name="product_image"
-                            params={16}
-                            src={srcProductImage}
-                            layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 320 }}
-                        />
-                    </Region>
-                </Region>
+                <PhotoPurchaseConfirmationLayoutContentlist {...contentlist} />
             </Region>
         </Frame>
     );
@@ -144,14 +99,37 @@ export const PhotoPurchaseConfirmationLayoutCompetitionInfoItem = ({ captionComp
     );
 };
 
-/** Row template `competition_wrapper` of PhotoPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
-export interface PhotoPurchaseConfirmationLayoutCompetitionWrapperItemProps {
+/** Named region `properties_itemlist` of PhotoPurchaseConfirmationLayout - configured through the parent's `propertiesItemlist` prop. */
+export interface PhotoPurchaseConfirmationLayoutPropertiesItemlistProps {
     itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
-    onCompetitionButton?: () => void;
 }
 
-export const PhotoPurchaseConfirmationLayoutCompetitionWrapperItem = ({ itemsPropertiesItemlist, layout, onCompetitionButton }: PhotoPurchaseConfirmationLayoutCompetitionWrapperItemProps) => {
+export const PhotoPurchaseConfirmationLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout }: PhotoPurchaseConfirmationLayoutPropertiesItemlistProps) => {
+    return (
+        <Region
+            name="properties_itemlist"
+            params={8388624}
+            layout={{ position: 'absolute', left: 6, width: 309, top: 4, height: 58, flexDirection: 'column', gap: 2, ...layout }}
+        >
+            {itemsPropertiesItemlist ?? (
+                <>
+                    <PhotoPurchaseConfirmationLayoutCompetitionNameItem />
+                    <PhotoPurchaseConfirmationLayoutCompetitionInfoItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Row template `competition_wrapper` of PhotoPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
+export interface PhotoPurchaseConfirmationLayoutCompetitionWrapperItemProps {
+    layout?: BoxLayout;
+    onCompetitionButton?: () => void;
+    propertiesItemlist?: PhotoPurchaseConfirmationLayoutPropertiesItemlistProps;
+}
+
+export const PhotoPurchaseConfirmationLayoutCompetitionWrapperItem = ({ layout, onCompetitionButton, propertiesItemlist }: PhotoPurchaseConfirmationLayoutCompetitionWrapperItemProps) => {
     const t = useTranslation();
 
     return (
@@ -162,18 +140,7 @@ export const PhotoPurchaseConfirmationLayoutCompetitionWrapperItem = ({ itemsPro
             tintColor="#4d1725"
             layout={{ width: 316, height: 62, flexShrink: 0, minWidth: 316, maxWidth: 316, minHeight: 55, ...layout }}
         >
-            <Region
-                name="properties_itemlist"
-                params={8388624}
-                layout={{ position: 'absolute', left: 6, width: 309, top: 4, height: 58, flexDirection: 'column', gap: 2 }}
-            >
-                {itemsPropertiesItemlist ?? (
-                    <>
-                        <PhotoPurchaseConfirmationLayoutCompetitionNameItem />
-                        <PhotoPurchaseConfirmationLayoutCompetitionInfoItem />
-                    </>
-                )}
-            </Region>
+            <PhotoPurchaseConfirmationLayoutPropertiesItemlist {...propertiesItemlist} />
             <Button
                 variant="5"
                 name="competition_button"
@@ -450,14 +417,39 @@ export const PhotoPurchaseConfirmationLayoutInventoryLinkAreaItem = ({ itemsInve
     );
 };
 
-/** Row template `purchase_wrapper` of PhotoPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
-export interface PhotoPurchaseConfirmationLayoutPurchaseWrapperItemProps {
+/** Named region `properties_itemlist` of PhotoPurchaseConfirmationLayout - configured through the parent's `propertiesItemlist` prop. */
+export interface PhotoPurchaseConfirmationLayoutPropertiesItemlist2Props {
     itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
-    onBuyButton?: () => void;
 }
 
-export const PhotoPurchaseConfirmationLayoutPurchaseWrapperItem = ({ itemsPropertiesItemlist, layout, onBuyButton }: PhotoPurchaseConfirmationLayoutPurchaseWrapperItemProps) => {
+export const PhotoPurchaseConfirmationLayoutPropertiesItemlist2 = ({ itemsPropertiesItemlist, layout }: PhotoPurchaseConfirmationLayoutPropertiesItemlist2Props) => {
+    return (
+        <Region
+            name="properties_itemlist"
+            params={16}
+            layout={{ position: 'absolute', left: 6, width: 309, top: 4, height: 43, flexDirection: 'column', gap: 2, ...layout }}
+        >
+            {itemsPropertiesItemlist ?? (
+                <>
+                    <PhotoPurchaseConfirmationLayoutProductNameItem />
+                    <PhotoPurchaseConfirmationLayoutQuantityItem />
+                    <PhotoPurchaseConfirmationLayoutPriceAreaItem />
+                    <PhotoPurchaseConfirmationLayoutInventoryLinkAreaItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Row template `purchase_wrapper` of PhotoPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
+export interface PhotoPurchaseConfirmationLayoutPurchaseWrapperItemProps {
+    layout?: BoxLayout;
+    onBuyButton?: () => void;
+    propertiesItemlist?: PhotoPurchaseConfirmationLayoutPropertiesItemlist2Props;
+}
+
+export const PhotoPurchaseConfirmationLayoutPurchaseWrapperItem = ({ layout, onBuyButton, propertiesItemlist }: PhotoPurchaseConfirmationLayoutPurchaseWrapperItemProps) => {
     const t = useTranslation();
 
     return (
@@ -468,20 +460,7 @@ export const PhotoPurchaseConfirmationLayoutPurchaseWrapperItem = ({ itemsProper
             tintColor="#c7c6bf"
             layout={{ width: 316, height: 55, flexShrink: 0, minWidth: 316, maxWidth: 316, minHeight: 55, ...layout }}
         >
-            <Region
-                name="properties_itemlist"
-                params={16}
-                layout={{ position: 'absolute', left: 6, width: 309, top: 4, height: 43, flexDirection: 'column', gap: 2 }}
-            >
-                {itemsPropertiesItemlist ?? (
-                    <>
-                        <PhotoPurchaseConfirmationLayoutProductNameItem />
-                        <PhotoPurchaseConfirmationLayoutQuantityItem />
-                        <PhotoPurchaseConfirmationLayoutPriceAreaItem />
-                        <PhotoPurchaseConfirmationLayoutInventoryLinkAreaItem />
-                    </>
-                )}
-            </Region>
+            <PhotoPurchaseConfirmationLayoutPropertiesItemlist2 {...propertiesItemlist} />
             <Button
                 variant="5"
                 name="buy_button"
@@ -672,14 +651,39 @@ export const PhotoPurchaseConfirmationLayoutPublishLinkAreaItem = ({ itemsPublis
     );
 };
 
-/** Row template `publish_wrapper` of PhotoPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
-export interface PhotoPurchaseConfirmationLayoutPublishWrapperItemProps {
+/** Named region `publish_area_itemlist` of PhotoPurchaseConfirmationLayout - configured through the parent's `publishAreaItemlist` prop. */
+export interface PhotoPurchaseConfirmationLayoutPublishAreaItemlistProps {
     itemsPublishAreaItemlist?: ReactNode;
     layout?: BoxLayout;
-    onPublishButton?: () => void;
 }
 
-export const PhotoPurchaseConfirmationLayoutPublishWrapperItem = ({ itemsPublishAreaItemlist, layout, onPublishButton }: PhotoPurchaseConfirmationLayoutPublishWrapperItemProps) => {
+export const PhotoPurchaseConfirmationLayoutPublishAreaItemlist = ({ itemsPublishAreaItemlist, layout }: PhotoPurchaseConfirmationLayoutPublishAreaItemlistProps) => {
+    return (
+        <Region
+            name="publish_area_itemlist"
+            params={8388624}
+            layout={{ position: 'absolute', left: 6, width: 309, top: 4, height: 75, flexDirection: 'column', ...layout }}
+        >
+            {itemsPublishAreaItemlist ?? (
+                <>
+                    <PhotoPurchaseConfirmationLayoutPublishExplanationItem />
+                    <PhotoPurchaseConfirmationLayoutPublishDetailedExplanationItem />
+                    <PhotoPurchaseConfirmationLayoutPublishPriceAreaItem />
+                    <PhotoPurchaseConfirmationLayoutPublishLinkAreaItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Row template `publish_wrapper` of PhotoPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
+export interface PhotoPurchaseConfirmationLayoutPublishWrapperItemProps {
+    layout?: BoxLayout;
+    onPublishButton?: () => void;
+    publishAreaItemlist?: PhotoPurchaseConfirmationLayoutPublishAreaItemlistProps;
+}
+
+export const PhotoPurchaseConfirmationLayoutPublishWrapperItem = ({ layout, onPublishButton, publishAreaItemlist }: PhotoPurchaseConfirmationLayoutPublishWrapperItemProps) => {
     const t = useTranslation();
 
     return (
@@ -690,20 +694,7 @@ export const PhotoPurchaseConfirmationLayoutPublishWrapperItem = ({ itemsPublish
             tintColor="#c7c6bf"
             layout={{ width: 316, height: 83, flexShrink: 0, minWidth: 316, maxWidth: 316, minHeight: 83, ...layout }}
         >
-            <Region
-                name="publish_area_itemlist"
-                params={8388624}
-                layout={{ position: 'absolute', left: 6, width: 309, top: 4, height: 75, flexDirection: 'column' }}
-            >
-                {itemsPublishAreaItemlist ?? (
-                    <>
-                        <PhotoPurchaseConfirmationLayoutPublishExplanationItem />
-                        <PhotoPurchaseConfirmationLayoutPublishDetailedExplanationItem />
-                        <PhotoPurchaseConfirmationLayoutPublishPriceAreaItem />
-                        <PhotoPurchaseConfirmationLayoutPublishLinkAreaItem />
-                    </>
-                )}
-            </Region>
+            <PhotoPurchaseConfirmationLayoutPublishAreaItemlist {...publishAreaItemlist} />
             <Button
                 variant="5"
                 name="publish_button"
@@ -810,6 +801,77 @@ export const PhotoPurchaseConfirmationLayoutButtonsItem = ({ layout, onCancelBut
             >
                 {t('catalog.purchase_confirmation.cancel')}
             </Button>
+        </Region>
+    );
+};
+
+/** Named region `image_bg` of PhotoPurchaseConfirmationLayout - configured through the parent's `imageBg` prop. */
+export interface PhotoPurchaseConfirmationLayoutImageBgProps {
+    layout?: BoxLayout;
+}
+
+export const PhotoPurchaseConfirmationLayoutImageBg = ({ layout }: PhotoPurchaseConfirmationLayoutImageBgProps) => {
+    return (
+        <Region
+            name="image_bg"
+            params={16}
+            backgroundColor="#cccccc"
+            layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 320, ...layout }}
+        />
+    );
+};
+
+/** Named region `contentlist` of PhotoPurchaseConfirmationLayout - configured through the parent's `contentlist` prop. */
+export interface PhotoPurchaseConfirmationLayoutContentlistProps {
+    captionLoadingText?: string;
+    imageBg?: PhotoPurchaseConfirmationLayoutImageBgProps;
+    itemsContentlist?: ReactNode;
+    layout?: BoxLayout;
+    srcProductImage?: string;
+}
+
+export const PhotoPurchaseConfirmationLayoutContentlist = ({ captionLoadingText, imageBg, itemsContentlist, layout, srcProductImage }: PhotoPurchaseConfirmationLayoutContentlistProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="contentlist"
+            params={12732432}
+            layout={{ position: 'absolute', left: 10, top: 39, bottom: 7, flexDirection: 'column', gap: 6, ...layout }}
+        >
+            {itemsContentlist ?? (
+                <>
+                    <PhotoPurchaseConfirmationLayoutStatusInfoItem />
+                    <PhotoPurchaseConfirmationLayoutCompetitionWrapperItem />
+                    <PhotoPurchaseConfirmationLayoutPurchaseWrapperItem />
+                    <PhotoPurchaseConfirmationLayoutPublishWrapperItem />
+                    <PhotoPurchaseConfirmationLayoutBadPhotoRemovalDisclaimerItem />
+                    <PhotoPurchaseConfirmationLayoutDisclaimerItem />
+                    <PhotoPurchaseConfirmationLayoutButtonsItem />
+                </>
+            )}
+            <Region
+                params={16}
+                layout={{ width: 320, height: 320, flexShrink: 0, justifyContent: 'center' }}
+            >
+                <PhotoPurchaseConfirmationLayoutImageBg {...imageBg} />
+                <Region
+                    name="loadingText"
+                    params={786640}
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 255, top: 130, height: 44, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionLoadingText ?? t('camera.loading')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
+                </Region>
+                <ThemeImage
+                    name="product_image"
+                    params={16}
+                    src={srcProductImage}
+                    layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 320 }}
+                />
+            </Region>
         </Region>
     );
 };

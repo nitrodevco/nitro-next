@@ -5,13 +5,11 @@ import { BoxLayout, Bubble, ContainerButton, Icon, Region, ThemeText } from '#ba
 
 /** Generated from `948_monsterplant_seed_menu_xml` (layout "context_menu_widget", 115x86) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MonsterplantSeedMenuLayoutProps {
-    captionFurniName?: string;
-    itemsButtons?: ReactNode;
+    border?: MonsterplantSeedMenuLayoutBorderProps;
     layout?: BoxLayout;
-    onMinimize?: () => void;
 }
 
-export const MonsterplantSeedMenuLayout = ({ captionFurniName, itemsButtons, layout, onMinimize }: MonsterplantSeedMenuLayoutProps) => {
+export const MonsterplantSeedMenuLayout = ({ border, layout }: MonsterplantSeedMenuLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 115, height: 86, ...layout }}>
             <Bubble
@@ -20,56 +18,7 @@ export const MonsterplantSeedMenuLayout = ({ captionFurniName, itemsButtons, lay
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 115, bottom: -27, height: 86 }}
             >
-                <Region
-                    name="border"
-                    params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76, justifyContent: 'center' }}
-                >
-                    <Region
-                        params={17}
-                        layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="furni_name"
-                            params={208}
-                            layout={{ position: 'absolute', width: 61, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionFurniName ?? 'furni_name'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                    </Region>
-                    <Region
-                        params={144}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
-                    />
-                    <Region
-                        name="buttons"
-                        params={8519888}
-                        layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 26, flexDirection: 'column', gap: 1 }}
-                    >
-                        {itemsButtons ?? (
-                            <MonsterplantSeedMenuLayoutUseItem />
-                        )}
-                    </Region>
-                    <Region
-                        name="minimize"
-                        params={1041}
-                        onPointerTap={onMinimize}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 4, width: 100, bottom: 3, height: 18 }}
-                    >
-                        <Icon
-                            variant="7"
-                            name="icon"
-                            params={16}
-                            layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
-                        />
-                    </Region>
-                </Region>
+                <MonsterplantSeedMenuLayoutBorder {...border} />
             </Bubble>
         </Region>
     );
@@ -113,6 +62,93 @@ export const MonsterplantSeedMenuLayoutUseItem = ({ captionLabel, layout, onButt
                     />
                 </Region>
             </ContainerButton>
+        </Region>
+    );
+};
+
+/** Named region `buttons` of MonsterplantSeedMenuLayout - configured through the parent's `buttons` prop. */
+export interface MonsterplantSeedMenuLayoutButtonsProps {
+    itemsButtons?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const MonsterplantSeedMenuLayoutButtons = ({ itemsButtons, layout }: MonsterplantSeedMenuLayoutButtonsProps) => {
+    return (
+        <Region
+            name="buttons"
+            params={8519888}
+            layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 26, flexDirection: 'column', gap: 1, ...layout }}
+        >
+            {itemsButtons ?? (
+                <MonsterplantSeedMenuLayoutUseItem />
+            )}
+        </Region>
+    );
+};
+
+/** Named region `minimize` of MonsterplantSeedMenuLayout - configured through the parent's `minimize` prop. */
+export interface MonsterplantSeedMenuLayoutMinimizeProps {
+    layout?: BoxLayout;
+    onMinimize?: () => void;
+}
+
+export const MonsterplantSeedMenuLayoutMinimize = ({ layout, onMinimize }: MonsterplantSeedMenuLayoutMinimizeProps) => {
+    return (
+        <Region
+            name="minimize"
+            params={1041}
+            onPointerTap={onMinimize}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 4, width: 100, bottom: 3, height: 18, ...layout }}
+        >
+            <Icon
+                variant="7"
+                name="icon"
+                params={16}
+                layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `border` of MonsterplantSeedMenuLayout - configured through the parent's `border` prop. */
+export interface MonsterplantSeedMenuLayoutBorderProps {
+    buttons?: MonsterplantSeedMenuLayoutButtonsProps;
+    captionFurniName?: string;
+    layout?: BoxLayout;
+    minimize?: MonsterplantSeedMenuLayoutMinimizeProps;
+}
+
+export const MonsterplantSeedMenuLayoutBorder = ({ buttons, captionFurniName, layout, minimize }: MonsterplantSeedMenuLayoutBorderProps) => {
+    return (
+        <Region
+            name="border"
+            params={12582928}
+            layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                params={17}
+                layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center' }}
+            >
+                <Region
+                    name="furni_name"
+                    params={208}
+                    layout={{ position: 'absolute', width: 61, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionFurniName ?? 'furni_name'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+            </Region>
+            <Region
+                params={144}
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
+            />
+            <MonsterplantSeedMenuLayoutButtons {...buttons} />
+            <MonsterplantSeedMenuLayoutMinimize {...minimize} />
         </Region>
     );
 };

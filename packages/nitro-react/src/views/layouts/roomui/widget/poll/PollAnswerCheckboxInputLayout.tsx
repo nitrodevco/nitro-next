@@ -4,31 +4,14 @@ import { BoxLayout, CheckBox, Region, ThemeText } from '#base/theme';
 
 /** Generated from `922_poll_answer_checkbox_input_xml` (layout "poll_answer_checkbox_input", 372x125) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PollAnswerCheckboxInputLayoutProps {
-    itemsPollAnswerItemlist?: ReactNode;
     layout?: BoxLayout;
-    onPollAnswerContent?: () => void;
+    pollAnswerContent?: PollAnswerCheckboxInputLayoutPollAnswerContentProps;
 }
 
-export const PollAnswerCheckboxInputLayout = ({ itemsPollAnswerItemlist, layout, onPollAnswerContent }: PollAnswerCheckboxInputLayoutProps) => {
+export const PollAnswerCheckboxInputLayout = ({ layout, pollAnswerContent }: PollAnswerCheckboxInputLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 372, height: 125, ...layout }}>
-            <Region
-                name="poll_answer_content"
-                params={131217}
-                onPointerTap={onPollAnswerContent}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 125 }}
-            >
-                <Region
-                    name="poll_answer_itemlist"
-                    params={131217}
-                    layout={{ position: 'absolute', left: 0, right: 7, top: 0, minHeight: 125, flexDirection: 'column' }}
-                >
-                    {itemsPollAnswerItemlist ?? (
-                        <PollAnswerCheckboxInputLayoutPollAnswerEntityItem />
-                    )}
-                </Region>
-            </Region>
+            <PollAnswerCheckboxInputLayoutPollAnswerContent {...pollAnswerContent} />
         </Region>
     );
 };
@@ -69,6 +52,47 @@ export const PollAnswerCheckboxInputLayoutPollAnswerEntityItem = ({ captionPollA
                     textOptions={{ wordWrap: true, wordWrapWidth: 341 }}
                 />
             </Region>
+        </Region>
+    );
+};
+
+/** Named region `poll_answer_itemlist` of PollAnswerCheckboxInputLayout - configured through the parent's `pollAnswerItemlist` prop. */
+export interface PollAnswerCheckboxInputLayoutPollAnswerItemlistProps {
+    itemsPollAnswerItemlist?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PollAnswerCheckboxInputLayoutPollAnswerItemlist = ({ itemsPollAnswerItemlist, layout }: PollAnswerCheckboxInputLayoutPollAnswerItemlistProps) => {
+    return (
+        <Region
+            name="poll_answer_itemlist"
+            params={131217}
+            layout={{ position: 'absolute', left: 0, right: 7, top: 0, minHeight: 125, flexDirection: 'column', ...layout }}
+        >
+            {itemsPollAnswerItemlist ?? (
+                <PollAnswerCheckboxInputLayoutPollAnswerEntityItem />
+            )}
+        </Region>
+    );
+};
+
+/** Named region `poll_answer_content` of PollAnswerCheckboxInputLayout - configured through the parent's `pollAnswerContent` prop. */
+export interface PollAnswerCheckboxInputLayoutPollAnswerContentProps {
+    layout?: BoxLayout;
+    onPollAnswerContent?: () => void;
+    pollAnswerItemlist?: PollAnswerCheckboxInputLayoutPollAnswerItemlistProps;
+}
+
+export const PollAnswerCheckboxInputLayoutPollAnswerContent = ({ layout, onPollAnswerContent, pollAnswerItemlist }: PollAnswerCheckboxInputLayoutPollAnswerContentProps) => {
+    return (
+        <Region
+            name="poll_answer_content"
+            params={131217}
+            onPointerTap={onPollAnswerContent}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 125, ...layout }}
+        >
+            <PollAnswerCheckboxInputLayoutPollAnswerItemlist {...pollAnswerItemlist} />
         </Region>
     );
 };

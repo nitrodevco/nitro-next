@@ -6,11 +6,11 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1242_toolbar_view_xml` (layout "toolbar_view_squeezed", 87x875) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ToolbarViewLayoutProps {
-    itemsToolbarItems?: ReactNode;
     layout?: BoxLayout;
+    toolbarItems?: ToolbarViewLayoutToolbarItemsProps;
 }
 
-export const ToolbarViewLayout = ({ itemsToolbarItems, layout }: ToolbarViewLayoutProps) => {
+export const ToolbarViewLayout = ({ layout, toolbarItems }: ToolbarViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 87, height: 875, ...layout }}>
             <Region
@@ -25,28 +25,7 @@ export const ToolbarViewLayout = ({ itemsToolbarItems, layout }: ToolbarViewLayo
                     tintColor="#79756e"
                     layout={{ width: '100%', height: '100%' }}
                 >
-                    <Region
-                        name="toolbar_items"
-                        params={8536080}
-                        layout={{ position: 'absolute', left: 0, top: 5, flexDirection: 'column' }}
-                    >
-                        {itemsToolbarItems ?? (
-                            <>
-                                <ToolbarViewLayoutRECEPTIONItem />
-                                <ToolbarViewLayoutHOMEItem />
-                                <ToolbarViewLayoutNAVIGATORItem />
-                                <ToolbarViewLayoutQUESTSItem />
-                                <ToolbarViewLayoutGAMESItem />
-                                <ToolbarViewLayoutSTORIESItem />
-                                <ToolbarViewLayoutACHIEVEMENTSItem />
-                                <ToolbarViewLayoutCATALOGUEItem />
-                                <ToolbarViewLayoutBUILDERItem />
-                                <ToolbarViewLayoutINVENTORYItem />
-                                <ToolbarViewLayoutMEMENUItem />
-                                <ToolbarViewLayoutBottomPaddingItem />
-                            </>
-                        )}
-                    </Region>
+                    <ToolbarViewLayoutToolbarItems {...toolbarItems} />
                 </Border>
             </Region>
         </Region>
@@ -613,5 +592,38 @@ export const ToolbarViewLayoutBottomPaddingItem = ({ layout, srcBottomPadding }:
             src={srcBottomPadding}
             layout={{ width: 76, height: 10, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `toolbar_items` of ToolbarViewLayout - configured through the parent's `toolbarItems` prop. */
+export interface ToolbarViewLayoutToolbarItemsProps {
+    itemsToolbarItems?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const ToolbarViewLayoutToolbarItems = ({ itemsToolbarItems, layout }: ToolbarViewLayoutToolbarItemsProps) => {
+    return (
+        <Region
+            name="toolbar_items"
+            params={8536080}
+            layout={{ position: 'absolute', left: 0, top: 5, flexDirection: 'column', ...layout }}
+        >
+            {itemsToolbarItems ?? (
+                <>
+                    <ToolbarViewLayoutRECEPTIONItem />
+                    <ToolbarViewLayoutHOMEItem />
+                    <ToolbarViewLayoutNAVIGATORItem />
+                    <ToolbarViewLayoutQUESTSItem />
+                    <ToolbarViewLayoutGAMESItem />
+                    <ToolbarViewLayoutSTORIESItem />
+                    <ToolbarViewLayoutACHIEVEMENTSItem />
+                    <ToolbarViewLayoutCATALOGUEItem />
+                    <ToolbarViewLayoutBUILDERItem />
+                    <ToolbarViewLayoutINVENTORYItem />
+                    <ToolbarViewLayoutMEMENUItem />
+                    <ToolbarViewLayoutBottomPaddingItem />
+                </>
+            )}
+        </Region>
     );
 };

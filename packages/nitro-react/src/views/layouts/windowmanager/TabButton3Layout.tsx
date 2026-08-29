@@ -8,7 +8,7 @@ export interface TabButton3LayoutProps {
 
 export const TabButton3Layout = ({ captionTitle, layout }: TabButton3LayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 20, height: 32, justifyContent: 'center', ...layout }}>
+        <Region layout={{ position: 'relative', width: 20, height: 32, ...layout }}>
             <Region
                 tags={[ '_EXCLUDE', '_INTERNAL' ]}
                 params={16}

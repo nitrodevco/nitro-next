@@ -6,81 +6,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1531_collectible_hub_xml` (layout "collectible_view", 500x600) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface CollectibleHubLayoutProps {
-    captionCaptionAllTimeHighScore?: string;
-    captionCaptionCurrentScore?: string;
-    captionCollectionName?: string;
-    captionCollectorCollectionsHeader?: string;
-    captionCollectorLevel?: string;
-    captionCollectorLevelDescription?: string;
-    captionCollectorLevelHeader?: string;
-    captionCollectorProfileDescription?: string;
-    captionCollectorProfileDescription2?: string;
-    captionCollectorProfileDescription3?: string;
-    captionCollectorProfileHeader?: string;
-    captionCurrentHiscoreKey?: string;
-    captionCurrentHiscoreValue?: string;
-    captionCurrentScoreKey?: string;
-    captionCurrentScoreValue?: string;
-    captionEmeraldCurrencyValue?: string;
-    captionInfoDesc?: string;
-    captionLevelTitle?: string;
-    captionMintingDescription?: string;
-    captionMintingHeader?: string;
-    captionMintLockText?: string;
-    captionMintTokenBalance?: string;
-    captionNoWalletText?: string;
-    captionPreviewFurniName?: string;
-    captionPreviewFurniName2?: string;
-    captionPreviewFurniName3?: string;
-    captionPreviewRewardText?: string;
-    captionPreviewScoreText?: string;
-    captionPriceText?: string;
-    captionProcuctScoreText?: string;
-    captionProgressBarText?: string;
-    captionProgressBarText2?: string;
-    captionProgressText?: string;
-    captionRewardFurniName?: string;
-    captionSearchPlaceholder?: string;
-    captionSilverCostText?: string;
-    captionSilverCurrencyValue?: string;
-    captionStampPricing?: string;
-    captionStampsHeader?: string;
-    captionStampsHeader2?: string;
-    captionTransferDesc?: string;
-    captionTransferFeeText?: string;
-    itemsItemgridCollection?: ReactNode;
-    itemsItemgridInventory?: ReactNode;
-    itemsItemgridShop?: ReactNode;
-    itemsItemlist?: ReactNode;
-    itemsMintlimitContainer?: ReactNode;
-    itemsNavigationList?: ReactNode;
-    itemsNavigationList2?: ReactNode;
-    itemsProductInfoList?: ReactNode;
-    itemsProductInfoList2?: ReactNode;
+    collectionsContainer?: CollectibleHubLayoutCollectionsContainerProps;
+    collectorHubHeader?: CollectibleHubLayoutCollectorHubHeaderProps;
+    collectorProfileContainer?: CollectibleHubLayoutCollectorProfileContainerProps;
+    infoContainer?: CollectibleHubLayoutInfoContainerProps;
     layout?: BoxLayout;
-    onBuyButton?: () => void;
-    onCategoryInfoDescriptionRegion?: () => void;
-    onCategoryInfoHeaderRegion?: () => void;
-    onCategoryInfoTransferRegion?: () => void;
-    onCategoryMintingDescriptionRegion?: () => void;
-    onCategoryMintingDescriptionRegion2?: () => void;
-    onCategoryMintingDescriptionRegion3?: () => void;
-    onCategoryNameRegion?: () => void;
-    onCategoryNameRegion2?: () => void;
-    onCategoryNameRegion3?: () => void;
-    onClaimButton?: () => void;
-    onClaimButton2?: () => void;
+    levelsContainer?: CollectibleHubLayoutLevelsContainerProps;
+    mintingContainer?: CollectibleHubLayoutMintingContainerProps;
     onClose?: () => void;
-    onCollectButton?: () => void;
-    onCreateWalletButton?: () => void;
-    onMoreInfoButton?: () => void;
-    onProductNameContainer?: () => void;
-    onProductNameContainer2?: () => void;
-    onProductNameContainer3?: () => void;
-    onSearchClearButton?: () => void;
-    onSilverBuyButton?: () => void;
-    onSortSelection?: () => void;
-    onStampsPurchaseDropdown?: () => void;
     onTopViewCollectionsButton?: () => void;
     onTopViewInfoButton?: () => void;
     onTopViewLevelsButton?: () => void;
@@ -89,64 +22,15 @@ export interface CollectibleHubLayoutProps {
     onTopViewRewardsButton?: () => void;
     onTopViewShopButton?: () => void;
     onTopViewTransferButton?: () => void;
-    onTransferButton?: () => void;
-    onTransferWalletSelection?: () => void;
-    onWalletSelection?: () => void;
-    srcBgStar?: string;
-    srcBgStar2?: string;
-    srcBgStar3?: string;
-    srcCollectableBgLeft?: string;
-    srcCollectableBgRight?: string;
-    srcCollectorLevelBg?: string;
-    srcCollectorLevelBg2?: string;
-    srcEmeraldCurrencyIcon?: string;
-    srcLoadingIcon?: string;
-    srcLoadingIcon2?: string;
-    srcLoadingIcon3?: string;
-    srcLoadingIcon4?: string;
-    srcLoadingIcon5?: string;
-    srcMintLockClosedIcon?: string;
-    srcMintLockOpenIcon?: string;
-    srcPlaceholderImage?: string;
-    srcPlaceholderImage2?: string;
-    srcPlaceholderImage3?: string;
-    srcProductPreview?: string;
-    srcProductPreview2?: string;
-    srcProductPreview3?: string;
-    srcSearchIcon?: string;
-    srcSilverCurrencyIcon?: string;
-    srcTransferFeeIcon?: string;
-    srcUnknownImage?: string;
-    srcUnknownImage2?: string;
-    srcUnknownImage3?: string;
-    visibleCategoryNameRegion?: boolean;
-    visibleCollectionProgressContainer?: boolean;
-    visibleCollectorProfileContainer?: boolean;
-    visibleInfoContainer?: boolean;
-    visibleLevelsContainer?: boolean;
-    visibleLoadedContent?: boolean;
-    visibleLoadingContents?: boolean;
-    visibleLoadingContents2?: boolean;
-    visibleLoadingContents3?: boolean;
-    visibleLoadingContents4?: boolean;
-    visibleLoadingContents5?: boolean;
-    visibleMintingContainer?: boolean;
-    visibleNoWalletContainer?: boolean;
-    visibleProductInfoContainer?: boolean;
-    visibleProductInfoContainer2?: boolean;
-    visibleProductNameContainer?: boolean;
-    visibleRewardsContainer?: boolean;
-    visibleShopContainer?: boolean;
-    visibleTabBg?: boolean;
+    rewardsContainer?: CollectibleHubLayoutRewardsContainerProps;
+    shopContainer?: CollectibleHubLayoutShopContainerProps;
+    transferContainer?: CollectibleHubLayoutTransferContainerProps;
     visibleTopViewLevelsButton?: boolean;
     visibleTopViewProfileButton?: boolean;
-    visibleTransferContainer?: boolean;
 }
 
-export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCaptionCurrentScore, captionCollectionName, captionCollectorCollectionsHeader, captionCollectorLevel, captionCollectorLevelDescription, captionCollectorLevelHeader, captionCollectorProfileDescription, captionCollectorProfileDescription2, captionCollectorProfileDescription3, captionCollectorProfileHeader, captionCurrentHiscoreKey, captionCurrentHiscoreValue, captionCurrentScoreKey, captionCurrentScoreValue, captionEmeraldCurrencyValue, captionInfoDesc, captionLevelTitle, captionMintingDescription, captionMintingHeader, captionMintLockText, captionMintTokenBalance, captionNoWalletText, captionPreviewFurniName, captionPreviewFurniName2, captionPreviewFurniName3, captionPreviewRewardText, captionPreviewScoreText, captionPriceText, captionProcuctScoreText, captionProgressBarText, captionProgressBarText2, captionProgressText, captionRewardFurniName, captionSearchPlaceholder, captionSilverCostText, captionSilverCurrencyValue, captionStampPricing, captionStampsHeader, captionStampsHeader2, captionTransferDesc, captionTransferFeeText, itemsItemgridCollection, itemsItemgridInventory, itemsItemgridShop, itemsItemlist, itemsMintlimitContainer, itemsNavigationList, itemsNavigationList2, itemsProductInfoList, itemsProductInfoList2, layout, onBuyButton, onCategoryInfoDescriptionRegion, onCategoryInfoHeaderRegion, onCategoryInfoTransferRegion, onCategoryMintingDescriptionRegion, onCategoryMintingDescriptionRegion2, onCategoryMintingDescriptionRegion3, onCategoryNameRegion, onCategoryNameRegion2, onCategoryNameRegion3, onClaimButton, onClaimButton2, onClose, onCollectButton, onCreateWalletButton, onMoreInfoButton, onProductNameContainer, onProductNameContainer2, onProductNameContainer3, onSearchClearButton, onSilverBuyButton, onSortSelection, onStampsPurchaseDropdown, onTopViewCollectionsButton, onTopViewInfoButton, onTopViewLevelsButton, onTopViewMintingButton, onTopViewProfileButton, onTopViewRewardsButton, onTopViewShopButton, onTopViewTransferButton, onTransferButton, onTransferWalletSelection, onWalletSelection, srcBgStar, srcBgStar2, srcBgStar3, srcCollectableBgLeft, srcCollectableBgRight, srcCollectorLevelBg, srcCollectorLevelBg2, srcEmeraldCurrencyIcon, srcLoadingIcon, srcLoadingIcon2, srcLoadingIcon3, srcLoadingIcon4, srcLoadingIcon5, srcMintLockClosedIcon, srcMintLockOpenIcon, srcPlaceholderImage, srcPlaceholderImage2, srcPlaceholderImage3, srcProductPreview, srcProductPreview2, srcProductPreview3, srcSearchIcon, srcSilverCurrencyIcon, srcTransferFeeIcon, srcUnknownImage, srcUnknownImage2, srcUnknownImage3, visibleCategoryNameRegion, visibleCollectionProgressContainer, visibleCollectorProfileContainer, visibleInfoContainer, visibleLevelsContainer, visibleLoadedContent, visibleLoadingContents, visibleLoadingContents2, visibleLoadingContents3, visibleLoadingContents4, visibleLoadingContents5, visibleMintingContainer, visibleNoWalletContainer, visibleProductInfoContainer, visibleProductInfoContainer2, visibleProductNameContainer, visibleRewardsContainer, visibleShopContainer, visibleTabBg, visibleTopViewLevelsButton, visibleTopViewProfileButton, visibleTransferContainer }: CollectibleHubLayoutProps) => {
+export const CollectibleHubLayout = ({ collectionsContainer, collectorHubHeader, collectorProfileContainer, infoContainer, layout, levelsContainer, mintingContainer, onClose, onTopViewCollectionsButton, onTopViewInfoButton, onTopViewLevelsButton, onTopViewMintingButton, onTopViewProfileButton, onTopViewRewardsButton, onTopViewShopButton, onTopViewTransferButton, rewardsContainer, shopContainer, transferContainer, visibleTopViewLevelsButton, visibleTopViewProfileButton }: CollectibleHubLayoutProps) => {
     const t = useTranslation();
-    const [ stampsPurchaseInputValue, setStampsPurchaseInputValue ] = useState('');
-    const [ searchInputValue, setSearchInputValue ] = useState('');
 
     return (
         <Frame
@@ -160,243 +44,7 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
             layout={{ width: 500, height: 600, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="collector_hub_header"
-                    backgroundColor="#0b162d"
-                    layout={{ position: 'absolute', left: -5, width: 500, top: -2, height: 122 }}
-                >
-                    <Border
-                        variant="3"
-                        name="collector_hub_background"
-                        params={16}
-                        tintColor="#2c1d29"
-                        layout={{ position: 'absolute', left: 0, width: 498, top: 0, height: 125 }}
-                    >
-                        <ThemeImage
-                            params={16}
-                            src={layoutImage('collectables_score_background_gradient.png')}
-                            tint="#804138"
-                            layout={{ position: 'absolute', left: 0, width: 498, top: 0, height: 122 }}
-                        />
-                        <ThemeImage
-                            name="collectable_bg_left"
-                            params={16}
-                            src={srcCollectableBgLeft ?? layoutImage('collectables_score_background.png')}
-                            tint="#fc7c5a"
-                            layout={{ position: 'absolute', left: 0, width: 166, top: 0, height: 121 }}
-                        />
-                        <ThemeImage
-                            name="collectable_bg_right"
-                            params={16}
-                            src={srcCollectableBgRight ?? layoutImage('collectables_score_background_right.png')}
-                            tint="#fc7c5a"
-                            layout={{ position: 'absolute', left: 332, width: 166, top: -160, height: 286 }}
-                        />
-                        <ThemeImage
-                            name="collector_level_bg2"
-                            params={16}
-                            src={srcCollectorLevelBg2 ?? layoutImage('collectables_score_element2.png')}
-                            tint="#7c8c92"
-                            layout={{ position: 'absolute', left: 0, width: 300, top: 17, height: 54 }}
-                        />
-                        <ThemeImage
-                            name="collector_level_bg"
-                            params={16}
-                            src={srcCollectorLevelBg ?? layoutImage('collectables_score_element.png')}
-                            tint="#7c8c92"
-                            layout={{ position: 'absolute', left: 299, width: 92, top: 17, height: 72 }}
-                        />
-                        <ThemeImage
-                            params={16}
-                            src={layoutImage('collectables_cabinet_element.png')}
-                            layout={{ position: 'absolute', left: -2, width: 130, top: -1, height: 128 }}
-                        />
-                        <Region
-                            name="score_container"
-                            params={16}
-                            layout={{ position: 'absolute', left: 116, width: 220, top: 21, height: 45 }}
-                        >
-                            <Region
-                                name="current_score_key"
-                                params={16}
-                                layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                            >
-                                <ThemeText
-                                    text={captionCurrentScoreKey ?? t('collectibles.score')}
-                                    textStyle="text-style-u-bold"
-                                    textOptions={{ fill: '#ffffff', align: 'right' }}
-                                />
-                            </Region>
-                            <Region
-                                name="current_score_value"
-                                params={16}
-                                layout={{ position: 'absolute', left: 158, width: 10, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionCurrentScoreValue ?? '0'}
-                                    textStyle="text-style-u-bold"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
-                            <Region
-                                name="current_hiscore_key"
-                                params={16}
-                                layout={{ position: 'absolute', left: 0, width: 158, top: 26, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                            >
-                                <ThemeText
-                                    text={captionCurrentHiscoreKey ?? t('collectibles.high_score')}
-                                    textStyle="text-style-u-bold"
-                                    textOptions={{ fill: '#ffffff', align: 'right' }}
-                                />
-                            </Region>
-                            <Region
-                                name="current_hiscore_value"
-                                params={16}
-                                layout={{ position: 'absolute', left: 158, width: 11, top: 26, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionCurrentHiscoreValue ?? '0'}
-                                    textStyle="text-style-u-bold"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
-                            <Region
-                                name="caption_current_score"
-                                params={16}
-                                visible={false}
-                                layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                            >
-                                <ThemeText
-                                    text={captionCaptionCurrentScore ?? 'My Habbo Collector Score: 999999'}
-                                    textStyle="text-style-u-bold"
-                                    textOptions={{ fill: '#ffffff', align: 'right' }}
-                                />
-                            </Region>
-                            <Region
-                                name="caption_all_time_high_score"
-                                params={272}
-                                visible={false}
-                                layout={{ position: 'absolute', left: 0, width: 197, top: 25, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                            >
-                                <ThemeText
-                                    text={captionCaptionAllTimeHighScore ?? 'My all time high score: 999999'}
-                                    textStyle="text-style-u-bold"
-                                    textOptions={{ fill: '#ffffff', align: 'right' }}
-                                />
-                            </Region>
-                        </Region>
-                        <ThemeImage
-                            params={16}
-                            src={layoutImage('collectables_level_bg.png')}
-                            layout={{ position: 'absolute', left: 335, width: 64, top: 2, height: 68 }}
-                        />
-                        <Region
-                            name="level_container"
-                            params={16}
-                            layout={{ position: 'absolute', left: 344, width: 45, top: 16, height: 35 }}
-                        >
-                            <Region
-                                name="collector_level"
-                                params={16}
-                                layout={{ position: 'absolute', left: 2, width: 40, top: 0, height: 26, maxWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={captionCollectorLevel ?? '0'}
-                                    textStyle="text-style-u-bold"
-                                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                                />
-                            </Region>
-                            <Region
-                                name="level_title"
-                                params={16}
-                                layout={{ position: 'absolute', left: 3, width: 41, top: 22, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={captionLevelTitle ?? 'LEVEL'}
-                                    textStyle="text-style-u-bold"
-                                    textOptions={{ align: 'center' }}
-                                />
-                            </Region>
-                        </Region>
-                        <Border
-                            variant="3"
-                            name="silver_currency_border"
-                            params={16}
-                            tintColor="#a99490"
-                            layout={{ position: 'absolute', left: 419, width: 70, top: 18, height: 22 }}
-                        >
-                            <Border
-                                variant="3"
-                                name="silver_currency_container"
-                                params={16}
-                                tintColor="#3a2f29"
-                                layout={{ position: 'absolute', left: 1, width: 68, top: 1, height: 20 }}
-                            >
-                                <Region
-                                    name="silver_currency_value"
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 2, width: 45, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                >
-                                    <ThemeText
-                                        text={captionSilverCurrencyValue ?? '0'}
-                                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                                    />
-                                </Region>
-                            </Border>
-                        </Border>
-                        <ThemeImage
-                            name="silver_currency_icon"
-                            params={16}
-                            src={srcSilverCurrencyIcon ?? layoutImage('pursearea_mid_silver_icon.png')}
-                            layout={{ position: 'absolute', left: 466, width: 24, top: 17, height: 24 }}
-                        />
-                        <Border
-                            variant="3"
-                            name="emerald_currency_border"
-                            params={16}
-                            tintColor="#a99490"
-                            layout={{ position: 'absolute', left: 419, width: 70, top: 48, height: 22 }}
-                        >
-                            <Border
-                                variant="3"
-                                name="emerald_currency_container"
-                                params={16}
-                                tintColor="#3a2f29"
-                                layout={{ position: 'absolute', left: 1, width: 68, top: 1, height: 20 }}
-                            >
-                                <Region
-                                    name="emerald_currency_value"
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 2, width: 45, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                >
-                                    <ThemeText
-                                        text={captionEmeraldCurrencyValue ?? '0'}
-                                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                                    />
-                                </Region>
-                            </Border>
-                        </Border>
-                        <ThemeImage
-                            name="emerald_currency_icon"
-                            params={16}
-                            src={srcEmeraldCurrencyIcon ?? layoutImage('pursearea_mid_emerald_icon.png')}
-                            layout={{ position: 'absolute', left: 466, width: 24, top: 47, height: 24 }}
-                        />
-                    </Border>
-                    <Region
-                        visible={visibleTabBg ?? false}
-                        layout={{ position: 'absolute', left: -2, width: 502, top: 91, height: 39 }}
-                    >
-                        <Border
-                            variant="3"
-                            name="tab_bg"
-                            params={16}
-                            tintColor="#000000"
-                            blend={0.4}
-                            layout={{ width: '100%', height: '100%' }}
-                        />
-                    </Region>
-                </Region>
+                <CollectibleHubLayoutCollectorHubHeader {...collectorHubHeader} />
                 <TabContext
                     variant="3"
                     name="top_view_select_tab_context"
@@ -486,1718 +134,14 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
                         </TabButton>
                     </Region>
                 </TabContext>
-                <Region
-                    name="mintingContainer"
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    params={1073889424}
-                    visible={visibleMintingContainer ?? false}
-                    backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, right: 10, top: 125, height: 430, overflow: 'hidden' }}
-                >
-                    <Region
-                        name="loaded_content"
-                        params={1073741840}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 430, overflow: 'hidden' }}
-                    >
-                        <Region
-                            name="category_minting_header_region"
-                            tags={[ 'category_header' ]}
-                            params={1073741840}
-                            layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 58, overflow: 'hidden' }}
-                        >
-                            <Region
-                                name="category_name_region"
-                                params={131089}
-                                onPointerTap={onCategoryNameRegion}
-                                cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17 }}
-                            >
-                                <Region
-                                    name="minting_header"
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 0, width: 130, top: 0, height: 17, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionMintingHeader ?? t('shop.minting.info.title')}
-                                        textStyle="text-style-u-regular"
-                                    />
-                                </Region>
-                            </Region>
-                            <Region
-                                name="category_minting_description_region"
-                                params={147473}
-                                onPointerTap={onCategoryMintingDescriptionRegion}
-                                cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 480, top: 22, height: 35 }}
-                            >
-                                <Region
-                                    name="minting_description"
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 0, width: 480, top: 0, height: 35, minWidth: 2, maxWidth: 480, minHeight: 35, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionMintingDescription ?? t('shop.minting.info.description')}
-                                        textStyle="text-style-u-regular"
-                                        textOptions={{ wordWrap: true, wordWrapWidth: 480 }}
-                                    />
-                                </Region>
-                            </Region>
-                        </Region>
-                        <Region
-                            name="furniture_container"
-                            params={16}
-                            layout={{ position: 'absolute', left: 4, width: 480, top: 60, height: 262 }}
-                        >
-                            <ScrollArea
-                                orientation="vertical"
-                                layout={{ position: 'absolute', left: 0, width: 179, top: 0, height: 260 }}
-                            >
-                                <Region
-                                    name="itemgrid_inventory"
-                                    tags={[ 'FURNI_ITEM_GRID' ]}
-                                    params={16}
-                                    layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}
-                                >
-                                    {itemsItemgridInventory ?? (
-                                        <CollectibleHubLayoutItemTemplateItem />
-                                    )}
-                                </Region>
-                            </ScrollArea>
-                            <Region
-                                name="preview_container"
-                                params={16}
-                                layout={{ position: 'absolute', left: 191, width: 290, top: 0, height: 260 }}
-                            >
-                                <Border
-                                    variant="3"
-                                    name="collection_preview_bg"
-                                    params={16}
-                                    tintColor="#3d1f39"
-                                    layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260, justifyContent: 'center' }}
-                                >
-                                    <ThemeImage
-                                        params={16}
-                                        src={layoutImage('collectables_score_background.png')}
-                                        layout={{ position: 'absolute', left: -15, width: 166, top: -8, height: 286 }}
-                                    />
-                                    <ThemeImage
-                                        params={16}
-                                        src={layoutImage('collectables_score_background_right.png')}
-                                        layout={{ position: 'absolute', left: 139, width: 166, top: -18, height: 286 }}
-                                    />
-                                    <ThemeImage
-                                        params={16}
-                                        src={layoutImage('collectables_score_background_gradient2.png')}
-                                        tint="#45ace2"
-                                        layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260 }}
-                                    />
-                                    <ThemeImage
-                                        name="bg_star"
-                                        params={16}
-                                        src={srcBgStar ?? layoutImage('bg_star_300x300.png')}
-                                        layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
-                                    />
-                                    <Region
-                                        visible={false}
-                                        layout={{ position: 'absolute', left: 91, width: 108, top: 64, height: 132 }}
-                                    >
-                                        <ThemeImage
-                                            name="placeholder_image"
-                                            params={16}
-                                            src={srcPlaceholderImage ?? layoutImage('collectables_collection_default.png')}
-                                            layout={{ position: 'absolute', left: 91, width: 108, top: 64, height: 132 }}
-                                        />
-                                    </Region>
-                                    <WidgetSlot
-                                        widgetType="avatar_image"
-                                        name="avatar_image_widget"
-                                        params={16}
-                                        visible={false}
-                                        layout={{ position: 'absolute', left: 100, width: 90, top: 53, height: 130 }}
-                                    />
-                                    <WidgetSlot
-                                        widgetType="badge_image"
-                                        name="badge_image_widget"
-                                        params={1077674000}
-                                        visible={false}
-                                        options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '2', 'badge_image:zoom_y': '2' }}
-                                        layout={{ position: 'absolute', width: 80, alignSelf: 'center', height: 80, overflow: 'hidden' }}
-                                    />
-                                    <Region
-                                        visible={false}
-                                        layout={{ position: 'absolute', width: 48, alignSelf: 'center', height: 48, justifyContent: 'center' }}
-                                    >
-                                        <ThemeImage
-                                            name="unknown_image"
-                                            params={3932176}
-                                            src={srcUnknownImage ?? layoutImage('collectables_icon_curator_stamp_large.png')}
-                                            layout={{ position: 'absolute', width: 48, alignSelf: 'center', height: 48 }}
-                                        />
-                                    </Region>
-                                    <WidgetSlot
-                                        widgetType="pet_image"
-                                        name="pet_image_widget"
-                                        params={1077674000}
-                                        visible={false}
-                                        options={{ 'pet_image:zoomX': '2', 'pet_image:zoomY': '2', 'pet_image:shrink_on_overflow': 'true' }}
-                                        layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 180, alignSelf: 'center', height: 140, overflow: 'hidden' }}
-                                    />
-                                    <WidgetSlot
-                                        widgetType="room_previewer"
-                                        name="effect_image_widget"
-                                        params={1077674000}
-                                        visible={false}
-                                        options={{ 'room_previewer:offsetx': '2', 'room_previewer:offsety': '36' }}
-                                        layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 100, alignSelf: 'center', height: 260, overflow: 'hidden' }}
-                                    />
-                                    <Region
-                                        visible={false}
-                                        layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
-                                    >
-                                        <ThemeImage
-                                            name="product_preview"
-                                            params={16}
-                                            src={srcProductPreview}
-                                            layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
-                                        />
-                                    </Region>
-                                    <Region
-                                        name="product_name_container"
-                                        params={17}
-                                        backgroundColor="#000000"
-                                        onPointerTap={onProductNameContainer}
-                                        cursor="pointer"
-                                        layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 26 }}
-                                    >
-                                        <Region
-                                            name="preview_furni_name"
-                                            params={16}
-                                            layout={{ position: 'absolute', left: 0, width: 290, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                        >
-                                            <ThemeText
-                                                text={captionPreviewFurniName ?? 'Lorem ipsum hot air balloon'}
-                                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                                            />
-                                        </Region>
-                                    </Region>
-                                    <Region
-                                        name="collect_container"
-                                        params={16}
-                                        layout={{ position: 'absolute', left: 82, width: 200, top: 180, height: 30 }}
-                                    >
-                                        <Region
-                                            params={409616}
-                                            layout={{ position: 'absolute', right: 0, top: 0, flexDirection: 'row' }}
-                                        >
-                                            <Region
-                                                name="stamp_pricing"
-                                                params={16400}
-                                                layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                            >
-                                                <ThemeText
-                                                    text={captionStampPricing ?? '1'}
-                                                    textOptions={{ fill: '#ffffff' }}
-                                                />
-                                            </Region>
-                                            <Region
-                                                name="spacing"
-                                                params={16}
-                                                layout={{ width: 3, height: 30, flexShrink: 0 }}
-                                            />
-                                            <ThemeImage
-                                                params={16}
-                                                src={layoutImage('collectables_icon_curator_stamp_small.png')}
-                                                layout={{ width: 18, height: 30, flexShrink: 0 }}
-                                            />
-                                            <Region
-                                                name="spacing"
-                                                params={16}
-                                                layout={{ width: 7, height: 30, flexShrink: 0 }}
-                                            />
-                                            <Button
-                                                variant="5"
-                                                name="collect_button"
-                                                params={131089}
-                                                tintColor="#01a101"
-                                                onPointerTap={onCollectButton}
-                                                layout={{ width: 62, height: 30, flexShrink: 0 }}
-                                            >
-                                                {t('collectibles.collect')}
-                                            </Button>
-                                        </Region>
-                                    </Region>
-                                    <Border
-                                        variant="3"
-                                        name="no_furni_notify"
-                                        params={16}
-                                        tintColor="#5a1003"
-                                        blend={0.82}
-                                        layout={{ position: 'absolute', left: 4, width: 282, top: 30, height: 50, justifyContent: 'center' }}
-                                    >
-                                        <Region
-                                            params={3932161}
-                                            layout={{ position: 'absolute', width: 274, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 16, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                                        >
-                                            <ThemeText
-                                                text={t('shop.minting.no_furni')}
-                                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 274, align: 'center' }}
-                                            />
-                                        </Region>
-                                    </Border>
-                                    <Region
-                                        name="mint_info_container"
-                                        params={16}
-                                        backgroundColor="#000000"
-                                        layout={{ position: 'absolute', left: 0, width: 290, top: 214, height: 46 }}
-                                    >
-                                        <Region
-                                            name="right_box"
-                                            params={16}
-                                            layout={{ position: 'absolute', left: 64, width: 226, top: 0, height: 46, justifyContent: 'center' }}
-                                        >
-                                            <Region
-                                                name="mint_lock_text"
-                                                params={786433}
-                                                layout={{ position: 'absolute', marginLeft: 32, marginRight: -32, width: 290, top: 4, height: 17, minWidth: 290, maxWidth: 290, minHeight: 17, maxHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                            >
-                                                <ThemeText
-                                                    text={captionMintLockText ?? t('shop.minting.region_unlocked')}
-                                                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 290 }}
-                                                />
-                                            </Region>
-                                            <Region
-                                                name="progress_bar"
-                                                params={16}
-                                                backgroundColor="#112e31"
-                                                layout={{ position: 'absolute', left: 0, width: 220, top: 24, height: 18 }}
-                                            >
-                                                <Region
-                                                    name="progress_padded_bar"
-                                                    params={16}
-                                                    layout={{ position: 'absolute', left: 1, width: 220, top: 1, height: 16 }}
-                                                >
-                                                    <Region
-                                                        name="progress_bar_top"
-                                                        params={16}
-                                                        backgroundColor="#00910a"
-                                                        layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 8 }}
-                                                    />
-                                                    <Region
-                                                        name="progress_bar_bottom"
-                                                        params={16}
-                                                        backgroundColor="#037c00"
-                                                        layout={{ position: 'absolute', left: 0, width: 120, top: 8, height: 8 }}
-                                                    />
-                                                </Region>
-                                                <Region
-                                                    name="progress_bar_text"
-                                                    params={16}
-                                                    layout={{ position: 'absolute', left: 0, width: 220, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                                >
-                                                    <ThemeText
-                                                        text={captionProgressBarText ?? t('collectibles.preview.time_left')}
-                                                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                                                    />
-                                                </Region>
-                                            </Region>
-                                        </Region>
-                                    </Region>
-                                    <ThemeImage
-                                        name="mint_lock_open_icon"
-                                        params={16}
-                                        src={srcMintLockOpenIcon ?? layoutImage('collectables_lock_open.png')}
-                                        layout={{ position: 'absolute', left: 7, width: 51, top: 208, height: 46 }}
-                                    />
-                                    <Region
-                                        visible={false}
-                                        layout={{ position: 'absolute', left: 7, width: 52, top: 208, height: 46 }}
-                                    >
-                                        <ThemeImage
-                                            name="mint_lock_closed_icon"
-                                            params={16}
-                                            src={srcMintLockClosedIcon ?? layoutImage('collectables_lock_closed.png')}
-                                            layout={{ position: 'absolute', left: 7, width: 52, top: 208, height: 46 }}
-                                        />
-                                    </Region>
-                                </Border>
-                            </Region>
-                        </Region>
-                        <Region
-                            name="category_footer"
-                            tags={[ 'category_header' ]}
-                            params={1073741840}
-                            layout={{ position: 'absolute', left: 0, width: 488, top: 330, height: 100, overflow: 'hidden' }}
-                        >
-                            <Border
-                                variant="3"
-                                name="large_border"
-                                params={16}
-                                tintColor="#bac3cd"
-                                layout={{ position: 'absolute', left: 0, width: 488, top: 0, height: 100 }}
-                            >
-                                <Region
-                                    name="stamp_purchasing_container"
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 0, width: 488, top: 0, height: 100 }}
-                                >
-                                    <Border
-                                        variant="3"
-                                        name="stamps_container"
-                                        params={16}
-                                        tintColor="#d6dbe1"
-                                        layout={{ position: 'absolute', left: 42, width: 200, top: 14, height: 72 }}
-                                    >
-                                        <ThemeImage
-                                            params={16}
-                                            src={layoutImage('collectables_icon_curator_stamp_large.png')}
-                                            layout={{ position: 'absolute', left: 12, width: 48, top: 12, height: 48 }}
-                                        />
-                                        <Region
-                                            name="stamps_header"
-                                            params={16}
-                                            layout={{ position: 'absolute', left: 68, width: 122, top: 12, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                        >
-                                            <ThemeText
-                                                text={captionStampsHeader ?? t('shop.minting.tokens')}
-                                                textStyle="text-style-u-bold"
-                                            />
-                                        </Region>
-                                        <Region
-                                            name="mint_token_balance"
-                                            params={16}
-                                            layout={{ position: 'absolute', left: 67, width: 21, top: 26, height: 37, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                        >
-                                            <ThemeText
-                                                text={captionMintTokenBalance ?? '0'}
-                                                textStyle="text-style-u-bold"
-                                            />
-                                        </Region>
-                                    </Border>
-                                    <Border
-                                        variant="3"
-                                        name="stamp_buying_container"
-                                        params={16}
-                                        tintColor="#d6dbe1"
-                                        layout={{ position: 'absolute', left: 246, width: 200, top: 14, height: 72 }}
-                                    >
-                                        <Region
-                                            params={409616}
-                                            layout={{ position: 'absolute', right: 4, top: 4, flexDirection: 'row', gap: 6 }}
-                                        >
-                                            <Region
-                                                name="stamps_header"
-                                                params={16}
-                                                layout={{ width: 100, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                            >
-                                                <ThemeText
-                                                    text={captionStampsHeader2 ?? t('collectibles.buy.mint.tokens')}
-                                                    textStyle="text-style-u-bold"
-                                                />
-                                            </Region>
-                                            <Region
-                                                visible={false}
-                                                layout={{ width: 30, height: 25, flexShrink: 0 }}
-                                            >
-                                                <Border
-                                                    variant="5"
-                                                    params={16}
-                                                    layout={{ width: '100%', height: '100%' }}
-                                                >
-                                                    <TextInput
-                                                        value={stampsPurchaseInputValue}
-                                                        onChange={setStampsPurchaseInputValue}
-                                                        layout={{ position: 'absolute', left: 3, width: 23, top: 5, height: 15 }}
-                                                    />
-                                                </Border>
-                                            </Region>
-                                            <Dropmenu
-                                                variant="0"
-                                                name="stamps_purchase_dropdown"
-                                                params={17}
-                                                onPointerTap={onStampsPurchaseDropdown}
-                                                layout={{ width: 48, height: 21, flexShrink: 0 }}
-                                            >
-                                                100
-                                            </Dropmenu>
-                                        </Region>
-                                        <Region
-                                            params={409616}
-                                            layout={{ position: 'absolute', right: 4, top: 36, flexDirection: 'row' }}
-                                        >
-                                            <Region
-                                                name="silver_cost_text"
-                                                params={16}
-                                                layout={{ width: 13, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                            >
-                                                <ThemeText
-                                                    text={captionSilverCostText ?? '1'}
-                                                    textStyle="text-style-u-bold"
-                                                />
-                                            </Region>
-                                            <Region
-                                                name="spacing"
-                                                params={16}
-                                                layout={{ width: 4, height: 30, flexShrink: 0 }}
-                                            />
-                                            <ThemeImage
-                                                params={16}
-                                                src={layoutImage('pursearea_mid_silver_icon.png')}
-                                                layout={{ width: 24, height: 30, flexShrink: 0 }}
-                                            />
-                                            <Region
-                                                name="spacing"
-                                                params={16}
-                                                layout={{ width: 6, height: 30, flexShrink: 0 }}
-                                            />
-                                            <Button
-                                                variant="5"
-                                                name="silver_buy_button"
-                                                params={131089}
-                                                tintColor="#2095d4"
-                                                onPointerTap={onSilverBuyButton}
-                                                layout={{ width: 100, height: 30, flexShrink: 0, minWidth: 100 }}
-                                            >
-                                                {t('generic.buy')}
-                                            </Button>
-                                        </Region>
-                                    </Border>
-                                </Region>
-                                <Region
-                                    name="no_wallet_container"
-                                    params={16}
-                                    visible={visibleNoWalletContainer ?? false}
-                                    layout={{ position: 'absolute', left: 0, width: 488, top: 0, height: 100 }}
-                                >
-                                    <Region
-                                        name="no_wallet_text"
-                                        params={3145744}
-                                        layout={{ position: 'absolute', left: 10, width: 360, alignSelf: 'center', marginTop: -41.5, marginBottom: 41.5, height: 17, minHeight: 0, maxHeight: 60, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                    >
-                                        <ThemeText
-                                            text={captionNoWalletText ?? t('shop.minting.no_wallet.description')}
-                                            textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
-                                        />
-                                    </Region>
-                                    <ThemeImage
-                                        params={16}
-                                        src={layoutImage('image_connection_problem.png')}
-                                        layout={{ position: 'absolute', left: 380, width: 92, top: 5, height: 90 }}
-                                    />
-                                    <Button
-                                        variant="5"
-                                        name="create_wallet_button"
-                                        params={131089}
-                                        tintColor="#2095d4"
-                                        onPointerTap={onCreateWalletButton}
-                                        layout={{ position: 'absolute', left: 10, width: 170, top: 62, height: 30, minWidth: 170, maxWidth: 170 }}
-                                    >
-                                        {t('shop.minting.create.wallet')}
-                                    </Button>
-                                    <Button
-                                        variant="5"
-                                        name="more_info_button"
-                                        params={131089}
-                                        tintColor="#2095d4"
-                                        onPointerTap={onMoreInfoButton}
-                                        layout={{ position: 'absolute', left: 192, width: 170, top: 62, height: 30, minWidth: 170, maxWidth: 170 }}
-                                    >
-                                        {t('shop.minting.link.wallet')}
-                                    </Button>
-                                </Region>
-                            </Border>
-                        </Region>
-                    </Region>
-                    <Region
-                        name="loading_contents"
-                        params={16}
-                        visible={visibleLoadingContents ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429 }}
-                    >
-                        <Border
-                            variant="2"
-                            params={16}
-                            tintColor="#a4a49f"
-                            layout={{ position: 'absolute', left: 185, width: 113, top: 155, height: 116 }}
-                        />
-                        <ThemeImage
-                            name="loading_icon"
-                            params={16}
-                            src={srcLoadingIcon ?? layoutImage('loading.png')}
-                            layout={{ position: 'absolute', left: 205, width: 75, top: 175, height: 75 }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="collectorProfileContainer"
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    params={1073889424}
-                    visible={visibleCollectorProfileContainer ?? false}
-                    backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, right: 110, top: 125, height: 400, overflow: 'hidden' }}
-                >
-                    <Region
-                        name="category_content_background"
-                        params={1073741840}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400, overflow: 'hidden' }}
-                    >
-                        <Region
-                            name="category_collector_header_region"
-                            tags={[ 'category_header' ]}
-                            params={1073741840}
-                            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 56, overflow: 'hidden' }}
-                        >
-                            <Region
-                                name="category_name_region"
-                                params={131089}
-                                visible={visibleCategoryNameRegion ?? false}
-                                onPointerTap={onCategoryNameRegion2}
-                                cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17 }}
-                            >
-                                <Region
-                                    name="collector_profile_header"
-                                    params={16}
-                                    visible={false}
-                                    layout={{ position: 'absolute', left: 0, width: 141, top: 0, height: 17, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionCollectorProfileHeader ?? 'Collector Profile Header'}
-                                        textStyle="text-style-u-regular"
-                                    />
-                                </Region>
-                            </Region>
-                            <Region
-                                name="category_minting_description_region"
-                                params={147473}
-                                onPointerTap={onCategoryMintingDescriptionRegion2}
-                                cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 380, top: 22, height: 30 }}
-                            >
-                                <Region
-                                    name="collector_profile_description"
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 30, minWidth: 2, maxWidth: 380, minHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionCollectorProfileDescription ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta felis sed libero rhoncus, at elementum metus sagittis. '}
-                                        textStyle="text-style-u-regular"
-                                        textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
-                                    />
-                                </Region>
-                            </Region>
-                        </Region>
-                    </Region>
-                </Region>
-                <Region
-                    name="collectionsContainer"
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    params={1073889424}
-                    backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden' }}
-                >
-                    <Region
-                        name="loaded_content"
-                        params={147472}
-                        layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429 }}
-                    >
-                        <Dropmenu
-                            variant="3"
-                            name="wallet_selection"
-                            params={17}
-                            onPointerTap={onWalletSelection}
-                            layout={{ position: 'absolute', left: 4, width: 184, top: 4, height: 24 }}
-                        >
-                            Collector Wallet
-                        </Dropmenu>
-                        <Dropmenu
-                            variant="3"
-                            name="sort_selection"
-                            params={17}
-                            onPointerTap={onSortSelection}
-                            layout={{ position: 'absolute', left: 4, width: 184, top: 32, height: 24 }}
-                        >
-                            Sort
-                        </Dropmenu>
-                        <Border
-                            variant="105"
-                            name="searchContainer"
-                            params={16}
-                            layout={{ position: 'absolute', left: 4, width: 184, top: 60, height: 24 }}
-                        >
-                            <Region
-                                name="buttonContainer"
-                                params={16}
-                                layout={{ position: 'absolute', left: 160, width: 24, top: 0, height: 24, justifyContent: 'center' }}
-                            >
-                                <ThemeImage
-                                    name="search_icon"
-                                    params={3935424}
-                                    src={srcSearchIcon ?? layoutImage('icons_close.png')}
-                                    layout={{ position: 'absolute', width: 20, alignSelf: 'center', height: 20 }}
-                                />
-                                <Button
-                                    variant="100"
-                                    name="search_clear_button"
-                                    tooltip="clear"
-                                    params={131089}
-                                    onPointerTap={onSearchClearButton}
-                                    layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 32 }}
-                                />
-                            </Region>
-                            <TextInput
-                                value={searchInputValue}
-                                onChange={setSearchInputValue}
-                                layout={{ position: 'absolute', left: 4, width: 156, top: 4, height: 20 }}
-                            />
-                            <Region
-                                name="search_placeholder"
-                                params={16}
-                                layout={{ position: 'absolute', left: 4, width: 156, top: 4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText text={captionSearchPlaceholder ?? t('generic.search')} />
-                            </Region>
-                        </Border>
-                        <Region
-                            name="navigationContainer"
-                            params={2064}
-                            layout={{ position: 'absolute', left: 4, width: 184, top: 88, bottom: 0 }}
-                        >
-                            <Border
-                                variant="6"
-                                params={2064}
-                                blend={0.5}
-                                layout={{ position: 'absolute', left: 0, width: 184, top: 0, bottom: 0 }}
-                            />
-                            <ScrollArea
-                                orientation="vertical"
-                                layout={{ position: 'absolute', left: 3, width: 178, top: 5, bottom: 5 }}
-                            >
-                                <Region
-                                    name="navigationList"
-                                    params={2064}
-                                    layout={{ flexDirection: 'column', width: '100%' }}
-                                >
-                                    {itemsNavigationList ?? (
-                                        <CollectibleHubLayoutItemTemplateItem2 />
-                                    )}
-                                </Region>
-                            </ScrollArea>
-                        </Region>
-                        <Region
-                            name="collection_content"
-                            params={16}
-                            layout={{ position: 'absolute', left: 195, width: 290, top: 3, height: 425 }}
-                        >
-                            <Border
-                                variant="3"
-                                name="collection_header_container"
-                                params={16}
-                                tintColor="#cbd1d8"
-                                layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 30 }}
-                            >
-                                <Region
-                                    name="collection_name"
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 4, width: 121, top: 4, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText text={captionCollectionName ?? 'Collection name'} />
-                                </Region>
-                                <Region
-                                    name="progress_header_container"
-                                    params={131088}
-                                    layout={{ position: 'absolute', left: 248, width: 40, top: 2, height: 26, minWidth: 40, maxWidth: 40 }}
-                                >
-                                    <Border
-                                        variant="3"
-                                        name="progress_color"
-                                        params={16}
-                                        tintColor="#00910a"
-                                        layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 26 }}
-                                    />
-                                    <Region
-                                        name="progress_text"
-                                        params={16}
-                                        layout={{ position: 'absolute', left: 2, width: 36, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                    >
-                                        <ThemeText
-                                            text={captionProgressText ?? '88/88'}
-                                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                                        />
-                                    </Region>
-                                </Region>
-                            </Border>
-                            <Region
-                                name="preview_container"
-                                params={16}
-                                layout={{ position: 'absolute', left: 0, width: 290, top: 34, height: 260 }}
-                            >
-                                <Border
-                                    variant="3"
-                                    name="collection_preview_bg"
-                                    params={16}
-                                    tintColor="#3d1f39"
-                                    layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260, justifyContent: 'center' }}
-                                >
-                                    <ThemeImage
-                                        params={16}
-                                        src={layoutImage('collectables_score_background.png')}
-                                        layout={{ position: 'absolute', left: -15, width: 166, top: -8, height: 286 }}
-                                    />
-                                    <ThemeImage
-                                        params={16}
-                                        src={layoutImage('collectables_score_background_right.png')}
-                                        layout={{ position: 'absolute', left: 139, width: 166, top: -18, height: 286 }}
-                                    />
-                                    <ThemeImage
-                                        params={16}
-                                        src={layoutImage('collectables_score_background_gradient2.png')}
-                                        tint="#45ace2"
-                                        layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260 }}
-                                    />
-                                    <ThemeImage
-                                        name="bg_star"
-                                        params={16}
-                                        src={srcBgStar2 ?? layoutImage('bg_star_300x300.png')}
-                                        layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
-                                    />
-                                    <Region
-                                        visible={false}
-                                        layout={{ position: 'absolute', left: 91, width: 108, top: 64, height: 132 }}
-                                    >
-                                        <ThemeImage
-                                            name="placeholder_image"
-                                            params={16}
-                                            src={srcPlaceholderImage2 ?? layoutImage('collectables_collection_default.png')}
-                                            layout={{ position: 'absolute', left: 91, width: 108, top: 64, height: 132 }}
-                                        />
-                                    </Region>
-                                    <WidgetSlot
-                                        widgetType="avatar_image"
-                                        name="avatar_image_widget"
-                                        params={16}
-                                        visible={false}
-                                        layout={{ position: 'absolute', left: 100, width: 90, top: 53, height: 130 }}
-                                    />
-                                    <WidgetSlot
-                                        widgetType="badge_image"
-                                        name="badge_image_widget"
-                                        params={1077674000}
-                                        visible={false}
-                                        options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '2', 'badge_image:zoom_y': '2' }}
-                                        layout={{ position: 'absolute', width: 80, alignSelf: 'center', height: 80, overflow: 'hidden' }}
-                                    />
-                                    <Region
-                                        visible={false}
-                                        layout={{ position: 'absolute', width: 48, alignSelf: 'center', height: 48, justifyContent: 'center' }}
-                                    >
-                                        <ThemeImage
-                                            name="unknown_image"
-                                            params={3932176}
-                                            src={srcUnknownImage2 ?? layoutImage('collectables_icon_curator_stamp_large.png')}
-                                            layout={{ position: 'absolute', width: 48, alignSelf: 'center', height: 48 }}
-                                        />
-                                    </Region>
-                                    <WidgetSlot
-                                        widgetType="pet_image"
-                                        name="pet_image_widget"
-                                        params={1077674000}
-                                        visible={false}
-                                        options={{ 'pet_image:zoomX': '2', 'pet_image:zoomY': '2', 'pet_image:shrink_on_overflow': 'true' }}
-                                        layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 180, alignSelf: 'center', height: 140, overflow: 'hidden' }}
-                                    />
-                                    <WidgetSlot
-                                        widgetType="room_previewer"
-                                        name="effect_image_widget"
-                                        params={1077674000}
-                                        visible={false}
-                                        options={{ 'room_previewer:offsetx': '2', 'room_previewer:offsety': '36' }}
-                                        layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 100, alignSelf: 'center', height: 260, overflow: 'hidden' }}
-                                    />
-                                    <ThemeImage
-                                        name="product_preview"
-                                        params={16}
-                                        src={srcProductPreview2}
-                                        layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
-                                    />
-                                    <Region
-                                        name="product_name_container"
-                                        params={17}
-                                        visible={visibleProductNameContainer ?? false}
-                                        backgroundColor="#000000"
-                                        onPointerTap={onProductNameContainer2}
-                                        cursor="pointer"
-                                        layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 26 }}
-                                    >
-                                        <Region
-                                            name="preview_furni_name"
-                                            params={16}
-                                            layout={{ position: 'absolute', left: 0, width: 290, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                        >
-                                            <ThemeText
-                                                text={captionPreviewFurniName2 ?? 'Lorem ipsum hot air balloon'}
-                                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                                            />
-                                        </Region>
-                                    </Region>
-                                    <Region
-                                        name="product_info_container"
-                                        params={16}
-                                        visible={visibleProductInfoContainer ?? false}
-                                        backgroundColor="#3b1829"
-                                        layout={{ position: 'absolute', left: 0, width: 290, top: 26, height: 194 }}
-                                    >
-                                        <Region
-                                            name="product_info_list"
-                                            params={16}
-                                            layout={{ position: 'absolute', left: 24, width: 242, top: 24, height: 140, flexDirection: 'column', gap: 2 }}
-                                        >
-                                            {itemsProductInfoList ?? (
-                                                <CollectibleHubLayoutProductInfoEntryTemplateItem />
-                                            )}
-                                        </Region>
-                                    </Region>
-                                    <Region
-                                        name="bonus_or_reward_container"
-                                        params={16}
-                                        layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 200 }}
-                                    >
-                                        <Region
-                                            name="completion_header_container"
-                                            params={16}
-                                            backgroundColor="#000000"
-                                            layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 60 }}
-                                        >
-                                            <Region
-                                                name="padded_cont"
-                                                params={16}
-                                                layout={{ position: 'absolute', left: 4, width: 282, top: 4, height: 52 }}
-                                            >
-                                                <Region
-                                                    params={16}
-                                                    layout={{ position: 'absolute', left: 0, width: 282, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                                >
-                                                    <ThemeText
-                                                        text={t('collectibles.preview.completion_bonus')}
-                                                        textOptions={{ fill: '#ffd300', align: 'center' }}
-                                                    />
-                                                </Region>
-                                                <Region
-                                                    name="reward_furni_name"
-                                                    params={16}
-                                                    layout={{ position: 'absolute', left: 0, width: 282, top: 14, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                                >
-                                                    <ThemeText
-                                                        text={captionRewardFurniName ?? 'Lorem ipsum hot air balloon'}
-                                                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                                                    />
-                                                </Region>
-                                                <Region
-                                                    name="progress_bar"
-                                                    params={16}
-                                                    backgroundColor="#112e31"
-                                                    layout={{ position: 'absolute', left: 0, width: 282, top: 34, height: 18 }}
-                                                >
-                                                    <Region
-                                                        name="progress_padded_bar"
-                                                        params={16}
-                                                        layout={{ position: 'absolute', left: 1, width: 280, top: 1, height: 16 }}
-                                                    >
-                                                        <Region
-                                                            name="progress_bar_top"
-                                                            params={16}
-                                                            backgroundColor="#00910a"
-                                                            layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 8 }}
-                                                        />
-                                                        <Region
-                                                            name="progress_bar_bottom"
-                                                            params={16}
-                                                            backgroundColor="#037c00"
-                                                            layout={{ position: 'absolute', left: 0, width: 120, top: 8, height: 8 }}
-                                                        />
-                                                    </Region>
-                                                    <Region
-                                                        name="progress_bar_text"
-                                                        params={16}
-                                                        layout={{ position: 'absolute', left: 0, width: 282, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                                    >
-                                                        <ThemeText
-                                                            text={captionProgressBarText2 ?? t('shop.minting.time_left')}
-                                                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                                                        />
-                                                    </Region>
-                                                </Region>
-                                            </Region>
-                                        </Region>
-                                        <Button
-                                            variant="5"
-                                            name="claim_button"
-                                            params={393233}
-                                            tintColor="#01a101"
-                                            onPointerTap={onClaimButton}
-                                            layout={{ position: 'absolute', right: 7, width: 97, top: 166, height: 30 }}
-                                        >
-                                            {t('collectibles.claim')}
-                                        </Button>
-                                    </Region>
-                                    <Region
-                                        name="collection_progress_container"
-                                        params={16}
-                                        visible={visibleCollectionProgressContainer ?? false}
-                                        backgroundColor="#000000"
-                                        layout={{ position: 'absolute', left: 0, width: 290, top: 200, height: 60, justifyContent: 'center' }}
-                                    >
-                                        <Region
-                                            name="preview_score_text"
-                                            params={786433}
-                                            layout={{ position: 'absolute', width: 290, top: 3, height: 17, minWidth: 290, maxWidth: 290, minHeight: 17, maxHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                                        >
-                                            <ThemeText
-                                                text={captionPreviewScoreText ?? t('collectibles.preview.score')}
-                                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 290, align: 'center' }}
-                                            />
-                                        </Region>
-                                        <Border
-                                            variant="3"
-                                            params={16}
-                                            tintColor="#5a1003"
-                                            layout={{ position: 'absolute', left: 4, width: 282, top: 24, height: 32, justifyContent: 'center' }}
-                                        >
-                                            <Region
-                                                name="preview_reward_text"
-                                                params={3932161}
-                                                layout={{ position: 'absolute', width: 274, alignSelf: 'center', height: 28, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                                            >
-                                                <ThemeText
-                                                    text={captionPreviewRewardText ?? t('collectibles.preview.reward')}
-                                                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 274, align: 'center' }}
-                                                />
-                                            </Region>
-                                        </Border>
-                                    </Region>
-                                    <Region
-                                        name="product_progress_container"
-                                        params={16}
-                                        backgroundColor="#000000"
-                                        layout={{ position: 'absolute', left: 0, width: 290, top: 220, height: 40 }}
-                                    >
-                                        <Border
-                                            variant="3"
-                                            params={16}
-                                            tintColor="#5a1003"
-                                            layout={{ position: 'absolute', left: 4, width: 282, top: 4, height: 32, justifyContent: 'center' }}
-                                        >
-                                            <Region
-                                                name="procuct_score_text"
-                                                params={3932161}
-                                                layout={{ position: 'absolute', width: 274, alignSelf: 'center', height: 16, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                                            >
-                                                <ThemeText
-                                                    text={captionProcuctScoreText ?? t('collectibles.preview.product.incomplete')}
-                                                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 274, align: 'center' }}
-                                                />
-                                            </Region>
-                                        </Border>
-                                    </Region>
-                                </Border>
-                            </Region>
-                            <Region
-                                name="item_container"
-                                params={16}
-                                layout={{ position: 'absolute', left: 0, width: 290, top: 300, height: 123 }}
-                            >
-                                <ScrollArea
-                                    orientation="vertical"
-                                    layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 123 }}
-                                >
-                                    <Region
-                                        name="itemgrid_collection"
-                                        tags={[ 'FURNI_ITEM_GRID' ]}
-                                        params={16}
-                                        layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}
-                                    >
-                                        {itemsItemgridCollection ?? (
-                                            <CollectibleHubLayoutItemTemplateItem3 />
-                                        )}
-                                    </Region>
-                                </ScrollArea>
-                            </Region>
-                        </Region>
-                    </Region>
-                    <Region
-                        name="loading_contents"
-                        params={16}
-                        visible={visibleLoadingContents2 ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429 }}
-                    >
-                        <Border
-                            variant="2"
-                            params={16}
-                            tintColor="#a4a49f"
-                            layout={{ position: 'absolute', left: 185, width: 113, top: 155, height: 116 }}
-                        />
-                        <ThemeImage
-                            name="loading_icon"
-                            params={16}
-                            src={srcLoadingIcon2 ?? layoutImage('loading.png')}
-                            layout={{ position: 'absolute', left: 205, width: 75, top: 175, height: 75 }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="shopContainer"
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    params={1073889424}
-                    visible={visibleShopContainer ?? false}
-                    backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: -5, right: 15, top: 125, height: 428, overflow: 'hidden' }}
-                >
-                    <Region
-                        name="loaded_content"
-                        params={147472}
-                        layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 428 }}
-                    >
-                        <Region
-                            name="navigationContainer"
-                            params={2064}
-                            layout={{ position: 'absolute', left: 8, width: 184, top: 3, bottom: 0 }}
-                        >
-                            <Border
-                                variant="6"
-                                params={2064}
-                                blend={0.5}
-                                layout={{ position: 'absolute', left: 0, width: 184, top: 0, bottom: 0 }}
-                            />
-                            <ScrollArea
-                                orientation="vertical"
-                                layout={{ position: 'absolute', left: 3, width: 178, top: 5, bottom: 5 }}
-                            >
-                                <Region
-                                    name="navigationList"
-                                    params={2064}
-                                    layout={{ flexDirection: 'column', width: '100%' }}
-                                >
-                                    {itemsNavigationList2 ?? (
-                                        <CollectibleHubLayoutItemTemplateItem4 />
-                                    )}
-                                </Region>
-                            </ScrollArea>
-                        </Region>
-                        <Region
-                            name="collection_content"
-                            params={16}
-                            layout={{ position: 'absolute', left: 200, width: 290, top: 3, height: 425 }}
-                        >
-                            <Region
-                                name="preview_container"
-                                params={16}
-                                layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260 }}
-                            >
-                                <Border
-                                    variant="3"
-                                    name="collection_preview_bg"
-                                    params={16}
-                                    tintColor="#3d1f39"
-                                    layout={{ position: 'absolute', left: 0, width: 296, top: 0, height: 260, justifyContent: 'center' }}
-                                >
-                                    <ThemeImage
-                                        params={16}
-                                        src={layoutImage('collectables_score_background.png')}
-                                        layout={{ position: 'absolute', left: -15, width: 166, top: -8, height: 286 }}
-                                    />
-                                    <ThemeImage
-                                        params={16}
-                                        src={layoutImage('collectables_score_background_right.png')}
-                                        layout={{ position: 'absolute', left: 139, width: 166, top: -18, height: 286 }}
-                                    />
-                                    <ThemeImage
-                                        params={16}
-                                        src={layoutImage('collectables_score_background_gradient2.png')}
-                                        tint="#45ace2"
-                                        layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260 }}
-                                    />
-                                    <ThemeImage
-                                        name="bg_star"
-                                        params={16}
-                                        src={srcBgStar3 ?? layoutImage('bg_star_300x300.png')}
-                                        layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
-                                    />
-                                    <Region
-                                        visible={false}
-                                        layout={{ position: 'absolute', left: 91, width: 108, top: 64, height: 132 }}
-                                    >
-                                        <ThemeImage
-                                            name="placeholder_image"
-                                            params={16}
-                                            src={srcPlaceholderImage3 ?? layoutImage('collectables_collection_default.png')}
-                                            layout={{ position: 'absolute', left: 91, width: 108, top: 64, height: 132 }}
-                                        />
-                                    </Region>
-                                    <WidgetSlot
-                                        widgetType="avatar_image"
-                                        name="avatar_image_widget"
-                                        params={16}
-                                        visible={false}
-                                        layout={{ position: 'absolute', left: 100, width: 90, top: 53, height: 130 }}
-                                    />
-                                    <WidgetSlot
-                                        widgetType="badge_image"
-                                        name="badge_image_widget"
-                                        params={1077674000}
-                                        visible={false}
-                                        options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '2', 'badge_image:zoom_y': '2' }}
-                                        layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 80, alignSelf: 'center', height: 80, overflow: 'hidden' }}
-                                    />
-                                    <Region
-                                        visible={false}
-                                        layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 48, alignSelf: 'center', height: 48, justifyContent: 'center' }}
-                                    >
-                                        <ThemeImage
-                                            name="unknown_image"
-                                            params={3932176}
-                                            src={srcUnknownImage3 ?? layoutImage('collectables_icon_curator_stamp_large.png')}
-                                            layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 48, alignSelf: 'center', height: 48 }}
-                                        />
-                                    </Region>
-                                    <WidgetSlot
-                                        widgetType="pet_image"
-                                        name="pet_image_widget"
-                                        params={1077674000}
-                                        visible={false}
-                                        options={{ 'pet_image:zoomX': '2', 'pet_image:zoomY': '2', 'pet_image:shrink_on_overflow': 'true' }}
-                                        layout={{ position: 'absolute', marginLeft: -5, marginRight: 5, width: 180, alignSelf: 'center', height: 140, overflow: 'hidden' }}
-                                    />
-                                    <WidgetSlot
-                                        widgetType="room_previewer"
-                                        name="effect_image_widget"
-                                        params={1077674000}
-                                        visible={false}
-                                        options={{ 'room_previewer:offsetx': '2', 'room_previewer:offsety': '36' }}
-                                        layout={{ position: 'absolute', marginLeft: -5, marginRight: 5, width: 100, alignSelf: 'center', height: 260, overflow: 'hidden' }}
-                                    />
-                                    <ThemeImage
-                                        name="product_preview"
-                                        params={16}
-                                        src={srcProductPreview3}
-                                        layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
-                                    />
-                                    <Region
-                                        name="product_name_container"
-                                        params={17}
-                                        backgroundColor="#000000"
-                                        onPointerTap={onProductNameContainer3}
-                                        cursor="pointer"
-                                        layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 26 }}
-                                    >
-                                        <Region
-                                            name="preview_furni_name"
-                                            params={16}
-                                            layout={{ position: 'absolute', left: 0, width: 290, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                        >
-                                            <ThemeText
-                                                text={captionPreviewFurniName3 ?? 'Lorem ipsum hot air balloon'}
-                                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                                            />
-                                        </Region>
-                                    </Region>
-                                    <Region
-                                        name="product_info_container"
-                                        params={16}
-                                        visible={visibleProductInfoContainer2 ?? false}
-                                        backgroundColor="#3b1829"
-                                        layout={{ position: 'absolute', left: 0, width: 290, top: 26, height: 194 }}
-                                    >
-                                        <Region
-                                            name="product_info_list"
-                                            params={16}
-                                            layout={{ position: 'absolute', left: 24, width: 242, top: 24, height: 140, flexDirection: 'column', gap: 2 }}
-                                        >
-                                            {itemsProductInfoList2 ?? (
-                                                <CollectibleHubLayoutProductInfoEntryTemplateItem2 />
-                                            )}
-                                        </Region>
-                                    </Region>
-                                    <Region
-                                        params={409616}
-                                        layout={{ position: 'absolute', right: 10, top: 226, flexDirection: 'row', gap: 4 }}
-                                    >
-                                        <Region
-                                            name="price_text"
-                                            params={16}
-                                            layout={{ width: 50, height: 25, flexShrink: 0, minHeight: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                                        >
-                                            <ThemeText
-                                                text={captionPriceText ?? '100'}
-                                                textStyle="text-style-u-bold"
-                                                textOptions={{ fill: '#ffffff', align: 'right' }}
-                                            />
-                                        </Region>
-                                        <Icon
-                                            variant="70"
-                                            name="emerald_icon"
-                                            params={16}
-                                            layout={{ width: 26, height: 20, flexShrink: 0 }}
-                                        />
-                                        <Button
-                                            variant="5"
-                                            name="buy_button"
-                                            params={131089}
-                                            tintColor="#01a101"
-                                            onPointerTap={onBuyButton}
-                                            layout={{ width: 88, height: 30, flexShrink: 0 }}
-                                        >
-                                            {t('generic.buy')}
-                                        </Button>
-                                    </Region>
-                                    <Region
-                                        name="mintlimit_container"
-                                        params={409616}
-                                        layout={{ position: 'absolute', right: 10, top: 196, flexDirection: 'row', gap: 4 }}
-                                    >
-                                        {itemsMintlimitContainer ?? (
-                                            <CollectibleHubLayoutMintlimitTextItem />
-                                        )}
-                                        <ThemeImage
-                                            params={16}
-                                            src={layoutImage('collectables_icon_curator_stamp_small.png')}
-                                            layout={{ width: 18, height: 30, flexShrink: 0 }}
-                                        />
-                                    </Region>
-                                </Border>
-                            </Region>
-                            <Region
-                                name="item_container"
-                                params={16}
-                                layout={{ position: 'absolute', left: 0, width: 290, top: 270, height: 153 }}
-                            >
-                                <ScrollArea
-                                    orientation="vertical"
-                                    layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 153 }}
-                                >
-                                    <Region
-                                        name="itemgrid_shop"
-                                        tags={[ 'FURNI_ITEM_GRID' ]}
-                                        params={16}
-                                        layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}
-                                    >
-                                        {itemsItemgridShop ?? (
-                                            <CollectibleHubLayoutItemTemplateItem5 />
-                                        )}
-                                    </Region>
-                                </ScrollArea>
-                            </Region>
-                        </Region>
-                    </Region>
-                    <Region
-                        name="loading_contents"
-                        params={16}
-                        visible={visibleLoadingContents3 ?? false}
-                        layout={{ position: 'absolute', left: 5, width: 485, top: 0, height: 429 }}
-                    >
-                        <Border
-                            variant="2"
-                            params={16}
-                            tintColor="#a4a49f"
-                            layout={{ position: 'absolute', left: 185, width: 113, top: 155, height: 116 }}
-                        />
-                        <ThemeImage
-                            name="loading_icon"
-                            params={16}
-                            src={srcLoadingIcon3 ?? layoutImage('loading.png')}
-                            layout={{ position: 'absolute', left: 205, width: 75, top: 175, height: 75 }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="transferContainer"
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    params={1073758352}
-                    visible={visibleTransferContainer ?? false}
-                    backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden' }}
-                >
-                    <Region
-                        name="loaded_content"
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429 }}
-                    >
-                        <Region
-                            name="headercontainer"
-                            params={16}
-                            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 50, justifyContent: 'center' }}
-                        >
-                            <Region
-                                params={3935248}
-                                layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 450, alignSelf: 'center', height: 30, minWidth: 450, maxWidth: 450, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={t('collectibles.transfer.description')}
-                                    textOptions={{ wordWrap: true, wordWrapWidth: 450, align: 'center' }}
-                                />
-                            </Region>
-                        </Region>
-                        <Border
-                            variant="3"
-                            name="transfer_container"
-                            params={16}
-                            tintColor="#bac3cd"
-                            layout={{ position: 'absolute', left: 0, width: 488, top: 380, height: 50 }}
-                        >
-                            <Dropmenu
-                                variant="3"
-                                name="transfer_wallet_selection"
-                                params={17}
-                                onPointerTap={onTransferWalletSelection}
-                                layout={{ position: 'absolute', left: 10, width: 260, top: 13, height: 24 }}
-                            />
-                            <Border
-                                variant="3"
-                                params={16}
-                                tintColor="#d6dbe1"
-                                blend={0}
-                                layout={{ position: 'absolute', left: 315, width: 170, top: 5, height: 40 }}
-                            >
-                                <Region
-                                    params={409616}
-                                    layout={{ position: 'absolute', right: 13, top: 5, flexDirection: 'row' }}
-                                >
-                                    <Region
-                                        name="transfer_fee_text"
-                                        params={16}
-                                        layout={{ width: 12, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                    >
-                                        <ThemeText
-                                            text={captionTransferFeeText ?? '0'}
-                                            textStyle="text-style-u-bold"
-                                        />
-                                    </Region>
-                                    <Region
-                                        name="spacing"
-                                        params={16}
-                                        layout={{ width: 4, height: 30, flexShrink: 0 }}
-                                    />
-                                    <ThemeImage
-                                        name="transfer_fee_icon"
-                                        params={16}
-                                        src={srcTransferFeeIcon ?? layoutImage('pursearea_mid_silver_icon.png')}
-                                        layout={{ width: 24, height: 30, flexShrink: 0 }}
-                                    />
-                                    <Region
-                                        name="spacing"
-                                        params={16}
-                                        layout={{ width: 6, height: 30, flexShrink: 0 }}
-                                    />
-                                    <Button
-                                        variant="5"
-                                        name="transfer_button"
-                                        params={131089}
-                                        tintColor="#2095d4"
-                                        onPointerTap={onTransferButton}
-                                        layout={{ width: 100, height: 30, flexShrink: 0, minWidth: 100 }}
-                                    >
-                                        {t('collectibles.transfer')}
-                                    </Button>
-                                </Region>
-                            </Border>
-                        </Border>
-                        <ThemeImage
-                            params={16}
-                            src={layoutImage('collectables_transfer_safe.png')}
-                            layout={{ position: 'absolute', left: 42, width: 400, top: 120, height: 180 }}
-                        />
-                    </Region>
-                    <Region
-                        name="loading_contents"
-                        params={16}
-                        visible={visibleLoadingContents4 ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429 }}
-                    >
-                        <Border
-                            variant="2"
-                            params={16}
-                            tintColor="#a4a49f"
-                            layout={{ position: 'absolute', left: 185, width: 113, top: 155, height: 116 }}
-                        />
-                        <ThemeImage
-                            name="loading_icon"
-                            params={16}
-                            src={srcLoadingIcon4 ?? layoutImage('loading.png')}
-                            layout={{ position: 'absolute', left: 205, width: 75, top: 175, height: 75 }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="levelsContainer"
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    params={1073758352}
-                    visible={visibleLevelsContainer ?? false}
-                    backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden' }}
-                >
-                    <Region
-                        name="category_content_background"
-                        params={1073741840}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, overflow: 'hidden' }}
-                    >
-                        <Region
-                            name="category_collector_header_region"
-                            tags={[ 'category_header' ]}
-                            params={1073741840}
-                            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 80, overflow: 'hidden' }}
-                        >
-                            <Region
-                                name="category_name_region"
-                                params={131089}
-                                onPointerTap={onCategoryNameRegion3}
-                                cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17 }}
-                            >
-                                <Region
-                                    name="collector_level_header"
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 17, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionCollectorLevelHeader ?? 'Levels Header'}
-                                        textStyle="text-style-u-regular"
-                                    />
-                                </Region>
-                            </Region>
-                            <Region
-                                name="category_minting_description_region"
-                                params={147473}
-                                onPointerTap={onCategoryMintingDescriptionRegion3}
-                                cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 380, top: 22, height: 30 }}
-                            >
-                                <Region
-                                    name="collector_level_description"
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 30, minWidth: 2, maxWidth: 380, minHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionCollectorLevelDescription ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta felis sed libero rhoncus, at elementum metus sagittis. '}
-                                        textStyle="text-style-u-regular"
-                                        textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
-                                    />
-                                </Region>
-                            </Region>
-                        </Region>
-                    </Region>
-                </Region>
-                <Region
-                    name="infoContainer"
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    params={1073889424}
-                    visible={visibleInfoContainer ?? false}
-                    backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, right: 110, top: 125, height: 419, overflow: 'hidden' }}
-                >
-                    <Region
-                        name="category_content_background"
-                        params={1073741840}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400, overflow: 'hidden' }}
-                    >
-                        <Region
-                            name="category_collector_header_region"
-                            tags={[ 'category_header' ]}
-                            params={1073741840}
-                            layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 135, overflow: 'hidden' }}
-                        >
-                            <Region
-                                name="category_info_header_region"
-                                params={131089}
-                                onPointerTap={onCategoryInfoHeaderRegion}
-                                cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17 }}
-                            >
-                                <Region
-                                    name="collector_collections_header"
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 0, width: 27, top: 0, height: 17, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionCollectorCollectionsHeader ?? t('collectibles.info.title')}
-                                        textStyle="text-style-u-regular"
-                                    />
-                                </Region>
-                            </Region>
-                            <Region
-                                name="category_info_description_region"
-                                params={147473}
-                                onPointerTap={onCategoryInfoDescriptionRegion}
-                                cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 480, top: 22, height: 50 }}
-                            >
-                                <Region
-                                    name="collector_profile_description"
-                                    params={16}
-                                    visible={false}
-                                    layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 30, minWidth: 2, maxWidth: 380, minHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionCollectorProfileDescription2 ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta felis sed libero rhoncus, at elementum metus sagittis. '}
-                                        textStyle="text-style-u-regular"
-                                        textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
-                                    />
-                                </Region>
-                                <Region
-                                    name="info_desc"
-                                    params={1}
-                                    layout={{ position: 'absolute', left: 0, width: 480, top: 0, height: 50, maxWidth: 480, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionInfoDesc ?? t('collectibles.info.description')}
-                                        textOptions={{ wordWrap: true, wordWrapWidth: 480 }}
-                                    />
-                                </Region>
-                            </Region>
-                            <Region
-                                name="category_info_transfer_region"
-                                params={147473}
-                                onPointerTap={onCategoryInfoTransferRegion}
-                                cursor="pointer"
-                                layout={{ position: 'absolute', left: 0, width: 480, top: 75, height: 60 }}
-                            >
-                                <Region
-                                    name="collector_profile_description"
-                                    params={16}
-                                    visible={false}
-                                    layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 30, minWidth: 2, maxWidth: 380, minHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionCollectorProfileDescription3 ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta felis sed libero rhoncus, at elementum metus sagittis. '}
-                                        textStyle="text-style-u-regular"
-                                        textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
-                                    />
-                                </Region>
-                                <Region
-                                    name="transfer_desc"
-                                    params={1}
-                                    layout={{ position: 'absolute', left: 0, width: 480, top: 0, height: 60, maxWidth: 480, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionTransferDesc ?? t('collectibles.info.trading')}
-                                        textOptions={{ wordWrap: true, wordWrapWidth: 480 }}
-                                    />
-                                </Region>
-                            </Region>
-                        </Region>
-                    </Region>
-                    <ThemeImage
-                        params={16}
-                        src={layoutImage('collectables_collection_default.png')}
-                        layout={{ position: 'absolute', left: 128, width: 216, top: 155, height: 264 }}
-                    />
-                </Region>
-                <Region
-                    name="rewardsContainer"
-                    tags={[ 'TEMPLATE', 'category_container' ]}
-                    params={1073758352}
-                    visible={visibleRewardsContainer ?? false}
-                    backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden' }}
-                >
-                    <Region
-                        name="loaded_content"
-                        params={16}
-                        visible={visibleLoadedContent ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429 }}
-                    >
-                        <Region
-                            name="item_container"
-                            params={16}
-                            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 374 }}
-                        >
-                            <ScrollArea
-                                orientation="vertical"
-                                layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 374 }}
-                            >
-                                <Region
-                                    name="itemlist"
-                                    params={16}
-                                    layout={{ flexDirection: 'column', gap: 2, width: '100%' }}
-                                >
-                                    {itemsItemlist ?? (
-                                        <CollectibleHubLayoutItemTemplateItem6 />
-                                    )}
-                                </Region>
-                            </ScrollArea>
-                        </Region>
-                        <Border
-                            variant="3"
-                            name="bottom_container"
-                            params={16}
-                            tintColor="#bac3cd"
-                            layout={{ position: 'absolute', left: 0, width: 486, top: 380, height: 50 }}
-                        >
-                            <Button
-                                variant="5"
-                                name="claim_button"
-                                params={131089}
-                                tintColor="#2095d4"
-                                onPointerTap={onClaimButton2}
-                                layout={{ position: 'absolute', left: 180, width: 137, top: 10, height: 30, minWidth: 100 }}
-                            >
-                                {t('collectibles.claim_all')}
-                            </Button>
-                        </Border>
-                    </Region>
-                    <Region
-                        name="no_content_container"
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429 }}
-                    >
-                        <Region
-                            name="headercontainer"
-                            params={16}
-                            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 100, justifyContent: 'center' }}
-                        >
-                            <Region
-                                params={788496}
-                                layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 450, top: 28, bottom: 55, minWidth: 450, maxWidth: 450, minHeight: 17, maxHeight: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={t('collectibles.no_claims')}
-                                    textOptions={{ wordWrap: true, wordWrapWidth: 450, align: 'center' }}
-                                />
-                            </Region>
-                        </Region>
-                        <Region
-                            name="image_container"
-                            params={16}
-                            layout={{ position: 'absolute', left: 0, width: 485, top: 100, height: 332, justifyContent: 'center' }}
-                        >
-                            <ThemeImage
-                                params={3932176}
-                                src={layoutImage('image_frank_dont_know.png')}
-                                layout={{ position: 'absolute', width: 485, alignSelf: 'center', marginTop: -28, marginBottom: 28, height: 176 }}
-                            />
-                        </Region>
-                    </Region>
-                    <Region
-                        name="loading_contents"
-                        params={16}
-                        visible={visibleLoadingContents5 ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429 }}
-                    >
-                        <Border
-                            variant="2"
-                            params={16}
-                            tintColor="#a4a49f"
-                            layout={{ position: 'absolute', left: 185, width: 113, top: 155, height: 116 }}
-                        />
-                        <ThemeImage
-                            name="loading_icon"
-                            params={16}
-                            src={srcLoadingIcon5 ?? layoutImage('loading.png')}
-                            layout={{ position: 'absolute', left: 205, width: 75, top: 175, height: 75 }}
-                        />
-                    </Region>
-                </Region>
+                <CollectibleHubLayoutMintingContainer {...mintingContainer} />
+                <CollectibleHubLayoutCollectorProfileContainer {...collectorProfileContainer} />
+                <CollectibleHubLayoutCollectionsContainer {...collectionsContainer} />
+                <CollectibleHubLayoutShopContainer {...shopContainer} />
+                <CollectibleHubLayoutTransferContainer {...transferContainer} />
+                <CollectibleHubLayoutLevelsContainer {...levelsContainer} />
+                <CollectibleHubLayoutInfoContainer {...infoContainer} />
+                <CollectibleHubLayoutRewardsContainer {...rewardsContainer} />
                 <Region
                     visible={false}
                     layout={{ position: 'absolute', left: -8, width: 410, top: 56, height: 1 }}
@@ -2213,17 +157,427 @@ export const CollectibleHubLayout = ({ captionCaptionAllTimeHighScore, captionCa
     );
 };
 
-/** Row template `item_template` of CollectibleHubLayout - pass real rows through its `items…` slot. */
-export interface CollectibleHubLayoutItemTemplateItemProps {
+/** Named region `score_container` of CollectibleHubLayout - configured through the parent's `scoreContainer` prop. */
+export interface CollectibleHubLayoutScoreContainerProps {
+    captionCaptionAllTimeHighScore?: string;
+    captionCaptionCurrentScore?: string;
+    captionCurrentHiscoreKey?: string;
+    captionCurrentHiscoreValue?: string;
+    captionCurrentScoreKey?: string;
+    captionCurrentScoreValue?: string;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutScoreContainer = ({ captionCaptionAllTimeHighScore, captionCaptionCurrentScore, captionCurrentHiscoreKey, captionCurrentHiscoreValue, captionCurrentScoreKey, captionCurrentScoreValue, layout }: CollectibleHubLayoutScoreContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="score_container"
+            params={16}
+            layout={{ position: 'absolute', left: 116, width: 220, top: 21, height: 45, ...layout }}
+        >
+            <Region
+                name="current_score_key"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 158, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+            >
+                <ThemeText
+                    text={captionCurrentScoreKey ?? t('collectibles.score')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff', align: 'right' }}
+                />
+            </Region>
+            <Region
+                name="current_score_value"
+                params={16}
+                layout={{ position: 'absolute', left: 158, width: 10, top: 0, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCurrentScoreValue ?? '0'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+            <Region
+                name="current_hiscore_key"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 158, top: 26, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+            >
+                <ThemeText
+                    text={captionCurrentHiscoreKey ?? t('collectibles.high_score')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff', align: 'right' }}
+                />
+            </Region>
+            <Region
+                name="current_hiscore_value"
+                params={16}
+                layout={{ position: 'absolute', left: 158, width: 11, top: 26, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCurrentHiscoreValue ?? '0'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+            <Region
+                name="caption_current_score"
+                params={16}
+                visible={false}
+                layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+            >
+                <ThemeText
+                    text={captionCaptionCurrentScore ?? 'My Habbo Collector Score: 999999'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff', align: 'right' }}
+                />
+            </Region>
+            <Region
+                name="caption_all_time_high_score"
+                params={272}
+                visible={false}
+                layout={{ position: 'absolute', left: 0, width: 197, top: 25, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+            >
+                <ThemeText
+                    text={captionCaptionAllTimeHighScore ?? 'My all time high score: 999999'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff', align: 'right' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `level_container` of CollectibleHubLayout - configured through the parent's `levelContainer` prop. */
+export interface CollectibleHubLayoutLevelContainerProps {
+    captionCollectorLevel?: string;
+    captionLevelTitle?: string;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutLevelContainer = ({ captionCollectorLevel, captionLevelTitle, layout }: CollectibleHubLayoutLevelContainerProps) => {
+    return (
+        <Region
+            name="level_container"
+            params={16}
+            layout={{ position: 'absolute', left: 344, width: 45, top: 16, height: 35, ...layout }}
+        >
+            <Region
+                name="collector_level"
+                params={16}
+                layout={{ position: 'absolute', left: 2, width: 40, top: 0, height: 26, maxWidth: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionCollectorLevel ?? '0'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </Region>
+            <Region
+                name="level_title"
+                params={16}
+                layout={{ position: 'absolute', left: 3, width: 41, top: 22, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionLevelTitle ?? 'LEVEL'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `collector_hub_header` of CollectibleHubLayout - configured through the parent's `collectorHubHeader` prop. */
+export interface CollectibleHubLayoutCollectorHubHeaderProps {
+    captionEmeraldCurrencyValue?: string;
+    captionSilverCurrencyValue?: string;
+    layout?: BoxLayout;
+    levelContainer?: CollectibleHubLayoutLevelContainerProps;
+    scoreContainer?: CollectibleHubLayoutScoreContainerProps;
+    srcCollectableBgLeft?: string;
+    srcCollectableBgRight?: string;
+    srcCollectorLevelBg?: string;
+    srcCollectorLevelBg2?: string;
+    srcEmeraldCurrencyIcon?: string;
+    srcSilverCurrencyIcon?: string;
+    visibleTabBg?: boolean;
+}
+
+export const CollectibleHubLayoutCollectorHubHeader = ({ captionEmeraldCurrencyValue, captionSilverCurrencyValue, layout, levelContainer, scoreContainer, srcCollectableBgLeft, srcCollectableBgRight, srcCollectorLevelBg, srcCollectorLevelBg2, srcEmeraldCurrencyIcon, srcSilverCurrencyIcon, visibleTabBg }: CollectibleHubLayoutCollectorHubHeaderProps) => {
+    return (
+        <Region
+            name="collector_hub_header"
+            backgroundColor="#0b162d"
+            layout={{ position: 'absolute', left: -5, width: 500, top: -2, height: 122, ...layout }}
+        >
+            <Border
+                variant="3"
+                name="collector_hub_background"
+                params={16}
+                tintColor="#2c1d29"
+                layout={{ position: 'absolute', left: 0, width: 498, top: 0, height: 125 }}
+            >
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_score_background_gradient.png')}
+                    tint="#804138"
+                    layout={{ position: 'absolute', left: 0, width: 498, top: 0, height: 122 }}
+                />
+                <ThemeImage
+                    name="collectable_bg_left"
+                    params={16}
+                    src={srcCollectableBgLeft ?? layoutImage('collectables_score_background.png')}
+                    tint="#fc7c5a"
+                    layout={{ position: 'absolute', left: 0, width: 166, top: 0, height: 121 }}
+                />
+                <ThemeImage
+                    name="collectable_bg_right"
+                    params={16}
+                    src={srcCollectableBgRight ?? layoutImage('collectables_score_background_right.png')}
+                    tint="#fc7c5a"
+                    layout={{ position: 'absolute', left: 332, width: 166, top: -160, height: 286 }}
+                />
+                <ThemeImage
+                    name="collector_level_bg2"
+                    params={16}
+                    src={srcCollectorLevelBg2 ?? layoutImage('collectables_score_element2.png')}
+                    tint="#7c8c92"
+                    layout={{ position: 'absolute', left: 0, width: 300, top: 17, height: 54 }}
+                />
+                <ThemeImage
+                    name="collector_level_bg"
+                    params={16}
+                    src={srcCollectorLevelBg ?? layoutImage('collectables_score_element.png')}
+                    tint="#7c8c92"
+                    layout={{ position: 'absolute', left: 299, width: 92, top: 17, height: 72 }}
+                />
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_cabinet_element.png')}
+                    layout={{ position: 'absolute', left: -2, width: 130, top: -1, height: 128 }}
+                />
+                <CollectibleHubLayoutScoreContainer {...scoreContainer} />
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_level_bg.png')}
+                    layout={{ position: 'absolute', left: 335, width: 64, top: 2, height: 68 }}
+                />
+                <CollectibleHubLayoutLevelContainer {...levelContainer} />
+                <Border
+                    variant="3"
+                    name="silver_currency_border"
+                    params={16}
+                    tintColor="#a99490"
+                    layout={{ position: 'absolute', left: 419, width: 70, top: 18, height: 22 }}
+                >
+                    <Border
+                        variant="3"
+                        name="silver_currency_container"
+                        params={16}
+                        tintColor="#3a2f29"
+                        layout={{ position: 'absolute', left: 1, width: 68, top: 1, height: 20 }}
+                    >
+                        <Region
+                            name="silver_currency_value"
+                            params={16}
+                            layout={{ position: 'absolute', left: 2, width: 45, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        >
+                            <ThemeText
+                                text={captionSilverCurrencyValue ?? '0'}
+                                textOptions={{ fill: '#ffffff', align: 'center' }}
+                            />
+                        </Region>
+                    </Border>
+                </Border>
+                <ThemeImage
+                    name="silver_currency_icon"
+                    params={16}
+                    src={srcSilverCurrencyIcon ?? layoutImage('pursearea_mid_silver_icon.png')}
+                    layout={{ position: 'absolute', left: 466, width: 24, top: 17, height: 24 }}
+                />
+                <Border
+                    variant="3"
+                    name="emerald_currency_border"
+                    params={16}
+                    tintColor="#a99490"
+                    layout={{ position: 'absolute', left: 419, width: 70, top: 48, height: 22 }}
+                >
+                    <Border
+                        variant="3"
+                        name="emerald_currency_container"
+                        params={16}
+                        tintColor="#3a2f29"
+                        layout={{ position: 'absolute', left: 1, width: 68, top: 1, height: 20 }}
+                    >
+                        <Region
+                            name="emerald_currency_value"
+                            params={16}
+                            layout={{ position: 'absolute', left: 2, width: 45, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        >
+                            <ThemeText
+                                text={captionEmeraldCurrencyValue ?? '0'}
+                                textOptions={{ fill: '#ffffff', align: 'center' }}
+                            />
+                        </Region>
+                    </Border>
+                </Border>
+                <ThemeImage
+                    name="emerald_currency_icon"
+                    params={16}
+                    src={srcEmeraldCurrencyIcon ?? layoutImage('pursearea_mid_emerald_icon.png')}
+                    layout={{ position: 'absolute', left: 466, width: 24, top: 47, height: 24 }}
+                />
+            </Border>
+            <Region
+                visible={visibleTabBg ?? false}
+                layout={{ position: 'absolute', left: -2, width: 502, top: 91, height: 39 }}
+            >
+                <Border
+                    variant="3"
+                    name="tab_bg"
+                    params={16}
+                    tintColor="#000000"
+                    blend={0.4}
+                    layout={{ width: '100%', height: '100%' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `category_name_region` of CollectibleHubLayout - configured through the parent's `categoryNameRegion` prop. */
+export interface CollectibleHubLayoutCategoryNameRegionProps {
+    captionMintingHeader?: string;
+    layout?: BoxLayout;
+    onCategoryNameRegion?: () => void;
+}
+
+export const CollectibleHubLayoutCategoryNameRegion = ({ captionMintingHeader, layout, onCategoryNameRegion }: CollectibleHubLayoutCategoryNameRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="category_name_region"
+            params={131089}
+            onPointerTap={onCategoryNameRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17, ...layout }}
+        >
+            <Region
+                name="minting_header"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 130, top: 0, height: 17, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionMintingHeader ?? t('shop.minting.info.title')}
+                    textStyle="text-style-u-regular"
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `category_minting_description_region` of CollectibleHubLayout - configured through the parent's `categoryMintingDescriptionRegion` prop. */
+export interface CollectibleHubLayoutCategoryMintingDescriptionRegionProps {
+    captionMintingDescription?: string;
+    layout?: BoxLayout;
+    onCategoryMintingDescriptionRegion?: () => void;
+}
+
+export const CollectibleHubLayoutCategoryMintingDescriptionRegion = ({ captionMintingDescription, layout, onCategoryMintingDescriptionRegion }: CollectibleHubLayoutCategoryMintingDescriptionRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="category_minting_description_region"
+            params={147473}
+            onPointerTap={onCategoryMintingDescriptionRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 480, top: 22, height: 35, ...layout }}
+        >
+            <Region
+                name="minting_description"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 480, top: 0, height: 35, minWidth: 2, maxWidth: 480, minHeight: 35, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionMintingDescription ?? t('shop.minting.info.description')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 480 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `category_minting_header_region` of CollectibleHubLayout - configured through the parent's `categoryMintingHeaderRegion` prop. */
+export interface CollectibleHubLayoutCategoryMintingHeaderRegionProps {
+    categoryMintingDescriptionRegion?: CollectibleHubLayoutCategoryMintingDescriptionRegionProps;
+    categoryNameRegion?: CollectibleHubLayoutCategoryNameRegionProps;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutCategoryMintingHeaderRegion = ({ categoryMintingDescriptionRegion, categoryNameRegion, layout }: CollectibleHubLayoutCategoryMintingHeaderRegionProps) => {
+    return (
+        <Region
+            name="category_minting_header_region"
+            tags={[ 'category_header' ]}
+            params={1073741840}
+            layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 58, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutCategoryNameRegion {...categoryNameRegion} />
+            <CollectibleHubLayoutCategoryMintingDescriptionRegion {...categoryMintingDescriptionRegion} />
+        </Region>
+    );
+};
+
+/** Named region `number_container` of CollectibleHubLayout - configured through the parent's `numberContainer` prop. */
+export interface CollectibleHubLayoutNumberContainerProps {
     captionNumber?: string;
     layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutNumberContainer = ({ captionNumber, layout }: CollectibleHubLayoutNumberContainerProps) => {
+    return (
+        <Region
+            name="number_container"
+            params={131088}
+            layout={{ position: 'absolute', left: 0, width: 50, top: 45, height: 16, minWidth: 50, maxWidth: 50, ...layout }}
+        >
+            <Border
+                variant="3"
+                name="text_border"
+                params={16}
+                tintColor="#337c00"
+                layout={{ position: 'absolute', left: 3, width: 44, top: 1, height: 12 }}
+            />
+            <Region
+                name="number"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionNumber ?? 'x10'}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Row template `item_template` of CollectibleHubLayout - pass real rows through its `items…` slot. */
+export interface CollectibleHubLayoutItemTemplateItemProps {
+    layout?: BoxLayout;
+    numberContainer?: CollectibleHubLayoutNumberContainerProps;
     onItemTemplate?: () => void;
     srcBitmap?: string;
     srcCheckmarkIcon?: string;
     srcUnknownImage?: string;
 }
 
-export const CollectibleHubLayoutItemTemplateItem = ({ captionNumber, layout, onItemTemplate, srcBitmap, srcCheckmarkIcon, srcUnknownImage }: CollectibleHubLayoutItemTemplateItemProps) => {
+export const CollectibleHubLayoutItemTemplateItem = ({ layout, numberContainer, onItemTemplate, srcBitmap, srcCheckmarkIcon, srcUnknownImage }: CollectibleHubLayoutItemTemplateItemProps) => {
     return (
         <Region
             name="item_template"
@@ -2277,7 +631,7 @@ export const CollectibleHubLayoutItemTemplateItem = ({ captionNumber, layout, on
             />
             <Region
                 visible={false}
-                layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 18, alignSelf: 'center', marginTop: -6.5, marginBottom: 6.5, height: 18, justifyContent: 'center' }}
+                layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 18, alignSelf: 'center', marginTop: -6.5, marginBottom: 6.5, height: 18 }}
             >
                 <ThemeImage
                     name="unknown_image"
@@ -2294,29 +648,7 @@ export const CollectibleHubLayoutItemTemplateItem = ({ captionNumber, layout, on
                 options={{ 'pet_image:shrink_on_overflow': 'true' }}
                 layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 40, alignSelf: 'center', marginTop: -6.5, marginBottom: 6.5, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, overflow: 'hidden' }}
             />
-            <Region
-                name="number_container"
-                params={131088}
-                layout={{ position: 'absolute', left: 0, width: 50, top: 45, height: 16, minWidth: 50, maxWidth: 50 }}
-            >
-                <Border
-                    variant="3"
-                    name="text_border"
-                    params={16}
-                    tintColor="#337c00"
-                    layout={{ position: 'absolute', left: 3, width: 44, top: 1, height: 12 }}
-                />
-                <Region
-                    name="number"
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionNumber ?? 'x10'}
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </Region>
+            <CollectibleHubLayoutNumberContainer {...numberContainer} />
             <Region
                 visible={false}
                 layout={{ position: 'absolute', left: 31, width: 16, top: 3, height: 16 }}
@@ -2332,15 +664,1049 @@ export const CollectibleHubLayoutItemTemplateItem = ({ captionNumber, layout, on
     );
 };
 
+/** Named region `itemgrid_inventory` of CollectibleHubLayout - configured through the parent's `itemgridInventory` prop. */
+export interface CollectibleHubLayoutItemgridInventoryProps {
+    itemsItemgridInventory?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutItemgridInventory = ({ itemsItemgridInventory, layout }: CollectibleHubLayoutItemgridInventoryProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 0, width: 179, top: 0, height: 260, ...layout }}
+        >
+            <Region
+                name="itemgrid_inventory"
+                tags={[ 'FURNI_ITEM_GRID' ]}
+                params={16}
+                layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}
+            >
+                {itemsItemgridInventory ?? (
+                    <CollectibleHubLayoutItemTemplateItem />
+                )}
+            </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `product_name_container` of CollectibleHubLayout - configured through the parent's `productNameContainer` prop. */
+export interface CollectibleHubLayoutProductNameContainerProps {
+    captionPreviewFurniName?: string;
+    layout?: BoxLayout;
+    onProductNameContainer?: () => void;
+}
+
+export const CollectibleHubLayoutProductNameContainer = ({ captionPreviewFurniName, layout, onProductNameContainer }: CollectibleHubLayoutProductNameContainerProps) => {
+    return (
+        <Region
+            name="product_name_container"
+            params={17}
+            backgroundColor="#000000"
+            onPointerTap={onProductNameContainer}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 26, ...layout }}
+        >
+            <Region
+                name="preview_furni_name"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 290, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionPreviewFurniName ?? 'Lorem ipsum hot air balloon'}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `spacing` of CollectibleHubLayout - configured through the parent's `spacing` prop. */
+export interface CollectibleHubLayoutSpacingProps {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutSpacing = ({ layout }: CollectibleHubLayoutSpacingProps) => {
+    return (
+        <Region
+            name="spacing"
+            params={16}
+            layout={{ width: 3, height: 30, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `spacing` of CollectibleHubLayout - configured through the parent's `spacing` prop. */
+export interface CollectibleHubLayoutSpacing2Props {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutSpacing2 = ({ layout }: CollectibleHubLayoutSpacing2Props) => {
+    return (
+        <Region
+            name="spacing"
+            params={16}
+            layout={{ width: 7, height: 30, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `collect_container` of CollectibleHubLayout - configured through the parent's `collectContainer` prop. */
+export interface CollectibleHubLayoutCollectContainerProps {
+    captionStampPricing?: string;
+    layout?: BoxLayout;
+    onCollectButton?: () => void;
+    spacing?: CollectibleHubLayoutSpacingProps;
+    spacing2?: CollectibleHubLayoutSpacing2Props;
+}
+
+export const CollectibleHubLayoutCollectContainer = ({ captionStampPricing, layout, onCollectButton, spacing, spacing2 }: CollectibleHubLayoutCollectContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="collect_container"
+            params={16}
+            layout={{ position: 'absolute', left: 82, width: 200, top: 180, height: 30, ...layout }}
+        >
+            <Region
+                params={409616}
+                layout={{ position: 'absolute', right: 0, top: 0, flexDirection: 'row' }}
+            >
+                <Region
+                    name="stamp_pricing"
+                    params={16400}
+                    layout={{ width: 10, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionStampPricing ?? '1'}
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+                <CollectibleHubLayoutSpacing {...spacing} />
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_icon_curator_stamp_small.png')}
+                    layout={{ width: 18, height: 30, flexShrink: 0 }}
+                />
+                <CollectibleHubLayoutSpacing2 {...spacing2} />
+                <Button
+                    variant="5"
+                    name="collect_button"
+                    params={131089}
+                    tintColor="#01a101"
+                    onPointerTap={onCollectButton}
+                    layout={{ width: 62, height: 30, flexShrink: 0 }}
+                >
+                    {t('collectibles.collect')}
+                </Button>
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `progress_bar_top` of CollectibleHubLayout - configured through the parent's `progressBarTop` prop. */
+export interface CollectibleHubLayoutProgressBarTopProps {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutProgressBarTop = ({ layout }: CollectibleHubLayoutProgressBarTopProps) => {
+    return (
+        <Region
+            name="progress_bar_top"
+            params={16}
+            backgroundColor="#00910a"
+            layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 8, ...layout }}
+        />
+    );
+};
+
+/** Named region `progress_bar_bottom` of CollectibleHubLayout - configured through the parent's `progressBarBottom` prop. */
+export interface CollectibleHubLayoutProgressBarBottomProps {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutProgressBarBottom = ({ layout }: CollectibleHubLayoutProgressBarBottomProps) => {
+    return (
+        <Region
+            name="progress_bar_bottom"
+            params={16}
+            backgroundColor="#037c00"
+            layout={{ position: 'absolute', left: 0, width: 120, top: 8, height: 8, ...layout }}
+        />
+    );
+};
+
+/** Named region `progress_padded_bar` of CollectibleHubLayout - configured through the parent's `progressPaddedBar` prop. */
+export interface CollectibleHubLayoutProgressPaddedBarProps {
+    layout?: BoxLayout;
+    progressBarBottom?: CollectibleHubLayoutProgressBarBottomProps;
+    progressBarTop?: CollectibleHubLayoutProgressBarTopProps;
+}
+
+export const CollectibleHubLayoutProgressPaddedBar = ({ layout, progressBarBottom, progressBarTop }: CollectibleHubLayoutProgressPaddedBarProps) => {
+    return (
+        <Region
+            name="progress_padded_bar"
+            params={16}
+            layout={{ position: 'absolute', left: 1, width: 220, top: 1, height: 16, ...layout }}
+        >
+            <CollectibleHubLayoutProgressBarTop {...progressBarTop} />
+            <CollectibleHubLayoutProgressBarBottom {...progressBarBottom} />
+        </Region>
+    );
+};
+
+/** Named region `progress_bar` of CollectibleHubLayout - configured through the parent's `progressBar` prop. */
+export interface CollectibleHubLayoutProgressBarProps {
+    captionProgressBarText?: string;
+    layout?: BoxLayout;
+    progressPaddedBar?: CollectibleHubLayoutProgressPaddedBarProps;
+}
+
+export const CollectibleHubLayoutProgressBar = ({ captionProgressBarText, layout, progressPaddedBar }: CollectibleHubLayoutProgressBarProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="progress_bar"
+            params={16}
+            backgroundColor="#112e31"
+            layout={{ position: 'absolute', left: 0, width: 220, top: 24, height: 18, ...layout }}
+        >
+            <CollectibleHubLayoutProgressPaddedBar {...progressPaddedBar} />
+            <Region
+                name="progress_bar_text"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 220, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionProgressBarText ?? t('collectibles.preview.time_left')}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `right_box` of CollectibleHubLayout - configured through the parent's `rightBox` prop. */
+export interface CollectibleHubLayoutRightBoxProps {
+    captionMintLockText?: string;
+    layout?: BoxLayout;
+    progressBar?: CollectibleHubLayoutProgressBarProps;
+}
+
+export const CollectibleHubLayoutRightBox = ({ captionMintLockText, layout, progressBar }: CollectibleHubLayoutRightBoxProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="right_box"
+            params={16}
+            layout={{ position: 'absolute', left: 64, width: 226, top: 0, height: 46, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="mint_lock_text"
+                params={786433}
+                layout={{ position: 'absolute', marginLeft: 32, marginRight: -32, width: 290, top: 4, height: 17, minWidth: 290, maxWidth: 290, minHeight: 17, maxHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionMintLockText ?? t('shop.minting.region_unlocked')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 290 }}
+                />
+            </Region>
+            <CollectibleHubLayoutProgressBar {...progressBar} />
+        </Region>
+    );
+};
+
+/** Named region `mint_info_container` of CollectibleHubLayout - configured through the parent's `mintInfoContainer` prop. */
+export interface CollectibleHubLayoutMintInfoContainerProps {
+    layout?: BoxLayout;
+    rightBox?: CollectibleHubLayoutRightBoxProps;
+}
+
+export const CollectibleHubLayoutMintInfoContainer = ({ layout, rightBox }: CollectibleHubLayoutMintInfoContainerProps) => {
+    return (
+        <Region
+            name="mint_info_container"
+            params={16}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, width: 290, top: 214, height: 46, ...layout }}
+        >
+            <CollectibleHubLayoutRightBox {...rightBox} />
+        </Region>
+    );
+};
+
+/** Named region `preview_container` of CollectibleHubLayout - configured through the parent's `previewContainer` prop. */
+export interface CollectibleHubLayoutPreviewContainerProps {
+    collectContainer?: CollectibleHubLayoutCollectContainerProps;
+    layout?: BoxLayout;
+    mintInfoContainer?: CollectibleHubLayoutMintInfoContainerProps;
+    productNameContainer?: CollectibleHubLayoutProductNameContainerProps;
+    srcBgStar?: string;
+    srcMintLockClosedIcon?: string;
+    srcMintLockOpenIcon?: string;
+    srcPlaceholderImage?: string;
+    srcProductPreview?: string;
+    srcUnknownImage?: string;
+}
+
+export const CollectibleHubLayoutPreviewContainer = ({ collectContainer, layout, mintInfoContainer, productNameContainer, srcBgStar, srcMintLockClosedIcon, srcMintLockOpenIcon, srcPlaceholderImage, srcProductPreview, srcUnknownImage }: CollectibleHubLayoutPreviewContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="preview_container"
+            params={16}
+            layout={{ position: 'absolute', left: 191, width: 290, top: 0, height: 260, ...layout }}
+        >
+            <Border
+                variant="3"
+                name="collection_preview_bg"
+                params={16}
+                tintColor="#3d1f39"
+                layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260, justifyContent: 'center' }}
+            >
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_score_background.png')}
+                    layout={{ position: 'absolute', left: -15, width: 166, top: -8, height: 286 }}
+                />
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_score_background_right.png')}
+                    layout={{ position: 'absolute', left: 139, width: 166, top: -18, height: 286 }}
+                />
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_score_background_gradient2.png')}
+                    tint="#45ace2"
+                    layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260 }}
+                />
+                <ThemeImage
+                    name="bg_star"
+                    params={16}
+                    src={srcBgStar ?? layoutImage('bg_star_300x300.png')}
+                    layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
+                />
+                <Region
+                    visible={false}
+                    layout={{ position: 'absolute', left: 91, width: 108, top: 64, height: 132 }}
+                >
+                    <ThemeImage
+                        name="placeholder_image"
+                        params={16}
+                        src={srcPlaceholderImage ?? layoutImage('collectables_collection_default.png')}
+                        layout={{ position: 'absolute', left: 91, width: 108, top: 64, height: 132 }}
+                    />
+                </Region>
+                <WidgetSlot
+                    widgetType="avatar_image"
+                    name="avatar_image_widget"
+                    params={16}
+                    visible={false}
+                    layout={{ position: 'absolute', left: 100, width: 90, top: 53, height: 130 }}
+                />
+                <WidgetSlot
+                    widgetType="badge_image"
+                    name="badge_image_widget"
+                    params={1077674000}
+                    visible={false}
+                    options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '2', 'badge_image:zoom_y': '2' }}
+                    layout={{ position: 'absolute', width: 80, alignSelf: 'center', height: 80, overflow: 'hidden' }}
+                />
+                <Region
+                    visible={false}
+                    layout={{ position: 'absolute', width: 48, alignSelf: 'center', height: 48 }}
+                >
+                    <ThemeImage
+                        name="unknown_image"
+                        params={3932176}
+                        src={srcUnknownImage ?? layoutImage('collectables_icon_curator_stamp_large.png')}
+                        layout={{ position: 'absolute', width: 48, alignSelf: 'center', height: 48 }}
+                    />
+                </Region>
+                <WidgetSlot
+                    widgetType="pet_image"
+                    name="pet_image_widget"
+                    params={1077674000}
+                    visible={false}
+                    options={{ 'pet_image:zoomX': '2', 'pet_image:zoomY': '2', 'pet_image:shrink_on_overflow': 'true' }}
+                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 180, alignSelf: 'center', height: 140, overflow: 'hidden' }}
+                />
+                <WidgetSlot
+                    widgetType="room_previewer"
+                    name="effect_image_widget"
+                    params={1077674000}
+                    visible={false}
+                    options={{ 'room_previewer:offsetx': '2', 'room_previewer:offsety': '36' }}
+                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 100, alignSelf: 'center', height: 260, overflow: 'hidden' }}
+                />
+                <Region
+                    visible={false}
+                    layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
+                >
+                    <ThemeImage
+                        name="product_preview"
+                        params={16}
+                        src={srcProductPreview}
+                        layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
+                    />
+                </Region>
+                <CollectibleHubLayoutProductNameContainer {...productNameContainer} />
+                <CollectibleHubLayoutCollectContainer {...collectContainer} />
+                <Border
+                    variant="3"
+                    name="no_furni_notify"
+                    params={16}
+                    tintColor="#5a1003"
+                    blend={0.82}
+                    layout={{ position: 'absolute', left: 4, width: 282, top: 30, height: 50, justifyContent: 'center' }}
+                >
+                    <Region
+                        params={3932161}
+                        layout={{ position: 'absolute', width: 274, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 16, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                    >
+                        <ThemeText
+                            text={t('shop.minting.no_furni')}
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 274, align: 'center' }}
+                        />
+                    </Region>
+                </Border>
+                <CollectibleHubLayoutMintInfoContainer {...mintInfoContainer} />
+                <ThemeImage
+                    name="mint_lock_open_icon"
+                    params={16}
+                    src={srcMintLockOpenIcon ?? layoutImage('collectables_lock_open.png')}
+                    layout={{ position: 'absolute', left: 7, width: 51, top: 208, height: 46 }}
+                />
+                <Region
+                    visible={false}
+                    layout={{ position: 'absolute', left: 7, width: 52, top: 208, height: 46 }}
+                >
+                    <ThemeImage
+                        name="mint_lock_closed_icon"
+                        params={16}
+                        src={srcMintLockClosedIcon ?? layoutImage('collectables_lock_closed.png')}
+                        layout={{ position: 'absolute', left: 7, width: 52, top: 208, height: 46 }}
+                    />
+                </Region>
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `furniture_container` of CollectibleHubLayout - configured through the parent's `furnitureContainer` prop. */
+export interface CollectibleHubLayoutFurnitureContainerProps {
+    itemgridInventory?: CollectibleHubLayoutItemgridInventoryProps;
+    layout?: BoxLayout;
+    previewContainer?: CollectibleHubLayoutPreviewContainerProps;
+}
+
+export const CollectibleHubLayoutFurnitureContainer = ({ itemgridInventory, layout, previewContainer }: CollectibleHubLayoutFurnitureContainerProps) => {
+    return (
+        <Region
+            name="furniture_container"
+            params={16}
+            layout={{ position: 'absolute', left: 4, width: 480, top: 60, height: 262, ...layout }}
+        >
+            <CollectibleHubLayoutItemgridInventory {...itemgridInventory} />
+            <CollectibleHubLayoutPreviewContainer {...previewContainer} />
+        </Region>
+    );
+};
+
+/** Named region `spacing` of CollectibleHubLayout - configured through the parent's `spacing` prop. */
+export interface CollectibleHubLayoutSpacing3Props {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutSpacing3 = ({ layout }: CollectibleHubLayoutSpacing3Props) => {
+    return (
+        <Region
+            name="spacing"
+            params={16}
+            layout={{ width: 4, height: 30, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `spacing` of CollectibleHubLayout - configured through the parent's `spacing` prop. */
+export interface CollectibleHubLayoutSpacing4Props {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutSpacing4 = ({ layout }: CollectibleHubLayoutSpacing4Props) => {
+    return (
+        <Region
+            name="spacing"
+            params={16}
+            layout={{ width: 6, height: 30, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `stamp_purchasing_container` of CollectibleHubLayout - configured through the parent's `stampPurchasingContainer` prop. */
+export interface CollectibleHubLayoutStampPurchasingContainerProps {
+    captionMintTokenBalance?: string;
+    captionSilverCostText?: string;
+    captionStampsHeader?: string;
+    captionStampsHeader2?: string;
+    layout?: BoxLayout;
+    onSilverBuyButton?: () => void;
+    onStampsPurchaseDropdown?: () => void;
+    spacing?: CollectibleHubLayoutSpacing3Props;
+    spacing2?: CollectibleHubLayoutSpacing4Props;
+}
+
+export const CollectibleHubLayoutStampPurchasingContainer = ({ captionMintTokenBalance, captionSilverCostText, captionStampsHeader, captionStampsHeader2, layout, onSilverBuyButton, onStampsPurchaseDropdown, spacing, spacing2 }: CollectibleHubLayoutStampPurchasingContainerProps) => {
+    const t = useTranslation();
+    const [ stampsPurchaseInputValue, setStampsPurchaseInputValue ] = useState('');
+
+    return (
+        <Region
+            name="stamp_purchasing_container"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 488, top: 0, height: 100, ...layout }}
+        >
+            <Border
+                variant="3"
+                name="stamps_container"
+                params={16}
+                tintColor="#d6dbe1"
+                layout={{ position: 'absolute', left: 42, width: 200, top: 14, height: 72 }}
+            >
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_icon_curator_stamp_large.png')}
+                    layout={{ position: 'absolute', left: 12, width: 48, top: 12, height: 48 }}
+                />
+                <Region
+                    name="stamps_header"
+                    params={16}
+                    layout={{ position: 'absolute', left: 68, width: 122, top: 12, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionStampsHeader ?? t('shop.minting.tokens')}
+                        textStyle="text-style-u-bold"
+                    />
+                </Region>
+                <Region
+                    name="mint_token_balance"
+                    params={16}
+                    layout={{ position: 'absolute', left: 67, width: 21, top: 26, height: 37, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionMintTokenBalance ?? '0'}
+                        textStyle="text-style-u-bold"
+                    />
+                </Region>
+            </Border>
+            <Border
+                variant="3"
+                name="stamp_buying_container"
+                params={16}
+                tintColor="#d6dbe1"
+                layout={{ position: 'absolute', left: 246, width: 200, top: 14, height: 72 }}
+            >
+                <Region
+                    params={409616}
+                    layout={{ position: 'absolute', right: 4, top: 4, flexDirection: 'row', gap: 6 }}
+                >
+                    <Region
+                        name="stamps_header"
+                        params={16}
+                        layout={{ width: 100, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionStampsHeader2 ?? t('collectibles.buy.mint.tokens')}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                    <Region
+                        visible={false}
+                        layout={{ width: 30, height: 25, flexShrink: 0 }}
+                    >
+                        <Border
+                            variant="5"
+                            params={16}
+                            layout={{ width: '100%', height: '100%' }}
+                        >
+                            <TextInput
+                                value={stampsPurchaseInputValue}
+                                onChange={setStampsPurchaseInputValue}
+                                layout={{ position: 'absolute', left: 3, width: 23, top: 5, height: 15 }}
+                            />
+                        </Border>
+                    </Region>
+                    <Dropmenu
+                        variant="0"
+                        name="stamps_purchase_dropdown"
+                        params={17}
+                        onPointerTap={onStampsPurchaseDropdown}
+                        layout={{ width: 48, height: 21, flexShrink: 0 }}
+                    >
+                        100
+                    </Dropmenu>
+                </Region>
+                <Region
+                    params={409616}
+                    layout={{ position: 'absolute', right: 4, top: 36, flexDirection: 'row' }}
+                >
+                    <Region
+                        name="silver_cost_text"
+                        params={16}
+                        layout={{ width: 13, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionSilverCostText ?? '1'}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                    <CollectibleHubLayoutSpacing3 {...spacing} />
+                    <ThemeImage
+                        params={16}
+                        src={layoutImage('pursearea_mid_silver_icon.png')}
+                        layout={{ width: 24, height: 30, flexShrink: 0 }}
+                    />
+                    <CollectibleHubLayoutSpacing4 {...spacing2} />
+                    <Button
+                        variant="5"
+                        name="silver_buy_button"
+                        params={131089}
+                        tintColor="#2095d4"
+                        onPointerTap={onSilverBuyButton}
+                        layout={{ width: 100, height: 30, flexShrink: 0, minWidth: 100 }}
+                    >
+                        {t('generic.buy')}
+                    </Button>
+                </Region>
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `no_wallet_container` of CollectibleHubLayout - configured through the parent's `noWalletContainer` prop. */
+export interface CollectibleHubLayoutNoWalletContainerProps {
+    captionNoWalletText?: string;
+    layout?: BoxLayout;
+    onCreateWalletButton?: () => void;
+    onMoreInfoButton?: () => void;
+    visibleNoWalletContainer?: boolean;
+}
+
+export const CollectibleHubLayoutNoWalletContainer = ({ captionNoWalletText, layout, onCreateWalletButton, onMoreInfoButton, visibleNoWalletContainer }: CollectibleHubLayoutNoWalletContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="no_wallet_container"
+            params={16}
+            visible={visibleNoWalletContainer ?? false}
+            layout={{ position: 'absolute', left: 0, width: 488, top: 0, height: 100, ...layout }}
+        >
+            <Region
+                name="no_wallet_text"
+                params={3145744}
+                layout={{ position: 'absolute', left: 10, width: 360, alignSelf: 'center', marginTop: -41.5, marginBottom: 41.5, height: 17, minHeight: 0, maxHeight: 60, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionNoWalletText ?? t('shop.minting.no_wallet.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 360 }}
+                />
+            </Region>
+            <ThemeImage
+                params={16}
+                src={layoutImage('image_connection_problem.png')}
+                layout={{ position: 'absolute', left: 380, width: 92, top: 5, height: 90 }}
+            />
+            <Button
+                variant="5"
+                name="create_wallet_button"
+                params={131089}
+                tintColor="#2095d4"
+                onPointerTap={onCreateWalletButton}
+                layout={{ position: 'absolute', left: 10, width: 170, top: 62, height: 30, minWidth: 170, maxWidth: 170 }}
+            >
+                {t('shop.minting.create.wallet')}
+            </Button>
+            <Button
+                variant="5"
+                name="more_info_button"
+                params={131089}
+                tintColor="#2095d4"
+                onPointerTap={onMoreInfoButton}
+                layout={{ position: 'absolute', left: 192, width: 170, top: 62, height: 30, minWidth: 170, maxWidth: 170 }}
+            >
+                {t('shop.minting.link.wallet')}
+            </Button>
+        </Region>
+    );
+};
+
+/** Named region `category_footer` of CollectibleHubLayout - configured through the parent's `categoryFooter` prop. */
+export interface CollectibleHubLayoutCategoryFooterProps {
+    layout?: BoxLayout;
+    noWalletContainer?: CollectibleHubLayoutNoWalletContainerProps;
+    stampPurchasingContainer?: CollectibleHubLayoutStampPurchasingContainerProps;
+}
+
+export const CollectibleHubLayoutCategoryFooter = ({ layout, noWalletContainer, stampPurchasingContainer }: CollectibleHubLayoutCategoryFooterProps) => {
+    return (
+        <Region
+            name="category_footer"
+            tags={[ 'category_header' ]}
+            params={1073741840}
+            layout={{ position: 'absolute', left: 0, width: 488, top: 330, height: 100, overflow: 'hidden', ...layout }}
+        >
+            <Border
+                variant="3"
+                name="large_border"
+                params={16}
+                tintColor="#bac3cd"
+                layout={{ position: 'absolute', left: 0, width: 488, top: 0, height: 100 }}
+            >
+                <CollectibleHubLayoutStampPurchasingContainer {...stampPurchasingContainer} />
+                <CollectibleHubLayoutNoWalletContainer {...noWalletContainer} />
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `loaded_content` of CollectibleHubLayout - configured through the parent's `loadedContent` prop. */
+export interface CollectibleHubLayoutLoadedContentProps {
+    categoryFooter?: CollectibleHubLayoutCategoryFooterProps;
+    categoryMintingHeaderRegion?: CollectibleHubLayoutCategoryMintingHeaderRegionProps;
+    furnitureContainer?: CollectibleHubLayoutFurnitureContainerProps;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutLoadedContent = ({ categoryFooter, categoryMintingHeaderRegion, furnitureContainer, layout }: CollectibleHubLayoutLoadedContentProps) => {
+    return (
+        <Region
+            name="loaded_content"
+            params={1073741840}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 430, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutCategoryMintingHeaderRegion {...categoryMintingHeaderRegion} />
+            <CollectibleHubLayoutFurnitureContainer {...furnitureContainer} />
+            <CollectibleHubLayoutCategoryFooter {...categoryFooter} />
+        </Region>
+    );
+};
+
+/** Named region `loading_contents` of CollectibleHubLayout - configured through the parent's `loadingContents` prop. */
+export interface CollectibleHubLayoutLoadingContentsProps {
+    layout?: BoxLayout;
+    srcLoadingIcon?: string;
+    visibleLoadingContents?: boolean;
+}
+
+export const CollectibleHubLayoutLoadingContents = ({ layout, srcLoadingIcon, visibleLoadingContents }: CollectibleHubLayoutLoadingContentsProps) => {
+    return (
+        <Region
+            name="loading_contents"
+            params={16}
+            visible={visibleLoadingContents ?? false}
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
+        >
+            <Border
+                variant="2"
+                params={16}
+                tintColor="#a4a49f"
+                layout={{ position: 'absolute', left: 185, width: 113, top: 155, height: 116 }}
+            />
+            <ThemeImage
+                name="loading_icon"
+                params={16}
+                src={srcLoadingIcon ?? layoutImage('loading.png')}
+                layout={{ position: 'absolute', left: 205, width: 75, top: 175, height: 75 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `mintingContainer` of CollectibleHubLayout - configured through the parent's `mintingContainer` prop. */
+export interface CollectibleHubLayoutMintingContainerProps {
+    layout?: BoxLayout;
+    loadedContent?: CollectibleHubLayoutLoadedContentProps;
+    loadingContents?: CollectibleHubLayoutLoadingContentsProps;
+    visibleMintingContainer?: boolean;
+}
+
+export const CollectibleHubLayoutMintingContainer = ({ layout, loadedContent, loadingContents, visibleMintingContainer }: CollectibleHubLayoutMintingContainerProps) => {
+    return (
+        <Region
+            name="mintingContainer"
+            tags={[ 'TEMPLATE', 'category_container' ]}
+            params={1073889424}
+            visible={visibleMintingContainer ?? false}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, right: 10, top: 125, height: 430, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutLoadedContent {...loadedContent} />
+            <CollectibleHubLayoutLoadingContents {...loadingContents} />
+        </Region>
+    );
+};
+
+/** Named region `category_name_region` of CollectibleHubLayout - configured through the parent's `categoryNameRegion` prop. */
+export interface CollectibleHubLayoutCategoryNameRegion2Props {
+    captionCollectorProfileHeader?: string;
+    layout?: BoxLayout;
+    onCategoryNameRegion?: () => void;
+    visibleCategoryNameRegion?: boolean;
+}
+
+export const CollectibleHubLayoutCategoryNameRegion2 = ({ captionCollectorProfileHeader, layout, onCategoryNameRegion, visibleCategoryNameRegion }: CollectibleHubLayoutCategoryNameRegion2Props) => {
+    return (
+        <Region
+            name="category_name_region"
+            params={131089}
+            visible={visibleCategoryNameRegion ?? false}
+            onPointerTap={onCategoryNameRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17, ...layout }}
+        >
+            <Region
+                name="collector_profile_header"
+                params={16}
+                visible={false}
+                layout={{ position: 'absolute', left: 0, width: 141, top: 0, height: 17, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCollectorProfileHeader ?? 'Collector Profile Header'}
+                    textStyle="text-style-u-regular"
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `category_minting_description_region` of CollectibleHubLayout - configured through the parent's `categoryMintingDescriptionRegion` prop. */
+export interface CollectibleHubLayoutCategoryMintingDescriptionRegion2Props {
+    captionCollectorProfileDescription?: string;
+    layout?: BoxLayout;
+    onCategoryMintingDescriptionRegion?: () => void;
+}
+
+export const CollectibleHubLayoutCategoryMintingDescriptionRegion2 = ({ captionCollectorProfileDescription, layout, onCategoryMintingDescriptionRegion }: CollectibleHubLayoutCategoryMintingDescriptionRegion2Props) => {
+    return (
+        <Region
+            name="category_minting_description_region"
+            params={147473}
+            onPointerTap={onCategoryMintingDescriptionRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 380, top: 22, height: 30, ...layout }}
+        >
+            <Region
+                name="collector_profile_description"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 30, minWidth: 2, maxWidth: 380, minHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCollectorProfileDescription ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta felis sed libero rhoncus, at elementum metus sagittis. '}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `category_collector_header_region` of CollectibleHubLayout - configured through the parent's `categoryCollectorHeaderRegion` prop. */
+export interface CollectibleHubLayoutCategoryCollectorHeaderRegionProps {
+    categoryMintingDescriptionRegion?: CollectibleHubLayoutCategoryMintingDescriptionRegion2Props;
+    categoryNameRegion?: CollectibleHubLayoutCategoryNameRegion2Props;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutCategoryCollectorHeaderRegion = ({ categoryMintingDescriptionRegion, categoryNameRegion, layout }: CollectibleHubLayoutCategoryCollectorHeaderRegionProps) => {
+    return (
+        <Region
+            name="category_collector_header_region"
+            tags={[ 'category_header' ]}
+            params={1073741840}
+            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 56, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutCategoryNameRegion2 {...categoryNameRegion} />
+            <CollectibleHubLayoutCategoryMintingDescriptionRegion2 {...categoryMintingDescriptionRegion} />
+        </Region>
+    );
+};
+
+/** Named region `category_content_background` of CollectibleHubLayout - configured through the parent's `categoryContentBackground` prop. */
+export interface CollectibleHubLayoutCategoryContentBackgroundProps {
+    categoryCollectorHeaderRegion?: CollectibleHubLayoutCategoryCollectorHeaderRegionProps;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutCategoryContentBackground = ({ categoryCollectorHeaderRegion, layout }: CollectibleHubLayoutCategoryContentBackgroundProps) => {
+    return (
+        <Region
+            name="category_content_background"
+            params={1073741840}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutCategoryCollectorHeaderRegion {...categoryCollectorHeaderRegion} />
+        </Region>
+    );
+};
+
+/** Named region `collectorProfileContainer` of CollectibleHubLayout - configured through the parent's `collectorProfileContainer` prop. */
+export interface CollectibleHubLayoutCollectorProfileContainerProps {
+    categoryContentBackground?: CollectibleHubLayoutCategoryContentBackgroundProps;
+    layout?: BoxLayout;
+    visibleCollectorProfileContainer?: boolean;
+}
+
+export const CollectibleHubLayoutCollectorProfileContainer = ({ categoryContentBackground, layout, visibleCollectorProfileContainer }: CollectibleHubLayoutCollectorProfileContainerProps) => {
+    return (
+        <Region
+            name="collectorProfileContainer"
+            tags={[ 'TEMPLATE', 'category_container' ]}
+            params={1073889424}
+            visible={visibleCollectorProfileContainer ?? false}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, right: 110, top: 125, height: 400, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutCategoryContentBackground {...categoryContentBackground} />
+        </Region>
+    );
+};
+
+/** Named region `buttonContainer` of CollectibleHubLayout - configured through the parent's `buttonContainer` prop. */
+export interface CollectibleHubLayoutButtonContainerProps {
+    layout?: BoxLayout;
+    onSearchClearButton?: () => void;
+    srcSearchIcon?: string;
+}
+
+export const CollectibleHubLayoutButtonContainer = ({ layout, onSearchClearButton, srcSearchIcon }: CollectibleHubLayoutButtonContainerProps) => {
+    return (
+        <Region
+            name="buttonContainer"
+            params={16}
+            layout={{ position: 'absolute', left: 160, width: 24, top: 0, height: 24, justifyContent: 'center', ...layout }}
+        >
+            <ThemeImage
+                name="search_icon"
+                params={3935424}
+                src={srcSearchIcon ?? layoutImage('icons_close.png')}
+                layout={{ position: 'absolute', width: 20, alignSelf: 'center', height: 20 }}
+            />
+            <Button
+                variant="100"
+                name="search_clear_button"
+                tooltip="clear"
+                params={131089}
+                onPointerTap={onSearchClearButton}
+                layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 32 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `item_hilight_inner` of CollectibleHubLayout - configured through the parent's `itemHilightInner` prop. */
+export interface CollectibleHubLayoutItemHilightInnerProps {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutItemHilightInner = ({ layout }: CollectibleHubLayoutItemHilightInnerProps) => {
+    return (
+        <Region
+            name="item_hilight_inner"
+            params={16}
+            backgroundColor="#63c5e9"
+            layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16, ...layout }}
+        />
+    );
+};
+
+/** Named region `item_hilight_outer` of CollectibleHubLayout - configured through the parent's `itemHilightOuter` prop. */
+export interface CollectibleHubLayoutItemHilightOuterProps {
+    itemHilightInner?: CollectibleHubLayoutItemHilightInnerProps;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutItemHilightOuter = ({ itemHilightInner, layout }: CollectibleHubLayoutItemHilightOuterProps) => {
+    return (
+        <Region
+            name="item_hilight_outer"
+            params={16}
+            backgroundColor="#82d1ed"
+            layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20, ...layout }}
+        >
+            <CollectibleHubLayoutItemHilightInner {...itemHilightInner} />
+        </Region>
+    );
+};
+
+/** Named region `progress_container` of CollectibleHubLayout - configured through the parent's `progressContainer` prop. */
+export interface CollectibleHubLayoutProgressContainerProps {
+    captionProgressText?: string;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutProgressContainer = ({ captionProgressText, layout }: CollectibleHubLayoutProgressContainerProps) => {
+    return (
+        <Region
+            name="progress_container"
+            params={131088}
+            layout={{ position: 'absolute', left: 120, width: 36, top: 3, height: 15, minWidth: 36, maxWidth: 36, ...layout }}
+        >
+            <Border
+                variant="3"
+                name="progress_color"
+                params={16}
+                tintColor="#00910a"
+                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 14 }}
+            />
+            <Region
+                name="progress_text"
+                params={16}
+                layout={{ position: 'absolute', left: 2, width: 32, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionProgressText ?? '100%'}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `progress_color_hint` of CollectibleHubLayout - configured through the parent's `progressColorHint` prop. */
+export interface CollectibleHubLayoutProgressColorHintProps {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutProgressColorHint = ({ layout }: CollectibleHubLayoutProgressColorHintProps) => {
+    return (
+        <Region
+            name="progress_color_hint"
+            params={16}
+            backgroundColor="#00910a"
+            layout={{ position: 'absolute', left: 0, width: 4, top: 1, height: 19, minWidth: 4, maxWidth: 4, minHeight: 19, maxHeight: 19, ...layout }}
+        />
+    );
+};
+
 /** Row template `item_template` of CollectibleHubLayout - pass real rows through its `items…` slot. */
 export interface CollectibleHubLayoutItemTemplateItem2Props {
     captionItemTitle?: string;
-    captionProgressText?: string;
+    itemHilightOuter?: CollectibleHubLayoutItemHilightOuterProps;
     layout?: BoxLayout;
     onItemTemplate?: () => void;
+    progressColorHint?: CollectibleHubLayoutProgressColorHintProps;
+    progressContainer?: CollectibleHubLayoutProgressContainerProps;
 }
 
-export const CollectibleHubLayoutItemTemplateItem2 = ({ captionItemTitle, captionProgressText, layout, onItemTemplate }: CollectibleHubLayoutItemTemplateItem2Props) => {
+export const CollectibleHubLayoutItemTemplateItem2 = ({ captionItemTitle, itemHilightOuter, layout, onItemTemplate, progressColorHint, progressContainer }: CollectibleHubLayoutItemTemplateItem2Props) => {
     return (
         <Region
             name="item_template"
@@ -2355,19 +1721,7 @@ export const CollectibleHubLayoutItemTemplateItem2 = ({ captionItemTitle, captio
                 backgroundColor="#b4b4ae"
                 layout={{ position: 'absolute', left: 1, width: 178, top: 0, height: 21 }}
             >
-                <Region
-                    name="item_hilight_outer"
-                    params={16}
-                    backgroundColor="#82d1ed"
-                    layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20 }}
-                >
-                    <Region
-                        name="item_hilight_inner"
-                        params={16}
-                        backgroundColor="#63c5e9"
-                        layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16 }}
-                    />
-                </Region>
+                <CollectibleHubLayoutItemHilightOuter {...itemHilightOuter} />
             </Region>
             <Region
                 name="item_title"
@@ -2381,35 +1735,124 @@ export const CollectibleHubLayoutItemTemplateItem2 = ({ captionItemTitle, captio
                     textOptions={{ fill: '#666666' }}
                 />
             </Region>
+            <CollectibleHubLayoutProgressContainer {...progressContainer} />
+            <CollectibleHubLayoutProgressColorHint {...progressColorHint} />
+        </Region>
+    );
+};
+
+/** Named region `navigationList` of CollectibleHubLayout - configured through the parent's `navigationList` prop. */
+export interface CollectibleHubLayoutNavigationListProps {
+    itemsNavigationList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutNavigationList = ({ itemsNavigationList, layout }: CollectibleHubLayoutNavigationListProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 3, width: 178, top: 5, bottom: 5, ...layout }}
+        >
             <Region
-                name="progress_container"
-                params={131088}
-                layout={{ position: 'absolute', left: 120, width: 36, top: 3, height: 15, minWidth: 36, maxWidth: 36 }}
+                name="navigationList"
+                params={2064}
+                layout={{ flexDirection: 'column', width: '100%' }}
             >
-                <Border
-                    variant="3"
-                    name="progress_color"
-                    params={16}
-                    tintColor="#00910a"
-                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 14 }}
-                />
-                <Region
-                    name="progress_text"
-                    params={16}
-                    layout={{ position: 'absolute', left: 2, width: 32, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionProgressText ?? '100%'}
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                {itemsNavigationList ?? (
+                    <CollectibleHubLayoutItemTemplateItem2 />
+                )}
             </Region>
-            <Region
-                name="progress_color_hint"
-                params={16}
-                backgroundColor="#00910a"
-                layout={{ position: 'absolute', left: 0, width: 4, top: 1, height: 19, minWidth: 4, maxWidth: 4, minHeight: 19, maxHeight: 19 }}
+        </ScrollArea>
+    );
+};
+
+/** Named region `navigationContainer` of CollectibleHubLayout - configured through the parent's `navigationContainer` prop. */
+export interface CollectibleHubLayoutNavigationContainerProps {
+    layout?: BoxLayout;
+    navigationList?: CollectibleHubLayoutNavigationListProps;
+}
+
+export const CollectibleHubLayoutNavigationContainer = ({ layout, navigationList }: CollectibleHubLayoutNavigationContainerProps) => {
+    return (
+        <Region
+            name="navigationContainer"
+            params={2064}
+            layout={{ position: 'absolute', left: 4, width: 184, top: 88, bottom: 0, ...layout }}
+        >
+            <Border
+                variant="6"
+                params={2064}
+                blend={0.5}
+                layout={{ position: 'absolute', left: 0, width: 184, top: 0, bottom: 0 }}
             />
+            <CollectibleHubLayoutNavigationList {...navigationList} />
+        </Region>
+    );
+};
+
+/** Named region `progress_header_container` of CollectibleHubLayout - configured through the parent's `progressHeaderContainer` prop. */
+export interface CollectibleHubLayoutProgressHeaderContainerProps {
+    captionProgressText?: string;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutProgressHeaderContainer = ({ captionProgressText, layout }: CollectibleHubLayoutProgressHeaderContainerProps) => {
+    return (
+        <Region
+            name="progress_header_container"
+            params={131088}
+            layout={{ position: 'absolute', left: 248, width: 40, top: 2, height: 26, minWidth: 40, maxWidth: 40, ...layout }}
+        >
+            <Border
+                variant="3"
+                name="progress_color"
+                params={16}
+                tintColor="#00910a"
+                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 26 }}
+            />
+            <Region
+                name="progress_text"
+                params={16}
+                layout={{ position: 'absolute', left: 2, width: 36, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionProgressText ?? '88/88'}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `product_name_container` of CollectibleHubLayout - configured through the parent's `productNameContainer` prop. */
+export interface CollectibleHubLayoutProductNameContainer2Props {
+    captionPreviewFurniName?: string;
+    layout?: BoxLayout;
+    onProductNameContainer?: () => void;
+    visibleProductNameContainer?: boolean;
+}
+
+export const CollectibleHubLayoutProductNameContainer2 = ({ captionPreviewFurniName, layout, onProductNameContainer, visibleProductNameContainer }: CollectibleHubLayoutProductNameContainer2Props) => {
+    return (
+        <Region
+            name="product_name_container"
+            params={17}
+            visible={visibleProductNameContainer ?? false}
+            backgroundColor="#000000"
+            onPointerTap={onProductNameContainer}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 26, ...layout }}
+        >
+            <Region
+                name="preview_furni_name"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 290, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionPreviewFurniName ?? 'Lorem ipsum hot air balloon'}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </Region>
         </Region>
     );
 };
@@ -2453,17 +1896,472 @@ export const CollectibleHubLayoutProductInfoEntryTemplateItem = ({ captionProduc
     );
 };
 
-/** Row template `item_template` of CollectibleHubLayout - pass real rows through its `items…` slot. */
-export interface CollectibleHubLayoutItemTemplateItem3Props {
+/** Named region `product_info_list` of CollectibleHubLayout - configured through the parent's `productInfoList` prop. */
+export interface CollectibleHubLayoutProductInfoListProps {
+    itemsProductInfoList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutProductInfoList = ({ itemsProductInfoList, layout }: CollectibleHubLayoutProductInfoListProps) => {
+    return (
+        <Region
+            name="product_info_list"
+            params={16}
+            layout={{ position: 'absolute', left: 24, width: 242, top: 24, height: 140, flexDirection: 'column', gap: 2, ...layout }}
+        >
+            {itemsProductInfoList ?? (
+                <CollectibleHubLayoutProductInfoEntryTemplateItem />
+            )}
+        </Region>
+    );
+};
+
+/** Named region `product_info_container` of CollectibleHubLayout - configured through the parent's `productInfoContainer` prop. */
+export interface CollectibleHubLayoutProductInfoContainerProps {
+    layout?: BoxLayout;
+    productInfoList?: CollectibleHubLayoutProductInfoListProps;
+    visibleProductInfoContainer?: boolean;
+}
+
+export const CollectibleHubLayoutProductInfoContainer = ({ layout, productInfoList, visibleProductInfoContainer }: CollectibleHubLayoutProductInfoContainerProps) => {
+    return (
+        <Region
+            name="product_info_container"
+            params={16}
+            visible={visibleProductInfoContainer ?? false}
+            backgroundColor="#3b1829"
+            layout={{ position: 'absolute', left: 0, width: 290, top: 26, height: 194, ...layout }}
+        >
+            <CollectibleHubLayoutProductInfoList {...productInfoList} />
+        </Region>
+    );
+};
+
+/** Named region `progress_bar_top` of CollectibleHubLayout - configured through the parent's `progressBarTop` prop. */
+export interface CollectibleHubLayoutProgressBarTop2Props {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutProgressBarTop2 = ({ layout }: CollectibleHubLayoutProgressBarTop2Props) => {
+    return (
+        <Region
+            name="progress_bar_top"
+            params={16}
+            backgroundColor="#00910a"
+            layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 8, ...layout }}
+        />
+    );
+};
+
+/** Named region `progress_bar_bottom` of CollectibleHubLayout - configured through the parent's `progressBarBottom` prop. */
+export interface CollectibleHubLayoutProgressBarBottom2Props {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutProgressBarBottom2 = ({ layout }: CollectibleHubLayoutProgressBarBottom2Props) => {
+    return (
+        <Region
+            name="progress_bar_bottom"
+            params={16}
+            backgroundColor="#037c00"
+            layout={{ position: 'absolute', left: 0, width: 120, top: 8, height: 8, ...layout }}
+        />
+    );
+};
+
+/** Named region `progress_padded_bar` of CollectibleHubLayout - configured through the parent's `progressPaddedBar` prop. */
+export interface CollectibleHubLayoutProgressPaddedBar2Props {
+    layout?: BoxLayout;
+    progressBarBottom?: CollectibleHubLayoutProgressBarBottom2Props;
+    progressBarTop?: CollectibleHubLayoutProgressBarTop2Props;
+}
+
+export const CollectibleHubLayoutProgressPaddedBar2 = ({ layout, progressBarBottom, progressBarTop }: CollectibleHubLayoutProgressPaddedBar2Props) => {
+    return (
+        <Region
+            name="progress_padded_bar"
+            params={16}
+            layout={{ position: 'absolute', left: 1, width: 280, top: 1, height: 16, ...layout }}
+        >
+            <CollectibleHubLayoutProgressBarTop2 {...progressBarTop} />
+            <CollectibleHubLayoutProgressBarBottom2 {...progressBarBottom} />
+        </Region>
+    );
+};
+
+/** Named region `progress_bar` of CollectibleHubLayout - configured through the parent's `progressBar` prop. */
+export interface CollectibleHubLayoutProgressBar2Props {
+    captionProgressBarText?: string;
+    layout?: BoxLayout;
+    progressPaddedBar?: CollectibleHubLayoutProgressPaddedBar2Props;
+}
+
+export const CollectibleHubLayoutProgressBar2 = ({ captionProgressBarText, layout, progressPaddedBar }: CollectibleHubLayoutProgressBar2Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="progress_bar"
+            params={16}
+            backgroundColor="#112e31"
+            layout={{ position: 'absolute', left: 0, width: 282, top: 34, height: 18, ...layout }}
+        >
+            <CollectibleHubLayoutProgressPaddedBar2 {...progressPaddedBar} />
+            <Region
+                name="progress_bar_text"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 282, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionProgressBarText ?? t('shop.minting.time_left')}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `padded_cont` of CollectibleHubLayout - configured through the parent's `paddedCont` prop. */
+export interface CollectibleHubLayoutPaddedContProps {
+    captionRewardFurniName?: string;
+    layout?: BoxLayout;
+    progressBar?: CollectibleHubLayoutProgressBar2Props;
+}
+
+export const CollectibleHubLayoutPaddedCont = ({ captionRewardFurniName, layout, progressBar }: CollectibleHubLayoutPaddedContProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="padded_cont"
+            params={16}
+            layout={{ position: 'absolute', left: 4, width: 282, top: 4, height: 52, ...layout }}
+        >
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 282, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('collectibles.preview.completion_bonus')}
+                    textOptions={{ fill: '#ffd300', align: 'center' }}
+                />
+            </Region>
+            <Region
+                name="reward_furni_name"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 282, top: 14, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionRewardFurniName ?? 'Lorem ipsum hot air balloon'}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </Region>
+            <CollectibleHubLayoutProgressBar2 {...progressBar} />
+        </Region>
+    );
+};
+
+/** Named region `completion_header_container` of CollectibleHubLayout - configured through the parent's `completionHeaderContainer` prop. */
+export interface CollectibleHubLayoutCompletionHeaderContainerProps {
+    layout?: BoxLayout;
+    paddedCont?: CollectibleHubLayoutPaddedContProps;
+}
+
+export const CollectibleHubLayoutCompletionHeaderContainer = ({ layout, paddedCont }: CollectibleHubLayoutCompletionHeaderContainerProps) => {
+    return (
+        <Region
+            name="completion_header_container"
+            params={16}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 60, ...layout }}
+        >
+            <CollectibleHubLayoutPaddedCont {...paddedCont} />
+        </Region>
+    );
+};
+
+/** Named region `bonus_or_reward_container` of CollectibleHubLayout - configured through the parent's `bonusOrRewardContainer` prop. */
+export interface CollectibleHubLayoutBonusOrRewardContainerProps {
+    completionHeaderContainer?: CollectibleHubLayoutCompletionHeaderContainerProps;
+    layout?: BoxLayout;
+    onClaimButton?: () => void;
+}
+
+export const CollectibleHubLayoutBonusOrRewardContainer = ({ completionHeaderContainer, layout, onClaimButton }: CollectibleHubLayoutBonusOrRewardContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="bonus_or_reward_container"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 200, ...layout }}
+        >
+            <CollectibleHubLayoutCompletionHeaderContainer {...completionHeaderContainer} />
+            <Button
+                variant="5"
+                name="claim_button"
+                params={393233}
+                tintColor="#01a101"
+                onPointerTap={onClaimButton}
+                layout={{ position: 'absolute', right: 7, width: 97, top: 166, height: 30 }}
+            >
+                {t('collectibles.claim')}
+            </Button>
+        </Region>
+    );
+};
+
+/** Named region `collection_progress_container` of CollectibleHubLayout - configured through the parent's `collectionProgressContainer` prop. */
+export interface CollectibleHubLayoutCollectionProgressContainerProps {
+    captionPreviewRewardText?: string;
+    captionPreviewScoreText?: string;
+    layout?: BoxLayout;
+    visibleCollectionProgressContainer?: boolean;
+}
+
+export const CollectibleHubLayoutCollectionProgressContainer = ({ captionPreviewRewardText, captionPreviewScoreText, layout, visibleCollectionProgressContainer }: CollectibleHubLayoutCollectionProgressContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="collection_progress_container"
+            params={16}
+            visible={visibleCollectionProgressContainer ?? false}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, width: 290, top: 200, height: 60, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="preview_score_text"
+                params={786433}
+                layout={{ position: 'absolute', width: 290, top: 3, height: 17, minWidth: 290, maxWidth: 290, minHeight: 17, maxHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionPreviewScoreText ?? t('collectibles.preview.score')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 290, align: 'center' }}
+                />
+            </Region>
+            <Border
+                variant="3"
+                params={16}
+                tintColor="#5a1003"
+                layout={{ position: 'absolute', left: 4, width: 282, top: 24, height: 32, justifyContent: 'center' }}
+            >
+                <Region
+                    name="preview_reward_text"
+                    params={3932161}
+                    layout={{ position: 'absolute', width: 274, alignSelf: 'center', height: 28, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionPreviewRewardText ?? t('collectibles.preview.reward')}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 274, align: 'center' }}
+                    />
+                </Region>
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `product_progress_container` of CollectibleHubLayout - configured through the parent's `productProgressContainer` prop. */
+export interface CollectibleHubLayoutProductProgressContainerProps {
+    captionProcuctScoreText?: string;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutProductProgressContainer = ({ captionProcuctScoreText, layout }: CollectibleHubLayoutProductProgressContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="product_progress_container"
+            params={16}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, width: 290, top: 220, height: 40, ...layout }}
+        >
+            <Border
+                variant="3"
+                params={16}
+                tintColor="#5a1003"
+                layout={{ position: 'absolute', left: 4, width: 282, top: 4, height: 32, justifyContent: 'center' }}
+            >
+                <Region
+                    name="procuct_score_text"
+                    params={3932161}
+                    layout={{ position: 'absolute', width: 274, alignSelf: 'center', height: 16, minWidth: 274, maxWidth: 274, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionProcuctScoreText ?? t('collectibles.preview.product.incomplete')}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 274, align: 'center' }}
+                    />
+                </Region>
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `preview_container` of CollectibleHubLayout - configured through the parent's `previewContainer` prop. */
+export interface CollectibleHubLayoutPreviewContainer2Props {
+    bonusOrRewardContainer?: CollectibleHubLayoutBonusOrRewardContainerProps;
+    collectionProgressContainer?: CollectibleHubLayoutCollectionProgressContainerProps;
+    layout?: BoxLayout;
+    productInfoContainer?: CollectibleHubLayoutProductInfoContainerProps;
+    productNameContainer?: CollectibleHubLayoutProductNameContainer2Props;
+    productProgressContainer?: CollectibleHubLayoutProductProgressContainerProps;
+    srcBgStar?: string;
+    srcPlaceholderImage?: string;
+    srcProductPreview?: string;
+    srcUnknownImage?: string;
+}
+
+export const CollectibleHubLayoutPreviewContainer2 = ({ bonusOrRewardContainer, collectionProgressContainer, layout, productInfoContainer, productNameContainer, productProgressContainer, srcBgStar, srcPlaceholderImage, srcProductPreview, srcUnknownImage }: CollectibleHubLayoutPreviewContainer2Props) => {
+    return (
+        <Region
+            name="preview_container"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 290, top: 34, height: 260, ...layout }}
+        >
+            <Border
+                variant="3"
+                name="collection_preview_bg"
+                params={16}
+                tintColor="#3d1f39"
+                layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260, justifyContent: 'center' }}
+            >
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_score_background.png')}
+                    layout={{ position: 'absolute', left: -15, width: 166, top: -8, height: 286 }}
+                />
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_score_background_right.png')}
+                    layout={{ position: 'absolute', left: 139, width: 166, top: -18, height: 286 }}
+                />
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_score_background_gradient2.png')}
+                    tint="#45ace2"
+                    layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260 }}
+                />
+                <ThemeImage
+                    name="bg_star"
+                    params={16}
+                    src={srcBgStar ?? layoutImage('bg_star_300x300.png')}
+                    layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
+                />
+                <Region
+                    visible={false}
+                    layout={{ position: 'absolute', left: 91, width: 108, top: 64, height: 132 }}
+                >
+                    <ThemeImage
+                        name="placeholder_image"
+                        params={16}
+                        src={srcPlaceholderImage ?? layoutImage('collectables_collection_default.png')}
+                        layout={{ position: 'absolute', left: 91, width: 108, top: 64, height: 132 }}
+                    />
+                </Region>
+                <WidgetSlot
+                    widgetType="avatar_image"
+                    name="avatar_image_widget"
+                    params={16}
+                    visible={false}
+                    layout={{ position: 'absolute', left: 100, width: 90, top: 53, height: 130 }}
+                />
+                <WidgetSlot
+                    widgetType="badge_image"
+                    name="badge_image_widget"
+                    params={1077674000}
+                    visible={false}
+                    options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '2', 'badge_image:zoom_y': '2' }}
+                    layout={{ position: 'absolute', width: 80, alignSelf: 'center', height: 80, overflow: 'hidden' }}
+                />
+                <Region
+                    visible={false}
+                    layout={{ position: 'absolute', width: 48, alignSelf: 'center', height: 48 }}
+                >
+                    <ThemeImage
+                        name="unknown_image"
+                        params={3932176}
+                        src={srcUnknownImage ?? layoutImage('collectables_icon_curator_stamp_large.png')}
+                        layout={{ position: 'absolute', width: 48, alignSelf: 'center', height: 48 }}
+                    />
+                </Region>
+                <WidgetSlot
+                    widgetType="pet_image"
+                    name="pet_image_widget"
+                    params={1077674000}
+                    visible={false}
+                    options={{ 'pet_image:zoomX': '2', 'pet_image:zoomY': '2', 'pet_image:shrink_on_overflow': 'true' }}
+                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 180, alignSelf: 'center', height: 140, overflow: 'hidden' }}
+                />
+                <WidgetSlot
+                    widgetType="room_previewer"
+                    name="effect_image_widget"
+                    params={1077674000}
+                    visible={false}
+                    options={{ 'room_previewer:offsetx': '2', 'room_previewer:offsety': '36' }}
+                    layout={{ position: 'absolute', marginLeft: -2, marginRight: 2, width: 100, alignSelf: 'center', height: 260, overflow: 'hidden' }}
+                />
+                <ThemeImage
+                    name="product_preview"
+                    params={16}
+                    src={srcProductPreview}
+                    layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
+                />
+                <CollectibleHubLayoutProductNameContainer2 {...productNameContainer} />
+                <CollectibleHubLayoutProductInfoContainer {...productInfoContainer} />
+                <CollectibleHubLayoutBonusOrRewardContainer {...bonusOrRewardContainer} />
+                <CollectibleHubLayoutCollectionProgressContainer {...collectionProgressContainer} />
+                <CollectibleHubLayoutProductProgressContainer {...productProgressContainer} />
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `number_container` of CollectibleHubLayout - configured through the parent's `numberContainer` prop. */
+export interface CollectibleHubLayoutNumberContainer2Props {
     captionNumber?: string;
     layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutNumberContainer2 = ({ captionNumber, layout }: CollectibleHubLayoutNumberContainer2Props) => {
+    return (
+        <Region
+            name="number_container"
+            params={131088}
+            layout={{ position: 'absolute', left: 0, width: 50, top: 45, height: 16, minWidth: 50, maxWidth: 50, ...layout }}
+        >
+            <Border
+                variant="3"
+                name="text_border"
+                params={16}
+                tintColor="#337c00"
+                layout={{ position: 'absolute', left: 3, width: 44, top: 1, height: 12 }}
+            />
+            <Region
+                name="number"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionNumber ?? 'x10'}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Row template `item_template` of CollectibleHubLayout - pass real rows through its `items…` slot. */
+export interface CollectibleHubLayoutItemTemplateItem3Props {
+    layout?: BoxLayout;
+    numberContainer?: CollectibleHubLayoutNumberContainer2Props;
     onItemTemplate?: () => void;
     srcBitmap?: string;
     srcCheckmarkIcon?: string;
     srcUnknownImage?: string;
 }
 
-export const CollectibleHubLayoutItemTemplateItem3 = ({ captionNumber, layout, onItemTemplate, srcBitmap, srcCheckmarkIcon, srcUnknownImage }: CollectibleHubLayoutItemTemplateItem3Props) => {
+export const CollectibleHubLayoutItemTemplateItem3 = ({ layout, numberContainer, onItemTemplate, srcBitmap, srcCheckmarkIcon, srcUnknownImage }: CollectibleHubLayoutItemTemplateItem3Props) => {
     return (
         <Region
             name="item_template"
@@ -2523,29 +2421,7 @@ export const CollectibleHubLayoutItemTemplateItem3 = ({ captionNumber, layout, o
                 options={{ 'pet_image:shrink_on_overflow': 'true' }}
                 layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 40, alignSelf: 'center', marginTop: -6.5, marginBottom: 6.5, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, overflow: 'hidden' }}
             />
-            <Region
-                name="number_container"
-                params={131088}
-                layout={{ position: 'absolute', left: 0, width: 50, top: 45, height: 16, minWidth: 50, maxWidth: 50 }}
-            >
-                <Border
-                    variant="3"
-                    name="text_border"
-                    params={16}
-                    tintColor="#337c00"
-                    layout={{ position: 'absolute', left: 3, width: 44, top: 1, height: 12 }}
-                />
-                <Region
-                    name="number"
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionNumber ?? 'x10'}
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-            </Region>
+            <CollectibleHubLayoutNumberContainer2 {...numberContainer} />
             <ThemeImage
                 name="checkmark_icon"
                 params={16}
@@ -2556,15 +2432,252 @@ export const CollectibleHubLayoutItemTemplateItem3 = ({ captionNumber, layout, o
     );
 };
 
-/** Row template `item_template` of CollectibleHubLayout - pass real rows through its `items…` slot. */
-export interface CollectibleHubLayoutItemTemplateItem4Props {
-    captionItemTitle?: string;
+/** Named region `itemgrid_collection` of CollectibleHubLayout - configured through the parent's `itemgridCollection` prop. */
+export interface CollectibleHubLayoutItemgridCollectionProps {
+    itemsItemgridCollection?: ReactNode;
     layout?: BoxLayout;
-    onItemTemplate?: () => void;
+}
+
+export const CollectibleHubLayoutItemgridCollection = ({ itemsItemgridCollection, layout }: CollectibleHubLayoutItemgridCollectionProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 123, ...layout }}
+        >
+            <Region
+                name="itemgrid_collection"
+                tags={[ 'FURNI_ITEM_GRID' ]}
+                params={16}
+                layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}
+            >
+                {itemsItemgridCollection ?? (
+                    <CollectibleHubLayoutItemTemplateItem3 />
+                )}
+            </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `item_container` of CollectibleHubLayout - configured through the parent's `itemContainer` prop. */
+export interface CollectibleHubLayoutItemContainerProps {
+    itemgridCollection?: CollectibleHubLayoutItemgridCollectionProps;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutItemContainer = ({ itemgridCollection, layout }: CollectibleHubLayoutItemContainerProps) => {
+    return (
+        <Region
+            name="item_container"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 290, top: 300, height: 123, ...layout }}
+        >
+            <CollectibleHubLayoutItemgridCollection {...itemgridCollection} />
+        </Region>
+    );
+};
+
+/** Named region `collection_content` of CollectibleHubLayout - configured through the parent's `collectionContent` prop. */
+export interface CollectibleHubLayoutCollectionContentProps {
+    captionCollectionName?: string;
+    itemContainer?: CollectibleHubLayoutItemContainerProps;
+    layout?: BoxLayout;
+    previewContainer?: CollectibleHubLayoutPreviewContainer2Props;
+    progressHeaderContainer?: CollectibleHubLayoutProgressHeaderContainerProps;
+}
+
+export const CollectibleHubLayoutCollectionContent = ({ captionCollectionName, itemContainer, layout, previewContainer, progressHeaderContainer }: CollectibleHubLayoutCollectionContentProps) => {
+    return (
+        <Region
+            name="collection_content"
+            params={16}
+            layout={{ position: 'absolute', left: 195, width: 290, top: 3, height: 425, ...layout }}
+        >
+            <Border
+                variant="3"
+                name="collection_header_container"
+                params={16}
+                tintColor="#cbd1d8"
+                layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 30 }}
+            >
+                <Region
+                    name="collection_name"
+                    params={16}
+                    layout={{ position: 'absolute', left: 4, width: 121, top: 4, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionCollectionName ?? 'Collection name'} />
+                </Region>
+                <CollectibleHubLayoutProgressHeaderContainer {...progressHeaderContainer} />
+            </Border>
+            <CollectibleHubLayoutPreviewContainer2 {...previewContainer} />
+            <CollectibleHubLayoutItemContainer {...itemContainer} />
+        </Region>
+    );
+};
+
+/** Named region `loaded_content` of CollectibleHubLayout - configured through the parent's `loadedContent` prop. */
+export interface CollectibleHubLayoutLoadedContent2Props {
+    buttonContainer?: CollectibleHubLayoutButtonContainerProps;
+    captionSearchPlaceholder?: string;
+    collectionContent?: CollectibleHubLayoutCollectionContentProps;
+    layout?: BoxLayout;
+    navigationContainer?: CollectibleHubLayoutNavigationContainerProps;
+    onSortSelection?: () => void;
+    onWalletSelection?: () => void;
+}
+
+export const CollectibleHubLayoutLoadedContent2 = ({ buttonContainer, captionSearchPlaceholder, collectionContent, layout, navigationContainer, onSortSelection, onWalletSelection }: CollectibleHubLayoutLoadedContent2Props) => {
+    const t = useTranslation();
+    const [ searchInputValue, setSearchInputValue ] = useState('');
+
+    return (
+        <Region
+            name="loaded_content"
+            params={147472}
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
+        >
+            <Dropmenu
+                variant="3"
+                name="wallet_selection"
+                params={17}
+                onPointerTap={onWalletSelection}
+                layout={{ position: 'absolute', left: 4, width: 184, top: 4, height: 24 }}
+            >
+                Collector Wallet
+            </Dropmenu>
+            <Dropmenu
+                variant="3"
+                name="sort_selection"
+                params={17}
+                onPointerTap={onSortSelection}
+                layout={{ position: 'absolute', left: 4, width: 184, top: 32, height: 24 }}
+            >
+                Sort
+            </Dropmenu>
+            <Border
+                variant="105"
+                name="searchContainer"
+                params={16}
+                layout={{ position: 'absolute', left: 4, width: 184, top: 60, height: 24 }}
+            >
+                <CollectibleHubLayoutButtonContainer {...buttonContainer} />
+                <TextInput
+                    value={searchInputValue}
+                    onChange={setSearchInputValue}
+                    layout={{ position: 'absolute', left: 4, width: 156, top: 4, height: 20 }}
+                />
+                <Region
+                    name="search_placeholder"
+                    params={16}
+                    layout={{ position: 'absolute', left: 4, width: 156, top: 4, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionSearchPlaceholder ?? t('generic.search')} />
+                </Region>
+            </Border>
+            <CollectibleHubLayoutNavigationContainer {...navigationContainer} />
+            <CollectibleHubLayoutCollectionContent {...collectionContent} />
+        </Region>
+    );
+};
+
+/** Named region `loading_contents` of CollectibleHubLayout - configured through the parent's `loadingContents` prop. */
+export interface CollectibleHubLayoutLoadingContents2Props {
+    layout?: BoxLayout;
+    srcLoadingIcon?: string;
+    visibleLoadingContents?: boolean;
+}
+
+export const CollectibleHubLayoutLoadingContents2 = ({ layout, srcLoadingIcon, visibleLoadingContents }: CollectibleHubLayoutLoadingContents2Props) => {
+    return (
+        <Region
+            name="loading_contents"
+            params={16}
+            visible={visibleLoadingContents ?? false}
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
+        >
+            <Border
+                variant="2"
+                params={16}
+                tintColor="#a4a49f"
+                layout={{ position: 'absolute', left: 185, width: 113, top: 155, height: 116 }}
+            />
+            <ThemeImage
+                name="loading_icon"
+                params={16}
+                src={srcLoadingIcon ?? layoutImage('loading.png')}
+                layout={{ position: 'absolute', left: 205, width: 75, top: 175, height: 75 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `collectionsContainer` of CollectibleHubLayout - configured through the parent's `collectionsContainer` prop. */
+export interface CollectibleHubLayoutCollectionsContainerProps {
+    layout?: BoxLayout;
+    loadedContent?: CollectibleHubLayoutLoadedContent2Props;
+    loadingContents?: CollectibleHubLayoutLoadingContents2Props;
+}
+
+export const CollectibleHubLayoutCollectionsContainer = ({ layout, loadedContent, loadingContents }: CollectibleHubLayoutCollectionsContainerProps) => {
+    return (
+        <Region
+            name="collectionsContainer"
+            tags={[ 'TEMPLATE', 'category_container' ]}
+            params={1073889424}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutLoadedContent2 {...loadedContent} />
+            <CollectibleHubLayoutLoadingContents2 {...loadingContents} />
+        </Region>
+    );
+};
+
+/** Named region `item_hilight_inner` of CollectibleHubLayout - configured through the parent's `itemHilightInner` prop. */
+export interface CollectibleHubLayoutItemHilightInner2Props {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutItemHilightInner2 = ({ layout }: CollectibleHubLayoutItemHilightInner2Props) => {
+    return (
+        <Region
+            name="item_hilight_inner"
+            params={16}
+            backgroundColor="#63c5e9"
+            layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16, ...layout }}
+        />
+    );
+};
+
+/** Named region `item_hilight_outer` of CollectibleHubLayout - configured through the parent's `itemHilightOuter` prop. */
+export interface CollectibleHubLayoutItemHilightOuter2Props {
+    itemHilightInner?: CollectibleHubLayoutItemHilightInner2Props;
+    layout?: BoxLayout;
     visibleItemHilightOuter?: boolean;
 }
 
-export const CollectibleHubLayoutItemTemplateItem4 = ({ captionItemTitle, layout, onItemTemplate, visibleItemHilightOuter }: CollectibleHubLayoutItemTemplateItem4Props) => {
+export const CollectibleHubLayoutItemHilightOuter2 = ({ itemHilightInner, layout, visibleItemHilightOuter }: CollectibleHubLayoutItemHilightOuter2Props) => {
+    return (
+        <Region
+            name="item_hilight_outer"
+            params={16}
+            visible={visibleItemHilightOuter ?? false}
+            backgroundColor="#82d1ed"
+            layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20, ...layout }}
+        >
+            <CollectibleHubLayoutItemHilightInner2 {...itemHilightInner} />
+        </Region>
+    );
+};
+
+/** Row template `item_template` of CollectibleHubLayout - pass real rows through its `items…` slot. */
+export interface CollectibleHubLayoutItemTemplateItem4Props {
+    captionItemTitle?: string;
+    itemHilightOuter?: CollectibleHubLayoutItemHilightOuter2Props;
+    layout?: BoxLayout;
+    onItemTemplate?: () => void;
+}
+
+export const CollectibleHubLayoutItemTemplateItem4 = ({ captionItemTitle, itemHilightOuter, layout, onItemTemplate }: CollectibleHubLayoutItemTemplateItem4Props) => {
     return (
         <Region
             name="item_template"
@@ -2579,20 +2692,7 @@ export const CollectibleHubLayoutItemTemplateItem4 = ({ captionItemTitle, layout
                 backgroundColor="#b4b4ae"
                 layout={{ position: 'absolute', left: 1, width: 178, top: 0, height: 21 }}
             >
-                <Region
-                    name="item_hilight_outer"
-                    params={16}
-                    visible={visibleItemHilightOuter ?? false}
-                    backgroundColor="#82d1ed"
-                    layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20 }}
-                >
-                    <Region
-                        name="item_hilight_inner"
-                        params={16}
-                        backgroundColor="#63c5e9"
-                        layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16 }}
-                    />
-                </Region>
+                <CollectibleHubLayoutItemHilightOuter2 {...itemHilightOuter} />
             </Region>
             <Region
                 name="item_title"
@@ -2604,6 +2704,86 @@ export const CollectibleHubLayoutItemTemplateItem4 = ({ captionItemTitle, layout
                     text={captionItemTitle ?? 'item'}
                     textStyle="text-style-u-bold"
                     textOptions={{ fill: '#666666' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `navigationList` of CollectibleHubLayout - configured through the parent's `navigationList` prop. */
+export interface CollectibleHubLayoutNavigationList2Props {
+    itemsNavigationList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutNavigationList2 = ({ itemsNavigationList, layout }: CollectibleHubLayoutNavigationList2Props) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 3, width: 178, top: 5, bottom: 5, ...layout }}
+        >
+            <Region
+                name="navigationList"
+                params={2064}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            >
+                {itemsNavigationList ?? (
+                    <CollectibleHubLayoutItemTemplateItem4 />
+                )}
+            </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `navigationContainer` of CollectibleHubLayout - configured through the parent's `navigationContainer` prop. */
+export interface CollectibleHubLayoutNavigationContainer2Props {
+    layout?: BoxLayout;
+    navigationList?: CollectibleHubLayoutNavigationList2Props;
+}
+
+export const CollectibleHubLayoutNavigationContainer2 = ({ layout, navigationList }: CollectibleHubLayoutNavigationContainer2Props) => {
+    return (
+        <Region
+            name="navigationContainer"
+            params={2064}
+            layout={{ position: 'absolute', left: 8, width: 184, top: 3, bottom: 0, ...layout }}
+        >
+            <Border
+                variant="6"
+                params={2064}
+                blend={0.5}
+                layout={{ position: 'absolute', left: 0, width: 184, top: 0, bottom: 0 }}
+            />
+            <CollectibleHubLayoutNavigationList2 {...navigationList} />
+        </Region>
+    );
+};
+
+/** Named region `product_name_container` of CollectibleHubLayout - configured through the parent's `productNameContainer` prop. */
+export interface CollectibleHubLayoutProductNameContainer3Props {
+    captionPreviewFurniName?: string;
+    layout?: BoxLayout;
+    onProductNameContainer?: () => void;
+}
+
+export const CollectibleHubLayoutProductNameContainer3 = ({ captionPreviewFurniName, layout, onProductNameContainer }: CollectibleHubLayoutProductNameContainer3Props) => {
+    return (
+        <Region
+            name="product_name_container"
+            params={17}
+            backgroundColor="#000000"
+            onPointerTap={onProductNameContainer}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 26, ...layout }}
+        >
+            <Region
+                name="preview_furni_name"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 290, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionPreviewFurniName ?? 'Lorem ipsum hot air balloon'}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                 />
             </Region>
         </Region>
@@ -2649,6 +2829,47 @@ export const CollectibleHubLayoutProductInfoEntryTemplateItem2 = ({ captionProdu
     );
 };
 
+/** Named region `product_info_list` of CollectibleHubLayout - configured through the parent's `productInfoList` prop. */
+export interface CollectibleHubLayoutProductInfoList2Props {
+    itemsProductInfoList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutProductInfoList2 = ({ itemsProductInfoList, layout }: CollectibleHubLayoutProductInfoList2Props) => {
+    return (
+        <Region
+            name="product_info_list"
+            params={16}
+            layout={{ position: 'absolute', left: 24, width: 242, top: 24, height: 140, flexDirection: 'column', gap: 2, ...layout }}
+        >
+            {itemsProductInfoList ?? (
+                <CollectibleHubLayoutProductInfoEntryTemplateItem2 />
+            )}
+        </Region>
+    );
+};
+
+/** Named region `product_info_container` of CollectibleHubLayout - configured through the parent's `productInfoContainer` prop. */
+export interface CollectibleHubLayoutProductInfoContainer2Props {
+    layout?: BoxLayout;
+    productInfoList?: CollectibleHubLayoutProductInfoList2Props;
+    visibleProductInfoContainer?: boolean;
+}
+
+export const CollectibleHubLayoutProductInfoContainer2 = ({ layout, productInfoList, visibleProductInfoContainer }: CollectibleHubLayoutProductInfoContainer2Props) => {
+    return (
+        <Region
+            name="product_info_container"
+            params={16}
+            visible={visibleProductInfoContainer ?? false}
+            backgroundColor="#3b1829"
+            layout={{ position: 'absolute', left: 0, width: 290, top: 26, height: 194, ...layout }}
+        >
+            <CollectibleHubLayoutProductInfoList2 {...productInfoList} />
+        </Region>
+    );
+};
+
 /** Row template `mintlimit_text` of CollectibleHubLayout - pass real rows through its `items…` slot. */
 export interface CollectibleHubLayoutMintlimitTextItemProps {
     captionMintlimitText?: string;
@@ -2671,18 +2892,240 @@ export const CollectibleHubLayoutMintlimitTextItem = ({ captionMintlimitText, la
     );
 };
 
-/** Row template `item_template` of CollectibleHubLayout - pass real rows through its `items…` slot. */
-export interface CollectibleHubLayoutItemTemplateItem5Props {
+/** Named region `mintlimit_container` of CollectibleHubLayout - configured through the parent's `mintlimitContainer` prop. */
+export interface CollectibleHubLayoutMintlimitContainerProps {
+    itemsMintlimitContainer?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutMintlimitContainer = ({ itemsMintlimitContainer, layout }: CollectibleHubLayoutMintlimitContainerProps) => {
+    return (
+        <Region
+            name="mintlimit_container"
+            params={409616}
+            layout={{ position: 'absolute', right: 10, top: 196, flexDirection: 'row', gap: 4, ...layout }}
+        >
+            {itemsMintlimitContainer ?? (
+                <CollectibleHubLayoutMintlimitTextItem />
+            )}
+            <ThemeImage
+                params={16}
+                src={layoutImage('collectables_icon_curator_stamp_small.png')}
+                layout={{ width: 18, height: 30, flexShrink: 0 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `preview_container` of CollectibleHubLayout - configured through the parent's `previewContainer` prop. */
+export interface CollectibleHubLayoutPreviewContainer3Props {
+    captionPriceText?: string;
+    layout?: BoxLayout;
+    mintlimitContainer?: CollectibleHubLayoutMintlimitContainerProps;
+    onBuyButton?: () => void;
+    productInfoContainer?: CollectibleHubLayoutProductInfoContainer2Props;
+    productNameContainer?: CollectibleHubLayoutProductNameContainer3Props;
+    srcBgStar?: string;
+    srcPlaceholderImage?: string;
+    srcProductPreview?: string;
+    srcUnknownImage?: string;
+}
+
+export const CollectibleHubLayoutPreviewContainer3 = ({ captionPriceText, layout, mintlimitContainer, onBuyButton, productInfoContainer, productNameContainer, srcBgStar, srcPlaceholderImage, srcProductPreview, srcUnknownImage }: CollectibleHubLayoutPreviewContainer3Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="preview_container"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260, ...layout }}
+        >
+            <Border
+                variant="3"
+                name="collection_preview_bg"
+                params={16}
+                tintColor="#3d1f39"
+                layout={{ position: 'absolute', left: 0, width: 296, top: 0, height: 260, justifyContent: 'center' }}
+            >
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_score_background.png')}
+                    layout={{ position: 'absolute', left: -15, width: 166, top: -8, height: 286 }}
+                />
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_score_background_right.png')}
+                    layout={{ position: 'absolute', left: 139, width: 166, top: -18, height: 286 }}
+                />
+                <ThemeImage
+                    params={16}
+                    src={layoutImage('collectables_score_background_gradient2.png')}
+                    tint="#45ace2"
+                    layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 260 }}
+                />
+                <ThemeImage
+                    name="bg_star"
+                    params={16}
+                    src={srcBgStar ?? layoutImage('bg_star_300x300.png')}
+                    layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
+                />
+                <Region
+                    visible={false}
+                    layout={{ position: 'absolute', left: 91, width: 108, top: 64, height: 132 }}
+                >
+                    <ThemeImage
+                        name="placeholder_image"
+                        params={16}
+                        src={srcPlaceholderImage ?? layoutImage('collectables_collection_default.png')}
+                        layout={{ position: 'absolute', left: 91, width: 108, top: 64, height: 132 }}
+                    />
+                </Region>
+                <WidgetSlot
+                    widgetType="avatar_image"
+                    name="avatar_image_widget"
+                    params={16}
+                    visible={false}
+                    layout={{ position: 'absolute', left: 100, width: 90, top: 53, height: 130 }}
+                />
+                <WidgetSlot
+                    widgetType="badge_image"
+                    name="badge_image_widget"
+                    params={1077674000}
+                    visible={false}
+                    options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '2', 'badge_image:zoom_y': '2' }}
+                    layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 80, alignSelf: 'center', height: 80, overflow: 'hidden' }}
+                />
+                <Region
+                    visible={false}
+                    layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 48, alignSelf: 'center', height: 48 }}
+                >
+                    <ThemeImage
+                        name="unknown_image"
+                        params={3932176}
+                        src={srcUnknownImage ?? layoutImage('collectables_icon_curator_stamp_large.png')}
+                        layout={{ position: 'absolute', marginLeft: -3, marginRight: 3, width: 48, alignSelf: 'center', height: 48 }}
+                    />
+                </Region>
+                <WidgetSlot
+                    widgetType="pet_image"
+                    name="pet_image_widget"
+                    params={1077674000}
+                    visible={false}
+                    options={{ 'pet_image:zoomX': '2', 'pet_image:zoomY': '2', 'pet_image:shrink_on_overflow': 'true' }}
+                    layout={{ position: 'absolute', marginLeft: -5, marginRight: 5, width: 180, alignSelf: 'center', height: 140, overflow: 'hidden' }}
+                />
+                <WidgetSlot
+                    widgetType="room_previewer"
+                    name="effect_image_widget"
+                    params={1077674000}
+                    visible={false}
+                    options={{ 'room_previewer:offsetx': '2', 'room_previewer:offsety': '36' }}
+                    layout={{ position: 'absolute', marginLeft: -5, marginRight: 5, width: 100, alignSelf: 'center', height: 260, overflow: 'hidden' }}
+                />
+                <ThemeImage
+                    name="product_preview"
+                    params={16}
+                    src={srcProductPreview}
+                    layout={{ position: 'absolute', left: -5, width: 300, top: -20, height: 300 }}
+                />
+                <CollectibleHubLayoutProductNameContainer3 {...productNameContainer} />
+                <CollectibleHubLayoutProductInfoContainer2 {...productInfoContainer} />
+                <Region
+                    params={409616}
+                    layout={{ position: 'absolute', right: 10, top: 226, flexDirection: 'row', gap: 4 }}
+                >
+                    <Region
+                        name="price_text"
+                        params={16}
+                        layout={{ width: 50, height: 25, flexShrink: 0, minHeight: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    >
+                        <ThemeText
+                            text={captionPriceText ?? '100'}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff', align: 'right' }}
+                        />
+                    </Region>
+                    <Icon
+                        variant="70"
+                        name="emerald_icon"
+                        params={16}
+                        layout={{ width: 26, height: 20, flexShrink: 0 }}
+                    />
+                    <Button
+                        variant="5"
+                        name="buy_button"
+                        params={131089}
+                        tintColor="#01a101"
+                        onPointerTap={onBuyButton}
+                        layout={{ width: 88, height: 30, flexShrink: 0 }}
+                    >
+                        {t('generic.buy')}
+                    </Button>
+                </Region>
+                <CollectibleHubLayoutMintlimitContainer {...mintlimitContainer} />
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `number_container` of CollectibleHubLayout - configured through the parent's `numberContainer` prop. */
+export interface CollectibleHubLayoutNumberContainer3Props {
     captionNumber?: string;
     layout?: BoxLayout;
-    onItemTemplate?: () => void;
-    srcBitmap?: string;
     srcEmeraldIcon?: string;
-    srcUnknownImage?: string;
     visibleTextBorder?: boolean;
 }
 
-export const CollectibleHubLayoutItemTemplateItem5 = ({ captionNumber, layout, onItemTemplate, srcBitmap, srcEmeraldIcon, srcUnknownImage, visibleTextBorder }: CollectibleHubLayoutItemTemplateItem5Props) => {
+export const CollectibleHubLayoutNumberContainer3 = ({ captionNumber, layout, srcEmeraldIcon, visibleTextBorder }: CollectibleHubLayoutNumberContainer3Props) => {
+    return (
+        <Region
+            name="number_container"
+            params={131088}
+            layout={{ position: 'absolute', left: 0, width: 50, top: 40, height: 20, minWidth: 50, maxWidth: 50, ...layout }}
+        >
+            <Region
+                visible={visibleTextBorder ?? false}
+                layout={{ position: 'absolute', left: 3, width: 44, top: 5, height: 12 }}
+            >
+                <Border
+                    variant="3"
+                    name="text_border"
+                    params={16}
+                    tintColor="#337c00"
+                    layout={{ width: '100%', height: '100%' }}
+                />
+            </Region>
+            <Region
+                name="number"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 34, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+            >
+                <ThemeText
+                    text={captionNumber ?? '0'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'right' }}
+                />
+            </Region>
+            <ThemeImage
+                name="emerald_icon"
+                params={16}
+                src={srcEmeraldIcon ?? layoutImage('pursearea_tiny_emerald_icon.png')}
+                layout={{ position: 'absolute', left: 34, width: 12, top: 3, height: 12 }}
+            />
+        </Region>
+    );
+};
+
+/** Row template `item_template` of CollectibleHubLayout - pass real rows through its `items…` slot. */
+export interface CollectibleHubLayoutItemTemplateItem5Props {
+    layout?: BoxLayout;
+    numberContainer?: CollectibleHubLayoutNumberContainer3Props;
+    onItemTemplate?: () => void;
+    srcBitmap?: string;
+    srcUnknownImage?: string;
+}
+
+export const CollectibleHubLayoutItemTemplateItem5 = ({ layout, numberContainer, onItemTemplate, srcBitmap, srcUnknownImage }: CollectibleHubLayoutItemTemplateItem5Props) => {
     return (
         <Region
             name="item_template"
@@ -2742,39 +3185,692 @@ export const CollectibleHubLayoutItemTemplateItem5 = ({ captionNumber, layout, o
                 options={{ 'pet_image:shrink_on_overflow': 'true' }}
                 layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 40, alignSelf: 'center', marginTop: -7, marginBottom: 7, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, overflow: 'hidden' }}
             />
+            <CollectibleHubLayoutNumberContainer3 {...numberContainer} />
+        </Region>
+    );
+};
+
+/** Named region `itemgrid_shop` of CollectibleHubLayout - configured through the parent's `itemgridShop` prop. */
+export interface CollectibleHubLayoutItemgridShopProps {
+    itemsItemgridShop?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutItemgridShop = ({ itemsItemgridShop, layout }: CollectibleHubLayoutItemgridShopProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 0, width: 290, top: 0, height: 153, ...layout }}
+        >
             <Region
-                name="number_container"
-                params={131088}
-                layout={{ position: 'absolute', left: 0, width: 50, top: 40, height: 20, minWidth: 50, maxWidth: 50 }}
+                name="itemgrid_shop"
+                tags={[ 'FURNI_ITEM_GRID' ]}
+                params={16}
+                layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, width: '100%' }}
             >
-                <Region
-                    visible={visibleTextBorder ?? false}
-                    layout={{ position: 'absolute', left: 3, width: 44, top: 5, height: 12 }}
-                >
-                    <Border
-                        variant="3"
-                        name="text_border"
-                        params={16}
-                        tintColor="#337c00"
-                        layout={{ width: '100%', height: '100%' }}
-                    />
-                </Region>
-                <Region
-                    name="number"
+                {itemsItemgridShop ?? (
+                    <CollectibleHubLayoutItemTemplateItem5 />
+                )}
+            </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `item_container` of CollectibleHubLayout - configured through the parent's `itemContainer` prop. */
+export interface CollectibleHubLayoutItemContainer2Props {
+    itemgridShop?: CollectibleHubLayoutItemgridShopProps;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutItemContainer2 = ({ itemgridShop, layout }: CollectibleHubLayoutItemContainer2Props) => {
+    return (
+        <Region
+            name="item_container"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 290, top: 270, height: 153, ...layout }}
+        >
+            <CollectibleHubLayoutItemgridShop {...itemgridShop} />
+        </Region>
+    );
+};
+
+/** Named region `collection_content` of CollectibleHubLayout - configured through the parent's `collectionContent` prop. */
+export interface CollectibleHubLayoutCollectionContent2Props {
+    itemContainer?: CollectibleHubLayoutItemContainer2Props;
+    layout?: BoxLayout;
+    previewContainer?: CollectibleHubLayoutPreviewContainer3Props;
+}
+
+export const CollectibleHubLayoutCollectionContent2 = ({ itemContainer, layout, previewContainer }: CollectibleHubLayoutCollectionContent2Props) => {
+    return (
+        <Region
+            name="collection_content"
+            params={16}
+            layout={{ position: 'absolute', left: 200, width: 290, top: 3, height: 425, ...layout }}
+        >
+            <CollectibleHubLayoutPreviewContainer3 {...previewContainer} />
+            <CollectibleHubLayoutItemContainer2 {...itemContainer} />
+        </Region>
+    );
+};
+
+/** Named region `loaded_content` of CollectibleHubLayout - configured through the parent's `loadedContent` prop. */
+export interface CollectibleHubLayoutLoadedContent3Props {
+    collectionContent?: CollectibleHubLayoutCollectionContent2Props;
+    layout?: BoxLayout;
+    navigationContainer?: CollectibleHubLayoutNavigationContainer2Props;
+}
+
+export const CollectibleHubLayoutLoadedContent3 = ({ collectionContent, layout, navigationContainer }: CollectibleHubLayoutLoadedContent3Props) => {
+    return (
+        <Region
+            name="loaded_content"
+            params={147472}
+            layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 428, ...layout }}
+        >
+            <CollectibleHubLayoutNavigationContainer2 {...navigationContainer} />
+            <CollectibleHubLayoutCollectionContent2 {...collectionContent} />
+        </Region>
+    );
+};
+
+/** Named region `loading_contents` of CollectibleHubLayout - configured through the parent's `loadingContents` prop. */
+export interface CollectibleHubLayoutLoadingContents3Props {
+    layout?: BoxLayout;
+    srcLoadingIcon?: string;
+    visibleLoadingContents?: boolean;
+}
+
+export const CollectibleHubLayoutLoadingContents3 = ({ layout, srcLoadingIcon, visibleLoadingContents }: CollectibleHubLayoutLoadingContents3Props) => {
+    return (
+        <Region
+            name="loading_contents"
+            params={16}
+            visible={visibleLoadingContents ?? false}
+            layout={{ position: 'absolute', left: 5, width: 485, top: 0, height: 429, ...layout }}
+        >
+            <Border
+                variant="2"
+                params={16}
+                tintColor="#a4a49f"
+                layout={{ position: 'absolute', left: 185, width: 113, top: 155, height: 116 }}
+            />
+            <ThemeImage
+                name="loading_icon"
+                params={16}
+                src={srcLoadingIcon ?? layoutImage('loading.png')}
+                layout={{ position: 'absolute', left: 205, width: 75, top: 175, height: 75 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `shopContainer` of CollectibleHubLayout - configured through the parent's `shopContainer` prop. */
+export interface CollectibleHubLayoutShopContainerProps {
+    layout?: BoxLayout;
+    loadedContent?: CollectibleHubLayoutLoadedContent3Props;
+    loadingContents?: CollectibleHubLayoutLoadingContents3Props;
+    visibleShopContainer?: boolean;
+}
+
+export const CollectibleHubLayoutShopContainer = ({ layout, loadedContent, loadingContents, visibleShopContainer }: CollectibleHubLayoutShopContainerProps) => {
+    return (
+        <Region
+            name="shopContainer"
+            tags={[ 'TEMPLATE', 'category_container' ]}
+            params={1073889424}
+            visible={visibleShopContainer ?? false}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: -5, right: 15, top: 125, height: 428, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutLoadedContent3 {...loadedContent} />
+            <CollectibleHubLayoutLoadingContents3 {...loadingContents} />
+        </Region>
+    );
+};
+
+/** Named region `headercontainer` of CollectibleHubLayout - configured through the parent's `headercontainer` prop. */
+export interface CollectibleHubLayoutHeadercontainerProps {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutHeadercontainer = ({ layout }: CollectibleHubLayoutHeadercontainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="headercontainer"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 50, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                params={3935248}
+                layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 450, alignSelf: 'center', height: 30, minWidth: 450, maxWidth: 450, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('collectibles.transfer.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 450, align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `spacing` of CollectibleHubLayout - configured through the parent's `spacing` prop. */
+export interface CollectibleHubLayoutSpacing5Props {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutSpacing5 = ({ layout }: CollectibleHubLayoutSpacing5Props) => {
+    return (
+        <Region
+            name="spacing"
+            params={16}
+            layout={{ width: 4, height: 30, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `spacing` of CollectibleHubLayout - configured through the parent's `spacing` prop. */
+export interface CollectibleHubLayoutSpacing6Props {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutSpacing6 = ({ layout }: CollectibleHubLayoutSpacing6Props) => {
+    return (
+        <Region
+            name="spacing"
+            params={16}
+            layout={{ width: 6, height: 30, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `loaded_content` of CollectibleHubLayout - configured through the parent's `loadedContent` prop. */
+export interface CollectibleHubLayoutLoadedContent4Props {
+    captionTransferFeeText?: string;
+    headercontainer?: CollectibleHubLayoutHeadercontainerProps;
+    layout?: BoxLayout;
+    onTransferButton?: () => void;
+    onTransferWalletSelection?: () => void;
+    spacing?: CollectibleHubLayoutSpacing5Props;
+    spacing2?: CollectibleHubLayoutSpacing6Props;
+    srcTransferFeeIcon?: string;
+}
+
+export const CollectibleHubLayoutLoadedContent4 = ({ captionTransferFeeText, headercontainer, layout, onTransferButton, onTransferWalletSelection, spacing, spacing2, srcTransferFeeIcon }: CollectibleHubLayoutLoadedContent4Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="loaded_content"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
+        >
+            <CollectibleHubLayoutHeadercontainer {...headercontainer} />
+            <Border
+                variant="3"
+                name="transfer_container"
+                params={16}
+                tintColor="#bac3cd"
+                layout={{ position: 'absolute', left: 0, width: 488, top: 380, height: 50 }}
+            >
+                <Dropmenu
+                    variant="3"
+                    name="transfer_wallet_selection"
+                    params={17}
+                    onPointerTap={onTransferWalletSelection}
+                    layout={{ position: 'absolute', left: 10, width: 260, top: 13, height: 24 }}
+                />
+                <Border
+                    variant="3"
                     params={16}
-                    layout={{ position: 'absolute', left: 0, width: 34, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    tintColor="#d6dbe1"
+                    blend={0}
+                    layout={{ position: 'absolute', left: 315, width: 170, top: 5, height: 40 }}
                 >
-                    <ThemeText
-                        text={captionNumber ?? '0'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ align: 'right' }}
-                    />
-                </Region>
-                <ThemeImage
-                    name="emerald_icon"
-                    params={16}
-                    src={srcEmeraldIcon ?? layoutImage('pursearea_tiny_emerald_icon.png')}
-                    layout={{ position: 'absolute', left: 34, width: 12, top: 3, height: 12 }}
+                    <Region
+                        params={409616}
+                        layout={{ position: 'absolute', right: 13, top: 5, flexDirection: 'row' }}
+                    >
+                        <Region
+                            name="transfer_fee_text"
+                            params={16}
+                            layout={{ width: 12, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionTransferFeeText ?? '0'}
+                                textStyle="text-style-u-bold"
+                            />
+                        </Region>
+                        <CollectibleHubLayoutSpacing5 {...spacing} />
+                        <ThemeImage
+                            name="transfer_fee_icon"
+                            params={16}
+                            src={srcTransferFeeIcon ?? layoutImage('pursearea_mid_silver_icon.png')}
+                            layout={{ width: 24, height: 30, flexShrink: 0 }}
+                        />
+                        <CollectibleHubLayoutSpacing6 {...spacing2} />
+                        <Button
+                            variant="5"
+                            name="transfer_button"
+                            params={131089}
+                            tintColor="#2095d4"
+                            onPointerTap={onTransferButton}
+                            layout={{ width: 100, height: 30, flexShrink: 0, minWidth: 100 }}
+                        >
+                            {t('collectibles.transfer')}
+                        </Button>
+                    </Region>
+                </Border>
+            </Border>
+            <ThemeImage
+                params={16}
+                src={layoutImage('collectables_transfer_safe.png')}
+                layout={{ position: 'absolute', left: 42, width: 400, top: 120, height: 180 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `loading_contents` of CollectibleHubLayout - configured through the parent's `loadingContents` prop. */
+export interface CollectibleHubLayoutLoadingContents4Props {
+    layout?: BoxLayout;
+    srcLoadingIcon?: string;
+    visibleLoadingContents?: boolean;
+}
+
+export const CollectibleHubLayoutLoadingContents4 = ({ layout, srcLoadingIcon, visibleLoadingContents }: CollectibleHubLayoutLoadingContents4Props) => {
+    return (
+        <Region
+            name="loading_contents"
+            params={16}
+            visible={visibleLoadingContents ?? false}
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
+        >
+            <Border
+                variant="2"
+                params={16}
+                tintColor="#a4a49f"
+                layout={{ position: 'absolute', left: 185, width: 113, top: 155, height: 116 }}
+            />
+            <ThemeImage
+                name="loading_icon"
+                params={16}
+                src={srcLoadingIcon ?? layoutImage('loading.png')}
+                layout={{ position: 'absolute', left: 205, width: 75, top: 175, height: 75 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `transferContainer` of CollectibleHubLayout - configured through the parent's `transferContainer` prop. */
+export interface CollectibleHubLayoutTransferContainerProps {
+    layout?: BoxLayout;
+    loadedContent?: CollectibleHubLayoutLoadedContent4Props;
+    loadingContents?: CollectibleHubLayoutLoadingContents4Props;
+    visibleTransferContainer?: boolean;
+}
+
+export const CollectibleHubLayoutTransferContainer = ({ layout, loadedContent, loadingContents, visibleTransferContainer }: CollectibleHubLayoutTransferContainerProps) => {
+    return (
+        <Region
+            name="transferContainer"
+            tags={[ 'TEMPLATE', 'category_container' ]}
+            params={1073758352}
+            visible={visibleTransferContainer ?? false}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutLoadedContent4 {...loadedContent} />
+            <CollectibleHubLayoutLoadingContents4 {...loadingContents} />
+        </Region>
+    );
+};
+
+/** Named region `category_name_region` of CollectibleHubLayout - configured through the parent's `categoryNameRegion` prop. */
+export interface CollectibleHubLayoutCategoryNameRegion3Props {
+    captionCollectorLevelHeader?: string;
+    layout?: BoxLayout;
+    onCategoryNameRegion?: () => void;
+}
+
+export const CollectibleHubLayoutCategoryNameRegion3 = ({ captionCollectorLevelHeader, layout, onCategoryNameRegion }: CollectibleHubLayoutCategoryNameRegion3Props) => {
+    return (
+        <Region
+            name="category_name_region"
+            params={131089}
+            onPointerTap={onCategoryNameRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17, ...layout }}
+        >
+            <Region
+                name="collector_level_header"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 17, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCollectorLevelHeader ?? 'Levels Header'}
+                    textStyle="text-style-u-regular"
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `category_minting_description_region` of CollectibleHubLayout - configured through the parent's `categoryMintingDescriptionRegion` prop. */
+export interface CollectibleHubLayoutCategoryMintingDescriptionRegion3Props {
+    captionCollectorLevelDescription?: string;
+    layout?: BoxLayout;
+    onCategoryMintingDescriptionRegion?: () => void;
+}
+
+export const CollectibleHubLayoutCategoryMintingDescriptionRegion3 = ({ captionCollectorLevelDescription, layout, onCategoryMintingDescriptionRegion }: CollectibleHubLayoutCategoryMintingDescriptionRegion3Props) => {
+    return (
+        <Region
+            name="category_minting_description_region"
+            params={147473}
+            onPointerTap={onCategoryMintingDescriptionRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 380, top: 22, height: 30, ...layout }}
+        >
+            <Region
+                name="collector_level_description"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 30, minWidth: 2, maxWidth: 380, minHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCollectorLevelDescription ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta felis sed libero rhoncus, at elementum metus sagittis. '}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `category_collector_header_region` of CollectibleHubLayout - configured through the parent's `categoryCollectorHeaderRegion` prop. */
+export interface CollectibleHubLayoutCategoryCollectorHeaderRegion2Props {
+    categoryMintingDescriptionRegion?: CollectibleHubLayoutCategoryMintingDescriptionRegion3Props;
+    categoryNameRegion?: CollectibleHubLayoutCategoryNameRegion3Props;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutCategoryCollectorHeaderRegion2 = ({ categoryMintingDescriptionRegion, categoryNameRegion, layout }: CollectibleHubLayoutCategoryCollectorHeaderRegion2Props) => {
+    return (
+        <Region
+            name="category_collector_header_region"
+            tags={[ 'category_header' ]}
+            params={1073741840}
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 80, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutCategoryNameRegion3 {...categoryNameRegion} />
+            <CollectibleHubLayoutCategoryMintingDescriptionRegion3 {...categoryMintingDescriptionRegion} />
+        </Region>
+    );
+};
+
+/** Named region `category_content_background` of CollectibleHubLayout - configured through the parent's `categoryContentBackground` prop. */
+export interface CollectibleHubLayoutCategoryContentBackground2Props {
+    categoryCollectorHeaderRegion?: CollectibleHubLayoutCategoryCollectorHeaderRegion2Props;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutCategoryContentBackground2 = ({ categoryCollectorHeaderRegion, layout }: CollectibleHubLayoutCategoryContentBackground2Props) => {
+    return (
+        <Region
+            name="category_content_background"
+            params={1073741840}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutCategoryCollectorHeaderRegion2 {...categoryCollectorHeaderRegion} />
+        </Region>
+    );
+};
+
+/** Named region `levelsContainer` of CollectibleHubLayout - configured through the parent's `levelsContainer` prop. */
+export interface CollectibleHubLayoutLevelsContainerProps {
+    categoryContentBackground?: CollectibleHubLayoutCategoryContentBackground2Props;
+    layout?: BoxLayout;
+    visibleLevelsContainer?: boolean;
+}
+
+export const CollectibleHubLayoutLevelsContainer = ({ categoryContentBackground, layout, visibleLevelsContainer }: CollectibleHubLayoutLevelsContainerProps) => {
+    return (
+        <Region
+            name="levelsContainer"
+            tags={[ 'TEMPLATE', 'category_container' ]}
+            params={1073758352}
+            visible={visibleLevelsContainer ?? false}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutCategoryContentBackground2 {...categoryContentBackground} />
+        </Region>
+    );
+};
+
+/** Named region `category_info_header_region` of CollectibleHubLayout - configured through the parent's `categoryInfoHeaderRegion` prop. */
+export interface CollectibleHubLayoutCategoryInfoHeaderRegionProps {
+    captionCollectorCollectionsHeader?: string;
+    layout?: BoxLayout;
+    onCategoryInfoHeaderRegion?: () => void;
+}
+
+export const CollectibleHubLayoutCategoryInfoHeaderRegion = ({ captionCollectorCollectionsHeader, layout, onCategoryInfoHeaderRegion }: CollectibleHubLayoutCategoryInfoHeaderRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="category_info_header_region"
+            params={131089}
+            onPointerTap={onCategoryInfoHeaderRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 142, top: 4, height: 17, ...layout }}
+        >
+            <Region
+                name="collector_collections_header"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 27, top: 0, height: 17, minWidth: 2, maxWidth: 270, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCollectorCollectionsHeader ?? t('collectibles.info.title')}
+                    textStyle="text-style-u-regular"
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `category_info_description_region` of CollectibleHubLayout - configured through the parent's `categoryInfoDescriptionRegion` prop. */
+export interface CollectibleHubLayoutCategoryInfoDescriptionRegionProps {
+    captionCollectorProfileDescription?: string;
+    captionInfoDesc?: string;
+    layout?: BoxLayout;
+    onCategoryInfoDescriptionRegion?: () => void;
+}
+
+export const CollectibleHubLayoutCategoryInfoDescriptionRegion = ({ captionCollectorProfileDescription, captionInfoDesc, layout, onCategoryInfoDescriptionRegion }: CollectibleHubLayoutCategoryInfoDescriptionRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="category_info_description_region"
+            params={147473}
+            onPointerTap={onCategoryInfoDescriptionRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 480, top: 22, height: 50, ...layout }}
+        >
+            <Region
+                name="collector_profile_description"
+                params={16}
+                visible={false}
+                layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 30, minWidth: 2, maxWidth: 380, minHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCollectorProfileDescription ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta felis sed libero rhoncus, at elementum metus sagittis. '}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
+                />
+            </Region>
+            <Region
+                name="info_desc"
+                params={1}
+                layout={{ position: 'absolute', left: 0, width: 480, top: 0, height: 50, maxWidth: 480, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionInfoDesc ?? t('collectibles.info.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 480 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `category_info_transfer_region` of CollectibleHubLayout - configured through the parent's `categoryInfoTransferRegion` prop. */
+export interface CollectibleHubLayoutCategoryInfoTransferRegionProps {
+    captionCollectorProfileDescription?: string;
+    captionTransferDesc?: string;
+    layout?: BoxLayout;
+    onCategoryInfoTransferRegion?: () => void;
+}
+
+export const CollectibleHubLayoutCategoryInfoTransferRegion = ({ captionCollectorProfileDescription, captionTransferDesc, layout, onCategoryInfoTransferRegion }: CollectibleHubLayoutCategoryInfoTransferRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="category_info_transfer_region"
+            params={147473}
+            onPointerTap={onCategoryInfoTransferRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 480, top: 75, height: 60, ...layout }}
+        >
+            <Region
+                name="collector_profile_description"
+                params={16}
+                visible={false}
+                layout={{ position: 'absolute', left: 0, width: 380, top: 0, height: 30, minWidth: 2, maxWidth: 380, minHeight: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCollectorProfileDescription ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras porta felis sed libero rhoncus, at elementum metus sagittis. '}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 380 }}
+                />
+            </Region>
+            <Region
+                name="transfer_desc"
+                params={1}
+                layout={{ position: 'absolute', left: 0, width: 480, top: 0, height: 60, maxWidth: 480, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionTransferDesc ?? t('collectibles.info.trading')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 480 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `category_collector_header_region` of CollectibleHubLayout - configured through the parent's `categoryCollectorHeaderRegion` prop. */
+export interface CollectibleHubLayoutCategoryCollectorHeaderRegion3Props {
+    categoryInfoDescriptionRegion?: CollectibleHubLayoutCategoryInfoDescriptionRegionProps;
+    categoryInfoHeaderRegion?: CollectibleHubLayoutCategoryInfoHeaderRegionProps;
+    categoryInfoTransferRegion?: CollectibleHubLayoutCategoryInfoTransferRegionProps;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutCategoryCollectorHeaderRegion3 = ({ categoryInfoDescriptionRegion, categoryInfoHeaderRegion, categoryInfoTransferRegion, layout }: CollectibleHubLayoutCategoryCollectorHeaderRegion3Props) => {
+    return (
+        <Region
+            name="category_collector_header_region"
+            tags={[ 'category_header' ]}
+            params={1073741840}
+            layout={{ position: 'absolute', left: 0, width: 490, top: 0, height: 135, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutCategoryInfoHeaderRegion {...categoryInfoHeaderRegion} />
+            <CollectibleHubLayoutCategoryInfoDescriptionRegion {...categoryInfoDescriptionRegion} />
+            <CollectibleHubLayoutCategoryInfoTransferRegion {...categoryInfoTransferRegion} />
+        </Region>
+    );
+};
+
+/** Named region `category_content_background` of CollectibleHubLayout - configured through the parent's `categoryContentBackground` prop. */
+export interface CollectibleHubLayoutCategoryContentBackground3Props {
+    categoryCollectorHeaderRegion?: CollectibleHubLayoutCategoryCollectorHeaderRegion3Props;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutCategoryContentBackground3 = ({ categoryCollectorHeaderRegion, layout }: CollectibleHubLayoutCategoryContentBackground3Props) => {
+    return (
+        <Region
+            name="category_content_background"
+            params={1073741840}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, width: 390, top: 0, height: 400, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutCategoryCollectorHeaderRegion3 {...categoryCollectorHeaderRegion} />
+        </Region>
+    );
+};
+
+/** Named region `infoContainer` of CollectibleHubLayout - configured through the parent's `infoContainer` prop. */
+export interface CollectibleHubLayoutInfoContainerProps {
+    categoryContentBackground?: CollectibleHubLayoutCategoryContentBackground3Props;
+    layout?: BoxLayout;
+    visibleInfoContainer?: boolean;
+}
+
+export const CollectibleHubLayoutInfoContainer = ({ categoryContentBackground, layout, visibleInfoContainer }: CollectibleHubLayoutInfoContainerProps) => {
+    return (
+        <Region
+            name="infoContainer"
+            tags={[ 'TEMPLATE', 'category_container' ]}
+            params={1073889424}
+            visible={visibleInfoContainer ?? false}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, right: 110, top: 125, height: 419, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutCategoryContentBackground3 {...categoryContentBackground} />
+            <ThemeImage
+                params={16}
+                src={layoutImage('collectables_collection_default.png')}
+                layout={{ position: 'absolute', left: 128, width: 216, top: 155, height: 264 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `amount_container` of CollectibleHubLayout - configured through the parent's `amountContainer` prop. */
+export interface CollectibleHubLayoutAmountContainerProps {
+    captionAmountText?: string;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutAmountContainer = ({ captionAmountText, layout }: CollectibleHubLayoutAmountContainerProps) => {
+    return (
+        <Region
+            name="amount_container"
+            params={16}
+            layout={{ position: 'absolute', left: 27, width: 20, top: 34, height: 16, ...layout }}
+        >
+            <Border
+                variant="3"
+                params={16}
+                tintColor="#8f9db1"
+                layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 14 }}
+            />
+            <Region
+                name="amount_text"
+                tags={[ 'AMOUNT_TITLE' ]}
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionAmountText ?? 'x0'}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                 />
             </Region>
         </Region>
@@ -2783,7 +3879,7 @@ export const CollectibleHubLayoutItemTemplateItem5 = ({ captionNumber, layout, o
 
 /** Row template `item_template` of CollectibleHubLayout - pass real rows through its `items…` slot. */
 export interface CollectibleHubLayoutItemTemplateItem6Props {
-    captionAmountText?: string;
+    amountContainer?: CollectibleHubLayoutAmountContainerProps;
     captionCollectionText?: string;
     captionExpiresText?: string;
     captionItemName?: string;
@@ -2794,7 +3890,7 @@ export interface CollectibleHubLayoutItemTemplateItem6Props {
     srcUnknownImage?: string;
 }
 
-export const CollectibleHubLayoutItemTemplateItem6 = ({ captionAmountText, captionCollectionText, captionExpiresText, captionItemName, captionWalletText, layout, onItemTemplate, srcBitmap, srcUnknownImage }: CollectibleHubLayoutItemTemplateItem6Props) => {
+export const CollectibleHubLayoutItemTemplateItem6 = ({ amountContainer, captionCollectionText, captionExpiresText, captionItemName, captionWalletText, layout, onItemTemplate, srcBitmap, srcUnknownImage }: CollectibleHubLayoutItemTemplateItem6Props) => {
     return (
         <Region
             name="item_template"
@@ -2913,30 +4009,216 @@ export const CollectibleHubLayoutItemTemplateItem6 = ({ captionAmountText, capti
             >
                 <ThemeText text={captionExpiresText ?? '<b>Expires:</b> test'} />
             </Region>
+            <CollectibleHubLayoutAmountContainer {...amountContainer} />
+        </Region>
+    );
+};
+
+/** Named region `itemlist` of CollectibleHubLayout - configured through the parent's `itemlist` prop. */
+export interface CollectibleHubLayoutItemlistProps {
+    itemsItemlist?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutItemlist = ({ itemsItemlist, layout }: CollectibleHubLayoutItemlistProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 374, ...layout }}
+        >
             <Region
-                name="amount_container"
+                name="itemlist"
                 params={16}
-                layout={{ position: 'absolute', left: 27, width: 20, top: 34, height: 16 }}
+                layout={{ flexDirection: 'column', gap: 2, width: '100%' }}
             >
-                <Border
-                    variant="3"
-                    params={16}
-                    tintColor="#8f9db1"
-                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 14 }}
-                />
-                <Region
-                    name="amount_text"
-                    tags={[ 'AMOUNT_TITLE' ]}
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionAmountText ?? 'x0'}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                {itemsItemlist ?? (
+                    <CollectibleHubLayoutItemTemplateItem6 />
+                )}
             </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `item_container` of CollectibleHubLayout - configured through the parent's `itemContainer` prop. */
+export interface CollectibleHubLayoutItemContainer3Props {
+    itemlist?: CollectibleHubLayoutItemlistProps;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutItemContainer3 = ({ itemlist, layout }: CollectibleHubLayoutItemContainer3Props) => {
+    return (
+        <Region
+            name="item_container"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 374, ...layout }}
+        >
+            <CollectibleHubLayoutItemlist {...itemlist} />
+        </Region>
+    );
+};
+
+/** Named region `loaded_content` of CollectibleHubLayout - configured through the parent's `loadedContent` prop. */
+export interface CollectibleHubLayoutLoadedContent5Props {
+    itemContainer?: CollectibleHubLayoutItemContainer3Props;
+    layout?: BoxLayout;
+    onClaimButton?: () => void;
+    visibleLoadedContent?: boolean;
+}
+
+export const CollectibleHubLayoutLoadedContent5 = ({ itemContainer, layout, onClaimButton, visibleLoadedContent }: CollectibleHubLayoutLoadedContent5Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="loaded_content"
+            params={16}
+            visible={visibleLoadedContent ?? false}
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
+        >
+            <CollectibleHubLayoutItemContainer3 {...itemContainer} />
+            <Border
+                variant="3"
+                name="bottom_container"
+                params={16}
+                tintColor="#bac3cd"
+                layout={{ position: 'absolute', left: 0, width: 486, top: 380, height: 50 }}
+            >
+                <Button
+                    variant="5"
+                    name="claim_button"
+                    params={131089}
+                    tintColor="#2095d4"
+                    onPointerTap={onClaimButton}
+                    layout={{ position: 'absolute', left: 180, width: 137, top: 10, height: 30, minWidth: 100 }}
+                >
+                    {t('collectibles.claim_all')}
+                </Button>
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `headercontainer` of CollectibleHubLayout - configured through the parent's `headercontainer` prop. */
+export interface CollectibleHubLayoutHeadercontainer2Props {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutHeadercontainer2 = ({ layout }: CollectibleHubLayoutHeadercontainer2Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="headercontainer"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 100, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                params={788496}
+                layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 450, top: 28, bottom: 55, minWidth: 450, maxWidth: 450, minHeight: 17, maxHeight: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('collectibles.no_claims')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 450, align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `image_container` of CollectibleHubLayout - configured through the parent's `imageContainer` prop. */
+export interface CollectibleHubLayoutImageContainerProps {
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutImageContainer = ({ layout }: CollectibleHubLayoutImageContainerProps) => {
+    return (
+        <Region
+            name="image_container"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 485, top: 100, height: 332, justifyContent: 'center', ...layout }}
+        >
+            <ThemeImage
+                params={3932176}
+                src={layoutImage('image_frank_dont_know.png')}
+                layout={{ position: 'absolute', width: 485, alignSelf: 'center', marginTop: -28, marginBottom: 28, height: 176 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `no_content_container` of CollectibleHubLayout - configured through the parent's `noContentContainer` prop. */
+export interface CollectibleHubLayoutNoContentContainerProps {
+    headercontainer?: CollectibleHubLayoutHeadercontainer2Props;
+    imageContainer?: CollectibleHubLayoutImageContainerProps;
+    layout?: BoxLayout;
+}
+
+export const CollectibleHubLayoutNoContentContainer = ({ headercontainer, imageContainer, layout }: CollectibleHubLayoutNoContentContainerProps) => {
+    return (
+        <Region
+            name="no_content_container"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
+        >
+            <CollectibleHubLayoutHeadercontainer2 {...headercontainer} />
+            <CollectibleHubLayoutImageContainer {...imageContainer} />
+        </Region>
+    );
+};
+
+/** Named region `loading_contents` of CollectibleHubLayout - configured through the parent's `loadingContents` prop. */
+export interface CollectibleHubLayoutLoadingContents5Props {
+    layout?: BoxLayout;
+    srcLoadingIcon?: string;
+    visibleLoadingContents?: boolean;
+}
+
+export const CollectibleHubLayoutLoadingContents5 = ({ layout, srcLoadingIcon, visibleLoadingContents }: CollectibleHubLayoutLoadingContents5Props) => {
+    return (
+        <Region
+            name="loading_contents"
+            params={16}
+            visible={visibleLoadingContents ?? false}
+            layout={{ position: 'absolute', left: 0, width: 485, top: 0, height: 429, ...layout }}
+        >
+            <Border
+                variant="2"
+                params={16}
+                tintColor="#a4a49f"
+                layout={{ position: 'absolute', left: 185, width: 113, top: 155, height: 116 }}
+            />
+            <ThemeImage
+                name="loading_icon"
+                params={16}
+                src={srcLoadingIcon ?? layoutImage('loading.png')}
+                layout={{ position: 'absolute', left: 205, width: 75, top: 175, height: 75 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `rewardsContainer` of CollectibleHubLayout - configured through the parent's `rewardsContainer` prop. */
+export interface CollectibleHubLayoutRewardsContainerProps {
+    layout?: BoxLayout;
+    loadedContent?: CollectibleHubLayoutLoadedContent5Props;
+    loadingContents?: CollectibleHubLayoutLoadingContents5Props;
+    noContentContainer?: CollectibleHubLayoutNoContentContainerProps;
+    visibleRewardsContainer?: boolean;
+}
+
+export const CollectibleHubLayoutRewardsContainer = ({ layout, loadedContent, loadingContents, noContentContainer, visibleRewardsContainer }: CollectibleHubLayoutRewardsContainerProps) => {
+    return (
+        <Region
+            name="rewardsContainer"
+            tags={[ 'TEMPLATE', 'category_container' ]}
+            params={1073758352}
+            visible={visibleRewardsContainer ?? false}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, right: 15, top: 125, height: 429, overflow: 'hidden', ...layout }}
+        >
+            <CollectibleHubLayoutLoadedContent5 {...loadedContent} />
+            <CollectibleHubLayoutNoContentContainer {...noContentContainer} />
+            <CollectibleHubLayoutLoadingContents5 {...loadingContents} />
         </Region>
     );
 };

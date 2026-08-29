@@ -4,12 +4,12 @@ import { BoxLayout, Frame, Region, ScrollArea, ThemeText } from '#base/theme';
 
 /** Generated from `1125_userclassification_frame_xml` (layout "userclassification_frame", 292x224) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface UserclassificationFrameLayoutProps {
-    itemsUserclassificationList?: ReactNode;
+    classificationsCont?: UserclassificationFrameLayoutClassificationsContProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const UserclassificationFrameLayout = ({ itemsUserclassificationList, layout, onClose }: UserclassificationFrameLayoutProps) => {
+export const UserclassificationFrameLayout = ({ classificationsCont, layout, onClose }: UserclassificationFrameLayoutProps) => {
     return (
         <Frame
             variant="0"
@@ -20,28 +20,7 @@ export const UserclassificationFrameLayout = ({ itemsUserclassificationList, lay
             layout={{ width: 292, height: 224, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="classifications_cont"
-                    params={2192}
-                    backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
-                >
-                    <ScrollArea
-                        orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0 }}
-                    >
-                        <Region
-                            name="userclassification_list"
-                            params={2193}
-                            layout={{ flexDirection: 'column', width: '100%' }}
-                        >
-                            {itemsUserclassificationList ?? (
-                                <UserclassificationFrameLayoutClassificationrowItem />
-                            )}
-                        </Region>
-                    </ScrollArea>
-                    {/* <scrollbar_vertical> for userclassification_list - rendered by that list's ScrollArea */}
-                </Region>
+                <UserclassificationFrameLayoutClassificationsCont {...classificationsCont} />
             </Region>
         </Frame>
     );
@@ -83,6 +62,51 @@ export const UserclassificationFrameLayoutClassificationrowItem = ({ captionUser
             >
                 <ThemeText text={captionVisitRoomTxt ?? 'Visit'} />
             </Region>
+        </Region>
+    );
+};
+
+/** Named region `userclassification_list` of UserclassificationFrameLayout - configured through the parent's `userclassificationList` prop. */
+export interface UserclassificationFrameLayoutUserclassificationListProps {
+    itemsUserclassificationList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const UserclassificationFrameLayoutUserclassificationList = ({ itemsUserclassificationList, layout }: UserclassificationFrameLayoutUserclassificationListProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0, ...layout }}
+        >
+            <Region
+                name="userclassification_list"
+                params={2193}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            >
+                {itemsUserclassificationList ?? (
+                    <UserclassificationFrameLayoutClassificationrowItem />
+                )}
+            </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `classifications_cont` of UserclassificationFrameLayout - configured through the parent's `classificationsCont` prop. */
+export interface UserclassificationFrameLayoutClassificationsContProps {
+    layout?: BoxLayout;
+    userclassificationList?: UserclassificationFrameLayoutUserclassificationListProps;
+}
+
+export const UserclassificationFrameLayoutClassificationsCont = ({ layout, userclassificationList }: UserclassificationFrameLayoutClassificationsContProps) => {
+    return (
+        <Region
+            name="classifications_cont"
+            params={2192}
+            backgroundColor="#ffffff"
+            layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, ...layout }}
+        >
+            <UserclassificationFrameLayoutUserclassificationList {...userclassificationList} />
+            {/* <scrollbar_vertical> for userclassification_list - rendered by that list's ScrollArea */}
         </Region>
     );
 };

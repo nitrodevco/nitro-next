@@ -7,16 +7,16 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface MintGridItemLayoutProps {
     captionBundleCounter?: string;
     captionMultiCounter?: string;
-    itemsTotalpriceContainer?: ReactNode;
     layout?: BoxLayout;
     srcBadgeAddOn?: string;
     srcImage?: string;
     srcUniqueItemBackgroundBitmap?: string;
     srcUniqueItemSoldOutBitmap?: string;
+    totalpriceContainer?: MintGridItemLayoutTotalpriceContainerProps;
     visibleBg?: boolean;
 }
 
-export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, itemsTotalpriceContainer, layout, srcBadgeAddOn, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, visibleBg }: MintGridItemLayoutProps) => {
+export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, layout, srcBadgeAddOn, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, totalpriceContainer, visibleBg }: MintGridItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 53, height: 74, ...layout }}>
             <Region
@@ -146,18 +146,7 @@ export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, 
                         />
                     </Region>
                 </Region>
-                <Region
-                    name="totalprice_container"
-                    params={409616}
-                    layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1 }}
-                >
-                    {itemsTotalpriceContainer ?? (
-                        <>
-                            <MintGridItemLayoutAmountTextRightItem />
-                            <MintGridItemLayoutCurrencyIndicatorBitmapRightItem />
-                        </>
-                    )}
-                </Region>
+                <MintGridItemLayoutTotalpriceContainer {...totalpriceContainer} />
             </Region>
         </Region>
     );
@@ -194,5 +183,28 @@ export const MintGridItemLayoutCurrencyIndicatorBitmapRightItem = ({ layout }: M
             params={147481}
             layout={{ width: 15, height: 15, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `totalprice_container` of MintGridItemLayout - configured through the parent's `totalpriceContainer` prop. */
+export interface MintGridItemLayoutTotalpriceContainerProps {
+    itemsTotalpriceContainer?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const MintGridItemLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout }: MintGridItemLayoutTotalpriceContainerProps) => {
+    return (
+        <Region
+            name="totalprice_container"
+            params={409616}
+            layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1, ...layout }}
+        >
+            {itemsTotalpriceContainer ?? (
+                <>
+                    <MintGridItemLayoutAmountTextRightItem />
+                    <MintGridItemLayoutCurrencyIndicatorBitmapRightItem />
+                </>
+            )}
+        </Region>
     );
 };

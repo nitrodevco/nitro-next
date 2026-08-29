@@ -6,22 +6,20 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `130_Achievements_xml` (layout "Achievements", 389x297) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface AchievementsLayoutProps {
+    achievementsHeaderCont?: AchievementsLayoutAchievementsHeaderContProps;
+    achievementsList?: AchievementsLayoutAchievementsListProps;
     captionAchievementDescTxt?: string;
     captionAchievementNameTxt?: string;
-    captionAchievementScoreTxt?: string;
-    captionCategoryNameTxt?: string;
-    captionCategoryProgressTxt?: string;
     captionLevelTxt?: string;
     captionRewardAmountTxt?: string;
     captionRewardCaptionTxt?: string;
-    itemsAchievementsScrollarea?: ReactNode;
+    categoriesCont?: AchievementsLayoutCategoriesContProps;
+    categoriesFooterCont?: AchievementsLayoutCategoriesFooterContProps;
     layout?: BoxLayout;
-    onBackButton?: () => void;
     onClose?: () => void;
-    srcCategoryPicBitmap?: string;
 }
 
-export const AchievementsLayout = ({ captionAchievementDescTxt, captionAchievementNameTxt, captionAchievementScoreTxt, captionCategoryNameTxt, captionCategoryProgressTxt, captionLevelTxt, captionRewardAmountTxt, captionRewardCaptionTxt, itemsAchievementsScrollarea, layout, onBackButton, onClose, srcCategoryPicBitmap }: AchievementsLayoutProps) => {
+export const AchievementsLayout = ({ achievementsHeaderCont, achievementsList, captionAchievementDescTxt, captionAchievementNameTxt, captionLevelTxt, captionRewardAmountTxt, captionRewardCaptionTxt, categoriesCont, categoriesFooterCont, layout, onClose }: AchievementsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -37,103 +35,10 @@ export const AchievementsLayout = ({ captionAchievementDescTxt, captionAchieveme
             layout={{ width: 389, height: 297, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="categories_cont"
-                    params={144}
-                    layout={{ position: 'absolute', left: 19, right: -1, top: 0, height: 10 }}
-                />
-                <Region
-                    name="categories_footer_cont"
-                    params={144}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 37 }}
-                >
-                    <Region
-                        name="achievement_score_txt"
-                        params={129}
-                        layout={{ position: 'absolute', left: 5, right: 5, top: 23, height: 18, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionAchievementScoreTxt ?? t('achievements.categories.score')}
-                            textOptions={{ fill: '#444444', wordWrap: true, wordWrapWidth: 379, align: 'center' }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="achievements_header_cont"
-                    params={144}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 75 }}
-                >
-                    <Region
-                        params={2192}
-                        backgroundColor="#8899a2"
-                        layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 0 }}
-                    />
-                    <Region
-                        params={16}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 387, top: 74, height: 1 }}
-                    />
-                    <ThemeImage
-                        name="category_pic_bitmap"
-                        params={16}
-                        src={srcCategoryPicBitmap}
-                        layout={{ position: 'absolute', left: 297, width: 84, top: 3, height: 72 }}
-                    />
-                    <Region
-                        name="category_name_txt"
-                        params={129}
-                        layout={{ position: 'absolute', left: 78, right: 25, top: 13, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCategoryNameTxt ?? 'Category Name Placeholder'}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 286 }}
-                        />
-                    </Region>
-                    <Region
-                        name="category_progress_txt"
-                        params={129}
-                        layout={{ position: 'absolute', left: 78, right: 66, top: 40, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCategoryProgressTxt ?? t('achievements.details.categoryprogress')}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 245 }}
-                        />
-                    </Region>
-                    <Region
-                        name="back_button"
-                        params={147473}
-                        onPointerTap={onBackButton}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 14, width: 33, top: 21, height: 34 }}
-                    >
-                        <ThemeImage
-                            params={16}
-                            src={layoutImage('icons_back.png')}
-                            layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="achievements_list"
-                    params={16}
-                    layout={{ position: 'absolute', left: 10, width: 367, top: 0, height: 100, minWidth: 367, maxHeight: 245 }}
-                >
-                    <ScrollArea
-                        orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 367, top: 0, height: 10, maxHeight: 245 }}
-                    >
-                        <Region
-                            name="achievements_scrollarea"
-                            params={16}
-                            layout={{ flexDirection: 'column', width: '100%' }}
-                        >
-                            {itemsAchievementsScrollarea ?? (
-                                <AchievementsLayoutAchievementsContItem />
-                            )}
-                        </Region>
-                    </ScrollArea>
-                    {/* <scrollbar_vertical> for achievements_scrollarea - rendered by that list's ScrollArea */}
-                </Region>
+                <AchievementsLayoutCategoriesCont {...categoriesCont} />
+                <AchievementsLayoutCategoriesFooterCont {...categoriesFooterCont} />
+                <AchievementsLayoutAchievementsHeaderCont {...achievementsHeaderCont} />
+                <AchievementsLayoutAchievementsList {...achievementsList} />
                 <Border
                     variant="0"
                     name="achievement_cont"
@@ -204,6 +109,133 @@ export const AchievementsLayout = ({ captionAchievementDescTxt, captionAchieveme
     );
 };
 
+/** Named region `categories_cont` of AchievementsLayout - configured through the parent's `categoriesCont` prop. */
+export interface AchievementsLayoutCategoriesContProps {
+    layout?: BoxLayout;
+}
+
+export const AchievementsLayoutCategoriesCont = ({ layout }: AchievementsLayoutCategoriesContProps) => {
+    return (
+        <Region
+            name="categories_cont"
+            params={144}
+            layout={{ position: 'absolute', left: 19, right: -1, top: 0, height: 10, ...layout }}
+        />
+    );
+};
+
+/** Named region `categories_footer_cont` of AchievementsLayout - configured through the parent's `categoriesFooterCont` prop. */
+export interface AchievementsLayoutCategoriesFooterContProps {
+    captionAchievementScoreTxt?: string;
+    layout?: BoxLayout;
+}
+
+export const AchievementsLayoutCategoriesFooterCont = ({ captionAchievementScoreTxt, layout }: AchievementsLayoutCategoriesFooterContProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="categories_footer_cont"
+            params={144}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 37, ...layout }}
+        >
+            <Region
+                name="achievement_score_txt"
+                params={129}
+                layout={{ position: 'absolute', left: 5, right: 5, top: 23, height: 18, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionAchievementScoreTxt ?? t('achievements.categories.score')}
+                    textOptions={{ fill: '#444444', wordWrap: true, wordWrapWidth: 379, align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `back_button` of AchievementsLayout - configured through the parent's `backButton` prop. */
+export interface AchievementsLayoutBackButtonProps {
+    layout?: BoxLayout;
+    onBackButton?: () => void;
+}
+
+export const AchievementsLayoutBackButton = ({ layout, onBackButton }: AchievementsLayoutBackButtonProps) => {
+    return (
+        <Region
+            name="back_button"
+            params={147473}
+            onPointerTap={onBackButton}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 14, width: 33, top: 21, height: 34, ...layout }}
+        >
+            <ThemeImage
+                params={16}
+                src={layoutImage('icons_back.png')}
+                layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 34 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `achievements_header_cont` of AchievementsLayout - configured through the parent's `achievementsHeaderCont` prop. */
+export interface AchievementsLayoutAchievementsHeaderContProps {
+    backButton?: AchievementsLayoutBackButtonProps;
+    captionCategoryNameTxt?: string;
+    captionCategoryProgressTxt?: string;
+    layout?: BoxLayout;
+    srcCategoryPicBitmap?: string;
+}
+
+export const AchievementsLayoutAchievementsHeaderCont = ({ backButton, captionCategoryNameTxt, captionCategoryProgressTxt, layout, srcCategoryPicBitmap }: AchievementsLayoutAchievementsHeaderContProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="achievements_header_cont"
+            params={144}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 75, ...layout }}
+        >
+            <Region
+                params={2192}
+                backgroundColor="#8899a2"
+                layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 0 }}
+            />
+            <Region
+                params={16}
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 0, width: 387, top: 74, height: 1 }}
+            />
+            <ThemeImage
+                name="category_pic_bitmap"
+                params={16}
+                src={srcCategoryPicBitmap}
+                layout={{ position: 'absolute', left: 297, width: 84, top: 3, height: 72 }}
+            />
+            <Region
+                name="category_name_txt"
+                params={129}
+                layout={{ position: 'absolute', left: 78, right: 25, top: 13, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCategoryNameTxt ?? 'Category Name Placeholder'}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 286 }}
+                />
+            </Region>
+            <Region
+                name="category_progress_txt"
+                params={129}
+                layout={{ position: 'absolute', left: 78, right: 66, top: 40, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCategoryProgressTxt ?? t('achievements.details.categoryprogress')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 245 }}
+                />
+            </Region>
+            <AchievementsLayoutBackButton {...backButton} />
+        </Region>
+    );
+};
+
 /** Row template `achievements_cont` of AchievementsLayout - pass real rows through its `items…` slot. */
 export interface AchievementsLayoutAchievementsContItemProps {
     layout?: BoxLayout;
@@ -216,5 +248,49 @@ export const AchievementsLayoutAchievementsContItem = ({ layout }: AchievementsL
             params={16}
             layout={{ width: 367, height: 10, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `achievements_scrollarea` of AchievementsLayout - configured through the parent's `achievementsScrollarea` prop. */
+export interface AchievementsLayoutAchievementsScrollareaProps {
+    itemsAchievementsScrollarea?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const AchievementsLayoutAchievementsScrollarea = ({ itemsAchievementsScrollarea, layout }: AchievementsLayoutAchievementsScrollareaProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 0, width: 367, top: 0, height: 10, maxHeight: 245, ...layout }}
+        >
+            <Region
+                name="achievements_scrollarea"
+                params={16}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            >
+                {itemsAchievementsScrollarea ?? (
+                    <AchievementsLayoutAchievementsContItem />
+                )}
+            </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `achievements_list` of AchievementsLayout - configured through the parent's `achievementsList` prop. */
+export interface AchievementsLayoutAchievementsListProps {
+    achievementsScrollarea?: AchievementsLayoutAchievementsScrollareaProps;
+    layout?: BoxLayout;
+}
+
+export const AchievementsLayoutAchievementsList = ({ achievementsScrollarea, layout }: AchievementsLayoutAchievementsListProps) => {
+    return (
+        <Region
+            name="achievements_list"
+            params={16}
+            layout={{ position: 'absolute', left: 10, width: 367, top: 0, height: 100, minWidth: 367, maxHeight: 245, ...layout }}
+        >
+            <AchievementsLayoutAchievementsScrollarea {...achievementsScrollarea} />
+            {/* <scrollbar_vertical> for achievements_scrollarea - rendered by that list's ScrollArea */}
+        </Region>
     );
 };

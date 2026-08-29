@@ -4,12 +4,12 @@ import { Border, BoxLayout, Button, Region, ThemeImage, ThemeText } from '#base/
 
 /** Generated from `2983_feed_entity_xml` (layout "feed_entity", 229x172) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface FeedEntityLayoutProps {
-    itemsContentList?: ReactNode;
+    contentList?: FeedEntityLayoutContentListProps;
     layout?: BoxLayout;
     srcIcon?: string;
 }
 
-export const FeedEntityLayout = ({ itemsContentList, layout, srcIcon }: FeedEntityLayoutProps) => {
+export const FeedEntityLayout = ({ contentList, layout, srcIcon }: FeedEntityLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 229, height: 172, ...layout }}>
             <Border
@@ -25,21 +25,7 @@ export const FeedEntityLayout = ({ itemsContentList, layout, srcIcon }: FeedEnti
                     src={srcIcon}
                     layout={{ position: 'absolute', left: 4, width: 50, top: 5, height: 60 }}
                 />
-                <Region
-                    name="content_list"
-                    params={8538256}
-                    layout={{ position: 'absolute', left: 50, right: 1, top: 4, bottom: 6, flexDirection: 'column', gap: 3 }}
-                >
-                    {itemsContentList ?? (
-                        <>
-                            <FeedEntityLayoutTitleItem />
-                            <FeedEntityLayoutTimeItem />
-                            <FeedEntityLayoutMessageItem />
-                            <FeedEntityLayoutDecorationItem />
-                            <FeedEntityLayoutActionButtonItem />
-                        </>
-                    )}
-                </Region>
+                <FeedEntityLayoutContentList {...contentList} />
             </Border>
         </Region>
     );
@@ -145,5 +131,31 @@ export const FeedEntityLayoutActionButtonItem = ({ layout, onActionButton }: Fee
         >
             _button
         </Button>
+    );
+};
+
+/** Named region `content_list` of FeedEntityLayout - configured through the parent's `contentList` prop. */
+export interface FeedEntityLayoutContentListProps {
+    itemsContentList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const FeedEntityLayoutContentList = ({ itemsContentList, layout }: FeedEntityLayoutContentListProps) => {
+    return (
+        <Region
+            name="content_list"
+            params={8538256}
+            layout={{ position: 'absolute', left: 50, right: 1, top: 4, bottom: 6, flexDirection: 'column', gap: 3, ...layout }}
+        >
+            {itemsContentList ?? (
+                <>
+                    <FeedEntityLayoutTitleItem />
+                    <FeedEntityLayoutTimeItem />
+                    <FeedEntityLayoutMessageItem />
+                    <FeedEntityLayoutDecorationItem />
+                    <FeedEntityLayoutActionButtonItem />
+                </>
+            )}
+        </Region>
     );
 };

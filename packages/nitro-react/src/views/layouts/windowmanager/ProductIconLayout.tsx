@@ -33,7 +33,7 @@ export const ProductIconLayout = ({ layout, srcBitmap, srcUnknownImage, visibleI
                 />
                 <Region
                     visible={false}
-                    layout={{ position: 'absolute', width: 18, alignSelf: 'center', height: 18, justifyContent: 'center' }}
+                    layout={{ position: 'absolute', width: 18, alignSelf: 'center', height: 18 }}
                 >
                     <ThemeImage
                         name="unknown_image"

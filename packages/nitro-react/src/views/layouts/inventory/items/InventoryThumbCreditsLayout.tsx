@@ -3,8 +3,8 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1455_inventory_thumb_credits_xml` (layout "thumbnail", 42x42) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface InventoryThumbCreditsLayoutProps {
-    captionNumber?: string;
     layout?: BoxLayout;
+    numberContainer?: InventoryThumbCreditsLayoutNumberContainerProps;
     srcBitmap?: string;
     srcOutline?: string;
     srcRecyclableContainer?: string;
@@ -12,7 +12,7 @@ export interface InventoryThumbCreditsLayoutProps {
     srcUniqueItemBackgroundBitmap?: string;
 }
 
-export const InventoryThumbCreditsLayout = ({ captionNumber, layout, srcBitmap, srcOutline, srcRecyclableContainer, srcRentState, srcUniqueItemBackgroundBitmap }: InventoryThumbCreditsLayoutProps) => {
+export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap, srcOutline, srcRecyclableContainer, srcRentState, srcUniqueItemBackgroundBitmap }: InventoryThumbCreditsLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 42, height: 42, ...layout }}>
             <Region
@@ -77,25 +77,7 @@ export const InventoryThumbCreditsLayout = ({ captionNumber, layout, srcBitmap, 
                         visible={false}
                         layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                     />
-                    <Region
-                        name="number_container"
-                        tags={[ 'COUNT' ]}
-                        params={393360}
-                        layout={{ position: 'absolute', left: 0, right: 2, top: 1, height: 20 }}
-                    >
-                        <Region
-                            name="number"
-                            tags={[ 'NUMBER', 'COUNT' ]}
-                            params={16}
-                            layout={{ position: 'absolute', left: 0, width: 38, top: 0, height: 17, maxWidth: 38, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionNumber ?? '66'}
-                                textStyle="text-style-u-headline-small"
-                                textOptions={{ align: 'center' }}
-                            />
-                        </Region>
-                    </Region>
+                    <InventoryThumbCreditsLayoutNumberContainer {...numberContainer} />
                     <Region
                         visible={false}
                         layout={{ position: 'absolute', left: 4, width: 10, top: 4, height: 10 }}
@@ -113,6 +95,36 @@ export const InventoryThumbCreditsLayout = ({ captionNumber, layout, srcBitmap, 
                     params={16}
                     src={srcOutline ?? layoutImage('inventory_thumb_selected_outline.png')}
                     layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `number_container` of InventoryThumbCreditsLayout - configured through the parent's `numberContainer` prop. */
+export interface InventoryThumbCreditsLayoutNumberContainerProps {
+    captionNumber?: string;
+    layout?: BoxLayout;
+}
+
+export const InventoryThumbCreditsLayoutNumberContainer = ({ captionNumber, layout }: InventoryThumbCreditsLayoutNumberContainerProps) => {
+    return (
+        <Region
+            name="number_container"
+            tags={[ 'COUNT' ]}
+            params={393360}
+            layout={{ position: 'absolute', left: 0, right: 2, top: 1, height: 20, ...layout }}
+        >
+            <Region
+                name="number"
+                tags={[ 'NUMBER', 'COUNT' ]}
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 38, top: 0, height: 17, maxWidth: 38, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionNumber ?? '66'}
+                    textStyle="text-style-u-headline-small"
+                    textOptions={{ align: 'center' }}
                 />
             </Region>
         </Region>

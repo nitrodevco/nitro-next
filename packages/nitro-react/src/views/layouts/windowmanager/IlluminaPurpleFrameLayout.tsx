@@ -3,31 +3,20 @@ import { BoxLayout, CloseButton, Region, Scaler, ThemeText } from '#base/theme';
 /** Generated from `2638_illumina_purple_frame_xml` (layout "illumina_purple_frame", 50x50) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IlluminaPurpleFrameLayoutProps {
     captionHeaderTitleText?: string;
+    contentArea?: IlluminaPurpleFrameLayoutContentAreaProps;
     layout?: BoxLayout;
     onHeaderButtonClose?: () => void;
-    onTitlebar?: () => void;
+    titlebar?: IlluminaPurpleFrameLayoutTitlebarProps;
 }
 
-export const IlluminaPurpleFrameLayout = ({ captionHeaderTitleText, layout, onHeaderButtonClose, onTitlebar }: IlluminaPurpleFrameLayoutProps) => {
+export const IlluminaPurpleFrameLayout = ({ captionHeaderTitleText, contentArea, layout, onHeaderButtonClose, titlebar }: IlluminaPurpleFrameLayoutProps) => {
     return (
         <Region
             dropShadow={{ distance: 0, angle: 0, color: '#000000', alpha: 0.35, blur: 20 }}
             layout={{ position: 'relative', width: 50, height: 50, ...layout }}
         >
-            <Region
-                name="content_area"
-                tags={[ '_CONTENT', '_INTERNAL', '_EXCLUDE' ]}
-                params={12585104}
-                layout={{ position: 'absolute', left: 1, right: 1, top: 30, bottom: 1 }}
-            />
-            <Region
-                name="titlebar"
-                tags={[ '_EXCLUDE', '_INTERNAL' ]}
-                params={401}
-                onPointerTap={onTitlebar}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30 }}
-            />
+            <IlluminaPurpleFrameLayoutContentArea {...contentArea} />
+            <IlluminaPurpleFrameLayoutTitlebar {...titlebar} />
             <Region
                 name="header_title_text"
                 tags={[ '_TITLE', '_EXCLUDE', '_INTERNAL' ]}
@@ -55,5 +44,40 @@ export const IlluminaPurpleFrameLayout = ({ captionHeaderTitleText, layout, onHe
                 layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 10 }}
             />
         </Region>
+    );
+};
+
+/** Named region `content_area` of IlluminaPurpleFrameLayout - configured through the parent's `contentArea` prop. */
+export interface IlluminaPurpleFrameLayoutContentAreaProps {
+    layout?: BoxLayout;
+}
+
+export const IlluminaPurpleFrameLayoutContentArea = ({ layout }: IlluminaPurpleFrameLayoutContentAreaProps) => {
+    return (
+        <Region
+            name="content_area"
+            tags={[ '_CONTENT', '_INTERNAL', '_EXCLUDE' ]}
+            params={12585104}
+            layout={{ position: 'absolute', left: 1, right: 1, top: 30, bottom: 1, ...layout }}
+        />
+    );
+};
+
+/** Named region `titlebar` of IlluminaPurpleFrameLayout - configured through the parent's `titlebar` prop. */
+export interface IlluminaPurpleFrameLayoutTitlebarProps {
+    layout?: BoxLayout;
+    onTitlebar?: () => void;
+}
+
+export const IlluminaPurpleFrameLayoutTitlebar = ({ layout, onTitlebar }: IlluminaPurpleFrameLayoutTitlebarProps) => {
+    return (
+        <Region
+            name="titlebar"
+            tags={[ '_EXCLUDE', '_INTERNAL' ]}
+            params={401}
+            onPointerTap={onTitlebar}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30, ...layout }}
+        />
     );
 };

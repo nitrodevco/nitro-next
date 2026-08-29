@@ -6,13 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `859_costumehopper_costumerequired_xml` (layout "costumehopper_costumerequired", 310x149) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface CostumehopperCostumerequiredLayoutProps {
-    itemsList?: ReactNode;
     layout?: BoxLayout;
+    list?: CostumehopperCostumerequiredLayoutListProps;
     onClose?: () => void;
     srcIllustration?: string;
 }
 
-export const CostumehopperCostumerequiredLayout = ({ itemsList, layout, onClose, srcIllustration }: CostumehopperCostumerequiredLayoutProps) => {
+export const CostumehopperCostumerequiredLayout = ({ layout, list, onClose, srcIllustration }: CostumehopperCostumerequiredLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -30,18 +30,7 @@ export const CostumehopperCostumerequiredLayout = ({ itemsList, layout, onClose,
                     src={srcIllustration}
                     layout={{ position: 'absolute', left: 10, width: 1, top: 0, height: 1 }}
                 />
-                <Region
-                    name="list"
-                    params={8536080}
-                    layout={{ position: 'absolute', left: 10, top: 0, flexDirection: 'column', gap: 3 }}
-                >
-                    {itemsList ?? (
-                        <>
-                            <CostumehopperCostumerequiredLayoutListTopItem />
-                            <CostumehopperCostumerequiredLayoutListBottomItem />
-                        </>
-                    )}
-                </Region>
+                <CostumehopperCostumerequiredLayoutList {...list} />
             </Region>
         </Frame>
     );
@@ -181,6 +170,29 @@ export const CostumehopperCostumerequiredLayoutListBottomItem = ({ itemsListBott
                 src={layoutImage('illumina_horizontal_separator.png')}
                 layout={{ width: 291, height: 3, flexShrink: 0 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `list` of CostumehopperCostumerequiredLayout - configured through the parent's `list` prop. */
+export interface CostumehopperCostumerequiredLayoutListProps {
+    itemsList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const CostumehopperCostumerequiredLayoutList = ({ itemsList, layout }: CostumehopperCostumerequiredLayoutListProps) => {
+    return (
+        <Region
+            name="list"
+            params={8536080}
+            layout={{ position: 'absolute', left: 10, top: 0, flexDirection: 'column', gap: 3, ...layout }}
+        >
+            {itemsList ?? (
+                <>
+                    <CostumehopperCostumerequiredLayoutListTopItem />
+                    <CostumehopperCostumerequiredLayoutListBottomItem />
+                </>
+            )}
         </Region>
     );
 };

@@ -6,13 +6,12 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1540_vault_view_xml` (layout "vault_view", 422x536) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface VaultViewLayoutProps {
-    itemsScrollingEarningsList?: ReactNode;
+    earningsContentArea?: VaultViewLayoutEarningsContentAreaProps;
     layout?: BoxLayout;
-    onClaimAllBtn?: () => void;
     onClose?: () => void;
 }
 
-export const VaultViewLayout = ({ itemsScrollingEarningsList, layout, onClaimAllBtn, onClose }: VaultViewLayoutProps) => {
+export const VaultViewLayout = ({ earningsContentArea, layout, onClose }: VaultViewLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -27,43 +26,7 @@ export const VaultViewLayout = ({ itemsScrollingEarningsList, layout, onClaimAll
             layout={{ width: 422, height: 536, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="earningsContentArea"
-                    params={8390672}
-                    layout={{ position: 'absolute', left: 1, width: 404, top: 0, bottom: 45, justifyContent: 'center' }}
-                >
-                    <Region
-                        name="scrolling_earnings_list"
-                        params={8388624}
-                        layout={{ position: 'absolute', left: 2, width: 404, top: 5, height: 441, flexDirection: 'column', gap: 3 }}
-                    >
-                        {itemsScrollingEarningsList ?? (
-                            <>
-                                <VaultViewLayoutDailygiftContainerItem />
-                                <VaultViewLayoutGamesContainerItem />
-                                <VaultViewLayoutWiredchestContainerItem />
-                                <VaultViewLayoutAchievementsContainerItem />
-                                <VaultViewLayoutMarketplaceContainerItem />
-                                <VaultViewLayoutHabboclubContainerItem />
-                                <VaultViewLayoutLevelprogressionContainerItem />
-                                <VaultViewLayoutDonationContainerItem />
-                                <VaultViewLayoutBonusbagContainerItem />
-                                <VaultViewLayoutSurpriseContainerItem />
-                                <VaultViewLayoutSnowstormContainerItem />
-                                <VaultViewLayoutAgencyContainerItem />
-                            </>
-                        )}
-                    </Region>
-                    <ButtonThick
-                        variant="3"
-                        name="claim_all_btn"
-                        params={918545}
-                        onPointerTap={onClaimAllBtn}
-                        layout={{ position: 'absolute', marginLeft: -9.5, marginRight: 9.5, width: 73, bottom: 4, height: 30 }}
-                    >
-                        {t('earning.claim_all')}
-                    </ButtonThick>
-                </Region>
+                <VaultViewLayoutEarningsContentArea {...earningsContentArea} />
             </Region>
         </Frame>
     );
@@ -1323,6 +1286,69 @@ export const VaultViewLayoutAgencyContainerItem = ({ captionAgencyCreditValue, c
             >
                 {t('earnings.claim.button')}
             </Button>
+        </Region>
+    );
+};
+
+/** Named region `scrolling_earnings_list` of VaultViewLayout - configured through the parent's `scrollingEarningsList` prop. */
+export interface VaultViewLayoutScrollingEarningsListProps {
+    itemsScrollingEarningsList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const VaultViewLayoutScrollingEarningsList = ({ itemsScrollingEarningsList, layout }: VaultViewLayoutScrollingEarningsListProps) => {
+    return (
+        <Region
+            name="scrolling_earnings_list"
+            params={8388624}
+            layout={{ position: 'absolute', left: 2, width: 404, top: 5, height: 441, flexDirection: 'column', gap: 3, ...layout }}
+        >
+            {itemsScrollingEarningsList ?? (
+                <>
+                    <VaultViewLayoutDailygiftContainerItem />
+                    <VaultViewLayoutGamesContainerItem />
+                    <VaultViewLayoutWiredchestContainerItem />
+                    <VaultViewLayoutAchievementsContainerItem />
+                    <VaultViewLayoutMarketplaceContainerItem />
+                    <VaultViewLayoutHabboclubContainerItem />
+                    <VaultViewLayoutLevelprogressionContainerItem />
+                    <VaultViewLayoutDonationContainerItem />
+                    <VaultViewLayoutBonusbagContainerItem />
+                    <VaultViewLayoutSurpriseContainerItem />
+                    <VaultViewLayoutSnowstormContainerItem />
+                    <VaultViewLayoutAgencyContainerItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `earningsContentArea` of VaultViewLayout - configured through the parent's `earningsContentArea` prop. */
+export interface VaultViewLayoutEarningsContentAreaProps {
+    layout?: BoxLayout;
+    onClaimAllBtn?: () => void;
+    scrollingEarningsList?: VaultViewLayoutScrollingEarningsListProps;
+}
+
+export const VaultViewLayoutEarningsContentArea = ({ layout, onClaimAllBtn, scrollingEarningsList }: VaultViewLayoutEarningsContentAreaProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="earningsContentArea"
+            params={8390672}
+            layout={{ position: 'absolute', left: 1, width: 404, top: 0, bottom: 45, justifyContent: 'center', ...layout }}
+        >
+            <VaultViewLayoutScrollingEarningsList {...scrollingEarningsList} />
+            <ButtonThick
+                variant="3"
+                name="claim_all_btn"
+                params={918545}
+                onPointerTap={onClaimAllBtn}
+                layout={{ position: 'absolute', marginLeft: -9.5, marginRight: 9.5, width: 73, bottom: 4, height: 30 }}
+            >
+                {t('earning.claim_all')}
+            </ButtonThick>
         </Region>
     );
 };

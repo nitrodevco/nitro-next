@@ -7,12 +7,13 @@ import { Border, BoxLayout, Button, Dropmenu, Region, ThemeText } from '#base/th
 export interface ToolbarChatSettingsLayoutProps {
     captionChatSettingsInfo?: string;
     captionSettingsTitle?: string;
-    itemsChatSettingsList?: ReactNode;
+    chatSettingsList?: ToolbarChatSettingsLayoutChatSettingsListProps;
     layout?: BoxLayout;
+    line?: ToolbarChatSettingsLayoutLineProps;
     onBackBtn?: () => void;
 }
 
-export const ToolbarChatSettingsLayout = ({ captionChatSettingsInfo, captionSettingsTitle, itemsChatSettingsList, layout, onBackBtn }: ToolbarChatSettingsLayoutProps) => {
+export const ToolbarChatSettingsLayout = ({ captionChatSettingsInfo, captionSettingsTitle, chatSettingsList, layout, line, onBackBtn }: ToolbarChatSettingsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -35,12 +36,7 @@ export const ToolbarChatSettingsLayout = ({ captionChatSettingsInfo, captionSett
                         textOptions={{ fill: '#ffffff', align: 'center' }}
                     />
                 </Region>
-                <Region
-                    name="line"
-                    params={786576}
-                    backgroundColor="#2f2f2f"
-                    layout={{ position: 'absolute', left: 10, right: 10, top: 24, height: 1 }}
-                />
+                <ToolbarChatSettingsLayoutLine {...line} />
                 <Region
                     name="chat_settings_info"
                     params={144}
@@ -52,22 +48,7 @@ export const ToolbarChatSettingsLayout = ({ captionChatSettingsInfo, captionSett
                         textOptions={{ fill: '#ffffff' }}
                     />
                 </Region>
-                <Region
-                    name="chat_settings_list"
-                    params={144}
-                    layout={{ position: 'absolute', left: 10, right: 10, top: 70, height: 143, flexDirection: 'column', gap: 4 }}
-                >
-                    {itemsChatSettingsList ?? (
-                        <>
-                            <ToolbarChatSettingsLayoutChatModeLabelItem />
-                            <ToolbarChatSettingsLayoutChatModeItem />
-                            <ToolbarChatSettingsLayoutChatBubbleWidthLabelItem />
-                            <ToolbarChatSettingsLayoutChatBubbleWidthItem />
-                            <ToolbarChatSettingsLayoutChatScrollSpeedLabelItem />
-                            <ToolbarChatSettingsLayoutChatScrollSpeedItem />
-                        </>
-                    )}
-                </Region>
+                <ToolbarChatSettingsLayoutChatSettingsList {...chatSettingsList} />
                 <Button
                     variant="3"
                     name="back_btn"
@@ -79,6 +60,22 @@ export const ToolbarChatSettingsLayout = ({ captionChatSettingsInfo, captionSett
                 </Button>
             </Border>
         </Region>
+    );
+};
+
+/** Named region `line` of ToolbarChatSettingsLayout - configured through the parent's `line` prop. */
+export interface ToolbarChatSettingsLayoutLineProps {
+    layout?: BoxLayout;
+}
+
+export const ToolbarChatSettingsLayoutLine = ({ layout }: ToolbarChatSettingsLayoutLineProps) => {
+    return (
+        <Region
+            name="line"
+            params={786576}
+            backgroundColor="#2f2f2f"
+            layout={{ position: 'absolute', left: 10, right: 10, top: 24, height: 1, ...layout }}
+        />
     );
 };
 
@@ -205,5 +202,32 @@ export const ToolbarChatSettingsLayoutChatScrollSpeedItem = ({ layout, onChatScr
             onPointerTap={onChatScrollSpeed}
             layout={{ width: 237, height: 24, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `chat_settings_list` of ToolbarChatSettingsLayout - configured through the parent's `chatSettingsList` prop. */
+export interface ToolbarChatSettingsLayoutChatSettingsListProps {
+    itemsChatSettingsList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const ToolbarChatSettingsLayoutChatSettingsList = ({ itemsChatSettingsList, layout }: ToolbarChatSettingsLayoutChatSettingsListProps) => {
+    return (
+        <Region
+            name="chat_settings_list"
+            params={144}
+            layout={{ position: 'absolute', left: 10, right: 10, top: 70, height: 143, flexDirection: 'column', gap: 4, ...layout }}
+        >
+            {itemsChatSettingsList ?? (
+                <>
+                    <ToolbarChatSettingsLayoutChatModeLabelItem />
+                    <ToolbarChatSettingsLayoutChatModeItem />
+                    <ToolbarChatSettingsLayoutChatBubbleWidthLabelItem />
+                    <ToolbarChatSettingsLayoutChatBubbleWidthItem />
+                    <ToolbarChatSettingsLayoutChatScrollSpeedLabelItem />
+                    <ToolbarChatSettingsLayoutChatScrollSpeedItem />
+                </>
+            )}
+        </Region>
     );
 };

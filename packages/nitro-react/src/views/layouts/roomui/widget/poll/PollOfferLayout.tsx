@@ -6,18 +6,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1016_poll_offer_xml` (layout "poll_offer", 382x250) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PollOfferLayoutProps {
-    captionPollOfferButtonCancel?: string;
-    captionPollOfferButtonLater?: string;
-    itemsPollOfferHeaderWrapper?: ReactNode;
-    itemsPollOfferSummaryWrapper?: ReactNode;
+    headerContainer?: PollOfferLayoutHeaderContainerProps;
     layout?: BoxLayout;
     onClose?: () => void;
-    onHeaderContainer?: () => void;
-    onPollOfferButtonOk?: () => void;
-    srcPreviewImageBg?: string;
+    pollOfferSummaryWrapper?: PollOfferLayoutPollOfferSummaryWrapperProps;
+    pollOptionsContainer?: PollOfferLayoutPollOptionsContainerProps;
 }
 
-export const PollOfferLayout = ({ captionPollOfferButtonCancel, captionPollOfferButtonLater, itemsPollOfferHeaderWrapper, itemsPollOfferSummaryWrapper, layout, onClose, onHeaderContainer, onPollOfferButtonOk, srcPreviewImageBg }: PollOfferLayoutProps) => {
+export const PollOfferLayout = ({ headerContainer, layout, onClose, pollOfferSummaryWrapper, pollOptionsContainer }: PollOfferLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -32,84 +28,15 @@ export const PollOfferLayout = ({ captionPollOfferButtonCancel, captionPollOffer
             layout={{ width: 382, height: 250, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="header_container"
-                    params={1}
-                    backgroundColor="#0e3f52"
-                    onPointerTap={onHeaderContainer}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: -5, width: 380, top: 8, height: 95 }}
-                >
-                    <ThemeImage
-                        name="preview_image_bg"
-                        tags={[ 'bitmap' ]}
-                        params={16}
-                        src={srcPreviewImageBg ?? layoutImage('poll_poll_prompt_frank.png')}
-                        layout={{ position: 'absolute', left: 10, width: 80, top: 7, height: 80 }}
-                    />
-                    <Region
-                        name="poll_offer_header_wrapper"
-                        params={2193}
-                        layout={{ position: 'absolute', left: 110, right: 20, top: 25, bottom: 10, flexDirection: 'column' }}
-                    >
-                        {itemsPollOfferHeaderWrapper ?? (
-                            <PollOfferLayoutPollOfferHeadlineItem />
-                        )}
-                    </Region>
-                </Region>
+                <PollOfferLayoutHeaderContainer {...headerContainer} />
                 <Border
                     variant="2"
                     name="poll_offer_border"
                     params={2192}
                     layout={{ position: 'absolute', left: 0, right: 12, top: 100, bottom: 0 }}
                 >
-                    <Region
-                        name="poll_offer_summary_wrapper"
-                        params={2193}
-                        layout={{ position: 'absolute', left: 8, right: 7, top: 10, bottom: 90, flexDirection: 'column' }}
-                    >
-                        {itemsPollOfferSummaryWrapper ?? (
-                            <PollOfferLayoutPollOfferSummaryItem />
-                        )}
-                    </Region>
-                    <Region
-                        name="poll_options_container"
-                        params={9700368}
-                        layout={{ position: 'absolute', right: 0, width: 250, bottom: 41, height: 42 }}
-                    >
-                        <Region
-                            name="poll_offer_button_cancel"
-                            params={131073}
-                            layout={{ position: 'absolute', left: 1, width: 74, top: 20, height: 17, minWidth: 74, maxWidth: 74, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionPollOfferButtonCancel ?? `${t('cancel')}...`}
-                                textStyle="text-style-u-regular"
-                                textOptions={{ fill: '#333333' }}
-                            />
-                        </Region>
-                        <Region
-                            name="poll_offer_button_later"
-                            params={131073}
-                            layout={{ position: 'absolute', left: 75, width: 74, top: 20, height: 17, minWidth: 74, maxWidth: 74, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionPollOfferButtonLater ?? t('poll_offer_later')}
-                                textStyle="text-style-u-regular"
-                                textOptions={{ fill: '#333333' }}
-                            />
-                        </Region>
-                        <ButtonThick
-                            variant="5"
-                            name="poll_offer_button_ok"
-                            params={131089}
-                            tintColor="#00aa00"
-                            onPointerTap={onPollOfferButtonOk}
-                            layout={{ position: 'absolute', left: 166, width: 80, top: 0, height: 40, minWidth: 80, maxWidth: 80 }}
-                        >
-                            {t('ok')}
-                        </ButtonThick>
-                    </Region>
+                    <PollOfferLayoutPollOfferSummaryWrapper {...pollOfferSummaryWrapper} />
+                    <PollOfferLayoutPollOptionsContainer {...pollOptionsContainer} />
                 </Border>
             </Region>
         </Frame>
@@ -140,6 +67,56 @@ export const PollOfferLayoutPollOfferHeadlineItem = ({ captionPollOfferHeadline,
     );
 };
 
+/** Named region `poll_offer_header_wrapper` of PollOfferLayout - configured through the parent's `pollOfferHeaderWrapper` prop. */
+export interface PollOfferLayoutPollOfferHeaderWrapperProps {
+    itemsPollOfferHeaderWrapper?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PollOfferLayoutPollOfferHeaderWrapper = ({ itemsPollOfferHeaderWrapper, layout }: PollOfferLayoutPollOfferHeaderWrapperProps) => {
+    return (
+        <Region
+            name="poll_offer_header_wrapper"
+            params={2193}
+            layout={{ position: 'absolute', left: 110, right: 20, top: 25, bottom: 10, flexDirection: 'column', ...layout }}
+        >
+            {itemsPollOfferHeaderWrapper ?? (
+                <PollOfferLayoutPollOfferHeadlineItem />
+            )}
+        </Region>
+    );
+};
+
+/** Named region `header_container` of PollOfferLayout - configured through the parent's `headerContainer` prop. */
+export interface PollOfferLayoutHeaderContainerProps {
+    layout?: BoxLayout;
+    onHeaderContainer?: () => void;
+    pollOfferHeaderWrapper?: PollOfferLayoutPollOfferHeaderWrapperProps;
+    srcPreviewImageBg?: string;
+}
+
+export const PollOfferLayoutHeaderContainer = ({ layout, onHeaderContainer, pollOfferHeaderWrapper, srcPreviewImageBg }: PollOfferLayoutHeaderContainerProps) => {
+    return (
+        <Region
+            name="header_container"
+            params={1}
+            backgroundColor="#0e3f52"
+            onPointerTap={onHeaderContainer}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: -5, width: 380, top: 8, height: 95, ...layout }}
+        >
+            <ThemeImage
+                name="preview_image_bg"
+                tags={[ 'bitmap' ]}
+                params={16}
+                src={srcPreviewImageBg ?? layoutImage('poll_poll_prompt_frank.png')}
+                layout={{ position: 'absolute', left: 10, width: 80, top: 7, height: 80 }}
+            />
+            <PollOfferLayoutPollOfferHeaderWrapper {...pollOfferHeaderWrapper} />
+        </Region>
+    );
+};
+
 /** Row template `poll_offer_summary` of PollOfferLayout - pass real rows through its `items…` slot. */
 export interface PollOfferLayoutPollOfferSummaryItemProps {
     captionPollOfferSummary?: string;
@@ -160,6 +137,79 @@ export const PollOfferLayoutPollOfferSummaryItem = ({ captionPollOfferSummary, l
                 textStyle="text-style-u-regular"
                 textOptions={{ wordWrap: true, wordWrapWidth: 355 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `poll_offer_summary_wrapper` of PollOfferLayout - configured through the parent's `pollOfferSummaryWrapper` prop. */
+export interface PollOfferLayoutPollOfferSummaryWrapperProps {
+    itemsPollOfferSummaryWrapper?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PollOfferLayoutPollOfferSummaryWrapper = ({ itemsPollOfferSummaryWrapper, layout }: PollOfferLayoutPollOfferSummaryWrapperProps) => {
+    return (
+        <Region
+            name="poll_offer_summary_wrapper"
+            params={2193}
+            layout={{ position: 'absolute', left: 8, right: 7, top: 10, bottom: 90, flexDirection: 'column', ...layout }}
+        >
+            {itemsPollOfferSummaryWrapper ?? (
+                <PollOfferLayoutPollOfferSummaryItem />
+            )}
+        </Region>
+    );
+};
+
+/** Named region `poll_options_container` of PollOfferLayout - configured through the parent's `pollOptionsContainer` prop. */
+export interface PollOfferLayoutPollOptionsContainerProps {
+    captionPollOfferButtonCancel?: string;
+    captionPollOfferButtonLater?: string;
+    layout?: BoxLayout;
+    onPollOfferButtonOk?: () => void;
+}
+
+export const PollOfferLayoutPollOptionsContainer = ({ captionPollOfferButtonCancel, captionPollOfferButtonLater, layout, onPollOfferButtonOk }: PollOfferLayoutPollOptionsContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="poll_options_container"
+            params={9700368}
+            layout={{ position: 'absolute', right: 0, width: 250, bottom: 41, height: 42, ...layout }}
+        >
+            <Region
+                name="poll_offer_button_cancel"
+                params={131073}
+                layout={{ position: 'absolute', left: 1, width: 74, top: 20, height: 17, minWidth: 74, maxWidth: 74, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionPollOfferButtonCancel ?? `${t('cancel')}...`}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#333333' }}
+                />
+            </Region>
+            <Region
+                name="poll_offer_button_later"
+                params={131073}
+                layout={{ position: 'absolute', left: 75, width: 74, top: 20, height: 17, minWidth: 74, maxWidth: 74, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionPollOfferButtonLater ?? t('poll_offer_later')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#333333' }}
+                />
+            </Region>
+            <ButtonThick
+                variant="5"
+                name="poll_offer_button_ok"
+                params={131089}
+                tintColor="#00aa00"
+                onPointerTap={onPollOfferButtonOk}
+                layout={{ position: 'absolute', left: 166, width: 80, top: 0, height: 40, minWidth: 80, maxWidth: 80 }}
+            >
+                {t('ok')}
+            </ButtonThick>
         </Region>
     );
 };

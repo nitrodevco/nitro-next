@@ -3,11 +3,12 @@ import { BoxLayout, Frame, Region, ScrollArea } from '#base/theme';
 
 /** Generated from `1091_chooser_view_xml` (layout "chooser_view", 203x168) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ChooserViewLayoutProps {
+    itemList?: ChooserViewLayoutItemListProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const ChooserViewLayout = ({ layout, onClose }: ChooserViewLayoutProps) => {
+export const ChooserViewLayout = ({ itemList, layout, onClose }: ChooserViewLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -24,18 +25,29 @@ export const ChooserViewLayout = ({ layout, onClose }: ChooserViewLayoutProps) =
                     params={2192}
                     layout={{ position: 'absolute', left: 9, right: 21, top: 13, bottom: 35 }}
                 >
-                    <ScrollArea
-                        orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, right: 1, top: 0, bottom: 0 }}
-                    >
-                        <Region
-                            name="item_list"
-                            params={2192}
-                            layout={{ flexDirection: 'column', width: '100%' }}
-                        />
-                    </ScrollArea>
+                    <ChooserViewLayoutItemList {...itemList} />
                 </Region>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `item_list` of ChooserViewLayout - configured through the parent's `itemList` prop. */
+export interface ChooserViewLayoutItemListProps {
+    layout?: BoxLayout;
+}
+
+export const ChooserViewLayoutItemList = ({ layout }: ChooserViewLayoutItemListProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 0, right: 1, top: 0, bottom: 0, ...layout }}
+        >
+            <Region
+                name="item_list"
+                params={2192}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            />
+        </ScrollArea>
     );
 };

@@ -5,21 +5,16 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1717_gridItem_with_price_multi_xml` (layout "gridItem_with_price_multi", 53x74) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GridItemWithPriceMultiLayoutProps {
-    captionBundleCounter?: string;
-    captionMultiCounter?: string;
-    itemsTotalpriceContainer?: ReactNode;
-    itemsTotalpriceContainer2?: ReactNode;
     layout?: BoxLayout;
-    onSmallContainer?: () => void;
+    smallContainer?: GridItemWithPriceMultiLayoutSmallContainerProps;
     srcBadgeAddOn?: string;
-    srcImage?: string;
-    srcImageWide?: string;
-    srcUniqueItemBackgroundBitmap?: string;
-    srcUniqueItemSoldOutBitmap?: string;
+    totalpriceContainer?: GridItemWithPriceMultiLayoutTotalpriceContainerProps;
+    totalpriceContainer2?: GridItemWithPriceMultiLayoutTotalpriceContainer2Props;
     visibleBg?: boolean;
+    wideContainer?: GridItemWithPriceMultiLayoutWideContainerProps;
 }
 
-export const GridItemWithPriceMultiLayout = ({ captionBundleCounter, captionMultiCounter, itemsTotalpriceContainer, itemsTotalpriceContainer2, layout, onSmallContainer, srcBadgeAddOn, srcImage, srcImageWide, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap, visibleBg }: GridItemWithPriceMultiLayoutProps) => {
+export const GridItemWithPriceMultiLayout = ({ layout, smallContainer, srcBadgeAddOn, totalpriceContainer, totalpriceContainer2, visibleBg, wideContainer }: GridItemWithPriceMultiLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 53, height: 74, ...layout }}>
             <Region
@@ -58,137 +53,143 @@ export const GridItemWithPriceMultiLayout = ({ captionBundleCounter, captionMult
                         />
                     </Border>
                 </Border>
-                <Region
-                    name="wide_container"
-                    params={24}
-                    layout={{ position: 'absolute', left: 6, width: 60, top: 2, height: 36 }}
-                >
-                    <ThemeImage
-                        name="image_wide"
-                        params={16}
-                        src={srcImageWide}
-                        layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 36 }}
-                    />
-                </Region>
+                <GridItemWithPriceMultiLayoutWideContainer {...wideContainer} />
                 <ThemeImage
                     name="badge_add_on"
                     params={16}
                     src={srcBadgeAddOn}
                     layout={{ position: 'absolute', left: 8, width: 10, top: 2, height: 10 }}
                 />
+                <GridItemWithPriceMultiLayoutSmallContainer {...smallContainer} />
+                <GridItemWithPriceMultiLayoutTotalpriceContainer {...totalpriceContainer} />
+                <GridItemWithPriceMultiLayoutTotalpriceContainer2 {...totalpriceContainer2} />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `wide_container` of GridItemWithPriceMultiLayout - configured through the parent's `wideContainer` prop. */
+export interface GridItemWithPriceMultiLayoutWideContainerProps {
+    layout?: BoxLayout;
+    srcImageWide?: string;
+}
+
+export const GridItemWithPriceMultiLayoutWideContainer = ({ layout, srcImageWide }: GridItemWithPriceMultiLayoutWideContainerProps) => {
+    return (
+        <Region
+            name="wide_container"
+            params={24}
+            layout={{ position: 'absolute', left: 6, width: 60, top: 2, height: 36, ...layout }}
+        >
+            <ThemeImage
+                name="image_wide"
+                params={16}
+                src={srcImageWide}
+                layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 36 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `small_container` of GridItemWithPriceMultiLayout - configured through the parent's `smallContainer` prop. */
+export interface GridItemWithPriceMultiLayoutSmallContainerProps {
+    captionBundleCounter?: string;
+    captionMultiCounter?: string;
+    layout?: BoxLayout;
+    onSmallContainer?: () => void;
+    srcImage?: string;
+    srcUniqueItemBackgroundBitmap?: string;
+    srcUniqueItemSoldOutBitmap?: string;
+}
+
+export const GridItemWithPriceMultiLayoutSmallContainer = ({ captionBundleCounter, captionMultiCounter, layout, onSmallContainer, srcImage, srcUniqueItemBackgroundBitmap, srcUniqueItemSoldOutBitmap }: GridItemWithPriceMultiLayoutSmallContainerProps) => {
+    return (
+        <Region
+            name="small_container"
+            params={17}
+            onPointerTap={onSmallContainer}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 8, width: 36, top: 2, height: 36, ...layout }}
+        >
+            <Region
+                visible={false}
+                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+            >
+                <ThemeImage
+                    name="unique_item_background_bitmap"
+                    params={16}
+                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
+                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                />
+            </Region>
+            <ThemeImage
+                name="image"
+                params={16}
+                src={srcImage}
+                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+            />
+            <WidgetSlot
+                widgetType="limited_item_overlay_grid"
+                name="unique_item_overlay_container"
+                params={16}
+                visible={false}
+                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+            />
+            <Icon
+                variant="0"
+                name="clubLevelIcon"
+                params={394320}
+                layout={{ position: 'absolute', right: 2, width: 19, bottom: 24, height: 10 }}
+            />
+            <Region
+                name="bundleCounter"
+                params={176}
+                layout={{ position: 'absolute', left: 18, right: 14, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionBundleCounter ?? ''}
+                    textOptions={{ fill: '#cccc66' }}
+                />
+            </Region>
+            <Border
+                variant="2"
+                name="multiContainer"
+                params={393232}
+                tintColor="#ff3300"
+                layout={{ position: 'absolute', right: 1, width: 17, top: 21, height: 13 }}
+            >
                 <Region
-                    name="small_container"
-                    params={17}
-                    onPointerTap={onSmallContainer}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 8, width: 36, top: 2, height: 36 }}
+                    name="multiCounter"
+                    params={16}
+                    layout={{ position: 'absolute', left: 3, width: 4, top: 0, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <Region
-                        visible={false}
-                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                    >
-                        <ThemeImage
-                            name="unique_item_background_bitmap"
-                            params={16}
-                            src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                            layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                        />
-                    </Region>
-                    <ThemeImage
-                        name="image"
-                        params={16}
-                        src={srcImage}
-                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                    <ThemeText
+                        text={captionMultiCounter ?? ''}
+                        textOptions={{ fill: '#cccc66' }}
                     />
-                    <WidgetSlot
-                        widgetType="limited_item_overlay_grid"
-                        name="unique_item_overlay_container"
-                        params={16}
-                        visible={false}
-                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                    />
-                    <Icon
-                        variant="0"
-                        name="clubLevelIcon"
-                        params={394320}
-                        layout={{ position: 'absolute', right: 2, width: 19, bottom: 24, height: 10 }}
-                    />
-                    <Region
-                        name="bundleCounter"
-                        params={176}
-                        layout={{ position: 'absolute', left: 18, right: 14, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBundleCounter ?? ''}
-                            textOptions={{ fill: '#cccc66' }}
-                        />
-                    </Region>
-                    <Border
-                        variant="2"
-                        name="multiContainer"
-                        params={393232}
-                        tintColor="#ff3300"
-                        layout={{ position: 'absolute', right: 1, width: 17, top: 21, height: 13 }}
-                    >
-                        <Region
-                            name="multiCounter"
-                            params={16}
-                            layout={{ position: 'absolute', left: 3, width: 4, top: 0, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionMultiCounter ?? ''}
-                                textOptions={{ fill: '#cccc66' }}
-                            />
-                        </Region>
-                    </Border>
-                    <Region
-                        visible={false}
-                        layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
-                    >
-                        <ThemeImage
-                            name="unique_item_sold_out_bitmap"
-                            params={16}
-                            src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_tile.png')}
-                            layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
-                        />
-                    </Region>
-                    <Region
-                        visible={false}
-                        layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                    >
-                        <ThemeImage
-                            tags={[ 'ITEM_HILIGHT_TOP' ]}
-                            params={16}
-                            src={layoutImage('inventory_thumb_selected_outline.png')}
-                            layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                        />
-                    </Region>
                 </Region>
-                <Region
-                    name="totalprice_container"
-                    params={409680}
-                    layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1 }}
-                >
-                    {itemsTotalpriceContainer ?? (
-                        <>
-                            <GridItemWithPriceMultiLayoutAmountTextLeftItem />
-                            <GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapLeftItem />
-                        </>
-                    )}
-                </Region>
-                <Region
-                    name="totalprice_container"
-                    params={409680}
-                    layout={{ position: 'absolute', right: 2, top: 51, flexDirection: 'row', gap: 1 }}
-                >
-                    {itemsTotalpriceContainer2 ?? (
-                        <>
-                            <GridItemWithPriceMultiLayoutPlusItem />
-                            <GridItemWithPriceMultiLayoutAmountTextRightItem />
-                            <GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapRightItem />
-                        </>
-                    )}
-                </Region>
+            </Border>
+            <Region
+                visible={false}
+                layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
+            >
+                <ThemeImage
+                    name="unique_item_sold_out_bitmap"
+                    params={16}
+                    src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_tile.png')}
+                    layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
+                />
+            </Region>
+            <Region
+                visible={false}
+                layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+            >
+                <ThemeImage
+                    tags={[ 'ITEM_HILIGHT_TOP' ]}
+                    params={16}
+                    src={layoutImage('inventory_thumb_selected_outline.png')}
+                    layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
+                />
             </Region>
         </Region>
     );
@@ -225,6 +226,29 @@ export const GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapLeftItem = ({ la
             params={16}
             layout={{ width: 14, height: 15, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `totalprice_container` of GridItemWithPriceMultiLayout - configured through the parent's `totalpriceContainer` prop. */
+export interface GridItemWithPriceMultiLayoutTotalpriceContainerProps {
+    itemsTotalpriceContainer?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const GridItemWithPriceMultiLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout }: GridItemWithPriceMultiLayoutTotalpriceContainerProps) => {
+    return (
+        <Region
+            name="totalprice_container"
+            params={409680}
+            layout={{ position: 'absolute', right: 2, top: 36, flexDirection: 'row', gap: 1, ...layout }}
+        >
+            {itemsTotalpriceContainer ?? (
+                <>
+                    <GridItemWithPriceMultiLayoutAmountTextLeftItem />
+                    <GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapLeftItem />
+                </>
+            )}
+        </Region>
     );
 };
 
@@ -277,5 +301,29 @@ export const GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapRightItem = ({ l
             params={16}
             layout={{ width: 14, height: 15, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `totalprice_container` of GridItemWithPriceMultiLayout - configured through the parent's `totalpriceContainer` prop. */
+export interface GridItemWithPriceMultiLayoutTotalpriceContainer2Props {
+    itemsTotalpriceContainer?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const GridItemWithPriceMultiLayoutTotalpriceContainer2 = ({ itemsTotalpriceContainer, layout }: GridItemWithPriceMultiLayoutTotalpriceContainer2Props) => {
+    return (
+        <Region
+            name="totalprice_container"
+            params={409680}
+            layout={{ position: 'absolute', right: 2, top: 51, flexDirection: 'row', gap: 1, ...layout }}
+        >
+            {itemsTotalpriceContainer ?? (
+                <>
+                    <GridItemWithPriceMultiLayoutPlusItem />
+                    <GridItemWithPriceMultiLayoutAmountTextRightItem />
+                    <GridItemWithPriceMultiLayoutCurrencyIndicatorBitmapRightItem />
+                </>
+            )}
+        </Region>
     );
 };

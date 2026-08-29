@@ -5,12 +5,12 @@ import { Border, BoxLayout, Button, Frame, Region, ThemeText, WidgetSlot } from 
 
 /** Generated from `1310_inventory_trading_name_scam_warning_xml` (layout "inventory_trading_name_scam_warning", 356x333) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface InventoryTradingNameScamWarningLayoutProps {
-    itemsContentList?: ReactNode;
+    contentList?: InventoryTradingNameScamWarningLayoutContentListProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const InventoryTradingNameScamWarningLayout = ({ itemsContentList, layout, onClose }: InventoryTradingNameScamWarningLayoutProps) => {
+export const InventoryTradingNameScamWarningLayout = ({ contentList, layout, onClose }: InventoryTradingNameScamWarningLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -25,21 +25,7 @@ export const InventoryTradingNameScamWarningLayout = ({ itemsContentList, layout
             layout={{ width: 356, height: 333, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="content_list"
-                    params={8388752}
-                    layout={{ position: 'absolute', left: 10, right: 16, top: 8, height: 280, flexDirection: 'column', gap: 8 }}
-                >
-                    {itemsContentList ?? (
-                        <>
-                            <InventoryTradingNameScamWarningLayoutWarningTextItem />
-                            <InventoryTradingNameScamWarningLayoutTraderSectionItem />
-                            <InventoryTradingNameScamWarningLayoutRoomMatchesSectionItem />
-                            <InventoryTradingNameScamWarningLayoutFriendMatchesSectionItem />
-                            <InventoryTradingNameScamWarningLayoutButtonContainerItem />
-                        </>
-                    )}
-                </Region>
+                <InventoryTradingNameScamWarningLayoutContentList {...contentList} />
             </Region>
         </Frame>
     );
@@ -260,6 +246,32 @@ export const InventoryTradingNameScamWarningLayoutButtonContainerItem = ({ items
                 <>
                     <InventoryTradingNameScamWarningLayoutCloseButtonItem />
                     <InventoryTradingNameScamWarningLayoutCloseCountdownTextItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `content_list` of InventoryTradingNameScamWarningLayout - configured through the parent's `contentList` prop. */
+export interface InventoryTradingNameScamWarningLayoutContentListProps {
+    itemsContentList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const InventoryTradingNameScamWarningLayoutContentList = ({ itemsContentList, layout }: InventoryTradingNameScamWarningLayoutContentListProps) => {
+    return (
+        <Region
+            name="content_list"
+            params={8388752}
+            layout={{ position: 'absolute', left: 10, right: 16, top: 8, height: 280, flexDirection: 'column', gap: 8, ...layout }}
+        >
+            {itemsContentList ?? (
+                <>
+                    <InventoryTradingNameScamWarningLayoutWarningTextItem />
+                    <InventoryTradingNameScamWarningLayoutTraderSectionItem />
+                    <InventoryTradingNameScamWarningLayoutRoomMatchesSectionItem />
+                    <InventoryTradingNameScamWarningLayoutFriendMatchesSectionItem />
+                    <InventoryTradingNameScamWarningLayoutButtonContainerItem />
                 </>
             )}
         </Region>

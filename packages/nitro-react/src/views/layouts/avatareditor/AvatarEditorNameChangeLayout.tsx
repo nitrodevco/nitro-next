@@ -14,12 +14,12 @@ export interface AvatarEditorNameChangeLayoutProps {
     onCheckNameButton?: () => void;
     onClose?: () => void;
     onSelectNameButton?: () => void;
-    onSuggestions?: () => void;
     srcHcIconImage?: string;
     srcPenImage?: string;
+    suggestions?: AvatarEditorNameChangeLayoutSuggestionsProps;
 }
 
-export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoText, captionStaticInfoText, layout, onCancelSelectionButton, onCheckNameButton, onClose, onSelectNameButton, onSuggestions, srcHcIconImage, srcPenImage }: AvatarEditorNameChangeLayoutProps) => {
+export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoText, captionStaticInfoText, layout, onCancelSelectionButton, onCheckNameButton, onClose, onSelectNameButton, srcHcIconImage, srcPenImage, suggestions }: AvatarEditorNameChangeLayoutProps) => {
     const t = useTranslation();
     const [ inputValue, setInputValue ] = useState('');
 
@@ -89,13 +89,7 @@ export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoTex
                             textOptions={{ wordWrap: true, wordWrapWidth: 280 }}
                         />
                     </Region>
-                    <Region
-                        name="suggestions"
-                        params={131089}
-                        onPointerTap={onSuggestions}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 10, width: 280, top: 150, height: 31 }}
-                    />
+                    <AvatarEditorNameChangeLayoutSuggestions {...suggestions} />
                     <Button
                         variant="2"
                         name="select_name_button"
@@ -143,5 +137,23 @@ export const AvatarEditorNameChangeLayout = ({ captionHcOnlyText, captionInfoTex
                 </Region>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `suggestions` of AvatarEditorNameChangeLayout - configured through the parent's `suggestions` prop. */
+export interface AvatarEditorNameChangeLayoutSuggestionsProps {
+    layout?: BoxLayout;
+    onSuggestions?: () => void;
+}
+
+export const AvatarEditorNameChangeLayoutSuggestions = ({ layout, onSuggestions }: AvatarEditorNameChangeLayoutSuggestionsProps) => {
+    return (
+        <Region
+            name="suggestions"
+            params={131089}
+            onPointerTap={onSuggestions}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 10, width: 280, top: 150, height: 31, ...layout }}
+        />
     );
 };

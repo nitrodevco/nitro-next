@@ -4,12 +4,12 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `107_AchievementResolutionCompleted_xml` (layout "AchievementResolutionCompleted", 340x273) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface AchievementResolutionCompletedLayoutProps {
+    cancelButton?: AchievementResolutionCompletedLayoutCancelButtonProps;
     layout?: BoxLayout;
-    onCancelButton?: () => void;
     onClose?: () => void;
 }
 
-export const AchievementResolutionCompletedLayout = ({ layout, onCancelButton, onClose }: AchievementResolutionCompletedLayoutProps) => {
+export const AchievementResolutionCompletedLayout = ({ cancelButton, layout, onClose }: AchievementResolutionCompletedLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -65,26 +65,40 @@ export const AchievementResolutionCompletedLayout = ({ layout, onCancelButton, o
                             layout={{ position: 'absolute', left: 39, width: 50, top: 37, height: 50 }}
                         />
                     </Region>
-                    <Region
-                        name="cancel_button"
-                        params={17}
-                        onPointerTap={onCancelButton}
-                        cursor="pointer"
-                        layout={{ width: 294, height: 23, flexShrink: 0 }}
-                    >
-                        <Region
-                            params={16}
-                            layout={{ position: 'absolute', left: 0, width: 294, top: 0, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={t('resolution.completed.close')}
-                                textStyle="text-style-il-link-regular"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 294, align: 'center' }}
-                            />
-                        </Region>
-                    </Region>
+                    <AchievementResolutionCompletedLayoutCancelButton {...cancelButton} />
                 </Region>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `cancel_button` of AchievementResolutionCompletedLayout - configured through the parent's `cancelButton` prop. */
+export interface AchievementResolutionCompletedLayoutCancelButtonProps {
+    layout?: BoxLayout;
+    onCancelButton?: () => void;
+}
+
+export const AchievementResolutionCompletedLayoutCancelButton = ({ layout, onCancelButton }: AchievementResolutionCompletedLayoutCancelButtonProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="cancel_button"
+            params={17}
+            onPointerTap={onCancelButton}
+            cursor="pointer"
+            layout={{ width: 294, height: 23, flexShrink: 0, ...layout }}
+        >
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 294, top: 0, height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('resolution.completed.close')}
+                    textStyle="text-style-il-link-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 294, align: 'center' }}
+                />
+            </Region>
+        </Region>
     );
 };

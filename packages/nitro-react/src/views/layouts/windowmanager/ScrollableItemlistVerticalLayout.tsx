@@ -2,19 +2,31 @@ import { BoxLayout, Region } from '#base/theme';
 
 /** Generated from `2300_scrollable_itemlist_vertical_xml` (layout "habbo_window_layout_scrollable_itemlist", 40x40) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ScrollableItemlistVerticalLayoutProps {
+    iTEMLIST?: ScrollableItemlistVerticalLayoutITEMLISTProps;
     layout?: BoxLayout;
 }
 
-export const ScrollableItemlistVerticalLayout = ({ layout }: ScrollableItemlistVerticalLayoutProps) => {
+export const ScrollableItemlistVerticalLayout = ({ iTEMLIST, layout }: ScrollableItemlistVerticalLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 40, height: 40, ...layout }}>
-            <Region
-                name="_ITEMLIST"
-                tags={[ '_ITEMLIST', '_EXCLUDE', '_INTERNAL' ]}
-                params={2193}
-                layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0, flexDirection: 'column' }}
-            />
+            <ScrollableItemlistVerticalLayoutITEMLIST {...iTEMLIST} />
             {/* <scrollbar_vertical> for ? - rendered by that list's ScrollArea */}
         </Region>
+    );
+};
+
+/** Named region `_ITEMLIST` of ScrollableItemlistVerticalLayout - configured through the parent's `iTEMLIST` prop. */
+export interface ScrollableItemlistVerticalLayoutITEMLISTProps {
+    layout?: BoxLayout;
+}
+
+export const ScrollableItemlistVerticalLayoutITEMLIST = ({ layout }: ScrollableItemlistVerticalLayoutITEMLISTProps) => {
+    return (
+        <Region
+            name="_ITEMLIST"
+            tags={[ '_ITEMLIST', '_EXCLUDE', '_INTERNAL' ]}
+            params={2193}
+            layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0, flexDirection: 'column', ...layout }}
+        />
     );
 };

@@ -4,12 +4,13 @@ import { Border, BoxLayout, Button, Region, ThemeText } from '#base/theme';
 /** Generated from `884_memenu_effects_xml` (layout "memenu_effects", 175x114) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MemenuEffectsLayoutProps {
     captionInfoText?: string;
+    effectsCnvs?: MemenuEffectsLayoutEffectsCnvsProps;
     layout?: BoxLayout;
+    line?: MemenuEffectsLayoutLineProps;
     onBackBtn?: () => void;
-    onEffectsCnvs?: () => void;
 }
 
-export const MemenuEffectsLayout = ({ captionInfoText, layout, onBackBtn, onEffectsCnvs }: MemenuEffectsLayoutProps) => {
+export const MemenuEffectsLayout = ({ captionInfoText, effectsCnvs, layout, line, onBackBtn }: MemenuEffectsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -29,19 +30,8 @@ export const MemenuEffectsLayout = ({ captionInfoText, layout, onBackBtn, onEffe
                         textOptions={{ fill: '#ffffff' }}
                     />
                 </Region>
-                <Region
-                    name="line"
-                    params={786640}
-                    backgroundColor="#2f2f2f"
-                    layout={{ position: 'absolute', width: 153, top: 22, height: 1 }}
-                />
-                <Region
-                    name="effects_cnvs"
-                    params={17}
-                    onPointerTap={onEffectsCnvs}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 11, width: 154, top: 29, height: 48 }}
-                />
+                <MemenuEffectsLayoutLine {...line} />
+                <MemenuEffectsLayoutEffectsCnvs {...effectsCnvs} />
                 <Button
                     variant="1"
                     name="back_btn"
@@ -63,5 +53,39 @@ export const MemenuEffectsLayout = ({ captionInfoText, layout, onBackBtn, onEffe
                 </Region>
             </Border>
         </Region>
+    );
+};
+
+/** Named region `line` of MemenuEffectsLayout - configured through the parent's `line` prop. */
+export interface MemenuEffectsLayoutLineProps {
+    layout?: BoxLayout;
+}
+
+export const MemenuEffectsLayoutLine = ({ layout }: MemenuEffectsLayoutLineProps) => {
+    return (
+        <Region
+            name="line"
+            params={786640}
+            backgroundColor="#2f2f2f"
+            layout={{ position: 'absolute', width: 153, top: 22, height: 1, ...layout }}
+        />
+    );
+};
+
+/** Named region `effects_cnvs` of MemenuEffectsLayout - configured through the parent's `effectsCnvs` prop. */
+export interface MemenuEffectsLayoutEffectsCnvsProps {
+    layout?: BoxLayout;
+    onEffectsCnvs?: () => void;
+}
+
+export const MemenuEffectsLayoutEffectsCnvs = ({ layout, onEffectsCnvs }: MemenuEffectsLayoutEffectsCnvsProps) => {
+    return (
+        <Region
+            name="effects_cnvs"
+            params={17}
+            onPointerTap={onEffectsCnvs}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 11, width: 154, top: 29, height: 48, ...layout }}
+        />
     );
 };

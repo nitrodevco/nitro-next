@@ -3,14 +3,11 @@ import { Border, BoxLayout, Button, ContainerButton, Region, ThemeText } from '#
 
 /** Generated from `1612_purchaseWidget_xml` (layout "purchaseWidget", 360x30) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PurchaseWidgetLayoutProps {
-    captionPurchaseLabel?: string;
+    defaultButtons?: PurchaseWidgetLayoutDefaultButtonsProps;
     layout?: BoxLayout;
-    onBuyButton?: () => void;
-    onGiftButton?: () => void;
-    visibleDefaultButtons?: boolean;
 }
 
-export const PurchaseWidgetLayout = ({ captionPurchaseLabel, layout, onBuyButton, onGiftButton, visibleDefaultButtons }: PurchaseWidgetLayoutProps) => {
+export const PurchaseWidgetLayout = ({ defaultButtons, layout }: PurchaseWidgetLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -37,42 +34,59 @@ export const PurchaseWidgetLayout = ({ captionPurchaseLabel, layout, onBuyButton
                         />
                     </Region>
                 </Border>
-                <Region
-                    name="default_buttons"
-                    params={16}
-                    visible={visibleDefaultButtons ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 3, height: 25 }}
-                >
-                    <ContainerButton
-                        variant="3"
-                        name="buy_button"
-                        params={17}
-                        tintColor="#00aa00"
-                        onPointerTap={onBuyButton}
-                        layout={{ position: 'absolute', left: 185, width: 170, top: 0, height: 24, minWidth: 170, maxWidth: 170, minHeight: 24, maxHeight: 24, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="purchase_label"
-                            params={786448}
-                            layout={{ position: 'absolute', marginLeft: -5, marginRight: 5, width: 160, top: 3, height: 17, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionPurchaseLabel ?? t('catalog.purchase_confirmation.buy')}
-                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                            />
-                        </Region>
-                    </ContainerButton>
-                    <Button
-                        variant="3"
-                        name="gift_button"
-                        params={131089}
-                        onPointerTap={onGiftButton}
-                        layout={{ position: 'absolute', left: 5, width: 170, top: 0, height: 24, minWidth: 170, maxWidth: 170, minHeight: 24, maxHeight: 24 }}
-                    >
-                        {t('catalog.purchase_confirmation.gift')}
-                    </Button>
-                </Region>
+                <PurchaseWidgetLayoutDefaultButtons {...defaultButtons} />
             </Region>
+        </Region>
+    );
+};
+
+/** Named region `default_buttons` of PurchaseWidgetLayout - configured through the parent's `defaultButtons` prop. */
+export interface PurchaseWidgetLayoutDefaultButtonsProps {
+    captionPurchaseLabel?: string;
+    layout?: BoxLayout;
+    onBuyButton?: () => void;
+    onGiftButton?: () => void;
+    visibleDefaultButtons?: boolean;
+}
+
+export const PurchaseWidgetLayoutDefaultButtons = ({ captionPurchaseLabel, layout, onBuyButton, onGiftButton, visibleDefaultButtons }: PurchaseWidgetLayoutDefaultButtonsProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="default_buttons"
+            params={16}
+            visible={visibleDefaultButtons ?? false}
+            layout={{ position: 'absolute', left: 0, width: 360, top: 3, height: 25, ...layout }}
+        >
+            <ContainerButton
+                variant="3"
+                name="buy_button"
+                params={17}
+                tintColor="#00aa00"
+                onPointerTap={onBuyButton}
+                layout={{ position: 'absolute', left: 185, width: 170, top: 0, height: 24, minWidth: 170, maxWidth: 170, minHeight: 24, maxHeight: 24, justifyContent: 'center' }}
+            >
+                <Region
+                    name="purchase_label"
+                    params={786448}
+                    layout={{ position: 'absolute', marginLeft: -5, marginRight: 5, width: 160, top: 3, height: 17, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionPurchaseLabel ?? t('catalog.purchase_confirmation.buy')}
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
+                </Region>
+            </ContainerButton>
+            <Button
+                variant="3"
+                name="gift_button"
+                params={131089}
+                onPointerTap={onGiftButton}
+                layout={{ position: 'absolute', left: 5, width: 170, top: 0, height: 24, minWidth: 170, maxWidth: 170, minHeight: 24, maxHeight: 24 }}
+            >
+                {t('catalog.purchase_confirmation.gift')}
+            </Button>
         </Region>
     );
 };

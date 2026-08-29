@@ -5,16 +5,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `2881_guardian_chat_review_results_xml` (layout "guardian_chat_review_results", 248x280) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GuardianChatReviewResultsLayoutProps {
     captionResultText?: string;
-    captionVoteText?: string;
     layout?: BoxLayout;
     onClose?: () => void;
     onCloseButton?: () => void;
+    results?: GuardianChatReviewResultsLayoutResultsProps;
     srcResultImage?: string;
-    srcVoteImage?: string;
-    srcVoteSeparator?: string;
 }
 
-export const GuardianChatReviewResultsLayout = ({ captionResultText, captionVoteText, layout, onClose, onCloseButton, srcResultImage, srcVoteImage, srcVoteSeparator }: GuardianChatReviewResultsLayoutProps) => {
+export const GuardianChatReviewResultsLayout = ({ captionResultText, layout, onClose, onCloseButton, results, srcResultImage }: GuardianChatReviewResultsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -65,39 +63,7 @@ export const GuardianChatReviewResultsLayout = ({ captionResultText, captionVote
                     params={8536080}
                     layout={{ position: 'absolute', left: 7, width: 232, top: 96, height: 46 }}
                 >
-                    <Region
-                        name="results"
-                        params={147472}
-                        layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
-                    >
-                        <Region
-                            params={16}
-                            layout={{ width: 232, height: 46, flexShrink: 0 }}
-                        >
-                            <Region
-                                name="vote_text"
-                                params={3088}
-                                layout={{ position: 'absolute', left: 20, width: 110, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionVoteText ?? 'The user behaved well'}
-                                    textStyle="text-style-il-heading-3"
-                                />
-                            </Region>
-                            <ThemeImage
-                                name="vote_image"
-                                params={16}
-                                src={srcVoteImage ?? layoutImage('help_chat_review_decision_waiting_1.png')}
-                                layout={{ position: 'absolute', left: 180, width: 52, top: 0, height: 47 }}
-                            />
-                            <ThemeImage
-                                name="vote_separator"
-                                params={16}
-                                src={srcVoteSeparator ?? layoutImage('illumina_light_separator_horizontal.png')}
-                                layout={{ position: 'absolute', left: 8, width: 216, top: 44, height: 3 }}
-                            />
-                        </Region>
-                    </Region>
+                    <GuardianChatReviewResultsLayoutResults {...results} />
                 </Border>
                 <Region
                     params={1040}
@@ -141,5 +107,51 @@ export const GuardianChatReviewResultsLayout = ({ captionResultText, captionVote
                 </WidgetSlot>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `results` of GuardianChatReviewResultsLayout - configured through the parent's `results` prop. */
+export interface GuardianChatReviewResultsLayoutResultsProps {
+    captionVoteText?: string;
+    layout?: BoxLayout;
+    srcVoteImage?: string;
+    srcVoteSeparator?: string;
+}
+
+export const GuardianChatReviewResultsLayoutResults = ({ captionVoteText, layout, srcVoteImage, srcVoteSeparator }: GuardianChatReviewResultsLayoutResultsProps) => {
+    return (
+        <Region
+            name="results"
+            params={147472}
+            layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', ...layout }}
+        >
+            <Region
+                params={16}
+                layout={{ width: 232, height: 46, flexShrink: 0 }}
+            >
+                <Region
+                    name="vote_text"
+                    params={3088}
+                    layout={{ position: 'absolute', left: 20, width: 110, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionVoteText ?? 'The user behaved well'}
+                        textStyle="text-style-il-heading-3"
+                    />
+                </Region>
+                <ThemeImage
+                    name="vote_image"
+                    params={16}
+                    src={srcVoteImage ?? layoutImage('help_chat_review_decision_waiting_1.png')}
+                    layout={{ position: 'absolute', left: 180, width: 52, top: 0, height: 47 }}
+                />
+                <ThemeImage
+                    name="vote_separator"
+                    params={16}
+                    src={srcVoteSeparator ?? layoutImage('illumina_light_separator_horizontal.png')}
+                    layout={{ position: 'absolute', left: 8, width: 216, top: 44, height: 3 }}
+                />
+            </Region>
+        </Region>
     );
 };

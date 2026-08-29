@@ -6,17 +6,15 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `937_furni_view_xml` (layout "furni_view", 429x97) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface FurniViewLayoutProps {
-    captionName?: string;
-    itemsButtonList?: ReactNode;
-    itemsInfostandElementList?: ReactNode;
+    buttonList?: FurniViewLayoutButtonListProps;
+    infostandElementList?: FurniViewLayoutInfostandElementListProps;
     layout?: BoxLayout;
     onClose?: () => void;
     onSetValues?: () => void;
+    variableList?: FurniViewLayoutVariableListProps;
 }
 
-export const FurniViewLayout = ({ captionName, itemsButtonList, itemsInfostandElementList, layout, onClose, onSetValues }: FurniViewLayoutProps) => {
-    const [ valueValue, setValueValue ] = useState('');
-
+export const FurniViewLayout = ({ buttonList, infostandElementList, layout, onClose, onSetValues, variableList }: FurniViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 429, height: 97, ...layout }}>
             <Region
@@ -36,31 +34,7 @@ export const FurniViewLayout = ({ captionName, itemsButtonList, itemsInfostandEl
                         onPointerTap={onClose}
                         layout={{ position: 'absolute', left: 168, width: 18, top: 6, height: 16 }}
                     />
-                    <Region
-                        name="infostand_element_list"
-                        params={8388624}
-                        layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 355, flexDirection: 'column', gap: 5 }}
-                    >
-                        {itemsInfostandElementList ?? (
-                            <>
-                                <FurniViewLayoutNameTextItem />
-                                <FurniViewLayoutNameExtraTextItem />
-                                <FurniViewLayoutImagesSpacerItem />
-                                <FurniViewLayoutWiredChestElementsItem />
-                                <FurniViewLayoutImageContainerItem />
-                                <FurniViewLayoutNftIndicatorItem />
-                                <FurniViewLayoutOwnerSpacerItem />
-                                <FurniViewLayoutOwnerRegionItem />
-                                <FurniViewLayoutGroupDetailsSpacerItem />
-                                <FurniViewLayoutGroupDetailsContainerItem />
-                                <FurniViewLayoutExpirationTextItem />
-                                <FurniViewLayoutPurchaseButtonsItem />
-                                <FurniViewLayoutFurniDetailsSpacerItem />
-                                <FurniViewLayoutChestItemCountItem />
-                                <FurniViewLayoutFurniDetailsTextItem />
-                            </>
-                        )}
-                    </Region>
+                    <FurniViewLayoutInfostandElementList {...infostandElementList} />
                 </Border>
                 <Border
                     variant="2"
@@ -84,56 +58,10 @@ export const FurniViewLayout = ({ captionName, itemsButtonList, itemsInfostandEl
                         >
                             Set values
                         </Button>
-                        <Region
-                            name="variable_list"
-                            params={8536080}
-                            layout={{ position: 'absolute', left: 0, top: 32, flexDirection: 'column' }}
-                        >
-                            <Region
-                                params={16}
-                                layout={{ width: 183, height: 26, flexShrink: 0 }}
-                            >
-                                <Region
-                                    name="name"
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 1, width: 41, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionName ?? 'Name:'}
-                                        textOptions={{ fill: '#ffffff' }}
-                                    />
-                                </Region>
-                                <TextInput
-                                    value={valueValue}
-                                    onChange={setValueValue}
-                                    layout={{ position: 'absolute', left: 80, width: 100, top: 2, height: 17 }}
-                                />
-                                <Border
-                                    variant="3"
-                                    params={16}
-                                    tintColor="#cccccc"
-                                    layout={{ position: 'absolute', left: 80, width: 100, top: 0, height: 20 }}
-                                />
-                            </Region>
-                        </Region>
+                        <FurniViewLayoutVariableList {...variableList} />
                     </Border>
                 </Border>
-                <Region
-                    name="button_list"
-                    params={16}
-                    layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10 }}
-                >
-                    {itemsButtonList ?? (
-                        <>
-                            <FurniViewLayoutMoveItem />
-                            <FurniViewLayoutRotateItem />
-                            <FurniViewLayoutPickupItem />
-                            <FurniViewLayoutSaveBrandingConfigurationItem />
-                            <FurniViewLayoutUseItem />
-                            <FurniViewLayoutWiredInspectItem />
-                        </>
-                    )}
-                </Region>
+                <FurniViewLayoutButtonList {...buttonList} />
             </Region>
         </Region>
     );
@@ -255,10 +183,9 @@ export const FurniViewLayoutWiredChestElementsItem = ({ itemsWiredChestElements,
     );
 };
 
-/** Row template `image_container` of FurniViewLayout - pass real rows through its `items…` slot. */
-export interface FurniViewLayoutImageContainerItemProps {
+/** Named region `unique_item_background_container` of FurniViewLayout - configured through the parent's `uniqueItemBackgroundContainer` prop. */
+export interface FurniViewLayoutUniqueItemBackgroundContainerProps {
     layout?: BoxLayout;
-    srcImage?: string;
     srcUniqueItemBackgroundBottom?: string;
     srcUniqueItemBackgroundBottom2?: string;
     srcUniqueItemBackgroundBottom3?: string;
@@ -266,102 +193,139 @@ export interface FurniViewLayoutImageContainerItemProps {
     srcUniqueItemBackgroundBottom5?: string;
     srcUniqueItemBackgroundMid?: string;
     srcUniqueItemBackgroundTop?: string;
-    visibleRarityItemOverlayContainer?: boolean;
     visibleUniqueItemBackgroundContainer?: boolean;
+}
+
+export const FurniViewLayoutUniqueItemBackgroundContainer = ({ layout, srcUniqueItemBackgroundBottom, srcUniqueItemBackgroundBottom2, srcUniqueItemBackgroundBottom3, srcUniqueItemBackgroundBottom4, srcUniqueItemBackgroundBottom5, srcUniqueItemBackgroundMid, srcUniqueItemBackgroundTop, visibleUniqueItemBackgroundContainer }: FurniViewLayoutUniqueItemBackgroundContainerProps) => {
+    return (
+        <Region
+            name="unique_item_background_container"
+            params={2096}
+            visible={visibleUniqueItemBackgroundContainer ?? false}
+            layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, minHeight: 45, ...layout }}
+        >
+            <ThemeImage
+                name="unique_item_background_bottom"
+                src={srcUniqueItemBackgroundBottom ?? layoutImage('unique_item_large_iron.png')}
+                layout={{ position: 'absolute', left: 8, width: 5, top: -1, height: 9 }}
+            />
+            <ThemeImage
+                name="unique_item_background_bottom"
+                src={srcUniqueItemBackgroundBottom2 ?? layoutImage('unique_item_large_iron.png')}
+                layout={{ position: 'absolute', left: 155, width: 5, top: -1, height: 9 }}
+            />
+            <ThemeImage
+                name="unique_item_background_mid"
+                params={2064}
+                src={srcUniqueItemBackgroundMid ?? layoutImage('unique_item_large_glass_mid.png')}
+                layout={{ position: 'absolute', left: 0, width: 170, top: 5, bottom: 5 }}
+            />
+            <ThemeImage
+                name="unique_item_background_top"
+                params={16}
+                src={srcUniqueItemBackgroundTop ?? layoutImage('unique_item_large_glass_top.png')}
+                layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 5 }}
+            />
+            <ThemeImage
+                name="unique_item_background_bottom"
+                params={1040}
+                src={srcUniqueItemBackgroundBottom3 ?? layoutImage('unique_item_large_glass_bottom.png')}
+                layout={{ position: 'absolute', left: 0, width: 170, bottom: 0, height: 5 }}
+            />
+            <ThemeImage
+                name="unique_item_background_bottom"
+                params={1024}
+                src={srcUniqueItemBackgroundBottom4 ?? layoutImage('unique_item_large_iron.png')}
+                layout={{ position: 'absolute', left: 8, width: 5, bottom: -2, height: 9 }}
+            />
+            <ThemeImage
+                name="unique_item_background_bottom"
+                params={1024}
+                src={srcUniqueItemBackgroundBottom5 ?? layoutImage('unique_item_large_iron.png')}
+                layout={{ position: 'absolute', left: 155, width: 5, bottom: -2, height: 9 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `unique_item_overlay_container` of FurniViewLayout - configured through the parent's `uniqueItemOverlayContainer` prop. */
+export interface FurniViewLayoutUniqueItemOverlayContainerProps {
+    layout?: BoxLayout;
     visibleUniqueItemOverlayContainer?: boolean;
 }
 
-export const FurniViewLayoutImageContainerItem = ({ layout, srcImage, srcUniqueItemBackgroundBottom, srcUniqueItemBackgroundBottom2, srcUniqueItemBackgroundBottom3, srcUniqueItemBackgroundBottom4, srcUniqueItemBackgroundBottom5, srcUniqueItemBackgroundMid, srcUniqueItemBackgroundTop, visibleRarityItemOverlayContainer, visibleUniqueItemBackgroundContainer, visibleUniqueItemOverlayContainer }: FurniViewLayoutImageContainerItemProps) => {
+export const FurniViewLayoutUniqueItemOverlayContainer = ({ layout, visibleUniqueItemOverlayContainer }: FurniViewLayoutUniqueItemOverlayContainerProps) => {
+    return (
+        <Region
+            name="unique_item_overlay_container"
+            params={2096}
+            visible={visibleUniqueItemOverlayContainer ?? false}
+            layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, minHeight: 45, ...layout }}
+        >
+            <ThemeImage
+                params={2064}
+                src={layoutImage('unique_item_large_glass_shine.png')}
+                layout={{ position: 'absolute', left: 0, width: 170, top: 5, bottom: 5 }}
+            />
+            <WidgetSlot
+                widgetType="limited_item_overlay_preview"
+                name="unique_item_plaque_widget"
+                params={16}
+                layout={{ position: 'absolute', left: 128, width: 40, top: 6, height: 40 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `rarity_item_overlay_container` of FurniViewLayout - configured through the parent's `rarityItemOverlayContainer` prop. */
+export interface FurniViewLayoutRarityItemOverlayContainerProps {
+    layout?: BoxLayout;
+    visibleRarityItemOverlayContainer?: boolean;
+}
+
+export const FurniViewLayoutRarityItemOverlayContainer = ({ layout, visibleRarityItemOverlayContainer }: FurniViewLayoutRarityItemOverlayContainerProps) => {
+    return (
+        <Region
+            name="rarity_item_overlay_container"
+            params={2096}
+            visible={visibleRarityItemOverlayContainer ?? false}
+            layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, ...layout }}
+        >
+            <WidgetSlot
+                widgetType="rarity_item_overlay_preview"
+                name="rarity_item_overlay_widget"
+                params={16}
+                layout={{ position: 'absolute', left: 128, width: 40, top: 6, height: 40 }}
+            />
+        </Region>
+    );
+};
+
+/** Row template `image_container` of FurniViewLayout - pass real rows through its `items…` slot. */
+export interface FurniViewLayoutImageContainerItemProps {
+    layout?: BoxLayout;
+    rarityItemOverlayContainer?: FurniViewLayoutRarityItemOverlayContainerProps;
+    srcImage?: string;
+    uniqueItemBackgroundContainer?: FurniViewLayoutUniqueItemBackgroundContainerProps;
+    uniqueItemOverlayContainer?: FurniViewLayoutUniqueItemOverlayContainerProps;
+}
+
+export const FurniViewLayoutImageContainerItem = ({ layout, rarityItemOverlayContainer, srcImage, uniqueItemBackgroundContainer, uniqueItemOverlayContainer }: FurniViewLayoutImageContainerItemProps) => {
     return (
         <Region
             name="image_container"
             params={16}
             layout={{ width: 170, height: 130, flexShrink: 0, minHeight: 45, ...layout }}
         >
-            <Region
-                name="unique_item_background_container"
-                params={2096}
-                visible={visibleUniqueItemBackgroundContainer ?? false}
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, minHeight: 45 }}
-            >
-                <ThemeImage
-                    name="unique_item_background_bottom"
-                    src={srcUniqueItemBackgroundBottom ?? layoutImage('unique_item_large_iron.png')}
-                    layout={{ position: 'absolute', left: 8, width: 5, top: -1, height: 9 }}
-                />
-                <ThemeImage
-                    name="unique_item_background_bottom"
-                    src={srcUniqueItemBackgroundBottom2 ?? layoutImage('unique_item_large_iron.png')}
-                    layout={{ position: 'absolute', left: 155, width: 5, top: -1, height: 9 }}
-                />
-                <ThemeImage
-                    name="unique_item_background_mid"
-                    params={2064}
-                    src={srcUniqueItemBackgroundMid ?? layoutImage('unique_item_large_glass_mid.png')}
-                    layout={{ position: 'absolute', left: 0, width: 170, top: 5, bottom: 5 }}
-                />
-                <ThemeImage
-                    name="unique_item_background_top"
-                    params={16}
-                    src={srcUniqueItemBackgroundTop ?? layoutImage('unique_item_large_glass_top.png')}
-                    layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 5 }}
-                />
-                <ThemeImage
-                    name="unique_item_background_bottom"
-                    params={1040}
-                    src={srcUniqueItemBackgroundBottom3 ?? layoutImage('unique_item_large_glass_bottom.png')}
-                    layout={{ position: 'absolute', left: 0, width: 170, bottom: 0, height: 5 }}
-                />
-                <ThemeImage
-                    name="unique_item_background_bottom"
-                    params={1024}
-                    src={srcUniqueItemBackgroundBottom4 ?? layoutImage('unique_item_large_iron.png')}
-                    layout={{ position: 'absolute', left: 8, width: 5, bottom: -2, height: 9 }}
-                />
-                <ThemeImage
-                    name="unique_item_background_bottom"
-                    params={1024}
-                    src={srcUniqueItemBackgroundBottom5 ?? layoutImage('unique_item_large_iron.png')}
-                    layout={{ position: 'absolute', left: 155, width: 5, bottom: -2, height: 9 }}
-                />
-            </Region>
+            <FurniViewLayoutUniqueItemBackgroundContainer {...uniqueItemBackgroundContainer} />
             <ThemeImage
                 name="image"
                 params={8388624}
                 src={srcImage}
                 layout={{ position: 'absolute', left: 5, width: 140, top: 5, minHeight: 45 }}
             />
-            <Region
-                name="unique_item_overlay_container"
-                params={2096}
-                visible={visibleUniqueItemOverlayContainer ?? false}
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0, minHeight: 45 }}
-            >
-                <ThemeImage
-                    params={2064}
-                    src={layoutImage('unique_item_large_glass_shine.png')}
-                    layout={{ position: 'absolute', left: 0, width: 170, top: 5, bottom: 5 }}
-                />
-                <WidgetSlot
-                    widgetType="limited_item_overlay_preview"
-                    name="unique_item_plaque_widget"
-                    params={16}
-                    layout={{ position: 'absolute', left: 128, width: 40, top: 6, height: 40 }}
-                />
-            </Region>
-            <Region
-                name="rarity_item_overlay_container"
-                params={2096}
-                visible={visibleRarityItemOverlayContainer ?? false}
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, bottom: 0 }}
-            >
-                <WidgetSlot
-                    widgetType="rarity_item_overlay_preview"
-                    name="rarity_item_overlay_widget"
-                    params={16}
-                    layout={{ position: 'absolute', left: 128, width: 40, top: 6, height: 40 }}
-                />
-            </Region>
+            <FurniViewLayoutUniqueItemOverlayContainer {...uniqueItemOverlayContainer} />
+            <FurniViewLayoutRarityItemOverlayContainer {...rarityItemOverlayContainer} />
         </Region>
     );
 };
@@ -452,7 +416,7 @@ export const FurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwn
             </Region>
             <Region
                 visible={false}
-                layout={{ position: 'absolute', marginLeft: -77.5, marginRight: 77.5, width: 15, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 15, justifyContent: 'center' }}
+                layout={{ position: 'absolute', marginLeft: -77.5, marginRight: 77.5, width: 15, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 15 }}
             >
                 <ThemeImage
                     name="temp_icon"
@@ -781,6 +745,87 @@ export const FurniViewLayoutFurniDetailsTextItem = ({ captionFurniDetailsText, l
     );
 };
 
+/** Named region `infostand_element_list` of FurniViewLayout - configured through the parent's `infostandElementList` prop. */
+export interface FurniViewLayoutInfostandElementListProps {
+    itemsInfostandElementList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const FurniViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: FurniViewLayoutInfostandElementListProps) => {
+    return (
+        <Region
+            name="infostand_element_list"
+            params={8388624}
+            layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 355, flexDirection: 'column', gap: 5, ...layout }}
+        >
+            {itemsInfostandElementList ?? (
+                <>
+                    <FurniViewLayoutNameTextItem />
+                    <FurniViewLayoutNameExtraTextItem />
+                    <FurniViewLayoutImagesSpacerItem />
+                    <FurniViewLayoutWiredChestElementsItem />
+                    <FurniViewLayoutImageContainerItem />
+                    <FurniViewLayoutNftIndicatorItem />
+                    <FurniViewLayoutOwnerSpacerItem />
+                    <FurniViewLayoutOwnerRegionItem />
+                    <FurniViewLayoutGroupDetailsSpacerItem />
+                    <FurniViewLayoutGroupDetailsContainerItem />
+                    <FurniViewLayoutExpirationTextItem />
+                    <FurniViewLayoutPurchaseButtonsItem />
+                    <FurniViewLayoutFurniDetailsSpacerItem />
+                    <FurniViewLayoutChestItemCountItem />
+                    <FurniViewLayoutFurniDetailsTextItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `variable_list` of FurniViewLayout - configured through the parent's `variableList` prop. */
+export interface FurniViewLayoutVariableListProps {
+    captionName?: string;
+    layout?: BoxLayout;
+}
+
+export const FurniViewLayoutVariableList = ({ captionName, layout }: FurniViewLayoutVariableListProps) => {
+    const [ valueValue, setValueValue ] = useState('');
+
+    return (
+        <Region
+            name="variable_list"
+            params={8536080}
+            layout={{ position: 'absolute', left: 0, top: 32, flexDirection: 'column', ...layout }}
+        >
+            <Region
+                params={16}
+                layout={{ width: 183, height: 26, flexShrink: 0 }}
+            >
+                <Region
+                    name="name"
+                    params={16}
+                    layout={{ position: 'absolute', left: 1, width: 41, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionName ?? 'Name:'}
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+                <TextInput
+                    value={valueValue}
+                    onChange={setValueValue}
+                    layout={{ position: 'absolute', left: 80, width: 100, top: 2, height: 17 }}
+                />
+                <Border
+                    variant="3"
+                    params={16}
+                    tintColor="#cccccc"
+                    layout={{ position: 'absolute', left: 80, width: 100, top: 0, height: 20 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
 /** Row template `move` of FurniViewLayout - pass real rows through its `items…` slot. */
 export interface FurniViewLayoutMoveItemProps {
     layout?: BoxLayout;
@@ -910,5 +955,32 @@ export const FurniViewLayoutWiredInspectItem = ({ layout, onWiredInspect }: Furn
         >
             {t('infostand.button.wired_inspect')}
         </Button>
+    );
+};
+
+/** Named region `button_list` of FurniViewLayout - configured through the parent's `buttonList` prop. */
+export interface FurniViewLayoutButtonListProps {
+    itemsButtonList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const FurniViewLayoutButtonList = ({ itemsButtonList, layout }: FurniViewLayoutButtonListProps) => {
+    return (
+        <Region
+            name="button_list"
+            params={16}
+            layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
+        >
+            {itemsButtonList ?? (
+                <>
+                    <FurniViewLayoutMoveItem />
+                    <FurniViewLayoutRotateItem />
+                    <FurniViewLayoutPickupItem />
+                    <FurniViewLayoutSaveBrandingConfigurationItem />
+                    <FurniViewLayoutUseItem />
+                    <FurniViewLayoutWiredInspectItem />
+                </>
+            )}
+        </Region>
     );
 };

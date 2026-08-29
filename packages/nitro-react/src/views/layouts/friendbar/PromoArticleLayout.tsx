@@ -6,236 +6,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `64_promo_article_xml` (layout "promo_article", 500x118) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PromoArticleLayoutProps {
-    itemsContent?: ReactNode;
-    itemsTitle?: ReactNode;
     layout?: BoxLayout;
-    onArticleNavigation?: () => void;
-    onArticleNavigation10?: () => void;
-    onArticleNavigation2?: () => void;
-    onArticleNavigation3?: () => void;
-    onArticleNavigation4?: () => void;
-    onArticleNavigation5?: () => void;
-    onArticleNavigation6?: () => void;
-    onArticleNavigation7?: () => void;
-    onArticleNavigation8?: () => void;
-    onArticleNavigation9?: () => void;
-    srcNavigationDisk?: string;
-    srcNavigationDisk10?: string;
-    srcNavigationDisk2?: string;
-    srcNavigationDisk3?: string;
-    srcNavigationDisk4?: string;
-    srcNavigationDisk5?: string;
-    srcNavigationDisk6?: string;
-    srcNavigationDisk7?: string;
-    srcNavigationDisk8?: string;
-    srcNavigationDisk9?: string;
-    srcPromoImage?: string;
+    root?: PromoArticleLayoutRootProps;
 }
 
-export const PromoArticleLayout = ({ itemsContent, itemsTitle, layout, onArticleNavigation, onArticleNavigation10, onArticleNavigation2, onArticleNavigation3, onArticleNavigation4, onArticleNavigation5, onArticleNavigation6, onArticleNavigation7, onArticleNavigation8, onArticleNavigation9, srcNavigationDisk, srcNavigationDisk10, srcNavigationDisk2, srcNavigationDisk3, srcNavigationDisk4, srcNavigationDisk5, srcNavigationDisk6, srcNavigationDisk7, srcNavigationDisk8, srcNavigationDisk9, srcPromoImage }: PromoArticleLayoutProps) => {
-    const t = useTranslation();
-
+export const PromoArticleLayout = ({ layout, root }: PromoArticleLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 500, height: 118, ...layout }}>
-            <Region
-                name="root"
-                params={147472}
-                layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 118, maxWidth: 500 }}
-            >
-                <Region
-                    name="title"
-                    params={147600}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, minWidth: 500, maxWidth: 500, flexDirection: 'row', gap: 4 }}
-                >
-                    {itemsTitle ?? (
-                        <>
-                            <PromoArticleLayoutBorderBarItem />
-                            <PromoArticleLayoutHeaderTxtItem />
-                            <PromoArticleLayoutHdrLineItem />
-                        </>
-                    )}
-                </Region>
-                <Region
-                    name="navigation"
-                    layout={{ position: 'absolute', left: 10, width: 160, top: 23, height: 10 }}
-                >
-                    <Region
-                        name="article_navigation"
-                        tooltip={t('promo.article.widget.tooltip.go.to.article')}
-                        params={17}
-                        onPointerTap={onArticleNavigation}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
-                    >
-                        <ThemeImage
-                            name="navigation_disk"
-                            params={16}
-                            src={srcNavigationDisk ?? layoutImage('progress_disk_flat_off.png')}
-                            layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
-                        />
-                    </Region>
-                    <Region
-                        name="article_navigation"
-                        tooltip={t('promo.article.widget.tooltip.go.to.article')}
-                        params={17}
-                        onPointerTap={onArticleNavigation2}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 10, width: 8, top: 0, height: 8 }}
-                    >
-                        <ThemeImage
-                            name="navigation_disk"
-                            params={16}
-                            src={srcNavigationDisk2 ?? layoutImage('progress_disk_flat_off.png')}
-                            layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
-                        />
-                    </Region>
-                    <Region
-                        name="article_navigation"
-                        tooltip={t('promo.article.widget.tooltip.go.to.article')}
-                        params={17}
-                        onPointerTap={onArticleNavigation3}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 20, width: 8, top: 0, height: 8 }}
-                    >
-                        <ThemeImage
-                            name="navigation_disk"
-                            params={16}
-                            src={srcNavigationDisk3 ?? layoutImage('progress_disk_flat_off.png')}
-                            layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
-                        />
-                    </Region>
-                    <Region
-                        name="article_navigation"
-                        tooltip={t('promo.article.widget.tooltip.go.to.article')}
-                        params={17}
-                        onPointerTap={onArticleNavigation4}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 30, width: 8, top: 0, height: 8 }}
-                    >
-                        <ThemeImage
-                            name="navigation_disk"
-                            params={16}
-                            src={srcNavigationDisk4 ?? layoutImage('progress_disk_flat_off.png')}
-                            layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
-                        />
-                    </Region>
-                    <Region
-                        name="article_navigation"
-                        tooltip={t('promo.article.widget.tooltip.go.to.article')}
-                        params={17}
-                        onPointerTap={onArticleNavigation5}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 40, width: 8, top: 0, height: 8 }}
-                    >
-                        <ThemeImage
-                            name="navigation_disk"
-                            params={16}
-                            src={srcNavigationDisk5 ?? layoutImage('progress_disk_flat_off.png')}
-                            layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
-                        />
-                    </Region>
-                    <Region
-                        name="article_navigation"
-                        tooltip={t('promo.article.widget.tooltip.go.to.article')}
-                        params={17}
-                        onPointerTap={onArticleNavigation6}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 50, width: 8, top: 0, height: 8 }}
-                    >
-                        <ThemeImage
-                            name="navigation_disk"
-                            params={16}
-                            src={srcNavigationDisk6 ?? layoutImage('progress_disk_flat_off.png')}
-                            layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
-                        />
-                    </Region>
-                    <Region
-                        name="article_navigation"
-                        tooltip={t('promo.article.widget.tooltip.go.to.article')}
-                        params={17}
-                        onPointerTap={onArticleNavigation7}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 60, width: 8, top: 0, height: 8 }}
-                    >
-                        <ThemeImage
-                            name="navigation_disk"
-                            params={16}
-                            src={srcNavigationDisk7 ?? layoutImage('progress_disk_flat_off.png')}
-                            layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
-                        />
-                    </Region>
-                    <Region
-                        name="article_navigation"
-                        tooltip={t('promo.article.widget.tooltip.go.to.article')}
-                        params={17}
-                        onPointerTap={onArticleNavigation8}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 70, width: 8, top: 0, height: 8 }}
-                    >
-                        <ThemeImage
-                            name="navigation_disk"
-                            params={16}
-                            src={srcNavigationDisk8 ?? layoutImage('progress_disk_flat_off.png')}
-                            layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
-                        />
-                    </Region>
-                    <Region
-                        name="article_navigation"
-                        tooltip={t('promo.article.widget.tooltip.go.to.article')}
-                        params={17}
-                        onPointerTap={onArticleNavigation9}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 80, width: 8, top: 0, height: 8 }}
-                    >
-                        <ThemeImage
-                            name="navigation_disk"
-                            params={16}
-                            src={srcNavigationDisk9 ?? layoutImage('progress_disk_flat_off.png')}
-                            layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
-                        />
-                    </Region>
-                    <Region
-                        name="article_navigation"
-                        tooltip={t('promo.article.widget.tooltip.go.to.article')}
-                        params={17}
-                        onPointerTap={onArticleNavigation10}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 90, width: 8, top: 0, height: 8 }}
-                    >
-                        <ThemeImage
-                            name="navigation_disk"
-                            params={16}
-                            src={srcNavigationDisk10 ?? layoutImage('progress_disk_flat_off.png')}
-                            layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="article"
-                    params={8536080}
-                    layout={{ position: 'absolute', left: 0, width: 500, top: 17, height: 101 }}
-                >
-                    <ThemeImage
-                        name="promo_image"
-                        params={16}
-                        src={srcPromoImage}
-                        layout={{ position: 'absolute', left: 10, width: 150, top: 19, height: 82, maxWidth: 150 }}
-                    />
-                    <Region
-                        name="content"
-                        params={16}
-                        layout={{ position: 'absolute', left: 170, width: 330, top: 0, height: 34, flexDirection: 'column', gap: 6 }}
-                    >
-                        {itemsContent ?? (
-                            <>
-                                <PromoArticleLayoutPromoTitleItem />
-                                <PromoArticleLayoutPromoTextItem />
-                                <PromoArticleLayoutButtonItem />
-                            </>
-                        )}
-                    </Region>
-                </Region>
-            </Region>
+            <PromoArticleLayoutRoot {...root} />
         </Region>
     );
 };
@@ -295,6 +73,355 @@ export const PromoArticleLayoutHdrLineItem = ({ layout, srcHdrLine }: PromoArtic
             src={srcHdrLine ?? layoutImage('illumina_light_border_top_center.png')}
             layout={{ width: 500, height: 4, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `title` of PromoArticleLayout - configured through the parent's `title` prop. */
+export interface PromoArticleLayoutTitleProps {
+    itemsTitle?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PromoArticleLayoutTitle = ({ itemsTitle, layout }: PromoArticleLayoutTitleProps) => {
+    return (
+        <Region
+            name="title"
+            params={147600}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, minWidth: 500, maxWidth: 500, flexDirection: 'row', gap: 4, ...layout }}
+        >
+            {itemsTitle ?? (
+                <>
+                    <PromoArticleLayoutBorderBarItem />
+                    <PromoArticleLayoutHeaderTxtItem />
+                    <PromoArticleLayoutHdrLineItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `article_navigation` of PromoArticleLayout - configured through the parent's `articleNavigation` prop. */
+export interface PromoArticleLayoutArticleNavigationProps {
+    layout?: BoxLayout;
+    onArticleNavigation?: () => void;
+    srcNavigationDisk?: string;
+}
+
+export const PromoArticleLayoutArticleNavigation = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigationProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="article_navigation"
+            tooltip={t('promo.article.widget.tooltip.go.to.article')}
+            params={17}
+            onPointerTap={onArticleNavigation}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8, ...layout }}
+        >
+            <ThemeImage
+                name="navigation_disk"
+                params={16}
+                src={srcNavigationDisk ?? layoutImage('progress_disk_flat_off.png')}
+                layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `article_navigation` of PromoArticleLayout - configured through the parent's `articleNavigation` prop. */
+export interface PromoArticleLayoutArticleNavigation2Props {
+    layout?: BoxLayout;
+    onArticleNavigation?: () => void;
+    srcNavigationDisk?: string;
+}
+
+export const PromoArticleLayoutArticleNavigation2 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation2Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="article_navigation"
+            tooltip={t('promo.article.widget.tooltip.go.to.article')}
+            params={17}
+            onPointerTap={onArticleNavigation}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 10, width: 8, top: 0, height: 8, ...layout }}
+        >
+            <ThemeImage
+                name="navigation_disk"
+                params={16}
+                src={srcNavigationDisk ?? layoutImage('progress_disk_flat_off.png')}
+                layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `article_navigation` of PromoArticleLayout - configured through the parent's `articleNavigation` prop. */
+export interface PromoArticleLayoutArticleNavigation3Props {
+    layout?: BoxLayout;
+    onArticleNavigation?: () => void;
+    srcNavigationDisk?: string;
+}
+
+export const PromoArticleLayoutArticleNavigation3 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation3Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="article_navigation"
+            tooltip={t('promo.article.widget.tooltip.go.to.article')}
+            params={17}
+            onPointerTap={onArticleNavigation}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 20, width: 8, top: 0, height: 8, ...layout }}
+        >
+            <ThemeImage
+                name="navigation_disk"
+                params={16}
+                src={srcNavigationDisk ?? layoutImage('progress_disk_flat_off.png')}
+                layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `article_navigation` of PromoArticleLayout - configured through the parent's `articleNavigation` prop. */
+export interface PromoArticleLayoutArticleNavigation4Props {
+    layout?: BoxLayout;
+    onArticleNavigation?: () => void;
+    srcNavigationDisk?: string;
+}
+
+export const PromoArticleLayoutArticleNavigation4 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation4Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="article_navigation"
+            tooltip={t('promo.article.widget.tooltip.go.to.article')}
+            params={17}
+            onPointerTap={onArticleNavigation}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 30, width: 8, top: 0, height: 8, ...layout }}
+        >
+            <ThemeImage
+                name="navigation_disk"
+                params={16}
+                src={srcNavigationDisk ?? layoutImage('progress_disk_flat_off.png')}
+                layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `article_navigation` of PromoArticleLayout - configured through the parent's `articleNavigation` prop. */
+export interface PromoArticleLayoutArticleNavigation5Props {
+    layout?: BoxLayout;
+    onArticleNavigation?: () => void;
+    srcNavigationDisk?: string;
+}
+
+export const PromoArticleLayoutArticleNavigation5 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation5Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="article_navigation"
+            tooltip={t('promo.article.widget.tooltip.go.to.article')}
+            params={17}
+            onPointerTap={onArticleNavigation}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 40, width: 8, top: 0, height: 8, ...layout }}
+        >
+            <ThemeImage
+                name="navigation_disk"
+                params={16}
+                src={srcNavigationDisk ?? layoutImage('progress_disk_flat_off.png')}
+                layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `article_navigation` of PromoArticleLayout - configured through the parent's `articleNavigation` prop. */
+export interface PromoArticleLayoutArticleNavigation6Props {
+    layout?: BoxLayout;
+    onArticleNavigation?: () => void;
+    srcNavigationDisk?: string;
+}
+
+export const PromoArticleLayoutArticleNavigation6 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation6Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="article_navigation"
+            tooltip={t('promo.article.widget.tooltip.go.to.article')}
+            params={17}
+            onPointerTap={onArticleNavigation}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 50, width: 8, top: 0, height: 8, ...layout }}
+        >
+            <ThemeImage
+                name="navigation_disk"
+                params={16}
+                src={srcNavigationDisk ?? layoutImage('progress_disk_flat_off.png')}
+                layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `article_navigation` of PromoArticleLayout - configured through the parent's `articleNavigation` prop. */
+export interface PromoArticleLayoutArticleNavigation7Props {
+    layout?: BoxLayout;
+    onArticleNavigation?: () => void;
+    srcNavigationDisk?: string;
+}
+
+export const PromoArticleLayoutArticleNavigation7 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation7Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="article_navigation"
+            tooltip={t('promo.article.widget.tooltip.go.to.article')}
+            params={17}
+            onPointerTap={onArticleNavigation}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 60, width: 8, top: 0, height: 8, ...layout }}
+        >
+            <ThemeImage
+                name="navigation_disk"
+                params={16}
+                src={srcNavigationDisk ?? layoutImage('progress_disk_flat_off.png')}
+                layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `article_navigation` of PromoArticleLayout - configured through the parent's `articleNavigation` prop. */
+export interface PromoArticleLayoutArticleNavigation8Props {
+    layout?: BoxLayout;
+    onArticleNavigation?: () => void;
+    srcNavigationDisk?: string;
+}
+
+export const PromoArticleLayoutArticleNavigation8 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation8Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="article_navigation"
+            tooltip={t('promo.article.widget.tooltip.go.to.article')}
+            params={17}
+            onPointerTap={onArticleNavigation}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 70, width: 8, top: 0, height: 8, ...layout }}
+        >
+            <ThemeImage
+                name="navigation_disk"
+                params={16}
+                src={srcNavigationDisk ?? layoutImage('progress_disk_flat_off.png')}
+                layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `article_navigation` of PromoArticleLayout - configured through the parent's `articleNavigation` prop. */
+export interface PromoArticleLayoutArticleNavigation9Props {
+    layout?: BoxLayout;
+    onArticleNavigation?: () => void;
+    srcNavigationDisk?: string;
+}
+
+export const PromoArticleLayoutArticleNavigation9 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation9Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="article_navigation"
+            tooltip={t('promo.article.widget.tooltip.go.to.article')}
+            params={17}
+            onPointerTap={onArticleNavigation}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 80, width: 8, top: 0, height: 8, ...layout }}
+        >
+            <ThemeImage
+                name="navigation_disk"
+                params={16}
+                src={srcNavigationDisk ?? layoutImage('progress_disk_flat_off.png')}
+                layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `article_navigation` of PromoArticleLayout - configured through the parent's `articleNavigation` prop. */
+export interface PromoArticleLayoutArticleNavigation10Props {
+    layout?: BoxLayout;
+    onArticleNavigation?: () => void;
+    srcNavigationDisk?: string;
+}
+
+export const PromoArticleLayoutArticleNavigation10 = ({ layout, onArticleNavigation, srcNavigationDisk }: PromoArticleLayoutArticleNavigation10Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="article_navigation"
+            tooltip={t('promo.article.widget.tooltip.go.to.article')}
+            params={17}
+            onPointerTap={onArticleNavigation}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 90, width: 8, top: 0, height: 8, ...layout }}
+        >
+            <ThemeImage
+                name="navigation_disk"
+                params={16}
+                src={srcNavigationDisk ?? layoutImage('progress_disk_flat_off.png')}
+                layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 8 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `navigation` of PromoArticleLayout - configured through the parent's `navigation` prop. */
+export interface PromoArticleLayoutNavigationProps {
+    articleNavigation?: PromoArticleLayoutArticleNavigationProps;
+    articleNavigation10?: PromoArticleLayoutArticleNavigation10Props;
+    articleNavigation2?: PromoArticleLayoutArticleNavigation2Props;
+    articleNavigation3?: PromoArticleLayoutArticleNavigation3Props;
+    articleNavigation4?: PromoArticleLayoutArticleNavigation4Props;
+    articleNavigation5?: PromoArticleLayoutArticleNavigation5Props;
+    articleNavigation6?: PromoArticleLayoutArticleNavigation6Props;
+    articleNavigation7?: PromoArticleLayoutArticleNavigation7Props;
+    articleNavigation8?: PromoArticleLayoutArticleNavigation8Props;
+    articleNavigation9?: PromoArticleLayoutArticleNavigation9Props;
+    layout?: BoxLayout;
+}
+
+export const PromoArticleLayoutNavigation = ({ articleNavigation, articleNavigation10, articleNavigation2, articleNavigation3, articleNavigation4, articleNavigation5, articleNavigation6, articleNavigation7, articleNavigation8, articleNavigation9, layout }: PromoArticleLayoutNavigationProps) => {
+    return (
+        <Region
+            name="navigation"
+            layout={{ position: 'absolute', left: 10, width: 160, top: 23, height: 10, ...layout }}
+        >
+            <PromoArticleLayoutArticleNavigation {...articleNavigation} />
+            <PromoArticleLayoutArticleNavigation2 {...articleNavigation2} />
+            <PromoArticleLayoutArticleNavigation3 {...articleNavigation3} />
+            <PromoArticleLayoutArticleNavigation4 {...articleNavigation4} />
+            <PromoArticleLayoutArticleNavigation5 {...articleNavigation5} />
+            <PromoArticleLayoutArticleNavigation6 {...articleNavigation6} />
+            <PromoArticleLayoutArticleNavigation7 {...articleNavigation7} />
+            <PromoArticleLayoutArticleNavigation8 {...articleNavigation8} />
+            <PromoArticleLayoutArticleNavigation9 {...articleNavigation9} />
+            <PromoArticleLayoutArticleNavigation10 {...articleNavigation10} />
+        </Region>
     );
 };
 
@@ -365,6 +492,77 @@ export const PromoArticleLayoutButtonItem = ({ layout, onButton, visibleButton }
                 onPointerTap={onButton}
                 layout={{ width: '100%', height: '100%' }}
             />
+        </Region>
+    );
+};
+
+/** Named region `content` of PromoArticleLayout - configured through the parent's `content` prop. */
+export interface PromoArticleLayoutContentProps {
+    itemsContent?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PromoArticleLayoutContent = ({ itemsContent, layout }: PromoArticleLayoutContentProps) => {
+    return (
+        <Region
+            name="content"
+            params={16}
+            layout={{ position: 'absolute', left: 170, width: 330, top: 0, height: 34, flexDirection: 'column', gap: 6, ...layout }}
+        >
+            {itemsContent ?? (
+                <>
+                    <PromoArticleLayoutPromoTitleItem />
+                    <PromoArticleLayoutPromoTextItem />
+                    <PromoArticleLayoutButtonItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `article` of PromoArticleLayout - configured through the parent's `article` prop. */
+export interface PromoArticleLayoutArticleProps {
+    content?: PromoArticleLayoutContentProps;
+    layout?: BoxLayout;
+    srcPromoImage?: string;
+}
+
+export const PromoArticleLayoutArticle = ({ content, layout, srcPromoImage }: PromoArticleLayoutArticleProps) => {
+    return (
+        <Region
+            name="article"
+            params={8536080}
+            layout={{ position: 'absolute', left: 0, width: 500, top: 17, height: 101, ...layout }}
+        >
+            <ThemeImage
+                name="promo_image"
+                params={16}
+                src={srcPromoImage}
+                layout={{ position: 'absolute', left: 10, width: 150, top: 19, height: 82, maxWidth: 150 }}
+            />
+            <PromoArticleLayoutContent {...content} />
+        </Region>
+    );
+};
+
+/** Named region `root` of PromoArticleLayout - configured through the parent's `root` prop. */
+export interface PromoArticleLayoutRootProps {
+    article?: PromoArticleLayoutArticleProps;
+    layout?: BoxLayout;
+    navigation?: PromoArticleLayoutNavigationProps;
+    title?: PromoArticleLayoutTitleProps;
+}
+
+export const PromoArticleLayoutRoot = ({ article, layout, navigation, title }: PromoArticleLayoutRootProps) => {
+    return (
+        <Region
+            name="root"
+            params={147472}
+            layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 118, maxWidth: 500, ...layout }}
+        >
+            <PromoArticleLayoutTitle {...title} />
+            <PromoArticleLayoutNavigation {...navigation} />
+            <PromoArticleLayoutArticle {...article} />
         </Region>
     );
 };

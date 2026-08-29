@@ -3,16 +3,15 @@ import { BoxLayout, ButtonThick, Region, ThemeImage, ThemeText } from '#base/the
 
 /** Generated from `997_use_product_controller_custom_part_shampoo_xml` (layout "use_product_custom_part_shampoo", 386x180) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface UseProductControllerCustomPartShampooLayoutProps {
+    cancelText?: UseProductControllerCustomPartShampooLayoutCancelTextProps;
     captionDescription?: string;
     captionInfo?: string;
     layout?: BoxLayout;
-    onCancelText?: () => void;
-    onPreviewImageRegion?: () => void;
     onSaveButton?: () => void;
-    srcPreviewImage?: string;
+    previewImageRegion?: UseProductControllerCustomPartShampooLayoutPreviewImageRegionProps;
 }
 
-export const UseProductControllerCustomPartShampooLayout = ({ captionDescription, captionInfo, layout, onCancelText, onPreviewImageRegion, onSaveButton, srcPreviewImage }: UseProductControllerCustomPartShampooLayoutProps) => {
+export const UseProductControllerCustomPartShampooLayout = ({ cancelText, captionDescription, captionInfo, layout, onSaveButton, previewImageRegion }: UseProductControllerCustomPartShampooLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -30,20 +29,7 @@ export const UseProductControllerCustomPartShampooLayout = ({ captionDescription
                 >
                     {t('useproduct.widget.use')}
                 </ButtonThick>
-                <Region
-                    name="preview_image_region"
-                    params={17}
-                    onPointerTap={onPreviewImageRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 10, width: 122, top: 10, height: 130 }}
-                >
-                    <ThemeImage
-                        name="preview_image"
-                        params={16}
-                        src={srcPreviewImage}
-                        layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 130 }}
-                    />
-                </Region>
+                <UseProductControllerCustomPartShampooLayoutPreviewImageRegion {...previewImageRegion} />
                 <Region
                     name="description"
                     params={16}
@@ -54,13 +40,7 @@ export const UseProductControllerCustomPartShampooLayout = ({ captionDescription
                         textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
                     />
                 </Region>
-                <Region
-                    name="cancel_text"
-                    params={17}
-                    onPointerTap={onCancelText}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25 }}
-                />
+                <UseProductControllerCustomPartShampooLayoutCancelText {...cancelText} />
                 <Region
                     params={16}
                     layout={{ position: 'absolute', left: 160, width: 70, top: 120, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -80,5 +60,49 @@ export const UseProductControllerCustomPartShampooLayout = ({ captionDescription
                 </Region>
             </Region>
         </Region>
+    );
+};
+
+/** Named region `preview_image_region` of UseProductControllerCustomPartShampooLayout - configured through the parent's `previewImageRegion` prop. */
+export interface UseProductControllerCustomPartShampooLayoutPreviewImageRegionProps {
+    layout?: BoxLayout;
+    onPreviewImageRegion?: () => void;
+    srcPreviewImage?: string;
+}
+
+export const UseProductControllerCustomPartShampooLayoutPreviewImageRegion = ({ layout, onPreviewImageRegion, srcPreviewImage }: UseProductControllerCustomPartShampooLayoutPreviewImageRegionProps) => {
+    return (
+        <Region
+            name="preview_image_region"
+            params={17}
+            onPointerTap={onPreviewImageRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 10, width: 122, top: 10, height: 130, ...layout }}
+        >
+            <ThemeImage
+                name="preview_image"
+                params={16}
+                src={srcPreviewImage}
+                layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 130 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `cancel_text` of UseProductControllerCustomPartShampooLayout - configured through the parent's `cancelText` prop. */
+export interface UseProductControllerCustomPartShampooLayoutCancelTextProps {
+    layout?: BoxLayout;
+    onCancelText?: () => void;
+}
+
+export const UseProductControllerCustomPartShampooLayoutCancelText = ({ layout, onCancelText }: UseProductControllerCustomPartShampooLayoutCancelTextProps) => {
+    return (
+        <Region
+            name="cancel_text"
+            params={17}
+            onPointerTap={onCancelText}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25, ...layout }}
+        />
     );
 };

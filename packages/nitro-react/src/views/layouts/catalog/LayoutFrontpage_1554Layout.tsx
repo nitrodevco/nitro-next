@@ -5,86 +5,112 @@ import { Border, BoxLayout, Button, Region, TextInput, ThemeImage, ThemeText } f
 
 /** Generated from `1554_layout_frontpage_xml` (layout "ctlg_frontpage4", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutFrontpage_1554LayoutProps {
-    captionCtlgTxt1?: string;
-    captionCtlgTxt2?: string;
+    ctlgFrontpage4?: LayoutFrontpage_1554LayoutCtlgFrontpage4Props;
     layout?: BoxLayout;
-    onRedeem?: () => void;
-    srcCtlgTeaserimg1?: string;
 }
 
-export const LayoutFrontpage_1554Layout = ({ captionCtlgTxt1, captionCtlgTxt2, layout, onRedeem, srcCtlgTeaserimg1 }: LayoutFrontpage_1554LayoutProps) => {
+export const LayoutFrontpage_1554Layout = ({ ctlgFrontpage4, layout }: LayoutFrontpage_1554LayoutProps) => {
+    return (
+        <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
+            <LayoutFrontpage_1554LayoutCtlgFrontpage4 {...ctlgFrontpage4} />
+        </Region>
+    );
+};
+
+/** Named region `redeemItemCodeWidget` of LayoutFrontpage_1554Layout - configured through the parent's `redeemItemCodeWidget` prop. */
+export interface LayoutFrontpage_1554LayoutRedeemItemCodeWidgetProps {
+    layout?: BoxLayout;
+    onRedeem?: () => void;
+}
+
+export const LayoutFrontpage_1554LayoutRedeemItemCodeWidget = ({ layout, onRedeem }: LayoutFrontpage_1554LayoutRedeemItemCodeWidgetProps) => {
     const t = useTranslation();
     const [ voucherCodeValue, setVoucherCodeValue ] = useState('');
 
     return (
-        <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
-            <Region
-                name="ctlg_frontpage4"
+        <Region
+            name="redeemItemCodeWidget"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 345, top: 20, height: 34, ...layout }}
+        >
+            <Border
+                variant="0"
                 params={16}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
+                layout={{ position: 'absolute', left: 10, width: 216, top: 5, height: 25 }}
             >
-                <ThemeImage
-                    name="ctlg_teaserimg_1"
-                    params={16}
-                    src={srcCtlgTeaserimg1 ?? '${image.library.url}catalogue/frontpage_teaser.gif'}
-                    layout={{ position: 'absolute', left: 246, width: 103, top: 64, height: 324 }}
+                <TextInput
+                    value={voucherCodeValue}
+                    onChange={setVoucherCodeValue}
+                    multiline
+                    layout={{ position: 'absolute', left: 4, width: 206, top: 4, height: 15 }}
                 />
+            </Border>
+            <Button
+                variant="3"
+                name="redeem"
+                params={393361}
+                onPointerTap={onRedeem}
+                layout={{ position: 'absolute', left: 274, right: 9, top: 5, height: 22, maxWidth: 100 }}
+            >
+                {t('redeem')}
+            </Button>
+        </Region>
+    );
+};
+
+/** Named region `ctlg_frontpage4` of LayoutFrontpage_1554Layout - configured through the parent's `ctlgFrontpage4` prop. */
+export interface LayoutFrontpage_1554LayoutCtlgFrontpage4Props {
+    captionCtlgTxt1?: string;
+    captionCtlgTxt2?: string;
+    layout?: BoxLayout;
+    redeemItemCodeWidget?: LayoutFrontpage_1554LayoutRedeemItemCodeWidgetProps;
+    srcCtlgTeaserimg1?: string;
+}
+
+export const LayoutFrontpage_1554LayoutCtlgFrontpage4 = ({ captionCtlgTxt1, captionCtlgTxt2, layout, redeemItemCodeWidget, srcCtlgTeaserimg1 }: LayoutFrontpage_1554LayoutCtlgFrontpage4Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="ctlg_frontpage4"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
+        >
+            <ThemeImage
+                name="ctlg_teaserimg_1"
+                params={16}
+                src={srcCtlgTeaserimg1 ?? '${image.library.url}catalogue/frontpage_teaser.gif'}
+                layout={{ position: 'absolute', left: 246, width: 103, top: 64, height: 324 }}
+            />
+            <Region
+                name="ctlg_txt1"
+                params={1}
+                layout={{ position: 'absolute', left: 15, width: 225, top: 70, height: 320, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCtlgTxt1 ?? t('loremipsum.html')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 225 }}
+                />
+            </Region>
+            <Border
+                variant="2"
+                name="bgBorder"
+                params={16}
+                tintColor="#51bbee"
+                layout={{ position: 'absolute', left: 8, width: 345, top: 397, height: 61 }}
+            >
                 <Region
-                    name="ctlg_txt1"
-                    params={1}
-                    layout={{ position: 'absolute', left: 15, width: 225, top: 70, height: 320, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    name="ctlg_txt2"
+                    params={16}
+                    layout={{ position: 'absolute', left: 10, width: 272, top: 6, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
-                        text={captionCtlgTxt1 ?? t('loremipsum.html')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 225 }}
+                        text={captionCtlgTxt2 ?? t('lorem.title')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 272 }}
                     />
                 </Region>
-                <Border
-                    variant="2"
-                    name="bgBorder"
-                    params={16}
-                    tintColor="#51bbee"
-                    layout={{ position: 'absolute', left: 8, width: 345, top: 397, height: 61 }}
-                >
-                    <Region
-                        name="ctlg_txt2"
-                        params={16}
-                        layout={{ position: 'absolute', left: 10, width: 272, top: 6, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCtlgTxt2 ?? t('lorem.title')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 272 }}
-                        />
-                    </Region>
-                    <Region
-                        name="redeemItemCodeWidget"
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 345, top: 20, height: 34 }}
-                    >
-                        <Border
-                            variant="0"
-                            params={16}
-                            layout={{ position: 'absolute', left: 10, width: 216, top: 5, height: 25 }}
-                        >
-                            <TextInput
-                                value={voucherCodeValue}
-                                onChange={setVoucherCodeValue}
-                                multiline
-                                layout={{ position: 'absolute', left: 4, width: 206, top: 4, height: 15 }}
-                            />
-                        </Border>
-                        <Button
-                            variant="3"
-                            name="redeem"
-                            params={393361}
-                            onPointerTap={onRedeem}
-                            layout={{ position: 'absolute', left: 274, right: 9, top: 5, height: 22, maxWidth: 100 }}
-                        >
-                            {t('redeem')}
-                        </Button>
-                    </Region>
-                </Border>
-            </Region>
+                <LayoutFrontpage_1554LayoutRedeemItemCodeWidget {...redeemItemCodeWidget} />
+            </Border>
         </Region>
     );
 };

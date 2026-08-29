@@ -3,14 +3,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1398_inventory_thumb_nft_xml` (layout "thumbnail", 42x42) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface InventoryThumbNftLayoutProps {
-    captionNumber?: string;
     layout?: BoxLayout;
+    numberContainer?: InventoryThumbNftLayoutNumberContainerProps;
     srcOutline?: string;
     srcUniqueItemBackgroundBitmap?: string;
-    visibleNumberContainer?: boolean;
 }
 
-export const InventoryThumbNftLayout = ({ captionNumber, layout, srcOutline, srcUniqueItemBackgroundBitmap, visibleNumberContainer }: InventoryThumbNftLayoutProps) => {
+export const InventoryThumbNftLayout = ({ layout, numberContainer, srcOutline, srcUniqueItemBackgroundBitmap }: InventoryThumbNftLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 42, height: 42, ...layout }}>
             <Region
@@ -41,26 +40,7 @@ export const InventoryThumbNftLayout = ({ captionNumber, layout, srcOutline, src
                         params={16}
                         layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
                     />
-                    <Region
-                        name="number_container"
-                        tags={[ 'COUNT' ]}
-                        params={393360}
-                        visible={visibleNumberContainer ?? false}
-                        backgroundColor="#2f6982"
-                        layout={{ position: 'absolute', left: 33, right: 1, top: 2, height: 15 }}
-                    >
-                        <Region
-                            name="number"
-                            tags={[ 'NUMBER', 'COUNT' ]}
-                            params={16}
-                            layout={{ position: 'absolute', left: 1, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionNumber ?? ''}
-                                textOptions={{ fill: '#2f6982' }}
-                            />
-                        </Region>
-                    </Region>
+                    <InventoryThumbNftLayoutNumberContainer {...numberContainer} />
                 </Border>
                 <Region
                     visible={false}
@@ -73,6 +53,38 @@ export const InventoryThumbNftLayout = ({ captionNumber, layout, srcOutline, src
                         layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
                     />
                 </Region>
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `number_container` of InventoryThumbNftLayout - configured through the parent's `numberContainer` prop. */
+export interface InventoryThumbNftLayoutNumberContainerProps {
+    captionNumber?: string;
+    layout?: BoxLayout;
+    visibleNumberContainer?: boolean;
+}
+
+export const InventoryThumbNftLayoutNumberContainer = ({ captionNumber, layout, visibleNumberContainer }: InventoryThumbNftLayoutNumberContainerProps) => {
+    return (
+        <Region
+            name="number_container"
+            tags={[ 'COUNT' ]}
+            params={393360}
+            visible={visibleNumberContainer ?? false}
+            backgroundColor="#2f6982"
+            layout={{ position: 'absolute', left: 33, right: 1, top: 2, height: 15, ...layout }}
+        >
+            <Region
+                name="number"
+                tags={[ 'NUMBER', 'COUNT' ]}
+                params={16}
+                layout={{ position: 'absolute', left: 1, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionNumber ?? ''}
+                    textOptions={{ fill: '#2f6982' }}
+                />
             </Region>
         </Region>
     );

@@ -6,132 +6,43 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1152_search_tree_dropdown_xml` (layout "search_tree_dropdown", 197x22) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface SearchTreeDropdownLayoutProps {
-    captionInputPlaceholderText?: string;
-    itemsMainCont?: ReactNode;
     layout?: BoxLayout;
-    onCancelSearch?: () => void;
-    onInputFieldRegion?: () => void;
+    searchTreeDropdown?: SearchTreeDropdownLayoutSearchTreeDropdownProps;
 }
 
-export const SearchTreeDropdownLayout = ({ captionInputPlaceholderText, itemsMainCont, layout, onCancelSearch, onInputFieldRegion }: SearchTreeDropdownLayoutProps) => {
-    const t = useTranslation();
-    const [ inputFieldValue, setInputFieldValue ] = useState('');
-
+export const SearchTreeDropdownLayout = ({ layout, searchTreeDropdown }: SearchTreeDropdownLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 197, height: 22, ...layout }}>
-            <Region
-                name="search_tree_dropdown"
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 22 }}
-            >
-                <Border
-                    variant="12"
-                    name="collapsed_view"
-                    params={12585104}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                >
-                    <Icon
-                        variant="7"
-                        name="down_icon"
-                        params={12848208}
-                        tintColor="#777777"
-                        layout={{ position: 'absolute', right: 8, width: 10, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 5 }}
-                    />
-                </Border>
-                <Region
-                    name="expanded_view_wrapper"
-                    layout={{ position: 'absolute', left: 0, width: 1000, top: 0, height: 1000 }}
-                >
-                    <Border
-                        variant="12"
-                        name="expanded_view"
-                        params={149521}
-                        layout={{ position: 'absolute', left: 0, width: 198, top: 0, bottom: 904 }}
-                    >
-                        <Region
-                            name="main_cont"
-                            params={4327568}
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column' }}
-                        >
-                            {itemsMainCont ?? (
-                                <>
-                                    <SearchTreeDropdownLayoutButtonListItem />
-                                    <SearchTreeDropdownLayoutSpacerItem />
-                                    <SearchTreeDropdownLayoutContentBoxItem />
-                                    <SearchTreeDropdownLayoutSpacingItem />
-                                </>
-                            )}
-                            <Region
-                                params={4194448}
-                                layout={{ width: 196, height: 20, flexShrink: 0 }}
-                            >
-                                <Region
-                                    name="search_wrapper_expanded"
-                                    params={4194448}
-                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20 }}
-                                />
-                                <Region
-                                    name="cancel_search"
-                                    params={4194369}
-                                    onPointerTap={onCancelSearch}
-                                    cursor="pointer"
-                                    layout={{ position: 'absolute', right: 6, width: 9, top: 5, height: 9 }}
-                                >
-                                    <ThemeImage
-                                        params={16}
-                                        src={layoutImage('var_picker_cancel_search.png')}
-                                        layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 9 }}
-                                    />
-                                </Region>
-                            </Region>
-                        </Region>
-                    </Border>
-                </Region>
-                <Region
-                    name="search_wrapper_collapsed"
-                    params={4194448}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 20 }}
-                >
-                    <Region
-                        name="input_field_region"
-                        params={17}
-                        onPointerTap={onInputFieldRegion}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 20 }}
-                    >
-                        <Region
-                            name="input_placeholder_text"
-                            tags={[ 'DO_NOT_DISABLE' ]}
-                            params={12585104}
-                            layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionInputPlaceholderText ?? t('wiredfurni.variable_picker.search')}
-                                textStyle="text-style-regular"
-                                textOptions={{ fill: '#808080', wordWrap: true }}
-                            />
-                        </Region>
-                        <TextInput
-                            value={inputFieldValue}
-                            onChange={setInputFieldValue}
-                            maxLength={60}
-                            layout={{ position: 'absolute', left: 7, right: 0, top: 3, bottom: 0, overflow: 'hidden' }}
-                        />
-                    </Region>
-                </Region>
-            </Region>
+            <SearchTreeDropdownLayoutSearchTreeDropdown {...searchTreeDropdown} />
         </Region>
+    );
+};
+
+/** Named region `button_shadow` of SearchTreeDropdownLayout - configured through the parent's `buttonShadow` prop. */
+export interface SearchTreeDropdownLayoutButtonShadowProps {
+    layout?: BoxLayout;
+}
+
+export const SearchTreeDropdownLayoutButtonShadow = ({ layout }: SearchTreeDropdownLayoutButtonShadowProps) => {
+    return (
+        <Region
+            name="button_shadow"
+            params={12584080}
+            backgroundColor="#dddddd"
+            layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 2, ...layout }}
+        />
     );
 };
 
 /** Row template `button_template` of SearchTreeDropdownLayout - pass real rows through its `items…` slot. */
 export interface SearchTreeDropdownLayoutButtonTemplateItemProps {
+    buttonShadow?: SearchTreeDropdownLayoutButtonShadowProps;
     layout?: BoxLayout;
     onButtonTemplate?: () => void;
     srcButtonImg?: string;
 }
 
-export const SearchTreeDropdownLayoutButtonTemplateItem = ({ layout, onButtonTemplate, srcButtonImg }: SearchTreeDropdownLayoutButtonTemplateItemProps) => {
+export const SearchTreeDropdownLayoutButtonTemplateItem = ({ buttonShadow, layout, onButtonTemplate, srcButtonImg }: SearchTreeDropdownLayoutButtonTemplateItemProps) => {
     return (
         <Region
             name="button_template"
@@ -154,12 +65,7 @@ export const SearchTreeDropdownLayoutButtonTemplateItem = ({ layout, onButtonTem
                     layout={{ position: 'absolute', left: 0, top: 0 }}
                 />
             </Border>
-            <Region
-                name="button_shadow"
-                params={12584080}
-                backgroundColor="#dddddd"
-                layout={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 2 }}
-            />
+            <SearchTreeDropdownLayoutButtonShadow {...buttonShadow} />
         </Region>
     );
 };
@@ -184,62 +90,177 @@ export const SearchTreeDropdownLayoutButtonListItem = ({ itemsButtonList, layout
     );
 };
 
-/** Row template `spacer` of SearchTreeDropdownLayout - pass real rows through its `items…` slot. */
-export interface SearchTreeDropdownLayoutSpacerItemProps {
+/** Named region `splitter` of SearchTreeDropdownLayout - configured through the parent's `splitter` prop. */
+export interface SearchTreeDropdownLayoutSplitterProps {
     layout?: BoxLayout;
 }
 
-export const SearchTreeDropdownLayoutSpacerItem = ({ layout }: SearchTreeDropdownLayoutSpacerItemProps) => {
+export const SearchTreeDropdownLayoutSplitter = ({ layout }: SearchTreeDropdownLayoutSplitterProps) => {
+    return (
+        <Region
+            name="splitter"
+            params={4194448}
+            backgroundColor="#dddddd"
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1, ...layout }}
+        />
+    );
+};
+
+/** Row template `spacer` of SearchTreeDropdownLayout - pass real rows through its `items…` slot. */
+export interface SearchTreeDropdownLayoutSpacerItemProps {
+    layout?: BoxLayout;
+    splitter?: SearchTreeDropdownLayoutSplitterProps;
+}
+
+export const SearchTreeDropdownLayoutSpacerItem = ({ layout, splitter }: SearchTreeDropdownLayoutSpacerItemProps) => {
     return (
         <Region
             name="spacer"
             params={4194448}
             layout={{ width: 195, height: 2, flexShrink: 0, ...layout }}
         >
+            <SearchTreeDropdownLayoutSplitter {...splitter} />
+        </Region>
+    );
+};
+
+/** Named region `empty_container` of SearchTreeDropdownLayout - configured through the parent's `emptyContainer` prop. */
+export interface SearchTreeDropdownLayoutEmptyContainerProps {
+    layout?: BoxLayout;
+    visibleEmptyContainer?: boolean;
+}
+
+export const SearchTreeDropdownLayoutEmptyContainer = ({ layout, visibleEmptyContainer }: SearchTreeDropdownLayoutEmptyContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="empty_container"
+            params={4194448}
+            visible={visibleEmptyContainer ?? false}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 52, ...layout }}
+        >
             <Region
-                name="splitter"
                 params={4194448}
-                backgroundColor="#dddddd"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1 }}
+                layout={{ position: 'absolute', left: 0, top: 19, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('wiredfurni.variable_picker.empty')}
+                    textStyle="text-style-regular"
+                    textOptions={{ fill: '#333333', align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `spacing` of SearchTreeDropdownLayout - configured through the parent's `spacing` prop. */
+export interface SearchTreeDropdownLayoutSpacingProps {
+    layout?: BoxLayout;
+}
+
+export const SearchTreeDropdownLayoutSpacing = ({ layout }: SearchTreeDropdownLayoutSpacingProps) => {
+    return (
+        <Region
+            name="spacing"
+            params={4194448}
+            layout={{ width: 195, height: 3, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `nodes_list` of SearchTreeDropdownLayout - configured through the parent's `nodesList` prop. */
+export interface SearchTreeDropdownLayoutNodesListProps {
+    layout?: BoxLayout;
+}
+
+export const SearchTreeDropdownLayoutNodesList = ({ layout }: SearchTreeDropdownLayoutNodesListProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ width: 195, height: 30, flexShrink: 0, ...layout }}
+        >
+            <Region
+                name="nodes_list"
+                params={4194448}
+                layout={{ flexDirection: 'column', width: '100%' }}
             />
+        </ScrollArea>
+    );
+};
+
+/** Named region `spacing` of SearchTreeDropdownLayout - configured through the parent's `spacing` prop. */
+export interface SearchTreeDropdownLayoutSpacing2Props {
+    layout?: BoxLayout;
+}
+
+export const SearchTreeDropdownLayoutSpacing2 = ({ layout }: SearchTreeDropdownLayoutSpacing2Props) => {
+    return (
+        <Region
+            name="spacing"
+            params={4194448}
+            layout={{ width: 195, height: 3, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `node_template` of SearchTreeDropdownLayout - configured through the parent's `nodeTemplate` prop. */
+export interface SearchTreeDropdownLayoutNodeTemplateProps {
+    captionNodeName?: string;
+    layout?: BoxLayout;
+    onNodeTemplate?: () => void;
+}
+
+export const SearchTreeDropdownLayoutNodeTemplate = ({ captionNodeName, layout, onNodeTemplate }: SearchTreeDropdownLayoutNodeTemplateProps) => {
+    return (
+        <Region
+            name="node_template"
+            params={17}
+            backgroundColor="#ffffff"
+            onPointerTap={onNodeTemplate}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 20, ...layout }}
+        >
+            <Icon
+                variant="5"
+                name="right_triangle_icon"
+                params={12848208}
+                tintColor="#777777"
+                layout={{ position: 'absolute', right: 6, width: 10, alignSelf: 'center', height: 10 }}
+            />
+            <Region
+                name="node_name"
+                params={16}
+                layout={{ position: 'absolute', left: 7, width: 29, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionNodeName ?? 'name'}
+                    textStyle="text-style-regular"
+                    textOptions={{ fill: '#555555' }}
+                />
+            </Region>
         </Region>
     );
 };
 
 /** Row template `content_box` of SearchTreeDropdownLayout - pass real rows through its `items…` slot. */
 export interface SearchTreeDropdownLayoutContentBoxItemProps {
-    captionNodeName?: string;
+    emptyContainer?: SearchTreeDropdownLayoutEmptyContainerProps;
     layout?: BoxLayout;
-    onNodeTemplate?: () => void;
-    visibleEmptyContainer?: boolean;
+    nodesList?: SearchTreeDropdownLayoutNodesListProps;
+    nodeTemplate?: SearchTreeDropdownLayoutNodeTemplateProps;
+    spacing?: SearchTreeDropdownLayoutSpacingProps;
+    spacing2?: SearchTreeDropdownLayoutSpacing2Props;
 }
 
-export const SearchTreeDropdownLayoutContentBoxItem = ({ captionNodeName, layout, onNodeTemplate, visibleEmptyContainer }: SearchTreeDropdownLayoutContentBoxItemProps) => {
-    const t = useTranslation();
-
+export const SearchTreeDropdownLayoutContentBoxItem = ({ emptyContainer, layout, nodesList, nodeTemplate, spacing, spacing2 }: SearchTreeDropdownLayoutContentBoxItemProps) => {
     return (
         <Region
             name="content_box"
             params={4194448}
             layout={{ width: 195, height: 52, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="empty_container"
-                params={4194448}
-                visible={visibleEmptyContainer ?? false}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 52 }}
-            >
-                <Region
-                    params={4194448}
-                    layout={{ position: 'absolute', left: 0, top: 19, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={t('wiredfurni.variable_picker.empty')}
-                        textStyle="text-style-regular"
-                        textOptions={{ fill: '#333333', align: 'center' }}
-                    />
-                </Region>
-            </Region>
+            <SearchTreeDropdownLayoutEmptyContainer {...emptyContainer} />
             <Border
                 variant="3"
                 name="variable_overview_template"
@@ -250,55 +271,12 @@ export const SearchTreeDropdownLayoutContentBoxItem = ({ captionNodeName, layout
                     params={4341904}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, flexDirection: 'column' }}
                 >
-                    <Region
-                        name="spacing"
-                        params={4194448}
-                        layout={{ width: 195, height: 3, flexShrink: 0 }}
-                    />
-                    <ScrollArea
-                        orientation="vertical"
-                        layout={{ width: 195, height: 30, flexShrink: 0 }}
-                    >
-                        <Region
-                            name="nodes_list"
-                            params={4194448}
-                            layout={{ flexDirection: 'column', width: '100%' }}
-                        />
-                    </ScrollArea>
-                    <Region
-                        name="spacing"
-                        params={4194448}
-                        layout={{ width: 195, height: 3, flexShrink: 0 }}
-                    />
+                    <SearchTreeDropdownLayoutSpacing {...spacing} />
+                    <SearchTreeDropdownLayoutNodesList {...nodesList} />
+                    <SearchTreeDropdownLayoutSpacing2 {...spacing2} />
                 </Region>
             </Border>
-            <Region
-                name="node_template"
-                params={17}
-                backgroundColor="#ffffff"
-                onPointerTap={onNodeTemplate}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 195, top: 0, height: 20 }}
-            >
-                <Icon
-                    variant="5"
-                    name="right_triangle_icon"
-                    params={12848208}
-                    tintColor="#777777"
-                    layout={{ position: 'absolute', right: 6, width: 10, alignSelf: 'center', height: 10 }}
-                />
-                <Region
-                    name="node_name"
-                    params={16}
-                    layout={{ position: 'absolute', left: 7, width: 29, top: 3, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionNodeName ?? 'name'}
-                        textStyle="text-style-regular"
-                        textOptions={{ fill: '#555555' }}
-                    />
-                </Region>
-            </Region>
+            <SearchTreeDropdownLayoutNodeTemplate {...nodeTemplate} />
         </Region>
     );
 };
@@ -315,5 +293,195 @@ export const SearchTreeDropdownLayoutSpacingItem = ({ layout }: SearchTreeDropdo
             params={16}
             layout={{ width: 0, height: 2, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `search_wrapper_expanded` of SearchTreeDropdownLayout - configured through the parent's `searchWrapperExpanded` prop. */
+export interface SearchTreeDropdownLayoutSearchWrapperExpandedProps {
+    layout?: BoxLayout;
+}
+
+export const SearchTreeDropdownLayoutSearchWrapperExpanded = ({ layout }: SearchTreeDropdownLayoutSearchWrapperExpandedProps) => {
+    return (
+        <Region
+            name="search_wrapper_expanded"
+            params={4194448}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 20, ...layout }}
+        />
+    );
+};
+
+/** Named region `cancel_search` of SearchTreeDropdownLayout - configured through the parent's `cancelSearch` prop. */
+export interface SearchTreeDropdownLayoutCancelSearchProps {
+    layout?: BoxLayout;
+    onCancelSearch?: () => void;
+}
+
+export const SearchTreeDropdownLayoutCancelSearch = ({ layout, onCancelSearch }: SearchTreeDropdownLayoutCancelSearchProps) => {
+    return (
+        <Region
+            name="cancel_search"
+            params={4194369}
+            onPointerTap={onCancelSearch}
+            cursor="pointer"
+            layout={{ position: 'absolute', right: 6, width: 9, top: 5, height: 9, ...layout }}
+        >
+            <ThemeImage
+                params={16}
+                src={layoutImage('var_picker_cancel_search.png')}
+                layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 9 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `main_cont` of SearchTreeDropdownLayout - configured through the parent's `mainCont` prop. */
+export interface SearchTreeDropdownLayoutMainContProps {
+    cancelSearch?: SearchTreeDropdownLayoutCancelSearchProps;
+    itemsMainCont?: ReactNode;
+    layout?: BoxLayout;
+    searchWrapperExpanded?: SearchTreeDropdownLayoutSearchWrapperExpandedProps;
+}
+
+export const SearchTreeDropdownLayoutMainCont = ({ cancelSearch, itemsMainCont, layout, searchWrapperExpanded }: SearchTreeDropdownLayoutMainContProps) => {
+    return (
+        <Region
+            name="main_cont"
+            params={4327568}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, flexDirection: 'column', ...layout }}
+        >
+            {itemsMainCont ?? (
+                <>
+                    <SearchTreeDropdownLayoutButtonListItem />
+                    <SearchTreeDropdownLayoutSpacerItem />
+                    <SearchTreeDropdownLayoutContentBoxItem />
+                    <SearchTreeDropdownLayoutSpacingItem />
+                </>
+            )}
+            <Region
+                params={4194448}
+                layout={{ width: 196, height: 20, flexShrink: 0 }}
+            >
+                <SearchTreeDropdownLayoutSearchWrapperExpanded {...searchWrapperExpanded} />
+                <SearchTreeDropdownLayoutCancelSearch {...cancelSearch} />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `expanded_view_wrapper` of SearchTreeDropdownLayout - configured through the parent's `expandedViewWrapper` prop. */
+export interface SearchTreeDropdownLayoutExpandedViewWrapperProps {
+    layout?: BoxLayout;
+    mainCont?: SearchTreeDropdownLayoutMainContProps;
+}
+
+export const SearchTreeDropdownLayoutExpandedViewWrapper = ({ layout, mainCont }: SearchTreeDropdownLayoutExpandedViewWrapperProps) => {
+    return (
+        <Region
+            name="expanded_view_wrapper"
+            layout={{ position: 'absolute', left: 0, width: 1000, top: 0, height: 1000, ...layout }}
+        >
+            <Border
+                variant="12"
+                name="expanded_view"
+                params={149521}
+                layout={{ position: 'absolute', left: 0, width: 198, top: 0, bottom: 904 }}
+            >
+                <SearchTreeDropdownLayoutMainCont {...mainCont} />
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `input_field_region` of SearchTreeDropdownLayout - configured through the parent's `inputFieldRegion` prop. */
+export interface SearchTreeDropdownLayoutInputFieldRegionProps {
+    captionInputPlaceholderText?: string;
+    layout?: BoxLayout;
+    onInputFieldRegion?: () => void;
+}
+
+export const SearchTreeDropdownLayoutInputFieldRegion = ({ captionInputPlaceholderText, layout, onInputFieldRegion }: SearchTreeDropdownLayoutInputFieldRegionProps) => {
+    const t = useTranslation();
+    const [ inputFieldValue, setInputFieldValue ] = useState('');
+
+    return (
+        <Region
+            name="input_field_region"
+            params={17}
+            onPointerTap={onInputFieldRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 20, ...layout }}
+        >
+            <Region
+                name="input_placeholder_text"
+                tags={[ 'DO_NOT_DISABLE' ]}
+                params={12585104}
+                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionInputPlaceholderText ?? t('wiredfurni.variable_picker.search')}
+                    textStyle="text-style-regular"
+                    textOptions={{ fill: '#808080', wordWrap: true }}
+                />
+            </Region>
+            <TextInput
+                value={inputFieldValue}
+                onChange={setInputFieldValue}
+                maxLength={60}
+                layout={{ position: 'absolute', left: 7, right: 0, top: 3, bottom: 0, overflow: 'hidden' }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `search_wrapper_collapsed` of SearchTreeDropdownLayout - configured through the parent's `searchWrapperCollapsed` prop. */
+export interface SearchTreeDropdownLayoutSearchWrapperCollapsedProps {
+    inputFieldRegion?: SearchTreeDropdownLayoutInputFieldRegionProps;
+    layout?: BoxLayout;
+}
+
+export const SearchTreeDropdownLayoutSearchWrapperCollapsed = ({ inputFieldRegion, layout }: SearchTreeDropdownLayoutSearchWrapperCollapsedProps) => {
+    return (
+        <Region
+            name="search_wrapper_collapsed"
+            params={4194448}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 20, ...layout }}
+        >
+            <SearchTreeDropdownLayoutInputFieldRegion {...inputFieldRegion} />
+        </Region>
+    );
+};
+
+/** Named region `search_tree_dropdown` of SearchTreeDropdownLayout - configured through the parent's `searchTreeDropdown` prop. */
+export interface SearchTreeDropdownLayoutSearchTreeDropdownProps {
+    expandedViewWrapper?: SearchTreeDropdownLayoutExpandedViewWrapperProps;
+    layout?: BoxLayout;
+    searchWrapperCollapsed?: SearchTreeDropdownLayoutSearchWrapperCollapsedProps;
+}
+
+export const SearchTreeDropdownLayoutSearchTreeDropdown = ({ expandedViewWrapper, layout, searchWrapperCollapsed }: SearchTreeDropdownLayoutSearchTreeDropdownProps) => {
+    return (
+        <Region
+            name="search_tree_dropdown"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 197, top: 0, height: 22, ...layout }}
+        >
+            <Border
+                variant="12"
+                name="collapsed_view"
+                params={12585104}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+            >
+                <Icon
+                    variant="7"
+                    name="down_icon"
+                    params={12848208}
+                    tintColor="#777777"
+                    layout={{ position: 'absolute', right: 8, width: 10, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 5 }}
+                />
+            </Border>
+            <SearchTreeDropdownLayoutExpandedViewWrapper {...expandedViewWrapper} />
+            <SearchTreeDropdownLayoutSearchWrapperCollapsed {...searchWrapperCollapsed} />
+        </Region>
     );
 };

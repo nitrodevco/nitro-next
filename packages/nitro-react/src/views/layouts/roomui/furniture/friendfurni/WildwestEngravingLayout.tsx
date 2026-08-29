@@ -7,14 +7,14 @@ export interface WildwestEngravingLayoutProps {
     captionHeader?: string;
     captionNameLeft?: string;
     captionNameRight?: string;
+    headerButtonClose?: WildwestEngravingLayoutHeaderButtonCloseProps;
     layout?: BoxLayout;
-    onHeaderButtonClose?: () => void;
     srcAvatarLeft?: string;
     srcAvatarRight?: string;
     srcBackground?: string;
 }
 
-export const WildwestEngravingLayout = ({ captionDate, captionHeader, captionNameLeft, captionNameRight, layout, onHeaderButtonClose, srcAvatarLeft, srcAvatarRight, srcBackground }: WildwestEngravingLayoutProps) => {
+export const WildwestEngravingLayout = ({ captionDate, captionHeader, captionNameLeft, captionNameRight, headerButtonClose, layout, srcAvatarLeft, srcAvatarRight, srcBackground }: WildwestEngravingLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -85,14 +85,26 @@ export const WildwestEngravingLayout = ({ captionDate, captionHeader, captionNam
                         textOptions={{ fill: '#59224a', align: 'center' }}
                     />
                 </Region>
-                <Region
-                    name="header_button_close"
-                    params={17}
-                    onPointerTap={onHeaderButtonClose}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 330, width: 21, top: 33, height: 17 }}
-                />
+                <WildwestEngravingLayoutHeaderButtonClose {...headerButtonClose} />
             </Region>
         </Region>
+    );
+};
+
+/** Named region `header_button_close` of WildwestEngravingLayout - configured through the parent's `headerButtonClose` prop. */
+export interface WildwestEngravingLayoutHeaderButtonCloseProps {
+    layout?: BoxLayout;
+    onHeaderButtonClose?: () => void;
+}
+
+export const WildwestEngravingLayoutHeaderButtonClose = ({ layout, onHeaderButtonClose }: WildwestEngravingLayoutHeaderButtonCloseProps) => {
+    return (
+        <Region
+            name="header_button_close"
+            params={17}
+            onPointerTap={onHeaderButtonClose}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 330, width: 21, top: 33, height: 17, ...layout }}
+        />
     );
 };

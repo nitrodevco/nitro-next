@@ -36,21 +36,15 @@ export const ToolbarMeMenuPixi: ForwardRefExoticComponent<ToolbarMeMenuPixiProps
             tintColor="#2e2d2c"
             layout={{ position: 'absolute', left: 4, bottom: 58, padding: 6 }}
         >
-            <MemenuMainSimpleLayout
-                srcProfileIcon={icon('profile')}
-                srcMinimailIcon={icon('minimail')}
-                srcRoomsIcon={icon('gohome')}
-                srcSettingsIcon={icon('settings')}
-                srcAchievementsIcon={icon('achievements')}
-                srcTalentsIcon={icon('compass')}
-                srcGuideIcon={icon('lighthouse')}
-                onRooms={choose(() => showWindow('navigator'))}
-                onProfile={choose()}
-                onMinimail={choose()}
-                onSettings={choose()}
-                onAchievements={choose()}
-                onTalents={choose()}
-                onGuide={choose()}
+            <MemenuMainSimpleLayout buttons={{
+                profile: { srcProfileIcon: icon('profile'), onProfile: choose() },
+                minimail: { srcMinimailIcon: icon('minimail'), onMinimail: choose() },
+                rooms: { srcRoomsIcon: icon('gohome'), onRooms: choose(() => showWindow('navigator')) },
+                settings: { srcSettingsIcon: icon('settings'), onSettings: choose() },
+                achievements: { srcAchievementsIcon: icon('achievements'), onAchievements: choose() },
+                talents: { srcTalentsIcon: icon('compass'), onTalents: choose() },
+                guide: { srcGuideIcon: icon('lighthouse'), onGuide: choose() },
+            }}
             />
         </Border>
     );

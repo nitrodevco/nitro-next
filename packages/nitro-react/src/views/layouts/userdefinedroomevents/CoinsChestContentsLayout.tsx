@@ -6,73 +6,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1143_coins_chest_contents_xml` (layout "coins_chest_contents", 413x263) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface CoinsChestContentsLayoutProps {
-    captionBalanceTxt?: string;
-    itemsBalanceContainer?: ReactNode;
-    itemsWithdrawCont?: ReactNode;
+    coinsChest?: CoinsChestContentsLayoutCoinsChestProps;
     layout?: BoxLayout;
-    srcBgImg?: string;
 }
 
-export const CoinsChestContentsLayout = ({ captionBalanceTxt, itemsBalanceContainer, itemsWithdrawCont, layout, srcBgImg }: CoinsChestContentsLayoutProps) => {
-    const t = useTranslation();
-
+export const CoinsChestContentsLayout = ({ coinsChest, layout }: CoinsChestContentsLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 413, height: 263, ...layout }}>
-            <Region
-                name="coins_chest"
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 413, top: 0, height: 263, justifyContent: 'center' }}
-            >
-                <Region
-                    name="moving_container"
-                    params={3280}
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 324, alignSelf: 'center', marginTop: 6.5, marginBottom: -6.5, height: 228 }}
-                >
-                    <ThemeImage
-                        name="bg_img"
-                        params={12582928}
-                        src={srcBgImg ?? layoutImage('wired_chests_images_light_coins_chest_balance_zero.png')}
-                        layout={{ position: 'absolute', left: 0, top: 0 }}
-                    />
-                    <Region
-                        name="balance_cont"
-                        params={16}
-                        layout={{ position: 'absolute', left: 9, width: 54, top: 68, height: 47, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="balance_txt"
-                            params={786448}
-                            layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 45, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText text={captionBalanceTxt ?? t('wiredchests.coin_chest.balance')} />
-                        </Region>
-                        <Region
-                            name="balance_container"
-                            params={786448}
-                            layout={{ position: 'absolute', width: 24, top: 22, height: 15, flexDirection: 'row', gap: 1 }}
-                        >
-                            {itemsBalanceContainer ?? (
-                                <>
-                                    <CoinsChestContentsLayoutCoinsAmountTxtItem />
-                                    <CoinsChestContentsLayoutCoinIconItem />
-                                </>
-                            )}
-                        </Region>
-                    </Region>
-                    <Region
-                        name="withdraw_cont"
-                        params={934992}
-                        layout={{ position: 'absolute', right: 59, bottom: 182, flexDirection: 'row', gap: 5 }}
-                    >
-                        {itemsWithdrawCont ?? (
-                            <>
-                                <CoinsChestContentsLayoutWithdrawInputItem />
-                                <CoinsChestContentsLayoutWithdrawBtnItem />
-                            </>
-                        )}
-                    </Region>
-                </Region>
-            </Region>
+            <CoinsChestContentsLayoutCoinsChest {...coinsChest} />
         </Region>
     );
 };
@@ -108,6 +49,57 @@ export const CoinsChestContentsLayoutCoinIconItem = ({ layout }: CoinsChestConte
             params={17}
             layout={{ width: 13, height: 15, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `balance_container` of CoinsChestContentsLayout - configured through the parent's `balanceContainer` prop. */
+export interface CoinsChestContentsLayoutBalanceContainerProps {
+    itemsBalanceContainer?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const CoinsChestContentsLayoutBalanceContainer = ({ itemsBalanceContainer, layout }: CoinsChestContentsLayoutBalanceContainerProps) => {
+    return (
+        <Region
+            name="balance_container"
+            params={786448}
+            layout={{ position: 'absolute', width: 24, top: 22, height: 15, flexDirection: 'row', gap: 1, ...layout }}
+        >
+            {itemsBalanceContainer ?? (
+                <>
+                    <CoinsChestContentsLayoutCoinsAmountTxtItem />
+                    <CoinsChestContentsLayoutCoinIconItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `balance_cont` of CoinsChestContentsLayout - configured through the parent's `balanceCont` prop. */
+export interface CoinsChestContentsLayoutBalanceContProps {
+    balanceContainer?: CoinsChestContentsLayoutBalanceContainerProps;
+    captionBalanceTxt?: string;
+    layout?: BoxLayout;
+}
+
+export const CoinsChestContentsLayoutBalanceCont = ({ balanceContainer, captionBalanceTxt, layout }: CoinsChestContentsLayoutBalanceContProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="balance_cont"
+            params={16}
+            layout={{ position: 'absolute', left: 9, width: 54, top: 68, height: 47, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="balance_txt"
+                params={786448}
+                layout={{ position: 'absolute', marginLeft: -2.5, marginRight: 2.5, width: 45, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={captionBalanceTxt ?? t('wiredchests.coin_chest.balance')} />
+            </Region>
+            <CoinsChestContentsLayoutBalanceContainer {...balanceContainer} />
+        </Region>
     );
 };
 
@@ -147,5 +139,73 @@ export const CoinsChestContentsLayoutWithdrawBtnItem = ({ layout, onWithdrawBtn 
         >
             {t('wiredchests.withdraw')}
         </Button>
+    );
+};
+
+/** Named region `withdraw_cont` of CoinsChestContentsLayout - configured through the parent's `withdrawCont` prop. */
+export interface CoinsChestContentsLayoutWithdrawContProps {
+    itemsWithdrawCont?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const CoinsChestContentsLayoutWithdrawCont = ({ itemsWithdrawCont, layout }: CoinsChestContentsLayoutWithdrawContProps) => {
+    return (
+        <Region
+            name="withdraw_cont"
+            params={934992}
+            layout={{ position: 'absolute', right: 59, bottom: 182, flexDirection: 'row', gap: 5, ...layout }}
+        >
+            {itemsWithdrawCont ?? (
+                <>
+                    <CoinsChestContentsLayoutWithdrawInputItem />
+                    <CoinsChestContentsLayoutWithdrawBtnItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `moving_container` of CoinsChestContentsLayout - configured through the parent's `movingContainer` prop. */
+export interface CoinsChestContentsLayoutMovingContainerProps {
+    balanceCont?: CoinsChestContentsLayoutBalanceContProps;
+    layout?: BoxLayout;
+    srcBgImg?: string;
+    withdrawCont?: CoinsChestContentsLayoutWithdrawContProps;
+}
+
+export const CoinsChestContentsLayoutMovingContainer = ({ balanceCont, layout, srcBgImg, withdrawCont }: CoinsChestContentsLayoutMovingContainerProps) => {
+    return (
+        <Region
+            name="moving_container"
+            params={3280}
+            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 324, alignSelf: 'center', marginTop: 6.5, marginBottom: -6.5, height: 228, ...layout }}
+        >
+            <ThemeImage
+                name="bg_img"
+                params={12582928}
+                src={srcBgImg ?? layoutImage('wired_chests_images_light_coins_chest_balance_zero.png')}
+                layout={{ position: 'absolute', left: 0, top: 0 }}
+            />
+            <CoinsChestContentsLayoutBalanceCont {...balanceCont} />
+            <CoinsChestContentsLayoutWithdrawCont {...withdrawCont} />
+        </Region>
+    );
+};
+
+/** Named region `coins_chest` of CoinsChestContentsLayout - configured through the parent's `coinsChest` prop. */
+export interface CoinsChestContentsLayoutCoinsChestProps {
+    layout?: BoxLayout;
+    movingContainer?: CoinsChestContentsLayoutMovingContainerProps;
+}
+
+export const CoinsChestContentsLayoutCoinsChest = ({ layout, movingContainer }: CoinsChestContentsLayoutCoinsChestProps) => {
+    return (
+        <Region
+            name="coins_chest"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 413, top: 0, height: 263, justifyContent: 'center', ...layout }}
+        >
+            <CoinsChestContentsLayoutMovingContainer {...movingContainer} />
+        </Region>
     );
 };

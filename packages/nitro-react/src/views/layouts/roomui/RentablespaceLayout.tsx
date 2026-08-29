@@ -5,14 +5,14 @@ import { BoxLayout, Button, ContainerButton, Frame, Icon, Region, ThemeText } fr
 
 /** Generated from `845_rentablespace_xml` (layout "rentablespace", 256x224) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RentablespaceLayoutProps {
-    itemsErrorView?: ReactNode;
-    itemsRentedView?: ReactNode;
-    itemsRentView?: ReactNode;
+    errorView?: RentablespaceLayoutErrorViewProps;
     layout?: BoxLayout;
     onClose?: () => void;
+    rentedView?: RentablespaceLayoutRentedViewProps;
+    rentView?: RentablespaceLayoutRentViewProps;
 }
 
-export const RentablespaceLayout = ({ itemsErrorView, itemsRentedView, itemsRentView, layout, onClose }: RentablespaceLayoutProps) => {
+export const RentablespaceLayout = ({ errorView, layout, onClose, rentedView, rentView }: RentablespaceLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -25,49 +25,9 @@ export const RentablespaceLayout = ({ itemsErrorView, itemsRentedView, itemsRent
             layout={{ width: 256, height: 224, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="rent_view"
-                    params={8519696}
-                    layout={{ position: 'absolute', left: 2, minWidth: 243, top: 4, minHeight: 216, flexDirection: 'column', gap: 10 }}
-                >
-                    {itemsRentView ?? (
-                        <>
-                            <RentablespaceLayoutRentInstructionsItem />
-                            <RentablespaceLayoutRentButtonItem />
-                            <RentablespaceLayoutCantRentErrorItem />
-                            <RentablespaceLayoutIconHabboclubItem />
-                        </>
-                    )}
-                </Region>
-                <Region
-                    name="rented_view"
-                    params={8536080}
-                    visible={false}
-                    layout={{ position: 'absolute', left: 2, top: 4, flexDirection: 'column', gap: 5 }}
-                >
-                    {itemsRentedView ?? (
-                        <>
-                            <RentablespaceLayoutRentedToLabelItem />
-                            <RentablespaceLayoutRenterNameItem />
-                            <RentablespaceLayoutTimeLabelItem />
-                            <RentablespaceLayoutTimeRemainingLabelItem />
-                            <RentablespaceLayoutCancelRentButtonItem />
-                        </>
-                    )}
-                </Region>
-                <Region
-                    name="error_view"
-                    params={131088}
-                    visible={false}
-                    layout={{ position: 'absolute', left: 0, minWidth: 253, top: 0, minHeight: 182, flexDirection: 'column' }}
-                >
-                    {itemsErrorView ?? (
-                        <>
-                            <RentablespaceLayoutErrorMessageItem />
-                            <RentablespaceLayoutErrorButtonCloseItem />
-                        </>
-                    )}
-                </Region>
+                <RentablespaceLayoutRentView {...rentView} />
+                <RentablespaceLayoutRentedView {...rentedView} />
+                <RentablespaceLayoutErrorView {...errorView} />
             </Region>
         </Frame>
     );
@@ -187,6 +147,31 @@ export const RentablespaceLayoutIconHabboclubItem = ({ layout }: RentablespaceLa
     );
 };
 
+/** Named region `rent_view` of RentablespaceLayout - configured through the parent's `rentView` prop. */
+export interface RentablespaceLayoutRentViewProps {
+    itemsRentView?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const RentablespaceLayoutRentView = ({ itemsRentView, layout }: RentablespaceLayoutRentViewProps) => {
+    return (
+        <Region
+            name="rent_view"
+            params={8519696}
+            layout={{ position: 'absolute', left: 2, minWidth: 243, top: 4, minHeight: 216, flexDirection: 'column', gap: 10, ...layout }}
+        >
+            {itemsRentView ?? (
+                <>
+                    <RentablespaceLayoutRentInstructionsItem />
+                    <RentablespaceLayoutRentButtonItem />
+                    <RentablespaceLayoutCantRentErrorItem />
+                    <RentablespaceLayoutIconHabboclubItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
 /** Row template `rented_to_label` of RentablespaceLayout - pass real rows through its `items…` slot. */
 export interface RentablespaceLayoutRentedToLabelItemProps {
     captionRentedToLabel?: string;
@@ -303,6 +288,33 @@ export const RentablespaceLayoutCancelRentButtonItem = ({ layout, onCancelRentBu
     );
 };
 
+/** Named region `rented_view` of RentablespaceLayout - configured through the parent's `rentedView` prop. */
+export interface RentablespaceLayoutRentedViewProps {
+    itemsRentedView?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const RentablespaceLayoutRentedView = ({ itemsRentedView, layout }: RentablespaceLayoutRentedViewProps) => {
+    return (
+        <Region
+            name="rented_view"
+            params={8536080}
+            visible={false}
+            layout={{ position: 'absolute', left: 2, top: 4, flexDirection: 'column', gap: 5, ...layout }}
+        >
+            {itemsRentedView ?? (
+                <>
+                    <RentablespaceLayoutRentedToLabelItem />
+                    <RentablespaceLayoutRenterNameItem />
+                    <RentablespaceLayoutTimeLabelItem />
+                    <RentablespaceLayoutTimeRemainingLabelItem />
+                    <RentablespaceLayoutCancelRentButtonItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
 /** Row template `error_message` of RentablespaceLayout - pass real rows through its `items…` slot. */
 export interface RentablespaceLayoutErrorMessageItemProps {
     captionErrorMessage?: string;
@@ -343,5 +355,29 @@ export const RentablespaceLayoutErrorButtonCloseItem = ({ layout, onErrorButtonC
         >
             {t('rentablespace.widget.close')}
         </Button>
+    );
+};
+
+/** Named region `error_view` of RentablespaceLayout - configured through the parent's `errorView` prop. */
+export interface RentablespaceLayoutErrorViewProps {
+    itemsErrorView?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const RentablespaceLayoutErrorView = ({ itemsErrorView, layout }: RentablespaceLayoutErrorViewProps) => {
+    return (
+        <Region
+            name="error_view"
+            params={131088}
+            visible={false}
+            layout={{ position: 'absolute', left: 0, minWidth: 253, top: 0, minHeight: 182, flexDirection: 'column', ...layout }}
+        >
+            {itemsErrorView ?? (
+                <>
+                    <RentablespaceLayoutErrorMessageItem />
+                    <RentablespaceLayoutErrorButtonCloseItem />
+                </>
+            )}
+        </Region>
     );
 };

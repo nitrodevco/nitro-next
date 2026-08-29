@@ -12,11 +12,15 @@ export interface MyReportsLayoutProps {
     layout?: BoxLayout;
     onAppealButton?: () => void;
     onClose?: () => void;
-    visibleSpacer?: boolean;
+    reportsTableCont?: MyReportsLayoutReportsTableContProps;
+    spacer?: MyReportsLayoutSpacerProps;
+    spacer2?: MyReportsLayoutSpacer2Props;
+    spacer3?: MyReportsLayoutSpacer3Props;
+    spacer4?: MyReportsLayoutSpacer4Props;
     visibleStatusInfoBubble?: boolean;
 }
 
-export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captionCreatedKeyTxt, captionDecisionDateTxt, captionReportedDateTxt, captionSanctionInfoTxt, layout, onAppealButton, onClose, visibleSpacer, visibleStatusInfoBubble }: MyReportsLayoutProps) => {
+export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captionCreatedKeyTxt, captionDecisionDateTxt, captionReportedDateTxt, captionSanctionInfoTxt, layout, onAppealButton, onClose, reportsTableCont, spacer, spacer2, spacer3, spacer4, visibleStatusInfoBubble }: MyReportsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -29,11 +33,7 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
             layout={{ width: 538, height: 220, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="reports_table_cont"
-                    params={12585104}
-                    layout={{ position: 'absolute', left: 4, right: 3, top: 3, bottom: 41 }}
-                />
+                <MyReportsLayoutReportsTableCont {...reportsTableCont} />
                 <Region
                     visible={visibleStatusInfoBubble ?? true}
                     layout={{ position: 'absolute', left: 529, width: 292, top: -24, height: 189 }}
@@ -58,11 +58,7 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                                     textStyle="text-style-u-bold"
                                 />
                             </Region>
-                            <Region
-                                name="spacer"
-                                params={16}
-                                layout={{ width: 0, height: 8, flexShrink: 0 }}
-                            />
+                            <MyReportsLayoutSpacer {...spacer} />
                             <Region
                                 params={16}
                                 layout={{ width: 223, height: 17, flexShrink: 0, flexDirection: 'row', gap: 2 }}
@@ -106,11 +102,7 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                                     <ThemeText text={captionDecisionDateTxt ?? '18.09.2024'} />
                                 </Region>
                             </Region>
-                            <Region
-                                name="spacer"
-                                params={16}
-                                layout={{ width: 0, height: 8, flexShrink: 0 }}
-                            />
+                            <MyReportsLayoutSpacer2 {...spacer2} />
                             <Region
                                 name="action_txt"
                                 params={16}
@@ -131,12 +123,7 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                                     textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
                                 />
                             </Region>
-                            <Region
-                                name="spacer"
-                                params={16}
-                                visible={visibleSpacer ?? false}
-                                layout={{ width: 0, height: 8, flexShrink: 0 }}
-                            />
+                            <MyReportsLayoutSpacer3 {...spacer3} />
                             <Region
                                 name="sanction_info_txt"
                                 params={129}
@@ -147,11 +134,7 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                                     textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
                                 />
                             </Region>
-                            <Region
-                                name="spacer"
-                                params={16}
-                                layout={{ width: 0, height: 8, flexShrink: 0 }}
-                            />
+                            <MyReportsLayoutSpacer4 {...spacer4} />
                             <Button
                                 variant="3"
                                 name="appeal_button"
@@ -166,5 +149,82 @@ export const MyReportsLayout = ({ captionActionDescTxt, captionActionTxt, captio
                 </Region>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `reports_table_cont` of MyReportsLayout - configured through the parent's `reportsTableCont` prop. */
+export interface MyReportsLayoutReportsTableContProps {
+    layout?: BoxLayout;
+}
+
+export const MyReportsLayoutReportsTableCont = ({ layout }: MyReportsLayoutReportsTableContProps) => {
+    return (
+        <Region
+            name="reports_table_cont"
+            params={12585104}
+            layout={{ position: 'absolute', left: 4, right: 3, top: 3, bottom: 41, ...layout }}
+        />
+    );
+};
+
+/** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
+export interface MyReportsLayoutSpacerProps {
+    layout?: BoxLayout;
+}
+
+export const MyReportsLayoutSpacer = ({ layout }: MyReportsLayoutSpacerProps) => {
+    return (
+        <Region
+            name="spacer"
+            params={16}
+            layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
+export interface MyReportsLayoutSpacer2Props {
+    layout?: BoxLayout;
+}
+
+export const MyReportsLayoutSpacer2 = ({ layout }: MyReportsLayoutSpacer2Props) => {
+    return (
+        <Region
+            name="spacer"
+            params={16}
+            layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
+export interface MyReportsLayoutSpacer3Props {
+    layout?: BoxLayout;
+    visibleSpacer?: boolean;
+}
+
+export const MyReportsLayoutSpacer3 = ({ layout, visibleSpacer }: MyReportsLayoutSpacer3Props) => {
+    return (
+        <Region
+            name="spacer"
+            params={16}
+            visible={visibleSpacer ?? false}
+            layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `spacer` of MyReportsLayout - configured through the parent's `spacer` prop. */
+export interface MyReportsLayoutSpacer4Props {
+    layout?: BoxLayout;
+}
+
+export const MyReportsLayoutSpacer4 = ({ layout }: MyReportsLayoutSpacer4Props) => {
+    return (
+        <Region
+            name="spacer"
+            params={16}
+            layout={{ width: 0, height: 8, flexShrink: 0, ...layout }}
+        />
     );
 };

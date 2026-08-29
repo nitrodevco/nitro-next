@@ -5,12 +5,12 @@ import { Border, BoxLayout, Button, ButtonThick, Frame, Icon, Region, ThemeImage
 
 /** Generated from `1605_habbicon_purchase_confirmation_xml` (layout "habbicon_purchase_confirmation", 353x296) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface HabbiconPurchaseConfirmationLayoutProps {
-    itemsContent?: ReactNode;
+    content?: HabbiconPurchaseConfirmationLayoutContentProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const HabbiconPurchaseConfirmationLayout = ({ itemsContent, layout, onClose }: HabbiconPurchaseConfirmationLayoutProps) => {
+export const HabbiconPurchaseConfirmationLayout = ({ content, layout, onClose }: HabbiconPurchaseConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -23,19 +23,7 @@ export const HabbiconPurchaseConfirmationLayout = ({ itemsContent, layout, onClo
             layout={{ width: 353, height: 296, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="content"
-                    params={8405136}
-                    layout={{ position: 'absolute', left: 0, right: 2, top: 8, height: 250, flexDirection: 'column', gap: 10 }}
-                >
-                    {itemsContent ?? (
-                        <>
-                            <HabbiconPurchaseConfirmationLayoutTopBodyItem />
-                            <HabbiconPurchaseConfirmationLayoutValueAreaItem />
-                            <HabbiconPurchaseConfirmationLayoutButtonsItem />
-                        </>
-                    )}
-                </Region>
+                <HabbiconPurchaseConfirmationLayoutContent {...content} />
             </Region>
         </Frame>
     );
@@ -117,6 +105,30 @@ export const HabbiconPurchaseConfirmationLayoutReceiveRowItem = ({ captionReceiv
                 />
             </Region>
         </Border>
+    );
+};
+
+/** Named region `properties_itemlist` of HabbiconPurchaseConfirmationLayout - configured through the parent's `propertiesItemlist` prop. */
+export interface HabbiconPurchaseConfirmationLayoutPropertiesItemlistProps {
+    itemsPropertiesItemlist?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const HabbiconPurchaseConfirmationLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout }: HabbiconPurchaseConfirmationLayoutPropertiesItemlistProps) => {
+    return (
+        <Region
+            name="properties_itemlist"
+            params={144}
+            layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 89, flexDirection: 'column', gap: 6, ...layout }}
+        >
+            {itemsPropertiesItemlist ?? (
+                <>
+                    <HabbiconPurchaseConfirmationLayoutProductNameItem />
+                    <HabbiconPurchaseConfirmationLayoutDescriptionTextItem />
+                    <HabbiconPurchaseConfirmationLayoutReceiveRowItem />
+                </>
+            )}
+        </Region>
     );
 };
 
@@ -203,16 +215,39 @@ export const HabbiconPurchaseConfirmationLayoutPriceValueItem = ({ itemsPriceVal
     );
 };
 
+/** Named region `price_line` of HabbiconPurchaseConfirmationLayout - configured through the parent's `priceLine` prop. */
+export interface HabbiconPurchaseConfirmationLayoutPriceLineProps {
+    itemsPriceLine?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const HabbiconPurchaseConfirmationLayoutPriceLine = ({ itemsPriceLine, layout }: HabbiconPurchaseConfirmationLayoutPriceLineProps) => {
+    return (
+        <Region
+            name="price_line"
+            params={16400}
+            layout={{ position: 'absolute', left: 144, width: 280, top: 134, height: 22, flexDirection: 'row', gap: 6, ...layout }}
+        >
+            {itemsPriceLine ?? (
+                <>
+                    <HabbiconPurchaseConfirmationLayoutPriceLabelItem />
+                    <HabbiconPurchaseConfirmationLayoutPriceValueItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
 /** Row template `top_body` of HabbiconPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface HabbiconPurchaseConfirmationLayoutTopBodyItemProps {
     captionPreviewLabel?: string;
-    itemsPriceLine?: ReactNode;
-    itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
+    priceLine?: HabbiconPurchaseConfirmationLayoutPriceLineProps;
+    propertiesItemlist?: HabbiconPurchaseConfirmationLayoutPropertiesItemlistProps;
     srcProductImage?: string;
 }
 
-export const HabbiconPurchaseConfirmationLayoutTopBodyItem = ({ captionPreviewLabel, itemsPriceLine, itemsPropertiesItemlist, layout, srcProductImage }: HabbiconPurchaseConfirmationLayoutTopBodyItemProps) => {
+export const HabbiconPurchaseConfirmationLayoutTopBodyItem = ({ captionPreviewLabel, layout, priceLine, propertiesItemlist, srcProductImage }: HabbiconPurchaseConfirmationLayoutTopBodyItemProps) => {
     const t = useTranslation();
 
     return (
@@ -253,31 +288,8 @@ export const HabbiconPurchaseConfirmationLayoutTopBodyItem = ({ captionPreviewLa
                     />
                 </Region>
             </Border>
-            <Region
-                name="properties_itemlist"
-                params={144}
-                layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 89, flexDirection: 'column', gap: 6 }}
-            >
-                {itemsPropertiesItemlist ?? (
-                    <>
-                        <HabbiconPurchaseConfirmationLayoutProductNameItem />
-                        <HabbiconPurchaseConfirmationLayoutDescriptionTextItem />
-                        <HabbiconPurchaseConfirmationLayoutReceiveRowItem />
-                    </>
-                )}
-            </Region>
-            <Region
-                name="price_line"
-                params={16400}
-                layout={{ position: 'absolute', left: 144, width: 280, top: 134, height: 22, flexDirection: 'row', gap: 6 }}
-            >
-                {itemsPriceLine ?? (
-                    <>
-                        <HabbiconPurchaseConfirmationLayoutPriceLabelItem />
-                        <HabbiconPurchaseConfirmationLayoutPriceValueItem />
-                    </>
-                )}
-            </Region>
+            <HabbiconPurchaseConfirmationLayoutPropertiesItemlist {...propertiesItemlist} />
+            <HabbiconPurchaseConfirmationLayoutPriceLine {...priceLine} />
         </Region>
     );
 };
@@ -452,6 +464,30 @@ export const HabbiconPurchaseConfirmationLayoutButtonsItem = ({ itemsButtons, la
                 <>
                     <HabbiconPurchaseConfirmationLayoutCancelButtonItem />
                     <HabbiconPurchaseConfirmationLayoutConfirmButtonItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `content` of HabbiconPurchaseConfirmationLayout - configured through the parent's `content` prop. */
+export interface HabbiconPurchaseConfirmationLayoutContentProps {
+    itemsContent?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const HabbiconPurchaseConfirmationLayoutContent = ({ itemsContent, layout }: HabbiconPurchaseConfirmationLayoutContentProps) => {
+    return (
+        <Region
+            name="content"
+            params={8405136}
+            layout={{ position: 'absolute', left: 0, right: 2, top: 8, height: 250, flexDirection: 'column', gap: 10, ...layout }}
+        >
+            {itemsContent ?? (
+                <>
+                    <HabbiconPurchaseConfirmationLayoutTopBodyItem />
+                    <HabbiconPurchaseConfirmationLayoutValueAreaItem />
+                    <HabbiconPurchaseConfirmationLayoutButtonsItem />
                 </>
             )}
         </Region>

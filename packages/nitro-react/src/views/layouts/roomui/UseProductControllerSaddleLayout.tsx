@@ -3,16 +3,15 @@ import { BoxLayout, ButtonThick, Region, ThemeImage, ThemeText } from '#base/the
 
 /** Generated from `1069_use_product_controller_saddle_xml` (layout "use_product_saddle", 386x180) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface UseProductControllerSaddleLayoutProps {
+    cancelText?: UseProductControllerSaddleLayoutCancelTextProps;
     captionDescription?: string;
     captionInfo?: string;
     layout?: BoxLayout;
-    onCancelText?: () => void;
-    onPreviewImageRegion?: () => void;
     onSaveButton?: () => void;
-    srcPreviewImage?: string;
+    previewImageRegion?: UseProductControllerSaddleLayoutPreviewImageRegionProps;
 }
 
-export const UseProductControllerSaddleLayout = ({ captionDescription, captionInfo, layout, onCancelText, onPreviewImageRegion, onSaveButton, srcPreviewImage }: UseProductControllerSaddleLayoutProps) => {
+export const UseProductControllerSaddleLayout = ({ cancelText, captionDescription, captionInfo, layout, onSaveButton, previewImageRegion }: UseProductControllerSaddleLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -30,20 +29,7 @@ export const UseProductControllerSaddleLayout = ({ captionDescription, captionIn
                 >
                     {t('useproduct.widget.use')}
                 </ButtonThick>
-                <Region
-                    name="preview_image_region"
-                    params={17}
-                    onPointerTap={onPreviewImageRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 10, width: 122, top: 10, height: 130 }}
-                >
-                    <ThemeImage
-                        name="preview_image"
-                        params={16}
-                        src={srcPreviewImage}
-                        layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 130 }}
-                    />
-                </Region>
+                <UseProductControllerSaddleLayoutPreviewImageRegion {...previewImageRegion} />
                 <Region
                     name="description"
                     params={16}
@@ -54,13 +40,7 @@ export const UseProductControllerSaddleLayout = ({ captionDescription, captionIn
                         textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
                     />
                 </Region>
-                <Region
-                    name="cancel_text"
-                    params={17}
-                    onPointerTap={onCancelText}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25 }}
-                />
+                <UseProductControllerSaddleLayoutCancelText {...cancelText} />
                 <Region
                     params={16}
                     layout={{ position: 'absolute', left: 160, width: 70, top: 120, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -80,5 +60,49 @@ export const UseProductControllerSaddleLayout = ({ captionDescription, captionIn
                 </Region>
             </Region>
         </Region>
+    );
+};
+
+/** Named region `preview_image_region` of UseProductControllerSaddleLayout - configured through the parent's `previewImageRegion` prop. */
+export interface UseProductControllerSaddleLayoutPreviewImageRegionProps {
+    layout?: BoxLayout;
+    onPreviewImageRegion?: () => void;
+    srcPreviewImage?: string;
+}
+
+export const UseProductControllerSaddleLayoutPreviewImageRegion = ({ layout, onPreviewImageRegion, srcPreviewImage }: UseProductControllerSaddleLayoutPreviewImageRegionProps) => {
+    return (
+        <Region
+            name="preview_image_region"
+            params={17}
+            onPointerTap={onPreviewImageRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 10, width: 122, top: 10, height: 130, ...layout }}
+        >
+            <ThemeImage
+                name="preview_image"
+                params={16}
+                src={srcPreviewImage}
+                layout={{ position: 'absolute', left: 0, width: 122, top: 0, height: 130 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `cancel_text` of UseProductControllerSaddleLayout - configured through the parent's `cancelText` prop. */
+export interface UseProductControllerSaddleLayoutCancelTextProps {
+    layout?: BoxLayout;
+    onCancelText?: () => void;
+}
+
+export const UseProductControllerSaddleLayoutCancelText = ({ layout, onCancelText }: UseProductControllerSaddleLayoutCancelTextProps) => {
+    return (
+        <Region
+            name="cancel_text"
+            params={17}
+            onPointerTap={onCancelText}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 160, width: 65, top: 118, height: 25, ...layout }}
+        />
     );
 };

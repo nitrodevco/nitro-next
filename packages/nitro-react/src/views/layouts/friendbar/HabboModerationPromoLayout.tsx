@@ -12,11 +12,14 @@ export interface HabboModerationPromoLayoutProps {
     captionWrongdoersCaptionTxt?: string;
     captionWrongdoersInfoTxt?: string;
     layout?: BoxLayout;
+    spacing?: HabboModerationPromoLayoutSpacingProps;
+    spacing2?: HabboModerationPromoLayoutSpacing2Props;
+    spacing3?: HabboModerationPromoLayoutSpacing3Props;
     srcBorderBar?: string;
     srcHdrLine?: string;
 }
 
-export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCaptionTxt, captionCursingInfoTxt, captionInfoTxt, captionTitleTxt, captionWrongdoersCaptionTxt, captionWrongdoersInfoTxt, layout, srcBorderBar, srcHdrLine }: HabboModerationPromoLayoutProps) => {
+export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCaptionTxt, captionCursingInfoTxt, captionInfoTxt, captionTitleTxt, captionWrongdoersCaptionTxt, captionWrongdoersInfoTxt, layout, spacing, spacing2, spacing3, srcBorderBar, srcHdrLine }: HabboModerationPromoLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -62,12 +65,7 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                             textStyle="text-style-il-heading-1"
                         />
                     </Region>
-                    <Region
-                        name="spacing"
-                        params={16}
-                        backgroundColor="#000000"
-                        layout={{ width: 250, height: 6, flexShrink: 0 }}
-                    />
+                    <HabboModerationPromoLayoutSpacing {...spacing} />
                     <Region
                         name="info_txt"
                         params={16}
@@ -78,12 +76,7 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                             textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
                         />
                     </Region>
-                    <Region
-                        name="spacing"
-                        params={16}
-                        backgroundColor="#000000"
-                        layout={{ width: 250, height: 8, flexShrink: 0 }}
-                    />
+                    <HabboModerationPromoLayoutSpacing2 {...spacing2} />
                     <Region
                         name="cursing_caption_txt"
                         params={16}
@@ -105,12 +98,7 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                             textOptions={{ wordWrap: true, wordWrapWidth: 250 }}
                         />
                     </Region>
-                    <Region
-                        name="spacing"
-                        params={16}
-                        backgroundColor="#000000"
-                        layout={{ width: 250, height: 8, flexShrink: 0 }}
-                    />
+                    <HabboModerationPromoLayoutSpacing3 {...spacing3} />
                     <Region
                         name="wrongdoers_caption_txt"
                         params={16}
@@ -135,5 +123,53 @@ export const HabboModerationPromoLayout = ({ captionCaptionTxt, captionCursingCa
                 </Region>
             </Region>
         </Region>
+    );
+};
+
+/** Named region `spacing` of HabboModerationPromoLayout - configured through the parent's `spacing` prop. */
+export interface HabboModerationPromoLayoutSpacingProps {
+    layout?: BoxLayout;
+}
+
+export const HabboModerationPromoLayoutSpacing = ({ layout }: HabboModerationPromoLayoutSpacingProps) => {
+    return (
+        <Region
+            name="spacing"
+            params={16}
+            backgroundColor="#000000"
+            layout={{ width: 250, height: 6, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `spacing` of HabboModerationPromoLayout - configured through the parent's `spacing` prop. */
+export interface HabboModerationPromoLayoutSpacing2Props {
+    layout?: BoxLayout;
+}
+
+export const HabboModerationPromoLayoutSpacing2 = ({ layout }: HabboModerationPromoLayoutSpacing2Props) => {
+    return (
+        <Region
+            name="spacing"
+            params={16}
+            backgroundColor="#000000"
+            layout={{ width: 250, height: 8, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `spacing` of HabboModerationPromoLayout - configured through the parent's `spacing` prop. */
+export interface HabboModerationPromoLayoutSpacing3Props {
+    layout?: BoxLayout;
+}
+
+export const HabboModerationPromoLayoutSpacing3 = ({ layout }: HabboModerationPromoLayoutSpacing3Props) => {
+    return (
+        <Region
+            name="spacing"
+            params={16}
+            backgroundColor="#000000"
+            layout={{ width: 250, height: 8, flexShrink: 0, ...layout }}
+        />
     );
 };

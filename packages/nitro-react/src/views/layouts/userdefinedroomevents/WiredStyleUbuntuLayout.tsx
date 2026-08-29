@@ -10,49 +10,42 @@ export interface WiredStyleUbuntuLayoutProps {
     captionTextHtml?: string;
     captionTextView?: string;
     captionTitle?: string;
-    itemsGrid?: ReactNode;
-    itemsMenuList?: ReactNode;
-    itemsSourcetypeSelectorView?: ReactNode;
+    closeRuleRegion?: WiredStyleUbuntuLayoutCloseRuleRegionProps;
+    expandCollapseRegion?: WiredStyleUbuntuLayoutExpandCollapseRegionProps;
+    grid?: WiredStyleUbuntuLayoutGridProps;
     layout?: BoxLayout;
+    menuList?: WiredStyleUbuntuLayoutMenuListProps;
+    miniButtonView?: WiredStyleUbuntuLayoutMiniButtonViewProps;
     onButton?: () => void;
     onCheckboxView?: () => void;
-    onCloseRuleRegion?: () => void;
     onContainerButton?: () => void;
     onDropdownView?: () => void;
-    onExpandCollapseRegion?: () => void;
     onFrame?: () => void;
     onIconbuttonDown?: () => void;
     onIconbuttonLeft?: () => void;
     onIconbuttonRight?: () => void;
     onIconbuttonUp?: () => void;
-    onMiniButtonClick?: () => void;
     onRadiobuttonView?: () => void;
-    srcDownArrow?: string;
-    srcMiniButtonIcon?: string;
-    srcSliderBase?: string;
-    srcSliderButton?: string;
-    srcUpArrow?: string;
+    rulerView?: WiredStyleUbuntuLayoutRulerViewProps;
+    rulerViewVertical?: WiredStyleUbuntuLayoutRulerViewVerticalProps;
+    slider?: WiredStyleUbuntuLayoutSliderProps;
+    sourcetypeSelectorView?: WiredStyleUbuntuLayoutSourcetypeSelectorViewProps;
     visibleBorder?: boolean;
     visibleButton?: boolean;
     visibleContainerButton?: boolean;
     visibleDropdownView?: boolean;
-    visibleExpandCollapseRegion?: boolean;
     visibleIconbuttonDown?: boolean;
     visibleIconbuttonLeft?: boolean;
     visibleIconbuttonRight?: boolean;
     visibleIconbuttonUp?: boolean;
     visibleInputTemplate?: boolean;
-    visibleMiniButtonView?: boolean;
     visibleProductIconPreviewer?: boolean;
     visibleQuickMenu?: boolean;
     visibleRadiobuttonView?: boolean;
     visibleRequirementRule?: boolean;
-    visibleRulerView?: boolean;
-    visibleRulerViewVertical?: boolean;
-    visibleSlider?: boolean;
 }
 
-export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, captionTextView, captionTitle, itemsGrid, itemsMenuList, itemsSourcetypeSelectorView, layout, onButton, onCheckboxView, onCloseRuleRegion, onContainerButton, onDropdownView, onExpandCollapseRegion, onFrame, onIconbuttonDown, onIconbuttonLeft, onIconbuttonRight, onIconbuttonUp, onMiniButtonClick, onRadiobuttonView, srcDownArrow, srcMiniButtonIcon, srcSliderBase, srcSliderButton, srcUpArrow, visibleBorder, visibleButton, visibleContainerButton, visibleDropdownView, visibleExpandCollapseRegion, visibleIconbuttonDown, visibleIconbuttonLeft, visibleIconbuttonRight, visibleIconbuttonUp, visibleInputTemplate, visibleMiniButtonView, visibleProductIconPreviewer, visibleQuickMenu, visibleRadiobuttonView, visibleRequirementRule, visibleRulerView, visibleRulerViewVertical, visibleSlider }: WiredStyleUbuntuLayoutProps) => {
+export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, captionTextView, captionTitle, closeRuleRegion, expandCollapseRegion, grid, layout, menuList, miniButtonView, onButton, onCheckboxView, onContainerButton, onDropdownView, onFrame, onIconbuttonDown, onIconbuttonLeft, onIconbuttonRight, onIconbuttonUp, onRadiobuttonView, rulerView, rulerViewVertical, slider, sourcetypeSelectorView, visibleBorder, visibleButton, visibleContainerButton, visibleDropdownView, visibleIconbuttonDown, visibleIconbuttonLeft, visibleIconbuttonRight, visibleIconbuttonUp, visibleInputTemplate, visibleProductIconPreviewer, visibleQuickMenu, visibleRadiobuttonView, visibleRequirementRule }: WiredStyleUbuntuLayoutProps) => {
     const t = useTranslation();
     const [ fieldValue, setFieldValue ] = useState('');
 
@@ -81,42 +74,8 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                         >
                             <ThemeText text={captionTitle ?? 'Payment option 1:'} />
                         </Region>
-                        <Region
-                            name="close_rule_region"
-                            params={65}
-                            dynamicStyle="brightness_and_shadow_under"
-                            onPointerTap={onCloseRuleRegion}
-                            cursor="pointer"
-                            layout={{ position: 'absolute', right: 4, width: 15, top: 3, height: 15 }}
-                        >
-                            <Border
-                                variant="12"
-                                tags={[ '#bg' ]}
-                                params={16}
-                                tintColor="#dddddd"
-                                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
-                            >
-                                <ThemeImage
-                                    tags={[ '#bg' ]}
-                                    params={16}
-                                    src={layoutImage('common_close_x.png')}
-                                    tint="#777777"
-                                    layout={{ position: 'absolute', left: 3, width: 9, top: 3, height: 9 }}
-                                />
-                            </Border>
-                        </Region>
-                        <Region
-                            name="grid"
-                            params={8388752}
-                            layout={{ position: 'absolute', left: 6, right: 6, top: 21, height: 42, flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}
-                        >
-                            {itemsGrid ?? (
-                                <>
-                                    <WiredStyleUbuntuLayoutElementEntryTemplateItem />
-                                    <WiredStyleUbuntuLayoutAddMoreContainerItem />
-                                </>
-                            )}
-                        </Region>
+                        <WiredStyleUbuntuLayoutCloseRuleRegion {...closeRuleRegion} />
+                        <WiredStyleUbuntuLayoutGrid {...grid} />
                     </Border>
                 </Region>
                 <Region
@@ -138,30 +97,8 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                         />
                     </Border>
                 </Region>
-                <Region
-                    name="ruler_view"
-                    params={16}
-                    visible={visibleRulerView ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 228, top: 0, height: 1 }}
-                >
-                    <Region
-                        params={4194448}
-                        backgroundColor="#b5b5b5"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1 }}
-                    />
-                </Region>
-                <Region
-                    name="ruler_view_vertical"
-                    params={16}
-                    visible={visibleRulerViewVertical ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 1, top: 0, height: 50 }}
-                >
-                    <Region
-                        params={4196368}
-                        backgroundColor="#b5b5b5"
-                        layout={{ position: 'absolute', left: 0, width: 1, top: 0, bottom: 0 }}
-                    />
-                </Region>
+                <WiredStyleUbuntuLayoutRulerView {...rulerView} />
+                <WiredStyleUbuntuLayoutRulerViewVertical {...rulerViewVertical} />
                 <Region
                     name="text_view"
                     params={147472}
@@ -234,29 +171,7 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
-                <Region
-                    name="expand_collapse_region"
-                    params={17}
-                    visible={visibleExpandCollapseRegion ?? false}
-                    onPointerTap={onExpandCollapseRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 16, top: 2, height: 12 }}
-                >
-                    <ThemeImage
-                        name="up_arrow"
-                        params={16}
-                        src={srcUpArrow ?? layoutImage('wired_volter_uparrow.png')}
-                        tint="#999999"
-                        layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 10 }}
-                    />
-                    <ThemeImage
-                        name="down_arrow"
-                        params={16}
-                        src={srcDownArrow ?? layoutImage('wired_volter_downarrow.png')}
-                        tint="#999999"
-                        layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 10 }}
-                    />
-                </Region>
+                <WiredStyleUbuntuLayoutExpandCollapseRegion {...expandCollapseRegion} />
                 <Region
                     visible={visibleIconbuttonLeft ?? false}
                     layout={{ position: 'absolute', left: 0, width: 22, top: 0, height: 22 }}
@@ -384,83 +299,14 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                                 tintColor="#d6d6d6"
                                 layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                             >
-                                <Region
-                                    name="menu_list"
-                                    params={144}
-                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 3, flexDirection: 'column' }}
-                                >
-                                    {itemsMenuList ?? (
-                                        <>
-                                            <WiredStyleUbuntuLayoutMenuItemTemplateItem />
-                                            <WiredStyleUbuntuLayoutSpacerTemplateItem />
-                                        </>
-                                    )}
-                                </Region>
+                                <WiredStyleUbuntuLayoutMenuList {...menuList} />
                             </Border>
                         </Border>
                     </Border>
                 </Region>
-                <Region
-                    name="sourcetype_selector_view"
-                    params={147456}
-                    visible={false}
-                    layout={{ position: 'absolute', left: 0, top: -2, minHeight: 17, maxHeight: 17, flexDirection: 'row' }}
-                >
-                    {itemsSourcetypeSelectorView ?? (
-                        <>
-                            <WiredStyleUbuntuLayoutLeftPaddingItem />
-                            <WiredStyleUbuntuLayoutSourceOptionsBorderItem />
-                            <WiredStyleUbuntuLayoutRightPaddingItem />
-                        </>
-                    )}
-                </Region>
-                <Region
-                    name="slider"
-                    params={16}
-                    visible={visibleSlider ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 148, top: 0, height: 18 }}
-                >
-                    <ThemeImage
-                        name="slider_base"
-                        params={144}
-                        src={srcSliderBase ?? layoutImage('wired_styles_volter_slider_bg.png')}
-                        tint="#999999"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 19 }}
-                    />
-                    <Region
-                        name="slider_movement_area"
-                        params={144}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17 }}
-                    >
-                        <ThemeImage
-                            name="slider_button"
-                            params={33073}
-                            src={srcSliderButton ?? layoutImage('wired_styles_illumina_slider_obj.png')}
-                            layout={{ position: 'absolute', left: 0, width: 12, top: 0, height: 17 }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="mini_button_view"
-                    params={16}
-                    visible={visibleMiniButtonView ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19 }}
-                >
-                    <ContainerButton
-                        variant="3"
-                        name="mini_button_click"
-                        params={17}
-                        onPointerTap={onMiniButtonClick}
-                        layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19, maxWidth: 19 }}
-                    >
-                        <ThemeImage
-                            name="mini_button_icon"
-                            params={16}
-                            src={srcMiniButtonIcon}
-                            layout={{ position: 'absolute', left: 3, width: 13, top: 2, height: 15 }}
-                        />
-                    </ContainerButton>
-                </Region>
+                <WiredStyleUbuntuLayoutSourcetypeSelectorView {...sourcetypeSelectorView} />
+                <WiredStyleUbuntuLayoutSlider {...slider} />
+                <WiredStyleUbuntuLayoutMiniButtonView {...miniButtonView} />
                 <Region
                     visible={visibleBorder ?? false}
                     layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
@@ -490,16 +336,86 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
     );
 };
 
+/** Named region `close_rule_region` of WiredStyleUbuntuLayout - configured through the parent's `closeRuleRegion` prop. */
+export interface WiredStyleUbuntuLayoutCloseRuleRegionProps {
+    layout?: BoxLayout;
+    onCloseRuleRegion?: () => void;
+}
+
+export const WiredStyleUbuntuLayoutCloseRuleRegion = ({ layout, onCloseRuleRegion }: WiredStyleUbuntuLayoutCloseRuleRegionProps) => {
+    return (
+        <Region
+            name="close_rule_region"
+            params={65}
+            dynamicStyle="brightness_and_shadow_under"
+            onPointerTap={onCloseRuleRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', right: 4, width: 15, top: 3, height: 15, ...layout }}
+        >
+            <Border
+                variant="12"
+                tags={[ '#bg' ]}
+                params={16}
+                tintColor="#dddddd"
+                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
+            >
+                <ThemeImage
+                    tags={[ '#bg' ]}
+                    params={16}
+                    src={layoutImage('common_close_x.png')}
+                    tint="#777777"
+                    layout={{ position: 'absolute', left: 3, width: 9, top: 3, height: 9 }}
+                />
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `close_region` of WiredStyleUbuntuLayout - configured through the parent's `closeRegion` prop. */
+export interface WiredStyleUbuntuLayoutCloseRegionProps {
+    layout?: BoxLayout;
+    onCloseRegion?: () => void;
+}
+
+export const WiredStyleUbuntuLayoutCloseRegion = ({ layout, onCloseRegion }: WiredStyleUbuntuLayoutCloseRegionProps) => {
+    return (
+        <Region
+            name="close_region"
+            params={65}
+            dynamicStyle="brightness_and_shadow_under"
+            onPointerTap={onCloseRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', right: 0, width: 15, top: 0, height: 15, ...layout }}
+        >
+            <Border
+                variant="12"
+                tags={[ '#bg' ]}
+                params={16}
+                tintColor="#dddddd"
+                layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
+            >
+                <ThemeImage
+                    tags={[ '#bg' ]}
+                    params={16}
+                    src={layoutImage('common_close_x.png')}
+                    tint="#777777"
+                    layout={{ position: 'absolute', left: 3, width: 9, top: 3, height: 9 }}
+                />
+            </Border>
+        </Region>
+    );
+};
+
 /** Row template `element_entry_template` of WiredStyleUbuntuLayout - pass real rows through its `items…` slot. */
 export interface WiredStyleUbuntuLayoutElementEntryTemplateItemProps {
     captionQuantityAmount?: string;
+    closeRegion?: WiredStyleUbuntuLayoutCloseRegionProps;
     layout?: BoxLayout;
-    onCloseRegion?: () => void;
     onElementEntryTemplate?: () => void;
     srcCoinsIcon?: string;
 }
 
-export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantityAmount, layout, onCloseRegion, onElementEntryTemplate, srcCoinsIcon }: WiredStyleUbuntuLayoutElementEntryTemplateItemProps) => {
+export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantityAmount, closeRegion, layout, onElementEntryTemplate, srcCoinsIcon }: WiredStyleUbuntuLayoutElementEntryTemplateItemProps) => {
     return (
         <Region
             name="element_entry_template"
@@ -554,30 +470,7 @@ export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantity
                         />
                     </Region>
                 </Border>
-                <Region
-                    name="close_region"
-                    params={65}
-                    dynamicStyle="brightness_and_shadow_under"
-                    onPointerTap={onCloseRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', right: 0, width: 15, top: 0, height: 15 }}
-                >
-                    <Border
-                        variant="12"
-                        tags={[ '#bg' ]}
-                        params={16}
-                        tintColor="#dddddd"
-                        layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
-                    >
-                        <ThemeImage
-                            tags={[ '#bg' ]}
-                            params={16}
-                            src={layoutImage('common_close_x.png')}
-                            tint="#777777"
-                            layout={{ position: 'absolute', left: 3, width: 9, top: 3, height: 9 }}
-                        />
-                    </Border>
-                </Region>
+                <WiredStyleUbuntuLayoutCloseRegion {...closeRegion} />
             </Border>
         </Region>
     );
@@ -602,6 +495,112 @@ export const WiredStyleUbuntuLayoutAddMoreContainerItem = ({ layout, onAddMore }
                 params={3281}
                 onPointerTap={onAddMore}
                 layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 23, alignSelf: 'center', height: 22 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `grid` of WiredStyleUbuntuLayout - configured through the parent's `grid` prop. */
+export interface WiredStyleUbuntuLayoutGridProps {
+    itemsGrid?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const WiredStyleUbuntuLayoutGrid = ({ itemsGrid, layout }: WiredStyleUbuntuLayoutGridProps) => {
+    return (
+        <Region
+            name="grid"
+            params={8388752}
+            layout={{ position: 'absolute', left: 6, right: 6, top: 21, height: 42, flexDirection: 'row', flexWrap: 'wrap', gap: 6, ...layout }}
+        >
+            {itemsGrid ?? (
+                <>
+                    <WiredStyleUbuntuLayoutElementEntryTemplateItem />
+                    <WiredStyleUbuntuLayoutAddMoreContainerItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `ruler_view` of WiredStyleUbuntuLayout - configured through the parent's `rulerView` prop. */
+export interface WiredStyleUbuntuLayoutRulerViewProps {
+    layout?: BoxLayout;
+    visibleRulerView?: boolean;
+}
+
+export const WiredStyleUbuntuLayoutRulerView = ({ layout, visibleRulerView }: WiredStyleUbuntuLayoutRulerViewProps) => {
+    return (
+        <Region
+            name="ruler_view"
+            params={16}
+            visible={visibleRulerView ?? false}
+            layout={{ position: 'absolute', left: 0, width: 228, top: 0, height: 1, ...layout }}
+        >
+            <Region
+                params={4194448}
+                backgroundColor="#b5b5b5"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `ruler_view_vertical` of WiredStyleUbuntuLayout - configured through the parent's `rulerViewVertical` prop. */
+export interface WiredStyleUbuntuLayoutRulerViewVerticalProps {
+    layout?: BoxLayout;
+    visibleRulerViewVertical?: boolean;
+}
+
+export const WiredStyleUbuntuLayoutRulerViewVertical = ({ layout, visibleRulerViewVertical }: WiredStyleUbuntuLayoutRulerViewVerticalProps) => {
+    return (
+        <Region
+            name="ruler_view_vertical"
+            params={16}
+            visible={visibleRulerViewVertical ?? false}
+            layout={{ position: 'absolute', left: 0, width: 1, top: 0, height: 50, ...layout }}
+        >
+            <Region
+                params={4196368}
+                backgroundColor="#b5b5b5"
+                layout={{ position: 'absolute', left: 0, width: 1, top: 0, bottom: 0 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `expand_collapse_region` of WiredStyleUbuntuLayout - configured through the parent's `expandCollapseRegion` prop. */
+export interface WiredStyleUbuntuLayoutExpandCollapseRegionProps {
+    layout?: BoxLayout;
+    onExpandCollapseRegion?: () => void;
+    srcDownArrow?: string;
+    srcUpArrow?: string;
+    visibleExpandCollapseRegion?: boolean;
+}
+
+export const WiredStyleUbuntuLayoutExpandCollapseRegion = ({ layout, onExpandCollapseRegion, srcDownArrow, srcUpArrow, visibleExpandCollapseRegion }: WiredStyleUbuntuLayoutExpandCollapseRegionProps) => {
+    return (
+        <Region
+            name="expand_collapse_region"
+            params={17}
+            visible={visibleExpandCollapseRegion ?? false}
+            onPointerTap={onExpandCollapseRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 16, top: 2, height: 12, ...layout }}
+        >
+            <ThemeImage
+                name="up_arrow"
+                params={16}
+                src={srcUpArrow ?? layoutImage('wired_volter_uparrow.png')}
+                tint="#999999"
+                layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 10 }}
+            />
+            <ThemeImage
+                name="down_arrow"
+                params={16}
+                src={srcDownArrow ?? layoutImage('wired_volter_downarrow.png')}
+                tint="#999999"
+                layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 10 }}
             />
         </Region>
     );
@@ -668,37 +667,96 @@ export const WiredStyleUbuntuLayoutSpacerTemplateItem = ({ layout }: WiredStyleU
     );
 };
 
-/** Row template `left_padding` of WiredStyleUbuntuLayout - pass real rows through its `items…` slot. */
-export interface WiredStyleUbuntuLayoutLeftPaddingItemProps {
+/** Named region `menu_list` of WiredStyleUbuntuLayout - configured through the parent's `menuList` prop. */
+export interface WiredStyleUbuntuLayoutMenuListProps {
+    itemsMenuList?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const WiredStyleUbuntuLayoutLeftPaddingItem = ({ layout }: WiredStyleUbuntuLayoutLeftPaddingItemProps) => {
+export const WiredStyleUbuntuLayoutMenuList = ({ itemsMenuList, layout }: WiredStyleUbuntuLayoutMenuListProps) => {
+    return (
+        <Region
+            name="menu_list"
+            params={144}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 3, flexDirection: 'column', ...layout }}
+        >
+            {itemsMenuList ?? (
+                <>
+                    <WiredStyleUbuntuLayoutMenuItemTemplateItem />
+                    <WiredStyleUbuntuLayoutSpacerTemplateItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `border` of WiredStyleUbuntuLayout - configured through the parent's `border` prop. */
+export interface WiredStyleUbuntuLayoutBorderProps {
+    layout?: BoxLayout;
+}
+
+export const WiredStyleUbuntuLayoutBorder = ({ layout }: WiredStyleUbuntuLayoutBorderProps) => {
+    return (
+        <Region
+            name="border"
+            params={16}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, width: 1, top: 2, height: 13, minWidth: 1, maxWidth: 1, ...layout }}
+        />
+    );
+};
+
+/** Named region `margin_item_color_left` of WiredStyleUbuntuLayout - configured through the parent's `marginItemColorLeft` prop. */
+export interface WiredStyleUbuntuLayoutMarginItemColorLeftProps {
+    layout?: BoxLayout;
+}
+
+export const WiredStyleUbuntuLayoutMarginItemColorLeft = ({ layout }: WiredStyleUbuntuLayoutMarginItemColorLeftProps) => {
+    return (
+        <Region
+            name="margin_item_color_left"
+            params={16}
+            backgroundColor="#333333"
+            layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 13, minWidth: 1, maxWidth: 1, minHeight: 13, maxHeight: 13, ...layout }}
+        />
+    );
+};
+
+/** Named region `border` of WiredStyleUbuntuLayout - configured through the parent's `border` prop. */
+export interface WiredStyleUbuntuLayoutBorder2Props {
+    layout?: BoxLayout;
+    marginItemColorLeft?: WiredStyleUbuntuLayoutMarginItemColorLeftProps;
+}
+
+export const WiredStyleUbuntuLayoutBorder2 = ({ layout, marginItemColorLeft }: WiredStyleUbuntuLayoutBorder2Props) => {
+    return (
+        <Region
+            name="border"
+            params={16}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 1, width: 1, top: 1, height: 15, minWidth: 1, maxWidth: 1, minHeight: 15, maxHeight: 15, ...layout }}
+        >
+            <WiredStyleUbuntuLayoutMarginItemColorLeft {...marginItemColorLeft} />
+        </Region>
+    );
+};
+
+/** Row template `left_padding` of WiredStyleUbuntuLayout - pass real rows through its `items…` slot. */
+export interface WiredStyleUbuntuLayoutLeftPaddingItemProps {
+    border?: WiredStyleUbuntuLayoutBorderProps;
+    border2?: WiredStyleUbuntuLayoutBorder2Props;
+    layout?: BoxLayout;
+}
+
+export const WiredStyleUbuntuLayoutLeftPaddingItem = ({ border, border2, layout }: WiredStyleUbuntuLayoutLeftPaddingItemProps) => {
     return (
         <Region
             name="left_padding"
             params={16}
             layout={{ width: 2, height: 17, flexShrink: 0, minWidth: 2, maxWidth: 2, minHeight: 17, maxHeight: 17, ...layout }}
         >
-            <Region
-                name="border"
-                params={16}
-                backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 1, top: 2, height: 13, minWidth: 1, maxWidth: 1 }}
-            />
-            <Region
-                name="border"
-                params={16}
-                backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 1, width: 1, top: 1, height: 15, minWidth: 1, maxWidth: 1, minHeight: 15, maxHeight: 15 }}
-            >
-                <Region
-                    name="margin_item_color_left"
-                    params={16}
-                    backgroundColor="#333333"
-                    layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 13, minWidth: 1, maxWidth: 1, minHeight: 13, maxHeight: 13 }}
-                />
-            </Region>
+            <WiredStyleUbuntuLayoutBorder {...border} />
+            <WiredStyleUbuntuLayoutBorder2 {...border2} />
         </Region>
     );
 };
@@ -750,14 +808,39 @@ export const WiredStyleUbuntuLayoutRightPadItem = ({ layout }: WiredStyleUbuntuL
     );
 };
 
-/** Row template `source_btn` of WiredStyleUbuntuLayout - pass real rows through its `items…` slot. */
-export interface WiredStyleUbuntuLayoutSourceBtnItemProps {
+/** Named region `source_elements` of WiredStyleUbuntuLayout - configured through the parent's `sourceElements` prop. */
+export interface WiredStyleUbuntuLayoutSourceElementsProps {
     itemsSourceElements?: ReactNode;
     layout?: BoxLayout;
-    onSourceBtn?: () => void;
 }
 
-export const WiredStyleUbuntuLayoutSourceBtnItem = ({ itemsSourceElements, layout, onSourceBtn }: WiredStyleUbuntuLayoutSourceBtnItemProps) => {
+export const WiredStyleUbuntuLayoutSourceElements = ({ itemsSourceElements, layout }: WiredStyleUbuntuLayoutSourceElementsProps) => {
+    return (
+        <Region
+            name="source_elements"
+            params={147600}
+            backgroundColor="#333333"
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row', ...layout }}
+        >
+            {itemsSourceElements ?? (
+                <>
+                    <WiredStyleUbuntuLayoutLeftPadItem />
+                    <WiredStyleUbuntuLayoutTypeIconBitmapItem />
+                    <WiredStyleUbuntuLayoutRightPadItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Row template `source_btn` of WiredStyleUbuntuLayout - pass real rows through its `items…` slot. */
+export interface WiredStyleUbuntuLayoutSourceBtnItemProps {
+    layout?: BoxLayout;
+    onSourceBtn?: () => void;
+    sourceElements?: WiredStyleUbuntuLayoutSourceElementsProps;
+}
+
+export const WiredStyleUbuntuLayoutSourceBtnItem = ({ layout, onSourceBtn, sourceElements }: WiredStyleUbuntuLayoutSourceBtnItemProps) => {
     return (
         <Region
             name="source_btn"
@@ -767,31 +850,57 @@ export const WiredStyleUbuntuLayoutSourceBtnItem = ({ itemsSourceElements, layou
             cursor="pointer"
             layout={{ width: 13, height: 15, flexShrink: 0, minHeight: 15, maxHeight: 15, ...layout }}
         >
-            <Region
-                name="source_elements"
-                params={147600}
-                backgroundColor="#333333"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row' }}
-            >
-                {itemsSourceElements ?? (
-                    <>
-                        <WiredStyleUbuntuLayoutLeftPadItem />
-                        <WiredStyleUbuntuLayoutTypeIconBitmapItem />
-                        <WiredStyleUbuntuLayoutRightPadItem />
-                    </>
-                )}
-            </Region>
+            <WiredStyleUbuntuLayoutSourceElements {...sourceElements} />
+        </Region>
+    );
+};
+
+/** Named region `source_options_list` of WiredStyleUbuntuLayout - configured through the parent's `sourceOptionsList` prop. */
+export interface WiredStyleUbuntuLayoutSourceOptionsListProps {
+    itemsSourceOptionsList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const WiredStyleUbuntuLayoutSourceOptionsList = ({ itemsSourceOptionsList, layout }: WiredStyleUbuntuLayoutSourceOptionsListProps) => {
+    return (
+        <Region
+            name="source_options_list"
+            params={147600}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row', gap: 1, ...layout }}
+        >
+            {itemsSourceOptionsList ?? (
+                <WiredStyleUbuntuLayoutSourceBtnItem />
+            )}
+        </Region>
+    );
+};
+
+/** Named region `source_options_cont` of WiredStyleUbuntuLayout - configured through the parent's `sourceOptionsCont` prop. */
+export interface WiredStyleUbuntuLayoutSourceOptionsContProps {
+    layout?: BoxLayout;
+    sourceOptionsList?: WiredStyleUbuntuLayoutSourceOptionsListProps;
+}
+
+export const WiredStyleUbuntuLayoutSourceOptionsCont = ({ layout, sourceOptionsList }: WiredStyleUbuntuLayoutSourceOptionsContProps) => {
+    return (
+        <Region
+            name="source_options_cont"
+            params={147600}
+            backgroundColor="#181818"
+            layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 15, minHeight: 15, maxHeight: 15, ...layout }}
+        >
+            <WiredStyleUbuntuLayoutSourceOptionsList {...sourceOptionsList} />
         </Region>
     );
 };
 
 /** Row template `source_options_border` of WiredStyleUbuntuLayout - pass real rows through its `items…` slot. */
 export interface WiredStyleUbuntuLayoutSourceOptionsBorderItemProps {
-    itemsSourceOptionsList?: ReactNode;
     layout?: BoxLayout;
+    sourceOptionsCont?: WiredStyleUbuntuLayoutSourceOptionsContProps;
 }
 
-export const WiredStyleUbuntuLayoutSourceOptionsBorderItem = ({ itemsSourceOptionsList, layout }: WiredStyleUbuntuLayoutSourceOptionsBorderItemProps) => {
+export const WiredStyleUbuntuLayoutSourceOptionsBorderItem = ({ layout, sourceOptionsCont }: WiredStyleUbuntuLayoutSourceOptionsBorderItemProps) => {
     return (
         <Region
             name="source_options_border"
@@ -799,57 +908,188 @@ export const WiredStyleUbuntuLayoutSourceOptionsBorderItem = ({ itemsSourceOptio
             backgroundColor="#000000"
             layout={{ width: 13, height: 17, flexShrink: 0, minHeight: 17, maxHeight: 17, ...layout }}
         >
-            <Region
-                name="source_options_cont"
-                params={147600}
-                backgroundColor="#181818"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 15, minHeight: 15, maxHeight: 15 }}
-            >
-                <Region
-                    name="source_options_list"
-                    params={147600}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, minHeight: 15, maxHeight: 15, flexDirection: 'row', gap: 1 }}
-                >
-                    {itemsSourceOptionsList ?? (
-                        <WiredStyleUbuntuLayoutSourceBtnItem />
-                    )}
-                </Region>
-            </Region>
+            <WiredStyleUbuntuLayoutSourceOptionsCont {...sourceOptionsCont} />
         </Region>
+    );
+};
+
+/** Named region `margin_item_color_right` of WiredStyleUbuntuLayout - configured through the parent's `marginItemColorRight` prop. */
+export interface WiredStyleUbuntuLayoutMarginItemColorRightProps {
+    layout?: BoxLayout;
+}
+
+export const WiredStyleUbuntuLayoutMarginItemColorRight = ({ layout }: WiredStyleUbuntuLayoutMarginItemColorRightProps) => {
+    return (
+        <Region
+            name="margin_item_color_right"
+            params={16}
+            backgroundColor="#222222"
+            layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 13, minWidth: 1, maxWidth: 1, minHeight: 13, maxHeight: 13, ...layout }}
+        />
+    );
+};
+
+/** Named region `border` of WiredStyleUbuntuLayout - configured through the parent's `border` prop. */
+export interface WiredStyleUbuntuLayoutBorder3Props {
+    layout?: BoxLayout;
+    marginItemColorRight?: WiredStyleUbuntuLayoutMarginItemColorRightProps;
+}
+
+export const WiredStyleUbuntuLayoutBorder3 = ({ layout, marginItemColorRight }: WiredStyleUbuntuLayoutBorder3Props) => {
+    return (
+        <Region
+            name="border"
+            params={16}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 15, minWidth: 1, maxWidth: 1, minHeight: 15, maxHeight: 15, ...layout }}
+        >
+            <WiredStyleUbuntuLayoutMarginItemColorRight {...marginItemColorRight} />
+        </Region>
+    );
+};
+
+/** Named region `border` of WiredStyleUbuntuLayout - configured through the parent's `border` prop. */
+export interface WiredStyleUbuntuLayoutBorder4Props {
+    layout?: BoxLayout;
+}
+
+export const WiredStyleUbuntuLayoutBorder4 = ({ layout }: WiredStyleUbuntuLayoutBorder4Props) => {
+    return (
+        <Region
+            name="border"
+            params={16}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 1, width: 1, top: 2, height: 13, minWidth: 1, maxWidth: 1, ...layout }}
+        />
     );
 };
 
 /** Row template `right_padding` of WiredStyleUbuntuLayout - pass real rows through its `items…` slot. */
 export interface WiredStyleUbuntuLayoutRightPaddingItemProps {
+    border?: WiredStyleUbuntuLayoutBorder3Props;
+    border2?: WiredStyleUbuntuLayoutBorder4Props;
     layout?: BoxLayout;
 }
 
-export const WiredStyleUbuntuLayoutRightPaddingItem = ({ layout }: WiredStyleUbuntuLayoutRightPaddingItemProps) => {
+export const WiredStyleUbuntuLayoutRightPaddingItem = ({ border, border2, layout }: WiredStyleUbuntuLayoutRightPaddingItemProps) => {
     return (
         <Region
             name="right_padding"
             params={16}
             layout={{ width: 2, height: 17, flexShrink: 0, minWidth: 2, maxWidth: 2, minHeight: 17, maxHeight: 17, ...layout }}
         >
-            <Region
-                name="border"
-                params={16}
-                backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 15, minWidth: 1, maxWidth: 1, minHeight: 15, maxHeight: 15 }}
-            >
-                <Region
-                    name="margin_item_color_right"
-                    params={16}
-                    backgroundColor="#222222"
-                    layout={{ position: 'absolute', left: 0, width: 1, top: 1, height: 13, minWidth: 1, maxWidth: 1, minHeight: 13, maxHeight: 13 }}
-                />
-            </Region>
-            <Region
-                name="border"
-                params={16}
-                backgroundColor="#000000"
-                layout={{ position: 'absolute', left: 1, width: 1, top: 2, height: 13, minWidth: 1, maxWidth: 1 }}
+            <WiredStyleUbuntuLayoutBorder3 {...border} />
+            <WiredStyleUbuntuLayoutBorder4 {...border2} />
+        </Region>
+    );
+};
+
+/** Named region `sourcetype_selector_view` of WiredStyleUbuntuLayout - configured through the parent's `sourcetypeSelectorView` prop. */
+export interface WiredStyleUbuntuLayoutSourcetypeSelectorViewProps {
+    itemsSourcetypeSelectorView?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const WiredStyleUbuntuLayoutSourcetypeSelectorView = ({ itemsSourcetypeSelectorView, layout }: WiredStyleUbuntuLayoutSourcetypeSelectorViewProps) => {
+    return (
+        <Region
+            name="sourcetype_selector_view"
+            params={147456}
+            visible={false}
+            layout={{ position: 'absolute', left: 0, top: -2, minHeight: 17, maxHeight: 17, flexDirection: 'row', ...layout }}
+        >
+            {itemsSourcetypeSelectorView ?? (
+                <>
+                    <WiredStyleUbuntuLayoutLeftPaddingItem />
+                    <WiredStyleUbuntuLayoutSourceOptionsBorderItem />
+                    <WiredStyleUbuntuLayoutRightPaddingItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `slider_movement_area` of WiredStyleUbuntuLayout - configured through the parent's `sliderMovementArea` prop. */
+export interface WiredStyleUbuntuLayoutSliderMovementAreaProps {
+    layout?: BoxLayout;
+    srcSliderButton?: string;
+}
+
+export const WiredStyleUbuntuLayoutSliderMovementArea = ({ layout, srcSliderButton }: WiredStyleUbuntuLayoutSliderMovementAreaProps) => {
+    return (
+        <Region
+            name="slider_movement_area"
+            params={144}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17, ...layout }}
+        >
+            <ThemeImage
+                name="slider_button"
+                params={33073}
+                src={srcSliderButton ?? layoutImage('wired_styles_illumina_slider_obj.png')}
+                layout={{ position: 'absolute', left: 0, width: 12, top: 0, height: 17 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `slider` of WiredStyleUbuntuLayout - configured through the parent's `slider` prop. */
+export interface WiredStyleUbuntuLayoutSliderProps {
+    layout?: BoxLayout;
+    sliderMovementArea?: WiredStyleUbuntuLayoutSliderMovementAreaProps;
+    srcSliderBase?: string;
+    visibleSlider?: boolean;
+}
+
+export const WiredStyleUbuntuLayoutSlider = ({ layout, sliderMovementArea, srcSliderBase, visibleSlider }: WiredStyleUbuntuLayoutSliderProps) => {
+    return (
+        <Region
+            name="slider"
+            params={16}
+            visible={visibleSlider ?? false}
+            layout={{ position: 'absolute', left: 0, width: 148, top: 0, height: 18, ...layout }}
+        >
+            <ThemeImage
+                name="slider_base"
+                params={144}
+                src={srcSliderBase ?? layoutImage('wired_styles_volter_slider_bg.png')}
+                tint="#999999"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 19 }}
+            />
+            <WiredStyleUbuntuLayoutSliderMovementArea {...sliderMovementArea} />
+        </Region>
+    );
+};
+
+/** Named region `mini_button_view` of WiredStyleUbuntuLayout - configured through the parent's `miniButtonView` prop. */
+export interface WiredStyleUbuntuLayoutMiniButtonViewProps {
+    layout?: BoxLayout;
+    onMiniButtonClick?: () => void;
+    srcMiniButtonIcon?: string;
+    visibleMiniButtonView?: boolean;
+}
+
+export const WiredStyleUbuntuLayoutMiniButtonView = ({ layout, onMiniButtonClick, srcMiniButtonIcon, visibleMiniButtonView }: WiredStyleUbuntuLayoutMiniButtonViewProps) => {
+    return (
+        <Region
+            name="mini_button_view"
+            params={16}
+            visible={visibleMiniButtonView ?? false}
+            layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19, ...layout }}
+        >
+            <ContainerButton
+                variant="3"
+                name="mini_button_click"
+                params={17}
+                onPointerTap={onMiniButtonClick}
+                layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19, maxWidth: 19 }}
+            >
+                <ThemeImage
+                    name="mini_button_icon"
+                    params={16}
+                    src={srcMiniButtonIcon}
+                    layout={{ position: 'absolute', left: 3, width: 13, top: 2, height: 15 }}
+                />
+            </ContainerButton>
         </Region>
     );
 };

@@ -5,14 +5,11 @@ import { BoxLayout, Bubble, ContainerButton, Icon, Region, ThemeImage, ThemeText
 
 /** Generated from `958_own_avatar_menu_xml` (layout "context_menu_widget", 115x887) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface OwnAvatarMenuLayoutProps {
-    captionName?: string;
-    itemsButtons?: ReactNode;
+    border?: OwnAvatarMenuLayoutBorderProps;
     layout?: BoxLayout;
-    onMinimize?: () => void;
-    onProfileLink?: () => void;
 }
 
-export const OwnAvatarMenuLayout = ({ captionName, itemsButtons, layout, onMinimize, onProfileLink }: OwnAvatarMenuLayoutProps) => {
+export const OwnAvatarMenuLayout = ({ border, layout }: OwnAvatarMenuLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 115, height: 887, ...layout }}>
             <Bubble
@@ -21,87 +18,39 @@ export const OwnAvatarMenuLayout = ({ captionName, itemsButtons, layout, onMinim
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 20, width: 115, bottom: 0, height: 887 }}
             >
-                <Region
-                    name="border"
-                    params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 877, justifyContent: 'center' }}
-                >
-                    <Region
-                        name="profile_link"
-                        params={17}
-                        onPointerTap={onProfileLink}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="name"
-                            params={208}
-                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionName ?? 'my_name_here'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                    </Region>
-                    <Region
-                        params={144}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
-                    />
-                    <Region
-                        name="buttons"
-                        params={8519888}
-                        layout={{ position: 'absolute', minWidth: 105, top: 28, minHeight: 827, flexDirection: 'column', gap: 1 }}
-                    >
-                        {itemsButtons ?? (
-                            <>
-                                <OwnAvatarMenuLayoutChangeNameItem />
-                                <OwnAvatarMenuLayoutDecorateItem />
-                                <OwnAvatarMenuLayoutChangeLooksItem />
-                                <OwnAvatarMenuLayoutSitItem />
-                                <OwnAvatarMenuLayoutStandItem />
-                                <OwnAvatarMenuLayoutWaveItem />
-                                <OwnAvatarMenuLayoutBlowItem />
-                                <OwnAvatarMenuLayout_67Item />
-                                <OwnAvatarMenuLayoutJumpItem />
-                                <OwnAvatarMenuLayoutLaughItem />
-                                <OwnAvatarMenuLayoutIdleItem />
-                                <OwnAvatarMenuLayoutExpressionsItem />
-                                <OwnAvatarMenuLayoutDanceMenuItem />
-                                <OwnAvatarMenuLayoutDanceItem />
-                                <OwnAvatarMenuLayoutDanceStopItem />
-                                <OwnAvatarMenuLayoutDance1Item />
-                                <OwnAvatarMenuLayoutDance2Item />
-                                <OwnAvatarMenuLayoutDance3Item />
-                                <OwnAvatarMenuLayoutDance4Item />
-                                <OwnAvatarMenuLayoutSignsGridItem />
-                                <OwnAvatarMenuLayoutSignsItem />
-                                <OwnAvatarMenuLayoutBackItem />
-                                <OwnAvatarMenuLayoutHanditemItem />
-                                <OwnAvatarMenuLayoutEffectsItem />
-                                <OwnAvatarMenuLayoutMoreItem />
-                                <OwnAvatarMenuLayoutWiredInspectItem />
-                            </>
-                        )}
-                    </Region>
-                    <Region
-                        name="minimize"
-                        params={1041}
-                        onPointerTap={onMinimize}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 4, width: 100, bottom: 4, height: 18 }}
-                    >
-                        <Icon
-                            variant="7"
-                            name="icon"
-                            params={16}
-                            layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
-                        />
-                    </Region>
-                </Region>
+                <OwnAvatarMenuLayoutBorder {...border} />
             </Bubble>
+        </Region>
+    );
+};
+
+/** Named region `profile_link` of OwnAvatarMenuLayout - configured through the parent's `profileLink` prop. */
+export interface OwnAvatarMenuLayoutProfileLinkProps {
+    captionName?: string;
+    layout?: BoxLayout;
+    onProfileLink?: () => void;
+}
+
+export const OwnAvatarMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: OwnAvatarMenuLayoutProfileLinkProps) => {
+    return (
+        <Region
+            name="profile_link"
+            params={17}
+            onPointerTap={onProfileLink}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="name"
+                params={208}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionName ?? 'my_name_here'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
         </Region>
     );
 };
@@ -1885,6 +1834,105 @@ export const OwnAvatarMenuLayoutWiredInspectItem = ({ captionLabel, layout, onBu
                     />
                 </Region>
             </ContainerButton>
+        </Region>
+    );
+};
+
+/** Named region `buttons` of OwnAvatarMenuLayout - configured through the parent's `buttons` prop. */
+export interface OwnAvatarMenuLayoutButtonsProps {
+    itemsButtons?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const OwnAvatarMenuLayoutButtons = ({ itemsButtons, layout }: OwnAvatarMenuLayoutButtonsProps) => {
+    return (
+        <Region
+            name="buttons"
+            params={8519888}
+            layout={{ position: 'absolute', minWidth: 105, top: 28, minHeight: 827, flexDirection: 'column', gap: 1, ...layout }}
+        >
+            {itemsButtons ?? (
+                <>
+                    <OwnAvatarMenuLayoutChangeNameItem />
+                    <OwnAvatarMenuLayoutDecorateItem />
+                    <OwnAvatarMenuLayoutChangeLooksItem />
+                    <OwnAvatarMenuLayoutSitItem />
+                    <OwnAvatarMenuLayoutStandItem />
+                    <OwnAvatarMenuLayoutWaveItem />
+                    <OwnAvatarMenuLayoutBlowItem />
+                    <OwnAvatarMenuLayout_67Item />
+                    <OwnAvatarMenuLayoutJumpItem />
+                    <OwnAvatarMenuLayoutLaughItem />
+                    <OwnAvatarMenuLayoutIdleItem />
+                    <OwnAvatarMenuLayoutExpressionsItem />
+                    <OwnAvatarMenuLayoutDanceMenuItem />
+                    <OwnAvatarMenuLayoutDanceItem />
+                    <OwnAvatarMenuLayoutDanceStopItem />
+                    <OwnAvatarMenuLayoutDance1Item />
+                    <OwnAvatarMenuLayoutDance2Item />
+                    <OwnAvatarMenuLayoutDance3Item />
+                    <OwnAvatarMenuLayoutDance4Item />
+                    <OwnAvatarMenuLayoutSignsGridItem />
+                    <OwnAvatarMenuLayoutSignsItem />
+                    <OwnAvatarMenuLayoutBackItem />
+                    <OwnAvatarMenuLayoutHanditemItem />
+                    <OwnAvatarMenuLayoutEffectsItem />
+                    <OwnAvatarMenuLayoutMoreItem />
+                    <OwnAvatarMenuLayoutWiredInspectItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `minimize` of OwnAvatarMenuLayout - configured through the parent's `minimize` prop. */
+export interface OwnAvatarMenuLayoutMinimizeProps {
+    layout?: BoxLayout;
+    onMinimize?: () => void;
+}
+
+export const OwnAvatarMenuLayoutMinimize = ({ layout, onMinimize }: OwnAvatarMenuLayoutMinimizeProps) => {
+    return (
+        <Region
+            name="minimize"
+            params={1041}
+            onPointerTap={onMinimize}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 4, width: 100, bottom: 4, height: 18, ...layout }}
+        >
+            <Icon
+                variant="7"
+                name="icon"
+                params={16}
+                layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `border` of OwnAvatarMenuLayout - configured through the parent's `border` prop. */
+export interface OwnAvatarMenuLayoutBorderProps {
+    buttons?: OwnAvatarMenuLayoutButtonsProps;
+    layout?: BoxLayout;
+    minimize?: OwnAvatarMenuLayoutMinimizeProps;
+    profileLink?: OwnAvatarMenuLayoutProfileLinkProps;
+}
+
+export const OwnAvatarMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: OwnAvatarMenuLayoutBorderProps) => {
+    return (
+        <Region
+            name="border"
+            params={12582928}
+            layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 877, justifyContent: 'center', ...layout }}
+        >
+            <OwnAvatarMenuLayoutProfileLink {...profileLink} />
+            <Region
+                params={144}
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
+            />
+            <OwnAvatarMenuLayoutButtons {...buttons} />
+            <OwnAvatarMenuLayoutMinimize {...minimize} />
         </Region>
     );
 };

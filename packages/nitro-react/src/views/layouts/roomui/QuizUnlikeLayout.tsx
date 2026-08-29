@@ -4,13 +4,11 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `920_quiz_unlike_xml` (layout "quiz_unlike", 32x32) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface QuizUnlikeLayoutProps {
+    buttonLike?: QuizUnlikeLayoutButtonLikeProps;
     layout?: BoxLayout;
-    onButtonLike?: () => void;
 }
 
-export const QuizUnlikeLayout = ({ layout, onButtonLike }: QuizUnlikeLayoutProps) => {
-    const t = useTranslation();
-
+export const QuizUnlikeLayout = ({ buttonLike, layout }: QuizUnlikeLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 32, height: 32, ...layout }}>
             <Region layout={{ position: 'absolute', left: -1, width: 32, top: 0, height: 32 }}>
@@ -27,23 +25,37 @@ export const QuizUnlikeLayout = ({ layout, onButtonLike }: QuizUnlikeLayoutProps
                     tintColor="#b32e22"
                     layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32 }}
                 />
-                <Region
-                    name="button_like"
-                    tooltip={t('quizz.like.button.tooltip')}
-                    params={131073}
-                    dynamicStyle="brightness_and_shadow_under"
-                    onPointerTap={onButtonLike}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32, minWidth: 32, maxWidth: 32 }}
-                >
-                    <ThemeImage
-                        tags={[ '#icon' ]}
-                        params={16}
-                        src={layoutImage('word_quiz_thum_down.png')}
-                        layout={{ position: 'absolute', left: 5, width: 22, top: 8, height: 22 }}
-                    />
-                </Region>
+                <QuizUnlikeLayoutButtonLike {...buttonLike} />
             </Region>
+        </Region>
+    );
+};
+
+/** Named region `button_like` of QuizUnlikeLayout - configured through the parent's `buttonLike` prop. */
+export interface QuizUnlikeLayoutButtonLikeProps {
+    layout?: BoxLayout;
+    onButtonLike?: () => void;
+}
+
+export const QuizUnlikeLayoutButtonLike = ({ layout, onButtonLike }: QuizUnlikeLayoutButtonLikeProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="button_like"
+            tooltip={t('quizz.like.button.tooltip')}
+            params={131073}
+            dynamicStyle="brightness_and_shadow_under"
+            onPointerTap={onButtonLike}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 32, top: 0, height: 32, minWidth: 32, maxWidth: 32, ...layout }}
+        >
+            <ThemeImage
+                tags={[ '#icon' ]}
+                params={16}
+                src={layoutImage('word_quiz_thum_down.png')}
+                layout={{ position: 'absolute', left: 5, width: 22, top: 8, height: 22 }}
+            />
         </Region>
     );
 };

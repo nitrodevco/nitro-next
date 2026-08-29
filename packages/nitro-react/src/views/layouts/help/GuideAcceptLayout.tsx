@@ -6,13 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `2907_guide_accept_xml` (layout "guide_accept", 282x276) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GuideAcceptLayoutProps {
-    itemsItemlist?: ReactNode;
+    itemlist?: GuideAcceptLayoutItemlistProps;
     layout?: BoxLayout;
     onClose?: () => void;
     srcFrankGreeting?: string;
 }
 
-export const GuideAcceptLayout = ({ itemsItemlist, layout, onClose, srcFrankGreeting }: GuideAcceptLayoutProps) => {
+export const GuideAcceptLayout = ({ itemlist, layout, onClose, srcFrankGreeting }: GuideAcceptLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -32,21 +32,7 @@ export const GuideAcceptLayout = ({ itemsItemlist, layout, onClose, srcFrankGree
                     params={16}
                     layout={{ position: 'absolute', left: 0, width: 280, top: 20, height: 224 }}
                 >
-                    <Region
-                        name="itemlist"
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 221, flexDirection: 'column' }}
-                    >
-                        {itemsItemlist ?? (
-                            <>
-                                <GuideAcceptLayoutRequestTitleItem />
-                                <GuideAcceptLayoutRequestTypeItem />
-                                <GuideAcceptLayoutRequestDescriptionWrapperItem />
-                                <GuideAcceptLayoutAcceptButtonItem />
-                                <GuideAcceptLayoutSkipLinkItem />
-                            </>
-                        )}
-                    </Region>
+                    <GuideAcceptLayoutItemlist {...itemlist} />
                 </Border>
                 <ThemeImage
                     params={16}
@@ -230,6 +216,32 @@ export const GuideAcceptLayoutSkipLinkItem = ({ captionSkipLink, layout, onSkipL
             cursor="pointer"
         >
             <ThemeText text={captionSkipLink ?? t('guide.help.request.guide.accept.skip.link')} />
+        </Region>
+    );
+};
+
+/** Named region `itemlist` of GuideAcceptLayout - configured through the parent's `itemlist` prop. */
+export interface GuideAcceptLayoutItemlistProps {
+    itemsItemlist?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const GuideAcceptLayoutItemlist = ({ itemsItemlist, layout }: GuideAcceptLayoutItemlistProps) => {
+    return (
+        <Region
+            name="itemlist"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 221, flexDirection: 'column', ...layout }}
+        >
+            {itemsItemlist ?? (
+                <>
+                    <GuideAcceptLayoutRequestTitleItem />
+                    <GuideAcceptLayoutRequestTypeItem />
+                    <GuideAcceptLayoutRequestDescriptionWrapperItem />
+                    <GuideAcceptLayoutAcceptButtonItem />
+                    <GuideAcceptLayoutSkipLinkItem />
+                </>
+            )}
         </Region>
     );
 };

@@ -6,13 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `76_tour_task_progress_dialog_xml` (layout "task_progress_dialog", 378x289) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface TourTaskProgressDialogLayoutProps {
-    itemsTopList?: ReactNode;
+    declineTourRegion?: TourTaskProgressDialogLayoutDeclineTourRegionProps;
     layout?: BoxLayout;
     onClose?: () => void;
-    onDeclineTourRegion?: () => void;
+    topList?: TourTaskProgressDialogLayoutTopListProps;
 }
 
-export const TourTaskProgressDialogLayout = ({ itemsTopList, layout, onClose, onDeclineTourRegion }: TourTaskProgressDialogLayoutProps) => {
+export const TourTaskProgressDialogLayout = ({ declineTourRegion, layout, onClose, topList }: TourTaskProgressDialogLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -65,34 +65,9 @@ export const TourTaskProgressDialogLayout = ({ itemsTopList, layout, onClose, on
                         params={16}
                         layout={{ position: 'absolute', left: 10, width: 325, top: 57, height: 30 }}
                     />
-                    <Region
-                        name="top_list"
-                        params={147472}
-                        layout={{ position: 'absolute', left: 118, top: 79, minHeight: 70, flexDirection: 'column' }}
-                    >
-                        {itemsTopList ?? (
-                            <>
-                                <TourTaskProgressDialogLayoutActionTitleItem />
-                                <TourTaskProgressDialogLayoutActionDescriptionItem />
-                                <TourTaskProgressDialogLayoutTakeTourButtonItem />
-                            </>
-                        )}
-                    </Region>
+                    <TourTaskProgressDialogLayoutTopList {...topList} />
                 </Border>
-                <Region
-                    name="decline_tour_region"
-                    params={17}
-                    onPointerTap={onDeclineTourRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 16, width: 347, top: 211, height: 33, justifyContent: 'center' }}
-                >
-                    <Region
-                        params={786448}
-                        layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 144, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={t('talent.track.progress.tour.decline')} />
-                    </Region>
-                </Region>
+                <TourTaskProgressDialogLayoutDeclineTourRegion {...declineTourRegion} />
             </Region>
         </Frame>
     );
@@ -165,5 +140,56 @@ export const TourTaskProgressDialogLayoutTakeTourButtonItem = ({ layout, onTakeT
         >
             {t('talent.track.progress.tour.accept')}
         </Button>
+    );
+};
+
+/** Named region `top_list` of TourTaskProgressDialogLayout - configured through the parent's `topList` prop. */
+export interface TourTaskProgressDialogLayoutTopListProps {
+    itemsTopList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const TourTaskProgressDialogLayoutTopList = ({ itemsTopList, layout }: TourTaskProgressDialogLayoutTopListProps) => {
+    return (
+        <Region
+            name="top_list"
+            params={147472}
+            layout={{ position: 'absolute', left: 118, top: 79, minHeight: 70, flexDirection: 'column', ...layout }}
+        >
+            {itemsTopList ?? (
+                <>
+                    <TourTaskProgressDialogLayoutActionTitleItem />
+                    <TourTaskProgressDialogLayoutActionDescriptionItem />
+                    <TourTaskProgressDialogLayoutTakeTourButtonItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `decline_tour_region` of TourTaskProgressDialogLayout - configured through the parent's `declineTourRegion` prop. */
+export interface TourTaskProgressDialogLayoutDeclineTourRegionProps {
+    layout?: BoxLayout;
+    onDeclineTourRegion?: () => void;
+}
+
+export const TourTaskProgressDialogLayoutDeclineTourRegion = ({ layout, onDeclineTourRegion }: TourTaskProgressDialogLayoutDeclineTourRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="decline_tour_region"
+            params={17}
+            onPointerTap={onDeclineTourRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 16, width: 347, top: 211, height: 33, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                params={786448}
+                layout={{ position: 'absolute', marginLeft: 1.5, marginRight: -1.5, width: 144, top: 7, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={t('talent.track.progress.tour.decline')} />
+            </Region>
+        </Region>
     );
 };

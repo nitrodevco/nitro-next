@@ -6,11 +6,11 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `66_add_friends_tab_xml` (layout "entity", 127x164) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface AddFriendsTabLayoutProps {
-    itemsTabContent?: ReactNode;
     layout?: BoxLayout;
+    tabContent?: AddFriendsTabLayoutTabContentProps;
 }
 
-export const AddFriendsTabLayout = ({ itemsTabContent, layout }: AddFriendsTabLayoutProps) => {
+export const AddFriendsTabLayout = ({ layout, tabContent }: AddFriendsTabLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 127, height: 164, ...layout }}>
             <Border
@@ -20,20 +20,7 @@ export const AddFriendsTabLayout = ({ itemsTabContent, layout }: AddFriendsTabLa
                 tintColor="#74dbfa"
                 layout={{ position: 'absolute', left: 0, width: 127, top: 0, height: 164 }}
             >
-                <Region
-                    name="tab_content"
-                    params={8388752}
-                    layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 140, minHeight: 40, flexDirection: 'column' }}
-                >
-                    {itemsTabContent ?? (
-                        <>
-                            <AddFriendsTabLayoutHeaderItem />
-                            <AddFriendsTabLayoutTextItem />
-                            <AddFriendsTabLayoutSpacerItem />
-                            <AddFriendsTabLayoutButtonItem />
-                        </>
-                    )}
-                </Region>
+                <AddFriendsTabLayoutTabContent {...tabContent} />
             </Border>
         </Region>
     );
@@ -138,5 +125,30 @@ export const AddFriendsTabLayoutButtonItem = ({ layout, onButton }: AddFriendsTa
         >
             {t('friend.bar.find.button')}
         </ButtonThick>
+    );
+};
+
+/** Named region `tab_content` of AddFriendsTabLayout - configured through the parent's `tabContent` prop. */
+export interface AddFriendsTabLayoutTabContentProps {
+    itemsTabContent?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const AddFriendsTabLayoutTabContent = ({ itemsTabContent, layout }: AddFriendsTabLayoutTabContentProps) => {
+    return (
+        <Region
+            name="tab_content"
+            params={8388752}
+            layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 140, minHeight: 40, flexDirection: 'column', ...layout }}
+        >
+            {itemsTabContent ?? (
+                <>
+                    <AddFriendsTabLayoutHeaderItem />
+                    <AddFriendsTabLayoutTextItem />
+                    <AddFriendsTabLayoutSpacerItem />
+                    <AddFriendsTabLayoutButtonItem />
+                </>
+            )}
+        </Region>
     );
 };

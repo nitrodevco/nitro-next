@@ -5,13 +5,11 @@ import { BoxLayout, Bubble, ContainerButton, Icon, Region, ThemeText } from '#ba
 
 /** Generated from `987_random_teleport_menu_xml` (layout "context_menu_widget", 115x86) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RandomTeleportMenuLayoutProps {
-    captionFurniName?: string;
-    itemsButtons?: ReactNode;
+    border?: RandomTeleportMenuLayoutBorderProps;
     layout?: BoxLayout;
-    onMinimize?: () => void;
 }
 
-export const RandomTeleportMenuLayout = ({ captionFurniName, itemsButtons, layout, onMinimize }: RandomTeleportMenuLayoutProps) => {
+export const RandomTeleportMenuLayout = ({ border, layout }: RandomTeleportMenuLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 115, height: 86, ...layout }}>
             <Bubble
@@ -20,56 +18,7 @@ export const RandomTeleportMenuLayout = ({ captionFurniName, itemsButtons, layou
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 115, bottom: -27, height: 86 }}
             >
-                <Region
-                    name="border"
-                    params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76, justifyContent: 'center' }}
-                >
-                    <Region
-                        params={17}
-                        layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="furni_name"
-                            params={208}
-                            layout={{ position: 'absolute', width: 61, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionFurniName ?? 'furni_name'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                    </Region>
-                    <Region
-                        params={144}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
-                    />
-                    <Region
-                        name="buttons"
-                        params={8519888}
-                        layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 26, flexDirection: 'column', gap: 1 }}
-                    >
-                        {itemsButtons ?? (
-                            <RandomTeleportMenuLayoutUseItem />
-                        )}
-                    </Region>
-                    <Region
-                        name="minimize"
-                        params={1041}
-                        onPointerTap={onMinimize}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 4, width: 100, bottom: 3, height: 18 }}
-                    >
-                        <Icon
-                            variant="7"
-                            name="icon"
-                            params={16}
-                            layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
-                        />
-                    </Region>
-                </Region>
+                <RandomTeleportMenuLayoutBorder {...border} />
             </Bubble>
         </Region>
     );
@@ -113,6 +62,93 @@ export const RandomTeleportMenuLayoutUseItem = ({ captionLabel, layout, onButton
                     />
                 </Region>
             </ContainerButton>
+        </Region>
+    );
+};
+
+/** Named region `buttons` of RandomTeleportMenuLayout - configured through the parent's `buttons` prop. */
+export interface RandomTeleportMenuLayoutButtonsProps {
+    itemsButtons?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const RandomTeleportMenuLayoutButtons = ({ itemsButtons, layout }: RandomTeleportMenuLayoutButtonsProps) => {
+    return (
+        <Region
+            name="buttons"
+            params={8519888}
+            layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 26, flexDirection: 'column', gap: 1, ...layout }}
+        >
+            {itemsButtons ?? (
+                <RandomTeleportMenuLayoutUseItem />
+            )}
+        </Region>
+    );
+};
+
+/** Named region `minimize` of RandomTeleportMenuLayout - configured through the parent's `minimize` prop. */
+export interface RandomTeleportMenuLayoutMinimizeProps {
+    layout?: BoxLayout;
+    onMinimize?: () => void;
+}
+
+export const RandomTeleportMenuLayoutMinimize = ({ layout, onMinimize }: RandomTeleportMenuLayoutMinimizeProps) => {
+    return (
+        <Region
+            name="minimize"
+            params={1041}
+            onPointerTap={onMinimize}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 4, width: 100, bottom: 3, height: 18, ...layout }}
+        >
+            <Icon
+                variant="7"
+                name="icon"
+                params={16}
+                layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `border` of RandomTeleportMenuLayout - configured through the parent's `border` prop. */
+export interface RandomTeleportMenuLayoutBorderProps {
+    buttons?: RandomTeleportMenuLayoutButtonsProps;
+    captionFurniName?: string;
+    layout?: BoxLayout;
+    minimize?: RandomTeleportMenuLayoutMinimizeProps;
+}
+
+export const RandomTeleportMenuLayoutBorder = ({ buttons, captionFurniName, layout, minimize }: RandomTeleportMenuLayoutBorderProps) => {
+    return (
+        <Region
+            name="border"
+            params={12582928}
+            layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                params={17}
+                layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center' }}
+            >
+                <Region
+                    name="furni_name"
+                    params={208}
+                    layout={{ position: 'absolute', width: 61, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionFurniName ?? 'furni_name'}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+            </Region>
+            <Region
+                params={144}
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
+            />
+            <RandomTeleportMenuLayoutButtons {...buttons} />
+            <RandomTeleportMenuLayoutMinimize {...minimize} />
         </Region>
     );
 };

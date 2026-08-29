@@ -9,12 +9,13 @@ export interface ExpiringCatalogPageLayoutProps {
     captionPageHeaderTxt?: string;
     layout?: BoxLayout;
     onOpenCatalogButton?: () => void;
+    spacing?: ExpiringCatalogPageLayoutSpacingProps;
     srcBorderBar?: string;
     srcHdrLine?: string;
     srcPromoBitmap?: string;
 }
 
-export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpiryTitle, captionPageHeaderTxt, layout, onOpenCatalogButton, srcBorderBar, srcHdrLine, srcPromoBitmap }: ExpiringCatalogPageLayoutProps) => {
+export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpiryTitle, captionPageHeaderTxt, layout, onOpenCatalogButton, spacing, srcBorderBar, srcHdrLine, srcPromoBitmap }: ExpiringCatalogPageLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -58,11 +59,7 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                         options={{ 'countdown:running': 'true' }}
                         layout={{ width: 99, height: 37, flexShrink: 0 }}
                     />
-                    <Region
-                        name="spacing"
-                        params={16}
-                        layout={{ width: 30, height: 6, flexShrink: 0 }}
-                    />
+                    <ExpiringCatalogPageLayoutSpacing {...spacing} />
                     <Region
                         name="page_header_txt"
                         tags={[ 'COLORABLE' ]}
@@ -103,5 +100,20 @@ export const ExpiringCatalogPageLayout = ({ captionPageDescTxt, captionPageExpir
                 />
             </Region>
         </Region>
+    );
+};
+
+/** Named region `spacing` of ExpiringCatalogPageLayout - configured through the parent's `spacing` prop. */
+export interface ExpiringCatalogPageLayoutSpacingProps {
+    layout?: BoxLayout;
+}
+
+export const ExpiringCatalogPageLayoutSpacing = ({ layout }: ExpiringCatalogPageLayoutSpacingProps) => {
+    return (
+        <Region
+            name="spacing"
+            params={16}
+            layout={{ width: 30, height: 6, flexShrink: 0, ...layout }}
+        />
     );
 };

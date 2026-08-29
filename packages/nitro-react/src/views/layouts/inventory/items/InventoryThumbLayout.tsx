@@ -3,18 +3,17 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1420_inventory_thumb_xml` (layout "thumbnail", 42x42) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface InventoryThumbLayoutProps {
-    captionNumber?: string;
     layout?: BoxLayout;
+    numberContainer?: InventoryThumbLayoutNumberContainerProps;
     srcBitmap?: string;
     srcChestBackgroundBitmap?: string;
     srcOutline?: string;
     srcRecyclableContainer?: string;
     srcRentState?: string;
     srcUniqueItemBackgroundBitmap?: string;
-    visibleNumberContainer?: boolean;
 }
 
-export const InventoryThumbLayout = ({ captionNumber, layout, srcBitmap, srcChestBackgroundBitmap, srcOutline, srcRecyclableContainer, srcRentState, srcUniqueItemBackgroundBitmap, visibleNumberContainer }: InventoryThumbLayoutProps) => {
+export const InventoryThumbLayout = ({ layout, numberContainer, srcBitmap, srcChestBackgroundBitmap, srcOutline, srcRecyclableContainer, srcRentState, srcUniqueItemBackgroundBitmap }: InventoryThumbLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 42, height: 42, ...layout }}>
             <Region
@@ -97,26 +96,7 @@ export const InventoryThumbLayout = ({ captionNumber, layout, srcBitmap, srcChes
                         visible={false}
                         layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                     />
-                    <Region
-                        name="number_container"
-                        tags={[ 'COUNT' ]}
-                        params={393360}
-                        visible={visibleNumberContainer ?? false}
-                        backgroundColor="#2f6982"
-                        layout={{ position: 'absolute', left: 33, right: 1, top: 2, height: 15 }}
-                    >
-                        <Region
-                            name="number"
-                            tags={[ 'NUMBER', 'COUNT' ]}
-                            params={16}
-                            layout={{ position: 'absolute', left: 1, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionNumber ?? ''}
-                                textOptions={{ fill: '#2f6982' }}
-                            />
-                        </Region>
-                    </Region>
+                    <InventoryThumbLayoutNumberContainer {...numberContainer} />
                     <Region
                         visible={false}
                         layout={{ position: 'absolute', left: 4, width: 10, top: 4, height: 10 }}
@@ -134,6 +114,38 @@ export const InventoryThumbLayout = ({ captionNumber, layout, srcBitmap, srcChes
                     params={16}
                     src={srcOutline ?? layoutImage('inventory_thumb_selected_outline.png')}
                     layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `number_container` of InventoryThumbLayout - configured through the parent's `numberContainer` prop. */
+export interface InventoryThumbLayoutNumberContainerProps {
+    captionNumber?: string;
+    layout?: BoxLayout;
+    visibleNumberContainer?: boolean;
+}
+
+export const InventoryThumbLayoutNumberContainer = ({ captionNumber, layout, visibleNumberContainer }: InventoryThumbLayoutNumberContainerProps) => {
+    return (
+        <Region
+            name="number_container"
+            tags={[ 'COUNT' ]}
+            params={393360}
+            visible={visibleNumberContainer ?? false}
+            backgroundColor="#2f6982"
+            layout={{ position: 'absolute', left: 33, right: 1, top: 2, height: 15, ...layout }}
+        >
+            <Region
+                name="number"
+                tags={[ 'NUMBER', 'COUNT' ]}
+                params={16}
+                layout={{ position: 'absolute', left: 1, width: 4, top: 1, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionNumber ?? ''}
+                    textOptions={{ fill: '#2f6982' }}
                 />
             </Region>
         </Region>

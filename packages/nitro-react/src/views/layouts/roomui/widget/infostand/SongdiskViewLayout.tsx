@@ -6,13 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1053_songdisk_view_xml` (layout "furni_view", 429x25) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface SongdiskViewLayoutProps {
-    itemsButtonList?: ReactNode;
-    itemsInfostandElementList?: ReactNode;
+    buttonList?: SongdiskViewLayoutButtonListProps;
+    infostandElementList?: SongdiskViewLayoutInfostandElementListProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const SongdiskViewLayout = ({ itemsButtonList, itemsInfostandElementList, layout, onClose }: SongdiskViewLayoutProps) => {
+export const SongdiskViewLayout = ({ buttonList, infostandElementList, layout, onClose }: SongdiskViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 429, height: 25, ...layout }}>
             <Region
@@ -33,40 +33,9 @@ export const SongdiskViewLayout = ({ itemsButtonList, itemsInfostandElementList,
                         onPointerTap={onClose}
                         layout={{ position: 'absolute', left: 168, width: 18, top: 6, height: 16 }}
                     />
-                    <Region
-                        name="infostand_element_list"
-                        params={16}
-                        layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 271, flexDirection: 'column', gap: 5 }}
-                    >
-                        {itemsInfostandElementList ?? (
-                            <>
-                                <SongdiskViewLayoutNameTextItem />
-                                <SongdiskViewLayoutImagesSpacerItem />
-                                <SongdiskViewLayoutImageItem />
-                                <SongdiskViewLayoutOwnerSpacerItem />
-                                <SongdiskViewLayoutOwnerRegionItem />
-                                <SongdiskViewLayoutDescriptionSpacerItem />
-                                <SongdiskViewLayoutTracknameContainerItem />
-                                <SongdiskViewLayoutCreatornameContainerItem />
-                                <SongdiskViewLayoutExpirationTextItem />
-                                <SongdiskViewLayoutPurchaseButtonsItem />
-                            </>
-                        )}
-                    </Region>
+                    <SongdiskViewLayoutInfostandElementList {...infostandElementList} />
                 </Border>
-                <Region
-                    name="button_list"
-                    params={16}
-                    layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10 }}
-                >
-                    {itemsButtonList ?? (
-                        <>
-                            <SongdiskViewLayoutMoveItem />
-                            <SongdiskViewLayoutRotateItem />
-                            <SongdiskViewLayoutPickupItem />
-                        </>
-                    )}
-                </Region>
+                <SongdiskViewLayoutButtonList {...buttonList} />
             </Region>
         </Region>
     );
@@ -404,6 +373,37 @@ export const SongdiskViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButtons, la
     );
 };
 
+/** Named region `infostand_element_list` of SongdiskViewLayout - configured through the parent's `infostandElementList` prop. */
+export interface SongdiskViewLayoutInfostandElementListProps {
+    itemsInfostandElementList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const SongdiskViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: SongdiskViewLayoutInfostandElementListProps) => {
+    return (
+        <Region
+            name="infostand_element_list"
+            params={16}
+            layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 271, flexDirection: 'column', gap: 5, ...layout }}
+        >
+            {itemsInfostandElementList ?? (
+                <>
+                    <SongdiskViewLayoutNameTextItem />
+                    <SongdiskViewLayoutImagesSpacerItem />
+                    <SongdiskViewLayoutImageItem />
+                    <SongdiskViewLayoutOwnerSpacerItem />
+                    <SongdiskViewLayoutOwnerRegionItem />
+                    <SongdiskViewLayoutDescriptionSpacerItem />
+                    <SongdiskViewLayoutTracknameContainerItem />
+                    <SongdiskViewLayoutCreatornameContainerItem />
+                    <SongdiskViewLayoutExpirationTextItem />
+                    <SongdiskViewLayoutPurchaseButtonsItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
 /** Row template `move` of SongdiskViewLayout - pass real rows through its `items…` slot. */
 export interface SongdiskViewLayoutMoveItemProps {
     layout?: BoxLayout;
@@ -470,5 +470,29 @@ export const SongdiskViewLayoutPickupItem = ({ layout, onPickup }: SongdiskViewL
         >
             {t('infostand.button.pickup')}
         </Button>
+    );
+};
+
+/** Named region `button_list` of SongdiskViewLayout - configured through the parent's `buttonList` prop. */
+export interface SongdiskViewLayoutButtonListProps {
+    itemsButtonList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const SongdiskViewLayoutButtonList = ({ itemsButtonList, layout }: SongdiskViewLayoutButtonListProps) => {
+    return (
+        <Region
+            name="button_list"
+            params={16}
+            layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
+        >
+            {itemsButtonList ?? (
+                <>
+                    <SongdiskViewLayoutMoveItem />
+                    <SongdiskViewLayoutRotateItem />
+                    <SongdiskViewLayoutPickupItem />
+                </>
+            )}
+        </Region>
     );
 };

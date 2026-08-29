@@ -5,14 +5,11 @@ import { BoxLayout, Bubble, CheckBox, ContainerButton, Icon, Region, ThemeText }
 
 /** Generated from `843_own_pet_menu_xml` (layout "context_menu_widget", 115x600) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface OwnPetMenuLayoutProps {
-    captionName?: string;
-    itemsButtons?: ReactNode;
+    border?: OwnPetMenuLayoutBorderProps;
     layout?: BoxLayout;
-    onMinimize?: () => void;
-    onProfileLink?: () => void;
 }
 
-export const OwnPetMenuLayout = ({ captionName, itemsButtons, layout, onMinimize, onProfileLink }: OwnPetMenuLayoutProps) => {
+export const OwnPetMenuLayout = ({ border, layout }: OwnPetMenuLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 115, height: 600, ...layout }}>
             <Bubble
@@ -21,80 +18,39 @@ export const OwnPetMenuLayout = ({ captionName, itemsButtons, layout, onMinimize
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 115, bottom: 0, height: 600 }}
             >
-                <Region
-                    name="border"
-                    params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 590, justifyContent: 'center' }}
-                >
-                    <Region
-                        name="profile_link"
-                        params={1}
-                        onPointerTap={onProfileLink}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 107, top: -1, height: 28, maxHeight: 28, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="name"
-                            params={3280}
-                            layout={{ position: 'absolute', width: 107, alignSelf: 'center', height: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionName ?? 'Incarnatus Hairbullis'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 107, align: 'center' }}
-                            />
-                        </Region>
-                    </Region>
-                    <Region
-                        params={144}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
-                    />
-                    <Region
-                        name="buttons"
-                        params={8519888}
-                        layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 540, flexDirection: 'column', gap: 1 }}
-                    >
-                        {itemsButtons ?? (
-                            <>
-                                <OwnPetMenuLayoutBuySaddleItem />
-                                <OwnPetMenuLayoutMountItem />
-                                <OwnPetMenuLayoutToggleRidingPermissionItem />
-                                <OwnPetMenuLayoutDismountItem />
-                                <OwnPetMenuLayoutRespectItem />
-                                <OwnPetMenuLayoutTreatItem />
-                                <OwnPetMenuLayoutPassHanditemItem />
-                                <OwnPetMenuLayoutTrainItem />
-                                <OwnPetMenuLayoutPickUpItem />
-                                <OwnPetMenuLayoutSaddleOffItem />
-                                <OwnPetMenuLayoutGiveWaterItem />
-                                <OwnPetMenuLayoutGiveLightItem />
-                                <OwnPetMenuLayoutBreedItem />
-                                <OwnPetMenuLayoutHarvestItem />
-                                <OwnPetMenuLayoutReviveItem />
-                                <OwnPetMenuLayoutCompostItem />
-                                <OwnPetMenuLayoutMoreItem />
-                                <OwnPetMenuLayoutToggleBreedingPermissionItem />
-                                <OwnPetMenuLayoutWiredInspectItem />
-                            </>
-                        )}
-                    </Region>
-                    <Region
-                        name="minimize"
-                        params={1041}
-                        onPointerTap={onMinimize}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 4, width: 100, bottom: 4, height: 19 }}
-                    >
-                        <Icon
-                            variant="7"
-                            name="icon"
-                            params={16}
-                            layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
-                        />
-                    </Region>
-                </Region>
+                <OwnPetMenuLayoutBorder {...border} />
             </Bubble>
+        </Region>
+    );
+};
+
+/** Named region `profile_link` of OwnPetMenuLayout - configured through the parent's `profileLink` prop. */
+export interface OwnPetMenuLayoutProfileLinkProps {
+    captionName?: string;
+    layout?: BoxLayout;
+    onProfileLink?: () => void;
+}
+
+export const OwnPetMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: OwnPetMenuLayoutProfileLinkProps) => {
+    return (
+        <Region
+            name="profile_link"
+            params={1}
+            onPointerTap={onProfileLink}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 107, top: -1, height: 28, maxHeight: 28, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="name"
+                params={3280}
+                layout={{ position: 'absolute', width: 107, alignSelf: 'center', height: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionName ?? 'Incarnatus Hairbullis'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 107, align: 'center' }}
+                />
+            </Region>
         </Region>
     );
 };
@@ -916,6 +872,98 @@ export const OwnPetMenuLayoutWiredInspectItem = ({ captionLabel, layout, onButto
                     />
                 </Region>
             </ContainerButton>
+        </Region>
+    );
+};
+
+/** Named region `buttons` of OwnPetMenuLayout - configured through the parent's `buttons` prop. */
+export interface OwnPetMenuLayoutButtonsProps {
+    itemsButtons?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const OwnPetMenuLayoutButtons = ({ itemsButtons, layout }: OwnPetMenuLayoutButtonsProps) => {
+    return (
+        <Region
+            name="buttons"
+            params={8519888}
+            layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 540, flexDirection: 'column', gap: 1, ...layout }}
+        >
+            {itemsButtons ?? (
+                <>
+                    <OwnPetMenuLayoutBuySaddleItem />
+                    <OwnPetMenuLayoutMountItem />
+                    <OwnPetMenuLayoutToggleRidingPermissionItem />
+                    <OwnPetMenuLayoutDismountItem />
+                    <OwnPetMenuLayoutRespectItem />
+                    <OwnPetMenuLayoutTreatItem />
+                    <OwnPetMenuLayoutPassHanditemItem />
+                    <OwnPetMenuLayoutTrainItem />
+                    <OwnPetMenuLayoutPickUpItem />
+                    <OwnPetMenuLayoutSaddleOffItem />
+                    <OwnPetMenuLayoutGiveWaterItem />
+                    <OwnPetMenuLayoutGiveLightItem />
+                    <OwnPetMenuLayoutBreedItem />
+                    <OwnPetMenuLayoutHarvestItem />
+                    <OwnPetMenuLayoutReviveItem />
+                    <OwnPetMenuLayoutCompostItem />
+                    <OwnPetMenuLayoutMoreItem />
+                    <OwnPetMenuLayoutToggleBreedingPermissionItem />
+                    <OwnPetMenuLayoutWiredInspectItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `minimize` of OwnPetMenuLayout - configured through the parent's `minimize` prop. */
+export interface OwnPetMenuLayoutMinimizeProps {
+    layout?: BoxLayout;
+    onMinimize?: () => void;
+}
+
+export const OwnPetMenuLayoutMinimize = ({ layout, onMinimize }: OwnPetMenuLayoutMinimizeProps) => {
+    return (
+        <Region
+            name="minimize"
+            params={1041}
+            onPointerTap={onMinimize}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 4, width: 100, bottom: 4, height: 19, ...layout }}
+        >
+            <Icon
+                variant="7"
+                name="icon"
+                params={16}
+                layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `border` of OwnPetMenuLayout - configured through the parent's `border` prop. */
+export interface OwnPetMenuLayoutBorderProps {
+    buttons?: OwnPetMenuLayoutButtonsProps;
+    layout?: BoxLayout;
+    minimize?: OwnPetMenuLayoutMinimizeProps;
+    profileLink?: OwnPetMenuLayoutProfileLinkProps;
+}
+
+export const OwnPetMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: OwnPetMenuLayoutBorderProps) => {
+    return (
+        <Region
+            name="border"
+            params={12582928}
+            layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 590, justifyContent: 'center', ...layout }}
+        >
+            <OwnPetMenuLayoutProfileLink {...profileLink} />
+            <Region
+                params={144}
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
+            />
+            <OwnPetMenuLayoutButtons {...buttons} />
+            <OwnPetMenuLayoutMinimize {...minimize} />
         </Region>
     );
 };

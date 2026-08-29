@@ -6,13 +6,12 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `34_task_progress_dialog_xml` (layout "task_progress_dialog", 378x370) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface TaskProgressDialogLayoutProps {
-    itemsList?: ReactNode;
-    itemsTopList?: ReactNode;
     layout?: BoxLayout;
+    list?: TaskProgressDialogLayoutListProps;
     onClose?: () => void;
 }
 
-export const TaskProgressDialogLayout = ({ itemsList, itemsTopList, layout, onClose }: TaskProgressDialogLayoutProps) => {
+export const TaskProgressDialogLayout = ({ layout, list, onClose }: TaskProgressDialogLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -24,68 +23,14 @@ export const TaskProgressDialogLayout = ({ itemsList, itemsTopList, layout, onCl
             layout={{ width: 378, height: 370, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="list"
-                    params={8536080}
-                    layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
-                >
-                    {itemsList ?? (
-                        <>
-                            <TaskProgressDialogLayoutProgressMainContainerItem />
-                            <TaskProgressDialogLayoutActionLinkItem />
-                        </>
-                    )}
-                    <Border
-                        variant="104"
-                        params={147472}
-                        tintColor="#e2e2e2"
-                        layout={{ width: 345, height: 204, flexShrink: 0 }}
-                    >
-                        <Region
-                            name="top_list"
-                            params={147472}
-                            layout={{ position: 'absolute', left: 0, top: 0, minHeight: 70, flexDirection: 'column' }}
-                        >
-                            {itemsTopList ?? (
-                                <>
-                                    <TaskProgressDialogLayoutInstructionItem />
-                                    <TaskProgressDialogLayoutTitleItem />
-                                    <TaskProgressDialogLayoutActionSeparatorItem />
-                                    <TaskProgressDialogLayoutActionTitleItem />
-                                    <TaskProgressDialogLayoutActionDescriptionItem />
-                                    <TaskProgressDialogLayoutEmailContainerItem />
-                                </>
-                            )}
-                            <Region
-                                params={16}
-                                layout={{ width: 345, height: 10, flexShrink: 0 }}
-                            >
-                                <WidgetSlot
-                                    widgetType="badge_image"
-                                    name="badge"
-                                    options={{ 'badge_image:badge_id': 'ACH_EmailVerification1', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                                    layout={{ position: 'absolute', left: 0, width: 60, top: 1, height: 70 }}
-                                />
-                            </Region>
-                            <Region
-                                params={16}
-                                layout={{ width: 345, height: 10, flexShrink: 0 }}
-                            />
-                        </Region>
-                    </Border>
-                    <Region
-                        params={16}
-                        layout={{ width: 380, height: 15, flexShrink: 0 }}
-                    />
-                </Region>
+                <TaskProgressDialogLayoutList {...list} />
             </Region>
         </Frame>
     );
 };
 
-/** Row template `progress_main_container` of TaskProgressDialogLayout - pass real rows through its `items…` slot. */
-export interface TaskProgressDialogLayoutProgressMainContainerItemProps {
-    captionProgressText?: string;
+/** Named region `progress_container` of TaskProgressDialogLayout - configured through the parent's `progressContainer` prop. */
+export interface TaskProgressDialogLayoutProgressContainerProps {
     layout?: BoxLayout;
     srcAchievedLeft?: string;
     srcAchievedMid?: string;
@@ -95,7 +40,61 @@ export interface TaskProgressDialogLayoutProgressMainContainerItemProps {
     srcUnachievedRight?: string;
 }
 
-export const TaskProgressDialogLayoutProgressMainContainerItem = ({ captionProgressText, layout, srcAchievedLeft, srcAchievedMid, srcAchievedRight, srcUnachievedLeft, srcUnachievedMid, srcUnachievedRight }: TaskProgressDialogLayoutProgressMainContainerItemProps) => {
+export const TaskProgressDialogLayoutProgressContainer = ({ layout, srcAchievedLeft, srcAchievedMid, srcAchievedRight, srcUnachievedLeft, srcUnachievedMid, srcUnachievedRight }: TaskProgressDialogLayoutProgressContainerProps) => {
+    return (
+        <Region
+            name="progress_container"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 350, top: 0, height: 16, ...layout }}
+        >
+            <ThemeImage
+                name="unachieved_left"
+                params={16}
+                src={srcUnachievedLeft ?? layoutImage('talent_unachieved_left.png')}
+                layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 16 }}
+            />
+            <ThemeImage
+                name="unachieved_mid"
+                params={16}
+                src={srcUnachievedMid ?? layoutImage('talent_unachieved_mid.png')}
+                layout={{ position: 'absolute', left: 4, width: 342, top: 0, height: 16 }}
+            />
+            <ThemeImage
+                name="unachieved_right"
+                params={16}
+                src={srcUnachievedRight ?? layoutImage('talent_unachieved_right.png')}
+                layout={{ position: 'absolute', left: 346, width: 4, top: 0, height: 16 }}
+            />
+            <ThemeImage
+                name="achieved_left"
+                params={16}
+                src={srcAchievedLeft ?? layoutImage('talent_achieved_left.png')}
+                layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 16 }}
+            />
+            <ThemeImage
+                name="achieved_mid"
+                params={16}
+                src={srcAchievedMid ?? layoutImage('talent_achieved_mid.png')}
+                layout={{ position: 'absolute', left: 4, width: 342, top: 0, height: 16 }}
+            />
+            <ThemeImage
+                name="achieved_right"
+                params={16}
+                src={srcAchievedRight ?? layoutImage('talent_achieved_right.png')}
+                layout={{ position: 'absolute', left: 346, width: 4, top: 0, height: 16 }}
+            />
+        </Region>
+    );
+};
+
+/** Row template `progress_main_container` of TaskProgressDialogLayout - pass real rows through its `items…` slot. */
+export interface TaskProgressDialogLayoutProgressMainContainerItemProps {
+    captionProgressText?: string;
+    layout?: BoxLayout;
+    progressContainer?: TaskProgressDialogLayoutProgressContainerProps;
+}
+
+export const TaskProgressDialogLayoutProgressMainContainerItem = ({ captionProgressText, layout, progressContainer }: TaskProgressDialogLayoutProgressMainContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -104,48 +103,7 @@ export const TaskProgressDialogLayoutProgressMainContainerItem = ({ captionProgr
             params={16}
             layout={{ width: 350, height: 47, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="progress_container"
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 350, top: 0, height: 16 }}
-            >
-                <ThemeImage
-                    name="unachieved_left"
-                    params={16}
-                    src={srcUnachievedLeft ?? layoutImage('talent_unachieved_left.png')}
-                    layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 16 }}
-                />
-                <ThemeImage
-                    name="unachieved_mid"
-                    params={16}
-                    src={srcUnachievedMid ?? layoutImage('talent_unachieved_mid.png')}
-                    layout={{ position: 'absolute', left: 4, width: 342, top: 0, height: 16 }}
-                />
-                <ThemeImage
-                    name="unachieved_right"
-                    params={16}
-                    src={srcUnachievedRight ?? layoutImage('talent_unachieved_right.png')}
-                    layout={{ position: 'absolute', left: 346, width: 4, top: 0, height: 16 }}
-                />
-                <ThemeImage
-                    name="achieved_left"
-                    params={16}
-                    src={srcAchievedLeft ?? layoutImage('talent_achieved_left.png')}
-                    layout={{ position: 'absolute', left: 0, width: 4, top: 0, height: 16 }}
-                />
-                <ThemeImage
-                    name="achieved_mid"
-                    params={16}
-                    src={srcAchievedMid ?? layoutImage('talent_achieved_mid.png')}
-                    layout={{ position: 'absolute', left: 4, width: 342, top: 0, height: 16 }}
-                />
-                <ThemeImage
-                    name="achieved_right"
-                    params={16}
-                    src={srcAchievedRight ?? layoutImage('talent_achieved_right.png')}
-                    layout={{ position: 'absolute', left: 346, width: 4, top: 0, height: 16 }}
-                />
-            </Region>
+            <TaskProgressDialogLayoutProgressContainer {...progressContainer} />
             <Region
                 name="progress_text"
                 params={16}
@@ -294,18 +252,130 @@ export const TaskProgressDialogLayoutActionDescriptionItem = ({ captionActionDes
     );
 };
 
-/** Row template `email_container` of TaskProgressDialogLayout - pass real rows through its `items…` slot. */
-export interface TaskProgressDialogLayoutEmailContainerItemProps {
-    captionErrorTxt?: string;
-    captionVerifiedTxt?: string;
+/** Named region `change_email_region` of TaskProgressDialogLayout - configured through the parent's `changeEmailRegion` prop. */
+export interface TaskProgressDialogLayoutChangeEmailRegionProps {
     layout?: BoxLayout;
     onChangeEmailRegion?: () => void;
+}
+
+export const TaskProgressDialogLayoutChangeEmailRegion = ({ layout, onChangeEmailRegion }: TaskProgressDialogLayoutChangeEmailRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="change_email_region"
+            params={17}
+            onPointerTap={onChangeEmailRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 3, width: 319, top: 28, height: 21, ...layout }}
+        >
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 156, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={t('talent.track.progress.setemail')} />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `changed_container` of TaskProgressDialogLayout - configured through the parent's `changedContainer` prop. */
+export interface TaskProgressDialogLayoutChangedContainerProps {
+    layout?: BoxLayout;
+}
+
+export const TaskProgressDialogLayoutChangedContainer = ({ layout }: TaskProgressDialogLayoutChangedContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="changed_container"
+            params={16}
+            layout={{ position: 'absolute', left: 2, width: 328, top: 29, height: 36, ...layout }}
+        >
+            <ThemeImage
+                params={16}
+                src={layoutImage('help_accept_icon.png')}
+                layout={{ position: 'absolute', left: 0, width: 11, top: 6, height: 10 }}
+            />
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 16, width: 306, top: 2, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('talent.track.progress.emailchanged')}
+                    textStyle="text-style-il-heading-3"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 306 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `unverified_container` of TaskProgressDialogLayout - configured through the parent's `unverifiedContainer` prop. */
+export interface TaskProgressDialogLayoutUnverifiedContainerProps {
+    captionErrorTxt?: string;
+    changedContainer?: TaskProgressDialogLayoutChangedContainerProps;
+    changeEmailRegion?: TaskProgressDialogLayoutChangeEmailRegionProps;
+    layout?: BoxLayout;
     visibleUnverifiedContainer?: boolean;
 }
 
-export const TaskProgressDialogLayoutEmailContainerItem = ({ captionErrorTxt, captionVerifiedTxt, layout, onChangeEmailRegion, visibleUnverifiedContainer }: TaskProgressDialogLayoutEmailContainerItemProps) => {
-    const t = useTranslation();
+export const TaskProgressDialogLayoutUnverifiedContainer = ({ captionErrorTxt, changedContainer, changeEmailRegion, layout, visibleUnverifiedContainer }: TaskProgressDialogLayoutUnverifiedContainerProps) => {
     const [ emailTxtValue, setEmailTxtValue ] = useState('');
+
+    return (
+        <Region
+            name="unverified_container"
+            params={16}
+            visible={visibleUnverifiedContainer ?? false}
+            layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 60, ...layout }}
+        >
+            <Border
+                variant="105"
+                name="error_border"
+                params={16}
+                tintColor="#cc0000"
+                layout={{ position: 'absolute', left: 0, width: 271, top: 0, height: 29 }}
+            />
+            <Border
+                variant="105"
+                name="input_border"
+                params={16}
+                layout={{ position: 'absolute', left: 2, width: 267, top: 2, height: 24 }}
+            >
+                <TextInput
+                    value={emailTxtValue}
+                    onChange={setEmailTxtValue}
+                    layout={{ position: 'absolute', left: 4, width: 258, top: 4, height: 15 }}
+                />
+            </Border>
+            <TaskProgressDialogLayoutChangeEmailRegion {...changeEmailRegion} />
+            <Region
+                name="error_txt"
+                params={16}
+                layout={{ position: 'absolute', left: 2, width: 318, top: 28, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionErrorTxt ?? 'jkhgjk hgk jhg kjhg jkh lkjh lkjh lkjh lkjh lkj hlkjh lkj hlkjh lkj'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#cc0000', wordWrap: true, wordWrapWidth: 318 }}
+                />
+            </Region>
+            <TaskProgressDialogLayoutChangedContainer {...changedContainer} />
+        </Region>
+    );
+};
+
+/** Row template `email_container` of TaskProgressDialogLayout - pass real rows through its `items…` slot. */
+export interface TaskProgressDialogLayoutEmailContainerItemProps {
+    captionVerifiedTxt?: string;
+    layout?: BoxLayout;
+    unverifiedContainer?: TaskProgressDialogLayoutUnverifiedContainerProps;
+}
+
+export const TaskProgressDialogLayoutEmailContainerItem = ({ captionVerifiedTxt, layout, unverifiedContainer }: TaskProgressDialogLayoutEmailContainerItemProps) => {
+    const t = useTranslation();
 
     return (
         <Region
@@ -313,78 +383,7 @@ export const TaskProgressDialogLayoutEmailContainerItem = ({ captionErrorTxt, ca
             params={16}
             layout={{ width: 320, height: 60, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="unverified_container"
-                params={16}
-                visible={visibleUnverifiedContainer ?? false}
-                layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 60 }}
-            >
-                <Border
-                    variant="105"
-                    name="error_border"
-                    params={16}
-                    tintColor="#cc0000"
-                    layout={{ position: 'absolute', left: 0, width: 271, top: 0, height: 29 }}
-                />
-                <Border
-                    variant="105"
-                    name="input_border"
-                    params={16}
-                    layout={{ position: 'absolute', left: 2, width: 267, top: 2, height: 24 }}
-                >
-                    <TextInput
-                        value={emailTxtValue}
-                        onChange={setEmailTxtValue}
-                        layout={{ position: 'absolute', left: 4, width: 258, top: 4, height: 15 }}
-                    />
-                </Border>
-                <Region
-                    name="change_email_region"
-                    params={17}
-                    onPointerTap={onChangeEmailRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 3, width: 319, top: 28, height: 21 }}
-                >
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 156, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={t('talent.track.progress.setemail')} />
-                    </Region>
-                </Region>
-                <Region
-                    name="error_txt"
-                    params={16}
-                    layout={{ position: 'absolute', left: 2, width: 318, top: 28, height: 33, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionErrorTxt ?? 'jkhgjk hgk jhg kjhg jkh lkjh lkjh lkjh lkjh lkj hlkjh lkj hlkjh lkj'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#cc0000', wordWrap: true, wordWrapWidth: 318 }}
-                    />
-                </Region>
-                <Region
-                    name="changed_container"
-                    params={16}
-                    layout={{ position: 'absolute', left: 2, width: 328, top: 29, height: 36 }}
-                >
-                    <ThemeImage
-                        params={16}
-                        src={layoutImage('help_accept_icon.png')}
-                        layout={{ position: 'absolute', left: 0, width: 11, top: 6, height: 10 }}
-                    />
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 16, width: 306, top: 2, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={t('talent.track.progress.emailchanged')}
-                            textStyle="text-style-il-heading-3"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 306 }}
-                        />
-                    </Region>
-                </Region>
-            </Region>
+            <TaskProgressDialogLayoutUnverifiedContainer {...unverifiedContainer} />
             <Region
                 name="verified_txt"
                 params={16}
@@ -397,6 +396,84 @@ export const TaskProgressDialogLayoutEmailContainerItem = ({ captionErrorTxt, ca
                     textOptions={{ wordWrap: true, wordWrapWidth: 320 }}
                 />
             </Region>
+        </Region>
+    );
+};
+
+/** Named region `top_list` of TaskProgressDialogLayout - configured through the parent's `topList` prop. */
+export interface TaskProgressDialogLayoutTopListProps {
+    itemsTopList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const TaskProgressDialogLayoutTopList = ({ itemsTopList, layout }: TaskProgressDialogLayoutTopListProps) => {
+    return (
+        <Region
+            name="top_list"
+            params={147472}
+            layout={{ position: 'absolute', left: 0, top: 0, minHeight: 70, flexDirection: 'column', ...layout }}
+        >
+            {itemsTopList ?? (
+                <>
+                    <TaskProgressDialogLayoutInstructionItem />
+                    <TaskProgressDialogLayoutTitleItem />
+                    <TaskProgressDialogLayoutActionSeparatorItem />
+                    <TaskProgressDialogLayoutActionTitleItem />
+                    <TaskProgressDialogLayoutActionDescriptionItem />
+                    <TaskProgressDialogLayoutEmailContainerItem />
+                </>
+            )}
+            <Region
+                params={16}
+                layout={{ width: 345, height: 10, flexShrink: 0 }}
+            >
+                <WidgetSlot
+                    widgetType="badge_image"
+                    name="badge"
+                    options={{ 'badge_image:badge_id': 'ACH_EmailVerification1', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
+                    layout={{ position: 'absolute', left: 0, width: 60, top: 1, height: 70 }}
+                />
+            </Region>
+            <Region
+                params={16}
+                layout={{ width: 345, height: 10, flexShrink: 0 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `list` of TaskProgressDialogLayout - configured through the parent's `list` prop. */
+export interface TaskProgressDialogLayoutListProps {
+    itemsList?: ReactNode;
+    layout?: BoxLayout;
+    topList?: TaskProgressDialogLayoutTopListProps;
+}
+
+export const TaskProgressDialogLayoutList = ({ itemsList, layout, topList }: TaskProgressDialogLayoutListProps) => {
+    return (
+        <Region
+            name="list"
+            params={8536080}
+            layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', ...layout }}
+        >
+            {itemsList ?? (
+                <>
+                    <TaskProgressDialogLayoutProgressMainContainerItem />
+                    <TaskProgressDialogLayoutActionLinkItem />
+                </>
+            )}
+            <Border
+                variant="104"
+                params={147472}
+                tintColor="#e2e2e2"
+                layout={{ width: 345, height: 204, flexShrink: 0 }}
+            >
+                <TaskProgressDialogLayoutTopList {...topList} />
+            </Border>
+            <Region
+                params={16}
+                layout={{ width: 380, height: 15, flexShrink: 0 }}
+            />
         </Region>
     );
 };

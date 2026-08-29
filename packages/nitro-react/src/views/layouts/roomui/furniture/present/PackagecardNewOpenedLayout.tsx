@@ -5,12 +5,12 @@ import { BoxLayout, Button, ButtonThick, Frame, Region, ThemeImage, ThemeText } 
 
 /** Generated from `835_packagecard_new_opened_xml` (layout "packagecard_new_opened", 342x360) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PackagecardNewOpenedLayoutProps {
-    itemsElementList?: ReactNode;
+    elementList?: PackagecardNewOpenedLayoutElementListProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const PackagecardNewOpenedLayout = ({ itemsElementList, layout, onClose }: PackagecardNewOpenedLayoutProps) => {
+export const PackagecardNewOpenedLayout = ({ elementList, layout, onClose }: PackagecardNewOpenedLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -28,19 +28,7 @@ export const PackagecardNewOpenedLayout = ({ itemsElementList, layout, onClose }
                     backgroundColor="#e9e9e9"
                     layout={{ position: 'absolute', left: 0, width: 336, top: 0, height: 305 }}
                 >
-                    <Region
-                        name="element_list"
-                        params={4341777}
-                        layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', gap: 10 }}
-                    >
-                        {itemsElementList ?? (
-                            <>
-                                <PackagecardNewOpenedLayoutMessageElementListItem />
-                                <PackagecardNewOpenedLayoutButtonListItem />
-                                <PackagecardNewOpenedLayoutGiveElementListItem />
-                            </>
-                        )}
-                    </Region>
+                    <PackagecardNewOpenedLayoutElementList {...elementList} />
                 </Region>
             </Region>
         </Frame>
@@ -234,16 +222,62 @@ export const PackagecardNewOpenedLayoutButtonListItem = ({ itemsButtonList, layo
     );
 };
 
-/** Row template `give_container` of PackagecardNewOpenedLayout - pass real rows through its `items…` slot. */
-export interface PackagecardNewOpenedLayoutGiveContainerItemProps {
+/** Named region `avatar_image_region` of PackagecardNewOpenedLayout - configured through the parent's `avatarImageRegion` prop. */
+export interface PackagecardNewOpenedLayoutAvatarImageRegionProps {
     layout?: BoxLayout;
     onAvatarImageRegion?: () => void;
-    onGiveContainer?: () => void;
-    onGiveGiftButton?: () => void;
     srcAvatarImage?: string;
 }
 
-export const PackagecardNewOpenedLayoutGiveContainerItem = ({ layout, onAvatarImageRegion, onGiveContainer, onGiveGiftButton, srcAvatarImage }: PackagecardNewOpenedLayoutGiveContainerItemProps) => {
+export const PackagecardNewOpenedLayoutAvatarImageRegion = ({ layout, onAvatarImageRegion, srcAvatarImage }: PackagecardNewOpenedLayoutAvatarImageRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="avatar_image_region"
+            tooltip={t('widget.furni.present.sender.profile_tooltip')}
+            params={3935441}
+            onPointerTap={onAvatarImageRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', width: 45, alignSelf: 'center', height: 45, ...layout }}
+        >
+            <ThemeImage
+                name="avatar_image"
+                params={16}
+                src={srcAvatarImage}
+                layout={{ position: 'absolute', left: 0, width: 45, top: 0, height: 45 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `avatar_image_container` of PackagecardNewOpenedLayout - configured through the parent's `avatarImageContainer` prop. */
+export interface PackagecardNewOpenedLayoutAvatarImageContainerProps {
+    avatarImageRegion?: PackagecardNewOpenedLayoutAvatarImageRegionProps;
+    layout?: BoxLayout;
+}
+
+export const PackagecardNewOpenedLayoutAvatarImageContainer = ({ avatarImageRegion, layout }: PackagecardNewOpenedLayoutAvatarImageContainerProps) => {
+    return (
+        <Region
+            name="avatar_image_container"
+            params={3407888}
+            layout={{ position: 'absolute', right: 1, width: 45, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 45, justifyContent: 'center', ...layout }}
+        >
+            <PackagecardNewOpenedLayoutAvatarImageRegion {...avatarImageRegion} />
+        </Region>
+    );
+};
+
+/** Row template `give_container` of PackagecardNewOpenedLayout - pass real rows through its `items…` slot. */
+export interface PackagecardNewOpenedLayoutGiveContainerItemProps {
+    avatarImageContainer?: PackagecardNewOpenedLayoutAvatarImageContainerProps;
+    layout?: BoxLayout;
+    onGiveContainer?: () => void;
+    onGiveGiftButton?: () => void;
+}
+
+export const PackagecardNewOpenedLayoutGiveContainerItem = ({ avatarImageContainer, layout, onGiveContainer, onGiveGiftButton }: PackagecardNewOpenedLayoutGiveContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -265,27 +299,7 @@ export const PackagecardNewOpenedLayoutGiveContainerItem = ({ layout, onAvatarIm
             >
                 {t('widget.furni.present.give_gift')}
             </ButtonThick>
-            <Region
-                name="avatar_image_container"
-                params={3407888}
-                layout={{ position: 'absolute', right: 1, width: 45, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 45, justifyContent: 'center' }}
-            >
-                <Region
-                    name="avatar_image_region"
-                    tooltip={t('widget.furni.present.sender.profile_tooltip')}
-                    params={3935441}
-                    onPointerTap={onAvatarImageRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', width: 45, alignSelf: 'center', height: 45 }}
-                >
-                    <ThemeImage
-                        name="avatar_image"
-                        params={16}
-                        src={srcAvatarImage}
-                        layout={{ position: 'absolute', left: 0, width: 45, top: 0, height: 45 }}
-                    />
-                </Region>
-            </Region>
+            <PackagecardNewOpenedLayoutAvatarImageContainer {...avatarImageContainer} />
         </Region>
     );
 };
@@ -305,6 +319,30 @@ export const PackagecardNewOpenedLayoutGiveElementListItem = ({ itemsGiveElement
         >
             {itemsGiveElementList ?? (
                 <PackagecardNewOpenedLayoutGiveContainerItem />
+            )}
+        </Region>
+    );
+};
+
+/** Named region `element_list` of PackagecardNewOpenedLayout - configured through the parent's `elementList` prop. */
+export interface PackagecardNewOpenedLayoutElementListProps {
+    itemsElementList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PackagecardNewOpenedLayoutElementList = ({ itemsElementList, layout }: PackagecardNewOpenedLayoutElementListProps) => {
+    return (
+        <Region
+            name="element_list"
+            params={4341777}
+            layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', gap: 10, ...layout }}
+        >
+            {itemsElementList ?? (
+                <>
+                    <PackagecardNewOpenedLayoutMessageElementListItem />
+                    <PackagecardNewOpenedLayoutButtonListItem />
+                    <PackagecardNewOpenedLayoutGiveElementListItem />
+                </>
             )}
         </Region>
     );

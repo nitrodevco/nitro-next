@@ -6,37 +6,32 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1171_wired_style_illumina_xml` (layout "wired_style_illumina", 200x200) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface WiredStyleIlluminaLayoutProps {
-    captionLimitText?: string;
     captionTextBoldView?: string;
     captionTextHtml?: string;
     captionTextView?: string;
-    itemsMenuList?: ReactNode;
-    itemsSourcetypeSelectorView?: ReactNode;
+    charLimitWarn?: WiredStyleIlluminaLayoutCharLimitWarnProps;
+    expandCollapseRegion?: WiredStyleIlluminaLayoutExpandCollapseRegionProps;
     layout?: BoxLayout;
+    menuList?: WiredStyleIlluminaLayoutMenuListProps;
+    miniButtonView?: WiredStyleIlluminaLayoutMiniButtonViewProps;
     onAssetButton?: () => void;
     onButton?: () => void;
     onCheckboxView?: () => void;
     onDropdownView?: () => void;
-    onExpandCollapseRegion?: () => void;
     onFrame?: () => void;
     onIconbuttonDown?: () => void;
     onIconbuttonLeft?: () => void;
     onIconbuttonRight?: () => void;
     onIconbuttonUp?: () => void;
-    onMiniButtonClick?: () => void;
     onRadiobuttonView?: () => void;
+    rulerView?: WiredStyleIlluminaLayoutRulerViewProps;
+    slider?: WiredStyleIlluminaLayoutSliderProps;
+    sourcetypeSelectorView?: WiredStyleIlluminaLayoutSourcetypeSelectorViewProps;
     srcAsset?: string;
-    srcDownArrow?: string;
-    srcMiniButtonIcon?: string;
-    srcSliderBase?: string;
-    srcSliderButton?: string;
-    srcUpArrow?: string;
     visibleAssetButton?: boolean;
     visibleButton?: boolean;
-    visibleCharLimitWarn?: boolean;
     visibleCheckboxView?: boolean;
     visibleDropdownView?: boolean;
-    visibleExpandCollapseRegion?: boolean;
     visibleIconbuttonDown?: boolean;
     visibleIconbuttonLeft?: boolean;
     visibleIconbuttonRight?: boolean;
@@ -44,11 +39,9 @@ export interface WiredStyleIlluminaLayoutProps {
     visibleInputTemplate?: boolean;
     visibleQuickMenu?: boolean;
     visibleRadiobuttonView?: boolean;
-    visibleRulerView?: boolean;
-    visibleSlider?: boolean;
 }
 
-export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView, captionTextHtml, captionTextView, itemsMenuList, itemsSourcetypeSelectorView, layout, onAssetButton, onButton, onCheckboxView, onDropdownView, onExpandCollapseRegion, onFrame, onIconbuttonDown, onIconbuttonLeft, onIconbuttonRight, onIconbuttonUp, onMiniButtonClick, onRadiobuttonView, srcAsset, srcDownArrow, srcMiniButtonIcon, srcSliderBase, srcSliderButton, srcUpArrow, visibleAssetButton, visibleButton, visibleCharLimitWarn, visibleCheckboxView, visibleDropdownView, visibleExpandCollapseRegion, visibleIconbuttonDown, visibleIconbuttonLeft, visibleIconbuttonRight, visibleIconbuttonUp, visibleInputTemplate, visibleQuickMenu, visibleRadiobuttonView, visibleRulerView, visibleSlider }: WiredStyleIlluminaLayoutProps) => {
+export const WiredStyleIlluminaLayout = ({ captionTextBoldView, captionTextHtml, captionTextView, charLimitWarn, expandCollapseRegion, layout, menuList, miniButtonView, onAssetButton, onButton, onCheckboxView, onDropdownView, onFrame, onIconbuttonDown, onIconbuttonLeft, onIconbuttonRight, onIconbuttonUp, onRadiobuttonView, rulerView, slider, sourcetypeSelectorView, srcAsset, visibleAssetButton, visibleButton, visibleCheckboxView, visibleDropdownView, visibleIconbuttonDown, visibleIconbuttonLeft, visibleIconbuttonRight, visibleIconbuttonUp, visibleInputTemplate, visibleQuickMenu, visibleRadiobuttonView }: WiredStyleIlluminaLayoutProps) => {
     const t = useTranslation();
     const [ fieldValue, setFieldValue ] = useState('');
 
@@ -59,23 +52,7 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                 backgroundColor="#e2e2e2"
                 layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 200 }}
             >
-                <Region
-                    name="ruler_view"
-                    params={16}
-                    visible={visibleRulerView ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 228, top: 0, height: 2 }}
-                >
-                    <Region
-                        params={4194448}
-                        backgroundColor="#aaaaaa"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1 }}
-                    />
-                    <Region
-                        params={4194448}
-                        backgroundColor="#ffffff"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 1 }}
-                    />
-                </Region>
+                <WiredStyleIlluminaLayoutRulerView {...rulerView} />
                 <Region
                     name="text_view"
                     params={147472}
@@ -125,31 +102,7 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                             textColor="#4a4a4a"
                             layout={{ position: 'absolute', left: 4, right: 4, top: 2, bottom: 3 }}
                         />
-                        <Region
-                            name="char_limit_warn"
-                            params={64}
-                            visible={visibleCharLimitWarn ?? false}
-                            layout={{ position: 'absolute', right: 0, width: 116, top: -30, height: 50 }}
-                        >
-                            <Border
-                                variant="2"
-                                params={262160}
-                                tintColor="#222222"
-                                blend={0.7}
-                                layout={{ position: 'absolute', right: 0, width: 49, top: 10, height: 17 }}
-                            >
-                                <Region
-                                    name="limit_text"
-                                    params={4194320}
-                                    layout={{ position: 'absolute', left: 5, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionLimitText ?? '95/100'}
-                                        textStyle="text-style-il-regular-white"
-                                    />
-                                </Region>
-                            </Border>
-                        </Region>
+                        <WiredStyleIlluminaLayoutCharLimitWarn {...charLimitWarn} />
                     </Border>
                 </Region>
                 <Region
@@ -188,34 +141,7 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                         layout={{ width: '100%', height: '100%' }}
                     />
                 </Region>
-                <Region
-                    name="expand_collapse_region"
-                    params={17}
-                    visible={visibleExpandCollapseRegion ?? false}
-                    onPointerTap={onExpandCollapseRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 16, top: 2, height: 12 }}
-                >
-                    <ThemeImage
-                        name="up_arrow"
-                        params={16}
-                        src={srcUpArrow ?? layoutImage('wired_volter_uparrow.png')}
-                        tint="#999999"
-                        layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 10 }}
-                    />
-                    <Region
-                        visible={false}
-                        layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 10 }}
-                    >
-                        <ThemeImage
-                            name="down_arrow"
-                            params={16}
-                            src={srcDownArrow ?? layoutImage('wired_volter_downarrow.png')}
-                            tint="#999999"
-                            layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 10 }}
-                        />
-                    </Region>
-                </Region>
+                <WiredStyleIlluminaLayoutExpandCollapseRegion {...expandCollapseRegion} />
                 <Region
                     visible={visibleIconbuttonLeft ?? false}
                     layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
@@ -343,84 +269,14 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                                 tintColor="#d6d6d6"
                                 layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                             >
-                                <Region
-                                    name="menu_list"
-                                    params={144}
-                                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23, flexDirection: 'column' }}
-                                >
-                                    {itemsMenuList ?? (
-                                        <>
-                                            <WiredStyleIlluminaLayoutMenuItemTemplateItem />
-                                            <WiredStyleIlluminaLayoutSpacerTemplateItem />
-                                        </>
-                                    )}
-                                </Region>
+                                <WiredStyleIlluminaLayoutMenuList {...menuList} />
                             </Border>
                         </Border>
                     </Border>
                 </Region>
-                <Region
-                    name="sourcetype_selector_view"
-                    tags={[ 'NEW' ]}
-                    visible={false}
-                    layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 19, flexDirection: 'row' }}
-                >
-                    {itemsSourcetypeSelectorView ?? (
-                        <>
-                            <WiredStyleIlluminaLayoutLeftButtonTemplateItem />
-                            <WiredStyleIlluminaLayoutSplitterTemplateItem />
-                            <WiredStyleIlluminaLayoutMiddleButtonTemplateItem />
-                            <WiredStyleIlluminaLayoutSplitterTemplateItem2 />
-                            <WiredStyleIlluminaLayoutRightButtonTemplateItem />
-                        </>
-                    )}
-                </Region>
-                <Region
-                    name="slider"
-                    params={16}
-                    visible={visibleSlider ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 148, top: 0, height: 18 }}
-                >
-                    <ThemeImage
-                        name="slider_base"
-                        params={144}
-                        src={srcSliderBase ?? layoutImage('wired_styles_volter_slider_bg.png')}
-                        tint="#999999"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 19 }}
-                    />
-                    <Region
-                        name="slider_movement_area"
-                        params={144}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17 }}
-                    >
-                        <ThemeImage
-                            name="slider_button"
-                            params={33073}
-                            src={srcSliderButton ?? layoutImage('wired_styles_illumina_slider_obj.png')}
-                            layout={{ position: 'absolute', left: 0, width: 12, top: 0, height: 17 }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="mini_button_view"
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19 }}
-                >
-                    <ContainerButton
-                        variant="102"
-                        name="mini_button_click"
-                        params={17}
-                        onPointerTap={onMiniButtonClick}
-                        layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19, maxWidth: 19 }}
-                    >
-                        <ThemeImage
-                            name="mini_button_icon"
-                            params={16}
-                            src={srcMiniButtonIcon}
-                            layout={{ position: 'absolute', left: 3, width: 13, top: 2, height: 15 }}
-                        />
-                    </ContainerButton>
-                </Region>
+                <WiredStyleIlluminaLayoutSourcetypeSelectorView {...sourcetypeSelectorView} />
+                <WiredStyleIlluminaLayoutSlider {...slider} />
+                <WiredStyleIlluminaLayoutMiniButtonView {...miniButtonView} />
                 <Region
                     visible={visibleAssetButton ?? false}
                     layout={{ position: 'absolute', left: 0, width: 25, top: 0, height: 25 }}
@@ -442,6 +298,113 @@ export const WiredStyleIlluminaLayout = ({ captionLimitText, captionTextBoldView
                         />
                     </ContainerButton>
                 </Region>
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `ruler_view` of WiredStyleIlluminaLayout - configured through the parent's `rulerView` prop. */
+export interface WiredStyleIlluminaLayoutRulerViewProps {
+    layout?: BoxLayout;
+    visibleRulerView?: boolean;
+}
+
+export const WiredStyleIlluminaLayoutRulerView = ({ layout, visibleRulerView }: WiredStyleIlluminaLayoutRulerViewProps) => {
+    return (
+        <Region
+            name="ruler_view"
+            params={16}
+            visible={visibleRulerView ?? false}
+            layout={{ position: 'absolute', left: 0, width: 228, top: 0, height: 2, ...layout }}
+        >
+            <Region
+                params={4194448}
+                backgroundColor="#aaaaaa"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1 }}
+            />
+            <Region
+                params={4194448}
+                backgroundColor="#ffffff"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 1 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `char_limit_warn` of WiredStyleIlluminaLayout - configured through the parent's `charLimitWarn` prop. */
+export interface WiredStyleIlluminaLayoutCharLimitWarnProps {
+    captionLimitText?: string;
+    layout?: BoxLayout;
+    visibleCharLimitWarn?: boolean;
+}
+
+export const WiredStyleIlluminaLayoutCharLimitWarn = ({ captionLimitText, layout, visibleCharLimitWarn }: WiredStyleIlluminaLayoutCharLimitWarnProps) => {
+    return (
+        <Region
+            name="char_limit_warn"
+            params={64}
+            visible={visibleCharLimitWarn ?? false}
+            layout={{ position: 'absolute', right: 0, width: 116, top: -30, height: 50, ...layout }}
+        >
+            <Border
+                variant="2"
+                params={262160}
+                tintColor="#222222"
+                blend={0.7}
+                layout={{ position: 'absolute', right: 0, width: 49, top: 10, height: 17 }}
+            >
+                <Region
+                    name="limit_text"
+                    params={4194320}
+                    layout={{ position: 'absolute', left: 5, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionLimitText ?? '95/100'}
+                        textStyle="text-style-il-regular-white"
+                    />
+                </Region>
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `expand_collapse_region` of WiredStyleIlluminaLayout - configured through the parent's `expandCollapseRegion` prop. */
+export interface WiredStyleIlluminaLayoutExpandCollapseRegionProps {
+    layout?: BoxLayout;
+    onExpandCollapseRegion?: () => void;
+    srcDownArrow?: string;
+    srcUpArrow?: string;
+    visibleExpandCollapseRegion?: boolean;
+}
+
+export const WiredStyleIlluminaLayoutExpandCollapseRegion = ({ layout, onExpandCollapseRegion, srcDownArrow, srcUpArrow, visibleExpandCollapseRegion }: WiredStyleIlluminaLayoutExpandCollapseRegionProps) => {
+    return (
+        <Region
+            name="expand_collapse_region"
+            params={17}
+            visible={visibleExpandCollapseRegion ?? false}
+            onPointerTap={onExpandCollapseRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 16, top: 2, height: 12, ...layout }}
+        >
+            <ThemeImage
+                name="up_arrow"
+                params={16}
+                src={srcUpArrow ?? layoutImage('wired_volter_uparrow.png')}
+                tint="#999999"
+                layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 10 }}
+            />
+            <Region
+                visible={false}
+                layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 10 }}
+            >
+                <ThemeImage
+                    name="down_arrow"
+                    params={16}
+                    src={srcDownArrow ?? layoutImage('wired_volter_downarrow.png')}
+                    tint="#999999"
+                    layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 10 }}
+                />
             </Region>
         </Region>
     );
@@ -508,6 +471,29 @@ export const WiredStyleIlluminaLayoutSpacerTemplateItem = ({ layout }: WiredStyl
                 backgroundColor="#aaaaaa"
                 layout={{ position: 'absolute', left: 6, right: 6, top: 1, height: 1 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `menu_list` of WiredStyleIlluminaLayout - configured through the parent's `menuList` prop. */
+export interface WiredStyleIlluminaLayoutMenuListProps {
+    itemsMenuList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const WiredStyleIlluminaLayoutMenuList = ({ itemsMenuList, layout }: WiredStyleIlluminaLayoutMenuListProps) => {
+    return (
+        <Region
+            name="menu_list"
+            params={144}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 23, flexDirection: 'column', ...layout }}
+        >
+            {itemsMenuList ?? (
+                <>
+                    <WiredStyleIlluminaLayoutMenuItemTemplateItem />
+                    <WiredStyleIlluminaLayoutSpacerTemplateItem />
+                </>
+            )}
         </Region>
     );
 };
@@ -645,5 +631,115 @@ export const WiredStyleIlluminaLayoutRightButtonTemplateItem = ({ layout, onRigh
                 layout={{ position: 'absolute', left: 4, top: 6, height: 7 }}
             />
         </ContainerButton>
+    );
+};
+
+/** Named region `sourcetype_selector_view` of WiredStyleIlluminaLayout - configured through the parent's `sourcetypeSelectorView` prop. */
+export interface WiredStyleIlluminaLayoutSourcetypeSelectorViewProps {
+    itemsSourcetypeSelectorView?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const WiredStyleIlluminaLayoutSourcetypeSelectorView = ({ itemsSourcetypeSelectorView, layout }: WiredStyleIlluminaLayoutSourcetypeSelectorViewProps) => {
+    return (
+        <Region
+            name="sourcetype_selector_view"
+            tags={[ 'NEW' ]}
+            visible={false}
+            layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 19, flexDirection: 'row', ...layout }}
+        >
+            {itemsSourcetypeSelectorView ?? (
+                <>
+                    <WiredStyleIlluminaLayoutLeftButtonTemplateItem />
+                    <WiredStyleIlluminaLayoutSplitterTemplateItem />
+                    <WiredStyleIlluminaLayoutMiddleButtonTemplateItem />
+                    <WiredStyleIlluminaLayoutSplitterTemplateItem2 />
+                    <WiredStyleIlluminaLayoutRightButtonTemplateItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `slider_movement_area` of WiredStyleIlluminaLayout - configured through the parent's `sliderMovementArea` prop. */
+export interface WiredStyleIlluminaLayoutSliderMovementAreaProps {
+    layout?: BoxLayout;
+    srcSliderButton?: string;
+}
+
+export const WiredStyleIlluminaLayoutSliderMovementArea = ({ layout, srcSliderButton }: WiredStyleIlluminaLayoutSliderMovementAreaProps) => {
+    return (
+        <Region
+            name="slider_movement_area"
+            params={144}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17, ...layout }}
+        >
+            <ThemeImage
+                name="slider_button"
+                params={33073}
+                src={srcSliderButton ?? layoutImage('wired_styles_illumina_slider_obj.png')}
+                layout={{ position: 'absolute', left: 0, width: 12, top: 0, height: 17 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `slider` of WiredStyleIlluminaLayout - configured through the parent's `slider` prop. */
+export interface WiredStyleIlluminaLayoutSliderProps {
+    layout?: BoxLayout;
+    sliderMovementArea?: WiredStyleIlluminaLayoutSliderMovementAreaProps;
+    srcSliderBase?: string;
+    visibleSlider?: boolean;
+}
+
+export const WiredStyleIlluminaLayoutSlider = ({ layout, sliderMovementArea, srcSliderBase, visibleSlider }: WiredStyleIlluminaLayoutSliderProps) => {
+    return (
+        <Region
+            name="slider"
+            params={16}
+            visible={visibleSlider ?? false}
+            layout={{ position: 'absolute', left: 0, width: 148, top: 0, height: 18, ...layout }}
+        >
+            <ThemeImage
+                name="slider_base"
+                params={144}
+                src={srcSliderBase ?? layoutImage('wired_styles_volter_slider_bg.png')}
+                tint="#999999"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 19 }}
+            />
+            <WiredStyleIlluminaLayoutSliderMovementArea {...sliderMovementArea} />
+        </Region>
+    );
+};
+
+/** Named region `mini_button_view` of WiredStyleIlluminaLayout - configured through the parent's `miniButtonView` prop. */
+export interface WiredStyleIlluminaLayoutMiniButtonViewProps {
+    layout?: BoxLayout;
+    onMiniButtonClick?: () => void;
+    srcMiniButtonIcon?: string;
+}
+
+export const WiredStyleIlluminaLayoutMiniButtonView = ({ layout, onMiniButtonClick, srcMiniButtonIcon }: WiredStyleIlluminaLayoutMiniButtonViewProps) => {
+    return (
+        <Region
+            name="mini_button_view"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19, ...layout }}
+        >
+            <ContainerButton
+                variant="102"
+                name="mini_button_click"
+                params={17}
+                onPointerTap={onMiniButtonClick}
+                layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 19, maxWidth: 19 }}
+            >
+                <ThemeImage
+                    name="mini_button_icon"
+                    params={16}
+                    src={srcMiniButtonIcon}
+                    layout={{ position: 'absolute', left: 3, width: 13, top: 2, height: 15 }}
+                />
+            </ContainerButton>
+        </Region>
     );
 };

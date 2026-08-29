@@ -4,12 +4,12 @@ import { Border, BoxLayout, Button, CheckBox, Dropmenu, Frame, Region, TextInput
 
 /** Generated from `1113_roomtool_frame_xml` (layout "roomtool_frame", 240x437) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RoomtoolFrameLayoutProps {
-    itemsListCont?: ReactNode;
     layout?: BoxLayout;
+    listCont?: RoomtoolFrameLayoutListContProps;
     onClose?: () => void;
 }
 
-export const RoomtoolFrameLayout = ({ itemsListCont, layout, onClose }: RoomtoolFrameLayoutProps) => {
+export const RoomtoolFrameLayout = ({ layout, listCont, onClose }: RoomtoolFrameLayoutProps) => {
     return (
         <Frame
             variant="0"
@@ -20,44 +20,92 @@ export const RoomtoolFrameLayout = ({ itemsListCont, layout, onClose }: Roomtool
             layout={{ width: 240, height: 437, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="list_cont"
-                    params={8388625}
-                    layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 405, flexDirection: 'column' }}
-                >
-                    {itemsListCont ?? (
-                        <>
-                            <RoomtoolFrameLayoutRoomContItem />
-                            <RoomtoolFrameLayoutSpacingItem />
-                            <RoomtoolFrameLayoutInfoContItem />
-                            <RoomtoolFrameLayoutEventSpacingItem />
-                            <RoomtoolFrameLayoutEventContItem />
-                            <RoomtoolFrameLayoutSpacingItem2 />
-                            <RoomtoolFrameLayoutActContItem />
-                            <RoomtoolFrameLayoutSpacingItem3 />
-                            <RoomtoolFrameLayoutMsgTemplatesSelectItem />
-                            <RoomtoolFrameLayoutSpacingItem4 />
-                            <RoomtoolFrameLayoutMessageInputItem />
-                            <RoomtoolFrameLayoutSpacingItem5 />
-                            <RoomtoolFrameLayoutSpacingItem6 />
-                            <RoomtoolFrameLayoutFooterContItem />
-                        </>
-                    )}
-                </Region>
+                <RoomtoolFrameLayoutListCont {...listCont} />
             </Region>
         </Frame>
     );
 };
 
-/** Row template `room_cont` of RoomtoolFrameLayout - pass real rows through its `items…` slot. */
-export interface RoomtoolFrameLayoutRoomContItemProps {
-    captionDesc?: string;
-    captionName?: string;
+/** Named region `tags_cont` of RoomtoolFrameLayout - configured through the parent's `tagsCont` prop. */
+export interface RoomtoolFrameLayoutTagsContProps {
     captionTagsTxt?: string;
     layout?: BoxLayout;
 }
 
-export const RoomtoolFrameLayoutRoomContItem = ({ captionDesc, captionName, captionTagsTxt, layout }: RoomtoolFrameLayoutRoomContItemProps) => {
+export const RoomtoolFrameLayoutTagsCont = ({ captionTagsTxt, layout }: RoomtoolFrameLayoutTagsContProps) => {
+    return (
+        <Region
+            name="tags_cont"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 220, top: 60, height: 30, ...layout }}
+        >
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text="Tags:" />
+            </Region>
+            <Region
+                name="tags_txt"
+                params={144}
+                layout={{ position: 'absolute', left: 40, right: 2, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionTagsTxt ?? 'PH Room Name: Neque porro quisquam est que'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 178 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `room_data` of RoomtoolFrameLayout - configured through the parent's `roomData` prop. */
+export interface RoomtoolFrameLayoutRoomDataProps {
+    captionDesc?: string;
+    captionName?: string;
+    layout?: BoxLayout;
+    tagsCont?: RoomtoolFrameLayoutTagsContProps;
+}
+
+export const RoomtoolFrameLayoutRoomData = ({ captionDesc, captionName, layout, tagsCont }: RoomtoolFrameLayoutRoomDataProps) => {
+    return (
+        <Region
+            name="room_data"
+            params={16}
+            layout={{ position: 'absolute', left: 5, width: 220, top: 5, height: 90, ...layout }}
+        >
+            <Region
+                name="name"
+                params={144}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionName ?? 'PH Room Name: Neque porro quisquam est que'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
+                />
+            </Region>
+            <Region
+                name="desc"
+                params={144}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 30, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
+                    textOptions={{ fill: '#808080', wordWrap: true, wordWrapWidth: 220 }}
+                />
+            </Region>
+            <RoomtoolFrameLayoutTagsCont {...tagsCont} />
+        </Region>
+    );
+};
+
+/** Row template `room_cont` of RoomtoolFrameLayout - pass real rows through its `items…` slot. */
+export interface RoomtoolFrameLayoutRoomContItemProps {
+    layout?: BoxLayout;
+    roomData?: RoomtoolFrameLayoutRoomDataProps;
+}
+
+export const RoomtoolFrameLayoutRoomContItem = ({ layout, roomData }: RoomtoolFrameLayoutRoomContItemProps) => {
     return (
         <Border
             variant="0"
@@ -65,54 +113,7 @@ export const RoomtoolFrameLayoutRoomContItem = ({ captionDesc, captionName, capt
             params={4194320}
             layout={{ width: 230, height: 97, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="room_data"
-                params={16}
-                layout={{ position: 'absolute', left: 5, width: 220, top: 5, height: 90 }}
-            >
-                <Region
-                    name="name"
-                    params={144}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionName ?? 'PH Room Name: Neque porro quisquam est que'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                    />
-                </Region>
-                <Region
-                    name="desc"
-                    params={144}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 30, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDesc ?? 'PH Room Desc: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit'}
-                        textOptions={{ fill: '#808080', wordWrap: true, wordWrapWidth: 220 }}
-                    />
-                </Region>
-                <Region
-                    name="tags_cont"
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 220, top: 60, height: 30 }}
-                >
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text="Tags:" />
-                    </Region>
-                    <Region
-                        name="tags_txt"
-                        params={144}
-                        layout={{ position: 'absolute', left: 40, right: 2, top: 0, height: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTagsTxt ?? 'PH Room Name: Neque porro quisquam est que'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 178 }}
-                        />
-                    </Region>
-                </Region>
-            </Region>
+            <RoomtoolFrameLayoutRoomData {...roomData} />
         </Border>
     );
 };
@@ -482,6 +483,41 @@ export const RoomtoolFrameLayoutFooterContItem = ({ layout, onSendCautionBut, on
             >
                 Send message
             </Button>
+        </Region>
+    );
+};
+
+/** Named region `list_cont` of RoomtoolFrameLayout - configured through the parent's `listCont` prop. */
+export interface RoomtoolFrameLayoutListContProps {
+    itemsListCont?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const RoomtoolFrameLayoutListCont = ({ itemsListCont, layout }: RoomtoolFrameLayoutListContProps) => {
+    return (
+        <Region
+            name="list_cont"
+            params={8388625}
+            layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 405, flexDirection: 'column', ...layout }}
+        >
+            {itemsListCont ?? (
+                <>
+                    <RoomtoolFrameLayoutRoomContItem />
+                    <RoomtoolFrameLayoutSpacingItem />
+                    <RoomtoolFrameLayoutInfoContItem />
+                    <RoomtoolFrameLayoutEventSpacingItem />
+                    <RoomtoolFrameLayoutEventContItem />
+                    <RoomtoolFrameLayoutSpacingItem2 />
+                    <RoomtoolFrameLayoutActContItem />
+                    <RoomtoolFrameLayoutSpacingItem3 />
+                    <RoomtoolFrameLayoutMsgTemplatesSelectItem />
+                    <RoomtoolFrameLayoutSpacingItem4 />
+                    <RoomtoolFrameLayoutMessageInputItem />
+                    <RoomtoolFrameLayoutSpacingItem5 />
+                    <RoomtoolFrameLayoutSpacingItem6 />
+                    <RoomtoolFrameLayoutFooterContItem />
+                </>
+            )}
         </Region>
     );
 };

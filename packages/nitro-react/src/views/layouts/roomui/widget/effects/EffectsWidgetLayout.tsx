@@ -5,10 +5,12 @@ import { Border, BoxLayout, CloseButton, Region, ScrollArea, ThemeText } from '#
 export interface EffectsWidgetLayoutProps {
     captionTitle?: string;
     layout?: BoxLayout;
+    list?: EffectsWidgetLayoutListProps;
+    noEffects?: EffectsWidgetLayoutNoEffectsProps;
     onClose?: () => void;
 }
 
-export const EffectsWidgetLayout = ({ captionTitle, layout, onClose }: EffectsWidgetLayoutProps) => {
+export const EffectsWidgetLayout = ({ captionTitle, layout, list, noEffects, onClose }: EffectsWidgetLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -43,32 +45,56 @@ export const EffectsWidgetLayout = ({ captionTitle, layout, onClose }: EffectsWi
                     onPointerTap={onClose}
                     layout={{ position: 'absolute', left: 165, width: 20, top: 6, height: 20 }}
                 />
-                <ScrollArea
-                    orientation="vertical"
-                    layout={{ position: 'absolute', left: 6, width: 178, top: 30, height: 48 }}
-                >
-                    <Region
-                        name="list"
-                        params={8388624}
-                        layout={{ flexDirection: 'column', width: '100%' }}
-                    />
-                </ScrollArea>
-                <Region
-                    name="no_effects"
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 190, top: 30, height: 48 }}
-                >
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 190, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={t('widget.memenu.effects.info')}
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
-                </Region>
+                <EffectsWidgetLayoutList {...list} />
+                <EffectsWidgetLayoutNoEffects {...noEffects} />
             </Border>
+        </Region>
+    );
+};
+
+/** Named region `list` of EffectsWidgetLayout - configured through the parent's `list` prop. */
+export interface EffectsWidgetLayoutListProps {
+    layout?: BoxLayout;
+}
+
+export const EffectsWidgetLayoutList = ({ layout }: EffectsWidgetLayoutListProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 6, width: 178, top: 30, height: 48, ...layout }}
+        >
+            <Region
+                name="list"
+                params={8388624}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            />
+        </ScrollArea>
+    );
+};
+
+/** Named region `no_effects` of EffectsWidgetLayout - configured through the parent's `noEffects` prop. */
+export interface EffectsWidgetLayoutNoEffectsProps {
+    layout?: BoxLayout;
+}
+
+export const EffectsWidgetLayoutNoEffects = ({ layout }: EffectsWidgetLayoutNoEffectsProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="no_effects"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 190, top: 30, height: 48, ...layout }}
+        >
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 190, top: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('widget.memenu.effects.info')}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </Region>
         </Region>
     );
 };

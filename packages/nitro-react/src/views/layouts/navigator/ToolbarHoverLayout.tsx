@@ -4,11 +4,11 @@ import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 
 /** Generated from `3070_toolbar_hover_xml` (layout "toolbar_hover", 252x36) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ToolbarHoverLayoutProps {
-    itemsItemList?: ReactNode;
+    itemList?: ToolbarHoverLayoutItemListProps;
     layout?: BoxLayout;
 }
 
-export const ToolbarHoverLayout = ({ itemsItemList, layout }: ToolbarHoverLayoutProps) => {
+export const ToolbarHoverLayout = ({ itemList, layout }: ToolbarHoverLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 252, height: 36, ...layout }}>
             <Region
@@ -22,16 +22,7 @@ export const ToolbarHoverLayout = ({ itemsItemList, layout }: ToolbarHoverLayout
                     tintColor="#79756e"
                     layout={{ width: '100%', height: '100%' }}
                 >
-                    <Region
-                        name="item_list"
-                        tags={[ 'SIMPLE_ITEM' ]}
-                        params={8519698}
-                        layout={{ position: 'absolute', left: 7, minWidth: 245, top: 7, minHeight: 25, flexDirection: 'column' }}
-                    >
-                        {itemsItemList ?? (
-                            <ToolbarHoverLayoutItemBasicItem />
-                        )}
-                    </Region>
+                    <ToolbarHoverLayoutItemList {...itemList} />
                 </Border>
             </Region>
         </Region>
@@ -73,6 +64,27 @@ export const ToolbarHoverLayoutItemBasicItem = ({ captionText, layout, onItemBas
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Region>
+        </Region>
+    );
+};
+
+/** Named region `item_list` of ToolbarHoverLayout - configured through the parent's `itemList` prop. */
+export interface ToolbarHoverLayoutItemListProps {
+    itemsItemList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const ToolbarHoverLayoutItemList = ({ itemsItemList, layout }: ToolbarHoverLayoutItemListProps) => {
+    return (
+        <Region
+            name="item_list"
+            tags={[ 'SIMPLE_ITEM' ]}
+            params={8519698}
+            layout={{ position: 'absolute', left: 7, minWidth: 245, top: 7, minHeight: 25, flexDirection: 'column', ...layout }}
+        >
+            {itemsItemList ?? (
+                <ToolbarHoverLayoutItemBasicItem />
+            )}
         </Region>
     );
 };

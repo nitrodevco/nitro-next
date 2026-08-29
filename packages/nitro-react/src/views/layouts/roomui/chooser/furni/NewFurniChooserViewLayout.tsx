@@ -8,14 +8,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface NewFurniChooserViewLayoutProps {
     captionAmountIndicator?: string;
     captionSearchPlaceholder?: string;
+    clearButton?: NewFurniChooserViewLayoutClearButtonProps;
     layout?: BoxLayout;
-    onClearButton?: () => void;
     onClose?: () => void;
     onUsernameDropdown?: () => void;
-    visibleClearButton?: boolean;
+    tableContainer?: NewFurniChooserViewLayoutTableContainerProps;
 }
 
-export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearchPlaceholder, layout, onClearButton, onClose, onUsernameDropdown, visibleClearButton }: NewFurniChooserViewLayoutProps) => {
+export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearchPlaceholder, clearButton, layout, onClose, onUsernameDropdown, tableContainer }: NewFurniChooserViewLayoutProps) => {
     const t = useTranslation();
     const [ textInputValue, setTextInputValue ] = useState('');
 
@@ -50,20 +50,7 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
                         textColor="#666666"
                         layout={{ position: 'absolute', left: 6, right: 23, top: 4, bottom: 4 }}
                     />
-                    <Region
-                        name="clear_button"
-                        params={17}
-                        visible={visibleClearButton ?? false}
-                        onPointerTap={onClearButton}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 206, width: 20, top: 3, height: 20 }}
-                    >
-                        <ThemeImage
-                            params={16}
-                            src={layoutImage('icons_close.png')}
-                            layout={{ position: 'absolute', left: 4, width: 11, top: 4, height: 12 }}
-                        />
-                    </Region>
+                    <NewFurniChooserViewLayoutClearButton {...clearButton} />
                 </Border>
                 <Dropmenu
                     variant="3"
@@ -72,11 +59,7 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
                     onPointerTap={onUsernameDropdown}
                     layout={{ position: 'absolute', left: 244, width: 152, top: 18, height: 25 }}
                 />
-                <Region
-                    name="table_container"
-                    params={2064}
-                    layout={{ position: 'absolute', left: 6, width: 389, top: 53, bottom: 61 }}
-                />
+                <NewFurniChooserViewLayoutTableContainer {...tableContainer} />
                 <Region
                     name="amount_indicator"
                     params={1040}
@@ -86,5 +69,46 @@ export const NewFurniChooserViewLayout = ({ captionAmountIndicator, captionSearc
                 </Region>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `clear_button` of NewFurniChooserViewLayout - configured through the parent's `clearButton` prop. */
+export interface NewFurniChooserViewLayoutClearButtonProps {
+    layout?: BoxLayout;
+    onClearButton?: () => void;
+    visibleClearButton?: boolean;
+}
+
+export const NewFurniChooserViewLayoutClearButton = ({ layout, onClearButton, visibleClearButton }: NewFurniChooserViewLayoutClearButtonProps) => {
+    return (
+        <Region
+            name="clear_button"
+            params={17}
+            visible={visibleClearButton ?? false}
+            onPointerTap={onClearButton}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 206, width: 20, top: 3, height: 20, ...layout }}
+        >
+            <ThemeImage
+                params={16}
+                src={layoutImage('icons_close.png')}
+                layout={{ position: 'absolute', left: 4, width: 11, top: 4, height: 12 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `table_container` of NewFurniChooserViewLayout - configured through the parent's `tableContainer` prop. */
+export interface NewFurniChooserViewLayoutTableContainerProps {
+    layout?: BoxLayout;
+}
+
+export const NewFurniChooserViewLayoutTableContainer = ({ layout }: NewFurniChooserViewLayoutTableContainerProps) => {
+    return (
+        <Region
+            name="table_container"
+            params={2064}
+            layout={{ position: 'absolute', left: 6, width: 389, top: 53, bottom: 61, ...layout }}
+        />
     );
 };

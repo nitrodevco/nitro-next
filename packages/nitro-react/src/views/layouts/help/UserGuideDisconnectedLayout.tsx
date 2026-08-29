@@ -9,14 +9,14 @@ export interface UserGuideDisconnectedLayoutProps {
     captionGuideDesc?: string;
     captionGuideNameLink?: string;
     captionReportGuideLink?: string;
-    itemsErrorList?: ReactNode;
+    errorList?: UserGuideDisconnectedLayoutErrorListProps;
     layout?: BoxLayout;
     onClose?: () => void;
     onGuideNameLink?: () => void;
     onReportGuideLink?: () => void;
 }
 
-export const UserGuideDisconnectedLayout = ({ captionGuideDesc, captionGuideNameLink, captionReportGuideLink, itemsErrorList, layout, onClose, onGuideNameLink, onReportGuideLink }: UserGuideDisconnectedLayoutProps) => {
+export const UserGuideDisconnectedLayout = ({ captionGuideDesc, captionGuideNameLink, captionReportGuideLink, errorList, layout, onClose, onGuideNameLink, onReportGuideLink }: UserGuideDisconnectedLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -85,60 +85,7 @@ export const UserGuideDisconnectedLayout = ({ captionGuideDesc, captionGuideName
                         />
                     </Region>
                 </Border>
-                <Region
-                    name="error_list"
-                    params={8536080}
-                    layout={{ position: 'absolute', left: 10, top: 69, flexDirection: 'column' }}
-                >
-                    {itemsErrorList ?? (
-                        <UserGuideDisconnectedLayoutResubmitButtonItem />
-                    )}
-                    <Region
-                        params={16}
-                        layout={{ width: 260, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={t('guide.help.request.user.guide.disconnected.error.heading')}
-                            textStyle="text-style-il-heading-1"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                        />
-                    </Region>
-                    <Region
-                        params={16}
-                        layout={{ width: 260, height: 10, flexShrink: 0 }}
-                    />
-                    <Region
-                        params={16}
-                        layout={{ width: 260, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={t('guide.help.request.user.guide.disconnected.error.desc')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                        />
-                    </Region>
-                    <Region
-                        params={16}
-                        layout={{ width: 260, height: 10, flexShrink: 0 }}
-                    />
-                    <WidgetSlot
-                        widgetType="separator"
-                        params={16}
-                        layout={{ width: 260, height: 1, flexShrink: 0 }}
-                    />
-                    <Region
-                        params={16}
-                        layout={{ width: 260, height: 1, flexShrink: 0 }}
-                    >
-                        <ThemeImage
-                            src={layoutImage('help_error_state.png')}
-                            layout={{ position: 'absolute', left: 0, width: 81, top: -6, height: 97 }}
-                        />
-                    </Region>
-                    <Region
-                        params={16}
-                        layout={{ width: 260, height: 50, flexShrink: 0 }}
-                    />
-                </Region>
+                <UserGuideDisconnectedLayoutErrorList {...errorList} />
             </Region>
         </Frame>
     );
@@ -164,5 +111,72 @@ export const UserGuideDisconnectedLayoutResubmitButtonItem = ({ layout, onResubm
         >
             {t('guide.help.request.user.guide.disconnected.resubmit.button')}
         </Button>
+    );
+};
+
+/** Named region `error_list` of UserGuideDisconnectedLayout - configured through the parent's `errorList` prop. */
+export interface UserGuideDisconnectedLayoutErrorListProps {
+    itemsErrorList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const UserGuideDisconnectedLayoutErrorList = ({ itemsErrorList, layout }: UserGuideDisconnectedLayoutErrorListProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="error_list"
+            params={8536080}
+            layout={{ position: 'absolute', left: 10, top: 69, flexDirection: 'column', ...layout }}
+        >
+            {itemsErrorList ?? (
+                <UserGuideDisconnectedLayoutResubmitButtonItem />
+            )}
+            <Region
+                params={16}
+                layout={{ width: 260, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('guide.help.request.user.guide.disconnected.error.heading')}
+                    textStyle="text-style-il-heading-1"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                />
+            </Region>
+            <Region
+                params={16}
+                layout={{ width: 260, height: 10, flexShrink: 0 }}
+            />
+            <Region
+                params={16}
+                layout={{ width: 260, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('guide.help.request.user.guide.disconnected.error.desc')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                />
+            </Region>
+            <Region
+                params={16}
+                layout={{ width: 260, height: 10, flexShrink: 0 }}
+            />
+            <WidgetSlot
+                widgetType="separator"
+                params={16}
+                layout={{ width: 260, height: 1, flexShrink: 0 }}
+            />
+            <Region
+                params={16}
+                layout={{ width: 260, height: 1, flexShrink: 0 }}
+            >
+                <ThemeImage
+                    src={layoutImage('help_error_state.png')}
+                    layout={{ position: 'absolute', left: 0, width: 81, top: -6, height: 97 }}
+                />
+            </Region>
+            <Region
+                params={16}
+                layout={{ width: 260, height: 50, flexShrink: 0 }}
+            />
+        </Region>
     );
 };

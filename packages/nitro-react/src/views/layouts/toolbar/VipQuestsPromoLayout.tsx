@@ -7,14 +7,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `1264_vip_quests_promo_xml` (layout "vip_quests_promo", 193x216) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface VipQuestsPromoLayoutProps {
     captionTitleTxt?: string;
-    itemsContentItemlist?: ReactNode;
+    contentItemlist?: VipQuestsPromoLayoutContentItemlistProps;
     layout?: BoxLayout;
-    onMaximizeRegion?: () => void;
-    onMinimizeRegion?: () => void;
+    maximizeRegion?: VipQuestsPromoLayoutMaximizeRegionProps;
+    minimizeRegion?: VipQuestsPromoLayoutMinimizeRegionProps;
     srcPromoImg?: string;
 }
 
-export const VipQuestsPromoLayout = ({ captionTitleTxt, itemsContentItemlist, layout, onMaximizeRegion, onMinimizeRegion, srcPromoImg }: VipQuestsPromoLayoutProps) => {
+export const VipQuestsPromoLayout = ({ captionTitleTxt, contentItemlist, layout, maximizeRegion, minimizeRegion, srcPromoImg }: VipQuestsPromoLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -24,32 +24,8 @@ export const VipQuestsPromoLayout = ({ captionTitleTxt, itemsContentItemlist, la
                 params={16}
                 layout={{ position: 'absolute', left: 0, width: 193, top: 0, height: 216 }}
             >
-                <Region
-                    name="minimize_region"
-                    params={17}
-                    onPointerTap={onMinimizeRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 167, width: 20, top: 7, height: 20 }}
-                >
-                    <ThemeImage
-                        params={16}
-                        src={layoutImage('messenger_minimize_button.png')}
-                        layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
-                    />
-                </Region>
-                <Region
-                    name="maximize_region"
-                    params={17}
-                    onPointerTap={onMaximizeRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 167, width: 20, top: 7, height: 20 }}
-                >
-                    <ThemeImage
-                        params={16}
-                        src={layoutImage('common_maximize.png')}
-                        layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
-                    />
-                </Region>
+                <VipQuestsPromoLayoutMinimizeRegion {...minimizeRegion} />
+                <VipQuestsPromoLayoutMaximizeRegion {...maximizeRegion} />
                 <Region
                     name="title_txt"
                     params={16}
@@ -66,20 +42,56 @@ export const VipQuestsPromoLayout = ({ captionTitleTxt, itemsContentItemlist, la
                     src={srcPromoImg ?? '${image.library.url}talent/citizenship_vip_quest_promo.png'}
                     layout={{ position: 'absolute', right: 6, width: 92, bottom: 1, height: 97 }}
                 />
-                <Region
-                    name="content_itemlist"
-                    params={147472}
-                    layout={{ position: 'absolute', left: 0, top: 30, flexDirection: 'column', gap: 5 }}
-                >
-                    {itemsContentItemlist ?? (
-                        <>
-                            <VipQuestsPromoLayoutCaptionTxtItem />
-                            <VipQuestsPromoLayoutInfoTxtItem />
-                            <VipQuestsPromoLayoutQuestsButtonItem />
-                        </>
-                    )}
-                </Region>
+                <VipQuestsPromoLayoutContentItemlist {...contentItemlist} />
             </Border>
+        </Region>
+    );
+};
+
+/** Named region `minimize_region` of VipQuestsPromoLayout - configured through the parent's `minimizeRegion` prop. */
+export interface VipQuestsPromoLayoutMinimizeRegionProps {
+    layout?: BoxLayout;
+    onMinimizeRegion?: () => void;
+}
+
+export const VipQuestsPromoLayoutMinimizeRegion = ({ layout, onMinimizeRegion }: VipQuestsPromoLayoutMinimizeRegionProps) => {
+    return (
+        <Region
+            name="minimize_region"
+            params={17}
+            onPointerTap={onMinimizeRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 167, width: 20, top: 7, height: 20, ...layout }}
+        >
+            <ThemeImage
+                params={16}
+                src={layoutImage('messenger_minimize_button.png')}
+                layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `maximize_region` of VipQuestsPromoLayout - configured through the parent's `maximizeRegion` prop. */
+export interface VipQuestsPromoLayoutMaximizeRegionProps {
+    layout?: BoxLayout;
+    onMaximizeRegion?: () => void;
+}
+
+export const VipQuestsPromoLayoutMaximizeRegion = ({ layout, onMaximizeRegion }: VipQuestsPromoLayoutMaximizeRegionProps) => {
+    return (
+        <Region
+            name="maximize_region"
+            params={17}
+            onPointerTap={onMaximizeRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 167, width: 20, top: 7, height: 20, ...layout }}
+        >
+            <ThemeImage
+                params={16}
+                src={layoutImage('common_maximize.png')}
+                layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
+            />
         </Region>
     );
 };
@@ -149,5 +161,29 @@ export const VipQuestsPromoLayoutQuestsButtonItem = ({ layout, onQuestsButton }:
         >
             {t('citizenship.vip.quests.button')}
         </Button>
+    );
+};
+
+/** Named region `content_itemlist` of VipQuestsPromoLayout - configured through the parent's `contentItemlist` prop. */
+export interface VipQuestsPromoLayoutContentItemlistProps {
+    itemsContentItemlist?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const VipQuestsPromoLayoutContentItemlist = ({ itemsContentItemlist, layout }: VipQuestsPromoLayoutContentItemlistProps) => {
+    return (
+        <Region
+            name="content_itemlist"
+            params={147472}
+            layout={{ position: 'absolute', left: 0, top: 30, flexDirection: 'column', gap: 5, ...layout }}
+        >
+            {itemsContentItemlist ?? (
+                <>
+                    <VipQuestsPromoLayoutCaptionTxtItem />
+                    <VipQuestsPromoLayoutInfoTxtItem />
+                    <VipQuestsPromoLayoutQuestsButtonItem />
+                </>
+            )}
+        </Region>
     );
 };

@@ -5,13 +5,12 @@ import { BoxLayout, Button, ButtonThick, CheckBox, Frame, Region, ThemeImage, Th
 
 /** Generated from `1653_targeted_offer_purchase_confirmation_xml` (layout "targeted_offer_purchase_confirmation", 325x291) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface TargetedOfferPurchaseConfirmationLayoutProps {
-    itemsContent?: ReactNode;
-    itemsPropertiesItemlist?: ReactNode;
+    content?: TargetedOfferPurchaseConfirmationLayoutContentProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const TargetedOfferPurchaseConfirmationLayout = ({ itemsContent, itemsPropertiesItemlist, layout, onClose }: TargetedOfferPurchaseConfirmationLayoutProps) => {
+export const TargetedOfferPurchaseConfirmationLayout = ({ content, layout, onClose }: TargetedOfferPurchaseConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -24,42 +23,7 @@ export const TargetedOfferPurchaseConfirmationLayout = ({ itemsContent, itemsPro
             layout={{ width: 325, height: 291, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="content"
-                    params={8538256}
-                    layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 48, flexDirection: 'column', gap: 10 }}
-                >
-                    {itemsContent ?? (
-                        <>
-                            <TargetedOfferPurchaseConfirmationLayoutDisclaimerItem />
-                            <TargetedOfferPurchaseConfirmationLayoutButtonsItem />
-                        </>
-                    )}
-                    <Region
-                        params={131088}
-                        layout={{ minWidth: 404, minHeight: 171, flexShrink: 0, flexDirection: 'column', gap: 5 }}
-                    >
-                        <Region
-                            params={16}
-                            layout={{ width: 344, height: 171, flexShrink: 0 }}
-                        >
-                            <Region
-                                name="properties_itemlist"
-                                params={16}
-                                layout={{ position: 'absolute', left: 102, width: 176, top: 24, height: 64, flexDirection: 'column', gap: 7 }}
-                            >
-                                {itemsPropertiesItemlist ?? (
-                                    <TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItem />
-                                )}
-                            </Region>
-                            <ThemeImage
-                                params={16}
-                                src="${image.library.url}targetedoffers/coins_diamonds_icon.png"
-                                layout={{ position: 'absolute', left: 13, width: 68, top: 23, height: 40 }}
-                            />
-                        </Region>
-                    </Region>
-                </Region>
+                <TargetedOfferPurchaseConfirmationLayoutContent {...content} />
             </Region>
         </Frame>
     );
@@ -211,13 +175,29 @@ export const TargetedOfferPurchaseConfirmationLayoutQuantityItem = ({ captionQua
     );
 };
 
+/** Named region `purchase_cost_box` of TargetedOfferPurchaseConfirmationLayout - configured through the parent's `purchaseCostBox` prop. */
+export interface TargetedOfferPurchaseConfirmationLayoutPurchaseCostBoxProps {
+    layout?: BoxLayout;
+}
+
+export const TargetedOfferPurchaseConfirmationLayoutPurchaseCostBox = ({ layout }: TargetedOfferPurchaseConfirmationLayoutPurchaseCostBoxProps) => {
+    return (
+        <Region
+            name="purchase_cost_box"
+            params={147472}
+            layout={{ width: 20, height: 22, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
 /** Row template `properties_itemlist` of TargetedOfferPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItemProps {
     itemsPropertiesItemlist?: ReactNode;
     layout?: BoxLayout;
+    purchaseCostBox?: TargetedOfferPurchaseConfirmationLayoutPurchaseCostBoxProps;
 }
 
-export const TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItem = ({ itemsPropertiesItemlist, layout }: TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItemProps) => {
+export const TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItem = ({ itemsPropertiesItemlist, layout, purchaseCostBox }: TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItemProps) => {
     const t = useTranslation();
 
     return (
@@ -245,11 +225,67 @@ export const TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItem = ({ 
                         textStyle="text-style-u-regular"
                     />
                 </Region>
+                <TargetedOfferPurchaseConfirmationLayoutPurchaseCostBox {...purchaseCostBox} />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `properties_itemlist` of TargetedOfferPurchaseConfirmationLayout - configured through the parent's `propertiesItemlist` prop. */
+export interface TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistProps {
+    itemsPropertiesItemlist?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const TargetedOfferPurchaseConfirmationLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout }: TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistProps) => {
+    return (
+        <Region
+            name="properties_itemlist"
+            params={16}
+            layout={{ position: 'absolute', left: 102, width: 176, top: 24, height: 64, flexDirection: 'column', gap: 7, ...layout }}
+        >
+            {itemsPropertiesItemlist ?? (
+                <TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistItem />
+            )}
+        </Region>
+    );
+};
+
+/** Named region `content` of TargetedOfferPurchaseConfirmationLayout - configured through the parent's `content` prop. */
+export interface TargetedOfferPurchaseConfirmationLayoutContentProps {
+    itemsContent?: ReactNode;
+    layout?: BoxLayout;
+    propertiesItemlist?: TargetedOfferPurchaseConfirmationLayoutPropertiesItemlistProps;
+}
+
+export const TargetedOfferPurchaseConfirmationLayoutContent = ({ itemsContent, layout, propertiesItemlist }: TargetedOfferPurchaseConfirmationLayoutContentProps) => {
+    return (
+        <Region
+            name="content"
+            params={8538256}
+            layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 48, flexDirection: 'column', gap: 10, ...layout }}
+        >
+            {itemsContent ?? (
+                <>
+                    <TargetedOfferPurchaseConfirmationLayoutDisclaimerItem />
+                    <TargetedOfferPurchaseConfirmationLayoutButtonsItem />
+                </>
+            )}
+            <Region
+                params={131088}
+                layout={{ minWidth: 404, minHeight: 171, flexShrink: 0, flexDirection: 'column', gap: 5 }}
+            >
                 <Region
-                    name="purchase_cost_box"
-                    params={147472}
-                    layout={{ width: 20, height: 22, flexShrink: 0 }}
-                />
+                    params={16}
+                    layout={{ width: 344, height: 171, flexShrink: 0 }}
+                >
+                    <TargetedOfferPurchaseConfirmationLayoutPropertiesItemlist {...propertiesItemlist} />
+                    <ThemeImage
+                        params={16}
+                        src="${image.library.url}targetedoffers/coins_diamonds_icon.png"
+                        layout={{ position: 'absolute', left: 13, width: 68, top: 23, height: 40 }}
+                    />
+                </Region>
             </Region>
         </Region>
     );

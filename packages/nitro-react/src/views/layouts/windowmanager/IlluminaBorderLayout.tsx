@@ -2,11 +2,12 @@ import { BoxLayout, Region, ThemeImage } from '#base/theme';
 
 /** Generated from `2808_illumina_border_xml` (layout "illumina_border", 30x30) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IlluminaBorderLayoutProps {
+    children?: IlluminaBorderLayoutChildrenProps;
     layout?: BoxLayout;
     srcCanvas?: string;
 }
 
-export const IlluminaBorderLayout = ({ layout, srcCanvas }: IlluminaBorderLayoutProps) => {
+export const IlluminaBorderLayout = ({ children, layout, srcCanvas }: IlluminaBorderLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 30, height: 30, ...layout }}>
             <Region
@@ -19,12 +20,23 @@ export const IlluminaBorderLayout = ({ layout, srcCanvas }: IlluminaBorderLayout
                     src={srcCanvas}
                     layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
                 />
-                <Region
-                    name="children"
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
-                />
+                <IlluminaBorderLayoutChildren {...children} />
             </Region>
         </Region>
+    );
+};
+
+/** Named region `children` of IlluminaBorderLayout - configured through the parent's `children` prop. */
+export interface IlluminaBorderLayoutChildrenProps {
+    layout?: BoxLayout;
+}
+
+export const IlluminaBorderLayoutChildren = ({ layout }: IlluminaBorderLayoutChildrenProps) => {
+    return (
+        <Region
+            name="children"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30, ...layout }}
+        />
     );
 };

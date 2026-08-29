@@ -5,128 +5,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `19_thread_list_item_xml` (layout "thread_list_item", 600x40) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ThreadListItemLayoutProps {
-    captionDetails?: string;
-    captionHeader?: string;
-    captionMessages1?: string;
-    captionMessages2?: string;
-    itemsInfoButtons?: ReactNode;
-    itemsModButtons?: ReactNode;
     layout?: BoxLayout;
-    onButtonContainer?: () => void;
-    onHeaderRegion?: () => void;
-    onUnreadRegion?: () => void;
+    mainBox?: ThreadListItemLayoutMainBoxProps;
 }
 
-export const ThreadListItemLayout = ({ captionDetails, captionHeader, captionMessages1, captionMessages2, itemsInfoButtons, itemsModButtons, layout, onButtonContainer, onHeaderRegion, onUnreadRegion }: ThreadListItemLayoutProps) => {
+export const ThreadListItemLayout = ({ layout, mainBox }: ThreadListItemLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 600, height: 40, ...layout }}>
-            <Region
-                name="main_box"
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 600, top: 0, height: 40 }}
-            >
-                <Region
-                    name="left_button_container"
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 40 }}
-                >
-                    <Region
-                        name="info_buttons"
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 40, flexDirection: 'column' }}
-                    >
-                        {itemsInfoButtons ?? (
-                            <>
-                                <ThreadListItemLayoutThreadLockItem />
-                                <ThreadListItemLayoutThreadPinItem />
-                            </>
-                        )}
-                    </Region>
-                </Region>
-                <Region
-                    name="texts_container"
-                    tags={[ 'relative(1)' ]}
-                    params={16}
-                    backgroundColor="#eefeff"
-                    layout={{ position: 'absolute', left: 21, width: 387, top: 0, height: 40 }}
-                >
-                    <Region
-                        name="header_region"
-                        params={131089}
-                        onPointerTap={onHeaderRegion}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 17 }}
-                    >
-                        <Region
-                            name="header"
-                            params={16}
-                            layout={{ position: 'absolute', left: 0, width: 117, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText text={captionHeader ?? 'Some thread header'} />
-                        </Region>
-                    </Region>
-                    <Region
-                        name="details"
-                        params={1073741825}
-                        layout={{ position: 'absolute', left: 0, width: 460, top: 16, height: 16, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionDetails ?? 'By author LongLongLongName 7 days ago, last message by LongLongLongName 30 seconds ago'} />
-                    </Region>
-                </Region>
-                <Region
-                    name="unread_texts_container"
-                    params={16}
-                    layout={{ position: 'absolute', left: 409, width: 140, top: 0, height: 40 }}
-                >
-                    <Region
-                        name="unread_region"
-                        params={17}
-                        onPointerTap={onUnreadRegion}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 40 }}
-                    />
-                    <Region
-                        name="messages1"
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionMessages1 ?? '100 messages'}
-                            textStyle="text-style-regular"
-                        />
-                    </Region>
-                    <Region
-                        name="messages2"
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 140, top: 15, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionMessages2 ?? '12 new'}
-                            textStyle="text-style-regular"
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="button_container"
-                    params={17}
-                    onPointerTap={onButtonContainer}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 550, width: 50, top: 0, height: 40 }}
-                >
-                    <Region
-                        name="mod_buttons"
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 40, flexDirection: 'row' }}
-                    >
-                        {itemsModButtons ?? (
-                            <>
-                                <ThreadListItemLayoutDeleteThreadItem />
-                                <ThreadListItemLayoutReportThreadItem />
-                            </>
-                        )}
-                    </Region>
-                </Region>
-            </Region>
+            <ThreadListItemLayoutMainBox {...mainBox} />
         </Region>
     );
 };
@@ -183,6 +69,160 @@ export const ThreadListItemLayoutThreadPinItem = ({ layout, onThreadPin, srcIcon
     );
 };
 
+/** Named region `info_buttons` of ThreadListItemLayout - configured through the parent's `infoButtons` prop. */
+export interface ThreadListItemLayoutInfoButtonsProps {
+    itemsInfoButtons?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const ThreadListItemLayoutInfoButtons = ({ itemsInfoButtons, layout }: ThreadListItemLayoutInfoButtonsProps) => {
+    return (
+        <Region
+            name="info_buttons"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 40, flexDirection: 'column', ...layout }}
+        >
+            {itemsInfoButtons ?? (
+                <>
+                    <ThreadListItemLayoutThreadLockItem />
+                    <ThreadListItemLayoutThreadPinItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `left_button_container` of ThreadListItemLayout - configured through the parent's `leftButtonContainer` prop. */
+export interface ThreadListItemLayoutLeftButtonContainerProps {
+    infoButtons?: ThreadListItemLayoutInfoButtonsProps;
+    layout?: BoxLayout;
+}
+
+export const ThreadListItemLayoutLeftButtonContainer = ({ infoButtons, layout }: ThreadListItemLayoutLeftButtonContainerProps) => {
+    return (
+        <Region
+            name="left_button_container"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 40, ...layout }}
+        >
+            <ThreadListItemLayoutInfoButtons {...infoButtons} />
+        </Region>
+    );
+};
+
+/** Named region `header_region` of ThreadListItemLayout - configured through the parent's `headerRegion` prop. */
+export interface ThreadListItemLayoutHeaderRegionProps {
+    captionHeader?: string;
+    layout?: BoxLayout;
+    onHeaderRegion?: () => void;
+}
+
+export const ThreadListItemLayoutHeaderRegion = ({ captionHeader, layout, onHeaderRegion }: ThreadListItemLayoutHeaderRegionProps) => {
+    return (
+        <Region
+            name="header_region"
+            params={131089}
+            onPointerTap={onHeaderRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 17, ...layout }}
+        >
+            <Region
+                name="header"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 117, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={captionHeader ?? 'Some thread header'} />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `texts_container` of ThreadListItemLayout - configured through the parent's `textsContainer` prop. */
+export interface ThreadListItemLayoutTextsContainerProps {
+    captionDetails?: string;
+    headerRegion?: ThreadListItemLayoutHeaderRegionProps;
+    layout?: BoxLayout;
+}
+
+export const ThreadListItemLayoutTextsContainer = ({ captionDetails, headerRegion, layout }: ThreadListItemLayoutTextsContainerProps) => {
+    return (
+        <Region
+            name="texts_container"
+            tags={[ 'relative(1)' ]}
+            params={16}
+            backgroundColor="#eefeff"
+            layout={{ position: 'absolute', left: 21, width: 387, top: 0, height: 40, ...layout }}
+        >
+            <ThreadListItemLayoutHeaderRegion {...headerRegion} />
+            <Region
+                name="details"
+                params={1073741825}
+                layout={{ position: 'absolute', left: 0, width: 460, top: 16, height: 16, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={captionDetails ?? 'By author LongLongLongName 7 days ago, last message by LongLongLongName 30 seconds ago'} />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `unread_region` of ThreadListItemLayout - configured through the parent's `unreadRegion` prop. */
+export interface ThreadListItemLayoutUnreadRegionProps {
+    layout?: BoxLayout;
+    onUnreadRegion?: () => void;
+}
+
+export const ThreadListItemLayoutUnreadRegion = ({ layout, onUnreadRegion }: ThreadListItemLayoutUnreadRegionProps) => {
+    return (
+        <Region
+            name="unread_region"
+            params={17}
+            onPointerTap={onUnreadRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 40, ...layout }}
+        />
+    );
+};
+
+/** Named region `unread_texts_container` of ThreadListItemLayout - configured through the parent's `unreadTextsContainer` prop. */
+export interface ThreadListItemLayoutUnreadTextsContainerProps {
+    captionMessages1?: string;
+    captionMessages2?: string;
+    layout?: BoxLayout;
+    unreadRegion?: ThreadListItemLayoutUnreadRegionProps;
+}
+
+export const ThreadListItemLayoutUnreadTextsContainer = ({ captionMessages1, captionMessages2, layout, unreadRegion }: ThreadListItemLayoutUnreadTextsContainerProps) => {
+    return (
+        <Region
+            name="unread_texts_container"
+            params={16}
+            layout={{ position: 'absolute', left: 409, width: 140, top: 0, height: 40, ...layout }}
+        >
+            <ThreadListItemLayoutUnreadRegion {...unreadRegion} />
+            <Region
+                name="messages1"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 140, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionMessages1 ?? '100 messages'}
+                    textStyle="text-style-regular"
+                />
+            </Region>
+            <Region
+                name="messages2"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 140, top: 15, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionMessages2 ?? '12 new'}
+                    textStyle="text-style-regular"
+                />
+            </Region>
+        </Region>
+    );
+};
+
 /** Row template `delete_thread` of ThreadListItemLayout - pass real rows through its `items…` slot. */
 export interface ThreadListItemLayoutDeleteThreadItemProps {
     layout?: BoxLayout;
@@ -233,6 +273,74 @@ export const ThreadListItemLayoutReportThreadItem = ({ layout, onReportThread, s
                 src={srcIcon ?? layoutImage('forum_forum_report.png')}
                 layout={{ position: 'absolute', left: 4, right: 4, top: 12, bottom: 13 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `mod_buttons` of ThreadListItemLayout - configured through the parent's `modButtons` prop. */
+export interface ThreadListItemLayoutModButtonsProps {
+    itemsModButtons?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const ThreadListItemLayoutModButtons = ({ itemsModButtons, layout }: ThreadListItemLayoutModButtonsProps) => {
+    return (
+        <Region
+            name="mod_buttons"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 40, flexDirection: 'row', ...layout }}
+        >
+            {itemsModButtons ?? (
+                <>
+                    <ThreadListItemLayoutDeleteThreadItem />
+                    <ThreadListItemLayoutReportThreadItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `button_container` of ThreadListItemLayout - configured through the parent's `buttonContainer` prop. */
+export interface ThreadListItemLayoutButtonContainerProps {
+    layout?: BoxLayout;
+    modButtons?: ThreadListItemLayoutModButtonsProps;
+    onButtonContainer?: () => void;
+}
+
+export const ThreadListItemLayoutButtonContainer = ({ layout, modButtons, onButtonContainer }: ThreadListItemLayoutButtonContainerProps) => {
+    return (
+        <Region
+            name="button_container"
+            params={17}
+            onPointerTap={onButtonContainer}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 550, width: 50, top: 0, height: 40, ...layout }}
+        >
+            <ThreadListItemLayoutModButtons {...modButtons} />
+        </Region>
+    );
+};
+
+/** Named region `main_box` of ThreadListItemLayout - configured through the parent's `mainBox` prop. */
+export interface ThreadListItemLayoutMainBoxProps {
+    buttonContainer?: ThreadListItemLayoutButtonContainerProps;
+    layout?: BoxLayout;
+    leftButtonContainer?: ThreadListItemLayoutLeftButtonContainerProps;
+    textsContainer?: ThreadListItemLayoutTextsContainerProps;
+    unreadTextsContainer?: ThreadListItemLayoutUnreadTextsContainerProps;
+}
+
+export const ThreadListItemLayoutMainBox = ({ buttonContainer, layout, leftButtonContainer, textsContainer, unreadTextsContainer }: ThreadListItemLayoutMainBoxProps) => {
+    return (
+        <Region
+            name="main_box"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 600, top: 0, height: 40, ...layout }}
+        >
+            <ThreadListItemLayoutLeftButtonContainer {...leftButtonContainer} />
+            <ThreadListItemLayoutTextsContainer {...textsContainer} />
+            <ThreadListItemLayoutUnreadTextsContainer {...unreadTextsContainer} />
+            <ThreadListItemLayoutButtonContainer {...buttonContainer} />
         </Region>
     );
 };

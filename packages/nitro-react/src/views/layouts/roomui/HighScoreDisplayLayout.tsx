@@ -8,12 +8,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface HighScoreDisplayLayoutProps {
     captionFooter?: string;
     captionScoreHeader?: string;
-    itemsEntries?: ReactNode;
+    entries?: HighScoreDisplayLayoutEntriesProps;
     layout?: BoxLayout;
     srcCupIcon?: string;
+    title?: HighScoreDisplayLayoutTitleProps;
 }
 
-export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, itemsEntries, layout, srcCupIcon }: HighScoreDisplayLayoutProps) => {
+export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, entries, layout, srcCupIcon, title }: HighScoreDisplayLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -23,23 +24,7 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
                 params={1}
                 layout={{ position: 'absolute', left: 0, width: 275, top: 0, height: 341, justifyContent: 'center' }}
             >
-                <Region
-                    name="title"
-                    params={16}
-                    backgroundColor="#3f3f3f"
-                    layout={{ position: 'absolute', left: 9, width: 256, top: 8, height: 20, justifyContent: 'center' }}
-                >
-                    <Region
-                        params={786640}
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 151, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={t('high.score.display.caption')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                </Region>
+                <HighScoreDisplayLayoutTitle {...title} />
                 <Border
                     variant="100"
                     name="header"
@@ -96,21 +81,37 @@ export const HighScoreDisplayLayout = ({ captionFooter, captionScoreHeader, item
                     src={srcCupIcon ?? layoutImage('high_score_highscore_cup.png')}
                     layout={{ position: 'absolute', left: 0, width: 40, top: 269, height: 70 }}
                 />
-                <ScrollArea
-                    orientation="vertical"
-                    layout={{ position: 'absolute', left: 8, width: 256, top: 53, height: 253 }}
-                >
-                    <Region
-                        name="entries"
-                        params={16}
-                        layout={{ flexDirection: 'column', width: '100%' }}
-                    >
-                        {itemsEntries ?? (
-                            <HighScoreDisplayLayoutEntryTemplateItem />
-                        )}
-                    </Region>
-                </ScrollArea>
+                <HighScoreDisplayLayoutEntries {...entries} />
             </Bubble>
+        </Region>
+    );
+};
+
+/** Named region `title` of HighScoreDisplayLayout - configured through the parent's `title` prop. */
+export interface HighScoreDisplayLayoutTitleProps {
+    layout?: BoxLayout;
+}
+
+export const HighScoreDisplayLayoutTitle = ({ layout }: HighScoreDisplayLayoutTitleProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="title"
+            params={16}
+            backgroundColor="#3f3f3f"
+            layout={{ position: 'absolute', left: 9, width: 256, top: 8, height: 20, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                params={786640}
+                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 151, top: 2, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('high.score.display.caption')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
         </Region>
     );
 };
@@ -150,5 +151,30 @@ export const HighScoreDisplayLayoutEntryTemplateItem = ({ captionScore, captionU
                 />
             </Region>
         </Region>
+    );
+};
+
+/** Named region `entries` of HighScoreDisplayLayout - configured through the parent's `entries` prop. */
+export interface HighScoreDisplayLayoutEntriesProps {
+    itemsEntries?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const HighScoreDisplayLayoutEntries = ({ itemsEntries, layout }: HighScoreDisplayLayoutEntriesProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 8, width: 256, top: 53, height: 253, ...layout }}
+        >
+            <Region
+                name="entries"
+                params={16}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            >
+                {itemsEntries ?? (
+                    <HighScoreDisplayLayoutEntryTemplateItem />
+                )}
+            </Region>
+        </ScrollArea>
     );
 };

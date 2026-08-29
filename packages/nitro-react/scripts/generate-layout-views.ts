@@ -304,6 +304,8 @@ interface FileContext {
     /** Source of the row-template sub-components, appended after the main component. */
     subComponents: string[];
     subComponentNames: string[];
+    /** Each sub-component's own props / nested sub-components, for the registry. */
+    subComponentProps: Record<string, { props: string[]; nested: Record<string, string> }>;
 }
 
 interface EmitContext {
@@ -872,8 +874,26 @@ const emitThemed = (ctx: EmitContext, component: string, el: Element, parent: Pa
     return wrap('Region', [ ...wrapperProps, `layout={${boxLayout(el, parent)}}` ], indent, inner);
 };
 
-const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
+const REGION_TAGS = new Set([ 'container', 'region', 'background', 'boxsizer', 'display_object_wrapper', 'selector', 'gradient' ]);
+
+/**
+ * `asRoot` marks the element a sub-component is being generated *for* - it renders inline
+ * there instead of being extracted again (which would recurse forever).
+ */
+const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, asRoot = false): string[] => {
     const { tag } = el;
+
+    // Every named structural node (a `container`/`region`/list the Flash code addressed by
+    // name) becomes its own component; the parent renders it and exposes one prop, named after
+    // it, that forwards that component's props (handlers, caption/src/visible overrides, layout).
+    if (!asRoot && el.attrs.name && (REGION_TAGS.has(tag) || LIST_TAGS[tag])) {
+        const component = generateSubComponent(ctx.file, el, parent, 'region');
+        const prop = uniqueProp(ctx, camel(el.attrs.name));
+
+        ctx.props.set(prop, `${component}Props`);
+
+        return [ `${indent}<${component} {...${prop}} />` ];
+    }
 
     if (SKIPPED_TAGS.has(tag)) return [ `${indent}{/* <${tag}> for ${el.vars.scrollable ?? '?'} - rendered by that list's ScrollArea */}` ];
 
@@ -1050,6 +1070,8 @@ const THEME_IMPORTS = new Set([
 interface AssembledComponent {
     lines: string[];
     props: string[];
+    /** Props that forward a nested sub-component's props: prop name -> sub-component name. */
+    nested: Record<string, string>;
 }
 
 /** The `export interface XProps` + `export const X = (...) => {...}` pair for one emitted body. */
@@ -1081,11 +1103,15 @@ const assembleComponent = (ctx: EmitContext, componentName: string, doc: string,
 
     lines.push(`${INDENT}return (`, ...body, `${INDENT});`, '};', '');
 
-    return { lines, props: propEntries.map(([ name ]) => name) };
+    const nested: Record<string, string> = {};
+
+    for (const [ name, type ] of propEntries) if (type.endsWith('Props') && type !== 'BoxLayout') nested[name] = type.slice(0, -5);
+
+    return { lines, props: propEntries.map(([ name ]) => name), nested };
 };
 
-const generateSubComponent = (file: FileContext, el: Element, parent: ParentBox): string => {
-    const base = `${file.componentName}${pascal(el.attrs.name ?? el.tag)}Item`;
+const generateSubComponent = (file: FileContext, el: Element, parent: ParentBox, kind: 'item' | 'region' = 'item'): string => {
+    const base = `${file.componentName}${pascal(el.attrs.name ?? el.tag)}${kind === 'item' ? 'Item' : ''}`;
     let name = base;
 
     for (let i = 2; file.subComponentNames.includes(name); i++) name = `${base}${i}`;
@@ -1097,10 +1123,15 @@ const generateSubComponent = (file: FileContext, el: Element, parent: ParentBox)
     ctx.props.set('layout', 'BoxLayout');
     ctx.imports.add('BoxLayout');
 
-    const body = emit(ctx, el, { ...parent, spreadLayout: true }, INDENT + INDENT);
-    const doc = `/** Row template \`${el.attrs.name ?? el.tag}\` of ${file.componentName} - pass real rows through its \`items…\` slot. */`;
+    const body = emit(ctx, el, { ...parent, spreadLayout: true }, INDENT + INDENT, true);
+    const doc = kind === 'item'
+        ? `/** Row template \`${el.attrs.name ?? el.tag}\` of ${file.componentName} - pass real rows through its \`items…\` slot. */`
+        : `/** Named region \`${el.attrs.name}\` of ${file.componentName} - configured through the parent's \`${camel(el.attrs.name ?? '')}\` prop. */`;
 
-    file.subComponents.push(assembleComponent(ctx, name, doc, body).lines.join('\n'));
+    const assembled = assembleComponent(ctx, name, doc, body);
+
+    file.subComponents.push(assembled.lines.join('\n'));
+    file.subComponentProps[name] = { props: assembled.props, nested: assembled.nested };
 
     return name;
 };
@@ -1108,6 +1139,8 @@ const generateSubComponent = (file: FileContext, el: Element, parent: ParentBox)
 interface GeneratedComponent {
     code: string;
     props: string[];
+    nested: Record<string, string>;
+    subComponentProps: Record<string, { props: string[]; nested: Record<string, string> }>;
     rootIsFrame: boolean;
     subComponents: string[];
     warnings: string[];
@@ -1121,7 +1154,7 @@ const generateComponent = (componentName: string, sourceFile: string, root: XmlN
 
         return [ toElement(child) ];
     }));
-    const file: FileContext = { componentName, imports: new Set(), scrollTargets: new Map(), warnings: [], subComponents: [], subComponentNames: [] };
+    const file: FileContext = { componentName, imports: new Set(), scrollTargets: new Map(), warnings: [], subComponents: [], subComponentNames: [], subComponentProps: {} };
     const ctx = createEmitContext(file);
 
     for (const el of elements) collectScrollTargets(el, ctx.scrollTargets);
@@ -1165,7 +1198,7 @@ const generateComponent = (componentName: string, sourceFile: string, root: XmlN
 
     lines.push('', ...main.lines, ...file.subComponents);
 
-    return { code: lines.join('\n'), props: main.props, rootIsFrame, subComponents: file.subComponentNames, warnings: file.warnings };
+    return { code: lines.join('\n'), props: main.props, nested: main.nested, subComponentProps: file.subComponentProps, rootIsFrame, subComponents: file.subComponentNames, warnings: file.warnings };
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -1292,7 +1325,7 @@ const registry: string[] = [];
 for (const source of sources) {
     const suffix = (baseCounts.get(nameKey(source)) ?? 0) > 1 ? `_${source.id}` : '';
     const componentName = `${pascal(source.base)}${suffix ? pascal(suffix) : ''}Layout`;
-    const { code, props, rootIsFrame, subComponents, warnings } = generateComponent(componentName, source.file.replace(/\$.*$/, ''), source.root);
+    const { code, props, nested, subComponentProps, rootIsFrame, subComponents, warnings } = generateComponent(componentName, source.file.replace(/\$.*$/, ''), source.root);
 
     const usage = as3Usage.get(source.base);
     const folder = layoutFolder(usage);
@@ -1309,7 +1342,9 @@ for (const source of sources) {
         `${INDENT}{`,
         `${INDENT}${INDENT}name: ${quote(source.base)}, id: ${source.id}, component: ${quote(componentName)}, size: ${quote(size)}, rootIsFrame: ${rootIsFrame},`,
         `${INDENT}${INDENT}props: [ ${props.map(quote).join(', ')} ],`,
+        `${INDENT}${INDENT}nested: { ${Object.entries(nested).map(([ prop, component ]) => `${prop}: ${quote(component)}`).join(', ')} },`,
         `${INDENT}${INDENT}subComponents: [ ${subComponents.map(quote).join(', ')} ],`,
+        `${INDENT}${INDENT}subComponentProps: { ${Object.entries(subComponentProps).map(([ name, info ]) => `${name}: { props: [ ${info.props.map(quote).join(', ')} ], nested: { ${Object.entries(info.nested).map(([ prop, component ]) => `${prop}: ${quote(component)}`).join(', ')} } }`).join(', ')} },`,
         `${INDENT}${INDENT}folder: ${quote(folder)}, libraries: [ ${libraries.map(quote).join(', ')} ],`,
         `${INDENT}${INDENT}as3: [ ${as3.map(quote).join(', ')} ],`,
         `${INDENT}${INDENT}load: () => import(${quote(`./${folder}/${componentName}`)}).then(module => module.${componentName}),`,
@@ -1339,7 +1374,11 @@ writeFileSync(join(OUT_DIR, 'layoutRegistry.ts'), [
     `${INDENT}rootIsFrame: boolean;`,
     `${INDENT}/** The component's prop names - \`on*\` handlers, \`caption*\`/\`src*\` overrides, \`items*\` row slots, \`layout\`. */`,
     `${INDENT}props: string[];`,
+    `${INDENT}/** Props of the main component that forward a sub-component's props: prop name -> sub-component name. */`,
+    `${INDENT}nested: Record<string, string>;`,
     `${INDENT}subComponents: string[];`,
+    `${INDENT}/** Every sub-component's own props and nested sub-components, so a caller can walk the whole prop tree. */`,
+    `${INDENT}subComponentProps: Record<string, { props: string[]; nested: Record<string, string> }>;`,
     `${INDENT}/** Output folder under views/layouts - embedding client library + driving class package (see \`layoutFolder\` in the generator). */`,
     `${INDENT}folder: string;`,
     `${INDENT}/** Client libraries (\`HabboFriendBarCom\` -> \`friendbar\`) whose SWF embedded this layout's XML. */`,

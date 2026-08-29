@@ -6,12 +6,12 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1175_transaction_details_xml` (layout "transaction_details", 400x394) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface TransactionDetailsLayoutProps {
-    itemsKeyValuePairs?: ReactNode;
+    keyValuePairs?: TransactionDetailsLayoutKeyValuePairsProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const TransactionDetailsLayout = ({ itemsKeyValuePairs, layout, onClose }: TransactionDetailsLayoutProps) => {
+export const TransactionDetailsLayout = ({ keyValuePairs, layout, onClose }: TransactionDetailsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -24,35 +24,7 @@ export const TransactionDetailsLayout = ({ itemsKeyValuePairs, layout, onClose }
             layout={{ width: 400, height: 394, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="key_value_pairs"
-                    params={8388752}
-                    layout={{ position: 'absolute', left: 10, right: 10, top: 13, height: 336, flexDirection: 'column', gap: 2 }}
-                >
-                    {itemsKeyValuePairs ?? (
-                        <>
-                            <TransactionDetailsLayoutTransactionTypePairItem />
-                            <TransactionDetailsLayoutTimestampPairItem />
-                            <TransactionDetailsLayoutRoomIdPairItem />
-                            <TransactionDetailsLayoutChestIdsPairItem />
-                            <TransactionDetailsLayoutUsernamePairItem />
-                            <TransactionDetailsLayoutFurniTransactionsPairItem />
-                            <TransactionDetailsLayoutFurniDetailsItem />
-                            <TransactionDetailsLayoutSpacingItem />
-                            <TransactionDetailsLayoutExtraContainerItem />
-                        </>
-                    )}
-                    <WidgetSlot
-                        widgetType="separator"
-                        params={144}
-                        layout={{ width: 380, height: 5, flexShrink: 0 }}
-                    />
-                    <WidgetSlot
-                        widgetType="separator"
-                        params={144}
-                        layout={{ width: 380, height: 5, flexShrink: 0 }}
-                    />
-                </Region>
+                <TransactionDetailsLayoutKeyValuePairs {...keyValuePairs} />
             </Region>
         </Frame>
     );
@@ -238,19 +210,68 @@ export const TransactionDetailsLayoutFurniTransactionsPairItem = ({ layout }: Tr
     );
 };
 
+/** Named region `number_container_inner_border` of TransactionDetailsLayout - configured through the parent's `numberContainerInnerBorder` prop. */
+export interface TransactionDetailsLayoutNumberContainerInnerBorderProps {
+    captionFurniQuantity?: string;
+    layout?: BoxLayout;
+}
+
+export const TransactionDetailsLayoutNumberContainerInnerBorder = ({ captionFurniQuantity, layout }: TransactionDetailsLayoutNumberContainerInnerBorderProps) => {
+    return (
+        <Region
+            name="number_container_inner_border"
+            params={4194320}
+            backgroundColor="#ffffff"
+            layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14, ...layout }}
+        >
+            <Region
+                name="furni_quantity"
+                params={4194320}
+                layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionFurniQuantity ?? '0'}
+                    textStyle="text-style-regular"
+                    textOptions={{ fill: '#2f6982' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `number_container` of TransactionDetailsLayout - configured through the parent's `numberContainer` prop. */
+export interface TransactionDetailsLayoutNumberContainerProps {
+    layout?: BoxLayout;
+    numberContainerInnerBorder?: TransactionDetailsLayoutNumberContainerInnerBorderProps;
+    visibleNumberContainer?: boolean;
+}
+
+export const TransactionDetailsLayoutNumberContainer = ({ layout, numberContainerInnerBorder, visibleNumberContainer }: TransactionDetailsLayoutNumberContainerProps) => {
+    return (
+        <Region
+            name="number_container"
+            params={278672}
+            visible={visibleNumberContainer ?? false}
+            backgroundColor="#2f6982"
+            layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16, ...layout }}
+        >
+            <TransactionDetailsLayoutNumberContainerInnerBorder {...numberContainerInnerBorder} />
+        </Region>
+    );
+};
+
 /** Row template `furni_template` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutFurniTemplateItemProps {
-    captionFurniQuantity?: string;
     captionIncompleteText?: string;
     layout?: BoxLayout;
+    numberContainer?: TransactionDetailsLayoutNumberContainerProps;
     onFurniTemplate?: () => void;
     srcCoinsIcon?: string;
     srcOutlineFocus?: string;
     srcUniqueItemBackgroundBitmap?: string;
-    visibleNumberContainer?: boolean;
 }
 
-export const TransactionDetailsLayoutFurniTemplateItem = ({ captionFurniQuantity, captionIncompleteText, layout, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap, visibleNumberContainer }: TransactionDetailsLayoutFurniTemplateItemProps) => {
+export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteText, layout, numberContainer, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap }: TransactionDetailsLayoutFurniTemplateItemProps) => {
     return (
         <Region
             name="furni_template"
@@ -294,32 +315,7 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionFurniQuantity
                     params={16}
                     layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
                 />
-                <Region
-                    name="number_container"
-                    params={278672}
-                    visible={visibleNumberContainer ?? false}
-                    backgroundColor="#2f6982"
-                    layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16 }}
-                >
-                    <Region
-                        name="number_container_inner_border"
-                        params={4194320}
-                        backgroundColor="#ffffff"
-                        layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14 }}
-                    >
-                        <Region
-                            name="furni_quantity"
-                            params={4194320}
-                            layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionFurniQuantity ?? '0'}
-                                textStyle="text-style-regular"
-                                textOptions={{ fill: '#2f6982' }}
-                            />
-                        </Region>
-                    </Region>
-                </Region>
+                <TransactionDetailsLayoutNumberContainer {...numberContainer} />
                 <WidgetSlot
                     widgetType="limited_item_overlay_grid"
                     name="unique_item_overlay_container"
@@ -357,23 +353,144 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionFurniQuantity
                     layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
                 />
             </Region>
+        </Region>
+    );
+};
+
+/** Named region `item_grid` of TransactionDetailsLayout - configured through the parent's `itemGrid` prop. */
+export interface TransactionDetailsLayoutItemGridProps {
+    itemsItemGrid?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const TransactionDetailsLayoutItemGrid = ({ itemsItemGrid, layout }: TransactionDetailsLayoutItemGridProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5, ...layout }}
+        >
+            <Region
+                name="item_grid"
+                params={2192}
+                layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 3, width: '100%' }}
+            >
+                {itemsItemGrid ?? (
+                    <TransactionDetailsLayoutFurniTemplateItem />
+                )}
+            </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `withdrawals_container` of TransactionDetailsLayout - configured through the parent's `withdrawalsContainer` prop. */
+export interface TransactionDetailsLayoutWithdrawalsContainerProps {
+    captionEmptyText?: string;
+    itemGrid?: TransactionDetailsLayoutItemGridProps;
+    layout?: BoxLayout;
+}
+
+export const TransactionDetailsLayoutWithdrawalsContainer = ({ captionEmptyText, itemGrid, layout }: TransactionDetailsLayoutWithdrawalsContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="withdrawals_container"
+            params={16}
+            layout={{ width: 165, height: 161, flexShrink: 0, ...layout }}
+        >
+            <Region
+                params={144}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('wiredchests.log_details.transactions.withdrawn')}
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
+            <Border
+                variant="4"
+                params={16}
+                tintColor="#e2e2e2"
+                layout={{ position: 'absolute', left: 0, width: 165, top: 20, height: 141 }}
+            >
+                <TransactionDetailsLayoutItemGrid {...itemGrid} />
+                <Region
+                    name="empty_text"
+                    params={144}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionEmptyText ?? t('wiredchests.log_details.transactions.none_placeholder')}
+                        textOptions={{ align: 'center' }}
+                    />
+                </Region>
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `number_container_inner_border` of TransactionDetailsLayout - configured through the parent's `numberContainerInnerBorder` prop. */
+export interface TransactionDetailsLayoutNumberContainerInnerBorder2Props {
+    captionFurniQuantity?: string;
+    layout?: BoxLayout;
+}
+
+export const TransactionDetailsLayoutNumberContainerInnerBorder2 = ({ captionFurniQuantity, layout }: TransactionDetailsLayoutNumberContainerInnerBorder2Props) => {
+    return (
+        <Region
+            name="number_container_inner_border"
+            params={4194320}
+            backgroundColor="#ffffff"
+            layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14, ...layout }}
+        >
+            <Region
+                name="furni_quantity"
+                params={4194320}
+                layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionFurniQuantity ?? '0'}
+                    textStyle="text-style-regular"
+                    textOptions={{ fill: '#2f6982' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `number_container` of TransactionDetailsLayout - configured through the parent's `numberContainer` prop. */
+export interface TransactionDetailsLayoutNumberContainer2Props {
+    layout?: BoxLayout;
+    numberContainerInnerBorder?: TransactionDetailsLayoutNumberContainerInnerBorder2Props;
+    visibleNumberContainer?: boolean;
+}
+
+export const TransactionDetailsLayoutNumberContainer2 = ({ layout, numberContainerInnerBorder, visibleNumberContainer }: TransactionDetailsLayoutNumberContainer2Props) => {
+    return (
+        <Region
+            name="number_container"
+            params={278672}
+            visible={visibleNumberContainer ?? false}
+            backgroundColor="#2f6982"
+            layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16, ...layout }}
+        >
+            <TransactionDetailsLayoutNumberContainerInnerBorder2 {...numberContainerInnerBorder} />
         </Region>
     );
 };
 
 /** Row template `furni_template` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
 export interface TransactionDetailsLayoutFurniTemplateItem2Props {
-    captionFurniQuantity?: string;
     captionIncompleteText?: string;
     layout?: BoxLayout;
+    numberContainer?: TransactionDetailsLayoutNumberContainer2Props;
     onFurniTemplate?: () => void;
     srcCoinsIcon?: string;
     srcOutlineFocus?: string;
     srcUniqueItemBackgroundBitmap?: string;
-    visibleNumberContainer?: boolean;
 }
 
-export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionFurniQuantity, captionIncompleteText, layout, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap, visibleNumberContainer }: TransactionDetailsLayoutFurniTemplateItem2Props) => {
+export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteText, layout, numberContainer, onFurniTemplate, srcCoinsIcon, srcOutlineFocus, srcUniqueItemBackgroundBitmap }: TransactionDetailsLayoutFurniTemplateItem2Props) => {
     return (
         <Region
             name="furni_template"
@@ -417,32 +534,7 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionFurniQuantit
                     params={16}
                     layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
                 />
-                <Region
-                    name="number_container"
-                    params={278672}
-                    visible={visibleNumberContainer ?? false}
-                    backgroundColor="#2f6982"
-                    layout={{ position: 'absolute', left: 27, right: 0, top: 2, height: 16 }}
-                >
-                    <Region
-                        name="number_container_inner_border"
-                        params={4194320}
-                        backgroundColor="#ffffff"
-                        layout={{ position: 'absolute', left: 1, width: 11, top: 1, height: 14 }}
-                    >
-                        <Region
-                            name="furni_quantity"
-                            params={4194320}
-                            layout={{ position: 'absolute', left: 1, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionFurniQuantity ?? '0'}
-                                textStyle="text-style-regular"
-                                textOptions={{ fill: '#2f6982' }}
-                            />
-                        </Region>
-                    </Region>
-                </Region>
+                <TransactionDetailsLayoutNumberContainer2 {...numberContainer} />
                 <WidgetSlot
                     widgetType="limited_item_overlay_grid"
                     name="unique_item_overlay_container"
@@ -484,18 +576,87 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionFurniQuantit
     );
 };
 
-/** Row template `furni_details` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
-export interface TransactionDetailsLayoutFurniDetailsItemProps {
-    captionEmptyText?: string;
-    captionEmptyText2?: string;
+/** Named region `item_grid` of TransactionDetailsLayout - configured through the parent's `itemGrid` prop. */
+export interface TransactionDetailsLayoutItemGrid2Props {
     itemsItemGrid?: ReactNode;
-    itemsItemGrid2?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const TransactionDetailsLayoutFurniDetailsItem = ({ captionEmptyText, captionEmptyText2, itemsItemGrid, itemsItemGrid2, layout }: TransactionDetailsLayoutFurniDetailsItemProps) => {
+export const TransactionDetailsLayoutItemGrid2 = ({ itemsItemGrid, layout }: TransactionDetailsLayoutItemGrid2Props) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 4, ...layout }}
+        >
+            <Region
+                name="item_grid"
+                params={2192}
+                layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 3, width: '100%' }}
+            >
+                {itemsItemGrid ?? (
+                    <TransactionDetailsLayoutFurniTemplateItem2 />
+                )}
+            </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `deposits_container` of TransactionDetailsLayout - configured through the parent's `depositsContainer` prop. */
+export interface TransactionDetailsLayoutDepositsContainerProps {
+    captionEmptyText?: string;
+    itemGrid?: TransactionDetailsLayoutItemGrid2Props;
+    layout?: BoxLayout;
+}
+
+export const TransactionDetailsLayoutDepositsContainer = ({ captionEmptyText, itemGrid, layout }: TransactionDetailsLayoutDepositsContainerProps) => {
     const t = useTranslation();
 
+    return (
+        <Region
+            name="deposits_container"
+            params={16}
+            layout={{ width: 165, height: 161, flexShrink: 0, ...layout }}
+        >
+            <Region
+                params={144}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('wiredchests.log_details.transactions.deposit')}
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
+            <Border
+                variant="4"
+                params={16}
+                tintColor="#e2e2e2"
+                layout={{ position: 'absolute', left: 0, width: 165, top: 20, height: 141 }}
+            >
+                <TransactionDetailsLayoutItemGrid2 {...itemGrid} />
+                <Region
+                    name="empty_text"
+                    params={144}
+                    visible={false}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionEmptyText ?? t('wiredchests.log_details.transactions.none_placeholder')}
+                        textOptions={{ align: 'center' }}
+                    />
+                </Region>
+            </Border>
+        </Region>
+    );
+};
+
+/** Row template `furni_details` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
+export interface TransactionDetailsLayoutFurniDetailsItemProps {
+    depositsContainer?: TransactionDetailsLayoutDepositsContainerProps;
+    layout?: BoxLayout;
+    withdrawalsContainer?: TransactionDetailsLayoutWithdrawalsContainerProps;
+}
+
+export const TransactionDetailsLayoutFurniDetailsItem = ({ depositsContainer, layout, withdrawalsContainer }: TransactionDetailsLayoutFurniDetailsItemProps) => {
     return (
         <Region
             name="furni_details"
@@ -506,99 +667,8 @@ export const TransactionDetailsLayoutFurniDetailsItem = ({ captionEmptyText, cap
                 params={786640}
                 layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 345, top: 0, height: 161, flexDirection: 'row', gap: 15 }}
             >
-                <Region
-                    name="withdrawals_container"
-                    params={16}
-                    layout={{ width: 165, height: 161, flexShrink: 0 }}
-                >
-                    <Region
-                        params={144}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={t('wiredchests.log_details.transactions.withdrawn')}
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
-                    <Border
-                        variant="4"
-                        params={16}
-                        tintColor="#e2e2e2"
-                        layout={{ position: 'absolute', left: 0, width: 165, top: 20, height: 141 }}
-                    >
-                        <ScrollArea
-                            orientation="vertical"
-                            layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5 }}
-                        >
-                            <Region
-                                name="item_grid"
-                                params={2192}
-                                layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 3, width: '100%' }}
-                            >
-                                {itemsItemGrid ?? (
-                                    <TransactionDetailsLayoutFurniTemplateItem />
-                                )}
-                            </Region>
-                        </ScrollArea>
-                        <Region
-                            name="empty_text"
-                            params={144}
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionEmptyText ?? t('wiredchests.log_details.transactions.none_placeholder')}
-                                textOptions={{ align: 'center' }}
-                            />
-                        </Region>
-                    </Border>
-                </Region>
-                <Region
-                    name="deposits_container"
-                    params={16}
-                    layout={{ width: 165, height: 161, flexShrink: 0 }}
-                >
-                    <Region
-                        params={144}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={t('wiredchests.log_details.transactions.deposit')}
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
-                    <Border
-                        variant="4"
-                        params={16}
-                        tintColor="#e2e2e2"
-                        layout={{ position: 'absolute', left: 0, width: 165, top: 20, height: 141 }}
-                    >
-                        <ScrollArea
-                            orientation="vertical"
-                            layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 4 }}
-                        >
-                            <Region
-                                name="item_grid"
-                                params={2192}
-                                layout={{ flexDirection: 'row', flexWrap: 'wrap', gap: 3, width: '100%' }}
-                            >
-                                {itemsItemGrid2 ?? (
-                                    <TransactionDetailsLayoutFurniTemplateItem2 />
-                                )}
-                            </Region>
-                        </ScrollArea>
-                        <Region
-                            name="empty_text"
-                            params={144}
-                            visible={false}
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 61, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionEmptyText2 ?? t('wiredchests.log_details.transactions.none_placeholder')}
-                                textOptions={{ align: 'center' }}
-                            />
-                        </Region>
-                    </Border>
-                </Region>
+                <TransactionDetailsLayoutWithdrawalsContainer {...withdrawalsContainer} />
+                <TransactionDetailsLayoutDepositsContainer {...depositsContainer} />
             </Region>
         </Region>
     );
@@ -616,6 +686,60 @@ export const TransactionDetailsLayoutSpacingItem = ({ layout }: TransactionDetai
             params={144}
             layout={{ width: 380, height: 5, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `extra_pair` of TransactionDetailsLayout - configured through the parent's `extraPair` prop. */
+export interface TransactionDetailsLayoutExtraPairProps {
+    layout?: BoxLayout;
+}
+
+export const TransactionDetailsLayoutExtraPair = ({ layout }: TransactionDetailsLayoutExtraPairProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="extra_pair"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 20, flexDirection: 'row', gap: 2, ...layout }}
+        >
+            <Region
+                params={16}
+                layout={{ width: 37, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={t('wiredchests.log_details.extra')} />
+            </Region>
+            <Region
+                params={16}
+                layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text="-" />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `extra_info_button` of TransactionDetailsLayout - configured through the parent's `extraInfoButton` prop. */
+export interface TransactionDetailsLayoutExtraInfoButtonProps {
+    layout?: BoxLayout;
+    onExtraInfoButton?: () => void;
+}
+
+export const TransactionDetailsLayoutExtraInfoButton = ({ layout, onExtraInfoButton }: TransactionDetailsLayoutExtraInfoButtonProps) => {
+    return (
+        <Region
+            name="extra_info_button"
+            params={81}
+            onPointerTap={onExtraInfoButton}
+            cursor="pointer"
+            layout={{ position: 'absolute', right: 3, width: 20, top: 0, height: 20, ...layout }}
+        >
+            <ThemeImage
+                params={16}
+                src={layoutImage('icons_info_grey.png')}
+                layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 18 }}
+            />
+        </Region>
     );
 };
 
@@ -726,54 +850,50 @@ export const TransactionDetailsLayoutDesc3Item = ({ captionDesc3, layout }: Tran
     );
 };
 
-/** Row template `extra_container` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
-export interface TransactionDetailsLayoutExtraContainerItemProps {
+/** Named region `extra_info_bubble_texts` of TransactionDetailsLayout - configured through the parent's `extraInfoBubbleTexts` prop. */
+export interface TransactionDetailsLayoutExtraInfoBubbleTextsProps {
     itemsExtraInfoBubbleTexts?: ReactNode;
     layout?: BoxLayout;
-    onExtraInfoButton?: () => void;
+}
+
+export const TransactionDetailsLayoutExtraInfoBubbleTexts = ({ itemsExtraInfoBubbleTexts, layout }: TransactionDetailsLayoutExtraInfoBubbleTextsProps) => {
+    return (
+        <Region
+            name="extra_info_bubble_texts"
+            params={8388752}
+            layout={{ position: 'absolute', left: 8, right: 24, top: 8, height: 147, flexDirection: 'column', gap: 1, ...layout }}
+        >
+            {itemsExtraInfoBubbleTexts ?? (
+                <>
+                    <TransactionDetailsLayoutTitleItem />
+                    <TransactionDetailsLayoutSpacerItem />
+                    <TransactionDetailsLayoutDesc1Item />
+                    <TransactionDetailsLayoutDesc2Item />
+                    <TransactionDetailsLayoutDesc3Item />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Row template `extra_container` of TransactionDetailsLayout - pass real rows through its `items…` slot. */
+export interface TransactionDetailsLayoutExtraContainerItemProps {
+    extraInfoBubbleTexts?: TransactionDetailsLayoutExtraInfoBubbleTextsProps;
+    extraInfoButton?: TransactionDetailsLayoutExtraInfoButtonProps;
+    extraPair?: TransactionDetailsLayoutExtraPairProps;
+    layout?: BoxLayout;
     visibleExtraInfoBubble?: boolean;
 }
 
-export const TransactionDetailsLayoutExtraContainerItem = ({ itemsExtraInfoBubbleTexts, layout, onExtraInfoButton, visibleExtraInfoBubble }: TransactionDetailsLayoutExtraContainerItemProps) => {
-    const t = useTranslation();
-
+export const TransactionDetailsLayoutExtraContainerItem = ({ extraInfoBubbleTexts, extraInfoButton, extraPair, layout, visibleExtraInfoBubble }: TransactionDetailsLayoutExtraContainerItemProps) => {
     return (
         <Region
             name="extra_container"
             params={144}
             layout={{ width: 380, height: 20, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="extra_pair"
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 47, top: 0, height: 20, flexDirection: 'row', gap: 2 }}
-            >
-                <Region
-                    params={16}
-                    layout={{ width: 37, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText text={t('wiredchests.log_details.extra')} />
-                </Region>
-                <Region
-                    params={16}
-                    layout={{ width: 8, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText text="-" />
-                </Region>
-            </Region>
-            <Region
-                name="extra_info_button"
-                params={81}
-                onPointerTap={onExtraInfoButton}
-                cursor="pointer"
-                layout={{ position: 'absolute', right: 3, width: 20, top: 0, height: 20 }}
-            >
-                <ThemeImage
-                    params={16}
-                    src={layoutImage('icons_info_grey.png')}
-                    layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 18 }}
-                />
-            </Region>
+            <TransactionDetailsLayoutExtraPair {...extraPair} />
+            <TransactionDetailsLayoutExtraInfoButton {...extraInfoButton} />
             <Region
                 visible={visibleExtraInfoBubble ?? false}
                 layout={{ position: 'absolute', left: 379, width: 325, top: -79, height: 179 }}
@@ -785,23 +905,49 @@ export const TransactionDetailsLayoutExtraContainerItem = ({ itemsExtraInfoBubbl
                     pointer="left"
                     layout={{ width: '100%', height: '100%' }}
                 >
-                    <Region
-                        name="extra_info_bubble_texts"
-                        params={8388752}
-                        layout={{ position: 'absolute', left: 8, right: 24, top: 8, height: 147, flexDirection: 'column', gap: 1 }}
-                    >
-                        {itemsExtraInfoBubbleTexts ?? (
-                            <>
-                                <TransactionDetailsLayoutTitleItem />
-                                <TransactionDetailsLayoutSpacerItem />
-                                <TransactionDetailsLayoutDesc1Item />
-                                <TransactionDetailsLayoutDesc2Item />
-                                <TransactionDetailsLayoutDesc3Item />
-                            </>
-                        )}
-                    </Region>
+                    <TransactionDetailsLayoutExtraInfoBubbleTexts {...extraInfoBubbleTexts} />
                 </Bubble>
             </Region>
+        </Region>
+    );
+};
+
+/** Named region `key_value_pairs` of TransactionDetailsLayout - configured through the parent's `keyValuePairs` prop. */
+export interface TransactionDetailsLayoutKeyValuePairsProps {
+    itemsKeyValuePairs?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const TransactionDetailsLayoutKeyValuePairs = ({ itemsKeyValuePairs, layout }: TransactionDetailsLayoutKeyValuePairsProps) => {
+    return (
+        <Region
+            name="key_value_pairs"
+            params={8388752}
+            layout={{ position: 'absolute', left: 10, right: 10, top: 13, height: 336, flexDirection: 'column', gap: 2, ...layout }}
+        >
+            {itemsKeyValuePairs ?? (
+                <>
+                    <TransactionDetailsLayoutTransactionTypePairItem />
+                    <TransactionDetailsLayoutTimestampPairItem />
+                    <TransactionDetailsLayoutRoomIdPairItem />
+                    <TransactionDetailsLayoutChestIdsPairItem />
+                    <TransactionDetailsLayoutUsernamePairItem />
+                    <TransactionDetailsLayoutFurniTransactionsPairItem />
+                    <TransactionDetailsLayoutFurniDetailsItem />
+                    <TransactionDetailsLayoutSpacingItem />
+                    <TransactionDetailsLayoutExtraContainerItem />
+                </>
+            )}
+            <WidgetSlot
+                widgetType="separator"
+                params={144}
+                layout={{ width: 380, height: 5, flexShrink: 0 }}
+            />
+            <WidgetSlot
+                widgetType="separator"
+                params={144}
+                layout={{ width: 380, height: 5, flexShrink: 0 }}
+            />
         </Region>
     );
 };

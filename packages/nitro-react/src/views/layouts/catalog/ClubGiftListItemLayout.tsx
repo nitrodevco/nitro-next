@@ -3,17 +3,15 @@ import { Border, BoxLayout, Button, Icon, Region, ThemeImage, ThemeText } from '
 
 /** Generated from `1559_club_gift_list_item_xml` (layout "marketplace_offers_item", 320x58) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ClubGiftListItemLayoutProps {
-    captionBundleCounter?: string;
     captionGiftDesc?: string;
     captionGiftName?: string;
     captionMonthsRequired?: string;
-    captionMultiCounter?: string;
+    imageContainer?: ClubGiftListItemLayoutImageContainerProps;
     layout?: BoxLayout;
     onSelectButton?: () => void;
-    srcImage?: string;
 }
 
-export const ClubGiftListItemLayout = ({ captionBundleCounter, captionGiftDesc, captionGiftName, captionMonthsRequired, captionMultiCounter, layout, onSelectButton, srcImage }: ClubGiftListItemLayoutProps) => {
+export const ClubGiftListItemLayout = ({ captionGiftDesc, captionGiftName, captionMonthsRequired, imageContainer, layout, onSelectButton }: ClubGiftListItemLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -63,52 +61,66 @@ export const ClubGiftListItemLayout = ({ captionBundleCounter, captionGiftDesc, 
                 >
                     {t('catalog.club_gift.select')}
                 </Button>
-                <Region
-                    name="image_container"
-                    params={16}
-                    layout={{ position: 'absolute', left: 7, width: 52, top: 6, height: 46 }}
-                >
-                    <ThemeImage
-                        name="image"
-                        params={16}
-                        src={srcImage}
-                        layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 46 }}
-                    />
-                    <Region
-                        name="bundleCounter"
-                        params={176}
-                        layout={{ position: 'absolute', left: 18, right: 24, top: 18, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBundleCounter ?? '0'}
-                            textOptions={{ fill: '#cccc66' }}
-                        />
-                    </Region>
-                    <Border
-                        variant="2"
-                        name="multiContainer"
-                        params={131088}
-                        tintColor="#ff3300"
-                        layout={{ position: 'absolute', left: 10, width: 17, top: 2, height: 17 }}
-                    >
-                        <Region
-                            name="multiCounter"
-                            params={16}
-                            layout={{ position: 'absolute', left: 3, width: 10, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionMultiCounter ?? '0'}
-                                textOptions={{ fill: '#cccc66' }}
-                            />
-                        </Region>
-                    </Border>
-                </Region>
+                <ClubGiftListItemLayoutImageContainer {...imageContainer} />
                 <Icon
                     variant="12"
                     name="vip_icon"
                     params={16}
                     layout={{ position: 'absolute', left: 5, width: 20, top: 5, height: 20 }}
                 />
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `image_container` of ClubGiftListItemLayout - configured through the parent's `imageContainer` prop. */
+export interface ClubGiftListItemLayoutImageContainerProps {
+    captionBundleCounter?: string;
+    captionMultiCounter?: string;
+    layout?: BoxLayout;
+    srcImage?: string;
+}
+
+export const ClubGiftListItemLayoutImageContainer = ({ captionBundleCounter, captionMultiCounter, layout, srcImage }: ClubGiftListItemLayoutImageContainerProps) => {
+    return (
+        <Region
+            name="image_container"
+            params={16}
+            layout={{ position: 'absolute', left: 7, width: 52, top: 6, height: 46, ...layout }}
+        >
+            <ThemeImage
+                name="image"
+                params={16}
+                src={srcImage}
+                layout={{ position: 'absolute', left: 0, width: 52, top: 0, height: 46 }}
+            />
+            <Region
+                name="bundleCounter"
+                params={176}
+                layout={{ position: 'absolute', left: 18, right: 24, top: 18, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionBundleCounter ?? '0'}
+                    textOptions={{ fill: '#cccc66' }}
+                />
+            </Region>
+            <Border
+                variant="2"
+                name="multiContainer"
+                params={131088}
+                tintColor="#ff3300"
+                layout={{ position: 'absolute', left: 10, width: 17, top: 2, height: 17 }}
+            >
+                <Region
+                    name="multiCounter"
+                    params={16}
+                    layout={{ position: 'absolute', left: 3, width: 10, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionMultiCounter ?? '0'}
+                        textOptions={{ fill: '#cccc66' }}
+                    />
+                </Region>
             </Border>
         </Region>
     );

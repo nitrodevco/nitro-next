@@ -6,13 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `991_viprequired_xml` (layout "viprequired", 310x149) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ViprequiredLayoutProps {
-    itemsList?: ReactNode;
     layout?: BoxLayout;
+    list?: ViprequiredLayoutListProps;
     onClose?: () => void;
     srcIllustration?: string;
 }
 
-export const ViprequiredLayout = ({ itemsList, layout, onClose, srcIllustration }: ViprequiredLayoutProps) => {
+export const ViprequiredLayout = ({ layout, list, onClose, srcIllustration }: ViprequiredLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -32,18 +32,7 @@ export const ViprequiredLayout = ({ itemsList, layout, onClose, srcIllustration 
                     src={srcIllustration}
                     layout={{ position: 'absolute', left: 10, width: 1, top: 0, height: 1 }}
                 />
-                <Region
-                    name="list"
-                    params={8536080}
-                    layout={{ position: 'absolute', left: 10, top: 0, flexDirection: 'column', gap: 3 }}
-                >
-                    {itemsList ?? (
-                        <>
-                            <ViprequiredLayoutListTopItem />
-                            <ViprequiredLayoutListBottomItem />
-                        </>
-                    )}
-                </Region>
+                <ViprequiredLayoutList {...list} />
             </Region>
         </Frame>
     );
@@ -210,6 +199,29 @@ export const ViprequiredLayoutListBottomItem = ({ itemsListBottom, layout }: Vip
                 src={layoutImage('illumina_horizontal_separator.png')}
                 layout={{ width: 291, height: 3, flexShrink: 0 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `list` of ViprequiredLayout - configured through the parent's `list` prop. */
+export interface ViprequiredLayoutListProps {
+    itemsList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const ViprequiredLayoutList = ({ itemsList, layout }: ViprequiredLayoutListProps) => {
+    return (
+        <Region
+            name="list"
+            params={8536080}
+            layout={{ position: 'absolute', left: 10, top: 0, flexDirection: 'column', gap: 3, ...layout }}
+        >
+            {itemsList ?? (
+                <>
+                    <ViprequiredLayoutListTopItem />
+                    <ViprequiredLayoutListBottomItem />
+                </>
+            )}
         </Region>
     );
 };

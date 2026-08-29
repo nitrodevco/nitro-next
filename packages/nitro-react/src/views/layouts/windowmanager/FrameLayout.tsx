@@ -2,10 +2,11 @@ import { BoxLayout, Header, Region, Scaler } from '#base/theme';
 
 /** Generated from `2754_frame_xml` (layout "habbo_window_layout_frame", 40x40) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface FrameLayoutProps {
+    contentArea?: FrameLayoutContentAreaProps;
     layout?: BoxLayout;
 }
 
-export const FrameLayout = ({ layout }: FrameLayoutProps) => {
+export const FrameLayout = ({ contentArea, layout }: FrameLayoutProps) => {
     return (
         <Region
             dropShadow={{ distance: 4, angle: 45, color: '#000000', alpha: 0.35, blur: 4 }}
@@ -17,12 +18,7 @@ export const FrameLayout = ({ layout }: FrameLayoutProps) => {
                 params={2147484049}
                 layout={{ position: 'absolute', left: 6, right: 6, top: 6, height: 15 }}
             />
-            <Region
-                name="content_area"
-                tags={[ '_CONTENT', '_INTERNAL', '_EXCLUDE' ]}
-                params={12585104}
-                layout={{ position: 'absolute', left: 6, right: 6, top: 25, bottom: 7 }}
-            />
+            <FrameLayoutContentArea {...contentArea} />
             <Scaler
                 name="_FRAME_SCALER"
                 tags={[ '_SCALER', '_EXCLUDE', '_INTERNAL', '_COLORIZE' ]}
@@ -30,5 +26,21 @@ export const FrameLayout = ({ layout }: FrameLayoutProps) => {
                 layout={{ position: 'absolute', right: 0, width: 15, bottom: 0, height: 15 }}
             />
         </Region>
+    );
+};
+
+/** Named region `content_area` of FrameLayout - configured through the parent's `contentArea` prop. */
+export interface FrameLayoutContentAreaProps {
+    layout?: BoxLayout;
+}
+
+export const FrameLayoutContentArea = ({ layout }: FrameLayoutContentAreaProps) => {
+    return (
+        <Region
+            name="content_area"
+            tags={[ '_CONTENT', '_INTERNAL', '_EXCLUDE' ]}
+            params={12585104}
+            layout={{ position: 'absolute', left: 6, right: 6, top: 25, bottom: 7, ...layout }}
+        />
     );
 };

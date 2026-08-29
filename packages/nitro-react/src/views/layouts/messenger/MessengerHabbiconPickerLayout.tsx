@@ -6,15 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `3108_messenger_habbicon_picker_xml` (layout "messenger_habbicon_picker", 256x138) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MessengerHabbiconPickerLayoutProps {
-    captionEmptyText?: string;
-    itemsHabbiconSectionList?: ReactNode;
-    itemsTopControls?: ReactNode;
+    emptyView?: MessengerHabbiconPickerLayoutEmptyViewProps;
+    habbiconSectionList?: MessengerHabbiconPickerLayoutHabbiconSectionListProps;
     layout?: BoxLayout;
+    topControls?: MessengerHabbiconPickerLayoutTopControlsProps;
 }
 
-export const MessengerHabbiconPickerLayout = ({ captionEmptyText, itemsHabbiconSectionList, itemsTopControls, layout }: MessengerHabbiconPickerLayoutProps) => {
-    const t = useTranslation();
-
+export const MessengerHabbiconPickerLayout = ({ emptyView, habbiconSectionList, layout, topControls }: MessengerHabbiconPickerLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 256, height: 138, ...layout }}>
             <Border
@@ -23,50 +21,34 @@ export const MessengerHabbiconPickerLayout = ({ captionEmptyText, itemsHabbiconS
                 params={1048577}
                 layout={{ position: 'absolute', left: 0, width: 256, bottom: 0, height: 138 }}
             >
-                <Region
-                    name="top_controls"
-                    params={16}
-                    layout={{ position: 'absolute', left: 6, width: 232, top: 8, height: 28, flexDirection: 'row', gap: 9 }}
-                >
-                    {itemsTopControls ?? (
-                        <>
-                            <MessengerHabbiconPickerLayoutHabbiconSearchBorderItem />
-                            <MessengerHabbiconPickerLayoutHabbiconOpenHubButtonItem />
-                        </>
-                    )}
-                </Region>
-                <ScrollArea
-                    orientation="vertical"
-                    layout={{ position: 'absolute', left: 6, right: 6, top: 43, height: 88 }}
-                >
-                    <Region
-                        name="habbicon_section_list"
-                        params={144}
-                        layout={{ flexDirection: 'column', gap: 4, width: '100%' }}
-                    >
-                        {itemsHabbiconSectionList ?? (
-                            <MessengerHabbiconPickerLayoutHabbiconSectionTemplateItem />
-                        )}
-                    </Region>
-                </ScrollArea>
-                <Region
-                    name="empty_view"
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 40, bottom: 2, justifyContent: 'center' }}
-                >
-                    <Region
-                        name="empty_text"
-                        params={3935440}
-                        layout={{ position: 'absolute', width: 200, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionEmptyText ?? t('habbicons.no_habbicons')}
-                            textStyle="text-style-il-regular"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 200, align: 'center' }}
-                        />
-                    </Region>
-                </Region>
+                <MessengerHabbiconPickerLayoutTopControls {...topControls} />
+                <MessengerHabbiconPickerLayoutHabbiconSectionList {...habbiconSectionList} />
+                <MessengerHabbiconPickerLayoutEmptyView {...emptyView} />
             </Border>
+        </Region>
+    );
+};
+
+/** Named region `habbicon_search_clear_button` of MessengerHabbiconPickerLayout - configured through the parent's `habbiconSearchClearButton` prop. */
+export interface MessengerHabbiconPickerLayoutHabbiconSearchClearButtonProps {
+    layout?: BoxLayout;
+    onHabbiconSearchClearButton?: () => void;
+}
+
+export const MessengerHabbiconPickerLayoutHabbiconSearchClearButton = ({ layout, onHabbiconSearchClearButton }: MessengerHabbiconPickerLayoutHabbiconSearchClearButtonProps) => {
+    return (
+        <Region
+            name="habbicon_search_clear_button"
+            params={3153}
+            onPointerTap={onHabbiconSearchClearButton}
+            cursor="pointer"
+            layout={{ position: 'absolute', right: 6, width: 17, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, ...layout }}
+        >
+            <ThemeImage
+                params={2192}
+                src={layoutImage('common_promo_arrow_close.png')}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+            />
         </Region>
     );
 };
@@ -74,11 +56,11 @@ export const MessengerHabbiconPickerLayout = ({ captionEmptyText, itemsHabbiconS
 /** Row template `habbicon_search_border` of MessengerHabbiconPickerLayout - pass real rows through its `items…` slot. */
 export interface MessengerHabbiconPickerLayoutHabbiconSearchBorderItemProps {
     captionHabbiconSearchPlaceholder?: string;
+    habbiconSearchClearButton?: MessengerHabbiconPickerLayoutHabbiconSearchClearButtonProps;
     layout?: BoxLayout;
-    onHabbiconSearchClearButton?: () => void;
 }
 
-export const MessengerHabbiconPickerLayoutHabbiconSearchBorderItem = ({ captionHabbiconSearchPlaceholder, layout, onHabbiconSearchClearButton }: MessengerHabbiconPickerLayoutHabbiconSearchBorderItemProps) => {
+export const MessengerHabbiconPickerLayoutHabbiconSearchBorderItem = ({ captionHabbiconSearchPlaceholder, habbiconSearchClearButton, layout }: MessengerHabbiconPickerLayoutHabbiconSearchBorderItemProps) => {
     const t = useTranslation();
     const [ habbiconSearchInputValue, setHabbiconSearchInputValue ] = useState('');
 
@@ -106,19 +88,7 @@ export const MessengerHabbiconPickerLayoutHabbiconSearchBorderItem = ({ captionH
                     textOptions={{ fill: '#888888' }}
                 />
             </Region>
-            <Region
-                name="habbicon_search_clear_button"
-                params={3153}
-                onPointerTap={onHabbiconSearchClearButton}
-                cursor="pointer"
-                layout={{ position: 'absolute', right: 6, width: 17, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17 }}
-            >
-                <ThemeImage
-                    params={2192}
-                    src={layoutImage('common_promo_arrow_close.png')}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                />
-            </Region>
+            <MessengerHabbiconPickerLayoutHabbiconSearchClearButton {...habbiconSearchClearButton} />
         </Border>
     );
 };
@@ -143,6 +113,29 @@ export const MessengerHabbiconPickerLayoutHabbiconOpenHubButtonItem = ({ layout,
         >
             {t('habbicons.hud.get_more')}
         </Button>
+    );
+};
+
+/** Named region `top_controls` of MessengerHabbiconPickerLayout - configured through the parent's `topControls` prop. */
+export interface MessengerHabbiconPickerLayoutTopControlsProps {
+    itemsTopControls?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const MessengerHabbiconPickerLayoutTopControls = ({ itemsTopControls, layout }: MessengerHabbiconPickerLayoutTopControlsProps) => {
+    return (
+        <Region
+            name="top_controls"
+            params={16}
+            layout={{ position: 'absolute', left: 6, width: 232, top: 8, height: 28, flexDirection: 'row', gap: 9, ...layout }}
+        >
+            {itemsTopControls ?? (
+                <>
+                    <MessengerHabbiconPickerLayoutHabbiconSearchBorderItem />
+                    <MessengerHabbiconPickerLayoutHabbiconOpenHubButtonItem />
+                </>
+            )}
+        </Region>
     );
 };
 
@@ -179,14 +172,34 @@ export const MessengerHabbiconPickerLayoutHabbiconItemTemplateItem = ({ layout, 
     );
 };
 
-/** Row template `habbicon_section_template` of MessengerHabbiconPickerLayout - pass real rows through its `items…` slot. */
-export interface MessengerHabbiconPickerLayoutHabbiconSectionTemplateItemProps {
-    captionSectionTitle?: string;
+/** Named region `habbicon_grid` of MessengerHabbiconPickerLayout - configured through the parent's `habbiconGrid` prop. */
+export interface MessengerHabbiconPickerLayoutHabbiconGridProps {
     itemsHabbiconGrid?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const MessengerHabbiconPickerLayoutHabbiconSectionTemplateItem = ({ captionSectionTitle, itemsHabbiconGrid, layout }: MessengerHabbiconPickerLayoutHabbiconSectionTemplateItemProps) => {
+export const MessengerHabbiconPickerLayoutHabbiconGrid = ({ itemsHabbiconGrid, layout }: MessengerHabbiconPickerLayoutHabbiconGridProps) => {
+    return (
+        <Region
+            name="habbicon_grid"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 230, top: 20, height: 45, flexDirection: 'row', flexWrap: 'wrap', gap: 2, ...layout }}
+        >
+            {itemsHabbiconGrid ?? (
+                <MessengerHabbiconPickerLayoutHabbiconItemTemplateItem />
+            )}
+        </Region>
+    );
+};
+
+/** Row template `habbicon_section_template` of MessengerHabbiconPickerLayout - pass real rows through its `items…` slot. */
+export interface MessengerHabbiconPickerLayoutHabbiconSectionTemplateItemProps {
+    captionSectionTitle?: string;
+    habbiconGrid?: MessengerHabbiconPickerLayoutHabbiconGridProps;
+    layout?: BoxLayout;
+}
+
+export const MessengerHabbiconPickerLayoutHabbiconSectionTemplateItem = ({ captionSectionTitle, habbiconGrid, layout }: MessengerHabbiconPickerLayoutHabbiconSectionTemplateItemProps) => {
     return (
         <Region
             name="habbicon_section_template"
@@ -203,14 +216,61 @@ export const MessengerHabbiconPickerLayoutHabbiconSectionTemplateItem = ({ capti
                     textStyle="text-style-il-regular"
                 />
             </Region>
+            <MessengerHabbiconPickerLayoutHabbiconGrid {...habbiconGrid} />
+        </Region>
+    );
+};
+
+/** Named region `habbicon_section_list` of MessengerHabbiconPickerLayout - configured through the parent's `habbiconSectionList` prop. */
+export interface MessengerHabbiconPickerLayoutHabbiconSectionListProps {
+    itemsHabbiconSectionList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const MessengerHabbiconPickerLayoutHabbiconSectionList = ({ itemsHabbiconSectionList, layout }: MessengerHabbiconPickerLayoutHabbiconSectionListProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 6, right: 6, top: 43, height: 88, ...layout }}
+        >
             <Region
-                name="habbicon_grid"
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 230, top: 20, height: 45, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
+                name="habbicon_section_list"
+                params={144}
+                layout={{ flexDirection: 'column', gap: 4, width: '100%' }}
             >
-                {itemsHabbiconGrid ?? (
-                    <MessengerHabbiconPickerLayoutHabbiconItemTemplateItem />
+                {itemsHabbiconSectionList ?? (
+                    <MessengerHabbiconPickerLayoutHabbiconSectionTemplateItem />
                 )}
+            </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `empty_view` of MessengerHabbiconPickerLayout - configured through the parent's `emptyView` prop. */
+export interface MessengerHabbiconPickerLayoutEmptyViewProps {
+    captionEmptyText?: string;
+    layout?: BoxLayout;
+}
+
+export const MessengerHabbiconPickerLayoutEmptyView = ({ captionEmptyText, layout }: MessengerHabbiconPickerLayoutEmptyViewProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="empty_view"
+            params={2192}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 40, bottom: 2, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="empty_text"
+                params={3935440}
+                layout={{ position: 'absolute', width: 200, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionEmptyText ?? t('habbicons.no_habbicons')}
+                    textStyle="text-style-il-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 200, align: 'center' }}
+                />
             </Region>
         </Region>
     );

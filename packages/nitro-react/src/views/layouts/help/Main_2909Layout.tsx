@@ -4,19 +4,19 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `2909_main_xml` (layout "main", 643x532) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface Main_2909LayoutProps {
+    faqLink?: Main_2909LayoutFaqLinkProps;
+    habbowayLink?: Main_2909LayoutHabbowayLinkProps;
     layout?: BoxLayout;
     onBullyButton?: () => void;
     onClose?: () => void;
     onEmergencyButton?: () => void;
-    onFaqLink?: () => void;
-    onHabbowayLink?: () => void;
-    onPaymentLink?: () => void;
     onQuestionButton?: () => void;
-    onSafetypolicyLink?: () => void;
     onTourButton?: () => void;
+    paymentLink?: Main_2909LayoutPaymentLinkProps;
+    safetypolicyLink?: Main_2909LayoutSafetypolicyLinkProps;
 }
 
-export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyButton, onFaqLink, onHabbowayLink, onPaymentLink, onQuestionButton, onSafetypolicyLink, onTourButton }: Main_2909LayoutProps) => {
+export const Main_2909Layout = ({ faqLink, habbowayLink, layout, onBullyButton, onClose, onEmergencyButton, onQuestionButton, onTourButton, paymentLink, safetypolicyLink }: Main_2909LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -283,88 +283,144 @@ export const Main_2909Layout = ({ layout, onBullyButton, onClose, onEmergencyBut
                     params={16}
                     layout={{ position: 'absolute', left: 33, width: 575, top: 390, height: 68 }}
                 >
-                    <Region
-                        name="safetypolicy_link"
-                        params={17}
-                        onPointerTap={onSafetypolicyLink}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 191, top: 0, height: 68, justifyContent: 'center' }}
-                    >
-                        <Region
-                            params={3280}
-                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 170, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={t('help.main2.self.safetypolicy')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
-                            />
-                        </Region>
-                    </Region>
+                    <Main_2909LayoutSafetypolicyLink {...safetypolicyLink} />
                     <WidgetSlot
                         widgetType="separator"
                         params={3088}
                         options={{ 'separator:vertical': 'true' }}
                         layout={{ position: 'absolute', left: 190, width: 2, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 49 }}
                     />
-                    <Region
-                        name="habboway_link"
-                        params={17}
-                        onPointerTap={onHabbowayLink}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 191, width: 193, top: 0, height: 68, justifyContent: 'center' }}
-                    >
-                        <Region
-                            params={3280}
-                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 170, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={t('help.main2.self.habboway')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
-                            />
-                        </Region>
-                    </Region>
+                    <Main_2909LayoutHabbowayLink {...habbowayLink} />
                     <WidgetSlot
                         widgetType="separator"
                         params={3088}
                         options={{ 'separator:vertical': 'true' }}
                         layout={{ position: 'absolute', left: 384, width: 2, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 49 }}
                     />
-                    <Region
-                        name="faq_link"
-                        params={17}
-                        onPointerTap={onFaqLink}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 385, width: 190, top: 0, height: 68, justifyContent: 'center' }}
-                    >
-                        <Region
-                            params={3280}
-                            layout={{ position: 'absolute', width: 170, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={t('help.main2.self.faq')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
-                            />
-                        </Region>
-                    </Region>
+                    <Main_2909LayoutFaqLink {...faqLink} />
                 </Border>
-                <Region
-                    name="payment_link"
-                    params={209}
-                    onPointerTap={onPaymentLink}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 541, top: 463, height: 23, justifyContent: 'center' }}
-                >
-                    <Region
-                        params={3280}
-                        layout={{ position: 'absolute', width: 129, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={t('help.main2.self.payment')}
-                            textStyle="text-style-il-link-regular"
-                        />
-                    </Region>
-                </Region>
+                <Main_2909LayoutPaymentLink {...paymentLink} />
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `safetypolicy_link` of Main_2909Layout - configured through the parent's `safetypolicyLink` prop. */
+export interface Main_2909LayoutSafetypolicyLinkProps {
+    layout?: BoxLayout;
+    onSafetypolicyLink?: () => void;
+}
+
+export const Main_2909LayoutSafetypolicyLink = ({ layout, onSafetypolicyLink }: Main_2909LayoutSafetypolicyLinkProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="safetypolicy_link"
+            params={17}
+            onPointerTap={onSafetypolicyLink}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 191, top: 0, height: 68, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                params={3280}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 170, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('help.main2.self.safetypolicy')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `habboway_link` of Main_2909Layout - configured through the parent's `habbowayLink` prop. */
+export interface Main_2909LayoutHabbowayLinkProps {
+    layout?: BoxLayout;
+    onHabbowayLink?: () => void;
+}
+
+export const Main_2909LayoutHabbowayLink = ({ layout, onHabbowayLink }: Main_2909LayoutHabbowayLinkProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="habboway_link"
+            params={17}
+            onPointerTap={onHabbowayLink}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 191, width: 193, top: 0, height: 68, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                params={3280}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 170, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('help.main2.self.habboway')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `faq_link` of Main_2909Layout - configured through the parent's `faqLink` prop. */
+export interface Main_2909LayoutFaqLinkProps {
+    layout?: BoxLayout;
+    onFaqLink?: () => void;
+}
+
+export const Main_2909LayoutFaqLink = ({ layout, onFaqLink }: Main_2909LayoutFaqLinkProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="faq_link"
+            params={17}
+            onPointerTap={onFaqLink}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 385, width: 190, top: 0, height: 68, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                params={3280}
+                layout={{ position: 'absolute', width: 170, alignSelf: 'center', height: 20, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('help.main2.self.faq')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 170, align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `payment_link` of Main_2909Layout - configured through the parent's `paymentLink` prop. */
+export interface Main_2909LayoutPaymentLinkProps {
+    layout?: BoxLayout;
+    onPaymentLink?: () => void;
+}
+
+export const Main_2909LayoutPaymentLink = ({ layout, onPaymentLink }: Main_2909LayoutPaymentLinkProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="payment_link"
+            params={209}
+            onPointerTap={onPaymentLink}
+            cursor="pointer"
+            layout={{ position: 'absolute', marginLeft: -1, marginRight: 1, width: 541, top: 463, height: 23, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                params={3280}
+                layout={{ position: 'absolute', width: 129, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('help.main2.self.payment')}
+                    textStyle="text-style-il-link-regular"
+                />
+            </Region>
+        </Region>
     );
 };

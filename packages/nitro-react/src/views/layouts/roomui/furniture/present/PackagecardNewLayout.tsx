@@ -6,12 +6,12 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `959_packagecard_new_xml` (layout "packagecard_new", 334x355) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PackagecardNewLayoutProps {
-    itemsElementList?: ReactNode;
+    elementList?: PackagecardNewLayoutElementListProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const PackagecardNewLayout = ({ itemsElementList, layout, onClose }: PackagecardNewLayoutProps) => {
+export const PackagecardNewLayout = ({ elementList, layout, onClose }: PackagecardNewLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -28,34 +28,76 @@ export const PackagecardNewLayout = ({ itemsElementList, layout, onClose }: Pack
                     params={935952}
                     layout={{ position: 'absolute', marginLeft: -4, marginRight: 4, width: 326, top: 0, bottom: 43, minWidth: 326, maxWidth: 380, maxHeight: 345 }}
                 >
-                    <Region
-                        name="element_list"
-                        params={12730385}
-                        layout={{ position: 'absolute', left: 10, top: 10, minWidth: 306, maxWidth: 306, flexDirection: 'column', gap: 10 }}
-                    >
-                        {itemsElementList ?? (
-                            <>
-                                <PackagecardNewLayoutWarningItem />
-                                <PackagecardNewLayoutGiftCardContainerItem />
-                                <PackagecardNewLayoutButtonListItem />
-                                <PackagecardNewLayoutSeparatorItem />
-                            </>
-                        )}
-                    </Region>
+                    <PackagecardNewLayoutElementList {...elementList} />
                 </Region>
             </Region>
         </Frame>
     );
 };
 
-/** Row template `warning` of PackagecardNewLayout - pass real rows through its `items…` slot. */
-export interface PackagecardNewLayoutWarningItemProps {
-    captionWarningText?: string;
+/** Named region `top-spacer` of PackagecardNewLayout - configured through the parent's `topSpacer` prop. */
+export interface PackagecardNewLayoutTopSpacerProps {
+    layout?: BoxLayout;
+}
+
+export const PackagecardNewLayoutTopSpacer = ({ layout }: PackagecardNewLayoutTopSpacerProps) => {
+    return (
+        <Region
+            name="top-spacer"
+            params={16}
+            layout={{ width: 300, height: 3, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `warning_icon_container` of PackagecardNewLayout - configured through the parent's `warningIconContainer` prop. */
+export interface PackagecardNewLayoutWarningIconContainerProps {
     layout?: BoxLayout;
     srcWarningIcon?: string;
 }
 
-export const PackagecardNewLayoutWarningItem = ({ captionWarningText, layout, srcWarningIcon }: PackagecardNewLayoutWarningItemProps) => {
+export const PackagecardNewLayoutWarningIconContainer = ({ layout, srcWarningIcon }: PackagecardNewLayoutWarningIconContainerProps) => {
+    return (
+        <Region
+            name="warning_icon_container"
+            params={3148816}
+            layout={{ position: 'absolute', left: 0, width: 70, alignSelf: 'center', height: 50, maxWidth: 70, justifyContent: 'center', ...layout }}
+        >
+            <ThemeImage
+                name="warning_icon"
+                params={3932176}
+                src={srcWarningIcon ?? layoutImage('catalogue_ui2_checkmark_m.png')}
+                layout={{ position: 'absolute', width: 30, alignSelf: 'center', height: 24 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `bottom-spacer` of PackagecardNewLayout - configured through the parent's `bottomSpacer` prop. */
+export interface PackagecardNewLayoutBottomSpacerProps {
+    layout?: BoxLayout;
+}
+
+export const PackagecardNewLayoutBottomSpacer = ({ layout }: PackagecardNewLayoutBottomSpacerProps) => {
+    return (
+        <Region
+            name="bottom-spacer"
+            params={16}
+            layout={{ width: 300, height: 3, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Row template `warning` of PackagecardNewLayout - pass real rows through its `items…` slot. */
+export interface PackagecardNewLayoutWarningItemProps {
+    bottomSpacer?: PackagecardNewLayoutBottomSpacerProps;
+    captionWarningText?: string;
+    layout?: BoxLayout;
+    topSpacer?: PackagecardNewLayoutTopSpacerProps;
+    warningIconContainer?: PackagecardNewLayoutWarningIconContainerProps;
+}
+
+export const PackagecardNewLayoutWarningItem = ({ bottomSpacer, captionWarningText, layout, topSpacer, warningIconContainer }: PackagecardNewLayoutWarningItemProps) => {
     const t = useTranslation();
 
     return (
@@ -75,11 +117,7 @@ export const PackagecardNewLayoutWarningItem = ({ captionWarningText, layout, sr
                     params={150736}
                     layout={{ position: 'absolute', alignSelf: 'center', flexDirection: 'column' }}
                 >
-                    <Region
-                        name="top-spacer"
-                        params={16}
-                        layout={{ width: 300, height: 3, flexShrink: 0 }}
-                    />
+                    <PackagecardNewLayoutTopSpacer {...topSpacer} />
                     <Border
                         variant="3"
                         name="warning_foreground_border"
@@ -98,44 +136,105 @@ export const PackagecardNewLayoutWarningItem = ({ captionWarningText, layout, sr
                                 textOptions={{ wordWrap: true, wordWrapWidth: 235 }}
                             />
                         </Region>
-                        <Region
-                            name="warning_icon_container"
-                            params={3148816}
-                            layout={{ position: 'absolute', left: 0, width: 70, alignSelf: 'center', height: 50, maxWidth: 70, justifyContent: 'center' }}
-                        >
-                            <ThemeImage
-                                name="warning_icon"
-                                params={3932176}
-                                src={srcWarningIcon ?? layoutImage('catalogue_ui2_checkmark_m.png')}
-                                layout={{ position: 'absolute', width: 30, alignSelf: 'center', height: 24 }}
-                            />
-                        </Region>
+                        <PackagecardNewLayoutWarningIconContainer {...warningIconContainer} />
                     </Border>
-                    <Region
-                        name="bottom-spacer"
-                        params={16}
-                        layout={{ width: 300, height: 3, flexShrink: 0 }}
-                    />
+                    <PackagecardNewLayoutBottomSpacer {...bottomSpacer} />
                 </Region>
             </Border>
         </Region>
     );
 };
 
-/** Row template `gift_card_container` of PackagecardNewLayout - pass real rows through its `items…` slot. */
-export interface PackagecardNewLayoutGiftCardContainerItemProps {
-    captionMessageFrom?: string;
-    captionMessageText?: string;
+/** Named region `staff_image` of PackagecardNewLayout - configured through the parent's `staffImage` prop. */
+export interface PackagecardNewLayoutStaffImageProps {
     layout?: BoxLayout;
-    onAvatarImageRegion?: () => void;
-    onMessageFrom?: () => void;
-    srcAvatarImage?: string;
-    srcGiftCard?: string;
     srcStaffImageBackground?: string;
     srcStaffImageForeground?: string;
 }
 
-export const PackagecardNewLayoutGiftCardContainerItem = ({ captionMessageFrom, captionMessageText, layout, onAvatarImageRegion, onMessageFrom, srcAvatarImage, srcGiftCard, srcStaffImageBackground, srcStaffImageForeground }: PackagecardNewLayoutGiftCardContainerItemProps) => {
+export const PackagecardNewLayoutStaffImage = ({ layout, srcStaffImageBackground, srcStaffImageForeground }: PackagecardNewLayoutStaffImageProps) => {
+    return (
+        <Region
+            name="staff_image"
+            params={3932176}
+            layout={{ position: 'absolute', width: 54, alignSelf: 'center', marginTop: -23, marginBottom: 23, height: 54, justifyContent: 'center', ...layout }}
+        >
+            <ThemeImage
+                name="staff_image_background"
+                params={3932176}
+                src={srcStaffImageBackground ?? layoutImage('catalogue_giftcard_icon_bgstar.png')}
+                layout={{ position: 'absolute', width: 54, alignSelf: 'center', height: 54 }}
+            />
+            <ThemeImage
+                name="staff_image_foreground"
+                params={3934224}
+                src={srcStaffImageForeground ?? layoutImage('catalogue_giftcard_staff_icon.png')}
+                layout={{ position: 'absolute', width: 34, top: 10, bottom: 10 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `avatar_image_region` of PackagecardNewLayout - configured through the parent's `avatarImageRegion` prop. */
+export interface PackagecardNewLayoutAvatarImageRegionProps {
+    layout?: BoxLayout;
+    onAvatarImageRegion?: () => void;
+    srcAvatarImage?: string;
+    staffImage?: PackagecardNewLayoutStaffImageProps;
+}
+
+export const PackagecardNewLayoutAvatarImageRegion = ({ layout, onAvatarImageRegion, srcAvatarImage, staffImage }: PackagecardNewLayoutAvatarImageRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="avatar_image_region"
+            tooltip={t('widget.furni.present.sender.profile_tooltip')}
+            params={3935441}
+            onPointerTap={onAvatarImageRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', width: 60, alignSelf: 'center', height: 140, justifyContent: 'center', ...layout }}
+        >
+            <ThemeImage
+                name="avatar_image"
+                params={16}
+                src={srcAvatarImage}
+                layout={{ position: 'absolute', left: 11, width: 37, top: 74, height: 48 }}
+            />
+            <PackagecardNewLayoutStaffImage {...staffImage} />
+        </Region>
+    );
+};
+
+/** Named region `avatar_image_container` of PackagecardNewLayout - configured through the parent's `avatarImageContainer` prop. */
+export interface PackagecardNewLayoutAvatarImageContainerProps {
+    avatarImageRegion?: PackagecardNewLayoutAvatarImageRegionProps;
+    layout?: BoxLayout;
+}
+
+export const PackagecardNewLayoutAvatarImageContainer = ({ avatarImageRegion, layout }: PackagecardNewLayoutAvatarImageContainerProps) => {
+    return (
+        <Region
+            name="avatar_image_container"
+            params={3932176}
+            layout={{ position: 'absolute', marginLeft: -117, marginRight: 117, width: 60, alignSelf: 'center', marginTop: -2.5, marginBottom: 2.5, height: 140, minWidth: 60, maxWidth: 60, minHeight: 140, maxHeight: 140, justifyContent: 'center', ...layout }}
+        >
+            <PackagecardNewLayoutAvatarImageRegion {...avatarImageRegion} />
+        </Region>
+    );
+};
+
+/** Row template `gift_card_container` of PackagecardNewLayout - pass real rows through its `items…` slot. */
+export interface PackagecardNewLayoutGiftCardContainerItemProps {
+    avatarImageContainer?: PackagecardNewLayoutAvatarImageContainerProps;
+    captionMessageFrom?: string;
+    captionMessageText?: string;
+    layout?: BoxLayout;
+    onMessageFrom?: () => void;
+    srcGiftCard?: string;
+}
+
+export const PackagecardNewLayoutGiftCardContainerItem = ({ avatarImageContainer, captionMessageFrom, captionMessageText, layout, onMessageFrom, srcGiftCard }: PackagecardNewLayoutGiftCardContainerItemProps) => {
     const t = useTranslation();
 
     return (
@@ -150,45 +249,7 @@ export const PackagecardNewLayoutGiftCardContainerItem = ({ captionMessageFrom, 
                 src={srcGiftCard ?? layoutImage('catalogue_giftcard_blank.png')}
                 layout={{ position: 'absolute', left: 0, width: 306, top: 0, height: 149 }}
             />
-            <Region
-                name="avatar_image_container"
-                params={3932176}
-                layout={{ position: 'absolute', marginLeft: -117, marginRight: 117, width: 60, alignSelf: 'center', marginTop: -2.5, marginBottom: 2.5, height: 140, minWidth: 60, maxWidth: 60, minHeight: 140, maxHeight: 140, justifyContent: 'center' }}
-            >
-                <Region
-                    name="avatar_image_region"
-                    tooltip={t('widget.furni.present.sender.profile_tooltip')}
-                    params={3935441}
-                    onPointerTap={onAvatarImageRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', width: 60, alignSelf: 'center', height: 140, justifyContent: 'center' }}
-                >
-                    <ThemeImage
-                        name="avatar_image"
-                        params={16}
-                        src={srcAvatarImage}
-                        layout={{ position: 'absolute', left: 11, width: 37, top: 74, height: 48 }}
-                    />
-                    <Region
-                        name="staff_image"
-                        params={3932176}
-                        layout={{ position: 'absolute', width: 54, alignSelf: 'center', marginTop: -23, marginBottom: 23, height: 54, justifyContent: 'center' }}
-                    >
-                        <ThemeImage
-                            name="staff_image_background"
-                            params={3932176}
-                            src={srcStaffImageBackground ?? layoutImage('catalogue_giftcard_icon_bgstar.png')}
-                            layout={{ position: 'absolute', width: 54, alignSelf: 'center', height: 54 }}
-                        />
-                        <ThemeImage
-                            name="staff_image_foreground"
-                            params={3934224}
-                            src={srcStaffImageForeground ?? layoutImage('catalogue_giftcard_staff_icon.png')}
-                            layout={{ position: 'absolute', width: 34, top: 10, bottom: 10 }}
-                        />
-                    </Region>
-                </Region>
-            </Region>
+            <PackagecardNewLayoutAvatarImageContainer {...avatarImageContainer} />
             <Region
                 name="message_text"
                 params={1}
@@ -298,5 +359,30 @@ export const PackagecardNewLayoutSeparatorItem = ({ layout }: PackagecardNewLayo
             params={3932176}
             layout={{ width: 306, height: 1, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `element_list` of PackagecardNewLayout - configured through the parent's `elementList` prop. */
+export interface PackagecardNewLayoutElementListProps {
+    itemsElementList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PackagecardNewLayoutElementList = ({ itemsElementList, layout }: PackagecardNewLayoutElementListProps) => {
+    return (
+        <Region
+            name="element_list"
+            params={12730385}
+            layout={{ position: 'absolute', left: 10, top: 10, minWidth: 306, maxWidth: 306, flexDirection: 'column', gap: 10, ...layout }}
+        >
+            {itemsElementList ?? (
+                <>
+                    <PackagecardNewLayoutWarningItem />
+                    <PackagecardNewLayoutGiftCardContainerItem />
+                    <PackagecardNewLayoutButtonListItem />
+                    <PackagecardNewLayoutSeparatorItem />
+                </>
+            )}
+        </Region>
     );
 };

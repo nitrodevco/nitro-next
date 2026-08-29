@@ -5,11 +5,11 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1508_relationship_chooser_xml` (layout "relationship_chooser", 30x68) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RelationshipChooserLayoutProps {
-    itemsItems?: ReactNode;
+    items?: RelationshipChooserLayoutItemsProps;
     layout?: BoxLayout;
 }
 
-export const RelationshipChooserLayout = ({ itemsItems, layout }: RelationshipChooserLayoutProps) => {
+export const RelationshipChooserLayout = ({ items, layout }: RelationshipChooserLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 30, height: 68, ...layout }}>
             <Border
@@ -18,20 +18,7 @@ export const RelationshipChooserLayout = ({ itemsItems, layout }: RelationshipCh
                 tintColor="#ffffff"
                 layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 68 }}
             >
-                <Region
-                    name="items"
-                    params={16}
-                    layout={{ position: 'absolute', left: 2, width: 25, top: 2, height: 63, flexDirection: 'column', gap: 1 }}
-                >
-                    {itemsItems ?? (
-                        <>
-                            <RelationshipChooserLayoutItemNoneItem />
-                            <RelationshipChooserLayoutItemHeartItem />
-                            <RelationshipChooserLayoutItemSmileItem />
-                            <RelationshipChooserLayoutItemBobbaItem />
-                        </>
-                    )}
-                </Region>
+                <RelationshipChooserLayoutItems {...items} />
             </Border>
         </Region>
     );
@@ -141,6 +128,31 @@ export const RelationshipChooserLayoutItemBobbaItem = ({ layout, onItemBobba, sr
                 src={srcImage ?? layoutImage('relationship_status_bobba.png')}
                 layout={{ position: 'absolute', left: 0, width: 16, top: 1, height: 14 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `items` of RelationshipChooserLayout - configured through the parent's `items` prop. */
+export interface RelationshipChooserLayoutItemsProps {
+    itemsItems?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const RelationshipChooserLayoutItems = ({ itemsItems, layout }: RelationshipChooserLayoutItemsProps) => {
+    return (
+        <Region
+            name="items"
+            params={16}
+            layout={{ position: 'absolute', left: 2, width: 25, top: 2, height: 63, flexDirection: 'column', gap: 1, ...layout }}
+        >
+            {itemsItems ?? (
+                <>
+                    <RelationshipChooserLayoutItemNoneItem />
+                    <RelationshipChooserLayoutItemHeartItem />
+                    <RelationshipChooserLayoutItemSmileItem />
+                    <RelationshipChooserLayoutItemBobbaItem />
+                </>
+            )}
         </Region>
     );
 };

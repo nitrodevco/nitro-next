@@ -5,11 +5,11 @@ import { BoxLayout, Bubble, ContainerButton, Region, ThemeText } from '#base/the
 
 /** Generated from `1097_own_avatar_decorating_xml` (layout "context_menu_widget", 115x49) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface OwnAvatarDecoratingLayoutProps {
-    itemsButtons?: ReactNode;
+    border?: OwnAvatarDecoratingLayoutBorderProps;
     layout?: BoxLayout;
 }
 
-export const OwnAvatarDecoratingLayout = ({ itemsButtons, layout }: OwnAvatarDecoratingLayoutProps) => {
+export const OwnAvatarDecoratingLayout = ({ border, layout }: OwnAvatarDecoratingLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 115, height: 49, ...layout }}>
             <Bubble
@@ -18,26 +18,7 @@ export const OwnAvatarDecoratingLayout = ({ itemsButtons, layout }: OwnAvatarDec
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 115, bottom: -376, height: 49 }}
             >
-                <Region
-                    name="border"
-                    params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76, justifyContent: 'center' }}
-                >
-                    <Region
-                        params={144}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, right: 2, top: 7, height: 1 }}
-                    />
-                    <Region
-                        name="buttons"
-                        params={8519888}
-                        layout={{ position: 'absolute', minWidth: 103, top: 7, minHeight: 26, flexDirection: 'column', gap: 1 }}
-                    >
-                        {itemsButtons ?? (
-                            <OwnAvatarDecoratingLayoutDecorateItem />
-                        )}
-                    </Region>
-                </Region>
+                <OwnAvatarDecoratingLayoutBorder {...border} />
             </Bubble>
         </Region>
     );
@@ -81,6 +62,49 @@ export const OwnAvatarDecoratingLayoutDecorateItem = ({ captionLabel, layout, on
                     />
                 </Region>
             </ContainerButton>
+        </Region>
+    );
+};
+
+/** Named region `buttons` of OwnAvatarDecoratingLayout - configured through the parent's `buttons` prop. */
+export interface OwnAvatarDecoratingLayoutButtonsProps {
+    itemsButtons?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const OwnAvatarDecoratingLayoutButtons = ({ itemsButtons, layout }: OwnAvatarDecoratingLayoutButtonsProps) => {
+    return (
+        <Region
+            name="buttons"
+            params={8519888}
+            layout={{ position: 'absolute', minWidth: 103, top: 7, minHeight: 26, flexDirection: 'column', gap: 1, ...layout }}
+        >
+            {itemsButtons ?? (
+                <OwnAvatarDecoratingLayoutDecorateItem />
+            )}
+        </Region>
+    );
+};
+
+/** Named region `border` of OwnAvatarDecoratingLayout - configured through the parent's `border` prop. */
+export interface OwnAvatarDecoratingLayoutBorderProps {
+    buttons?: OwnAvatarDecoratingLayoutButtonsProps;
+    layout?: BoxLayout;
+}
+
+export const OwnAvatarDecoratingLayoutBorder = ({ buttons, layout }: OwnAvatarDecoratingLayoutBorderProps) => {
+    return (
+        <Region
+            name="border"
+            params={12582928}
+            layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 76, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                params={144}
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 2, right: 2, top: 7, height: 1 }}
+            />
+            <OwnAvatarDecoratingLayoutButtons {...buttons} />
         </Region>
     );
 };

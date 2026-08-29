@@ -6,14 +6,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `995_user_view_xml` (layout "userview_test", 1036x400) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface UserViewLayoutProps {
-    itemsInfostandElementList?: ReactNode;
+    infostandElementList?: UserViewLayoutInfostandElementListProps;
     layout?: BoxLayout;
     onClose?: () => void;
     srcHomeIcon?: string;
     srcStickerCroco?: string;
 }
 
-export const UserViewLayout = ({ itemsInfostandElementList, layout, onClose, srcHomeIcon, srcStickerCroco }: UserViewLayoutProps) => {
+export const UserViewLayout = ({ infostandElementList, layout, onClose, srcHomeIcon, srcStickerCroco }: UserViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 1036, height: 400, ...layout }}>
             <Region
@@ -44,30 +44,7 @@ export const UserViewLayout = ({ itemsInfostandElementList, layout, onClose, src
                         src={srcStickerCroco ?? layoutImage('sticker_croco.png')}
                         layout={{ position: 'absolute', left: 2, width: 92, top: 64, height: 63 }}
                     />
-                    <Region
-                        name="infostand_element_list"
-                        params={16}
-                        layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 277, flexDirection: 'column', gap: 3 }}
-                    >
-                        {itemsInfostandElementList ?? (
-                            <>
-                                <UserViewLayoutProfileLinkItem />
-                                <UserViewLayoutImagesSpacerItem />
-                                <UserViewLayoutImageAndBadgesContainerItem />
-                                <UserViewLayoutMottoSpacerItem />
-                                <UserViewLayoutMottoContainerItem />
-                                <UserViewLayoutBadgesRankSpacerItem />
-                                <UserViewLayoutBadgesRankRegionItem />
-                                <UserViewLayoutScoreSpacerItem />
-                                <UserViewLayoutScoreTextItem />
-                                <UserViewLayoutScoreValueItem />
-                                <UserViewLayoutHanditemSpacerItem />
-                                <UserViewLayoutHanditemTxtItem />
-                                <UserViewLayoutGenericSpacerItem />
-                                <UserViewLayoutRelationshipStatusContainerItem />
-                            </>
-                        )}
-                    </Region>
+                    <UserViewLayoutInfostandElementList {...infostandElementList} />
                 </Border>
             </Region>
         </Region>
@@ -124,15 +101,43 @@ export const UserViewLayoutImagesSpacerItem = ({ layout }: UserViewLayoutImagesS
     );
 };
 
-/** Row template `image_and_badges_container` of UserViewLayout - pass real rows through its `items…` slot. */
-export interface UserViewLayoutImageAndBadgesContainerItemProps {
+/** Named region `avatar_image_profile_link` of UserViewLayout - configured through the parent's `avatarImageProfileLink` prop. */
+export interface UserViewLayoutAvatarImageProfileLinkProps {
     layout?: BoxLayout;
     onAvatarImageProfileLink?: () => void;
 }
 
-export const UserViewLayoutImageAndBadgesContainerItem = ({ layout, onAvatarImageProfileLink }: UserViewLayoutImageAndBadgesContainerItemProps) => {
+export const UserViewLayoutAvatarImageProfileLink = ({ layout, onAvatarImageProfileLink }: UserViewLayoutAvatarImageProfileLinkProps) => {
     const t = useTranslation();
 
+    return (
+        <Region
+            name="avatar_image_profile_link"
+            tooltip={t('infostand.profile.link.tooltip')}
+            params={17}
+            onPointerTap={onAvatarImageProfileLink}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 17, width: 66, top: 2, height: 127, justifyContent: 'center', ...layout }}
+        >
+            <WidgetSlot
+                widgetType="avatar_image"
+                name="avatar_image"
+                params={3282}
+                visible={false}
+                options={{ 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
+                layout={{ position: 'absolute', width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 84 }}
+            />
+        </Region>
+    );
+};
+
+/** Row template `image_and_badges_container` of UserViewLayout - pass real rows through its `items…` slot. */
+export interface UserViewLayoutImageAndBadgesContainerItemProps {
+    avatarImageProfileLink?: UserViewLayoutAvatarImageProfileLinkProps;
+    layout?: BoxLayout;
+}
+
+export const UserViewLayoutImageAndBadgesContainerItem = ({ avatarImageProfileLink, layout }: UserViewLayoutImageAndBadgesContainerItemProps) => {
     return (
         <Region
             name="image_and_badges_container"
@@ -147,23 +152,7 @@ export const UserViewLayoutImageAndBadgesContainerItem = ({ layout, onAvatarImag
                 tintColor="#666666"
                 layout={{ position: 'absolute', left: 16, width: 67, top: 0, height: 130 }}
             />
-            <Region
-                name="avatar_image_profile_link"
-                tooltip={t('infostand.profile.link.tooltip')}
-                params={17}
-                onPointerTap={onAvatarImageProfileLink}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 17, width: 66, top: 2, height: 127, justifyContent: 'center' }}
-            >
-                <WidgetSlot
-                    widgetType="avatar_image"
-                    name="avatar_image"
-                    params={3282}
-                    visible={false}
-                    options={{ 'avatar_image:cropped': 'true', 'avatar_image:direction': 'southwest' }}
-                    layout={{ position: 'absolute', width: 34, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 84 }}
-                />
-            </Region>
+            <UserViewLayoutAvatarImageProfileLink {...avatarImageProfileLink} />
             <WidgetSlot
                 widgetType="badge_image"
                 name="badge_0"
@@ -686,6 +675,41 @@ export const UserViewLayoutRelationshipStatusContainerItem = ({ itemsRelationshi
                     <UserViewLayoutRelationshipHeartItem />
                     <UserViewLayoutRelationshipSmileItem />
                     <UserViewLayoutRelationshipBobbaItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `infostand_element_list` of UserViewLayout - configured through the parent's `infostandElementList` prop. */
+export interface UserViewLayoutInfostandElementListProps {
+    itemsInfostandElementList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const UserViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: UserViewLayoutInfostandElementListProps) => {
+    return (
+        <Region
+            name="infostand_element_list"
+            params={16}
+            layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 277, flexDirection: 'column', gap: 3, ...layout }}
+        >
+            {itemsInfostandElementList ?? (
+                <>
+                    <UserViewLayoutProfileLinkItem />
+                    <UserViewLayoutImagesSpacerItem />
+                    <UserViewLayoutImageAndBadgesContainerItem />
+                    <UserViewLayoutMottoSpacerItem />
+                    <UserViewLayoutMottoContainerItem />
+                    <UserViewLayoutBadgesRankSpacerItem />
+                    <UserViewLayoutBadgesRankRegionItem />
+                    <UserViewLayoutScoreSpacerItem />
+                    <UserViewLayoutScoreTextItem />
+                    <UserViewLayoutScoreValueItem />
+                    <UserViewLayoutHanditemSpacerItem />
+                    <UserViewLayoutHanditemTxtItem />
+                    <UserViewLayoutGenericSpacerItem />
+                    <UserViewLayoutRelationshipStatusContainerItem />
                 </>
             )}
         </Region>

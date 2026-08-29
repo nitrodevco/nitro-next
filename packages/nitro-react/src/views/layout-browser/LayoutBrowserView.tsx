@@ -33,15 +33,28 @@ const LayoutPreview = ({ entry, onEvent, onClose }: { entry: LayoutRegistryEntry
         };
     }, [ entry ]);
 
+    // Named regions/lists are their own sub-components whose props are forwarded through a
+    // prop named after them - walk that tree so a click deep inside the layout still reports.
     const props = useMemo(() => {
-        const handlers: Record<string, unknown> = {};
+        const build = (propNames: string[], nested: Record<string, string>, path: string): Record<string, unknown> => {
+            const handlers: Record<string, unknown> = {};
 
-        for (const prop of entry.props) {
-            if (prop === 'onClose') handlers[prop] = onClose;
-            else if (prop.startsWith('on')) handlers[prop] = () => onEvent(prop);
-        }
+            for (const prop of propNames) {
+                const label = path ? `${path}.${prop}` : prop;
 
-        return handlers;
+                if (prop === 'onClose' && !path) handlers[prop] = onClose;
+                else if (prop.startsWith('on')) handlers[prop] = () => onEvent(label);
+                else if (nested[prop]) {
+                    const sub = entry.subComponentProps[nested[prop]];
+
+                    if (sub) handlers[prop] = build(sub.props, sub.nested, label);
+                }
+            }
+
+            return handlers;
+        };
+
+        return build(entry.props, entry.nested, '');
     }, [ entry, onEvent, onClose ]);
 
     if (!Component) return null;

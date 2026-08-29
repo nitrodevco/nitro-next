@@ -4,29 +4,14 @@ import { BoxLayout, Icon, Region, ThemeText } from '#base/theme';
 
 /** Generated from `1584_price_display_xml` (layout "price_display", 60x21) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PriceDisplayLayoutProps {
-    itemsPriceBox?: ReactNode;
     layout?: BoxLayout;
+    priceBox?: PriceDisplayLayoutPriceBoxProps;
 }
 
-export const PriceDisplayLayout = ({ itemsPriceBox, layout }: PriceDisplayLayoutProps) => {
+export const PriceDisplayLayout = ({ layout, priceBox }: PriceDisplayLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 60, height: 21, ...layout }}>
-            <Region
-                name="price_box"
-                params={147472}
-                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', gap: 1 }}
-            >
-                {itemsPriceBox ?? (
-                    <>
-                        <PriceDisplayLayoutSpacingItem />
-                        <PriceDisplayLayoutAmount0Item />
-                        <PriceDisplayLayoutUnit0Item />
-                        <PriceDisplayLayoutAmount1Item />
-                        <PriceDisplayLayoutUnit1Item />
-                        <PriceDisplayLayoutSpacingItem2 />
-                    </>
-                )}
-            </Region>
+            <PriceDisplayLayoutPriceBox {...priceBox} />
         </Region>
     );
 };
@@ -132,5 +117,32 @@ export const PriceDisplayLayoutSpacingItem2 = ({ layout }: PriceDisplayLayoutSpa
             params={16}
             layout={{ width: 2, height: 1, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `price_box` of PriceDisplayLayout - configured through the parent's `priceBox` prop. */
+export interface PriceDisplayLayoutPriceBoxProps {
+    itemsPriceBox?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PriceDisplayLayoutPriceBox = ({ itemsPriceBox, layout }: PriceDisplayLayoutPriceBoxProps) => {
+    return (
+        <Region
+            name="price_box"
+            params={147472}
+            layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', gap: 1, ...layout }}
+        >
+            {itemsPriceBox ?? (
+                <>
+                    <PriceDisplayLayoutSpacingItem />
+                    <PriceDisplayLayoutAmount0Item />
+                    <PriceDisplayLayoutUnit0Item />
+                    <PriceDisplayLayoutAmount1Item />
+                    <PriceDisplayLayoutUnit1Item />
+                    <PriceDisplayLayoutSpacingItem2 />
+                </>
+            )}
+        </Region>
     );
 };

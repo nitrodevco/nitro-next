@@ -6,30 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1099_pet_view_xml` (layout "pet_view", 1036x440) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PetViewLayoutProps {
-    itemsInfostandElementList?: ReactNode;
+    buttonList?: PetViewLayoutButtonListProps;
+    infostandElementList?: PetViewLayoutInfostandElementListProps;
     layout?: BoxLayout;
-    onBtnBuyFood?: () => void;
-    onBtnKick?: () => void;
-    onBtnMove?: () => void;
-    onBtnPetrespect?: () => void;
-    onBtnPettreat?: () => void;
-    onBtnPick?: () => void;
-    onBtnRotate?: () => void;
-    onBtnTrain?: () => void;
-    onBuyFood?: () => void;
     onClose?: () => void;
-    onKick?: () => void;
-    onMove?: () => void;
-    onPetrespect?: () => void;
-    onPettreat?: () => void;
-    onPick?: () => void;
-    onRotate?: () => void;
-    onTrain?: () => void;
 }
 
-export const PetViewLayout = ({ itemsInfostandElementList, layout, onBtnBuyFood, onBtnKick, onBtnMove, onBtnPetrespect, onBtnPettreat, onBtnPick, onBtnRotate, onBtnTrain, onBuyFood, onClose, onKick, onMove, onPetrespect, onPettreat, onPick, onRotate, onTrain }: PetViewLayoutProps) => {
-    const t = useTranslation();
-
+export const PetViewLayout = ({ buttonList, infostandElementList, layout, onClose }: PetViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 1036, height: 440, ...layout }}>
             <Region
@@ -49,190 +32,9 @@ export const PetViewLayout = ({ itemsInfostandElementList, layout, onBtnBuyFood,
                         onPointerTap={onClose}
                         layout={{ position: 'absolute', left: 170, width: 18, top: 6, height: 16 }}
                     />
-                    <Region
-                        name="infostand_element_list"
-                        params={16}
-                        layout={{ position: 'absolute', left: 10, width: 173, top: 10, height: 270, flexDirection: 'column' }}
-                    >
-                        {itemsInfostandElementList ?? (
-                            <>
-                                <PetViewLayoutNameTextItem />
-                                <PetViewLayoutBreedTextItem />
-                                <PetViewLayoutImageContainerItem />
-                                <PetViewLayoutStatusContainerItem />
-                                <PetViewLayoutPetrespectContainerItem />
-                                <PetViewLayoutAgeTextItem />
-                                <PetViewLayoutOwnerTextItem />
-                            </>
-                        )}
-                    </Region>
+                    <PetViewLayoutInfostandElementList {...infostandElementList} />
                 </Border>
-                <Region
-                    name="button_list"
-                    params={16}
-                    layout={{ width: 1000, height: 25, flexShrink: 0 }}
-                >
-                    <Region
-                        name="pick"
-                        tags={[ 'CMD_BUTTON_REGION' ]}
-                        params={17}
-                        onPointerTap={onPick}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 54, top: 0, height: 25 }}
-                    >
-                        <Button
-                            variant="1"
-                            name="btn_pick"
-                            tags={[ 'CMD_BUTTON' ]}
-                            params={131089}
-                            onPointerTap={onBtnPick}
-                            textStyle="text-style-button-regular"
-                            layout={{ position: 'absolute', left: 0, width: 139, top: 0, height: 25 }}
-                        >
-                            {t('infostand.button.pickup')}
-                        </Button>
-                    </Region>
-                    <Region
-                        name="train"
-                        tags={[ 'CMD_BUTTON_REGION' ]}
-                        params={17}
-                        onPointerTap={onTrain}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 64, width: 44, top: 0, height: 25 }}
-                    >
-                        <Button
-                            variant="1"
-                            name="btn_train"
-                            tags={[ 'CMD_BUTTON' ]}
-                            params={131089}
-                            onPointerTap={onBtnTrain}
-                            textStyle="text-style-button-regular"
-                            layout={{ position: 'absolute', left: 0, width: 132, top: 0, height: 25 }}
-                        >
-                            {t('infostand.button.train')}
-                        </Button>
-                    </Region>
-                    <Region
-                        name="buy_food"
-                        tags={[ 'CMD_BUTTON_REGION' ]}
-                        params={17}
-                        onPointerTap={onBuyFood}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 118, width: 147, top: 0, height: 25 }}
-                    >
-                        <Button
-                            variant="1"
-                            name="btn_buy_food"
-                            tags={[ 'CMD_BUTTON' ]}
-                            params={131089}
-                            onPointerTap={onBtnBuyFood}
-                            textStyle="text-style-button-regular"
-                            layout={{ position: 'absolute', left: 0, width: 149, top: 0, height: 25 }}
-                        >
-                            {t('infostand.button.buyfood')}
-                        </Button>
-                    </Region>
-                    <Region
-                        name="petrespect"
-                        tags={[ 'CMD_BUTTON_REGION' ]}
-                        params={17}
-                        onPointerTap={onPetrespect}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 275, width: 163, top: 0, height: 25 }}
-                    >
-                        <Button
-                            variant="1"
-                            name="btn_petrespect"
-                            tags={[ 'CMD_BUTTON' ]}
-                            params={131089}
-                            onPointerTap={onBtnPetrespect}
-                            textStyle="text-style-button-regular"
-                            layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 25 }}
-                        >
-                            {t('infostand.button.petrespect')}
-                        </Button>
-                    </Region>
-                    <Region
-                        name="pettreat"
-                        tags={[ 'CMD_BUTTON_REGION' ]}
-                        params={17}
-                        onPointerTap={onPettreat}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 275, width: 163, top: 0, height: 25 }}
-                    >
-                        <Button
-                            variant="1"
-                            name="btn_pettreat"
-                            tags={[ 'CMD_BUTTON' ]}
-                            params={131089}
-                            onPointerTap={onBtnPettreat}
-                            textStyle="text-style-button-regular"
-                            layout={{ position: 'absolute', left: 0, width: 152, top: 0, height: 25 }}
-                        >
-                            {t('infostand.button.pettreat')}
-                        </Button>
-                    </Region>
-                    <Region
-                        name="kick"
-                        tags={[ 'CMD_BUTTON_REGION' ]}
-                        params={17}
-                        onPointerTap={onKick}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 448, width: 141, top: 0, height: 25 }}
-                    >
-                        <Button
-                            variant="1"
-                            name="btn_kick"
-                            tags={[ 'CMD_BUTTON' ]}
-                            params={131089}
-                            onPointerTap={onBtnKick}
-                            textStyle="text-style-button-regular"
-                            layout={{ position: 'absolute', left: 0, width: 143, top: 0, height: 25 }}
-                        >
-                            {t('infostand.button.petkick')}
-                        </Button>
-                    </Region>
-                    <Region
-                        name="rotate"
-                        tags={[ 'CMD_BUTTON_REGION' ]}
-                        params={17}
-                        onPointerTap={onRotate}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 600, width: 132, top: 0, height: 25 }}
-                    >
-                        <Button
-                            variant="1"
-                            name="btn_rotate"
-                            tags={[ 'CMD_BUTTON' ]}
-                            params={131089}
-                            onPointerTap={onBtnRotate}
-                            textStyle="text-style-button-regular"
-                            layout={{ position: 'absolute', left: 0, width: 141, top: 0, height: 25 }}
-                        >
-                            {t('infostand.button.rotate')}
-                        </Button>
-                    </Region>
-                    <Region
-                        name="move"
-                        tags={[ 'CMD_BUTTON_REGION' ]}
-                        params={17}
-                        onPointerTap={onMove}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 589, width: 132, top: 0, height: 25 }}
-                    >
-                        <Button
-                            variant="1"
-                            name="btn_move"
-                            tags={[ 'CMD_BUTTON' ]}
-                            params={131089}
-                            onPointerTap={onBtnMove}
-                            textStyle="text-style-button-regular"
-                            layout={{ position: 'absolute', left: 0, width: 134, top: 0, height: 25 }}
-                        >
-                            {t('infostand.button.move')}
-                        </Button>
-                    </Region>
-                </Region>
+                <PetViewLayoutButtonList {...buttonList} />
             </Region>
         </Region>
     );
@@ -280,18 +82,61 @@ export const PetViewLayoutBreedTextItem = ({ captionBreedText, layout }: PetView
     );
 };
 
-/** Row template `image_container` of PetViewLayout - pass real rows through its `items…` slot. */
-export interface PetViewLayoutImageContainerItemProps {
+/** Named region `level_container` of PetViewLayout - configured through the parent's `levelContainer` prop. */
+export interface PetViewLayoutLevelContainerProps {
     captionLevelText?: string;
     captionStatusSkillText?: string;
     layout?: BoxLayout;
-    srcAvatarImage?: string;
     srcSkillLevelIndicator?: string;
 }
 
-export const PetViewLayoutImageContainerItem = ({ captionLevelText, captionStatusSkillText, layout, srcAvatarImage, srcSkillLevelIndicator }: PetViewLayoutImageContainerItemProps) => {
+export const PetViewLayoutLevelContainer = ({ captionLevelText, captionStatusSkillText, layout, srcSkillLevelIndicator }: PetViewLayoutLevelContainerProps) => {
     const t = useTranslation();
 
+    return (
+        <Region
+            name="level_container"
+            params={16}
+            layout={{ position: 'absolute', left: 76, width: 95, top: 0, height: 78, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="level_text"
+                params={208}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 46, top: 10, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionLevelText ?? t('pet.level')}
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+            <Region
+                name="status_skill_text"
+                params={208}
+                layout={{ position: 'absolute', marginLeft: 11, marginRight: -11, width: 117, top: 31, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionStatusSkillText ?? t('infostand.pet.text.skill')}
+                    textOptions={{ fill: '#a4a4a4' }}
+                />
+            </Region>
+            <ThemeImage
+                name="skill_level_indicator"
+                params={208}
+                src={srcSkillLevelIndicator}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 78, top: 47, height: 18 }}
+            />
+        </Region>
+    );
+};
+
+/** Row template `image_container` of PetViewLayout - pass real rows through its `items…` slot. */
+export interface PetViewLayoutImageContainerItemProps {
+    layout?: BoxLayout;
+    levelContainer?: PetViewLayoutLevelContainerProps;
+    srcAvatarImage?: string;
+}
+
+export const PetViewLayoutImageContainerItem = ({ layout, levelContainer, srcAvatarImage }: PetViewLayoutImageContainerItemProps) => {
     return (
         <Region
             name="image_container"
@@ -304,38 +149,7 @@ export const PetViewLayoutImageContainerItem = ({ captionLevelText, captionStatu
                 src={srcAvatarImage}
                 layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 83, maxWidth: 80 }}
             />
-            <Region
-                name="level_container"
-                params={16}
-                layout={{ position: 'absolute', left: 76, width: 95, top: 0, height: 78, justifyContent: 'center' }}
-            >
-                <Region
-                    name="level_text"
-                    params={208}
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 46, top: 10, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionLevelText ?? t('pet.level')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-                <Region
-                    name="status_skill_text"
-                    params={208}
-                    layout={{ position: 'absolute', marginLeft: 11, marginRight: -11, width: 117, top: 31, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStatusSkillText ?? t('infostand.pet.text.skill')}
-                        textOptions={{ fill: '#a4a4a4' }}
-                    />
-                </Region>
-                <ThemeImage
-                    name="skill_level_indicator"
-                    params={208}
-                    src={srcSkillLevelIndicator}
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 78, top: 47, height: 18 }}
-                />
-            </Region>
+            <PetViewLayoutLevelContainer {...levelContainer} />
         </Region>
     );
 };
@@ -525,6 +339,31 @@ export const PetViewLayoutStatusRarityLevelItem = ({ captionStatusRarityLevel, l
     );
 };
 
+/** Named region `status_item_list_default` of PetViewLayout - configured through the parent's `statusItemListDefault` prop. */
+export interface PetViewLayoutStatusItemListDefaultProps {
+    itemsStatusItemListDefault?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PetViewLayoutStatusItemListDefault = ({ itemsStatusItemListDefault, layout }: PetViewLayoutStatusItemListDefaultProps) => {
+    return (
+        <Region
+            name="status_item_list_default"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 142, flexDirection: 'column', ...layout }}
+        >
+            {itemsStatusItemListDefault ?? (
+                <>
+                    <PetViewLayoutStatusHappinessContainerItem />
+                    <PetViewLayoutStatusExperienceContainerItem />
+                    <PetViewLayoutStatusEnergyContainerItem />
+                    <PetViewLayoutStatusRarityLevelItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
 /** Row template `status_wellbeing_container` of PetViewLayout - pass real rows through its `items…` slot. */
 export interface PetViewLayoutStatusWellbeingContainerItemProps {
     captionStatusWellbeingText?: string;
@@ -658,50 +497,49 @@ export const PetViewLayoutRarityItemOverlayWidgetItem = ({ layout }: PetViewLayo
     );
 };
 
-/** Row template `status_container` of PetViewLayout - pass real rows through its `items…` slot. */
-export interface PetViewLayoutStatusContainerItemProps {
-    itemsStatusItemListDefault?: ReactNode;
+/** Named region `status_item_list_monsterplant` of PetViewLayout - configured through the parent's `statusItemListMonsterplant` prop. */
+export interface PetViewLayoutStatusItemListMonsterplantProps {
     itemsStatusItemListMonsterplant?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const PetViewLayoutStatusContainerItem = ({ itemsStatusItemListDefault, itemsStatusItemListMonsterplant, layout }: PetViewLayoutStatusContainerItemProps) => {
+export const PetViewLayoutStatusItemListMonsterplant = ({ itemsStatusItemListMonsterplant, layout }: PetViewLayoutStatusItemListMonsterplantProps) => {
+    return (
+        <Region
+            name="status_item_list_monsterplant"
+            params={16}
+            visible={false}
+            layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 137, flexDirection: 'column', gap: 2, ...layout }}
+        >
+            {itemsStatusItemListMonsterplant ?? (
+                <>
+                    <PetViewLayoutStatusWellbeingContainerItem />
+                    <PetViewLayoutGrowthStatusTextItem />
+                    <PetViewLayoutGrowthStatusWidgetItem />
+                    <PetViewLayoutStatusRarityLevelItem2 />
+                    <PetViewLayoutRarityItemOverlayWidgetItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Row template `status_container` of PetViewLayout - pass real rows through its `items…` slot. */
+export interface PetViewLayoutStatusContainerItemProps {
+    layout?: BoxLayout;
+    statusItemListDefault?: PetViewLayoutStatusItemListDefaultProps;
+    statusItemListMonsterplant?: PetViewLayoutStatusItemListMonsterplantProps;
+}
+
+export const PetViewLayoutStatusContainerItem = ({ layout, statusItemListDefault, statusItemListMonsterplant }: PetViewLayoutStatusContainerItemProps) => {
     return (
         <Region
             name="status_container"
             params={16}
             layout={{ width: 170, height: 140, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="status_item_list_default"
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 142, flexDirection: 'column' }}
-            >
-                {itemsStatusItemListDefault ?? (
-                    <>
-                        <PetViewLayoutStatusHappinessContainerItem />
-                        <PetViewLayoutStatusExperienceContainerItem />
-                        <PetViewLayoutStatusEnergyContainerItem />
-                        <PetViewLayoutStatusRarityLevelItem />
-                    </>
-                )}
-            </Region>
-            <Region
-                name="status_item_list_monsterplant"
-                params={16}
-                visible={false}
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 137, flexDirection: 'column', gap: 2 }}
-            >
-                {itemsStatusItemListMonsterplant ?? (
-                    <>
-                        <PetViewLayoutStatusWellbeingContainerItem />
-                        <PetViewLayoutGrowthStatusTextItem />
-                        <PetViewLayoutGrowthStatusWidgetItem />
-                        <PetViewLayoutStatusRarityLevelItem2 />
-                        <PetViewLayoutRarityItemOverlayWidgetItem />
-                    </>
-                )}
-            </Region>
+            <PetViewLayoutStatusItemListDefault {...statusItemListDefault} />
+            <PetViewLayoutStatusItemListMonsterplant {...statusItemListMonsterplant} />
         </Region>
     );
 };
@@ -784,6 +622,338 @@ export const PetViewLayoutOwnerTextItem = ({ captionOwnerText, layout }: PetView
                 text={captionOwnerText ?? t('infostand.text.petowner')}
                 textOptions={{ fill: '#ffffff' }}
             />
+        </Region>
+    );
+};
+
+/** Named region `infostand_element_list` of PetViewLayout - configured through the parent's `infostandElementList` prop. */
+export interface PetViewLayoutInfostandElementListProps {
+    itemsInfostandElementList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PetViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: PetViewLayoutInfostandElementListProps) => {
+    return (
+        <Region
+            name="infostand_element_list"
+            params={16}
+            layout={{ position: 'absolute', left: 10, width: 173, top: 10, height: 270, flexDirection: 'column', ...layout }}
+        >
+            {itemsInfostandElementList ?? (
+                <>
+                    <PetViewLayoutNameTextItem />
+                    <PetViewLayoutBreedTextItem />
+                    <PetViewLayoutImageContainerItem />
+                    <PetViewLayoutStatusContainerItem />
+                    <PetViewLayoutPetrespectContainerItem />
+                    <PetViewLayoutAgeTextItem />
+                    <PetViewLayoutOwnerTextItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `pick` of PetViewLayout - configured through the parent's `pick` prop. */
+export interface PetViewLayoutPickProps {
+    layout?: BoxLayout;
+    onBtnPick?: () => void;
+    onPick?: () => void;
+}
+
+export const PetViewLayoutPick = ({ layout, onBtnPick, onPick }: PetViewLayoutPickProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="pick"
+            tags={[ 'CMD_BUTTON_REGION' ]}
+            params={17}
+            onPointerTap={onPick}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 54, top: 0, height: 25, ...layout }}
+        >
+            <Button
+                variant="1"
+                name="btn_pick"
+                tags={[ 'CMD_BUTTON' ]}
+                params={131089}
+                onPointerTap={onBtnPick}
+                textStyle="text-style-button-regular"
+                layout={{ position: 'absolute', left: 0, width: 139, top: 0, height: 25 }}
+            >
+                {t('infostand.button.pickup')}
+            </Button>
+        </Region>
+    );
+};
+
+/** Named region `train` of PetViewLayout - configured through the parent's `train` prop. */
+export interface PetViewLayoutTrainProps {
+    layout?: BoxLayout;
+    onBtnTrain?: () => void;
+    onTrain?: () => void;
+}
+
+export const PetViewLayoutTrain = ({ layout, onBtnTrain, onTrain }: PetViewLayoutTrainProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="train"
+            tags={[ 'CMD_BUTTON_REGION' ]}
+            params={17}
+            onPointerTap={onTrain}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 64, width: 44, top: 0, height: 25, ...layout }}
+        >
+            <Button
+                variant="1"
+                name="btn_train"
+                tags={[ 'CMD_BUTTON' ]}
+                params={131089}
+                onPointerTap={onBtnTrain}
+                textStyle="text-style-button-regular"
+                layout={{ position: 'absolute', left: 0, width: 132, top: 0, height: 25 }}
+            >
+                {t('infostand.button.train')}
+            </Button>
+        </Region>
+    );
+};
+
+/** Named region `buy_food` of PetViewLayout - configured through the parent's `buyFood` prop. */
+export interface PetViewLayoutBuyFoodProps {
+    layout?: BoxLayout;
+    onBtnBuyFood?: () => void;
+    onBuyFood?: () => void;
+}
+
+export const PetViewLayoutBuyFood = ({ layout, onBtnBuyFood, onBuyFood }: PetViewLayoutBuyFoodProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="buy_food"
+            tags={[ 'CMD_BUTTON_REGION' ]}
+            params={17}
+            onPointerTap={onBuyFood}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 118, width: 147, top: 0, height: 25, ...layout }}
+        >
+            <Button
+                variant="1"
+                name="btn_buy_food"
+                tags={[ 'CMD_BUTTON' ]}
+                params={131089}
+                onPointerTap={onBtnBuyFood}
+                textStyle="text-style-button-regular"
+                layout={{ position: 'absolute', left: 0, width: 149, top: 0, height: 25 }}
+            >
+                {t('infostand.button.buyfood')}
+            </Button>
+        </Region>
+    );
+};
+
+/** Named region `petrespect` of PetViewLayout - configured through the parent's `petrespect` prop. */
+export interface PetViewLayoutPetrespectProps {
+    layout?: BoxLayout;
+    onBtnPetrespect?: () => void;
+    onPetrespect?: () => void;
+}
+
+export const PetViewLayoutPetrespect = ({ layout, onBtnPetrespect, onPetrespect }: PetViewLayoutPetrespectProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="petrespect"
+            tags={[ 'CMD_BUTTON_REGION' ]}
+            params={17}
+            onPointerTap={onPetrespect}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 275, width: 163, top: 0, height: 25, ...layout }}
+        >
+            <Button
+                variant="1"
+                name="btn_petrespect"
+                tags={[ 'CMD_BUTTON' ]}
+                params={131089}
+                onPointerTap={onBtnPetrespect}
+                textStyle="text-style-button-regular"
+                layout={{ position: 'absolute', left: 0, width: 165, top: 0, height: 25 }}
+            >
+                {t('infostand.button.petrespect')}
+            </Button>
+        </Region>
+    );
+};
+
+/** Named region `pettreat` of PetViewLayout - configured through the parent's `pettreat` prop. */
+export interface PetViewLayoutPettreatProps {
+    layout?: BoxLayout;
+    onBtnPettreat?: () => void;
+    onPettreat?: () => void;
+}
+
+export const PetViewLayoutPettreat = ({ layout, onBtnPettreat, onPettreat }: PetViewLayoutPettreatProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="pettreat"
+            tags={[ 'CMD_BUTTON_REGION' ]}
+            params={17}
+            onPointerTap={onPettreat}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 275, width: 163, top: 0, height: 25, ...layout }}
+        >
+            <Button
+                variant="1"
+                name="btn_pettreat"
+                tags={[ 'CMD_BUTTON' ]}
+                params={131089}
+                onPointerTap={onBtnPettreat}
+                textStyle="text-style-button-regular"
+                layout={{ position: 'absolute', left: 0, width: 152, top: 0, height: 25 }}
+            >
+                {t('infostand.button.pettreat')}
+            </Button>
+        </Region>
+    );
+};
+
+/** Named region `kick` of PetViewLayout - configured through the parent's `kick` prop. */
+export interface PetViewLayoutKickProps {
+    layout?: BoxLayout;
+    onBtnKick?: () => void;
+    onKick?: () => void;
+}
+
+export const PetViewLayoutKick = ({ layout, onBtnKick, onKick }: PetViewLayoutKickProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="kick"
+            tags={[ 'CMD_BUTTON_REGION' ]}
+            params={17}
+            onPointerTap={onKick}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 448, width: 141, top: 0, height: 25, ...layout }}
+        >
+            <Button
+                variant="1"
+                name="btn_kick"
+                tags={[ 'CMD_BUTTON' ]}
+                params={131089}
+                onPointerTap={onBtnKick}
+                textStyle="text-style-button-regular"
+                layout={{ position: 'absolute', left: 0, width: 143, top: 0, height: 25 }}
+            >
+                {t('infostand.button.petkick')}
+            </Button>
+        </Region>
+    );
+};
+
+/** Named region `rotate` of PetViewLayout - configured through the parent's `rotate` prop. */
+export interface PetViewLayoutRotateProps {
+    layout?: BoxLayout;
+    onBtnRotate?: () => void;
+    onRotate?: () => void;
+}
+
+export const PetViewLayoutRotate = ({ layout, onBtnRotate, onRotate }: PetViewLayoutRotateProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="rotate"
+            tags={[ 'CMD_BUTTON_REGION' ]}
+            params={17}
+            onPointerTap={onRotate}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 600, width: 132, top: 0, height: 25, ...layout }}
+        >
+            <Button
+                variant="1"
+                name="btn_rotate"
+                tags={[ 'CMD_BUTTON' ]}
+                params={131089}
+                onPointerTap={onBtnRotate}
+                textStyle="text-style-button-regular"
+                layout={{ position: 'absolute', left: 0, width: 141, top: 0, height: 25 }}
+            >
+                {t('infostand.button.rotate')}
+            </Button>
+        </Region>
+    );
+};
+
+/** Named region `move` of PetViewLayout - configured through the parent's `move` prop. */
+export interface PetViewLayoutMoveProps {
+    layout?: BoxLayout;
+    onBtnMove?: () => void;
+    onMove?: () => void;
+}
+
+export const PetViewLayoutMove = ({ layout, onBtnMove, onMove }: PetViewLayoutMoveProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="move"
+            tags={[ 'CMD_BUTTON_REGION' ]}
+            params={17}
+            onPointerTap={onMove}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 589, width: 132, top: 0, height: 25, ...layout }}
+        >
+            <Button
+                variant="1"
+                name="btn_move"
+                tags={[ 'CMD_BUTTON' ]}
+                params={131089}
+                onPointerTap={onBtnMove}
+                textStyle="text-style-button-regular"
+                layout={{ position: 'absolute', left: 0, width: 134, top: 0, height: 25 }}
+            >
+                {t('infostand.button.move')}
+            </Button>
+        </Region>
+    );
+};
+
+/** Named region `button_list` of PetViewLayout - configured through the parent's `buttonList` prop. */
+export interface PetViewLayoutButtonListProps {
+    buyFood?: PetViewLayoutBuyFoodProps;
+    kick?: PetViewLayoutKickProps;
+    layout?: BoxLayout;
+    move?: PetViewLayoutMoveProps;
+    petrespect?: PetViewLayoutPetrespectProps;
+    pettreat?: PetViewLayoutPettreatProps;
+    pick?: PetViewLayoutPickProps;
+    rotate?: PetViewLayoutRotateProps;
+    train?: PetViewLayoutTrainProps;
+}
+
+export const PetViewLayoutButtonList = ({ buyFood, kick, layout, move, petrespect, pettreat, pick, rotate, train }: PetViewLayoutButtonListProps) => {
+    return (
+        <Region
+            name="button_list"
+            params={16}
+            layout={{ width: 1000, height: 25, flexShrink: 0, ...layout }}
+        >
+            <PetViewLayoutPick {...pick} />
+            <PetViewLayoutTrain {...train} />
+            <PetViewLayoutBuyFood {...buyFood} />
+            <PetViewLayoutPetrespect {...petrespect} />
+            <PetViewLayoutPettreat {...pettreat} />
+            <PetViewLayoutKick {...kick} />
+            <PetViewLayoutRotate {...rotate} />
+            <PetViewLayoutMove {...move} />
         </Region>
     );
 };

@@ -6,33 +6,25 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1602_gift_wrapping_xml` (layout "gift_wrapping", 342x482) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GiftWrappingLayoutProps {
+    avatarImageContainer?: GiftWrappingLayoutAvatarImageContainerProps;
+    boxPickerContainer?: GiftWrappingLayoutBoxPickerContainerProps;
+    cancelLinkRegion?: GiftWrappingLayoutCancelLinkRegionProps;
     captionBoxColorTitle?: string;
-    captionCancelLink?: string;
     captionMessageFrom?: string;
     captionMessageInputHint?: string;
     captionNameInputHint?: string;
-    captionPickBoxTitle?: string;
-    captionPickRibbonTitle?: string;
     captionShowFaceCheckboxTitle?: string;
-    itemsPriceBoxContainer?: ReactNode;
+    colorPickerContainer?: GiftWrappingLayoutColorPickerContainerProps;
     layout?: BoxLayout;
-    onBoxNext?: () => void;
-    onBoxPrev?: () => void;
-    onCancelLinkRegion?: () => void;
     onClose?: () => void;
     onGiveGiftButton?: () => void;
-    onRibbonNext?: () => void;
-    onRibbonPrev?: () => void;
     onShowFaceCheckbox?: () => void;
-    onSuggestionContainer?: () => void;
-    srcAvatarImage?: string;
     srcGiftCard?: string;
-    srcProductImage?: string;
     srcWriteDeco?: string;
-    visibleSuggestionContainer?: boolean;
+    suggestionContainer?: GiftWrappingLayoutSuggestionContainerProps;
 }
 
-export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, captionMessageFrom, captionMessageInputHint, captionNameInputHint, captionPickBoxTitle, captionPickRibbonTitle, captionShowFaceCheckboxTitle, itemsPriceBoxContainer, layout, onBoxNext, onBoxPrev, onCancelLinkRegion, onClose, onGiveGiftButton, onRibbonNext, onRibbonPrev, onShowFaceCheckbox, onSuggestionContainer, srcAvatarImage, srcGiftCard, srcProductImage, srcWriteDeco, visibleSuggestionContainer }: GiftWrappingLayoutProps) => {
+export const GiftWrappingLayout = ({ avatarImageContainer, boxPickerContainer, cancelLinkRegion, captionBoxColorTitle, captionMessageFrom, captionMessageInputHint, captionNameInputHint, captionShowFaceCheckboxTitle, colorPickerContainer, layout, onClose, onGiveGiftButton, onShowFaceCheckbox, srcGiftCard, srcWriteDeco, suggestionContainer }: GiftWrappingLayoutProps) => {
     const t = useTranslation();
     const [ nameInputValue, setNameInputValue ] = useState('');
     const [ messageInputValue, setMessageInputValue ] = useState('');
@@ -84,45 +76,14 @@ export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, ca
                         src={srcWriteDeco ?? layoutImage('common_small_pen.png')}
                         layout={{ position: 'absolute', left: 301, width: 17, top: 15, height: 18 }}
                     />
-                    <Region
-                        name="suggestion_container"
-                        params={147457}
-                        visible={visibleSuggestionContainer ?? false}
-                        backgroundColor="#999999"
-                        onPointerTap={onSuggestionContainer}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 18, width: 264, top: 39, height: 0, minWidth: 150, maxWidth: 267 }}
-                    >
-                        <Region
-                            params={12730385}
-                            backgroundColor="#ffffff"
-                            layout={{ position: 'absolute', left: 1, width: 263, top: 0, height: 0, minWidth: 150, maxWidth: 265 }}
-                        >
-                            <Region
-                                name="suggestion_list"
-                                params={12730385}
-                                layout={{ position: 'absolute', left: 1, top: 0, minWidth: 148, maxWidth: 262, flexDirection: 'column' }}
-                            />
-                        </Region>
-                    </Region>
+                    <GiftWrappingLayoutSuggestionContainer {...suggestionContainer} />
                     <ThemeImage
                         name="gift_card"
                         params={16}
                         src={srcGiftCard ?? layoutImage('catalogue_giftcard_blank.png')}
                         layout={{ position: 'absolute', left: 10, width: 306, top: 56, height: 149 }}
                     />
-                    <Region
-                        name="avatar_image_container"
-                        params={16}
-                        layout={{ position: 'absolute', left: 15, width: 60, top: 51, height: 149, minWidth: 60, maxWidth: 60, minHeight: 149, maxHeight: 149, justifyContent: 'center' }}
-                    >
-                        <ThemeImage
-                            name="avatar_image"
-                            params={3935440}
-                            src={srcAvatarImage}
-                            layout={{ position: 'absolute', width: 60, alignSelf: 'center', height: 149 }}
-                        />
-                    </Region>
+                    <GiftWrappingLayoutAvatarImageContainer {...avatarImageContainer} />
                     <TextInput
                         value={messageInputValue}
                         onChange={setMessageInputValue}
@@ -170,114 +131,7 @@ export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, ca
                             textStyle="text-style-u-regular"
                         />
                     </Region>
-                    <Region
-                        name="box_picker_container"
-                        params={16}
-                        layout={{ position: 'absolute', left: 10, width: 306, top: 253, height: 83 }}
-                    >
-                        <Border
-                            variant="0"
-                            name="image_border"
-                            params={16}
-                            tintColor="#f1f1f1"
-                            layout={{ position: 'absolute', left: 0, width: 82, top: 0, height: 82 }}
-                        >
-                            <ThemeImage
-                                name="product_image"
-                                params={16}
-                                src={srcProductImage}
-                                layout={{ position: 'absolute', left: 1, width: 80, top: 1, height: 80 }}
-                            />
-                        </Border>
-                        <Region
-                            name="pick_box_title"
-                            params={16}
-                            layout={{ position: 'absolute', left: 154, width: 152, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionPickBoxTitle ?? t('catalog.gift_wrapping.pick_box')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
-                        <Region
-                            name="price_box_container"
-                            params={147473}
-                            layout={{ position: 'absolute', left: 154, top: 20, flexDirection: 'row' }}
-                        >
-                            {itemsPriceBoxContainer ?? (
-                                <>
-                                    <GiftWrappingLayoutPickBoxPriceTitleItem />
-                                    <GiftWrappingLayoutSmallCoinItem />
-                                </>
-                            )}
-                        </Region>
-                        <ContainerButton
-                            variant="0"
-                            name="box_prev"
-                            params={17}
-                            onPointerTap={onBoxPrev}
-                            layout={{ position: 'absolute', left: 92, width: 25, top: 9, height: 25 }}
-                        >
-                            <Icon
-                                variant="2"
-                                params={16}
-                                tintColor="#000000"
-                                layout={{ position: 'absolute', left: 7, width: 17, top: 8, height: 16 }}
-                            />
-                        </ContainerButton>
-                        <ContainerButton
-                            variant="0"
-                            name="box_next"
-                            params={17}
-                            onPointerTap={onBoxNext}
-                            layout={{ position: 'absolute', left: 121, width: 25, top: 9, height: 25 }}
-                        >
-                            <Icon
-                                variant="3"
-                                params={16}
-                                tintColor="#000000"
-                                layout={{ position: 'absolute', left: 8, width: 17, top: 8, height: 16 }}
-                            />
-                        </ContainerButton>
-                        <Region
-                            name="pick_ribbon_title"
-                            params={16}
-                            layout={{ position: 'absolute', left: 154, width: 152, top: 50, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionPickRibbonTitle ?? t('catalog.gift_wrapping.pick_ribbon.title')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
-                        <ContainerButton
-                            variant="0"
-                            name="ribbon_prev"
-                            params={17}
-                            onPointerTap={onRibbonPrev}
-                            layout={{ position: 'absolute', left: 92, width: 25, top: 47, height: 25 }}
-                        >
-                            <Icon
-                                variant="2"
-                                params={16}
-                                tintColor="#000000"
-                                layout={{ position: 'absolute', left: 7, width: 17, top: 8, height: 16 }}
-                            />
-                        </ContainerButton>
-                        <ContainerButton
-                            variant="0"
-                            name="ribbon_next"
-                            params={17}
-                            onPointerTap={onRibbonNext}
-                            layout={{ position: 'absolute', left: 121, width: 25, top: 47, height: 25 }}
-                        >
-                            <Icon
-                                variant="3"
-                                params={16}
-                                tintColor="#000000"
-                                layout={{ position: 'absolute', left: 9, width: 17, top: 8, height: 16 }}
-                            />
-                        </ContainerButton>
-                    </Region>
+                    <GiftWrappingLayoutBoxPickerContainer {...boxPickerContainer} />
                     <Region
                         name="box_color_title"
                         params={16}
@@ -288,17 +142,7 @@ export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, ca
                             textStyle="text-style-u-bold"
                         />
                     </Region>
-                    <Region
-                        name="color_picker_container"
-                        params={16}
-                        layout={{ position: 'absolute', left: 20, width: 308, top: 360, height: 30, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="color_grid"
-                            params={786449}
-                            layout={{ position: 'absolute', width: 306, top: 2, height: 26, flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}
-                        />
-                    </Region>
+                    <GiftWrappingLayoutColorPickerContainer {...colorPickerContainer} />
                     <ButtonThick
                         variant="3"
                         name="give_gift_button"
@@ -308,27 +152,78 @@ export const GiftWrappingLayout = ({ captionBoxColorTitle, captionCancelLink, ca
                     >
                         {t('catalog.gift_wrapping.give_gift')}
                     </ButtonThick>
-                    <Region
-                        name="cancel_link_region"
-                        params={17}
-                        onPointerTap={onCancelLinkRegion}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 9, width: 100, top: 407, height: 20 }}
-                    >
-                        <Region
-                            name="cancel_link"
-                            params={16}
-                            layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionCancelLink ?? t('catalog.gift_wrapping.cancel')}
-                                textStyle="text-style-u-regular"
-                            />
-                        </Region>
-                    </Region>
+                    <GiftWrappingLayoutCancelLinkRegion {...cancelLinkRegion} />
                 </Border>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `suggestion_list` of GiftWrappingLayout - configured through the parent's `suggestionList` prop. */
+export interface GiftWrappingLayoutSuggestionListProps {
+    layout?: BoxLayout;
+}
+
+export const GiftWrappingLayoutSuggestionList = ({ layout }: GiftWrappingLayoutSuggestionListProps) => {
+    return (
+        <Region
+            name="suggestion_list"
+            params={12730385}
+            layout={{ position: 'absolute', left: 1, top: 0, minWidth: 148, maxWidth: 262, flexDirection: 'column', ...layout }}
+        />
+    );
+};
+
+/** Named region `suggestion_container` of GiftWrappingLayout - configured through the parent's `suggestionContainer` prop. */
+export interface GiftWrappingLayoutSuggestionContainerProps {
+    layout?: BoxLayout;
+    onSuggestionContainer?: () => void;
+    suggestionList?: GiftWrappingLayoutSuggestionListProps;
+    visibleSuggestionContainer?: boolean;
+}
+
+export const GiftWrappingLayoutSuggestionContainer = ({ layout, onSuggestionContainer, suggestionList, visibleSuggestionContainer }: GiftWrappingLayoutSuggestionContainerProps) => {
+    return (
+        <Region
+            name="suggestion_container"
+            params={147457}
+            visible={visibleSuggestionContainer ?? false}
+            backgroundColor="#999999"
+            onPointerTap={onSuggestionContainer}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 18, width: 264, top: 39, height: 0, minWidth: 150, maxWidth: 267, ...layout }}
+        >
+            <Region
+                params={12730385}
+                backgroundColor="#ffffff"
+                layout={{ position: 'absolute', left: 1, width: 263, top: 0, height: 0, minWidth: 150, maxWidth: 265 }}
+            >
+                <GiftWrappingLayoutSuggestionList {...suggestionList} />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `avatar_image_container` of GiftWrappingLayout - configured through the parent's `avatarImageContainer` prop. */
+export interface GiftWrappingLayoutAvatarImageContainerProps {
+    layout?: BoxLayout;
+    srcAvatarImage?: string;
+}
+
+export const GiftWrappingLayoutAvatarImageContainer = ({ layout, srcAvatarImage }: GiftWrappingLayoutAvatarImageContainerProps) => {
+    return (
+        <Region
+            name="avatar_image_container"
+            params={16}
+            layout={{ position: 'absolute', left: 15, width: 60, top: 51, height: 149, minWidth: 60, maxWidth: 60, minHeight: 149, maxHeight: 149, justifyContent: 'center', ...layout }}
+        >
+            <ThemeImage
+                name="avatar_image"
+                params={3935440}
+                src={srcAvatarImage}
+                layout={{ position: 'absolute', width: 60, alignSelf: 'center', height: 149 }}
+            />
+        </Region>
     );
 };
 
@@ -369,5 +264,210 @@ export const GiftWrappingLayoutSmallCoinItem = ({ layout, srcSmallCoin }: GiftWr
             src={srcSmallCoin ?? layoutImage('common_small_coin.png')}
             layout={{ width: 16, height: 16, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `price_box_container` of GiftWrappingLayout - configured through the parent's `priceBoxContainer` prop. */
+export interface GiftWrappingLayoutPriceBoxContainerProps {
+    itemsPriceBoxContainer?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const GiftWrappingLayoutPriceBoxContainer = ({ itemsPriceBoxContainer, layout }: GiftWrappingLayoutPriceBoxContainerProps) => {
+    return (
+        <Region
+            name="price_box_container"
+            params={147473}
+            layout={{ position: 'absolute', left: 154, top: 20, flexDirection: 'row', ...layout }}
+        >
+            {itemsPriceBoxContainer ?? (
+                <>
+                    <GiftWrappingLayoutPickBoxPriceTitleItem />
+                    <GiftWrappingLayoutSmallCoinItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `box_picker_container` of GiftWrappingLayout - configured through the parent's `boxPickerContainer` prop. */
+export interface GiftWrappingLayoutBoxPickerContainerProps {
+    captionPickBoxTitle?: string;
+    captionPickRibbonTitle?: string;
+    layout?: BoxLayout;
+    onBoxNext?: () => void;
+    onBoxPrev?: () => void;
+    onRibbonNext?: () => void;
+    onRibbonPrev?: () => void;
+    priceBoxContainer?: GiftWrappingLayoutPriceBoxContainerProps;
+    srcProductImage?: string;
+}
+
+export const GiftWrappingLayoutBoxPickerContainer = ({ captionPickBoxTitle, captionPickRibbonTitle, layout, onBoxNext, onBoxPrev, onRibbonNext, onRibbonPrev, priceBoxContainer, srcProductImage }: GiftWrappingLayoutBoxPickerContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="box_picker_container"
+            params={16}
+            layout={{ position: 'absolute', left: 10, width: 306, top: 253, height: 83, ...layout }}
+        >
+            <Border
+                variant="0"
+                name="image_border"
+                params={16}
+                tintColor="#f1f1f1"
+                layout={{ position: 'absolute', left: 0, width: 82, top: 0, height: 82 }}
+            >
+                <ThemeImage
+                    name="product_image"
+                    params={16}
+                    src={srcProductImage}
+                    layout={{ position: 'absolute', left: 1, width: 80, top: 1, height: 80 }}
+                />
+            </Border>
+            <Region
+                name="pick_box_title"
+                params={16}
+                layout={{ position: 'absolute', left: 154, width: 152, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionPickBoxTitle ?? t('catalog.gift_wrapping.pick_box')}
+                    textStyle="text-style-u-bold"
+                />
+            </Region>
+            <GiftWrappingLayoutPriceBoxContainer {...priceBoxContainer} />
+            <ContainerButton
+                variant="0"
+                name="box_prev"
+                params={17}
+                onPointerTap={onBoxPrev}
+                layout={{ position: 'absolute', left: 92, width: 25, top: 9, height: 25 }}
+            >
+                <Icon
+                    variant="2"
+                    params={16}
+                    tintColor="#000000"
+                    layout={{ position: 'absolute', left: 7, width: 17, top: 8, height: 16 }}
+                />
+            </ContainerButton>
+            <ContainerButton
+                variant="0"
+                name="box_next"
+                params={17}
+                onPointerTap={onBoxNext}
+                layout={{ position: 'absolute', left: 121, width: 25, top: 9, height: 25 }}
+            >
+                <Icon
+                    variant="3"
+                    params={16}
+                    tintColor="#000000"
+                    layout={{ position: 'absolute', left: 8, width: 17, top: 8, height: 16 }}
+                />
+            </ContainerButton>
+            <Region
+                name="pick_ribbon_title"
+                params={16}
+                layout={{ position: 'absolute', left: 154, width: 152, top: 50, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionPickRibbonTitle ?? t('catalog.gift_wrapping.pick_ribbon.title')}
+                    textStyle="text-style-u-bold"
+                />
+            </Region>
+            <ContainerButton
+                variant="0"
+                name="ribbon_prev"
+                params={17}
+                onPointerTap={onRibbonPrev}
+                layout={{ position: 'absolute', left: 92, width: 25, top: 47, height: 25 }}
+            >
+                <Icon
+                    variant="2"
+                    params={16}
+                    tintColor="#000000"
+                    layout={{ position: 'absolute', left: 7, width: 17, top: 8, height: 16 }}
+                />
+            </ContainerButton>
+            <ContainerButton
+                variant="0"
+                name="ribbon_next"
+                params={17}
+                onPointerTap={onRibbonNext}
+                layout={{ position: 'absolute', left: 121, width: 25, top: 47, height: 25 }}
+            >
+                <Icon
+                    variant="3"
+                    params={16}
+                    tintColor="#000000"
+                    layout={{ position: 'absolute', left: 9, width: 17, top: 8, height: 16 }}
+                />
+            </ContainerButton>
+        </Region>
+    );
+};
+
+/** Named region `color_grid` of GiftWrappingLayout - configured through the parent's `colorGrid` prop. */
+export interface GiftWrappingLayoutColorGridProps {
+    layout?: BoxLayout;
+}
+
+export const GiftWrappingLayoutColorGrid = ({ layout }: GiftWrappingLayoutColorGridProps) => {
+    return (
+        <Region
+            name="color_grid"
+            params={786449}
+            layout={{ position: 'absolute', width: 306, top: 2, height: 26, flexDirection: 'row', flexWrap: 'wrap', gap: 2, ...layout }}
+        />
+    );
+};
+
+/** Named region `color_picker_container` of GiftWrappingLayout - configured through the parent's `colorPickerContainer` prop. */
+export interface GiftWrappingLayoutColorPickerContainerProps {
+    colorGrid?: GiftWrappingLayoutColorGridProps;
+    layout?: BoxLayout;
+}
+
+export const GiftWrappingLayoutColorPickerContainer = ({ colorGrid, layout }: GiftWrappingLayoutColorPickerContainerProps) => {
+    return (
+        <Region
+            name="color_picker_container"
+            params={16}
+            layout={{ position: 'absolute', left: 20, width: 308, top: 360, height: 30, justifyContent: 'center', ...layout }}
+        >
+            <GiftWrappingLayoutColorGrid {...colorGrid} />
+        </Region>
+    );
+};
+
+/** Named region `cancel_link_region` of GiftWrappingLayout - configured through the parent's `cancelLinkRegion` prop. */
+export interface GiftWrappingLayoutCancelLinkRegionProps {
+    captionCancelLink?: string;
+    layout?: BoxLayout;
+    onCancelLinkRegion?: () => void;
+}
+
+export const GiftWrappingLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion }: GiftWrappingLayoutCancelLinkRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="cancel_link_region"
+            params={17}
+            onPointerTap={onCancelLinkRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 9, width: 100, top: 407, height: 20, ...layout }}
+        >
+            <Region
+                name="cancel_link"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCancelLink ?? t('catalog.gift_wrapping.cancel')}
+                    textStyle="text-style-u-regular"
+                />
+            </Region>
+        </Region>
     );
 };

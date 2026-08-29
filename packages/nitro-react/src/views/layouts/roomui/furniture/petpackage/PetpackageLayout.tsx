@@ -5,15 +5,14 @@ import { Border, BoxLayout, ButtonThick, Region, TextInput, ThemeImage, ThemeTex
 
 /** Generated from `969_petpackage_xml` (layout "open_petpackage", 280x160) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PetpackageLayoutProps {
-    captionCancel?: string;
+    cancel?: PetpackageLayoutCancelProps;
     captionInfoText?: string;
     layout?: BoxLayout;
-    onCancel?: () => void;
     onPickName?: () => void;
     srcPetImage?: string;
 }
 
-export const PetpackageLayout = ({ captionCancel, captionInfoText, layout, onCancel, onPickName, srcPetImage }: PetpackageLayoutProps) => {
+export const PetpackageLayout = ({ cancel, captionInfoText, layout, onPickName, srcPetImage }: PetpackageLayoutProps) => {
     const t = useTranslation();
     const [ inputValue, setInputValue ] = useState('');
 
@@ -55,24 +54,7 @@ export const PetpackageLayout = ({ captionCancel, captionInfoText, layout, onCan
                 >
                     {t('widgets.petpackage.name.pick')}
                 </ButtonThick>
-                <Region
-                    name="cancel"
-                    params={17}
-                    onPointerTap={onCancel}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 10, width: 68, top: 90, height: 29 }}
-                >
-                    <Region
-                        name="cancel"
-                        params={16}
-                        layout={{ position: 'absolute', left: 1, width: 64, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionCancel ?? t('generic.cancel')}
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
-                </Region>
+                <PetpackageLayoutCancel {...cancel} />
                 <Border
                     variant="0"
                     name="pet_img_bg_box"
@@ -88,6 +70,38 @@ export const PetpackageLayout = ({ captionCancel, captionInfoText, layout, onCan
                     />
                 </Border>
             </Border>
+        </Region>
+    );
+};
+
+/** Named region `cancel` of PetpackageLayout - configured through the parent's `cancel` prop. */
+export interface PetpackageLayoutCancelProps {
+    captionCancel?: string;
+    layout?: BoxLayout;
+    onCancel?: () => void;
+}
+
+export const PetpackageLayoutCancel = ({ captionCancel, layout, onCancel }: PetpackageLayoutCancelProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="cancel"
+            params={17}
+            onPointerTap={onCancel}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 10, width: 68, top: 90, height: 29, ...layout }}
+        >
+            <Region
+                name="cancel"
+                params={16}
+                layout={{ position: 'absolute', left: 1, width: 64, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionCancel ?? t('generic.cancel')}
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
         </Region>
     );
 };

@@ -3,14 +3,14 @@ import { Border, BoxLayout, Button, Region, ThemeImage, ThemeText, WidgetSlot } 
 
 /** Generated from `33_next_ltd_available_xml` (layout "next_ltd_available", 541x60) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface NextLtdAvailableLayoutProps {
+    buttonContainer?: NextLtdAvailableLayoutButtonContainerProps;
     captionHeader?: string;
     layout?: BoxLayout;
-    onCatalogueButton?: () => void;
     onGet?: () => void;
     visibleGet?: boolean;
 }
 
-export const NextLtdAvailableLayout = ({ captionHeader, layout, onCatalogueButton, onGet, visibleGet }: NextLtdAvailableLayoutProps) => {
+export const NextLtdAvailableLayout = ({ buttonContainer, captionHeader, layout, onGet, visibleGet }: NextLtdAvailableLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -56,22 +56,36 @@ export const NextLtdAvailableLayout = ({ captionHeader, layout, onCatalogueButto
                         {t('landing.view.next.ltd.get')}
                     </Button>
                 </Region>
-                <Region
-                    name="button_container"
-                    params={147472}
-                    layout={{ position: 'absolute', left: 60, width: 230, top: 20, height: 38 }}
-                >
-                    <Button
-                        variant="100"
-                        name="catalogue_button"
-                        params={131089}
-                        onPointerTap={onCatalogueButton}
-                        layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 43 }}
-                    >
-                        {t('landing.view.next.ltd.opencatalogue')}
-                    </Button>
-                </Region>
+                <NextLtdAvailableLayoutButtonContainer {...buttonContainer} />
             </Border>
+        </Region>
+    );
+};
+
+/** Named region `button_container` of NextLtdAvailableLayout - configured through the parent's `buttonContainer` prop. */
+export interface NextLtdAvailableLayoutButtonContainerProps {
+    layout?: BoxLayout;
+    onCatalogueButton?: () => void;
+}
+
+export const NextLtdAvailableLayoutButtonContainer = ({ layout, onCatalogueButton }: NextLtdAvailableLayoutButtonContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="button_container"
+            params={147472}
+            layout={{ position: 'absolute', left: 60, width: 230, top: 20, height: 38, ...layout }}
+        >
+            <Button
+                variant="100"
+                name="catalogue_button"
+                params={131089}
+                onPointerTap={onCatalogueButton}
+                layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 43 }}
+            >
+                {t('landing.view.next.ltd.opencatalogue')}
+            </Button>
         </Region>
     );
 };

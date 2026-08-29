@@ -6,20 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `832_room_tools_toolbar_xml` (layout "room_tools_toolbar", 165x229) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RoomToolsToolbarLayoutProps {
-    captionZoomText?: string;
-    itemsItemlistButtons?: ReactNode;
+    buttonCollapse?: RoomToolsToolbarLayoutButtonCollapseProps;
+    buttonExpand?: RoomToolsToolbarLayoutButtonExpandProps;
+    itemlistButtons?: RoomToolsToolbarLayoutItemlistButtonsProps;
     layout?: BoxLayout;
-    onButtonCollapse?: () => void;
-    onButtonExpand?: () => void;
-    onZoomInBtn?: () => void;
-    onZoomOutBtn?: () => void;
-    srcArrowCollapse?: string;
-    srcArrowExpand?: string;
 }
 
-export const RoomToolsToolbarLayout = ({ captionZoomText, itemsItemlistButtons, layout, onButtonCollapse, onButtonExpand, onZoomInBtn, onZoomOutBtn, srcArrowCollapse, srcArrowExpand }: RoomToolsToolbarLayoutProps) => {
-    const t = useTranslation();
-
+export const RoomToolsToolbarLayout = ({ buttonCollapse, buttonExpand, itemlistButtons, layout }: RoomToolsToolbarLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 165, height: 229, ...layout }}>
             <Region
@@ -34,76 +27,7 @@ export const RoomToolsToolbarLayout = ({ captionZoomText, itemsItemlistButtons, 
                     blend={0.8}
                     layout={{ position: 'absolute', left: 1, width: 164, top: 0, bottom: 0 }}
                 >
-                    <Region
-                        name="itemlist_buttons"
-                        params={8536064}
-                        layout={{ position: 'absolute', left: 24, top: 6, minWidth: 140, flexDirection: 'column' }}
-                    >
-                        {itemsItemlistButtons ?? (
-                            <>
-                                <RoomToolsToolbarLayoutButtonZoomItem />
-                                <RoomToolsToolbarLayoutButtonAchievementsItem />
-                                <RoomToolsToolbarLayoutButtonSettingsItem />
-                                <RoomToolsToolbarLayoutButtonChatHistoryItem />
-                                <RoomToolsToolbarLayoutButtonLikeItem />
-                                <RoomToolsToolbarLayoutButtonCameraItem />
-                                <RoomToolsToolbarLayoutButtonShareItem />
-                                <RoomToolsToolbarLayoutCntHistoryItem />
-                            </>
-                        )}
-                        <Region
-                            params={16}
-                            layout={{ width: 130, height: 30, flexShrink: 0 }}
-                        >
-                            <Region
-                                name="zoom_text"
-                                params={16}
-                                layout={{ position: 'absolute', left: 6, width: 90, top: 4, height: 14, maxWidth: 90, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionZoomText ?? t('room.zoom.text')}
-                                    textOptions={{ fill: '#cccccc' }}
-                                />
-                            </Region>
-                            <Region
-                                params={16}
-                                backgroundColor="#707070"
-                                layout={{ position: 'absolute', left: 3, width: 125, top: 26, height: 1 }}
-                            />
-                            <Region
-                                name="zoom_in_btn"
-                                tooltip={t('room.zoom.zoom_in.tooltip')}
-                                params={1}
-                                dynamicStyle="button"
-                                onPointerTap={onZoomInBtn}
-                                cursor="pointer"
-                                layout={{ position: 'absolute', left: 87, width: 18, top: 3, height: 19 }}
-                            >
-                                <ThemeImage
-                                    tags={[ '#icon' ]}
-                                    params={16}
-                                    src={layoutImage('roomtools_zoom_in.png')}
-                                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
-                                />
-                            </Region>
-                            <Region
-                                name="zoom_out_btn"
-                                tooltip={t('room.zoom.zoom_out.tooltip')}
-                                params={1}
-                                dynamicStyle="button"
-                                onPointerTap={onZoomOutBtn}
-                                cursor="pointer"
-                                layout={{ position: 'absolute', left: 107, width: 18, top: 3, height: 19 }}
-                            >
-                                <ThemeImage
-                                    tags={[ '#icon' ]}
-                                    params={16}
-                                    src={layoutImage('roomtools_zoom_out.png')}
-                                    layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
-                                />
-                            </Region>
-                        </Region>
-                    </Region>
+                    <RoomToolsToolbarLayoutItemlistButtons {...itemlistButtons} />
                 </Border>
                 <Border
                     variant="2"
@@ -112,21 +36,7 @@ export const RoomToolsToolbarLayout = ({ captionZoomText, itemsItemlistButtons, 
                     tintColor="#3b3933"
                     layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 172 }}
                 >
-                    <Region
-                        name="button_collapse"
-                        params={1}
-                        onPointerTap={onButtonCollapse}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 172 }}
-                    >
-                        <ThemeImage
-                            name="arrow_collapse"
-                            tags={[ '#icon' ]}
-                            params={3145744}
-                            src={srcArrowCollapse ?? layoutImage('roomtools_minimizebutton.png')}
-                            layout={{ position: 'absolute', left: 9, width: 6, alignSelf: 'center', marginTop: 17, marginBottom: -17, height: 8 }}
-                        />
-                    </Region>
+                    <RoomToolsToolbarLayoutButtonCollapse {...buttonCollapse} />
                 </Border>
                 <Border
                     variant="2"
@@ -135,20 +45,7 @@ export const RoomToolsToolbarLayout = ({ captionZoomText, itemsItemlistButtons, 
                     tintColor="#3b3933"
                     layout={{ position: 'absolute', left: 0, width: 19, bottom: 57, height: 108 }}
                 >
-                    <Region
-                        name="button_expand"
-                        params={2049}
-                        onPointerTap={onButtonExpand}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 19, top: 0, bottom: 0 }}
-                    >
-                        <ThemeImage
-                            name="arrow_expand"
-                            params={3145744}
-                            src={srcArrowExpand ?? layoutImage('roomtools_minimizebutton.png')}
-                            layout={{ position: 'absolute', left: 11, width: 6, alignSelf: 'center', height: 8 }}
-                        />
-                    </Region>
+                    <RoomToolsToolbarLayoutButtonExpand {...buttonExpand} />
                 </Border>
             </Region>
         </Region>
@@ -470,91 +367,298 @@ export const RoomToolsToolbarLayoutButtonShareItem = ({ captionTextShare, layout
     );
 };
 
-/** Row template `cnt_history` of RoomToolsToolbarLayout - pass real rows through its `items…` slot. */
-export interface RoomToolsToolbarLayoutCntHistoryItemProps {
+/** Named region `button_history_back` of RoomToolsToolbarLayout - configured through the parent's `buttonHistoryBack` prop. */
+export interface RoomToolsToolbarLayoutButtonHistoryBackProps {
+    layout?: BoxLayout;
+    onButtonHistoryBack?: () => void;
+}
+
+export const RoomToolsToolbarLayoutButtonHistoryBack = ({ layout, onButtonHistoryBack }: RoomToolsToolbarLayoutButtonHistoryBackProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="button_history_back"
+            tooltip={t('room.history.button.back.tooltip')}
+            params={131073}
+            dynamicStyle="brightness_and_shadow_under"
+            onPointerTap={onButtonHistoryBack}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 37, top: 3, height: 34, ...layout }}
+        >
+            <ThemeImage
+                tags={[ '#bg' ]}
+                params={16}
+                src={layoutImage('roomtools_history_forward_bg.png')}
+                tint="#44a88d"
+                layout={{ position: 'absolute', left: 3, width: 34, top: 2, height: 31 }}
+            />
+            <ThemeImage
+                tags={[ '#icon' ]}
+                params={16}
+                src={layoutImage('roomtools_history_back_icon.png')}
+                layout={{ position: 'absolute', left: 4, width: 30, top: 3, height: 30 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `button_history` of RoomToolsToolbarLayout - configured through the parent's `buttonHistory` prop. */
+export interface RoomToolsToolbarLayoutButtonHistoryProps {
     layout?: BoxLayout;
     onButtonHistory?: () => void;
-    onButtonHistoryBack?: () => void;
+}
+
+export const RoomToolsToolbarLayoutButtonHistory = ({ layout, onButtonHistory }: RoomToolsToolbarLayoutButtonHistoryProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="button_history"
+            tooltip={t('room.history.button.tooltip')}
+            params={131073}
+            dynamicStyle="brightness_and_shadow_under"
+            onPointerTap={onButtonHistory}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 38, width: 35, top: 0, height: 38, ...layout }}
+        >
+            <ThemeImage
+                tags={[ '#icon' ]}
+                params={16}
+                src={layoutImage('roomtools_history_open_bg.png')}
+                tint="#44a88d"
+                layout={{ position: 'absolute', left: 1, width: 33, top: 1, height: 35 }}
+            />
+            <ThemeImage
+                tags={[ '#icon' ]}
+                params={16}
+                src={layoutImage('roomtools_history_open_icon.png')}
+                layout={{ position: 'absolute', left: 2, width: 32, top: 3, height: 35 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `button_history_forward` of RoomToolsToolbarLayout - configured through the parent's `buttonHistoryForward` prop. */
+export interface RoomToolsToolbarLayoutButtonHistoryForwardProps {
+    layout?: BoxLayout;
     onButtonHistoryForward?: () => void;
 }
 
-export const RoomToolsToolbarLayoutCntHistoryItem = ({ layout, onButtonHistory, onButtonHistoryBack, onButtonHistoryForward }: RoomToolsToolbarLayoutCntHistoryItemProps) => {
+export const RoomToolsToolbarLayoutButtonHistoryForward = ({ layout, onButtonHistoryForward }: RoomToolsToolbarLayoutButtonHistoryForwardProps) => {
     const t = useTranslation();
 
+    return (
+        <Region
+            name="button_history_forward"
+            tooltip={t('room.history.button.forward.tooltip')}
+            params={131073}
+            dynamicStyle="brightness_and_shadow_under"
+            onPointerTap={onButtonHistoryForward}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 74, width: 34, top: 5, height: 32, ...layout }}
+        >
+            <ThemeImage
+                tags={[ '#bg' ]}
+                params={16}
+                src={layoutImage('roomtools_history_forward_bg.png')}
+                tint="#44a88d"
+                layout={{ position: 'absolute', left: 0, width: 34, top: 0, height: 31 }}
+            />
+            <ThemeImage
+                tags={[ '#icon' ]}
+                params={16}
+                src={layoutImage('roomtools_history_back_icon.png')}
+                layout={{ position: 'absolute', left: 3, width: 30, top: 1, height: 30 }}
+            />
+        </Region>
+    );
+};
+
+/** Row template `cnt_history` of RoomToolsToolbarLayout - pass real rows through its `items…` slot. */
+export interface RoomToolsToolbarLayoutCntHistoryItemProps {
+    buttonHistory?: RoomToolsToolbarLayoutButtonHistoryProps;
+    buttonHistoryBack?: RoomToolsToolbarLayoutButtonHistoryBackProps;
+    buttonHistoryForward?: RoomToolsToolbarLayoutButtonHistoryForwardProps;
+    layout?: BoxLayout;
+}
+
+export const RoomToolsToolbarLayoutCntHistoryItem = ({ buttonHistory, buttonHistoryBack, buttonHistoryForward, layout }: RoomToolsToolbarLayoutCntHistoryItemProps) => {
     return (
         <Region
             name="cnt_history"
             layout={{ width: 115, height: 43, flexShrink: 0, ...layout }}
         >
+            <RoomToolsToolbarLayoutButtonHistoryBack {...buttonHistoryBack} />
+            <RoomToolsToolbarLayoutButtonHistory {...buttonHistory} />
+            <RoomToolsToolbarLayoutButtonHistoryForward {...buttonHistoryForward} />
+        </Region>
+    );
+};
+
+/** Named region `zoom_in_btn` of RoomToolsToolbarLayout - configured through the parent's `zoomInBtn` prop. */
+export interface RoomToolsToolbarLayoutZoomInBtnProps {
+    layout?: BoxLayout;
+    onZoomInBtn?: () => void;
+}
+
+export const RoomToolsToolbarLayoutZoomInBtn = ({ layout, onZoomInBtn }: RoomToolsToolbarLayoutZoomInBtnProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="zoom_in_btn"
+            tooltip={t('room.zoom.zoom_in.tooltip')}
+            params={1}
+            dynamicStyle="button"
+            onPointerTap={onZoomInBtn}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 87, width: 18, top: 3, height: 19, ...layout }}
+        >
+            <ThemeImage
+                tags={[ '#icon' ]}
+                params={16}
+                src={layoutImage('roomtools_zoom_in.png')}
+                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `zoom_out_btn` of RoomToolsToolbarLayout - configured through the parent's `zoomOutBtn` prop. */
+export interface RoomToolsToolbarLayoutZoomOutBtnProps {
+    layout?: BoxLayout;
+    onZoomOutBtn?: () => void;
+}
+
+export const RoomToolsToolbarLayoutZoomOutBtn = ({ layout, onZoomOutBtn }: RoomToolsToolbarLayoutZoomOutBtnProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="zoom_out_btn"
+            tooltip={t('room.zoom.zoom_out.tooltip')}
+            params={1}
+            dynamicStyle="button"
+            onPointerTap={onZoomOutBtn}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 107, width: 18, top: 3, height: 19, ...layout }}
+        >
+            <ThemeImage
+                tags={[ '#icon' ]}
+                params={16}
+                src={layoutImage('roomtools_zoom_out.png')}
+                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 18 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `itemlist_buttons` of RoomToolsToolbarLayout - configured through the parent's `itemlistButtons` prop. */
+export interface RoomToolsToolbarLayoutItemlistButtonsProps {
+    captionZoomText?: string;
+    itemsItemlistButtons?: ReactNode;
+    layout?: BoxLayout;
+    zoomInBtn?: RoomToolsToolbarLayoutZoomInBtnProps;
+    zoomOutBtn?: RoomToolsToolbarLayoutZoomOutBtnProps;
+}
+
+export const RoomToolsToolbarLayoutItemlistButtons = ({ captionZoomText, itemsItemlistButtons, layout, zoomInBtn, zoomOutBtn }: RoomToolsToolbarLayoutItemlistButtonsProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="itemlist_buttons"
+            params={8536064}
+            layout={{ position: 'absolute', left: 24, top: 6, minWidth: 140, flexDirection: 'column', ...layout }}
+        >
+            {itemsItemlistButtons ?? (
+                <>
+                    <RoomToolsToolbarLayoutButtonZoomItem />
+                    <RoomToolsToolbarLayoutButtonAchievementsItem />
+                    <RoomToolsToolbarLayoutButtonSettingsItem />
+                    <RoomToolsToolbarLayoutButtonChatHistoryItem />
+                    <RoomToolsToolbarLayoutButtonLikeItem />
+                    <RoomToolsToolbarLayoutButtonCameraItem />
+                    <RoomToolsToolbarLayoutButtonShareItem />
+                    <RoomToolsToolbarLayoutCntHistoryItem />
+                </>
+            )}
             <Region
-                name="button_history_back"
-                tooltip={t('room.history.button.back.tooltip')}
-                params={131073}
-                dynamicStyle="brightness_and_shadow_under"
-                onPointerTap={onButtonHistoryBack}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 37, top: 3, height: 34 }}
+                params={16}
+                layout={{ width: 130, height: 30, flexShrink: 0 }}
             >
-                <ThemeImage
-                    tags={[ '#bg' ]}
+                <Region
+                    name="zoom_text"
                     params={16}
-                    src={layoutImage('roomtools_history_forward_bg.png')}
-                    tint="#44a88d"
-                    layout={{ position: 'absolute', left: 3, width: 34, top: 2, height: 31 }}
-                />
-                <ThemeImage
-                    tags={[ '#icon' ]}
+                    layout={{ position: 'absolute', left: 6, width: 90, top: 4, height: 14, maxWidth: 90, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionZoomText ?? t('room.zoom.text')}
+                        textOptions={{ fill: '#cccccc' }}
+                    />
+                </Region>
+                <Region
                     params={16}
-                    src={layoutImage('roomtools_history_back_icon.png')}
-                    layout={{ position: 'absolute', left: 4, width: 30, top: 3, height: 30 }}
+                    backgroundColor="#707070"
+                    layout={{ position: 'absolute', left: 3, width: 125, top: 26, height: 1 }}
                 />
+                <RoomToolsToolbarLayoutZoomInBtn {...zoomInBtn} />
+                <RoomToolsToolbarLayoutZoomOutBtn {...zoomOutBtn} />
             </Region>
-            <Region
-                name="button_history"
-                tooltip={t('room.history.button.tooltip')}
-                params={131073}
-                dynamicStyle="brightness_and_shadow_under"
-                onPointerTap={onButtonHistory}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 38, width: 35, top: 0, height: 38 }}
-            >
-                <ThemeImage
-                    tags={[ '#icon' ]}
-                    params={16}
-                    src={layoutImage('roomtools_history_open_bg.png')}
-                    tint="#44a88d"
-                    layout={{ position: 'absolute', left: 1, width: 33, top: 1, height: 35 }}
-                />
-                <ThemeImage
-                    tags={[ '#icon' ]}
-                    params={16}
-                    src={layoutImage('roomtools_history_open_icon.png')}
-                    layout={{ position: 'absolute', left: 2, width: 32, top: 3, height: 35 }}
-                />
-            </Region>
-            <Region
-                name="button_history_forward"
-                tooltip={t('room.history.button.forward.tooltip')}
-                params={131073}
-                dynamicStyle="brightness_and_shadow_under"
-                onPointerTap={onButtonHistoryForward}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 74, width: 34, top: 5, height: 32 }}
-            >
-                <ThemeImage
-                    tags={[ '#bg' ]}
-                    params={16}
-                    src={layoutImage('roomtools_history_forward_bg.png')}
-                    tint="#44a88d"
-                    layout={{ position: 'absolute', left: 0, width: 34, top: 0, height: 31 }}
-                />
-                <ThemeImage
-                    tags={[ '#icon' ]}
-                    params={16}
-                    src={layoutImage('roomtools_history_back_icon.png')}
-                    layout={{ position: 'absolute', left: 3, width: 30, top: 1, height: 30 }}
-                />
-            </Region>
+        </Region>
+    );
+};
+
+/** Named region `button_collapse` of RoomToolsToolbarLayout - configured through the parent's `buttonCollapse` prop. */
+export interface RoomToolsToolbarLayoutButtonCollapseProps {
+    layout?: BoxLayout;
+    onButtonCollapse?: () => void;
+    srcArrowCollapse?: string;
+}
+
+export const RoomToolsToolbarLayoutButtonCollapse = ({ layout, onButtonCollapse, srcArrowCollapse }: RoomToolsToolbarLayoutButtonCollapseProps) => {
+    return (
+        <Region
+            name="button_collapse"
+            params={1}
+            onPointerTap={onButtonCollapse}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 19, top: 0, height: 172, ...layout }}
+        >
+            <ThemeImage
+                name="arrow_collapse"
+                tags={[ '#icon' ]}
+                params={3145744}
+                src={srcArrowCollapse ?? layoutImage('roomtools_minimizebutton.png')}
+                layout={{ position: 'absolute', left: 9, width: 6, alignSelf: 'center', marginTop: 17, marginBottom: -17, height: 8 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `button_expand` of RoomToolsToolbarLayout - configured through the parent's `buttonExpand` prop. */
+export interface RoomToolsToolbarLayoutButtonExpandProps {
+    layout?: BoxLayout;
+    onButtonExpand?: () => void;
+    srcArrowExpand?: string;
+}
+
+export const RoomToolsToolbarLayoutButtonExpand = ({ layout, onButtonExpand, srcArrowExpand }: RoomToolsToolbarLayoutButtonExpandProps) => {
+    return (
+        <Region
+            name="button_expand"
+            params={2049}
+            onPointerTap={onButtonExpand}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 19, top: 0, bottom: 0, ...layout }}
+        >
+            <ThemeImage
+                name="arrow_expand"
+                params={3145744}
+                src={srcArrowExpand ?? layoutImage('roomtools_minimizebutton.png')}
+                layout={{ position: 'absolute', left: 11, width: 6, alignSelf: 'center', height: 8 }}
+            />
         </Region>
     );
 };

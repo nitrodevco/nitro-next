@@ -5,19 +5,19 @@ import { Border, BoxLayout, Bubble, CloseButton, ContainerButton, Icon, Region, 
 
 /** Generated from `31_entity_xml` (layout "entity", 127x36) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface EntityLayoutProps {
+    bubbleClickRegionReject?: EntityLayoutBubbleClickRegionRejectProps;
     captionBubbleCaption?: string;
-    captionBubbleLinkReject?: string;
     captionBubbleMessage?: string;
     captionBubbleTitle?: string;
-    itemsPieces?: ReactNode;
+    icons?: EntityLayoutIconsProps;
     layout?: BoxLayout;
     onBubbleButtonAccept?: () => void;
     onBubbleButtonClose?: () => void;
-    onBubbleClickRegionReject?: () => void;
+    pieces?: EntityLayoutPiecesProps;
     visibleBubble?: boolean;
 }
 
-export const EntityLayout = ({ captionBubbleCaption, captionBubbleLinkReject, captionBubbleMessage, captionBubbleTitle, itemsPieces, layout, onBubbleButtonAccept, onBubbleButtonClose, onBubbleClickRegionReject, visibleBubble }: EntityLayoutProps) => {
+export const EntityLayout = ({ bubbleClickRegionReject, captionBubbleCaption, captionBubbleMessage, captionBubbleTitle, icons, layout, onBubbleButtonAccept, onBubbleButtonClose, pieces, visibleBubble }: EntityLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -29,20 +29,8 @@ export const EntityLayout = ({ captionBubbleCaption, captionBubbleLinkReject, ca
                 tintColor="#a5cd5d"
                 layout={{ position: 'absolute', left: 0, width: 127, top: 101, height: 36 }}
             >
-                <Region
-                    name="icons"
-                    params={262224}
-                    layout={{ position: 'absolute', right: 10, width: 0, top: -13, height: 25, flexDirection: 'row', gap: 2 }}
-                />
-                <Region
-                    name="pieces"
-                    params={2192}
-                    layout={{ position: 'absolute', left: 3, right: 3, top: 7, bottom: -1, minHeight: 30, flexDirection: 'column' }}
-                >
-                    {itemsPieces ?? (
-                        <EntityLayoutHeaderItem />
-                    )}
-                </Region>
+                <EntityLayoutIcons {...icons} />
+                <EntityLayoutPieces {...pieces} />
                 <Region
                     visible={visibleBubble ?? true}
                     layout={{ position: 'absolute', left: -6, width: 139, top: -113, height: 120 }}
@@ -109,28 +97,56 @@ export const EntityLayout = ({ captionBubbleCaption, captionBubbleLinkReject, ca
                                 />
                             </Region>
                         </ContainerButton>
-                        <Region
-                            name="bubble_click_region_reject"
-                            params={1233}
-                            onPointerTap={onBubbleClickRegionReject}
-                            cursor="pointer"
-                            layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 118, bottom: 26, height: 15 }}
-                        >
-                            <Region
-                                name="bubble_link_reject"
-                                params={4194320}
-                                layout={{ position: 'absolute', left: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={captionBubbleLinkReject ?? t('friendbar.request.decline')}
-                                    textStyle="text-style-u-small"
-                                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                                />
-                            </Region>
-                        </Region>
+                        <EntityLayoutBubbleClickRegionReject {...bubbleClickRegionReject} />
                     </Bubble>
                 </Region>
             </Border>
+        </Region>
+    );
+};
+
+/** Named region `icons` of EntityLayout - configured through the parent's `icons` prop. */
+export interface EntityLayoutIconsProps {
+    layout?: BoxLayout;
+}
+
+export const EntityLayoutIcons = ({ layout }: EntityLayoutIconsProps) => {
+    return (
+        <Region
+            name="icons"
+            params={262224}
+            layout={{ position: 'absolute', right: 10, width: 0, top: -13, height: 25, flexDirection: 'row', gap: 2, ...layout }}
+        />
+    );
+};
+
+/** Named region `region_profile` of EntityLayout - configured through the parent's `regionProfile` prop. */
+export interface EntityLayoutRegionProfileProps {
+    layout?: BoxLayout;
+    onRegionProfile?: () => void;
+    srcCanvas?: string;
+}
+
+export const EntityLayoutRegionProfile = ({ layout, onRegionProfile, srcCanvas }: EntityLayoutRegionProfileProps) => {
+    return (
+        <Region
+            name="region_profile"
+            params={145}
+            onPointerTap={onRegionProfile}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, right: 86, top: 0, height: 24, ...layout }}
+        >
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: -11, width: 50, top: -25, height: 70, justifyContent: 'center' }}
+            >
+                <ThemeImage
+                    name="canvas"
+                    params={3932160}
+                    src={srcCanvas}
+                    layout={{ position: 'absolute', width: 10, alignSelf: 'center', height: 10 }}
+                />
+            </Region>
         </Region>
     );
 };
@@ -140,11 +156,10 @@ export interface EntityLayoutHeaderItemProps {
     captionName?: string;
     layout?: BoxLayout;
     onHeader?: () => void;
-    onRegionProfile?: () => void;
-    srcCanvas?: string;
+    regionProfile?: EntityLayoutRegionProfileProps;
 }
 
-export const EntityLayoutHeaderItem = ({ captionName, layout, onHeader, onRegionProfile, srcCanvas }: EntityLayoutHeaderItemProps) => {
+export const EntityLayoutHeaderItem = ({ captionName, layout, onHeader, regionProfile }: EntityLayoutHeaderItemProps) => {
     return (
         <Region
             name="header"
@@ -165,24 +180,59 @@ export const EntityLayoutHeaderItem = ({ captionName, layout, onHeader, onRegion
                     textOptions={{ fill: '#ffffff' }}
                 />
             </Region>
+            <EntityLayoutRegionProfile {...regionProfile} />
+        </Region>
+    );
+};
+
+/** Named region `pieces` of EntityLayout - configured through the parent's `pieces` prop. */
+export interface EntityLayoutPiecesProps {
+    itemsPieces?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const EntityLayoutPieces = ({ itemsPieces, layout }: EntityLayoutPiecesProps) => {
+    return (
+        <Region
+            name="pieces"
+            params={2192}
+            layout={{ position: 'absolute', left: 3, right: 3, top: 7, bottom: -1, minHeight: 30, flexDirection: 'column', ...layout }}
+        >
+            {itemsPieces ?? (
+                <EntityLayoutHeaderItem />
+            )}
+        </Region>
+    );
+};
+
+/** Named region `bubble_click_region_reject` of EntityLayout - configured through the parent's `bubbleClickRegionReject` prop. */
+export interface EntityLayoutBubbleClickRegionRejectProps {
+    captionBubbleLinkReject?: string;
+    layout?: BoxLayout;
+    onBubbleClickRegionReject?: () => void;
+}
+
+export const EntityLayoutBubbleClickRegionReject = ({ captionBubbleLinkReject, layout, onBubbleClickRegionReject }: EntityLayoutBubbleClickRegionRejectProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="bubble_click_region_reject"
+            params={1233}
+            onPointerTap={onBubbleClickRegionReject}
+            cursor="pointer"
+            layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 118, bottom: 26, height: 15, ...layout }}
+        >
             <Region
-                name="region_profile"
-                params={145}
-                onPointerTap={onRegionProfile}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 0, right: 86, top: 0, height: 24 }}
+                name="bubble_link_reject"
+                params={4194320}
+                layout={{ position: 'absolute', left: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
             >
-                <Region
-                    params={16}
-                    layout={{ position: 'absolute', left: -11, width: 50, top: -25, height: 70, justifyContent: 'center' }}
-                >
-                    <ThemeImage
-                        name="canvas"
-                        params={3932160}
-                        src={srcCanvas}
-                        layout={{ position: 'absolute', width: 10, alignSelf: 'center', height: 10 }}
-                    />
-                </Region>
+                <ThemeText
+                    text={captionBubbleLinkReject ?? t('friendbar.request.decline')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
             </Region>
         </Region>
     );

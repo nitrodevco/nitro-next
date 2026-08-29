@@ -6,97 +6,23 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1201_group_management_window_xml` (layout "Achievements", 392x497) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GroupManagementWindowLayoutProps {
-    captionBaseLabel?: string;
-    captionBaseWarning?: string;
-    captionBuyTxt?: string;
-    captionCancelLink?: string;
-    captionConfirmationCaption?: string;
-    captionConfirmationDesc?: string;
-    captionCreateRoomLinkTxt?: string;
-    captionDescLabel?: string;
-    captionGetVipTxt?: string;
-    captionGuildBadgeTxt?: string;
-    captionGuildColorsTxt?: string;
-    captionGuildRights?: string;
-    captionGuildType?: string;
-    captionHeaderCaptionTxt?: string;
-    captionHeaderDescTxt?: string;
-    captionLabelGuildColor?: string;
-    captionLabelPrimary?: string;
-    captionLabelSecondary?: string;
-    captionNameLabel?: string;
-    captionPreviousStepLink?: string;
-    captionStep1MembersTxt?: string;
-    captionStepTitle1?: string;
-    captionStepTitle2?: string;
-    captionStepTitle3?: string;
-    captionStepTitle4?: string;
-    captionVipRequiredTxt?: string;
+    footerCont?: GroupManagementWindowLayoutFooterContProps;
+    headerCont?: GroupManagementWindowLayoutHeaderContProps;
     layout?: BoxLayout;
-    onBaseDropmenu?: () => void;
-    onBuyButton?: () => void;
-    onCancelLinkRegion?: () => void;
-    onCbMemberRights?: () => void;
     onClose?: () => void;
-    onCreateRoomLinkRegion?: () => void;
-    onEditTab1?: () => void;
-    onEditTab2?: () => void;
-    onEditTab3?: () => void;
-    onEditTab5?: () => void;
-    onGrouptypeRegion0?: () => void;
-    onGrouptypeRegion1?: () => void;
-    onGrouptypeRegion2?: () => void;
-    onNextStepButton?: () => void;
-    onPreviousStepLinkRegion?: () => void;
-    onRbTypeExclusive?: () => void;
-    onRbTypePrivate?: () => void;
-    onRbTypeRegular?: () => void;
     onResetBadge?: () => void;
     onResetColors?: () => void;
-    onStep1MembersRegion?: () => void;
-    onVipRequiredRegion?: () => void;
-    srcBadgePreviewImage?: string;
-    srcBadgePreviewPrimaryColorBtm?: string;
-    srcBadgePreviewPrimaryColorTop?: string;
-    srcBadgePreviewSecondaryColorBtm?: string;
-    srcBadgePreviewSecondaryColorTop?: string;
-    srcBuyCreditIcon?: string;
-    srcGcreate10?: string;
-    srcGcreate11?: string;
-    srcGcreate20?: string;
-    srcGcreate21?: string;
-    srcGcreate30?: string;
-    srcGcreate31?: string;
-    srcGcreate40?: string;
-    srcGcreate41?: string;
-    srcGcreateIconCredit?: string;
-    srcGrouptypeIcon0?: string;
-    srcGrouptypeIcon1?: string;
-    srcGrouptypeIcon2?: string;
-    srcGuildColorPrimaryColorBtm?: string;
-    srcGuildColorPrimaryColorTop?: string;
-    srcGuildColorSecondaryColorBtm?: string;
-    srcGuildColorSecondaryColorTop?: string;
-    srcHeaderPicBitmapStep1?: string;
-    srcHeaderPicBitmapStep2?: string;
-    srcHeaderPicBitmapStep3?: string;
-    srcHeaderPicBitmapStep4?: string;
-    srcHeaderPicBitmapStep5?: string;
-    srcHeaderPicBitmapStep6?: string;
-    visibleFooterCont?: boolean;
+    stepCont1?: GroupManagementWindowLayoutStepCont1Props;
+    stepCont2?: GroupManagementWindowLayoutStepCont2Props;
+    stepCont3?: GroupManagementWindowLayoutStepCont3Props;
+    stepCont4?: GroupManagementWindowLayoutStepCont4Props;
+    stepCont5?: GroupManagementWindowLayoutStepCont5Props;
     visibleResetBadge?: boolean;
     visibleResetColors?: boolean;
-    visibleStepCont2?: boolean;
-    visibleStepCont3?: boolean;
-    visibleStepCont4?: boolean;
-    visibleStepCont5?: boolean;
-    visibleStepsHeaderCont?: boolean;
 }
 
-export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarning, captionBuyTxt, captionCancelLink, captionConfirmationCaption, captionConfirmationDesc, captionCreateRoomLinkTxt, captionDescLabel, captionGetVipTxt, captionGuildBadgeTxt, captionGuildColorsTxt, captionGuildRights, captionGuildType, captionHeaderCaptionTxt, captionHeaderDescTxt, captionLabelGuildColor, captionLabelPrimary, captionLabelSecondary, captionNameLabel, captionPreviousStepLink, captionStep1MembersTxt, captionStepTitle1, captionStepTitle2, captionStepTitle3, captionStepTitle4, captionVipRequiredTxt, layout, onBaseDropmenu, onBuyButton, onCancelLinkRegion, onCbMemberRights, onClose, onCreateRoomLinkRegion, onEditTab1, onEditTab2, onEditTab3, onEditTab5, onGrouptypeRegion0, onGrouptypeRegion1, onGrouptypeRegion2, onNextStepButton, onPreviousStepLinkRegion, onRbTypeExclusive, onRbTypePrivate, onRbTypeRegular, onResetBadge, onResetColors, onStep1MembersRegion, onVipRequiredRegion, srcBadgePreviewImage, srcBadgePreviewPrimaryColorBtm, srcBadgePreviewPrimaryColorTop, srcBadgePreviewSecondaryColorBtm, srcBadgePreviewSecondaryColorTop, srcBuyCreditIcon, srcGcreate10, srcGcreate11, srcGcreate20, srcGcreate21, srcGcreate30, srcGcreate31, srcGcreate40, srcGcreate41, srcGcreateIconCredit, srcGrouptypeIcon0, srcGrouptypeIcon1, srcGrouptypeIcon2, srcGuildColorPrimaryColorBtm, srcGuildColorPrimaryColorTop, srcGuildColorSecondaryColorBtm, srcGuildColorSecondaryColorTop, srcHeaderPicBitmapStep1, srcHeaderPicBitmapStep2, srcHeaderPicBitmapStep3, srcHeaderPicBitmapStep4, srcHeaderPicBitmapStep5, srcHeaderPicBitmapStep6, visibleFooterCont, visibleResetBadge, visibleResetColors, visibleStepCont2, visibleStepCont3, visibleStepCont4, visibleStepCont5, visibleStepsHeaderCont }: GroupManagementWindowLayoutProps) => {
+export const GroupManagementWindowLayout = ({ footerCont, headerCont, layout, onClose, onResetBadge, onResetColors, stepCont1, stepCont2, stepCont3, stepCont4, stepCont5, visibleResetBadge, visibleResetColors }: GroupManagementWindowLayoutProps) => {
     const t = useTranslation();
-    const [ nameTxtValue, setNameTxtValue ] = useState('');
-    const [ descTxtValue, setDescTxtValue ] = useState('');
 
     return (
         <Frame
@@ -110,337 +36,9 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
             layout={{ width: 392, height: 497, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="header_cont"
-                    params={144}
-                    layout={{ position: 'absolute', left: 0, right: 1, top: 0, height: 110 }}
-                >
-                    <Region
-                        params={2192}
-                        backgroundColor="#b3b099"
-                        layout={{ position: 'absolute', left: 1, right: 0, top: 0, bottom: 0 }}
-                    />
-                    <TabContext
-                        variant="0"
-                        name="edit_guild_tab_context"
-                        params={2193}
-                        layout={{ position: 'absolute', left: -6, right: -5, top: 89, bottom: 0 }}
-                    >
-                        <TabButton
-                            variant="0"
-                            name="edit_tab_1"
-                            params={131089}
-                            onPointerTap={onEditTab1}
-                            layout={{ position: 'absolute', left: 0, width: 97, top: 0, height: 22 }}
-                        >
-                            {t('group.edit.tab.1')}
-                        </TabButton>
-                        <TabButton
-                            variant="0"
-                            name="edit_tab_2"
-                            params={131089}
-                            onPointerTap={onEditTab2}
-                            layout={{ position: 'absolute', left: 97, width: 101, top: 0, height: 22 }}
-                        >
-                            {t('group.edit.tab.2')}
-                        </TabButton>
-                        <TabButton
-                            variant="0"
-                            name="edit_tab_3"
-                            params={131089}
-                            onPointerTap={onEditTab3}
-                            layout={{ position: 'absolute', left: 198, width: 101, top: 0, height: 22 }}
-                        >
-                            {t('group.edit.tab.3')}
-                        </TabButton>
-                        <TabButton
-                            variant="0"
-                            name="edit_tab_5"
-                            params={131089}
-                            onPointerTap={onEditTab5}
-                            layout={{ position: 'absolute', left: 299, width: 101, top: 0, height: 22 }}
-                        >
-                            {t('group.edit.tab.5')}
-                        </TabButton>
-                    </TabContext>
-                    <Region
-                        name="steps_header_cont"
-                        params={144}
-                        visible={visibleStepsHeaderCont ?? false}
-                        layout={{ position: 'absolute', left: 16, right: 15, top: 5, height: 33 }}
-                    >
-                        <ThemeImage
-                            name="gcreate_1_0"
-                            params={16}
-                            src={srcGcreate10 ?? '${image.library.url}guilds/gcreate_1_0.png'}
-                            layout={{ position: 'absolute', left: 0, width: 84, top: 0, height: 33 }}
-                        />
-                        <ThemeImage
-                            name="gcreate_1_1"
-                            params={16}
-                            src={srcGcreate11 ?? '${image.library.url}guilds/gcreate_1_1.png'}
-                            layout={{ position: 'absolute', left: 0, width: 84, top: 0, height: 33 }}
-                        />
-                        <ThemeImage
-                            name="gcreate_2_0"
-                            params={16}
-                            src={srcGcreate20 ?? '${image.library.url}guilds/gcreate_2_0.png'}
-                            layout={{ position: 'absolute', left: 77, width: 83, top: 0, height: 33 }}
-                        />
-                        <ThemeImage
-                            name="gcreate_2_1"
-                            params={16}
-                            src={srcGcreate21 ?? '${image.library.url}guilds/gcreate_2_1.png'}
-                            layout={{ position: 'absolute', left: 77, width: 83, top: 0, height: 33 }}
-                        />
-                        <ThemeImage
-                            name="gcreate_3_0"
-                            params={16}
-                            src={srcGcreate30 ?? '${image.library.url}guilds/gcreate_2_0.png'}
-                            layout={{ position: 'absolute', left: 153, width: 83, top: 0, height: 33 }}
-                        />
-                        <ThemeImage
-                            name="gcreate_3_1"
-                            params={16}
-                            src={srcGcreate31 ?? '${image.library.url}guilds/gcreate_2_1.png'}
-                            layout={{ position: 'absolute', left: 153, width: 83, top: 0, height: 33 }}
-                        />
-                        <ThemeImage
-                            name="gcreate_4_0"
-                            params={16}
-                            src={srcGcreate40 ?? '${image.library.url}guilds/gcreate_4_0.png'}
-                            layout={{ position: 'absolute', left: 227, width: 133, top: 0, height: 33 }}
-                        />
-                        <ThemeImage
-                            name="gcreate_4_1"
-                            params={16}
-                            src={srcGcreate41 ?? '${image.library.url}guilds/gcreate_4_1.png'}
-                            layout={{ position: 'absolute', left: 227, width: 133, top: 0, height: 33 }}
-                        />
-                        <ThemeImage
-                            name="gcreate_icon_credit"
-                            params={16}
-                            src={srcGcreateIconCredit ?? '${image.library.url}guilds/gcreate_icon_credit.png'}
-                            layout={{ position: 'absolute', left: 335, width: 21, top: 0, height: 20 }}
-                        />
-                        <Region
-                            name="step_title_1"
-                            params={786560}
-                            layout={{ position: 'absolute', left: -38, right: 242, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionStepTitle1 ?? t('group.create.steplabel.1')}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                        <Region
-                            name="step_title_2"
-                            params={786560}
-                            layout={{ position: 'absolute', left: 40, right: 164, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionStepTitle2 ?? t('group.create.steplabel.2')}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                        <Region
-                            name="step_title_3"
-                            params={786560}
-                            layout={{ position: 'absolute', left: 115, right: 89, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionStepTitle3 ?? t('group.create.steplabel.3')}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                        <Region
-                            name="step_title_4"
-                            params={786560}
-                            layout={{ position: 'absolute', left: 210, right: -6, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionStepTitle4 ?? t('group.create.steplabel.4')}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                    </Region>
-                    <ThemeImage
-                        name="header_pic_bitmap_step_1"
-                        params={16}
-                        src={srcHeaderPicBitmapStep1 ?? '${image.library.url}guilds/group_UI_identity.png'}
-                        layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
-                    />
-                    <ThemeImage
-                        name="header_pic_bitmap_step_2"
-                        params={16}
-                        src={srcHeaderPicBitmapStep2 ?? '${image.library.url}guilds/group_UI_badge.png'}
-                        layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
-                    />
-                    <ThemeImage
-                        name="header_pic_bitmap_step_3"
-                        params={16}
-                        src={srcHeaderPicBitmapStep3 ?? '${image.library.url}guilds/group_UI_colors.png'}
-                        layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
-                    />
-                    <ThemeImage
-                        name="header_pic_bitmap_step_4"
-                        params={16}
-                        src={srcHeaderPicBitmapStep4 ?? '${image.library.url}guilds/group_UI_ready.png'}
-                        layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
-                    />
-                    <ThemeImage
-                        name="header_pic_bitmap_step_5"
-                        params={16}
-                        src={srcHeaderPicBitmapStep5 ?? '${image.library.url}guilds/group_UI_ready.png'}
-                        layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
-                    />
-                    <ThemeImage
-                        name="header_pic_bitmap_step_6"
-                        params={16}
-                        src={srcHeaderPicBitmapStep6}
-                        layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
-                    />
-                    <Region
-                        name="header_caption_txt"
-                        params={129}
-                        layout={{ position: 'absolute', left: 126, right: 2, top: 43, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionHeaderCaptionTxt ?? 'Caption PH'}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 263 }}
-                        />
-                    </Region>
-                    <Region
-                        name="header_desc_txt"
-                        params={129}
-                        layout={{ position: 'absolute', left: 126, right: 33, top: 69, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionHeaderDescTxt ?? 'Desc PH'}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 232 }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="step_cont_1"
-                    params={144}
-                    layout={{ position: 'absolute', left: 0, right: 19, top: 128, height: 310 }}
-                >
-                    <Border
-                        variant="0"
-                        name="step_1_badge"
-                        params={16}
-                        layout={{ position: 'absolute', left: 17, width: 94, top: 11, height: 94 }}
-                    >
-                        <Border
-                            variant="3"
-                            params={16}
-                            tintColor="#e9e9e1"
-                            layout={{ position: 'absolute', left: 4, width: 86, top: 4, height: 86 }}
-                        />
-                        <WidgetSlot
-                            widgetType="badge_image"
-                            name="group_logo"
-                            params={16}
-                            options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                            layout={{ position: 'absolute', left: 27, width: 39, top: 27, height: 39 }}
-                        />
-                    </Border>
-                    <Region
-                        name="step_1_members_region"
-                        params={17}
-                        onPointerTap={onStep1MembersRegion}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 17, width: 94, top: 110, height: 18, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="step_1_members_txt"
-                            params={786448}
-                            layout={{ position: 'absolute', width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionStep1MembersTxt ?? 'Members PH'}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
-                    </Region>
-                    <Region
-                        name="name_label"
-                        params={129}
-                        layout={{ position: 'absolute', left: 126, right: 140, top: -8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionNameLabel ?? t('group.edit.name')} />
-                    </Region>
-                    <TextInput
-                        value={nameTxtValue}
-                        onChange={setNameTxtValue}
-                        maxLength={29}
-                        layout={{ position: 'absolute', left: 126, right: 0, top: 14, height: 26 }}
-                    />
-                    <Region
-                        name="desc_label"
-                        params={129}
-                        layout={{ position: 'absolute', left: 126, right: 147, top: 52, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionDescLabel ?? t('group.edit.desc')} />
-                    </Region>
-                    <TextInput
-                        value={descTxtValue}
-                        onChange={setDescTxtValue}
-                        maxLength={254}
-                        layout={{ position: 'absolute', left: 126, right: 0, top: 74, height: 80 }}
-                    />
-                    <Region
-                        name="base_label"
-                        params={129}
-                        layout={{ position: 'absolute', left: 126, right: 146, top: 166, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionBaseLabel ?? t('group.edit.base')} />
-                    </Region>
-                    <Dropmenu
-                        variant="0"
-                        name="base_dropmenu"
-                        params={129}
-                        onPointerTap={onBaseDropmenu}
-                        layout={{ position: 'absolute', left: 126, right: 0, top: 188, height: 26 }}
-                    />
-                    <Region
-                        name="base_warning"
-                        params={129}
-                        layout={{ position: 'absolute', left: 126, right: 0, top: 214, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBaseWarning ?? t('group.edit.base.warning')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 247 }}
-                        />
-                    </Region>
-                    <Region
-                        name="create_room_link_region"
-                        params={17}
-                        onPointerTap={onCreateRoomLinkRegion}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 126, width: 247, top: 252, height: 38 }}
-                    >
-                        <Region
-                            name="create_room_link_txt"
-                            params={128}
-                            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionCreateRoomLinkTxt ?? t('group.createroom')}
-                                textStyle="text-style-u-regular"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 247 }}
-                            />
-                        </Region>
-                    </Region>
-                </Region>
-                <Region
-                    name="step_cont_2"
-                    params={144}
-                    visible={visibleStepCont2 ?? false}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 110, height: 305 }}
-                />
+                <GroupManagementWindowLayoutHeaderCont {...headerCont} />
+                <GroupManagementWindowLayoutStepCont1 {...stepCont1} />
+                <GroupManagementWindowLayoutStepCont2 {...stepCont2} />
                 <Region
                     visible={visibleResetBadge ?? false}
                     layout={{ position: 'absolute', left: 17, width: 94, top: 245, height: 29, minWidth: 94, maxWidth: 94 }}
@@ -455,109 +53,7 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         {t('group.edit.reset.badge')}
                     </ButtonThick>
                 </Region>
-                <Region
-                    name="step_cont_3"
-                    params={144}
-                    visible={visibleStepCont3 ?? false}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 110, height: 305 }}
-                >
-                    <Region
-                        name="label_guild_color"
-                        params={1048592}
-                        layout={{ position: 'absolute', left: 13, width: 92, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionLabelGuildColor ?? t('group.edit.color.guild.color')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
-                    <Border
-                        variant="5"
-                        params={16}
-                        layout={{ position: 'absolute', left: 13, width: 92, top: 29, height: 46 }}
-                    >
-                        <Border
-                            variant="3"
-                            params={16}
-                            tintColor="#e9e9e1"
-                            layout={{ position: 'absolute', left: 4, width: 84, top: 4, height: 38 }}
-                        >
-                            <ThemeImage
-                                name="guild_color_primary_color_btm"
-                                params={16}
-                                src={srcGuildColorPrimaryColorBtm ?? layoutImage('group_guild_color_btm.png')}
-                                layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 30 }}
-                            />
-                            <ThemeImage
-                                name="guild_color_primary_color_top"
-                                params={16}
-                                src={srcGuildColorPrimaryColorTop ?? layoutImage('group_guild_color_top.png')}
-                                layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 30 }}
-                            />
-                            <ThemeImage
-                                name="guild_color_secondary_color_btm"
-                                params={16}
-                                src={srcGuildColorSecondaryColorBtm ?? layoutImage('group_guild_color_btm.png')}
-                                layout={{ position: 'absolute', left: 44, width: 36, top: 4, height: 30 }}
-                            />
-                            <ThemeImage
-                                name="guild_color_secondary_color_top"
-                                params={16}
-                                src={srcGuildColorSecondaryColorTop ?? layoutImage('group_guild_color_top.png')}
-                                layout={{ position: 'absolute', left: 44, width: 36, top: 4, height: 30 }}
-                            />
-                        </Border>
-                    </Border>
-                    <Region
-                        name="label_primary"
-                        params={1048592}
-                        layout={{ position: 'absolute', left: 128, width: 142, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionLabelPrimary ?? t('group.edit.color.primary.color')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
-                    <Region
-                        name="label_secondary"
-                        params={1048592}
-                        layout={{ position: 'absolute', left: 280, width: 100, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionLabelSecondary ?? t('group.edit.color.secondary.color')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
-                    <Border
-                        variant="3"
-                        name="border"
-                        params={16}
-                        tintColor="#bebba5"
-                        layout={{ position: 'absolute', left: 128, width: 142, top: 29, height: 277 }}
-                    >
-                        <Region
-                            name="guild_primary_color_selector"
-                            params={16}
-                            layout={{ position: 'absolute', left: 3, width: 138, top: 3, height: 273, flexDirection: 'row', flexWrap: 'wrap' }}
-                        />
-                    </Border>
-                    <Border
-                        variant="3"
-                        name="border"
-                        params={16}
-                        tintColor="#bebba5"
-                        layout={{ position: 'absolute', left: 280, width: 96, top: 29, height: 277 }}
-                    >
-                        <Region
-                            name="guild_secondary_color_selector"
-                            params={16}
-                            layout={{ position: 'absolute', left: 3, width: 94, top: 3, height: 273, flexDirection: 'row', flexWrap: 'wrap' }}
-                        />
-                    </Border>
-                </Region>
+                <GroupManagementWindowLayoutStepCont3 {...stepCont3} />
                 <Region
                     visible={visibleResetColors ?? false}
                     layout={{ position: 'absolute', left: 15, width: 90, top: 195, height: 29, minWidth: 90, maxWidth: 90 }}
@@ -572,439 +68,1199 @@ export const GroupManagementWindowLayout = ({ captionBaseLabel, captionBaseWarni
                         {t('group.edit.reset.color')}
                     </ButtonThick>
                 </Region>
-                <Region
-                    name="step_cont_4"
-                    params={144}
-                    visible={visibleStepCont4 ?? false}
-                    layout={{ position: 'absolute', left: 0, right: 3, top: 111, height: 360 }}
-                >
-                    <Region
-                        name="confirmation_caption"
-                        params={1}
-                        layout={{ position: 'absolute', left: 126, width: 256, top: 8, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionConfirmationCaption ?? 'Group Name Here DIPPA DAPPA DII'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 256 }}
-                        />
-                    </Region>
-                    <Region
-                        name="confirmation_desc"
-                        params={1}
-                        layout={{ position: 'absolute', left: 126, width: 260, top: 46, height: 215, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionConfirmationDesc ?? t('group.create.confirm.info')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                        />
-                    </Region>
-                    <Border
-                        variant="0"
-                        name="badge_border"
-                        params={16}
-                        layout={{ position: 'absolute', left: 15, width: 92, top: 50, height: 92 }}
-                    >
-                        <Border
-                            variant="3"
-                            params={16}
-                            tintColor="#e9e9e1"
-                            layout={{ position: 'absolute', left: 4, width: 84, top: 4, height: 84 }}
-                        />
-                        <ThemeImage
-                            name="badge_preview_image"
-                            params={16}
-                            src={srcBadgePreviewImage}
-                            layout={{ position: 'absolute', left: 26, width: 39, top: 26, height: 39 }}
-                        />
-                    </Border>
-                    <Region
-                        name="guild_badge_txt"
-                        layout={{ position: 'absolute', left: 15, width: 92, top: 33, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionGuildBadgeTxt ?? t('group.create.confirm.guildbadge')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
-                    <Region
-                        name="guild_colors_txt"
-                        layout={{ position: 'absolute', left: 15, width: 92, top: 155, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionGuildColorsTxt ?? t('group.create.confirm.guildcolors')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
-                    <Border
-                        variant="5"
-                        params={16}
-                        layout={{ position: 'absolute', left: 15, width: 92, top: 172, height: 46 }}
-                    >
-                        <Border
-                            variant="3"
-                            params={16}
-                            tintColor="#e9e9e1"
-                            layout={{ position: 'absolute', left: 4, width: 84, top: 4, height: 38 }}
-                        >
-                            <ThemeImage
-                                name="badge_preview_primary_color_btm"
-                                params={16}
-                                src={srcBadgePreviewPrimaryColorBtm ?? layoutImage('group_guild_color_btm.png')}
-                                layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 30 }}
-                            />
-                            <ThemeImage
-                                name="badge_preview_primary_color_top"
-                                params={16}
-                                src={srcBadgePreviewPrimaryColorTop ?? layoutImage('group_guild_color_top.png')}
-                                layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 30 }}
-                            />
-                            <ThemeImage
-                                name="badge_preview_secondary_color_btm"
-                                params={16}
-                                src={srcBadgePreviewSecondaryColorBtm ?? layoutImage('group_guild_color_btm.png')}
-                                layout={{ position: 'absolute', left: 44, width: 36, top: 4, height: 30 }}
-                            />
-                            <ThemeImage
-                                name="badge_preview_secondary_color_top"
-                                params={16}
-                                src={srcBadgePreviewSecondaryColorTop ?? layoutImage('group_guild_color_top.png')}
-                                layout={{ position: 'absolute', left: 44, width: 36, top: 4, height: 30 }}
-                            />
-                        </Border>
-                    </Border>
-                    <Border
-                        variant="0"
-                        name="vip_required_border"
-                        params={16}
-                        tintColor="#cc0000"
-                        layout={{ position: 'absolute', left: 126, width: 248, top: 253, height: 39 }}
-                    >
-                        <Region
-                            name="vip_required_region"
-                            params={17}
-                            onPointerTap={onVipRequiredRegion}
-                            cursor="pointer"
-                            layout={{ position: 'absolute', left: 0, width: 248, top: 0, height: 39 }}
-                        />
-                        <Icon
-                            variant="14"
-                            name="vip_icon"
-                            params={16}
-                            layout={{ position: 'absolute', left: 14, width: 16, top: 11, height: 17 }}
-                        />
-                        <Region
-                            name="vip_required_txt"
-                            params={16}
-                            layout={{ position: 'absolute', left: 38, width: 192, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionVipRequiredTxt ?? t('group.create.confirm.viprequired')}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                        <Region
-                            name="get_vip_txt"
-                            params={16}
-                            layout={{ position: 'absolute', left: 38, width: 160, top: 20, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionGetVipTxt ?? t('group.create.confirm.getvip')}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                    </Border>
-                </Region>
-                <Region
-                    name="footer_cont"
-                    params={1168}
-                    visible={visibleFooterCont ?? false}
-                    layout={{ position: 'absolute', left: 0, right: 2, bottom: 45, height: 42 }}
-                >
-                    <Region
-                        name="cancel_link_region"
-                        params={17}
-                        onPointerTap={onCancelLinkRegion}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 11, width: 120, top: 20, height: 18 }}
-                    >
-                        <Region
-                            name="cancel_link"
-                            params={4194320}
-                            layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText text={captionCancelLink ?? t('cancel')} />
-                        </Region>
-                    </Region>
-                    <Region
-                        name="previous_step_link_region"
-                        params={17}
-                        onPointerTap={onPreviousStepLinkRegion}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 11, width: 120, top: 20, height: 18 }}
-                    >
-                        <Region
-                            name="previous_step_link"
-                            params={4194320}
-                            layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText text={captionPreviousStepLink ?? t('group.create.previousstep')} />
-                        </Region>
-                    </Region>
-                    <Border
-                        variant="0"
-                        name="buy_border"
-                        params={16}
-                        tintColor="#ffc300"
-                        layout={{ position: 'absolute', left: 126, width: 248, top: 0, height: 39 }}
-                    >
-                        <ThemeImage
-                            name="buy_credit_icon"
-                            params={16}
-                            src={srcBuyCreditIcon ?? '${image.library.url}guilds/gcreate_icon_credit.png'}
-                            layout={{ position: 'absolute', left: 9, width: 21, top: 11, height: 20 }}
-                        />
-                        <Region
-                            name="buy_txt"
-                            layout={{ position: 'absolute', left: 37, width: 131, top: 3, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionBuyTxt ?? t('group.create.confirm.buyinfo')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 131 }}
-                            />
-                        </Region>
-                        <ButtonThick
-                            variant="3"
-                            name="buy_button"
-                            params={131153}
-                            onPointerTap={onBuyButton}
-                            layout={{ position: 'absolute', right: 4, width: 72, top: 5, height: 29, minWidth: 72, maxWidth: 72 }}
-                        >
-                            {t('group.create.confirm.buy')}
-                        </ButtonThick>
-                    </Border>
-                    <ButtonThick
-                        variant="3"
-                        name="next_step_button"
-                        params={131089}
-                        onPointerTap={onNextStepButton}
-                        layout={{ position: 'absolute', left: 256, width: 120, top: 13, height: 29, minWidth: 120, maxWidth: 120 }}
-                    >
-                        {t('group.create.nextstep')}
-                    </ButtonThick>
-                </Region>
-                <Region
-                    name="step_cont_5"
-                    params={144}
-                    visible={visibleStepCont5 ?? false}
-                    layout={{ position: 'absolute', left: 0, right: 3, top: 111, height: 360 }}
-                >
-                    <Region
-                        name="guild_type"
-                        params={1048592}
-                        layout={{ position: 'absolute', left: 16, width: 170, bottom: 335, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionGuildType ?? t('group.edit.settings.type.caption')}
-                            textStyle="text-style-u-headline-small"
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
-                    <Border
-                        variant="0"
-                        params={16}
-                        layout={{ position: 'absolute', left: 16, width: 170, top: 29, height: 199 }}
-                    >
-                        <Border
-                            variant="3"
-                            params={16}
-                            tintColor="#e9e9e1"
-                            layout={{ position: 'absolute', left: 4, width: 162, top: 4, height: 191 }}
-                        >
-                            <Region
-                                name="group_type_selector"
-                                params={17}
-                                layout={{ position: 'absolute', left: 5, width: 152, top: 5, height: 191 }}
-                            >
-                                <RadioButton
-                                    variant="0"
-                                    name="rb_type_regular"
-                                    params={17}
-                                    onPointerTap={onRbTypeRegular}
-                                    layout={{ position: 'absolute', left: 0, width: 15, top: 2, height: 15 }}
-                                />
-                                <Region
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 20, width: 112, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={t('group.edit.settings.type.regular.label')}
-                                        textStyle="text-style-u-bold"
-                                    />
-                                </Region>
-                                <Region
-                                    name="grouptype_region_0"
-                                    tooltip={t('group.edit.settings.type.regular.help')}
-                                    params={17}
-                                    onPointerTap={onGrouptypeRegion0}
-                                    cursor="pointer"
-                                    layout={{ position: 'absolute', left: 0, width: 16, top: 22, height: 16 }}
-                                >
-                                    <ThemeImage
-                                        name="grouptype_icon_0"
-                                        params={16}
-                                        src={srcGrouptypeIcon0 ?? '${image.library.url}guilds/grouptype_icon_0.png'}
-                                        layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
-                                    />
-                                </Region>
-                                <Region
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 20, width: 132, top: 15, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={t('group.edit.settings.type.regular.help')}
-                                        textStyle="text-style-u-regular"
-                                        textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
-                                    />
-                                </Region>
-                                <RadioButton
-                                    variant="0"
-                                    name="rb_type_exclusive"
-                                    params={17}
-                                    onPointerTap={onRbTypeExclusive}
-                                    layout={{ position: 'absolute', left: 0, width: 15, top: 62, height: 15 }}
-                                />
-                                <Region
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 20, width: 132, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={t('group.edit.settings.type.exclusive.label')}
-                                        textStyle="text-style-u-bold"
-                                    />
-                                </Region>
-                                <Region
-                                    name="grouptype_region_1"
-                                    tooltip={t('group.edit.settings.type.exclusive.help')}
-                                    params={17}
-                                    onPointerTap={onGrouptypeRegion1}
-                                    cursor="pointer"
-                                    layout={{ position: 'absolute', left: 0, width: 16, top: 82, height: 16 }}
-                                >
-                                    <ThemeImage
-                                        name="grouptype_icon_1"
-                                        params={16}
-                                        src={srcGrouptypeIcon1 ?? '${image.library.url}guilds/grouptype_icon_1.png'}
-                                        layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
-                                    />
-                                </Region>
-                                <Region
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 20, width: 132, top: 75, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={t('group.edit.settings.type.exclusive.help')}
-                                        textStyle="text-style-u-regular"
-                                        textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
-                                    />
-                                </Region>
-                                <RadioButton
-                                    variant="0"
-                                    name="rb_type_private"
-                                    params={17}
-                                    onPointerTap={onRbTypePrivate}
-                                    layout={{ position: 'absolute', left: 0, width: 15, top: 122, height: 15 }}
-                                />
-                                <Region
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 20, width: 132, top: 120, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={t('group.edit.settings.type.private.label')}
-                                        textStyle="text-style-u-bold"
-                                    />
-                                </Region>
-                                <Region
-                                    name="grouptype_region_2"
-                                    tooltip={t('group.edit.settings.type.private.help')}
-                                    params={17}
-                                    onPointerTap={onGrouptypeRegion2}
-                                    cursor="pointer"
-                                    layout={{ position: 'absolute', left: 0, width: 16, top: 142, height: 16 }}
-                                >
-                                    <ThemeImage
-                                        name="grouptype_icon_2"
-                                        params={16}
-                                        src={srcGrouptypeIcon2 ?? '${image.library.url}guilds/grouptype_icon_2.png'}
-                                        layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
-                                    />
-                                </Region>
-                                <Region
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 20, width: 132, top: 135, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={t('group.edit.settings.type.private.help')}
-                                        textStyle="text-style-u-regular"
-                                        textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
-                                    />
-                                </Region>
-                            </Region>
-                        </Border>
-                    </Border>
-                    <Region
-                        name="guild_rights"
-                        params={1048592}
-                        layout={{ position: 'absolute', left: 207, width: 170, bottom: 335, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionGuildRights ?? t('group.edit.settings.rights.caption')}
-                            textStyle="text-style-u-headline-small"
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
-                    <Border
-                        variant="0"
-                        params={16}
-                        layout={{ position: 'absolute', left: 207, width: 170, top: 29, height: 144 }}
-                    >
-                        <Border
-                            variant="3"
-                            params={16}
-                            tintColor="#e9e9e1"
-                            layout={{ position: 'absolute', left: 4, width: 162, top: 4, height: 135 }}
-                        >
-                            <CheckBox
-                                variant="0"
-                                name="cb_member_rights"
-                                params={17}
-                                onPointerTap={onCbMemberRights}
-                                layout={{ position: 'absolute', left: 5, width: 16, top: 5, height: 16 }}
-                            />
-                            <Region
-                                params={16}
-                                layout={{ position: 'absolute', left: 25, width: 133, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={t('group.edit.settings.rights.members.label')}
-                                    textStyle="text-style-u-bold"
-                                />
-                            </Region>
-                            <Region
-                                params={16}
-                                layout={{ position: 'absolute', left: 5, width: 152, top: 25, height: 100, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={t('group.edit.settings.rights.members.help')}
-                                    textStyle="text-style-u-regular"
-                                    textOptions={{ wordWrap: true, wordWrapWidth: 152 }}
-                                />
-                            </Region>
-                        </Border>
-                    </Border>
-                </Region>
+                <GroupManagementWindowLayoutStepCont4 {...stepCont4} />
+                <GroupManagementWindowLayoutFooterCont {...footerCont} />
+                <GroupManagementWindowLayoutStepCont5 {...stepCont5} />
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `steps_header_cont` of GroupManagementWindowLayout - configured through the parent's `stepsHeaderCont` prop. */
+export interface GroupManagementWindowLayoutStepsHeaderContProps {
+    captionStepTitle1?: string;
+    captionStepTitle2?: string;
+    captionStepTitle3?: string;
+    captionStepTitle4?: string;
+    layout?: BoxLayout;
+    srcGcreate10?: string;
+    srcGcreate11?: string;
+    srcGcreate20?: string;
+    srcGcreate21?: string;
+    srcGcreate30?: string;
+    srcGcreate31?: string;
+    srcGcreate40?: string;
+    srcGcreate41?: string;
+    srcGcreateIconCredit?: string;
+    visibleStepsHeaderCont?: boolean;
+}
+
+export const GroupManagementWindowLayoutStepsHeaderCont = ({ captionStepTitle1, captionStepTitle2, captionStepTitle3, captionStepTitle4, layout, srcGcreate10, srcGcreate11, srcGcreate20, srcGcreate21, srcGcreate30, srcGcreate31, srcGcreate40, srcGcreate41, srcGcreateIconCredit, visibleStepsHeaderCont }: GroupManagementWindowLayoutStepsHeaderContProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="steps_header_cont"
+            params={144}
+            visible={visibleStepsHeaderCont ?? false}
+            layout={{ position: 'absolute', left: 16, right: 15, top: 5, height: 33, ...layout }}
+        >
+            <ThemeImage
+                name="gcreate_1_0"
+                params={16}
+                src={srcGcreate10 ?? '${image.library.url}guilds/gcreate_1_0.png'}
+                layout={{ position: 'absolute', left: 0, width: 84, top: 0, height: 33 }}
+            />
+            <ThemeImage
+                name="gcreate_1_1"
+                params={16}
+                src={srcGcreate11 ?? '${image.library.url}guilds/gcreate_1_1.png'}
+                layout={{ position: 'absolute', left: 0, width: 84, top: 0, height: 33 }}
+            />
+            <ThemeImage
+                name="gcreate_2_0"
+                params={16}
+                src={srcGcreate20 ?? '${image.library.url}guilds/gcreate_2_0.png'}
+                layout={{ position: 'absolute', left: 77, width: 83, top: 0, height: 33 }}
+            />
+            <ThemeImage
+                name="gcreate_2_1"
+                params={16}
+                src={srcGcreate21 ?? '${image.library.url}guilds/gcreate_2_1.png'}
+                layout={{ position: 'absolute', left: 77, width: 83, top: 0, height: 33 }}
+            />
+            <ThemeImage
+                name="gcreate_3_0"
+                params={16}
+                src={srcGcreate30 ?? '${image.library.url}guilds/gcreate_2_0.png'}
+                layout={{ position: 'absolute', left: 153, width: 83, top: 0, height: 33 }}
+            />
+            <ThemeImage
+                name="gcreate_3_1"
+                params={16}
+                src={srcGcreate31 ?? '${image.library.url}guilds/gcreate_2_1.png'}
+                layout={{ position: 'absolute', left: 153, width: 83, top: 0, height: 33 }}
+            />
+            <ThemeImage
+                name="gcreate_4_0"
+                params={16}
+                src={srcGcreate40 ?? '${image.library.url}guilds/gcreate_4_0.png'}
+                layout={{ position: 'absolute', left: 227, width: 133, top: 0, height: 33 }}
+            />
+            <ThemeImage
+                name="gcreate_4_1"
+                params={16}
+                src={srcGcreate41 ?? '${image.library.url}guilds/gcreate_4_1.png'}
+                layout={{ position: 'absolute', left: 227, width: 133, top: 0, height: 33 }}
+            />
+            <ThemeImage
+                name="gcreate_icon_credit"
+                params={16}
+                src={srcGcreateIconCredit ?? '${image.library.url}guilds/gcreate_icon_credit.png'}
+                layout={{ position: 'absolute', left: 335, width: 21, top: 0, height: 20 }}
+            />
+            <Region
+                name="step_title_1"
+                params={786560}
+                layout={{ position: 'absolute', left: -38, right: 242, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionStepTitle1 ?? t('group.create.steplabel.1')}
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+            <Region
+                name="step_title_2"
+                params={786560}
+                layout={{ position: 'absolute', left: 40, right: 164, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionStepTitle2 ?? t('group.create.steplabel.2')}
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+            <Region
+                name="step_title_3"
+                params={786560}
+                layout={{ position: 'absolute', left: 115, right: 89, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionStepTitle3 ?? t('group.create.steplabel.3')}
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+            <Region
+                name="step_title_4"
+                params={786560}
+                layout={{ position: 'absolute', left: 210, right: -6, top: 7, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionStepTitle4 ?? t('group.create.steplabel.4')}
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `header_cont` of GroupManagementWindowLayout - configured through the parent's `headerCont` prop. */
+export interface GroupManagementWindowLayoutHeaderContProps {
+    captionHeaderCaptionTxt?: string;
+    captionHeaderDescTxt?: string;
+    layout?: BoxLayout;
+    onEditTab1?: () => void;
+    onEditTab2?: () => void;
+    onEditTab3?: () => void;
+    onEditTab5?: () => void;
+    srcHeaderPicBitmapStep1?: string;
+    srcHeaderPicBitmapStep2?: string;
+    srcHeaderPicBitmapStep3?: string;
+    srcHeaderPicBitmapStep4?: string;
+    srcHeaderPicBitmapStep5?: string;
+    srcHeaderPicBitmapStep6?: string;
+    stepsHeaderCont?: GroupManagementWindowLayoutStepsHeaderContProps;
+}
+
+export const GroupManagementWindowLayoutHeaderCont = ({ captionHeaderCaptionTxt, captionHeaderDescTxt, layout, onEditTab1, onEditTab2, onEditTab3, onEditTab5, srcHeaderPicBitmapStep1, srcHeaderPicBitmapStep2, srcHeaderPicBitmapStep3, srcHeaderPicBitmapStep4, srcHeaderPicBitmapStep5, srcHeaderPicBitmapStep6, stepsHeaderCont }: GroupManagementWindowLayoutHeaderContProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="header_cont"
+            params={144}
+            layout={{ position: 'absolute', left: 0, right: 1, top: 0, height: 110, ...layout }}
+        >
+            <Region
+                params={2192}
+                backgroundColor="#b3b099"
+                layout={{ position: 'absolute', left: 1, right: 0, top: 0, bottom: 0 }}
+            />
+            <TabContext
+                variant="0"
+                name="edit_guild_tab_context"
+                params={2193}
+                layout={{ position: 'absolute', left: -6, right: -5, top: 89, bottom: 0 }}
+            >
+                <TabButton
+                    variant="0"
+                    name="edit_tab_1"
+                    params={131089}
+                    onPointerTap={onEditTab1}
+                    layout={{ position: 'absolute', left: 0, width: 97, top: 0, height: 22 }}
+                >
+                    {t('group.edit.tab.1')}
+                </TabButton>
+                <TabButton
+                    variant="0"
+                    name="edit_tab_2"
+                    params={131089}
+                    onPointerTap={onEditTab2}
+                    layout={{ position: 'absolute', left: 97, width: 101, top: 0, height: 22 }}
+                >
+                    {t('group.edit.tab.2')}
+                </TabButton>
+                <TabButton
+                    variant="0"
+                    name="edit_tab_3"
+                    params={131089}
+                    onPointerTap={onEditTab3}
+                    layout={{ position: 'absolute', left: 198, width: 101, top: 0, height: 22 }}
+                >
+                    {t('group.edit.tab.3')}
+                </TabButton>
+                <TabButton
+                    variant="0"
+                    name="edit_tab_5"
+                    params={131089}
+                    onPointerTap={onEditTab5}
+                    layout={{ position: 'absolute', left: 299, width: 101, top: 0, height: 22 }}
+                >
+                    {t('group.edit.tab.5')}
+                </TabButton>
+            </TabContext>
+            <GroupManagementWindowLayoutStepsHeaderCont {...stepsHeaderCont} />
+            <ThemeImage
+                name="header_pic_bitmap_step_1"
+                params={16}
+                src={srcHeaderPicBitmapStep1 ?? '${image.library.url}guilds/group_UI_identity.png'}
+                layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
+            />
+            <ThemeImage
+                name="header_pic_bitmap_step_2"
+                params={16}
+                src={srcHeaderPicBitmapStep2 ?? '${image.library.url}guilds/group_UI_badge.png'}
+                layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
+            />
+            <ThemeImage
+                name="header_pic_bitmap_step_3"
+                params={16}
+                src={srcHeaderPicBitmapStep3 ?? '${image.library.url}guilds/group_UI_colors.png'}
+                layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
+            />
+            <ThemeImage
+                name="header_pic_bitmap_step_4"
+                params={16}
+                src={srcHeaderPicBitmapStep4 ?? '${image.library.url}guilds/group_UI_ready.png'}
+                layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
+            />
+            <ThemeImage
+                name="header_pic_bitmap_step_5"
+                params={16}
+                src={srcHeaderPicBitmapStep5 ?? '${image.library.url}guilds/group_UI_ready.png'}
+                layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
+            />
+            <ThemeImage
+                name="header_pic_bitmap_step_6"
+                params={16}
+                src={srcHeaderPicBitmapStep6}
+                layout={{ position: 'absolute', left: 0, width: 114, top: 0, height: 62 }}
+            />
+            <Region
+                name="header_caption_txt"
+                params={129}
+                layout={{ position: 'absolute', left: 126, right: 2, top: 43, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionHeaderCaptionTxt ?? 'Caption PH'}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 263 }}
+                />
+            </Region>
+            <Region
+                name="header_desc_txt"
+                params={129}
+                layout={{ position: 'absolute', left: 126, right: 33, top: 69, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionHeaderDescTxt ?? 'Desc PH'}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 232 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `step_1_members_region` of GroupManagementWindowLayout - configured through the parent's `step1MembersRegion` prop. */
+export interface GroupManagementWindowLayoutStep1MembersRegionProps {
+    captionStep1MembersTxt?: string;
+    layout?: BoxLayout;
+    onStep1MembersRegion?: () => void;
+}
+
+export const GroupManagementWindowLayoutStep1MembersRegion = ({ captionStep1MembersTxt, layout, onStep1MembersRegion }: GroupManagementWindowLayoutStep1MembersRegionProps) => {
+    return (
+        <Region
+            name="step_1_members_region"
+            params={17}
+            onPointerTap={onStep1MembersRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 17, width: 94, top: 110, height: 18, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="step_1_members_txt"
+                params={786448}
+                layout={{ position: 'absolute', width: 74, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionStep1MembersTxt ?? 'Members PH'}
+                    textStyle="text-style-u-bold"
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `create_room_link_region` of GroupManagementWindowLayout - configured through the parent's `createRoomLinkRegion` prop. */
+export interface GroupManagementWindowLayoutCreateRoomLinkRegionProps {
+    captionCreateRoomLinkTxt?: string;
+    layout?: BoxLayout;
+    onCreateRoomLinkRegion?: () => void;
+}
+
+export const GroupManagementWindowLayoutCreateRoomLinkRegion = ({ captionCreateRoomLinkTxt, layout, onCreateRoomLinkRegion }: GroupManagementWindowLayoutCreateRoomLinkRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="create_room_link_region"
+            params={17}
+            onPointerTap={onCreateRoomLinkRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 126, width: 247, top: 252, height: 38, ...layout }}
+        >
+            <Region
+                name="create_room_link_txt"
+                params={128}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCreateRoomLinkTxt ?? t('group.createroom')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 247 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `step_cont_1` of GroupManagementWindowLayout - configured through the parent's `stepCont1` prop. */
+export interface GroupManagementWindowLayoutStepCont1Props {
+    captionBaseLabel?: string;
+    captionBaseWarning?: string;
+    captionDescLabel?: string;
+    captionNameLabel?: string;
+    createRoomLinkRegion?: GroupManagementWindowLayoutCreateRoomLinkRegionProps;
+    layout?: BoxLayout;
+    onBaseDropmenu?: () => void;
+    step1MembersRegion?: GroupManagementWindowLayoutStep1MembersRegionProps;
+}
+
+export const GroupManagementWindowLayoutStepCont1 = ({ captionBaseLabel, captionBaseWarning, captionDescLabel, captionNameLabel, createRoomLinkRegion, layout, onBaseDropmenu, step1MembersRegion }: GroupManagementWindowLayoutStepCont1Props) => {
+    const t = useTranslation();
+    const [ nameTxtValue, setNameTxtValue ] = useState('');
+    const [ descTxtValue, setDescTxtValue ] = useState('');
+
+    return (
+        <Region
+            name="step_cont_1"
+            params={144}
+            layout={{ position: 'absolute', left: 0, right: 19, top: 128, height: 310, ...layout }}
+        >
+            <Border
+                variant="0"
+                name="step_1_badge"
+                params={16}
+                layout={{ position: 'absolute', left: 17, width: 94, top: 11, height: 94 }}
+            >
+                <Border
+                    variant="3"
+                    params={16}
+                    tintColor="#e9e9e1"
+                    layout={{ position: 'absolute', left: 4, width: 86, top: 4, height: 86 }}
+                />
+                <WidgetSlot
+                    widgetType="badge_image"
+                    name="group_logo"
+                    params={16}
+                    options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
+                    layout={{ position: 'absolute', left: 27, width: 39, top: 27, height: 39 }}
+                />
+            </Border>
+            <GroupManagementWindowLayoutStep1MembersRegion {...step1MembersRegion} />
+            <Region
+                name="name_label"
+                params={129}
+                layout={{ position: 'absolute', left: 126, right: 140, top: -8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={captionNameLabel ?? t('group.edit.name')} />
+            </Region>
+            <TextInput
+                value={nameTxtValue}
+                onChange={setNameTxtValue}
+                maxLength={29}
+                layout={{ position: 'absolute', left: 126, right: 0, top: 14, height: 26 }}
+            />
+            <Region
+                name="desc_label"
+                params={129}
+                layout={{ position: 'absolute', left: 126, right: 147, top: 52, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={captionDescLabel ?? t('group.edit.desc')} />
+            </Region>
+            <TextInput
+                value={descTxtValue}
+                onChange={setDescTxtValue}
+                maxLength={254}
+                layout={{ position: 'absolute', left: 126, right: 0, top: 74, height: 80 }}
+            />
+            <Region
+                name="base_label"
+                params={129}
+                layout={{ position: 'absolute', left: 126, right: 146, top: 166, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={captionBaseLabel ?? t('group.edit.base')} />
+            </Region>
+            <Dropmenu
+                variant="0"
+                name="base_dropmenu"
+                params={129}
+                onPointerTap={onBaseDropmenu}
+                layout={{ position: 'absolute', left: 126, right: 0, top: 188, height: 26 }}
+            />
+            <Region
+                name="base_warning"
+                params={129}
+                layout={{ position: 'absolute', left: 126, right: 0, top: 214, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionBaseWarning ?? t('group.edit.base.warning')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 247 }}
+                />
+            </Region>
+            <GroupManagementWindowLayoutCreateRoomLinkRegion {...createRoomLinkRegion} />
+        </Region>
+    );
+};
+
+/** Named region `step_cont_2` of GroupManagementWindowLayout - configured through the parent's `stepCont2` prop. */
+export interface GroupManagementWindowLayoutStepCont2Props {
+    layout?: BoxLayout;
+    visibleStepCont2?: boolean;
+}
+
+export const GroupManagementWindowLayoutStepCont2 = ({ layout, visibleStepCont2 }: GroupManagementWindowLayoutStepCont2Props) => {
+    return (
+        <Region
+            name="step_cont_2"
+            params={144}
+            visible={visibleStepCont2 ?? false}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 110, height: 305, ...layout }}
+        />
+    );
+};
+
+/** Named region `guild_primary_color_selector` of GroupManagementWindowLayout - configured through the parent's `guildPrimaryColorSelector` prop. */
+export interface GroupManagementWindowLayoutGuildPrimaryColorSelectorProps {
+    layout?: BoxLayout;
+}
+
+export const GroupManagementWindowLayoutGuildPrimaryColorSelector = ({ layout }: GroupManagementWindowLayoutGuildPrimaryColorSelectorProps) => {
+    return (
+        <Region
+            name="guild_primary_color_selector"
+            params={16}
+            layout={{ position: 'absolute', left: 3, width: 138, top: 3, height: 273, flexDirection: 'row', flexWrap: 'wrap', ...layout }}
+        />
+    );
+};
+
+/** Named region `guild_secondary_color_selector` of GroupManagementWindowLayout - configured through the parent's `guildSecondaryColorSelector` prop. */
+export interface GroupManagementWindowLayoutGuildSecondaryColorSelectorProps {
+    layout?: BoxLayout;
+}
+
+export const GroupManagementWindowLayoutGuildSecondaryColorSelector = ({ layout }: GroupManagementWindowLayoutGuildSecondaryColorSelectorProps) => {
+    return (
+        <Region
+            name="guild_secondary_color_selector"
+            params={16}
+            layout={{ position: 'absolute', left: 3, width: 94, top: 3, height: 273, flexDirection: 'row', flexWrap: 'wrap', ...layout }}
+        />
+    );
+};
+
+/** Named region `step_cont_3` of GroupManagementWindowLayout - configured through the parent's `stepCont3` prop. */
+export interface GroupManagementWindowLayoutStepCont3Props {
+    captionLabelGuildColor?: string;
+    captionLabelPrimary?: string;
+    captionLabelSecondary?: string;
+    guildPrimaryColorSelector?: GroupManagementWindowLayoutGuildPrimaryColorSelectorProps;
+    guildSecondaryColorSelector?: GroupManagementWindowLayoutGuildSecondaryColorSelectorProps;
+    layout?: BoxLayout;
+    srcGuildColorPrimaryColorBtm?: string;
+    srcGuildColorPrimaryColorTop?: string;
+    srcGuildColorSecondaryColorBtm?: string;
+    srcGuildColorSecondaryColorTop?: string;
+    visibleStepCont3?: boolean;
+}
+
+export const GroupManagementWindowLayoutStepCont3 = ({ captionLabelGuildColor, captionLabelPrimary, captionLabelSecondary, guildPrimaryColorSelector, guildSecondaryColorSelector, layout, srcGuildColorPrimaryColorBtm, srcGuildColorPrimaryColorTop, srcGuildColorSecondaryColorBtm, srcGuildColorSecondaryColorTop, visibleStepCont3 }: GroupManagementWindowLayoutStepCont3Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="step_cont_3"
+            params={144}
+            visible={visibleStepCont3 ?? false}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 110, height: 305, ...layout }}
+        >
+            <Region
+                name="label_guild_color"
+                params={1048592}
+                layout={{ position: 'absolute', left: 13, width: 92, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionLabelGuildColor ?? t('group.edit.color.guild.color')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
+            <Border
+                variant="5"
+                params={16}
+                layout={{ position: 'absolute', left: 13, width: 92, top: 29, height: 46 }}
+            >
+                <Border
+                    variant="3"
+                    params={16}
+                    tintColor="#e9e9e1"
+                    layout={{ position: 'absolute', left: 4, width: 84, top: 4, height: 38 }}
+                >
+                    <ThemeImage
+                        name="guild_color_primary_color_btm"
+                        params={16}
+                        src={srcGuildColorPrimaryColorBtm ?? layoutImage('group_guild_color_btm.png')}
+                        layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 30 }}
+                    />
+                    <ThemeImage
+                        name="guild_color_primary_color_top"
+                        params={16}
+                        src={srcGuildColorPrimaryColorTop ?? layoutImage('group_guild_color_top.png')}
+                        layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 30 }}
+                    />
+                    <ThemeImage
+                        name="guild_color_secondary_color_btm"
+                        params={16}
+                        src={srcGuildColorSecondaryColorBtm ?? layoutImage('group_guild_color_btm.png')}
+                        layout={{ position: 'absolute', left: 44, width: 36, top: 4, height: 30 }}
+                    />
+                    <ThemeImage
+                        name="guild_color_secondary_color_top"
+                        params={16}
+                        src={srcGuildColorSecondaryColorTop ?? layoutImage('group_guild_color_top.png')}
+                        layout={{ position: 'absolute', left: 44, width: 36, top: 4, height: 30 }}
+                    />
+                </Border>
+            </Border>
+            <Region
+                name="label_primary"
+                params={1048592}
+                layout={{ position: 'absolute', left: 128, width: 142, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionLabelPrimary ?? t('group.edit.color.primary.color')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
+            <Region
+                name="label_secondary"
+                params={1048592}
+                layout={{ position: 'absolute', left: 280, width: 100, bottom: 280, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionLabelSecondary ?? t('group.edit.color.secondary.color')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
+            <Border
+                variant="3"
+                name="border"
+                params={16}
+                tintColor="#bebba5"
+                layout={{ position: 'absolute', left: 128, width: 142, top: 29, height: 277 }}
+            >
+                <GroupManagementWindowLayoutGuildPrimaryColorSelector {...guildPrimaryColorSelector} />
+            </Border>
+            <Border
+                variant="3"
+                name="border"
+                params={16}
+                tintColor="#bebba5"
+                layout={{ position: 'absolute', left: 280, width: 96, top: 29, height: 277 }}
+            >
+                <GroupManagementWindowLayoutGuildSecondaryColorSelector {...guildSecondaryColorSelector} />
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `vip_required_region` of GroupManagementWindowLayout - configured through the parent's `vipRequiredRegion` prop. */
+export interface GroupManagementWindowLayoutVipRequiredRegionProps {
+    layout?: BoxLayout;
+    onVipRequiredRegion?: () => void;
+}
+
+export const GroupManagementWindowLayoutVipRequiredRegion = ({ layout, onVipRequiredRegion }: GroupManagementWindowLayoutVipRequiredRegionProps) => {
+    return (
+        <Region
+            name="vip_required_region"
+            params={17}
+            onPointerTap={onVipRequiredRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 248, top: 0, height: 39, ...layout }}
+        />
+    );
+};
+
+/** Named region `step_cont_4` of GroupManagementWindowLayout - configured through the parent's `stepCont4` prop. */
+export interface GroupManagementWindowLayoutStepCont4Props {
+    captionConfirmationCaption?: string;
+    captionConfirmationDesc?: string;
+    captionGetVipTxt?: string;
+    captionGuildBadgeTxt?: string;
+    captionGuildColorsTxt?: string;
+    captionVipRequiredTxt?: string;
+    layout?: BoxLayout;
+    srcBadgePreviewImage?: string;
+    srcBadgePreviewPrimaryColorBtm?: string;
+    srcBadgePreviewPrimaryColorTop?: string;
+    srcBadgePreviewSecondaryColorBtm?: string;
+    srcBadgePreviewSecondaryColorTop?: string;
+    vipRequiredRegion?: GroupManagementWindowLayoutVipRequiredRegionProps;
+    visibleStepCont4?: boolean;
+}
+
+export const GroupManagementWindowLayoutStepCont4 = ({ captionConfirmationCaption, captionConfirmationDesc, captionGetVipTxt, captionGuildBadgeTxt, captionGuildColorsTxt, captionVipRequiredTxt, layout, srcBadgePreviewImage, srcBadgePreviewPrimaryColorBtm, srcBadgePreviewPrimaryColorTop, srcBadgePreviewSecondaryColorBtm, srcBadgePreviewSecondaryColorTop, vipRequiredRegion, visibleStepCont4 }: GroupManagementWindowLayoutStepCont4Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="step_cont_4"
+            params={144}
+            visible={visibleStepCont4 ?? false}
+            layout={{ position: 'absolute', left: 0, right: 3, top: 111, height: 360, ...layout }}
+        >
+            <Region
+                name="confirmation_caption"
+                params={1}
+                layout={{ position: 'absolute', left: 126, width: 256, top: 8, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionConfirmationCaption ?? 'Group Name Here DIPPA DAPPA DII'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 256 }}
+                />
+            </Region>
+            <Region
+                name="confirmation_desc"
+                params={1}
+                layout={{ position: 'absolute', left: 126, width: 260, top: 46, height: 215, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionConfirmationDesc ?? t('group.create.confirm.info')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                />
+            </Region>
+            <Border
+                variant="0"
+                name="badge_border"
+                params={16}
+                layout={{ position: 'absolute', left: 15, width: 92, top: 50, height: 92 }}
+            >
+                <Border
+                    variant="3"
+                    params={16}
+                    tintColor="#e9e9e1"
+                    layout={{ position: 'absolute', left: 4, width: 84, top: 4, height: 84 }}
+                />
+                <ThemeImage
+                    name="badge_preview_image"
+                    params={16}
+                    src={srcBadgePreviewImage}
+                    layout={{ position: 'absolute', left: 26, width: 39, top: 26, height: 39 }}
+                />
+            </Border>
+            <Region
+                name="guild_badge_txt"
+                layout={{ position: 'absolute', left: 15, width: 92, top: 33, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionGuildBadgeTxt ?? t('group.create.confirm.guildbadge')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
+            <Region
+                name="guild_colors_txt"
+                layout={{ position: 'absolute', left: 15, width: 92, top: 155, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionGuildColorsTxt ?? t('group.create.confirm.guildcolors')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
+            <Border
+                variant="5"
+                params={16}
+                layout={{ position: 'absolute', left: 15, width: 92, top: 172, height: 46 }}
+            >
+                <Border
+                    variant="3"
+                    params={16}
+                    tintColor="#e9e9e1"
+                    layout={{ position: 'absolute', left: 4, width: 84, top: 4, height: 38 }}
+                >
+                    <ThemeImage
+                        name="badge_preview_primary_color_btm"
+                        params={16}
+                        src={srcBadgePreviewPrimaryColorBtm ?? layoutImage('group_guild_color_btm.png')}
+                        layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 30 }}
+                    />
+                    <ThemeImage
+                        name="badge_preview_primary_color_top"
+                        params={16}
+                        src={srcBadgePreviewPrimaryColorTop ?? layoutImage('group_guild_color_top.png')}
+                        layout={{ position: 'absolute', left: 4, width: 36, top: 4, height: 30 }}
+                    />
+                    <ThemeImage
+                        name="badge_preview_secondary_color_btm"
+                        params={16}
+                        src={srcBadgePreviewSecondaryColorBtm ?? layoutImage('group_guild_color_btm.png')}
+                        layout={{ position: 'absolute', left: 44, width: 36, top: 4, height: 30 }}
+                    />
+                    <ThemeImage
+                        name="badge_preview_secondary_color_top"
+                        params={16}
+                        src={srcBadgePreviewSecondaryColorTop ?? layoutImage('group_guild_color_top.png')}
+                        layout={{ position: 'absolute', left: 44, width: 36, top: 4, height: 30 }}
+                    />
+                </Border>
+            </Border>
+            <Border
+                variant="0"
+                name="vip_required_border"
+                params={16}
+                tintColor="#cc0000"
+                layout={{ position: 'absolute', left: 126, width: 248, top: 253, height: 39 }}
+            >
+                <GroupManagementWindowLayoutVipRequiredRegion {...vipRequiredRegion} />
+                <Icon
+                    variant="14"
+                    name="vip_icon"
+                    params={16}
+                    layout={{ position: 'absolute', left: 14, width: 16, top: 11, height: 17 }}
+                />
+                <Region
+                    name="vip_required_txt"
+                    params={16}
+                    layout={{ position: 'absolute', left: 38, width: 192, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionVipRequiredTxt ?? t('group.create.confirm.viprequired')}
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+                <Region
+                    name="get_vip_txt"
+                    params={16}
+                    layout={{ position: 'absolute', left: 38, width: 160, top: 20, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionGetVipTxt ?? t('group.create.confirm.getvip')}
+                        textOptions={{ fill: '#ffffff' }}
+                    />
+                </Region>
+            </Border>
+        </Region>
+    );
+};
+
+/** Named region `cancel_link_region` of GroupManagementWindowLayout - configured through the parent's `cancelLinkRegion` prop. */
+export interface GroupManagementWindowLayoutCancelLinkRegionProps {
+    captionCancelLink?: string;
+    layout?: BoxLayout;
+    onCancelLinkRegion?: () => void;
+}
+
+export const GroupManagementWindowLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion }: GroupManagementWindowLayoutCancelLinkRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="cancel_link_region"
+            params={17}
+            onPointerTap={onCancelLinkRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 11, width: 120, top: 20, height: 18, ...layout }}
+        >
+            <Region
+                name="cancel_link"
+                params={4194320}
+                layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={captionCancelLink ?? t('cancel')} />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `previous_step_link_region` of GroupManagementWindowLayout - configured through the parent's `previousStepLinkRegion` prop. */
+export interface GroupManagementWindowLayoutPreviousStepLinkRegionProps {
+    captionPreviousStepLink?: string;
+    layout?: BoxLayout;
+    onPreviousStepLinkRegion?: () => void;
+}
+
+export const GroupManagementWindowLayoutPreviousStepLinkRegion = ({ captionPreviousStepLink, layout, onPreviousStepLinkRegion }: GroupManagementWindowLayoutPreviousStepLinkRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="previous_step_link_region"
+            params={17}
+            onPointerTap={onPreviousStepLinkRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 11, width: 120, top: 20, height: 18, ...layout }}
+        >
+            <Region
+                name="previous_step_link"
+                params={4194320}
+                layout={{ position: 'absolute', left: 0, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={captionPreviousStepLink ?? t('group.create.previousstep')} />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `footer_cont` of GroupManagementWindowLayout - configured through the parent's `footerCont` prop. */
+export interface GroupManagementWindowLayoutFooterContProps {
+    cancelLinkRegion?: GroupManagementWindowLayoutCancelLinkRegionProps;
+    captionBuyTxt?: string;
+    layout?: BoxLayout;
+    onBuyButton?: () => void;
+    onNextStepButton?: () => void;
+    previousStepLinkRegion?: GroupManagementWindowLayoutPreviousStepLinkRegionProps;
+    srcBuyCreditIcon?: string;
+    visibleFooterCont?: boolean;
+}
+
+export const GroupManagementWindowLayoutFooterCont = ({ cancelLinkRegion, captionBuyTxt, layout, onBuyButton, onNextStepButton, previousStepLinkRegion, srcBuyCreditIcon, visibleFooterCont }: GroupManagementWindowLayoutFooterContProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="footer_cont"
+            params={1168}
+            visible={visibleFooterCont ?? false}
+            layout={{ position: 'absolute', left: 0, right: 2, bottom: 45, height: 42, ...layout }}
+        >
+            <GroupManagementWindowLayoutCancelLinkRegion {...cancelLinkRegion} />
+            <GroupManagementWindowLayoutPreviousStepLinkRegion {...previousStepLinkRegion} />
+            <Border
+                variant="0"
+                name="buy_border"
+                params={16}
+                tintColor="#ffc300"
+                layout={{ position: 'absolute', left: 126, width: 248, top: 0, height: 39 }}
+            >
+                <ThemeImage
+                    name="buy_credit_icon"
+                    params={16}
+                    src={srcBuyCreditIcon ?? '${image.library.url}guilds/gcreate_icon_credit.png'}
+                    layout={{ position: 'absolute', left: 9, width: 21, top: 11, height: 20 }}
+                />
+                <Region
+                    name="buy_txt"
+                    layout={{ position: 'absolute', left: 37, width: 131, top: 3, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionBuyTxt ?? t('group.create.confirm.buyinfo')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 131 }}
+                    />
+                </Region>
+                <ButtonThick
+                    variant="3"
+                    name="buy_button"
+                    params={131153}
+                    onPointerTap={onBuyButton}
+                    layout={{ position: 'absolute', right: 4, width: 72, top: 5, height: 29, minWidth: 72, maxWidth: 72 }}
+                >
+                    {t('group.create.confirm.buy')}
+                </ButtonThick>
+            </Border>
+            <ButtonThick
+                variant="3"
+                name="next_step_button"
+                params={131089}
+                onPointerTap={onNextStepButton}
+                layout={{ position: 'absolute', left: 256, width: 120, top: 13, height: 29, minWidth: 120, maxWidth: 120 }}
+            >
+                {t('group.create.nextstep')}
+            </ButtonThick>
+        </Region>
+    );
+};
+
+/** Named region `grouptype_region_0` of GroupManagementWindowLayout - configured through the parent's `grouptypeRegion0` prop. */
+export interface GroupManagementWindowLayoutGrouptypeRegion0Props {
+    layout?: BoxLayout;
+    onGrouptypeRegion0?: () => void;
+    srcGrouptypeIcon0?: string;
+}
+
+export const GroupManagementWindowLayoutGrouptypeRegion0 = ({ layout, onGrouptypeRegion0, srcGrouptypeIcon0 }: GroupManagementWindowLayoutGrouptypeRegion0Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="grouptype_region_0"
+            tooltip={t('group.edit.settings.type.regular.help')}
+            params={17}
+            onPointerTap={onGrouptypeRegion0}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 16, top: 22, height: 16, ...layout }}
+        >
+            <ThemeImage
+                name="grouptype_icon_0"
+                params={16}
+                src={srcGrouptypeIcon0 ?? '${image.library.url}guilds/grouptype_icon_0.png'}
+                layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `grouptype_region_1` of GroupManagementWindowLayout - configured through the parent's `grouptypeRegion1` prop. */
+export interface GroupManagementWindowLayoutGrouptypeRegion1Props {
+    layout?: BoxLayout;
+    onGrouptypeRegion1?: () => void;
+    srcGrouptypeIcon1?: string;
+}
+
+export const GroupManagementWindowLayoutGrouptypeRegion1 = ({ layout, onGrouptypeRegion1, srcGrouptypeIcon1 }: GroupManagementWindowLayoutGrouptypeRegion1Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="grouptype_region_1"
+            tooltip={t('group.edit.settings.type.exclusive.help')}
+            params={17}
+            onPointerTap={onGrouptypeRegion1}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 16, top: 82, height: 16, ...layout }}
+        >
+            <ThemeImage
+                name="grouptype_icon_1"
+                params={16}
+                src={srcGrouptypeIcon1 ?? '${image.library.url}guilds/grouptype_icon_1.png'}
+                layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `grouptype_region_2` of GroupManagementWindowLayout - configured through the parent's `grouptypeRegion2` prop. */
+export interface GroupManagementWindowLayoutGrouptypeRegion2Props {
+    layout?: BoxLayout;
+    onGrouptypeRegion2?: () => void;
+    srcGrouptypeIcon2?: string;
+}
+
+export const GroupManagementWindowLayoutGrouptypeRegion2 = ({ layout, onGrouptypeRegion2, srcGrouptypeIcon2 }: GroupManagementWindowLayoutGrouptypeRegion2Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="grouptype_region_2"
+            tooltip={t('group.edit.settings.type.private.help')}
+            params={17}
+            onPointerTap={onGrouptypeRegion2}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 16, top: 142, height: 16, ...layout }}
+        >
+            <ThemeImage
+                name="grouptype_icon_2"
+                params={16}
+                src={srcGrouptypeIcon2 ?? '${image.library.url}guilds/grouptype_icon_2.png'}
+                layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 16 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `group_type_selector` of GroupManagementWindowLayout - configured through the parent's `groupTypeSelector` prop. */
+export interface GroupManagementWindowLayoutGroupTypeSelectorProps {
+    grouptypeRegion0?: GroupManagementWindowLayoutGrouptypeRegion0Props;
+    grouptypeRegion1?: GroupManagementWindowLayoutGrouptypeRegion1Props;
+    grouptypeRegion2?: GroupManagementWindowLayoutGrouptypeRegion2Props;
+    layout?: BoxLayout;
+    onRbTypeExclusive?: () => void;
+    onRbTypePrivate?: () => void;
+    onRbTypeRegular?: () => void;
+}
+
+export const GroupManagementWindowLayoutGroupTypeSelector = ({ grouptypeRegion0, grouptypeRegion1, grouptypeRegion2, layout, onRbTypeExclusive, onRbTypePrivate, onRbTypeRegular }: GroupManagementWindowLayoutGroupTypeSelectorProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="group_type_selector"
+            params={17}
+            layout={{ position: 'absolute', left: 5, width: 152, top: 5, height: 191, ...layout }}
+        >
+            <RadioButton
+                variant="0"
+                name="rb_type_regular"
+                params={17}
+                onPointerTap={onRbTypeRegular}
+                layout={{ position: 'absolute', left: 0, width: 15, top: 2, height: 15 }}
+            />
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 20, width: 112, top: 0, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('group.edit.settings.type.regular.label')}
+                    textStyle="text-style-u-bold"
+                />
+            </Region>
+            <GroupManagementWindowLayoutGrouptypeRegion0 {...grouptypeRegion0} />
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 20, width: 132, top: 15, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('group.edit.settings.type.regular.help')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
+                />
+            </Region>
+            <RadioButton
+                variant="0"
+                name="rb_type_exclusive"
+                params={17}
+                onPointerTap={onRbTypeExclusive}
+                layout={{ position: 'absolute', left: 0, width: 15, top: 62, height: 15 }}
+            />
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 20, width: 132, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('group.edit.settings.type.exclusive.label')}
+                    textStyle="text-style-u-bold"
+                />
+            </Region>
+            <GroupManagementWindowLayoutGrouptypeRegion1 {...grouptypeRegion1} />
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 20, width: 132, top: 75, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('group.edit.settings.type.exclusive.help')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
+                />
+            </Region>
+            <RadioButton
+                variant="0"
+                name="rb_type_private"
+                params={17}
+                onPointerTap={onRbTypePrivate}
+                layout={{ position: 'absolute', left: 0, width: 15, top: 122, height: 15 }}
+            />
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 20, width: 132, top: 120, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('group.edit.settings.type.private.label')}
+                    textStyle="text-style-u-bold"
+                />
+            </Region>
+            <GroupManagementWindowLayoutGrouptypeRegion2 {...grouptypeRegion2} />
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 20, width: 132, top: 135, height: 45, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('group.edit.settings.type.private.help')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 132 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `step_cont_5` of GroupManagementWindowLayout - configured through the parent's `stepCont5` prop. */
+export interface GroupManagementWindowLayoutStepCont5Props {
+    captionGuildRights?: string;
+    captionGuildType?: string;
+    groupTypeSelector?: GroupManagementWindowLayoutGroupTypeSelectorProps;
+    layout?: BoxLayout;
+    onCbMemberRights?: () => void;
+    visibleStepCont5?: boolean;
+}
+
+export const GroupManagementWindowLayoutStepCont5 = ({ captionGuildRights, captionGuildType, groupTypeSelector, layout, onCbMemberRights, visibleStepCont5 }: GroupManagementWindowLayoutStepCont5Props) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="step_cont_5"
+            params={144}
+            visible={visibleStepCont5 ?? false}
+            layout={{ position: 'absolute', left: 0, right: 3, top: 111, height: 360, ...layout }}
+        >
+            <Region
+                name="guild_type"
+                params={1048592}
+                layout={{ position: 'absolute', left: 16, width: 170, bottom: 335, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionGuildType ?? t('group.edit.settings.type.caption')}
+                    textStyle="text-style-u-headline-small"
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
+            <Border
+                variant="0"
+                params={16}
+                layout={{ position: 'absolute', left: 16, width: 170, top: 29, height: 199 }}
+            >
+                <Border
+                    variant="3"
+                    params={16}
+                    tintColor="#e9e9e1"
+                    layout={{ position: 'absolute', left: 4, width: 162, top: 4, height: 191 }}
+                >
+                    <GroupManagementWindowLayoutGroupTypeSelector {...groupTypeSelector} />
+                </Border>
+            </Border>
+            <Region
+                name="guild_rights"
+                params={1048592}
+                layout={{ position: 'absolute', left: 207, width: 170, bottom: 335, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionGuildRights ?? t('group.edit.settings.rights.caption')}
+                    textStyle="text-style-u-headline-small"
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
+            <Border
+                variant="0"
+                params={16}
+                layout={{ position: 'absolute', left: 207, width: 170, top: 29, height: 144 }}
+            >
+                <Border
+                    variant="3"
+                    params={16}
+                    tintColor="#e9e9e1"
+                    layout={{ position: 'absolute', left: 4, width: 162, top: 4, height: 135 }}
+                >
+                    <CheckBox
+                        variant="0"
+                        name="cb_member_rights"
+                        params={17}
+                        onPointerTap={onCbMemberRights}
+                        layout={{ position: 'absolute', left: 5, width: 16, top: 5, height: 16 }}
+                    />
+                    <Region
+                        params={16}
+                        layout={{ position: 'absolute', left: 25, width: 133, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={t('group.edit.settings.rights.members.label')}
+                            textStyle="text-style-u-bold"
+                        />
+                    </Region>
+                    <Region
+                        params={16}
+                        layout={{ position: 'absolute', left: 5, width: 152, top: 25, height: 100, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={t('group.edit.settings.rights.members.help')}
+                            textStyle="text-style-u-regular"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 152 }}
+                        />
+                    </Region>
+                </Border>
+            </Border>
+        </Region>
     );
 };

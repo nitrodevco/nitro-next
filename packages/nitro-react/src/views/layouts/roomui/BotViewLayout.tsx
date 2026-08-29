@@ -5,12 +5,12 @@ import { Border, BoxLayout, CloseButton, Region, TextInput, ThemeText, WidgetSlo
 
 /** Generated from `896_bot_view_xml` (layout "bot_view", 1036x400) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface BotViewLayoutProps {
-    itemsInfostandElementList?: ReactNode;
+    infostandElementList?: BotViewLayoutInfostandElementListProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const BotViewLayout = ({ itemsInfostandElementList, layout, onClose }: BotViewLayoutProps) => {
+export const BotViewLayout = ({ infostandElementList, layout, onClose }: BotViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 1036, height: 400, ...layout }}>
             <Region
@@ -30,23 +30,7 @@ export const BotViewLayout = ({ itemsInfostandElementList, layout, onClose }: Bo
                         onPointerTap={onClose}
                         layout={{ position: 'absolute', left: 168, width: 18, top: 6, height: 16 }}
                     />
-                    <Region
-                        name="infostand_element_list"
-                        params={16}
-                        layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 330, flexDirection: 'column', gap: 3 }}
-                    >
-                        {itemsInfostandElementList ?? (
-                            <>
-                                <BotViewLayoutNameTextItem />
-                                <BotViewLayoutImagesSpacerItem />
-                                <BotViewLayoutImageAndBadgesContainerItem />
-                                <BotViewLayoutMottoSpacerItem />
-                                <BotViewLayoutMottoContainerItem />
-                                <BotViewLayoutHanditemSpacerItem />
-                                <BotViewLayoutHanditemTxtItem />
-                            </>
-                        )}
-                    </Region>
+                    <BotViewLayoutInfostandElementList {...infostandElementList} />
                 </Border>
             </Region>
         </Region>
@@ -243,6 +227,34 @@ export const BotViewLayoutHanditemTxtItem = ({ captionHanditemTxt, layout }: Bot
                 text={captionHanditemTxt ?? t('infostand.text.handitem')}
                 textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `infostand_element_list` of BotViewLayout - configured through the parent's `infostandElementList` prop. */
+export interface BotViewLayoutInfostandElementListProps {
+    itemsInfostandElementList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const BotViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: BotViewLayoutInfostandElementListProps) => {
+    return (
+        <Region
+            name="infostand_element_list"
+            params={16}
+            layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 330, flexDirection: 'column', gap: 3, ...layout }}
+        >
+            {itemsInfostandElementList ?? (
+                <>
+                    <BotViewLayoutNameTextItem />
+                    <BotViewLayoutImagesSpacerItem />
+                    <BotViewLayoutImageAndBadgesContainerItem />
+                    <BotViewLayoutMottoSpacerItem />
+                    <BotViewLayoutMottoContainerItem />
+                    <BotViewLayoutHanditemSpacerItem />
+                    <BotViewLayoutHanditemTxtItem />
+                </>
+            )}
         </Region>
     );
 };

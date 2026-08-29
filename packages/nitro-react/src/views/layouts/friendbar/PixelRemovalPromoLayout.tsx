@@ -6,12 +6,13 @@ export interface PixelRemovalPromoLayoutProps {
     captionCaptionTxt?: string;
     captionInfoTxt?: string;
     captionTitleTxt?: string;
+    col1?: PixelRemovalPromoLayoutCol1Props;
     layout?: BoxLayout;
     onGoButton?: () => void;
-    srcTeaserImage?: string;
+    spacing?: PixelRemovalPromoLayoutSpacingProps;
 }
 
-export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, captionTitleTxt, layout, onGoButton, srcTeaserImage }: PixelRemovalPromoLayoutProps) => {
+export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, captionTitleTxt, col1, layout, onGoButton, spacing }: PixelRemovalPromoLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -21,19 +22,7 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                 backgroundColor="#000000"
                 layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 245 }}
             >
-                <Region
-                    name="col1"
-                    params={16}
-                    backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 245 }}
-                >
-                    <ThemeImage
-                        name="teaser_image"
-                        params={16}
-                        src={srcTeaserImage ?? '${image.library.url}reception/pixrem_promo.png'}
-                        layout={{ position: 'absolute', left: 10, width: 200, top: 30, height: 170 }}
-                    />
-                </Region>
+                <PixelRemovalPromoLayoutCol1 {...col1} />
                 <Region
                     params={16}
                     layout={{ position: 'absolute', left: 230, width: 270, top: 30, height: 111, flexDirection: 'column' }}
@@ -48,12 +37,7 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                             textStyle="text-style-il-heading-1"
                         />
                     </Region>
-                    <Region
-                        name="spacing"
-                        params={16}
-                        backgroundColor="#000000"
-                        layout={{ width: 250, height: 6, flexShrink: 0 }}
-                    />
+                    <PixelRemovalPromoLayoutSpacing {...spacing} />
                     <Region
                         name="title_txt"
                         params={16}
@@ -87,5 +71,45 @@ export const PixelRemovalPromoLayout = ({ captionCaptionTxt, captionInfoTxt, cap
                 </Region>
             </Region>
         </Region>
+    );
+};
+
+/** Named region `col1` of PixelRemovalPromoLayout - configured through the parent's `col1` prop. */
+export interface PixelRemovalPromoLayoutCol1Props {
+    layout?: BoxLayout;
+    srcTeaserImage?: string;
+}
+
+export const PixelRemovalPromoLayoutCol1 = ({ layout, srcTeaserImage }: PixelRemovalPromoLayoutCol1Props) => {
+    return (
+        <Region
+            name="col1"
+            params={16}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 245, ...layout }}
+        >
+            <ThemeImage
+                name="teaser_image"
+                params={16}
+                src={srcTeaserImage ?? '${image.library.url}reception/pixrem_promo.png'}
+                layout={{ position: 'absolute', left: 10, width: 200, top: 30, height: 170 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `spacing` of PixelRemovalPromoLayout - configured through the parent's `spacing` prop. */
+export interface PixelRemovalPromoLayoutSpacingProps {
+    layout?: BoxLayout;
+}
+
+export const PixelRemovalPromoLayoutSpacing = ({ layout }: PixelRemovalPromoLayoutSpacingProps) => {
+    return (
+        <Region
+            name="spacing"
+            params={16}
+            backgroundColor="#000000"
+            layout={{ width: 250, height: 6, flexShrink: 0, ...layout }}
+        />
     );
 };

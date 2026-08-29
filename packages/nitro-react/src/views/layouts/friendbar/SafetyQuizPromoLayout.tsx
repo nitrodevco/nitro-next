@@ -12,7 +12,7 @@ export const SafetyQuizPromoLayout = ({ layout, onSafetyQuizButton }: SafetyQuiz
     const t = useTranslation();
 
     return (
-        <Region layout={{ position: 'relative', width: 577, height: 57, justifyContent: 'center', ...layout }}>
+        <Region layout={{ position: 'relative', width: 577, height: 57, ...layout }}>
             <Border
                 variant="2"
                 name="safety_quiz_overlay"

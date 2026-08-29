@@ -8,7 +8,7 @@ export interface IlluminaDarkButtonLayoutProps {
 
 export const IlluminaDarkButtonLayout = ({ captionBTNTEXT, layout }: IlluminaDarkButtonLayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 28, height: 28, justifyContent: 'center', ...layout }}>
+        <Region layout={{ position: 'relative', width: 28, height: 28, ...layout }}>
             <Region
                 name="_BTN_TEXT"
                 tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}

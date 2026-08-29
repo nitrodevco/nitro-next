@@ -4,11 +4,13 @@ import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 /** Generated from `1050_styleselector_menu_new_xml` (layout "styleselector_menu_new", 67x70) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface StyleselectorMenuNewLayoutProps {
     captionFontSizeTitle?: string;
+    divider?: StyleselectorMenuNewLayoutDividerProps;
+    fontSizeList?: StyleselectorMenuNewLayoutFontSizeListProps;
+    itemgrid?: StyleselectorMenuNewLayoutItemgridProps;
     layout?: BoxLayout;
-    visibleDivider?: boolean;
 }
 
-export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, layout, visibleDivider }: StyleselectorMenuNewLayoutProps) => {
+export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, divider, fontSizeList, itemgrid, layout }: StyleselectorMenuNewLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -20,18 +22,8 @@ export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, layout, visib
                 blend={0.8}
                 layout={{ position: 'absolute', left: 0, width: 67, top: 0, height: 70 }}
             >
-                <Region
-                    name="itemgrid"
-                    params={12582928}
-                    layout={{ position: 'absolute', left: 6, width: 55, top: 5, height: 33, flexDirection: 'row', flexWrap: 'wrap', gap: 1 }}
-                />
-                <Region
-                    name="divider"
-                    params={1104}
-                    visible={visibleDivider ?? false}
-                    backgroundColor="#c7c7c7"
-                    layout={{ position: 'absolute', right: 6, width: 55, bottom: 21, height: 1 }}
-                />
+                <StyleselectorMenuNewLayoutItemgrid {...itemgrid} />
+                <StyleselectorMenuNewLayoutDivider {...divider} />
                 <Border
                     variant="2"
                     params={1168}
@@ -49,12 +41,56 @@ export const StyleselectorMenuNewLayout = ({ captionFontSizeTitle, layout, visib
                         textOptions={{ fill: '#999999' }}
                     />
                 </Region>
-                <Region
-                    name="font_size_list"
-                    params={787536}
-                    layout={{ position: 'absolute', right: 31, width: 85, bottom: 4, height: 18, flexDirection: 'row', gap: 2 }}
-                />
+                <StyleselectorMenuNewLayoutFontSizeList {...fontSizeList} />
             </Border>
         </Region>
+    );
+};
+
+/** Named region `itemgrid` of StyleselectorMenuNewLayout - configured through the parent's `itemgrid` prop. */
+export interface StyleselectorMenuNewLayoutItemgridProps {
+    layout?: BoxLayout;
+}
+
+export const StyleselectorMenuNewLayoutItemgrid = ({ layout }: StyleselectorMenuNewLayoutItemgridProps) => {
+    return (
+        <Region
+            name="itemgrid"
+            params={12582928}
+            layout={{ position: 'absolute', left: 6, width: 55, top: 5, height: 33, flexDirection: 'row', flexWrap: 'wrap', gap: 1, ...layout }}
+        />
+    );
+};
+
+/** Named region `divider` of StyleselectorMenuNewLayout - configured through the parent's `divider` prop. */
+export interface StyleselectorMenuNewLayoutDividerProps {
+    layout?: BoxLayout;
+    visibleDivider?: boolean;
+}
+
+export const StyleselectorMenuNewLayoutDivider = ({ layout, visibleDivider }: StyleselectorMenuNewLayoutDividerProps) => {
+    return (
+        <Region
+            name="divider"
+            params={1104}
+            visible={visibleDivider ?? false}
+            backgroundColor="#c7c7c7"
+            layout={{ position: 'absolute', right: 6, width: 55, bottom: 21, height: 1, ...layout }}
+        />
+    );
+};
+
+/** Named region `font_size_list` of StyleselectorMenuNewLayout - configured through the parent's `fontSizeList` prop. */
+export interface StyleselectorMenuNewLayoutFontSizeListProps {
+    layout?: BoxLayout;
+}
+
+export const StyleselectorMenuNewLayoutFontSizeList = ({ layout }: StyleselectorMenuNewLayoutFontSizeListProps) => {
+    return (
+        <Region
+            name="font_size_list"
+            params={787536}
+            layout={{ position: 'absolute', right: 31, width: 85, bottom: 4, height: 18, flexDirection: 'row', gap: 2, ...layout }}
+        />
     );
 };

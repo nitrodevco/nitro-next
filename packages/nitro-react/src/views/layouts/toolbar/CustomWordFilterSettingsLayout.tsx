@@ -6,14 +6,15 @@ import { Border, BoxLayout, Button, Region, ScrollArea, TextInput, ThemeText } f
 /** Generated from `1249_custom_word_filter_settings_xml` (layout "memenu_chat_settings", 242x248) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface CustomWordFilterSettingsLayoutProps {
     captionWordFilterTitle?: string;
-    itemsWordlist?: ReactNode;
     layout?: BoxLayout;
+    line?: CustomWordFilterSettingsLayoutLineProps;
     onAddBtn?: () => void;
     onBackBtn?: () => void;
     onRemoveBtn?: () => void;
+    wordlist?: CustomWordFilterSettingsLayoutWordlistProps;
 }
 
-export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, itemsWordlist, layout, onAddBtn, onBackBtn, onRemoveBtn }: CustomWordFilterSettingsLayoutProps) => {
+export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, layout, line, onAddBtn, onBackBtn, onRemoveBtn, wordlist }: CustomWordFilterSettingsLayoutProps) => {
     const t = useTranslation();
     const [ addWordInputValue, setAddWordInputValue ] = useState('');
 
@@ -37,12 +38,7 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, itemsWo
                         textOptions={{ fill: '#ffffff', align: 'center' }}
                     />
                 </Region>
-                <Region
-                    name="line"
-                    params={786640}
-                    backgroundColor="#2f2f2f"
-                    layout={{ position: 'absolute', width: 162, top: 24, height: 1 }}
-                />
+                <CustomWordFilterSettingsLayoutLine {...line} />
                 <Region
                     params={8388624}
                     layout={{ position: 'absolute', left: 10, width: 222, top: 35, height: 203, flexDirection: 'column', gap: 7 }}
@@ -78,20 +74,7 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, itemsWo
                         params={16}
                         layout={{ width: 222, height: 100, flexShrink: 0 }}
                     >
-                        <ScrollArea
-                            orientation="vertical"
-                            layout={{ position: 'absolute', left: 3, right: 4, top: 4, bottom: 3 }}
-                        >
-                            <Region
-                                name="wordlist"
-                                params={2192}
-                                layout={{ flexDirection: 'column', width: '100%' }}
-                            >
-                                {itemsWordlist ?? (
-                                    <CustomWordFilterSettingsLayoutWordFilterListItemItem />
-                                )}
-                            </Region>
-                        </ScrollArea>
+                        <CustomWordFilterSettingsLayoutWordlist {...wordlist} />
                     </Border>
                     <Button
                         variant="3"
@@ -117,15 +100,49 @@ export const CustomWordFilterSettingsLayout = ({ captionWordFilterTitle, itemsWo
     );
 };
 
-/** Row template `word_filter_list_item` of CustomWordFilterSettingsLayout - pass real rows through its `items…` slot. */
-export interface CustomWordFilterSettingsLayoutWordFilterListItemItemProps {
-    captionText?: string;
+/** Named region `line` of CustomWordFilterSettingsLayout - configured through the parent's `line` prop. */
+export interface CustomWordFilterSettingsLayoutLineProps {
+    layout?: BoxLayout;
+}
+
+export const CustomWordFilterSettingsLayoutLine = ({ layout }: CustomWordFilterSettingsLayoutLineProps) => {
+    return (
+        <Region
+            name="line"
+            params={786640}
+            backgroundColor="#2f2f2f"
+            layout={{ position: 'absolute', width: 162, top: 24, height: 1, ...layout }}
+        />
+    );
+};
+
+/** Named region `bg_region` of CustomWordFilterSettingsLayout - configured through the parent's `bgRegion` prop. */
+export interface CustomWordFilterSettingsLayoutBgRegionProps {
     layout?: BoxLayout;
     onBgRegion?: () => void;
+}
+
+export const CustomWordFilterSettingsLayoutBgRegion = ({ layout, onBgRegion }: CustomWordFilterSettingsLayoutBgRegionProps) => {
+    return (
+        <Region
+            name="bg_region"
+            params={17}
+            onPointerTap={onBgRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 222, top: 0, height: 18, ...layout }}
+        />
+    );
+};
+
+/** Row template `word_filter_list_item` of CustomWordFilterSettingsLayout - pass real rows through its `items…` slot. */
+export interface CustomWordFilterSettingsLayoutWordFilterListItemItemProps {
+    bgRegion?: CustomWordFilterSettingsLayoutBgRegionProps;
+    captionText?: string;
+    layout?: BoxLayout;
     visibleWordFilterListItem?: boolean;
 }
 
-export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ captionText, layout, onBgRegion, visibleWordFilterListItem }: CustomWordFilterSettingsLayoutWordFilterListItemItemProps) => {
+export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ bgRegion, captionText, layout, visibleWordFilterListItem }: CustomWordFilterSettingsLayoutWordFilterListItemItemProps) => {
     return (
         <Region
             name="word_filter_list_item"
@@ -134,13 +151,7 @@ export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ captionTe
             backgroundColor="#ff00ff"
             layout={{ width: 213, height: 18, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="bg_region"
-                params={17}
-                onPointerTap={onBgRegion}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 222, top: 0, height: 18 }}
-            />
+            <CustomWordFilterSettingsLayoutBgRegion {...bgRegion} />
             <Region
                 name="text"
                 params={16}
@@ -149,5 +160,30 @@ export const CustomWordFilterSettingsLayoutWordFilterListItemItem = ({ captionTe
                 <ThemeText text={captionText ?? 'BadWord'} />
             </Region>
         </Region>
+    );
+};
+
+/** Named region `wordlist` of CustomWordFilterSettingsLayout - configured through the parent's `wordlist` prop. */
+export interface CustomWordFilterSettingsLayoutWordlistProps {
+    itemsWordlist?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const CustomWordFilterSettingsLayoutWordlist = ({ itemsWordlist, layout }: CustomWordFilterSettingsLayoutWordlistProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 3, right: 4, top: 4, bottom: 3, ...layout }}
+        >
+            <Region
+                name="wordlist"
+                params={2192}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            >
+                {itemsWordlist ?? (
+                    <CustomWordFilterSettingsLayoutWordFilterListItemItem />
+                )}
+            </Region>
+        </ScrollArea>
     );
 };

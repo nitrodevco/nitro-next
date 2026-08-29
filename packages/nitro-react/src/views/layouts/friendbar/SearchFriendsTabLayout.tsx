@@ -6,11 +6,11 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `4_search_friends_tab_xml` (layout "search_friends_tab", 127x36) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface SearchFriendsTabLayoutProps {
-    itemsTabContent?: ReactNode;
     layout?: BoxLayout;
+    tabContent?: SearchFriendsTabLayoutTabContentProps;
 }
 
-export const SearchFriendsTabLayout = ({ itemsTabContent, layout }: SearchFriendsTabLayoutProps) => {
+export const SearchFriendsTabLayout = ({ layout, tabContent }: SearchFriendsTabLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 127, height: 36, ...layout }}>
             <Border
@@ -20,15 +20,7 @@ export const SearchFriendsTabLayout = ({ itemsTabContent, layout }: SearchFriend
                 tintColor="#74dbfa"
                 layout={{ position: 'absolute', left: 0, width: 127, top: 0, height: 36 }}
             >
-                <Region
-                    name="tab_content"
-                    params={8388752}
-                    layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 31, minHeight: 30, flexDirection: 'column' }}
-                >
-                    {itemsTabContent ?? (
-                        <SearchFriendsTabLayoutHeaderItem />
-                    )}
-                </Region>
+                <SearchFriendsTabLayoutTabContent {...tabContent} />
             </Border>
         </Region>
     );
@@ -71,6 +63,26 @@ export const SearchFriendsTabLayoutHeaderItem = ({ captionTitle, layout, onHeade
                     textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 77 }}
                 />
             </Region>
+        </Region>
+    );
+};
+
+/** Named region `tab_content` of SearchFriendsTabLayout - configured through the parent's `tabContent` prop. */
+export interface SearchFriendsTabLayoutTabContentProps {
+    itemsTabContent?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const SearchFriendsTabLayoutTabContent = ({ itemsTabContent, layout }: SearchFriendsTabLayoutTabContentProps) => {
+    return (
+        <Region
+            name="tab_content"
+            params={8388752}
+            layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 31, minHeight: 30, flexDirection: 'column', ...layout }}
+        >
+            {itemsTabContent ?? (
+                <SearchFriendsTabLayoutHeaderItem />
+            )}
         </Region>
     );
 };

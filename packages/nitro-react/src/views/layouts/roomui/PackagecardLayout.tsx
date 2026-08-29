@@ -7,12 +7,12 @@ export interface PackagecardLayoutProps {
     captionTitle?: string;
     layout?: BoxLayout;
     onClose?: () => void;
-    onOpen?: () => void;
     srcGiftImage?: string;
     srcImageBg?: string;
+    stateContent?: PackagecardLayoutStateContentProps;
 }
 
-export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, onOpen, srcGiftImage, srcImageBg }: PackagecardLayoutProps) => {
+export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, srcGiftImage, srcImageBg, stateContent }: PackagecardLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -62,48 +62,77 @@ export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, 
                             textOptions={{ wordWrap: true, wordWrapWidth: 219 }}
                         />
                     </Region>
-                    <Region
-                        name="state_content"
-                        params={12582928}
-                        backgroundColor="#eaece8"
-                        layout={{ position: 'absolute', left: 6, width: 350, top: 156, height: 50 }}
-                    >
-                        <Region
-                            params={16}
-                            backgroundColor="#eeeeee"
-                            layout={{ position: 'absolute', left: 0, width: 351, top: 0, height: 50 }}
-                        >
-                            <Region
-                                name="close"
-                                params={1041}
-                                onPointerTap={onClose}
-                                cursor="pointer"
-                                layout={{ position: 'absolute', left: 14, width: 100, bottom: 9, height: 33 }}
-                            >
-                                <Region
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 0, width: 100, top: 9, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                >
-                                    <ThemeText
-                                        text={t('widget.furni.present.close')}
-                                        textOptions={{ align: 'center' }}
-                                    />
-                                </Region>
-                            </Region>
-                            <ButtonThick
-                                variant="5"
-                                name="open"
-                                params={132113}
-                                tintColor="#00aa00"
-                                onPointerTap={onOpen}
-                                layout={{ position: 'absolute', left: 214, width: 130, bottom: 10, height: 30, minWidth: 130 }}
-                            >
-                                {t('widget.furni.present.open')}
-                            </ButtonThick>
-                        </Region>
-                    </Region>
+                    <PackagecardLayoutStateContent {...stateContent} />
                 </Border>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `close` of PackagecardLayout - configured through the parent's `close` prop. */
+export interface PackagecardLayoutCloseProps {
+    layout?: BoxLayout;
+    onClose?: () => void;
+}
+
+export const PackagecardLayoutClose = ({ layout, onClose }: PackagecardLayoutCloseProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="close"
+            params={1041}
+            onPointerTap={onClose}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 14, width: 100, bottom: 9, height: 33, ...layout }}
+        >
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 100, top: 9, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('widget.furni.present.close')}
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `state_content` of PackagecardLayout - configured through the parent's `stateContent` prop. */
+export interface PackagecardLayoutStateContentProps {
+    close?: PackagecardLayoutCloseProps;
+    layout?: BoxLayout;
+    onOpen?: () => void;
+}
+
+export const PackagecardLayoutStateContent = ({ close, layout, onOpen }: PackagecardLayoutStateContentProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="state_content"
+            params={12582928}
+            backgroundColor="#eaece8"
+            layout={{ position: 'absolute', left: 6, width: 350, top: 156, height: 50, ...layout }}
+        >
+            <Region
+                params={16}
+                backgroundColor="#eeeeee"
+                layout={{ position: 'absolute', left: 0, width: 351, top: 0, height: 50 }}
+            >
+                <PackagecardLayoutClose {...close} />
+                <ButtonThick
+                    variant="5"
+                    name="open"
+                    params={132113}
+                    tintColor="#00aa00"
+                    onPointerTap={onOpen}
+                    layout={{ position: 'absolute', left: 214, width: 130, bottom: 10, height: 30, minWidth: 130 }}
+                >
+                    {t('widget.furni.present.open')}
+                </ButtonThick>
+            </Region>
+        </Region>
     );
 };

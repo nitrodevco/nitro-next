@@ -2,12 +2,13 @@ import { BoxLayout, BubblePointer, Region } from '#base/theme';
 
 /** Generated from `2342_bubble_7_xml` (layout "habbo_window_layout_bubble", 23x23) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface Bubble7LayoutProps {
+    contentArea?: Bubble7LayoutContentAreaProps;
     layout?: BoxLayout;
 }
 
-export const Bubble7Layout = ({ layout }: Bubble7LayoutProps) => {
+export const Bubble7Layout = ({ contentArea, layout }: Bubble7LayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 23, height: 23, justifyContent: 'center', ...layout }}>
+        <Region layout={{ position: 'relative', width: 23, height: 23, ...layout }}>
             <BubblePointer
                 name="up"
                 tags={[ '_POINTER', '_INTERNAL', '_EXCLUDE', '_COLORIZE' ]}
@@ -36,12 +37,23 @@ export const Bubble7Layout = ({ layout }: Bubble7LayoutProps) => {
                 direction="right"
                 layout={{ position: 'absolute', right: -2, width: 11, alignSelf: 'center', marginTop: 1.5, marginBottom: -1.5, height: 18 }}
             />
-            <Region
-                name="content_area"
-                tags={[ '_CONTENT', '_INTERNAL', '_EXCLUDE' ]}
-                params={12585104}
-                layout={{ position: 'absolute', left: 8, right: 10, top: 8, bottom: 10 }}
-            />
+            <Bubble7LayoutContentArea {...contentArea} />
         </Region>
+    );
+};
+
+/** Named region `content_area` of Bubble7Layout - configured through the parent's `contentArea` prop. */
+export interface Bubble7LayoutContentAreaProps {
+    layout?: BoxLayout;
+}
+
+export const Bubble7LayoutContentArea = ({ layout }: Bubble7LayoutContentAreaProps) => {
+    return (
+        <Region
+            name="content_area"
+            tags={[ '_CONTENT', '_INTERNAL', '_EXCLUDE' ]}
+            params={12585104}
+            layout={{ position: 'absolute', left: 8, right: 10, top: 8, bottom: 10, ...layout }}
+        />
     );
 };

@@ -6,12 +6,12 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `2905_guardian_chat_review_accept_xml` (layout "guardian_chat_review_accept", 282x276) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GuardianChatReviewAcceptLayoutProps {
-    itemsItemlist?: ReactNode;
+    itemlist?: GuardianChatReviewAcceptLayoutItemlistProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const GuardianChatReviewAcceptLayout = ({ itemsItemlist, layout, onClose }: GuardianChatReviewAcceptLayoutProps) => {
+export const GuardianChatReviewAcceptLayout = ({ itemlist, layout, onClose }: GuardianChatReviewAcceptLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -31,21 +31,7 @@ export const GuardianChatReviewAcceptLayout = ({ itemsItemlist, layout, onClose 
                     params={16}
                     layout={{ position: 'absolute', left: 0, width: 280, top: 20, height: 224 }}
                 >
-                    <Region
-                        name="itemlist"
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 221, flexDirection: 'column' }}
-                    >
-                        {itemsItemlist ?? (
-                            <>
-                                <GuardianChatReviewAcceptLayoutRequestTitleItem />
-                                <GuardianChatReviewAcceptLayoutRequestTypeItem />
-                                <GuardianChatReviewAcceptLayoutRequestDescriptionWrapperItem />
-                                <GuardianChatReviewAcceptLayoutAcceptButtonItem />
-                                <GuardianChatReviewAcceptLayoutSkipLinkItem />
-                            </>
-                        )}
-                    </Region>
+                    <GuardianChatReviewAcceptLayoutItemlist {...itemlist} />
                 </Border>
                 <ThemeImage
                     params={16}
@@ -228,6 +214,32 @@ export const GuardianChatReviewAcceptLayoutSkipLinkItem = ({ layout, onSkipLink 
                     textStyle="text-style-il-link-regular"
                 />
             </Region>
+        </Region>
+    );
+};
+
+/** Named region `itemlist` of GuardianChatReviewAcceptLayout - configured through the parent's `itemlist` prop. */
+export interface GuardianChatReviewAcceptLayoutItemlistProps {
+    itemsItemlist?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const GuardianChatReviewAcceptLayoutItemlist = ({ itemsItemlist, layout }: GuardianChatReviewAcceptLayoutItemlistProps) => {
+    return (
+        <Region
+            name="itemlist"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 221, flexDirection: 'column', ...layout }}
+        >
+            {itemsItemlist ?? (
+                <>
+                    <GuardianChatReviewAcceptLayoutRequestTitleItem />
+                    <GuardianChatReviewAcceptLayoutRequestTypeItem />
+                    <GuardianChatReviewAcceptLayoutRequestDescriptionWrapperItem />
+                    <GuardianChatReviewAcceptLayoutAcceptButtonItem />
+                    <GuardianChatReviewAcceptLayoutSkipLinkItem />
+                </>
+            )}
         </Region>
     );
 };

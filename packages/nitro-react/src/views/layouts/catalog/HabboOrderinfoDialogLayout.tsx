@@ -5,37 +5,14 @@ import { Border, BoxLayout, Button, Region, ThemeText } from '#base/theme';
 
 /** Generated from `1608_habbo_orderinfo_dialog_xml` (layout "habbo_orderinfo_dialog", 284x149) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface HabboOrderinfoDialogLayoutProps {
-    itemsOrderItemList?: ReactNode;
+    habboOrderinfoDialog?: HabboOrderinfoDialogLayoutHabboOrderinfoDialogProps;
     layout?: BoxLayout;
 }
 
-export const HabboOrderinfoDialogLayout = ({ itemsOrderItemList, layout }: HabboOrderinfoDialogLayoutProps) => {
+export const HabboOrderinfoDialogLayout = ({ habboOrderinfoDialog, layout }: HabboOrderinfoDialogLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 284, height: 149, ...layout }}>
-            <Region
-                name="habbo_orderinfo_dialog"
-                params={131088}
-                layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 149 }}
-            >
-                <Border
-                    variant="0"
-                    params={131088}
-                    layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 149 }}
-                >
-                    <Region
-                        name="orderItemList"
-                        params={131088}
-                        layout={{ position: 'absolute', left: 0, minWidth: 284, top: 0, minHeight: 149, flexDirection: 'column' }}
-                    >
-                        {itemsOrderItemList ?? (
-                            <>
-                                <HabboOrderinfoDialogLayoutInfoContainerItem />
-                                <HabboOrderinfoDialogLayoutButtonContainerItem />
-                            </>
-                        )}
-                    </Region>
-                </Border>
-            </Region>
+            <HabboOrderinfoDialogLayoutHabboOrderinfoDialog {...habboOrderinfoDialog} />
         </Region>
     );
 };
@@ -128,6 +105,53 @@ export const HabboOrderinfoDialogLayoutButtonContainerItem = ({ layout, onButton
             >
                 {t('generic.ok')}
             </Button>
+        </Region>
+    );
+};
+
+/** Named region `orderItemList` of HabboOrderinfoDialogLayout - configured through the parent's `orderItemList` prop. */
+export interface HabboOrderinfoDialogLayoutOrderItemListProps {
+    itemsOrderItemList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const HabboOrderinfoDialogLayoutOrderItemList = ({ itemsOrderItemList, layout }: HabboOrderinfoDialogLayoutOrderItemListProps) => {
+    return (
+        <Region
+            name="orderItemList"
+            params={131088}
+            layout={{ position: 'absolute', left: 0, minWidth: 284, top: 0, minHeight: 149, flexDirection: 'column', ...layout }}
+        >
+            {itemsOrderItemList ?? (
+                <>
+                    <HabboOrderinfoDialogLayoutInfoContainerItem />
+                    <HabboOrderinfoDialogLayoutButtonContainerItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `habbo_orderinfo_dialog` of HabboOrderinfoDialogLayout - configured through the parent's `habboOrderinfoDialog` prop. */
+export interface HabboOrderinfoDialogLayoutHabboOrderinfoDialogProps {
+    layout?: BoxLayout;
+    orderItemList?: HabboOrderinfoDialogLayoutOrderItemListProps;
+}
+
+export const HabboOrderinfoDialogLayoutHabboOrderinfoDialog = ({ layout, orderItemList }: HabboOrderinfoDialogLayoutHabboOrderinfoDialogProps) => {
+    return (
+        <Region
+            name="habbo_orderinfo_dialog"
+            params={131088}
+            layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 149, ...layout }}
+        >
+            <Border
+                variant="0"
+                params={131088}
+                layout={{ position: 'absolute', left: 0, width: 284, top: 0, height: 149 }}
+            >
+                <HabboOrderinfoDialogLayoutOrderItemList {...orderItemList} />
+            </Border>
         </Region>
     );
 };

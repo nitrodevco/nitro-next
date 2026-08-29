@@ -6,13 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `2678_simple_alert_xml` (layout "simple_alert", 310x163) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface SimpleAlert_2678LayoutProps {
-    itemsList?: ReactNode;
     layout?: BoxLayout;
+    list?: SimpleAlert_2678LayoutListProps;
     onClose?: () => void;
     srcIllustration?: string;
 }
 
-export const SimpleAlert_2678Layout = ({ itemsList, layout, onClose, srcIllustration }: SimpleAlert_2678LayoutProps) => {
+export const SimpleAlert_2678Layout = ({ layout, list, onClose, srcIllustration }: SimpleAlert_2678LayoutProps) => {
     return (
         <Frame
             variant="3"
@@ -29,18 +29,7 @@ export const SimpleAlert_2678Layout = ({ itemsList, layout, onClose, srcIllustra
                     src={srcIllustration}
                     layout={{ position: 'absolute', left: 10, width: 1, top: 8, height: 1 }}
                 />
-                <Region
-                    name="list"
-                    params={8536080}
-                    layout={{ position: 'absolute', left: 10, top: 8, flexDirection: 'column', gap: 3 }}
-                >
-                    {itemsList ?? (
-                        <>
-                            <SimpleAlert_2678LayoutListTopItem />
-                            <SimpleAlert_2678LayoutListBottomItem />
-                        </>
-                    )}
-                </Region>
+                <SimpleAlert_2678LayoutList {...list} />
             </Region>
         </Frame>
     );
@@ -183,6 +172,29 @@ export const SimpleAlert_2678LayoutListBottomItem = ({ itemsListBottom, layout }
                 src={layoutImage('illumina_horizontal_separator.png')}
                 layout={{ width: 1000, height: 13, flexShrink: 0 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `list` of SimpleAlert_2678Layout - configured through the parent's `list` prop. */
+export interface SimpleAlert_2678LayoutListProps {
+    itemsList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const SimpleAlert_2678LayoutList = ({ itemsList, layout }: SimpleAlert_2678LayoutListProps) => {
+    return (
+        <Region
+            name="list"
+            params={8536080}
+            layout={{ position: 'absolute', left: 10, top: 8, flexDirection: 'column', gap: 3, ...layout }}
+        >
+            {itemsList ?? (
+                <>
+                    <SimpleAlert_2678LayoutListTopItem />
+                    <SimpleAlert_2678LayoutListBottomItem />
+                </>
+            )}
         </Region>
     );
 };

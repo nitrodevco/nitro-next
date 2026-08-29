@@ -4,11 +4,11 @@ import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 
 /** Generated from `1200_extended_profile_badge_details_xml` (layout "extended_profile_badge_details", 263x25) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ExtendedProfileBadgeDetailsLayoutProps {
-    itemsDetailsList?: ReactNode;
+    detailsList?: ExtendedProfileBadgeDetailsLayoutDetailsListProps;
     layout?: BoxLayout;
 }
 
-export const ExtendedProfileBadgeDetailsLayout = ({ itemsDetailsList, layout }: ExtendedProfileBadgeDetailsLayoutProps) => {
+export const ExtendedProfileBadgeDetailsLayout = ({ detailsList, layout }: ExtendedProfileBadgeDetailsLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 263, height: 25, ...layout }}>
             <Border
@@ -16,20 +16,7 @@ export const ExtendedProfileBadgeDetailsLayout = ({ itemsDetailsList, layout }: 
                 name="test"
                 layout={{ position: 'absolute', left: 87, width: 263, top: 53, height: 25 }}
             >
-                <Region
-                    name="details_list"
-                    params={8388624}
-                    layout={{ position: 'absolute', left: 0, width: 263, top: 6, height: 11, flexDirection: 'column', gap: 3 }}
-                >
-                    {itemsDetailsList ?? (
-                        <>
-                            <ExtendedProfileBadgeDetailsLayoutNameItem />
-                            <ExtendedProfileBadgeDetailsLayoutDescriptionItem />
-                            <ExtendedProfileBadgeDetailsLayoutRarityTagItem />
-                            <ExtendedProfileBadgeDetailsLayoutOwnerCountItem />
-                        </>
-                    )}
-                </Region>
+                <ExtendedProfileBadgeDetailsLayoutDetailsList {...detailsList} />
             </Border>
         </Region>
     );
@@ -143,6 +130,31 @@ export const ExtendedProfileBadgeDetailsLayoutOwnerCountItem = ({ captionOwnerCo
                 text={captionOwnerCount ?? ''}
                 textOptions={{ fill: '#555555', wordWrap: true, wordWrapWidth: 250 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `details_list` of ExtendedProfileBadgeDetailsLayout - configured through the parent's `detailsList` prop. */
+export interface ExtendedProfileBadgeDetailsLayoutDetailsListProps {
+    itemsDetailsList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const ExtendedProfileBadgeDetailsLayoutDetailsList = ({ itemsDetailsList, layout }: ExtendedProfileBadgeDetailsLayoutDetailsListProps) => {
+    return (
+        <Region
+            name="details_list"
+            params={8388624}
+            layout={{ position: 'absolute', left: 0, width: 263, top: 6, height: 11, flexDirection: 'column', gap: 3, ...layout }}
+        >
+            {itemsDetailsList ?? (
+                <>
+                    <ExtendedProfileBadgeDetailsLayoutNameItem />
+                    <ExtendedProfileBadgeDetailsLayoutDescriptionItem />
+                    <ExtendedProfileBadgeDetailsLayoutRarityTagItem />
+                    <ExtendedProfileBadgeDetailsLayoutOwnerCountItem />
+                </>
+            )}
         </Region>
     );
 };

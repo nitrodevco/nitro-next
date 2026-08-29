@@ -6,14 +6,12 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `2026_illumina_chat_bubble_xml` (layout "chat_bubble", 259x80) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IlluminaChatBubbleLayoutProps {
-    itemsBubbleWrapper?: ReactNode;
-    itemsSpacedMessageContainer?: ReactNode;
+    bubbleWrapper?: IlluminaChatBubbleLayoutBubbleWrapperProps;
     layout?: BoxLayout;
-    onMessageRegion?: () => void;
     srcArrowPoint?: string;
 }
 
-export const IlluminaChatBubbleLayout = ({ itemsBubbleWrapper, itemsSpacedMessageContainer, layout, onMessageRegion, srcArrowPoint }: IlluminaChatBubbleLayoutProps) => {
+export const IlluminaChatBubbleLayout = ({ bubbleWrapper, layout, srcArrowPoint }: IlluminaChatBubbleLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 259, height: 80, ...layout }}>
             <Region
@@ -37,46 +35,7 @@ export const IlluminaChatBubbleLayout = ({ itemsBubbleWrapper, itemsSpacedMessag
                     src={srcArrowPoint ?? layoutImage('illumina_light_bubble_chat_arrow.png')}
                     layout={{ position: 'absolute', left: 47, width: 5, top: 39, height: 10 }}
                 />
-                <Region
-                    name="bubble_wrapper"
-                    params={147472}
-                    layout={{ position: 'absolute', left: 52, top: 15, flexDirection: 'column' }}
-                >
-                    {itemsBubbleWrapper ?? (
-                        <>
-                            <IlluminaChatBubbleLayoutUserNameRegionItem />
-                            <IlluminaChatBubbleLayoutPostTimeItem />
-                            <IlluminaChatBubbleLayoutOfflinePlaceholderItem />
-                        </>
-                    )}
-                    <Border
-                        variant="106"
-                        params={147472}
-                        layout={{ width: 207, height: 18, flexShrink: 0 }}
-                    >
-                        <Region
-                            name="message_region"
-                            params={147473}
-                            onPointerTap={onMessageRegion}
-                            cursor="pointer"
-                            layout={{ position: 'absolute', left: 0, width: 207, top: 0, height: 18 }}
-                        >
-                            <Region
-                                name="spaced_message_container"
-                                params={147472}
-                                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
-                            >
-                                {itemsSpacedMessageContainer ?? (
-                                    <>
-                                        <IlluminaChatBubbleLayoutSpacingItem />
-                                        <IlluminaChatBubbleLayoutMessageContainerItem />
-                                        <IlluminaChatBubbleLayoutSpacingItem2 />
-                                    </>
-                                )}
-                            </Region>
-                        </Region>
-                    </Border>
-                </Region>
+                <IlluminaChatBubbleLayoutBubbleWrapper {...bubbleWrapper} />
             </Region>
         </Region>
     );
@@ -254,5 +213,82 @@ export const IlluminaChatBubbleLayoutSpacingItem2 = ({ layout }: IlluminaChatBub
             params={16}
             layout={{ width: 0, height: 7, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `spaced_message_container` of IlluminaChatBubbleLayout - configured through the parent's `spacedMessageContainer` prop. */
+export interface IlluminaChatBubbleLayoutSpacedMessageContainerProps {
+    itemsSpacedMessageContainer?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const IlluminaChatBubbleLayoutSpacedMessageContainer = ({ itemsSpacedMessageContainer, layout }: IlluminaChatBubbleLayoutSpacedMessageContainerProps) => {
+    return (
+        <Region
+            name="spaced_message_container"
+            params={147472}
+            layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', ...layout }}
+        >
+            {itemsSpacedMessageContainer ?? (
+                <>
+                    <IlluminaChatBubbleLayoutSpacingItem />
+                    <IlluminaChatBubbleLayoutMessageContainerItem />
+                    <IlluminaChatBubbleLayoutSpacingItem2 />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `message_region` of IlluminaChatBubbleLayout - configured through the parent's `messageRegion` prop. */
+export interface IlluminaChatBubbleLayoutMessageRegionProps {
+    layout?: BoxLayout;
+    onMessageRegion?: () => void;
+    spacedMessageContainer?: IlluminaChatBubbleLayoutSpacedMessageContainerProps;
+}
+
+export const IlluminaChatBubbleLayoutMessageRegion = ({ layout, onMessageRegion, spacedMessageContainer }: IlluminaChatBubbleLayoutMessageRegionProps) => {
+    return (
+        <Region
+            name="message_region"
+            params={147473}
+            onPointerTap={onMessageRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 207, top: 0, height: 18, ...layout }}
+        >
+            <IlluminaChatBubbleLayoutSpacedMessageContainer {...spacedMessageContainer} />
+        </Region>
+    );
+};
+
+/** Named region `bubble_wrapper` of IlluminaChatBubbleLayout - configured through the parent's `bubbleWrapper` prop. */
+export interface IlluminaChatBubbleLayoutBubbleWrapperProps {
+    itemsBubbleWrapper?: ReactNode;
+    layout?: BoxLayout;
+    messageRegion?: IlluminaChatBubbleLayoutMessageRegionProps;
+}
+
+export const IlluminaChatBubbleLayoutBubbleWrapper = ({ itemsBubbleWrapper, layout, messageRegion }: IlluminaChatBubbleLayoutBubbleWrapperProps) => {
+    return (
+        <Region
+            name="bubble_wrapper"
+            params={147472}
+            layout={{ position: 'absolute', left: 52, top: 15, flexDirection: 'column', ...layout }}
+        >
+            {itemsBubbleWrapper ?? (
+                <>
+                    <IlluminaChatBubbleLayoutUserNameRegionItem />
+                    <IlluminaChatBubbleLayoutPostTimeItem />
+                    <IlluminaChatBubbleLayoutOfflinePlaceholderItem />
+                </>
+            )}
+            <Border
+                variant="106"
+                params={147472}
+                layout={{ width: 207, height: 18, flexShrink: 0 }}
+            >
+                <IlluminaChatBubbleLayoutMessageRegion {...messageRegion} />
+            </Border>
+        </Region>
     );
 };

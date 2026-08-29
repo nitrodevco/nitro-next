@@ -7,14 +7,14 @@ export interface HabboweenEngravingLayoutProps {
     captionHeader?: string;
     captionNameLeft?: string;
     captionNameRight?: string;
+    headerButtonClose?: HabboweenEngravingLayoutHeaderButtonCloseProps;
     layout?: BoxLayout;
-    onHeaderButtonClose?: () => void;
     srcAvatarLeft?: string;
     srcAvatarRight?: string;
     srcBackground?: string;
 }
 
-export const HabboweenEngravingLayout = ({ captionDate, captionHeader, captionNameLeft, captionNameRight, layout, onHeaderButtonClose, srcAvatarLeft, srcAvatarRight, srcBackground }: HabboweenEngravingLayoutProps) => {
+export const HabboweenEngravingLayout = ({ captionDate, captionHeader, captionNameLeft, captionNameRight, headerButtonClose, layout, srcAvatarLeft, srcAvatarRight, srcBackground }: HabboweenEngravingLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -85,14 +85,26 @@ export const HabboweenEngravingLayout = ({ captionDate, captionHeader, captionNa
                         textOptions={{ fill: '#2a2420', align: 'center' }}
                     />
                 </Region>
-                <Region
-                    name="header_button_close"
-                    params={17}
-                    onPointerTap={onHeaderButtonClose}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 330, width: 21, top: 33, height: 17 }}
-                />
+                <HabboweenEngravingLayoutHeaderButtonClose {...headerButtonClose} />
             </Region>
         </Region>
+    );
+};
+
+/** Named region `header_button_close` of HabboweenEngravingLayout - configured through the parent's `headerButtonClose` prop. */
+export interface HabboweenEngravingLayoutHeaderButtonCloseProps {
+    layout?: BoxLayout;
+    onHeaderButtonClose?: () => void;
+}
+
+export const HabboweenEngravingLayoutHeaderButtonClose = ({ layout, onHeaderButtonClose }: HabboweenEngravingLayoutHeaderButtonCloseProps) => {
+    return (
+        <Region
+            name="header_button_close"
+            params={17}
+            onPointerTap={onHeaderButtonClose}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 330, width: 21, top: 33, height: 17, ...layout }}
+        />
     );
 };

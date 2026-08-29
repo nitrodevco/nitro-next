@@ -6,15 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `105_premium_purchase_confirmation_xml` (layout "reward_track_premium_purchase_confirmation", 390x352) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PremiumPurchaseConfirmationLayoutProps {
-    itemsBenefits?: ReactNode;
-    itemsButtons?: ReactNode;
-    itemsPrice?: ReactNode;
+    buttons?: PremiumPurchaseConfirmationLayoutButtonsProps;
+    content?: PremiumPurchaseConfirmationLayoutContentProps;
     layout?: BoxLayout;
     onClose?: () => void;
-    srcPremiumIcon?: string;
 }
 
-export const PremiumPurchaseConfirmationLayout = ({ itemsBenefits, itemsButtons, itemsPrice, layout, onClose, srcPremiumIcon }: PremiumPurchaseConfirmationLayoutProps) => {
+export const PremiumPurchaseConfirmationLayout = ({ buttons, content, layout, onClose }: PremiumPurchaseConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -27,130 +25,8 @@ export const PremiumPurchaseConfirmationLayout = ({ itemsBenefits, itemsButtons,
             layout={{ width: 390, height: 352, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="content"
-                    params={8388752}
-                    layout={{ position: 'absolute', left: 12, right: 12, top: 20, height: 268 }}
-                >
-                    <Region
-                        name="top_body"
-                        params={8388624}
-                        layout={{ position: 'absolute', left: 0, width: 366, top: 0, height: 208 }}
-                    >
-                        <Border
-                            variant="15"
-                            name="premium_icon_panel"
-                            params={2064}
-                            tintColor="#f5def8"
-                            layout={{ position: 'absolute', left: 0, width: 132, top: 0, bottom: 0 }}
-                        >
-                            <Border
-                                variant="15"
-                                name="premium_icon_frame"
-                                params={16}
-                                tintColor="#fff4ff"
-                                layout={{ position: 'absolute', left: 13, width: 106, top: 13, height: 92 }}
-                            >
-                                <ThemeImage
-                                    name="premium_icon"
-                                    params={16}
-                                    src={srcPremiumIcon ?? layoutImage('reward_track_premium_track.png')}
-                                    layout={{ position: 'absolute', left: 20, width: 67, top: 12, height: 67 }}
-                                />
-                            </Border>
-                            <Region
-                                params={2064}
-                                layout={{ position: 'absolute', left: 0, width: 132, top: 115, bottom: 12 }}
-                            >
-                                <Region
-                                    params={3148800}
-                                    layout={{ position: 'absolute', left: 0, width: 132, alignSelf: 'center', height: 35, flexDirection: 'column' }}
-                                >
-                                    <Region
-                                        params={16}
-                                        layout={{ width: 116, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                                    >
-                                        <ThemeText
-                                            text={t('reward_track.rewards.premium')}
-                                            textOptions={{ fill: '#5d2c82', align: 'center' }}
-                                        />
-                                    </Region>
-                                    <Region
-                                        params={16}
-                                        layout={{ width: 116, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                                    >
-                                        <ThemeText
-                                            text={t('reward_track.rewards.premium.info')}
-                                            textOptions={{ fill: '#4d3559', wordWrap: true, wordWrapWidth: 116, align: 'center' }}
-                                        />
-                                    </Region>
-                                </Region>
-                            </Region>
-                        </Border>
-                        <Region
-                            name="benefits"
-                            params={8388752}
-                            layout={{ position: 'absolute', left: 146, right: 0, top: 3, height: 205, flexDirection: 'column', gap: 5 }}
-                        >
-                            {itemsBenefits ?? (
-                                <>
-                                    <PremiumPurchaseConfirmationLayoutSpacingItem />
-                                    <PremiumPurchaseConfirmationLayoutDescriptionTxtItem />
-                                    <PremiumPurchaseConfirmationLayoutSpacingItem2 />
-                                    <PremiumPurchaseConfirmationLayoutBenefitBoostRowItem />
-                                    <PremiumPurchaseConfirmationLayoutBenefitRewardsRowItem />
-                                    <PremiumPurchaseConfirmationLayoutBenefitInstantPointsRowItem />
-                                    <PremiumPurchaseConfirmationLayoutBenefitTasksRowItem />
-                                    <PremiumPurchaseConfirmationLayoutBenefitLevelsRowItem />
-                                </>
-                            )}
-                        </Region>
-                    </Region>
-                    <Border
-                        variant="15"
-                        name="purchase_cost_box"
-                        params={1040}
-                        tintColor="#f7e7ff"
-                        layout={{ position: 'absolute', left: 0, width: 366, bottom: 10, height: 38 }}
-                    >
-                        <Region
-                            params={16}
-                            layout={{ position: 'absolute', left: 10, width: 241, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={t('catalog.purchase.confirmation.dialog.cost')}
-                                textOptions={{ fill: '#57356b' }}
-                            />
-                        </Region>
-                        <Region
-                            name="price"
-                            params={262224}
-                            layout={{ position: 'absolute', right: 15, width: 87, top: 8, height: 22, flexDirection: 'row', gap: 3 }}
-                        >
-                            {itemsPrice ?? (
-                                <>
-                                    <PremiumPurchaseConfirmationLayoutPriceCreditsItem />
-                                    <PremiumPurchaseConfirmationLayoutCreditsIconItem />
-                                    <PremiumPurchaseConfirmationLayoutPlusTxtItem />
-                                    <PremiumPurchaseConfirmationLayoutPriceDiamondsItem />
-                                    <PremiumPurchaseConfirmationLayoutDiamondsIconItem />
-                                </>
-                            )}
-                        </Region>
-                    </Border>
-                </Region>
-                <Region
-                    name="buttons"
-                    params={132240}
-                    layout={{ position: 'absolute', left: 12, right: 12, bottom: 36, minHeight: 27, flexDirection: 'row', gap: 146 }}
-                >
-                    {itemsButtons ?? (
-                        <>
-                            <PremiumPurchaseConfirmationLayoutCancelButtonItem />
-                            <PremiumPurchaseConfirmationLayoutConfirmButtonItem />
-                        </>
-                    )}
-                </Region>
+                <PremiumPurchaseConfirmationLayoutContent {...content} />
+                <PremiumPurchaseConfirmationLayoutButtons {...buttons} />
             </Region>
         </Frame>
     );
@@ -370,6 +246,106 @@ export const PremiumPurchaseConfirmationLayoutBenefitLevelsRowItem = ({ captionB
     );
 };
 
+/** Named region `benefits` of PremiumPurchaseConfirmationLayout - configured through the parent's `benefits` prop. */
+export interface PremiumPurchaseConfirmationLayoutBenefitsProps {
+    itemsBenefits?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PremiumPurchaseConfirmationLayoutBenefits = ({ itemsBenefits, layout }: PremiumPurchaseConfirmationLayoutBenefitsProps) => {
+    return (
+        <Region
+            name="benefits"
+            params={8388752}
+            layout={{ position: 'absolute', left: 146, right: 0, top: 3, height: 205, flexDirection: 'column', gap: 5, ...layout }}
+        >
+            {itemsBenefits ?? (
+                <>
+                    <PremiumPurchaseConfirmationLayoutSpacingItem />
+                    <PremiumPurchaseConfirmationLayoutDescriptionTxtItem />
+                    <PremiumPurchaseConfirmationLayoutSpacingItem2 />
+                    <PremiumPurchaseConfirmationLayoutBenefitBoostRowItem />
+                    <PremiumPurchaseConfirmationLayoutBenefitRewardsRowItem />
+                    <PremiumPurchaseConfirmationLayoutBenefitInstantPointsRowItem />
+                    <PremiumPurchaseConfirmationLayoutBenefitTasksRowItem />
+                    <PremiumPurchaseConfirmationLayoutBenefitLevelsRowItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `top_body` of PremiumPurchaseConfirmationLayout - configured through the parent's `topBody` prop. */
+export interface PremiumPurchaseConfirmationLayoutTopBodyProps {
+    benefits?: PremiumPurchaseConfirmationLayoutBenefitsProps;
+    layout?: BoxLayout;
+    srcPremiumIcon?: string;
+}
+
+export const PremiumPurchaseConfirmationLayoutTopBody = ({ benefits, layout, srcPremiumIcon }: PremiumPurchaseConfirmationLayoutTopBodyProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="top_body"
+            params={8388624}
+            layout={{ position: 'absolute', left: 0, width: 366, top: 0, height: 208, ...layout }}
+        >
+            <Border
+                variant="15"
+                name="premium_icon_panel"
+                params={2064}
+                tintColor="#f5def8"
+                layout={{ position: 'absolute', left: 0, width: 132, top: 0, bottom: 0 }}
+            >
+                <Border
+                    variant="15"
+                    name="premium_icon_frame"
+                    params={16}
+                    tintColor="#fff4ff"
+                    layout={{ position: 'absolute', left: 13, width: 106, top: 13, height: 92 }}
+                >
+                    <ThemeImage
+                        name="premium_icon"
+                        params={16}
+                        src={srcPremiumIcon ?? layoutImage('reward_track_premium_track.png')}
+                        layout={{ position: 'absolute', left: 20, width: 67, top: 12, height: 67 }}
+                    />
+                </Border>
+                <Region
+                    params={2064}
+                    layout={{ position: 'absolute', left: 0, width: 132, top: 115, bottom: 12 }}
+                >
+                    <Region
+                        params={3148800}
+                        layout={{ position: 'absolute', left: 0, width: 132, alignSelf: 'center', height: 35, flexDirection: 'column' }}
+                    >
+                        <Region
+                            params={16}
+                            layout={{ width: 116, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                        >
+                            <ThemeText
+                                text={t('reward_track.rewards.premium')}
+                                textOptions={{ fill: '#5d2c82', align: 'center' }}
+                            />
+                        </Region>
+                        <Region
+                            params={16}
+                            layout={{ width: 116, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        >
+                            <ThemeText
+                                text={t('reward_track.rewards.premium.info')}
+                                textOptions={{ fill: '#4d3559', wordWrap: true, wordWrapWidth: 116, align: 'center' }}
+                            />
+                        </Region>
+                    </Region>
+                </Region>
+            </Border>
+            <PremiumPurchaseConfirmationLayoutBenefits {...benefits} />
+        </Region>
+    );
+};
+
 /** Row template `price_credits` of PremiumPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface PremiumPurchaseConfirmationLayoutPriceCreditsItemProps {
     captionPriceCredits?: string;
@@ -456,6 +432,71 @@ export const PremiumPurchaseConfirmationLayoutDiamondsIconItem = ({ layout }: Pr
     );
 };
 
+/** Named region `price` of PremiumPurchaseConfirmationLayout - configured through the parent's `price` prop. */
+export interface PremiumPurchaseConfirmationLayoutPriceProps {
+    itemsPrice?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PremiumPurchaseConfirmationLayoutPrice = ({ itemsPrice, layout }: PremiumPurchaseConfirmationLayoutPriceProps) => {
+    return (
+        <Region
+            name="price"
+            params={262224}
+            layout={{ position: 'absolute', right: 15, width: 87, top: 8, height: 22, flexDirection: 'row', gap: 3, ...layout }}
+        >
+            {itemsPrice ?? (
+                <>
+                    <PremiumPurchaseConfirmationLayoutPriceCreditsItem />
+                    <PremiumPurchaseConfirmationLayoutCreditsIconItem />
+                    <PremiumPurchaseConfirmationLayoutPlusTxtItem />
+                    <PremiumPurchaseConfirmationLayoutPriceDiamondsItem />
+                    <PremiumPurchaseConfirmationLayoutDiamondsIconItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `content` of PremiumPurchaseConfirmationLayout - configured through the parent's `content` prop. */
+export interface PremiumPurchaseConfirmationLayoutContentProps {
+    layout?: BoxLayout;
+    price?: PremiumPurchaseConfirmationLayoutPriceProps;
+    topBody?: PremiumPurchaseConfirmationLayoutTopBodyProps;
+}
+
+export const PremiumPurchaseConfirmationLayoutContent = ({ layout, price, topBody }: PremiumPurchaseConfirmationLayoutContentProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="content"
+            params={8388752}
+            layout={{ position: 'absolute', left: 12, right: 12, top: 20, height: 268, ...layout }}
+        >
+            <PremiumPurchaseConfirmationLayoutTopBody {...topBody} />
+            <Border
+                variant="15"
+                name="purchase_cost_box"
+                params={1040}
+                tintColor="#f7e7ff"
+                layout={{ position: 'absolute', left: 0, width: 366, bottom: 10, height: 38 }}
+            >
+                <Region
+                    params={16}
+                    layout={{ position: 'absolute', left: 10, width: 241, top: 10, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={t('catalog.purchase.confirmation.dialog.cost')}
+                        textOptions={{ fill: '#57356b' }}
+                    />
+                </Region>
+                <PremiumPurchaseConfirmationLayoutPrice {...price} />
+            </Border>
+        </Region>
+    );
+};
+
 /** Row template `cancel_button` of PremiumPurchaseConfirmationLayout - pass real rows through its `items…` slot. */
 export interface PremiumPurchaseConfirmationLayoutCancelButtonItemProps {
     layout?: BoxLayout;
@@ -500,5 +541,28 @@ export const PremiumPurchaseConfirmationLayoutConfirmButtonItem = ({ layout, onC
         >
             {t('reward_track.premium.confirm.buy')}
         </Button>
+    );
+};
+
+/** Named region `buttons` of PremiumPurchaseConfirmationLayout - configured through the parent's `buttons` prop. */
+export interface PremiumPurchaseConfirmationLayoutButtonsProps {
+    itemsButtons?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PremiumPurchaseConfirmationLayoutButtons = ({ itemsButtons, layout }: PremiumPurchaseConfirmationLayoutButtonsProps) => {
+    return (
+        <Region
+            name="buttons"
+            params={132240}
+            layout={{ position: 'absolute', left: 12, right: 12, bottom: 36, minHeight: 27, flexDirection: 'row', gap: 146, ...layout }}
+        >
+            {itemsButtons ?? (
+                <>
+                    <PremiumPurchaseConfirmationLayoutCancelButtonItem />
+                    <PremiumPurchaseConfirmationLayoutConfirmButtonItem />
+                </>
+            )}
+        </Region>
     );
 };

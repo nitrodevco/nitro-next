@@ -5,13 +5,14 @@ import { Border, BoxLayout, Button, Frame, Region, ScrollArea, TextInput } from 
 
 /** Generated from `3068_iro_room_filter_framed_xml` (layout "iro_room_filter_framed", 250x230) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface IroRoomFilterFramedLayoutProps {
+    badwordsItemlist?: IroRoomFilterFramedLayoutBadwordsItemlistProps;
     layout?: BoxLayout;
     onBadwordAddBtn?: () => void;
     onBadwordRemoveBtn?: () => void;
     onClose?: () => void;
 }
 
-export const IroRoomFilterFramedLayout = ({ layout, onBadwordAddBtn, onBadwordRemoveBtn, onClose }: IroRoomFilterFramedLayoutProps) => {
+export const IroRoomFilterFramedLayout = ({ badwordsItemlist, layout, onBadwordAddBtn, onBadwordRemoveBtn, onClose }: IroRoomFilterFramedLayoutProps) => {
     const t = useTranslation();
     const [ roomfilterAddwordTxtValue, setRoomfilterAddwordTxtValue ] = useState('');
 
@@ -45,16 +46,7 @@ export const IroRoomFilterFramedLayout = ({ layout, onBadwordAddBtn, onBadwordRe
                     params={16}
                     layout={{ position: 'absolute', left: 5, width: 235, top: 50, height: 100 }}
                 >
-                    <ScrollArea
-                        orientation="vertical"
-                        layout={{ position: 'absolute', left: 3, width: 226, top: 4, height: 95 }}
-                    >
-                        <Region
-                            name="badwords_itemlist"
-                            params={16}
-                            layout={{ flexDirection: 'column', width: '100%' }}
-                        />
-                    </ScrollArea>
+                    <IroRoomFilterFramedLayoutBadwordsItemlist {...badwordsItemlist} />
                     {/* <scrollbar_vertical> for badwords_itemlist - rendered by that list's ScrollArea */}
                 </Border>
                 <Button
@@ -77,5 +69,25 @@ export const IroRoomFilterFramedLayout = ({ layout, onBadwordAddBtn, onBadwordRe
                 </Button>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `badwords_itemlist` of IroRoomFilterFramedLayout - configured through the parent's `badwordsItemlist` prop. */
+export interface IroRoomFilterFramedLayoutBadwordsItemlistProps {
+    layout?: BoxLayout;
+}
+
+export const IroRoomFilterFramedLayoutBadwordsItemlist = ({ layout }: IroRoomFilterFramedLayoutBadwordsItemlistProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 3, width: 226, top: 4, height: 95, ...layout }}
+        >
+            <Region
+                name="badwords_itemlist"
+                params={16}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            />
+        </ScrollArea>
     );
 };

@@ -6,13 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `891_jukebox_view_xml` (layout "furni_view", 429x345) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface JukeboxViewLayoutProps {
-    itemsButtonList?: ReactNode;
-    itemsInfostandElementList?: ReactNode;
+    buttonList?: JukeboxViewLayoutButtonListProps;
+    infostandElementList?: JukeboxViewLayoutInfostandElementListProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const JukeboxViewLayout = ({ itemsButtonList, itemsInfostandElementList, layout, onClose }: JukeboxViewLayoutProps) => {
+export const JukeboxViewLayout = ({ buttonList, infostandElementList, layout, onClose }: JukeboxViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 429, height: 345, ...layout }}>
             <Region
@@ -33,42 +33,9 @@ export const JukeboxViewLayout = ({ itemsButtonList, itemsInfostandElementList, 
                         onPointerTap={onClose}
                         layout={{ position: 'absolute', left: 168, width: 18, top: 6, height: 16 }}
                     />
-                    <Region
-                        name="infostand_element_list"
-                        params={16}
-                        layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 290, flexDirection: 'column', gap: 5 }}
-                    >
-                        {itemsInfostandElementList ?? (
-                            <>
-                                <JukeboxViewLayoutNameTextItem />
-                                <JukeboxViewLayoutImagesSpacerItem />
-                                <JukeboxViewLayoutImageItem />
-                                <JukeboxViewLayoutOwnerSpacerItem />
-                                <JukeboxViewLayoutOwnerRegionItem />
-                                <JukeboxViewLayoutDescriptionSpacerItem />
-                                <JukeboxViewLayoutNowPlayingTextItem />
-                                <JukeboxViewLayoutTracknameContainerItem />
-                                <JukeboxViewLayoutCreatornameContainerItem />
-                                <JukeboxViewLayoutExpirationTextItem />
-                                <JukeboxViewLayoutPurchaseButtonsItem />
-                            </>
-                        )}
-                    </Region>
+                    <JukeboxViewLayoutInfostandElementList {...infostandElementList} />
                 </Border>
-                <Region
-                    name="button_list"
-                    params={16}
-                    layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10 }}
-                >
-                    {itemsButtonList ?? (
-                        <>
-                            <JukeboxViewLayoutMoveItem />
-                            <JukeboxViewLayoutRotateItem />
-                            <JukeboxViewLayoutPickupItem />
-                            <JukeboxViewLayoutUseItem />
-                        </>
-                    )}
-                </Region>
+                <JukeboxViewLayoutButtonList {...buttonList} />
             </Region>
         </Region>
     );
@@ -433,6 +400,38 @@ export const JukeboxViewLayoutPurchaseButtonsItem = ({ itemsPurchaseButtons, lay
     );
 };
 
+/** Named region `infostand_element_list` of JukeboxViewLayout - configured through the parent's `infostandElementList` prop. */
+export interface JukeboxViewLayoutInfostandElementListProps {
+    itemsInfostandElementList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const JukeboxViewLayoutInfostandElementList = ({ itemsInfostandElementList, layout }: JukeboxViewLayoutInfostandElementListProps) => {
+    return (
+        <Region
+            name="infostand_element_list"
+            params={16}
+            layout={{ position: 'absolute', left: 10, width: 170, top: 10, height: 290, flexDirection: 'column', gap: 5, ...layout }}
+        >
+            {itemsInfostandElementList ?? (
+                <>
+                    <JukeboxViewLayoutNameTextItem />
+                    <JukeboxViewLayoutImagesSpacerItem />
+                    <JukeboxViewLayoutImageItem />
+                    <JukeboxViewLayoutOwnerSpacerItem />
+                    <JukeboxViewLayoutOwnerRegionItem />
+                    <JukeboxViewLayoutDescriptionSpacerItem />
+                    <JukeboxViewLayoutNowPlayingTextItem />
+                    <JukeboxViewLayoutTracknameContainerItem />
+                    <JukeboxViewLayoutCreatornameContainerItem />
+                    <JukeboxViewLayoutExpirationTextItem />
+                    <JukeboxViewLayoutPurchaseButtonsItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
 /** Row template `move` of JukeboxViewLayout - pass real rows through its `items…` slot. */
 export interface JukeboxViewLayoutMoveItemProps {
     layout?: BoxLayout;
@@ -522,5 +521,30 @@ export const JukeboxViewLayoutUseItem = ({ layout, onUse }: JukeboxViewLayoutUse
         >
             {t('infostand.button.use')}
         </Button>
+    );
+};
+
+/** Named region `button_list` of JukeboxViewLayout - configured through the parent's `buttonList` prop. */
+export interface JukeboxViewLayoutButtonListProps {
+    itemsButtonList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const JukeboxViewLayoutButtonList = ({ itemsButtonList, layout }: JukeboxViewLayoutButtonListProps) => {
+    return (
+        <Region
+            name="button_list"
+            params={16}
+            layout={{ width: 1280, height: 25, flexShrink: 0, flexDirection: 'row', gap: 10, ...layout }}
+        >
+            {itemsButtonList ?? (
+                <>
+                    <JukeboxViewLayoutMoveItem />
+                    <JukeboxViewLayoutRotateItem />
+                    <JukeboxViewLayoutPickupItem />
+                    <JukeboxViewLayoutUseItem />
+                </>
+            )}
+        </Region>
     );
 };

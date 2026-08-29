@@ -5,12 +5,13 @@ export interface ProfilerDialogLayoutProps {
     captionFooter?: string;
     captionHeader?: string;
     layout?: BoxLayout;
+    list?: ProfilerDialogLayoutListProps;
     onButtonGc?: () => void;
     onClose?: () => void;
     onFooterEnableToggle?: () => void;
 }
 
-export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, onButtonGc, onClose, onFooterEnableToggle }: ProfilerDialogLayoutProps) => {
+export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, list, onButtonGc, onClose, onFooterEnableToggle }: ProfilerDialogLayoutProps) => {
     return (
         <Frame
             variant="100"
@@ -37,16 +38,7 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, onB
                         params={2193}
                         layout={{ position: 'absolute', left: 4, right: 4, top: 20, bottom: -5 }}
                     >
-                        <ScrollArea
-                            orientation="vertical"
-                            layout={{ position: 'absolute', left: 0, right: 20, top: 0, bottom: 35 }}
-                        >
-                            <Region
-                                name="list"
-                                params={2193}
-                                layout={{ flexDirection: 'column', width: '100%' }}
-                            />
-                        </ScrollArea>
+                        <ProfilerDialogLayoutList {...list} />
                         {/* <scrollbar_vertical> for list - rendered by that list's ScrollArea */}
                         <Region
                             name="footer"
@@ -80,5 +72,25 @@ export const ProfilerDialogLayout = ({ captionFooter, captionHeader, layout, onB
                 </Border>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `list` of ProfilerDialogLayout - configured through the parent's `list` prop. */
+export interface ProfilerDialogLayoutListProps {
+    layout?: BoxLayout;
+}
+
+export const ProfilerDialogLayoutList = ({ layout }: ProfilerDialogLayoutListProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 0, right: 20, top: 0, bottom: 35, ...layout }}
+        >
+            <Region
+                name="list"
+                params={2193}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            />
+        </ScrollArea>
     );
 };

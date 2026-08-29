@@ -6,12 +6,13 @@ export interface MeMenuSettingsMenu_1256LayoutProps {
     captionIdentityText?: string;
     captionSettingsTitle?: string;
     layout?: BoxLayout;
+    line?: MeMenuSettingsMenu_1256LayoutLineProps;
     onBack?: () => void;
     onCharacterSettings?: () => void;
     onSoundSettings?: () => void;
 }
 
-export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSettingsTitle, layout, onBack, onCharacterSettings, onSoundSettings }: MeMenuSettingsMenu_1256LayoutProps) => {
+export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSettingsTitle, layout, line, onBack, onCharacterSettings, onSoundSettings }: MeMenuSettingsMenu_1256LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -32,11 +33,7 @@ export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSett
                         textOptions={{ fill: '#ffffff' }}
                     />
                 </Region>
-                <Region
-                    name="line"
-                    params={16}
-                    layout={{ position: 'absolute', left: 5, width: 160, top: 22, height: 1 }}
-                />
+                <MeMenuSettingsMenu_1256LayoutLine {...line} />
                 <Button
                     variant="3"
                     name="character_settings"
@@ -77,5 +74,20 @@ export const MeMenuSettingsMenu_1256Layout = ({ captionIdentityText, captionSett
                 </Button>
             </Border>
         </Region>
+    );
+};
+
+/** Named region `line` of MeMenuSettingsMenu_1256Layout - configured through the parent's `line` prop. */
+export interface MeMenuSettingsMenu_1256LayoutLineProps {
+    layout?: BoxLayout;
+}
+
+export const MeMenuSettingsMenu_1256LayoutLine = ({ layout }: MeMenuSettingsMenu_1256LayoutLineProps) => {
+    return (
+        <Region
+            name="line"
+            params={16}
+            layout={{ position: 'absolute', left: 5, width: 160, top: 22, height: 1, ...layout }}
+        />
     );
 };

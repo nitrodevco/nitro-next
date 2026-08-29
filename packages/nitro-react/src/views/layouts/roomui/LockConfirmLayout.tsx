@@ -6,14 +6,12 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `855_lock_confirm_xml` (layout "lock_confirm", 309x198) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LockConfirmLayoutProps {
-    itemsTopList?: ReactNode;
     layout?: BoxLayout;
-    onCancelButton?: () => void;
     onClose?: () => void;
-    onConfirmButton?: () => void;
+    topList?: LockConfirmLayoutTopListProps;
 }
 
-export const LockConfirmLayout = ({ itemsTopList, layout, onCancelButton, onClose, onConfirmButton }: LockConfirmLayoutProps) => {
+export const LockConfirmLayout = ({ layout, onClose, topList }: LockConfirmLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -25,48 +23,7 @@ export const LockConfirmLayout = ({ itemsTopList, layout, onCancelButton, onClos
             layout={{ width: 309, height: 198, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="top_list"
-                    params={8536080}
-                    layout={{ position: 'absolute', left: 9, top: 1, flexDirection: 'column', gap: 5 }}
-                >
-                    {itemsTopList ?? (
-                        <>
-                            <LockConfirmLayoutSubtitleItem />
-                            <LockConfirmLayoutOtherLockedContainerItem />
-                        </>
-                    )}
-                    <ThemeImage
-                        params={16}
-                        src={layoutImage('illumina_horizontal_separator.png')}
-                        layout={{ width: 285, height: 2, flexShrink: 0 }}
-                    />
-                    <Region
-                        params={16}
-                        layout={{ width: 288, height: 46, flexShrink: 0 }}
-                    >
-                        <Button
-                            variant="101"
-                            name="cancel_button"
-                            params={131089}
-                            tintColor="#bbbbbb"
-                            onPointerTap={onCancelButton}
-                            layout={{ position: 'absolute', left: 0, width: 140, top: -2, height: 48, maxWidth: 140 }}
-                        >
-                            {t('friend.furniture.confirm.lock.button.cancel')}
-                        </Button>
-                        <Button
-                            variant="101"
-                            name="confirm_button"
-                            params={393297}
-                            tintColor="#bbbbbb"
-                            onPointerTap={onConfirmButton}
-                            layout={{ position: 'absolute', right: 4, width: 140, top: -2, height: 48, maxWidth: 140 }}
-                        >
-                            {t('friend.furniture.confirm.lock.button.confirm')}
-                        </Button>
-                    </Region>
-                </Region>
+                <LockConfirmLayoutTopList {...topList} />
             </Region>
         </Frame>
     );
@@ -127,6 +84,63 @@ export const LockConfirmLayoutOtherLockedContainerItem = ({ captionMessage, layo
                     text={captionMessage ?? t('friend.furniture.confirm.lock.other.locked')}
                     textOptions={{ wordWrap: true, wordWrapWidth: 291, align: 'center' }}
                 />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `top_list` of LockConfirmLayout - configured through the parent's `topList` prop. */
+export interface LockConfirmLayoutTopListProps {
+    itemsTopList?: ReactNode;
+    layout?: BoxLayout;
+    onCancelButton?: () => void;
+    onConfirmButton?: () => void;
+}
+
+export const LockConfirmLayoutTopList = ({ itemsTopList, layout, onCancelButton, onConfirmButton }: LockConfirmLayoutTopListProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="top_list"
+            params={8536080}
+            layout={{ position: 'absolute', left: 9, top: 1, flexDirection: 'column', gap: 5, ...layout }}
+        >
+            {itemsTopList ?? (
+                <>
+                    <LockConfirmLayoutSubtitleItem />
+                    <LockConfirmLayoutOtherLockedContainerItem />
+                </>
+            )}
+            <ThemeImage
+                params={16}
+                src={layoutImage('illumina_horizontal_separator.png')}
+                layout={{ width: 285, height: 2, flexShrink: 0 }}
+            />
+            <Region
+                params={16}
+                layout={{ width: 288, height: 46, flexShrink: 0 }}
+            >
+                <Button
+                    variant="101"
+                    name="cancel_button"
+                    params={131089}
+                    tintColor="#bbbbbb"
+                    onPointerTap={onCancelButton}
+                    layout={{ position: 'absolute', left: 0, width: 140, top: -2, height: 48, maxWidth: 140 }}
+                >
+                    {t('friend.furniture.confirm.lock.button.cancel')}
+                </Button>
+                <Button
+                    variant="101"
+                    name="confirm_button"
+                    params={393297}
+                    tintColor="#bbbbbb"
+                    onPointerTap={onConfirmButton}
+                    layout={{ position: 'absolute', right: 4, width: 140, top: -2, height: 48, maxWidth: 140 }}
+                >
+                    {t('friend.furniture.confirm.lock.button.confirm')}
+                </Button>
             </Region>
         </Region>
     );

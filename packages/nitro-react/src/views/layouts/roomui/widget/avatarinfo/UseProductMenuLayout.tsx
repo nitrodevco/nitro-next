@@ -5,14 +5,11 @@ import { BoxLayout, Bubble, ContainerButton, Icon, Region, ThemeText } from '#ba
 
 /** Generated from `1029_use_product_menu_xml` (layout "context_menu_widget", 115x302) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface UseProductMenuLayoutProps {
-    captionName?: string;
-    itemsButtons?: ReactNode;
+    border?: UseProductMenuLayoutBorderProps;
     layout?: BoxLayout;
-    onMinimize?: () => void;
-    onProfileLink?: () => void;
 }
 
-export const UseProductMenuLayout = ({ captionName, itemsButtons, layout, onMinimize, onProfileLink }: UseProductMenuLayoutProps) => {
+export const UseProductMenuLayout = ({ border, layout }: UseProductMenuLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 115, height: 302, ...layout }}>
             <Bubble
@@ -21,70 +18,39 @@ export const UseProductMenuLayout = ({ captionName, itemsButtons, layout, onMini
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 115, bottom: -9, height: 302 }}
             >
-                <Region
-                    name="border"
-                    params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 292, justifyContent: 'center' }}
-                >
-                    <Region
-                        name="profile_link"
-                        params={1}
-                        onPointerTap={onProfileLink}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="name"
-                            params={208}
-                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionName ?? 'my_name_here'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                    </Region>
-                    <Region
-                        params={144}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
-                    />
-                    <Region
-                        name="buttons"
-                        params={8519888}
-                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, minWidth: 104, top: 28, minHeight: 242, flexDirection: 'column', gap: 1 }}
-                    >
-                        {itemsButtons ?? (
-                            <>
-                                <UseProductMenuLayoutUseProductItem />
-                                <UseProductMenuLayoutUseProductShampooItem />
-                                <UseProductMenuLayoutUseProductCustomPartItem />
-                                <UseProductMenuLayoutUseProductCustomPartShampooItem />
-                                <UseProductMenuLayoutUseProductSaddleItem />
-                                <UseProductMenuLayoutReplaceProductSaddleItem />
-                                <UseProductMenuLayoutReviveMonsterplantItem />
-                                <UseProductMenuLayoutRebreedMonsterplantItem />
-                                <UseProductMenuLayoutFertilizeMonsterplantItem />
-                            </>
-                        )}
-                    </Region>
-                    <Region
-                        name="minimize"
-                        params={1041}
-                        onPointerTap={onMinimize}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 2, width: 100, bottom: 3, height: 18 }}
-                    >
-                        <Icon
-                            variant="7"
-                            name="icon"
-                            params={16}
-                            layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
-                        />
-                    </Region>
-                </Region>
+                <UseProductMenuLayoutBorder {...border} />
             </Bubble>
+        </Region>
+    );
+};
+
+/** Named region `profile_link` of UseProductMenuLayout - configured through the parent's `profileLink` prop. */
+export interface UseProductMenuLayoutProfileLinkProps {
+    captionName?: string;
+    layout?: BoxLayout;
+    onProfileLink?: () => void;
+}
+
+export const UseProductMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: UseProductMenuLayoutProfileLinkProps) => {
+    return (
+        <Region
+            name="profile_link"
+            params={1}
+            onPointerTap={onProfileLink}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="name"
+                params={208}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionName ?? 'my_name_here'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
         </Region>
     );
 };
@@ -463,6 +429,88 @@ export const UseProductMenuLayoutFertilizeMonsterplantItem = ({ captionLabel, la
                     />
                 </Region>
             </ContainerButton>
+        </Region>
+    );
+};
+
+/** Named region `buttons` of UseProductMenuLayout - configured through the parent's `buttons` prop. */
+export interface UseProductMenuLayoutButtonsProps {
+    itemsButtons?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const UseProductMenuLayoutButtons = ({ itemsButtons, layout }: UseProductMenuLayoutButtonsProps) => {
+    return (
+        <Region
+            name="buttons"
+            params={8519888}
+            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, minWidth: 104, top: 28, minHeight: 242, flexDirection: 'column', gap: 1, ...layout }}
+        >
+            {itemsButtons ?? (
+                <>
+                    <UseProductMenuLayoutUseProductItem />
+                    <UseProductMenuLayoutUseProductShampooItem />
+                    <UseProductMenuLayoutUseProductCustomPartItem />
+                    <UseProductMenuLayoutUseProductCustomPartShampooItem />
+                    <UseProductMenuLayoutUseProductSaddleItem />
+                    <UseProductMenuLayoutReplaceProductSaddleItem />
+                    <UseProductMenuLayoutReviveMonsterplantItem />
+                    <UseProductMenuLayoutRebreedMonsterplantItem />
+                    <UseProductMenuLayoutFertilizeMonsterplantItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `minimize` of UseProductMenuLayout - configured through the parent's `minimize` prop. */
+export interface UseProductMenuLayoutMinimizeProps {
+    layout?: BoxLayout;
+    onMinimize?: () => void;
+}
+
+export const UseProductMenuLayoutMinimize = ({ layout, onMinimize }: UseProductMenuLayoutMinimizeProps) => {
+    return (
+        <Region
+            name="minimize"
+            params={1041}
+            onPointerTap={onMinimize}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 2, width: 100, bottom: 3, height: 18, ...layout }}
+        >
+            <Icon
+                variant="7"
+                name="icon"
+                params={16}
+                layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `border` of UseProductMenuLayout - configured through the parent's `border` prop. */
+export interface UseProductMenuLayoutBorderProps {
+    buttons?: UseProductMenuLayoutButtonsProps;
+    layout?: BoxLayout;
+    minimize?: UseProductMenuLayoutMinimizeProps;
+    profileLink?: UseProductMenuLayoutProfileLinkProps;
+}
+
+export const UseProductMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: UseProductMenuLayoutBorderProps) => {
+    return (
+        <Region
+            name="border"
+            params={12582928}
+            layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 292, justifyContent: 'center', ...layout }}
+        >
+            <UseProductMenuLayoutProfileLink {...profileLink} />
+            <Region
+                params={144}
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
+            />
+            <UseProductMenuLayoutButtons {...buttons} />
+            <UseProductMenuLayoutMinimize {...minimize} />
         </Region>
     );
 };

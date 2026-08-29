@@ -6,14 +6,14 @@ export interface SnowwarLeaderboardEntryLayoutProps {
     captionName?: string;
     captionRank?: string;
     captionScore?: string;
+    imageRegion?: SnowwarLeaderboardEntryLayoutImageRegionProps;
     layout?: BoxLayout;
-    onImageRegion?: () => void;
     srcAvatarImage?: string;
     srcDivider?: string;
     srcHighlight?: string;
 }
 
-export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captionScore, layout, onImageRegion, srcAvatarImage, srcDivider, srcHighlight }: SnowwarLeaderboardEntryLayoutProps) => {
+export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captionScore, imageRegion, layout, srcAvatarImage, srcDivider, srcHighlight }: SnowwarLeaderboardEntryLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 356, height: 42, ...layout }}>
             <Region
@@ -37,13 +37,7 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
                         textOptions={{ fill: '#1077ac', align: 'center' }}
                     />
                 </Region>
-                <Region
-                    name="imageRegion"
-                    params={17}
-                    onPointerTap={onImageRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 53, width: 44, top: 1, height: 40 }}
-                />
+                <SnowwarLeaderboardEntryLayoutImageRegion {...imageRegion} />
                 <ThemeImage
                     name="avatarImage"
                     params={2064}
@@ -79,5 +73,23 @@ export const SnowwarLeaderboardEntryLayout = ({ captionName, captionRank, captio
                 />
             </Region>
         </Region>
+    );
+};
+
+/** Named region `imageRegion` of SnowwarLeaderboardEntryLayout - configured through the parent's `imageRegion` prop. */
+export interface SnowwarLeaderboardEntryLayoutImageRegionProps {
+    layout?: BoxLayout;
+    onImageRegion?: () => void;
+}
+
+export const SnowwarLeaderboardEntryLayoutImageRegion = ({ layout, onImageRegion }: SnowwarLeaderboardEntryLayoutImageRegionProps) => {
+    return (
+        <Region
+            name="imageRegion"
+            params={17}
+            onPointerTap={onImageRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 53, width: 44, top: 1, height: 40, ...layout }}
+        />
     );
 };

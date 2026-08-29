@@ -2,24 +2,48 @@ import { BoxLayout, Region } from '#base/theme';
 
 /** Generated from `1633_layout_marketplace_xml` (layout "ctlg_marketplace", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutMarketplace_1633LayoutProps {
+    ctlgMarketplace?: LayoutMarketplace_1633LayoutCtlgMarketplaceProps;
     layout?: BoxLayout;
 }
 
-export const LayoutMarketplace_1633Layout = ({ layout }: LayoutMarketplace_1633LayoutProps) => {
+export const LayoutMarketplace_1633Layout = ({ ctlgMarketplace, layout }: LayoutMarketplace_1633LayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
-            <Region
-                name="ctlg_marketplace"
-                params={16}
-                backgroundColor="#ffffff"
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460 }}
-            >
-                <Region
-                    name="marketPlaceWidget"
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 70, height: 390 }}
-                />
-            </Region>
+            <LayoutMarketplace_1633LayoutCtlgMarketplace {...ctlgMarketplace} />
+        </Region>
+    );
+};
+
+/** Named region `marketPlaceWidget` of LayoutMarketplace_1633Layout - configured through the parent's `marketPlaceWidget` prop. */
+export interface LayoutMarketplace_1633LayoutMarketPlaceWidgetProps {
+    layout?: BoxLayout;
+}
+
+export const LayoutMarketplace_1633LayoutMarketPlaceWidget = ({ layout }: LayoutMarketplace_1633LayoutMarketPlaceWidgetProps) => {
+    return (
+        <Region
+            name="marketPlaceWidget"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 360, top: 70, height: 390, ...layout }}
+        />
+    );
+};
+
+/** Named region `ctlg_marketplace` of LayoutMarketplace_1633Layout - configured through the parent's `ctlgMarketplace` prop. */
+export interface LayoutMarketplace_1633LayoutCtlgMarketplaceProps {
+    layout?: BoxLayout;
+    marketPlaceWidget?: LayoutMarketplace_1633LayoutMarketPlaceWidgetProps;
+}
+
+export const LayoutMarketplace_1633LayoutCtlgMarketplace = ({ layout, marketPlaceWidget }: LayoutMarketplace_1633LayoutCtlgMarketplaceProps) => {
+    return (
+        <Region
+            name="ctlg_marketplace"
+            params={16}
+            backgroundColor="#ffffff"
+            layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 460, ...layout }}
+        >
+            <LayoutMarketplace_1633LayoutMarketPlaceWidget {...marketPlaceWidget} />
         </Region>
     );
 };

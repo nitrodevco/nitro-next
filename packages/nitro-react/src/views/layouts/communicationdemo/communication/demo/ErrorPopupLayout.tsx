@@ -5,12 +5,12 @@ import { Border, BoxLayout, Button, CheckBox, Frame, Region, TextInput, ThemeTex
 
 /** Generated from `2879_error_popup_xml` (layout "error_popup", 300x328) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ErrorPopupLayoutProps {
-    itemsContentList?: ReactNode;
+    contentList?: ErrorPopupLayoutContentListProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const ErrorPopupLayout = ({ itemsContentList, layout, onClose }: ErrorPopupLayoutProps) => {
+export const ErrorPopupLayout = ({ contentList, layout, onClose }: ErrorPopupLayoutProps) => {
     return (
         <Frame
             variant="3"
@@ -21,21 +21,7 @@ export const ErrorPopupLayout = ({ itemsContentList, layout, onClose }: ErrorPop
             layout={{ width: 300, height: 328, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="content_list"
-                    params={144}
-                    layout={{ position: 'absolute', left: 17, right: 18, top: 10, height: 271, flexDirection: 'column', gap: 10 }}
-                >
-                    {itemsContentList ?? (
-                        <>
-                            <ErrorPopupLayoutErrorMsgTextItem />
-                            <ErrorPopupLayoutInfoTextItem />
-                            <ErrorPopupLayoutErrorInfoBorderItem />
-                            <ErrorPopupLayoutDoNotShowContainerItem />
-                            <ErrorPopupLayoutButtonRowItem />
-                        </>
-                    )}
-                </Region>
+                <ErrorPopupLayoutContentList {...contentList} />
             </Region>
         </Frame>
     );
@@ -204,6 +190,32 @@ export const ErrorPopupLayoutButtonRowItem = ({ itemsButtonRow, layout }: ErrorP
                 <>
                     <ErrorPopupLayoutOkButtonItem />
                     <ErrorPopupLayoutCopyButtonItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `content_list` of ErrorPopupLayout - configured through the parent's `contentList` prop. */
+export interface ErrorPopupLayoutContentListProps {
+    itemsContentList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const ErrorPopupLayoutContentList = ({ itemsContentList, layout }: ErrorPopupLayoutContentListProps) => {
+    return (
+        <Region
+            name="content_list"
+            params={144}
+            layout={{ position: 'absolute', left: 17, right: 18, top: 10, height: 271, flexDirection: 'column', gap: 10, ...layout }}
+        >
+            {itemsContentList ?? (
+                <>
+                    <ErrorPopupLayoutErrorMsgTextItem />
+                    <ErrorPopupLayoutInfoTextItem />
+                    <ErrorPopupLayoutErrorInfoBorderItem />
+                    <ErrorPopupLayoutDoNotShowContainerItem />
+                    <ErrorPopupLayoutButtonRowItem />
                 </>
             )}
         </Region>

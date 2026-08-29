@@ -3,108 +3,180 @@ import { Border, BoxLayout, Region, ScrollArea, ThemeImage, ThemeText } from '#b
 
 /** Generated from `1587_layout_single_bundle_xml` (layout "ctlg_single_bundle", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface LayoutSingleBundle_1587LayoutProps {
+    ctlgSingleBundle?: LayoutSingleBundle_1587LayoutCtlgSingleBundleProps;
+    layout?: BoxLayout;
+}
+
+export const LayoutSingleBundle_1587Layout = ({ ctlgSingleBundle, layout }: LayoutSingleBundle_1587LayoutProps) => {
+    return (
+        <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
+            <LayoutSingleBundle_1587LayoutCtlgSingleBundle {...ctlgSingleBundle} />
+        </Region>
+    );
+};
+
+/** Named region `bundleGrid` of LayoutSingleBundle_1587Layout - configured through the parent's `bundleGrid` prop. */
+export interface LayoutSingleBundle_1587LayoutBundleGridProps {
+    layout?: BoxLayout;
+}
+
+export const LayoutSingleBundle_1587LayoutBundleGrid = ({ layout }: LayoutSingleBundle_1587LayoutBundleGridProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 4, width: 178, top: 3, bottom: 6, ...layout }}
+        >
+            <Region
+                name="bundleGrid"
+                params={2064}
+                layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
+            />
+        </ScrollArea>
+    );
+};
+
+/** Named region `addOnBadgeViewWidget` of LayoutSingleBundle_1587Layout - configured through the parent's `addOnBadgeViewWidget` prop. */
+export interface LayoutSingleBundle_1587LayoutAddOnBadgeViewWidgetProps {
+    layout?: BoxLayout;
+}
+
+export const LayoutSingleBundle_1587LayoutAddOnBadgeViewWidget = ({ layout }: LayoutSingleBundle_1587LayoutAddOnBadgeViewWidgetProps) => {
+    return (
+        <Region
+            name="addOnBadgeViewWidget"
+            layout={{ position: 'absolute', left: 12, width: 40, top: 125, height: 40, ...layout }}
+        />
+    );
+};
+
+/** Named region `fake_productimage` of LayoutSingleBundle_1587Layout - configured through the parent's `fakeProductimage` prop. */
+export interface LayoutSingleBundle_1587LayoutFakeProductimageProps {
+    layout?: BoxLayout;
+}
+
+export const LayoutSingleBundle_1587LayoutFakeProductimage = ({ layout }: LayoutSingleBundle_1587LayoutFakeProductimageProps) => {
+    return (
+        <Region
+            name="fake_productimage"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 30, ...layout }}
+        />
+    );
+};
+
+/** Named region `simplePriceWidget` of LayoutSingleBundle_1587Layout - configured through the parent's `simplePriceWidget` prop. */
+export interface LayoutSingleBundle_1587LayoutSimplePriceWidgetProps {
+    fakeProductimage?: LayoutSingleBundle_1587LayoutFakeProductimageProps;
+    layout?: BoxLayout;
+}
+
+export const LayoutSingleBundle_1587LayoutSimplePriceWidget = ({ fakeProductimage, layout }: LayoutSingleBundle_1587LayoutSimplePriceWidgetProps) => {
+    return (
+        <Region
+            name="simplePriceWidget"
+            layout={{ position: 'absolute', left: 74, width: 83, top: 125, height: 30, ...layout }}
+        >
+            <LayoutSingleBundle_1587LayoutFakeProductimage {...fakeProductimage} />
+        </Region>
+    );
+};
+
+/** Named region `purchaseWidget` of LayoutSingleBundle_1587Layout - configured through the parent's `purchaseWidget` prop. */
+export interface LayoutSingleBundle_1587LayoutPurchaseWidgetProps {
+    layout?: BoxLayout;
+}
+
+export const LayoutSingleBundle_1587LayoutPurchaseWidget = ({ layout }: LayoutSingleBundle_1587LayoutPurchaseWidgetProps) => {
+    return (
+        <Region
+            name="purchaseWidget"
+            params={1040}
+            layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30, ...layout }}
+        />
+    );
+};
+
+/** Named region `ctlg_single_bundle` of LayoutSingleBundle_1587Layout - configured through the parent's `ctlgSingleBundle` prop. */
+export interface LayoutSingleBundle_1587LayoutCtlgSingleBundleProps {
+    addOnBadgeViewWidget?: LayoutSingleBundle_1587LayoutAddOnBadgeViewWidgetProps;
+    bundleGrid?: LayoutSingleBundle_1587LayoutBundleGridProps;
     captionCtlgDescription?: string;
     captionCtlgSpecialTxt?: string;
     captionCtlgText1?: string;
     layout?: BoxLayout;
+    purchaseWidget?: LayoutSingleBundle_1587LayoutPurchaseWidgetProps;
+    simplePriceWidget?: LayoutSingleBundle_1587LayoutSimplePriceWidgetProps;
     srcCtlgSpecialImg?: string;
     srcCtlgTeaserimg1?: string;
 }
 
-export const LayoutSingleBundle_1587Layout = ({ captionCtlgDescription, captionCtlgSpecialTxt, captionCtlgText1, layout, srcCtlgSpecialImg, srcCtlgTeaserimg1 }: LayoutSingleBundle_1587LayoutProps) => {
+export const LayoutSingleBundle_1587LayoutCtlgSingleBundle = ({ addOnBadgeViewWidget, bundleGrid, captionCtlgDescription, captionCtlgSpecialTxt, captionCtlgText1, layout, purchaseWidget, simplePriceWidget, srcCtlgSpecialImg, srcCtlgTeaserimg1 }: LayoutSingleBundle_1587LayoutCtlgSingleBundleProps) => {
     const t = useTranslation();
 
     return (
-        <Region layout={{ position: 'relative', width: 360, height: 460, ...layout }}>
+        <Region
+            name="ctlg_single_bundle"
+            params={2064}
+            layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0, ...layout }}
+        >
             <Region
-                name="ctlg_single_bundle"
-                params={2064}
-                layout={{ position: 'absolute', left: 0, width: 360, top: 0, bottom: 0 }}
+                name="ctlg_description"
+                params={1}
+                layout={{ position: 'absolute', left: 15, width: 329, top: 13, height: 62, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
             >
-                <Region
-                    name="ctlg_description"
-                    params={1}
-                    layout={{ position: 'absolute', left: 15, width: 329, top: 13, height: 62, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgDescription ?? t('lorem.html')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 329 }}
-                    />
-                </Region>
-                <Region
-                    name="ctlg_special_txt"
-                    params={1}
-                    layout={{ position: 'absolute', left: 159, width: 173, top: 92, height: 25, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCtlgSpecialTxt ?? t('lorem.html')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 173 }}
-                    />
-                </Region>
-                <Border
-                    variant="6"
-                    name="bundleGridScrollWidget"
-                    tags={[ 'EMBEDDED' ]}
-                    params={2064}
-                    layout={{ position: 'absolute', left: 164, width: 186, top: 117, bottom: 96 }}
-                >
-                    <ScrollArea
-                        orientation="vertical"
-                        layout={{ position: 'absolute', left: 4, width: 178, top: 3, bottom: 6 }}
-                    >
-                        <Region
-                            name="bundleGrid"
-                            params={2064}
-                            layout={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%' }}
-                        />
-                    </ScrollArea>
-                </Border>
-                <ThemeImage
-                    name="ctlg_teaserimg_1"
-                    params={16}
-                    src={srcCtlgTeaserimg1 ?? '${image.library.url}catalogue/small_movie_roomteaser.gif'}
-                    layout={{ position: 'absolute', left: 6, width: 157, top: 119, height: 238 }}
-                />
-                <Border
-                    variant="3"
-                    params={1040}
-                    tintColor="#e0e0e0"
-                    layout={{ position: 'absolute', left: 17, width: 324, bottom: 35, height: 40 }}
-                >
-                    <ThemeImage
-                        name="ctlg_special_img"
-                        params={16}
-                        src={srcCtlgSpecialImg}
-                        layout={{ position: 'absolute', left: 10, width: 32, top: 5, height: 30 }}
-                    />
-                    <Region
-                        name="ctlg_text_1"
-                        params={1}
-                        layout={{ position: 'absolute', left: 51, width: 256, top: 10, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionCtlgText1 ?? t('lorem.html')} />
-                    </Region>
-                </Border>
-                <Region
-                    name="addOnBadgeViewWidget"
-                    layout={{ position: 'absolute', left: 12, width: 40, top: 125, height: 40 }}
-                />
-                <Region
-                    name="simplePriceWidget"
-                    layout={{ position: 'absolute', left: 74, width: 83, top: 125, height: 30 }}
-                >
-                    <Region
-                        name="fake_productimage"
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 83, top: 0, height: 30 }}
-                    />
-                </Region>
-                <Region
-                    name="purchaseWidget"
-                    params={1040}
-                    layout={{ position: 'absolute', left: 0, width: 360, bottom: 0, height: 30 }}
+                <ThemeText
+                    text={captionCtlgDescription ?? t('lorem.html')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 329 }}
                 />
             </Region>
+            <Region
+                name="ctlg_special_txt"
+                params={1}
+                layout={{ position: 'absolute', left: 159, width: 173, top: 92, height: 25, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCtlgSpecialTxt ?? t('lorem.html')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 173 }}
+                />
+            </Region>
+            <Border
+                variant="6"
+                name="bundleGridScrollWidget"
+                tags={[ 'EMBEDDED' ]}
+                params={2064}
+                layout={{ position: 'absolute', left: 164, width: 186, top: 117, bottom: 96 }}
+            >
+                <LayoutSingleBundle_1587LayoutBundleGrid {...bundleGrid} />
+            </Border>
+            <ThemeImage
+                name="ctlg_teaserimg_1"
+                params={16}
+                src={srcCtlgTeaserimg1 ?? '${image.library.url}catalogue/small_movie_roomteaser.gif'}
+                layout={{ position: 'absolute', left: 6, width: 157, top: 119, height: 238 }}
+            />
+            <Border
+                variant="3"
+                params={1040}
+                tintColor="#e0e0e0"
+                layout={{ position: 'absolute', left: 17, width: 324, bottom: 35, height: 40 }}
+            >
+                <ThemeImage
+                    name="ctlg_special_img"
+                    params={16}
+                    src={srcCtlgSpecialImg}
+                    layout={{ position: 'absolute', left: 10, width: 32, top: 5, height: 30 }}
+                />
+                <Region
+                    name="ctlg_text_1"
+                    params={1}
+                    layout={{ position: 'absolute', left: 51, width: 256, top: 10, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionCtlgText1 ?? t('lorem.html')} />
+                </Region>
+            </Border>
+            <LayoutSingleBundle_1587LayoutAddOnBadgeViewWidget {...addOnBadgeViewWidget} />
+            <LayoutSingleBundle_1587LayoutSimplePriceWidget {...simplePriceWidget} />
+            <LayoutSingleBundle_1587LayoutPurchaseWidget {...purchaseWidget} />
         </Region>
     );
 };

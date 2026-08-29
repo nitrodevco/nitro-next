@@ -6,17 +6,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `103_AchievementsResolutions_xml` (layout "AchievementResolutions", 312x525) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface AchievementsResolutionsLayoutProps {
-    captionAchievementDescription?: string;
-    captionAchievementLevel?: string;
-    captionAchievementName?: string;
     captionDisabledReason?: string;
-    itemsElementList?: ReactNode;
+    elementList?: AchievementsResolutionsLayoutElementListProps;
     layout?: BoxLayout;
     onClose?: () => void;
     onSaveButton?: () => void;
 }
 
-export const AchievementsResolutionsLayout = ({ captionAchievementDescription, captionAchievementLevel, captionAchievementName, captionDisabledReason, itemsElementList, layout, onClose, onSaveButton }: AchievementsResolutionsLayoutProps) => {
+export const AchievementsResolutionsLayout = ({ captionDisabledReason, elementList, layout, onClose, onSaveButton }: AchievementsResolutionsLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -33,87 +30,7 @@ export const AchievementsResolutionsLayout = ({ captionAchievementDescription, c
                     params={16}
                     layout={{ position: 'absolute', left: 0, width: 310, top: 50, height: 389, minWidth: 310, maxWidth: 310 }}
                 />
-                <Region
-                    name="element_list"
-                    params={147472}
-                    layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 310, flexDirection: 'column', gap: 10 }}
-                >
-                    {itemsElementList ?? (
-                        <>
-                            <AchievementsResolutionsLayoutTitleItem />
-                            <AchievementsResolutionsLayoutAchievementsItem />
-                        </>
-                    )}
-                    <Region
-                        params={147472}
-                        layout={{ flexShrink: 0, flexDirection: 'row' }}
-                    >
-                        <Region
-                            params={147472}
-                            layout={{ width: 75, height: 90, flexShrink: 0, justifyContent: 'center' }}
-                        >
-                            <ThemeImage
-                                params={786448}
-                                src={layoutImage('common_star.png')}
-                                layout={{ position: 'absolute', width: 75, top: 0, height: 90, minHeight: 90, maxHeight: 90 }}
-                            />
-                            <WidgetSlot
-                                widgetType="badge_image"
-                                name="achievement_badge"
-                                params={16}
-                                options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                                layout={{ position: 'absolute', left: 13, width: 50, top: 14, height: 50 }}
-                            />
-                        </Region>
-                        <Region
-                            params={147472}
-                            layout={{ flexShrink: 0, maxWidth: 220, flexDirection: 'column', gap: 5 }}
-                        >
-                            <Region
-                                name="achievement.name"
-                                params={16}
-                                layout={{ width: 220, height: 17, flexShrink: 0, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionAchievementName ?? 'Achievement name '}
-                                    textStyle="text-style-il-heading-2"
-                                    textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                                />
-                            </Region>
-                            <Region
-                                name="achievement.description"
-                                params={16}
-                                layout={{ width: 220, height: 16, flexShrink: 0, minWidth: 0, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionAchievementDescription ?? 'Achievement description'}
-                                    textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
-                                />
-                            </Region>
-                            <Region
-                                params={16}
-                                layout={{ width: 220, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2 }}
-                            >
-                                <Region
-                                    params={16}
-                                    layout={{ width: 153, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText text={t('resolution.achievement.level')} />
-                                </Region>
-                                <Region
-                                    name="achievement.level"
-                                    params={16}
-                                    layout={{ width: 173, height: 15, flexShrink: 0, minWidth: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                >
-                                    <ThemeText
-                                        text={captionAchievementLevel ?? '0'}
-                                        textStyle="text-style-il-heading-3"
-                                    />
-                                </Region>
-                            </Region>
-                        </Region>
-                    </Region>
-                </Region>
+                <AchievementsResolutionsLayoutElementList {...elementList} />
                 <Button
                     variant="102"
                     name="save_button"
@@ -181,5 +98,102 @@ export const AchievementsResolutionsLayoutAchievementsItem = ({ layout }: Achiev
             params={16}
             layout={{ width: 290, height: 230, flexShrink: 0, flexDirection: 'row', flexWrap: 'wrap', gap: 6, ...layout }}
         />
+    );
+};
+
+/** Named region `element_list` of AchievementsResolutionsLayout - configured through the parent's `elementList` prop. */
+export interface AchievementsResolutionsLayoutElementListProps {
+    captionAchievementDescription?: string;
+    captionAchievementLevel?: string;
+    captionAchievementName?: string;
+    itemsElementList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const AchievementsResolutionsLayoutElementList = ({ captionAchievementDescription, captionAchievementLevel, captionAchievementName, itemsElementList, layout }: AchievementsResolutionsLayoutElementListProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="element_list"
+            params={147472}
+            layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 310, flexDirection: 'column', gap: 10, ...layout }}
+        >
+            {itemsElementList ?? (
+                <>
+                    <AchievementsResolutionsLayoutTitleItem />
+                    <AchievementsResolutionsLayoutAchievementsItem />
+                </>
+            )}
+            <Region
+                params={147472}
+                layout={{ flexShrink: 0, flexDirection: 'row' }}
+            >
+                <Region
+                    params={147472}
+                    layout={{ width: 75, height: 90, flexShrink: 0, justifyContent: 'center' }}
+                >
+                    <ThemeImage
+                        params={786448}
+                        src={layoutImage('common_star.png')}
+                        layout={{ position: 'absolute', width: 75, top: 0, height: 90, minHeight: 90, maxHeight: 90 }}
+                    />
+                    <WidgetSlot
+                        widgetType="badge_image"
+                        name="achievement_badge"
+                        params={16}
+                        options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
+                        layout={{ position: 'absolute', left: 13, width: 50, top: 14, height: 50 }}
+                    />
+                </Region>
+                <Region
+                    params={147472}
+                    layout={{ flexShrink: 0, maxWidth: 220, flexDirection: 'column', gap: 5 }}
+                >
+                    <Region
+                        name="achievement.name"
+                        params={16}
+                        layout={{ width: 220, height: 17, flexShrink: 0, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionAchievementName ?? 'Achievement name '}
+                            textStyle="text-style-il-heading-2"
+                            textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
+                        />
+                    </Region>
+                    <Region
+                        name="achievement.description"
+                        params={16}
+                        layout={{ width: 220, height: 16, flexShrink: 0, minWidth: 0, maxWidth: 220, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionAchievementDescription ?? 'Achievement description'}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 220 }}
+                        />
+                    </Region>
+                    <Region
+                        params={16}
+                        layout={{ width: 220, height: 20, flexShrink: 0, flexDirection: 'row', gap: 2 }}
+                    >
+                        <Region
+                            params={16}
+                            layout={{ width: 153, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText text={t('resolution.achievement.level')} />
+                        </Region>
+                        <Region
+                            name="achievement.level"
+                            params={16}
+                            layout={{ width: 173, height: 15, flexShrink: 0, minWidth: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionAchievementLevel ?? '0'}
+                                textStyle="text-style-il-heading-3"
+                            />
+                        </Region>
+                    </Region>
+                </Region>
+            </Region>
+        </Region>
     );
 };

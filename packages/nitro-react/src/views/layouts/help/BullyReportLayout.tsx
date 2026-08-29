@@ -5,13 +5,13 @@ import { Border, BoxLayout, Button, Frame, Region, ScrollArea, ThemeText, Widget
 
 /** Generated from `2920_bully_report_xml` (layout "bully_report", 289x491) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface BullyReportLayoutProps {
-    itemsUserPanel?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
     onSubmitButton?: () => void;
+    userPanel?: BullyReportLayoutUserPanelProps;
 }
 
-export const BullyReportLayout = ({ itemsUserPanel, layout, onClose, onSubmitButton }: BullyReportLayoutProps) => {
+export const BullyReportLayout = ({ layout, onClose, onSubmitButton, userPanel }: BullyReportLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -25,34 +25,7 @@ export const BullyReportLayout = ({ itemsUserPanel, layout, onClose, onSubmitBut
             layout={{ width: 289, height: 491, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%', justifyContent: 'center' }}>
-                <Region
-                    name="user_panel"
-                    params={131088}
-                    layout={{ position: 'absolute', left: 9, minWidth: 282, top: 8, minHeight: 388, flexDirection: 'column', gap: 8 }}
-                >
-                    {itemsUserPanel ?? (
-                        <BullyReportLayoutUserListItem />
-                    )}
-                    <Region
-                        params={16}
-                        layout={{ width: 122, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={t('help.bully.subtitle')}
-                            textStyle="text-style-il-heading-1"
-                            textOptions={{ fill: '#555555' }}
-                        />
-                    </Region>
-                    <Region
-                        params={16}
-                        layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={t('help.bully.description')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
-                        />
-                    </Region>
-                </Region>
+                <BullyReportLayoutUserPanel {...userPanel} />
                 <Button
                     variant="101"
                     name="submit_button"
@@ -123,5 +96,46 @@ export const BullyReportLayoutUserListItem = ({ captionRoomName, captionUserName
                 </Border>
             </Region>
         </ScrollArea>
+    );
+};
+
+/** Named region `user_panel` of BullyReportLayout - configured through the parent's `userPanel` prop. */
+export interface BullyReportLayoutUserPanelProps {
+    itemsUserPanel?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const BullyReportLayoutUserPanel = ({ itemsUserPanel, layout }: BullyReportLayoutUserPanelProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="user_panel"
+            params={131088}
+            layout={{ position: 'absolute', left: 9, minWidth: 282, top: 8, minHeight: 388, flexDirection: 'column', gap: 8, ...layout }}
+        >
+            {itemsUserPanel ?? (
+                <BullyReportLayoutUserListItem />
+            )}
+            <Region
+                params={16}
+                layout={{ width: 122, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('help.bully.subtitle')}
+                    textStyle="text-style-il-heading-1"
+                    textOptions={{ fill: '#555555' }}
+                />
+            </Region>
+            <Region
+                params={16}
+                layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('help.bully.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
+                />
+            </Region>
+        </Region>
     );
 };

@@ -8,7 +8,7 @@ export interface ButtonShinyLarge5LayoutProps {
 
 export const ButtonShinyLarge5Layout = ({ captionBTNTEXT, layout }: ButtonShinyLarge5LayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 20, height: 28, justifyContent: 'center', ...layout }}>
+        <Region layout={{ position: 'relative', width: 20, height: 28, ...layout }}>
             <Region
                 name="_BTN_TEXT"
                 tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}

@@ -6,15 +6,11 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1062_avatar_menu_widget_xml` (layout "avatar_menu_widget", 151x1462) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface AvatarMenuWidgetLayoutProps {
-    captionName?: string;
-    itemsButtons?: ReactNode;
+    border?: AvatarMenuWidgetLayoutBorderProps;
     layout?: BoxLayout;
-    onMinimize?: () => void;
-    onProfileLink?: () => void;
-    srcRelationshipStatus?: string;
 }
 
-export const AvatarMenuWidgetLayout = ({ captionName, itemsButtons, layout, onMinimize, onProfileLink, srcRelationshipStatus }: AvatarMenuWidgetLayoutProps) => {
+export const AvatarMenuWidgetLayout = ({ border, layout }: AvatarMenuWidgetLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 151, height: 1462, ...layout }}>
             <Bubble
@@ -23,121 +19,46 @@ export const AvatarMenuWidgetLayout = ({ captionName, itemsButtons, layout, onMi
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 151, bottom: 530, height: 1462 }}
             >
-                <Region
-                    name="border"
-                    params={12583056}
-                    layout={{ position: 'absolute', left: 0, right: 8, top: 0, height: 1458 }}
-                >
-                    <Region
-                        name="profile_link"
-                        params={145}
-                        onPointerTap={onProfileLink}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 7, height: 16, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="name"
-                            params={208}
-                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionName ?? 'my_name_here'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                        <ThemeImage
-                            name="relationship_status"
-                            params={16}
-                            src={srcRelationshipStatus}
-                            layout={{ position: 'absolute', left: 5, width: 16, top: 1, height: 14 }}
-                        />
-                    </Region>
-                    <Region
-                        params={144}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
-                    />
-                    <Region
-                        name="buttons"
-                        params={8519824}
-                        layout={{ position: 'absolute', left: 2, right: 2, top: 28, minHeight: 1402, flexDirection: 'column', gap: 1 }}
-                    >
-                        {itemsButtons ?? (
-                            <>
-                                <AvatarMenuWidgetLayoutOpenProfileItem />
-                                <AvatarMenuWidgetLayoutFriendItem />
-                                <AvatarMenuWidgetLayoutTradeItem />
-                                <AvatarMenuWidgetLayoutWhisperItem />
-                                <AvatarMenuWidgetLayoutRespectItem />
-                                <AvatarMenuWidgetLayoutReplenishRespectItem />
-                                <AvatarMenuWidgetLayoutBlowItem />
-                                <AvatarMenuWidgetLayoutPerformItem />
-                                <AvatarMenuWidgetLayoutRelationshipItem />
-                                <AvatarMenuWidgetLayoutKickItem />
-                                <AvatarMenuWidgetLayoutMuteItem />
-                                <AvatarMenuWidgetLayoutMute2minItem />
-                                <AvatarMenuWidgetLayoutMute5minItem />
-                                <AvatarMenuWidgetLayoutMute10minItem />
-                                <AvatarMenuWidgetLayoutBanWithDurationItem />
-                                <AvatarMenuWidgetLayoutBanHourItem />
-                                <AvatarMenuWidgetLayoutBanDayItem />
-                                <AvatarMenuWidgetLayoutPermBanItem />
-                                <AvatarMenuWidgetLayoutGiveRightsItem />
-                                <AvatarMenuWidgetLayoutRemoveRightsItem />
-                                <AvatarMenuWidgetLayoutUnignoreItem />
-                                <AvatarMenuWidgetLayoutIgnoreItem />
-                                <AvatarMenuWidgetLayoutReportItem />
-                                <AvatarMenuWidgetLayoutModerateItem />
-                                <AvatarMenuWidgetLayoutRelationshipGridItem />
-                                <AvatarMenuWidgetLayoutNoRelationshipItem />
-                                <AvatarMenuWidgetLayoutActionsItem />
-                                <AvatarMenuWidgetLayoutPassHanditemItem />
-                                <AvatarMenuWidgetLayoutChangeBotNameItem />
-                                <AvatarMenuWidgetLayoutDressUpItem />
-                                <AvatarMenuWidgetLayoutSetupChatItem />
-                                <AvatarMenuWidgetLayoutRandomWalkItem />
-                                <AvatarMenuWidgetLayoutDanceItem />
-                                <AvatarMenuWidgetLayoutPickItem />
-                                <AvatarMenuWidgetLayoutNuxProceed1Item />
-                                <AvatarMenuWidgetLayoutNuxTakeTourItem />
-                                <AvatarMenuWidgetLayoutNuxAgainItem />
-                                <AvatarMenuWidgetLayoutNuxRestartItem />
-                                <AvatarMenuWidgetLayoutNuxNextDayItem />
-                                <AvatarMenuWidgetLayoutLinkTemplateItem />
-                                <AvatarMenuWidgetLayoutAmbassadorItem />
-                                <AvatarMenuWidgetLayoutAmbassadorAlertItem />
-                                <AvatarMenuWidgetLayoutAmbassadorKickItem />
-                                <AvatarMenuWidgetLayoutAmbassadorMute2minItem />
-                                <AvatarMenuWidgetLayoutAmbassadorMute10minItem />
-                                <AvatarMenuWidgetLayoutAmbassadorMute15minItem />
-                                <AvatarMenuWidgetLayoutAmbassadorMute60minItem />
-                                <AvatarMenuWidgetLayoutAmbassadorMute18hourItem />
-                                <AvatarMenuWidgetLayoutAmbassadorMute36hourItem />
-                                <AvatarMenuWidgetLayoutAmbassadorMute72hourItem />
-                                <AvatarMenuWidgetLayoutAmbassadorUnmuteItem />
-                                <AvatarMenuWidgetLayoutDonateToAllItem />
-                                <AvatarMenuWidgetLayoutDonateToUserItem />
-                                <AvatarMenuWidgetLayoutWiredInspectItem />
-                            </>
-                        )}
-                    </Region>
-                    <Region
-                        name="minimize"
-                        params={1169}
-                        onPointerTap={onMinimize}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 3, right: 4, bottom: 11, height: 18, justifyContent: 'center' }}
-                    >
-                        <Icon
-                            variant="7"
-                            name="icon"
-                            params={208}
-                            layout={{ position: 'absolute', width: 12, top: 7, height: 11 }}
-                        />
-                    </Region>
-                </Region>
+                <AvatarMenuWidgetLayoutBorder {...border} />
             </Bubble>
+        </Region>
+    );
+};
+
+/** Named region `profile_link` of AvatarMenuWidgetLayout - configured through the parent's `profileLink` prop. */
+export interface AvatarMenuWidgetLayoutProfileLinkProps {
+    captionName?: string;
+    layout?: BoxLayout;
+    onProfileLink?: () => void;
+    srcRelationshipStatus?: string;
+}
+
+export const AvatarMenuWidgetLayoutProfileLink = ({ captionName, layout, onProfileLink, srcRelationshipStatus }: AvatarMenuWidgetLayoutProfileLinkProps) => {
+    return (
+        <Region
+            name="profile_link"
+            params={145}
+            onPointerTap={onProfileLink}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, right: 0, top: 7, height: 16, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="name"
+                params={208}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 80, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionName ?? 'my_name_here'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+            <ThemeImage
+                name="relationship_status"
+                params={16}
+                src={srcRelationshipStatus}
+                layout={{ position: 'absolute', left: 5, width: 16, top: 1, height: 14 }}
+            />
         </Region>
     );
 };
@@ -2533,6 +2454,133 @@ export const AvatarMenuWidgetLayoutWiredInspectItem = ({ captionLabel, layout, o
                     />
                 </Region>
             </ContainerButton>
+        </Region>
+    );
+};
+
+/** Named region `buttons` of AvatarMenuWidgetLayout - configured through the parent's `buttons` prop. */
+export interface AvatarMenuWidgetLayoutButtonsProps {
+    itemsButtons?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const AvatarMenuWidgetLayoutButtons = ({ itemsButtons, layout }: AvatarMenuWidgetLayoutButtonsProps) => {
+    return (
+        <Region
+            name="buttons"
+            params={8519824}
+            layout={{ position: 'absolute', left: 2, right: 2, top: 28, minHeight: 1402, flexDirection: 'column', gap: 1, ...layout }}
+        >
+            {itemsButtons ?? (
+                <>
+                    <AvatarMenuWidgetLayoutOpenProfileItem />
+                    <AvatarMenuWidgetLayoutFriendItem />
+                    <AvatarMenuWidgetLayoutTradeItem />
+                    <AvatarMenuWidgetLayoutWhisperItem />
+                    <AvatarMenuWidgetLayoutRespectItem />
+                    <AvatarMenuWidgetLayoutReplenishRespectItem />
+                    <AvatarMenuWidgetLayoutBlowItem />
+                    <AvatarMenuWidgetLayoutPerformItem />
+                    <AvatarMenuWidgetLayoutRelationshipItem />
+                    <AvatarMenuWidgetLayoutKickItem />
+                    <AvatarMenuWidgetLayoutMuteItem />
+                    <AvatarMenuWidgetLayoutMute2minItem />
+                    <AvatarMenuWidgetLayoutMute5minItem />
+                    <AvatarMenuWidgetLayoutMute10minItem />
+                    <AvatarMenuWidgetLayoutBanWithDurationItem />
+                    <AvatarMenuWidgetLayoutBanHourItem />
+                    <AvatarMenuWidgetLayoutBanDayItem />
+                    <AvatarMenuWidgetLayoutPermBanItem />
+                    <AvatarMenuWidgetLayoutGiveRightsItem />
+                    <AvatarMenuWidgetLayoutRemoveRightsItem />
+                    <AvatarMenuWidgetLayoutUnignoreItem />
+                    <AvatarMenuWidgetLayoutIgnoreItem />
+                    <AvatarMenuWidgetLayoutReportItem />
+                    <AvatarMenuWidgetLayoutModerateItem />
+                    <AvatarMenuWidgetLayoutRelationshipGridItem />
+                    <AvatarMenuWidgetLayoutNoRelationshipItem />
+                    <AvatarMenuWidgetLayoutActionsItem />
+                    <AvatarMenuWidgetLayoutPassHanditemItem />
+                    <AvatarMenuWidgetLayoutChangeBotNameItem />
+                    <AvatarMenuWidgetLayoutDressUpItem />
+                    <AvatarMenuWidgetLayoutSetupChatItem />
+                    <AvatarMenuWidgetLayoutRandomWalkItem />
+                    <AvatarMenuWidgetLayoutDanceItem />
+                    <AvatarMenuWidgetLayoutPickItem />
+                    <AvatarMenuWidgetLayoutNuxProceed1Item />
+                    <AvatarMenuWidgetLayoutNuxTakeTourItem />
+                    <AvatarMenuWidgetLayoutNuxAgainItem />
+                    <AvatarMenuWidgetLayoutNuxRestartItem />
+                    <AvatarMenuWidgetLayoutNuxNextDayItem />
+                    <AvatarMenuWidgetLayoutLinkTemplateItem />
+                    <AvatarMenuWidgetLayoutAmbassadorItem />
+                    <AvatarMenuWidgetLayoutAmbassadorAlertItem />
+                    <AvatarMenuWidgetLayoutAmbassadorKickItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute2minItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute10minItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute15minItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute60minItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute18hourItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute36hourItem />
+                    <AvatarMenuWidgetLayoutAmbassadorMute72hourItem />
+                    <AvatarMenuWidgetLayoutAmbassadorUnmuteItem />
+                    <AvatarMenuWidgetLayoutDonateToAllItem />
+                    <AvatarMenuWidgetLayoutDonateToUserItem />
+                    <AvatarMenuWidgetLayoutWiredInspectItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `minimize` of AvatarMenuWidgetLayout - configured through the parent's `minimize` prop. */
+export interface AvatarMenuWidgetLayoutMinimizeProps {
+    layout?: BoxLayout;
+    onMinimize?: () => void;
+}
+
+export const AvatarMenuWidgetLayoutMinimize = ({ layout, onMinimize }: AvatarMenuWidgetLayoutMinimizeProps) => {
+    return (
+        <Region
+            name="minimize"
+            params={1169}
+            onPointerTap={onMinimize}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 3, right: 4, bottom: 11, height: 18, justifyContent: 'center', ...layout }}
+        >
+            <Icon
+                variant="7"
+                name="icon"
+                params={208}
+                layout={{ position: 'absolute', width: 12, top: 7, height: 11 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `border` of AvatarMenuWidgetLayout - configured through the parent's `border` prop. */
+export interface AvatarMenuWidgetLayoutBorderProps {
+    buttons?: AvatarMenuWidgetLayoutButtonsProps;
+    layout?: BoxLayout;
+    minimize?: AvatarMenuWidgetLayoutMinimizeProps;
+    profileLink?: AvatarMenuWidgetLayoutProfileLinkProps;
+}
+
+export const AvatarMenuWidgetLayoutBorder = ({ buttons, layout, minimize, profileLink }: AvatarMenuWidgetLayoutBorderProps) => {
+    return (
+        <Region
+            name="border"
+            params={12583056}
+            layout={{ position: 'absolute', left: 0, right: 8, top: 0, height: 1458, ...layout }}
+        >
+            <AvatarMenuWidgetLayoutProfileLink {...profileLink} />
+            <Region
+                params={144}
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
+            />
+            <AvatarMenuWidgetLayoutButtons {...buttons} />
+            <AvatarMenuWidgetLayoutMinimize {...minimize} />
         </Region>
     );
 };

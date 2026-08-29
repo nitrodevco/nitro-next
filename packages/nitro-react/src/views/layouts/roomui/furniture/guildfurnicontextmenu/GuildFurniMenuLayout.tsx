@@ -5,14 +5,11 @@ import { BoxLayout, Bubble, ContainerButton, Icon, Region, ThemeText } from '#ba
 
 /** Generated from `837_guild_furni_menu_xml` (layout "context_menu_widget", 115x140) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface GuildFurniMenuLayoutProps {
-    captionName?: string;
-    itemsButtons?: ReactNode;
+    border?: GuildFurniMenuLayoutBorderProps;
     layout?: BoxLayout;
-    onMinimize?: () => void;
-    onProfileLink?: () => void;
 }
 
-export const GuildFurniMenuLayout = ({ captionName, itemsButtons, layout, onMinimize, onProfileLink }: GuildFurniMenuLayoutProps) => {
+export const GuildFurniMenuLayout = ({ border, layout }: GuildFurniMenuLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 115, height: 140, ...layout }}>
             <Bubble
@@ -21,64 +18,39 @@ export const GuildFurniMenuLayout = ({ captionName, itemsButtons, layout, onMini
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 115, bottom: 0, height: 140 }}
             >
-                <Region
-                    name="border"
-                    params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 130, justifyContent: 'center' }}
-                >
-                    <Region
-                        name="profile_link"
-                        params={17}
-                        onPointerTap={onProfileLink}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="name"
-                            params={208}
-                            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 62, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionName ?? 'group_title'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                    </Region>
-                    <Region
-                        params={144}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
-                    />
-                    <Region
-                        name="buttons"
-                        params={8519888}
-                        layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 80, flexDirection: 'column', gap: 1 }}
-                    >
-                        {itemsButtons ?? (
-                            <>
-                                <GuildFurniMenuLayoutJoinItem />
-                                <GuildFurniMenuLayoutHomeRoomItem />
-                                <GuildFurniMenuLayoutOpenForumItem />
-                            </>
-                        )}
-                    </Region>
-                    <Region
-                        name="minimize"
-                        params={1041}
-                        onPointerTap={onMinimize}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 4, width: 100, bottom: 4, height: 18 }}
-                    >
-                        <Icon
-                            variant="7"
-                            name="icon"
-                            params={16}
-                            layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
-                        />
-                    </Region>
-                </Region>
+                <GuildFurniMenuLayoutBorder {...border} />
             </Bubble>
+        </Region>
+    );
+};
+
+/** Named region `profile_link` of GuildFurniMenuLayout - configured through the parent's `profileLink` prop. */
+export interface GuildFurniMenuLayoutProfileLinkProps {
+    captionName?: string;
+    layout?: BoxLayout;
+    onProfileLink?: () => void;
+}
+
+export const GuildFurniMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: GuildFurniMenuLayoutProfileLinkProps) => {
+    return (
+        <Region
+            name="profile_link"
+            params={17}
+            onPointerTap={onProfileLink}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 107, top: 7, height: 16, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="name"
+                params={208}
+                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 62, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionName ?? 'group_title'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
         </Region>
     );
 };
@@ -205,6 +177,82 @@ export const GuildFurniMenuLayoutOpenForumItem = ({ captionLabel, layout, onButt
                     />
                 </Region>
             </ContainerButton>
+        </Region>
+    );
+};
+
+/** Named region `buttons` of GuildFurniMenuLayout - configured through the parent's `buttons` prop. */
+export interface GuildFurniMenuLayoutButtonsProps {
+    itemsButtons?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const GuildFurniMenuLayoutButtons = ({ itemsButtons, layout }: GuildFurniMenuLayoutButtonsProps) => {
+    return (
+        <Region
+            name="buttons"
+            params={8519888}
+            layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 80, flexDirection: 'column', gap: 1, ...layout }}
+        >
+            {itemsButtons ?? (
+                <>
+                    <GuildFurniMenuLayoutJoinItem />
+                    <GuildFurniMenuLayoutHomeRoomItem />
+                    <GuildFurniMenuLayoutOpenForumItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `minimize` of GuildFurniMenuLayout - configured through the parent's `minimize` prop. */
+export interface GuildFurniMenuLayoutMinimizeProps {
+    layout?: BoxLayout;
+    onMinimize?: () => void;
+}
+
+export const GuildFurniMenuLayoutMinimize = ({ layout, onMinimize }: GuildFurniMenuLayoutMinimizeProps) => {
+    return (
+        <Region
+            name="minimize"
+            params={1041}
+            onPointerTap={onMinimize}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 4, width: 100, bottom: 4, height: 18, ...layout }}
+        >
+            <Icon
+                variant="7"
+                name="icon"
+                params={16}
+                layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `border` of GuildFurniMenuLayout - configured through the parent's `border` prop. */
+export interface GuildFurniMenuLayoutBorderProps {
+    buttons?: GuildFurniMenuLayoutButtonsProps;
+    layout?: BoxLayout;
+    minimize?: GuildFurniMenuLayoutMinimizeProps;
+    profileLink?: GuildFurniMenuLayoutProfileLinkProps;
+}
+
+export const GuildFurniMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: GuildFurniMenuLayoutBorderProps) => {
+    return (
+        <Region
+            name="border"
+            params={12582928}
+            layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 130, justifyContent: 'center', ...layout }}
+        >
+            <GuildFurniMenuLayoutProfileLink {...profileLink} />
+            <Region
+                params={144}
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
+            />
+            <GuildFurniMenuLayoutButtons {...buttons} />
+            <GuildFurniMenuLayoutMinimize {...minimize} />
         </Region>
     );
 };

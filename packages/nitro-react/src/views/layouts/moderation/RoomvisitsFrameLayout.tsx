@@ -4,12 +4,12 @@ import { BoxLayout, Frame, Region, ScrollArea, ThemeText } from '#base/theme';
 
 /** Generated from `1117_roomvisits_frame_xml` (layout "roomvisits_frame", 292x224) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RoomvisitsFrameLayoutProps {
-    itemsVisitsList?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
+    visitsCont?: RoomvisitsFrameLayoutVisitsContProps;
 }
 
-export const RoomvisitsFrameLayout = ({ itemsVisitsList, layout, onClose }: RoomvisitsFrameLayoutProps) => {
+export const RoomvisitsFrameLayout = ({ layout, onClose, visitsCont }: RoomvisitsFrameLayoutProps) => {
     return (
         <Frame
             variant="0"
@@ -20,28 +20,7 @@ export const RoomvisitsFrameLayout = ({ itemsVisitsList, layout, onClose }: Room
             layout={{ width: 292, height: 224, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="visits_cont"
-                    params={2192}
-                    backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
-                >
-                    <ScrollArea
-                        orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0 }}
-                    >
-                        <Region
-                            name="visits_list"
-                            params={2193}
-                            layout={{ flexDirection: 'column', width: '100%' }}
-                        >
-                            {itemsVisitsList ?? (
-                                <RoomvisitsFrameLayoutVisitrowItem />
-                            )}
-                        </Region>
-                    </ScrollArea>
-                    {/* <scrollbar_vertical> for visits_list - rendered by that list's ScrollArea */}
-                </Region>
+                <RoomvisitsFrameLayoutVisitsCont {...visitsCont} />
             </Region>
         </Frame>
     );
@@ -83,6 +62,51 @@ export const RoomvisitsFrameLayoutVisitrowItem = ({ captionRoomNameTxt, captionT
             >
                 <ThemeText text={captionViewRoomTxt ?? 'Enter'} />
             </Region>
+        </Region>
+    );
+};
+
+/** Named region `visits_list` of RoomvisitsFrameLayout - configured through the parent's `visitsList` prop. */
+export interface RoomvisitsFrameLayoutVisitsListProps {
+    itemsVisitsList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const RoomvisitsFrameLayoutVisitsList = ({ itemsVisitsList, layout }: RoomvisitsFrameLayoutVisitsListProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 0, right: 17, top: 0, bottom: 0, ...layout }}
+        >
+            <Region
+                name="visits_list"
+                params={2193}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            >
+                {itemsVisitsList ?? (
+                    <RoomvisitsFrameLayoutVisitrowItem />
+                )}
+            </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `visits_cont` of RoomvisitsFrameLayout - configured through the parent's `visitsCont` prop. */
+export interface RoomvisitsFrameLayoutVisitsContProps {
+    layout?: BoxLayout;
+    visitsList?: RoomvisitsFrameLayoutVisitsListProps;
+}
+
+export const RoomvisitsFrameLayoutVisitsCont = ({ layout, visitsList }: RoomvisitsFrameLayoutVisitsContProps) => {
+    return (
+        <Region
+            name="visits_cont"
+            params={2192}
+            backgroundColor="#ffffff"
+            layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, ...layout }}
+        >
+            <RoomvisitsFrameLayoutVisitsList {...visitsList} />
+            {/* <scrollbar_vertical> for visits_list - rendered by that list's ScrollArea */}
         </Region>
     );
 };

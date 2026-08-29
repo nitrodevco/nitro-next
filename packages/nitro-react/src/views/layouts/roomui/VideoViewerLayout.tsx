@@ -6,18 +6,13 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1013_video_viewer_xml` (layout "video_viewer", 738x356) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface VideoViewerLayoutProps {
-    captionNoVideosLabel?: string;
-    itemsPlaylists?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
-    onPlaylistNext?: () => void;
-    onPlaylistPrev?: () => void;
-    visibleVideoWrapper?: boolean;
+    rightPane?: VideoViewerLayoutRightPaneProps;
+    videoBackground?: VideoViewerLayoutVideoBackgroundProps;
 }
 
-export const VideoViewerLayout = ({ captionNoVideosLabel, itemsPlaylists, layout, onClose, onPlaylistNext, onPlaylistPrev, visibleVideoWrapper }: VideoViewerLayoutProps) => {
-    const t = useTranslation();
-
+export const VideoViewerLayout = ({ layout, onClose, rightPane, videoBackground }: VideoViewerLayoutProps) => {
     return (
         <Frame
             variant="3"
@@ -29,85 +24,59 @@ export const VideoViewerLayout = ({ captionNoVideosLabel, itemsPlaylists, layout
             layout={{ width: 738, height: 356, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="video_background"
-                    params={18448}
-                    backgroundColor="#000000"
-                    layout={{ position: 'absolute', left: 7, width: 431, top: 6, bottom: 48, justifyContent: 'center' }}
-                >
-                    <Region
-                        name="no_videos_label"
-                        params={3280}
-                        layout={{ position: 'absolute', width: 187, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionNoVideosLabel ?? t('widget.furni.video_viewer.no_videos')}
-                            textStyle="text-style-il-regular-white"
-                        />
-                    </Region>
-                    <Region
-                        name="video_wrapper"
-                        params={2176}
-                        visible={visibleVideoWrapper ?? false}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                    />
-                </Region>
-                <Region
-                    name="right_pane"
-                    params={2064}
-                    layout={{ position: 'absolute', left: 447, width: 278, top: 6, bottom: 48 }}
-                >
-                    <ContainerButton
-                        variant="3"
-                        name="playlist_prev"
-                        tooltip={t('widget.furni.video_viewer.tooltip.prev')}
-                        params={17}
-                        onPointerTap={onPlaylistPrev}
-                        layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 29, justifyContent: 'center' }}
-                    >
-                        <ThemeImage
-                            params={3280}
-                            src={layoutImage('icons_next.png')}
-                            layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 21, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16 }}
-                        />
-                    </ContainerButton>
-                    <ContainerButton
-                        variant="3"
-                        name="playlist_next"
-                        tooltip={t('widget.furni.video_viewer.tooltip.next')}
-                        params={17}
-                        onPointerTap={onPlaylistNext}
-                        layout={{ position: 'absolute', left: 44, width: 40, top: 0, height: 29, justifyContent: 'center' }}
-                    >
-                        <ThemeImage
-                            params={3280}
-                            src={layoutImage('icons_next.png')}
-                            layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 21, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16 }}
-                        />
-                    </ContainerButton>
-                    <Region
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 194, top: 33, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={t('widget.furni.video_viewer.playlists')} />
-                    </Region>
-                    <ScrollArea
-                        orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 50, bottom: 0 }}
-                    >
-                        <Region
-                            name="playlists"
-                            params={2192}
-                            layout={{ flexDirection: 'column', width: '100%' }}
-                        >
-                            {itemsPlaylists ?? (
-                                <VideoViewerLayoutItemItem />
-                            )}
-                        </Region>
-                    </ScrollArea>
-                </Region>
+                <VideoViewerLayoutVideoBackground {...videoBackground} />
+                <VideoViewerLayoutRightPane {...rightPane} />
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `video_wrapper` of VideoViewerLayout - configured through the parent's `videoWrapper` prop. */
+export interface VideoViewerLayoutVideoWrapperProps {
+    layout?: BoxLayout;
+    visibleVideoWrapper?: boolean;
+}
+
+export const VideoViewerLayoutVideoWrapper = ({ layout, visibleVideoWrapper }: VideoViewerLayoutVideoWrapperProps) => {
+    return (
+        <Region
+            name="video_wrapper"
+            params={2176}
+            visible={visibleVideoWrapper ?? false}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `video_background` of VideoViewerLayout - configured through the parent's `videoBackground` prop. */
+export interface VideoViewerLayoutVideoBackgroundProps {
+    captionNoVideosLabel?: string;
+    layout?: BoxLayout;
+    videoWrapper?: VideoViewerLayoutVideoWrapperProps;
+}
+
+export const VideoViewerLayoutVideoBackground = ({ captionNoVideosLabel, layout, videoWrapper }: VideoViewerLayoutVideoBackgroundProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="video_background"
+            params={18448}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 7, width: 431, top: 6, bottom: 48, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="no_videos_label"
+                params={3280}
+                layout={{ position: 'absolute', width: 187, alignSelf: 'center', height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionNoVideosLabel ?? t('widget.furni.video_viewer.no_videos')}
+                    textStyle="text-style-il-regular-white"
+                />
+            </Region>
+            <VideoViewerLayoutVideoWrapper {...videoWrapper} />
+        </Region>
     );
 };
 
@@ -154,14 +123,37 @@ export const VideoViewerLayoutItemDescriptionItem = ({ captionItemDescription, l
     );
 };
 
+/** Named region `item_contents` of VideoViewerLayout - configured through the parent's `itemContents` prop. */
+export interface VideoViewerLayoutItemContentsProps {
+    itemsItemContents?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const VideoViewerLayoutItemContents = ({ itemsItemContents, layout }: VideoViewerLayoutItemContentsProps) => {
+    return (
+        <Region
+            name="item_contents"
+            params={147472}
+            layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column', ...layout }}
+        >
+            {itemsItemContents ?? (
+                <>
+                    <VideoViewerLayoutItemTitleItem />
+                    <VideoViewerLayoutItemDescriptionItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
 /** Row template `item` of VideoViewerLayout - pass real rows through its `items…` slot. */
 export interface VideoViewerLayoutItemItemProps {
-    itemsItemContents?: ReactNode;
+    itemContents?: VideoViewerLayoutItemContentsProps;
     layout?: BoxLayout;
     onItem?: () => void;
 }
 
-export const VideoViewerLayoutItemItem = ({ itemsItemContents, layout, onItem }: VideoViewerLayoutItemItemProps) => {
+export const VideoViewerLayoutItemItem = ({ itemContents, layout, onItem }: VideoViewerLayoutItemItemProps) => {
     return (
         <Region
             name="item"
@@ -176,19 +168,89 @@ export const VideoViewerLayoutItemItem = ({ itemsItemContents, layout, onItem }:
                 params={147472}
                 layout={{ position: 'absolute', left: 0, width: 278, top: 0, height: 121 }}
             >
-                <Region
-                    name="item_contents"
-                    params={147472}
-                    layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'column' }}
-                >
-                    {itemsItemContents ?? (
-                        <>
-                            <VideoViewerLayoutItemTitleItem />
-                            <VideoViewerLayoutItemDescriptionItem />
-                        </>
-                    )}
-                </Region>
+                <VideoViewerLayoutItemContents {...itemContents} />
             </Border>
+        </Region>
+    );
+};
+
+/** Named region `playlists` of VideoViewerLayout - configured through the parent's `playlists` prop. */
+export interface VideoViewerLayoutPlaylistsProps {
+    itemsPlaylists?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const VideoViewerLayoutPlaylists = ({ itemsPlaylists, layout }: VideoViewerLayoutPlaylistsProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 0, right: 0, top: 50, bottom: 0, ...layout }}
+        >
+            <Region
+                name="playlists"
+                params={2192}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            >
+                {itemsPlaylists ?? (
+                    <VideoViewerLayoutItemItem />
+                )}
+            </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `right_pane` of VideoViewerLayout - configured through the parent's `rightPane` prop. */
+export interface VideoViewerLayoutRightPaneProps {
+    layout?: BoxLayout;
+    onPlaylistNext?: () => void;
+    onPlaylistPrev?: () => void;
+    playlists?: VideoViewerLayoutPlaylistsProps;
+}
+
+export const VideoViewerLayoutRightPane = ({ layout, onPlaylistNext, onPlaylistPrev, playlists }: VideoViewerLayoutRightPaneProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="right_pane"
+            params={2064}
+            layout={{ position: 'absolute', left: 447, width: 278, top: 6, bottom: 48, ...layout }}
+        >
+            <ContainerButton
+                variant="3"
+                name="playlist_prev"
+                tooltip={t('widget.furni.video_viewer.tooltip.prev')}
+                params={17}
+                onPointerTap={onPlaylistPrev}
+                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 29, justifyContent: 'center' }}
+            >
+                <ThemeImage
+                    params={3280}
+                    src={layoutImage('icons_next.png')}
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 21, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16 }}
+                />
+            </ContainerButton>
+            <ContainerButton
+                variant="3"
+                name="playlist_next"
+                tooltip={t('widget.furni.video_viewer.tooltip.next')}
+                params={17}
+                onPointerTap={onPlaylistNext}
+                layout={{ position: 'absolute', left: 44, width: 40, top: 0, height: 29, justifyContent: 'center' }}
+            >
+                <ThemeImage
+                    params={3280}
+                    src={layoutImage('icons_next.png')}
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 21, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 16 }}
+                />
+            </ContainerButton>
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 194, top: 33, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={t('widget.furni.video_viewer.playlists')} />
+            </Region>
+            <VideoViewerLayoutPlaylists {...playlists} />
         </Region>
     );
 };

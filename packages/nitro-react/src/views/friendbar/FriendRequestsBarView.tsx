@@ -37,10 +37,10 @@ const FriendRequestRow = ({ request, onAccept, onDecline }: { request: IFriendRe
 
     return (
         <FriendRequestsTabLayoutRequestEntityItem
-            captionName={request.name}
-            srcCanvas={faceUrl || undefined}
+            regionProfile={{ srcCanvas: faceUrl || undefined }}
+            regionProfileName={{ captionName: request.name }}
             onButtonAccept={onAccept}
-            onClickAreaDiscard={onDecline}
+            clickAreaDiscard={{ onClickAreaDiscard: onDecline }}
         />
     );
 };
@@ -84,18 +84,20 @@ export const FriendRequestsBarView = () => {
             layout={{ position: 'absolute', left: 260, bottom: 346 }}
             captionBadgeCounter={String(list.length)}
             visibleBubble={isOpen}
-            itemsTabContent={<FriendRequestsTabLayoutHeaderItem onHeader={() => setIsOpen(open => !open)} />}
-            itemsRequestEntityList={list.map(request => (
-                <FriendRequestRow
-                    key={request.playerId}
-                    request={request}
-                    onAccept={() => accept([ request.playerId ])}
-                    onDecline={() => decline([ request.playerId ])}
-                />
-            ))}
+            tabContent={{ itemsTabContent: <FriendRequestsTabLayoutHeaderItem onHeader={() => setIsOpen(open => !open)} /> }}
+            requestEntityList={{
+                itemsRequestEntityList: list.map(request => (
+                    <FriendRequestRow
+                        key={request.playerId}
+                        request={request}
+                        onAccept={() => accept([ request.playerId ])}
+                        onDecline={() => decline([ request.playerId ])}
+                    />
+                )),
+            }}
             onButtonClose={() => setIsOpen(false)}
             onButtonAcceptAll={() => accept(allIds)}
-            onClickAreaDiscardAll={() => decline(allIds, true)}
+            clickAreaDiscardAll={{ onClickAreaDiscardAll: () => decline(allIds, true) }}
         />
     );
 };

@@ -4,23 +4,18 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `861_mystery_box_toolbar_extension_xml` (layout "mystery_box_toolbar_extension", 192x137) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MysteryBoxToolbarExtensionLayoutProps {
+    boxRegion?: MysteryBoxToolbarExtensionLayoutBoxRegionProps;
     captionFaqLink?: string;
+    keyRegion?: MysteryBoxToolbarExtensionLayoutKeyRegionProps;
     layout?: BoxLayout;
-    onBoxRegion?: () => void;
+    maximizeRegion?: MysteryBoxToolbarExtensionLayoutMaximizeRegionProps;
+    minimizeRegion?: MysteryBoxToolbarExtensionLayoutMinimizeRegionProps;
     onFaqLink?: () => void;
-    onKeyRegion?: () => void;
-    onMaximizeRegion?: () => void;
-    onMinimizeRegion?: () => void;
-    srcBoxColour?: string;
-    srcBoxOverlay?: string;
-    srcKeyColour?: string;
-    srcKeyOverlay?: string;
     srcSmallBox?: string;
     srcSmallKey?: string;
-    visibleMaximizeRegion?: boolean;
 }
 
-export const MysteryBoxToolbarExtensionLayout = ({ captionFaqLink, layout, onBoxRegion, onFaqLink, onKeyRegion, onMaximizeRegion, onMinimizeRegion, srcBoxColour, srcBoxOverlay, srcKeyColour, srcKeyOverlay, srcSmallBox, srcSmallKey, visibleMaximizeRegion }: MysteryBoxToolbarExtensionLayoutProps) => {
+export const MysteryBoxToolbarExtensionLayout = ({ boxRegion, captionFaqLink, keyRegion, layout, maximizeRegion, minimizeRegion, onFaqLink, srcSmallBox, srcSmallKey }: MysteryBoxToolbarExtensionLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -65,58 +60,8 @@ export const MysteryBoxToolbarExtensionLayout = ({ captionFaqLink, layout, onBox
                         params={147664}
                         layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 89, top: 72, height: 39 }}
                     >
-                        <Region
-                            name="box_region"
-                            params={17}
-                            onPointerTap={onBoxRegion}
-                            cursor="pointer"
-                            layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
-                        >
-                            <ThemeImage
-                                params={16}
-                                src={layoutImage('mysterybox_tracker_border.png')}
-                                layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
-                            />
-                            <ThemeImage
-                                name="box_colour"
-                                params={16}
-                                src={srcBoxColour ?? layoutImage('mysterybox_box_base.png')}
-                                tint="#ff0000"
-                                layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
-                            />
-                            <ThemeImage
-                                name="box_overlay"
-                                params={16}
-                                src={srcBoxOverlay ?? layoutImage('mysterybox_box_overlay.png')}
-                                layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
-                            />
-                        </Region>
-                        <Region
-                            name="key_region"
-                            params={17}
-                            onPointerTap={onKeyRegion}
-                            cursor="pointer"
-                            layout={{ position: 'absolute', left: 50, width: 39, top: 0, height: 39 }}
-                        >
-                            <ThemeImage
-                                params={16}
-                                src={layoutImage('mysterybox_tracker_border.png')}
-                                layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
-                            />
-                            <ThemeImage
-                                name="key_colour"
-                                params={16}
-                                src={srcKeyColour ?? layoutImage('mysterybox_key_base.png')}
-                                tint="#ff0000"
-                                layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
-                            />
-                            <ThemeImage
-                                name="key_overlay"
-                                params={16}
-                                src={srcKeyOverlay ?? layoutImage('mysterybox_key_overlay.png')}
-                                layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
-                            />
-                        </Region>
+                        <MysteryBoxToolbarExtensionLayoutBoxRegion {...boxRegion} />
+                        <MysteryBoxToolbarExtensionLayoutKeyRegion {...keyRegion} />
                     </Region>
                     <Region
                         name="faq_link"
@@ -132,33 +77,8 @@ export const MysteryBoxToolbarExtensionLayout = ({ captionFaqLink, layout, onBox
                         />
                     </Region>
                 </Border>
-                <Region
-                    name="minimize_region"
-                    params={17}
-                    onPointerTap={onMinimizeRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 168, width: 20, top: 2, height: 20 }}
-                >
-                    <ThemeImage
-                        params={16}
-                        src={layoutImage('common_minimize_unetched.png')}
-                        layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 19 }}
-                    />
-                </Region>
-                <Region
-                    name="maximize_region"
-                    params={17}
-                    visible={visibleMaximizeRegion ?? false}
-                    onPointerTap={onMaximizeRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 168, width: 20, top: 2, height: 20 }}
-                >
-                    <ThemeImage
-                        params={16}
-                        src={layoutImage('common_maximize_unetched.png')}
-                        layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 19 }}
-                    />
-                </Region>
+                <MysteryBoxToolbarExtensionLayoutMinimizeRegion {...minimizeRegion} />
+                <MysteryBoxToolbarExtensionLayoutMaximizeRegion {...maximizeRegion} />
                 <Region
                     visible={false}
                     layout={{ position: 'absolute', left: 124, width: 19, top: 2, height: 20 }}
@@ -184,6 +104,134 @@ export const MysteryBoxToolbarExtensionLayout = ({ captionFaqLink, layout, onBox
                     />
                 </Region>
             </Border>
+        </Region>
+    );
+};
+
+/** Named region `box_region` of MysteryBoxToolbarExtensionLayout - configured through the parent's `boxRegion` prop. */
+export interface MysteryBoxToolbarExtensionLayoutBoxRegionProps {
+    layout?: BoxLayout;
+    onBoxRegion?: () => void;
+    srcBoxColour?: string;
+    srcBoxOverlay?: string;
+}
+
+export const MysteryBoxToolbarExtensionLayoutBoxRegion = ({ layout, onBoxRegion, srcBoxColour, srcBoxOverlay }: MysteryBoxToolbarExtensionLayoutBoxRegionProps) => {
+    return (
+        <Region
+            name="box_region"
+            params={17}
+            onPointerTap={onBoxRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39, ...layout }}
+        >
+            <ThemeImage
+                params={16}
+                src={layoutImage('mysterybox_tracker_border.png')}
+                layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
+            />
+            <ThemeImage
+                name="box_colour"
+                params={16}
+                src={srcBoxColour ?? layoutImage('mysterybox_box_base.png')}
+                tint="#ff0000"
+                layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
+            />
+            <ThemeImage
+                name="box_overlay"
+                params={16}
+                src={srcBoxOverlay ?? layoutImage('mysterybox_box_overlay.png')}
+                layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `key_region` of MysteryBoxToolbarExtensionLayout - configured through the parent's `keyRegion` prop. */
+export interface MysteryBoxToolbarExtensionLayoutKeyRegionProps {
+    layout?: BoxLayout;
+    onKeyRegion?: () => void;
+    srcKeyColour?: string;
+    srcKeyOverlay?: string;
+}
+
+export const MysteryBoxToolbarExtensionLayoutKeyRegion = ({ layout, onKeyRegion, srcKeyColour, srcKeyOverlay }: MysteryBoxToolbarExtensionLayoutKeyRegionProps) => {
+    return (
+        <Region
+            name="key_region"
+            params={17}
+            onPointerTap={onKeyRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 50, width: 39, top: 0, height: 39, ...layout }}
+        >
+            <ThemeImage
+                params={16}
+                src={layoutImage('mysterybox_tracker_border.png')}
+                layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
+            />
+            <ThemeImage
+                name="key_colour"
+                params={16}
+                src={srcKeyColour ?? layoutImage('mysterybox_key_base.png')}
+                tint="#ff0000"
+                layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
+            />
+            <ThemeImage
+                name="key_overlay"
+                params={16}
+                src={srcKeyOverlay ?? layoutImage('mysterybox_key_overlay.png')}
+                layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 39 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `minimize_region` of MysteryBoxToolbarExtensionLayout - configured through the parent's `minimizeRegion` prop. */
+export interface MysteryBoxToolbarExtensionLayoutMinimizeRegionProps {
+    layout?: BoxLayout;
+    onMinimizeRegion?: () => void;
+}
+
+export const MysteryBoxToolbarExtensionLayoutMinimizeRegion = ({ layout, onMinimizeRegion }: MysteryBoxToolbarExtensionLayoutMinimizeRegionProps) => {
+    return (
+        <Region
+            name="minimize_region"
+            params={17}
+            onPointerTap={onMinimizeRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 168, width: 20, top: 2, height: 20, ...layout }}
+        >
+            <ThemeImage
+                params={16}
+                src={layoutImage('common_minimize_unetched.png')}
+                layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 19 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `maximize_region` of MysteryBoxToolbarExtensionLayout - configured through the parent's `maximizeRegion` prop. */
+export interface MysteryBoxToolbarExtensionLayoutMaximizeRegionProps {
+    layout?: BoxLayout;
+    onMaximizeRegion?: () => void;
+    visibleMaximizeRegion?: boolean;
+}
+
+export const MysteryBoxToolbarExtensionLayoutMaximizeRegion = ({ layout, onMaximizeRegion, visibleMaximizeRegion }: MysteryBoxToolbarExtensionLayoutMaximizeRegionProps) => {
+    return (
+        <Region
+            name="maximize_region"
+            params={17}
+            visible={visibleMaximizeRegion ?? false}
+            onPointerTap={onMaximizeRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 168, width: 20, top: 2, height: 20, ...layout }}
+        >
+            <ThemeImage
+                params={16}
+                src={layoutImage('common_maximize_unetched.png')}
+                layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 19 }}
+            />
         </Region>
     );
 };

@@ -6,26 +6,19 @@ import { BoxLayout, ContainerButton, Frame, Region, TextInput, ThemeText, Widget
 /** Generated from `90_compose_message_view_xml` (layout "new_compose_message", 455x470) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ComposeMessageViewLayoutProps {
     captionCancelBtnLabel?: string;
-    captionFormattingHelp?: string;
-    captionMessageTextHeader?: string;
     captionSendMessageLabel?: string;
     captionStatusText?: string;
-    captionThreadSubjectHeader?: string;
-    captionTopHeaderText?: string;
-    captionTopText?: string;
     layout?: BoxLayout;
+    messageTextContainer?: ComposeMessageViewLayoutMessageTextContainerProps;
     onCancelBtn?: () => void;
     onClose?: () => void;
-    onMessageTextContainer?: () => void;
     onPostBtn?: () => void;
-    onTopClickArea?: () => void;
-    onTopPart?: () => void;
+    threadSubjectContainer?: ComposeMessageViewLayoutThreadSubjectContainerProps;
+    topPart?: ComposeMessageViewLayoutTopPartProps;
 }
 
-export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormattingHelp, captionMessageTextHeader, captionSendMessageLabel, captionStatusText, captionThreadSubjectHeader, captionTopHeaderText, captionTopText, layout, onCancelBtn, onClose, onMessageTextContainer, onPostBtn, onTopClickArea, onTopPart }: ComposeMessageViewLayoutProps) => {
+export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionSendMessageLabel, captionStatusText, layout, messageTextContainer, onCancelBtn, onClose, onPostBtn, threadSubjectContainer, topPart }: ComposeMessageViewLayoutProps) => {
     const t = useTranslation();
-    const [ threadSubjectValue, setThreadSubjectValue ] = useState('');
-    const [ messageTextValue, setMessageTextValue ] = useState('');
 
     return (
         <Frame
@@ -37,125 +30,9 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
             layout={{ width: 455, height: 470, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="top_part"
-                    params={129}
-                    backgroundColor="#0e3f52"
-                    onPointerTap={onTopPart}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: -5, right: 7, top: 8, height: 80 }}
-                >
-                    <Region
-                        name="top_click_area"
-                        params={145}
-                        onPointerTap={onTopClickArea}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80 }}
-                    />
-                    <Region
-                        name="icon_background"
-                        params={16}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80 }}
-                    >
-                        <WidgetSlot
-                            widgetType="badge_image"
-                            name="group_icon"
-                            params={16}
-                            options={{ 'badge_image:type': 'group', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                            layout={{ position: 'absolute', left: 20, width: 40, top: 20, height: 40 }}
-                        />
-                    </Region>
-                    <Region
-                        name="top_header_text"
-                        params={16}
-                        layout={{ position: 'absolute', left: 90, width: 678, top: 10, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTopHeaderText ?? 'Super-duper long group title'}
-                            textStyle="text-style-u-headline-big"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                    <Region
-                        name="top_text"
-                        params={144}
-                        layout={{ position: 'absolute', left: 90, right: 4, top: 40, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTopText ?? 'Super-duper long goup description, maybe even multiline, but takes a few lines anyway'}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 359 }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="thread_subject_container"
-                    params={144}
-                    layout={{ position: 'absolute', left: 0, right: 11, top: 96, height: 48 }}
-                >
-                    <Region
-                        params={145}
-                        backgroundColor="#227aad"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 21 }}
-                    />
-                    <Region
-                        name="thread_subject_header"
-                        params={144}
-                        layout={{ position: 'absolute', left: 1, right: -9, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionThreadSubjectHeader ?? t('groupforum.compose.subject')}
-                            textOptions={{ fill: '#eeeeee' }}
-                        />
-                    </Region>
-                    <TextInput
-                        value={threadSubjectValue}
-                        onChange={setThreadSubjectValue}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 21, height: 22 }}
-                    />
-                </Region>
-                <Region
-                    name="message_text_container"
-                    params={2193}
-                    onPointerTap={onMessageTextContainer}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, right: 11, top: 145, bottom: 105 }}
-                >
-                    <Region
-                        params={145}
-                        backgroundColor="#227aad"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 21 }}
-                    />
-                    <Region
-                        name="message_text_header"
-                        params={144}
-                        layout={{ position: 'absolute', left: 1, right: 0, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionMessageTextHeader ?? t('groupforum.compose.message')}
-                            textStyle="text-style-regular"
-                            textOptions={{ fill: '#eeeeee' }}
-                        />
-                    </Region>
-                    <TextInput
-                        value={messageTextValue}
-                        onChange={setMessageTextValue}
-                        multiline
-                        backgroundColor="#ffffff"
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0 }}
-                    />
-                    <Region
-                        name="formatting_help"
-                        params={262145}
-                        layout={{ position: 'absolute', right: 4, width: 197, top: 4, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                    >
-                        <ThemeText
-                            text={captionFormattingHelp ?? t('groupforum.compose.formatting_help')}
-                            textStyle="text-style-id-link-regular"
-                            textOptions={{ align: 'right' }}
-                        />
-                    </Region>
-                </Region>
+                <ComposeMessageViewLayoutTopPart {...topPart} />
+                <ComposeMessageViewLayoutThreadSubjectContainer {...threadSubjectContainer} />
+                <ComposeMessageViewLayoutMessageTextContainer {...messageTextContainer} />
                 <ContainerButton
                     variant="3"
                     name="cancel_btn"
@@ -207,5 +84,192 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionFormatt
                 </Region>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `top_click_area` of ComposeMessageViewLayout - configured through the parent's `topClickArea` prop. */
+export interface ComposeMessageViewLayoutTopClickAreaProps {
+    layout?: BoxLayout;
+    onTopClickArea?: () => void;
+}
+
+export const ComposeMessageViewLayoutTopClickArea = ({ layout, onTopClickArea }: ComposeMessageViewLayoutTopClickAreaProps) => {
+    return (
+        <Region
+            name="top_click_area"
+            params={145}
+            onPointerTap={onTopClickArea}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 80, ...layout }}
+        />
+    );
+};
+
+/** Named region `icon_background` of ComposeMessageViewLayout - configured through the parent's `iconBackground` prop. */
+export interface ComposeMessageViewLayoutIconBackgroundProps {
+    layout?: BoxLayout;
+}
+
+export const ComposeMessageViewLayoutIconBackground = ({ layout }: ComposeMessageViewLayoutIconBackgroundProps) => {
+    return (
+        <Region
+            name="icon_background"
+            params={16}
+            backgroundColor="#000000"
+            layout={{ position: 'absolute', left: 0, width: 80, top: 0, height: 80, ...layout }}
+        >
+            <WidgetSlot
+                widgetType="badge_image"
+                name="group_icon"
+                params={16}
+                options={{ 'badge_image:type': 'group', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
+                layout={{ position: 'absolute', left: 20, width: 40, top: 20, height: 40 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `top_part` of ComposeMessageViewLayout - configured through the parent's `topPart` prop. */
+export interface ComposeMessageViewLayoutTopPartProps {
+    captionTopHeaderText?: string;
+    captionTopText?: string;
+    iconBackground?: ComposeMessageViewLayoutIconBackgroundProps;
+    layout?: BoxLayout;
+    onTopPart?: () => void;
+    topClickArea?: ComposeMessageViewLayoutTopClickAreaProps;
+}
+
+export const ComposeMessageViewLayoutTopPart = ({ captionTopHeaderText, captionTopText, iconBackground, layout, onTopPart, topClickArea }: ComposeMessageViewLayoutTopPartProps) => {
+    return (
+        <Region
+            name="top_part"
+            params={129}
+            backgroundColor="#0e3f52"
+            onPointerTap={onTopPart}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: -5, right: 7, top: 8, height: 80, ...layout }}
+        >
+            <ComposeMessageViewLayoutTopClickArea {...topClickArea} />
+            <ComposeMessageViewLayoutIconBackground {...iconBackground} />
+            <Region
+                name="top_header_text"
+                params={16}
+                layout={{ position: 'absolute', left: 90, width: 678, top: 10, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionTopHeaderText ?? 'Super-duper long group title'}
+                    textStyle="text-style-u-headline-big"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+            <Region
+                name="top_text"
+                params={144}
+                layout={{ position: 'absolute', left: 90, right: 4, top: 40, height: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionTopText ?? 'Super-duper long goup description, maybe even multiline, but takes a few lines anyway'}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 359 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `thread_subject_container` of ComposeMessageViewLayout - configured through the parent's `threadSubjectContainer` prop. */
+export interface ComposeMessageViewLayoutThreadSubjectContainerProps {
+    captionThreadSubjectHeader?: string;
+    layout?: BoxLayout;
+}
+
+export const ComposeMessageViewLayoutThreadSubjectContainer = ({ captionThreadSubjectHeader, layout }: ComposeMessageViewLayoutThreadSubjectContainerProps) => {
+    const t = useTranslation();
+    const [ threadSubjectValue, setThreadSubjectValue ] = useState('');
+
+    return (
+        <Region
+            name="thread_subject_container"
+            params={144}
+            layout={{ position: 'absolute', left: 0, right: 11, top: 96, height: 48, ...layout }}
+        >
+            <Region
+                params={145}
+                backgroundColor="#227aad"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 21 }}
+            />
+            <Region
+                name="thread_subject_header"
+                params={144}
+                layout={{ position: 'absolute', left: 1, right: -9, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionThreadSubjectHeader ?? t('groupforum.compose.subject')}
+                    textOptions={{ fill: '#eeeeee' }}
+                />
+            </Region>
+            <TextInput
+                value={threadSubjectValue}
+                onChange={setThreadSubjectValue}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 21, height: 22 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `message_text_container` of ComposeMessageViewLayout - configured through the parent's `messageTextContainer` prop. */
+export interface ComposeMessageViewLayoutMessageTextContainerProps {
+    captionFormattingHelp?: string;
+    captionMessageTextHeader?: string;
+    layout?: BoxLayout;
+    onMessageTextContainer?: () => void;
+}
+
+export const ComposeMessageViewLayoutMessageTextContainer = ({ captionFormattingHelp, captionMessageTextHeader, layout, onMessageTextContainer }: ComposeMessageViewLayoutMessageTextContainerProps) => {
+    const t = useTranslation();
+    const [ messageTextValue, setMessageTextValue ] = useState('');
+
+    return (
+        <Region
+            name="message_text_container"
+            params={2193}
+            onPointerTap={onMessageTextContainer}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, right: 11, top: 145, bottom: 105, ...layout }}
+        >
+            <Region
+                params={145}
+                backgroundColor="#227aad"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 21 }}
+            />
+            <Region
+                name="message_text_header"
+                params={144}
+                layout={{ position: 'absolute', left: 1, right: 0, top: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionMessageTextHeader ?? t('groupforum.compose.message')}
+                    textStyle="text-style-regular"
+                    textOptions={{ fill: '#eeeeee' }}
+                />
+            </Region>
+            <TextInput
+                value={messageTextValue}
+                onChange={setMessageTextValue}
+                multiline
+                backgroundColor="#ffffff"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 20, bottom: 0 }}
+            />
+            <Region
+                name="formatting_help"
+                params={262145}
+                layout={{ position: 'absolute', right: 4, width: 197, top: 4, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+            >
+                <ThemeText
+                    text={captionFormattingHelp ?? t('groupforum.compose.formatting_help')}
+                    textStyle="text-style-id-link-regular"
+                    textOptions={{ align: 'right' }}
+                />
+            </Region>
+        </Region>
     );
 };

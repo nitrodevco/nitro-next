@@ -9,7 +9,7 @@ export interface CounterLayoutProps {
 
 export const CounterLayout = ({ layout, srcCounterBitmap }: CounterLayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 164, height: 164, justifyContent: 'center', ...layout }}>
+        <Region layout={{ position: 'relative', width: 164, height: 164, ...layout }}>
             <ThemeImage
                 name="counterBitmap"
                 tags={[ 'bitmap' ]}

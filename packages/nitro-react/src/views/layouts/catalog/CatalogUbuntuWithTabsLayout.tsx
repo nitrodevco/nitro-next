@@ -6,25 +6,18 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1609_catalog_ubuntu_with_tabs_xml` (layout "catalog_ubuntu_with_tabs", 570x635) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface CatalogUbuntuWithTabsLayoutProps {
-    captionBuilderHeaderStatusLimit?: string;
-    captionBuilderHeaderStatusMembership?: string;
-    captionBuilderHeaderTitle?: string;
-    captionCatalogHeaderDescription?: string;
-    captionCatalogHeaderTitle?: string;
     captionSearchHelper?: string;
-    itemsNavigationList?: ReactNode;
+    catalogHeaderBackgroundBorder?: CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBorderProps;
+    clearSearchButton?: CatalogUbuntuWithTabsLayoutClearSearchButtonProps;
     layout?: BoxLayout;
-    onClearSearchButton?: () => void;
+    layoutContainer?: CatalogUbuntuWithTabsLayoutLayoutContainerProps;
+    navigationContainer?: CatalogUbuntuWithTabsLayoutNavigationContainerProps;
     onClose?: () => void;
     onTabButton?: () => void;
-    srcCatalogHeaderIcon?: string;
-    srcCatalogHeaderImage?: string;
-    srcSearchClearIcon?: string;
-    visibleCatalogModeHeader?: boolean;
-    visibleSearchWaitingForResultsMask?: boolean;
+    searchWaitingForResultsMask?: CatalogUbuntuWithTabsLayoutSearchWaitingForResultsMaskProps;
 }
 
-export const CatalogUbuntuWithTabsLayout = ({ captionBuilderHeaderStatusLimit, captionBuilderHeaderStatusMembership, captionBuilderHeaderTitle, captionCatalogHeaderDescription, captionCatalogHeaderTitle, captionSearchHelper, itemsNavigationList, layout, onClearSearchButton, onClose, onTabButton, srcCatalogHeaderIcon, srcCatalogHeaderImage, srcSearchClearIcon, visibleCatalogModeHeader, visibleSearchWaitingForResultsMask }: CatalogUbuntuWithTabsLayoutProps) => {
+export const CatalogUbuntuWithTabsLayout = ({ captionSearchHelper, catalogHeaderBackgroundBorder, clearSearchButton, layout, layoutContainer, navigationContainer, onClose, onTabButton, searchWaitingForResultsMask }: CatalogUbuntuWithTabsLayoutProps) => {
     const t = useTranslation();
     const [ searchInputValue, setSearchInputValue ] = useState('');
 
@@ -40,96 +33,7 @@ export const CatalogUbuntuWithTabsLayout = ({ captionBuilderHeaderStatusLimit, c
             layout={{ width: 570, height: 635, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="catalog.header.background.border"
-                    params={144}
-                    backgroundColor="#376275"
-                    layout={{ position: 'absolute', left: 1, right: 1, top: 35, height: 90 }}
-                >
-                    <Region
-                        name="catalog.header.background.body"
-                        params={144}
-                        backgroundColor="#0e3f52"
-                        layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 86 }}
-                    />
-                    <ThemeImage
-                        name="catalog.header.image"
-                        params={144}
-                        src={srcCatalogHeaderImage ?? '${image.library.url}catalogue/catalog_header_roombuilder.gif'}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 90 }}
-                    />
-                    <ThemeImage
-                        name="catalog.header.icon"
-                        params={16}
-                        src={srcCatalogHeaderIcon ?? '${image.library.url}catalogue/icon_1.png'}
-                        layout={{ position: 'absolute', left: 24, width: 40, top: 30, height: 35 }}
-                    />
-                    <Region
-                        name="catalog.mode.header"
-                        params={16}
-                        visible={visibleCatalogModeHeader ?? false}
-                        layout={{ position: 'absolute', left: 0, width: 570, top: 0, height: 90 }}
-                    >
-                        <Region
-                            name="catalog.header.title"
-                            params={16}
-                            layout={{ position: 'absolute', left: 80, width: 133, top: 11, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionCatalogHeaderTitle ?? t('catalog.header')}
-                                textStyle="text-style-u-headline-big"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                        <Region
-                            name="catalog.header.description"
-                            params={16}
-                            layout={{ position: 'absolute', left: 80, width: 475, top: 34, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionCatalogHeaderDescription ?? t('catalog.description')}
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 475 }}
-                            />
-                        </Region>
-                    </Region>
-                    <Region
-                        name="builder.mode.header"
-                        params={16}
-                        layout={{ position: 'absolute', left: 0, width: 570, top: 0, height: 90 }}
-                    >
-                        <Region
-                            name="builder.header.title"
-                            params={16}
-                            layout={{ position: 'absolute', left: 80, width: 226, top: 11, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionBuilderHeaderTitle ?? t('builder.header.title')}
-                                textStyle="text-style-u-headline-big"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                        <Region
-                            name="builder.header.status.membership"
-                            params={16}
-                            layout={{ position: 'absolute', left: 80, width: 475, top: 41, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionBuilderHeaderStatusMembership ?? t('builder.header.status.membership')}
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 475 }}
-                            />
-                        </Region>
-                        <Region
-                            name="builder.header.status.limit"
-                            params={16}
-                            layout={{ position: 'absolute', left: 80, width: 475, top: 56, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionBuilderHeaderStatusLimit ?? t('builder.header.status.limit')}
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 475 }}
-                            />
-                        </Region>
-                    </Region>
-                </Region>
+                <CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBorder {...catalogHeaderBackgroundBorder} />
                 <Border
                     variant="105"
                     name="searchContainer"
@@ -152,60 +56,10 @@ export const CatalogUbuntuWithTabsLayout = ({ captionBuilderHeaderStatusLimit, c
                         textColor="#666666"
                         layout={{ position: 'absolute', left: 4, width: 144, top: 3, height: 18 }}
                     />
-                    <Region
-                        name="clear_search_button"
-                        params={17}
-                        onPointerTap={onClearSearchButton}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 160, width: 20, top: 2, height: 20 }}
-                    >
-                        <ThemeImage
-                            name="search.clear.icon"
-                            params={16}
-                            src={srcSearchClearIcon ?? layoutImage('common_small_pen.png')}
-                            layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
-                        />
-                    </Region>
+                    <CatalogUbuntuWithTabsLayoutClearSearchButton {...clearSearchButton} />
                 </Border>
-                <Region
-                    name="navigationContainer"
-                    params={2064}
-                    layout={{ position: 'absolute', left: 8, width: 184, top: 159, bottom: 43 }}
-                >
-                    <Border
-                        variant="6"
-                        params={2064}
-                        blend={0.5}
-                        layout={{ position: 'absolute', left: 0, width: 184, top: 0, bottom: 0 }}
-                    />
-                    <ScrollArea
-                        orientation="vertical"
-                        layout={{ position: 'absolute', left: 3, width: 178, top: 5, bottom: 5 }}
-                    >
-                        <Region
-                            name="navigationList"
-                            params={2064}
-                            layout={{ flexDirection: 'column', width: '100%' }}
-                        >
-                            {itemsNavigationList ?? (
-                                <>
-                                    <CatalogUbuntuWithTabsLayoutNormalListTemplateItem />
-                                    <CatalogUbuntuWithTabsLayoutNormalTopitemTemplateItem />
-                                    <CatalogUbuntuWithTabsLayoutNormalSubitemTemplateItem />
-                                    <CatalogUbuntuWithTabsLayoutBuildersClubListTemplateItem />
-                                    <CatalogUbuntuWithTabsLayoutBuildersClubTopitemTemplateItem />
-                                    <CatalogUbuntuWithTabsLayoutBuildersClubSubitemTemplateItem />
-                                </>
-                            )}
-                        </Region>
-                    </ScrollArea>
-                </Region>
-                <Region
-                    name="layoutContainer"
-                    tags={[ 'UBUNTU' ]}
-                    params={2064}
-                    layout={{ position: 'absolute', left: 200, width: 360, top: 131, bottom: 44 }}
-                />
+                <CatalogUbuntuWithTabsLayoutNavigationContainer {...navigationContainer} />
+                <CatalogUbuntuWithTabsLayoutLayoutContainer {...layoutContainer} />
                 <TabContext
                     variant="3"
                     name="tab_context"
@@ -219,15 +73,183 @@ export const CatalogUbuntuWithTabsLayout = ({ captionBuilderHeaderStatusLimit, c
                         layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 30 }}
                     />
                 </TabContext>
-                <Region
-                    name="search_waiting_for_results_mask"
-                    params={2176}
-                    visible={visibleSearchWaitingForResultsMask ?? false}
-                    backgroundColor="#eceae0"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 37 }}
-                />
+                <CatalogUbuntuWithTabsLayoutSearchWaitingForResultsMask {...searchWaitingForResultsMask} />
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `catalog.header.background.body` of CatalogUbuntuWithTabsLayout - configured through the parent's `catalogHeaderBackgroundBody` prop. */
+export interface CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBodyProps {
+    layout?: BoxLayout;
+}
+
+export const CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBody = ({ layout }: CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBodyProps) => {
+    return (
+        <Region
+            name="catalog.header.background.body"
+            params={144}
+            backgroundColor="#0e3f52"
+            layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 86, ...layout }}
+        />
+    );
+};
+
+/** Named region `catalog.mode.header` of CatalogUbuntuWithTabsLayout - configured through the parent's `catalogModeHeader` prop. */
+export interface CatalogUbuntuWithTabsLayoutCatalogModeHeaderProps {
+    captionCatalogHeaderDescription?: string;
+    captionCatalogHeaderTitle?: string;
+    layout?: BoxLayout;
+    visibleCatalogModeHeader?: boolean;
+}
+
+export const CatalogUbuntuWithTabsLayoutCatalogModeHeader = ({ captionCatalogHeaderDescription, captionCatalogHeaderTitle, layout, visibleCatalogModeHeader }: CatalogUbuntuWithTabsLayoutCatalogModeHeaderProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="catalog.mode.header"
+            params={16}
+            visible={visibleCatalogModeHeader ?? false}
+            layout={{ position: 'absolute', left: 0, width: 570, top: 0, height: 90, ...layout }}
+        >
+            <Region
+                name="catalog.header.title"
+                params={16}
+                layout={{ position: 'absolute', left: 80, width: 133, top: 11, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCatalogHeaderTitle ?? t('catalog.header')}
+                    textStyle="text-style-u-headline-big"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+            <Region
+                name="catalog.header.description"
+                params={16}
+                layout={{ position: 'absolute', left: 80, width: 475, top: 34, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCatalogHeaderDescription ?? t('catalog.description')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 475 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `builder.mode.header` of CatalogUbuntuWithTabsLayout - configured through the parent's `builderModeHeader` prop. */
+export interface CatalogUbuntuWithTabsLayoutBuilderModeHeaderProps {
+    captionBuilderHeaderStatusLimit?: string;
+    captionBuilderHeaderStatusMembership?: string;
+    captionBuilderHeaderTitle?: string;
+    layout?: BoxLayout;
+}
+
+export const CatalogUbuntuWithTabsLayoutBuilderModeHeader = ({ captionBuilderHeaderStatusLimit, captionBuilderHeaderStatusMembership, captionBuilderHeaderTitle, layout }: CatalogUbuntuWithTabsLayoutBuilderModeHeaderProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="builder.mode.header"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 570, top: 0, height: 90, ...layout }}
+        >
+            <Region
+                name="builder.header.title"
+                params={16}
+                layout={{ position: 'absolute', left: 80, width: 226, top: 11, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionBuilderHeaderTitle ?? t('builder.header.title')}
+                    textStyle="text-style-u-headline-big"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+            <Region
+                name="builder.header.status.membership"
+                params={16}
+                layout={{ position: 'absolute', left: 80, width: 475, top: 41, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionBuilderHeaderStatusMembership ?? t('builder.header.status.membership')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 475 }}
+                />
+            </Region>
+            <Region
+                name="builder.header.status.limit"
+                params={16}
+                layout={{ position: 'absolute', left: 80, width: 475, top: 56, height: 19, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionBuilderHeaderStatusLimit ?? t('builder.header.status.limit')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 475 }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `catalog.header.background.border` of CatalogUbuntuWithTabsLayout - configured through the parent's `catalogHeaderBackgroundBorder` prop. */
+export interface CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBorderProps {
+    builderModeHeader?: CatalogUbuntuWithTabsLayoutBuilderModeHeaderProps;
+    catalogHeaderBackgroundBody?: CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBodyProps;
+    catalogModeHeader?: CatalogUbuntuWithTabsLayoutCatalogModeHeaderProps;
+    layout?: BoxLayout;
+    srcCatalogHeaderIcon?: string;
+    srcCatalogHeaderImage?: string;
+}
+
+export const CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBorder = ({ builderModeHeader, catalogHeaderBackgroundBody, catalogModeHeader, layout, srcCatalogHeaderIcon, srcCatalogHeaderImage }: CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBorderProps) => {
+    return (
+        <Region
+            name="catalog.header.background.border"
+            params={144}
+            backgroundColor="#376275"
+            layout={{ position: 'absolute', left: 1, right: 1, top: 35, height: 90, ...layout }}
+        >
+            <CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBody {...catalogHeaderBackgroundBody} />
+            <ThemeImage
+                name="catalog.header.image"
+                params={144}
+                src={srcCatalogHeaderImage ?? '${image.library.url}catalogue/catalog_header_roombuilder.gif'}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 90 }}
+            />
+            <ThemeImage
+                name="catalog.header.icon"
+                params={16}
+                src={srcCatalogHeaderIcon ?? '${image.library.url}catalogue/icon_1.png'}
+                layout={{ position: 'absolute', left: 24, width: 40, top: 30, height: 35 }}
+            />
+            <CatalogUbuntuWithTabsLayoutCatalogModeHeader {...catalogModeHeader} />
+            <CatalogUbuntuWithTabsLayoutBuilderModeHeader {...builderModeHeader} />
+        </Region>
+    );
+};
+
+/** Named region `clear_search_button` of CatalogUbuntuWithTabsLayout - configured through the parent's `clearSearchButton` prop. */
+export interface CatalogUbuntuWithTabsLayoutClearSearchButtonProps {
+    layout?: BoxLayout;
+    onClearSearchButton?: () => void;
+    srcSearchClearIcon?: string;
+}
+
+export const CatalogUbuntuWithTabsLayoutClearSearchButton = ({ layout, onClearSearchButton, srcSearchClearIcon }: CatalogUbuntuWithTabsLayoutClearSearchButtonProps) => {
+    return (
+        <Region
+            name="clear_search_button"
+            params={17}
+            onPointerTap={onClearSearchButton}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 160, width: 20, top: 2, height: 20, ...layout }}
+        >
+            <ThemeImage
+                name="search.clear.icon"
+                params={16}
+                src={srcSearchClearIcon ?? layoutImage('common_small_pen.png')}
+                layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
+            />
+        </Region>
     );
 };
 
@@ -246,16 +268,52 @@ export const CatalogUbuntuWithTabsLayoutNormalListTemplateItem = ({ layout }: Ca
     );
 };
 
+/** Named region `item_hilight_inner` of CatalogUbuntuWithTabsLayout - configured through the parent's `itemHilightInner` prop. */
+export interface CatalogUbuntuWithTabsLayoutItemHilightInnerProps {
+    layout?: BoxLayout;
+}
+
+export const CatalogUbuntuWithTabsLayoutItemHilightInner = ({ layout }: CatalogUbuntuWithTabsLayoutItemHilightInnerProps) => {
+    return (
+        <Region
+            name="item_hilight_inner"
+            params={16}
+            backgroundColor="#63c5e9"
+            layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16, ...layout }}
+        />
+    );
+};
+
+/** Named region `item_hilight_outer` of CatalogUbuntuWithTabsLayout - configured through the parent's `itemHilightOuter` prop. */
+export interface CatalogUbuntuWithTabsLayoutItemHilightOuterProps {
+    itemHilightInner?: CatalogUbuntuWithTabsLayoutItemHilightInnerProps;
+    layout?: BoxLayout;
+}
+
+export const CatalogUbuntuWithTabsLayoutItemHilightOuter = ({ itemHilightInner, layout }: CatalogUbuntuWithTabsLayoutItemHilightOuterProps) => {
+    return (
+        <Region
+            name="item_hilight_outer"
+            params={16}
+            backgroundColor="#82d1ed"
+            layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20, ...layout }}
+        >
+            <CatalogUbuntuWithTabsLayoutItemHilightInner {...itemHilightInner} />
+        </Region>
+    );
+};
+
 /** Row template `normal_topitem_template` of CatalogUbuntuWithTabsLayout - pass real rows through its `items…` slot. */
 export interface CatalogUbuntuWithTabsLayoutNormalTopitemTemplateItemProps {
     captionItemTitle?: string;
+    itemHilightOuter?: CatalogUbuntuWithTabsLayoutItemHilightOuterProps;
     layout?: BoxLayout;
     onNormalTopitemTemplate?: () => void;
     srcIcon?: string;
     visibleDropButton?: boolean;
 }
 
-export const CatalogUbuntuWithTabsLayoutNormalTopitemTemplateItem = ({ captionItemTitle, layout, onNormalTopitemTemplate, srcIcon, visibleDropButton }: CatalogUbuntuWithTabsLayoutNormalTopitemTemplateItemProps) => {
+export const CatalogUbuntuWithTabsLayoutNormalTopitemTemplateItem = ({ captionItemTitle, itemHilightOuter, layout, onNormalTopitemTemplate, srcIcon, visibleDropButton }: CatalogUbuntuWithTabsLayoutNormalTopitemTemplateItemProps) => {
     return (
         <Region
             name="normal_topitem_template"
@@ -270,19 +328,7 @@ export const CatalogUbuntuWithTabsLayoutNormalTopitemTemplateItem = ({ captionIt
                 backgroundColor="#b4b4ae"
                 layout={{ position: 'absolute', left: 1, width: 178, top: 0, height: 21 }}
             >
-                <Region
-                    name="item_hilight_outer"
-                    params={16}
-                    backgroundColor="#82d1ed"
-                    layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20 }}
-                >
-                    <Region
-                        name="item_hilight_inner"
-                        params={16}
-                        backgroundColor="#63c5e9"
-                        layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16 }}
-                    />
-                </Region>
+                <CatalogUbuntuWithTabsLayoutItemHilightOuter {...itemHilightOuter} />
             </Region>
             <ThemeImage
                 name="icon"
@@ -320,16 +366,52 @@ export const CatalogUbuntuWithTabsLayoutNormalTopitemTemplateItem = ({ captionIt
     );
 };
 
+/** Named region `item_hilight_inner` of CatalogUbuntuWithTabsLayout - configured through the parent's `itemHilightInner` prop. */
+export interface CatalogUbuntuWithTabsLayoutItemHilightInner2Props {
+    layout?: BoxLayout;
+}
+
+export const CatalogUbuntuWithTabsLayoutItemHilightInner2 = ({ layout }: CatalogUbuntuWithTabsLayoutItemHilightInner2Props) => {
+    return (
+        <Region
+            name="item_hilight_inner"
+            params={16}
+            backgroundColor="#63c5e9"
+            layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 15, ...layout }}
+        />
+    );
+};
+
+/** Named region `item_hilight_outer` of CatalogUbuntuWithTabsLayout - configured through the parent's `itemHilightOuter` prop. */
+export interface CatalogUbuntuWithTabsLayoutItemHilightOuter2Props {
+    itemHilightInner?: CatalogUbuntuWithTabsLayoutItemHilightInner2Props;
+    layout?: BoxLayout;
+}
+
+export const CatalogUbuntuWithTabsLayoutItemHilightOuter2 = ({ itemHilightInner, layout }: CatalogUbuntuWithTabsLayoutItemHilightOuter2Props) => {
+    return (
+        <Region
+            name="item_hilight_outer"
+            params={16}
+            backgroundColor="#82d1ed"
+            layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 19, ...layout }}
+        >
+            <CatalogUbuntuWithTabsLayoutItemHilightInner2 {...itemHilightInner} />
+        </Region>
+    );
+};
+
 /** Row template `normal_subitem_template` of CatalogUbuntuWithTabsLayout - pass real rows through its `items…` slot. */
 export interface CatalogUbuntuWithTabsLayoutNormalSubitemTemplateItemProps {
     captionItemTitle?: string;
+    itemHilightOuter?: CatalogUbuntuWithTabsLayoutItemHilightOuter2Props;
     layout?: BoxLayout;
     onNormalSubitemTemplate?: () => void;
     srcIcon?: string;
     visibleDropButton?: boolean;
 }
 
-export const CatalogUbuntuWithTabsLayoutNormalSubitemTemplateItem = ({ captionItemTitle, layout, onNormalSubitemTemplate, srcIcon, visibleDropButton }: CatalogUbuntuWithTabsLayoutNormalSubitemTemplateItemProps) => {
+export const CatalogUbuntuWithTabsLayoutNormalSubitemTemplateItem = ({ captionItemTitle, itemHilightOuter, layout, onNormalSubitemTemplate, srcIcon, visibleDropButton }: CatalogUbuntuWithTabsLayoutNormalSubitemTemplateItemProps) => {
     return (
         <Region
             name="normal_subitem_template"
@@ -344,19 +426,7 @@ export const CatalogUbuntuWithTabsLayoutNormalSubitemTemplateItem = ({ captionIt
                 backgroundColor="#b4b4ae"
                 layout={{ position: 'absolute', left: 1, width: 178, top: 0, height: 20 }}
             >
-                <Region
-                    name="item_hilight_outer"
-                    params={16}
-                    backgroundColor="#82d1ed"
-                    layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 19 }}
-                >
-                    <Region
-                        name="item_hilight_inner"
-                        params={16}
-                        backgroundColor="#63c5e9"
-                        layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 15 }}
-                    />
-                </Region>
+                <CatalogUbuntuWithTabsLayoutItemHilightOuter2 {...itemHilightOuter} />
             </Region>
             <ThemeImage
                 name="icon"
@@ -409,16 +479,52 @@ export const CatalogUbuntuWithTabsLayoutBuildersClubListTemplateItem = ({ layout
     );
 };
 
+/** Named region `item_hilight_inner` of CatalogUbuntuWithTabsLayout - configured through the parent's `itemHilightInner` prop. */
+export interface CatalogUbuntuWithTabsLayoutItemHilightInner3Props {
+    layout?: BoxLayout;
+}
+
+export const CatalogUbuntuWithTabsLayoutItemHilightInner3 = ({ layout }: CatalogUbuntuWithTabsLayoutItemHilightInner3Props) => {
+    return (
+        <Region
+            name="item_hilight_inner"
+            params={16}
+            backgroundColor="#ff8d00"
+            layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16, ...layout }}
+        />
+    );
+};
+
+/** Named region `item_hilight_outer` of CatalogUbuntuWithTabsLayout - configured through the parent's `itemHilightOuter` prop. */
+export interface CatalogUbuntuWithTabsLayoutItemHilightOuter3Props {
+    itemHilightInner?: CatalogUbuntuWithTabsLayoutItemHilightInner3Props;
+    layout?: BoxLayout;
+}
+
+export const CatalogUbuntuWithTabsLayoutItemHilightOuter3 = ({ itemHilightInner, layout }: CatalogUbuntuWithTabsLayoutItemHilightOuter3Props) => {
+    return (
+        <Region
+            name="item_hilight_outer"
+            params={16}
+            backgroundColor="#ffb53c"
+            layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20, ...layout }}
+        >
+            <CatalogUbuntuWithTabsLayoutItemHilightInner3 {...itemHilightInner} />
+        </Region>
+    );
+};
+
 /** Row template `builders_club_topitem_template` of CatalogUbuntuWithTabsLayout - pass real rows through its `items…` slot. */
 export interface CatalogUbuntuWithTabsLayoutBuildersClubTopitemTemplateItemProps {
     captionItemTitle?: string;
+    itemHilightOuter?: CatalogUbuntuWithTabsLayoutItemHilightOuter3Props;
     layout?: BoxLayout;
     onBuildersClubTopitemTemplate?: () => void;
     srcIcon?: string;
     visibleDropButton?: boolean;
 }
 
-export const CatalogUbuntuWithTabsLayoutBuildersClubTopitemTemplateItem = ({ captionItemTitle, layout, onBuildersClubTopitemTemplate, srcIcon, visibleDropButton }: CatalogUbuntuWithTabsLayoutBuildersClubTopitemTemplateItemProps) => {
+export const CatalogUbuntuWithTabsLayoutBuildersClubTopitemTemplateItem = ({ captionItemTitle, itemHilightOuter, layout, onBuildersClubTopitemTemplate, srcIcon, visibleDropButton }: CatalogUbuntuWithTabsLayoutBuildersClubTopitemTemplateItemProps) => {
     return (
         <Region
             name="builders_club_topitem_template"
@@ -433,19 +539,7 @@ export const CatalogUbuntuWithTabsLayoutBuildersClubTopitemTemplateItem = ({ cap
                 backgroundColor="#b4b4ae"
                 layout={{ position: 'absolute', left: 1, width: 178, top: 0, height: 21 }}
             >
-                <Region
-                    name="item_hilight_outer"
-                    params={16}
-                    backgroundColor="#ffb53c"
-                    layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 20 }}
-                >
-                    <Region
-                        name="item_hilight_inner"
-                        params={16}
-                        backgroundColor="#ff8d00"
-                        layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 16 }}
-                    />
-                </Region>
+                <CatalogUbuntuWithTabsLayoutItemHilightOuter3 {...itemHilightOuter} />
             </Region>
             <ThemeImage
                 name="icon"
@@ -483,16 +577,52 @@ export const CatalogUbuntuWithTabsLayoutBuildersClubTopitemTemplateItem = ({ cap
     );
 };
 
+/** Named region `item_hilight_inner` of CatalogUbuntuWithTabsLayout - configured through the parent's `itemHilightInner` prop. */
+export interface CatalogUbuntuWithTabsLayoutItemHilightInner4Props {
+    layout?: BoxLayout;
+}
+
+export const CatalogUbuntuWithTabsLayoutItemHilightInner4 = ({ layout }: CatalogUbuntuWithTabsLayoutItemHilightInner4Props) => {
+    return (
+        <Region
+            name="item_hilight_inner"
+            params={16}
+            backgroundColor="#ff8d00"
+            layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 15, ...layout }}
+        />
+    );
+};
+
+/** Named region `item_hilight_outer` of CatalogUbuntuWithTabsLayout - configured through the parent's `itemHilightOuter` prop. */
+export interface CatalogUbuntuWithTabsLayoutItemHilightOuter4Props {
+    itemHilightInner?: CatalogUbuntuWithTabsLayoutItemHilightInner4Props;
+    layout?: BoxLayout;
+}
+
+export const CatalogUbuntuWithTabsLayoutItemHilightOuter4 = ({ itemHilightInner, layout }: CatalogUbuntuWithTabsLayoutItemHilightOuter4Props) => {
+    return (
+        <Region
+            name="item_hilight_outer"
+            params={16}
+            backgroundColor="#ffb53c"
+            layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 19, ...layout }}
+        >
+            <CatalogUbuntuWithTabsLayoutItemHilightInner4 {...itemHilightInner} />
+        </Region>
+    );
+};
+
 /** Row template `builders_club_subitem_template` of CatalogUbuntuWithTabsLayout - pass real rows through its `items…` slot. */
 export interface CatalogUbuntuWithTabsLayoutBuildersClubSubitemTemplateItemProps {
     captionItemTitle?: string;
+    itemHilightOuter?: CatalogUbuntuWithTabsLayoutItemHilightOuter4Props;
     layout?: BoxLayout;
     onBuildersClubSubitemTemplate?: () => void;
     srcIcon?: string;
     visibleDropButton?: boolean;
 }
 
-export const CatalogUbuntuWithTabsLayoutBuildersClubSubitemTemplateItem = ({ captionItemTitle, layout, onBuildersClubSubitemTemplate, srcIcon, visibleDropButton }: CatalogUbuntuWithTabsLayoutBuildersClubSubitemTemplateItemProps) => {
+export const CatalogUbuntuWithTabsLayoutBuildersClubSubitemTemplateItem = ({ captionItemTitle, itemHilightOuter, layout, onBuildersClubSubitemTemplate, srcIcon, visibleDropButton }: CatalogUbuntuWithTabsLayoutBuildersClubSubitemTemplateItemProps) => {
     return (
         <Region
             name="builders_club_subitem_template"
@@ -507,19 +637,7 @@ export const CatalogUbuntuWithTabsLayoutBuildersClubSubitemTemplateItem = ({ cap
                 backgroundColor="#b4b4ae"
                 layout={{ position: 'absolute', left: 1, width: 178, top: 0, height: 20 }}
             >
-                <Region
-                    name="item_hilight_outer"
-                    params={16}
-                    backgroundColor="#ffb53c"
-                    layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 19 }}
-                >
-                    <Region
-                        name="item_hilight_inner"
-                        params={16}
-                        backgroundColor="#ff8d00"
-                        layout={{ position: 'absolute', left: 0, width: 178, top: 2, height: 15 }}
-                    />
-                </Region>
+                <CatalogUbuntuWithTabsLayoutItemHilightOuter4 {...itemHilightOuter} />
             </Region>
             <ThemeImage
                 name="icon"
@@ -554,5 +672,95 @@ export const CatalogUbuntuWithTabsLayoutBuildersClubSubitemTemplateItem = ({ cap
                 />
             </Region>
         </Region>
+    );
+};
+
+/** Named region `navigationList` of CatalogUbuntuWithTabsLayout - configured through the parent's `navigationList` prop. */
+export interface CatalogUbuntuWithTabsLayoutNavigationListProps {
+    itemsNavigationList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const CatalogUbuntuWithTabsLayoutNavigationList = ({ itemsNavigationList, layout }: CatalogUbuntuWithTabsLayoutNavigationListProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 3, width: 178, top: 5, bottom: 5, ...layout }}
+        >
+            <Region
+                name="navigationList"
+                params={2064}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            >
+                {itemsNavigationList ?? (
+                    <>
+                        <CatalogUbuntuWithTabsLayoutNormalListTemplateItem />
+                        <CatalogUbuntuWithTabsLayoutNormalTopitemTemplateItem />
+                        <CatalogUbuntuWithTabsLayoutNormalSubitemTemplateItem />
+                        <CatalogUbuntuWithTabsLayoutBuildersClubListTemplateItem />
+                        <CatalogUbuntuWithTabsLayoutBuildersClubTopitemTemplateItem />
+                        <CatalogUbuntuWithTabsLayoutBuildersClubSubitemTemplateItem />
+                    </>
+                )}
+            </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `navigationContainer` of CatalogUbuntuWithTabsLayout - configured through the parent's `navigationContainer` prop. */
+export interface CatalogUbuntuWithTabsLayoutNavigationContainerProps {
+    layout?: BoxLayout;
+    navigationList?: CatalogUbuntuWithTabsLayoutNavigationListProps;
+}
+
+export const CatalogUbuntuWithTabsLayoutNavigationContainer = ({ layout, navigationList }: CatalogUbuntuWithTabsLayoutNavigationContainerProps) => {
+    return (
+        <Region
+            name="navigationContainer"
+            params={2064}
+            layout={{ position: 'absolute', left: 8, width: 184, top: 159, bottom: 43, ...layout }}
+        >
+            <Border
+                variant="6"
+                params={2064}
+                blend={0.5}
+                layout={{ position: 'absolute', left: 0, width: 184, top: 0, bottom: 0 }}
+            />
+            <CatalogUbuntuWithTabsLayoutNavigationList {...navigationList} />
+        </Region>
+    );
+};
+
+/** Named region `layoutContainer` of CatalogUbuntuWithTabsLayout - configured through the parent's `layoutContainer` prop. */
+export interface CatalogUbuntuWithTabsLayoutLayoutContainerProps {
+    layout?: BoxLayout;
+}
+
+export const CatalogUbuntuWithTabsLayoutLayoutContainer = ({ layout }: CatalogUbuntuWithTabsLayoutLayoutContainerProps) => {
+    return (
+        <Region
+            name="layoutContainer"
+            tags={[ 'UBUNTU' ]}
+            params={2064}
+            layout={{ position: 'absolute', left: 200, width: 360, top: 131, bottom: 44, ...layout }}
+        />
+    );
+};
+
+/** Named region `search_waiting_for_results_mask` of CatalogUbuntuWithTabsLayout - configured through the parent's `searchWaitingForResultsMask` prop. */
+export interface CatalogUbuntuWithTabsLayoutSearchWaitingForResultsMaskProps {
+    layout?: BoxLayout;
+    visibleSearchWaitingForResultsMask?: boolean;
+}
+
+export const CatalogUbuntuWithTabsLayoutSearchWaitingForResultsMask = ({ layout, visibleSearchWaitingForResultsMask }: CatalogUbuntuWithTabsLayoutSearchWaitingForResultsMaskProps) => {
+    return (
+        <Region
+            name="search_waiting_for_results_mask"
+            params={2176}
+            visible={visibleSearchWaitingForResultsMask ?? false}
+            backgroundColor="#eceae0"
+            layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 37, ...layout }}
+        />
     );
 };

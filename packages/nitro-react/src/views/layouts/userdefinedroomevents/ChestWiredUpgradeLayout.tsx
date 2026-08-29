@@ -5,16 +5,12 @@ import { Border, BoxLayout, Button, ButtonThick, Frame, Region, ThemeImage, Them
 
 /** Generated from `1129_chest_wired_upgrade_xml` (layout "chest_wired_upgrade", 353x287) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ChestWiredUpgradeLayoutProps {
-    captionFree?: string;
-    itemsContent?: ReactNode;
-    itemsPropertiesItemlist?: ReactNode;
+    content?: ChestWiredUpgradeLayoutContentProps;
     layout?: BoxLayout;
     onClose?: () => void;
-    srcProductImage?: string;
-    srcWiredIcon?: string;
 }
 
-export const ChestWiredUpgradeLayout = ({ captionFree, itemsContent, itemsPropertiesItemlist, layout, onClose, srcProductImage, srcWiredIcon }: ChestWiredUpgradeLayoutProps) => {
+export const ChestWiredUpgradeLayout = ({ content, layout, onClose }: ChestWiredUpgradeLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -27,75 +23,7 @@ export const ChestWiredUpgradeLayout = ({ captionFree, itemsContent, itemsProper
             layout={{ width: 353, height: 287, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="content"
-                    params={8538256}
-                    layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 38, flexDirection: 'column', gap: 10 }}
-                >
-                    {itemsContent ?? (
-                        <>
-                            <ChestWiredUpgradeLayoutErrorTextItem />
-                            <ChestWiredUpgradeLayoutButtonsItem />
-                        </>
-                    )}
-                    <Region
-                        params={144}
-                        layout={{ width: 349, height: 164, flexShrink: 0 }}
-                    >
-                        <Border
-                            variant="0"
-                            params={16}
-                            tintColor="#f1f1f1"
-                            layout={{ position: 'absolute', left: 10, width: 126, top: 12, height: 152 }}
-                        >
-                            <ThemeImage
-                                name="product_image"
-                                params={16}
-                                src={srcProductImage}
-                                layout={{ position: 'absolute', left: 1, width: 126, top: 1, height: 152 }}
-                            />
-                            <ThemeImage
-                                name="wired_icon"
-                                params={16}
-                                src={srcWiredIcon ?? '${image.library.url}catalogue/icon_80.png'}
-                                layout={{ position: 'absolute', left: 89, width: 30, top: 7, height: 30 }}
-                            />
-                        </Border>
-                        <Region
-                            name="properties_itemlist"
-                            params={144}
-                            layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 67, flexDirection: 'column', gap: 4 }}
-                        >
-                            {itemsPropertiesItemlist ?? (
-                                <>
-                                    <ChestWiredUpgradeLayoutProductNameItem />
-                                    <ChestWiredUpgradeLayoutWarningItem />
-                                </>
-                            )}
-                        </Region>
-                        <Region
-                            params={16400}
-                            layout={{ position: 'absolute', left: 142, width: 307, top: 137, height: 22, flexDirection: 'row' }}
-                        >
-                            <Region
-                                params={16}
-                                layout={{ width: 268, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={t('catalog.purchase.confirmation.dialog.cost')}
-                                    textStyle="text-style-u-regular"
-                                />
-                            </Region>
-                            <Region
-                                name="free"
-                                params={16}
-                                layout={{ width: 39, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText text={captionFree ?? t('wiredchests.upgrade.wired.cost')} />
-                            </Region>
-                        </Region>
-                    </Region>
-                </Region>
+                <ChestWiredUpgradeLayoutContent {...content} />
             </Region>
         </Frame>
     );
@@ -233,6 +161,104 @@ export const ChestWiredUpgradeLayoutWarningItem = ({ captionWarning, layout }: C
                 text={captionWarning ?? t('wiredchests.big_fat_warning')}
                 textOptions={{ wordWrap: true, wordWrapWidth: 197 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `properties_itemlist` of ChestWiredUpgradeLayout - configured through the parent's `propertiesItemlist` prop. */
+export interface ChestWiredUpgradeLayoutPropertiesItemlistProps {
+    itemsPropertiesItemlist?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const ChestWiredUpgradeLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout }: ChestWiredUpgradeLayoutPropertiesItemlistProps) => {
+    return (
+        <Region
+            name="properties_itemlist"
+            params={144}
+            layout={{ position: 'absolute', left: 143, right: 9, top: 15, height: 67, flexDirection: 'column', gap: 4, ...layout }}
+        >
+            {itemsPropertiesItemlist ?? (
+                <>
+                    <ChestWiredUpgradeLayoutProductNameItem />
+                    <ChestWiredUpgradeLayoutWarningItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `content` of ChestWiredUpgradeLayout - configured through the parent's `content` prop. */
+export interface ChestWiredUpgradeLayoutContentProps {
+    captionFree?: string;
+    itemsContent?: ReactNode;
+    layout?: BoxLayout;
+    propertiesItemlist?: ChestWiredUpgradeLayoutPropertiesItemlistProps;
+    srcProductImage?: string;
+    srcWiredIcon?: string;
+}
+
+export const ChestWiredUpgradeLayoutContent = ({ captionFree, itemsContent, layout, propertiesItemlist, srcProductImage, srcWiredIcon }: ChestWiredUpgradeLayoutContentProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="content"
+            params={8538256}
+            layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 38, flexDirection: 'column', gap: 10, ...layout }}
+        >
+            {itemsContent ?? (
+                <>
+                    <ChestWiredUpgradeLayoutErrorTextItem />
+                    <ChestWiredUpgradeLayoutButtonsItem />
+                </>
+            )}
+            <Region
+                params={144}
+                layout={{ width: 349, height: 164, flexShrink: 0 }}
+            >
+                <Border
+                    variant="0"
+                    params={16}
+                    tintColor="#f1f1f1"
+                    layout={{ position: 'absolute', left: 10, width: 126, top: 12, height: 152 }}
+                >
+                    <ThemeImage
+                        name="product_image"
+                        params={16}
+                        src={srcProductImage}
+                        layout={{ position: 'absolute', left: 1, width: 126, top: 1, height: 152 }}
+                    />
+                    <ThemeImage
+                        name="wired_icon"
+                        params={16}
+                        src={srcWiredIcon ?? '${image.library.url}catalogue/icon_80.png'}
+                        layout={{ position: 'absolute', left: 89, width: 30, top: 7, height: 30 }}
+                    />
+                </Border>
+                <ChestWiredUpgradeLayoutPropertiesItemlist {...propertiesItemlist} />
+                <Region
+                    params={16400}
+                    layout={{ position: 'absolute', left: 142, width: 307, top: 137, height: 22, flexDirection: 'row' }}
+                >
+                    <Region
+                        params={16}
+                        layout={{ width: 268, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={t('catalog.purchase.confirmation.dialog.cost')}
+                            textStyle="text-style-u-regular"
+                        />
+                    </Region>
+                    <Region
+                        name="free"
+                        params={16}
+                        layout={{ width: 39, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionFree ?? t('wiredchests.upgrade.wired.cost')} />
+                    </Region>
+                </Region>
+            </Region>
         </Region>
     );
 };

@@ -8,15 +8,15 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface LevelUpLayoutProps {
     captionCloseButton?: string;
     captionLevelUpMessage?: string;
-    itemsLevelUpLayout?: ReactNode;
     layout?: BoxLayout;
+    levelUpLayout?: LevelUpLayoutLevelUpLayoutProps;
     onClose?: () => void;
     onCloseButton?: () => void;
     onTalentButton?: () => void;
     srcLevelDecoration?: string;
 }
 
-export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, itemsLevelUpLayout, layout, onClose, onCloseButton, onTalentButton, srcLevelDecoration }: LevelUpLayoutProps) => {
+export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layout, levelUpLayout, onClose, onCloseButton, onTalentButton, srcLevelDecoration }: LevelUpLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -57,19 +57,7 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, items
                         params={147472}
                         layout={{ width: 406, height: 176, flexShrink: 0, minWidth: 406, minHeight: 70 }}
                     >
-                        <Region
-                            name="level_up_layout"
-                            params={147472}
-                            layout={{ position: 'absolute', left: 14, top: 12, flexDirection: 'column', gap: 1 }}
-                        >
-                            {itemsLevelUpLayout ?? (
-                                <>
-                                    <LevelUpLayoutLevelTitleItem />
-                                    <LevelUpLayoutLevelDescriptionItem />
-                                    <LevelUpLayoutLevelRewardsItem />
-                                </>
-                            )}
-                        </Region>
+                        <LevelUpLayoutLevelUpLayout {...levelUpLayout} />
                     </Border>
                     <Button
                         variant="101"
@@ -252,13 +240,38 @@ export const LevelUpLayoutPlusTemplateItem = ({ captionPlusTemplate, layout }: L
     );
 };
 
-/** Row template `level_rewards` of LevelUpLayout - pass real rows through its `items…` slot. */
-export interface LevelUpLayoutLevelRewardsItemProps {
+/** Named region `reward_list` of LevelUpLayout - configured through the parent's `rewardList` prop. */
+export interface LevelUpLayoutRewardListProps {
     itemsRewardList?: ReactNode;
     layout?: BoxLayout;
 }
 
-export const LevelUpLayoutLevelRewardsItem = ({ itemsRewardList, layout }: LevelUpLayoutLevelRewardsItemProps) => {
+export const LevelUpLayoutRewardList = ({ itemsRewardList, layout }: LevelUpLayoutRewardListProps) => {
+    return (
+        <Region
+            name="reward_list"
+            params={16}
+            layout={{ position: 'absolute', left: 4, width: 370, top: 34, height: 35, flexDirection: 'row', ...layout }}
+        >
+            {itemsRewardList ?? (
+                <>
+                    <LevelUpLayoutRewardVipTemplateItem />
+                    <LevelUpLayoutRewardProductTemplateItem />
+                    <LevelUpLayoutRewardPerkTemplateItem />
+                    <LevelUpLayoutPlusTemplateItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Row template `level_rewards` of LevelUpLayout - pass real rows through its `items…` slot. */
+export interface LevelUpLayoutLevelRewardsItemProps {
+    layout?: BoxLayout;
+    rewardList?: LevelUpLayoutRewardListProps;
+}
+
+export const LevelUpLayoutLevelRewardsItem = ({ layout, rewardList }: LevelUpLayoutLevelRewardsItemProps) => {
     const t = useTranslation();
 
     return (
@@ -282,20 +295,31 @@ export const LevelUpLayoutLevelRewardsItem = ({ itemsRewardList, layout }: Level
                     textOptions={{ fill: '#333333' }}
                 />
             </Region>
-            <Region
-                name="reward_list"
-                params={16}
-                layout={{ position: 'absolute', left: 4, width: 370, top: 34, height: 35, flexDirection: 'row' }}
-            >
-                {itemsRewardList ?? (
-                    <>
-                        <LevelUpLayoutRewardVipTemplateItem />
-                        <LevelUpLayoutRewardProductTemplateItem />
-                        <LevelUpLayoutRewardPerkTemplateItem />
-                        <LevelUpLayoutPlusTemplateItem />
-                    </>
-                )}
-            </Region>
+            <LevelUpLayoutRewardList {...rewardList} />
+        </Region>
+    );
+};
+
+/** Named region `level_up_layout` of LevelUpLayout - configured through the parent's `levelUpLayout` prop. */
+export interface LevelUpLayoutLevelUpLayoutProps {
+    itemsLevelUpLayout?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const LevelUpLayoutLevelUpLayout = ({ itemsLevelUpLayout, layout }: LevelUpLayoutLevelUpLayoutProps) => {
+    return (
+        <Region
+            name="level_up_layout"
+            params={147472}
+            layout={{ position: 'absolute', left: 14, top: 12, flexDirection: 'column', gap: 1, ...layout }}
+        >
+            {itemsLevelUpLayout ?? (
+                <>
+                    <LevelUpLayoutLevelTitleItem />
+                    <LevelUpLayoutLevelDescriptionItem />
+                    <LevelUpLayoutLevelRewardsItem />
+                </>
+            )}
         </Region>
     );
 };

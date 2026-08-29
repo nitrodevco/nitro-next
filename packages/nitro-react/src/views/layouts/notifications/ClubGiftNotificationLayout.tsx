@@ -3,14 +3,13 @@ import { Border, BoxLayout, Button, Icon, Region, ThemeText } from '#base/theme'
 
 /** Generated from `2992_club_gift_notification_xml` (layout "achievement_notification", 192x82) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ClubGiftNotificationLayoutProps {
-    captionCancelLink?: string;
+    cancelLinkRegion?: ClubGiftNotificationLayoutCancelLinkRegionProps;
     captionInfoText?: string;
     layout?: BoxLayout;
-    onCancelLinkRegion?: () => void;
     onOpenCatalogButton?: () => void;
 }
 
-export const ClubGiftNotificationLayout = ({ captionCancelLink, captionInfoText, layout, onCancelLinkRegion, onOpenCatalogButton }: ClubGiftNotificationLayoutProps) => {
+export const ClubGiftNotificationLayout = ({ cancelLinkRegion, captionInfoText, layout, onOpenCatalogButton }: ClubGiftNotificationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -46,24 +45,39 @@ export const ClubGiftNotificationLayout = ({ captionCancelLink, captionInfoText,
                 >
                     {t('notifications.button.show_gift_list')}
                 </Button>
-                <Region
-                    name="cancel_link_region"
-                    params={147473}
-                    onPointerTap={onCancelLinkRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 8, width: 147, top: 49, height: 18 }}
-                >
-                    <Region
-                        name="cancel_link"
-                        layout={{ position: 'absolute', left: 0, width: 147, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCancelLink ?? t('notifications.button.later')}
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                </Region>
+                <ClubGiftNotificationLayoutCancelLinkRegion {...cancelLinkRegion} />
             </Border>
+        </Region>
+    );
+};
+
+/** Named region `cancel_link_region` of ClubGiftNotificationLayout - configured through the parent's `cancelLinkRegion` prop. */
+export interface ClubGiftNotificationLayoutCancelLinkRegionProps {
+    captionCancelLink?: string;
+    layout?: BoxLayout;
+    onCancelLinkRegion?: () => void;
+}
+
+export const ClubGiftNotificationLayoutCancelLinkRegion = ({ captionCancelLink, layout, onCancelLinkRegion }: ClubGiftNotificationLayoutCancelLinkRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="cancel_link_region"
+            params={147473}
+            onPointerTap={onCancelLinkRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 8, width: 147, top: 49, height: 18, ...layout }}
+        >
+            <Region
+                name="cancel_link"
+                layout={{ position: 'absolute', left: 0, width: 147, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCancelLink ?? t('notifications.button.later')}
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
         </Region>
     );
 };

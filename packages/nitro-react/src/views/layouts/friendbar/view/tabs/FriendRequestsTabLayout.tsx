@@ -8,16 +8,16 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 export interface FriendRequestsTabLayoutProps {
     captionBadgeCounter?: string;
     captionTitle?: string;
-    itemsRequestEntityList?: ReactNode;
-    itemsTabContent?: ReactNode;
+    clickAreaDiscardAll?: FriendRequestsTabLayoutClickAreaDiscardAllProps;
     layout?: BoxLayout;
     onButtonAcceptAll?: () => void;
     onButtonClose?: () => void;
-    onClickAreaDiscardAll?: () => void;
+    requestEntityList?: FriendRequestsTabLayoutRequestEntityListProps;
+    tabContent?: FriendRequestsTabLayoutTabContentProps;
     visibleBubble?: boolean;
 }
 
-export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, itemsRequestEntityList, itemsTabContent, layout, onButtonAcceptAll, onButtonClose, onClickAreaDiscardAll, visibleBubble }: FriendRequestsTabLayoutProps) => {
+export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, clickAreaDiscardAll, layout, onButtonAcceptAll, onButtonClose, requestEntityList, tabContent, visibleBubble }: FriendRequestsTabLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -29,15 +29,7 @@ export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, ite
                 tintColor="#fac919"
                 layout={{ position: 'absolute', left: 39, width: 127, top: 292, height: 36 }}
             >
-                <Region
-                    name="tab_content"
-                    params={8388752}
-                    layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 40, minHeight: 40, flexDirection: 'column' }}
-                >
-                    {itemsTabContent ?? (
-                        <FriendRequestsTabLayoutHeaderItem />
-                    )}
-                </Region>
+                <FriendRequestsTabLayoutTabContent {...tabContent} />
                 <Region
                     visible={visibleBubble ?? true}
                     layout={{ position: 'absolute', left: -45, width: 222, bottom: 30, height: 304 }}
@@ -67,39 +59,9 @@ export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, ite
                             onPointerTap={onButtonClose}
                             layout={{ position: 'absolute', left: 184, width: 19, top: 3, height: 20 }}
                         />
-                        <ScrollArea
-                            orientation="vertical"
-                            layout={{ position: 'absolute', left: 4, width: 196, top: 27, height: 220, maxHeight: 220 }}
-                        >
-                            <Region
-                                name="request_entity_list"
-                                params={8388624}
-                                layout={{ flexDirection: 'column', width: '100%' }}
-                            >
-                                {itemsRequestEntityList ?? (
-                                    <FriendRequestsTabLayoutRequestEntityItem />
-                                )}
-                            </Region>
-                        </ScrollArea>
+                        <FriendRequestsTabLayoutRequestEntityList {...requestEntityList} />
                         {/* <scrollbar_vertical> for request_entity_list - rendered by that list's ScrollArea */}
-                        <Region
-                            name="click_area_discard_all"
-                            params={1041}
-                            onPointerTap={onClickAreaDiscardAll}
-                            cursor="pointer"
-                            layout={{ position: 'absolute', left: 11, width: 143, bottom: 30, height: 16 }}
-                        >
-                            <Region
-                                params={4194320}
-                                layout={{ position: 'absolute', left: 0, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={t('friendbar.requests.discard')}
-                                    textStyle="text-style-u-bold"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
-                        </Region>
+                        <FriendRequestsTabLayoutClickAreaDiscardAll {...clickAreaDiscardAll} />
                         <Region
                             params={16}
                             backgroundColor="#564620"
@@ -186,19 +148,126 @@ export const FriendRequestsTabLayoutHeaderItem = ({ captionLabel, layout, onHead
     );
 };
 
-/** Row template `request_entity` of FriendRequestsTabLayout - pass real rows through its `items…` slot. */
-export interface FriendRequestsTabLayoutRequestEntityItemProps {
-    captionName?: string;
-    captionTextDiscard?: string;
+/** Named region `tab_content` of FriendRequestsTabLayout - configured through the parent's `tabContent` prop. */
+export interface FriendRequestsTabLayoutTabContentProps {
+    itemsTabContent?: ReactNode;
     layout?: BoxLayout;
-    onButtonAccept?: () => void;
-    onClickAreaDiscard?: () => void;
+}
+
+export const FriendRequestsTabLayoutTabContent = ({ itemsTabContent, layout }: FriendRequestsTabLayoutTabContentProps) => {
+    return (
+        <Region
+            name="tab_content"
+            params={8388752}
+            layout={{ position: 'absolute', left: 7, right: 4, top: 3, height: 40, minHeight: 40, flexDirection: 'column', ...layout }}
+        >
+            {itemsTabContent ?? (
+                <FriendRequestsTabLayoutHeaderItem />
+            )}
+        </Region>
+    );
+};
+
+/** Named region `region_profile` of FriendRequestsTabLayout - configured through the parent's `regionProfile` prop. */
+export interface FriendRequestsTabLayoutRegionProfileProps {
+    layout?: BoxLayout;
     onRegionProfile?: () => void;
-    onRegionProfileName?: () => void;
     srcCanvas?: string;
 }
 
-export const FriendRequestsTabLayoutRequestEntityItem = ({ captionName, captionTextDiscard, layout, onButtonAccept, onClickAreaDiscard, onRegionProfile, onRegionProfileName, srcCanvas }: FriendRequestsTabLayoutRequestEntityItemProps) => {
+export const FriendRequestsTabLayoutRegionProfile = ({ layout, onRegionProfile, srcCanvas }: FriendRequestsTabLayoutRegionProfileProps) => {
+    return (
+        <Region
+            name="region_profile"
+            params={145}
+            onPointerTap={onRegionProfile}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 1, right: 156, top: 3, height: 44, ...layout }}
+        >
+            <ThemeImage
+                name="canvas"
+                params={16}
+                src={srcCanvas}
+                layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 44 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `region_profile_name` of FriendRequestsTabLayout - configured through the parent's `regionProfileName` prop. */
+export interface FriendRequestsTabLayoutRegionProfileNameProps {
+    captionName?: string;
+    layout?: BoxLayout;
+    onRegionProfileName?: () => void;
+}
+
+export const FriendRequestsTabLayoutRegionProfileName = ({ captionName, layout, onRegionProfileName }: FriendRequestsTabLayoutRegionProfileNameProps) => {
+    return (
+        <Region
+            name="region_profile_name"
+            params={145}
+            onPointerTap={onRegionProfileName}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 43, right: 15, top: 6, height: 17, ...layout }}
+        >
+            <Region
+                name="name"
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 138, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionName ?? 'Name'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `click_area_discard` of FriendRequestsTabLayout - configured through the parent's `clickAreaDiscard` prop. */
+export interface FriendRequestsTabLayoutClickAreaDiscardProps {
+    captionTextDiscard?: string;
+    layout?: BoxLayout;
+    onClickAreaDiscard?: () => void;
+}
+
+export const FriendRequestsTabLayoutClickAreaDiscard = ({ captionTextDiscard, layout, onClickAreaDiscard }: FriendRequestsTabLayoutClickAreaDiscardProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="click_area_discard"
+            params={17}
+            onPointerTap={onClickAreaDiscard}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 42, width: 119, top: 25, height: 18, ...layout }}
+        >
+            <Region
+                name="text_discard"
+                params={4194320}
+                layout={{ position: 'absolute', left: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionTextDiscard ?? t('friendbar.request.decline')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Row template `request_entity` of FriendRequestsTabLayout - pass real rows through its `items…` slot. */
+export interface FriendRequestsTabLayoutRequestEntityItemProps {
+    clickAreaDiscard?: FriendRequestsTabLayoutClickAreaDiscardProps;
+    layout?: BoxLayout;
+    onButtonAccept?: () => void;
+    regionProfile?: FriendRequestsTabLayoutRegionProfileProps;
+    regionProfileName?: FriendRequestsTabLayoutRegionProfileNameProps;
+}
+
+export const FriendRequestsTabLayoutRequestEntityItem = ({ clickAreaDiscard, layout, onButtonAccept, regionProfile, regionProfileName }: FriendRequestsTabLayoutRequestEntityItemProps) => {
     const t = useTranslation();
 
     return (
@@ -208,58 +277,9 @@ export const FriendRequestsTabLayoutRequestEntityItem = ({ captionName, captionT
             backgroundColor="#ab8710"
             layout={{ width: 196, height: 50, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="region_profile"
-                params={145}
-                onPointerTap={onRegionProfile}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 1, right: 156, top: 3, height: 44 }}
-            >
-                <ThemeImage
-                    name="canvas"
-                    params={16}
-                    src={srcCanvas}
-                    layout={{ position: 'absolute', left: 0, width: 39, top: 0, height: 44 }}
-                />
-            </Region>
-            <Region
-                name="region_profile_name"
-                params={145}
-                onPointerTap={onRegionProfileName}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 43, right: 15, top: 6, height: 17 }}
-            >
-                <Region
-                    name="name"
-                    params={16}
-                    layout={{ position: 'absolute', left: 0, width: 138, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionName ?? 'Name'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-            </Region>
-            <Region
-                name="click_area_discard"
-                params={17}
-                onPointerTap={onClickAreaDiscard}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 42, width: 119, top: 25, height: 18 }}
-            >
-                <Region
-                    name="text_discard"
-                    params={4194320}
-                    layout={{ position: 'absolute', left: 0, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTextDiscard ?? t('friendbar.request.decline')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-            </Region>
+            <FriendRequestsTabLayoutRegionProfile {...regionProfile} />
+            <FriendRequestsTabLayoutRegionProfileName {...regionProfileName} />
+            <FriendRequestsTabLayoutClickAreaDiscard {...clickAreaDiscard} />
             <Button
                 variant="3"
                 name="button_accept"
@@ -269,6 +289,62 @@ export const FriendRequestsTabLayoutRequestEntityItem = ({ captionName, captionT
             >
                 {t('friendbar.request.accept')}
             </Button>
+        </Region>
+    );
+};
+
+/** Named region `request_entity_list` of FriendRequestsTabLayout - configured through the parent's `requestEntityList` prop. */
+export interface FriendRequestsTabLayoutRequestEntityListProps {
+    itemsRequestEntityList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const FriendRequestsTabLayoutRequestEntityList = ({ itemsRequestEntityList, layout }: FriendRequestsTabLayoutRequestEntityListProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 4, width: 196, top: 27, height: 220, maxHeight: 220, ...layout }}
+        >
+            <Region
+                name="request_entity_list"
+                params={8388624}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            >
+                {itemsRequestEntityList ?? (
+                    <FriendRequestsTabLayoutRequestEntityItem />
+                )}
+            </Region>
+        </ScrollArea>
+    );
+};
+
+/** Named region `click_area_discard_all` of FriendRequestsTabLayout - configured through the parent's `clickAreaDiscardAll` prop. */
+export interface FriendRequestsTabLayoutClickAreaDiscardAllProps {
+    layout?: BoxLayout;
+    onClickAreaDiscardAll?: () => void;
+}
+
+export const FriendRequestsTabLayoutClickAreaDiscardAll = ({ layout, onClickAreaDiscardAll }: FriendRequestsTabLayoutClickAreaDiscardAllProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="click_area_discard_all"
+            params={1041}
+            onPointerTap={onClickAreaDiscardAll}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 11, width: 143, bottom: 30, height: 16, ...layout }}
+        >
+            <Region
+                params={4194320}
+                layout={{ position: 'absolute', left: 0, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('friendbar.requests.discard')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
         </Region>
     );
 };

@@ -6,58 +6,14 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `2636_table_view_xml` (layout "wired_menu_table_view", 472x177) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface TableViewLayoutProps {
-    captionNothingToDisplayText?: string;
-    itemsTableContents?: ReactNode;
     layout?: BoxLayout;
+    tableContainer?: TableViewLayoutTableContainerProps;
 }
 
-export const TableViewLayout = ({ captionNothingToDisplayText, itemsTableContents, layout }: TableViewLayoutProps) => {
-    const t = useTranslation();
-
+export const TableViewLayout = ({ layout, tableContainer }: TableViewLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 472, height: 177, ...layout }}>
-            <Region
-                name="table_container"
-                params={16}
-                layout={{ position: 'absolute', left: 0, width: 472, top: 0, height: 177 }}
-            >
-                <Border
-                    variant="0"
-                    name="table_border"
-                    params={2192}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                >
-                    <Region
-                        name="table_contents"
-                        params={2192}
-                        layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5, flexDirection: 'column' }}
-                    >
-                        {itemsTableContents ?? (
-                            <>
-                                <TableViewLayoutTableTitlerowItem />
-                                <TableViewLayoutSplitterItem />
-                                <TableViewLayoutTableItemsItem />
-                            </>
-                        )}
-                    </Region>
-                    <Region
-                        name="empty_container"
-                        params={2192}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 29, bottom: 0, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="nothing_to_display_text"
-                            params={3280}
-                            layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 107, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionNothingToDisplayText ?? t('wiredmenu.table.empty')}
-                                textOptions={{ fill: '#333333' }}
-                            />
-                        </Region>
-                    </Region>
-                </Border>
-            </Region>
+            <TableViewLayoutTableContainer {...tableContainer} />
         </Region>
     );
 };
@@ -131,20 +87,75 @@ export const TableViewLayoutTopSpacerItem = ({ layout }: TableViewLayoutTopSpace
     );
 };
 
-/** Row template `table_element` of TableViewLayout - pass real rows through its `items…` slot. */
-export interface TableViewLayoutTableElementItemProps {
+/** Named region `link_container` of TableViewLayout - configured through the parent's `linkContainer` prop. */
+export interface TableViewLayoutLinkContainerProps {
     captionElementLink?: string;
-    captionElementText?: string;
     layout?: BoxLayout;
-    onExtraButton?: () => void;
     onLinkContainer?: () => void;
-    onTableElement?: () => void;
-    srcExtraButtonBitmap?: string;
-    visibleHighlightBorder?: boolean;
     visibleLinkContainer?: boolean;
 }
 
-export const TableViewLayoutTableElementItem = ({ captionElementLink, captionElementText, layout, onExtraButton, onLinkContainer, onTableElement, srcExtraButtonBitmap, visibleHighlightBorder, visibleLinkContainer }: TableViewLayoutTableElementItemProps) => {
+export const TableViewLayoutLinkContainer = ({ captionElementLink, layout, onLinkContainer, visibleLinkContainer }: TableViewLayoutLinkContainerProps) => {
+    return (
+        <Region
+            name="link_container"
+            params={934129}
+            visible={visibleLinkContainer ?? false}
+            onPointerTap={onLinkContainer}
+            cursor="pointer"
+            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 1, height: 17, minHeight: 17, maxHeight: 17, ...layout }}
+        >
+            <Region
+                name="element_link"
+                params={144}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionElementLink ?? ''}
+                    textOptions={{ fill: '#0000ee' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `extra_button` of TableViewLayout - configured through the parent's `extraButton` prop. */
+export interface TableViewLayoutExtraButtonProps {
+    layout?: BoxLayout;
+    onExtraButton?: () => void;
+    srcExtraButtonBitmap?: string;
+}
+
+export const TableViewLayoutExtraButton = ({ layout, onExtraButton, srcExtraButtonBitmap }: TableViewLayoutExtraButtonProps) => {
+    return (
+        <Region
+            name="extra_button"
+            params={81}
+            onPointerTap={onExtraButton}
+            cursor="pointer"
+            layout={{ position: 'absolute', right: 3, width: 20, top: 0, height: 20, ...layout }}
+        >
+            <ThemeImage
+                name="extra_button_bitmap"
+                params={16}
+                src={srcExtraButtonBitmap ?? layoutImage('icons_info_grey.png')}
+                layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
+            />
+        </Region>
+    );
+};
+
+/** Row template `table_element` of TableViewLayout - pass real rows through its `items…` slot. */
+export interface TableViewLayoutTableElementItemProps {
+    captionElementText?: string;
+    extraButton?: TableViewLayoutExtraButtonProps;
+    layout?: BoxLayout;
+    linkContainer?: TableViewLayoutLinkContainerProps;
+    onTableElement?: () => void;
+    visibleHighlightBorder?: boolean;
+}
+
+export const TableViewLayoutTableElementItem = ({ captionElementText, extraButton, layout, linkContainer, onTableElement, visibleHighlightBorder }: TableViewLayoutTableElementItemProps) => {
     const [ elementInputValue, setElementInputValue ] = useState('');
 
     return (
@@ -180,39 +191,8 @@ export const TableViewLayoutTableElementItem = ({ captionElementLink, captionEle
                 onChange={setElementInputValue}
                 layout={{ position: 'absolute', left: 5, right: 5, top: 1, height: 18, minHeight: 18 }}
             />
-            <Region
-                name="link_container"
-                params={934129}
-                visible={visibleLinkContainer ?? false}
-                onPointerTap={onLinkContainer}
-                cursor="pointer"
-                layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 1, height: 17, minHeight: 17, maxHeight: 17 }}
-            >
-                <Region
-                    name="element_link"
-                    params={144}
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionElementLink ?? ''}
-                        textOptions={{ fill: '#0000ee' }}
-                    />
-                </Region>
-            </Region>
-            <Region
-                name="extra_button"
-                params={81}
-                onPointerTap={onExtraButton}
-                cursor="pointer"
-                layout={{ position: 'absolute', right: 3, width: 20, top: 0, height: 20 }}
-            >
-                <ThemeImage
-                    name="extra_button_bitmap"
-                    params={16}
-                    src={srcExtraButtonBitmap ?? layoutImage('icons_info_grey.png')}
-                    layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
-                />
-            </Region>
+            <TableViewLayoutLinkContainer {...linkContainer} />
+            <TableViewLayoutExtraButton {...extraButton} />
         </Region>
     );
 };
@@ -279,5 +259,85 @@ export const TableViewLayoutTableItemsItem = ({ itemsTableItems, layout }: Table
                 )}
             </Region>
         </ScrollArea>
+    );
+};
+
+/** Named region `table_contents` of TableViewLayout - configured through the parent's `tableContents` prop. */
+export interface TableViewLayoutTableContentsProps {
+    itemsTableContents?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const TableViewLayoutTableContents = ({ itemsTableContents, layout }: TableViewLayoutTableContentsProps) => {
+    return (
+        <Region
+            name="table_contents"
+            params={2192}
+            layout={{ position: 'absolute', left: 5, right: 5, top: 5, bottom: 5, flexDirection: 'column', ...layout }}
+        >
+            {itemsTableContents ?? (
+                <>
+                    <TableViewLayoutTableTitlerowItem />
+                    <TableViewLayoutSplitterItem />
+                    <TableViewLayoutTableItemsItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `empty_container` of TableViewLayout - configured through the parent's `emptyContainer` prop. */
+export interface TableViewLayoutEmptyContainerProps {
+    captionNothingToDisplayText?: string;
+    layout?: BoxLayout;
+}
+
+export const TableViewLayoutEmptyContainer = ({ captionNothingToDisplayText, layout }: TableViewLayoutEmptyContainerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="empty_container"
+            params={2192}
+            layout={{ position: 'absolute', left: 0, right: 0, top: 29, bottom: 0, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="nothing_to_display_text"
+                params={3280}
+                layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 107, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionNothingToDisplayText ?? t('wiredmenu.table.empty')}
+                    textOptions={{ fill: '#333333' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `table_container` of TableViewLayout - configured through the parent's `tableContainer` prop. */
+export interface TableViewLayoutTableContainerProps {
+    emptyContainer?: TableViewLayoutEmptyContainerProps;
+    layout?: BoxLayout;
+    tableContents?: TableViewLayoutTableContentsProps;
+}
+
+export const TableViewLayoutTableContainer = ({ emptyContainer, layout, tableContents }: TableViewLayoutTableContainerProps) => {
+    return (
+        <Region
+            name="table_container"
+            params={16}
+            layout={{ position: 'absolute', left: 0, width: 472, top: 0, height: 177, ...layout }}
+        >
+            <Border
+                variant="0"
+                name="table_border"
+                params={2192}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+            >
+                <TableViewLayoutTableContents {...tableContents} />
+                <TableViewLayoutEmptyContainer {...emptyContainer} />
+            </Border>
+        </Region>
     );
 };

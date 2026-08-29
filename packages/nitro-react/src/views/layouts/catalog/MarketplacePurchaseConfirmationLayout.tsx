@@ -9,16 +9,15 @@ export interface MarketplacePurchaseConfirmationLayoutProps {
     captionItemName?: string;
     captionItemPrice?: string;
     captionOfferCount?: string;
+    disclaimer?: MarketplacePurchaseConfirmationLayoutDisclaimerProps;
+    imageContainer?: MarketplacePurchaseConfirmationLayoutImageContainerProps;
     layout?: BoxLayout;
     onBuyButton?: () => void;
     onCancelButton?: () => void;
     onClose?: () => void;
-    onSpendingDisclaimer?: () => void;
-    srcItemImage?: string;
-    srcUniqueItemBackgroundBitmap?: string;
 }
 
-export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, captionItemAveragePrice, captionItemName, captionItemPrice, captionOfferCount, layout, onBuyButton, onCancelButton, onClose, onSpendingDisclaimer, srcItemImage, srcUniqueItemBackgroundBitmap }: MarketplacePurchaseConfirmationLayoutProps) => {
+export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, captionItemAveragePrice, captionItemName, captionItemPrice, captionOfferCount, disclaimer, imageContainer, layout, onBuyButton, onCancelButton, onClose }: MarketplacePurchaseConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -41,44 +40,7 @@ export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, capti
                         tintColor="#f1f1f1"
                         layout={{ position: 'absolute', left: 12, width: 48, top: 12, height: 48 }}
                     >
-                        <Region
-                            name="image_container"
-                            params={16}
-                            layout={{ position: 'absolute', left: 4, width: 40, top: 4, height: 40 }}
-                        >
-                            <Region
-                                visible={false}
-                                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                            >
-                                <ThemeImage
-                                    name="unique_item_background_bitmap"
-                                    params={16}
-                                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                                />
-                            </Region>
-                            <ThemeImage
-                                name="item_image"
-                                tags={[ 'BITMAP' ]}
-                                params={16}
-                                src={srcItemImage}
-                                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
-                            />
-                            <WidgetSlot
-                                widgetType="limited_item_overlay_grid"
-                                name="unique_item_overlay_widget"
-                                params={16}
-                                visible={false}
-                                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                            />
-                            <WidgetSlot
-                                widgetType="rarity_item_overlay_grid"
-                                name="rarity_item_overlay_widget"
-                                params={16}
-                                visible={false}
-                                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                            />
-                        </Region>
+                        <MarketplacePurchaseConfirmationLayoutImageContainer {...imageContainer} />
                     </Border>
                     <Region
                         name="item_name"
@@ -152,31 +114,95 @@ export const MarketplacePurchaseConfirmationLayout = ({ captionHeaderText, capti
                     >
                         {t('catalog.purchase_confirmation.cancel')}
                     </Button>
-                    <Region
-                        name="disclaimer"
-                        params={16}
-                        layout={{ position: 'absolute', left: 9, width: 252, top: 163, height: 24 }}
-                    >
-                        <Region
-                            params={16}
-                            layout={{ position: 'absolute', left: 17, width: 231, top: 1, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={t('disclaimer.credit_spending')}
-                                textStyle="text-style-u-small"
-                                textOptions={{ wordWrap: true, wordWrapWidth: 231 }}
-                            />
-                        </Region>
-                        <CheckBox
-                            variant="3"
-                            name="spending_disclaimer"
-                            params={17}
-                            onPointerTap={onSpendingDisclaimer}
-                            layout={{ position: 'absolute', left: 0, width: 252, top: 0, height: 24 }}
-                        />
-                    </Region>
+                    <MarketplacePurchaseConfirmationLayoutDisclaimer {...disclaimer} />
                 </Region>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `image_container` of MarketplacePurchaseConfirmationLayout - configured through the parent's `imageContainer` prop. */
+export interface MarketplacePurchaseConfirmationLayoutImageContainerProps {
+    layout?: BoxLayout;
+    srcItemImage?: string;
+    srcUniqueItemBackgroundBitmap?: string;
+}
+
+export const MarketplacePurchaseConfirmationLayoutImageContainer = ({ layout, srcItemImage, srcUniqueItemBackgroundBitmap }: MarketplacePurchaseConfirmationLayoutImageContainerProps) => {
+    return (
+        <Region
+            name="image_container"
+            params={16}
+            layout={{ position: 'absolute', left: 4, width: 40, top: 4, height: 40, ...layout }}
+        >
+            <Region
+                visible={false}
+                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+            >
+                <ThemeImage
+                    name="unique_item_background_bitmap"
+                    params={16}
+                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
+                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+                />
+            </Region>
+            <ThemeImage
+                name="item_image"
+                tags={[ 'BITMAP' ]}
+                params={16}
+                src={srcItemImage}
+                layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40, minWidth: 40, maxWidth: 40 }}
+            />
+            <WidgetSlot
+                widgetType="limited_item_overlay_grid"
+                name="unique_item_overlay_widget"
+                params={16}
+                visible={false}
+                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+            />
+            <WidgetSlot
+                widgetType="rarity_item_overlay_grid"
+                name="rarity_item_overlay_widget"
+                params={16}
+                visible={false}
+                layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `disclaimer` of MarketplacePurchaseConfirmationLayout - configured through the parent's `disclaimer` prop. */
+export interface MarketplacePurchaseConfirmationLayoutDisclaimerProps {
+    layout?: BoxLayout;
+    onSpendingDisclaimer?: () => void;
+}
+
+export const MarketplacePurchaseConfirmationLayoutDisclaimer = ({ layout, onSpendingDisclaimer }: MarketplacePurchaseConfirmationLayoutDisclaimerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="disclaimer"
+            params={16}
+            layout={{ position: 'absolute', left: 9, width: 252, top: 163, height: 24, ...layout }}
+        >
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 17, width: 231, top: 1, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('disclaimer.credit_spending')}
+                    textStyle="text-style-u-small"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 231 }}
+                />
+            </Region>
+            <CheckBox
+                variant="3"
+                name="spending_disclaimer"
+                params={17}
+                onPointerTap={onSpendingDisclaimer}
+                layout={{ position: 'absolute', left: 0, width: 252, top: 0, height: 24 }}
+            />
+        </Region>
     );
 };

@@ -5,11 +5,11 @@ import { Border, BoxLayout, Icon, Region, ThemeText } from '#base/theme';
 /** Generated from `1588_totalPriceWidget_xml` (layout "totalPriceWidget", 180x25) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface TotalPriceWidgetLayoutProps {
     captionHeaderText?: string;
-    itemsTotalpriceContainer?: ReactNode;
     layout?: BoxLayout;
+    totalpriceContainer?: TotalPriceWidgetLayoutTotalpriceContainerProps;
 }
 
-export const TotalPriceWidgetLayout = ({ captionHeaderText, itemsTotalpriceContainer, layout }: TotalPriceWidgetLayoutProps) => {
+export const TotalPriceWidgetLayout = ({ captionHeaderText, layout, totalpriceContainer }: TotalPriceWidgetLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 180, height: 25, ...layout }}>
             <Border
@@ -25,21 +25,7 @@ export const TotalPriceWidgetLayout = ({ captionHeaderText, itemsTotalpriceConta
                 >
                     <ThemeText text={captionHeaderText ?? '='} />
                 </Region>
-                <Region
-                    name="totalprice_container"
-                    params={409616}
-                    layout={{ position: 'absolute', right: 3, top: 1, flexDirection: 'row' }}
-                >
-                    {itemsTotalpriceContainer ?? (
-                        <>
-                            <TotalPriceWidgetLayoutAmountTextLeftItem />
-                            <TotalPriceWidgetLayoutCurrencyIndicatorBitmapLeftItem />
-                            <TotalPriceWidgetLayoutPlusItem />
-                            <TotalPriceWidgetLayoutAmountTextRightItem />
-                            <TotalPriceWidgetLayoutCurrencyIndicatorBitmapRightItem />
-                        </>
-                    )}
-                </Region>
+                <TotalPriceWidgetLayoutTotalpriceContainer {...totalpriceContainer} />
             </Border>
         </Region>
     );
@@ -128,5 +114,31 @@ export const TotalPriceWidgetLayoutCurrencyIndicatorBitmapRightItem = ({ layout 
             params={16}
             layout={{ width: 22, height: 22, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `totalprice_container` of TotalPriceWidgetLayout - configured through the parent's `totalpriceContainer` prop. */
+export interface TotalPriceWidgetLayoutTotalpriceContainerProps {
+    itemsTotalpriceContainer?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const TotalPriceWidgetLayoutTotalpriceContainer = ({ itemsTotalpriceContainer, layout }: TotalPriceWidgetLayoutTotalpriceContainerProps) => {
+    return (
+        <Region
+            name="totalprice_container"
+            params={409616}
+            layout={{ position: 'absolute', right: 3, top: 1, flexDirection: 'row', ...layout }}
+        >
+            {itemsTotalpriceContainer ?? (
+                <>
+                    <TotalPriceWidgetLayoutAmountTextLeftItem />
+                    <TotalPriceWidgetLayoutCurrencyIndicatorBitmapLeftItem />
+                    <TotalPriceWidgetLayoutPlusItem />
+                    <TotalPriceWidgetLayoutAmountTextRightItem />
+                    <TotalPriceWidgetLayoutCurrencyIndicatorBitmapRightItem />
+                </>
+            )}
+        </Region>
     );
 };

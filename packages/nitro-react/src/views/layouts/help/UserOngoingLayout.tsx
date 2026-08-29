@@ -8,6 +8,7 @@ export interface UserOngoingLayoutProps {
     captionGuideDesc?: string;
     captionGuideNameLink?: string;
     captionReportGuideLink?: string;
+    chatList?: UserOngoingLayoutChatListProps;
     layout?: BoxLayout;
     onClose?: () => void;
     onCloseLink?: () => void;
@@ -15,7 +16,7 @@ export interface UserOngoingLayoutProps {
     onReportGuideLink?: () => void;
 }
 
-export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionGuideNameLink, captionReportGuideLink, layout, onClose, onCloseLink, onGuideNameLink, onReportGuideLink }: UserOngoingLayoutProps) => {
+export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionGuideNameLink, captionReportGuideLink, chatList, layout, onClose, onCloseLink, onGuideNameLink, onReportGuideLink }: UserOngoingLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -83,26 +84,7 @@ export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionG
                         />
                     </Region>
                 </Border>
-                <ScrollArea
-                    orientation="vertical"
-                    layout={{ position: 'absolute', left: 5, width: 270, top: 65, bottom: 125 }}
-                >
-                    <Region
-                        name="chat_list"
-                        params={2064}
-                        layout={{ flexDirection: 'column', width: '100%' }}
-                    >
-                        <Region
-                            params={16}
-                            layout={{ width: 140, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={t('guide.help.common.typing')}
-                                textOptions={{ fill: '#555555' }}
-                            />
-                        </Region>
-                    </Region>
-                </ScrollArea>
+                <UserOngoingLayoutChatList {...chatList} />
                 <Region
                     params={1040}
                     layout={{ position: 'absolute', left: 0, width: 280, bottom: 46, height: 79 }}
@@ -133,5 +115,37 @@ export const UserOngoingLayout = ({ captionCloseLink, captionGuideDesc, captionG
                 </Region>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `chat_list` of UserOngoingLayout - configured through the parent's `chatList` prop. */
+export interface UserOngoingLayoutChatListProps {
+    layout?: BoxLayout;
+}
+
+export const UserOngoingLayoutChatList = ({ layout }: UserOngoingLayoutChatListProps) => {
+    const t = useTranslation();
+
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 5, width: 270, top: 65, bottom: 125, ...layout }}
+        >
+            <Region
+                name="chat_list"
+                params={2064}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            >
+                <Region
+                    params={16}
+                    layout={{ width: 140, height: 21, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={t('guide.help.common.typing')}
+                        textOptions={{ fill: '#555555' }}
+                    />
+                </Region>
+            </Region>
+        </ScrollArea>
     );
 };

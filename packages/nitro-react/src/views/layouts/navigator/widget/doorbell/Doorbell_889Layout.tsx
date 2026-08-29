@@ -5,9 +5,10 @@ import { BoxLayout, Frame, Region, ScrollArea, ThemeText } from '#base/theme';
 export interface Doorbell_889LayoutProps {
     layout?: BoxLayout;
     onClose?: () => void;
+    userListContainer?: Doorbell_889LayoutUserListContainerProps;
 }
 
-export const Doorbell_889Layout = ({ layout, onClose }: Doorbell_889LayoutProps) => {
+export const Doorbell_889Layout = ({ layout, onClose, userListContainer }: Doorbell_889LayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -30,25 +31,48 @@ export const Doorbell_889Layout = ({ layout, onClose }: Doorbell_889LayoutProps)
                         textOptions={{ wordWrap: true, wordWrapWidth: 215 }}
                     />
                 </Region>
-                <Region
-                    name="user_list_container"
-                    params={16}
-                    backgroundColor="#eaece8"
-                    layout={{ position: 'absolute', left: 10, width: 217, top: 48, height: 82 }}
-                >
-                    <ScrollArea
-                        orientation="vertical"
-                        layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 82 }}
-                    >
-                        <Region
-                            name="user_list"
-                            params={17}
-                            layout={{ flexDirection: 'column', width: '100%' }}
-                        />
-                    </ScrollArea>
-                    {/* <scrollbar_vertical> for user_list - rendered by that list's ScrollArea */}
-                </Region>
+                <Doorbell_889LayoutUserListContainer {...userListContainer} />
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `user_list` of Doorbell_889Layout - configured through the parent's `userList` prop. */
+export interface Doorbell_889LayoutUserListProps {
+    layout?: BoxLayout;
+}
+
+export const Doorbell_889LayoutUserList = ({ layout }: Doorbell_889LayoutUserListProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 82, ...layout }}
+        >
+            <Region
+                name="user_list"
+                params={17}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            />
+        </ScrollArea>
+    );
+};
+
+/** Named region `user_list_container` of Doorbell_889Layout - configured through the parent's `userListContainer` prop. */
+export interface Doorbell_889LayoutUserListContainerProps {
+    layout?: BoxLayout;
+    userList?: Doorbell_889LayoutUserListProps;
+}
+
+export const Doorbell_889LayoutUserListContainer = ({ layout, userList }: Doorbell_889LayoutUserListContainerProps) => {
+    return (
+        <Region
+            name="user_list_container"
+            params={16}
+            backgroundColor="#eaece8"
+            layout={{ position: 'absolute', left: 10, width: 217, top: 48, height: 82, ...layout }}
+        >
+            <Doorbell_889LayoutUserList {...userList} />
+            {/* <scrollbar_vertical> for user_list - rendered by that list's ScrollArea */}
+        </Region>
     );
 };

@@ -5,14 +5,15 @@ import { BoxLayout, Button, ButtonThick, CheckBox, Frame, Icon, Region, ThemeTex
 export interface ClubBuyConfirmationLayoutProps {
     captionEndDate?: string;
     captionSubscriptionName?: string;
+    disclaimer?: ClubBuyConfirmationLayoutDisclaimerProps;
     layout?: BoxLayout;
     onCancelButton?: () => void;
     onClose?: () => void;
     onSelectButton?: () => void;
-    onSpendingDisclaimer?: () => void;
+    purchaseCostBox?: ClubBuyConfirmationLayoutPurchaseCostBoxProps;
 }
 
-export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionName, layout, onCancelButton, onClose, onSelectButton, onSpendingDisclaimer }: ClubBuyConfirmationLayoutProps) => {
+export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionName, disclaimer, layout, onCancelButton, onClose, onSelectButton, purchaseCostBox }: ClubBuyConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -78,36 +79,11 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
                                         textStyle="text-style-u-regular"
                                     />
                                 </Region>
-                                <Region
-                                    name="purchase_cost_box"
-                                    params={147472}
-                                    layout={{ width: 20, height: 22, flexShrink: 0 }}
-                                />
+                                <ClubBuyConfirmationLayoutPurchaseCostBox {...purchaseCostBox} />
                             </Region>
                         </Region>
                     </Region>
-                    <Region
-                        name="disclaimer"
-                        params={147472}
-                        layout={{ width: 353, height: 17, flexShrink: 0 }}
-                    >
-                        <Region
-                            params={16}
-                            layout={{ position: 'absolute', left: 31, width: 322, top: 0, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={t('disclaimer.credit_spending')}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 322 }}
-                            />
-                        </Region>
-                        <CheckBox
-                            variant="3"
-                            name="spending_disclaimer"
-                            params={17}
-                            onPointerTap={onSpendingDisclaimer}
-                            layout={{ position: 'absolute', left: 11, width: 342, top: 0, height: 16 }}
-                        />
-                    </Region>
+                    <ClubBuyConfirmationLayoutDisclaimer {...disclaimer} />
                     <Region
                         params={147472}
                         layout={{ width: 355, height: 27, flexShrink: 0 }}
@@ -135,5 +111,55 @@ export const ClubBuyConfirmationLayout = ({ captionEndDate, captionSubscriptionN
                 </Region>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `purchase_cost_box` of ClubBuyConfirmationLayout - configured through the parent's `purchaseCostBox` prop. */
+export interface ClubBuyConfirmationLayoutPurchaseCostBoxProps {
+    layout?: BoxLayout;
+}
+
+export const ClubBuyConfirmationLayoutPurchaseCostBox = ({ layout }: ClubBuyConfirmationLayoutPurchaseCostBoxProps) => {
+    return (
+        <Region
+            name="purchase_cost_box"
+            params={147472}
+            layout={{ width: 20, height: 22, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `disclaimer` of ClubBuyConfirmationLayout - configured through the parent's `disclaimer` prop. */
+export interface ClubBuyConfirmationLayoutDisclaimerProps {
+    layout?: BoxLayout;
+    onSpendingDisclaimer?: () => void;
+}
+
+export const ClubBuyConfirmationLayoutDisclaimer = ({ layout, onSpendingDisclaimer }: ClubBuyConfirmationLayoutDisclaimerProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="disclaimer"
+            params={147472}
+            layout={{ width: 353, height: 17, flexShrink: 0, ...layout }}
+        >
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 31, width: 322, top: 0, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('disclaimer.credit_spending')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 322 }}
+                />
+            </Region>
+            <CheckBox
+                variant="3"
+                name="spending_disclaimer"
+                params={17}
+                onPointerTap={onSpendingDisclaimer}
+                layout={{ position: 'absolute', left: 11, width: 342, top: 0, height: 16 }}
+            />
+        </Region>
     );
 };

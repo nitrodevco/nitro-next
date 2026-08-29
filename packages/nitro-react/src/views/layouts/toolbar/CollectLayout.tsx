@@ -7,19 +7,16 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 /** Generated from `1252_collect_xml` (layout "collect", 477x440) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface CollectLayoutProps {
     captionCollectSummary?: string;
-    captionNeverLink?: string;
-    captionSkipLink?: string;
     layout?: BoxLayout;
     onClose?: () => void;
-    onNeverLink?: () => void;
     onOkButton?: () => void;
-    onSkipLink?: () => void;
+    phoneNumberInputBorder?: CollectLayoutPhoneNumberInputBorderProps;
     srcClubIcon?: string;
+    userInputButtonsContainer?: CollectLayoutUserInputButtonsContainerProps;
 }
 
-export const CollectLayout = ({ captionCollectSummary, captionNeverLink, captionSkipLink, layout, onClose, onNeverLink, onOkButton, onSkipLink, srcClubIcon }: CollectLayoutProps) => {
+export const CollectLayout = ({ captionCollectSummary, layout, onClose, onOkButton, phoneNumberInputBorder, srcClubIcon, userInputButtonsContainer }: CollectLayoutProps) => {
     const t = useTranslation();
-    const [ phoneNumberInputValue, setPhoneNumberInputValue ] = useState('');
 
     return (
         <Frame
@@ -75,51 +72,7 @@ export const CollectLayout = ({ captionCollectSummary, captionNeverLink, caption
                             />
                         </Region>
                     </Region>
-                    <Region
-                        name="phone_number_input_border"
-                        params={144}
-                        layout={{ position: 'absolute', left: 8, right: -1, top: 200, height: 61 }}
-                    >
-                        <Region
-                            params={16}
-                            layout={{ position: 'absolute', left: 0, width: 167, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={t('phone.number.collect.select.country')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
-                        <Region
-                            params={16}
-                            layout={{ position: 'absolute', left: 213, width: 165, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={t('phone.number.collect.input.number')}
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
-                        <Region
-                            params={16}
-                            layout={{ position: 'absolute', left: 213, width: 244, top: 18, height: 42 }}
-                        >
-                            <Border
-                                variant="4"
-                                params={16}
-                                layout={{ position: 'absolute', left: 0, width: 244, top: 0, height: 38 }}
-                            >
-                                <TextInput
-                                    value={phoneNumberInputValue}
-                                    onChange={setPhoneNumberInputValue}
-                                    layout={{ position: 'absolute', left: 7, width: 180, top: 6, height: 26, maxWidth: 240 }}
-                                />
-                                <ThemeImage
-                                    params={16}
-                                    src={layoutImage('common_small_pen.png')}
-                                    layout={{ position: 'absolute', left: 222, width: 17, top: 11, height: 18 }}
-                                />
-                            </Border>
-                        </Region>
-                    </Region>
+                    <CollectLayoutPhoneNumberInputBorder {...phoneNumberInputBorder} />
                 </Region>
                 <Droplist
                     variant="3"
@@ -129,49 +82,136 @@ export const CollectLayout = ({ captionCollectSummary, captionNeverLink, caption
                 >
                     Choose country
                 </Droplist>
-                <Region
-                    name="user_input_buttons_container"
-                    params={144}
-                    layout={{ position: 'absolute', left: 2, right: 7, top: 308, height: 87, justifyContent: 'center' }}
-                >
-                    <Border
-                        variant="3"
-                        params={16}
-                        layout={{ position: 'absolute', left: 4, width: 461, top: 8, height: 78 }}
-                    />
-                    <Region
-                        name="user_input_buttons"
-                        params={933904}
-                        layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 460, top: 15, height: 64, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="skip_link"
-                            params={786433}
-                            layout={{ position: 'absolute', width: 460, top: 0, height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            onPointerTap={onSkipLink}
-                            cursor="pointer"
-                        >
-                            <ThemeText
-                                text={captionSkipLink ?? t('phone.number.collect.skip')}
-                                textOptions={{ align: 'center' }}
-                            />
-                        </Region>
-                        <Region
-                            name="never_link"
-                            params={786433}
-                            layout={{ position: 'absolute', width: 460, top: 34, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            onPointerTap={onNeverLink}
-                            cursor="pointer"
-                        >
-                            <ThemeText
-                                text={captionNeverLink ?? t('phone.number.collect.never.again')}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ align: 'center' }}
-                            />
-                        </Region>
-                    </Region>
-                </Region>
+                <CollectLayoutUserInputButtonsContainer {...userInputButtonsContainer} />
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `phone_number_input_border` of CollectLayout - configured through the parent's `phoneNumberInputBorder` prop. */
+export interface CollectLayoutPhoneNumberInputBorderProps {
+    layout?: BoxLayout;
+}
+
+export const CollectLayoutPhoneNumberInputBorder = ({ layout }: CollectLayoutPhoneNumberInputBorderProps) => {
+    const t = useTranslation();
+    const [ phoneNumberInputValue, setPhoneNumberInputValue ] = useState('');
+
+    return (
+        <Region
+            name="phone_number_input_border"
+            params={144}
+            layout={{ position: 'absolute', left: 8, right: -1, top: 200, height: 61, ...layout }}
+        >
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 0, width: 167, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('phone.number.collect.select.country')}
+                    textStyle="text-style-u-bold"
+                />
+            </Region>
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 213, width: 165, top: 2, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('phone.number.collect.input.number')}
+                    textStyle="text-style-u-bold"
+                />
+            </Region>
+            <Region
+                params={16}
+                layout={{ position: 'absolute', left: 213, width: 244, top: 18, height: 42 }}
+            >
+                <Border
+                    variant="4"
+                    params={16}
+                    layout={{ position: 'absolute', left: 0, width: 244, top: 0, height: 38 }}
+                >
+                    <TextInput
+                        value={phoneNumberInputValue}
+                        onChange={setPhoneNumberInputValue}
+                        layout={{ position: 'absolute', left: 7, width: 180, top: 6, height: 26, maxWidth: 240 }}
+                    />
+                    <ThemeImage
+                        params={16}
+                        src={layoutImage('common_small_pen.png')}
+                        layout={{ position: 'absolute', left: 222, width: 17, top: 11, height: 18 }}
+                    />
+                </Border>
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `user_input_buttons` of CollectLayout - configured through the parent's `userInputButtons` prop. */
+export interface CollectLayoutUserInputButtonsProps {
+    captionNeverLink?: string;
+    captionSkipLink?: string;
+    layout?: BoxLayout;
+    onNeverLink?: () => void;
+    onSkipLink?: () => void;
+}
+
+export const CollectLayoutUserInputButtons = ({ captionNeverLink, captionSkipLink, layout, onNeverLink, onSkipLink }: CollectLayoutUserInputButtonsProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="user_input_buttons"
+            params={933904}
+            layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 460, top: 15, height: 64, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="skip_link"
+                params={786433}
+                layout={{ position: 'absolute', width: 460, top: 0, height: 28, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                onPointerTap={onSkipLink}
+                cursor="pointer"
+            >
+                <ThemeText
+                    text={captionSkipLink ?? t('phone.number.collect.skip')}
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
+            <Region
+                name="never_link"
+                params={786433}
+                layout={{ position: 'absolute', width: 460, top: 34, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                onPointerTap={onNeverLink}
+                cursor="pointer"
+            >
+                <ThemeText
+                    text={captionNeverLink ?? t('phone.number.collect.never.again')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'center' }}
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `user_input_buttons_container` of CollectLayout - configured through the parent's `userInputButtonsContainer` prop. */
+export interface CollectLayoutUserInputButtonsContainerProps {
+    layout?: BoxLayout;
+    userInputButtons?: CollectLayoutUserInputButtonsProps;
+}
+
+export const CollectLayoutUserInputButtonsContainer = ({ layout, userInputButtons }: CollectLayoutUserInputButtonsContainerProps) => {
+    return (
+        <Region
+            name="user_input_buttons_container"
+            params={144}
+            layout={{ position: 'absolute', left: 2, right: 7, top: 308, height: 87, justifyContent: 'center', ...layout }}
+        >
+            <Border
+                variant="3"
+                params={16}
+                layout={{ position: 'absolute', left: 4, width: 461, top: 8, height: 78 }}
+            />
+            <CollectLayoutUserInputButtons {...userInputButtons} />
+        </Region>
     );
 };

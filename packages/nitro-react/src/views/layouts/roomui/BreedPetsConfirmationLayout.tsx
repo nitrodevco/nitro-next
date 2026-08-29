@@ -5,12 +5,12 @@ import { BoxLayout, Button, ButtonThick, Frame, Region, ThemeImage, ThemeText } 
 
 /** Generated from `1067_breed_pets_confirmation_xml` (layout "breed_pets_confirmation", 274x387) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface BreedPetsConfirmationLayoutProps {
-    itemsElementList?: ReactNode;
+    elementList?: BreedPetsConfirmationLayoutElementListProps;
     layout?: BoxLayout;
     onClose?: () => void;
 }
 
-export const BreedPetsConfirmationLayout = ({ itemsElementList, layout, onClose }: BreedPetsConfirmationLayoutProps) => {
+export const BreedPetsConfirmationLayout = ({ elementList, layout, onClose }: BreedPetsConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -23,27 +23,7 @@ export const BreedPetsConfirmationLayout = ({ itemsElementList, layout, onClose 
             layout={{ width: 274, height: 387, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="element_list"
-                    params={147472}
-                    layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 272, flexDirection: 'column', gap: 10 }}
-                >
-                    {itemsElementList ?? (
-                        <>
-                            <BreedPetsConfirmationLayoutSeparatorItem />
-                            <BreedPetsConfirmationLayoutDescriptionItem />
-                            <BreedPetsConfirmationLayoutRequestItem />
-                            <BreedPetsConfirmationLayoutInfoItem />
-                            <BreedPetsConfirmationLayoutPreviewListItem />
-                            <BreedPetsConfirmationLayoutSeparatorItem2 />
-                            <BreedPetsConfirmationLayoutButtonListItem />
-                        </>
-                    )}
-                    <Region
-                        params={16}
-                        layout={{ width: 272, height: 1, flexShrink: 0, minWidth: 272 }}
-                    />
-                </Region>
+                <BreedPetsConfirmationLayoutElementList {...elementList} />
             </Region>
         </Frame>
     );
@@ -482,6 +462,38 @@ export const BreedPetsConfirmationLayoutButtonListItem = ({ itemsButtonList, lay
                     <BreedPetsConfirmationLayoutAcceptButtonItem />
                 </>
             )}
+        </Region>
+    );
+};
+
+/** Named region `element_list` of BreedPetsConfirmationLayout - configured through the parent's `elementList` prop. */
+export interface BreedPetsConfirmationLayoutElementListProps {
+    itemsElementList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const BreedPetsConfirmationLayoutElementList = ({ itemsElementList, layout }: BreedPetsConfirmationLayoutElementListProps) => {
+    return (
+        <Region
+            name="element_list"
+            params={147472}
+            layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 272, flexDirection: 'column', gap: 10, ...layout }}
+        >
+            {itemsElementList ?? (
+                <>
+                    <BreedPetsConfirmationLayoutSeparatorItem />
+                    <BreedPetsConfirmationLayoutDescriptionItem />
+                    <BreedPetsConfirmationLayoutRequestItem />
+                    <BreedPetsConfirmationLayoutInfoItem />
+                    <BreedPetsConfirmationLayoutPreviewListItem />
+                    <BreedPetsConfirmationLayoutSeparatorItem2 />
+                    <BreedPetsConfirmationLayoutButtonListItem />
+                </>
+            )}
+            <Region
+                params={16}
+                layout={{ width: 272, height: 1, flexShrink: 0, minWidth: 272 }}
+            />
         </Region>
     );
 };

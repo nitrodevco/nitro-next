@@ -8,7 +8,7 @@ export interface TabButtonBlackLayoutProps {
 
 export const TabButtonBlackLayout = ({ captionTitle, layout }: TabButtonBlackLayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 20, height: 22, justifyContent: 'center', ...layout }}>
+        <Region layout={{ position: 'relative', width: 20, height: 22, ...layout }}>
             <Region
                 name="title"
                 tags={[ 'title', 'TAB_BUTTON_TITLE', '_EXCLUDE', '_INTERNAL' ]}

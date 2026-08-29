@@ -6,120 +6,75 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1214_roomtools_xml` (layout "roomtools", 192x32) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface RoomtoolsLayoutProps {
-    itemsList?: ReactNode;
     layout?: BoxLayout;
-    onRoominfoRegion?: () => void;
-    onZoomRegion?: () => void;
-    srcIconZoomOff?: string;
-    srcIconZoomOff2?: string;
-    srcIconZoomOver?: string;
+    roominfoRegion?: RoomtoolsLayoutRoominfoRegionProps;
+    zoomRegion?: RoomtoolsLayoutZoomRegionProps;
 }
 
-export const RoomtoolsLayout = ({ itemsList, layout, onRoominfoRegion, onZoomRegion, srcIconZoomOff, srcIconZoomOff2, srcIconZoomOver }: RoomtoolsLayoutProps) => {
-    const t = useTranslation();
-
+export const RoomtoolsLayout = ({ layout, roominfoRegion, zoomRegion }: RoomtoolsLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 192, height: 32, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 32 }}>
-                <Region
-                    name="zoom_region"
-                    tags={[ 'REGION' ]}
-                    tooltip={t('toolbar.icon.tooltip.zoom')}
-                    params={17}
-                    onPointerTap={onZoomRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 0, width: 29, top: 2, height: 29 }}
-                >
-                    <Border
-                        variant="6"
-                        tags={[ 'BGCOLOR' ]}
-                        params={16}
-                        tintColor="#55534e"
-                        layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
-                    >
-                        <Border
-                            variant="3"
-                            params={16}
-                            tintColor="#201e19"
-                            blend={0.8}
-                            layout={{ position: 'absolute', left: 3, width: 23, top: 3, height: 22 }}
-                        />
-                        <ThemeImage
-                            name="icon_zoom_off"
-                            params={16}
-                            src={srcIconZoomOff ?? '${image.library.url}album3726/icon_zoom_off.png'}
-                            layout={{ position: 'absolute', left: 1, width: 23, top: 0, height: 27 }}
-                        />
-                        <Region
-                            visible={false}
-                            layout={{ position: 'absolute', left: 1, width: 23, top: 0, height: 27 }}
-                        >
-                            <ThemeImage
-                                name="icon_zoom_over"
-                                params={16}
-                                src={srcIconZoomOver ?? '${image.library.url}album3726/icon_zoom_over.png'}
-                                layout={{ position: 'absolute', left: 1, width: 23, top: 0, height: 27 }}
-                            />
-                        </Region>
-                    </Border>
-                </Region>
-                <Region
-                    name="roominfo_region"
-                    tags={[ 'REGION' ]}
-                    params={17}
-                    onPointerTap={onRoominfoRegion}
-                    cursor="pointer"
-                    layout={{ position: 'absolute', left: 31, width: 161, top: 2, height: 29 }}
-                >
-                    <Border
-                        variant="6"
-                        tags={[ 'BGCOLOR' ]}
-                        params={16}
-                        tintColor="#55534e"
-                        layout={{ position: 'absolute', left: 0, width: 161, top: 0, height: 29 }}
-                    >
-                        <Border
-                            variant="3"
-                            params={16}
-                            tintColor="#201e19"
-                            blend={0.8}
-                            layout={{ position: 'absolute', left: 3, width: 155, top: 3, height: 22 }}
-                        />
-                        <Region
-                            name="list"
-                            params={16}
-                            layout={{ position: 'absolute', left: 9, width: 114, top: 5, height: 17, flexDirection: 'row', gap: 2 }}
-                        >
-                            {itemsList ?? (
-                                <>
-                                    <RoomtoolsLayoutRoominfoTextItem />
-                                    <RoomtoolsLayoutRoominfoNameItem />
-                                </>
-                            )}
-                        </Region>
-                    </Border>
-                    <Border
-                        variant="6"
-                        params={16}
-                        tintColor="#55534e"
-                        layout={{ position: 'absolute', left: 132, width: 29, top: 0, height: 29 }}
-                    >
-                        <Border
-                            variant="3"
-                            params={16}
-                            tintColor="#201e19"
-                            blend={0.8}
-                            layout={{ position: 'absolute', left: 3, width: 23, top: 3, height: 22 }}
-                        />
-                        <ThemeImage
-                            name="icon_zoom_off"
-                            params={16}
-                            src={srcIconZoomOff2 ?? layoutImage('toolbar_room_icon_0.png')}
-                            layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
-                        />
-                    </Border>
-                </Region>
+                <RoomtoolsLayoutZoomRegion {...zoomRegion} />
+                <RoomtoolsLayoutRoominfoRegion {...roominfoRegion} />
             </Region>
+        </Region>
+    );
+};
+
+/** Named region `zoom_region` of RoomtoolsLayout - configured through the parent's `zoomRegion` prop. */
+export interface RoomtoolsLayoutZoomRegionProps {
+    layout?: BoxLayout;
+    onZoomRegion?: () => void;
+    srcIconZoomOff?: string;
+    srcIconZoomOver?: string;
+}
+
+export const RoomtoolsLayoutZoomRegion = ({ layout, onZoomRegion, srcIconZoomOff, srcIconZoomOver }: RoomtoolsLayoutZoomRegionProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="zoom_region"
+            tags={[ 'REGION' ]}
+            tooltip={t('toolbar.icon.tooltip.zoom')}
+            params={17}
+            onPointerTap={onZoomRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 29, top: 2, height: 29, ...layout }}
+        >
+            <Border
+                variant="6"
+                tags={[ 'BGCOLOR' ]}
+                params={16}
+                tintColor="#55534e"
+                layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
+            >
+                <Border
+                    variant="3"
+                    params={16}
+                    tintColor="#201e19"
+                    blend={0.8}
+                    layout={{ position: 'absolute', left: 3, width: 23, top: 3, height: 22 }}
+                />
+                <ThemeImage
+                    name="icon_zoom_off"
+                    params={16}
+                    src={srcIconZoomOff ?? '${image.library.url}album3726/icon_zoom_off.png'}
+                    layout={{ position: 'absolute', left: 1, width: 23, top: 0, height: 27 }}
+                />
+                <Region
+                    visible={false}
+                    layout={{ position: 'absolute', left: 1, width: 23, top: 0, height: 27 }}
+                >
+                    <ThemeImage
+                        name="icon_zoom_over"
+                        params={16}
+                        src={srcIconZoomOver ?? '${image.library.url}album3726/icon_zoom_over.png'}
+                        layout={{ position: 'absolute', left: 1, width: 23, top: 0, height: 27 }}
+                    />
+                </Region>
+            </Border>
         </Region>
     );
 };
@@ -167,6 +122,87 @@ export const RoomtoolsLayoutRoominfoNameItem = ({ captionRoominfoName, layout }:
                 text={captionRoominfoName ?? '...'}
                 textStyle="text-style-il-regular-white"
             />
+        </Region>
+    );
+};
+
+/** Named region `list` of RoomtoolsLayout - configured through the parent's `list` prop. */
+export interface RoomtoolsLayoutListProps {
+    itemsList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const RoomtoolsLayoutList = ({ itemsList, layout }: RoomtoolsLayoutListProps) => {
+    return (
+        <Region
+            name="list"
+            params={16}
+            layout={{ position: 'absolute', left: 9, width: 114, top: 5, height: 17, flexDirection: 'row', gap: 2, ...layout }}
+        >
+            {itemsList ?? (
+                <>
+                    <RoomtoolsLayoutRoominfoTextItem />
+                    <RoomtoolsLayoutRoominfoNameItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `roominfo_region` of RoomtoolsLayout - configured through the parent's `roominfoRegion` prop. */
+export interface RoomtoolsLayoutRoominfoRegionProps {
+    layout?: BoxLayout;
+    list?: RoomtoolsLayoutListProps;
+    onRoominfoRegion?: () => void;
+    srcIconZoomOff?: string;
+}
+
+export const RoomtoolsLayoutRoominfoRegion = ({ layout, list, onRoominfoRegion, srcIconZoomOff }: RoomtoolsLayoutRoominfoRegionProps) => {
+    return (
+        <Region
+            name="roominfo_region"
+            tags={[ 'REGION' ]}
+            params={17}
+            onPointerTap={onRoominfoRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 31, width: 161, top: 2, height: 29, ...layout }}
+        >
+            <Border
+                variant="6"
+                tags={[ 'BGCOLOR' ]}
+                params={16}
+                tintColor="#55534e"
+                layout={{ position: 'absolute', left: 0, width: 161, top: 0, height: 29 }}
+            >
+                <Border
+                    variant="3"
+                    params={16}
+                    tintColor="#201e19"
+                    blend={0.8}
+                    layout={{ position: 'absolute', left: 3, width: 155, top: 3, height: 22 }}
+                />
+                <RoomtoolsLayoutList {...list} />
+            </Border>
+            <Border
+                variant="6"
+                params={16}
+                tintColor="#55534e"
+                layout={{ position: 'absolute', left: 132, width: 29, top: 0, height: 29 }}
+            >
+                <Border
+                    variant="3"
+                    params={16}
+                    tintColor="#201e19"
+                    blend={0.8}
+                    layout={{ position: 'absolute', left: 3, width: 23, top: 3, height: 22 }}
+                />
+                <ThemeImage
+                    name="icon_zoom_off"
+                    params={16}
+                    src={srcIconZoomOff ?? layoutImage('toolbar_room_icon_0.png')}
+                    layout={{ position: 'absolute', left: 0, width: 29, top: 0, height: 29 }}
+                />
+            </Border>
         </Region>
     );
 };

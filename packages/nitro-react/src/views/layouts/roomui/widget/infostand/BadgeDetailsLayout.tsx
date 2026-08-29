@@ -4,11 +4,11 @@ import { Border, BoxLayout, Region, ThemeText } from '#base/theme';
 
 /** Generated from `982_badge_details_xml` (layout "badge_details", 263x25) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface BadgeDetailsLayoutProps {
-    itemsDetailsList?: ReactNode;
+    detailsList?: BadgeDetailsLayoutDetailsListProps;
     layout?: BoxLayout;
 }
 
-export const BadgeDetailsLayout = ({ itemsDetailsList, layout }: BadgeDetailsLayoutProps) => {
+export const BadgeDetailsLayout = ({ detailsList, layout }: BadgeDetailsLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 263, height: 25, ...layout }}>
             <Border
@@ -16,20 +16,7 @@ export const BadgeDetailsLayout = ({ itemsDetailsList, layout }: BadgeDetailsLay
                 name="test"
                 layout={{ position: 'absolute', left: 87, width: 263, top: 53, height: 25 }}
             >
-                <Region
-                    name="details_list"
-                    params={8388624}
-                    layout={{ position: 'absolute', left: 0, width: 263, top: 6, height: 11, flexDirection: 'column', gap: 3 }}
-                >
-                    {itemsDetailsList ?? (
-                        <>
-                            <BadgeDetailsLayoutNameItem />
-                            <BadgeDetailsLayoutDescriptionItem />
-                            <BadgeDetailsLayoutRarityTagItem />
-                            <BadgeDetailsLayoutOwnerCountItem />
-                        </>
-                    )}
-                </Region>
+                <BadgeDetailsLayoutDetailsList {...detailsList} />
             </Border>
         </Region>
     );
@@ -143,6 +130,31 @@ export const BadgeDetailsLayoutOwnerCountItem = ({ captionOwnerCount, layout }: 
                 text={captionOwnerCount ?? ''}
                 textOptions={{ fill: '#555555', wordWrap: true, wordWrapWidth: 250 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `details_list` of BadgeDetailsLayout - configured through the parent's `detailsList` prop. */
+export interface BadgeDetailsLayoutDetailsListProps {
+    itemsDetailsList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const BadgeDetailsLayoutDetailsList = ({ itemsDetailsList, layout }: BadgeDetailsLayoutDetailsListProps) => {
+    return (
+        <Region
+            name="details_list"
+            params={8388624}
+            layout={{ position: 'absolute', left: 0, width: 263, top: 6, height: 11, flexDirection: 'column', gap: 3, ...layout }}
+        >
+            {itemsDetailsList ?? (
+                <>
+                    <BadgeDetailsLayoutNameItem />
+                    <BadgeDetailsLayoutDescriptionItem />
+                    <BadgeDetailsLayoutRarityTagItem />
+                    <BadgeDetailsLayoutOwnerCountItem />
+                </>
+            )}
         </Region>
     );
 };

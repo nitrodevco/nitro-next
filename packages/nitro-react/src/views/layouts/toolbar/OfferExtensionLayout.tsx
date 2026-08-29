@@ -6,11 +6,11 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1245_offer_extension_xml` (layout "offer_extension", 192x13) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface OfferExtensionLayoutProps {
-    itemsList?: ReactNode;
     layout?: BoxLayout;
+    list?: OfferExtensionLayoutListProps;
 }
 
-export const OfferExtensionLayout = ({ itemsList, layout }: OfferExtensionLayoutProps) => {
+export const OfferExtensionLayout = ({ layout, list }: OfferExtensionLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 192, height: 13, ...layout }}>
             <Region
@@ -24,18 +24,7 @@ export const OfferExtensionLayout = ({ itemsList, layout }: OfferExtensionLayout
                     blend={0.8}
                     layout={{ position: 'absolute', left: 3, width: 186, top: 3, height: 6 }}
                 >
-                    <Region
-                        name="list"
-                        params={8536080}
-                        layout={{ position: 'absolute', left: 3, top: 3, flexDirection: 'column' }}
-                    >
-                        {itemsList ?? (
-                            <>
-                                <OfferExtensionLayoutStartVideoItem />
-                                <OfferExtensionLayoutCheckRewardsItem />
-                            </>
-                        )}
-                    </Region>
+                    <OfferExtensionLayoutList {...list} />
                 </Border>
             </Region>
         </Region>
@@ -112,6 +101,29 @@ export const OfferExtensionLayoutCheckRewardsItem = ({ layout, onCheckRewards, v
                     textStyle="text-style-il-regular-white"
                 />
             </Region>
+        </Region>
+    );
+};
+
+/** Named region `list` of OfferExtensionLayout - configured through the parent's `list` prop. */
+export interface OfferExtensionLayoutListProps {
+    itemsList?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const OfferExtensionLayoutList = ({ itemsList, layout }: OfferExtensionLayoutListProps) => {
+    return (
+        <Region
+            name="list"
+            params={8536080}
+            layout={{ position: 'absolute', left: 3, top: 3, flexDirection: 'column', ...layout }}
+        >
+            {itemsList ?? (
+                <>
+                    <OfferExtensionLayoutStartVideoItem />
+                    <OfferExtensionLayoutCheckRewardsItem />
+                </>
+            )}
         </Region>
     );
 };

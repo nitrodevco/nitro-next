@@ -5,55 +5,14 @@ import { BoxLayout, Button, ButtonThick, Region, ThemeImage, ThemeText } from '#
 
 /** Generated from `942_use_product_controller_revive_monsterplant_xml` (layout "use_product_revive_monsterplant", 290x257) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface UseProductControllerReviveMonsterplantLayoutProps {
-    itemsElementList?: ReactNode;
+    elementList?: UseProductControllerReviveMonsterplantLayoutElementListProps;
     layout?: BoxLayout;
-    onCancelText?: () => void;
-    onSaveButton?: () => void;
 }
 
-export const UseProductControllerReviveMonsterplantLayout = ({ itemsElementList, layout, onCancelText, onSaveButton }: UseProductControllerReviveMonsterplantLayoutProps) => {
-    const t = useTranslation();
-
+export const UseProductControllerReviveMonsterplantLayout = ({ elementList, layout }: UseProductControllerReviveMonsterplantLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 290, height: 257, ...layout }}>
-            <Region
-                name="element_list"
-                params={147472}
-                layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 290, flexDirection: 'column', gap: 10 }}
-            >
-                {itemsElementList ?? (
-                    <>
-                        <UseProductControllerReviveMonsterplantLayoutSeparatorItem />
-                        <UseProductControllerReviveMonsterplantLayoutPreviewListItem />
-                        <UseProductControllerReviveMonsterplantLayoutSeparatorItem2 />
-                        <UseProductControllerReviveMonsterplantLayoutSeparatorItem3 />
-                    </>
-                )}
-                <Region
-                    params={16}
-                    layout={{ width: 270, height: 30, flexShrink: 0, minHeight: 30, flexDirection: 'row', gap: 10 }}
-                >
-                    <Button
-                        variant="3"
-                        name="cancel_text"
-                        params={131089}
-                        onPointerTap={onCancelText}
-                        layout={{ width: 130, height: 30, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
-                    >
-                        {t('useproduct.widget.cancel')}
-                    </Button>
-                    <ButtonThick
-                        variant="5"
-                        name="save_button"
-                        params={131089}
-                        tintColor="#00aa00"
-                        onPointerTap={onSaveButton}
-                        layout={{ width: 130, height: 30, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
-                    >
-                        {t('useproduct.widget.revive')}
-                    </ButtonThick>
-                </Region>
-            </Region>
+            <UseProductControllerReviveMonsterplantLayoutElementList {...elementList} />
         </Region>
     );
 };
@@ -193,15 +152,47 @@ export const UseProductControllerReviveMonsterplantLayoutPlantItemlistItem = ({ 
     );
 };
 
+/** Named region `separator` of UseProductControllerReviveMonsterplantLayout - configured through the parent's `separator` prop. */
+export interface UseProductControllerReviveMonsterplantLayoutSeparatorProps {
+    layout?: BoxLayout;
+}
+
+export const UseProductControllerReviveMonsterplantLayoutSeparator = ({ layout }: UseProductControllerReviveMonsterplantLayoutSeparatorProps) => {
+    return (
+        <Region
+            name="separator"
+            params={16}
+            layout={{ width: 130, height: 17, flexShrink: 0, minWidth: 130, maxWidth: 130, ...layout }}
+        />
+    );
+};
+
+/** Named region `separator` of UseProductControllerReviveMonsterplantLayout - configured through the parent's `separator` prop. */
+export interface UseProductControllerReviveMonsterplantLayoutSeparator2Props {
+    layout?: BoxLayout;
+}
+
+export const UseProductControllerReviveMonsterplantLayoutSeparator2 = ({ layout }: UseProductControllerReviveMonsterplantLayoutSeparator2Props) => {
+    return (
+        <Region
+            name="separator"
+            params={16}
+            layout={{ width: 130, height: 10, flexShrink: 0, minWidth: 130, maxWidth: 130, ...layout }}
+        />
+    );
+};
+
 /** Row template `preview_list` of UseProductControllerReviveMonsterplantLayout - pass real rows through its `items…` slot. */
 export interface UseProductControllerReviveMonsterplantLayoutPreviewListItemProps {
     captionDescription?: string;
     captionInfo?: string;
     itemsPreviewList?: ReactNode;
     layout?: BoxLayout;
+    separator?: UseProductControllerReviveMonsterplantLayoutSeparatorProps;
+    separator2?: UseProductControllerReviveMonsterplantLayoutSeparator2Props;
 }
 
-export const UseProductControllerReviveMonsterplantLayoutPreviewListItem = ({ captionDescription, captionInfo, itemsPreviewList, layout }: UseProductControllerReviveMonsterplantLayoutPreviewListItemProps) => {
+export const UseProductControllerReviveMonsterplantLayoutPreviewListItem = ({ captionDescription, captionInfo, itemsPreviewList, layout, separator, separator2 }: UseProductControllerReviveMonsterplantLayoutPreviewListItemProps) => {
     const t = useTranslation();
 
     return (
@@ -217,11 +208,7 @@ export const UseProductControllerReviveMonsterplantLayoutPreviewListItem = ({ ca
                 params={147472}
                 layout={{ flexShrink: 0, minWidth: 130, maxWidth: 130, flexDirection: 'column', gap: 1 }}
             >
-                <Region
-                    name="separator"
-                    params={16}
-                    layout={{ width: 130, height: 17, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
-                />
+                <UseProductControllerReviveMonsterplantLayoutSeparator {...separator} />
                 <Region
                     name="description"
                     params={16}
@@ -232,11 +219,7 @@ export const UseProductControllerReviveMonsterplantLayoutPreviewListItem = ({ ca
                         textOptions={{ wordWrap: true, wordWrapWidth: 130 }}
                     />
                 </Region>
-                <Region
-                    name="separator"
-                    params={16}
-                    layout={{ width: 130, height: 10, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
-                />
+                <UseProductControllerReviveMonsterplantLayoutSeparator2 {...separator2} />
                 <Region
                     name="info"
                     params={16}
@@ -280,5 +263,58 @@ export const UseProductControllerReviveMonsterplantLayoutSeparatorItem3 = ({ lay
             params={16}
             layout={{ width: 270, height: 1, flexShrink: 0, ...layout }}
         />
+    );
+};
+
+/** Named region `element_list` of UseProductControllerReviveMonsterplantLayout - configured through the parent's `elementList` prop. */
+export interface UseProductControllerReviveMonsterplantLayoutElementListProps {
+    itemsElementList?: ReactNode;
+    layout?: BoxLayout;
+    onCancelText?: () => void;
+    onSaveButton?: () => void;
+}
+
+export const UseProductControllerReviveMonsterplantLayoutElementList = ({ itemsElementList, layout, onCancelText, onSaveButton }: UseProductControllerReviveMonsterplantLayoutElementListProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="element_list"
+            params={147472}
+            layout={{ position: 'absolute', left: 0, top: 0, maxWidth: 290, flexDirection: 'column', gap: 10, ...layout }}
+        >
+            {itemsElementList ?? (
+                <>
+                    <UseProductControllerReviveMonsterplantLayoutSeparatorItem />
+                    <UseProductControllerReviveMonsterplantLayoutPreviewListItem />
+                    <UseProductControllerReviveMonsterplantLayoutSeparatorItem2 />
+                    <UseProductControllerReviveMonsterplantLayoutSeparatorItem3 />
+                </>
+            )}
+            <Region
+                params={16}
+                layout={{ width: 270, height: 30, flexShrink: 0, minHeight: 30, flexDirection: 'row', gap: 10 }}
+            >
+                <Button
+                    variant="3"
+                    name="cancel_text"
+                    params={131089}
+                    onPointerTap={onCancelText}
+                    layout={{ width: 130, height: 30, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
+                >
+                    {t('useproduct.widget.cancel')}
+                </Button>
+                <ButtonThick
+                    variant="5"
+                    name="save_button"
+                    params={131089}
+                    tintColor="#00aa00"
+                    onPointerTap={onSaveButton}
+                    layout={{ width: 130, height: 30, flexShrink: 0, minWidth: 130, maxWidth: 130 }}
+                >
+                    {t('useproduct.widget.revive')}
+                </ButtonThick>
+            </Region>
+        </Region>
     );
 };

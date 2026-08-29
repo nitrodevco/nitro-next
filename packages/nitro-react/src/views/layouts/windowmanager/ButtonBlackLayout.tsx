@@ -8,7 +8,7 @@ export interface ButtonBlackLayoutProps {
 
 export const ButtonBlackLayout = ({ captionBTNTEXT, layout }: ButtonBlackLayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 20, height: 22, justifyContent: 'center', ...layout }}>
+        <Region layout={{ position: 'relative', width: 20, height: 22, ...layout }}>
             <Region
                 name="_BTN_TEXT"
                 tags={[ '_EXCLUDE', '_INTERNAL', 'title' ]}

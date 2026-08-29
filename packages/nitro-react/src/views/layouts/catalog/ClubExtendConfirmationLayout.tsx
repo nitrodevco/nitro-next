@@ -4,13 +4,14 @@ import { BoxLayout, ButtonThick, Frame, Icon, Region, ThemeImage, ThemeText } fr
 
 /** Generated from `1625_club_extend_confirmation_xml` (layout "extend_confirmation", 450x235) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface ClubExtendConfirmationLayoutProps {
-    itemsItemlistVertical?: ReactNode;
+    backgroundContainer?: ClubExtendConfirmationLayoutBackgroundContainerProps;
+    itemlistVertical?: ClubExtendConfirmationLayoutItemlistVerticalProps;
     layout?: BoxLayout;
     onClose?: () => void;
     srcClubTeaser?: string;
 }
 
-export const ClubExtendConfirmationLayout = ({ itemsItemlistVertical, layout, onClose, srcClubTeaser }: ClubExtendConfirmationLayoutProps) => {
+export const ClubExtendConfirmationLayout = ({ backgroundContainer, itemlistVertical, layout, onClose, srcClubTeaser }: ClubExtendConfirmationLayoutProps) => {
     return (
         <Frame
             variant="3"
@@ -22,40 +23,14 @@ export const ClubExtendConfirmationLayout = ({ itemsItemlistVertical, layout, on
             layout={{ width: 450, height: 235, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="background_container"
-                    params={16}
-                    backgroundColor="#bcbdbc"
-                    layout={{ position: 'absolute', left: 1, width: 448, top: 0, height: 25 }}
-                />
+                <ClubExtendConfirmationLayoutBackgroundContainer {...backgroundContainer} />
                 <Icon
                     variant="18"
                     name="club_level_icon"
                     params={16}
                     layout={{ position: 'absolute', left: 25, width: 85, top: 25, height: 40 }}
                 />
-                <Region
-                    name="itemlist_vertical"
-                    params={8388624}
-                    layout={{ position: 'absolute', left: 140, width: 285, top: 25, height: 175, flexDirection: 'column' }}
-                >
-                    {itemsItemlistVertical ?? (
-                        <>
-                            <ClubExtendConfirmationLayoutExtendTitleItem />
-                            <ClubExtendConfirmationLayoutNormalPriceContainerItem />
-                            <ClubExtendConfirmationLayoutYouSaveContainerItem />
-                            <ClubExtendConfirmationLayoutTotalAmountLineItem />
-                            <ClubExtendConfirmationLayoutSpacerItem />
-                            <ClubExtendConfirmationLayoutYourPriceContainerItem />
-                            <ClubExtendConfirmationLayoutOfferExpirationItem />
-                            <ClubExtendConfirmationLayoutActionContainerItem />
-                        </>
-                    )}
-                    <Region
-                        params={16}
-                        layout={{ width: 100, height: 10, flexShrink: 0 }}
-                    />
-                </Region>
+                <ClubExtendConfirmationLayoutItemlistVertical {...itemlistVertical} />
                 <ThemeImage
                     name="club_teaser"
                     params={1049712}
@@ -64,6 +39,22 @@ export const ClubExtendConfirmationLayout = ({ itemsItemlistVertical, layout, on
                 />
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `background_container` of ClubExtendConfirmationLayout - configured through the parent's `backgroundContainer` prop. */
+export interface ClubExtendConfirmationLayoutBackgroundContainerProps {
+    layout?: BoxLayout;
+}
+
+export const ClubExtendConfirmationLayoutBackgroundContainer = ({ layout }: ClubExtendConfirmationLayoutBackgroundContainerProps) => {
+    return (
+        <Region
+            name="background_container"
+            params={16}
+            backgroundColor="#bcbdbc"
+            layout={{ position: 'absolute', left: 1, width: 448, top: 0, height: 25, ...layout }}
+        />
     );
 };
 
@@ -370,15 +361,44 @@ export const ClubExtendConfirmationLayoutOfferExpirationItem = ({ captionOfferEx
     );
 };
 
-/** Row template `action_container` of ClubExtendConfirmationLayout - pass real rows through its `items…` slot. */
-export interface ClubExtendConfirmationLayoutActionContainerItemProps {
+/** Named region `maybe_later_region` of ClubExtendConfirmationLayout - configured through the parent's `maybeLaterRegion` prop. */
+export interface ClubExtendConfirmationLayoutMaybeLaterRegionProps {
     captionMaybeLaterLink?: string;
     layout?: BoxLayout;
-    onBuyNowButton?: () => void;
     onMaybeLaterRegion?: () => void;
 }
 
-export const ClubExtendConfirmationLayoutActionContainerItem = ({ captionMaybeLaterLink, layout, onBuyNowButton, onMaybeLaterRegion }: ClubExtendConfirmationLayoutActionContainerItemProps) => {
+export const ClubExtendConfirmationLayoutMaybeLaterRegion = ({ captionMaybeLaterLink, layout, onMaybeLaterRegion }: ClubExtendConfirmationLayoutMaybeLaterRegionProps) => {
+    return (
+        <Region
+            name="maybe_later_region"
+            params={131089}
+            onPointerTap={onMaybeLaterRegion}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 5, top: 0, height: 32, ...layout }}
+        >
+            <Region
+                name="maybe_later_link"
+                params={4194320}
+                layout={{ position: 'absolute', left: 0, top: 5, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionMaybeLaterLink ?? ''}
+                    textStyle="text-style-u-regular"
+                />
+            </Region>
+        </Region>
+    );
+};
+
+/** Row template `action_container` of ClubExtendConfirmationLayout - pass real rows through its `items…` slot. */
+export interface ClubExtendConfirmationLayoutActionContainerItemProps {
+    layout?: BoxLayout;
+    maybeLaterRegion?: ClubExtendConfirmationLayoutMaybeLaterRegionProps;
+    onBuyNowButton?: () => void;
+}
+
+export const ClubExtendConfirmationLayoutActionContainerItem = ({ layout, maybeLaterRegion, onBuyNowButton }: ClubExtendConfirmationLayoutActionContainerItemProps) => {
     return (
         <Region
             name="action_container"
@@ -392,24 +412,40 @@ export const ClubExtendConfirmationLayoutActionContainerItem = ({ captionMaybeLa
                 onPointerTap={onBuyNowButton}
                 layout={{ position: 'absolute', right: 0, width: 150, top: 0, height: 30, maxWidth: 150 }}
             />
+            <ClubExtendConfirmationLayoutMaybeLaterRegion {...maybeLaterRegion} />
+        </Region>
+    );
+};
+
+/** Named region `itemlist_vertical` of ClubExtendConfirmationLayout - configured through the parent's `itemlistVertical` prop. */
+export interface ClubExtendConfirmationLayoutItemlistVerticalProps {
+    itemsItemlistVertical?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const ClubExtendConfirmationLayoutItemlistVertical = ({ itemsItemlistVertical, layout }: ClubExtendConfirmationLayoutItemlistVerticalProps) => {
+    return (
+        <Region
+            name="itemlist_vertical"
+            params={8388624}
+            layout={{ position: 'absolute', left: 140, width: 285, top: 25, height: 175, flexDirection: 'column', ...layout }}
+        >
+            {itemsItemlistVertical ?? (
+                <>
+                    <ClubExtendConfirmationLayoutExtendTitleItem />
+                    <ClubExtendConfirmationLayoutNormalPriceContainerItem />
+                    <ClubExtendConfirmationLayoutYouSaveContainerItem />
+                    <ClubExtendConfirmationLayoutTotalAmountLineItem />
+                    <ClubExtendConfirmationLayoutSpacerItem />
+                    <ClubExtendConfirmationLayoutYourPriceContainerItem />
+                    <ClubExtendConfirmationLayoutOfferExpirationItem />
+                    <ClubExtendConfirmationLayoutActionContainerItem />
+                </>
+            )}
             <Region
-                name="maybe_later_region"
-                params={131089}
-                onPointerTap={onMaybeLaterRegion}
-                cursor="pointer"
-                layout={{ position: 'absolute', left: 0, width: 5, top: 0, height: 32 }}
-            >
-                <Region
-                    name="maybe_later_link"
-                    params={4194320}
-                    layout={{ position: 'absolute', left: 0, top: 5, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionMaybeLaterLink ?? ''}
-                        textStyle="text-style-u-regular"
-                    />
-                </Region>
-            </Region>
+                params={16}
+                layout={{ width: 100, height: 10, flexShrink: 0 }}
+            />
         </Region>
     );
 };

@@ -6,14 +6,12 @@ import { layoutImage } from '#base/views/layouts/layoutAssets';
 
 /** Generated from `1692_purchase_confirmation_xml` (layout "purchase_confirmation", 325x339) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PurchaseConfirmationLayoutProps {
-    itemsContent?: ReactNode;
-    itemsPropertiesItemlist?: ReactNode;
+    content?: PurchaseConfirmationLayoutContentProps;
     layout?: BoxLayout;
     onClose?: () => void;
-    srcProductImage?: string;
 }
 
-export const PurchaseConfirmationLayout = ({ itemsContent, itemsPropertiesItemlist, layout, onClose, srcProductImage }: PurchaseConfirmationLayoutProps) => {
+export const PurchaseConfirmationLayout = ({ content, layout, onClose }: PurchaseConfirmationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -26,80 +24,7 @@ export const PurchaseConfirmationLayout = ({ itemsContent, itemsPropertiesItemli
             layout={{ width: 325, height: 339, ...layout }}
         >
             <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="content"
-                    params={8538256}
-                    layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 37, flexDirection: 'column', gap: 10 }}
-                >
-                    {itemsContent ?? (
-                        <>
-                            <PurchaseConfirmationLayoutDisclaimerItem />
-                            <PurchaseConfirmationLayoutRaffleContainerItem />
-                            <PurchaseConfirmationLayoutButtonsItem />
-                        </>
-                    )}
-                    <Region
-                        params={131088}
-                        layout={{ minWidth: 404, minHeight: 171, flexShrink: 0, flexDirection: 'column', gap: 5 }}
-                    >
-                        <Region
-                            params={16}
-                            layout={{ width: 344, height: 171, flexShrink: 0 }}
-                        >
-                            <Border
-                                variant="0"
-                                params={16}
-                                tintColor="#f1f1f1"
-                                layout={{ position: 'absolute', left: 10, width: 126, top: 12, height: 152 }}
-                            >
-                                <ThemeImage
-                                    name="product_image"
-                                    params={16}
-                                    src={srcProductImage}
-                                    layout={{ position: 'absolute', left: 1, width: 126, top: 1, height: 152 }}
-                                />
-                                <WidgetSlot
-                                    widgetType="product_image"
-                                    name="nft_image"
-                                    params={16}
-                                    layout={{ position: 'absolute', left: 0, width: 126, top: 0, height: 152 }}
-                                />
-                            </Border>
-                            <Region
-                                name="properties_itemlist"
-                                params={3145744}
-                                layout={{ position: 'absolute', left: 143, width: 176, alignSelf: 'center', marginTop: -19.5, marginBottom: 19.5, height: 116, flexDirection: 'column', gap: 7 }}
-                            >
-                                {itemsPropertiesItemlist ?? (
-                                    <>
-                                        <PurchaseConfirmationLayoutProductNameItem />
-                                        <PurchaseConfirmationLayoutQuantityItem />
-                                        <PurchaseConfirmationLayoutFreeQuantityItem />
-                                    </>
-                                )}
-                                <Region
-                                    params={147472}
-                                    layout={{ flexShrink: 0, flexDirection: 'row' }}
-                                >
-                                    <Region
-                                        params={16}
-                                        layout={{ width: 268, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                    >
-                                        <ThemeText
-                                            text={t('catalog.purchase.confirmation.dialog.cost')}
-                                            textStyle="text-style-u-regular"
-                                        />
-                                    </Region>
-                                    <Region
-                                        name="purchase_cost_box"
-                                        params={147472}
-                                        layout={{ width: 20, height: 22, flexShrink: 0 }}
-                                    />
-                                </Region>
-                            </Region>
-                        </Region>
-                    </Region>
-                </Region>
+                <PurchaseConfirmationLayoutContent {...content} />
             </Region>
         </Frame>
     );
@@ -311,6 +236,119 @@ export const PurchaseConfirmationLayoutFreeQuantityItem = ({ captionFreeQuantity
                 text={captionFreeQuantity ?? t('shop.bonus.items.count')}
                 textStyle="text-style-u-bold"
             />
+        </Region>
+    );
+};
+
+/** Named region `purchase_cost_box` of PurchaseConfirmationLayout - configured through the parent's `purchaseCostBox` prop. */
+export interface PurchaseConfirmationLayoutPurchaseCostBoxProps {
+    layout?: BoxLayout;
+}
+
+export const PurchaseConfirmationLayoutPurchaseCostBox = ({ layout }: PurchaseConfirmationLayoutPurchaseCostBoxProps) => {
+    return (
+        <Region
+            name="purchase_cost_box"
+            params={147472}
+            layout={{ width: 20, height: 22, flexShrink: 0, ...layout }}
+        />
+    );
+};
+
+/** Named region `properties_itemlist` of PurchaseConfirmationLayout - configured through the parent's `propertiesItemlist` prop. */
+export interface PurchaseConfirmationLayoutPropertiesItemlistProps {
+    itemsPropertiesItemlist?: ReactNode;
+    layout?: BoxLayout;
+    purchaseCostBox?: PurchaseConfirmationLayoutPurchaseCostBoxProps;
+}
+
+export const PurchaseConfirmationLayoutPropertiesItemlist = ({ itemsPropertiesItemlist, layout, purchaseCostBox }: PurchaseConfirmationLayoutPropertiesItemlistProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="properties_itemlist"
+            params={3145744}
+            layout={{ position: 'absolute', left: 143, width: 176, alignSelf: 'center', marginTop: -19.5, marginBottom: 19.5, height: 116, flexDirection: 'column', gap: 7, ...layout }}
+        >
+            {itemsPropertiesItemlist ?? (
+                <>
+                    <PurchaseConfirmationLayoutProductNameItem />
+                    <PurchaseConfirmationLayoutQuantityItem />
+                    <PurchaseConfirmationLayoutFreeQuantityItem />
+                </>
+            )}
+            <Region
+                params={147472}
+                layout={{ flexShrink: 0, flexDirection: 'row' }}
+            >
+                <Region
+                    params={16}
+                    layout={{ width: 268, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={t('catalog.purchase.confirmation.dialog.cost')}
+                        textStyle="text-style-u-regular"
+                    />
+                </Region>
+                <PurchaseConfirmationLayoutPurchaseCostBox {...purchaseCostBox} />
+            </Region>
+        </Region>
+    );
+};
+
+/** Named region `content` of PurchaseConfirmationLayout - configured through the parent's `content` prop. */
+export interface PurchaseConfirmationLayoutContentProps {
+    itemsContent?: ReactNode;
+    layout?: BoxLayout;
+    propertiesItemlist?: PurchaseConfirmationLayoutPropertiesItemlistProps;
+    srcProductImage?: string;
+}
+
+export const PurchaseConfirmationLayoutContent = ({ itemsContent, layout, propertiesItemlist, srcProductImage }: PurchaseConfirmationLayoutContentProps) => {
+    return (
+        <Region
+            name="content"
+            params={8538256}
+            layout={{ position: 'absolute', left: 0, right: 2, top: 8, bottom: 37, flexDirection: 'column', gap: 10, ...layout }}
+        >
+            {itemsContent ?? (
+                <>
+                    <PurchaseConfirmationLayoutDisclaimerItem />
+                    <PurchaseConfirmationLayoutRaffleContainerItem />
+                    <PurchaseConfirmationLayoutButtonsItem />
+                </>
+            )}
+            <Region
+                params={131088}
+                layout={{ minWidth: 404, minHeight: 171, flexShrink: 0, flexDirection: 'column', gap: 5 }}
+            >
+                <Region
+                    params={16}
+                    layout={{ width: 344, height: 171, flexShrink: 0 }}
+                >
+                    <Border
+                        variant="0"
+                        params={16}
+                        tintColor="#f1f1f1"
+                        layout={{ position: 'absolute', left: 10, width: 126, top: 12, height: 152 }}
+                    >
+                        <ThemeImage
+                            name="product_image"
+                            params={16}
+                            src={srcProductImage}
+                            layout={{ position: 'absolute', left: 1, width: 126, top: 1, height: 152 }}
+                        />
+                        <WidgetSlot
+                            widgetType="product_image"
+                            name="nft_image"
+                            params={16}
+                            layout={{ position: 'absolute', left: 0, width: 126, top: 0, height: 152 }}
+                        />
+                    </Border>
+                    <PurchaseConfirmationLayoutPropertiesItemlist {...propertiesItemlist} />
+                </Region>
+            </Region>
         </Region>
     );
 };

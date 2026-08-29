@@ -4,10 +4,11 @@ import { Border, BoxLayout, Button, Frame, Region, ScrollArea } from '#base/them
 /** Generated from `2950_motd_notification_xml` (layout "achievement_notification", 436x227) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface MotdNotificationLayoutProps {
     layout?: BoxLayout;
+    messageList?: MotdNotificationLayoutMessageListProps;
     onClose?: () => void;
 }
 
-export const MotdNotificationLayout = ({ layout, onClose }: MotdNotificationLayoutProps) => {
+export const MotdNotificationLayout = ({ layout, messageList, onClose }: MotdNotificationLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -26,16 +27,7 @@ export const MotdNotificationLayout = ({ layout, onClose }: MotdNotificationLayo
                     params={16}
                     layout={{ position: 'absolute', left: 1, width: 420, top: 0, height: 160 }}
                 >
-                    <ScrollArea
-                        orientation="vertical"
-                        layout={{ position: 'absolute', left: 5, width: 410, top: 6, height: 149 }}
-                    >
-                        <Region
-                            name="message_list"
-                            params={16}
-                            layout={{ flexDirection: 'column', width: '100%' }}
-                        />
-                    </ScrollArea>
+                    <MotdNotificationLayoutMessageList {...messageList} />
                 </Border>
                 <Button
                     variant="0"
@@ -48,5 +40,25 @@ export const MotdNotificationLayout = ({ layout, onClose }: MotdNotificationLayo
                 </Button>
             </Region>
         </Frame>
+    );
+};
+
+/** Named region `message_list` of MotdNotificationLayout - configured through the parent's `messageList` prop. */
+export interface MotdNotificationLayoutMessageListProps {
+    layout?: BoxLayout;
+}
+
+export const MotdNotificationLayoutMessageList = ({ layout }: MotdNotificationLayoutMessageListProps) => {
+    return (
+        <ScrollArea
+            orientation="vertical"
+            layout={{ position: 'absolute', left: 5, width: 410, top: 6, height: 149, ...layout }}
+        >
+            <Region
+                name="message_list"
+                params={16}
+                layout={{ flexDirection: 'column', width: '100%' }}
+            />
+        </ScrollArea>
     );
 };

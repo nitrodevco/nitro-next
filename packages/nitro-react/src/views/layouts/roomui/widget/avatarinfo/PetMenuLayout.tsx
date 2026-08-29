@@ -5,14 +5,11 @@ import { BoxLayout, Bubble, ContainerButton, Icon, Region, ThemeText } from '#ba
 
 /** Generated from `1043_pet_menu_xml` (layout "context_menu_widget", 115x275) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface PetMenuLayoutProps {
-    captionName?: string;
-    itemsButtons?: ReactNode;
+    border?: PetMenuLayoutBorderProps;
     layout?: BoxLayout;
-    onMinimize?: () => void;
-    onProfileLink?: () => void;
 }
 
-export const PetMenuLayout = ({ captionName, itemsButtons, layout, onMinimize, onProfileLink }: PetMenuLayoutProps) => {
+export const PetMenuLayout = ({ border, layout }: PetMenuLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 115, height: 275, ...layout }}>
             <Bubble
@@ -21,69 +18,39 @@ export const PetMenuLayout = ({ captionName, itemsButtons, layout, onMinimize, o
                 tintColor="#6e6b67"
                 layout={{ position: 'absolute', left: 0, width: 115, bottom: -28, height: 275 }}
             >
-                <Region
-                    name="border"
-                    params={12582928}
-                    layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 265, justifyContent: 'center' }}
-                >
-                    <Region
-                        name="profile_link"
-                        params={1}
-                        onPointerTap={onProfileLink}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 0, width: 107, top: -1, height: 28, maxHeight: 28, justifyContent: 'center' }}
-                    >
-                        <Region
-                            name="name"
-                            params={3280}
-                            layout={{ position: 'absolute', width: 107, alignSelf: 'center', height: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionName ?? 'Incarnatus Hairbullis'}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 107, align: 'center' }}
-                            />
-                        </Region>
-                    </Region>
-                    <Region
-                        params={144}
-                        backgroundColor="#000000"
-                        layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
-                    />
-                    <Region
-                        name="buttons"
-                        params={8519888}
-                        layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 215, flexDirection: 'column', gap: 1 }}
-                    >
-                        {itemsButtons ?? (
-                            <>
-                                <PetMenuLayoutMountItem />
-                                <PetMenuLayoutDismountItem />
-                                <PetMenuLayoutRespectItem />
-                                <PetMenuLayoutTreatItem />
-                                <PetMenuLayoutPassHanditemItem />
-                                <PetMenuLayoutPickUpItem />
-                                <PetMenuLayoutMoreItem />
-                                <PetMenuLayoutWiredInspectItem />
-                            </>
-                        )}
-                    </Region>
-                    <Region
-                        name="minimize"
-                        params={1041}
-                        onPointerTap={onMinimize}
-                        cursor="pointer"
-                        layout={{ position: 'absolute', left: 4, width: 100, bottom: 6, height: 18 }}
-                    >
-                        <Icon
-                            variant="7"
-                            name="icon"
-                            params={16}
-                            layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
-                        />
-                    </Region>
-                </Region>
+                <PetMenuLayoutBorder {...border} />
             </Bubble>
+        </Region>
+    );
+};
+
+/** Named region `profile_link` of PetMenuLayout - configured through the parent's `profileLink` prop. */
+export interface PetMenuLayoutProfileLinkProps {
+    captionName?: string;
+    layout?: BoxLayout;
+    onProfileLink?: () => void;
+}
+
+export const PetMenuLayoutProfileLink = ({ captionName, layout, onProfileLink }: PetMenuLayoutProfileLinkProps) => {
+    return (
+        <Region
+            name="profile_link"
+            params={1}
+            onPointerTap={onProfileLink}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 0, width: 107, top: -1, height: 28, maxHeight: 28, justifyContent: 'center', ...layout }}
+        >
+            <Region
+                name="name"
+                params={3280}
+                layout={{ position: 'absolute', width: 107, alignSelf: 'center', height: 28, maxHeight: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionName ?? 'Incarnatus Hairbullis'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 107, align: 'center' }}
+                />
+            </Region>
         </Region>
     );
 };
@@ -427,6 +394,87 @@ export const PetMenuLayoutWiredInspectItem = ({ captionLabel, layout, onButton }
                     />
                 </Region>
             </ContainerButton>
+        </Region>
+    );
+};
+
+/** Named region `buttons` of PetMenuLayout - configured through the parent's `buttons` prop. */
+export interface PetMenuLayoutButtonsProps {
+    itemsButtons?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const PetMenuLayoutButtons = ({ itemsButtons, layout }: PetMenuLayoutButtonsProps) => {
+    return (
+        <Region
+            name="buttons"
+            params={8519888}
+            layout={{ position: 'absolute', minWidth: 103, top: 28, minHeight: 215, flexDirection: 'column', gap: 1, ...layout }}
+        >
+            {itemsButtons ?? (
+                <>
+                    <PetMenuLayoutMountItem />
+                    <PetMenuLayoutDismountItem />
+                    <PetMenuLayoutRespectItem />
+                    <PetMenuLayoutTreatItem />
+                    <PetMenuLayoutPassHanditemItem />
+                    <PetMenuLayoutPickUpItem />
+                    <PetMenuLayoutMoreItem />
+                    <PetMenuLayoutWiredInspectItem />
+                </>
+            )}
+        </Region>
+    );
+};
+
+/** Named region `minimize` of PetMenuLayout - configured through the parent's `minimize` prop. */
+export interface PetMenuLayoutMinimizeProps {
+    layout?: BoxLayout;
+    onMinimize?: () => void;
+}
+
+export const PetMenuLayoutMinimize = ({ layout, onMinimize }: PetMenuLayoutMinimizeProps) => {
+    return (
+        <Region
+            name="minimize"
+            params={1041}
+            onPointerTap={onMinimize}
+            cursor="pointer"
+            layout={{ position: 'absolute', left: 4, width: 100, bottom: 6, height: 18, ...layout }}
+        >
+            <Icon
+                variant="7"
+                name="icon"
+                params={16}
+                layout={{ position: 'absolute', left: 45, width: 13, top: 7, height: 10 }}
+            />
+        </Region>
+    );
+};
+
+/** Named region `border` of PetMenuLayout - configured through the parent's `border` prop. */
+export interface PetMenuLayoutBorderProps {
+    buttons?: PetMenuLayoutButtonsProps;
+    layout?: BoxLayout;
+    minimize?: PetMenuLayoutMinimizeProps;
+    profileLink?: PetMenuLayoutProfileLinkProps;
+}
+
+export const PetMenuLayoutBorder = ({ buttons, layout, minimize, profileLink }: PetMenuLayoutBorderProps) => {
+    return (
+        <Region
+            name="border"
+            params={12582928}
+            layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 265, justifyContent: 'center', ...layout }}
+        >
+            <PetMenuLayoutProfileLink {...profileLink} />
+            <Region
+                params={144}
+                backgroundColor="#000000"
+                layout={{ position: 'absolute', left: 2, right: 2, top: 27, height: 1 }}
+            />
+            <PetMenuLayoutButtons {...buttons} />
+            <PetMenuLayoutMinimize {...minimize} />
         </Region>
     );
 };

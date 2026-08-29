@@ -6,18 +6,18 @@ import { Border, BoxLayout, Button, Frame, RadioButton, Region, ScrollArea, Them
 /** Generated from `2927_emergency_help_request_xml` (layout "emergency_help_request", 593x491) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface EmergencyHelpRequestLayoutProps {
     captionUrgentHelpLink?: string;
-    itemsRoomPanel?: ReactNode;
-    itemsTopicSelector?: ReactNode;
-    itemsUserPanel?: ReactNode;
     layout?: BoxLayout;
     onClose?: () => void;
     onLink?: () => void;
     onSubmitButton?: () => void;
     onSubmitButton2?: () => void;
     onUrgentHelpLink?: () => void;
+    roomPanel?: EmergencyHelpRequestLayoutRoomPanelProps;
+    topicSelector?: EmergencyHelpRequestLayoutTopicSelectorProps;
+    userPanel?: EmergencyHelpRequestLayoutUserPanelProps;
 }
 
-export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, itemsRoomPanel, itemsTopicSelector, itemsUserPanel, layout, onClose, onLink, onSubmitButton, onSubmitButton2, onUrgentHelpLink }: EmergencyHelpRequestLayoutProps) => {
+export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, layout, onClose, onLink, onSubmitButton, onSubmitButton2, onUrgentHelpLink, roomPanel, topicSelector, userPanel }: EmergencyHelpRequestLayoutProps) => {
     const t = useTranslation();
 
     return (
@@ -61,64 +61,10 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, itemsRoomPan
                         options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${help.emergency.main.step.one.entry.instruction}', 'illumina_input:multiline': 'true', 'illumina_input:max_chars': '700' }}
                         layout={{ width: 279, height: 94, flexShrink: 0 }}
                     />
-                    <Region
-                        name="topic_selector"
-                        params={147473}
-                        layout={{ flexShrink: 0, flexDirection: 'column', gap: 5 }}
-                    >
-                        {itemsTopicSelector ?? (
-                            <>
-                                <EmergencyHelpRequestLayout_121Item />
-                                <EmergencyHelpRequestLayout_122Item />
-                                <EmergencyHelpRequestLayout_124Item />
-                                <EmergencyHelpRequestLayout_123Item />
-                            </>
-                        )}
-                    </Region>
+                    <EmergencyHelpRequestLayoutTopicSelector {...topicSelector} />
                 </Region>
-                <Region
-                    name="user_panel"
-                    params={131088}
-                    visible={false}
-                    layout={{ position: 'absolute', left: 309, minWidth: 282, top: 8, minHeight: 378, flexDirection: 'column', gap: 8 }}
-                >
-                    {itemsUserPanel ?? (
-                        <EmergencyHelpRequestLayoutUserListItem />
-                    )}
-                    <Region
-                        params={16}
-                        layout={{ width: 237, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={t('help.emergency.main.step.two.title')}
-                            textStyle="text-style-il-heading-1"
-                            textOptions={{ fill: '#555555' }}
-                        />
-                    </Region>
-                    <Region
-                        params={16}
-                        layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={t('help.emergency.main.step.two.description')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
-                        />
-                    </Region>
-                </Region>
-                <Region
-                    name="room_panel"
-                    params={131088}
-                    layout={{ position: 'absolute', left: 309, minWidth: 282, top: 8, minHeight: 378, flexDirection: 'column', gap: 8 }}
-                >
-                    {itemsRoomPanel ?? (
-                        <>
-                            <EmergencyHelpRequestLayoutRoomPanelTitleItem />
-                            <EmergencyHelpRequestLayoutRoomReportInfoItem />
-                            <EmergencyHelpRequestLayoutRoomNameItem />
-                            <EmergencyHelpRequestLayoutRoomDescriptionItem />
-                        </>
-                    )}
-                </Region>
+                <EmergencyHelpRequestLayoutUserPanel {...userPanel} />
+                <EmergencyHelpRequestLayoutRoomPanel {...roomPanel} />
                 <Border
                     variant="104"
                     name="submit_box_wide"
@@ -299,6 +245,31 @@ export const EmergencyHelpRequestLayout_123Item = ({ layout, on_123 }: Emergency
     );
 };
 
+/** Named region `topic_selector` of EmergencyHelpRequestLayout - configured through the parent's `topicSelector` prop. */
+export interface EmergencyHelpRequestLayoutTopicSelectorProps {
+    itemsTopicSelector?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const EmergencyHelpRequestLayoutTopicSelector = ({ itemsTopicSelector, layout }: EmergencyHelpRequestLayoutTopicSelectorProps) => {
+    return (
+        <Region
+            name="topic_selector"
+            params={147473}
+            layout={{ flexShrink: 0, flexDirection: 'column', gap: 5, ...layout }}
+        >
+            {itemsTopicSelector ?? (
+                <>
+                    <EmergencyHelpRequestLayout_121Item />
+                    <EmergencyHelpRequestLayout_122Item />
+                    <EmergencyHelpRequestLayout_124Item />
+                    <EmergencyHelpRequestLayout_123Item />
+                </>
+            )}
+        </Region>
+    );
+};
+
 /** Row template `user_list` of EmergencyHelpRequestLayout - pass real rows through its `items…` slot. */
 export interface EmergencyHelpRequestLayoutUserListItemProps {
     captionRoomName?: string;
@@ -354,6 +325,48 @@ export const EmergencyHelpRequestLayoutUserListItem = ({ captionRoomName, captio
                 </Border>
             </Region>
         </ScrollArea>
+    );
+};
+
+/** Named region `user_panel` of EmergencyHelpRequestLayout - configured through the parent's `userPanel` prop. */
+export interface EmergencyHelpRequestLayoutUserPanelProps {
+    itemsUserPanel?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const EmergencyHelpRequestLayoutUserPanel = ({ itemsUserPanel, layout }: EmergencyHelpRequestLayoutUserPanelProps) => {
+    const t = useTranslation();
+
+    return (
+        <Region
+            name="user_panel"
+            params={131088}
+            visible={false}
+            layout={{ position: 'absolute', left: 309, minWidth: 282, top: 8, minHeight: 378, flexDirection: 'column', gap: 8, ...layout }}
+        >
+            {itemsUserPanel ?? (
+                <EmergencyHelpRequestLayoutUserListItem />
+            )}
+            <Region
+                params={16}
+                layout={{ width: 237, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('help.emergency.main.step.two.title')}
+                    textStyle="text-style-il-heading-1"
+                    textOptions={{ fill: '#555555' }}
+                />
+            </Region>
+            <Region
+                params={16}
+                layout={{ width: 270, height: 16, flexShrink: 0, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={t('help.emergency.main.step.two.description')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
+                />
+            </Region>
+        </Region>
     );
 };
 
@@ -442,6 +455,31 @@ export const EmergencyHelpRequestLayoutRoomDescriptionItem = ({ captionRoomDescr
                 text={captionRoomDescription ?? 'room description'}
                 textOptions={{ wordWrap: true, wordWrapWidth: 270 }}
             />
+        </Region>
+    );
+};
+
+/** Named region `room_panel` of EmergencyHelpRequestLayout - configured through the parent's `roomPanel` prop. */
+export interface EmergencyHelpRequestLayoutRoomPanelProps {
+    itemsRoomPanel?: ReactNode;
+    layout?: BoxLayout;
+}
+
+export const EmergencyHelpRequestLayoutRoomPanel = ({ itemsRoomPanel, layout }: EmergencyHelpRequestLayoutRoomPanelProps) => {
+    return (
+        <Region
+            name="room_panel"
+            params={131088}
+            layout={{ position: 'absolute', left: 309, minWidth: 282, top: 8, minHeight: 378, flexDirection: 'column', gap: 8, ...layout }}
+        >
+            {itemsRoomPanel ?? (
+                <>
+                    <EmergencyHelpRequestLayoutRoomPanelTitleItem />
+                    <EmergencyHelpRequestLayoutRoomReportInfoItem />
+                    <EmergencyHelpRequestLayoutRoomNameItem />
+                    <EmergencyHelpRequestLayoutRoomDescriptionItem />
+                </>
+            )}
         </Region>
     );
 };
