@@ -15,6 +15,7 @@
  *   yarn workspace @nitrodevco/nitro-react generate-layout-views
  */
 import { createHash } from 'node:crypto';
+import { createCanvas, loadImage } from 'canvas';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -94,6 +95,12 @@ interface Element {
     params: number;
     dropShadow: DropShadow | undefined;
     children: Element[];
+    /**
+     * The layout never configured any anchoring (no `relative_*_scale_*` bits, no `<scale>`
+     * other than `fixed`), so the element's anchors are inferred from its geometry - see
+     * `inferAnchor`. Layouts whose designer did set anchors are trusted as designed.
+     */
+    infer: boolean;
 }
 
 /**
@@ -156,6 +163,7 @@ const toElement = (node: XmlNode): Element => {
         scale,
         params,
         dropShadow: parseDropShadow(node.children.find(child => child.tag === 'filters')),
+        infer: false,
         children: (childrenNode?.children ?? []).map(toElement),
     };
 };
@@ -189,8 +197,12 @@ const decode = (value: string): string => {
 
 const quote = (value: string): string => `'${value.replace(/\\/g, '\\\\').replace(/'/g, '\\\'').replace(/\n/g, '\\n').replace(/\r/g, '')}'`;
 
+/** The ordering eslint's simple-import-sort expects (case-insensitive, natural numbers). */
+const IMPORT_ORDER = new Intl.Collator('en', { sensitivity: 'base', numeric: true });
+const importSort = (a: string, b: string): number => IMPORT_ORDER.compare(a, b);
+
 /** A JSX string attribute value: plain double-quoted text where possible, an expression otherwise. */
-const jsxStr = (value: string): string => (/["\\\n{}<>]/.test(value) ? `{${quote(value)}}` : `"${value}"`);
+const jsxStr = (value: string): string => (/["\\\n]/.test(value) ? `{${quote(value)}}` : `"${value}"`);
 
 /** JSX text content: bare text where it's safe, a braced string expression otherwise. */
 const jsxText = (expr: string): string => {
@@ -264,16 +276,111 @@ const copiedImages = new Map<string, string>();
 const unresolvedImages = new Set<string>();
 
 /**
+ * The asset manifests (`*_manifest_xml`) publish named sub-regions of a sheet:
+ * `<asset name="progress_disk_etched_off" ref="illumina_light_progress_indicator_etched_png"><param key="region" value="0,0,10,11"/></asset>`.
+ * The region is cropped out of the referenced file into its own PNG (see `cropJobs`).
+ */
+interface ManifestAsset {
+    ref: string;
+    region?: { x: number; y: number; width: number; height: number };
+}
+
+const manifestAssets = new Map<string, ManifestAsset>();
+
+for (const file of readdirSync(XML_DIR)) {
+    if (!/_manifest_xml\$/.test(file)) continue;
+
+    const source = readFileSync(join(XML_DIR, file), 'utf8');
+    const pattern = /<asset [^>]*name="([^"]+)"[^>]*ref="([^"]+)"[^>]*(?:\/>|>([\s\S]*?)<\/asset>)/g;
+
+    for (let match = pattern.exec(source); match; match = pattern.exec(source)) {
+        const [ , name, ref, body ] = match;
+        const region = body && /<param key="region" value="(\d+),(\d+),(\d+),(\d+)"/.exec(body);
+
+        if (!manifestAssets.has(name)) {
+            manifestAssets.set(name, region ? { ref, region: { x: num(region[1]), y: num(region[2]), width: num(region[3]), height: num(region[4]) } } : { ref });
+        }
+    }
+}
+
+/** Sub-region crops to render once every layout has been generated (`loadImage` is async). */
+const cropJobs: { source: string; out: string; region: NonNullable<ManifestAsset['region']> }[] = [];
+
+/**
+ * The client's asset-library classes (`HabboWindowManagerCom.as`, `HabboInventoryCom.as`, ...)
+ * publish many bitmaps under a different name than the embedded file:
+ * `public static var collectables_cabinet_element:Class = coll_window_top_image_cabinet_png$<hash>;`.
+ * Layouts reference the published name, `scripts/images` holds the embedded file - this maps
+ * one to the other.
+ */
+const imageAliases = new Map<string, string>();
+
+const AS3_LIBRARY_DIR = join(__dirname, 'scripts');
+
+if (existsSync(AS3_LIBRARY_DIR)) {
+    for (const file of readdirSync(AS3_LIBRARY_DIR)) {
+        if (!file.endsWith('.as')) continue;
+
+        const source = readFileSync(join(AS3_LIBRARY_DIR, file), 'utf8');
+        const pattern = /public static var (\w+):Class = §?([\w-]+?_(?:png|gif|jpg))\$[^;§]*§?;/g;
+
+        for (let match = pattern.exec(source); match; match = pattern.exec(source)) {
+            const [ , alias, embedded ] = match;
+
+            if (alias !== embedded && !imageAliases.has(alias)) imageAliases.set(alias, embedded);
+        }
+    }
+}
+
+/**
  * Bitmaps no layout names statically but the client assigned at runtime - MeMenuMainView.as's
  * `_icons` table (`<name>_white` default / `<name>_color` hover per me-menu tile). Copied so the
  * wired views can reference them through `layoutImage()` like everything else.
  */
 const RUNTIME_IMAGES = [
     'gohome', 'dance', 'clothes', 'effects', 'badges', 'wave', 'settings', 'credits', 'minimail', 'profile', 'achievements', 'compass', 'lighthouse',
-].flatMap(name => [ `${name}_white`, `${name}_color` ]);
+].flatMap(name => [ `${name}_white`, `${name}_color` ]).concat([
+    // AvatarEditor tab icons: the layouts reference the `_off` state, TabUtils.setElementImage()
+    // strips `_off` for the active one; plus the runtime-only swatch/slot art the editor code loads.
+    'avatar_editor_tabs_gender_male', 'avatar_editor_tabs_gender_female', 'avatar_editor_tabs_head_hair', 'avatar_editor_tabs_head_hats',
+    'avatar_editor_tabs_head_accessories', 'avatar_editor_tabs_head_eyewear', 'avatar_editor_tabs_head_face_accessories', 'avatar_editor_tabs_top_shirt',
+    'avatar_editor_tabs_top_jacket', 'avatar_editor_tabs_top_prints', 'avatar_editor_tabs_top_accessories', 'avatar_editor_tabs_bottom_trousers',
+    'avatar_editor_tabs_bottom_shoes', 'avatar_editor_tabs_bottom_accessories', 'avatar_editor_tabs_icon_misc_pets', 'avatar_editor_tabs_icon_misc_misc',
+    'avatar_editor_wardrobe_empty_slot', 'avatar_editor_editor_clr_13x21_2', 'avatar_editor_editor_clr_13x21_3',
+]);
 
 const resolveImage = (name: string): string | undefined => {
-    const file = imageFiles.get(name) ?? imageFiles.get(`${name}_png`);
+    // `asset_uri` names carry their library/folder as leading tokens (`avatar_editor_tabs_ae_tabs_head`
+    // is the file `ae_tabs_head`; `icons_hc_icon_small` is `hc_icon_small`) - strip tokens until one matches.
+    let file: string | undefined;
+    const tokens = name.split('_');
+    const alias = imageAliases.get(name) ?? imageAliases.get(`${name}_png`);
+
+    if (alias) file = imageFiles.get(alias) ?? imageFiles.get(alias.replace(/_(png|gif|jpg)$/i, ''));
+
+    for (let skip = 0; skip < Math.min(4, tokens.length) && !file; skip++) {
+        const candidate = tokens.slice(skip).join('_');
+
+        file = imageFiles.get(candidate) ?? imageFiles.get(`${candidate}_png`);
+    }
+
+    if (!file) {
+        const manifest = manifestAssets.get(name);
+        const refFile = manifest && (imageFiles.get(manifest.ref) ?? imageFiles.get(manifest.ref.replace(/_(png|gif|jpg)$/i, '')));
+
+        if (manifest && refFile && manifest.region) {
+            const outName = `${name}.png`;
+
+            if (!copiedImages.has(outName)) {
+                cropJobs.push({ source: join(IMAGE_DIR, refFile), out: join(IMAGE_OUT_DIR, outName), region: manifest.region });
+                copiedImages.set(outName, refFile);
+            }
+
+            return outName;
+        }
+
+        file = refFile;
+    }
 
     if (!file) {
         unresolvedImages.add(name);
@@ -306,15 +413,26 @@ interface FileContext {
     sharedImports: Set<string>;
     scrollTargets: Map<string, 'vertical' | 'horizontal'>;
     warnings: string[];
-    /** Source of the row-template sub-components, appended after the main component. */
-    subComponents: string[];
+    /** The extracted sub-components (row templates, complex named regions) - each becomes its own file. */
+    subComponents: { name: string; code: string }[];
     subComponentNames: string[];
     /** Each sub-component's own props / nested sub-components, for the registry. */
     subComponentProps: Record<string, { props: string[]; nested: Record<string, string> }>;
+    /**
+     * A window-chrome skin template (`frame_3`, `illumina_light_frame`, ...): emitted against the
+     * theme's `FrameViewProps` contract so `Frame` can render it as the variant's view - its
+     * header/close button take `caption`/`tintColor`/`onClose`/`onHeaderPointerDown`, its scaler
+     * `resizeDirection`/`onScalerPointerDown`, and `content_area` renders `children`.
+     */
+    frameView: boolean;
 }
 
 interface EmitContext {
     file: FileContext;
+    /** While a tab context's children are emitted: the prop naming the selected tab. */
+    tabSelectedProp?: string;
+    /** While a row template's body is emitted: every named child gets a `visible<Name>` prop (rows are data-driven). */
+    rowTemplate?: boolean;
     /** Set by `emit` when it re-enters itself for the element it has just wrapped in a `{cond && (...)}`. */
     conditionalDone?: boolean;
     imports: Set<string>;
@@ -335,13 +453,75 @@ interface ParentBox {
     height: number;
     /** Children of an item list flow in a flex row/column instead of being absolutely placed. */
     flow: boolean;
+    /** The flow direction of a list parent - rows spanning the cross axis stretch with it. */
+    direction?: 'row' | 'column';
+    /** A wrapping grid - its cells keep both sizes. */
+    wrap?: boolean;
     /** The root of a row-template sub-component also merges the caller's own `layout` prop. */
     spreadLayout?: boolean;
     /** The root of a shared widget: placement comes entirely from the caller's `layout`, only the flex/clipping extras stay. */
     omitPlacement?: boolean;
+    /** The parent element's name - qualifies override prop names when siblings share a name. */
+    name?: string;
 }
 
 const INDENT = '    ';
+
+const findElement = (elements: Element[], test: (el: Element) => boolean): Element | undefined => {
+    for (const el of elements) {
+        const found = test(el) ? el : findElement(el.children, test);
+
+        if (found) return found;
+    }
+
+    return undefined;
+};
+
+/**
+ * A window-chrome skin template: a frame (`content_area` plus header/scaler/close button) or a
+ * header (`header_title_text` plus its close button). Both are emitted against the theme's
+ * view contracts (`FrameViewProps` / `HeaderViewProps`).
+ */
+const isFrameView = (elements: Element[]): boolean => !!findElement(elements, el => el.attrs.name === 'content_area' || el.attrs.name === 'header_title_text')
+    && !!findElement(elements, el => el.tag === 'header' || el.tag === 'scaler' || el.tag === 'closebutton');
+
+/** The `FrameViewProps` members, registered on demand as a frame template uses them. */
+const FRAME_VIEW_PROPS: Record<string, string> = {
+    caption: 'string',
+    tintColor: 'string',
+    resizeDirection: 'ScalerDirection',
+    onClose: '() => void',
+    onHeaderPointerDown: 'HeaderProps[\'onPointerDown\']',
+    onScalerPointerDown: 'ScalerProps[\'onPointerDown\']',
+    children: 'ReactNode',
+};
+
+const frameViewProp = (ctx: EmitContext, name: keyof typeof FRAME_VIEW_PROPS): string => {
+    const type = FRAME_VIEW_PROPS[name];
+
+    ctx.props.set(name, type);
+
+    if (type === 'ReactNode') ctx.imports.add('ReactNode');
+    else if (/^[A-Z]\w*/.test(type)) ctx.imports.add(/^(\w+)/.exec(type)![1]);
+
+    return name;
+};
+
+/** Did the designer configure any anchoring in this tree (scale bits or a non-`fixed` `<scale>`)? */
+const hasConfiguredAnchors = (el: Element): boolean => (el.params & (PARAM.H_MASK | PARAM.V_MASK)) !== 0
+    || [ el.scale?.horizontal, el.scale?.vertical ].some(value => value === 'strech' || value === 'move' || value === 'center')
+    || el.children.some(hasConfiguredAnchors);
+
+/** Layouts with no configured anchors infer them from geometry (`inferAnchor`); configured ones are trusted as designed. */
+const markAnchorInference = (elements: Element[]): void => {
+    const infer = !elements.some(hasConfiguredAnchors);
+    const mark = (el: Element) => {
+        el.infer = infer;
+        el.children.forEach(mark);
+    };
+
+    elements.forEach(mark);
+};
 
 /** `${friendbar.requests.title}` -> `t('friendbar.requests.title')`; plain text stays a literal. */
 const captionExpr = (ctx: EmitContext, raw: string | undefined): string | undefined => {
@@ -359,7 +539,7 @@ const captionExpr = (ctx: EmitContext, raw: string | undefined): string | undefi
         return `t(${quote(whole[1])})`;
     }
 
-    if (!text.includes('${')) return quote(text);
+    if (!/\$\{[^}]+\}/.test(text)) return quote(text);
 
     ctx.usesTranslation = true;
 
@@ -418,7 +598,10 @@ type Anchor = 'fixed' | 'move' | 'strech' | 'center';
  * bits (right/bottom == move, center/middle == center) - both of which the Flash window
  * manager treated as "keep this edge/centre at the same distance".
  */
-const anchor = (explicit: string | undefined, params: number, axis: 'h' | 'v'): Anchor => {
+const anchor = (el: Element, parent: ParentBox, axis: 'h' | 'v'): Anchor => {
+    const explicit = axis === 'h' ? el.scale?.horizontal : el.scale?.vertical;
+    const params = el.params;
+
     if (explicit === 'strech' || explicit === 'move' || explicit === 'center') return explicit;
     if (explicit === 'fixed') return 'fixed';
 
@@ -433,8 +616,89 @@ const anchor = (explicit: string | undefined, params: number, axis: 'h' | 'v'): 
     if (align === (axis === 'h' ? PARAM.ALIGN_H_CENTER : PARAM.ALIGN_V_MIDDLE)) return 'center';
     if (align === (axis === 'h' ? PARAM.ALIGN_RIGHT : PARAM.ALIGN_BOTTOM)) return 'move';
 
+    if (el.infer) return inferAnchor(el, parent, axis);
+
+    // Even in a designed layout, a box that exactly fills its parent's axis (a content
+    // container as wide as the window) was clearly meant to fill it.
+    return fillsAxis(el, parent, axis) && !RIGID_TAGS.has(el.tag) ? 'strech' : 'fixed';
+};
+
+/** The element's box covers the parent's whole axis (to the pixel). */
+const fillsAxis = (el: Element, parent: ParentBox, axis: 'h' | 'v'): boolean => {
+    const size = axis === 'h' ? parent.width : parent.height;
+    const start = num(el.attrs[axis === 'h' ? 'x' : 'y']);
+    const extent = num(el.attrs[axis === 'h' ? 'width' : 'height']);
+
+    return size > 0 && start === 0 && extent === size;
+};
+
+/** How far from a parent edge an element may sit and still count as touching it. */
+const ANCHOR_SLACK = 12;
+
+/** How unequal an element's two margins may be for it to still count as centred. */
+const CENTER_SLACK = 8;
+
+/** Elements whose art can't stretch without distorting - they may move or centre, never grow. */
+const RIGID_TAGS = new Set([ 'bitmap', 'static_bitmap', 'icon', 'iconbutton', 'checkbox', 'radiobutton', 'closebutton', 'display_object_wrapper', 'selector', 'shape' ]);
+
+/**
+ * Anchors for a layout that never configured any: the Flash tool defaulted every element to
+ * `fixed`, which only mattered when the window could be resized (and most couldn't). Read the
+ * intent off the geometry instead - an element that spans its parent's axis stretches with it,
+ * one that hugs the far edge moves with it, one sitting in the middle stays centred.
+ */
+const inferAnchor = (el: Element, parent: ParentBox, axis: 'h' | 'v'): Anchor => {
+    const size = axis === 'h' ? parent.width : parent.height;
+    const start = num(el.attrs[axis === 'h' ? 'x' : 'y']);
+    const extent = num(el.attrs[axis === 'h' ? 'width' : 'height']);
+    const end = size - start - extent;
+
+    if (size <= 0 || extent <= 0) return 'fixed';
+
+    const spans = start <= ANCHOR_SLACK && Math.abs(end) <= ANCHOR_SLACK && extent >= size / 2;
+
+    if (spans) return RIGID_TAGS.has(el.tag) ? 'fixed' : 'strech';
+    if (Math.abs(end) <= ANCHOR_SLACK && start > ANCHOR_SLACK) return 'move';
+    if (Math.abs(start - end) <= CENTER_SLACK && start > ANCHOR_SLACK) return 'center';
+
     return 'fixed';
 };
+
+/** Spans the cross axis of a flow parent: the row/cell takes the list's width (or height) instead of a fixed one. */
+const spansCrossAxis = (el: Element, parent: ParentBox, axis: 'h' | 'v'): boolean => {
+    if (!el.infer || parent.wrap || RIGID_TAGS.has(el.tag)) return false;
+    if (parent.direction !== (axis === 'h' ? 'column' : 'row')) return false;
+
+    const size = axis === 'h' ? parent.width : parent.height;
+    const extent = num(el.attrs[axis === 'h' ? 'width' : 'height']);
+
+    return size > 0 && extent >= size - ANCHOR_SLACK;
+};
+
+/**
+ * Which axes a root window may be resized on. The Flash limits (`width_min == width_max`) lock
+ * an axis; everything else stays resizable, floored at the design size unless the XML sets a
+ * smaller minimum.
+ */
+const rootSizing = (el: Element): { fields: Record<string, string | number | undefined>; resizeDirection?: string } => {
+    const width = num(el.attrs.width);
+    const height = num(el.attrs.height);
+    const minWidth = el.attrs.width_min ? num(el.attrs.width_min) : width;
+    const minHeight = el.attrs.height_min ? num(el.attrs.height_min) : height;
+    const maxWidth = el.attrs.width_max ? num(el.attrs.width_max) : undefined;
+    const maxHeight = el.attrs.height_max ? num(el.attrs.height_max) : undefined;
+    const lockedH = maxWidth !== undefined && maxWidth <= minWidth;
+    const lockedV = maxHeight !== undefined && maxHeight <= minHeight;
+    const fields = { width, height, minWidth, maxWidth, minHeight, maxHeight };
+
+    return { fields, resizeDirection: lockedH && lockedV ? 'none' : lockedH ? 'y' : lockedV ? 'x' : undefined };
+};
+
+/** Insets of the Flash `frame` skin around its content: 6px sides, a 33px header and 8px bottom. */
+const FRAME_CONTENT_INSET = { h: 12, v: 41 };
+
+/** The box a frame's children are placed in (the XML positions them from the content edge, not the frame edge). */
+const frameContentBox = (el: Element): ParentBox => ({ width: num(el.attrs.width) - FRAME_CONTENT_INSET.h, height: num(el.attrs.height) - FRAME_CONTENT_INSET.v, flow: false, name: el.attrs.name });
 
 /**
  * True when this element's own box will hold an absolutely-positioned child whose horizontal
@@ -446,10 +710,10 @@ const anchor = (explicit: string | undefined, params: number, axis: 'h' | 'v'): 
  * alignment. Vertical centring never needs the parent - it's the cross axis, so the child's
  * own `alignSelf` covers it.
  */
-const centersHChild = (el: Element): boolean => num(el.attrs.width) > 0
-    && el.children.some(child => anchor(child.scale?.horizontal, child.params, 'h') === 'center');
+const centersHChild = (el: Element, box: ParentBox = selfBox(el)): boolean => box.width > 0
+    && el.children.some(child => anchor(child, box, 'h') === 'center');
 
-const centerExtra = (el: Element): Record<string, string | undefined> => ({ justifyContent: centersHChild(el) ? '\'center\'' : undefined });
+const centerExtra = (el: Element, box?: ParentBox): Record<string, string | undefined> => ({ justifyContent: centersHChild(el, box) ? '\'center\'' : undefined });
 
 interface BoxLayoutOptions {
     /** `reflect_*_resize_to_parent` leaf (a text or bitmap): size to content on that axis instead of the XML box. */
@@ -483,14 +747,17 @@ const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string 
     if (parent.omitPlacement) {
         fields.position = '\'absolute\'';
     } else if (parent.flow) {
-        sizeField('width', width, autoWidth);
-        sizeField('height', height, autoHeight);
+        // A row as wide as its list (a cell as tall as its strip) follows the list's size.
+        if (spansCrossAxis(el, parent, 'h') && !autoWidth) fields.alignSelf = '\'stretch\'';
+        else sizeField('width', width, autoWidth);
+        if (spansCrossAxis(el, parent, 'v') && !autoHeight) fields.alignSelf = '\'stretch\'';
+        else sizeField('height', height, autoHeight);
         fields.flexShrink = 0;
     } else {
         fields.position = '\'absolute\'';
 
-        const horizontal = anchor(el.scale?.horizontal, el.params, 'h');
-        const vertical = anchor(el.scale?.vertical, el.params, 'v');
+        const horizontal = anchor(el, parent, 'h');
+        const vertical = anchor(el, parent, 'v');
 
         if (horizontal === 'strech' && parent.width > 0 && !autoWidth) {
             fields.left = x;
@@ -558,11 +825,17 @@ const boxLayout = (el: Element, parent: ParentBox, extra: Record<string, string 
     return parent.spreadLayout ? literal.replace(/ \}$/, ', ...layout }') : literal;
 };
 
-/** A named element's value can be overridden through a prop (`captionTitle`, `srcIcon`, ...). */
-const overrideProp = (ctx: EmitContext, el: Element, prefix: string, type: string): string | undefined => {
+/**
+ * A named element's value can be overridden through a prop (`captionTitle`, `srcIcon`, ...).
+ * When several siblings share a name (every tab's icon is `bitmap`), later ones are qualified
+ * by their parent (`srcHeadBitmap`) rather than numbered.
+ */
+const overrideProp = (ctx: EmitContext, el: Element, prefix: string, type: string, parentName?: string): string | undefined => {
     if (!el.attrs.name) return undefined;
 
-    const name = uniqueProp(ctx, `${prefix}${pascal(el.attrs.name)}`);
+    const base = `${prefix}${pascal(el.attrs.name)}`;
+    const taken = ctx.props.has(base) || (ctx.propCounts.get(base) ?? 0) > 0;
+    const name = uniqueProp(ctx, taken && parentName ? `${prefix}${pascal(parentName)}${pascal(el.attrs.name)}` : base);
 
     ctx.props.set(name, type);
 
@@ -577,7 +850,7 @@ const metaProps = (ctx: EmitContext, el: Element): string[] => {
 
     const tooltip = captionExpr(ctx, el.vars.tool_tip_caption);
 
-    if (tooltip) props.push(`tooltip={${tooltip}}`);
+    if (tooltip) props.push(jsxAttr('tooltip', tooltip));
     if (el.attrs.dynamic_style) props.push(`dynamicStyle=${jsxStr(el.attrs.dynamic_style)}`);
 
     return props;
@@ -672,10 +945,13 @@ const dropShadowProp = (el: Element): string[] => (el.dropShadow ? [ `dropShadow
 
 const variantProp = (el: Element): string[] => (el.attrs.style !== undefined ? [ `variant="${el.attrs.style}"` ] : []);
 
+/** A JSX attribute from an expression - a plain string literal becomes `name="..."`, anything else `name={expr}`. */
+const jsxAttr = (name: string, expr: string): string => (/^'[^'"\\]*'$/.test(expr) ? `${name}="${expr.slice(1, -1)}"` : `${name}={${expr}}`);
+
 const tintProp = (ctx: EmitContext, el: Element): string[] => {
     const expr = recolorExpr(ctx, el, hexColor(el.attrs.color));
 
-    return expr ? [ `tintColor={${expr}}` ] : [];
+    return expr ? [ jsxAttr('tintColor', expr) ] : [];
 };
 
 const openTag = (name: string, props: string[], indent: string, selfClose: boolean): string[] => {
@@ -736,10 +1012,10 @@ const AUTO_SIZE_JUSTIFY: Record<string, string> = { left: '\'flex-start\'', cent
 const emitChildren = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] =>
     el.children.flatMap(child => emit(ctx, child, parent, indent));
 
-const selfBox = (el: Element, flow = false): ParentBox => ({ width: num(el.attrs.width), height: num(el.attrs.height), flow });
+const selfBox = (el: Element, flow = false): ParentBox => ({ width: num(el.attrs.width), height: num(el.attrs.height), flow, name: el.attrs.name });
 
 /** Just the `<ThemeText>` for a text element - used where the parent already lays its caption out (a button). */
-const textElement = (ctx: EmitContext, el: Element): { props: string[]; hasText: boolean; wordWrap: boolean; autoSize: string } => {
+const textElement = (ctx: EmitContext, el: Element, parentName?: string): { props: string[]; hasText: boolean; wordWrap: boolean; autoSize: string } => {
     const caption = captionExpr(ctx, el.attrs.caption);
     const { textStyle, fill: styleFill } = resolveTextStyle(el.vars.text_style);
     const fill = hexColor(el.vars.text_color) ?? styleFill;
@@ -752,7 +1028,7 @@ const textElement = (ctx: EmitContext, el: Element): { props: string[]; hasText:
         align: autoSize !== 'left' ? quote(autoSize) : undefined,
     };
     const props: string[] = [];
-    const override = overrideProp(ctx, el, 'caption', 'string');
+    const override = ctx.file.frameView && el.attrs.name === 'header_title_text' ? frameViewProp(ctx, 'caption') : overrideProp(ctx, el, 'caption', 'string', parentName);
     const hasText = !!(caption || override);
 
     if (override && caption) props.push(`text={${override} ?? ${caption}}`);
@@ -780,7 +1056,7 @@ const bareText = (textProp: string, indent: string): string[] => {
  * button wraps bare text in a `ThemeText` with its own style.
  */
 const emitInlineText = (ctx: EmitContext, el: Element, button: Element, indent: string): string[] => {
-    const { props, hasText } = textElement(ctx, el);
+    const { props, hasText } = textElement(ctx, el, button.attrs.name);
 
     if (!hasText) return [];
 
@@ -804,7 +1080,7 @@ const fillsHost = (child: Element, host: Element): boolean =>
  */
 const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, host?: Element): string[] => {
     const box = host ?? el;
-    const { props: textProps, hasText, wordWrap, autoSize } = textElement(ctx, el);
+    const { props: textProps, hasText, wordWrap, autoSize } = textElement(ctx, el, parent.name);
 
     ctx.imports.add('Region');
 
@@ -825,7 +1101,7 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
 
     const bgColor = hexColor(box.attrs.color);
 
-    if (bgColor && (box.attrs.background === 'true' || box.tag === 'background' || box.tag === 'gradient')) regionProps.push(`backgroundColor={${recolorExpr(ctx, box, bgColor)}}`);
+    if (bgColor && (box.attrs.background === 'true' || box.tag === 'background' || box.tag === 'gradient')) regionProps.push(jsxAttr('backgroundColor', recolorExpr(ctx, box, bgColor)!));
 
     // A text with no style/options of its own is a bare child - the Region wraps it in a
     // default-styled ThemeText itself.
@@ -855,19 +1131,22 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
         }
     }
 
-    const override = overrideProp(ctx, el, 'src', 'string');
+    const override = overrideProp(ctx, el, 'src', 'string', parent.name);
 
     if (override && src) props.push(`src={${override} ?? ${src}}`);
-    else props.push(`src={${override ?? src ?? 'undefined'}}`);
+    else props.push(jsxAttr('src', override ?? src ?? 'undefined'));
 
     if (bool(el.vars.stretched_x) || bool(el.vars.fit_size_to_contents) === false) props.push(`width={${num(el.attrs.width)}}`);
     if (bool(el.vars.stretched_y) || bool(el.vars.fit_size_to_contents) === false) props.push(`height={${num(el.attrs.height)}}`);
 
     const tint = hexColor(el.attrs.color);
 
+    const tintOverride = el.tag === 'bitmap' ? overrideProp(ctx, el, 'tint', 'string', parent.name) : undefined;
     const tintExpr = recolorExpr(ctx, el, tint && tint !== '#ffffff' ? tint : undefined);
 
-    if (tintExpr) props.push(`tint={${tintExpr}}`);
+    if (tintOverride && tintExpr) props.push(`tint={${tintOverride} ?? ${tintExpr}}`);
+    else if (tintOverride) props.push(`tint={${tintOverride}}`);
+    else if (tintExpr) props.push(jsxAttr('tint', tintExpr));
     props.push(...blendProp(el));
 
     ctx.imports.add('ThemeImage');
@@ -895,7 +1174,7 @@ const emitList = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
 
     ctx.imports.add('Region');
 
-    const innerParent = selfBox(el, true);
+    const innerParent: ParentBox = { ...selfBox(el, true), direction: list.direction, wrap: !!list.wrap };
     const meta = [ ...metaProps(ctx, el), ...dropShadowProp(el) ];
     const background = el.attrs.background === 'true' && hexColor(el.attrs.color) ? [ `backgroundColor="${hexColor(el.attrs.color)!}"` ] : [];
     const contentIndent = scroll ? indent + INDENT : indent;
@@ -926,7 +1205,20 @@ const emitList = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
 const emitListChildren = (ctx: EmitContext, list: Element, parent: ParentBox, indent: string): string[] => {
     const named = list.children.filter(child => child.attrs.name && !SKIPPED_TAGS.has(child.tag));
 
-    if (!named.length || !list.attrs.name) return emitChildren(ctx, list, parent, indent);
+    if (!list.attrs.name) return emitChildren(ctx, list, parent, indent);
+
+    // A named list with nothing in it was filled at runtime (`palette1`, `nfts`, ...) - it still
+    // gets its `items<Name>` slot, just with no template rows to fall back on.
+    if (!named.length) {
+        if (list.children.length) return emitChildren(ctx, list, parent, indent);
+
+        const slot = uniqueProp(ctx, `items${pascal(list.attrs.name)}`);
+
+        ctx.props.set(slot, 'ReactNode');
+        ctx.imports.add('ReactNode');
+
+        return [ `${indent}{${slot}}` ];
+    }
 
     const slot = uniqueProp(ctx, `items${pascal(list.attrs.name)}`);
 
@@ -956,7 +1248,11 @@ const emitFrame = (ctx: EmitContext, el: Element, parent: ParentBox | undefined,
         ctx.props.set('layout', 'BoxLayout');
         ctx.imports.add('BoxLayout');
         props.push('onClose={onClose}');
-        props.push(`layout={{ width: ${num(el.attrs.width)}, height: ${num(el.attrs.height)}, ...layout }}`);
+
+        const sizing = rootSizing(el);
+
+        if (sizing.resizeDirection) props.push(`resizeDirection="${sizing.resizeDirection}"`);
+        props.push(`layout={${layoutLiteral(sizing.fields).replace(/ \}$/, ', ...layout }')}}`);
     } else {
         props.push(`onClose={${handlerProp(ctx, el, 'frameClose')}}`);
         props.push(`layout={${boxLayout(el, parent)}}`);
@@ -965,9 +1261,10 @@ const emitFrame = (ctx: EmitContext, el: Element, parent: ParentBox | undefined,
     // Children go straight into the Frame's ContentArea: an absolutely positioned child is
     // placed from its parent's padding edge in both Yoga and CSS, so no relative wrapper is
     // needed - unless a child centres itself, which needs a flex parent of its own.
-    const content = centersHChild(el)
-        ? wrap('Region', [ `layout={${layoutLiteral({ position: '\'relative\'', flex: 1, width: '\'100%\'', ...centerExtra(el) })}}` ], indent + INDENT, emitChildren(ctx, el, selfBox(el), indent + INDENT + INDENT))
-        : emitChildren(ctx, el, selfBox(el), indent + INDENT);
+    const contentBox = frameContentBox(el);
+    const content = centersHChild(el, contentBox)
+        ? wrap('Region', [ `layout={${layoutLiteral({ position: '\'relative\'', flex: 1, width: '\'100%\'', ...centerExtra(el, contentBox) })}}` ], indent + INDENT, emitChildren(ctx, el, contentBox, indent + INDENT + INDENT))
+        : emitChildren(ctx, el, contentBox, indent + INDENT);
 
     return wrap('Frame', props, indent, content);
 };
@@ -1043,8 +1340,8 @@ const WIDGETS_FOLDER = 'catalog/widgets';
 interface SharedWidgetVariant {
     /** Placeholder used in every file until all variants are known and can be numbered. */
     token: string;
-    /** The widget file's component source with `token` standing in for the final name. */
-    code: string;
+    /** The widget's components (root first) with `token` standing in for the final name. */
+    parts: { name: string; code: string }[];
     uses: number;
     imports: Set<string>;
     sharedImports: Set<string>;
@@ -1085,7 +1382,7 @@ const sharedWidget = (page: FileContext, el: Element, parent: ParentBox): string
         file.imports.add('Region');
         file.imports.add('BoxLayout');
         file.imports.add('CatalogWidgetFlags');
-        file.subComponents.push([
+        file.subComponents.push({ name: draft, code: [
             `export type ${draft}Props = Omit<${wraps.componentName}Props, 'layout'> & CatalogWidgetFlags & { layout?: BoxLayout };`,
             '',
             `export const ${draft} = ({ layout, ...widget }: ${draft}Props) => {`,
@@ -1099,13 +1396,13 @@ const sharedWidget = (page: FileContext, el: Element, parent: ParentBox): string
             `${INDENT});`,
             '};',
             '',
-        ].join('\n'));
+        ].join('\n') });
     } else {
         file.imports.add('CatalogWidgetFlags');
         generateSubComponent(file, el, { ...parent, omitPlacement: true }, 'region', draft, 'CatalogWidgetFlags');
     }
 
-    const code = file.subComponents.join('\n');
+    const code = file.subComponents.map(part => part.code).join('\n');
     const hash = createHash('md5').update(code.split(draft).join('X')).digest('hex').slice(0, 8);
     let variants = sharedWidgets.get(widgetName);
 
@@ -1121,7 +1418,13 @@ const sharedWidget = (page: FileContext, el: Element, parent: ParentBox): string
             subComponentProps[name.split(draft).join(token)] = { props: info.props, nested: Object.fromEntries(Object.entries(info.nested).map(([ prop, component ]) => [ prop, component.split(draft).join(token) ])) };
         }
 
-        variants.set(hash, variant = { token, code: code.split(draft).join(token), uses: 0, imports: file.imports, sharedImports: file.sharedImports, subComponentProps, pages: [], wraps });
+        // The root part is the widget itself; it comes last (nested parts are pushed first) - put it first.
+        const parts = file.subComponents.map(part => ({ name: part.name.split(draft).join(token), code: part.code.split(draft).join(token) }));
+        const rootIndex = parts.findIndex(part => part.name === token);
+
+        if (rootIndex > 0) parts.unshift(...parts.splice(rootIndex, 1));
+
+        variants.set(hash, variant = { token, parts, uses: 0, imports: file.imports, sharedImports: file.sharedImports, subComponentProps, pages: [], wraps });
     }
 
     variant.uses++;
@@ -1153,7 +1456,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
 
     if (!conditionalDone && !SKIPPED_TAGS.has(tag)) {
         const hidden = el.attrs.visible === 'false';
-        const override = el.attrs.name && (hidden || tag === 'bubble') ? overrideProp(ctx, el, 'visible', 'boolean') : undefined;
+        const override = el.attrs.name && (hidden || tag === 'bubble' || (ctx.rowTemplate && !asRoot)) ? overrideProp(ctx, el, 'visible', 'boolean', parent.name) : undefined;
         const condition = visibilityExpr(ctx, el, { defaultHidden: hidden, override });
 
         if (condition === 'false') return [ `${indent}{/* \`${el.attrs.name || tag}\` is hidden and has no name to show it by */}` ];
@@ -1202,9 +1505,21 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         // Not every chrome component takes the full ThemeProps surface (the horizontal slider
         // pieces and the buttons are plain PointerHandlerProps + variant/layout) - `meta` marks
         // the ones that do, so name/tags/params are only passed where they type-check.
-        const props = [ ...variantProp(el), ...(meta ? [ ...metaProps(ctx, el), ...tintProp(ctx, el) ] : []), ...(chromeProps ?? []) ];
+        let props = [ ...variantProp(el), ...(meta ? [ ...metaProps(ctx, el), ...tintProp(ctx, el) ] : []), ...(chromeProps ?? []) ];
 
-        if (tag === 'header' && el.attrs.caption) props.push(`caption=${jsxStr(decode(el.attrs.caption))}`);
+        if (ctx.file.frameView && tag === 'header') {
+            props = props.filter(prop => !prop.startsWith('tintColor='));
+            props.push(
+                `caption={${frameViewProp(ctx, 'caption')}}`,
+                `tintColor={${frameViewProp(ctx, 'tintColor')}}`,
+                `onClose={${frameViewProp(ctx, 'onClose')}}`,
+                `onPointerDown={${frameViewProp(ctx, 'onHeaderPointerDown')}}`,
+            );
+        } else if (ctx.file.frameView && tag === 'scaler') {
+            props.push(`direction={${frameViewProp(ctx, 'resizeDirection')}}`, `onPointerDown={${frameViewProp(ctx, 'onScalerPointerDown')}}`);
+        } else if (tag === 'header' && el.attrs.caption) {
+            props.push(`caption=${jsxStr(decode(el.attrs.caption))}`);
+        }
 
         props.push(`layout={${boxLayout(el, parent)}}`);
 
@@ -1246,21 +1561,45 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
                 return emitText(ctx, el.children[0], parent, indent, el);
             }
 
+            // A frame template's `content_area` is where `Frame` puts its children; its Illumina
+            // `titlebar` region is the drag handle.
+            if (ctx.file.frameView && el.attrs.name === 'content_area') {
+                ctx.imports.add('ContentArea');
+
+                return wrap('ContentArea', [ ...metaProps(ctx, el), `layout={${boxLayout(el, parent)}}` ], indent, [ `${childIndent}{${frameViewProp(ctx, 'children')}}` ]);
+            }
+
+            const dragHandle = ctx.file.frameView && el.attrs.name === 'titlebar';
+
+            // An empty named container was a runtime mount point (`maincontent`, `sideContainer`,
+            // `figureContainer`) - expose it as a children slot named after it.
+            let slotChild: string[] = [];
+
+            if (el.attrs.name && el.children.length === 0 && !dragHandle) {
+                const slot = uniqueProp(ctx, camel(el.attrs.name));
+
+                ctx.props.set(slot, 'ReactNode');
+                ctx.imports.add('ReactNode');
+                slotChild = [ `${childIndent}{${slot}}` ];
+            }
+
             ctx.imports.add('Region');
 
             const props = [ ...metaProps(ctx, el), ...dropShadowProp(el), ...blendProp(el) ];
             const color = hexColor(el.attrs.color);
-            if (color && (el.attrs.background === 'true' || tag === 'background' || tag === 'gradient')) props.push(`backgroundColor={${recolorExpr(ctx, el, color)}}`);
+            if (color && (el.attrs.background === 'true' || tag === 'background' || tag === 'gradient')) props.push(jsxAttr('backgroundColor', recolorExpr(ctx, el, color)!));
 
             // A named `region` with the low `params` bit set is a click target in the Flash client
             // (the me-menu tiles, `click_area_discard`, `region_profile`, ...) - see e.g.
             // MeMenuMainView.as/FriendRequestsTab.as listening for WME_CLICK on them by name.
-            if ((tag === 'region' || tag === 'container') && el.attrs.name && (el.params & PARAM.INPUT)) {
+            if (dragHandle) {
+                props.push(`onPointerDown={${frameViewProp(ctx, 'onHeaderPointerDown')}}`);
+            } else if ((tag === 'region' || tag === 'container') && el.attrs.name && (el.params & PARAM.INPUT)) {
                 props.push(`onPointerTap={${handlerProp(ctx, el, 'region')}}`);
                 props.push('cursor="pointer"');
             }
 
-            return wrap('Region', [ ...props, `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, emitChildren(ctx, el, selfBox(el), childIndent));
+            return wrap('Region', [ ...props, `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, [ ...slotChild, ...emitChildren(ctx, el, selfBox(el), childIndent) ]);
         }
         case 'border': {
             const blend = el.attrs.blend ? [ `blend={${num(el.attrs.blend)}}` ] : [];
@@ -1284,17 +1623,34 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         case 'iconbutton':
             return emitThemed(ctx, 'ContainerButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], buttonChildren);
         case 'closebutton':
-            return emitThemed(ctx, 'CloseButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'close')}}` ], none);
+            return emitThemed(ctx, 'CloseButton', el, parent, indent, [ `onPointerTap={${ctx.file.frameView && /close|^$/.test(el.attrs.name ?? '') ? frameViewProp(ctx, 'onClose') : handlerProp(ctx, el, 'close')}}` ], none);
         case 'checkbox':
         case 'radiobutton':
             return emitThemed(ctx, tag === 'checkbox' ? 'CheckBox' : 'RadioButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], captionOnly);
         case 'tab_button':
-            return emitThemed(ctx, 'TabButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'tab')}}` ], captionAndButtonChildren);
-        // Same as container_button: the tab's face is its children.
-        case 'tab_container_button':
-            return emitThemed(ctx, 'TabButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'tab')}}` ], buttonChildren);
-        case 'tab_context':
-            return emitThemed(ctx, 'TabContext', el, parent, indent, [], childrenOnly);
+        case 'tab_container_button': {
+            const selected = ctx.tabSelectedProp && el.attrs.name ? [ `selected={${ctx.tabSelectedProp} === ${quote(el.attrs.name)}}` ] : [];
+
+            // A tab_container_button's face is its children (like container_button).
+            return emitThemed(ctx, 'TabButton', el, parent, indent, [ ...selected, `onPointerTap={${handlerProp(ctx, el, 'tab')}}` ], tag === 'tab_button' ? captionAndButtonChildren : buttonChildren);
+        }
+        case 'tab_context': {
+            // The selected tab is state the caller owns: `selected<Context>` names it, each tab
+            // button compares its own name against it (the client's TabContext selector).
+            const selectedProp = uniqueProp(ctx, `selected${pascal(el.attrs.name || 'tab')}`);
+
+            ctx.props.set(selectedProp, 'string');
+
+            const previous = ctx.tabSelectedProp;
+
+            ctx.tabSelectedProp = selectedProp;
+
+            const lines = emitThemed(ctx, 'TabContext', el, parent, indent, [], childrenOnly);
+
+            ctx.tabSelectedProp = previous;
+
+            return lines;
+        }
         case 'tab_content':
             return emitThemed(ctx, 'TabContent', el, parent, indent, [], childrenOnly);
         case 'dropmenu':
@@ -1316,11 +1672,17 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
             const props = [ `widgetType=${jsxStr(widgetType ?? '')}`, ...metaProps(ctx, el) ];
             const options = Object.entries(rest);
 
-            if (options.length) props.push(`options={{ ${options.map(([ key, value ]) => `${quote(key)}: ${quote(value)}`).join(', ')} }}`);
+            if (options.length) props.push(`options={{ ${options.map(([ key, value ]) => `${/^[A-Za-z_$][\w$]*$/.test(key) ? key : quote(key)}: ${quote(value)}`).join(', ')} }}`);
 
             props.push(`layout={${boxLayout(el, parent, centerExtra(el))}}`);
 
-            return wrap('WidgetSlot', props, indent, emitChildren(ctx, el, selfBox(el), childIndent));
+            // The client filled the widget at runtime - the caller renders it through a slot named after it.
+            const slot = uniqueProp(ctx, camel(el.attrs.name || `${widgetType ?? 'widget'}Widget`));
+
+            ctx.props.set(slot, 'ReactNode');
+            ctx.imports.add('ReactNode');
+
+            return wrap('WidgetSlot', props, indent, [ `${childIndent}{${slot}}`, ...emitChildren(ctx, el, selfBox(el), childIndent) ]);
         }
         case 'shape': {
             ctx.imports.add('Shape');
@@ -1332,7 +1694,7 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
             const color = hexColor(el.attrs.color);
             const stroke = hexColor(el.vars.stroke_color);
 
-            if (color) props.push(`color={${recolorExpr(ctx, el, color)}}`);
+            if (color) props.push(jsxAttr('color', recolorExpr(ctx, el, color)!));
             if (stroke) props.push(`strokeColor="${stroke}"`);
             if (el.vars.stroke_thickness) props.push(`strokeThickness={${num(el.vars.stroke_thickness)}}`);
             if (el.vars.radius) props.push(`radius={${num(el.vars.radius)}}`);
@@ -1364,8 +1726,8 @@ const collectScrollTargets = (el: Element, targets: Map<string, 'vertical' | 'ho
 
 const THEME_IMPORTS = new Set([
     'Border', 'BoxLayout', 'Bubble', 'BubblePointer', 'Button', 'ButtonGroupCenter', 'ButtonGroupLeft', 'ButtonGroupRight', 'ButtonThick', 'CheckBox', 'CloseButton',
-    'ContainerButton', 'Droplist', 'Dropmenu', 'Frame', 'FramePointerDown', 'Header', 'Icon', 'RadioButton', 'Region', 'Scaler', 'ScrollArea',
-    'ScrollbarSliderBarHorizontal', 'ScrollbarSliderBarVertical', 'ScrollbarSliderButtonDown', 'ScrollbarSliderButtonLeft', 'ScrollbarSliderButtonRight',
+    'ContainerButton', 'ContentArea', 'Droplist', 'Dropmenu', 'Frame', 'FramePointerDown', 'Header', 'HeaderProps', 'Icon', 'RadioButton', 'Region', 'Scaler', 'ScrollArea',
+    'ScalerDirection', 'ScalerProps', 'ScrollbarSliderBarHorizontal', 'ScrollbarSliderBarVertical', 'ScrollbarSliderButtonDown', 'ScrollbarSliderButtonLeft', 'ScrollbarSliderButtonRight',
     'ScrollbarSliderButtonUp', 'ScrollbarSliderTrackHorizontal', 'ScrollbarSliderTrackVertical', 'Shape', 'TabButton', 'TabContent', 'TabContext',
     'TextInput', 'ThemeImage', 'ThemeText', 'WidgetSlot',
 ]);
@@ -1426,6 +1788,8 @@ const generateSubComponent = (file: FileContext, el: Element, parent: ParentBox,
     ctx.props.set('layout', 'BoxLayout');
     ctx.imports.add('BoxLayout');
 
+    ctx.rowTemplate = kind === 'item';
+
     const body = emit(ctx, el, { ...parent, spreadLayout: true }, INDENT + INDENT, true);
     const doc = kind === 'item'
         ? `/** Row template \`${el.attrs.name ?? el.tag}\` of ${file.componentName} - pass real rows through its \`items…\` slot. */`
@@ -1433,14 +1797,17 @@ const generateSubComponent = (file: FileContext, el: Element, parent: ParentBox,
 
     const assembled = assembleComponent(ctx, name, doc, body, extendsType);
 
-    file.subComponents.push(assembled.lines.join('\n'));
+    file.subComponents.push({ name, code: assembled.lines.join('\n') });
     file.subComponentProps[name] = { props: assembled.props, nested: assembled.nested };
 
     return name;
 };
 
 interface GeneratedComponent {
-    code: string;
+    /** The layout's components, main first - written as one file, or one file each under a folder when there are sub-components. */
+    parts: { name: string; code: string }[];
+    imports: Set<string>;
+    sharedImports: Set<string>;
     props: string[];
     nested: Record<string, string>;
     subComponentProps: Record<string, { props: string[]; nested: Record<string, string> }>;
@@ -1457,18 +1824,23 @@ const assembleImports = (imports: Set<string>, sharedImports: Set<string>): stri
     if (reactImports.length) lines.push(`import { ${reactImports.join(', ')} } from 'react';`, '');
     if (imports.has('useTranslation')) lines.push('import { useTranslation } from \'#base/context\';');
 
-    const themeImports = [ ...imports ].filter(name => THEME_IMPORTS.has(name)).sort();
+    const themeImports = [ ...imports ].filter(name => THEME_IMPORTS.has(name)).sort(importSort);
 
     if (themeImports.length) lines.push(`import { ${themeImports.join(', ')} } from '#base/theme';`);
     const assetImports = [ 'CatalogWidgetFlags', 'layoutImage' ].filter(name => imports.has(name));
 
     if (assetImports.length) lines.push(`import { ${assetImports.join(', ')} } from '#base/views/layouts/layoutAssets';`);
-    for (const token of [ ...sharedImports ].sort()) lines.push(`import { ${token}, ${token}Props } from '#base/views/layouts/${WIDGETS_FOLDER}/${token}';`);
+    for (const token of [ ...sharedImports ].sort(importSort)) lines.push(`import { ${token}, ${token}Props } from '#base/views/layouts/${WIDGETS_FOLDER}/${token}';`);
 
     return lines;
 };
 
 const generateComponent = (componentName: string, sourceFile: string, root: XmlNode, folder: string): GeneratedComponent => {
+    const sourceBase = sourceFile.replace(/^\d+_/, '').replace(/_xml$/, '');
+
+    if (!layoutComponents.has(sourceBase)) layoutComponents.set(sourceBase, componentName);
+    if (root.attrs.name && !layoutComponents.has(root.attrs.name)) layoutComponents.set(root.attrs.name, componentName);
+
     const windows = root.children.filter(child => child.tag === 'window');
     const elements = windows.flatMap(window => window.children.flatMap((child) => {
         if (child.tag === 'children') return child.children.map(toElement);
@@ -1476,10 +1848,12 @@ const generateComponent = (componentName: string, sourceFile: string, root: XmlN
 
         return [ toElement(child) ];
     }));
-    const file: FileContext = { componentName, folder, imports: new Set(), sharedImports: new Set(), scrollTargets: new Map(), warnings: [], subComponents: [], subComponentNames: [], subComponentProps: {} };
+    const file: FileContext = { componentName, folder, imports: new Set(), sharedImports: new Set(), scrollTargets: new Map(), warnings: [], subComponents: [], subComponentNames: [], subComponentProps: {}, frameView: false };
     const ctx = createEmitContext(file);
 
     for (const el of elements) collectScrollTargets(el, ctx.scrollTargets);
+    markAnchorInference(elements);
+    file.frameView = isFrameView(elements);
 
     const width = num(root.attrs.width);
     const height = num(root.attrs.height);
@@ -1499,7 +1873,9 @@ const generateComponent = (componentName: string, sourceFile: string, root: XmlN
 
         body = wrap(
             'Region',
-            [ ...rootProps, `layout={{ position: 'relative', width: ${width}, height: ${height}, ...layout }}` ],
+            [ ...rootProps, `layout={${layoutLiteral(file.frameView
+                ? { position: '\'relative\'', minWidth: width, minHeight: height }
+                : { position: '\'relative\'', width, height, minWidth: root.attrs.width_min ? num(root.attrs.width_min) : undefined, maxWidth: root.attrs.width_max ? num(root.attrs.width_max) : undefined, minHeight: root.attrs.height_min ? num(root.attrs.height_min) : undefined, maxHeight: root.attrs.height_max ? num(root.attrs.height_max) : undefined }).replace(/ \}$/, ', ...layout }')}}` ],
             bodyIndent,
             elements.flatMap(el => emit(ctx, el, { width, height, flow: false }, bodyIndent + INDENT)),
         );
@@ -1507,11 +1883,9 @@ const generateComponent = (componentName: string, sourceFile: string, root: XmlN
 
     const doc = `/** Generated from \`${sourceFile}\` (layout "${root.attrs.name ?? ''}", ${width}x${height}) by scripts/generate-layout-views.ts - do not edit by hand. */`;
     const main = assembleComponent(ctx, componentName, doc, body);
-    const lines = assembleImports(file.imports, file.sharedImports);
+    const parts = [ { name: componentName, code: main.lines.join('\n') }, ...file.subComponents ];
 
-    lines.push('', ...main.lines, ...file.subComponents);
-
-    return { code: lines.join('\n'), props: main.props, nested: main.nested, subComponentProps: file.subComponentProps, rootIsFrame, subComponents: file.subComponentNames, warnings: file.warnings };
+    return { parts, imports: file.imports, sharedImports: file.sharedImports, props: main.props, nested: main.nested, subComponentProps: file.subComponentProps, rootIsFrame, subComponents: file.subComponentNames, warnings: file.warnings };
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -1634,6 +2008,68 @@ const exports: string[] = [];
 const warningCounts = new Map<string, number>();
 /** Layout files are written only after every page has been generated, once the shared widgets can be named. */
 const pendingFiles: { path: string; code: string }[] = [];
+/** Import path (under views/layouts, no extension) of every written component, for cross-file imports. */
+const componentPath = new Map<string, string>();
+/** Component generated for each layout `name` (`habbo_window_layout_frame_3` -> `Frame3Layout`), for the element-view registry. */
+const layoutComponents = new Map<string, string>();
+/** Final name of each shared-widget placeholder token, filled in once every page has been generated. */
+const tokenNames = new Map<string, string>();
+/** Import path of each widget token (`catalog/widgets/PurchaseWidget`, or `.../PurchaseWidget2/PurchaseWidget2` when it has sub-components). */
+const tokenPaths = new Map<string, string>();
+
+/**
+ * Writes a layout (or shared widget) as one file per component: a layout with no
+ * sub-components is `<dir>/<Main>.tsx`; one with sub-components gets its own folder,
+ * `<dir>/<Main minus 'Layout'>/<Main>.tsx` + one file per sub-component, each importing the
+ * siblings it references. Every file starts from the layout's full import set - eslint's
+ * unused-import fixer prunes what a given file doesn't use. Returns the main component's path.
+ */
+const writeComponentFiles = (dir: string, parts: { name: string; code: string }[], imports: Set<string>, sharedImports: Set<string>, extraImports: string[], doc: string[] = []): string => {
+    const main = parts[0].name;
+    const subdir = parts.length > 1 ? `${dir}/${main.replace(/Layout$/, '') || main}` : dir;
+
+    for (const part of parts) {
+        const path = `${subdir}/${part.name}`;
+        // Comments mention components they don't render (`rendered by that list's ScrollArea`) - match code only.
+        const codeOnly = part.code.replace(/\{\/\*[\s\S]*?\*\/\}/g, '').replace(/\/\*\*[\s\S]*?\*\//g, '');
+        const uses = (name: string) => new RegExp(`\\b${name}\\b`).test(codeOnly);
+        // Each file imports only what its own code references (the layout-wide sets are a superset).
+        const partImports = new Set([ ...imports ].filter(name => uses(name) || (name === 'useTranslation' && uses('t'))));
+        const partShared = new Set([ ...sharedImports ].filter(token => uses(token) || uses(tokenNames.get(token) ?? token)));
+        // Only real usage counts (a JSX tag or the Props type) - doc comments mention the parent layout by name too.
+        const siblings = parts.filter(other => other !== part && new RegExp(`<${other.name}\\b|\\b${other.name}Props\\b`).test(part.code));
+        const header = [
+            ...assembleImports(partImports, partShared),
+            ...extraImports.filter((line) => {
+                const imported = /import \{ (\w+)/.exec(line)?.[1];
+
+                return imported ? uses(imported) : true;
+            }),
+        ];
+        // Every `#base/...` import forms one group, ordered by module path the way simple-import-sort wants.
+        const modulePath = (line: string) => /from '([^']+)'/.exec(line)?.[1] ?? '';
+        const baseImports = header.filter(line => modulePath(line).startsWith('#base/')).sort((a, b) => importSort(modulePath(a), modulePath(b)));
+        const lines = [
+            ...header.filter(line => !baseImports.includes(line)),
+            ...baseImports,
+            ...(siblings.length ? [ '' ] : []),
+            ...siblings.map(other => other.name).sort(importSort).map((name) => {
+                const named = [ new RegExp(`<${name}\\b`).test(codeOnly) ? name : '', uses(`${name}Props`) ? `${name}Props` : '' ].filter(Boolean);
+
+                return `import { ${named.join(', ')} } from './${name}';`;
+            }),
+            '',
+            ...(part === parts[0] ? doc : []),
+            part.code,
+        ];
+
+        pendingFiles.push({ path: join(OUT_DIR, `${path}.tsx`), code: lines.join('\n') });
+        exports.push(path);
+        componentPath.set(part.name, path);
+    }
+
+    return `${subdir}/${main}`;
+};
 const as3Usage = collectAs3Usage(new Set(sources.map(source => source.base)));
 const registry: string[] = [];
 
@@ -1697,12 +2133,11 @@ for (const { source, componentName, folder } of planned) if (!layoutByBase.has(s
 const generatedInfo = new Map<string, Pick<GeneratedComponent, 'props' | 'nested' | 'subComponentProps'>>();
 
 for (const { source, componentName, usage, folder } of planned) {
-    const { code, props, nested, subComponentProps, rootIsFrame, subComponents, warnings } = generateComponent(componentName, source.file.replace(/\$.*$/, ''), source.root, folder);
+    const { parts, imports, sharedImports, props, nested, subComponentProps, rootIsFrame, subComponents, warnings } = generateComponent(componentName, source.file.replace(/\$.*$/, ''), source.root, folder);
 
     generatedInfo.set(componentName, { props, nested, subComponentProps });
 
-    pendingFiles.push({ path: join(OUT_DIR, folder, `${componentName}.tsx`), code });
-    exports.push(`${folder}/${componentName}`);
+    const mainPath = writeComponentFiles(folder, parts, imports, sharedImports, []);
 
     const as3 = [ ...(usage?.classes ?? []) ].sort();
     const libraries = [ ...(usage?.libraries ?? []) ].sort();
@@ -1717,7 +2152,7 @@ for (const { source, componentName, usage, folder } of planned) {
         `${INDENT}${INDENT}subComponentProps: { ${Object.entries(subComponentProps).map(([ name, info ]) => `${name}: { props: [ ${info.props.map(quote).join(', ')} ], nested: { ${Object.entries(info.nested).map(([ prop, component ]) => `${prop}: ${quote(component)}`).join(', ')} } }`).join(', ')} },`,
         `${INDENT}${INDENT}folder: ${quote(folder)}, libraries: [ ${libraries.map(quote).join(', ')} ],`,
         `${INDENT}${INDENT}as3: [ ${as3.map(quote).join(', ')} ],`,
-        `${INDENT}${INDENT}load: () => import(${quote(`./${folder}/${componentName}`)}).then(module => module.${componentName}),`,
+        `${INDENT}${INDENT}load: () => import(${quote(`./${mainPath}`)}).then(module => module.${componentName}),`,
         `${INDENT}},`,
     ].join('\n'));
 
@@ -1726,18 +2161,24 @@ for (const { source, componentName, usage, folder } of planned) {
 
 // Name the shared widget variants - the most-used markup of a widget id gets the plain name
 // (`PurchaseWidget`), the rest are numbered - then write their files and resolve the tokens.
-const tokenNames = new Map<string, string>();
+
 /** LAYOUT_WIDGET_PROPS entries keyed by component name - several wrapper variants forward the same layout, so entries repeat. */
 const widgetProps = new Map<string, string>();
-const widgetExports: string[] = [];
 
 for (const [ widgetName, variants ] of [ ...sharedWidgets.entries() ].sort(([ a ], [ b ]) => a.localeCompare(b))) {
     const ordered = [ ...variants.values() ].sort((a, b) => b.uses - a.uses || a.token.localeCompare(b.token));
 
-    ordered.forEach((variant, index) => tokenNames.set(variant.token, index === 0 ? widgetName : `${widgetName}${index + 1}`));
+    ordered.forEach((variant, index) => {
+        const name = index === 0 ? widgetName : `${widgetName}${index + 1}`;
+
+        tokenNames.set(variant.token, name);
+        tokenPaths.set(variant.token, variant.parts.length > 1 ? `${WIDGETS_FOLDER}/${name}/${name}` : `${WIDGETS_FOLDER}/${name}`);
+    });
 }
 
-const resolveTokens = (text: string): string => text.replace(/__SHARED_\w+?_[0-9a-f]{8}__/g, token => tokenNames.get(token) ?? token);
+const resolveTokens = (text: string): string => text
+    .replace(/catalog\/widgets\/(__SHARED_\w+?_[0-9a-f]{8}__)'/g, (_, token: string) => `${tokenPaths.get(token) ?? `${WIDGETS_FOLDER}/${tokenNames.get(token)}`}'`)
+    .replace(/__SHARED_\w+?_[0-9a-f]{8}__/g, token => tokenNames.get(token) ?? token);
 
 for (const variants of sharedWidgets.values()) {
     for (const variant of variants.values()) {
@@ -1750,14 +2191,12 @@ for (const variants of sharedWidgets.values()) {
             ` * (${pages.slice(0, 6).join(', ')}${pages.length > 6 ? ', …' : ''}); each passes its own placement through \`layout\`.`,
             ' */',
         ];
-        const imports = assembleImports(variant.imports, variant.sharedImports);
+        const extraImports = variant.wraps
+            ? [ `import { ${variant.wraps.componentName}, ${variant.wraps.componentName}Props } from '#base/views/layouts/${componentPath.get(variant.wraps.componentName) ?? `${variant.wraps.folder}/${variant.wraps.componentName}`}';` ]
+            : [];
+        const parts = variant.parts.map(part => ({ name: resolveTokens(part.name), code: resolveTokens(part.code) }));
 
-        if (variant.wraps) imports.push(`import { ${variant.wraps.componentName}, ${variant.wraps.componentName}Props } from '#base/views/layouts/${variant.wraps.folder}/${variant.wraps.componentName}';`);
-
-        const lines = [ ...imports, '', ...doc, variant.code ];
-
-        pendingFiles.push({ path: join(OUT_DIR, WIDGETS_FOLDER, `${name}.tsx`), code: lines.join('\n') });
-        widgetExports.push(`${WIDGETS_FOLDER}/${name}`);
+        writeComponentFiles(WIDGETS_FOLDER, parts, variant.imports, variant.sharedImports, extraImports, doc);
 
         const propsEntry = (subName: string, info: { props: string[]; nested: Record<string, string> }) =>
             widgetProps.set(resolveTokens(subName), `${INDENT}${resolveTokens(subName)}: { props: [ ${info.props.map(quote).join(', ')} ], nested: { ${Object.entries(info.nested).map(([ prop, component ]) => `${prop}: ${quote(resolveTokens(component))}`).join(', ')} } },`);
@@ -1781,7 +2220,6 @@ for (const file of pendingFiles) {
     writeFileSync(file.path, resolveTokens(file.code));
 }
 
-exports.push(...widgetExports);
 
 writeFileSync(join(OUT_DIR, 'layoutAssets.ts'), [
     '/** Bitmaps referenced by the generated layouts - copied out of `scripts/images` by scripts/generate-layout-views.ts. */',
@@ -1843,7 +2281,7 @@ writeFileSync(join(OUT_DIR, 'layoutRegistry.ts'), [
     ...[ ...widgetProps.keys() ].sort().map(key => widgetProps.get(key)!),
     '};',
     '',
-].join('\n'));
+].join('\n').replace(/\{  \}/g, '{}').replace(/\[  \]/g, '[]'));
 
 // Deliberately NO barrel index.ts: an `export *` over ~800 layout files puts every one of
 // them into the static module graph of whoever imports it - none are side-effect-free as far
@@ -1852,8 +2290,103 @@ writeFileSync(join(OUT_DIR, 'layoutRegistry.ts'), [
 // (794 modulepreload links in the built index.html). Import a layout by its own path;
 // everything else goes through `layoutRegistry`'s per-entry dynamic `load()`.
 
+// ---------------------------------------------------------------------------------------------
+// Element views - the client's `habbo_element_description_xml` names, per element type and
+// style, the window layout (skin template) that draws it. Emitted as a registry the theme
+// components consult through `useThemeVariant` (`elementType` + resolved variant); a variant
+// with no entry falls back to the component's own default rendering.
+// ---------------------------------------------------------------------------------------------
+
+const descriptionFile = readdirSync(XML_DIR).find(file => /habbo_element_description_xml/.test(file));
+
+if (descriptionFile) {
+    const source = readFileSync(join(XML_DIR, descriptionFile), 'utf8');
+    const views = new Map<string, Map<string, string>>();
+    const viewImports = new Map<string, string>();
+    const unmapped: string[] = [];
+
+    for (const match of source.matchAll(/<window\b([^>]*)>/g)) {
+        const attrs = Object.fromEntries([ ...match[1].matchAll(/(\w+)="([^"]*)"/g) ].map(pair => [ pair[1], pair[2] ]));
+
+        if (!attrs.type || attrs.style === undefined || !attrs.window_layout) continue;
+
+        const layoutName = attrs.window_layout.replace(/_xml$/, '');
+        // `habbo_window_layout_frame_3_xml` is the file `frame_3_xml`; the illumina ones are named in full.
+        const component = layoutComponents.get(layoutName.replace(/^habbo_window_layout_/, '')) ?? layoutComponents.get(layoutName);
+
+        if (!component || !componentPath.has(component)) {
+            unmapped.push(`${attrs.type}/${attrs.style} -> ${layoutName}`);
+            continue;
+        }
+
+        const fields = [ `view: ${component}` ];
+        const color = hexColor(attrs.color);
+
+        if (color) fields.push(`tintColor: ${quote(color)}`);
+        if (attrs.intent) fields.push(`intent: ${quote(attrs.intent)}`);
+        if (attrs.asset) fields.push(`skin: ${quote(attrs.asset.replace(/_xml$/, ''))}`);
+
+        if (!views.has(attrs.type)) views.set(attrs.type, new Map());
+        views.get(attrs.type)!.set(attrs.style, `{ ${fields.join(', ')} }`);
+        viewImports.set(component, componentPath.get(component)!);
+    }
+
+    const byStyle = (a: string, b: string) => Number(a) - Number(b);
+    const registryLines = [ ...views.keys() ].sort().flatMap(type => [
+        `${INDENT}${/^[a-z_]\w*$/i.test(type) ? type : quote(type)}: {`,
+        ...[ ...views.get(type)!.entries() ].sort(([ a ], [ b ]) => byStyle(a, b)).map(([ style, entry ]) => `${INDENT}${INDENT}${quote(style)}: ${entry},`),
+        `${INDENT}},`,
+    ]);
+
+    const elementsFile = join(__dirname, '../src/theme/variants/elements.ts');
+
+    writeFileSync(elementsFile, [
+        ...[ ...viewImports.entries() ].sort(([ , a ], [ , b ]) => importSort(a, b)).map(([ component, path ]) => `import { ${component} } from '#base/views/layouts/${path}';`),
+        '',
+        'import { ElementView } from \'../utils/ThemeVariant\';',
+        '',
+        `/** Generated from \`${descriptionFile.replace(/\$.*$/, '')}\` by scripts/generate-layout-views.ts - do not edit by hand. */`,
+        '',
+        '/** What the client\'s element description says about one Flash element type + style. */',
+        'export interface ElementVariant {',
+        `${INDENT}/** The window layout (skin template) that draws it - rendered as the theme component's view. */`,
+        `${INDENT}view: ElementView;`,
+        `${INDENT}/** The element's default colour. */`,
+        `${INDENT}tintColor?: string;`,
+        `${INDENT}/** The design intent the style was authored for (\`default\`, \`black\`, \`bubble\`, \`modal\`, ...). */`,
+        `${INDENT}intent?: string;`,
+        `${INDENT}/** The skin (art sheet definition) the client rendered it with. */`,
+        `${INDENT}skin?: string;`,
+        '}',
+        '',
+        '/** Every element type + style the client described with a window layout - the base each component\'s variant table is built on (see ./defineVariants.ts). */',
+        'export const ELEMENT_VARIANTS: Record<string, Record<string, ElementVariant>> = {',
+        ...registryLines,
+        '};',
+        '',
+    ].join('\n'));
+
+    console.log(`Element views: ${[ ...views.values() ].reduce((total, styles) => total + styles.size, 0)} type/style entries across ${views.size} types (${unmapped.length} window layouts with no generated template)`);
+    for (const entry of unmapped) console.log(`  no template: ${entry}`);
+}
+
 console.log(`Generated ${exports.length} layout components into ${OUT_DIR}`);
-console.log(`Copied ${copiedImages.size} images into ${IMAGE_OUT_DIR} (${unresolvedImages.size} referenced assets not found in scripts/images)`);
+for (const job of cropJobs) {
+    const image = await loadImage(job.source);
+    const canvas = createCanvas(job.region.width, job.region.height);
+
+    canvas.getContext('2d').drawImage(image, job.region.x, job.region.y, job.region.width, job.region.height, 0, 0, job.region.width, job.region.height);
+    writeFileSync(job.out, canvas.toBuffer('image/png'));
+}
+
+// The folder is owned by this script - drop anything no layout references any more.
+const stale = readdirSync(IMAGE_OUT_DIR).filter(file => /\.(png|gif|jpg)$/i.test(file) && !copiedImages.has(file));
+
+for (const file of stale) rmSync(join(IMAGE_OUT_DIR, file));
+if (stale.length) console.log(`Removed ${stale.length} stale images: ${stale.join(', ')}`);
+
+console.log(`Copied ${copiedImages.size} images into ${IMAGE_OUT_DIR} (${cropJobs.length} cropped from manifest regions, ${unresolvedImages.size} referenced assets not found in scripts/images)`);
+for (const name of [ ...unresolvedImages ].sort()) console.log(`  missing image: ${name}`);
 
 if (!existsSync(join(IMAGE_OUT_DIR, 'README.md'))) {
     writeFileSync(join(IMAGE_OUT_DIR, 'README.md'), '# Generated - populated by `yarn workspace @nitrodevco/nitro-react generate-layout-views`.\n');

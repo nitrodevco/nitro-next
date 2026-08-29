@@ -5,7 +5,9 @@ import { useEffect, useState } from 'react';
 
 import { useWebSocketContext } from '#base/context';
 import { useFriendRequestsSelector, useUserMessengerActions } from '#base/context/user';
-import { FriendRequestsTabLayout, FriendRequestsTabLayoutHeaderItem, FriendRequestsTabLayoutRequestEntityItem } from '#base/views/layouts/friendbar/view/tabs/FriendRequestsTabLayout';
+import { FriendRequestsTabLayout } from '#base/views/layouts/friendbar/view/tabs/FriendRequestsTab/FriendRequestsTabLayout';
+import { FriendRequestsTabLayoutHeaderItem } from '#base/views/layouts/friendbar/view/tabs/FriendRequestsTab/FriendRequestsTabLayoutHeaderItem';
+import { FriendRequestsTabLayoutRequestEntityItem } from '#base/views/layouts/friendbar/view/tabs/FriendRequestsTab/FriendRequestsTabLayoutRequestEntityItem';
 
 /** The `VIEW.getAvatarFaceBitmap(figure)` the Flash tab painted into each row's `canvas` bitmap. */
 const useAvatarFaceUrl = (figure: string) => {

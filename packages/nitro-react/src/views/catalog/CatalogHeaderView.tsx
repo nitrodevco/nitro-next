@@ -1,5 +1,5 @@
-import { useCatalogSelectors, useConfigValue } from '#base/context';
-import { Box, ColorLayer, ThemeImage, ThemeText, useTextureFromUrl } from '#base/theme';
+import { useCatalogSelectors, useConfigValue, useTranslation } from '#base/context';
+import { Region, ThemeImage, ThemeText, useTextureFromUrl } from '#base/theme';
 
 /** Pixi port of views/catalog/CatalogHeaderView.tsx. */
 export const CatalogHeaderView = () => {
@@ -7,6 +7,7 @@ export const CatalogHeaderView = () => {
     const activeNode = activeNodes.find(x => x.pageId === activePage?.pageId);
     const catalogIconUrl = useConfigValue<string>('catalog.icons.url') ?? '';
     const catalogImageUrl = useConfigValue<string>('asset.urls.catalog') ?? '';
+    const t = useTranslation();
 
     let headerImageUrl = catalogImageUrl.replace('%name%', 'catalog_header_roombuilder');
 
@@ -21,28 +22,50 @@ export const CatalogHeaderView = () => {
     const iconTexture = useTextureFromUrl(iconUrl);
 
     return (
-        <Box layout={{ position: 'relative', width: '100%', height: 90, flexShrink: 0 }}>
-            <ThemeImage
-                src={headerImageUrl}
-                alpha={0.1}
-                layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
+        <Region
+            name="catalog.header.background.border"
+            backgroundColor="#376275"
+            layout={{ position: 'absolute', top: 34, left: 1, right: 1, height: 90 }}
+        >
+            <Region
+                name="catalog.header.background.body"
+                backgroundColor="#0e3f52"
+                layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 86 }}
             />
-            <ColorLayer color="#0e3f52" />
-            <Box layout={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center', gap: 16, paddingLeft: 20, paddingRight: 20 }}>
-                {iconTexture && (
-                    <ThemeImage
-                        src={iconUrl}
-                        width={iconTexture.width * 2}
-                        height={iconTexture.height * 2}
-                        layout={{}}
+            <ThemeImage
+                name="catalog.header.image"
+                src={headerImageUrl}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 90 }}
+            />
+            <ThemeImage
+                name="catalog.header.icon"
+                src={iconUrl}
+                layout={{ position: 'absolute', left: 24, width: 40, top: 30, height: 35 }}
+            />
+            <Region
+                name="catalog.mode.header"
+                layout={{ position: 'absolute', left: 0, width: 570, top: 0, height: 90 }}
+            >
+                <Region
+                    name="catalog.header.title"
+                    layout={{ position: 'absolute', left: 80, width: 133, top: 11, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={t('catalog.header')}
+                        textStyle="text-style-u-headline-big"
+                        textOptions={{ fill: '#ffffff' }}
                     />
-                )}
-                <ThemeText
-                    text={activeNode?.localization ?? ''}
-                    textStyle="text-style-u-headline-big"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Box>
-        </Box>
+                </Region>
+                <Region
+                    name="catalog.header.description"
+                    layout={{ position: 'absolute', left: 80, width: 475, top: 34, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={t('catalog.description')}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 475 }}
+                    />
+                </Region>
+            </Region>
+        </Region>
     );
 };

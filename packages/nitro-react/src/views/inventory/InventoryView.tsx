@@ -1,7 +1,7 @@
 import { useSystemActions, useTranslation, useWindowParams, WindowParams } from '#base/context';
 import { Frame, TabButton, TabContent, TabContext } from '#base/theme';
 
-import { InventoryLayout } from '../layouts/inventory/InventoryLayout';
+import { InventoryLayout } from '../layouts/inventory/Inventory/InventoryLayout';
 import { InventoryBadgesView } from './InventoryBadgesView';
 import { InventoryBotsView } from './InventoryBotsView';
 import { InventoryFurniView } from './InventoryFurniView';

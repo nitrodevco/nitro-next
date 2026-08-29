@@ -4,24 +4,9 @@ import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer, Stretch } from './layer';
-import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
-
-type DroplistItemVariant = ThemeWithStatesVariant;
-
-const DROPLIST_ITEM_VARIANTS: ThemeVariants<DroplistItemVariant> = {
-    0: {
-        states: {
-            default: Stretch('dropmenuitem-0-default-src'),
-            hovering: Stretch('dropmenuitem-0-hovering-src'),
-            selected: Stretch('dropmenuitem-0-selected-src'),
-        },
-        layout: {
-            minWidth: 5,
-            minHeight: 19,
-        },
-    },
-};
+import { BackgroundLayer } from './layer';
+import { ThemeProps, wrapTextChildren } from './utils';
+import { DROPLIST_ITEM_VARIANTS, DroplistItemVariant } from './variants/droplistItem';
 
 export interface DroplistItemProps extends ThemeProps<DroplistItemVariant> {
     selected?: boolean;

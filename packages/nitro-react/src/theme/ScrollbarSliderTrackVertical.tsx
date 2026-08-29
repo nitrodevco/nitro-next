@@ -4,54 +4,9 @@ import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer, NineSlice, Stretch } from './layer';
-import { ThemeProps, ThemeVariants, ThemeWithStatesVariant, wrapTextChildren } from './utils';
-
-type ScrollbarSliderTrackVerticalVariant = ThemeWithStatesVariant;
-
-const SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS: ThemeVariants<ScrollbarSliderTrackVerticalVariant> = {
-    0: {
-        states: {
-            default: Stretch('scrollbarslidertrackvertical-0-default-src'),
-        },
-        layout: {
-            minWidth: 17, minHeight: 1,
-        },
-    },
-    1: {
-        states: {
-            default: Stretch('scrollbarslidertrackvertical-1-default-src'),
-        },
-        layout: {
-            minWidth: 17, minHeight: 1,
-        },
-    },
-    3: {
-        states: {
-            default: Stretch('scrollbarslidertrackvertical-3-default-src'),
-            disabled: Stretch('scrollbarslidertrackvertical-3-disabled-src'),
-        },
-        layout: {
-            minWidth: 17, minHeight: 2,
-        },
-    },
-    100: {
-        states: {
-            default: NineSlice('scrollbarslidertrackhorizontal-100-default-src', 0, 2, 0, 2),
-        },
-        layout: {
-            minWidth: 10, minHeight: 1,
-        },
-    },
-    200: {
-        states: {
-            default: NineSlice('scrollbarslidertrackhorizontal-200-default-src', 0, 3, 0, 3),
-        },
-        layout: {
-            minWidth: 8, minHeight: 1,
-        },
-    },
-};
+import { BackgroundLayer } from './layer';
+import { ThemeProps, wrapTextChildren } from './utils';
+import { SCROLLBAR_SLIDER_TRACK_VERTICAL_VARIANTS, ScrollbarSliderTrackVerticalVariant } from './variants/scrollbarSliderTrackVertical';
 
 export interface ScrollbarSliderTrackVerticalProps extends ThemeProps<ScrollbarSliderTrackVerticalVariant> {
     disabled?: boolean;

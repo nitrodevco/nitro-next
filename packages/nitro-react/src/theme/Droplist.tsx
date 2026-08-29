@@ -4,19 +4,9 @@ import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer, NineSlice, Stretch } from './layer';
-import { ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
-
-type DroplistVariant = ThemeVariant & {
-    arrowTextureKey: string;
-    arrowTop: number;
-    arrowRight: number;
-};
-
-const DROPLIST_VARIANTS: ThemeVariants<DroplistVariant> = {
-    0: { layer: NineSlice('dropmenu-0-default-src', 3, 3, 3, 3), arrowTextureKey: 'dropmenu-0-default-arrow-src', arrowTop: 2, arrowRight: 5 },
-    1: { layer: NineSlice('droplist-1-default-src', 6, 6, 6, 6), arrowTextureKey: 'droplist-1-default-arrow-src', arrowTop: 10, arrowRight: 4 },
-};
+import { BackgroundLayer, Stretch } from './layer';
+import { ThemeProps, wrapTextChildren } from './utils';
+import { DROPLIST_VARIANTS, DroplistVariant } from './variants/droplist';
 
 export interface DroplistProps extends ThemeProps<DroplistVariant> {
     children?: ReactNode;

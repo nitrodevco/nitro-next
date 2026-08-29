@@ -5,14 +5,8 @@ import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
 import { BackgroundLayer } from './layer';
-import { ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
-
-type TabContextVariant = ThemeVariant;
-
-const TAB_CONTEXT_VARIANTS: ThemeVariants<TabContextVariant> = {
-    0: { layout: { minHeight: 22, maxHeight: 22 } },
-    3: {},
-};
+import { ThemeProps, wrapTextChildren } from './utils';
+import { TAB_CONTEXT_VARIANTS, TabContextVariant } from './variants/tabContext';
 
 export interface TabContextProps extends ThemeProps<TabContextVariant> {
     children?: ReactNode;
@@ -28,7 +22,6 @@ export const TabContext: ForwardRefExoticComponent<TabContextProps & RefAttribut
             <Box
                 ref={ref}
                 visible={visible}
-                zIndex={20}
                 layout={{
                     flexDirection: 'row',
                     width: '100%',

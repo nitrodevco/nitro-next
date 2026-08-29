@@ -4,18 +4,9 @@ import { forwardRef, ForwardRefExoticComponent, ReactNode, RefAttributes } from 
 import { Box } from './Box';
 import { VariantCascadeProvider } from './cascade';
 import { useThemeVariant } from './hooks';
-import { BackgroundLayer, NineSlice } from './layer';
-import { ThemeProps, ThemeVariant, ThemeVariants, wrapTextChildren } from './utils';
-
-type TooltipVariant = ThemeVariant;
-
-const TOOLTIP_VARIANTS: ThemeVariants<TooltipVariant> = {
-    // default
-    0: {
-        layer: NineSlice('tooltip-0-default-src', 6, 6, 6, 6),
-        layout: { minWidth: 20, minHeight: 22, paddingLeft: 6, paddingRight: 6 },
-    },
-};
+import { BackgroundLayer } from './layer';
+import { ThemeProps, wrapTextChildren } from './utils';
+import { TOOLTIP_VARIANTS, TooltipVariant } from './variants/tooltip';
 
 export interface TooltipProps extends ThemeProps<TooltipVariant> {
     children?: ReactNode;

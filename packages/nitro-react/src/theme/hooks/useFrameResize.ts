@@ -56,6 +56,7 @@ export const useFrameResize = (
     frameRef: RefObject<PixiContainer | HTMLElement | null>,
     direction: FrameResizeDirection = 'all',
     minSize: { width: number; height: number } = { width: MIN_SIZE, height: MIN_SIZE },
+    maxSize: { width?: number; height?: number } = {},
 ) => {
     const resizeStateRef = useRef<ResizeState | null>(null);
     const latestSizeRef = useRef<FrameSize | null>(null);
@@ -108,8 +109,9 @@ export const useFrameResize = (
             startHeight,
             minWidth: Math.max(minSize.width, MIN_SIZE),
             minHeight: Math.max(minSize.height, MIN_SIZE),
-            maxWidth: Math.max(startWidth, window.innerWidth - rect.x),
-            maxHeight: Math.max(startHeight, window.innerHeight - rect.y),
+            // The caller's own limit (a layout's `width_max`) wins over the viewport edge.
+            maxWidth: Math.min(maxSize.width ?? Infinity, Math.max(startWidth, window.innerWidth - rect.x)),
+            maxHeight: Math.min(maxSize.height ?? Infinity, Math.max(startHeight, window.innerHeight - rect.y)),
             moved: false,
         };
 

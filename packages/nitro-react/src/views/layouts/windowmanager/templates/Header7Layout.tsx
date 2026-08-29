@@ -2,15 +2,15 @@ import { BoxLayout, CloseButton, Region, ThemeText } from '#base/theme';
 
 /** Generated from `1743_header_7_xml` (layout "habbo_window_layout_header_7", 64x33) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface Header7LayoutProps {
-    captionHeaderTitleText?: string;
+    caption?: string;
     layout?: BoxLayout;
-    onHeaderButtonClose?: () => void;
+    onClose?: () => void;
     onHeaderButtonHelp?: () => void;
 }
 
-export const Header7Layout = ({ captionHeaderTitleText, layout, onHeaderButtonClose, onHeaderButtonHelp }: Header7LayoutProps) => {
+export const Header7Layout = ({ caption, layout, onClose, onHeaderButtonHelp }: Header7LayoutProps) => {
     return (
-        <Region layout={{ position: 'relative', width: 64, height: 33, ...layout }}>
+        <Region layout={{ position: 'relative', minWidth: 64, minHeight: 33, ...layout }}>
             <Region
                 name="header_container"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, justifyContent: 'center' }}
@@ -20,7 +20,7 @@ export const Header7Layout = ({ captionHeaderTitleText, layout, onHeaderButtonCl
                     layout={{ position: 'absolute', marginLeft: -22, marginRight: 22, width: 12, top: 2, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
                     <ThemeText
-                        text={captionHeaderTitleText ?? ''}
+                        text={caption ?? ''}
                         textStyle="text-style-u-frame-title"
                         textOptions={{ fill: '#ffffff' }}
                     />
@@ -35,7 +35,7 @@ export const Header7Layout = ({ captionHeaderTitleText, layout, onHeaderButtonCl
                     <CloseButton
                         variant="3"
                         name="header_button_close"
-                        onPointerTap={onHeaderButtonClose}
+                        onPointerTap={onClose}
                         layout={{ width: 21, height: 20, flexShrink: 0 }}
                     />
                 </Region>
