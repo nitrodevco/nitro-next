@@ -22,9 +22,7 @@ export const TransactionDetailsLayout = ({ keyValuePairs, layout, onClose }: Tra
             onClose={onClose}
             layout={{ width: 400, height: 394, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <TransactionDetailsLayoutKeyValuePairs {...keyValuePairs} />
-            </Region>
+            <TransactionDetailsLayoutKeyValuePairs {...keyValuePairs} />
         </Frame>
     );
 };
@@ -239,26 +237,18 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteTex
                 tintColor="#cbcbcb"
                 layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
             >
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="coins_icon"
+                    src={srcCoinsIcon ?? layoutImage('inventory_furni_icon_credits.png')}
                     layout={{ position: 'absolute', left: 7, width: 25, top: 11, height: 18 }}
-                >
-                    <ThemeImage
-                        name="coins_icon"
-                        src={srcCoinsIcon ?? layoutImage('inventory_furni_icon_credits.png')}
-                        layout={{ position: 'absolute', left: 7, width: 25, top: 11, height: 18 }}
-                    />
-                </Region>
-                <Region
                     visible={false}
+                />
+                <ThemeImage
+                    name="unique_item_background_bitmap"
+                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                     layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                >
-                    <ThemeImage
-                        name="unique_item_background_bitmap"
-                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                    />
-                </Region>
+                    visible={false}
+                />
                 <WidgetSlot
                     widgetType="product_icon"
                     name="furni_icon"
@@ -288,16 +278,12 @@ export const TransactionDetailsLayoutFurniTemplateItem = ({ captionIncompleteTex
                     />
                 </Region>
             </Border>
-            <Region
-                visible={false}
+            <ThemeImage
+                name="outline_focus"
+                src={srcOutlineFocus ?? layoutImage('inventory_thumb_selected_outline.png')}
                 layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
-            >
-                <ThemeImage
-                    name="outline_focus"
-                    src={srcOutlineFocus ?? layoutImage('inventory_thumb_selected_outline.png')}
-                    layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
-                />
-            </Region>
+                visible={false}
+            />
         </Region>
     );
 };
@@ -439,26 +425,18 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteTe
                 tintColor="#cbcbcb"
                 layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
             >
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="coins_icon"
+                    src={srcCoinsIcon ?? layoutImage('inventory_furni_icon_credits.png')}
                     layout={{ position: 'absolute', left: 7, width: 25, top: 11, height: 18 }}
-                >
-                    <ThemeImage
-                        name="coins_icon"
-                        src={srcCoinsIcon ?? layoutImage('inventory_furni_icon_credits.png')}
-                        layout={{ position: 'absolute', left: 7, width: 25, top: 11, height: 18 }}
-                    />
-                </Region>
-                <Region
                     visible={false}
+                />
+                <ThemeImage
+                    name="unique_item_background_bitmap"
+                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                     layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                >
-                    <ThemeImage
-                        name="unique_item_background_bitmap"
-                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                    />
-                </Region>
+                    visible={false}
+                />
                 <WidgetSlot
                     widgetType="product_icon"
                     name="furni_icon"
@@ -488,16 +466,12 @@ export const TransactionDetailsLayoutFurniTemplateItem2 = ({ captionIncompleteTe
                     />
                 </Region>
             </Border>
-            <Region
-                visible={false}
+            <ThemeImage
+                name="outline_focus"
+                src={srcOutlineFocus ?? layoutImage('inventory_thumb_selected_outline.png')}
                 layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
-            >
-                <ThemeImage
-                    name="outline_focus"
-                    src={srcOutlineFocus ?? layoutImage('inventory_thumb_selected_outline.png')}
-                    layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
-                />
-            </Region>
+                visible={false}
+            />
         </Region>
     );
 };
@@ -792,19 +766,15 @@ export const TransactionDetailsLayoutExtraContainerItem = ({ extraInfoBubbleText
         >
             <TransactionDetailsLayoutExtraPair {...extraPair} />
             <TransactionDetailsLayoutExtraInfoButton {...extraInfoButton} />
-            <Region
+            <Bubble
+                variant="7"
+                name="extra_info_bubble"
+                pointer="left"
                 visible={visibleExtraInfoBubble ?? false}
                 layout={{ position: 'absolute', left: 379, width: 325, top: -79, height: 179 }}
             >
-                <Bubble
-                    variant="7"
-                    name="extra_info_bubble"
-                    pointer="left"
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    <TransactionDetailsLayoutExtraInfoBubbleTexts {...extraInfoBubbleTexts} />
-                </Bubble>
-            </Region>
+                <TransactionDetailsLayoutExtraInfoBubbleTexts {...extraInfoBubbleTexts} />
+            </Bubble>
         </Region>
     );
 };

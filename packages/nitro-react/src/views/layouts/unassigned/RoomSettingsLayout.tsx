@@ -23,9 +23,7 @@ export const RoomSettingsLayout = ({ contents, layout, onClose }: RoomSettingsLa
             onClose={onClose}
             layout={{ width: 341, height: 584, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <RoomSettingsLayoutContents {...contents} />
-            </Region>
+            <RoomSettingsLayoutContents {...contents} />
         </Frame>
     );
 };
@@ -453,38 +451,34 @@ export const RoomSettingsLayoutNormalAccessContainer = ({ captionRoomAccessTabCa
             </Region>
             <RoomSettingsLayoutDoormodeContainer {...doormodeContainer} />
             <RoomSettingsLayoutPasswordContainer {...passwordContainer} />
-            <Region
+            <Border
+                variant="0"
+                name="doormode_override_info"
                 visible={visibleDoormodeOverrideInfo ?? false}
-                layout={{ position: 'absolute', left: 0, width: 308, top: 88, height: 166 }}
+                layout={{ position: 'absolute', left: 0, width: 308, top: 88, height: 166, justifyContent: 'center' }}
             >
-                <Border
-                    variant="0"
-                    name="doormode_override_info"
-                    layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
+                <Region layout={{ position: 'absolute', left: 5, width: 295, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('notification.builders_club.room_locked.title')}
+                        textStyle="text-style-u-headline-small"
+                    />
+                </Region>
+                <Region layout={{ position: 'absolute', left: 5, width: 298, top: 42, height: 79, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('notification.builders_club.room_locked.message')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 298 }}
+                    />
+                </Region>
+                <Button
+                    variant="3"
+                    name="builders_faq_button"
+                    onPointerTap={onBuildersFaqButton}
+                    textStyle="text-style-button-shiny-regular"
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 287, top: 122, height: 30 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 5, width: 295, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('notification.builders_club.room_locked.title')}
-                            textStyle="text-style-u-headline-small"
-                        />
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 5, width: 298, top: 42, height: 79, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('notification.builders_club.room_locked.message')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 298 }}
-                        />
-                    </Region>
-                    <Button
-                        variant="3"
-                        name="builders_faq_button"
-                        onPointerTap={onBuildersFaqButton}
-                        textStyle="text-style-button-shiny-regular"
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 287, top: 122, height: 30 }}
-                    >
-                        {t('notification.builders_club.room_locked.linkTitle')}
-                    </Button>
-                </Border>
-            </Region>
+                    {t('notification.builders_club.room_locked.linkTitle')}
+                </Button>
+            </Border>
         </Region>
     );
 };
@@ -766,43 +760,35 @@ export const RoomSettingsLayoutNormalRightsContainer = ({ captionFriendsTxt, cap
                     textOptions={{ wordWrap: true, wordWrapWidth: 150 }}
                 />
             </Region>
-            <Region
+            <Border
+                variant="0"
+                name="users_with_rights_cont"
+                tintColor="#ffffff"
                 visible={visibleUsersWithRightsCont ?? false}
                 layout={{ position: 'absolute', left: 0, width: 150, top: 74, bottom: 4 }}
             >
-                <Border
-                    variant="0"
-                    name="users_with_rights_cont"
-                    tintColor="#ffffff"
-                    layout={{ width: '100%', height: '100%' }}
+                <RoomSettingsLayoutUsersWithRightsItemList {...usersWithRightsItemList} />
+                {/* <scrollbar_vertical> for users_with_rights_item_list - rendered by that list's ScrollArea */}
+                <ButtonThick
+                    variant="3"
+                    name="remove_all_flat_ctrls"
+                    onPointerTap={onRemoveAllFlatCtrls}
+                    textStyle="text-style-button-shiny-bold"
+                    layout={{ position: 'absolute', left: 4, width: 142, bottom: 4, height: 29, minWidth: 142, maxWidth: 142 }}
                 >
-                    <RoomSettingsLayoutUsersWithRightsItemList {...usersWithRightsItemList} />
-                    {/* <scrollbar_vertical> for users_with_rights_item_list - rendered by that list's ScrollArea */}
-                    <ButtonThick
-                        variant="3"
-                        name="remove_all_flat_ctrls"
-                        onPointerTap={onRemoveAllFlatCtrls}
-                        textStyle="text-style-button-shiny-bold"
-                        layout={{ position: 'absolute', left: 4, width: 142, bottom: 4, height: 29, minWidth: 142, maxWidth: 142 }}
-                    >
-                        {t('navigator.flatctrls.clear')}
-                    </ButtonThick>
-                </Border>
-            </Region>
-            <Region
+                    {t('navigator.flatctrls.clear')}
+                </ButtonThick>
+            </Border>
+            <Border
+                variant="0"
+                name="friends_cont"
+                tintColor="#ffffff"
                 visible={visibleFriendsCont ?? false}
                 layout={{ position: 'absolute', left: 173, width: 150, top: 74, bottom: 4 }}
             >
-                <Border
-                    variant="0"
-                    name="friends_cont"
-                    tintColor="#ffffff"
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    <RoomSettingsLayoutFriendsItemList {...friendsItemList} />
-                    {/* <scrollbar_vertical> for friends_item_list - rendered by that list's ScrollArea */}
-                </Border>
-            </Region>
+                <RoomSettingsLayoutFriendsItemList {...friendsItemList} />
+                {/* <scrollbar_vertical> for friends_item_list - rendered by that list's ScrollArea */}
+            </Border>
         </Region>
     );
 };

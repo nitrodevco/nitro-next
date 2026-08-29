@@ -20,16 +20,12 @@ export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, 
     return (
         <Region layout={{ position: 'relative', width: 53, height: 74, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 74 }}>
-                <Region
+                <Border
+                    variant="3"
+                    name="bg"
                     visible={visibleBg ?? false}
                     layout={{ position: 'absolute', left: 0, width: 53, top: 0, height: 62 }}
-                >
-                    <Border
-                        variant="3"
-                        name="bg"
-                        layout={{ width: '100%', height: '100%' }}
-                    />
-                </Region>
+                />
                 <Border
                     variant="2"
                     tintColor="#a1a19b"
@@ -48,16 +44,12 @@ export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, 
                     </Border>
                 </Border>
                 <Region layout={{ position: 'absolute', left: 8, width: 36, top: 2, height: 36 }}>
-                    <Region
-                        visible={false}
+                    <ThemeImage
+                        name="unique_item_background_bitmap"
+                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                         layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                    >
-                        <ThemeImage
-                            name="unique_item_background_bitmap"
-                            src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                            layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                        />
-                    </Region>
+                        visible={false}
+                    />
                     <ThemeImage
                         name="image"
                         src={srcImage}
@@ -104,25 +96,17 @@ export const MintGridItemLayout = ({ captionBundleCounter, captionMultiCounter, 
                         src={srcBadgeAddOn}
                         layout={{ position: 'absolute', left: 0, width: 10, top: 0, height: 10 }}
                     />
-                    <Region
-                        visible={false}
+                    <ThemeImage
+                        name="unique_item_sold_out_bitmap"
+                        src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_tile.png')}
                         layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
-                    >
-                        <ThemeImage
-                            name="unique_item_sold_out_bitmap"
-                            src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_tile.png')}
-                            layout={{ position: 'absolute', left: 0, width: 36, top: 7, height: 29 }}
-                        />
-                    </Region>
-                    <Region
                         visible={false}
+                    />
+                    <ThemeImage
+                        src={layoutImage('inventory_thumb_selected_outline.png')}
                         layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                    >
-                        <ThemeImage
-                            src={layoutImage('inventory_thumb_selected_outline.png')}
-                            layout={{ position: 'absolute', left: 0, width: 36, top: 0, height: 36 }}
-                        />
-                    </Region>
+                        visible={false}
+                    />
                 </Region>
                 <MintGridItemLayoutTotalpriceContainer {...totalpriceContainer} />
             </Region>

@@ -13,34 +13,30 @@ export interface AvatarInfoWidgetLayoutProps {
 export const AvatarInfoWidgetLayout = ({ captionName, changeNameContainer, layout, srcRelationshipStatus, visibleBorder }: AvatarInfoWidgetLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 129, height: 39, ...layout }}>
-            <Region
+            <Bubble
+                variant="5"
+                name="border"
+                tintColor="#3d3d3d"
                 visible={visibleBorder ?? true}
-                layout={{ position: 'absolute', left: 0, width: 129, top: 0, height: 39 }}
+                layout={{ position: 'absolute', left: 0, width: 129, top: 0, height: 39, justifyContent: 'center' }}
             >
-                <Bubble
-                    variant="5"
-                    name="border"
-                    tintColor="#3d3d3d"
-                    layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
+                <ThemeImage
+                    name="relationship_status"
+                    src={srcRelationshipStatus}
+                    layout={{ position: 'absolute', left: 2, width: 16, top: 4, height: 14 }}
+                />
+                <Region
+                    name="name"
+                    layout={{ position: 'absolute', left: 16, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeImage
-                        name="relationship_status"
-                        src={srcRelationshipStatus}
-                        layout={{ position: 'absolute', left: 2, width: 16, top: 4, height: 14 }}
+                    <ThemeText
+                        text={captionName ?? 'my_name_here'}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff' }}
                     />
-                    <Region
-                        name="name"
-                        layout={{ position: 'absolute', left: 16, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionName ?? 'my_name_here'}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                    <AvatarInfoWidgetLayoutChangeNameContainer {...changeNameContainer} />
-                </Bubble>
-            </Region>
+                </Region>
+                <AvatarInfoWidgetLayoutChangeNameContainer {...changeNameContainer} />
+            </Bubble>
         </Region>
     );
 };

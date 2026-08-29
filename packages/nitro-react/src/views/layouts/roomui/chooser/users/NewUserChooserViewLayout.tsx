@@ -27,43 +27,41 @@ export const NewUserChooserViewLayout = ({ captionAmountIndicator, captionSearch
             onClose={onClose}
             layout={{ width: 290, height: 357, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="105"
-                    layout={{ position: 'absolute', left: 6, right: 130, top: 18, height: 26 }}
-                >
-                    <Region
-                        name="search_placeholder"
-                        layout={{ position: 'absolute', left: 6, width: 40, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionSearchPlaceholder ?? t('new_chooser.search')}
-                            textOptions={{ fill: '#666666' }}
-                        />
-                    </Region>
-                    <TextInput
-                        value={textInputValue}
-                        onChange={setTextInputValue}
-                        textColor="#666666"
-                        layout={{ position: 'absolute', left: 6, right: 23, top: 4, bottom: 4 }}
-                    />
-                    <NewUserChooserViewLayoutClearButton {...clearButton} />
-                </Border>
-                <Dropmenu
-                    variant="3"
-                    name="type_dropdown"
-                    onPointerTap={onTypeDropdown}
-                    layout={{ position: 'absolute', right: 18, width: 100, top: 18, height: 25 }}
-                >
-                    {t('new_user_chooser.usertype.all')}
-                </Dropmenu>
-                <NewUserChooserViewLayoutTableContainer {...tableContainer} />
+            <Border
+                variant="105"
+                layout={{ position: 'absolute', left: 6, right: 130, top: 18, height: 26 }}
+            >
                 <Region
-                    name="amount_indicator"
-                    layout={{ position: 'absolute', left: 6, width: 212, bottom: 37, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    name="search_placeholder"
+                    layout={{ position: 'absolute', left: 6, width: 40, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeText text={captionAmountIndicator ?? t('new_user_chooser.amount_indicator')} />
+                    <ThemeText
+                        text={captionSearchPlaceholder ?? t('new_chooser.search')}
+                        textOptions={{ fill: '#666666' }}
+                    />
                 </Region>
+                <TextInput
+                    value={textInputValue}
+                    onChange={setTextInputValue}
+                    textColor="#666666"
+                    layout={{ position: 'absolute', left: 6, right: 23, top: 4, bottom: 4 }}
+                />
+                <NewUserChooserViewLayoutClearButton {...clearButton} />
+            </Border>
+            <Dropmenu
+                variant="3"
+                name="type_dropdown"
+                onPointerTap={onTypeDropdown}
+                layout={{ position: 'absolute', right: 18, width: 100, top: 18, height: 25 }}
+            >
+                {t('new_user_chooser.usertype.all')}
+            </Dropmenu>
+            <NewUserChooserViewLayoutTableContainer {...tableContainer} />
+            <Region
+                name="amount_indicator"
+                layout={{ position: 'absolute', left: 6, width: 212, bottom: 37, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={captionAmountIndicator ?? t('new_user_chooser.amount_indicator')} />
             </Region>
         </Frame>
     );

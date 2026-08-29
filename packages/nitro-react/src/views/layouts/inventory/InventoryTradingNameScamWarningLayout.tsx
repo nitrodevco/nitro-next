@@ -23,9 +23,7 @@ export const InventoryTradingNameScamWarningLayout = ({ contentList, layout, onC
             onClose={onClose}
             layout={{ width: 356, height: 333, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <InventoryTradingNameScamWarningLayoutContentList {...contentList} />
-            </Region>
+            <InventoryTradingNameScamWarningLayoutContentList {...contentList} />
         </Frame>
     );
 };

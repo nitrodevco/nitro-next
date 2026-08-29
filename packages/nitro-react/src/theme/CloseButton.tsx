@@ -90,7 +90,7 @@ export type CloseButtonProps = ThemeProps<CloseButtonVariant>;
 
 export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, CloseButtonProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor,
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, visible,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
@@ -100,6 +100,7 @@ export const CloseButton: ForwardRefExoticComponent<CloseButtonProps & RefAttrib
         return (
             <Box
                 ref={ref}
+                visible={visible}
                 layout={{
                     flexDirection: 'row',
                     alignItems: 'center',

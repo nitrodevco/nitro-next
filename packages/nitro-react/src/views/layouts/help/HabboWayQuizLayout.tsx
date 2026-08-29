@@ -29,39 +29,37 @@ export const HabboWayQuizLayout = ({ analysisPane, captionTopIndicator, exitButt
             onClose={onClose}
             layout={{ width: 499, height: 470, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <WidgetSlot
-                    widgetType="separator"
-                    layout={{ position: 'absolute', left: 6, width: 485, top: 36, height: 25 }}
-                >
-                    <ThemeImage
-                        name="indicator_image"
-                        src={srcIndicatorImage}
-                        layout={{ position: 'absolute', left: 19, width: 29, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 18 }}
-                    />
-                    <Region
-                        name="top_indicator"
-                        layout={{ position: 'absolute', left: 40, width: 77, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTopIndicator ?? 'top indicator'}
-                            textStyle="text-style-il-border"
-                            textOptions={{ fill: '#555555' }}
-                        />
-                    </Region>
-                </WidgetSlot>
-                <HabboWayQuizLayoutQuestionPane {...questionPane} />
-                <HabboWayQuizLayoutFailurePane {...failurePane} />
-                <HabboWayQuizLayoutSuccessPane {...successPane} />
-                <HabboWayQuizLayoutAnalysisPane {...analysisPane} />
-                <WidgetSlot
-                    widgetType="separator"
-                    layout={{ position: 'absolute', left: 6, width: 485, bottom: 81, height: 30 }}
+            <WidgetSlot
+                widgetType="separator"
+                layout={{ position: 'absolute', left: 6, width: 485, top: 36, height: 25 }}
+            >
+                <ThemeImage
+                    name="indicator_image"
+                    src={srcIndicatorImage}
+                    layout={{ position: 'absolute', left: 19, width: 29, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 18 }}
                 />
-                <HabboWayQuizLayoutPrevNextButtons {...prevNextButtons} />
-                <HabboWayQuizLayoutFailureButtons {...failureButtons} />
-                <HabboWayQuizLayoutExitButtonContainer {...exitButtonContainer} />
-            </Region>
+                <Region
+                    name="top_indicator"
+                    layout={{ position: 'absolute', left: 40, width: 77, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionTopIndicator ?? 'top indicator'}
+                        textStyle="text-style-il-border"
+                        textOptions={{ fill: '#555555' }}
+                    />
+                </Region>
+            </WidgetSlot>
+            <HabboWayQuizLayoutQuestionPane {...questionPane} />
+            <HabboWayQuizLayoutFailurePane {...failurePane} />
+            <HabboWayQuizLayoutSuccessPane {...successPane} />
+            <HabboWayQuizLayoutAnalysisPane {...analysisPane} />
+            <WidgetSlot
+                widgetType="separator"
+                layout={{ position: 'absolute', left: 6, width: 485, bottom: 81, height: 30 }}
+            />
+            <HabboWayQuizLayoutPrevNextButtons {...prevNextButtons} />
+            <HabboWayQuizLayoutFailureButtons {...failureButtons} />
+            <HabboWayQuizLayoutExitButtonContainer {...exitButtonContainer} />
         </Frame>
     );
 };

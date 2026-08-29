@@ -23,26 +23,24 @@ export const NavPromoAlertLayout = ({ captionBodyText, layout, onClose, onOk, pr
             onClose={onClose}
             layout={{ width: 224, height: 182, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="body_text"
-                    layout={{ position: 'absolute', left: 7, width: 186, top: 12, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 186 }}
-                    />
-                </Region>
-                <Button
-                    variant="3"
-                    name="ok"
-                    onPointerTap={onOk}
-                    layout={{ position: 'absolute', left: 76, width: 60, top: 122, height: 24, minWidth: 60, maxWidth: 60 }}
-                >
-                    {t('generic.ok')}
-                </Button>
-                <NavPromoAlertLayoutPromoContainer {...promoContainer} />
+            <Region
+                name="body_text"
+                layout={{ position: 'absolute', left: 7, width: 186, top: 12, height: 57, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 186 }}
+                />
             </Region>
+            <Button
+                variant="3"
+                name="ok"
+                onPointerTap={onOk}
+                layout={{ position: 'absolute', left: 76, width: 60, top: 122, height: 24, minWidth: 60, maxWidth: 60 }}
+            >
+                {t('generic.ok')}
+            </Button>
+            <NavPromoAlertLayoutPromoContainer {...promoContainer} />
         </Frame>
     );
 };

@@ -70,36 +70,24 @@ export const CameraFilterbuttonLayoutRegion = ({ layout, onRegion, removeEffectB
                 src={srcContent}
                 layout={{ position: 'absolute', left: 3, width: 56, top: 3, height: 56 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="lock_indicator"
+                src={srcLockIndicator ?? layoutImage('camera_locked.png')}
                 layout={{ position: 'absolute', left: 2, width: 59, top: 0, height: 60 }}
-            >
-                <ThemeImage
-                    name="lock_indicator"
-                    src={srcLockIndicator ?? layoutImage('camera_locked.png')}
-                    layout={{ position: 'absolute', left: 2, width: 59, top: 0, height: 60 }}
-                />
-            </Region>
-            <Region
                 visible={false}
+            />
+            <ThemeImage
+                name="active_indicator"
+                src={srcActiveIndicator ?? layoutImage('camera_fx_button_active.png')}
                 layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 62 }}
-            >
-                <ThemeImage
-                    name="active_indicator"
-                    src={srcActiveIndicator ?? layoutImage('camera_fx_button_active.png')}
-                    layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 62 }}
-                />
-            </Region>
-            <Region
                 visible={false}
+            />
+            <ThemeImage
+                name="selected_indicator"
+                src={srcSelectedIndicator ?? layoutImage('camera_fx_button_selected.png')}
                 layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 62 }}
-            >
-                <ThemeImage
-                    name="selected_indicator"
-                    src={srcSelectedIndicator ?? layoutImage('camera_fx_button_selected.png')}
-                    layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 62 }}
-                />
-            </Region>
+                visible={false}
+            />
             <CameraFilterbuttonLayoutRemoveEffectButton {...removeEffectButton} />
         </Region>
     );

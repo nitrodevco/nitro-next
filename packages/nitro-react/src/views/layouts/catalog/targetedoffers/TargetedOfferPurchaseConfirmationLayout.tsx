@@ -21,9 +21,7 @@ export const TargetedOfferPurchaseConfirmationLayout = ({ content, layout, onClo
             onClose={onClose}
             layout={{ width: 325, height: 291, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <TargetedOfferPurchaseConfirmationLayoutContent {...content} />
-            </Region>
+            <TargetedOfferPurchaseConfirmationLayoutContent {...content} />
         </Frame>
     );
 };

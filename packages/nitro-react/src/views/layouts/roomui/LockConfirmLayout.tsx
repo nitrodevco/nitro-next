@@ -21,9 +21,7 @@ export const LockConfirmLayout = ({ layout, onClose, topList }: LockConfirmLayou
             onClose={onClose}
             layout={{ width: 309, height: 198, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <LockConfirmLayoutTopList {...topList} />
-            </Region>
+            <LockConfirmLayoutTopList {...topList} />
         </Frame>
     );
 };

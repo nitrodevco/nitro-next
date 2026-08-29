@@ -26,17 +26,15 @@ export const PollOfferLayout = ({ headerContainer, layout, onClose, pollOfferSum
             onClose={onClose}
             layout={{ width: 382, height: 250, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <PollOfferLayoutHeaderContainer {...headerContainer} />
-                <Border
-                    variant="2"
-                    name="poll_offer_border"
-                    layout={{ position: 'absolute', left: 0, right: 12, top: 100, bottom: 0 }}
-                >
-                    <PollOfferLayoutPollOfferSummaryWrapper {...pollOfferSummaryWrapper} />
-                    <PollOfferLayoutPollOptionsContainer {...pollOptionsContainer} />
-                </Border>
-            </Region>
+            <PollOfferLayoutHeaderContainer {...headerContainer} />
+            <Border
+                variant="2"
+                name="poll_offer_border"
+                layout={{ position: 'absolute', left: 0, right: 12, top: 100, bottom: 0 }}
+            >
+                <PollOfferLayoutPollOfferSummaryWrapper {...pollOfferSummaryWrapper} />
+                <PollOfferLayoutPollOptionsContainer {...pollOptionsContainer} />
+            </Border>
         </Frame>
     );
 };

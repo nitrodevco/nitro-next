@@ -31,16 +31,12 @@ export const MarketPlaceOwnItemsWidgetLayoutImageContainer = ({ layout, srcItemI
             name="image_container"
             layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
         >
-            <Region
-                visible={false}
+            <ThemeImage
+                name="unique_item_background_bitmap"
+                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                 layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            >
-                <ThemeImage
-                    name="unique_item_background_bitmap"
-                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="item_image"
                 src={srcItemImage}
@@ -145,16 +141,12 @@ export const MarketPlaceOwnItemsWidgetLayoutImageContainer2 = ({ layout, srcItem
             name="image_container"
             layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
         >
-            <Region
-                visible={false}
+            <ThemeImage
+                name="unique_item_background_bitmap"
+                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                 layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            >
-                <ThemeImage
-                    name="unique_item_background_bitmap"
-                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="item_image"
                 src={srcItemImage}
@@ -250,16 +242,12 @@ export const MarketPlaceOwnItemsWidgetLayoutImageContainer3 = ({ layout, srcItem
             name="image_container"
             layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
         >
-            <Region
-                visible={false}
+            <ThemeImage
+                name="unique_item_background_bitmap"
+                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                 layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            >
-                <ThemeImage
-                    name="unique_item_background_bitmap"
-                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="item_image"
                 src={srcItemImage}

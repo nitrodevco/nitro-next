@@ -40,29 +40,20 @@ export const MysteryboxMenuLayoutUseItem = ({ captionLabel, layout, onButton, vi
             visible={visibleGroups?.action ?? true}
             layout={{ width: 101, height: 26, flexShrink: 0, ...layout }}
         >
-            <Region
+            <ContainerButton
+                variant="3"
+                name="button"
+                tintColor="#2d2a27"
+                onPointerTap={onButton}
                 visible={visibleGroups?.action ?? true}
                 layout={{ position: 'absolute', left: -3, right: -3, top: -4, bottom: -5 }}
             >
-                <ContainerButton
-                    variant="3"
-                    name="button"
-                    tintColor="#2d2a27"
-                    onPointerTap={onButton}
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    <Region
-                        name="label"
-                        layout={{ position: 'absolute', left: 3, right: 3, top: 9, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionLabel ?? t('mysterybox.context.other.use')}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
-                </ContainerButton>
-            </Region>
+                <ThemeText
+                    text={captionLabel ?? t('mysterybox.context.other.use')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </ContainerButton>
         </Region>
     );
 };

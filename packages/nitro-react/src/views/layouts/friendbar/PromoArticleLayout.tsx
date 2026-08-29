@@ -456,17 +456,13 @@ export interface PromoArticleLayoutButtonItemProps {
 
 export const PromoArticleLayoutButtonItem = ({ layout, onButton, visibleButton }: PromoArticleLayoutButtonItemProps) => {
     return (
-        <Region
+        <Button
+            variant="100"
+            name="button"
+            onPointerTap={onButton}
             visible={visibleButton ?? false}
             layout={{ width: 52, height: 48, flexShrink: 0, maxWidth: 330, ...layout }}
-        >
-            <Button
-                variant="100"
-                name="button"
-                onPointerTap={onButton}
-                layout={{ width: '100%', height: '100%' }}
-            />
-        </Region>
+        />
     );
 };
 

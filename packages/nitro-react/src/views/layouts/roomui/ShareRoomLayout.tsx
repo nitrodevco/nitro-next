@@ -23,10 +23,8 @@ export const ShareRoomLayout = ({ embedInfo, layout, onClose, thumbnailEdges }: 
             onClose={onClose}
             layout={{ width: 457, height: 250, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ShareRoomLayoutThumbnailEdges {...thumbnailEdges} />
-                <ShareRoomLayoutEmbedInfo {...embedInfo} />
-            </Region>
+            <ShareRoomLayoutThumbnailEdges {...thumbnailEdges} />
+            <ShareRoomLayoutEmbedInfo {...embedInfo} />
         </Frame>
     );
 };

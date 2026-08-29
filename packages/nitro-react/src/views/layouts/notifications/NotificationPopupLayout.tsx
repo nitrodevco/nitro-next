@@ -20,47 +20,41 @@ export const NotificationPopupLayout = ({ captionLink, captionMessage, layout, o
             onClose={onClose}
             layout={{ width: 306, height: 92, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 3, top: 2, flexDirection: 'row' }}>
-                    <ThemeImage
-                        name="illustration"
-                        src={srcIllustration}
-                        layout={{ width: 1, height: 1, flexShrink: 0 }}
-                    />
-                    <Region layout={{ flexShrink: 0, flexDirection: 'column' }}>
-                        <Region
-                            name="message"
-                            layout={{ width: 293, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionMessage ?? ''}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 293 }}
-                            />
-                        </Region>
-                        <Region
-                            name="link"
-                            visible={false}
-                            layout={{ width: 293, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-                            onPointerTap={onLink}
-                            cursor="pointer"
-                        >
-                            <ThemeText
-                                text={captionLink ?? ''}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 293, align: 'center' }}
-                            />
-                        </Region>
-                        <Region
-                            visible={visibleAction ?? false}
-                            layout={{ width: 20, height: 30, flexShrink: 0 }}
-                        >
-                            <Button
-                                variant="3"
-                                name="action"
-                                onPointerTap={onAction}
-                                layout={{ width: '100%', height: '100%' }}
-                            />
-                        </Region>
+            <Region layout={{ position: 'absolute', left: 3, top: 2, flexDirection: 'row' }}>
+                <ThemeImage
+                    name="illustration"
+                    src={srcIllustration}
+                    layout={{ width: 1, height: 1, flexShrink: 0 }}
+                />
+                <Region layout={{ flexShrink: 0, flexDirection: 'column' }}>
+                    <Region
+                        name="message"
+                        layout={{ width: 293, height: 12, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionMessage ?? ''}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 293 }}
+                        />
                     </Region>
+                    <Region
+                        name="link"
+                        visible={false}
+                        layout={{ width: 293, height: 4, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
+                        onPointerTap={onLink}
+                        cursor="pointer"
+                    >
+                        <ThemeText
+                            text={captionLink ?? ''}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 293, align: 'center' }}
+                        />
+                    </Region>
+                    <Button
+                        variant="3"
+                        name="action"
+                        onPointerTap={onAction}
+                        visible={visibleAction ?? false}
+                        layout={{ width: 20, height: 30, flexShrink: 0 }}
+                    />
                 </Region>
             </Region>
         </Frame>

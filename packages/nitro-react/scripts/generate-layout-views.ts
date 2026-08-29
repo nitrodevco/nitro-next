@@ -741,11 +741,12 @@ const emitChildren = (ctx: EmitContext, el: Element, parent: ParentBox, indent: 
 
 const selfBox = (el: Element, flow = false): ParentBox => ({ width: num(el.attrs.width), height: num(el.attrs.height), flow });
 
-const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
+/** Just the `<ThemeText>` for a text element - used where the parent already lays its caption out (a button). */
+const textElement = (ctx: EmitContext, el: Element): { props: string[]; hasText: boolean; wordWrap: boolean; autoSize: string } => {
     const caption = captionExpr(ctx, el.attrs.caption);
     const { textStyle, fill: styleFill } = resolveTextStyle(el.vars.text_style);
     const fill = hexColor(el.vars.text_color) ?? styleFill;
-    const wordWrap = bool(el.vars.word_wrap) || bool(el.vars.multiline);
+    const wordWrap = !!(bool(el.vars.word_wrap) || bool(el.vars.multiline));
     const autoSize = el.vars.auto_size && AUTO_SIZE_JUSTIFY[el.vars.auto_size] ? el.vars.auto_size : 'left';
     const textOptions: Record<string, string | number | undefined> = {
         fill: textColorExpr(ctx, el, fill),
@@ -753,32 +754,61 @@ const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: stri
         wordWrapWidth: wordWrap && !(el.params & PARAM.REFLECT_H) ? num(el.attrs.width) : undefined,
         align: autoSize !== 'left' ? quote(autoSize) : undefined,
     };
-    const textProps: string[] = [];
+    const props: string[] = [];
     const override = overrideProp(ctx, el, 'caption', 'string');
     const hasText = !!(caption || override);
 
-    if (override && caption) textProps.push(`text={${override} ?? ${caption}}`);
-    else if (override) textProps.push(`text={${override} ?? ''}`);
-    else if (caption) textProps.push(`text=${caption.startsWith('\'') ? jsxStr(decode(el.attrs.caption ?? '')) : `{${caption}}`}`);
+    if (override && caption) props.push(`text={${override} ?? ${caption}}`);
+    else if (override) props.push(`text={${override} ?? ''}`);
+    else if (caption) props.push(`text=${caption.startsWith('\'') ? jsxStr(decode(el.attrs.caption ?? '')) : `{${caption}}`}`);
 
-    if (textStyle) textProps.push(`textStyle="${textStyle}"`);
-    if (Object.values(textOptions).some(value => value !== undefined)) textProps.push(`textOptions={${layoutLiteral(textOptions)}}`);
-
+    if (textStyle) props.push(`textStyle="${textStyle}"`);
+    if (Object.values(textOptions).some(value => value !== undefined)) props.push(`textOptions={${layoutLiteral(textOptions)}}`);
     if (hasText) ctx.imports.add('ThemeText');
+
+    return { props, hasText, wordWrap, autoSize };
+};
+
+/** A text as a button's caption: no positioning wrapper, the button's own flex centring places it. */
+const emitInlineText = (ctx: EmitContext, el: Element, indent: string): string[] => {
+    const { props, hasText } = textElement(ctx, el);
+
+    return hasText ? openTag('ThemeText', props, indent, true) : [];
+};
+
+/** A single text child that covers its container exactly - the container's box can hold the text directly. */
+const fillsHost = (child: Element, host: Element): boolean =>
+    num(child.attrs.x) === 0 && num(child.attrs.y) === 0 && num(child.attrs.width) === num(host.attrs.width) && num(child.attrs.height) === num(host.attrs.height);
+
+/**
+ * A text element: one `Region` (the positioned, aligning box) holding the `ThemeText`. With a
+ * `host` - a container whose only child is this text, filling it - the host's own Region carries
+ * the text instead of nesting two boxes.
+ */
+const emitText = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, host?: Element): string[] => {
+    const box = host ?? el;
+    const { props: textProps, hasText, wordWrap, autoSize } = textElement(ctx, el);
+
     ctx.imports.add('Region');
 
     const regionProps = [
-        ...metaProps(ctx, el),
-        ...dropShadowProp(el),
-        `layout={${boxLayout(el, parent, { flexDirection: '\'row\'', alignItems: wordWrap ? '\'flex-start\'' : '\'center\'', justifyContent: AUTO_SIZE_JUSTIFY[autoSize] }, { autoSize: true })}}`,
+        ...metaProps(ctx, box),
+        ...dropShadowProp(box),
+        ...(host ? blendProp(host) : []),
+        `layout={${boxLayout(box, parent, { flexDirection: '\'row\'', alignItems: wordWrap ? '\'flex-start\'' : '\'center\'', justifyContent: AUTO_SIZE_JUSTIFY[autoSize] }, { autoSize: !host })}}`,
     ];
 
     if (el.tag === 'link') {
         regionProps.push(`onPointerTap={${handlerProp(ctx, el, 'link')}}`);
         regionProps.push('cursor="pointer"');
+    } else if (host && (host.tag === 'region' || host.tag === 'container') && host.attrs.name && (host.params & PARAM.INPUT)) {
+        regionProps.push(`onPointerTap={${handlerProp(ctx, host, 'region')}}`);
+        regionProps.push('cursor="pointer"');
     }
 
-    if (el.attrs.background === 'true' && hexColor(el.attrs.color)) regionProps.push(`backgroundColor=${quote(hexColor(el.attrs.color)!)}`);
+    const bgColor = hexColor(box.attrs.color);
+
+    if (bgColor && (box.attrs.background === 'true' || box.tag === 'background' || box.tag === 'gradient')) regionProps.push(`backgroundColor={${recolorExpr(ctx, box, bgColor)}}`);
 
     return wrap('Region', regionProps, indent, hasText ? openTag('ThemeText', textProps, indent + INDENT, true) : []);
 };
@@ -823,14 +853,17 @@ const emitBitmap = (ctx: EmitContext, el: Element, parent: ParentBox, indent: st
     props.push(`layout={${boxLayout(el, parent, {}, { autoSize: true })}}`);
 
     const visible = visibilityExpr(ctx, el, { defaultHidden: el.attrs.visible === 'false' });
-    const needsWrapper = !!visible || !!el.dropShadow;
-    const image = openTag('ThemeImage', props, needsWrapper ? indent + INDENT : indent, true);
 
-    if (!needsWrapper) return image;
+    if (visible) props.push(`visible={${visible}}`);
+
+    // ThemeImage takes `visible` itself; only a drop shadow still needs a Region around it.
+    const image = openTag('ThemeImage', props, el.dropShadow ? indent + INDENT : indent, true);
+
+    if (!el.dropShadow) return image;
 
     ctx.imports.add('Region');
 
-    return wrap('Region', [ ...(visible ? [ `visible={${visible}}` ] : []), ...dropShadowProp(el), `layout={${boxLayout(el, parent)}}` ], indent, image);
+    return wrap('Region', [ ...dropShadowProp(el), `layout={${boxLayout(el, parent)}}` ], indent, image);
 };
 
 const emitList = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string): string[] => {
@@ -912,12 +945,12 @@ const emitFrame = (ctx: EmitContext, el: Element, parent: ParentBox | undefined,
         props.push(`layout={${boxLayout(el, parent)}}`);
     }
 
-    const content = wrap(
-        'Region',
-        [ `layout={${layoutLiteral({ position: '\'relative\'', flex: 1, width: '\'100%\'', ...centerExtra(el) })}}` ],
-        indent + INDENT,
-        emitChildren(ctx, el, selfBox(el), indent + INDENT + INDENT),
-    );
+    // Children go straight into the Frame's ContentArea: an absolutely positioned child is
+    // placed from its parent's padding edge in both Yoga and CSS, so no relative wrapper is
+    // needed - unless a child centres itself, which needs a flex parent of its own.
+    const content = centersHChild(el)
+        ? wrap('Region', [ `layout={${layoutLiteral({ position: '\'relative\'', flex: 1, width: '\'100%\'', ...centerExtra(el) })}}` ], indent + INDENT, emitChildren(ctx, el, selfBox(el), indent + INDENT + INDENT))
+        : emitChildren(ctx, el, selfBox(el), indent + INDENT);
 
     return wrap('Frame', props, indent, content);
 };
@@ -946,6 +979,9 @@ const emitInput = (ctx: EmitContext, el: Element, parent: ParentBox, indent: str
     return openTag('TextInput', props, indent, true);
 };
 
+/** Components whose root Box takes `visible` directly - no wrapper Region needed to hide them. */
+const VISIBLE_AWARE = new Set([ 'Border', 'Button', 'ButtonThick', 'CheckBox', 'RadioButton', 'TabButton', 'TabContent', 'TabContext', 'Dropmenu', 'Droplist', 'Bubble', 'CloseButton', 'ContainerButton', 'Scaler', 'Header', 'Tooltip' ]);
+
 const emitThemed = (ctx: EmitContext, component: string, el: Element, parent: ParentBox, indent: string, extraProps: string[], children: (childIndent: string) => string[]): string[] => {
     ctx.imports.add(component);
 
@@ -957,7 +993,9 @@ const emitThemed = (ctx: EmitContext, component: string, el: Element, parent: Pa
     const visible = visibilityExpr(ctx, el, { defaultHidden: hidden, override: visibleOverride });
     const blend = blendProp(el);
 
-    if (!visible && !el.dropShadow && !blend.length) return wrap(component, [ ...props, `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, children(indent + INDENT));
+    if (!el.dropShadow && !blend.length && (!visible || VISIBLE_AWARE.has(component))) {
+        return wrap(component, [ ...props, ...(visible ? [ `visible={${visible}}` ] : []), `layout={${boxLayout(el, parent, centerExtra(el))}}` ], indent, children(indent + INDENT));
+    }
 
     // Components that don't forward `visible`/`dropShadow` to their Box get a Region wrapper carrying them instead.
     ctx.imports.add('Region');
@@ -1150,6 +1188,11 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
     const captionOnly = (ci: string) => (caption ? [ `${ci}${jsxText(caption)}` ] : []);
     const childrenOnly = (ci: string) => emitChildren(ctx, el, selfBox(el), ci);
     const captionAndChildren = (ci: string) => [ ...captionOnly(ci), ...childrenOnly(ci) ];
+    // A button whose children are all texts: they're its caption, and the button already
+    // centres its content, so they go in bare instead of each in a positioned Region.
+    const allTexts = el.children.length > 0 && el.children.every(child => TEXT_TAGS.has(child.tag) && child.attrs.visible !== 'false');
+    const buttonChildren = (ci: string) => (allTexts ? el.children.flatMap(child => emitInlineText(ctx, child, ci)) : childrenOnly(ci));
+    const captionAndButtonChildren = (ci: string) => [ ...captionOnly(ci), ...buttonChildren(ci) ];
     const none = () => [] as string[];
 
     switch (tag) {
@@ -1160,6 +1203,10 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
         case 'display_object_wrapper':
         case 'selector':
         case 'gradient': {
+            if (el.children.length === 1 && TEXT_TAGS.has(el.children[0].tag) && el.children[0].tag !== 'link' && fillsHost(el.children[0], el) && el.children[0].attrs.visible !== 'false') {
+                return emitText(ctx, el.children[0], parent, indent, el);
+            }
+
             ctx.imports.add('Region');
 
             const props = [ ...metaProps(ctx, el, false), ...dropShadowProp(el), ...blendProp(el) ];
@@ -1196,23 +1243,23 @@ const emit = (ctx: EmitContext, el: Element, parent: ParentBox, indent: string, 
             const { textStyle } = resolveTextStyle(el.vars.text_style);
             const extra = [ `onPointerTap={${handlerProp(ctx, el, tag)}}`, ...(textStyle ? [ `textStyle="${textStyle}"` ] : []) ];
 
-            return emitThemed(ctx, component, el, parent, indent, extra, captionAndChildren);
+            return emitThemed(ctx, component, el, parent, indent, extra, captionAndButtonChildren);
         }
         // A container button's face is its children - the client never rendered its own
         // `caption` (the skin has no label), so only the children are emitted.
         case 'container_button':
         case 'iconbutton':
-            return emitThemed(ctx, 'ContainerButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], childrenOnly);
+            return emitThemed(ctx, 'ContainerButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], buttonChildren);
         case 'closebutton':
             return emitThemed(ctx, 'CloseButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'close')}}` ], none);
         case 'checkbox':
         case 'radiobutton':
             return emitThemed(ctx, tag === 'checkbox' ? 'CheckBox' : 'RadioButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, tag)}}` ], captionOnly);
         case 'tab_button':
-            return emitThemed(ctx, 'TabButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'tab')}}` ], captionAndChildren);
+            return emitThemed(ctx, 'TabButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'tab')}}` ], captionAndButtonChildren);
         // Same as container_button: the tab's face is its children.
         case 'tab_container_button':
-            return emitThemed(ctx, 'TabButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'tab')}}` ], childrenOnly);
+            return emitThemed(ctx, 'TabButton', el, parent, indent, [ `onPointerTap={${handlerProp(ctx, el, 'tab')}}` ], buttonChildren);
         case 'tab_context':
             return emitThemed(ctx, 'TabContext', el, parent, indent, [], childrenOnly);
         case 'tab_content':

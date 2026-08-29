@@ -20,34 +20,28 @@ export const SnowwarExitConfirmationLayout = ({ layout, onClose, onNo, onYes }: 
             onClose={onClose}
             layout={{ width: 270, height: 163, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 12, width: 238, top: 12, height: 18, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('snowwar.exit.confirmation')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 238, align: 'center' }}
-                    />
-                </Region>
-                <ContainerButton
-                    variant="3"
-                    name="no"
-                    onPointerTap={onNo}
-                    layout={{ position: 'absolute', left: 8, width: 110, top: 80, height: 35, justifyContent: 'center' }}
-                >
-                    <Region layout={{ position: 'absolute', width: 102, top: 8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('snowwar.exit.no')} />
-                    </Region>
-                </ContainerButton>
-                <ContainerButton
-                    variant="3"
-                    name="yes"
-                    onPointerTap={onYes}
-                    layout={{ position: 'absolute', left: 144, width: 110, top: 80, height: 35, justifyContent: 'center' }}
-                >
-                    <Region layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 107, top: 8, height: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('snowwar.exit.yes')} />
-                    </Region>
-                </ContainerButton>
+            <Region layout={{ position: 'absolute', left: 12, width: 238, top: 12, height: 18, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
+                <ThemeText
+                    text={t('snowwar.exit.confirmation')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 238, align: 'center' }}
+                />
             </Region>
+            <ContainerButton
+                variant="3"
+                name="no"
+                onPointerTap={onNo}
+                layout={{ position: 'absolute', left: 8, width: 110, top: 80, height: 35, justifyContent: 'center' }}
+            >
+                <ThemeText text={t('snowwar.exit.no')} />
+            </ContainerButton>
+            <ContainerButton
+                variant="3"
+                name="yes"
+                onPointerTap={onYes}
+                layout={{ position: 'absolute', left: 144, width: 110, top: 80, height: 35, justifyContent: 'center' }}
+            >
+                <ThemeText text={t('snowwar.exit.yes')} />
+            </ContainerButton>
         </Frame>
     );
 };

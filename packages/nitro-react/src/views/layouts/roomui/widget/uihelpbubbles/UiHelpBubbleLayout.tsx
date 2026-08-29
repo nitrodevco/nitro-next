@@ -57,27 +57,23 @@ export const UiHelpBubbleLayoutMasterContainer = ({ layout, onHelpBubbleBtnOk, p
             name="master_container"
             layout={{ position: 'absolute', right: 0, width: 180, top: 0, height: 500, maxWidth: 180, ...layout }}
         >
-            <Region
+            <Bubble
+                variant="7"
+                name="bubble"
                 visible={visibleBubble ?? true}
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 200 }}
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, maxWidth: 200, justifyContent: 'center' }}
             >
-                <Bubble
-                    variant="7"
-                    name="bubble"
-                    layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
+                <UiHelpBubbleLayoutProfileRegion {...profileRegion} />
+                <Button
+                    variant="5"
+                    name="help_bubble_btn_ok"
+                    tintColor="#33cc33"
+                    onPointerTap={onHelpBubbleBtnOk}
+                    layout={{ position: 'absolute', marginLeft: -10.5, marginRight: 10.5, width: 41, top: 441, height: 28 }}
                 >
-                    <UiHelpBubbleLayoutProfileRegion {...profileRegion} />
-                    <Button
-                        variant="5"
-                        name="help_bubble_btn_ok"
-                        tintColor="#33cc33"
-                        onPointerTap={onHelpBubbleBtnOk}
-                        layout={{ position: 'absolute', marginLeft: -10.5, marginRight: 10.5, width: 41, top: 441, height: 28 }}
-                    >
-                        OK
-                    </Button>
-                </Bubble>
-            </Region>
+                    OK
+                </Button>
+            </Bubble>
         </Region>
     );
 };

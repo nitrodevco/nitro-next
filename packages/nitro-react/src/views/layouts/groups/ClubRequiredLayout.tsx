@@ -24,36 +24,34 @@ export const ClubRequiredLayout = ({ cancelLinkRegion, captionInfoTxt, layout, m
             onClose={onClose}
             layout={{ width: 428, height: 215, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    backgroundColor="#3c3c3c"
-                    layout={{ position: 'absolute', left: 0, right: 1, top: 0, height: 125 }}
+            <Region
+                backgroundColor="#3c3c3c"
+                layout={{ position: 'absolute', left: 0, right: 1, top: 0, height: 125 }}
+            />
+            <Icon
+                variant="18"
+                layout={{ position: 'absolute', left: 23, width: 92, top: 19, height: 44 }}
+            />
+            <Region
+                name="info_txt"
+                layout={{ position: 'absolute', left: 131, width: 265, top: 28, height: 62, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionInfoTxt ?? 'Dippa dappa duppa'}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 265 }}
                 />
-                <Icon
-                    variant="18"
-                    layout={{ position: 'absolute', left: 23, width: 92, top: 19, height: 44 }}
-                />
-                <Region
-                    name="info_txt"
-                    layout={{ position: 'absolute', left: 131, width: 265, top: 28, height: 62, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfoTxt ?? 'Dippa dappa duppa'}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 265 }}
-                    />
-                </Region>
-                <ClubRequiredLayoutMoreInfoLinkRegion {...moreInfoLinkRegion} />
-                <ClubRequiredLayoutCancelLinkRegion {...cancelLinkRegion} />
-                <ButtonThick
-                    variant="3"
-                    name="join_button"
-                    onPointerTap={onJoinButton}
-                    layout={{ position: 'absolute', left: 303, width: 109, top: 140, height: 28, minWidth: 109, maxWidth: 109 }}
-                >
-                    {t('group.hcrequired.join')}
-                </ButtonThick>
             </Region>
+            <ClubRequiredLayoutMoreInfoLinkRegion {...moreInfoLinkRegion} />
+            <ClubRequiredLayoutCancelLinkRegion {...cancelLinkRegion} />
+            <ButtonThick
+                variant="3"
+                name="join_button"
+                onPointerTap={onJoinButton}
+                layout={{ position: 'absolute', left: 303, width: 109, top: 140, height: 28, minWidth: 109, maxWidth: 109 }}
+            >
+                {t('group.hcrequired.join')}
+            </ButtonThick>
         </Frame>
     );
 };

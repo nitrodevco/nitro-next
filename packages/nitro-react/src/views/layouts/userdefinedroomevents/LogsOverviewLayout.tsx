@@ -23,11 +23,9 @@ export const LogsOverviewLayout = ({ footer, header, layout, middle, onClose }: 
             onClose={onClose}
             layout={{ width: 700, height: 508, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <LogsOverviewLayoutHeader {...header} />
-                <LogsOverviewLayoutMiddle {...middle} />
-                <LogsOverviewLayoutFooter {...footer} />
-            </Region>
+            <LogsOverviewLayoutHeader {...header} />
+            <LogsOverviewLayoutMiddle {...middle} />
+            <LogsOverviewLayoutFooter {...footer} />
         </Frame>
     );
 };

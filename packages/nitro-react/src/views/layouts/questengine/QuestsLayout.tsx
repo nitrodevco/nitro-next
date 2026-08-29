@@ -22,11 +22,9 @@ export const QuestsLayout = ({ hcInfoCont, layout, onClose, questList }: QuestsL
             onClose={onClose}
             layout={{ width: 512, height: 448, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <QuestsLayoutQuestList {...questList} />
-                {/* <scrollbar_vertical> for quest_list - rendered by that list's ScrollArea */}
-                <QuestsLayoutHcInfoCont {...hcInfoCont} />
-            </Region>
+            <QuestsLayoutQuestList {...questList} />
+            {/* <scrollbar_vertical> for quest_list - rendered by that list's ScrollArea */}
+            <QuestsLayoutHcInfoCont {...hcInfoCont} />
         </Frame>
     );
 };

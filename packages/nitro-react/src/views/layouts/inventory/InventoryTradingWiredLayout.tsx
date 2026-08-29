@@ -58,26 +58,22 @@ export const InventoryTradingWiredLayout = ({ bubbleContents, buttonContainer, c
                         layout={{ position: 'absolute', left: 224, width: 30, top: 40, height: 160 }}
                     />
                     <InventoryTradingWiredLayoutRequirementsButton {...requirementsButton} />
-                    <Region
+                    <Bubble
+                        variant="7"
+                        name="trade_requirements_bubble"
+                        pointer="left"
                         visible={visibleTradeRequirementsBubble ?? true}
                         layout={{ position: 'absolute', left: 475, width: 430, top: 9, height: 281 }}
                     >
-                        <Bubble
-                            variant="7"
-                            name="trade_requirements_bubble"
-                            pointer="left"
-                            layout={{ width: '100%', height: '100%' }}
-                        >
-                            <Border
-                                variant="2"
-                                name="highlight_border"
-                                tintColor="#4fbce3"
-                                blend={0}
-                                layout={{ position: 'absolute', left: 0, right: 15, top: 0, bottom: 15 }}
-                            />
-                            <InventoryTradingWiredLayoutBubbleContents {...bubbleContents} />
-                        </Bubble>
-                    </Region>
+                        <Border
+                            variant="2"
+                            name="highlight_border"
+                            tintColor="#4fbce3"
+                            blend={0}
+                            layout={{ position: 'absolute', left: 0, right: 15, top: 0, bottom: 15 }}
+                        />
+                        <InventoryTradingWiredLayoutBubbleContents {...bubbleContents} />
+                    </Bubble>
                 </Border>
                 <InventoryTradingWiredLayoutButtonContainer {...buttonContainer} />
             </Region>

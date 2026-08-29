@@ -30,81 +30,77 @@ export const FriendRequestTabLayout = ({ captionCaption, captionCaption2, captio
                 layout={{ position: 'absolute', left: 0, width: 127, top: 107, height: 36 }}
             >
                 <FriendRequestTabLayoutPieces {...pieces} />
-                <Region
+                <Bubble
+                    variant="0"
+                    name="bubble"
+                    tintColor="#fac919"
                     visible={visibleBubble ?? true}
-                    layout={{ position: 'absolute', left: -6, width: 139, top: -133, height: 140 }}
+                    layout={{ position: 'absolute', left: -6, width: 139, top: -133, height: 140, justifyContent: 'center' }}
                 >
-                    <Bubble
-                        variant="0"
-                        name="bubble"
-                        tintColor="#fac919"
-                        layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
+                    <Region
+                        name="message"
+                        layout={{ position: 'absolute', left: 5, right: 41, top: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
+                        <ThemeText
+                            text={captionMessage ?? t('friendbar.request.title')}
+                            textStyle="text-style-u-bold"
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 93 }}
+                        />
+                    </Region>
+                    <CloseButton
+                        variant="3"
+                        name="button_close"
+                        onPointerTap={onButtonClose}
+                        layout={{ position: 'absolute', right: 19, width: 19, top: 3, height: 20 }}
+                    />
+                    <ContainerButton
+                        variant="3"
+                        name="button_accept"
+                        onPointerTap={onButtonAccept}
+                        layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 96, bottom: 77, height: 27, maxWidth: 110 }}
+                    >
+                        <Icon
+                            variant="8"
+                            name="icon"
+                            tintColor="#00a900"
+                            layout={{ position: 'absolute', left: 7, width: 17, top: 6, height: 16 }}
+                        />
                         <Region
-                            name="message"
-                            layout={{ position: 'absolute', left: 5, right: 41, top: 4, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                            name="caption"
+                            layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <ThemeText
-                                text={captionMessage ?? t('friendbar.request.title')}
-                                textStyle="text-style-u-bold"
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 93 }}
+                                text={captionCaption ?? t('friendbar.request.accept')}
+                                textStyle="text-style-button-shiny-bold"
+                                textOptions={{ align: 'center' }}
                             />
                         </Region>
-                        <CloseButton
-                            variant="3"
-                            name="button_close"
-                            onPointerTap={onButtonClose}
-                            layout={{ position: 'absolute', right: 19, width: 19, top: 3, height: 20 }}
+                    </ContainerButton>
+                    <ContainerButton
+                        variant="3"
+                        name="button_profile"
+                        onPointerTap={onButtonProfile}
+                        layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 96, bottom: 47, height: 27, maxWidth: 110 }}
+                    >
+                        <Icon
+                            variant="21"
+                            name="icon"
+                            tintColor="#00a900"
+                            layout={{ position: 'absolute', left: 7, width: 17, top: 8, height: 16 }}
                         />
-                        <ContainerButton
-                            variant="3"
-                            name="button_accept"
-                            onPointerTap={onButtonAccept}
-                            layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 96, bottom: 77, height: 27, maxWidth: 110 }}
+                        <Region
+                            name="caption"
+                            layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                         >
-                            <Icon
-                                variant="8"
-                                name="icon"
-                                tintColor="#00a900"
-                                layout={{ position: 'absolute', left: 7, width: 17, top: 6, height: 16 }}
+                            <ThemeText
+                                text={captionCaption2 ?? t('friendbar.request.profile')}
+                                textStyle="text-style-button-shiny-bold"
+                                textOptions={{ align: 'center' }}
                             />
-                            <Region
-                                name="caption"
-                                layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={captionCaption ?? t('friendbar.request.accept')}
-                                    textStyle="text-style-button-shiny-bold"
-                                    textOptions={{ align: 'center' }}
-                                />
-                            </Region>
-                        </ContainerButton>
-                        <ContainerButton
-                            variant="3"
-                            name="button_profile"
-                            onPointerTap={onButtonProfile}
-                            layout={{ position: 'absolute', marginLeft: -8.5, marginRight: 8.5, width: 96, bottom: 47, height: 27, maxWidth: 110 }}
-                        >
-                            <Icon
-                                variant="21"
-                                name="icon"
-                                tintColor="#00a900"
-                                layout={{ position: 'absolute', left: 7, width: 17, top: 8, height: 16 }}
-                            />
-                            <Region
-                                name="caption"
-                                layout={{ position: 'absolute', left: 16, width: 71, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                                <ThemeText
-                                    text={captionCaption2 ?? t('friendbar.request.profile')}
-                                    textStyle="text-style-button-shiny-bold"
-                                    textOptions={{ align: 'center' }}
-                                />
-                            </Region>
-                        </ContainerButton>
-                        <FriendRequestTabLayoutClickRegionReject {...clickRegionReject} />
-                    </Bubble>
-                </Region>
+                        </Region>
+                    </ContainerButton>
+                    <FriendRequestTabLayoutClickRegionReject {...clickRegionReject} />
+                </Bubble>
                 <FriendRequestTabLayoutIcons {...icons} />
             </Border>
         </Region>

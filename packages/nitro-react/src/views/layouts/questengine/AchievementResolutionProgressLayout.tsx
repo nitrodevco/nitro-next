@@ -21,9 +21,7 @@ export const AchievementResolutionProgressLayout = ({ elementList, layout, onClo
             onClose={onClose}
             layout={{ width: 419, height: 273, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <AchievementResolutionProgressLayoutElementList {...elementList} />
-            </Region>
+            <AchievementResolutionProgressLayoutElementList {...elementList} />
         </Frame>
     );
 };

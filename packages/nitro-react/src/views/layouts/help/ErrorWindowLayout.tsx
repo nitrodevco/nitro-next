@@ -20,31 +20,29 @@ export const ErrorWindowLayout = ({ layout, onClose, onCloseButton }: ErrorWindo
             onClose={onClose}
             layout={{ width: 242, height: 147, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 8, top: 0, bottom: 48, flexDirection: 'column' }}>
-                    <Region layout={{ width: 221, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('guide.help.request.error.heading')}
-                            textStyle="text-style-il-heading-1"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 221 }}
-                        />
-                    </Region>
-                    <Region layout={{ width: 221, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('guide.help.request.error.message')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 221 }}
-                        />
-                    </Region>
-                    <Button
-                        variant="101"
-                        name="close_button"
-                        tintColor="#bbbbbb"
-                        onPointerTap={onCloseButton}
-                        layout={{ width: 207, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
-                    >
-                        {t('guide.help.request.error.button')}
-                    </Button>
+            <Region layout={{ position: 'absolute', left: 8, top: 0, bottom: 48, flexDirection: 'column' }}>
+                <Region layout={{ width: 221, height: 35, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('guide.help.request.error.heading')}
+                        textStyle="text-style-il-heading-1"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 221 }}
+                    />
                 </Region>
+                <Region layout={{ width: 221, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('guide.help.request.error.message')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 221 }}
+                    />
+                </Region>
+                <Button
+                    variant="101"
+                    name="close_button"
+                    tintColor="#bbbbbb"
+                    onPointerTap={onCloseButton}
+                    layout={{ width: 207, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
+                >
+                    {t('guide.help.request.error.button')}
+                </Button>
             </Region>
         </Frame>
     );

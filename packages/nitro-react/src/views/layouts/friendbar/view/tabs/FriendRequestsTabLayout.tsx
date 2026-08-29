@@ -29,54 +29,50 @@ export const FriendRequestsTabLayout = ({ captionBadgeCounter, captionTitle, cli
                 layout={{ position: 'absolute', left: 39, width: 127, top: 292, height: 36 }}
             >
                 <FriendRequestsTabLayoutTabContent {...tabContent} />
-                <Region
+                <Bubble
+                    variant="0"
+                    name="bubble"
+                    tintColor="#fac919"
                     visible={visibleBubble ?? true}
                     layout={{ position: 'absolute', left: -45, width: 222, bottom: 30, height: 304 }}
                 >
-                    <Bubble
-                        variant="0"
-                        name="bubble"
-                        tintColor="#fac919"
-                        layout={{ width: '100%', height: '100%' }}
+                    <Region
+                        name="title"
+                        layout={{ position: 'absolute', left: 0, width: 204, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
-                        <Region
-                            name="title"
-                            layout={{ position: 'absolute', left: 0, width: 204, top: 4, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionTitle ?? t('friendbar.requests.title')}
-                                textStyle="text-style-u-frame-title"
-                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                            />
-                        </Region>
-                        <CloseButton
-                            variant="3"
-                            name="button_close"
-                            onPointerTap={onButtonClose}
-                            layout={{ position: 'absolute', left: 184, width: 19, top: 3, height: 20 }}
+                        <ThemeText
+                            text={captionTitle ?? t('friendbar.requests.title')}
+                            textStyle="text-style-u-frame-title"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
                         />
-                        <FriendRequestsTabLayoutRequestEntityList {...requestEntityList} />
-                        {/* <scrollbar_vertical> for request_entity_list - rendered by that list's ScrollArea */}
-                        <FriendRequestsTabLayoutClickAreaDiscardAll {...clickAreaDiscardAll} />
-                        <Region
-                            backgroundColor="#564620"
-                            layout={{ position: 'absolute', left: 4, width: 184, top: 27, height: 1 }}
-                        />
-                        <Region
-                            backgroundColor="#564620"
-                            layout={{ position: 'absolute', left: 4, width: 184, bottom: 57, height: 1 }}
-                        />
-                        <ButtonThick
-                            variant="5"
-                            name="button_accept_all"
-                            tintColor="#77bf43"
-                            onPointerTap={onButtonAcceptAll}
-                            layout={{ position: 'absolute', right: 23, width: 171, bottom: 22, height: 28 }}
-                        >
-                            {t('friendbar.requests.accept')}
-                        </ButtonThick>
-                    </Bubble>
-                </Region>
+                    </Region>
+                    <CloseButton
+                        variant="3"
+                        name="button_close"
+                        onPointerTap={onButtonClose}
+                        layout={{ position: 'absolute', left: 184, width: 19, top: 3, height: 20 }}
+                    />
+                    <FriendRequestsTabLayoutRequestEntityList {...requestEntityList} />
+                    {/* <scrollbar_vertical> for request_entity_list - rendered by that list's ScrollArea */}
+                    <FriendRequestsTabLayoutClickAreaDiscardAll {...clickAreaDiscardAll} />
+                    <Region
+                        backgroundColor="#564620"
+                        layout={{ position: 'absolute', left: 4, width: 184, top: 27, height: 1 }}
+                    />
+                    <Region
+                        backgroundColor="#564620"
+                        layout={{ position: 'absolute', left: 4, width: 184, bottom: 57, height: 1 }}
+                    />
+                    <ButtonThick
+                        variant="5"
+                        name="button_accept_all"
+                        tintColor="#77bf43"
+                        onPointerTap={onButtonAcceptAll}
+                        layout={{ position: 'absolute', right: 23, width: 171, bottom: 22, height: 28 }}
+                    >
+                        {t('friendbar.requests.accept')}
+                    </ButtonThick>
+                </Bubble>
                 <Border
                     variant="7"
                     tintColor="#de4537"
@@ -189,20 +185,15 @@ export const FriendRequestsTabLayoutRegionProfileName = ({ captionName, layout, 
     return (
         <Region
             name="region_profile_name"
+            layout={{ position: 'absolute', left: 43, right: 15, top: 6, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onRegionProfileName}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 43, right: 15, top: 6, height: 17, ...layout }}
         >
-            <Region
-                name="name"
-                layout={{ position: 'absolute', left: 0, width: 138, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionName ?? 'Name'}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+            <ThemeText
+                text={captionName ?? 'Name'}
+                textStyle="text-style-u-bold"
+                textOptions={{ fill: '#ffffff' }}
+            />
         </Region>
     );
 };

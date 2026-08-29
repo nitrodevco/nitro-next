@@ -19,16 +19,12 @@ export const OutfitLayout = ({ layout, onButton, srcBitmap, srcOutfitGradient }:
                     onPointerTap={onButton}
                     layout={{ position: 'absolute', left: 0, width: 35, top: 0, height: 60, overflow: 'hidden' }}
                 />
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="outfit_gradient"
+                    src={srcOutfitGradient ?? layoutImage('collectables_score_background_gradient.png')}
                     layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
-                >
-                    <ThemeImage
-                        name="outfit_gradient"
-                        src={srcOutfitGradient ?? layoutImage('collectables_score_background_gradient.png')}
-                        layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
-                    />
-                </Region>
+                    visible={false}
+                />
                 <ThemeImage
                     name="bitmap"
                     src={srcBitmap}

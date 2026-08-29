@@ -52,19 +52,15 @@ export const RoomQueueLayout = ({ captionInfoText, captionSpectatorInfo, layout,
                 >
                     {t('room.queue.button.exit')}
                 </Button>
-                <Region
+                <Button
+                    variant="3"
+                    name="change_button"
+                    onPointerTap={onChangeButton}
                     visible={visibleChangeButton ?? false}
                     layout={{ position: 'absolute', marginLeft: 41.5, marginRight: -41.5, width: 178, top: 140, height: 26 }}
                 >
-                    <Button
-                        variant="3"
-                        name="change_button"
-                        onPointerTap={onChangeButton}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        {t('room.queue.spectatormode')}
-                    </Button>
-                </Region>
+                    {t('room.queue.spectatormode')}
+                </Button>
             </Region>
         </Frame>
     );

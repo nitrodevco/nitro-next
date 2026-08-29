@@ -18,9 +18,7 @@ export const RoomvisitsFrameLayout = ({ layout, onClose, visitsCont }: Roomvisit
             onClose={onClose}
             layout={{ width: 292, height: 224, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <RoomvisitsFrameLayoutVisitsCont {...visitsCont} />
-            </Region>
+            <RoomvisitsFrameLayoutVisitsCont {...visitsCont} />
         </Frame>
     );
 };

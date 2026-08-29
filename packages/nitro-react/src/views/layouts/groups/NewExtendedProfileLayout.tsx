@@ -28,28 +28,26 @@ export const NewExtendedProfileLayout = ({ blockedContainer, bottomContainer, la
             onClose={onClose}
             layout={{ width: 521, height: 537, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 6, width: 500, top: -1, height: 495, flexDirection: 'column', gap: 6 }}>
-                    <NewExtendedProfileLayoutTop {...top} />
-                    <NewExtendedProfileLayoutSpacer {...spacer} />
-                    <NewExtendedProfileLayoutMiddle {...middle} />
-                    <NewExtendedProfileLayoutSpacer5 {...spacer2} />
-                    <NewExtendedProfileLayoutBottomContainer {...bottomContainer} />
-                </Region>
-                <ContainerButton
-                    variant="7"
-                    name="block_button"
-                    dynamicStyle="button"
-                    onPointerTap={onBlockButton}
-                    layout={{ position: 'absolute', left: 481, width: 24, top: 4, height: 24 }}
-                >
-                    <ThemeImage
-                        src={layoutImage('extended_profile_block_icon.png')}
-                        layout={{ position: 'absolute', left: 4, width: 16, top: 4, height: 16 }}
-                    />
-                </ContainerButton>
-                <NewExtendedProfileLayoutBlockedContainer {...blockedContainer} />
+            <Region layout={{ position: 'absolute', left: 6, width: 500, top: -1, height: 495, flexDirection: 'column', gap: 6 }}>
+                <NewExtendedProfileLayoutTop {...top} />
+                <NewExtendedProfileLayoutSpacer {...spacer} />
+                <NewExtendedProfileLayoutMiddle {...middle} />
+                <NewExtendedProfileLayoutSpacer5 {...spacer2} />
+                <NewExtendedProfileLayoutBottomContainer {...bottomContainer} />
             </Region>
+            <ContainerButton
+                variant="7"
+                name="block_button"
+                dynamicStyle="button"
+                onPointerTap={onBlockButton}
+                layout={{ position: 'absolute', left: 481, width: 24, top: 4, height: 24 }}
+            >
+                <ThemeImage
+                    src={layoutImage('extended_profile_block_icon.png')}
+                    layout={{ position: 'absolute', left: 4, width: 16, top: 4, height: 16 }}
+                />
+            </ContainerButton>
+            <NewExtendedProfileLayoutBlockedContainer {...blockedContainer} />
         </Frame>
     );
 };
@@ -197,16 +195,12 @@ export const NewExtendedProfileLayoutOnlineOfflineContainerItem = ({ layout, src
                 src={srcOnlineIcon ?? '${image.library.url}guilds/online_icon.png'}
                 layout={{ position: 'absolute', left: 1, width: 37, top: 3, height: 18 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="hidden_icon"
+                src={srcHiddenIcon ?? '${image.library.url}guilds/hidden_icon.png'}
                 layout={{ position: 'absolute', left: 0, width: 40, top: 3, height: 18 }}
-            >
-                <ThemeImage
-                    name="hidden_icon"
-                    src={srcHiddenIcon ?? '${image.library.url}guilds/hidden_icon.png'}
-                    layout={{ position: 'absolute', left: 0, width: 40, top: 3, height: 18 }}
-                />
-            </Region>
+                visible={false}
+            />
         </Region>
     );
 };
@@ -259,20 +253,16 @@ export const NewExtendedProfileLayoutFriendstatusItem = ({ captionFriendRequestS
                     textStyle="text-style-u-regular"
                 />
             </Region>
-            <Region
+            <Button
+                variant="3"
+                name="addasfriend_button"
+                onPointerTap={onAddasfriendButton}
+                textStyle="text-style-button-shiny-regular"
                 visible={visibleAddasfriendButton ?? false}
                 layout={{ position: 'absolute', left: 12, width: 105, top: 0, height: 23, minWidth: 105, maxWidth: 105 }}
             >
-                <Button
-                    variant="3"
-                    name="addasfriend_button"
-                    onPointerTap={onAddasfriendButton}
-                    textStyle="text-style-button-shiny-regular"
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    {t('extendedprofile.addasafriend')}
-                </Button>
-            </Region>
+                {t('extendedprofile.addasafriend')}
+            </Button>
         </Region>
     );
 };

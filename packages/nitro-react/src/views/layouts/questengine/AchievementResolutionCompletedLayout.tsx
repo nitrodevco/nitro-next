@@ -19,38 +19,36 @@ export const AchievementResolutionCompletedLayout = ({ cancelButton, layout, onC
             onClose={onClose}
             layout={{ width: 340, height: 273, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 20, top: 10, flexDirection: 'column', gap: 5 }}>
-                    <Region layout={{ width: 254, height: 24, flexShrink: 0, minHeight: 24, maxHeight: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('resolution.completed.header')}
-                            textStyle="text-style-il-heading-title"
-                        />
-                    </Region>
-                    <Region layout={{ width: 294, height: 40, flexShrink: 0, minHeight: 40, maxHeight: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('resolution.completed.description')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 294 }}
-                        />
-                    </Region>
-                    <Region layout={{ width: 125, height: 120, flexShrink: 0, justifyContent: 'center' }}>
-                        <ThemeImage
-                            src={layoutImage('common_hilight_big.png')}
-                            layout={{ position: 'absolute', marginLeft: 2.5, marginRight: -2.5, width: 120, top: 0, height: 120, minHeight: 120, maxHeight: 120 }}
-                        />
-                        <ThemeImage
-                            src={layoutImage('icons_hilighter_yellow.png')}
-                            layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 81, top: 20, height: 90, minHeight: 90, maxHeight: 90 }}
-                        />
-                        <WidgetSlot
-                            widgetType="badge_image"
-                            name="achievement_badge"
-                            options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
-                            layout={{ position: 'absolute', left: 39, width: 50, top: 37, height: 50 }}
-                        />
-                    </Region>
-                    <AchievementResolutionCompletedLayoutCancelButton {...cancelButton} />
+            <Region layout={{ position: 'absolute', left: 20, top: 10, flexDirection: 'column', gap: 5 }}>
+                <Region layout={{ width: 254, height: 24, flexShrink: 0, minHeight: 24, maxHeight: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('resolution.completed.header')}
+                        textStyle="text-style-il-heading-title"
+                    />
                 </Region>
+                <Region layout={{ width: 294, height: 40, flexShrink: 0, minHeight: 40, maxHeight: 40, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('resolution.completed.description')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 294 }}
+                    />
+                </Region>
+                <Region layout={{ width: 125, height: 120, flexShrink: 0, justifyContent: 'center' }}>
+                    <ThemeImage
+                        src={layoutImage('common_hilight_big.png')}
+                        layout={{ position: 'absolute', marginLeft: 2.5, marginRight: -2.5, width: 120, top: 0, height: 120, minHeight: 120, maxHeight: 120 }}
+                    />
+                    <ThemeImage
+                        src={layoutImage('icons_hilighter_yellow.png')}
+                        layout={{ position: 'absolute', marginLeft: 2, marginRight: -2, width: 81, top: 20, height: 90, minHeight: 90, maxHeight: 90 }}
+                    />
+                    <WidgetSlot
+                        widgetType="badge_image"
+                        name="achievement_badge"
+                        options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
+                        layout={{ position: 'absolute', left: 39, width: 50, top: 37, height: 50 }}
+                    />
+                </Region>
+                <AchievementResolutionCompletedLayoutCancelButton {...cancelButton} />
             </Region>
         </Frame>
     );

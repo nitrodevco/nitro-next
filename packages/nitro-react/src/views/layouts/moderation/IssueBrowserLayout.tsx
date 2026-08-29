@@ -22,47 +22,45 @@ export const IssueBrowserLayout = ({ layout, onAutoPick, onClose, onMyIssues, on
             onClose={onClose}
             layout={{ width: 585, height: 273, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <TabContext
+            <TabContext
+                variant="0"
+                name="tab_context"
+                layout={{ position: 'absolute', left: 3, right: 16, top: 5, bottom: 64 }}
+            >
+                <TabButton
                     variant="0"
-                    name="tab_context"
-                    layout={{ position: 'absolute', left: 3, right: 16, top: 5, bottom: 64 }}
+                    name="open_issues"
+                    onPointerTap={onOpenIssues}
+                    layout={{ position: 'absolute', left: 0, width: 81, top: 0, height: 22 }}
                 >
-                    <TabButton
-                        variant="0"
-                        name="open_issues"
-                        onPointerTap={onOpenIssues}
-                        layout={{ position: 'absolute', left: 0, width: 81, top: 0, height: 22 }}
-                    >
-                        Open Issues
-                    </TabButton>
-                    <TabButton
-                        variant="0"
-                        name="my_issues"
-                        onPointerTap={onMyIssues}
-                        layout={{ position: 'absolute', left: 81, width: 68, top: 0, height: 22 }}
-                    >
-                        My issues
-                    </TabButton>
-                    <TabButton
-                        variant="0"
-                        name="picked_issues"
-                        onPointerTap={onPickedIssues}
-                        layout={{ position: 'absolute', left: 149, width: 88, top: 0, height: 22 }}
-                    >
-                        Picked Issues
-                    </TabButton>
-                </TabContext>
-                <IssueBrowserLayoutTabContent {...tabContent} />
-                <Button
+                    Open Issues
+                </TabButton>
+                <TabButton
                     variant="0"
-                    name="auto_pick"
-                    onPointerTap={onAutoPick}
-                    layout={{ position: 'absolute', right: 406, width: 175, bottom: 36, height: 22 }}
+                    name="my_issues"
+                    onPointerTap={onMyIssues}
+                    layout={{ position: 'absolute', left: 81, width: 68, top: 0, height: 22 }}
                 >
-                    Give me the next priority issue
-                </Button>
-            </Region>
+                    My issues
+                </TabButton>
+                <TabButton
+                    variant="0"
+                    name="picked_issues"
+                    onPointerTap={onPickedIssues}
+                    layout={{ position: 'absolute', left: 149, width: 88, top: 0, height: 22 }}
+                >
+                    Picked Issues
+                </TabButton>
+            </TabContext>
+            <IssueBrowserLayoutTabContent {...tabContent} />
+            <Button
+                variant="0"
+                name="auto_pick"
+                onPointerTap={onAutoPick}
+                layout={{ position: 'absolute', right: 406, width: 175, bottom: 36, height: 22 }}
+            >
+                Give me the next priority issue
+            </Button>
         </Frame>
     );
 };

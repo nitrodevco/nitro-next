@@ -77,32 +77,24 @@ export const GroupLayout = ({ buyFurniLinkRegion, captionCreatedTxt, captionGrou
                 >
                     {t('group.leave')}
                 </ButtonThick>
-                <Region
+                <ButtonThick
+                    variant="3"
+                    name="join_button"
+                    onPointerTap={onJoinButton}
                     visible={visibleJoinButton ?? false}
                     layout={{ position: 'absolute', left: 99, width: 160, top: 179, height: 29, minWidth: 160, maxWidth: 160 }}
                 >
-                    <ButtonThick
-                        variant="3"
-                        name="join_button"
-                        onPointerTap={onJoinButton}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        {t('group.join')}
-                    </ButtonThick>
-                </Region>
-                <Region
+                    {t('group.join')}
+                </ButtonThick>
+                <ButtonThick
+                    variant="3"
+                    name="request_membership_button"
+                    onPointerTap={onRequestMembershipButton}
                     visible={visibleRequestMembershipButton ?? false}
                     layout={{ position: 'absolute', left: 49, width: 260, top: 179, height: 29, minWidth: 260, maxWidth: 260 }}
                 >
-                    <ButtonThick
-                        variant="3"
-                        name="request_membership_button"
-                        onPointerTap={onRequestMembershipButton}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        {t('group.requestmembership')}
-                    </ButtonThick>
-                </Region>
+                    {t('group.requestmembership')}
+                </ButtonThick>
                 <GroupLayoutYouAreOwnerRegion {...youAreOwnerRegion} />
                 <GroupLayoutYouAreAdminRegion {...youAreAdminRegion} />
                 <GroupLayoutYouAreMemberRegion {...youAreMemberRegion} />

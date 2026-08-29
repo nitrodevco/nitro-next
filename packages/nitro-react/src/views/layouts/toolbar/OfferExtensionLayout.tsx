@@ -38,29 +38,25 @@ export const OfferExtensionLayoutStartVideoItem = ({ layout, onStartVideo, visib
     const t = useTranslation();
 
     return (
-        <Region
+        <ContainerButton
+            variant="5"
+            name="start_video"
+            tintColor="#c55541"
+            onPointerTap={onStartVideo}
             visible={visibleStartVideo ?? false}
             layout={{ width: 180, height: 35, flexShrink: 0, ...layout }}
         >
-            <ContainerButton
-                variant="5"
-                name="start_video"
-                tintColor="#c55541"
-                onPointerTap={onStartVideo}
-                layout={{ width: '100%', height: '100%' }}
-            >
-                <Region layout={{ position: 'absolute', right: 33, width: 140, top: 7, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('offers.extension.start_video')}
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
-                <ThemeImage
-                    src={layoutImage('common_offers_icon.png')}
-                    layout={{ position: 'absolute', left: 151, width: 20, top: 7, height: 21 }}
+            <Region layout={{ position: 'absolute', right: 33, width: 140, top: 7, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <ThemeText
+                    text={t('offers.extension.start_video')}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
                 />
-            </ContainerButton>
-        </Region>
+            </Region>
+            <ThemeImage
+                src={layoutImage('common_offers_icon.png')}
+                layout={{ position: 'absolute', left: 151, width: 20, top: 7, height: 21 }}
+            />
+        </ContainerButton>
     );
 };
 

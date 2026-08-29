@@ -33,7 +33,7 @@ export interface DropmenuProps extends ThemeProps<DropmenuVariant> {
 
 export const Dropmenu: ForwardRefExoticComponent<DropmenuProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, DropmenuProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, children,
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
@@ -44,6 +44,7 @@ export const Dropmenu: ForwardRefExoticComponent<DropmenuProps & RefAttributes<P
         return (
             <Box
                 ref={ref}
+                visible={visible}
                 layout={{ position: 'relative', paddingLeft: 2, paddingRight: 2, ...config.layout, ...layout }}
                 {...handlers}
                 cursor={handlers.eventMode === 'static' ? 'pointer' : undefined}

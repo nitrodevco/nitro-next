@@ -36,34 +36,30 @@ export const SpecialItemsDisplayLayout = ({ backgroundContainer, bottom, caption
                 <SpecialItemsDisplayLayoutHeader {...header} />
                 <SpecialItemsDisplayLayoutCenter {...center} />
                 <SpecialItemsDisplayLayoutClaimSpacer {...claimSpacer} />
-                <Region
+                <Border
+                    variant="2"
+                    name="claim_container"
+                    blend={0.8}
                     visible={visibleClaimContainer ?? false}
                     layout={{ position: 'absolute', width: 310, top: 115, height: 40 }}
                 >
-                    <Border
-                        variant="2"
-                        name="claim_container"
-                        blend={0.8}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <Region layout={{ position: 'absolute', left: 16, width: 277, top: 5, height: 30, flexDirection: 'row', gap: 10 }}>
-                            <Region
-                                name="claim_txt"
-                                layout={{ width: 212, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText text={captionClaimTxt ?? t('special_items.claim_info')} />
-                            </Region>
-                            <Button
-                                variant="4"
-                                name="claim_btn"
-                                onPointerTap={onClaimBtn}
-                                layout={{ width: 55, height: 30, flexShrink: 0 }}
-                            >
-                                {t('special_items.claim')}
-                            </Button>
+                    <Region layout={{ position: 'absolute', left: 16, width: 277, top: 5, height: 30, flexDirection: 'row', gap: 10 }}>
+                        <Region
+                            name="claim_txt"
+                            layout={{ width: 212, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText text={captionClaimTxt ?? t('special_items.claim_info')} />
                         </Region>
-                    </Border>
-                </Region>
+                        <Button
+                            variant="4"
+                            name="claim_btn"
+                            onPointerTap={onClaimBtn}
+                            layout={{ width: 55, height: 30, flexShrink: 0 }}
+                        >
+                            {t('special_items.claim')}
+                        </Button>
+                    </Region>
+                </Border>
                 <SpecialItemsDisplayLayoutBottom {...bottom} />
             </Region>
         </Frame>
@@ -529,17 +525,13 @@ export const SpecialItemsDisplayLayoutBottom = ({ itemScrollArea, layout, srcTem
                 tintColor="#000000"
                 layout={{ position: 'absolute', left: 13, width: 394, top: 16, height: 110 }}
             />
-            <Region
+            <Border
+                variant="2"
+                name="bottomborder_2"
+                tintColor="#141414"
                 visible={visibleBottomborder2 ?? false}
                 layout={{ position: 'absolute', left: 13, width: 394, top: 15, height: 110 }}
-            >
-                <Border
-                    variant="2"
-                    name="bottomborder_2"
-                    tintColor="#141414"
-                    layout={{ width: '100%', height: '100%' }}
-                />
-            </Region>
+            />
             <Border
                 variant="2"
                 name="bottomborder_3"
@@ -552,16 +544,12 @@ export const SpecialItemsDisplayLayoutBottom = ({ itemScrollArea, layout, srcTem
                 layout={{ position: 'absolute', left: 13, width: 394, top: 9, height: 110 }}
             >
                 <SpecialItemsDisplayLayoutItemScrollArea {...itemScrollArea} />
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="temp"
+                    src={srcTemp ?? layoutImage('bottom_bar_wired_menu.png')}
                     layout={{ position: 'absolute', right: 24, width: 40, top: 9, height: 40 }}
-                >
-                    <ThemeImage
-                        name="temp"
-                        src={srcTemp ?? layoutImage('bottom_bar_wired_menu.png')}
-                        layout={{ position: 'absolute', right: 24, width: 40, top: 9, height: 40 }}
-                    />
-                </Region>
+                    visible={false}
+                />
                 <WidgetSlot
                     widgetType="product_icon"
                     name="product_icon"

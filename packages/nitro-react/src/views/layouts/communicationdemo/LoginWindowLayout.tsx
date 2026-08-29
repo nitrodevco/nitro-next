@@ -25,38 +25,36 @@ export const LoginWindowLayout = ({ captionUsersInfo, environmentContainer, layo
             onClose={onClose}
             layout={{ width: 305, height: 444, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 5, width: 293, top: 0, height: 364, flexDirection: 'column', gap: 3 }}>
-                    <LoginWindowLayoutOptionsContainer {...optionsContainer} />
-                    <LoginWindowLayoutEnvironmentContainer {...environmentContainer} />
-                    <LoginWindowLayoutNameContainer {...nameContainer} />
-                    <LoginWindowLayoutPasswordContainer {...passwordContainer} />
-                    <Button
-                        variant="101"
-                        name="login_btn"
-                        tintColor="#bbbbbb"
-                        onPointerTap={onLoginBtn}
-                        layout={{ width: 200, height: 52, flexShrink: 0, minWidth: 200, minHeight: 52 }}
+            <Region layout={{ position: 'absolute', left: 5, width: 293, top: 0, height: 364, flexDirection: 'column', gap: 3 }}>
+                <LoginWindowLayoutOptionsContainer {...optionsContainer} />
+                <LoginWindowLayoutEnvironmentContainer {...environmentContainer} />
+                <LoginWindowLayoutNameContainer {...nameContainer} />
+                <LoginWindowLayoutPasswordContainer {...passwordContainer} />
+                <Button
+                    variant="101"
+                    name="login_btn"
+                    tintColor="#bbbbbb"
+                    onPointerTap={onLoginBtn}
+                    layout={{ width: 200, height: 52, flexShrink: 0, minWidth: 200, minHeight: 52 }}
+                >
+                    Login
+                </Button>
+                <Border
+                    variant="0"
+                    name="users_container"
+                    layout={{ width: 200, height: 157, flexShrink: 0, minWidth: 200 }}
+                >
+                    <Region
+                        name="users_info"
+                        layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 157, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
-                        Login
-                    </Button>
-                    <Border
-                        variant="0"
-                        name="users_container"
-                        layout={{ width: 200, height: 157, flexShrink: 0, minWidth: 200 }}
-                    >
-                        <Region
-                            name="users_info"
-                            layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 157, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionUsersInfo ?? 'A list of your avatars will appear after successful login.'}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
-                            />
-                        </Region>
-                        <LoginWindowLayoutList {...list} />
-                    </Border>
-                </Region>
+                        <ThemeText
+                            text={captionUsersInfo ?? 'A list of your avatars will appear after successful login.'}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
+                        />
+                    </Region>
+                    <LoginWindowLayoutList {...list} />
+                </Border>
             </Region>
         </Frame>
     );

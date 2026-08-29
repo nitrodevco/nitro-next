@@ -24,17 +24,15 @@ export const CollectibleRewardLayout = ({ bottomContainer, layout, onClose, rari
             onClose={onClose}
             layout={{ width: 424, height: 570, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="3"
-                    name="background"
-                    tintColor="#5e696d"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33 }}
-                />
-                <CollectibleRewardLayoutTopContainer {...topContainer} />
-                <CollectibleRewardLayoutBottomContainer {...bottomContainer} />
-                <CollectibleRewardLayoutRarityContainer {...rarityContainer} />
-            </Region>
+            <Border
+                variant="3"
+                name="background"
+                tintColor="#5e696d"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 33 }}
+            />
+            <CollectibleRewardLayoutTopContainer {...topContainer} />
+            <CollectibleRewardLayoutBottomContainer {...bottomContainer} />
+            <CollectibleRewardLayoutRarityContainer {...rarityContainer} />
         </Frame>
     );
 };

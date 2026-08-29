@@ -23,55 +23,53 @@ export const GuideClosedLayout = ({ captionCloseReason, captionReportLink, layou
             onClose={onClose}
             layout={{ width: 282, height: 204, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 10, width: 60, top: 0, height: 48 }}>
-                    <WidgetSlot
-                        widgetType="avatar_image"
-                        name="requester_avatar"
-                        options={{ 'avatar_image:cropped': 'true' }}
-                        layout={{ position: 'absolute', left: 0, width: 34, top: 0, height: 84 }}
+            <Region layout={{ position: 'absolute', left: 10, width: 60, top: 0, height: 48 }}>
+                <WidgetSlot
+                    widgetType="avatar_image"
+                    name="requester_avatar"
+                    options={{ 'avatar_image:cropped': 'true' }}
+                    layout={{ position: 'absolute', left: 0, width: 34, top: 0, height: 84 }}
+                />
+            </Region>
+            <Region layout={{ position: 'absolute', left: 70, top: 0, minWidth: 200, maxWidth: 200, flexDirection: 'column', gap: 5 }}>
+                <Region layout={{ width: 271, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('guide.help.request.guide.closed.heading')}
+                        textStyle="text-style-il-heading-1"
                     />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 70, top: 0, minWidth: 200, maxWidth: 200, flexDirection: 'column', gap: 5 }}>
-                    <Region layout={{ width: 271, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('guide.help.request.guide.closed.heading')}
-                            textStyle="text-style-il-heading-1"
-                        />
-                    </Region>
-                    <Region
-                        name="close_reason"
-                        layout={{ width: 200, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCloseReason ?? 'Lilyflower closed the case.'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
-                        />
-                    </Region>
-                    <Region layout={{ width: 200, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('guide.help.request.guide.closed.thanks')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
-                        />
-                    </Region>
-                    <Button
-                        variant="101"
-                        name="close_button"
-                        tintColor="#bbbbbb"
-                        onPointerTap={onCloseButton}
-                        layout={{ width: 266, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
-                    >
-                        {t('guide.help.request.user.thanks.close.button')}
-                    </Button>
-                    <Region
-                        name="report_link"
-                        tooltip={t('guide.help.common.report.link.tooltip')}
-                        layout={{ width: 91, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        onPointerTap={onReportLink}
-                        cursor="pointer"
-                    >
-                        <ThemeText text={captionReportLink ?? 'Report Lilyflower'} />
-                    </Region>
+                <Region
+                    name="close_reason"
+                    layout={{ width: 200, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionCloseReason ?? 'Lilyflower closed the case.'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
+                    />
+                </Region>
+                <Region layout={{ width: 200, height: 28, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('guide.help.request.guide.closed.thanks')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 200 }}
+                    />
+                </Region>
+                <Button
+                    variant="101"
+                    name="close_button"
+                    tintColor="#bbbbbb"
+                    onPointerTap={onCloseButton}
+                    layout={{ width: 266, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
+                >
+                    {t('guide.help.request.user.thanks.close.button')}
+                </Button>
+                <Region
+                    name="report_link"
+                    tooltip={t('guide.help.common.report.link.tooltip')}
+                    layout={{ width: 91, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    onPointerTap={onReportLink}
+                    cursor="pointer"
+                >
+                    <ThemeText text={captionReportLink ?? 'Report Lilyflower'} />
                 </Region>
             </Region>
         </Frame>

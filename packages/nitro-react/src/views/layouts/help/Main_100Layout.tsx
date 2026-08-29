@@ -22,10 +22,8 @@ export const Main_100Layout = ({ body, header, layout, onClose, recolorDark }: M
             onClose={onClose}
             layout={{ width: 1103, height: 722, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Main_100LayoutHeader {...header} />
-                <Main_100LayoutBody {...body} />
-            </Region>
+            <Main_100LayoutHeader {...header} />
+            <Main_100LayoutBody {...body} />
         </Frame>
     );
 };
@@ -65,19 +63,14 @@ export const Main_100LayoutTrackTitleRegionItem = ({ captionTrackTitleTxt, layou
     return (
         <Region
             name="track_title_region"
+            layout={{ width: 160, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onTrackTitleRegion}
             cursor="pointer"
-            layout={{ width: 160, height: 24, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="track_title_txt"
-                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTrackTitleTxt ?? 'New player track'}
-                    textOptions={{ wordWrap: true }}
-                />
-            </Region>
+            <ThemeText
+                text={captionTrackTitleTxt ?? 'New player track'}
+                textOptions={{ wordWrap: true }}
+            />
         </Region>
     );
 };
@@ -925,48 +918,40 @@ export const Main_100LayoutHeader = ({ captionNextUnclaimedCount, captionPreviou
                 </Border>
                 <Main_100LayoutPreviousBtn {...previousBtn} />
                 <Main_100LayoutNextBtn {...nextBtn} />
-                <Region
+                <Border
+                    variant="7"
+                    name="previous_unclaimed_indicator"
+                    tintColor="#ee2924"
                     visible={visiblePreviousUnclaimedIndicator ?? false}
                     layout={{ position: 'absolute', right: 756, width: 17, top: 77, height: 18 }}
                 >
-                    <Border
-                        variant="7"
-                        name="previous_unclaimed_indicator"
-                        tintColor="#ee2924"
-                        layout={{ width: '100%', height: '100%' }}
+                    <Region
+                        name="previous_unclaimed_count"
+                        layout={{ position: 'absolute', left: 3, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <Region
-                            name="previous_unclaimed_count"
-                            layout={{ position: 'absolute', left: 3, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionPreviousUnclaimedCount ?? '2'}
-                                textStyle="text-style-il-regular-white"
-                            />
-                        </Region>
-                    </Border>
-                </Region>
-                <Region
+                        <ThemeText
+                            text={captionPreviousUnclaimedCount ?? '2'}
+                            textStyle="text-style-il-regular-white"
+                        />
+                    </Region>
+                </Border>
+                <Border
+                    variant="7"
+                    name="next_unclaimed_indicator"
+                    tintColor="#ee2924"
                     visible={visibleNextUnclaimedIndicator ?? false}
                     layout={{ position: 'absolute', right: 3, width: 17, top: 77, height: 18 }}
                 >
-                    <Border
-                        variant="7"
-                        name="next_unclaimed_indicator"
-                        tintColor="#ee2924"
-                        layout={{ width: '100%', height: '100%' }}
+                    <Region
+                        name="next_unclaimed_count"
+                        layout={{ position: 'absolute', left: 3, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <Region
-                            name="next_unclaimed_count"
-                            layout={{ position: 'absolute', left: 3, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionNextUnclaimedCount ?? '2'}
-                                textStyle="text-style-il-regular-white"
-                            />
-                        </Region>
-                    </Border>
-                </Region>
+                        <ThemeText
+                            text={captionNextUnclaimedCount ?? '2'}
+                            textStyle="text-style-il-regular-white"
+                        />
+                    </Region>
+                </Border>
             </Border>
         </Region>
     );
@@ -1042,19 +1027,15 @@ export const Main_100LayoutTabButtonTemplateItem2 = ({ captionButtonText, layout
             cursor="pointer"
             layout={{ width: 88, height: 29, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
-            <Region
+            <Button
+                variant="3"
+                name="selected_view"
+                tintColor={recolorDark ?? '#3576b9'}
+                onPointerTap={onSelectedView}
+                textStyle="text-style-button-shiny-regular"
                 visible={visibleSelectedView ?? false}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
-            >
-                <Button
-                    variant="3"
-                    name="selected_view"
-                    tintColor={recolorDark ?? '#3576b9'}
-                    onPointerTap={onSelectedView}
-                    textStyle="text-style-button-shiny-regular"
-                    layout={{ width: '100%', height: '100%' }}
-                />
-            </Region>
+            />
             <Shape
                 name="notselected_shape"
                 shape="round_rectangle"
@@ -1097,19 +1078,15 @@ export const Main_100LayoutTabButtonTemplateItem3 = ({ captionButtonText, layout
             cursor="pointer"
             layout={{ width: 88, height: 29, flexShrink: 0, justifyContent: 'center', ...layout }}
         >
-            <Region
+            <Button
+                variant="3"
+                name="selected_view"
+                tintColor={recolorDark ?? '#3576b9'}
+                onPointerTap={onSelectedView}
+                textStyle="text-style-button-shiny-regular"
                 visible={visibleSelectedView ?? false}
                 layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 29 }}
-            >
-                <Button
-                    variant="3"
-                    name="selected_view"
-                    tintColor={recolorDark ?? '#3576b9'}
-                    onPointerTap={onSelectedView}
-                    textStyle="text-style-button-shiny-regular"
-                    layout={{ width: '100%', height: '100%' }}
-                />
-            </Region>
+            />
             <Shape
                 name="notselected_shape"
                 shape="round_rectangle"
@@ -1387,16 +1364,11 @@ export const Main_100LayoutTaskInfoNameRegion = ({ captionTaskInfoName, layout, 
     return (
         <Region
             name="task_info_name_region"
+            layout={{ position: 'absolute', left: 137, width: 100, top: 35, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onTaskInfoNameRegion}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 137, width: 100, top: 35, height: 22, ...layout }}
         >
-            <Region
-                name="task_info_name"
-                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionTaskInfoName ?? 'Visit Rooms'} />
-            </Region>
+            <ThemeText text={captionTaskInfoName ?? 'Visit Rooms'} />
         </Region>
     );
 };

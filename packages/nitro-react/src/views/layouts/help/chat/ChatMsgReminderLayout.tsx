@@ -24,17 +24,12 @@ export const ChatMsgReminderLayoutChatMsgReminder = ({ captionContent, layout }:
     return (
         <Region
             name="chat_msg_reminder"
-            layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 24, ...layout }}
+            layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
-            <Region
-                name="content"
-                layout={{ position: 'absolute', left: 0, width: 270, top: 0, height: 24, minWidth: 270, maxWidth: 270, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionContent ?? ''}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 270, align: 'center' }}
-                />
-            </Region>
+            <ThemeText
+                text={captionContent ?? ''}
+                textOptions={{ wordWrap: true, wordWrapWidth: 270, align: 'center' }}
+            />
         </Region>
     );
 };

@@ -10,32 +10,28 @@ export interface VariableValueInfoBubbleLayoutProps {
 export const VariableValueInfoBubbleLayout = ({ captionValue, layout, visibleBorder }: VariableValueInfoBubbleLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 60, height: 39, ...layout }}>
-            <Region
+            <Bubble
+                variant="5"
+                name="border"
+                tintColor="#ade6ff"
                 visible={visibleBorder ?? true}
                 layout={{ position: 'absolute', left: 0, width: 60, top: 0, height: 39 }}
             >
-                <Bubble
-                    variant="5"
-                    name="border"
-                    tintColor="#ade6ff"
-                    layout={{ width: '100%', height: '100%' }}
+                <ThemeImage
+                    src={undefined}
+                    layout={{ position: 'absolute', left: 2, width: 16, top: 4, height: 14 }}
+                />
+                <Region
+                    name="value"
+                    layout={{ position: 'absolute', left: 11, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <ThemeImage
-                        src={undefined}
-                        layout={{ position: 'absolute', left: 2, width: 16, top: 4, height: 14 }}
+                    <ThemeText
+                        text={captionValue ?? '505'}
+                        textStyle="text-style-u-regular"
+                        textOptions={{ fill: '#ffffff' }}
                     />
-                    <Region
-                        name="value"
-                        layout={{ position: 'absolute', left: 11, top: 3, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionValue ?? '505'}
-                            textStyle="text-style-u-regular"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                </Bubble>
-            </Region>
+                </Region>
+            </Bubble>
         </Region>
     );
 };

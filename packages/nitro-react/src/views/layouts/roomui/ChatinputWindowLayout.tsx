@@ -138,12 +138,7 @@ export const ChatinputWindowLayoutSendButtonItem = ({ captionSendButtonText, lay
             onPointerTap={onSendButton}
             layout={{ width: 47, height: 38, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="send_button_text"
-                layout={{ position: 'absolute', left: 20, top: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionSendButtonText ?? '.'} />
-            </Region>
+            <ThemeText text={captionSendButtonText ?? '.'} />
         </ContainerButton>
     );
 };

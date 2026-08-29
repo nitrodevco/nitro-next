@@ -360,16 +360,12 @@ export const FurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwn
                 name="owner_link"
                 layout={{ position: 'absolute', left: 0, width: 20, top: 2, height: 15 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="bcw_icon"
+                src={srcBcwIcon ?? '${image.library.url}/catalogue/icon_193.png'}
                 layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
-            >
-                <ThemeImage
-                    name="bcw_icon"
-                    src={srcBcwIcon ?? '${image.library.url}/catalogue/icon_193.png'}
-                    layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15 }}
-                />
-            </Region>
+                visible={false}
+            />
             <Region
                 name="owner_name"
                 layout={{ position: 'absolute', left: 20, width: 150, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
@@ -379,16 +375,12 @@ export const FurniViewLayoutOwnerRegionItem = ({ captionOwnerName, layout, onOwn
                     textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 150 }}
                 />
             </Region>
-            <Region
-                visible={false}
+            <ThemeImage
+                name="temp_icon"
+                src={srcTempIcon ?? '${image.library.url}catalogue/icon_80.png'}
                 layout={{ position: 'absolute', marginLeft: -77.5, marginRight: 77.5, width: 15, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 15 }}
-            >
-                <ThemeImage
-                    name="temp_icon"
-                    src={srcTempIcon ?? '${image.library.url}catalogue/icon_80.png'}
-                    layout={{ position: 'absolute', marginLeft: -77.5, marginRight: 77.5, width: 15, alignSelf: 'center', marginTop: -1, marginBottom: 1, height: 15 }}
-                />
-            </Region>
+                visible={false}
+            />
         </Region>
     );
 };

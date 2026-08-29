@@ -39,19 +39,15 @@ export const NextLtdAvailableLayout = ({ buttonContainer, captionHeader, colorab
                         textOptions={{ fill: colorableTextColor }}
                     />
                 </Region>
-                <Region
+                <Button
+                    variant="100"
+                    name="get"
+                    onPointerTap={onGet}
                     visible={visibleGet ?? false}
                     layout={{ position: 'absolute', left: 367, right: 1, top: -1, height: 46, minWidth: 125, maxWidth: 200 }}
                 >
-                    <Button
-                        variant="100"
-                        name="get"
-                        onPointerTap={onGet}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        {t('landing.view.next.ltd.get')}
-                    </Button>
-                </Region>
+                    {t('landing.view.next.ltd.get')}
+                </Button>
                 <NextLtdAvailableLayoutButtonContainer {...buttonContainer} />
             </Border>
         </Region>

@@ -504,16 +504,12 @@ export const ToolbarViewLayoutMEMENUItem = ({ captionText, context, layout, onME
                     textOptions={{ fill: '#ffffff', align: 'center' }}
                 />
             </Region>
-            <Region
-                visible={false}
+            <ThemeImage
+                name="guide_icon"
+                src={srcGuideIcon ?? layoutImage('help_guide_icon.png')}
                 layout={{ position: 'absolute', left: 60, width: 13, top: 38, height: 26 }}
-            >
-                <ThemeImage
-                    name="guide_icon"
-                    src={srcGuideIcon ?? layoutImage('help_guide_icon.png')}
-                    layout={{ position: 'absolute', left: 60, width: 13, top: 38, height: 26 }}
-                />
-            </Region>
+                visible={false}
+            />
         </Region>
     );
 };

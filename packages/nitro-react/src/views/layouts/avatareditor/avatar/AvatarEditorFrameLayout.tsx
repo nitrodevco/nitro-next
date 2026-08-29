@@ -21,9 +21,7 @@ export const AvatarEditorFrameLayout = ({ layout, maincontent, onClose }: Avatar
             onClose={onClose}
             layout={{ width: 210, height: 155, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <AvatarEditorFrameLayoutMaincontent {...maincontent} />
-            </Region>
+            <AvatarEditorFrameLayoutMaincontent {...maincontent} />
         </Frame>
     );
 };

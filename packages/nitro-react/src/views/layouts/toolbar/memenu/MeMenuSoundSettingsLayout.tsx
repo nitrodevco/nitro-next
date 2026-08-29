@@ -37,17 +37,13 @@ export const MeMenuSoundSettingsLayout = ({ captionSettingsTitle, captionVolumeT
                     />
                 </Region>
                 <MeMenuSoundSettingsLayoutLine {...line} />
-                <Region
+                <Border
+                    variant="3"
+                    name="volume_grey_area"
+                    tintColor="#666666"
                     visible={visibleVolumeGreyArea ?? false}
                     layout={{ position: 'absolute', left: 10, width: 292, top: 29, height: 108 }}
-                >
-                    <Border
-                        variant="3"
-                        name="volume_grey_area"
-                        tintColor="#666666"
-                        layout={{ width: '100%', height: '100%' }}
-                    />
-                </Region>
+                />
                 <Region
                     name="volume_text"
                     layout={{ position: 'absolute', width: 148, top: 32, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}

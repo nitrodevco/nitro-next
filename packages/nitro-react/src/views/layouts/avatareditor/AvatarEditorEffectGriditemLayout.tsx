@@ -13,15 +13,11 @@ export const AvatarEditorEffectGriditemLayout = ({ durationContainer, effectAmou
     return (
         <Region layout={{ position: 'relative', width: 50, height: 50, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50, justifyContent: 'center' }}>
-                <Region
-                    visible={false}
+                <ThemeImage
+                    src={layoutImage('avatar_editor_parts_hilite.png')}
                     layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
-                >
-                    <ThemeImage
-                        src={layoutImage('avatar_editor_parts_hilite.png')}
-                        layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 50 }}
-                    />
-                </Region>
+                    visible={false}
+                />
                 <ThemeImage
                     name="bitmap"
                     src={srcBitmap}

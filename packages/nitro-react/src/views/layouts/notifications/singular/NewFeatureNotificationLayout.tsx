@@ -61,19 +61,14 @@ export const NewFeatureNotificationLayoutCancelLinkRegion = ({ captionCancelLink
     return (
         <Region
             name="cancel_link_region"
+            layout={{ position: 'absolute', left: 8, width: 155, bottom: 15, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onCancelLinkRegion}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 8, width: 155, bottom: 15, height: 17, ...layout }}
         >
-            <Region
-                name="cancel_link"
-                layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCancelLink ?? t('notifications.button.cancel')}
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+            <ThemeText
+                text={captionCancelLink ?? t('notifications.button.cancel')}
+                textOptions={{ fill: '#ffffff' }}
+            />
         </Region>
     );
 };

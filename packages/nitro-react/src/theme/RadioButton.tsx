@@ -65,7 +65,7 @@ export interface RadioButtonProps extends ThemeProps<RadioButtonVariant> {
 }
 
 export const RadioButton: ForwardRefExoticComponent<RadioButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, RadioButtonProps>(
-    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, selected, children,
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, disabled, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
             cascadeKey: 'radioButton', variants: RADIO_BUTTON_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, disabled, selected,
@@ -75,6 +75,7 @@ export const RadioButton: ForwardRefExoticComponent<RadioButtonProps & RefAttrib
         return (
             <Box
                 ref={ref}
+                visible={visible}
                 layout={{
                     flexDirection: 'row',
                     alignItems: 'center',

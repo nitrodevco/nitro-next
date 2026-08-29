@@ -27,17 +27,13 @@ export const PurseLayout = ({ earningsButton, hcJoinButton, layout, onHelpButton
                     tintColor="#686661"
                     layout={{ position: 'absolute', left: 0, width: 230, top: 0, height: 76 }}
                 />
-                <Region
+                <Border
+                    variant="3"
+                    tintColor="#201e19"
+                    blend={0.8}
                     visible={false}
                     layout={{ position: 'absolute', left: 3, width: 114, top: 3, height: 69 }}
-                >
-                    <Border
-                        variant="3"
-                        tintColor="#201e19"
-                        blend={0.8}
-                        layout={{ width: '100%', height: '100%' }}
-                    />
-                </Region>
+                />
                 <PurseLayoutPurseItemlist {...purseItemlist} />
                 <Border
                     variant="2"
@@ -66,12 +62,10 @@ export const PurseLayout = ({ earningsButton, hcJoinButton, layout, onHelpButton
                         onPointerTap={onHelpButton}
                         layout={{ width: 50, height: 19, flexShrink: 0, minWidth: 50, maxWidth: 50, justifyContent: 'center' }}
                     >
-                        <Region layout={{ position: 'absolute', marginLeft: 10.5, marginRight: -10.5, width: 71, alignSelf: 'center', height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('toolbar.help')}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
+                        <ThemeText
+                            text={t('toolbar.help')}
+                            textOptions={{ fill: '#ffffff' }}
+                        />
                     </ContainerButton>
                     <ContainerButton
                         variant="0"
@@ -100,16 +94,12 @@ export const PurseLayout = ({ earningsButton, hcJoinButton, layout, onHelpButton
                         />
                     </ContainerButton>
                 </Region>
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="beta_sign"
+                    src={srcBetaSign ?? layoutImage('common_beta_sign.png')}
                     layout={{ position: 'absolute', left: 0, width: 35, top: 55, height: 16 }}
-                >
-                    <ThemeImage
-                        name="beta_sign"
-                        src={srcBetaSign ?? layoutImage('common_beta_sign.png')}
-                        layout={{ position: 'absolute', left: 0, width: 35, top: 55, height: 16 }}
-                    />
-                </Region>
+                    visible={false}
+                />
             </Region>
         </Region>
     );
@@ -332,16 +322,12 @@ export const PurseLayoutEarningsButton = ({ captionEarnings, layout, onEarningsB
                 src={layoutImage('pursearea_icon_earnings.png')}
                 layout={{ position: 'absolute', left: 5, width: 20, top: 4, height: 18 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="earnings_unseen_indicator"
+                src={srcEarningsUnseenIndicator ?? layoutImage('pursearea_unseen_indicator.png')}
                 layout={{ position: 'absolute', left: 1, width: 10, top: 0, height: 11 }}
-            >
-                <ThemeImage
-                    name="earnings_unseen_indicator"
-                    src={srcEarningsUnseenIndicator ?? layoutImage('pursearea_unseen_indicator.png')}
-                    layout={{ position: 'absolute', left: 1, width: 10, top: 0, height: 11 }}
-                />
-            </Region>
+                visible={false}
+            />
         </Region>
     );
 };

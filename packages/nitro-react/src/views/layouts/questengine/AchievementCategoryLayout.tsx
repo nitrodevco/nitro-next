@@ -86,36 +86,24 @@ export const AchievementCategoryLayoutAchievementCategoryContainer = ({ captionU
             name="achievement_category_container"
             layout={{ position: 'absolute', left: 0, width: 112, top: 0, height: 105, ...layout }}
         >
-            <Region
-                visible={false}
+            <ThemeImage
+                name="category_bg_act"
+                src={srcCategoryBgAct ?? '${image.library.questing.url}achievement_background_active_1.png'}
                 layout={{ position: 'absolute', left: 0, width: 112, alignSelf: 'center', height: 105 }}
-            >
-                <ThemeImage
-                    name="category_bg_act"
-                    src={srcCategoryBgAct ?? '${image.library.questing.url}achievement_background_active_1.png'}
-                    layout={{ position: 'absolute', left: 0, width: 112, alignSelf: 'center', height: 105 }}
-                />
-            </Region>
-            <Region
                 visible={false}
+            />
+            <ThemeImage
+                name="category_bg_act_hover"
+                src={srcCategoryBgActHover ?? '${image.library.questing.url}achievement_background_active_2.png'}
                 layout={{ position: 'absolute', left: 0, width: 112, alignSelf: 'center', height: 105 }}
-            >
-                <ThemeImage
-                    name="category_bg_act_hover"
-                    src={srcCategoryBgActHover ?? '${image.library.questing.url}achievement_background_active_2.png'}
-                    layout={{ position: 'absolute', left: 0, width: 112, alignSelf: 'center', height: 105 }}
-                />
-            </Region>
-            <Region
                 visible={false}
+            />
+            <ThemeImage
+                name="category_bg_inact"
+                src={srcCategoryBgInact ?? '${image.library.questing.url}achievement_category_bkg_empty_3.png'}
                 layout={{ position: 'absolute', left: 0, width: 110, alignSelf: 'center', height: 103 }}
-            >
-                <ThemeImage
-                    name="category_bg_inact"
-                    src={srcCategoryBgInact ?? '${image.library.questing.url}achievement_category_bkg_empty_3.png'}
-                    layout={{ position: 'absolute', left: 0, width: 110, alignSelf: 'center', height: 103 }}
-                />
-            </Region>
+                visible={false}
+            />
             <AchievementCategoryLayoutHoverContainer {...hoverContainer} />
             <AchievementCategoryLayoutCategoryRegion {...categoryRegion} />
             <Border

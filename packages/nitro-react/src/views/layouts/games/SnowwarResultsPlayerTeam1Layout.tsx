@@ -187,17 +187,12 @@ export const SnowwarResultsPlayerTeam1LayoutPlayerTotalStats = ({ captionTotalSc
             name="playerTotalStats"
             layout={{ position: 'absolute', left: 13, width: 140, top: 24, height: 35, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, width: 148, top: 9, height: 17 }}>
-                <Region
-                    name="totalScoreLabel"
-                    layout={{ position: 'absolute', left: 0, width: 148, top: 0, height: 17, minWidth: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTotalScoreLabel ?? t('snowwar.stats.total_score')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+            <Region layout={{ position: 'absolute', left: 0, width: 148, top: 9, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <ThemeText
+                    text={captionTotalScoreLabel ?? t('snowwar.stats.total_score')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#ffffff' }}
+                />
             </Region>
             <Region layout={{ position: 'absolute', left: 100, width: 54, top: 9, height: 17 }}>
                 <Region
@@ -344,16 +339,12 @@ export const SnowwarResultsPlayerTeam1LayoutPlayerScoreContainer = ({ captionPla
                     textOptions={{ fill: '#ffffff', align: 'center' }}
                 />
             </Region>
-            <Region
-                visible={false}
+            <ThemeImage
+                name="loadingIcon"
+                src={srcLoadingIcon}
                 layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, top: 5, height: 50 }}
-            >
-                <ThemeImage
-                    name="loadingIcon"
-                    src={srcLoadingIcon}
-                    layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, top: 5, height: 50 }}
-                />
-            </Region>
+                visible={false}
+            />
         </Region>
     );
 };

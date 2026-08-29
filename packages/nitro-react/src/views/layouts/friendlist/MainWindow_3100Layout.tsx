@@ -23,16 +23,14 @@ export const MainWindow_3100Layout = ({ content, layout, onClose }: MainWindow_3
             onClose={onClose}
             layout={{ width: 212, height: 405, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <MainWindow_3100LayoutContent {...content} />
-                <TextInput
-                    value={messageInputValue}
-                    onChange={setMessageInputValue}
-                    textColor="#000000"
-                    backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', left: 10, right: 12, bottom: 36, height: 54 }}
-                />
-            </Region>
+            <MainWindow_3100LayoutContent {...content} />
+            <TextInput
+                value={messageInputValue}
+                onChange={setMessageInputValue}
+                textColor="#000000"
+                backgroundColor="#ffffff"
+                layout={{ position: 'absolute', left: 10, right: 12, bottom: 36, height: 54 }}
+            />
         </Frame>
     );
 };

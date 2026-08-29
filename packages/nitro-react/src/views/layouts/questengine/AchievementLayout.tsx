@@ -50,16 +50,12 @@ export const AchievementLayoutAchievementContainer = ({ bgRegion, layout, srcBgS
                 src={srcBgUnselectedBitmap ?? '${image.library.questing.url}achievement_inactive.png'}
                 layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="bg_selected_bitmap"
+                src={srcBgSelectedBitmap ?? '${image.library.questing.url}achievement_active.png'}
                 layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60 }}
-            >
-                <ThemeImage
-                    name="bg_selected_bitmap"
-                    src={srcBgSelectedBitmap ?? '${image.library.questing.url}achievement_active.png'}
-                    layout={{ position: 'absolute', left: 0, width: 62, top: 0, height: 60 }}
-                />
-            </Region>
+                visible={false}
+            />
             <WidgetSlot
                 widgetType="badge_image"
                 name="achievement_pic_bitmap"

@@ -38,17 +38,13 @@ export const NewFeatureNotificationPromoLayoutCancelLinkRegion = ({ layout, onCa
                 src={srcCancelImg ?? layoutImage('common_close_x.png')}
                 layout={{ position: 'absolute', left: 0, width: 9, top: 0, height: 9 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="cancel_img"
+                src={srcCancelImg2 ?? layoutImage('common_close_x.png')}
+                tint="#000000"
                 layout={{ position: 'absolute', left: 1, width: 9, top: 0, height: 9 }}
-            >
-                <ThemeImage
-                    name="cancel_img"
-                    src={srcCancelImg2 ?? layoutImage('common_close_x.png')}
-                    tint="#000000"
-                    layout={{ position: 'absolute', left: 1, width: 9, top: 0, height: 9 }}
-                />
-            </Region>
+                visible={false}
+            />
         </Region>
     );
 };

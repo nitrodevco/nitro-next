@@ -18,9 +18,7 @@ export const EvidenceFrameLayout = ({ chatCont, layout, onClose }: EvidenceFrame
             onClose={onClose}
             layout={{ width: 480, height: 565, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <EvidenceFrameLayoutChatCont {...chatCont} />
-            </Region>
+            <EvidenceFrameLayoutChatCont {...chatCont} />
         </Frame>
     );
 };

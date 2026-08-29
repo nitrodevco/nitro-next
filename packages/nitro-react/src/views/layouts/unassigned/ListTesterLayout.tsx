@@ -17,19 +17,17 @@ export const ListTesterLayout = ({ layout, listHorizontal, listVertical, onClose
             onClose={onClose}
             layout={{ width: 240, height: 245, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="0"
-                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
-                >
-                    <ListTesterLayoutListVertical {...listVertical} />
-                    {/* <scrollbar_vertical> for _list_vertical - rendered by that list's ScrollArea */}
-                    <Region layout={{ position: 'absolute', left: 6, right: 4, bottom: 5, height: 100 }}>
-                        <ListTesterLayoutListHorizontal {...listHorizontal} />
-                        {/* <scrollbar_horizontal> for _list_horizontal - rendered by that list's ScrollArea */}
-                    </Region>
-                </Border>
-            </Region>
+            <Border
+                variant="0"
+                layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
+            >
+                <ListTesterLayoutListVertical {...listVertical} />
+                {/* <scrollbar_vertical> for _list_vertical - rendered by that list's ScrollArea */}
+                <Region layout={{ position: 'absolute', left: 6, right: 4, bottom: 5, height: 100 }}>
+                    <ListTesterLayoutListHorizontal {...listHorizontal} />
+                    {/* <scrollbar_horizontal> for _list_horizontal - rendered by that list's ScrollArea */}
+                </Region>
+            </Border>
         </Frame>
     );
 };

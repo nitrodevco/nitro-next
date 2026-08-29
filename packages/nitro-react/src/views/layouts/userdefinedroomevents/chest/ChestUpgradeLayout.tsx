@@ -21,9 +21,7 @@ export const ChestUpgradeLayout = ({ content, layout, onClose }: ChestUpgradeLay
             onClose={onClose}
             layout={{ width: 353, height: 287, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ChestUpgradeLayoutContent {...content} />
-            </Region>
+            <ChestUpgradeLayoutContent {...content} />
         </Frame>
     );
 };

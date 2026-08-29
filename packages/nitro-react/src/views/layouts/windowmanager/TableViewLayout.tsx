@@ -88,27 +88,21 @@ export interface TableViewLayoutLinkContainerProps {
     captionElementLink?: string;
     layout?: BoxLayout;
     onLinkContainer?: () => void;
-    visibleLinkContainer?: boolean;
 }
 
-export const TableViewLayoutLinkContainer = ({ captionElementLink, layout, onLinkContainer, visibleLinkContainer }: TableViewLayoutLinkContainerProps) => {
+export const TableViewLayoutLinkContainer = ({ captionElementLink, layout, onLinkContainer }: TableViewLayoutLinkContainerProps) => {
     return (
         <Region
             name="link_container"
-            visible={visibleLinkContainer ?? false}
+            visible={false}
+            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 1, height: 17, minHeight: 17, maxHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onLinkContainer}
             cursor="pointer"
-            layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 4, top: 1, height: 17, minHeight: 17, maxHeight: 17, ...layout }}
         >
-            <Region
-                name="element_link"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionElementLink ?? ''}
-                    textOptions={{ fill: '#0000ee' }}
-                />
-            </Region>
+            <ThemeText
+                text={captionElementLink ?? ''}
+                textOptions={{ fill: '#0000ee' }}
+            />
         </Region>
     );
 };
@@ -157,18 +151,14 @@ export const TableViewLayoutTableElementItem = ({ captionElementText, extraButto
             cursor="pointer"
             layout={{ width: 101, height: 20, flexShrink: 0, minHeight: 20, maxHeight: 20, justifyContent: 'center', ...layout }}
         >
-            <Region
+            <Border
+                variant="2"
+                name="highlight_border"
+                tintColor="#4fbce3"
+                blend={0.4}
                 visible={visibleHighlightBorder ?? false}
                 layout={{ position: 'absolute', left: 2, right: 2, top: 1, height: 17, minHeight: 17 }}
-            >
-                <Border
-                    variant="2"
-                    name="highlight_border"
-                    tintColor="#4fbce3"
-                    blend={0.4}
-                    layout={{ width: '100%', height: '100%' }}
-                />
-            </Region>
+            />
             <Region
                 name="element_text"
                 layout={{ position: 'absolute', left: 0, right: 0, top: 1, height: 17, minHeight: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

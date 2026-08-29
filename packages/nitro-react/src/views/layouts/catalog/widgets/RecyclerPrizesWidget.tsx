@@ -67,16 +67,12 @@ export const RecyclerPrizesWidgetProductView = ({ bundleGrid, captionCtlgDescrip
                 name="product_viewer"
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="ctlg_teaserimg_1"
+                src={srcCtlgTeaserimg1}
                 layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
-            >
-                <ThemeImage
-                    name="ctlg_teaserimg_1"
-                    src={srcCtlgTeaserimg1}
-                    layout={{ position: 'absolute', left: 0, width: 360, top: 0, height: 240 }}
-                />
-            </Region>
+                visible={false}
+            />
             <Region
                 name="ctlg_product_name"
                 layout={{ position: 'absolute', left: 10, width: 74, top: 16, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

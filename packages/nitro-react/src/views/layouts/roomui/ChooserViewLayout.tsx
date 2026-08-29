@@ -19,10 +19,8 @@ export const ChooserViewLayout = ({ itemList, layout, onClose }: ChooserViewLayo
             onClose={onClose}
             layout={{ width: 203, height: 168, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 9, right: 21, top: 13, bottom: 35 }}>
-                    <ChooserViewLayoutItemList {...itemList} />
-                </Region>
+            <Region layout={{ position: 'absolute', left: 9, right: 21, top: 13, bottom: 35 }}>
+                <ChooserViewLayoutItemList {...itemList} />
             </Region>
         </Frame>
     );

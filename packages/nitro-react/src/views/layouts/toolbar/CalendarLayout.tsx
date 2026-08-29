@@ -24,55 +24,49 @@ export const CalendarLayout = ({ btnBack, btnForward, captionInfoBody, captionIn
             onClose={onClose}
             layout={{ width: 1033, height: 607, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region
+                backgroundColor="#0e0f1f"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+            >
+                <CalendarLayoutSpinnerContainer {...spinnerContainer} />
+            </Region>
+            <ThemeImage
+                src={layoutImage('campaign_calendar_icon.png')}
+                layout={{ position: 'absolute', left: 31, width: 47, top: 32, height: 51 }}
+            />
+            <Region layout={{ position: 'absolute', left: 95, width: 500, top: 28, height: 50, maxHeight: 120, flexDirection: 'column', gap: 3 }}>
                 <Region
-                    backgroundColor="#0e0f1f"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                    name="info_heading"
+                    layout={{ width: 500, flexShrink: 0, maxWidth: 500, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
-                    <CalendarLayoutSpinnerContainer {...spinnerContainer} />
+                    <ThemeText
+                        text={captionInfoHeading ?? 'December 20th'}
+                        textStyle="text-style-ubuntu-condensed-title"
+                        textOptions={{ fill: '#7ecaed', wordWrap: true, wordWrapWidth: 500 }}
+                    />
                 </Region>
-                <ThemeImage
-                    src={layoutImage('campaign_calendar_icon.png')}
-                    layout={{ position: 'absolute', left: 31, width: 47, top: 32, height: 51 }}
-                />
-                <Region layout={{ position: 'absolute', left: 95, width: 500, top: 28, height: 50, maxHeight: 120, flexDirection: 'column', gap: 3 }}>
-                    <Region
-                        name="info_heading"
-                        layout={{ width: 500, flexShrink: 0, maxWidth: 500, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionInfoHeading ?? 'December 20th'}
-                            textStyle="text-style-ubuntu-condensed-title"
-                            textOptions={{ fill: '#7ecaed', wordWrap: true, wordWrapWidth: 500 }}
-                        />
-                    </Region>
-                    <Region
-                        name="info_body"
-                        layout={{ width: 500, flexShrink: 0, maxWidth: 500, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionInfoBody ?? 'This spell will produce xxxxxx xxx xxxxx'}
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 500 }}
-                        />
-                    </Region>
-                </Region>
-                <CalendarLayoutBtnForward {...btnForward} />
-                <CalendarLayoutBtnBack {...btnBack} />
                 <Region
-                    visible={visibleBtnForceOpen ?? false}
-                    layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 30, minWidth: 120, maxWidth: 120 }}
+                    name="info_body"
+                    layout={{ width: 500, flexShrink: 0, maxWidth: 500, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
-                    <Button
-                        variant="6"
-                        name="btn_force_open"
-                        tintColor="#299f3a"
-                        onPointerTap={onBtnForceOpen}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        FORCE OPEN
-                    </Button>
+                    <ThemeText
+                        text={captionInfoBody ?? 'This spell will produce xxxxxx xxx xxxxx'}
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 500 }}
+                    />
                 </Region>
             </Region>
+            <CalendarLayoutBtnForward {...btnForward} />
+            <CalendarLayoutBtnBack {...btnBack} />
+            <Button
+                variant="6"
+                name="btn_force_open"
+                tintColor="#299f3a"
+                onPointerTap={onBtnForceOpen}
+                visible={visibleBtnForceOpen ?? false}
+                layout={{ position: 'absolute', left: 0, width: 120, top: 0, height: 30, minWidth: 120, maxWidth: 120 }}
+            >
+                FORCE OPEN
+            </Button>
         </Frame>
     );
 };
@@ -97,16 +91,12 @@ export const CalendarLayoutBtnPresent = ({ layout, srcBitmapBg, srcBitmapIcon, s
                 src={srcBitmapBg}
                 layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="bitmap_opened_bg"
+                src={srcBitmapOpenedBg ?? layoutImage('campaign_calendar_opened.png')}
                 layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
-            >
-                <ThemeImage
-                    name="bitmap_opened_bg"
-                    src={srcBitmapOpenedBg ?? layoutImage('campaign_calendar_opened.png')}
-                    layout={{ position: 'absolute', width: 192, alignSelf: 'center', height: 192 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="bitmap_icon2"
                 src={srcBitmapIcon2}

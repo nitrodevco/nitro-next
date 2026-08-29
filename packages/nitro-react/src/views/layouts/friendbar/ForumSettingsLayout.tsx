@@ -38,139 +38,133 @@ export const ForumSettingsLayout = ({ captionLabel0, captionLabel02, captionLabe
             onClose={onClose}
             layout={{ width: 350, height: 545, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ForumSettingsLayoutTopPart {...topPart} />
-                <ContainerButton
-                    variant="3"
-                    name="cancel_btn"
-                    tintColor="#dddddd"
-                    onPointerTap={onCancelBtn}
-                    layout={{ position: 'absolute', left: 25, width: 120, bottom: 37, height: 30, minWidth: 120, justifyContent: 'center' }}
+            <ForumSettingsLayoutTopPart {...topPart} />
+            <ContainerButton
+                variant="3"
+                name="cancel_btn"
+                tintColor="#dddddd"
+                onPointerTap={onCancelBtn}
+                layout={{ position: 'absolute', left: 25, width: 120, bottom: 37, height: 30, minWidth: 120, justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('groupforum.settings.cancel')}
+                    textStyle="text-style-u-bold"
+                />
+            </ContainerButton>
+            <ContainerButton
+                variant="3"
+                name="ok_btn"
+                tintColor="#0a9bc5"
+                onPointerTap={onOkBtn}
+                layout={{ position: 'absolute', right: 40, width: 120, bottom: 37, height: 30, minWidth: 120, justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={t('groupforum.settings.ok')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </ContainerButton>
+            <Region layout={{ position: 'absolute', left: 3, width: 444, top: 100, height: 80 }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 244, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('groupforum.permissions.read_label')} />
+                </Region>
+                <Region
+                    name="label0"
+                    layout={{ position: 'absolute', left: 40, width: 404, top: 20, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <Region layout={{ position: 'absolute', marginLeft: 20, marginRight: -20, width: 160, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('groupforum.settings.cancel')}
-                            textStyle="text-style-u-bold"
-                        />
-                    </Region>
-                </ContainerButton>
-                <ContainerButton
-                    variant="3"
-                    name="ok_btn"
-                    tintColor="#0a9bc5"
-                    onPointerTap={onOkBtn}
-                    layout={{ position: 'absolute', right: 40, width: 120, bottom: 37, height: 30, minWidth: 120, justifyContent: 'center' }}
+                    <ThemeText text={captionLabel0 ?? t('groupforum.permissions.option_all')} />
+                </Region>
+                <Region
+                    name="label1"
+                    layout={{ position: 'absolute', left: 40, width: 404, top: 40, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <Region layout={{ position: 'absolute', marginLeft: 8.5, marginRight: -8.5, width: 137, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('groupforum.settings.ok')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                </ContainerButton>
-                <Region layout={{ position: 'absolute', left: 3, width: 444, top: 100, height: 80 }}>
-                    <Region layout={{ position: 'absolute', left: 0, right: 244, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('groupforum.permissions.read_label')} />
-                    </Region>
-                    <Region
-                        name="label0"
-                        layout={{ position: 'absolute', left: 40, width: 404, top: 20, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionLabel0 ?? t('groupforum.permissions.option_all')} />
-                    </Region>
-                    <Region
-                        name="label1"
-                        layout={{ position: 'absolute', left: 40, width: 404, top: 40, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionLabel1 ?? t('groupforum.permissions.option_group_members')} />
-                    </Region>
-                    <Region
-                        name="label2"
-                        layout={{ position: 'absolute', left: 40, width: 404, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionLabel2 ?? t('groupforum.permissions.option_group_admins')} />
-                    </Region>
-                    <ForumSettingsLayoutReadSelector {...readSelector} />
+                    <ThemeText text={captionLabel1 ?? t('groupforum.permissions.option_group_members')} />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 3, width: 444, top: 190, height: 100 }}>
-                    <Region layout={{ position: 'absolute', left: 0, right: 188, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('groupforum.permissions.post_message_label')} />
-                    </Region>
-                    <Region
-                        name="label0"
-                        layout={{ position: 'absolute', left: 40, width: 404, top: 20, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionLabel02 ?? t('groupforum.permissions.option_all')} />
-                    </Region>
-                    <Region
-                        name="label1"
-                        layout={{ position: 'absolute', left: 40, width: 404, top: 40, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionLabel12 ?? t('groupforum.permissions.option_group_members')} />
-                    </Region>
-                    <Region
-                        name="label2"
-                        layout={{ position: 'absolute', left: 40, width: 404, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionLabel22 ?? t('groupforum.permissions.option_group_admins')} />
-                    </Region>
-                    <Region
-                        name="label3"
-                        layout={{ position: 'absolute', left: 40, width: 404, top: 80, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionLabel3 ?? t('groupforum.permissions.option_owner')} />
-                    </Region>
-                    <ForumSettingsLayoutPostMessageSelector {...postMessageSelector} />
+                <Region
+                    name="label2"
+                    layout={{ position: 'absolute', left: 40, width: 404, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionLabel2 ?? t('groupforum.permissions.option_group_admins')} />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 3, width: 444, top: 300, height: 100 }}>
-                    <Region layout={{ position: 'absolute', left: 0, right: 201, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('groupforum.permissions.post_thread_label')} />
-                    </Region>
-                    <Region
-                        name="label0"
-                        layout={{ position: 'absolute', left: 40, width: 384, top: 20, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionLabel03 ?? t('groupforum.permissions.option_all')} />
-                    </Region>
-                    <Region
-                        name="label1"
-                        layout={{ position: 'absolute', left: 40, width: 404, top: 40, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionLabel13 ?? t('groupforum.permissions.option_group_members')} />
-                    </Region>
-                    <Region
-                        name="label2"
-                        layout={{ position: 'absolute', left: 40, width: 404, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionLabel23 ?? t('groupforum.permissions.option_group_admins')} />
-                    </Region>
-                    <Region
-                        name="label3"
-                        layout={{ position: 'absolute', left: 40, width: 404, top: 80, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionLabel32 ?? t('groupforum.permissions.option_owner')} />
-                    </Region>
-                    <ForumSettingsLayoutPostThreadSelector {...postThreadSelector} />
+                <ForumSettingsLayoutReadSelector {...readSelector} />
+            </Region>
+            <Region layout={{ position: 'absolute', left: 3, width: 444, top: 190, height: 100 }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 188, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('groupforum.permissions.post_message_label')} />
                 </Region>
-                <Region layout={{ position: 'absolute', left: 3, width: 444, top: 410, height: 60 }}>
-                    <Region layout={{ position: 'absolute', left: 0, right: 212, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('groupforum.permissions.moderate_label')} />
-                    </Region>
-                    <Region
-                        name="label2"
-                        layout={{ position: 'absolute', left: 40, width: 404, top: 20, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionLabel24 ?? t('groupforum.permissions.option_group_admins')} />
-                    </Region>
-                    <Region
-                        name="label3"
-                        layout={{ position: 'absolute', left: 40, width: 404, top: 40, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionLabel33 ?? t('groupforum.permissions.option_owner')} />
-                    </Region>
-                    <ForumSettingsLayoutModerateSelector {...moderateSelector} />
+                <Region
+                    name="label0"
+                    layout={{ position: 'absolute', left: 40, width: 404, top: 20, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionLabel02 ?? t('groupforum.permissions.option_all')} />
                 </Region>
+                <Region
+                    name="label1"
+                    layout={{ position: 'absolute', left: 40, width: 404, top: 40, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionLabel12 ?? t('groupforum.permissions.option_group_members')} />
+                </Region>
+                <Region
+                    name="label2"
+                    layout={{ position: 'absolute', left: 40, width: 404, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionLabel22 ?? t('groupforum.permissions.option_group_admins')} />
+                </Region>
+                <Region
+                    name="label3"
+                    layout={{ position: 'absolute', left: 40, width: 404, top: 80, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionLabel3 ?? t('groupforum.permissions.option_owner')} />
+                </Region>
+                <ForumSettingsLayoutPostMessageSelector {...postMessageSelector} />
+            </Region>
+            <Region layout={{ position: 'absolute', left: 3, width: 444, top: 300, height: 100 }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 201, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('groupforum.permissions.post_thread_label')} />
+                </Region>
+                <Region
+                    name="label0"
+                    layout={{ position: 'absolute', left: 40, width: 384, top: 20, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionLabel03 ?? t('groupforum.permissions.option_all')} />
+                </Region>
+                <Region
+                    name="label1"
+                    layout={{ position: 'absolute', left: 40, width: 404, top: 40, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionLabel13 ?? t('groupforum.permissions.option_group_members')} />
+                </Region>
+                <Region
+                    name="label2"
+                    layout={{ position: 'absolute', left: 40, width: 404, top: 60, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionLabel23 ?? t('groupforum.permissions.option_group_admins')} />
+                </Region>
+                <Region
+                    name="label3"
+                    layout={{ position: 'absolute', left: 40, width: 404, top: 80, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionLabel32 ?? t('groupforum.permissions.option_owner')} />
+                </Region>
+                <ForumSettingsLayoutPostThreadSelector {...postThreadSelector} />
+            </Region>
+            <Region layout={{ position: 'absolute', left: 3, width: 444, top: 410, height: 60 }}>
+                <Region layout={{ position: 'absolute', left: 0, right: 212, top: 0, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('groupforum.permissions.moderate_label')} />
+                </Region>
+                <Region
+                    name="label2"
+                    layout={{ position: 'absolute', left: 40, width: 404, top: 20, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionLabel24 ?? t('groupforum.permissions.option_group_admins')} />
+                </Region>
+                <Region
+                    name="label3"
+                    layout={{ position: 'absolute', left: 40, width: 404, top: 40, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionLabel33 ?? t('groupforum.permissions.option_owner')} />
+                </Region>
+                <ForumSettingsLayoutModerateSelector {...moderateSelector} />
             </Region>
         </Frame>
     );

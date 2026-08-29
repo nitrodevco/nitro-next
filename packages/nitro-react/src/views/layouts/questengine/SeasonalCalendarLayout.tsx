@@ -18,10 +18,8 @@ export const SeasonalCalendarLayout = ({ calendarCont, footerCont, layout, onClo
             onClose={onClose}
             layout={{ width: 642, height: 465, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <SeasonalCalendarLayoutCalendarCont {...calendarCont} />
-                <SeasonalCalendarLayoutFooterCont {...footerCont} />
-            </Region>
+            <SeasonalCalendarLayoutCalendarCont {...calendarCont} />
+            <SeasonalCalendarLayoutFooterCont {...footerCont} />
         </Frame>
     );
 };

@@ -19,21 +19,19 @@ export const MysteryBoxRewardLayout = ({ bitmapContainer, layout, onClose, onClo
             onClose={onClose}
             layout={{ width: 430, height: 234, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 0, top: 8, flexDirection: 'column', gap: 4 }}>
-                    <Region layout={{ width: 128, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('mysterybox.reward.title')} />
-                    </Region>
-                    <MysteryBoxRewardLayoutBitmapContainer {...bitmapContainer} />
-                    <Button
-                        variant="100"
-                        name="close_button"
-                        onPointerTap={onCloseButton}
-                        layout={{ width: 175, height: 52, flexShrink: 0 }}
-                    >
-                        {t('mysterybox.reward.close')}
-                    </Button>
+            <Region layout={{ position: 'absolute', left: 0, top: 8, flexDirection: 'column', gap: 4 }}>
+                <Region layout={{ width: 128, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text={t('mysterybox.reward.title')} />
                 </Region>
+                <MysteryBoxRewardLayoutBitmapContainer {...bitmapContainer} />
+                <Button
+                    variant="100"
+                    name="close_button"
+                    onPointerTap={onCloseButton}
+                    layout={{ width: 175, height: 52, flexShrink: 0 }}
+                >
+                    {t('mysterybox.reward.close')}
+                </Button>
             </Region>
         </Frame>
     );

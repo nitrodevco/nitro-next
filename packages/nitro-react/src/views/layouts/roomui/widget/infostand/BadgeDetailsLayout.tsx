@@ -72,36 +72,32 @@ export interface BadgeDetailsLayoutRarityTagItemProps {
 
 export const BadgeDetailsLayoutRarityTagItem = ({ captionRarity, captionRarityBorder, layout, visibleRarityTag }: BadgeDetailsLayoutRarityTagItemProps) => {
     return (
-        <Region
+        <Border
+            variant="2"
+            name="rarity_tag"
+            tintColor="#cccccc"
             visible={visibleRarityTag ?? false}
             layout={{ width: 92, height: 17, flexShrink: 0, ...layout }}
         >
-            <Border
-                variant="2"
-                name="rarity_tag"
-                tintColor="#cccccc"
-                layout={{ width: '100%', height: '100%' }}
+            <Region
+                name="rarity_border"
+                layout={{ position: 'absolute', left: 5, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
             >
-                <Region
-                    name="rarity_border"
-                    layout={{ position: 'absolute', left: 5, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRarityBorder ?? 'Unique badge'}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-                <Region
-                    name="rarity"
-                    layout={{ position: 'absolute', left: 5, width: 81, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRarity ?? 'Unique badge'}
-                        textStyle="text-style-bold"
-                    />
-                </Region>
-            </Border>
-        </Region>
+                <ThemeText
+                    text={captionRarityBorder ?? 'Unique badge'}
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+            <Region
+                name="rarity"
+                layout={{ position: 'absolute', left: 5, width: 81, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionRarity ?? 'Unique badge'}
+                    textStyle="text-style-bold"
+                />
+            </Region>
+        </Border>
     );
 };
 

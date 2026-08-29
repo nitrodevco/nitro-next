@@ -21,20 +21,18 @@ export const ClubExtendConfirmationLayout = ({ backgroundContainer, itemlistVert
             onClose={onClose}
             layout={{ width: 450, height: 235, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ClubExtendConfirmationLayoutBackgroundContainer {...backgroundContainer} />
-                <Icon
-                    variant="18"
-                    name="club_level_icon"
-                    layout={{ position: 'absolute', left: 25, width: 85, top: 25, height: 40 }}
-                />
-                <ClubExtendConfirmationLayoutItemlistVertical {...itemlistVertical} />
-                <ThemeImage
-                    name="club_teaser"
-                    src={srcClubTeaser}
-                    layout={{ position: 'absolute', right: 409, width: 40, bottom: -19, height: 144 }}
-                />
-            </Region>
+            <ClubExtendConfirmationLayoutBackgroundContainer {...backgroundContainer} />
+            <Icon
+                variant="18"
+                name="club_level_icon"
+                layout={{ position: 'absolute', left: 25, width: 85, top: 25, height: 40 }}
+            />
+            <ClubExtendConfirmationLayoutItemlistVertical {...itemlistVertical} />
+            <ThemeImage
+                name="club_teaser"
+                src={srcClubTeaser}
+                layout={{ position: 'absolute', right: 409, width: 40, bottom: -19, height: 144 }}
+            />
         </Frame>
     );
 };

@@ -20,23 +20,21 @@ export const MotdNotificationLayout = ({ layout, messageList, onClose, onClose2 
             onClose={onClose}
             layout={{ width: 436, height: 227, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="0"
-                    name="notifications_border"
-                    layout={{ position: 'absolute', left: 1, width: 420, top: 0, height: 160 }}
-                >
-                    <MotdNotificationLayoutMessageList {...messageList} />
-                </Border>
-                <Button
-                    variant="0"
-                    name="close"
-                    onPointerTap={onClose2}
-                    layout={{ position: 'absolute', left: 200, width: 30, top: 168, height: 26 }}
-                >
-                    {t('generic.ok')}
-                </Button>
-            </Region>
+            <Border
+                variant="0"
+                name="notifications_border"
+                layout={{ position: 'absolute', left: 1, width: 420, top: 0, height: 160 }}
+            >
+                <MotdNotificationLayoutMessageList {...messageList} />
+            </Border>
+            <Button
+                variant="0"
+                name="close"
+                onPointerTap={onClose2}
+                layout={{ position: 'absolute', left: 200, width: 30, top: 168, height: 26 }}
+            >
+                {t('generic.ok')}
+            </Button>
         </Frame>
     );
 };

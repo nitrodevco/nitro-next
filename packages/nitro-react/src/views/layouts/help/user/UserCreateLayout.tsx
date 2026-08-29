@@ -23,9 +23,7 @@ export const UserCreateLayout = ({ layout, list, onClose }: UserCreateLayoutProp
             onClose={onClose}
             layout={{ width: 282, height: 295, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <UserCreateLayoutList {...list} />
-            </Region>
+            <UserCreateLayoutList {...list} />
         </Frame>
     );
 };

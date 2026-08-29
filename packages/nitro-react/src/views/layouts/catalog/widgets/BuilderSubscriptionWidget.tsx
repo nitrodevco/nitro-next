@@ -27,34 +27,26 @@ export const BuilderSubscriptionWidget = ({ layout, onSubscribeButton, onSubscri
             name="builderSubscriptionWidget"
             layout={{ position: 'absolute', ...layout }}
         >
-            <Region
+            <ButtonThick
+                variant="5"
+                name="subscribe_button_big"
+                tintColor="#0a9bc5"
+                onPointerTap={onSubscribeButtonBig}
                 visible={visibleSubscribeButtonBig ?? false}
                 layout={{ position: 'absolute', left: 90, width: 180, top: 40, height: 50, minWidth: 180, maxWidth: 180 }}
             >
-                <ButtonThick
-                    variant="5"
-                    name="subscribe_button_big"
-                    tintColor="#0a9bc5"
-                    onPointerTap={onSubscribeButtonBig}
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    {t('builder.front_page.join')}
-                </ButtonThick>
-            </Region>
-            <Region
+                {t('builder.front_page.join')}
+            </ButtonThick>
+            <ButtonThick
+                variant="5"
+                name="subscribe_button"
+                tintColor="#0a9bc5"
+                onPointerTap={onSubscribeButton}
                 visible={visibleSubscribeButton ?? false}
                 layout={{ position: 'absolute', left: 195, width: 140, top: 60, height: 30, minWidth: 140, maxWidth: 140 }}
             >
-                <ButtonThick
-                    variant="5"
-                    name="subscribe_button"
-                    tintColor="#0a9bc5"
-                    onPointerTap={onSubscribeButton}
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    {t('builder.front_page.join')}
-                </ButtonThick>
-            </Region>
+                {t('builder.front_page.join')}
+            </ButtonThick>
             <ButtonThick
                 variant="5"
                 name="try_button"
@@ -64,20 +56,16 @@ export const BuilderSubscriptionWidget = ({ layout, onSubscribeButton, onSubscri
             >
                 {t('builder.front_page.try')}
             </ButtonThick>
-            <Region
+            <ButtonThick
+                variant="5"
+                name="subscribe_button_sms"
+                tintColor="#0a9bc5"
+                onPointerTap={onSubscribeButtonSms}
                 visible={visibleSubscribeButtonSms ?? false}
                 layout={{ position: 'absolute', left: 195, width: 140, top: 20, height: 30, minWidth: 140, maxWidth: 140 }}
             >
-                <ButtonThick
-                    variant="5"
-                    name="subscribe_button_sms"
-                    tintColor="#0a9bc5"
-                    onPointerTap={onSubscribeButtonSms}
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    {t('builder.front_page.join.sms')}
-                </ButtonThick>
-            </Region>
+                {t('builder.front_page.join.sms')}
+            </ButtonThick>
         </Region>
     );
 };

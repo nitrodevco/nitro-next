@@ -23,11 +23,9 @@ export const VariablesManagementOverviewLayout = ({ footer, header, layout, midd
             onClose={onClose}
             layout={{ width: 700, height: 508, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <VariablesManagementOverviewLayoutHeader {...header} />
-                <VariablesManagementOverviewLayoutMiddle {...middle} />
-                <VariablesManagementOverviewLayoutFooter {...footer} />
-            </Region>
+            <VariablesManagementOverviewLayoutHeader {...header} />
+            <VariablesManagementOverviewLayoutMiddle {...middle} />
+            <VariablesManagementOverviewLayoutFooter {...footer} />
         </Frame>
     );
 };

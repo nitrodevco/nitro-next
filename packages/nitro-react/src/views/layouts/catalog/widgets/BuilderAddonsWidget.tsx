@@ -78,16 +78,12 @@ export const BuilderAddonsWidgetAddonsList = ({ captionDiamondsPrice, captionIte
                                 textStyle="text-style-u-headline-small"
                             />
                         </Region>
-                        <Region
-                            visible={false}
+                        <ThemeImage
+                            name="diamonds_icon"
+                            src={srcDiamondsIcon ?? layoutImage('pursearea_diamond_icon.png')}
                             layout={{ width: 15, height: 15, flexShrink: 0 }}
-                        >
-                            <ThemeImage
-                                name="diamonds_icon"
-                                src={srcDiamondsIcon ?? layoutImage('pursearea_diamond_icon.png')}
-                                layout={{ width: 15, height: 15, flexShrink: 0 }}
-                            />
-                        </Region>
+                            visible={false}
+                        />
                     </Region>
                     <ButtonThick
                         variant="5"

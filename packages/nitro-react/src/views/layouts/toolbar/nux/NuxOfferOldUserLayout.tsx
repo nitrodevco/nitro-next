@@ -21,42 +21,40 @@ export const NuxOfferOldUserLayout = ({ captionTxtBody, layout, onClose, srcClub
             onClose={onClose}
             layout={{ width: 456, height: 220, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region
+                backgroundColor="#3d6373"
+                layout={{ position: 'absolute', left: 0, right: 2, top: 23, bottom: 137 }}
+            >
                 <Region
-                    backgroundColor="#3d6373"
-                    layout={{ position: 'absolute', left: 0, right: 2, top: 23, bottom: 137 }}
+                    backgroundColor="#0f4052"
+                    layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
                 >
-                    <Region
-                        backgroundColor="#0f4052"
-                        layout={{ position: 'absolute', left: 2, right: 2, top: 2, bottom: 2 }}
-                    >
-                        <Region layout={{ position: 'absolute', left: 75, width: 360, top: 11, height: 28, maxHeight: 84, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('nux.offer.old.user.title')}
-                                textStyle="text-style-u-headline-big"
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 360 }}
-                            />
-                        </Region>
-                    </Region>
-                    <ThemeImage
-                        name="club_icon"
-                        src={srcClubIcon ?? '${image.library.url}nux/nux_cropped_frank.png'}
-                        layout={{ position: 'absolute', left: 12, width: 56, top: 5, height: 54 }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 4, width: 446, top: 89, height: 118 }}>
-                    <Region
-                        name="txtBody"
-                        layout={{ position: 'absolute', left: 6, width: 434, top: 3, height: 16, maxHeight: 84, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
+                    <Region layout={{ position: 'absolute', left: 75, width: 360, top: 11, height: 28, maxHeight: 84, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <ThemeText
-                            text={captionTxtBody ?? t('nux.offer.old.user.summary')}
-                            textStyle="text-style-u-tool-tip"
-                            textOptions={{ fill: '#333333', wordWrap: true, wordWrapWidth: 434 }}
+                            text={t('nux.offer.old.user.title')}
+                            textStyle="text-style-u-headline-big"
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 360 }}
                         />
                     </Region>
-                    <NuxOfferOldUserLayoutUserInputButtons {...userInputButtons} />
                 </Region>
+                <ThemeImage
+                    name="club_icon"
+                    src={srcClubIcon ?? '${image.library.url}nux/nux_cropped_frank.png'}
+                    layout={{ position: 'absolute', left: 12, width: 56, top: 5, height: 54 }}
+                />
+            </Region>
+            <Region layout={{ position: 'absolute', left: 4, width: 446, top: 89, height: 118 }}>
+                <Region
+                    name="txtBody"
+                    layout={{ position: 'absolute', left: 6, width: 434, top: 3, height: 16, maxHeight: 84, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionTxtBody ?? t('nux.offer.old.user.summary')}
+                        textStyle="text-style-u-tool-tip"
+                        textOptions={{ fill: '#333333', wordWrap: true, wordWrapWidth: 434 }}
+                    />
+                </Region>
+                <NuxOfferOldUserLayoutUserInputButtons {...userInputButtons} />
             </Region>
         </Frame>
     );

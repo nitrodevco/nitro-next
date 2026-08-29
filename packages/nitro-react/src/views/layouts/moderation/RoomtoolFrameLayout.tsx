@@ -18,9 +18,7 @@ export const RoomtoolFrameLayout = ({ layout, listCont, onClose }: RoomtoolFrame
             onClose={onClose}
             layout={{ width: 240, height: 437, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <RoomtoolFrameLayoutListCont {...listCont} />
-            </Region>
+            <RoomtoolFrameLayoutListCont {...listCont} />
         </Frame>
     );
 };

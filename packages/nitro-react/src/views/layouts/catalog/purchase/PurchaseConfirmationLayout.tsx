@@ -22,9 +22,7 @@ export const PurchaseConfirmationLayout = ({ content, layout, onClose }: Purchas
             onClose={onClose}
             layout={{ width: 325, height: 339, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <PurchaseConfirmationLayoutContent {...content} />
-            </Region>
+            <PurchaseConfirmationLayoutContent {...content} />
         </Frame>
     );
 };

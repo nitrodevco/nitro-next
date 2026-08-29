@@ -33,16 +33,12 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
     return (
         <Region layout={{ position: 'relative', width: 502, height: 455, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, width: 502, top: 0, height: 455 }}>
-                <Region
+                <Border
+                    variant="2"
+                    name="photo_widget_bg"
                     visible={visiblePhotoWidgetBg ?? false}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                >
-                    <Border
-                        variant="2"
-                        name="photo_widget_bg"
-                        layout={{ width: '100%', height: '100%' }}
-                    />
-                </Region>
+                />
                 <Border
                     variant="1"
                     name="bgBorder"
@@ -67,58 +63,50 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                     />
                 </Region>
                 <StoriesImageWidgetLayoutButtonContainer {...buttonContainer} />
-                <Region
+                <Button
+                    variant="5"
+                    name="makeOwnButton"
+                    tintColor="#4eaac1"
+                    onPointerTap={onMakeOwnButton}
                     visible={visibleMakeOwnButton ?? false}
                     layout={{ position: 'absolute', left: 84, width: 176, top: 8, height: 28 }}
                 >
-                    <Button
-                        variant="5"
-                        name="makeOwnButton"
-                        tintColor="#4eaac1"
-                        onPointerTap={onMakeOwnButton}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        {t('inventory.create_own_card')}
-                    </Button>
-                </Region>
+                    {t('inventory.create_own_card')}
+                </Button>
                 <StoriesImageWidgetLayoutShareButtonContainer {...shareButtonContainer} />
-                <Region
+                <Border
+                    variant="2"
+                    name="shareArea"
+                    tintColor="#24231e"
+                    blend={0.7}
                     visible={visibleShareArea ?? false}
                     layout={{ position: 'absolute', left: 13, width: 218, top: 65, height: 116 }}
                 >
-                    <Border
-                        variant="2"
-                        name="shareArea"
-                        tintColor="#24231e"
-                        blend={0.7}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <Region layout={{ position: 'absolute', left: 0, width: 218, top: 0, height: 116 }}>
-                            <Region layout={{ position: 'absolute', left: 8, width: 200, top: 8, height: 17, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                                <ThemeText
-                                    text={t('info.share.link.info')}
-                                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 200 }}
-                                />
-                            </Region>
-                            <TextInput
-                                value={urlFieldValue}
-                                onChange={setUrlFieldValue}
-                                layout={{ position: 'absolute', left: 8, width: 200, top: 30, height: 17, minWidth: 200, maxWidth: 200 }}
+                    <Region layout={{ position: 'absolute', left: 0, width: 218, top: 0, height: 116 }}>
+                        <Region layout={{ position: 'absolute', left: 8, width: 200, top: 8, height: 17, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                            <ThemeText
+                                text={t('info.share.link.info')}
+                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 200 }}
                             />
-                            <Region layout={{ position: 'absolute', left: 8, width: 200, top: 52, height: 17, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                                <ThemeText
-                                    text={t('info.share.button.info')}
-                                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 200 }}
-                                />
-                            </Region>
-                            <Region layout={{ position: 'absolute', left: 8, width: 200, top: 74, height: 32, minWidth: 200 }}>
-                                <StoriesImageWidgetLayoutFbShare {...fbShare} />
-                                <StoriesImageWidgetLayoutTwitterShare {...twitterShare} />
-                            </Region>
-                            <Region layout={{ position: 'absolute', left: 8, width: 210, top: 111, height: 5 }} />
                         </Region>
-                    </Border>
-                </Region>
+                        <TextInput
+                            value={urlFieldValue}
+                            onChange={setUrlFieldValue}
+                            layout={{ position: 'absolute', left: 8, width: 200, top: 30, height: 17, minWidth: 200, maxWidth: 200 }}
+                        />
+                        <Region layout={{ position: 'absolute', left: 8, width: 200, top: 52, height: 17, minWidth: 200, maxWidth: 200, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                            <ThemeText
+                                text={t('info.share.button.info')}
+                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 200 }}
+                            />
+                        </Region>
+                        <Region layout={{ position: 'absolute', left: 8, width: 200, top: 74, height: 32, minWidth: 200 }}>
+                            <StoriesImageWidgetLayoutFbShare {...fbShare} />
+                            <StoriesImageWidgetLayoutTwitterShare {...twitterShare} />
+                        </Region>
+                        <Region layout={{ position: 'absolute', left: 8, width: 210, top: 111, height: 5 }} />
+                    </Region>
+                </Border>
                 <StoriesImageWidgetLayoutSenderNameButton {...senderNameButton} />
                 <StoriesImageWidgetLayoutNameCopyWrapper {...nameCopyWrapper} />
                 <Region
@@ -132,26 +120,22 @@ export const StoriesImageWidgetLayout = ({ buttonContainer, captionCaptionText, 
                 </Region>
                 <StoriesImageWidgetLayoutNextButton {...nextButton} />
                 <StoriesImageWidgetLayoutPreviousButton {...previousButton} />
-                <Region
+                <Border
+                    variant="4"
+                    name="captionContainer"
                     visible={visibleCaptionContainer ?? false}
                     layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 60 }}
                 >
-                    <Border
-                        variant="4"
-                        name="captionContainer"
-                        layout={{ width: '100%', height: '100%' }}
+                    <Region
+                        name="captionText"
+                        layout={{ position: 'absolute', left: 5, width: 310, top: 5, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                     >
-                        <Region
-                            name="captionText"
-                            layout={{ position: 'absolute', left: 5, width: 310, top: 5, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionCaptionText ?? ''}
-                                textOptions={{ wordWrap: true, wordWrapWidth: 310 }}
-                            />
-                        </Region>
-                    </Border>
-                </Region>
+                        <ThemeText
+                            text={captionCaptionText ?? ''}
+                            textOptions={{ wordWrap: true, wordWrapWidth: 310 }}
+                        />
+                    </Region>
+                </Border>
             </Region>
         </Region>
     );

@@ -22,9 +22,7 @@ export const ChestGenericLayout = ({ layout, mainList, onClose }: ChestGenericLa
             onClose={onClose}
             layout={{ width: 460, height: 463, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ChestGenericLayoutMainList {...mainList} />
-            </Region>
+            <ChestGenericLayoutMainList {...mainList} />
         </Frame>
     );
 };
@@ -974,19 +972,15 @@ export const ChestGenericLayoutFooterItem = ({ buttonRow, footerOptions, layout,
             />
             <ChestGenericLayoutSplitter2 {...splitter} />
             <ChestGenericLayoutLockInfoButton {...lockInfoButton} />
-            <Region
+            <Bubble
+                variant="7"
+                name="lock_info_bubble"
+                pointer="left"
                 visible={visibleLockInfoBubble ?? false}
                 layout={{ position: 'absolute', left: 440, width: 385, top: -245, height: 536 }}
             >
-                <Bubble
-                    variant="7"
-                    name="lock_info_bubble"
-                    pointer="left"
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    <ChestGenericLayoutLockInfoBubbleTexts {...lockInfoBubbleTexts} />
-                </Bubble>
-            </Region>
+                <ChestGenericLayoutLockInfoBubbleTexts {...lockInfoBubbleTexts} />
+            </Bubble>
             <ChestGenericLayoutFooterOptions {...footerOptions} />
             <ChestGenericLayoutButtonRow {...buttonRow} />
         </Region>

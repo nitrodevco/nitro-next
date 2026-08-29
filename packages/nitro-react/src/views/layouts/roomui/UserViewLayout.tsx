@@ -248,29 +248,23 @@ export interface UserViewLayoutBadgesRankRegionItemProps {
     captionBadgesRankText?: string;
     layout?: BoxLayout;
     onBadgesRankRegion?: () => void;
-    visibleBadgesRankRegion?: boolean;
 }
 
-export const UserViewLayoutBadgesRankRegionItem = ({ captionBadgesRankText, layout, onBadgesRankRegion, visibleBadgesRankRegion }: UserViewLayoutBadgesRankRegionItemProps) => {
+export const UserViewLayoutBadgesRankRegionItem = ({ captionBadgesRankText, layout, onBadgesRankRegion }: UserViewLayoutBadgesRankRegionItemProps) => {
     const t = useTranslation();
 
     return (
         <Region
             name="badges_rank_region"
-            visible={visibleBadgesRankRegion ?? false}
+            visible={false}
+            layout={{ width: 170, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onBadgesRankRegion}
             cursor="pointer"
-            layout={{ width: 170, height: 15, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="badges_rank_text"
-                layout={{ position: 'absolute', left: 0, width: 170, top: 0, height: 15, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionBadgesRankText ?? t('infostand.text.badges_rank')}
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
-                />
-            </Region>
+            <ThemeText
+                text={captionBadgesRankText ?? t('infostand.text.badges_rank')}
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 170 }}
+            />
         </Region>
     );
 };

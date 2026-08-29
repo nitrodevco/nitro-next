@@ -57,16 +57,12 @@ export const RoomtoolsLayoutZoomRegion = ({ layout, onZoomRegion, srcIconZoomOff
                     src={srcIconZoomOff ?? '${image.library.url}album3726/icon_zoom_off.png'}
                     layout={{ position: 'absolute', left: 1, width: 23, top: 0, height: 27 }}
                 />
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="icon_zoom_over"
+                    src={srcIconZoomOver ?? '${image.library.url}album3726/icon_zoom_over.png'}
                     layout={{ position: 'absolute', left: 1, width: 23, top: 0, height: 27 }}
-                >
-                    <ThemeImage
-                        name="icon_zoom_over"
-                        src={srcIconZoomOver ?? '${image.library.url}album3726/icon_zoom_over.png'}
-                        layout={{ position: 'absolute', left: 1, width: 23, top: 0, height: 27 }}
-                    />
-                </Region>
+                    visible={false}
+                />
             </Border>
         </Region>
     );

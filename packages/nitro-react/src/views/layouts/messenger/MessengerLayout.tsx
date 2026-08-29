@@ -33,53 +33,51 @@ export const MessengerLayout = ({ avatarList, avatarsScrollLeft, avatarsScrollRi
                     onClose={onFrame}
                     layout={{ position: 'absolute', left: 0, width: 282, top: 0, height: 385, minWidth: 282, minHeight: 275 }}
                 >
-                    <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                        <MessengerLayoutAvatarList {...avatarList} />
-                        <MessengerLayoutAvatarsScrollLeft {...avatarsScrollLeft} />
-                        <MessengerLayoutAvatarsScrollRight {...avatarsScrollRight} />
-                        <WidgetSlot
-                            widgetType="separator"
-                            layout={{ position: 'absolute', left: 0, right: 1, top: 39, height: 15 }}
+                    <MessengerLayoutAvatarList {...avatarList} />
+                    <MessengerLayoutAvatarsScrollLeft {...avatarsScrollLeft} />
+                    <MessengerLayoutAvatarsScrollRight {...avatarsScrollRight} />
+                    <WidgetSlot
+                        widgetType="separator"
+                        layout={{ position: 'absolute', left: 0, right: 1, top: 39, height: 15 }}
+                    >
+                        <Region
+                            name="separator_label"
+                            layout={{ position: 'absolute', left: 0, width: 157, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
-                            <Region
-                                name="separator_label"
-                                layout={{ position: 'absolute', left: 0, width: 157, alignSelf: 'center', height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionSeparatorLabel ?? t('messenger.window.separator')}
-                                    textStyle="text-style-il-border"
-                                    textOptions={{ fill: '#444444' }}
-                                />
-                            </Region>
-                        </WidgetSlot>
-                        <MessengerLayoutButtonStrip {...buttonStrip} />
-                        <CloseButton
-                            variant="100"
-                            name="close_conversation_button"
-                            onPointerTap={onCloseConversationButton}
-                            layout={{ position: 'absolute', right: 9, width: 20, top: 57, height: 20 }}
-                        />
-                        <MessengerLayoutConversation {...conversation} />
-                        <ContainerButton
-                            variant="102"
-                            name="habbicon_button"
-                            tooltip={t('messenger.habbicons.tooltip')}
-                            onPointerTap={onHabbiconButton}
-                            layout={{ position: 'absolute', right: 9, width: 30, bottom: 52, height: 28 }}
-                        >
-                            <ThemeImage
-                                name="habbicon_button_icon"
-                                src={srcHabbiconButtonIcon ?? layoutImage('habbicons_habbicons_dm.png')}
-                                layout={{ position: 'absolute', left: 8, width: 14, top: 7, height: 14 }}
+                            <ThemeText
+                                text={captionSeparatorLabel ?? t('messenger.window.separator')}
+                                textStyle="text-style-il-border"
+                                textOptions={{ fill: '#444444' }}
                             />
-                        </ContainerButton>
-                        <WidgetSlot
-                            widgetType="illumina_input"
-                            name="input_widget"
-                            options={{ 'illumina_input:empty_message': '${messenger.window.input.default}', 'illumina_input:max_chars': '120' }}
-                            layout={{ position: 'absolute', left: 7, right: 43, bottom: 50, height: 30 }}
+                        </Region>
+                    </WidgetSlot>
+                    <MessengerLayoutButtonStrip {...buttonStrip} />
+                    <CloseButton
+                        variant="100"
+                        name="close_conversation_button"
+                        onPointerTap={onCloseConversationButton}
+                        layout={{ position: 'absolute', right: 9, width: 20, top: 57, height: 20 }}
+                    />
+                    <MessengerLayoutConversation {...conversation} />
+                    <ContainerButton
+                        variant="102"
+                        name="habbicon_button"
+                        tooltip={t('messenger.habbicons.tooltip')}
+                        onPointerTap={onHabbiconButton}
+                        layout={{ position: 'absolute', right: 9, width: 30, bottom: 52, height: 28 }}
+                    >
+                        <ThemeImage
+                            name="habbicon_button_icon"
+                            src={srcHabbiconButtonIcon ?? layoutImage('habbicons_habbicons_dm.png')}
+                            layout={{ position: 'absolute', left: 8, width: 14, top: 7, height: 14 }}
                         />
-                    </Region>
+                    </ContainerButton>
+                    <WidgetSlot
+                        widgetType="illumina_input"
+                        name="input_widget"
+                        options={{ 'illumina_input:empty_message': '${messenger.window.input.default}', 'illumina_input:max_chars': '120' }}
+                        layout={{ position: 'absolute', left: 7, right: 43, bottom: 50, height: 30 }}
+                    />
                 </Frame>
             </Region>
         </Region>
@@ -133,16 +131,12 @@ export const MessengerLayoutAvatarList = ({ avatarClickRegion, layout, srcChatIn
                     options={{ 'badge_image:type': 'group', 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '0.5', 'badge_image:zoom_y': '0.5', 'badge_image:fit_size_to_contents': 'true' }}
                     layout={{ position: 'absolute', left: 8, width: 20, top: 8, height: 20 }}
                 />
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="chat_indicator"
+                    src={srcChatIndicator ?? layoutImage('common_chat_indicator.png')}
                     layout={{ position: 'absolute', left: 19, width: 13, top: 6, height: 12 }}
-                >
-                    <ThemeImage
-                        name="chat_indicator"
-                        src={srcChatIndicator ?? layoutImage('common_chat_indicator.png')}
-                        layout={{ position: 'absolute', left: 19, width: 13, top: 6, height: 12 }}
-                    />
-                </Region>
+                    visible={false}
+                />
                 <MessengerLayoutAvatarClickRegion {...avatarClickRegion} />
             </Border>
         </Region>
@@ -376,17 +370,12 @@ export const MessengerLayoutMsgInfoItem = ({ captionContent, layout }: Messenger
     return (
         <Region
             name="msg_info"
-            layout={{ width: 255, height: 24, flexShrink: 0, ...layout }}
+            layout={{ width: 255, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', ...layout }}
         >
-            <Region
-                name="content"
-                layout={{ position: 'absolute', left: 0, width: 255, top: 0, height: 24, minWidth: 255, maxWidth: 255, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionContent ?? ''}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 255, align: 'center' }}
-                />
-            </Region>
+            <ThemeText
+                text={captionContent ?? ''}
+                textOptions={{ wordWrap: true, wordWrapWidth: 255, align: 'center' }}
+            />
         </Region>
     );
 };

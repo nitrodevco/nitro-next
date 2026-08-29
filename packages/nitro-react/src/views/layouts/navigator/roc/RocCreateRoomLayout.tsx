@@ -24,10 +24,8 @@ export const RocCreateRoomLayout = ({ layout, onClose, roomLayoutContainer, room
             onClose={onClose}
             layout={{ width: 585, height: 367, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <RocCreateRoomLayoutRoomSettingsContainer {...roomSettingsContainer} />
-                <RocCreateRoomLayoutRoomLayoutContainer {...roomLayoutContainer} />
-            </Region>
+            <RocCreateRoomLayoutRoomSettingsContainer {...roomSettingsContainer} />
+            <RocCreateRoomLayoutRoomLayoutContainer {...roomLayoutContainer} />
         </Frame>
     );
 };

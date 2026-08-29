@@ -27,66 +27,64 @@ export const GuideOngoingLayout = ({ captionCloseLink, captionReportLink, chatLi
             onClose={onClose}
             layout={{ width: 282, height: 340, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 10, width: 258, top: 0, height: 30, flexDirection: 'row', gap: 5 }}>
-                    <Button
-                        variant="102"
-                        name="visit_button"
-                        tooltip={t('guide.help.request.guide.ongoing.visit.button.tooltip')}
-                        onPointerTap={onVisitButton}
-                        layout={{ width: 120, height: 30, flexShrink: 0, maxWidth: 120, minHeight: 30, maxHeight: 30 }}
-                    >
-                        {t('guide.help.request.guide.ongoing.visit.button')}
-                    </Button>
-                    <Button
-                        variant="102"
-                        name="invite_button"
-                        tooltip={t('guide.help.request.guide.ongoing.invite.button.tooltip')}
-                        onPointerTap={onInviteButton}
-                        layout={{ width: 120, height: 30, flexShrink: 0, maxWidth: 120, minHeight: 30, maxHeight: 30 }}
-                    >
-                        {t('guide.help.request.guide.ongoing.invite.button')}
-                    </Button>
-                </Region>
+            <Region layout={{ position: 'absolute', left: 10, width: 258, top: 0, height: 30, flexDirection: 'row', gap: 5 }}>
+                <Button
+                    variant="102"
+                    name="visit_button"
+                    tooltip={t('guide.help.request.guide.ongoing.visit.button.tooltip')}
+                    onPointerTap={onVisitButton}
+                    layout={{ width: 120, height: 30, flexShrink: 0, maxWidth: 120, minHeight: 30, maxHeight: 30 }}
+                >
+                    {t('guide.help.request.guide.ongoing.visit.button')}
+                </Button>
+                <Button
+                    variant="102"
+                    name="invite_button"
+                    tooltip={t('guide.help.request.guide.ongoing.invite.button.tooltip')}
+                    onPointerTap={onInviteButton}
+                    layout={{ width: 120, height: 30, flexShrink: 0, maxWidth: 120, minHeight: 30, maxHeight: 30 }}
+                >
+                    {t('guide.help.request.guide.ongoing.invite.button')}
+                </Button>
+            </Region>
+            <Region
+                name="report_link"
+                tooltip={t('guide.help.common.report.link.tooltip')}
+                layout={{ position: 'absolute', left: 170, width: 90, top: 15, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                onPointerTap={onReportLink}
+                cursor="pointer"
+            >
+                <ThemeText
+                    text={captionReportLink ?? t('guide.help.common.report.link')}
+                    textOptions={{ align: 'right' }}
+                />
+            </Region>
+            <ThemeImage
+                src={layoutImage('illumina_horizontal_separator.png')}
+                layout={{ position: 'absolute', left: 0, width: 280, top: 37, height: 2 }}
+            />
+            <GuideOngoingLayoutChatList {...chatList} />
+            <Region layout={{ position: 'absolute', left: 0, width: 280, bottom: 44, height: 75 }}>
+                <ThemeImage
+                    src={layoutImage('illumina_horizontal_separator.png')}
+                    layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 2, minWidth: 280, maxWidth: 280 }}
+                />
+                <WidgetSlot
+                    widgetType="illumina_input"
+                    name="input_widget"
+                    options={{ 'illumina_input:empty_message': 'Click here to chat' }}
+                    layout={{ position: 'absolute', left: 10, width: 260, top: 15, height: 30 }}
+                />
                 <Region
-                    name="report_link"
-                    tooltip={t('guide.help.common.report.link.tooltip')}
-                    layout={{ position: 'absolute', left: 170, width: 90, top: 15, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                    onPointerTap={onReportLink}
+                    name="close_link"
+                    layout={{ position: 'absolute', left: 10, width: 260, top: 53, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    onPointerTap={onCloseLink}
                     cursor="pointer"
                 >
                     <ThemeText
-                        text={captionReportLink ?? t('guide.help.common.report.link')}
-                        textOptions={{ align: 'right' }}
+                        text={captionCloseLink ?? t('guide.help.request.guide.ongoing.close.link')}
+                        textOptions={{ align: 'center' }}
                     />
-                </Region>
-                <ThemeImage
-                    src={layoutImage('illumina_horizontal_separator.png')}
-                    layout={{ position: 'absolute', left: 0, width: 280, top: 37, height: 2 }}
-                />
-                <GuideOngoingLayoutChatList {...chatList} />
-                <Region layout={{ position: 'absolute', left: 0, width: 280, bottom: 44, height: 75 }}>
-                    <ThemeImage
-                        src={layoutImage('illumina_horizontal_separator.png')}
-                        layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 2, minWidth: 280, maxWidth: 280 }}
-                    />
-                    <WidgetSlot
-                        widgetType="illumina_input"
-                        name="input_widget"
-                        options={{ 'illumina_input:empty_message': 'Click here to chat' }}
-                        layout={{ position: 'absolute', left: 10, width: 260, top: 15, height: 30 }}
-                    />
-                    <Region
-                        name="close_link"
-                        layout={{ position: 'absolute', left: 10, width: 260, top: 53, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        onPointerTap={onCloseLink}
-                        cursor="pointer"
-                    >
-                        <ThemeText
-                            text={captionCloseLink ?? t('guide.help.request.guide.ongoing.close.link')}
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
                 </Region>
             </Region>
         </Frame>

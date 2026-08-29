@@ -28,76 +28,74 @@ export const QuestCompletedDialogLayout = ({ captionCongratsTxt, captionDescTxt,
             onClose={onClose}
             layout={{ width: 426, height: 215, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    backgroundColor="#7d7da6"
-                    layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 95 }}
+            <Region
+                backgroundColor="#7d7da6"
+                layout={{ position: 'absolute', left: 1, right: 1, top: 0, bottom: 95 }}
+            />
+            <ThemeImage
+                name="reward_icon"
+                src={srcRewardIcon ?? '${image.library.questing.url}quest_doneicon.png'}
+                layout={{ position: 'absolute', left: 6, width: 125, top: 10, height: 114 }}
+            />
+            <ThemeImage
+                name="campaign_reward_icon"
+                src={srcCampaignRewardIcon ?? '${image.library.questing.url}ach_receive_star.png'}
+                layout={{ position: 'absolute', left: 9, width: 109, top: 5, height: 109 }}
+            />
+            <ThemeImage
+                name="campaign_pic_bitmap"
+                src={srcCampaignPicBitmap}
+                layout={{ position: 'absolute', left: 23, width: 84, top: 25, height: 72 }}
+            />
+            <ThemeImage
+                name="twinkle_bitmap"
+                src={srcTwinkleBitmap}
+                layout={{ position: 'absolute', left: 35, width: 70, top: 30, height: 70 }}
+            />
+            <Region
+                name="congrats_txt"
+                layout={{ position: 'absolute', left: 138, right: 5, top: 22, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCongratsTxt ?? t('quests.completed.congrats')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 283 }}
                 />
-                <ThemeImage
-                    name="reward_icon"
-                    src={srcRewardIcon ?? '${image.library.questing.url}quest_doneicon.png'}
-                    layout={{ position: 'absolute', left: 6, width: 125, top: 10, height: 114 }}
-                />
-                <ThemeImage
-                    name="campaign_reward_icon"
-                    src={srcCampaignRewardIcon ?? '${image.library.questing.url}ach_receive_star.png'}
-                    layout={{ position: 'absolute', left: 9, width: 109, top: 5, height: 109 }}
-                />
-                <ThemeImage
-                    name="campaign_pic_bitmap"
-                    src={srcCampaignPicBitmap}
-                    layout={{ position: 'absolute', left: 23, width: 84, top: 25, height: 72 }}
-                />
-                <ThemeImage
-                    name="twinkle_bitmap"
-                    src={srcTwinkleBitmap}
-                    layout={{ position: 'absolute', left: 35, width: 70, top: 30, height: 70 }}
-                />
-                <Region
-                    name="congrats_txt"
-                    layout={{ position: 'absolute', left: 138, right: 5, top: 22, height: 24, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCongratsTxt ?? t('quests.completed.congrats')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 283 }}
-                    />
-                </Region>
-                <Region
-                    name="desc_txt"
-                    layout={{ position: 'absolute', left: 139, right: 5, top: 48, height: 31, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDescTxt ?? 'desc_txt jhg kjh gjkhg kjh gjkh gkjh gkjh gkjh gkjhg kjhg kjh'}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 282 }}
-                    />
-                </Region>
-                <Region
-                    name="reward_txt"
-                    layout={{ position: 'absolute', left: 138, right: -3, bottom: 104, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionRewardTxt ?? 'reward_txt'}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 291 }}
-                    />
-                </Region>
-                <ButtonThick
-                    variant="3"
-                    name="next_quest_button"
-                    onPointerTap={onNextQuestButton}
-                    layout={{ position: 'absolute', right: 13, width: 141, bottom: 45, height: 29, minWidth: 141, maxWidth: 141 }}
-                >
-                    {t('quests.completed.next')}
-                </ButtonThick>
-                <QuestCompletedDialogLayoutCatalogLinkRegion {...catalogLinkRegion} />
-                <ButtonThick
-                    variant="3"
-                    name="more_quests_button"
-                    onPointerTap={onMoreQuestsButton}
-                    layout={{ position: 'absolute', right: 134, width: 157, bottom: 45, height: 29, minWidth: 157, maxWidth: 157 }}
-                >
-                    {t('quests.campaigncompleted.more')}
-                </ButtonThick>
             </Region>
+            <Region
+                name="desc_txt"
+                layout={{ position: 'absolute', left: 139, right: 5, top: 48, height: 31, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionDescTxt ?? 'desc_txt jhg kjh gjkhg kjh gjkh gkjh gkjh gkjh gkjhg kjhg kjh'}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 282 }}
+                />
+            </Region>
+            <Region
+                name="reward_txt"
+                layout={{ position: 'absolute', left: 138, right: -3, bottom: 104, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionRewardTxt ?? 'reward_txt'}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 291 }}
+                />
+            </Region>
+            <ButtonThick
+                variant="3"
+                name="next_quest_button"
+                onPointerTap={onNextQuestButton}
+                layout={{ position: 'absolute', right: 13, width: 141, bottom: 45, height: 29, minWidth: 141, maxWidth: 141 }}
+            >
+                {t('quests.completed.next')}
+            </ButtonThick>
+            <QuestCompletedDialogLayoutCatalogLinkRegion {...catalogLinkRegion} />
+            <ButtonThick
+                variant="3"
+                name="more_quests_button"
+                onPointerTap={onMoreQuestsButton}
+                layout={{ position: 'absolute', right: 134, width: 157, bottom: 45, height: 29, minWidth: 157, maxWidth: 157 }}
+            >
+                {t('quests.campaigncompleted.more')}
+            </ButtonThick>
         </Frame>
     );
 };

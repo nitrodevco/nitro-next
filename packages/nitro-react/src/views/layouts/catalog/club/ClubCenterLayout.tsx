@@ -31,87 +31,85 @@ export const ClubCenterLayout = ({ basic, captionGiftInfo, captionGiftTitle, foo
             onClose={onClose}
             layout={{ width: 460, height: 597, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 0, width: 460, top: 0, height: 559, flexDirection: 'column' }}>
-                    <Region layout={{ width: 459, height: 137, flexShrink: 0 }}>
-                        <ThemeImage
-                            name="coverpic"
-                            src={srcCoverpic ?? layoutImage('hc_center_hc_center_cover.png')}
-                            layout={{ position: 'absolute', left: 0, width: 459, top: 1, height: 137 }}
-                        />
-                        <Region layout={{ position: 'absolute', left: 21, width: 261, top: 85, height: 33, flexDirection: 'row', gap: 14 }}>
-                            <ButtonThick
-                                variant="6"
-                                name="btn_buy"
-                                tintColor="#54c32e"
-                                onPointerTap={onBtnBuy}
-                                textStyle="text-style-button-shiny-bold"
-                                layout={{ width: 121, height: 33, flexShrink: 0 }}
-                            >
-                                {t('hccenter.btn.buy')}
-                            </ButtonThick>
-                            <ButtonThick
-                                variant="5"
-                                name="btn_earn"
-                                tintColor="#3399cc"
-                                onPointerTap={onBtnEarn}
-                                textStyle="text-style-button-shiny-bold"
-                                layout={{ width: 126, height: 33, flexShrink: 0 }}
-                            >
-                                {t('hccenter.btn.earn')}
-                            </ButtonThick>
-                        </Region>
-                    </Region>
-                    <ClubCenterLayoutBasic {...basic} />
-                    <Region layout={{ width: 420, height: 208, flexShrink: 0, flexDirection: 'column' }}>
-                        <ClubCenterLayoutSpecialContent {...specialContent} />
-                        <Border
-                            variant="3"
-                            name="gift_content"
+            <Region layout={{ position: 'absolute', left: 0, width: 460, top: 0, height: 559, flexDirection: 'column' }}>
+                <Region layout={{ width: 459, height: 137, flexShrink: 0 }}>
+                    <ThemeImage
+                        name="coverpic"
+                        src={srcCoverpic ?? layoutImage('hc_center_hc_center_cover.png')}
+                        layout={{ position: 'absolute', left: 0, width: 459, top: 1, height: 137 }}
+                    />
+                    <Region layout={{ position: 'absolute', left: 21, width: 261, top: 85, height: 33, flexDirection: 'row', gap: 14 }}>
+                        <ButtonThick
+                            variant="6"
+                            name="btn_buy"
                             tintColor="#54c32e"
-                            layout={{ width: 412, height: 74, flexShrink: 0 }}
+                            onPointerTap={onBtnBuy}
+                            textStyle="text-style-button-shiny-bold"
+                            layout={{ width: 121, height: 33, flexShrink: 0 }}
                         >
-                            <Region
-                                name="gift_title"
-                                layout={{ position: 'absolute', left: 16, width: 250, top: 16, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionGiftTitle ?? t('hccenter.gift.title')}
-                                    textStyle="text-style-u-bold"
-                                    textOptions={{ fill: '#ffffff' }}
-                                />
-                            </Region>
-                            <Region
-                                name="gift_info"
-                                layout={{ position: 'absolute', left: 16, width: 250, top: 36, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionGiftInfo ?? t('hccenter.gift.info')}
-                                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 250 }}
-                                />
-                            </Region>
-                            <ButtonThick
-                                variant="5"
-                                name="btn_gift"
-                                tintColor="#3399cc"
-                                onPointerTap={onBtnGift}
-                                textStyle="text-style-button-shiny-bold"
-                                layout={{ position: 'absolute', right: 25, width: 154, alignSelf: 'center', marginTop: 1.5, marginBottom: -1.5, height: 33 }}
-                            >
-                                {t('hccenter.btn.gifts.view')}
-                            </ButtonThick>
-                        </Border>
+                            {t('hccenter.btn.buy')}
+                        </ButtonThick>
+                        <ButtonThick
+                            variant="5"
+                            name="btn_earn"
+                            tintColor="#3399cc"
+                            onPointerTap={onBtnEarn}
+                            textStyle="text-style-button-shiny-bold"
+                            layout={{ width: 126, height: 33, flexShrink: 0 }}
+                        >
+                            {t('hccenter.btn.earn')}
+                        </ButtonThick>
                     </Region>
-                    <ClubCenterLayoutFooter {...footer} />
                 </Region>
-                <WidgetSlot
-                    widgetType="room_previewer"
-                    name="avatar"
-                    options={{ 'room_previewer:offsety': '-30', 'room_previewer:zoom': '2' }}
-                    layout={{ position: 'absolute', left: 360, width: 90, top: 14, height: 130 }}
-                />
-                <ClubCenterLayoutSpecialContentPostit {...specialContentPostit} />
+                <ClubCenterLayoutBasic {...basic} />
+                <Region layout={{ width: 420, height: 208, flexShrink: 0, flexDirection: 'column' }}>
+                    <ClubCenterLayoutSpecialContent {...specialContent} />
+                    <Border
+                        variant="3"
+                        name="gift_content"
+                        tintColor="#54c32e"
+                        layout={{ width: 412, height: 74, flexShrink: 0 }}
+                    >
+                        <Region
+                            name="gift_title"
+                            layout={{ position: 'absolute', left: 16, width: 250, top: 16, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionGiftTitle ?? t('hccenter.gift.title')}
+                                textStyle="text-style-u-bold"
+                                textOptions={{ fill: '#ffffff' }}
+                            />
+                        </Region>
+                        <Region
+                            name="gift_info"
+                            layout={{ position: 'absolute', left: 16, width: 250, top: 36, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText
+                                text={captionGiftInfo ?? t('hccenter.gift.info')}
+                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 250 }}
+                            />
+                        </Region>
+                        <ButtonThick
+                            variant="5"
+                            name="btn_gift"
+                            tintColor="#3399cc"
+                            onPointerTap={onBtnGift}
+                            textStyle="text-style-button-shiny-bold"
+                            layout={{ position: 'absolute', right: 25, width: 154, alignSelf: 'center', marginTop: 1.5, marginBottom: -1.5, height: 33 }}
+                        >
+                            {t('hccenter.btn.gifts.view')}
+                        </ButtonThick>
+                    </Border>
+                </Region>
+                <ClubCenterLayoutFooter {...footer} />
             </Region>
+            <WidgetSlot
+                widgetType="room_previewer"
+                name="avatar"
+                options={{ 'room_previewer:offsety': '-30', 'room_previewer:zoom': '2' }}
+                layout={{ position: 'absolute', left: 360, width: 90, top: 14, height: 130 }}
+            />
+            <ClubCenterLayoutSpecialContentPostit {...specialContentPostit} />
         </Frame>
     );
 };

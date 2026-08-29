@@ -23,11 +23,9 @@ export const TransactionOverviewLayout = ({ footer, header, layout, middle, onCl
             onClose={onClose}
             layout={{ width: 880, height: 391, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <TransactionOverviewLayoutHeader {...header} />
-                <TransactionOverviewLayoutMiddle {...middle} />
-                <TransactionOverviewLayoutFooter {...footer} />
-            </Region>
+            <TransactionOverviewLayoutHeader {...header} />
+            <TransactionOverviewLayoutMiddle {...middle} />
+            <TransactionOverviewLayoutFooter {...footer} />
         </Frame>
     );
 };

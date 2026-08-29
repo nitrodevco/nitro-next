@@ -110,16 +110,12 @@ export const FurniChestContentsLayoutFurniTemplateItem = ({ layout, numberContai
                 tintColor="#cbcbcb"
                 layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
             >
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="unique_item_background_bitmap"
+                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                     layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                >
-                    <ThemeImage
-                        name="unique_item_background_bitmap"
-                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                        layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                    />
-                </Region>
+                    visible={false}
+                />
                 <WidgetSlot
                     widgetType="product_icon"
                     name="furni_icon"
@@ -269,19 +265,15 @@ export const FurniChestContentsLayoutOptions = ({ layout, onViewLogsByFurniBtn, 
             layout={{ position: 'absolute', left: 0, right: 0, bottom: -31, height: 62, ...layout }}
         >
             <FurniChestContentsLayoutWithdrawCont {...withdrawCont} />
-            <Region
+            <Button
+                variant="3"
+                name="view_logs_by_furni_btn"
+                onPointerTap={onViewLogsByFurniBtn}
                 visible={visibleViewLogsByFurniBtn ?? false}
                 layout={{ position: 'absolute', right: 0, width: 73, top: 37, height: 22, minWidth: 60 }}
             >
-                <Button
-                    variant="3"
-                    name="view_logs_by_furni_btn"
-                    onPointerTap={onViewLogsByFurniBtn}
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    {t('wiredchests.view_logs')}
-                </Button>
-            </Region>
+                {t('wiredchests.view_logs')}
+            </Button>
         </Region>
     );
 };
@@ -316,16 +308,12 @@ export const FurniChestContentsLayoutRightPanel = ({ captionFurniName, layout, o
                     />
                 </Region>
                 <FurniChestContentsLayoutStretchingPreviewImageContainer {...stretchingPreviewImageContainer} />
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="placeholder_preview_image"
+                    src={srcPlaceholderPreviewImage ?? layoutImage('wired_chests_images_classic_furni_chest_empty.png')}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 10, bottom: 0 }}
-                >
-                    <ThemeImage
-                        name="placeholder_preview_image"
-                        src={srcPlaceholderPreviewImage ?? layoutImage('wired_chests_images_classic_furni_chest_empty.png')}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 10, bottom: 0 }}
-                    />
-                </Region>
+                    visible={false}
+                />
             </Border>
             <FurniChestContentsLayoutOptions {...options} />
         </Region>
@@ -358,33 +346,29 @@ export const FurniChestContentsLayoutFurniChest = ({ captionNoItemsText, caption
                 tintColor="#e3e3e3"
                 layout={{ position: 'absolute', left: 9, right: 194, top: 11, bottom: 11, justifyContent: 'center' }}
             >
-                <Region
+                <Border
+                    variant="105"
+                    name="search_border"
                     visible={visibleSearchBorder ?? false}
                     layout={{ position: 'absolute', left: 5, right: 5, top: 4, height: 24, minHeight: 24, maxHeight: 24 }}
                 >
-                    <Border
-                        variant="105"
-                        name="search_border"
-                        layout={{ width: '100%', height: '100%' }}
+                    <Region
+                        name="search_placeholder"
+                        layout={{ position: 'absolute', left: 4, width: 82, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <Region
-                            name="search_placeholder"
-                            layout={{ position: 'absolute', left: 4, width: 82, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionSearchPlaceholder ?? t('catalog.search')}
-                                textOptions={{ fill: '#666666' }}
-                            />
-                        </Region>
-                        <TextInput
-                            value={searchInputValue}
-                            onChange={setSearchInputValue}
-                            textColor="#666666"
-                            layout={{ position: 'absolute', left: 4, right: 25, top: 3, height: 18, minHeight: 18, maxHeight: 18 }}
+                        <ThemeText
+                            text={captionSearchPlaceholder ?? t('catalog.search')}
+                            textOptions={{ fill: '#666666' }}
                         />
-                        <FurniChestContentsLayoutClearSearchButton {...clearSearchButton} />
-                    </Border>
-                </Region>
+                    </Region>
+                    <TextInput
+                        value={searchInputValue}
+                        onChange={setSearchInputValue}
+                        textColor="#666666"
+                        layout={{ position: 'absolute', left: 4, right: 25, top: 3, height: 18, minHeight: 18, maxHeight: 18 }}
+                    />
+                    <FurniChestContentsLayoutClearSearchButton {...clearSearchButton} />
+                </Border>
                 <Region
                     name="no_items_text"
                     layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 108, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

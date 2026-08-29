@@ -21,36 +21,34 @@ export const PendingGuideSessionLayout = ({ layout, onClose, onCloseButton }: Pe
             onClose={onClose}
             layout={{ width: 369, height: 153, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 8, top: 6, flexDirection: 'column', gap: 9 }}>
-                    <Region layout={{ width: 194, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('guide.pending.guide.subtitle')}
-                            textStyle="text-style-il-heading-1"
-                            textOptions={{ fill: '#c30000' }}
-                        />
-                    </Region>
-                    <Region layout={{ width: 295, height: 24, flexShrink: 0, minWidth: 295, maxWidth: 295, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('guide.pending.guide.description')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 295 }}
-                        />
-                    </Region>
-                    <Region layout={{ width: 370, height: 52, flexShrink: 0, justifyContent: 'center' }}>
-                        <Button
-                            variant="101"
-                            name="close_button"
-                            tintColor="#bbbbbb"
-                            onPointerTap={onCloseButton}
-                            layout={{ position: 'absolute', width: 140, top: 0, height: 48 }}
-                        >
-                            {t('alert.close.button')}
-                        </Button>
-                        <ThemeImage
-                            src={layoutImage('help_illustrations_question.png')}
-                            layout={{ position: 'absolute', left: 272, width: 90, bottom: 4, height: 128 }}
-                        />
-                    </Region>
+            <Region layout={{ position: 'absolute', left: 8, top: 6, flexDirection: 'column', gap: 9 }}>
+                <Region layout={{ width: 194, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('guide.pending.guide.subtitle')}
+                        textStyle="text-style-il-heading-1"
+                        textOptions={{ fill: '#c30000' }}
+                    />
+                </Region>
+                <Region layout={{ width: 295, height: 24, flexShrink: 0, minWidth: 295, maxWidth: 295, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('guide.pending.guide.description')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 295 }}
+                    />
+                </Region>
+                <Region layout={{ width: 370, height: 52, flexShrink: 0, justifyContent: 'center' }}>
+                    <Button
+                        variant="101"
+                        name="close_button"
+                        tintColor="#bbbbbb"
+                        onPointerTap={onCloseButton}
+                        layout={{ position: 'absolute', width: 140, top: 0, height: 48 }}
+                    >
+                        {t('alert.close.button')}
+                    </Button>
+                    <ThemeImage
+                        src={layoutImage('help_illustrations_question.png')}
+                        layout={{ position: 'absolute', left: 272, width: 90, bottom: 4, height: 128 }}
+                    />
                 </Region>
             </Region>
         </Frame>

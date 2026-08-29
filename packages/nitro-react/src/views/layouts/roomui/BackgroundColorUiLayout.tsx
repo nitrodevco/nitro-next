@@ -25,31 +25,29 @@ export const BackgroundColorUiLayout = ({ layout, onApplyButton, onClose, onOnOf
             onClose={onClose}
             layout={{ width: 292, height: 255, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="100"
-                    tintColor="#ffffff"
-                    layout={{ position: 'absolute', left: 3, width: 275, top: 16, height: 171 }}
-                >
-                    <BackgroundColorUiLayoutTabContent {...tabContent} />
-                </Border>
-                <Button
-                    variant="0"
-                    name="apply_button"
-                    onPointerTap={onApplyButton}
-                    layout={{ position: 'absolute', left: 4, width: 203, top: 193, height: 24 }}
-                >
-                    {t('widget.backgroundcolor.button.apply')}
-                </Button>
-                <Button
-                    variant="0"
-                    name="on_off_button"
-                    onPointerTap={onOnOffButton}
-                    layout={{ position: 'absolute', right: 13, width: 189, top: 193, height: 24 }}
-                >
-                    {t('widget.backgroundcolor.button.on')}
-                </Button>
-            </Region>
+            <Border
+                variant="100"
+                tintColor="#ffffff"
+                layout={{ position: 'absolute', left: 3, width: 275, top: 16, height: 171 }}
+            >
+                <BackgroundColorUiLayoutTabContent {...tabContent} />
+            </Border>
+            <Button
+                variant="0"
+                name="apply_button"
+                onPointerTap={onApplyButton}
+                layout={{ position: 'absolute', left: 4, width: 203, top: 193, height: 24 }}
+            >
+                {t('widget.backgroundcolor.button.apply')}
+            </Button>
+            <Button
+                variant="0"
+                name="on_off_button"
+                onPointerTap={onOnOffButton}
+                layout={{ position: 'absolute', right: 13, width: 189, top: 193, height: 24 }}
+            >
+                {t('widget.backgroundcolor.button.on')}
+            </Button>
         </Frame>
     );
 };

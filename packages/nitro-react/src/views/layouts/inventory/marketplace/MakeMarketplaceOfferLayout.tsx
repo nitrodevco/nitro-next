@@ -21,9 +21,7 @@ export const MakeMarketplaceOfferLayout = ({ layout, mainBorder, onClose }: Make
             onClose={onClose}
             layout={{ width: 300, height: 429, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <MakeMarketplaceOfferLayoutMainBorder {...mainBorder} />
-            </Region>
+            <MakeMarketplaceOfferLayoutMainBorder {...mainBorder} />
         </Frame>
     );
 };

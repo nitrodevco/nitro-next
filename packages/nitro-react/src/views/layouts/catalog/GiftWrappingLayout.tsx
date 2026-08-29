@@ -37,112 +37,110 @@ export const GiftWrappingLayout = ({ avatarImageContainer, boxPickerContainer, c
             onClose={onClose}
             layout={{ width: 342, height: 482, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Border
+                variant="3"
+                tintColor="#e9e9e9"
+                layout={{ position: 'absolute', left: 0, right: 12, top: 10, bottom: 32 }}
+            >
                 <Border
-                    variant="3"
-                    tintColor="#e9e9e9"
-                    layout={{ position: 'absolute', left: 0, right: 12, top: 10, bottom: 32 }}
+                    variant="0"
+                    name="name_border"
+                    layout={{ position: 'absolute', left: 10, width: 284, top: 12, height: 27 }}
                 >
-                    <Border
-                        variant="0"
-                        name="name_border"
-                        layout={{ position: 'absolute', left: 10, width: 284, top: 12, height: 27 }}
-                    >
-                        <TextInput
-                            value={nameInputValue}
-                            onChange={setNameInputValue}
-                            maxLength={32}
-                            layout={{ position: 'absolute', left: 8, right: 10, top: 3, bottom: 3 }}
-                        />
-                        <Region
-                            name="name_input_hint"
-                            visible={false}
-                            layout={{ position: 'absolute', left: 8, width: 266, top: 3, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionNameInputHint ?? ''}
-                                textStyle="text-style-u-italic"
-                                textOptions={{ fill: '#777777' }}
-                            />
-                        </Region>
-                    </Border>
-                    <ThemeImage
-                        name="write_deco"
-                        src={srcWriteDeco ?? layoutImage('common_small_pen.png')}
-                        layout={{ position: 'absolute', left: 301, width: 17, top: 15, height: 18 }}
-                    />
-                    <GiftWrappingLayoutSuggestionContainer {...suggestionContainer} />
-                    <ThemeImage
-                        name="gift_card"
-                        src={srcGiftCard ?? layoutImage('catalogue_giftcard_blank.png')}
-                        layout={{ position: 'absolute', left: 10, width: 306, top: 56, height: 149 }}
-                    />
-                    <GiftWrappingLayoutAvatarImageContainer {...avatarImageContainer} />
                     <TextInput
-                        value={messageInputValue}
-                        onChange={setMessageInputValue}
-                        maxLength={140}
-                        multiline
-                        layout={{ position: 'absolute', left: 95, width: 190, top: 77, height: 100 }}
+                        value={nameInputValue}
+                        onChange={setNameInputValue}
+                        maxLength={32}
+                        layout={{ position: 'absolute', left: 8, right: 10, top: 3, bottom: 3 }}
                     />
                     <Region
-                        name="message_input_hint"
+                        name="name_input_hint"
                         visible={false}
-                        layout={{ position: 'absolute', left: 95, width: 190, top: 77, height: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        layout={{ position: 'absolute', left: 8, width: 266, top: 3, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
                         <ThemeText
-                            text={captionMessageInputHint ?? ''}
+                            text={captionNameInputHint ?? ''}
                             textStyle="text-style-u-italic"
                             textOptions={{ fill: '#777777' }}
                         />
                     </Region>
-                    <Region
-                        name="message_from"
-                        layout={{ position: 'absolute', left: 95, width: 190, top: 169, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                    >
-                        <ThemeText
-                            text={captionMessageFrom ?? ''}
-                            textStyle="text-style-u-italic"
-                            textOptions={{ align: 'right' }}
-                        />
-                    </Region>
-                    <CheckBox
-                        variant="0"
-                        name="show_face_checkbox"
-                        onPointerTap={onShowFaceCheckbox}
-                        layout={{ position: 'absolute', left: 46, width: 16, top: 220, height: 15 }}
-                    />
-                    <Region
-                        name="show_face_checkbox_title"
-                        layout={{ position: 'absolute', left: 66, width: 260, top: 218, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionShowFaceCheckboxTitle ?? t('catalog.gift_wrapping.show_face.title')}
-                            textStyle="text-style-u-regular"
-                        />
-                    </Region>
-                    <GiftWrappingLayoutBoxPickerContainer {...boxPickerContainer} />
-                    <Region
-                        name="box_color_title"
-                        layout={{ position: 'absolute', left: 11, width: 306, top: 341, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBoxColorTitle ?? t('catalog.gift_wrapping.pick_color')}
-                            textStyle="text-style-u-bold"
-                        />
-                    </Region>
-                    <GiftWrappingLayoutColorPickerContainer {...colorPickerContainer} />
-                    <ButtonThick
-                        variant="3"
-                        name="give_gift_button"
-                        onPointerTap={onGiveGiftButton}
-                        layout={{ position: 'absolute', left: 171, width: 150, top: 404, height: 25, minWidth: 150, maxWidth: 150 }}
-                    >
-                        {t('catalog.gift_wrapping.give_gift')}
-                    </ButtonThick>
-                    <GiftWrappingLayoutCancelLinkRegion {...cancelLinkRegion} />
                 </Border>
-            </Region>
+                <ThemeImage
+                    name="write_deco"
+                    src={srcWriteDeco ?? layoutImage('common_small_pen.png')}
+                    layout={{ position: 'absolute', left: 301, width: 17, top: 15, height: 18 }}
+                />
+                <GiftWrappingLayoutSuggestionContainer {...suggestionContainer} />
+                <ThemeImage
+                    name="gift_card"
+                    src={srcGiftCard ?? layoutImage('catalogue_giftcard_blank.png')}
+                    layout={{ position: 'absolute', left: 10, width: 306, top: 56, height: 149 }}
+                />
+                <GiftWrappingLayoutAvatarImageContainer {...avatarImageContainer} />
+                <TextInput
+                    value={messageInputValue}
+                    onChange={setMessageInputValue}
+                    maxLength={140}
+                    multiline
+                    layout={{ position: 'absolute', left: 95, width: 190, top: 77, height: 100 }}
+                />
+                <Region
+                    name="message_input_hint"
+                    visible={false}
+                    layout={{ position: 'absolute', left: 95, width: 190, top: 77, height: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionMessageInputHint ?? ''}
+                        textStyle="text-style-u-italic"
+                        textOptions={{ fill: '#777777' }}
+                    />
+                </Region>
+                <Region
+                    name="message_from"
+                    layout={{ position: 'absolute', left: 95, width: 190, top: 169, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                >
+                    <ThemeText
+                        text={captionMessageFrom ?? ''}
+                        textStyle="text-style-u-italic"
+                        textOptions={{ align: 'right' }}
+                    />
+                </Region>
+                <CheckBox
+                    variant="0"
+                    name="show_face_checkbox"
+                    onPointerTap={onShowFaceCheckbox}
+                    layout={{ position: 'absolute', left: 46, width: 16, top: 220, height: 15 }}
+                />
+                <Region
+                    name="show_face_checkbox_title"
+                    layout={{ position: 'absolute', left: 66, width: 260, top: 218, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionShowFaceCheckboxTitle ?? t('catalog.gift_wrapping.show_face.title')}
+                        textStyle="text-style-u-regular"
+                    />
+                </Region>
+                <GiftWrappingLayoutBoxPickerContainer {...boxPickerContainer} />
+                <Region
+                    name="box_color_title"
+                    layout={{ position: 'absolute', left: 11, width: 306, top: 341, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionBoxColorTitle ?? t('catalog.gift_wrapping.pick_color')}
+                        textStyle="text-style-u-bold"
+                    />
+                </Region>
+                <GiftWrappingLayoutColorPickerContainer {...colorPickerContainer} />
+                <ButtonThick
+                    variant="3"
+                    name="give_gift_button"
+                    onPointerTap={onGiveGiftButton}
+                    layout={{ position: 'absolute', left: 171, width: 150, top: 404, height: 25, minWidth: 150, maxWidth: 150 }}
+                >
+                    {t('catalog.gift_wrapping.give_gift')}
+                </ButtonThick>
+                <GiftWrappingLayoutCancelLinkRegion {...cancelLinkRegion} />
+            </Border>
         </Frame>
     );
 };

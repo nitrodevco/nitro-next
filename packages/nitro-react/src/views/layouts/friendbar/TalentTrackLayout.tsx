@@ -33,47 +33,37 @@ export const TalentTrackLayout = ({ captionFrameSubtitle, captionFrameTitle, lay
                     onClose={onFrame}
                     layout={{ position: 'absolute', left: 0, width: 1000, top: 22, height: 445, minWidth: 100 }}
                 >
-                    <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                        <TalentTrackLayoutPanorama {...panorama} />
-                        {/* <scrollbar_horizontal> for panorama - rendered by that list's ScrollArea */}
-                        <ThemeImage
-                            name="mask_left"
-                            src={srcMaskLeft ?? layoutImage('talent_mask_left.png')}
-                            layout={{ position: 'absolute', left: 0, width: 24, top: 20, height: 280 }}
-                        />
-                        <ThemeImage
-                            name="mask_right"
-                            src={srcMaskRight ?? layoutImage('talent_mask_right.png')}
-                            layout={{ position: 'absolute', right: 0, width: 24, top: 20, height: 280 }}
-                        />
-                        <TalentTrackLayoutProgressContainer {...progressContainer} />
-                        <Region
-                            visible={visibleButtonTrackCitizenship ?? false}
-                            layout={{ position: 'absolute', left: 10, width: 36, top: 10, height: 32 }}
-                        >
-                            <Button
-                                variant="102"
-                                name="button_track_citizenship"
-                                onPointerTap={onButtonTrackCitizenship}
-                                layout={{ width: '100%', height: '100%' }}
-                            >
-                                C
-                            </Button>
-                        </Region>
-                        <Region
-                            visible={visibleButtonTrackHelper ?? false}
-                            layout={{ position: 'absolute', left: 51, width: 36, top: 10, height: 32 }}
-                        >
-                            <Button
-                                variant="102"
-                                name="button_track_helper"
-                                onPointerTap={onButtonTrackHelper}
-                                layout={{ width: '100%', height: '100%' }}
-                            >
-                                H
-                            </Button>
-                        </Region>
-                    </Region>
+                    <TalentTrackLayoutPanorama {...panorama} />
+                    {/* <scrollbar_horizontal> for panorama - rendered by that list's ScrollArea */}
+                    <ThemeImage
+                        name="mask_left"
+                        src={srcMaskLeft ?? layoutImage('talent_mask_left.png')}
+                        layout={{ position: 'absolute', left: 0, width: 24, top: 20, height: 280 }}
+                    />
+                    <ThemeImage
+                        name="mask_right"
+                        src={srcMaskRight ?? layoutImage('talent_mask_right.png')}
+                        layout={{ position: 'absolute', right: 0, width: 24, top: 20, height: 280 }}
+                    />
+                    <TalentTrackLayoutProgressContainer {...progressContainer} />
+                    <Button
+                        variant="102"
+                        name="button_track_citizenship"
+                        onPointerTap={onButtonTrackCitizenship}
+                        visible={visibleButtonTrackCitizenship ?? false}
+                        layout={{ position: 'absolute', left: 10, width: 36, top: 10, height: 32 }}
+                    >
+                        C
+                    </Button>
+                    <Button
+                        variant="102"
+                        name="button_track_helper"
+                        onPointerTap={onButtonTrackHelper}
+                        visible={visibleButtonTrackHelper ?? false}
+                        layout={{ position: 'absolute', left: 51, width: 36, top: 10, height: 32 }}
+                    >
+                        H
+                    </Button>
                 </Frame>
                 <Region layout={{ position: 'absolute', left: 0, width: 500, top: 0, height: 53, minWidth: 100 }}>
                     <Region

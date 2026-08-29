@@ -56,27 +56,23 @@ export const PurseIndicatorCreditsLayout = ({ captionChange, captionCredits, lay
                         textOptions={{ align: 'right' }}
                     />
                 </Region>
-                <Region
+                <Border
+                    variant="6"
+                    name="change_overlay"
+                    tintColor="#e3af1e"
                     visible={visibleChangeOverlay ?? false}
                     layout={{ position: 'absolute', left: 44, width: 33, top: 0, height: 29 }}
                 >
-                    <Border
-                        variant="6"
-                        name="change_overlay"
-                        tintColor="#e3af1e"
-                        layout={{ width: '100%', height: '100%' }}
+                    <Region
+                        name="change"
+                        layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 29, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <Region
-                            name="change"
-                            layout={{ position: 'absolute', left: 0, width: 33, top: 0, height: 29, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionChange ?? ' 50'}
-                                textStyle="text-style-il-regular-white"
-                            />
-                        </Region>
-                    </Border>
-                </Region>
+                        <ThemeText
+                            text={captionChange ?? ' 50'}
+                            textStyle="text-style-il-regular-white"
+                        />
+                    </Region>
+                </Border>
             </Region>
         </Region>
     );

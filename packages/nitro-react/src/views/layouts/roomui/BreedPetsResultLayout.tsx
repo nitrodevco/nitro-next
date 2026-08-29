@@ -21,9 +21,7 @@ export const BreedPetsResultLayout = ({ elementList, layout, onClose }: BreedPet
             onClose={onClose}
             layout={{ width: 275, height: 300, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <BreedPetsResultLayoutElementList {...elementList} />
-            </Region>
+            <BreedPetsResultLayoutElementList {...elementList} />
         </Frame>
     );
 };
@@ -443,20 +441,16 @@ export const BreedPetsResultLayoutPlaceButton1Item = ({ layout, onPlaceButton1, 
     const t = useTranslation();
 
     return (
-        <Region
+        <ButtonThick
+            variant="5"
+            name="place_button1"
+            tintColor="#00aa00"
+            onPointerTap={onPlaceButton1}
             visible={visiblePlaceButton1 ?? false}
             layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
         >
-            <ButtonThick
-                variant="5"
-                name="place_button1"
-                tintColor="#00aa00"
-                onPointerTap={onPlaceButton1}
-                layout={{ width: '100%', height: '100%' }}
-            >
-                {t('breedpetsresult.widget.seed2.use')}
-            </ButtonThick>
-        </Region>
+            {t('breedpetsresult.widget.seed2.use')}
+        </ButtonThick>
     );
 };
 
@@ -471,19 +465,15 @@ export const BreedPetsResultLayoutPickButton1Item = ({ layout, onPickButton1, vi
     const t = useTranslation();
 
     return (
-        <Region
+        <Button
+            variant="3"
+            name="pick_button1"
+            onPointerTap={onPickButton1}
             visible={visiblePickButton1 ?? false}
             layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
         >
-            <Button
-                variant="3"
-                name="pick_button1"
-                onPointerTap={onPickButton1}
-                layout={{ width: '100%', height: '100%' }}
-            >
-                {t('breedpetsresult.widget.seed2.pick')}
-            </Button>
-        </Region>
+            {t('breedpetsresult.widget.seed2.pick')}
+        </Button>
     );
 };
 
@@ -520,20 +510,16 @@ export const BreedPetsResultLayoutPlaceButton2Item = ({ layout, onPlaceButton2, 
     const t = useTranslation();
 
     return (
-        <Region
+        <ButtonThick
+            variant="5"
+            name="place_button2"
+            tintColor="#00aa00"
+            onPointerTap={onPlaceButton2}
             visible={visiblePlaceButton2 ?? false}
             layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
         >
-            <ButtonThick
-                variant="5"
-                name="place_button2"
-                tintColor="#00aa00"
-                onPointerTap={onPlaceButton2}
-                layout={{ width: '100%', height: '100%' }}
-            >
-                {t('breedpetsresult.widget.seed2.use')}
-            </ButtonThick>
-        </Region>
+            {t('breedpetsresult.widget.seed2.use')}
+        </ButtonThick>
     );
 };
 
@@ -548,19 +534,15 @@ export const BreedPetsResultLayoutPickButton2Item = ({ layout, onPickButton2, vi
     const t = useTranslation();
 
     return (
-        <Region
+        <Button
+            variant="3"
+            name="pick_button2"
+            onPointerTap={onPickButton2}
             visible={visiblePickButton2 ?? false}
             layout={{ width: 120, height: 30, flexShrink: 0, minWidth: 120, maxWidth: 120, ...layout }}
         >
-            <Button
-                variant="3"
-                name="pick_button2"
-                onPointerTap={onPickButton2}
-                layout={{ width: '100%', height: '100%' }}
-            >
-                {t('breedpetsresult.widget.seed2.pick')}
-            </Button>
-        </Region>
+            {t('breedpetsresult.widget.seed2.pick')}
+        </Button>
     );
 };
 

@@ -77,23 +77,19 @@ export const FriendsFooterLayoutFooter = ({ clearInputRegion, layout, onButtonOp
                 tintColor="#d9d9d9"
                 layout={{ position: 'absolute', left: 5, right: 5, top: 5, height: 31 }}
             >
-                <Region
+                <ContainerButton
+                    variant="0"
+                    name="button_open_minimail"
+                    onPointerTap={onButtonOpenMinimail}
                     visible={visibleButtonOpenMinimail ?? false}
                     layout={{ position: 'absolute', left: 5, width: 32, top: 4, height: 22 }}
                 >
-                    <ContainerButton
-                        variant="0"
-                        name="button_open_minimail"
-                        onPointerTap={onButtonOpenMinimail}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <ThemeImage
-                            name="icon"
-                            src={srcIcon}
-                            layout={{ position: 'absolute', left: 8, width: 19, top: 4, height: 14 }}
-                        />
-                    </ContainerButton>
-                </Region>
+                    <ThemeImage
+                        name="icon"
+                        src={srcIcon}
+                        layout={{ position: 'absolute', left: 8, width: 19, top: 4, height: 14 }}
+                    />
+                </ContainerButton>
                 <ContainerButton
                     variant="0"
                     name="button_room_invite"

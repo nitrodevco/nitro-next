@@ -13,16 +13,12 @@ export const ProductImageLayout = ({ layout, srcPlaceholderImage, srcProductPrev
     return (
         <Region layout={{ position: 'relative', width: 200, height: 200, ...layout }}>
             <Region layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="placeholder_image"
+                    src={srcPlaceholderImage ?? layoutImage('collectables_collection_default.png')}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                >
-                    <ThemeImage
-                        name="placeholder_image"
-                        src={srcPlaceholderImage ?? layoutImage('collectables_collection_default.png')}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                    />
-                </Region>
+                    visible={false}
+                />
                 <WidgetSlot
                     widgetType="avatar_image"
                     name="avatar_image_widget"
@@ -36,16 +32,12 @@ export const ProductImageLayout = ({ layout, srcPlaceholderImage, srcProductPrev
                     options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '2', 'badge_image:zoom_y': '2' }}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
                 />
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="unknown_image"
+                    src={srcUnknownImage ?? layoutImage('collectables_icon_curator_stamp_large.png')}
                     layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                >
-                    <ThemeImage
-                        name="unknown_image"
-                        src={srcUnknownImage ?? layoutImage('collectables_icon_curator_stamp_large.png')}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                    />
-                </Region>
+                    visible={false}
+                />
                 <WidgetSlot
                     widgetType="pet_image"
                     name="pet_image_widget"

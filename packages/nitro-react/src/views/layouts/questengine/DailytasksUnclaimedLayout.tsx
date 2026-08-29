@@ -23,9 +23,7 @@ export const DailytasksUnclaimedLayout = ({ layout, mainCont, onClose }: Dailyta
             onClose={onClose}
             layout={{ width: 452, height: 426, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <DailytasksUnclaimedLayoutMainCont {...mainCont} />
-            </Region>
+            <DailytasksUnclaimedLayoutMainCont {...mainCont} />
         </Frame>
     );
 };

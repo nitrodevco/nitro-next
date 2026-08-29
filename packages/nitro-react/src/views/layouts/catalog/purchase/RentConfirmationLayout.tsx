@@ -25,36 +25,34 @@ export const RentConfirmationLayout = ({ contentList, layout, onCancelButton, on
             onClose={onClose}
             layout={{ width: 370, height: 300, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="0"
-                    layout={{ position: 'absolute', left: 20, width: 160, top: 25, height: 180 }}
-                >
-                    <ThemeImage
-                        name="image"
-                        src={srcImage}
-                        layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
-                    />
-                </Border>
-                <Button
-                    variant="3"
-                    name="cancel_button"
-                    onPointerTap={onCancelButton}
-                    layout={{ position: 'absolute', left: 20, width: 99, bottom: 50, height: 30 }}
-                >
-                    {t('generic.cancel')}
-                </Button>
-                <ButtonThick
-                    variant="5"
-                    name="ok_button"
-                    tintColor="#00cc00"
-                    onPointerTap={onOkButton}
-                    layout={{ position: 'absolute', right: 20, width: 82, bottom: 50, height: 30 }}
-                >
-                    {t('generic.ok')}
-                </ButtonThick>
-                <RentConfirmationLayoutContentList {...contentList} />
-            </Region>
+            <Border
+                variant="0"
+                layout={{ position: 'absolute', left: 20, width: 160, top: 25, height: 180 }}
+            >
+                <ThemeImage
+                    name="image"
+                    src={srcImage}
+                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                />
+            </Border>
+            <Button
+                variant="3"
+                name="cancel_button"
+                onPointerTap={onCancelButton}
+                layout={{ position: 'absolute', left: 20, width: 99, bottom: 50, height: 30 }}
+            >
+                {t('generic.cancel')}
+            </Button>
+            <ButtonThick
+                variant="5"
+                name="ok_button"
+                tintColor="#00cc00"
+                onPointerTap={onOkButton}
+                layout={{ position: 'absolute', right: 20, width: 82, bottom: 50, height: 30 }}
+            >
+                {t('generic.ok')}
+            </ButtonThick>
+            <RentConfirmationLayoutContentList {...contentList} />
         </Frame>
     );
 };

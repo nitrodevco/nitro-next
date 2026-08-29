@@ -27,20 +27,18 @@ export const DiscordSettingsLayout = ({ header, layout, onClose, onFunnyButton, 
             onClose={onClose}
             layout={{ width: 377, height: 551, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <DiscordSettingsLayoutHeader {...header} />
-                <DiscordSettingsLayoutSettings {...settings} />
-                <DiscordSettingsLayoutOurServers {...ourServers} />
-                <Button
-                    variant="105"
-                    name="funny_button"
-                    tintColor="#bbbbbb"
-                    onPointerTap={onFunnyButton}
-                    layout={{ position: 'absolute', left: 14, width: 348, bottom: 44, height: 28, minWidth: 348, maxWidth: 348 }}
-                >
-                    {t('discord_activity.funny_button')}
-                </Button>
-            </Region>
+            <DiscordSettingsLayoutHeader {...header} />
+            <DiscordSettingsLayoutSettings {...settings} />
+            <DiscordSettingsLayoutOurServers {...ourServers} />
+            <Button
+                variant="105"
+                name="funny_button"
+                tintColor="#bbbbbb"
+                onPointerTap={onFunnyButton}
+                layout={{ position: 'absolute', left: 14, width: 348, bottom: 44, height: 28, minWidth: 348, maxWidth: 348 }}
+            >
+                {t('discord_activity.funny_button')}
+            </Button>
         </Frame>
     );
 };

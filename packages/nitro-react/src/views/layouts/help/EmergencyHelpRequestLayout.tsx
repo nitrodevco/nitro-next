@@ -29,106 +29,104 @@ export const EmergencyHelpRequestLayout = ({ captionUrgentHelpLink, layout, onCl
             onClose={onClose}
             layout={{ width: 593, height: 491, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 9, minWidth: 280, top: 8, minHeight: 563, flexDirection: 'column', gap: 8 }}>
-                    <Region layout={{ width: 236, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.emergency.main.step.one.title')}
-                            textStyle="text-style-il-heading-1"
-                            textOptions={{ fill: '#555555' }}
-                        />
-                    </Region>
-                    <Region layout={{ width: 280, height: 16, flexShrink: 0, minWidth: 280, maxWidth: 280, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.emergency.main.step.one.description')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 280 }}
-                        />
-                    </Region>
-                    <WidgetSlot
-                        widgetType="illumina_input"
-                        name="help_message"
-                        options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${help.emergency.main.step.one.entry.instruction}', 'illumina_input:multiline': 'true', 'illumina_input:max_chars': '700' }}
-                        layout={{ width: 279, height: 94, flexShrink: 0 }}
+            <Region layout={{ position: 'absolute', left: 9, minWidth: 280, top: 8, minHeight: 563, flexDirection: 'column', gap: 8 }}>
+                <Region layout={{ width: 236, height: 19, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('help.emergency.main.step.one.title')}
+                        textStyle="text-style-il-heading-1"
+                        textOptions={{ fill: '#555555' }}
                     />
-                    <EmergencyHelpRequestLayoutTopicSelector {...topicSelector} />
                 </Region>
-                <EmergencyHelpRequestLayoutUserPanel {...userPanel} />
-                <EmergencyHelpRequestLayoutRoomPanel {...roomPanel} />
-                <Border
-                    variant="104"
-                    name="submit_box_wide"
-                    tintColor="#ca0c07"
-                    layout={{ position: 'absolute', left: 9, width: 573, top: 387, height: 58 }}
-                >
-                    <Region layout={{ position: 'absolute', left: 17, width: 397, top: 13, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('help.emergency.main.submit.description')}
-                            textStyle="text-style-il-regular-white"
-                        />
-                    </Region>
-                    <Region
-                        visible={false}
-                        layout={{ position: 'absolute', left: 17, width: 397, top: 28, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        onPointerTap={onLink}
-                        cursor="pointer"
-                    >
-                        <ThemeText
-                            text={t('help.emergency.main.submit.explanation')}
-                            textStyle="text-style-il-regular-white"
-                        />
-                    </Region>
-                    <Button
-                        variant="100"
-                        name="submit_button"
-                        onPointerTap={onSubmitButton}
-                        layout={{ position: 'absolute', right: 3, width: 225, top: 4, height: 48 }}
-                    >
-                        {t('help.emergency.main.submit.button')}
-                    </Button>
-                </Border>
-                <Border
-                    variant="104"
-                    name="submit_box_narrow"
-                    tintColor="#ca0c07"
-                    layout={{ position: 'absolute', left: 9, width: 280, top: 336, height: 108, justifyContent: 'center' }}
-                >
-                    <Region layout={{ position: 'absolute', left: 10, width: 250, top: 10, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                        <ThemeText
-                            text={t('guide.help.request.emergency.help.title')}
-                            textStyle="text-style-il-regular-white"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 250, align: 'center' }}
-                        />
-                    </Region>
-                    <Region
-                        name="urgent_help_link"
-                        visible={false}
-                        layout={{ position: 'absolute', left: 10, width: 250, top: 41, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        onPointerTap={onUrgentHelpLink}
-                        cursor="pointer"
-                    >
-                        <ThemeText
-                            text={captionUrgentHelpLink ?? t('guide.help.request.emergency.help.link')}
-                            textStyle="text-style-il-regular-white"
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
-                    <Button
-                        variant="101"
-                        name="submit_button"
-                        tintColor="#bbbbbb"
-                        onPointerTap={onSubmitButton2}
-                        layout={{ position: 'absolute', width: 264, top: 59, height: 48, minHeight: 48, maxHeight: 48 }}
-                    >
-                        {t('guide.help.request.user.create.input.button')}
-                    </Button>
-                </Border>
+                <Region layout={{ width: 280, height: 16, flexShrink: 0, minWidth: 280, maxWidth: 280, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('help.emergency.main.step.one.description')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 280 }}
+                    />
+                </Region>
                 <WidgetSlot
-                    widgetType="separator"
-                    name="separator"
-                    options={{ 'separator:vertical': 'true' }}
-                    layout={{ position: 'absolute', left: 296, width: 8, top: 40, height: 336 }}
+                    widgetType="illumina_input"
+                    name="help_message"
+                    options={{ 'illumina_input:button_caption': '', 'illumina_input:empty_message': '${help.emergency.main.step.one.entry.instruction}', 'illumina_input:multiline': 'true', 'illumina_input:max_chars': '700' }}
+                    layout={{ width: 279, height: 94, flexShrink: 0 }}
                 />
+                <EmergencyHelpRequestLayoutTopicSelector {...topicSelector} />
             </Region>
+            <EmergencyHelpRequestLayoutUserPanel {...userPanel} />
+            <EmergencyHelpRequestLayoutRoomPanel {...roomPanel} />
+            <Border
+                variant="104"
+                name="submit_box_wide"
+                tintColor="#ca0c07"
+                layout={{ position: 'absolute', left: 9, width: 573, top: 387, height: 58 }}
+            >
+                <Region layout={{ position: 'absolute', left: 17, width: 397, top: 13, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('help.emergency.main.submit.description')}
+                        textStyle="text-style-il-regular-white"
+                    />
+                </Region>
+                <Region
+                    visible={false}
+                    layout={{ position: 'absolute', left: 17, width: 397, top: 28, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    onPointerTap={onLink}
+                    cursor="pointer"
+                >
+                    <ThemeText
+                        text={t('help.emergency.main.submit.explanation')}
+                        textStyle="text-style-il-regular-white"
+                    />
+                </Region>
+                <Button
+                    variant="100"
+                    name="submit_button"
+                    onPointerTap={onSubmitButton}
+                    layout={{ position: 'absolute', right: 3, width: 225, top: 4, height: 48 }}
+                >
+                    {t('help.emergency.main.submit.button')}
+                </Button>
+            </Border>
+            <Border
+                variant="104"
+                name="submit_box_narrow"
+                tintColor="#ca0c07"
+                layout={{ position: 'absolute', left: 9, width: 280, top: 336, height: 108, justifyContent: 'center' }}
+            >
+                <Region layout={{ position: 'absolute', left: 10, width: 250, top: 10, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
+                    <ThemeText
+                        text={t('guide.help.request.emergency.help.title')}
+                        textStyle="text-style-il-regular-white"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 250, align: 'center' }}
+                    />
+                </Region>
+                <Region
+                    name="urgent_help_link"
+                    visible={false}
+                    layout={{ position: 'absolute', left: 10, width: 250, top: 41, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    onPointerTap={onUrgentHelpLink}
+                    cursor="pointer"
+                >
+                    <ThemeText
+                        text={captionUrgentHelpLink ?? t('guide.help.request.emergency.help.link')}
+                        textStyle="text-style-il-regular-white"
+                        textOptions={{ align: 'center' }}
+                    />
+                </Region>
+                <Button
+                    variant="101"
+                    name="submit_button"
+                    tintColor="#bbbbbb"
+                    onPointerTap={onSubmitButton2}
+                    layout={{ position: 'absolute', width: 264, top: 59, height: 48, minHeight: 48, maxHeight: 48 }}
+                >
+                    {t('guide.help.request.user.create.input.button')}
+                </Button>
+            </Border>
+            <WidgetSlot
+                widgetType="separator"
+                name="separator"
+                options={{ 'separator:vertical': 'true' }}
+                layout={{ position: 'absolute', left: 296, width: 8, top: 40, height: 336 }}
+            />
         </Frame>
     );
 };

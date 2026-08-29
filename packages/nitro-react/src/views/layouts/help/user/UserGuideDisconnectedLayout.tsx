@@ -28,53 +28,51 @@ export const UserGuideDisconnectedLayout = ({ captionGuideDesc, captionGuideName
             onClose={onClose}
             layout={{ width: 282, height: 294, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="103"
-                    name="guide_info"
-                    layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 65 }}
-                >
-                    <Region layout={{ position: 'absolute', left: 10, width: 180, top: 10, height: 40, flexDirection: 'row', gap: 5 }}>
-                        <ThemeImage
-                            src={layoutImage('help_guide_icon.png')}
-                            layout={{ width: 30, height: 40, flexShrink: 0 }}
-                        />
-                        <Region layout={{ width: 130, height: 35, flexShrink: 0, flexDirection: 'column' }}>
-                            <Region
-                                name="guide_name_link"
-                                tooltip={t('guide.help.common.profile.tooltip')}
-                                layout={{ width: 69, height: 17, flexShrink: 0, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                                onPointerTap={onGuideNameLink}
-                                cursor="pointer"
-                            >
-                                <ThemeText
-                                    text={captionGuideNameLink ?? 'Guide name'}
-                                    textStyle="text-style-il-heading-2"
-                                />
-                            </Region>
-                            <Region
-                                name="guide_desc"
-                                layout={{ width: 130, height: 16, flexShrink: 0, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText text={captionGuideDesc ?? t('guide.help.request.user.guide.disconnected.guide.desc')} />
-                            </Region>
+            <Border
+                variant="103"
+                name="guide_info"
+                layout={{ position: 'absolute', left: 0, width: 280, top: 0, height: 65 }}
+            >
+                <Region layout={{ position: 'absolute', left: 10, width: 180, top: 10, height: 40, flexDirection: 'row', gap: 5 }}>
+                    <ThemeImage
+                        src={layoutImage('help_guide_icon.png')}
+                        layout={{ width: 30, height: 40, flexShrink: 0 }}
+                    />
+                    <Region layout={{ width: 130, height: 35, flexShrink: 0, flexDirection: 'column' }}>
+                        <Region
+                            name="guide_name_link"
+                            tooltip={t('guide.help.common.profile.tooltip')}
+                            layout={{ width: 69, height: 17, flexShrink: 0, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            onPointerTap={onGuideNameLink}
+                            cursor="pointer"
+                        >
+                            <ThemeText
+                                text={captionGuideNameLink ?? 'Guide name'}
+                                textStyle="text-style-il-heading-2"
+                            />
+                        </Region>
+                        <Region
+                            name="guide_desc"
+                            layout={{ width: 130, height: 16, flexShrink: 0, maxWidth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                        >
+                            <ThemeText text={captionGuideDesc ?? t('guide.help.request.user.guide.disconnected.guide.desc')} />
                         </Region>
                     </Region>
-                    <Region
-                        name="report_guide_link"
-                        tooltip={t('guide.help.common.report.link.tooltip')}
-                        layout={{ position: 'absolute', left: 170, width: 100, top: 23, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                        onPointerTap={onReportGuideLink}
-                        cursor="pointer"
-                    >
-                        <ThemeText
-                            text={captionReportGuideLink ?? t('guide.help.common.report.link')}
-                            textOptions={{ align: 'right' }}
-                        />
-                    </Region>
-                </Border>
-                <UserGuideDisconnectedLayoutErrorList {...errorList} />
-            </Region>
+                </Region>
+                <Region
+                    name="report_guide_link"
+                    tooltip={t('guide.help.common.report.link.tooltip')}
+                    layout={{ position: 'absolute', left: 170, width: 100, top: 23, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    onPointerTap={onReportGuideLink}
+                    cursor="pointer"
+                >
+                    <ThemeText
+                        text={captionReportGuideLink ?? t('guide.help.common.report.link')}
+                        textOptions={{ align: 'right' }}
+                    />
+                </Region>
+            </Border>
+            <UserGuideDisconnectedLayoutErrorList {...errorList} />
         </Frame>
     );
 };

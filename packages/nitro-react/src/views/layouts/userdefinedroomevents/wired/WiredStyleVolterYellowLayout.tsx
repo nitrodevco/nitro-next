@@ -46,17 +46,13 @@ export const WiredStyleVolterYellowLayout = ({ captionTextBoldView, captionTextH
                 backgroundColor="#f4d763"
                 layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 200 }}
             >
-                <Region
+                <Border
+                    variant="13"
+                    name="inner_border"
+                    tintColor="#faea7c"
                     visible={visibleInnerBorder ?? false}
                     layout={{ position: 'absolute', left: 0, width: 119, top: 0, height: 98 }}
-                >
-                    <Border
-                        variant="13"
-                        name="inner_border"
-                        tintColor="#faea7c"
-                        layout={{ width: '100%', height: '100%' }}
-                    />
-                </Region>
+                />
                 <Frame
                     variant="2"
                     id="frame"
@@ -66,9 +62,7 @@ export const WiredStyleVolterYellowLayout = ({ captionTextBoldView, captionTextH
                     tintColor="#fac200"
                     onClose={onFrame}
                     layout={{ position: 'absolute', left: 0, width: 256, top: 0, height: 200, minWidth: 100 }}
-                >
-                    <Region layout={{ position: 'relative', flex: 1, width: '100%' }} />
-                </Frame>
+                />
                 <WiredStyleVolterYellowLayoutRulerView {...rulerView} />
                 <Region
                     name="text_view"
@@ -104,28 +98,20 @@ export const WiredStyleVolterYellowLayout = ({ captionTextBoldView, captionTextH
                     />
                 </Region>
                 <WiredStyleVolterYellowLayoutInputTemplate {...inputTemplate} />
-                <Region
+                <Dropmenu
+                    variant="200"
+                    name="dropdown_view"
+                    onPointerTap={onDropdownView}
                     visible={visibleDropdownView ?? false}
                     layout={{ position: 'absolute', left: 0, width: 149, top: 0, height: 22 }}
-                >
-                    <Dropmenu
-                        variant="200"
-                        name="dropdown_view"
-                        onPointerTap={onDropdownView}
-                        layout={{ width: '100%', height: '100%' }}
-                    />
-                </Region>
-                <Region
+                />
+                <CheckBox
+                    variant="2"
+                    name="checkbox_view"
+                    onPointerTap={onCheckboxView}
                     visible={visibleCheckboxView ?? false}
                     layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 17 }}
-                >
-                    <CheckBox
-                        variant="2"
-                        name="checkbox_view"
-                        onPointerTap={onCheckboxView}
-                        layout={{ width: '100%', height: '100%' }}
-                    />
-                </Region>
+                />
                 <RadioButton
                     variant="2"
                     name="radiobutton_view"
@@ -134,113 +120,89 @@ export const WiredStyleVolterYellowLayout = ({ captionTextBoldView, captionTextH
                 />
                 <WiredStyleVolterYellowLayoutExpandCollapseRegion {...expandCollapseRegion} />
                 <WiredStyleVolterYellowLayoutSourcetypeSelectorView {...sourcetypeSelectorView} />
-                <Region
+                <ContainerButton
+                    variant="2"
+                    name="iconbutton_left"
+                    onPointerTap={onIconbuttonLeft}
                     visible={visibleIconbuttonLeft ?? false}
                     layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
                 >
-                    <ContainerButton
+                    <Icon
                         variant="2"
-                        name="iconbutton_left"
-                        onPointerTap={onIconbuttonLeft}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <Icon
-                            variant="2"
-                            tintColor="#777777"
-                            layout={{ position: 'absolute', left: 5, width: 12, top: 5, height: 12 }}
-                        />
-                    </ContainerButton>
-                </Region>
-                <Region
+                        tintColor="#777777"
+                        layout={{ position: 'absolute', left: 5, width: 12, top: 5, height: 12 }}
+                    />
+                </ContainerButton>
+                <ContainerButton
+                    variant="2"
+                    name="iconbutton_right"
+                    onPointerTap={onIconbuttonRight}
                     visible={visibleIconbuttonRight ?? false}
                     layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
                 >
-                    <ContainerButton
-                        variant="2"
-                        name="iconbutton_right"
-                        onPointerTap={onIconbuttonRight}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <Icon
-                            variant="3"
-                            tintColor="#777777"
-                            layout={{ position: 'absolute', left: 5, width: 12, top: 5, height: 12 }}
-                        />
-                    </ContainerButton>
-                </Region>
-                <Region
+                    <Icon
+                        variant="3"
+                        tintColor="#777777"
+                        layout={{ position: 'absolute', left: 5, width: 12, top: 5, height: 12 }}
+                    />
+                </ContainerButton>
+                <ContainerButton
+                    variant="2"
+                    name="iconbutton_up"
+                    onPointerTap={onIconbuttonUp}
                     visible={visibleIconbuttonUp ?? false}
                     layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
                 >
-                    <ContainerButton
-                        variant="2"
-                        name="iconbutton_up"
-                        onPointerTap={onIconbuttonUp}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <Icon
-                            variant="1"
-                            tintColor="#777777"
-                            layout={{ position: 'absolute', left: 6, width: 12, top: 5, height: 12 }}
-                        />
-                    </ContainerButton>
-                </Region>
-                <Region
+                    <Icon
+                        variant="1"
+                        tintColor="#777777"
+                        layout={{ position: 'absolute', left: 6, width: 12, top: 5, height: 12 }}
+                    />
+                </ContainerButton>
+                <ContainerButton
+                    variant="2"
+                    name="iconbutton_down"
+                    onPointerTap={onIconbuttonDown}
                     visible={visibleIconbuttonDown ?? false}
                     layout={{ position: 'absolute', left: 0, width: 20, top: 0, height: 20 }}
                 >
-                    <ContainerButton
-                        variant="2"
-                        name="iconbutton_down"
-                        onPointerTap={onIconbuttonDown}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <Icon
-                            variant="0"
-                            tintColor="#777777"
-                            layout={{ position: 'absolute', left: 6, width: 12, top: 6, height: 12 }}
-                        />
-                    </ContainerButton>
-                </Region>
+                    <Icon
+                        variant="0"
+                        tintColor="#777777"
+                        layout={{ position: 'absolute', left: 6, width: 12, top: 6, height: 12 }}
+                    />
+                </ContainerButton>
                 <WiredStyleVolterYellowLayoutSlider {...slider} />
-                <Region
+                <Button
+                    variant="2"
+                    name="button"
+                    onPointerTap={onButton}
+                    textStyle="text-style-button-regular"
                     visible={visibleButton ?? false}
                     layout={{ position: 'absolute', left: 0, width: 41, top: 0, height: 22 }}
                 >
-                    <Button
-                        variant="2"
-                        name="button"
-                        onPointerTap={onButton}
-                        textStyle="text-style-button-regular"
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        text
-                    </Button>
-                </Region>
+                    text
+                </Button>
                 <WiredStyleVolterYellowLayoutMiniButtonView {...miniButtonView} />
-                <Region
+                <Border
+                    variant="3"
+                    name="quick_menu"
+                    tintColor="#000000"
                     visible={visibleQuickMenu ?? false}
                     layout={{ position: 'absolute', left: 0, width: 145, top: 0, height: 27 }}
                 >
                     <Border
-                        variant="3"
-                        name="quick_menu"
-                        tintColor="#000000"
-                        layout={{ width: '100%', height: '100%' }}
+                        variant="11"
+                        layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                     >
                         <Border
                             variant="11"
                             layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                         >
-                            <Border
-                                variant="11"
-                                layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
-                            >
-                                <WiredStyleVolterYellowLayoutMenuList {...menuList} />
-                            </Border>
+                            <WiredStyleVolterYellowLayoutMenuList {...menuList} />
                         </Border>
                     </Border>
-                </Region>
+                </Border>
             </Region>
         </Region>
     );
@@ -311,26 +273,18 @@ export const WiredStyleVolterYellowLayoutExpandCollapseRegion = ({ layout, onExp
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 10, ...layout }}
         >
-            <Region
-                visible={false}
+            <ThemeImage
+                name="up_arrow"
+                src={srcUpArrow ?? layoutImage('wired_volter_uparrow.png')}
                 layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 10 }}
-            >
-                <ThemeImage
-                    name="up_arrow"
-                    src={srcUpArrow ?? layoutImage('wired_volter_uparrow.png')}
-                    layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 10 }}
-                />
-            </Region>
-            <Region
                 visible={false}
+            />
+            <ThemeImage
+                name="down_arrow"
+                src={srcDownArrow ?? layoutImage('wired_volter_downarrow.png')}
                 layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 10 }}
-            >
-                <ThemeImage
-                    name="down_arrow"
-                    src={srcDownArrow ?? layoutImage('wired_volter_downarrow.png')}
-                    layout={{ position: 'absolute', left: 0, width: 16, top: 0, height: 10 }}
-                />
-            </Region>
+                visible={false}
+            />
         </Region>
     );
 };

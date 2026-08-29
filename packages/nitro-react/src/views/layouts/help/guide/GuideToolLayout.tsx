@@ -23,9 +23,7 @@ export const GuideToolLayout = ({ layout, list, onClose }: GuideToolLayoutProps)
             onClose={onClose}
             layout={{ width: 242, height: 306, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <GuideToolLayoutList {...list} />
-            </Region>
+            <GuideToolLayoutList {...list} />
         </Frame>
     );
 };

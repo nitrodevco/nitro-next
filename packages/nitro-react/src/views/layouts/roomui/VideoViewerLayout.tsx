@@ -22,10 +22,8 @@ export const VideoViewerLayout = ({ layout, onClose, rightPane, videoBackground 
             onClose={onClose}
             layout={{ width: 738, height: 356, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <VideoViewerLayoutVideoBackground {...videoBackground} />
-                <VideoViewerLayoutRightPane {...rightPane} />
-            </Region>
+            <VideoViewerLayoutVideoBackground {...videoBackground} />
+            <VideoViewerLayoutRightPane {...rightPane} />
         </Frame>
     );
 };

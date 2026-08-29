@@ -19,15 +19,13 @@ export const Doorbell_889Layout = ({ layout, onClose, userListContainer }: Doorb
             onClose={onClose}
             layout={{ width: 249, height: 165, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 10, right: 24, top: 13, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('widgets.doorbell.info')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 215 }}
-                    />
-                </Region>
-                <Doorbell_889LayoutUserListContainer {...userListContainer} />
+            <Region layout={{ position: 'absolute', left: 10, right: 24, top: 13, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                <ThemeText
+                    text={t('widgets.doorbell.info')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 215 }}
+                />
             </Region>
+            <Doorbell_889LayoutUserListContainer {...userListContainer} />
         </Frame>
     );
 };

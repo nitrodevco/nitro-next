@@ -44,20 +44,15 @@ export const IlluminaChatBubbleLayoutUserNameRegionItem = ({ captionUserName, la
     return (
         <Region
             name="user_name_region"
+            layout={{ width: 31, height: 15, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onUserNameRegion}
             cursor="pointer"
-            layout={{ width: 31, height: 15, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="user_name"
-                layout={{ position: 'absolute', left: 0, width: 31, top: 0, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionUserName ?? 'USER:'}
-                    textStyle="text-style-il-border"
-                    textOptions={{ fill: '#555555' }}
-                />
-            </Region>
+            <ThemeText
+                text={captionUserName ?? 'USER:'}
+                textStyle="text-style-il-border"
+                textOptions={{ fill: '#555555' }}
+            />
         </Region>
     );
 };
@@ -90,16 +85,11 @@ export const IlluminaChatBubbleLayoutOfflinePlaceholderItem = ({ captionOffline,
     return (
         <Region
             name="offline_placeholder"
+            layout={{ width: 250, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onOfflinePlaceholder}
             cursor="pointer"
-            layout={{ width: 250, height: 16, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="offline"
-                layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText text={captionOffline ?? t('messenger.notification.persisted_message_sent')} />
-            </Region>
+            <ThemeText text={captionOffline ?? t('messenger.notification.persisted_message_sent')} />
         </Region>
     );
 };

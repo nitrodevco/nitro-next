@@ -25,10 +25,8 @@ export const InventoryLayout = ({ layout, onClose, subContentArea, topContent }:
             onClose={onClose}
             layout={{ width: 490, height: 342, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <InventoryLayoutTopContent {...topContent} />
-                <InventoryLayoutSubContentArea {...subContentArea} />
-            </Region>
+            <InventoryLayoutTopContent {...topContent} />
+            <InventoryLayoutSubContentArea {...subContentArea} />
         </Frame>
     );
 };
@@ -168,13 +166,11 @@ export const InventoryLayoutItemGridPages = ({ layout }: InventoryLayoutItemGrid
             name="item_grid_pages"
             layout={{ position: 'absolute', left: 0, width: 280, bottom: 1, height: 10, flexDirection: 'row', gap: 2, ...layout }}
         >
-            <Region layout={{ width: 8, height: 14, flexShrink: 0 }}>
-                <Region layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text="0"
-                        textStyle="text-style-il-small"
-                    />
-                </Region>
+            <Region layout={{ width: 8, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <ThemeText
+                    text="0"
+                    textStyle="text-style-il-small"
+                />
             </Region>
         </Region>
     );
@@ -761,13 +757,11 @@ export const InventoryLayoutItemGridPages2 = ({ layout }: InventoryLayoutItemGri
             name="item_grid_pages"
             layout={{ position: 'absolute', left: 0, width: 280, bottom: 1, height: 10, flexDirection: 'row', gap: 2, ...layout }}
         >
-            <Region layout={{ width: 8, height: 14, flexShrink: 0 }}>
-                <Region layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text="0"
-                        textStyle="text-style-il-small"
-                    />
-                </Region>
+            <Region layout={{ width: 8, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <ThemeText
+                    text="0"
+                    textStyle="text-style-il-small"
+                />
             </Region>
         </Region>
     );
@@ -1027,34 +1021,26 @@ export const InventoryLayoutPreviewContainer2 = ({ iconsElementList, layout, nft
                 visible={false}
                 layout={{ position: 'absolute', right: 21, width: 40, top: 4, height: 40 }}
             />
-            <Region
+            <Button
+                variant="3"
+                name="nextItemButton"
+                onPointerTap={onNextItemButton}
+                textStyle="text-style-button-shiny-regular"
                 visible={visibleNextItemButton ?? false}
                 layout={{ position: 'absolute', right: 16, width: 131, top: 5, height: 23 }}
             >
-                <Button
-                    variant="3"
-                    name="nextItemButton"
-                    onPointerTap={onNextItemButton}
-                    textStyle="text-style-button-shiny-regular"
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    {t('inventory.furni.next')}
-                </Button>
-            </Region>
-            <Region
+                {t('inventory.furni.next')}
+            </Button>
+            <Button
+                variant="3"
+                name="viewItemButton"
+                onPointerTap={onViewItemButton}
+                textStyle="text-style-button-shiny-regular"
                 visible={visibleViewItemButton ?? false}
                 layout={{ position: 'absolute', right: 16, width: 131, top: 31, height: 23 }}
             >
-                <Button
-                    variant="3"
-                    name="viewItemButton"
-                    onPointerTap={onViewItemButton}
-                    textStyle="text-style-button-shiny-regular"
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    {t('inventory.furni.view')}
-                </Button>
-            </Region>
+                {t('inventory.furni.view')}
+            </Button>
         </Region>
     );
 };
@@ -1416,13 +1402,11 @@ export const InventoryLayoutItemGridPages3 = ({ layout }: InventoryLayoutItemGri
             name="item_grid_pages"
             layout={{ position: 'absolute', left: 0, width: 328, bottom: 81, height: 10, flexDirection: 'row', gap: 2, ...layout }}
         >
-            <Region layout={{ width: 8, height: 14, flexShrink: 0 }}>
-                <Region layout={{ position: 'absolute', left: 0, width: 8, top: 0, height: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text="0"
-                        textStyle="text-style-il-small"
-                    />
-                </Region>
+            <Region layout={{ width: 8, height: 14, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <ThemeText
+                    text="0"
+                    textStyle="text-style-il-small"
+                />
             </Region>
         </Region>
     );
@@ -1508,36 +1492,32 @@ export const InventoryLayoutBadgeDetailsList = ({ captionBadgeOwnerCount, captio
                 </>
             )}
             <Region layout={{ width: -5, height: 20, flexShrink: 0, flexDirection: 'row', gap: 5 }}>
-                <Region
+                <Border
+                    variant="2"
+                    name="badgeRarityTag"
+                    tintColor="#cccccc"
                     visible={visibleBadgeRarityTag ?? false}
                     layout={{ width: 92, height: 17, flexShrink: 0 }}
                 >
-                    <Border
-                        variant="2"
-                        name="badgeRarityTag"
-                        tintColor="#cccccc"
-                        layout={{ width: '100%', height: '100%' }}
+                    <Region
+                        name="badgeRarityBorder"
+                        layout={{ position: 'absolute', left: 5, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <Region
-                            name="badgeRarityBorder"
-                            layout={{ position: 'absolute', left: 5, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionBadgeRarityBorder ?? 'Unique badge'}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                        <Region
-                            name="badgeRarity"
-                            layout={{ position: 'absolute', left: 5, width: 81, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionBadgeRarity ?? 'Unique badge'}
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                    </Border>
-                </Region>
+                        <ThemeText
+                            text={captionBadgeRarityBorder ?? 'Unique badge'}
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                    <Region
+                        name="badgeRarity"
+                        layout={{ position: 'absolute', left: 5, width: 81, top: 2, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionBadgeRarity ?? 'Unique badge'}
+                            textOptions={{ fill: '#ffffff' }}
+                        />
+                    </Region>
+                </Border>
                 <Region
                     name="badgeOwnerCount"
                     visible={false}
@@ -1771,9 +1751,7 @@ export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout,
                     onPointerTap={onFurni}
                     layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 34 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 107, top: 0, height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('inventory.furni')} />
-                    </Region>
+                    <ThemeText text={t('inventory.furni')} />
                 </TabButton>
                 <TabButton
                     variant="3"
@@ -1781,9 +1759,7 @@ export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout,
                     onPointerTap={onCollectibles}
                     layout={{ position: 'absolute', left: 107, width: 87, top: 0, height: 34 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 87, top: 0, height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('inventory.collectibles')} />
-                    </Region>
+                    <ThemeText text={t('inventory.collectibles')} />
                 </TabButton>
                 <TabButton
                     variant="3"
@@ -1791,9 +1767,7 @@ export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout,
                     onPointerTap={onRentables}
                     layout={{ position: 'absolute', left: 194, width: 131, top: 0, height: 34 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 131, top: 0, height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('inventory.rentables')} />
-                    </Region>
+                    <ThemeText text={t('inventory.rentables')} />
                 </TabButton>
                 <TabButton
                     variant="3"
@@ -1801,9 +1775,7 @@ export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout,
                     onPointerTap={onPets}
                     layout={{ position: 'absolute', left: 325, width: 155, top: 0, height: 34 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('inventory.furni.tab.pets')} />
-                    </Region>
+                    <ThemeText text={t('inventory.furni.tab.pets')} />
                 </TabButton>
                 <TabButton
                     variant="3"
@@ -1811,9 +1783,7 @@ export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout,
                     onPointerTap={onBadges}
                     layout={{ position: 'absolute', left: 480, width: 64, top: 0, height: 34 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('inventory.badges')} />
-                    </Region>
+                    <ThemeText text={t('inventory.badges')} />
                 </TabButton>
                 <TabButton
                     variant="3"
@@ -1821,9 +1791,7 @@ export const InventoryLayoutTopContent = ({ contentArea, emptyContainer, layout,
                     onPointerTap={onBots}
                     layout={{ position: 'absolute', left: 544, width: 105, top: 0, height: 34 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 105, top: 0, height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text={t('inventory.bots')} />
-                    </Region>
+                    <ThemeText text={t('inventory.bots')} />
                 </TabButton>
             </TabContext>
             <InventoryLayoutEmptyContainer {...emptyContainer} />

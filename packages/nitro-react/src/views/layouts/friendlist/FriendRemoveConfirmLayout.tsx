@@ -22,39 +22,37 @@ export const FriendRemoveConfirmLayout = ({ captionRemoveInfo, layout, onCancel,
             onClose={onClose}
             layout={{ width: 160, height: 200, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="0"
-                    name="border"
-                    layout={{ position: 'absolute', left: 0, width: 150, top: 0, height: 143 }}
+            <Border
+                variant="0"
+                name="border"
+                layout={{ position: 'absolute', left: 0, width: 150, top: 0, height: 143 }}
+            >
+                <Region
+                    name="remove_info"
+                    layout={{ position: 'absolute', left: 10, width: 130, top: 10, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
-                    <Region
-                        name="remove_info"
-                        layout={{ position: 'absolute', left: 10, width: 130, top: 10, height: 120, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionRemoveInfo ?? t('friendlist.removefriendconfirm.userlist')}
-                            textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 130 }}
-                        />
-                    </Region>
-                </Border>
-                <Button
-                    variant="0"
-                    name="cancel"
-                    onPointerTap={onCancel}
-                    layout={{ position: 'absolute', left: 88, width: 60, top: 147, height: 21, minWidth: 60, maxWidth: 60 }}
-                >
-                    {t('generic.cancel')}
-                </Button>
-                <ButtonThick
-                    variant="0"
-                    name="ok"
-                    onPointerTap={onOk}
-                    layout={{ position: 'absolute', left: 0, width: 60, top: 147, height: 21, minWidth: 60, maxWidth: 60 }}
-                >
-                    {t('generic.ok')}
-                </ButtonThick>
-            </Region>
+                    <ThemeText
+                        text={captionRemoveInfo ?? t('friendlist.removefriendconfirm.userlist')}
+                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 130 }}
+                    />
+                </Region>
+            </Border>
+            <Button
+                variant="0"
+                name="cancel"
+                onPointerTap={onCancel}
+                layout={{ position: 'absolute', left: 88, width: 60, top: 147, height: 21, minWidth: 60, maxWidth: 60 }}
+            >
+                {t('generic.cancel')}
+            </Button>
+            <ButtonThick
+                variant="0"
+                name="ok"
+                onPointerTap={onOk}
+                layout={{ position: 'absolute', left: 0, width: 60, top: 147, height: 21, minWidth: 60, maxWidth: 60 }}
+            >
+                {t('generic.ok')}
+            </ButtonThick>
         </Frame>
     );
 };

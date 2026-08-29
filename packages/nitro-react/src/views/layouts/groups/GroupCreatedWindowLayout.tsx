@@ -22,27 +22,25 @@ export const GroupCreatedWindowLayout = ({ layout, onClose, onOkButton, srcGroup
             onClose={onClose}
             layout={{ width: 358, height: 381, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ThemeImage
-                    name="group_welcome_info"
-                    src={srcGroupWelcomeInfo ?? '${image.library.url}guilds/group_welcome_info.png'}
-                    layout={{ position: 'absolute', left: 20, width: 316, bottom: 86, height: 155 }}
+            <ThemeImage
+                name="group_welcome_info"
+                src={srcGroupWelcomeInfo ?? '${image.library.url}guilds/group_welcome_info.png'}
+                layout={{ position: 'absolute', left: 20, width: 316, bottom: 86, height: 155 }}
+            />
+            <ButtonThick
+                variant="3"
+                name="ok_button"
+                onPointerTap={onOkButton}
+                layout={{ position: 'absolute', left: 115, width: 131, bottom: 48, height: 29, minWidth: 131, maxWidth: 131 }}
+            >
+                {t('group.created.ok')}
+            </ButtonThick>
+            <Region layout={{ position: 'absolute', left: 22, width: 311, top: 10, height: 150, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                <ThemeText
+                    text={t('group.created.info')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 311 }}
                 />
-                <ButtonThick
-                    variant="3"
-                    name="ok_button"
-                    onPointerTap={onOkButton}
-                    layout={{ position: 'absolute', left: 115, width: 131, bottom: 48, height: 29, minWidth: 131, maxWidth: 131 }}
-                >
-                    {t('group.created.ok')}
-                </ButtonThick>
-                <Region layout={{ position: 'absolute', left: 22, width: 311, top: 10, height: 150, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('group.created.info')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 311 }}
-                    />
-                </Region>
             </Region>
         </Frame>
     );

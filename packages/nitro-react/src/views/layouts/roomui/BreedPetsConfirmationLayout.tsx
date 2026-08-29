@@ -21,9 +21,7 @@ export const BreedPetsConfirmationLayout = ({ elementList, layout, onClose }: Br
             onClose={onClose}
             layout={{ width: 274, height: 387, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <BreedPetsConfirmationLayoutElementList {...elementList} />
-            </Region>
+            <BreedPetsConfirmationLayoutElementList {...elementList} />
         </Frame>
     );
 };

@@ -21,9 +21,7 @@ export const ChestWiredUpgradeLayout = ({ content, layout, onClose }: ChestWired
             onClose={onClose}
             layout={{ width: 353, height: 287, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ChestWiredUpgradeLayoutContent {...content} />
-            </Region>
+            <ChestWiredUpgradeLayoutContent {...content} />
         </Frame>
     );
 };

@@ -25,11 +25,9 @@ export const GuildMembersWindowLayout = ({ footerCont, headerCont, layout, membe
             onClose={onClose}
             layout={{ width: 352, height: 431, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <GuildMembersWindowLayoutHeaderCont {...headerCont} />
-                <GuildMembersWindowLayoutMembersCont {...membersCont} />
-                <GuildMembersWindowLayoutFooterCont {...footerCont} />
-            </Region>
+            <GuildMembersWindowLayoutHeaderCont {...headerCont} />
+            <GuildMembersWindowLayoutMembersCont {...membersCont} />
+            <GuildMembersWindowLayoutFooterCont {...footerCont} />
         </Frame>
     );
 };

@@ -34,41 +34,31 @@ export const GroupManagementWindowLayout = ({ footerCont, headerCont, layout, on
             onClose={onClose}
             layout={{ width: 392, height: 497, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <GroupManagementWindowLayoutHeaderCont {...headerCont} />
-                <GroupManagementWindowLayoutStepCont1 {...stepCont1} />
-                <GroupManagementWindowLayoutStepCont2 {...stepCont2} />
-                <Region
-                    visible={visibleResetBadge ?? false}
-                    layout={{ position: 'absolute', left: 17, width: 94, top: 245, height: 29, minWidth: 94, maxWidth: 94 }}
-                >
-                    <ButtonThick
-                        variant="3"
-                        name="reset_badge"
-                        onPointerTap={onResetBadge}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        {t('group.edit.reset.badge')}
-                    </ButtonThick>
-                </Region>
-                <GroupManagementWindowLayoutStepCont3 {...stepCont3} />
-                <Region
-                    visible={visibleResetColors ?? false}
-                    layout={{ position: 'absolute', left: 15, width: 90, top: 195, height: 29, minWidth: 90, maxWidth: 90 }}
-                >
-                    <ButtonThick
-                        variant="3"
-                        name="reset_colors"
-                        onPointerTap={onResetColors}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        {t('group.edit.reset.color')}
-                    </ButtonThick>
-                </Region>
-                <GroupManagementWindowLayoutStepCont4 {...stepCont4} />
-                <GroupManagementWindowLayoutFooterCont {...footerCont} />
-                <GroupManagementWindowLayoutStepCont5 {...stepCont5} />
-            </Region>
+            <GroupManagementWindowLayoutHeaderCont {...headerCont} />
+            <GroupManagementWindowLayoutStepCont1 {...stepCont1} />
+            <GroupManagementWindowLayoutStepCont2 {...stepCont2} />
+            <ButtonThick
+                variant="3"
+                name="reset_badge"
+                onPointerTap={onResetBadge}
+                visible={visibleResetBadge ?? false}
+                layout={{ position: 'absolute', left: 17, width: 94, top: 245, height: 29, minWidth: 94, maxWidth: 94 }}
+            >
+                {t('group.edit.reset.badge')}
+            </ButtonThick>
+            <GroupManagementWindowLayoutStepCont3 {...stepCont3} />
+            <ButtonThick
+                variant="3"
+                name="reset_colors"
+                onPointerTap={onResetColors}
+                visible={visibleResetColors ?? false}
+                layout={{ position: 'absolute', left: 15, width: 90, top: 195, height: 29, minWidth: 90, maxWidth: 90 }}
+            >
+                {t('group.edit.reset.color')}
+            </ButtonThick>
+            <GroupManagementWindowLayoutStepCont4 {...stepCont4} />
+            <GroupManagementWindowLayoutFooterCont {...footerCont} />
+            <GroupManagementWindowLayoutStepCont5 {...stepCont5} />
         </Frame>
     );
 };
@@ -348,20 +338,15 @@ export const GroupManagementWindowLayoutCreateRoomLinkRegion = ({ captionCreateR
     return (
         <Region
             name="create_room_link_region"
+            layout={{ position: 'absolute', left: 126, width: 247, top: 252, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onCreateRoomLinkRegion}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 126, width: 247, top: 252, height: 38, ...layout }}
         >
-            <Region
-                name="create_room_link_txt"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 38, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionCreateRoomLinkTxt ?? t('group.createroom')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ wordWrap: true, wordWrapWidth: 247 }}
-                />
-            </Region>
+            <ThemeText
+                text={captionCreateRoomLinkTxt ?? t('group.createroom')}
+                textStyle="text-style-u-regular"
+                textOptions={{ wordWrap: true, wordWrapWidth: 247 }}
+            />
         </Region>
     );
 };

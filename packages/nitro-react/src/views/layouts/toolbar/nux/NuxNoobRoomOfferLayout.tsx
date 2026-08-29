@@ -20,31 +20,29 @@ export const NuxNoobRoomOfferLayout = ({ captionTxtBody, layout, onBtnGo, onClos
             onClose={onClose}
             layout={{ width: 382, height: 222, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ThemeImage
-                    src="${image.library.url}nux/NUXroom_prompt.png"
-                    layout={{ position: 'absolute', left: 0, width: 380, top: 23, height: 95 }}
-                />
-                <Region layout={{ position: 'absolute', left: 15, width: 364, top: 129, height: 81 }}>
-                    <Region
-                        name="txtBody"
-                        layout={{ position: 'absolute', left: 0, width: 366, top: 0, height: 13, maxHeight: 84, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTxtBody ?? t('nux.offer.noob.lobby.summary')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 366 }}
-                        />
-                    </Region>
-                    <ButtonThick
-                        variant="6"
-                        name="btnGo"
-                        tintColor="#1da100"
-                        onPointerTap={onBtnGo}
-                        layout={{ position: 'absolute', left: 178, width: 184, top: 45, height: 30, minWidth: 180 }}
-                    >
-                        {t('nux.offer.noob.lobby.button')}
-                    </ButtonThick>
+            <ThemeImage
+                src="${image.library.url}nux/NUXroom_prompt.png"
+                layout={{ position: 'absolute', left: 0, width: 380, top: 23, height: 95 }}
+            />
+            <Region layout={{ position: 'absolute', left: 15, width: 364, top: 129, height: 81 }}>
+                <Region
+                    name="txtBody"
+                    layout={{ position: 'absolute', left: 0, width: 366, top: 0, height: 13, maxHeight: 84, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionTxtBody ?? t('nux.offer.noob.lobby.summary')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 366 }}
+                    />
                 </Region>
+                <ButtonThick
+                    variant="6"
+                    name="btnGo"
+                    tintColor="#1da100"
+                    onPointerTap={onBtnGo}
+                    layout={{ position: 'absolute', left: 178, width: 184, top: 45, height: 30, minWidth: 180 }}
+                >
+                    {t('nux.offer.noob.lobby.button')}
+                </ButtonThick>
             </Region>
         </Frame>
     );

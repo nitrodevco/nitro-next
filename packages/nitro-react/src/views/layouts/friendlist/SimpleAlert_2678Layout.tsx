@@ -21,14 +21,12 @@ export const SimpleAlert_2678Layout = ({ layout, list, onClose, srcIllustration 
             onClose={onClose}
             layout={{ width: 310, height: 163, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ThemeImage
-                    name="illustration"
-                    src={srcIllustration}
-                    layout={{ position: 'absolute', left: 10, width: 1, top: 8, height: 1 }}
-                />
-                <SimpleAlert_2678LayoutList {...list} />
-            </Region>
+            <ThemeImage
+                name="illustration"
+                src={srcIllustration}
+                layout={{ position: 'absolute', left: 10, width: 1, top: 8, height: 1 }}
+            />
+            <SimpleAlert_2678LayoutList {...list} />
         </Frame>
     );
 };

@@ -154,76 +154,52 @@ export const CommunityGoalLayoutMeterContainer = ({ captionCommunityTotalStatus,
                 src={srcMeterLevel1 ?? '${image.library.url}reception/meter_level_1.png'}
                 layout={{ position: 'absolute', left: 30, width: 88, top: 39, height: 93 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="meter_level_1_icon"
+                src={srcMeterLevel1Icon}
                 layout={{ position: 'absolute', left: 30, width: 88, top: 39, height: 93 }}
-            >
-                <ThemeImage
-                    name="meter_level_1_icon"
-                    src={srcMeterLevel1Icon}
-                    layout={{ position: 'absolute', left: 30, width: 88, top: 39, height: 93 }}
-                />
-            </Region>
-            <Region
                 visible={false}
+            />
+            <ThemeImage
+                name="meter_level_1_icon_locked"
+                src={srcMeterLevel1IconLocked}
                 layout={{ position: 'absolute', left: 30, width: 88, top: 39, height: 93 }}
-            >
-                <ThemeImage
-                    name="meter_level_1_icon_locked"
-                    src={srcMeterLevel1IconLocked}
-                    layout={{ position: 'absolute', left: 30, width: 88, top: 39, height: 93 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="meter_level_2"
                 src={srcMeterLevel2 ?? '${image.library.url}reception/meter_level_2.png'}
                 layout={{ position: 'absolute', left: 50, width: 133, top: 10, height: 78 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="meter_level_2_icon"
+                src={srcMeterLevel2Icon}
                 layout={{ position: 'absolute', left: 50, width: 133, top: 10, height: 78 }}
-            >
-                <ThemeImage
-                    name="meter_level_2_icon"
-                    src={srcMeterLevel2Icon}
-                    layout={{ position: 'absolute', left: 50, width: 133, top: 10, height: 78 }}
-                />
-            </Region>
-            <Region
                 visible={false}
+            />
+            <ThemeImage
+                name="meter_level_2_icon_locked"
+                src={srcMeterLevel2IconLocked}
                 layout={{ position: 'absolute', left: 50, width: 133, top: 10, height: 78 }}
-            >
-                <ThemeImage
-                    name="meter_level_2_icon_locked"
-                    src={srcMeterLevel2IconLocked}
-                    layout={{ position: 'absolute', left: 50, width: 133, top: 10, height: 78 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="meter_level_3"
                 src={srcMeterLevel3 ?? '${image.library.url}reception/meter_level_3.png'}
                 layout={{ position: 'absolute', left: 125, width: 69, top: 39, height: 93 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="meter_level_3_icon"
+                src={srcMeterLevel3Icon}
                 layout={{ position: 'absolute', left: 125, width: 69, top: 39, height: 93 }}
-            >
-                <ThemeImage
-                    name="meter_level_3_icon"
-                    src={srcMeterLevel3Icon}
-                    layout={{ position: 'absolute', left: 125, width: 69, top: 39, height: 93 }}
-                />
-            </Region>
-            <Region
                 visible={false}
+            />
+            <ThemeImage
+                name="meter_level_3_icon_locked"
+                src={srcMeterLevel3IconLocked}
                 layout={{ position: 'absolute', left: 125, width: 69, top: 39, height: 93 }}
-            >
-                <ThemeImage
-                    name="meter_level_3_icon_locked"
-                    src={srcMeterLevel3IconLocked}
-                    layout={{ position: 'absolute', left: 125, width: 69, top: 39, height: 93 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="meter_needle"
                 src={srcMeterNeedle ?? layoutImage('landing_view_needle_meter_needle0.png')}

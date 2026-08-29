@@ -163,20 +163,16 @@ export const SnowwarEndingLayoutButtonsContainer = ({ layout, onButtonBuyGames, 
             visible={visibleButtonsContainer ?? false}
             layout={{ position: 'absolute', width: 180, top: 430, height: 50, justifyContent: 'center', ...layout }}
         >
-            <Region
+            <ButtonThick
+                variant="5"
+                name="button_play_again"
+                tintColor="#00ff00"
+                onPointerTap={onButtonPlayAgain}
                 visible={visibleButtonPlayAgain ?? false}
                 layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
             >
-                <ButtonThick
-                    variant="5"
-                    name="button_play_again"
-                    tintColor="#00ff00"
-                    onPointerTap={onButtonPlayAgain}
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    {t('snowwar.new_game')}
-                </ButtonThick>
-            </Region>
+                {t('snowwar.new_game')}
+            </ButtonThick>
             <ButtonThick
                 variant="5"
                 name="button_rematch"
@@ -186,20 +182,16 @@ export const SnowwarEndingLayoutButtonsContainer = ({ layout, onButtonBuyGames, 
             >
                 Rematch
             </ButtonThick>
-            <Region
+            <ButtonThick
+                variant="5"
+                name="button_buy_games"
+                tintColor="#00ff00"
+                onPointerTap={onButtonBuyGames}
                 visible={visibleButtonBuyGames ?? false}
                 layout={{ position: 'absolute', width: 180, top: 0, height: 50, minWidth: 180, minHeight: 50 }}
             >
-                <ButtonThick
-                    variant="5"
-                    name="button_buy_games"
-                    tintColor="#00ff00"
-                    onPointerTap={onButtonBuyGames}
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    {t('snowwar.buy_x_games')}
-                </ButtonThick>
-            </Region>
+                {t('snowwar.buy_x_games')}
+            </ButtonThick>
         </Region>
     );
 };

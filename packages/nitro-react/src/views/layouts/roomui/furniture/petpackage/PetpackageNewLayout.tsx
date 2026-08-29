@@ -27,38 +27,36 @@ export const PetpackageNewLayout = ({ cancel, layout, onClose, onPickName, petpa
             onClose={onClose}
             layout={{ width: 475, height: 250, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <PetpackageNewLayoutPetpackageHeaderBackgroundBorder {...petpackageHeaderBackgroundBorder} />
-                <Region layout={{ position: 'absolute', left: 0, width: 475, top: 90, height: 124 }}>
-                    <Border
-                        variant="0"
-                        name="input_border"
-                        layout={{ position: 'absolute', left: 17, width: 417, top: 25, height: 34 }}
+            <PetpackageNewLayoutPetpackageHeaderBackgroundBorder {...petpackageHeaderBackgroundBorder} />
+            <Region layout={{ position: 'absolute', left: 0, width: 475, top: 90, height: 124 }}>
+                <Border
+                    variant="0"
+                    name="input_border"
+                    layout={{ position: 'absolute', left: 17, width: 417, top: 25, height: 34 }}
+                >
+                    <TextInput
+                        value={inputValue}
+                        onChange={setInputValue}
+                        maxLength={15}
+                        textColor="#888888"
+                        layout={{ position: 'absolute', left: 7, width: 380, top: 6, height: 17 }}
+                    />
+                    <ThemeImage
+                        src={layoutImage('common_small_pen.png')}
+                        layout={{ position: 'absolute', left: 393, width: 17, top: 8, height: 18 }}
+                    />
+                </Border>
+                <Region layout={{ position: 'absolute', left: 0, width: 475, top: 64, height: 51 }}>
+                    <PetpackageNewLayoutCancel {...cancel} />
+                    <ButtonThick
+                        variant="5"
+                        name="pick_name"
+                        tintColor="#00aa00"
+                        onPointerTap={onPickName}
+                        layout={{ position: 'absolute', left: 239, width: 195, bottom: 8, height: 33, minWidth: 130 }}
                     >
-                        <TextInput
-                            value={inputValue}
-                            onChange={setInputValue}
-                            maxLength={15}
-                            textColor="#888888"
-                            layout={{ position: 'absolute', left: 7, width: 380, top: 6, height: 17 }}
-                        />
-                        <ThemeImage
-                            src={layoutImage('common_small_pen.png')}
-                            layout={{ position: 'absolute', left: 393, width: 17, top: 8, height: 18 }}
-                        />
-                    </Border>
-                    <Region layout={{ position: 'absolute', left: 0, width: 475, top: 64, height: 51 }}>
-                        <PetpackageNewLayoutCancel {...cancel} />
-                        <ButtonThick
-                            variant="5"
-                            name="pick_name"
-                            tintColor="#00aa00"
-                            onPointerTap={onPickName}
-                            layout={{ position: 'absolute', left: 239, width: 195, bottom: 8, height: 33, minWidth: 130 }}
-                        >
-                            {t('widgets.petpackage.name.pick')}
-                        </ButtonThick>
-                    </Region>
+                        {t('widgets.petpackage.name.pick')}
+                    </ButtonThick>
                 </Region>
             </Region>
         </Frame>

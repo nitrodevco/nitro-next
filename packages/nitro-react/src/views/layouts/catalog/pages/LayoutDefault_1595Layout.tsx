@@ -9,7 +9,7 @@ import { ProductViewWidget, ProductViewWidgetProps } from '#base/views/layouts/c
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 import { SoldLtdItemsWidget, SoldLtdItemsWidgetProps } from '#base/views/layouts/catalog/widgets/SoldLtdItemsWidget';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
-import { SpinnerWidget2, SpinnerWidget2Props } from '#base/views/layouts/catalog/widgets/SpinnerWidget2';
+import { SpinnerWidget, SpinnerWidgetProps } from '#base/views/layouts/catalog/widgets/SpinnerWidget';
 import { TotalPriceWidget, TotalPriceWidgetProps } from '#base/views/layouts/catalog/widgets/TotalPriceWidget';
 
 /** Generated from `1595_layout_default_xml` (layout "layout_default_ubuntu", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -38,7 +38,7 @@ export interface LayoutDefault_1595LayoutContainerProps {
     purchaseWidget?: PurchaseWidgetProps;
     soldLtdItemsWidget?: SoldLtdItemsWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
-    spinnerWidget?: SpinnerWidget2Props;
+    spinnerWidget?: SpinnerWidgetProps;
     totalPriceWidget?: TotalPriceWidgetProps;
 }
 
@@ -92,7 +92,7 @@ export const LayoutDefault_1595LayoutContainer = ({ activityPointDisplayWidget, 
                 layout={{ position: 'absolute', left: 0, width: 360, bottom: 5, height: 30 }}
                 {...soldLtdItemsWidget}
             />
-            <SpinnerWidget2
+            <SpinnerWidget
                 layout={{ position: 'absolute', left: 0, width: 200, bottom: 30, height: 25 }}
                 {...spinnerWidget}
             />

@@ -22,13 +22,11 @@ export const StartPanelLayout = ({ chatlogBut, layout, onClose, roomToolBut, tic
             onClose={onClose}
             layout={{ width: 170, height: 170, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 0, width: 158, top: 10, height: 128, flexDirection: 'column' }}>
-                    <StartPanelLayoutRoomToolBut {...roomToolBut} />
-                    <StartPanelLayoutChatlogBut {...chatlogBut} />
-                    <StartPanelLayoutUserinfoBut {...userinfoBut} />
-                    <StartPanelLayoutTicketQueueBut {...ticketQueueBut} />
-                </Region>
+            <Region layout={{ position: 'absolute', left: 0, width: 158, top: 10, height: 128, flexDirection: 'column' }}>
+                <StartPanelLayoutRoomToolBut {...roomToolBut} />
+                <StartPanelLayoutChatlogBut {...chatlogBut} />
+                <StartPanelLayoutUserinfoBut {...userinfoBut} />
+                <StartPanelLayoutTicketQueueBut {...ticketQueueBut} />
             </Region>
         </Frame>
     );
@@ -50,16 +48,12 @@ export const StartPanelLayoutRoomToolBut = ({ captionOffenceName, layout, onRoom
             cursor="pointer"
             layout={{ width: 155, height: 30, flexShrink: 0, ...layout }}
         >
-            <Region
+            <Border
+                variant="102"
+                name="mouseover"
                 visible={visibleMouseover ?? false}
                 layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 30 }}
-            >
-                <Border
-                    variant="102"
-                    name="mouseover"
-                    layout={{ width: '100%', height: '100%' }}
-                />
-            </Region>
+            />
             <Region
                 name="offence_name"
                 layout={{ position: 'absolute', left: 24, width: 123, top: 7, height: 15, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -93,16 +87,12 @@ export const StartPanelLayoutChatlogBut = ({ captionOffenceName, layout, onChatl
             cursor="pointer"
             layout={{ width: 155, height: 30, flexShrink: 0, ...layout }}
         >
-            <Region
+            <Border
+                variant="102"
+                name="mouseover"
                 visible={visibleMouseover ?? false}
                 layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 30 }}
-            >
-                <Border
-                    variant="102"
-                    name="mouseover"
-                    layout={{ width: '100%', height: '100%' }}
-                />
-            </Region>
+            />
             <Region
                 name="offence_name"
                 layout={{ position: 'absolute', left: 24, width: 111, top: 7, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -136,16 +126,12 @@ export const StartPanelLayoutUserinfoBut = ({ captionOffenceName, layout, onUser
             cursor="pointer"
             layout={{ width: 155, height: 30, flexShrink: 0, ...layout }}
         >
-            <Region
+            <Border
+                variant="102"
+                name="mouseover"
                 visible={visibleMouseover ?? false}
                 layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 30 }}
-            >
-                <Border
-                    variant="102"
-                    name="mouseover"
-                    layout={{ width: '100%', height: '100%' }}
-                />
-            </Region>
+            />
             <Region
                 name="offence_name"
                 layout={{ position: 'absolute', left: 24, width: 50, top: 7, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
@@ -179,16 +165,12 @@ export const StartPanelLayoutTicketQueueBut = ({ captionOffenceName, layout, onT
             cursor="pointer"
             layout={{ width: 155, height: 30, flexShrink: 0, ...layout }}
         >
-            <Region
+            <Border
+                variant="102"
+                name="mouseover"
                 visible={visibleMouseover ?? false}
                 layout={{ position: 'absolute', left: 0, width: 155, top: 0, height: 30 }}
-            >
-                <Border
-                    variant="102"
-                    name="mouseover"
-                    layout={{ width: '100%', height: '100%' }}
-                />
-            </Region>
+            />
             <Region
                 name="offence_name"
                 layout={{ position: 'absolute', left: 24, width: 78, top: 7, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}

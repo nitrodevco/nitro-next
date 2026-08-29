@@ -49,7 +49,7 @@ export interface ScalerProps extends ThemeProps<ScalerVariant> {
 
 export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ScalerProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, direction = 'all',
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, direction = 'all',
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { config, handlers, resolvedLayer, resolvedOverlay, resolvedTint } = useThemeVariant({
@@ -63,6 +63,7 @@ export const Scaler: ForwardRefExoticComponent<ScalerProps & RefAttributes<PixiC
         return (
             <Box
                 ref={ref}
+                visible={visible}
                 zIndex={config.zIndex}
                 layout={{
                     position: 'absolute',

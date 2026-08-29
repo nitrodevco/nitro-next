@@ -31,64 +31,62 @@ export const WiredMenuViewLayout = ({ bodyContainer, headerContainer, layout, on
             onClose={onClose}
             layout={{ width: 500, height: 500, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <TabContext
+            <TabContext
+                variant="3"
+                name="tab_context"
+                layout={{ position: 'absolute', left: 0, width: 500, top: 2, height: 30 }}
+            >
+                <TabButton
                     variant="3"
-                    name="tab_context"
-                    layout={{ position: 'absolute', left: 0, width: 500, top: 2, height: 30 }}
+                    name="top_view_monitor_button"
+                    onPointerTap={onTopViewMonitorButton}
+                    layout={{ position: 'absolute', left: 0, width: 70, top: 0, height: 32 }}
                 >
-                    <TabButton
-                        variant="3"
-                        name="top_view_monitor_button"
-                        onPointerTap={onTopViewMonitorButton}
-                        layout={{ position: 'absolute', left: 0, width: 70, top: 0, height: 32 }}
-                    >
-                        {t('wiredmenu.monitor.tab')}
-                    </TabButton>
-                    <TabButton
-                        variant="3"
-                        name="top_view_variable_overview_button"
-                        onPointerTap={onTopViewVariableOverviewButton}
-                        layout={{ position: 'absolute', left: 70, width: 74, top: 0, height: 32 }}
-                    >
-                        {t('wiredmenu.variable_overview.tab')}
-                    </TabButton>
-                    <TabButton
-                        variant="3"
-                        name="top_view_inspection_button"
-                        onPointerTap={onTopViewInspectionButton}
-                        layout={{ position: 'absolute', left: 144, width: 82, top: 0, height: 32 }}
-                    >
-                        {t('wiredmenu.inspection.tab')}
-                    </TabButton>
-                    <TabButton
-                        variant="3"
-                        name="top_view_chests_button"
-                        onPointerTap={onTopViewChestsButton}
-                        layout={{ position: 'absolute', left: 226, width: 109, top: 0, height: 32 }}
-                    >
-                        {t('wiredmenu.chests.tab')}
-                    </TabButton>
-                    <TabButton
-                        variant="3"
-                        name="top_view_settings_button"
-                        onPointerTap={onTopViewSettingsButton}
-                        layout={{ position: 'absolute', left: 335, width: 70, top: 0, height: 32 }}
-                    >
-                        {t('wiredmenu.settings.tab')}
-                    </TabButton>
-                    <TabButton
-                        variant="3"
-                        name="top_view_info_button"
-                        onPointerTap={onTopViewInfoButton}
-                        layout={{ position: 'absolute', left: 405, width: 46, top: 0, height: 32 }}
-                    >
-                        {t('wiredmenu.info.tab')}
-                    </TabButton>
-                </TabContext>
-                <WiredMenuViewLayoutHeaderContainer {...headerContainer} />
-                <WiredMenuViewLayoutBodyContainer {...bodyContainer} />
-            </Region>
+                    {t('wiredmenu.monitor.tab')}
+                </TabButton>
+                <TabButton
+                    variant="3"
+                    name="top_view_variable_overview_button"
+                    onPointerTap={onTopViewVariableOverviewButton}
+                    layout={{ position: 'absolute', left: 70, width: 74, top: 0, height: 32 }}
+                >
+                    {t('wiredmenu.variable_overview.tab')}
+                </TabButton>
+                <TabButton
+                    variant="3"
+                    name="top_view_inspection_button"
+                    onPointerTap={onTopViewInspectionButton}
+                    layout={{ position: 'absolute', left: 144, width: 82, top: 0, height: 32 }}
+                >
+                    {t('wiredmenu.inspection.tab')}
+                </TabButton>
+                <TabButton
+                    variant="3"
+                    name="top_view_chests_button"
+                    onPointerTap={onTopViewChestsButton}
+                    layout={{ position: 'absolute', left: 226, width: 109, top: 0, height: 32 }}
+                >
+                    {t('wiredmenu.chests.tab')}
+                </TabButton>
+                <TabButton
+                    variant="3"
+                    name="top_view_settings_button"
+                    onPointerTap={onTopViewSettingsButton}
+                    layout={{ position: 'absolute', left: 335, width: 70, top: 0, height: 32 }}
+                >
+                    {t('wiredmenu.settings.tab')}
+                </TabButton>
+                <TabButton
+                    variant="3"
+                    name="top_view_info_button"
+                    onPointerTap={onTopViewInfoButton}
+                    layout={{ position: 'absolute', left: 405, width: 46, top: 0, height: 32 }}
+                >
+                    {t('wiredmenu.info.tab')}
+                </TabButton>
+            </TabContext>
+            <WiredMenuViewLayoutHeaderContainer {...headerContainer} />
+            <WiredMenuViewLayoutBodyContainer {...bodyContainer} />
         </Frame>
     );
 };
@@ -326,16 +324,12 @@ export const WiredMenuViewLayoutImageContainer = ({ layout, srcMonitorImage1, sr
             name="image_container"
             layout={{ position: 'absolute', left: 230, width: 256, top: 4, height: 145, ...layout }}
         >
-            <Region
-                visible={false}
+            <ThemeImage
+                name="monitor_image_1"
+                src={srcMonitorImage1 ?? layoutImage('wired_monitor_element1.png')}
                 layout={{ position: 'absolute', left: 0, width: 256, top: 0, height: 145 }}
-            >
-                <ThemeImage
-                    name="monitor_image_1"
-                    src={srcMonitorImage1 ?? layoutImage('wired_monitor_element1.png')}
-                    layout={{ position: 'absolute', left: 0, width: 256, top: 0, height: 145 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="monitor_image_2"
                 src={srcMonitorImage2 ?? layoutImage('wired_monitor_element2.png')}
@@ -1095,28 +1089,24 @@ export const WiredMenuViewLayoutVariableValuesContainer = ({ captionTitle, layou
                     {t('wiredmenu.inspection.add')}
                 </Button>
             </Region>
-            <Region
+            <Bubble
+                variant="7"
+                name="create_var_bubble"
                 visible={visibleCreateVarBubble ?? false}
                 layout={{ position: 'absolute', left: 122, width: 186, top: 181, height: 145 }}
             >
-                <Bubble
-                    variant="7"
-                    name="create_var_bubble"
-                    layout={{ width: '100%', height: '100%' }}
+                <WiredMenuViewLayoutVariableSetting {...variableSetting} />
+                <WiredMenuViewLayoutValueSetting {...valueSetting} />
+                <Button
+                    variant="3"
+                    name="create_var_btn"
+                    onPointerTap={onCreateVarBtn}
+                    textStyle="text-style-button-shiny-regular"
+                    layout={{ position: 'absolute', left: 6, right: 22, bottom: 20, height: 25, minWidth: 158, maxWidth: 158 }}
                 >
-                    <WiredMenuViewLayoutVariableSetting {...variableSetting} />
-                    <WiredMenuViewLayoutValueSetting {...valueSetting} />
-                    <Button
-                        variant="3"
-                        name="create_var_btn"
-                        onPointerTap={onCreateVarBtn}
-                        textStyle="text-style-button-shiny-regular"
-                        layout={{ position: 'absolute', left: 6, right: 22, bottom: 20, height: 25, minWidth: 158, maxWidth: 158 }}
-                    >
-                        {t('wiredmenu.inspection.create')}
-                    </Button>
-                </Bubble>
-            </Region>
+                    {t('wiredmenu.inspection.create')}
+                </Button>
+            </Bubble>
         </Region>
     );
 };
@@ -1213,26 +1203,18 @@ export const WiredMenuViewLayoutPreviewContainer = ({ captionPreviewInstructionF
                     visible={false}
                     layout={{ position: 'absolute', left: 46, right: 46, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 38, overflow: 'hidden' }}
                 />
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="preview_image_bitmap"
+                    src={srcPreviewImageBitmap}
                     layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 50 }}
-                >
-                    <ThemeImage
-                        name="preview_image_bitmap"
-                        src={srcPreviewImageBitmap}
-                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 50, alignSelf: 'center', marginTop: -0.5, marginBottom: 0.5, height: 50 }}
-                    />
-                </Region>
-                <Region
                     visible={false}
+                />
+                <ThemeImage
+                    name="global_placeholder"
+                    src={srcGlobalPlaceholder ?? layoutImage('wired_global_placeholder.png')}
                     layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 120, top: 64, height: 97 }}
-                >
-                    <ThemeImage
-                        name="global_placeholder"
-                        src={srcGlobalPlaceholder ?? layoutImage('wired_global_placeholder.png')}
-                        layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 120, top: 64, height: 97 }}
-                    />
-                </Region>
+                    visible={false}
+                />
                 <ContainerButton
                     variant="7"
                     name="highlight_wired_btn"

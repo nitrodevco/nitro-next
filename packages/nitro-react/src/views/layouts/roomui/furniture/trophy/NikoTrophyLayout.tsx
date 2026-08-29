@@ -27,44 +27,42 @@ export const NikoTrophyLayout = ({ appstoreRegion, captionDate, captionHtmlTextb
             onClose={onClose}
             layout={{ width: 428, height: 325, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <NikoTrophyLayoutNikotrophyBackground {...nikotrophyBackground} />
-                <ThemeImage
-                    name="preview_image"
-                    src={srcPreviewImage}
-                    layout={{ position: 'absolute', left: 26, width: 93, top: 30, height: 112 }}
+            <NikoTrophyLayoutNikotrophyBackground {...nikotrophyBackground} />
+            <ThemeImage
+                name="preview_image"
+                src={srcPreviewImage}
+                layout={{ position: 'absolute', left: 26, width: 93, top: 30, height: 112 }}
+            />
+            <Region
+                name="html_textbox"
+                layout={{ position: 'absolute', left: 153, width: 249, top: 28, height: 64, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionHtmlTextbox ?? t('niko.trophy.description.gold')}
+                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 249 }}
                 />
-                <Region
-                    name="html_textbox"
-                    layout={{ position: 'absolute', left: 153, width: 249, top: 28, height: 64, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHtmlTextbox ?? t('niko.trophy.description.gold')}
-                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 249 }}
-                    />
-                </Region>
-                <Region
-                    name="store_link"
-                    layout={{ position: 'absolute', left: 153, width: 249, top: 97, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    onPointerTap={onStoreLink}
-                    cursor="pointer"
-                >
-                    <ThemeText
-                        text={captionStoreLink ?? t('niko.trophy.link.text')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-                <Region
-                    name="date"
-                    layout={{ position: 'absolute', left: 153, width: 249, top: 130, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionDate ?? t('trophy.niko.date')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
-                <NikoTrophyLayoutAppstoreRegion {...appstoreRegion} />
             </Region>
+            <Region
+                name="store_link"
+                layout={{ position: 'absolute', left: 153, width: 249, top: 97, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                onPointerTap={onStoreLink}
+                cursor="pointer"
+            >
+                <ThemeText
+                    text={captionStoreLink ?? t('niko.trophy.link.text')}
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+            <Region
+                name="date"
+                layout={{ position: 'absolute', left: 153, width: 249, top: 130, height: 23, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionDate ?? t('trophy.niko.date')}
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </Region>
+            <NikoTrophyLayoutAppstoreRegion {...appstoreRegion} />
         </Frame>
     );
 };

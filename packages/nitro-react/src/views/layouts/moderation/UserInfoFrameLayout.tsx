@@ -1,4 +1,4 @@
-import { BoxLayout, Frame, Region } from '#base/theme';
+import { BoxLayout, Frame } from '#base/theme';
 
 /** Generated from `1115_user_info_frame_xml` (layout "user_info_frame", 292x225) by scripts/generate-layout-views.ts - do not edit by hand. */
 export interface UserInfoFrameLayoutProps {
@@ -14,8 +14,6 @@ export const UserInfoFrameLayout = ({ layout, onClose }: UserInfoFrameLayoutProp
             tintColor="#418db0"
             onClose={onClose}
             layout={{ width: 292, height: 225, ...layout }}
-        >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }} />
-        </Frame>
+        />
     );
 };

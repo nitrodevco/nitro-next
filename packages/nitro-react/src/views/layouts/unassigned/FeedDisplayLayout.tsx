@@ -354,15 +354,10 @@ export const FeedDisplayLayoutInfoOkItem = ({ captionFeedInfoOkText, layout, onI
             onPointerTap={onInfoOk}
             layout={{ width: 150, height: 36, flexShrink: 0, minWidth: 150, maxWidth: 150, ...layout }}
         >
-            <Region
-                name="feed_info_ok_text"
-                layout={{ position: 'absolute', left: 0, top: 4, maxWidth: 150, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionFeedInfoOkText ?? '_info_ok'}
-                    textOptions={{ fill: '#ffffff', align: 'center' }}
-                />
-            </Region>
+            <ThemeText
+                text={captionFeedInfoOkText ?? '_info_ok'}
+                textOptions={{ fill: '#ffffff', align: 'center' }}
+            />
         </ContainerButton>
     );
 };

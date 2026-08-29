@@ -346,35 +346,27 @@ export const CameraInterfaceLayoutBgBorder = ({ buttonRelease, cameraButton0, ca
             cursor="pointer"
             layout={{ position: 'absolute', left: 0, width: 340, top: 0, height: 536, justifyContent: 'center', ...layout }}
         >
-            <Region
+            <Border
+                variant="7"
+                name="slot_container"
                 visible={visibleSlotContainer ?? false}
                 layout={{ position: 'absolute', left: 6, width: 328, top: 453, height: 82 }}
             >
-                <Border
-                    variant="7"
-                    name="slot_container"
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    <Region layout={{ position: 'absolute', left: 7, width: 340, top: 15, height: 58 }}>
-                        <CameraInterfaceLayoutCameraButton0 {...cameraButton0} />
-                        <CameraInterfaceLayoutCameraButton1 {...cameraButton1} />
-                        <CameraInterfaceLayoutCameraButton2 {...cameraButton2} />
-                        <CameraInterfaceLayoutCameraButton3 {...cameraButton3} />
-                        <CameraInterfaceLayoutCameraButton4 {...cameraButton4} />
-                    </Region>
-                    <Region
-                        visible={false}
-                        layout={{ position: 'absolute', left: 0, width: 62, top: -25, height: 62 }}
-                    >
-                        <ThemeImage
-                            name="photo_border"
-                            src={srcPhotoBorder ?? layoutImage('camera_photo_border.png')}
-                            layout={{ position: 'absolute', left: 0, width: 62, top: -25, height: 62 }}
-                        />
-                    </Region>
-                    <CameraInterfaceLayoutDeletePhotoButton {...deletePhotoButton} />
-                </Border>
-            </Region>
+                <Region layout={{ position: 'absolute', left: 7, width: 340, top: 15, height: 58 }}>
+                    <CameraInterfaceLayoutCameraButton0 {...cameraButton0} />
+                    <CameraInterfaceLayoutCameraButton1 {...cameraButton1} />
+                    <CameraInterfaceLayoutCameraButton2 {...cameraButton2} />
+                    <CameraInterfaceLayoutCameraButton3 {...cameraButton3} />
+                    <CameraInterfaceLayoutCameraButton4 {...cameraButton4} />
+                </Region>
+                <ThemeImage
+                    name="photo_border"
+                    src={srcPhotoBorder ?? layoutImage('camera_photo_border.png')}
+                    layout={{ position: 'absolute', left: 0, width: 62, top: -25, height: 62 }}
+                    visible={false}
+                />
+                <CameraInterfaceLayoutDeletePhotoButton {...deletePhotoButton} />
+            </Border>
             <ThemeImage
                 name="image"
                 src={srcImage}

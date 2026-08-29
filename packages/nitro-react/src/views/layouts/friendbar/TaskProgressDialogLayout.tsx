@@ -21,9 +21,7 @@ export const TaskProgressDialogLayout = ({ layout, list, onClose }: TaskProgress
             onClose={onClose}
             layout={{ width: 378, height: 370, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <TaskProgressDialogLayoutList {...list} />
-            </Region>
+            <TaskProgressDialogLayoutList {...list} />
         </Frame>
     );
 };

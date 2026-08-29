@@ -7,7 +7,7 @@ import { ProductViewWidget, ProductViewWidgetProps } from '#base/views/layouts/c
 import { PurchaseWidget, PurchaseWidgetProps } from '#base/views/layouts/catalog/widgets/PurchaseWidget';
 import { SoldLtdItemsWidget, SoldLtdItemsWidgetProps } from '#base/views/layouts/catalog/widgets/SoldLtdItemsWidget';
 import { SpecialInfoWidget, SpecialInfoWidgetProps } from '#base/views/layouts/catalog/widgets/SpecialInfoWidget';
-import { SpinnerWidget, SpinnerWidgetProps } from '#base/views/layouts/catalog/widgets/SpinnerWidget';
+import { SpinnerWidget2, SpinnerWidget2Props } from '#base/views/layouts/catalog/widgets/SpinnerWidget2';
 import { TotalPriceWidget2, TotalPriceWidget2Props } from '#base/views/layouts/catalog/widgets/TotalPriceWidget2';
 
 /** Generated from `1725_layout_default_xml` (layout "ctlg_default_3x3", 360x460) by scripts/generate-layout-views.ts - do not edit by hand. */
@@ -21,7 +21,7 @@ export interface LayoutDefault_1725LayoutProps {
     purchaseWidget?: PurchaseWidgetProps;
     soldLtdItemsWidget?: SoldLtdItemsWidgetProps;
     specialInfoWidget?: SpecialInfoWidgetProps;
-    spinnerWidget?: SpinnerWidgetProps;
+    spinnerWidget?: SpinnerWidget2Props;
     totalPriceWidget?: TotalPriceWidget2Props;
 }
 
@@ -53,7 +53,7 @@ export const LayoutDefault_1725Layout = ({ activityPointDisplayWidget, bundlePur
                     layout={{ position: 'absolute', left: 0, width: 360, top: 120, height: 155 }}
                     {...bundlePurchaseExtraInfoWidget}
                 />
-                <SpinnerWidget
+                <SpinnerWidget2
                     layout={{ position: 'absolute', left: 0, width: 180, top: 275, height: 25 }}
                     {...spinnerWidget}
                 />

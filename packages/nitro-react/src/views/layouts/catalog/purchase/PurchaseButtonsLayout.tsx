@@ -40,15 +40,10 @@ export const PurchaseButtonsLayoutDefaultButtons = ({ captionPurchaseLabel, layo
                 onPointerTap={onBuyButton}
                 layout={{ position: 'absolute', left: 5, width: 160, top: 0, height: 24, minWidth: 160, maxWidth: 160, minHeight: 24, maxHeight: 24, justifyContent: 'center' }}
             >
-                <Region
-                    name="purchase_label"
-                    layout={{ position: 'absolute', width: 160, top: 3, height: 17, minWidth: 160, maxWidth: 160, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionPurchaseLabel ?? t('catalog.purchase_confirmation.buy')}
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={captionPurchaseLabel ?? t('catalog.purchase_confirmation.buy')}
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
             </ContainerButton>
             <Button
                 variant="3"

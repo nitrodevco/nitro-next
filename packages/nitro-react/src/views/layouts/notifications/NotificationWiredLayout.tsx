@@ -36,21 +36,17 @@ export const NotificationWiredLayout = ({ captionDescription, header, layout, on
                         />
                     </Region>
                     <NotificationWiredLayoutSpacing {...spacing} />
-                    <Region
+                    <Button
+                        variant="106"
+                        name="button"
+                        tintColor="#6e8cb7"
+                        onPointerTap={onButton}
+                        textStyle="text-style-il-button"
                         visible={visibleButton ?? false}
                         layout={{ width: 65, height: 25, flexShrink: 0, minHeight: 25, maxHeight: 25 }}
                     >
-                        <Button
-                            variant="106"
-                            name="button"
-                            tintColor="#6e8cb7"
-                            onPointerTap={onButton}
-                            textStyle="text-style-il-button"
-                            layout={{ width: '100%', height: '100%' }}
-                        >
-                            Disable
-                        </Button>
-                    </Region>
+                        Disable
+                    </Button>
                 </Region>
                 <ThemeImage
                     src={undefined}

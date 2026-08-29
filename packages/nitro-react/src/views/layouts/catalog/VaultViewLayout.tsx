@@ -24,9 +24,7 @@ export const VaultViewLayout = ({ earningsContentArea, layout, onClose }: VaultV
             onClose={onClose}
             layout={{ width: 422, height: 536, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <VaultViewLayoutEarningsContentArea {...earningsContentArea} />
-            </Region>
+            <VaultViewLayoutEarningsContentArea {...earningsContentArea} />
         </Frame>
     );
 };

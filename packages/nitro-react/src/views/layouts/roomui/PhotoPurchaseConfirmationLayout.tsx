@@ -21,9 +21,7 @@ export const PhotoPurchaseConfirmationLayout = ({ contentlist, layout, onClose }
             onClose={onClose}
             layout={{ width: 340, height: 686, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <PhotoPurchaseConfirmationLayoutContentlist {...contentlist} />
-            </Region>
+            <PhotoPurchaseConfirmationLayoutContentlist {...contentlist} />
         </Frame>
     );
 };
@@ -689,17 +687,12 @@ export const PhotoPurchaseConfirmationLayoutBadPhotoRemovalDisclaimerItem = ({ c
     return (
         <Region
             name="bad_photo_removal_disclaimer"
-            layout={{ width: 320, height: 17, flexShrink: 0, ...layout }}
+            layout={{ width: 320, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
         >
-            <Region
-                name="removal_disclaimer"
-                layout={{ position: 'absolute', left: 0, width: 320, top: 0, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionRemovalDisclaimer ?? t('camera.warning.disclaimer')}
-                    textOptions={{ wordWrap: true, wordWrapWidth: 320 }}
-                />
-            </Region>
+            <ThemeText
+                text={captionRemovalDisclaimer ?? t('camera.warning.disclaimer')}
+                textOptions={{ wordWrap: true, wordWrapWidth: 320 }}
+            />
         </Region>
     );
 };

@@ -34,57 +34,41 @@ export const TopicsFlowHelpLayout = ({ captionButtonText, captionContinueButton,
             onClose={onClose}
             layout={{ width: 448, height: 522, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <TopicsFlowHelpLayoutStartContainer {...startContainer} />
-                <TopicsFlowHelpLayoutHelpContainer {...helpContainer} />
-                <ContainerButton
-                    variant="5"
-                    name="continue_button"
-                    tintColor="#00aa00"
-                    onPointerTap={onContinueButton}
-                    layout={{ position: 'absolute', left: 229, width: 189, top: 435, height: 41 }}
-                >
-                    <Region
-                        name="continue_button"
-                        layout={{ position: 'absolute', left: 10, width: 169, top: 9, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionContinueButton ?? t('help.emergency.main.submit.button')}
-                            textStyle="text-style-u-headline-medium"
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
-                </ContainerButton>
-                <TopicsFlowHelpLayoutUsersContainer {...usersContainer} />
-                <TopicsFlowHelpLayoutUser {...user} />
-                <TopicsFlowHelpLayoutReasonContainer {...reasonContainer} />
-                <TopicsFlowHelpLayoutMessageContainer {...messageContainer} />
-                <TopicsFlowHelpLayoutChatContainer {...chatContainer} />
-                <Region
-                    visible={visibleBackButton ?? false}
-                    layout={{ position: 'absolute', left: 30, width: 189, top: 435, height: 41 }}
-                >
-                    <ContainerButton
-                        variant="5"
-                        name="back_button"
-                        tintColor="#aaaaaa"
-                        onPointerTap={onBackButton}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <Region
-                            name="button_text"
-                            layout={{ position: 'absolute', left: 10, width: 169, top: 9, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={captionButtonText ?? t('generic.back')}
-                                textStyle="text-style-u-headline-medium"
-                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                            />
-                        </Region>
-                    </ContainerButton>
-                </Region>
-                <TopicsFlowHelpLayoutSummaryContainer {...summaryContainer} />
-            </Region>
+            <TopicsFlowHelpLayoutStartContainer {...startContainer} />
+            <TopicsFlowHelpLayoutHelpContainer {...helpContainer} />
+            <ContainerButton
+                variant="5"
+                name="continue_button"
+                tintColor="#00aa00"
+                onPointerTap={onContinueButton}
+                layout={{ position: 'absolute', left: 229, width: 189, top: 435, height: 41 }}
+            >
+                <ThemeText
+                    text={captionContinueButton ?? t('help.emergency.main.submit.button')}
+                    textStyle="text-style-u-headline-medium"
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </ContainerButton>
+            <TopicsFlowHelpLayoutUsersContainer {...usersContainer} />
+            <TopicsFlowHelpLayoutUser {...user} />
+            <TopicsFlowHelpLayoutReasonContainer {...reasonContainer} />
+            <TopicsFlowHelpLayoutMessageContainer {...messageContainer} />
+            <TopicsFlowHelpLayoutChatContainer {...chatContainer} />
+            <ContainerButton
+                variant="5"
+                name="back_button"
+                tintColor="#aaaaaa"
+                onPointerTap={onBackButton}
+                visible={visibleBackButton ?? false}
+                layout={{ position: 'absolute', left: 30, width: 189, top: 435, height: 41 }}
+            >
+                <ThemeText
+                    text={captionButtonText ?? t('generic.back')}
+                    textStyle="text-style-u-headline-medium"
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
+            </ContainerButton>
+            <TopicsFlowHelpLayoutSummaryContainer {...summaryContainer} />
         </Frame>
     );
 };
@@ -132,29 +116,25 @@ export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionRepo
                 />
             </Region>
             <Region layout={{ position: 'absolute', left: 32, width: 380, top: 230, height: 150, flexDirection: 'column', gap: 5 }}>
-                <Region
+                <ContainerButton
+                    variant="6"
+                    name="button_habbo_help"
+                    tintColor="#00aa00"
+                    onPointerTap={onButtonHabboHelp}
                     visible={visibleButtonHabboHelp ?? false}
                     layout={{ width: 380, height: 40, flexShrink: 0 }}
                 >
-                    <ContainerButton
-                        variant="6"
-                        name="button_habbo_help"
-                        tintColor="#00aa00"
-                        onPointerTap={onButtonHabboHelp}
-                        layout={{ width: '100%', height: '100%' }}
+                    <Region
+                        visible={false}
+                        layout={{ position: 'absolute', left: 0, width: 365, top: 7, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
                     >
-                        <Region
-                            visible={false}
-                            layout={{ position: 'absolute', left: 0, width: 365, top: 7, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                        >
-                            <ThemeText
-                                text={t('help.main.help.title')}
-                                textStyle="text-style-u-headline-medium"
-                                textOptions={{ fill: '#ffffff', align: 'center' }}
-                            />
-                        </Region>
-                    </ContainerButton>
-                </Region>
+                        <ThemeText
+                            text={t('help.main.help.title')}
+                            textStyle="text-style-u-headline-medium"
+                            textOptions={{ fill: '#ffffff', align: 'center' }}
+                        />
+                    </Region>
+                </ContainerButton>
                 <ContainerButton
                     variant="6"
                     name="button_user_report"
@@ -162,13 +142,11 @@ export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionRepo
                     onPointerTap={onButtonUserReport}
                     layout={{ width: 380, height: 40, flexShrink: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 365, top: 7, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        <ThemeText
-                            text={t('help.main.bully.subtitle')}
-                            textStyle="text-style-u-headline-medium"
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main.bully.subtitle')}
+                        textStyle="text-style-u-headline-medium"
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
                 </ContainerButton>
                 <ContainerButton
                     variant="6"
@@ -177,13 +155,11 @@ export const TopicsFlowHelpLayoutStartContainer = ({ captionFaqLink, captionRepo
                     onPointerTap={onButtonAccount}
                     layout={{ width: 380, height: 40, flexShrink: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 365, top: 7, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        <ThemeText
-                            text={t('help.main.self.tips.title')}
-                            textStyle="text-style-u-headline-medium"
-                            textOptions={{ fill: '#ffffff', align: 'center' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main.self.tips.title')}
+                        textStyle="text-style-u-headline-medium"
+                        textOptions={{ fill: '#ffffff', align: 'center' }}
+                    />
                 </ContainerButton>
             </Region>
             <ThemeImage
@@ -276,13 +252,11 @@ export const TopicsFlowHelpLayoutHelpContainer = ({ layout, onHabbowayLink, onIn
                     onPointerTap={onInstructionsButton}
                     layout={{ width: 380, height: 40, flexShrink: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 380, top: 7, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                        <ThemeText
-                            text={t('help.main2.tour.subtitle')}
-                            textStyle="text-style-u-headline-medium"
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 380, align: 'center' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main2.tour.subtitle')}
+                        textStyle="text-style-u-headline-medium"
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 380, align: 'center' }}
+                    />
                 </ContainerButton>
                 <ContainerButton
                     variant="6"
@@ -291,13 +265,11 @@ export const TopicsFlowHelpLayoutHelpContainer = ({ layout, onHabbowayLink, onIn
                     onPointerTap={onSafetybookletLink}
                     layout={{ width: 380, height: 40, flexShrink: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 380, top: 7, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                        <ThemeText
-                            text={t('help.main.button.self_help')}
-                            textStyle="text-style-u-headline-medium"
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 380, align: 'center' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main.button.self_help')}
+                        textStyle="text-style-u-headline-medium"
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 380, align: 'center' }}
+                    />
                 </ContainerButton>
                 <ContainerButton
                     variant="6"
@@ -306,13 +278,11 @@ export const TopicsFlowHelpLayoutHelpContainer = ({ layout, onHabbowayLink, onIn
                     onPointerTap={onHabbowayLink}
                     layout={{ width: 380, height: 40, flexShrink: 0 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 0, width: 380, top: 7, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}>
-                        <ThemeText
-                            text={t('help.main2.habboway.button')}
-                            textStyle="text-style-u-headline-medium"
-                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 380, align: 'center' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text={t('help.main2.habboway.button')}
+                        textStyle="text-style-u-headline-medium"
+                        textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 380, align: 'center' }}
+                    />
                 </ContainerButton>
             </Region>
         </Region>
@@ -515,16 +485,11 @@ export const TopicsFlowHelpLayoutReasonPrototypeItem = ({ captionName, layout, o
             onPointerTap={onReasonPrototype}
             layout={{ width: 355, height: 40, flexShrink: 0, ...layout }}
         >
-            <Region
-                name="name"
-                layout={{ position: 'absolute', left: 10, width: 335, top: 8, height: 21, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}
-            >
-                <ThemeText
-                    text={captionName ?? 'Category Name'}
-                    textStyle="text-style-u-headline-medium"
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 335, align: 'center' }}
-                />
-            </Region>
+            <ThemeText
+                text={captionName ?? 'Category Name'}
+                textStyle="text-style-u-headline-medium"
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 335, align: 'center' }}
+            />
         </ContainerButton>
     );
 };
@@ -807,13 +772,11 @@ export const TopicsFlowHelpLayoutSummaryContainer = ({ layout, onSubmitButton, v
                 onPointerTap={onSubmitButton}
                 layout={{ position: 'absolute', left: 229, width: 189, top: 335, height: 41 }}
             >
-                <Region layout={{ position: 'absolute', left: 10, width: 169, top: 9, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('help.emergency.chat_report.submit.button')}
-                        textStyle="text-style-u-headline-medium"
-                        textOptions={{ fill: '#ffffff', align: 'center' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={t('help.emergency.chat_report.submit.button')}
+                    textStyle="text-style-u-headline-medium"
+                    textOptions={{ fill: '#ffffff', align: 'center' }}
+                />
             </ContainerButton>
         </Region>
     );

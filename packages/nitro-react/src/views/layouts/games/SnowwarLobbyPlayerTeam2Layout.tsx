@@ -193,17 +193,12 @@ export const SnowwarLobbyPlayerTeam2LayoutPlayerTotalStats = ({ captionTotalScor
             name="playerTotalStats"
             layout={{ position: 'absolute', left: 13, width: 140, top: 24, height: 35, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, width: 50, top: 9, height: 17 }}>
-                <Region
-                    name="totalScoreLabel"
-                    layout={{ position: 'absolute', left: 0, width: 50, top: 0, height: 17, minWidth: 33, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionTotalScoreLabel ?? t('snowwar.stats.total_score')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+            <Region layout={{ position: 'absolute', left: 0, width: 50, top: 9, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <ThemeText
+                    text={captionTotalScoreLabel ?? t('snowwar.stats.total_score')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ fill: '#ffffff' }}
+                />
             </Region>
             <Region layout={{ position: 'absolute', left: 100, width: 54, top: 9, height: 17 }}>
                 <Region

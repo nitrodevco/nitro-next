@@ -24,15 +24,13 @@ export const GamesMainLayout = ({ layout, onClose, quickPlayContainer, snowwarLo
             onClose={onClose}
             layout={{ width: 413, height: 530, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ThemeImage
-                    name="quick_play_background"
-                    src={srcQuickPlayBackground ?? layoutImage('quick_play_background.png')}
-                    layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 355 }}
-                />
-                <GamesMainLayoutQuickPlayContainer {...quickPlayContainer} />
-                <GamesMainLayoutSnowwarLobbyCont {...snowwarLobbyCont} />
-            </Region>
+            <ThemeImage
+                name="quick_play_background"
+                src={srcQuickPlayBackground ?? layoutImage('quick_play_background.png')}
+                layout={{ position: 'absolute', left: 0, width: 407, top: 0, height: 355 }}
+            />
+            <GamesMainLayoutQuickPlayContainer {...quickPlayContainer} />
+            <GamesMainLayoutSnowwarLobbyCont {...snowwarLobbyCont} />
         </Frame>
     );
 };
@@ -507,15 +505,10 @@ export const GamesMainLayoutFooterContainer = ({ captionPlayText, gamesLeftRegio
                 onPointerTap={onPlayButton}
                 layout={{ position: 'absolute', right: 13, width: 190, top: 64, height: 50, justifyContent: 'center' }}
             >
-                <Region
-                    name="play_text"
-                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, top: 10, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionPlayText ?? t('snowwar.play')}
-                        textOptions={{ fill: '#ffffff' }}
-                    />
-                </Region>
+                <ThemeText
+                    text={captionPlayText ?? t('snowwar.play')}
+                    textOptions={{ fill: '#ffffff' }}
+                />
             </ContainerButton>
         </Region>
     );

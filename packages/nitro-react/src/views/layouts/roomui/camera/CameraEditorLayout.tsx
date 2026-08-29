@@ -35,62 +35,56 @@ export const CameraEditorLayout = ({ buttonSeparator, itemGrid, layout, onCancel
             onClose={onClose}
             layout={{ width: 586, height: 517, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ThemeImage
-                    name="image"
-                    src={srcImage}
-                    layout={{ position: 'absolute', left: 249, width: 320, top: 10, height: 320 }}
+            <ThemeImage
+                name="image"
+                src={srcImage}
+                layout={{ position: 'absolute', left: 249, width: 320, top: 10, height: 320 }}
+            />
+            <Border
+                variant="3"
+                name="caption_bg"
+                visible={visibleCaptionBg ?? false}
+                layout={{ position: 'absolute', left: 249, width: 321, top: 360, height: 51 }}
+            >
+                <TextInput
+                    value={captionInputValue}
+                    onChange={setCaptionInputValue}
+                    multiline
+                    layout={{ position: 'absolute', left: 5, width: 310, top: 4, height: 47 }}
                 />
-                <Region
-                    visible={visibleCaptionBg ?? false}
-                    layout={{ position: 'absolute', left: 249, width: 321, top: 360, height: 51 }}
-                >
-                    <Border
-                        variant="3"
-                        name="caption_bg"
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <TextInput
-                            value={captionInputValue}
-                            onChange={setCaptionInputValue}
-                            multiline
-                            layout={{ position: 'absolute', left: 5, width: 310, top: 4, height: 47 }}
-                        />
-                    </Border>
-                </Region>
-                <ButtonThick
-                    variant="6"
-                    name="purchase_button"
-                    dynamicStyle="brightness_and_shadow_under"
-                    tintColor="#009e00"
-                    onPointerTap={onPurchaseButton}
-                    layout={{ position: 'absolute', left: 413, width: 150, top: 426, height: 28, minWidth: 150, maxWidth: 150 }}
-                >
-                    {t('camera.preview.button.text')}
-                </ButtonThick>
-                <CameraEditorLayoutPurchaseDisplayObject {...purchaseDisplayObject} />
-                <Border
-                    variant="2"
-                    name="border_for_itemgrid"
-                    layout={{ position: 'absolute', left: 11, width: 230, top: 51, height: 410 }}
-                />
-                <CameraEditorLayoutItemGrid {...itemGrid} />
-                <CameraEditorLayoutButtonSeparator {...buttonSeparator} />
-                <Button
-                    variant="3"
-                    name="cancel_button"
-                    dynamicStyle="brightness_and_shadow_under"
-                    tintColor="#cccccc"
-                    onPointerTap={onCancelButton}
-                    layout={{ position: 'absolute', left: 255, width: 150, top: 426, height: 28, minWidth: 150, maxWidth: 150 }}
-                >
-                    {t('catalog.purchase_confirmation.cancel')}
-                </Button>
-                <CameraEditorLayoutSliderContainer {...sliderContainer} />
-                <CameraEditorLayoutZoomButton {...zoomButton} />
-                <CameraEditorLayoutSaveButton {...saveButton} />
-                <CameraEditorLayoutSaveClickCatcher {...saveClickCatcher} />
-            </Region>
+            </Border>
+            <ButtonThick
+                variant="6"
+                name="purchase_button"
+                dynamicStyle="brightness_and_shadow_under"
+                tintColor="#009e00"
+                onPointerTap={onPurchaseButton}
+                layout={{ position: 'absolute', left: 413, width: 150, top: 426, height: 28, minWidth: 150, maxWidth: 150 }}
+            >
+                {t('camera.preview.button.text')}
+            </ButtonThick>
+            <CameraEditorLayoutPurchaseDisplayObject {...purchaseDisplayObject} />
+            <Border
+                variant="2"
+                name="border_for_itemgrid"
+                layout={{ position: 'absolute', left: 11, width: 230, top: 51, height: 410 }}
+            />
+            <CameraEditorLayoutItemGrid {...itemGrid} />
+            <CameraEditorLayoutButtonSeparator {...buttonSeparator} />
+            <Button
+                variant="3"
+                name="cancel_button"
+                dynamicStyle="brightness_and_shadow_under"
+                tintColor="#cccccc"
+                onPointerTap={onCancelButton}
+                layout={{ position: 'absolute', left: 255, width: 150, top: 426, height: 28, minWidth: 150, maxWidth: 150 }}
+            >
+                {t('catalog.purchase_confirmation.cancel')}
+            </Button>
+            <CameraEditorLayoutSliderContainer {...sliderContainer} />
+            <CameraEditorLayoutZoomButton {...zoomButton} />
+            <CameraEditorLayoutSaveButton {...saveButton} />
+            <CameraEditorLayoutSaveClickCatcher {...saveClickCatcher} />
         </Frame>
     );
 };

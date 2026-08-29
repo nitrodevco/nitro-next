@@ -152,7 +152,7 @@ export interface ButtonProps extends ThemeProps<ButtonVariant> {
 
 export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, selected, children,
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, disabled, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
@@ -163,6 +163,7 @@ export const Button: ForwardRefExoticComponent<ButtonProps & RefAttributes<PixiC
         return (
             <Box
                 ref={ref}
+                visible={visible}
                 layout={{
                     flexDirection: 'row',
                     justifyContent: 'center',

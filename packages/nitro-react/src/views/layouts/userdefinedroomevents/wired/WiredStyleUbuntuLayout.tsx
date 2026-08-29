@@ -55,43 +55,35 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                 backgroundColor="#e9e9e1"
                 layout={{ position: 'absolute', left: 0, width: 200, top: 0, height: 200 }}
             >
-                <Region
+                <Border
+                    variant="5"
+                    name="requirement_rule"
+                    tintColor="#dadada"
                     visible={visibleRequirementRule ?? false}
                     layout={{ position: 'absolute', left: 0, width: 193, top: 0, height: 68 }}
                 >
-                    <Border
-                        variant="5"
-                        name="requirement_rule"
-                        tintColor="#dadada"
-                        layout={{ width: '100%', height: '100%' }}
+                    <Region
+                        name="title"
+                        layout={{ position: 'absolute', left: 6, width: 106, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <Region
-                            name="title"
-                            layout={{ position: 'absolute', left: 6, width: 106, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText text={captionTitle ?? 'Payment option 1:'} />
-                        </Region>
-                        <WiredStyleUbuntuLayoutCloseRuleRegion {...closeRuleRegion} />
-                        <WiredStyleUbuntuLayoutGrid {...grid} />
-                    </Border>
-                </Region>
-                <Region
+                        <ThemeText text={captionTitle ?? 'Payment option 1:'} />
+                    </Region>
+                    <WiredStyleUbuntuLayoutCloseRuleRegion {...closeRuleRegion} />
+                    <WiredStyleUbuntuLayoutGrid {...grid} />
+                </Border>
+                <Border
+                    variant="3"
+                    name="product_icon_previewer"
+                    tintColor="#dadada"
                     visible={visibleProductIconPreviewer ?? false}
                     layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
                 >
-                    <Border
-                        variant="3"
-                        name="product_icon_previewer"
-                        tintColor="#dadada"
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <WidgetSlot
-                            widgetType="product_icon"
-                            name="icon_preview"
-                            layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
-                        />
-                    </Border>
-                </Region>
+                    <WidgetSlot
+                        widgetType="product_icon"
+                        name="icon_preview"
+                        layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
+                    />
+                </Border>
                 <WiredStyleUbuntuLayoutRulerView {...rulerView} />
                 <WiredStyleUbuntuLayoutRulerViewVertical {...rulerViewVertical} />
                 <Region
@@ -115,133 +107,101 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                 >
                     <ThemeText text={captionTextHtml ?? 'Use this by typing'} />
                 </Region>
-                <Region
+                <Border
+                    variant="4"
+                    name="input_template"
                     visible={visibleInputTemplate ?? false}
                     layout={{ position: 'absolute', left: 0, width: 178, top: 0, height: 24 }}
                 >
-                    <Border
-                        variant="4"
-                        name="input_template"
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <TextInput
-                            value={fieldValue}
-                            onChange={setFieldValue}
-                            layout={{ position: 'absolute', left: 5, right: 5, top: 3, bottom: 3 }}
-                        />
-                    </Border>
-                </Region>
-                <Region
+                    <TextInput
+                        value={fieldValue}
+                        onChange={setFieldValue}
+                        layout={{ position: 'absolute', left: 5, right: 5, top: 3, bottom: 3 }}
+                    />
+                </Border>
+                <Dropmenu
+                    variant="3"
+                    name="dropdown_view"
+                    onPointerTap={onDropdownView}
                     visible={visibleDropdownView ?? false}
                     layout={{ position: 'absolute', left: 0, width: 149, top: 0, height: 24 }}
-                >
-                    <Dropmenu
-                        variant="3"
-                        name="dropdown_view"
-                        onPointerTap={onDropdownView}
-                        layout={{ width: '100%', height: '100%' }}
-                    />
-                </Region>
+                />
                 <CheckBox
                     variant="3"
                     name="checkbox_view"
                     onPointerTap={onCheckboxView}
                     layout={{ position: 'absolute', left: 0, width: 17, top: 0, height: 15, minHeight: 15, maxHeight: 15 }}
                 />
-                <Region
+                <RadioButton
+                    variant="3"
+                    name="radiobutton_view"
+                    onPointerTap={onRadiobuttonView}
                     visible={visibleRadiobuttonView ?? false}
                     layout={{ position: 'absolute', left: 0, width: 15, top: 0, height: 15, minHeight: 15, maxHeight: 15 }}
-                >
-                    <RadioButton
-                        variant="3"
-                        name="radiobutton_view"
-                        onPointerTap={onRadiobuttonView}
-                        layout={{ width: '100%', height: '100%' }}
-                    />
-                </Region>
+                />
                 <WiredStyleUbuntuLayoutExpandCollapseRegion {...expandCollapseRegion} />
-                <Region
+                <ContainerButton
+                    variant="3"
+                    name="iconbutton_left"
+                    onPointerTap={onIconbuttonLeft}
                     visible={visibleIconbuttonLeft ?? false}
                     layout={{ position: 'absolute', left: 0, width: 22, top: 0, height: 22 }}
                 >
-                    <ContainerButton
-                        variant="3"
-                        name="iconbutton_left"
-                        onPointerTap={onIconbuttonLeft}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <Icon
-                            variant="2"
-                            tintColor="#7f7f7f"
-                            layout={{ position: 'absolute', left: 6, width: 12, top: 6, height: 12 }}
-                        />
-                    </ContainerButton>
-                </Region>
-                <Region
+                    <Icon
+                        variant="2"
+                        tintColor="#7f7f7f"
+                        layout={{ position: 'absolute', left: 6, width: 12, top: 6, height: 12 }}
+                    />
+                </ContainerButton>
+                <ContainerButton
+                    variant="3"
+                    name="iconbutton_right"
+                    onPointerTap={onIconbuttonRight}
                     visible={visibleIconbuttonRight ?? false}
                     layout={{ position: 'absolute', left: 0, width: 22, top: 0, height: 22 }}
                 >
-                    <ContainerButton
+                    <Icon
                         variant="3"
-                        name="iconbutton_right"
-                        onPointerTap={onIconbuttonRight}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <Icon
-                            variant="3"
-                            tintColor="#7f7f7f"
-                            layout={{ position: 'absolute', left: 6, width: 12, top: 6, height: 12 }}
-                        />
-                    </ContainerButton>
-                </Region>
-                <Region
+                        tintColor="#7f7f7f"
+                        layout={{ position: 'absolute', left: 6, width: 12, top: 6, height: 12 }}
+                    />
+                </ContainerButton>
+                <ContainerButton
+                    variant="3"
+                    name="iconbutton_up"
+                    onPointerTap={onIconbuttonUp}
                     visible={visibleIconbuttonUp ?? false}
                     layout={{ position: 'absolute', left: 0, width: 22, top: 0, height: 22 }}
                 >
-                    <ContainerButton
-                        variant="3"
-                        name="iconbutton_up"
-                        onPointerTap={onIconbuttonUp}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <Icon
-                            variant="1"
-                            tintColor="#7f7f7f"
-                            layout={{ position: 'absolute', left: 7, width: 12, top: 5, height: 12 }}
-                        />
-                    </ContainerButton>
-                </Region>
-                <Region
+                    <Icon
+                        variant="1"
+                        tintColor="#7f7f7f"
+                        layout={{ position: 'absolute', left: 7, width: 12, top: 5, height: 12 }}
+                    />
+                </ContainerButton>
+                <ContainerButton
+                    variant="3"
+                    name="iconbutton_down"
+                    onPointerTap={onIconbuttonDown}
                     visible={visibleIconbuttonDown ?? false}
                     layout={{ position: 'absolute', left: 0, width: 22, top: 0, height: 22 }}
                 >
-                    <ContainerButton
-                        variant="3"
-                        name="iconbutton_down"
-                        onPointerTap={onIconbuttonDown}
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        <Icon
-                            variant="0"
-                            tintColor="#7f7f7f"
-                            layout={{ position: 'absolute', left: 7, width: 12, top: 6, height: 12 }}
-                        />
-                    </ContainerButton>
-                </Region>
-                <Region
+                    <Icon
+                        variant="0"
+                        tintColor="#7f7f7f"
+                        layout={{ position: 'absolute', left: 7, width: 12, top: 6, height: 12 }}
+                    />
+                </ContainerButton>
+                <Button
+                    variant="3"
+                    name="button"
+                    onPointerTap={onButton}
+                    textStyle="text-style-button-shiny-regular"
                     visible={visibleButton ?? false}
                     layout={{ position: 'absolute', left: 0, width: 43, top: 0, height: 24 }}
                 >
-                    <Button
-                        variant="3"
-                        name="button"
-                        onPointerTap={onButton}
-                        textStyle="text-style-button-shiny-regular"
-                        layout={{ width: '100%', height: '100%' }}
-                    >
-                        text
-                    </Button>
-                </Region>
+                    text
+                </Button>
                 <Frame
                     variant="3"
                     id="frame"
@@ -251,59 +211,45 @@ export const WiredStyleUbuntuLayout = ({ captionTextBoldView, captionTextHtml, c
                     tintColor="#418db0"
                     onClose={onFrame}
                     layout={{ position: 'absolute', left: 0, width: 240, top: 0, height: 200, minWidth: 100 }}
-                >
-                    <Region layout={{ position: 'relative', flex: 1, width: '100%' }} />
-                </Frame>
-                <Region
+                />
+                <Border
+                    variant="3"
+                    name="quick_menu"
+                    tintColor="#000000"
                     visible={visibleQuickMenu ?? false}
                     layout={{ position: 'absolute', left: 0, width: 145, top: 0, height: 27 }}
                 >
                     <Border
-                        variant="3"
-                        name="quick_menu"
-                        tintColor="#000000"
-                        layout={{ width: '100%', height: '100%' }}
+                        variant="11"
+                        tintColor="#f2f2f2"
+                        layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                     >
                         <Border
                             variant="11"
-                            tintColor="#f2f2f2"
+                            tintColor="#d6d6d6"
                             layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
                         >
-                            <Border
-                                variant="11"
-                                tintColor="#d6d6d6"
-                                layout={{ position: 'absolute', left: 1, right: 1, top: 1, bottom: 1 }}
-                            >
-                                <WiredStyleUbuntuLayoutMenuList {...menuList} />
-                            </Border>
+                            <WiredStyleUbuntuLayoutMenuList {...menuList} />
                         </Border>
                     </Border>
-                </Region>
+                </Border>
                 <WiredStyleUbuntuLayoutSourcetypeSelectorView {...sourcetypeSelectorView} />
                 <WiredStyleUbuntuLayoutSlider {...slider} />
                 <WiredStyleUbuntuLayoutMiniButtonView {...miniButtonView} />
-                <Region
+                <Border
+                    variant="3"
+                    name="border"
+                    tintColor="#dadada"
                     visible={visibleBorder ?? false}
                     layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
-                >
-                    <Border
-                        variant="3"
-                        name="border"
-                        tintColor="#dadada"
-                        layout={{ width: '100%', height: '100%' }}
-                    />
-                </Region>
-                <Region
+                />
+                <ContainerButton
+                    variant="7"
+                    name="container_button"
+                    onPointerTap={onContainerButton}
                     visible={visibleContainerButton ?? false}
                     layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
-                >
-                    <ContainerButton
-                        variant="7"
-                        name="container_button"
-                        onPointerTap={onContainerButton}
-                        layout={{ width: '100%', height: '100%' }}
-                    />
-                </Region>
+                />
             </Region>
         </Region>
     );
@@ -398,16 +344,12 @@ export const WiredStyleUbuntuLayoutElementEntryTemplateItem = ({ captionQuantity
                     name="element_icon_widget"
                     layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
                 />
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="coins_icon"
+                    src={srcCoinsIcon ?? layoutImage('inventory_furni_icon_credits.png')}
                     layout={{ position: 'absolute', left: 8, width: 25, top: 12, height: 18 }}
-                >
-                    <ThemeImage
-                        name="coins_icon"
-                        src={srcCoinsIcon ?? layoutImage('inventory_furni_icon_credits.png')}
-                        layout={{ position: 'absolute', left: 8, width: 25, top: 12, height: 18 }}
-                    />
-                </Region>
+                    visible={false}
+                />
                 <Border
                     variant="4"
                     name="quantity_border"

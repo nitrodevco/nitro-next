@@ -66,28 +66,20 @@ export const MysteryBoxToolbarExtensionLayout = ({ boxRegion, captionFaqLink, ke
                 </Border>
                 <MysteryBoxToolbarExtensionLayoutMinimizeRegion {...minimizeRegion} />
                 <MysteryBoxToolbarExtensionLayoutMaximizeRegion {...maximizeRegion} />
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="small_box"
+                    src={srcSmallBox ?? layoutImage('mysterybox_box_small.png')}
+                    tint="#ff0000"
                     layout={{ position: 'absolute', left: 124, width: 19, top: 2, height: 20 }}
-                >
-                    <ThemeImage
-                        name="small_box"
-                        src={srcSmallBox ?? layoutImage('mysterybox_box_small.png')}
-                        tint="#ff0000"
-                        layout={{ position: 'absolute', left: 124, width: 19, top: 2, height: 20 }}
-                    />
-                </Region>
-                <Region
                     visible={false}
+                />
+                <ThemeImage
+                    name="small_key"
+                    src={srcSmallKey ?? layoutImage('mysterybox_key_small.png')}
+                    tint="#ff0000"
                     layout={{ position: 'absolute', left: 144, width: 20, top: 3, height: 19 }}
-                >
-                    <ThemeImage
-                        name="small_key"
-                        src={srcSmallKey ?? layoutImage('mysterybox_key_small.png')}
-                        tint="#ff0000"
-                        layout={{ position: 'absolute', left: 144, width: 20, top: 3, height: 19 }}
-                    />
-                </Region>
+                    visible={false}
+                />
             </Border>
         </Region>
     );

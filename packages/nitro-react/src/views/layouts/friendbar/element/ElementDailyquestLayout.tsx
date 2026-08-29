@@ -108,32 +108,28 @@ export const ElementDailyquestLayoutQuestdataContainer = ({ cancelQuestRegion, c
             backgroundColor="#000000"
             layout={{ position: 'absolute', left: 0, width: 250, top: 0, height: 70, ...layout }}
         >
-            <Region
+            <ContainerButton
+                variant="102"
+                name="accept_button"
+                onPointerTap={onAcceptButton}
                 visible={visibleAcceptButton ?? false}
                 layout={{ position: 'absolute', left: 0, width: 250, top: 2, height: 39, minWidth: 250, maxWidth: 250 }}
             >
-                <ContainerButton
-                    variant="102"
-                    name="accept_button"
-                    onPointerTap={onAcceptButton}
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    <Region layout={{ position: 'absolute', left: 5, top: 3, flexDirection: 'column' }}>
-                        <Region
-                            name="caption_txt"
-                            layout={{ height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText text={captionCaptionTxt ?? 'DQ Title'} />
-                        </Region>
-                        <Region
-                            name="accept_text"
-                            layout={{ height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText text={captionAcceptText ?? t('landing.view.quest.accept')} />
-                        </Region>
+                <Region layout={{ position: 'absolute', left: 5, top: 3, flexDirection: 'column' }}>
+                    <Region
+                        name="caption_txt"
+                        layout={{ height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionCaptionTxt ?? 'DQ Title'} />
                     </Region>
-                </ContainerButton>
-            </Region>
+                    <Region
+                        name="accept_text"
+                        layout={{ height: 18, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText text={captionAcceptText ?? t('landing.view.quest.accept')} />
+                    </Region>
+                </Region>
+            </ContainerButton>
             <ElementDailyquestLayoutNextQuestRegion {...nextQuestRegion} />
             <ElementDailyquestLayoutCancelQuestRegion {...cancelQuestRegion} />
             <Border

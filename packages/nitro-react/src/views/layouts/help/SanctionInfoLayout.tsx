@@ -23,10 +23,8 @@ export const SanctionInfoLayout = ({ bottom, layout, mainContentsList, onClose }
             onClose={onClose}
             layout={{ width: 450, height: 359, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <SanctionInfoLayoutMainContentsList {...mainContentsList} />
-                <SanctionInfoLayoutBottom {...bottom} />
-            </Region>
+            <SanctionInfoLayoutMainContentsList {...mainContentsList} />
+            <SanctionInfoLayoutBottom {...bottom} />
         </Frame>
     );
 };

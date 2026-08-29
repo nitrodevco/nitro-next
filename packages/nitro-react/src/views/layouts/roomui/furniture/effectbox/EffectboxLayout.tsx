@@ -23,20 +23,18 @@ export const EffectboxLayout = ({ cancel, effectboxHeaderBackgroundBorder, layou
             onClose={onClose}
             layout={{ width: 475, height: 193, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <EffectboxLayoutEffectboxHeaderBackgroundBorder {...effectboxHeaderBackgroundBorder} />
-                <Region layout={{ position: 'absolute', left: -1, width: 475, top: 101, height: 51 }}>
-                    <EffectboxLayoutCancel {...cancel} />
-                    <ButtonThick
-                        variant="5"
-                        name="ok"
-                        tintColor="#00aa00"
-                        onPointerTap={onOk}
-                        layout={{ position: 'absolute', left: 319, width: 130, bottom: 8, height: 33, minWidth: 130 }}
-                    >
-                        {t('generic.ok')}
-                    </ButtonThick>
-                </Region>
+            <EffectboxLayoutEffectboxHeaderBackgroundBorder {...effectboxHeaderBackgroundBorder} />
+            <Region layout={{ position: 'absolute', left: -1, width: 475, top: 101, height: 51 }}>
+                <EffectboxLayoutCancel {...cancel} />
+                <ButtonThick
+                    variant="5"
+                    name="ok"
+                    tintColor="#00aa00"
+                    onPointerTap={onOk}
+                    layout={{ position: 'absolute', left: 319, width: 130, bottom: 8, height: 33, minWidth: 130 }}
+                >
+                    {t('generic.ok')}
+                </ButtonThick>
             </Region>
         </Frame>
     );

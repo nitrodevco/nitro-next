@@ -22,10 +22,8 @@ export const MainWindow_1503Layout = ({ footer, layout, mainContent, onClose }: 
             onClose={onClose}
             layout={{ width: 275, height: 105, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <MainWindow_1503LayoutMainContent {...mainContent} />
-                <MainWindow_1503LayoutFooter {...footer} />
-            </Region>
+            <MainWindow_1503LayoutMainContent {...mainContent} />
+            <MainWindow_1503LayoutFooter {...footer} />
         </Frame>
     );
 };

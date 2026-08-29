@@ -27,39 +27,37 @@ export const MysterytrophyLayout = ({ cancel, layout, mysterytrophyHeaderBackgro
             onClose={onClose}
             layout={{ width: 475, height: 270, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <MysterytrophyLayoutMysterytrophyHeaderBackgroundBorder {...mysterytrophyHeaderBackgroundBorder} />
-                <Region layout={{ position: 'absolute', left: 0, width: 475, top: 100, height: 90 }}>
-                    <Border
-                        variant="0"
-                        name="input_border"
-                        layout={{ position: 'absolute', left: 17, width: 417, top: 15, height: 65 }}
-                    >
-                        <TextInput
-                            value={inputValue}
-                            onChange={setInputValue}
-                            maxLength={500}
-                            multiline
-                            layout={{ position: 'absolute', left: 7, width: 380, top: 6, height: 50 }}
-                        />
-                        <ThemeImage
-                            src={layoutImage('common_small_pen.png')}
-                            layout={{ position: 'absolute', left: 390, width: 17, top: 20, height: 18 }}
-                        />
-                    </Border>
-                </Region>
-                <Region layout={{ position: 'absolute', left: -1, width: 475, top: 186, height: 51 }}>
-                    <MysterytrophyLayoutCancel {...cancel} />
-                    <ButtonThick
-                        variant="5"
-                        name="ok"
-                        tintColor="#00aa00"
-                        onPointerTap={onOk}
-                        layout={{ position: 'absolute', left: 319, width: 130, bottom: 8, height: 33, minWidth: 130 }}
-                    >
-                        {t('generic.ok')}
-                    </ButtonThick>
-                </Region>
+            <MysterytrophyLayoutMysterytrophyHeaderBackgroundBorder {...mysterytrophyHeaderBackgroundBorder} />
+            <Region layout={{ position: 'absolute', left: 0, width: 475, top: 100, height: 90 }}>
+                <Border
+                    variant="0"
+                    name="input_border"
+                    layout={{ position: 'absolute', left: 17, width: 417, top: 15, height: 65 }}
+                >
+                    <TextInput
+                        value={inputValue}
+                        onChange={setInputValue}
+                        maxLength={500}
+                        multiline
+                        layout={{ position: 'absolute', left: 7, width: 380, top: 6, height: 50 }}
+                    />
+                    <ThemeImage
+                        src={layoutImage('common_small_pen.png')}
+                        layout={{ position: 'absolute', left: 390, width: 17, top: 20, height: 18 }}
+                    />
+                </Border>
+            </Region>
+            <Region layout={{ position: 'absolute', left: -1, width: 475, top: 186, height: 51 }}>
+                <MysterytrophyLayoutCancel {...cancel} />
+                <ButtonThick
+                    variant="5"
+                    name="ok"
+                    tintColor="#00aa00"
+                    onPointerTap={onOk}
+                    layout={{ position: 'absolute', left: 319, width: 130, bottom: 8, height: 33, minWidth: 130 }}
+                >
+                    {t('generic.ok')}
+                </ButtonThick>
             </Region>
         </Frame>
     );

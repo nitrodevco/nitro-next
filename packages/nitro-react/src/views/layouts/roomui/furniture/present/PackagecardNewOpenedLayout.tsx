@@ -21,13 +21,11 @@ export const PackagecardNewOpenedLayout = ({ elementList, layout, onClose }: Pac
             onClose={onClose}
             layout={{ width: 342, height: 360, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    backgroundColor="#e9e9e9"
-                    layout={{ position: 'absolute', left: 0, width: 336, top: 0, height: 305 }}
-                >
-                    <PackagecardNewOpenedLayoutElementList {...elementList} />
-                </Region>
+            <Region
+                backgroundColor="#e9e9e9"
+                layout={{ position: 'absolute', left: 0, width: 336, top: 0, height: 305 }}
+            >
+                <PackagecardNewOpenedLayoutElementList {...elementList} />
             </Region>
         </Frame>
     );

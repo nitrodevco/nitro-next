@@ -28,55 +28,53 @@ export const RosRoomSettingsLayout = ({ contentContainer, layout, onClose, onTab
             onClose={onClose}
             layout={{ width: 341, height: 477, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <TabContext
+            <TabContext
+                variant="3"
+                name="tab_context"
+                layout={{ position: 'absolute', left: -6, width: 354, top: 3, height: 32 }}
+            >
+                <TabButton
                     variant="3"
-                    name="tab_context"
-                    layout={{ position: 'absolute', left: -6, width: 354, top: 3, height: 32 }}
+                    name="tab_1"
+                    onPointerTap={onTab1}
+                    layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 32 }}
                 >
-                    <TabButton
-                        variant="3"
-                        name="tab_1"
-                        onPointerTap={onTab1}
-                        layout={{ position: 'absolute', left: 0, width: 185, top: 0, height: 32 }}
-                    >
-                        {t('navigator.roomsettings.tab.1')}
-                    </TabButton>
-                    <TabButton
-                        variant="3"
-                        name="tab_2"
-                        onPointerTap={onTab2}
-                        layout={{ position: 'absolute', left: 185, width: 185, top: 0, height: 32 }}
-                    >
-                        {t('navigator.roomsettings.tab.2')}
-                    </TabButton>
-                    <TabButton
-                        variant="3"
-                        name="tab_3"
-                        onPointerTap={onTab3}
-                        layout={{ position: 'absolute', left: 370, width: 185, top: 0, height: 32 }}
-                    >
-                        {t('navigator.roomsettings.tab.3')}
-                    </TabButton>
-                    <TabButton
-                        variant="3"
-                        name="tab_4"
-                        onPointerTap={onTab4}
-                        layout={{ position: 'absolute', left: 555, width: 186, top: 0, height: 32 }}
-                    >
-                        {t('navigator.roomsettings.tab.4')}
-                    </TabButton>
-                    <TabButton
-                        variant="3"
-                        name="tab_5"
-                        onPointerTap={onTab5}
-                        layout={{ position: 'absolute', left: 741, width: 185, top: 0, height: 32 }}
-                    >
-                        {t('navigator.roomsettings.tab.5')}
-                    </TabButton>
-                </TabContext>
-                <RosRoomSettingsLayoutContentContainer {...contentContainer} />
-            </Region>
+                    {t('navigator.roomsettings.tab.1')}
+                </TabButton>
+                <TabButton
+                    variant="3"
+                    name="tab_2"
+                    onPointerTap={onTab2}
+                    layout={{ position: 'absolute', left: 185, width: 185, top: 0, height: 32 }}
+                >
+                    {t('navigator.roomsettings.tab.2')}
+                </TabButton>
+                <TabButton
+                    variant="3"
+                    name="tab_3"
+                    onPointerTap={onTab3}
+                    layout={{ position: 'absolute', left: 370, width: 185, top: 0, height: 32 }}
+                >
+                    {t('navigator.roomsettings.tab.3')}
+                </TabButton>
+                <TabButton
+                    variant="3"
+                    name="tab_4"
+                    onPointerTap={onTab4}
+                    layout={{ position: 'absolute', left: 555, width: 186, top: 0, height: 32 }}
+                >
+                    {t('navigator.roomsettings.tab.4')}
+                </TabButton>
+                <TabButton
+                    variant="3"
+                    name="tab_5"
+                    onPointerTap={onTab5}
+                    layout={{ position: 'absolute', left: 741, width: 185, top: 0, height: 32 }}
+                >
+                    {t('navigator.roomsettings.tab.5')}
+                </TabButton>
+            </TabContext>
+            <RosRoomSettingsLayoutContentContainer {...contentContainer} />
         </Frame>
     );
 };
@@ -509,37 +507,33 @@ export const RosRoomSettingsLayoutNormalAccessContainer = ({ captionRoomAccessTa
             </Region>
             <RosRoomSettingsLayoutDoormodeContainer {...doormodeContainer} />
             <RosRoomSettingsLayoutPasswordContainer {...passwordContainer} />
-            <Region
+            <Border
+                variant="0"
+                name="doormode_override_info"
                 visible={visibleDoormodeOverrideInfo ?? false}
-                layout={{ position: 'absolute', left: 0, width: 308, top: 88, height: 166 }}
+                layout={{ position: 'absolute', left: 0, width: 308, top: 88, height: 166, justifyContent: 'center' }}
             >
-                <Border
-                    variant="0"
-                    name="doormode_override_info"
-                    layout={{ width: '100%', height: '100%', justifyContent: 'center' }}
+                <Region layout={{ position: 'absolute', left: 5, width: 295, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('notification.builders_club.room_locked.title')}
+                        textStyle="text-style-u-headline-small"
+                    />
+                </Region>
+                <Region layout={{ position: 'absolute', left: 5, width: 298, top: 42, height: 79, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('notification.builders_club.room_locked.message')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 298 }}
+                    />
+                </Region>
+                <Button
+                    variant="3"
+                    name="builders_faq_button"
+                    onPointerTap={onBuildersFaqButton}
+                    layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 287, top: 122, height: 30 }}
                 >
-                    <Region layout={{ position: 'absolute', left: 5, width: 295, top: 10, height: 19, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('notification.builders_club.room_locked.title')}
-                            textStyle="text-style-u-headline-small"
-                        />
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 5, width: 298, top: 42, height: 79, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('notification.builders_club.room_locked.message')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 298 }}
-                        />
-                    </Region>
-                    <Button
-                        variant="3"
-                        name="builders_faq_button"
-                        onPointerTap={onBuildersFaqButton}
-                        layout={{ position: 'absolute', marginLeft: 0.5, marginRight: -0.5, width: 287, top: 122, height: 30 }}
-                    >
-                        {t('notification.builders_club.room_locked.linkTitle')}
-                    </Button>
-                </Border>
-            </Region>
+                    {t('notification.builders_club.room_locked.linkTitle')}
+                </Button>
+            </Border>
         </Region>
     );
 };

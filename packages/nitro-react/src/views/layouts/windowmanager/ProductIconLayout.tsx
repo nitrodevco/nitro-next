@@ -25,16 +25,12 @@ export const ProductIconLayout = ({ layout, srcBitmap, srcUnknownImage, visibleI
                     options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                     layout={{ position: 'absolute', width: 40, alignSelf: 'center', height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, overflow: 'hidden' }}
                 />
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="unknown_image"
+                    src={srcUnknownImage ?? layoutImage('collectables_icon_curator_stamp_small.png')}
                     layout={{ position: 'absolute', width: 18, alignSelf: 'center', height: 18 }}
-                >
-                    <ThemeImage
-                        name="unknown_image"
-                        src={srcUnknownImage ?? layoutImage('collectables_icon_curator_stamp_small.png')}
-                        layout={{ position: 'absolute', width: 18, alignSelf: 'center', height: 18 }}
-                    />
-                </Region>
+                    visible={false}
+                />
                 <WidgetSlot
                     widgetType="pet_image"
                     name="pet_image_widget"

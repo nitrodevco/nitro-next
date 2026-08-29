@@ -26,53 +26,51 @@ export const CollectLayout = ({ captionCollectSummary, layout, onClose, onOkButt
             onClose={onClose}
             layout={{ width: 477, height: 440, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region
+                backgroundColor="#96bdcb"
+                layout={{ position: 'absolute', left: -2, right: 4, top: -3, height: 198 }}
+            >
                 <Region
-                    backgroundColor="#96bdcb"
-                    layout={{ position: 'absolute', left: -2, right: 4, top: -3, height: 198 }}
-                >
-                    <Region
-                        backgroundColor="#6f95a4"
-                        layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 194 }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 0, width: 471, top: 0, height: 400, justifyContent: 'center' }}>
-                    <ButtonThick
-                        variant="5"
-                        name="ok_button"
-                        tintColor="#4faf4f"
-                        onPointerTap={onOkButton}
-                        layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 219, top: 266, height: 38, minWidth: 219, maxWidth: 219 }}
-                    >
-                        {t('phone.number.collect.send.button')}
-                    </ButtonThick>
-                    <Region layout={{ position: 'absolute', left: 8, right: 2, top: 8, bottom: 210 }}>
-                        <ThemeImage
-                            name="club_icon"
-                            src={srcClubIcon ?? '${image.library.url}returnusergifting/phone_frank.png'}
-                            layout={{ position: 'absolute', left: 6, width: 71, top: 0, height: 89 }}
-                        />
-                        <Region
-                            name="collect_summary"
-                            layout={{ position: 'absolute', left: 90, width: 360, top: 0, height: 178, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                        >
-                            <ThemeText
-                                text={captionCollectSummary ?? t('phone.number.collect.summary')}
-                                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 360 }}
-                            />
-                        </Region>
-                    </Region>
-                    <CollectLayoutPhoneNumberInputBorder {...phoneNumberInputBorder} />
-                </Region>
-                <Droplist
-                    variant="3"
-                    name="country_list"
-                    layout={{ position: 'absolute', left: 8, width: 204, top: 218, height: 38 }}
-                >
-                    Choose country
-                </Droplist>
-                <CollectLayoutUserInputButtonsContainer {...userInputButtonsContainer} />
+                    backgroundColor="#6f95a4"
+                    layout={{ position: 'absolute', left: 2, right: 2, top: 2, height: 194 }}
+                />
             </Region>
+            <Region layout={{ position: 'absolute', left: 0, width: 471, top: 0, height: 400, justifyContent: 'center' }}>
+                <ButtonThick
+                    variant="5"
+                    name="ok_button"
+                    tintColor="#4faf4f"
+                    onPointerTap={onOkButton}
+                    layout={{ position: 'absolute', marginLeft: 1, marginRight: -1, width: 219, top: 266, height: 38, minWidth: 219, maxWidth: 219 }}
+                >
+                    {t('phone.number.collect.send.button')}
+                </ButtonThick>
+                <Region layout={{ position: 'absolute', left: 8, right: 2, top: 8, bottom: 210 }}>
+                    <ThemeImage
+                        name="club_icon"
+                        src={srcClubIcon ?? '${image.library.url}returnusergifting/phone_frank.png'}
+                        layout={{ position: 'absolute', left: 6, width: 71, top: 0, height: 89 }}
+                    />
+                    <Region
+                        name="collect_summary"
+                        layout={{ position: 'absolute', left: 90, width: 360, top: 0, height: 178, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    >
+                        <ThemeText
+                            text={captionCollectSummary ?? t('phone.number.collect.summary')}
+                            textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 360 }}
+                        />
+                    </Region>
+                </Region>
+                <CollectLayoutPhoneNumberInputBorder {...phoneNumberInputBorder} />
+            </Region>
+            <Droplist
+                variant="3"
+                name="country_list"
+                layout={{ position: 'absolute', left: 8, width: 204, top: 218, height: 38 }}
+            >
+                Choose country
+            </Droplist>
+            <CollectLayoutUserInputButtonsContainer {...userInputButtonsContainer} />
         </Frame>
     );
 };

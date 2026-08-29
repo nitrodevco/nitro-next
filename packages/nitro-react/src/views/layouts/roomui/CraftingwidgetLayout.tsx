@@ -30,75 +30,73 @@ export const CraftingwidgetLayout = ({ captionHeaderInventory, captionHeaderMixe
             onClose={onClose}
             layout={{ width: 543, height: 407, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ThemeImage
-                    src={layoutImage('craft_craft_bg.png')}
-                    layout={{ position: 'absolute', left: 8, width: 521, top: 8, height: 351 }}
+            <ThemeImage
+                src={layoutImage('craft_craft_bg.png')}
+                layout={{ position: 'absolute', left: 8, width: 521, top: 8, height: 351 }}
+            />
+            <ThemeImage
+                name="furniture_icon"
+                src={srcFurnitureIcon}
+                layout={{ position: 'absolute', left: 398, width: 131, top: 198, height: 101 }}
+            />
+            <Region
+                name="header_recipes"
+                layout={{ position: 'absolute', left: 26, width: 219, top: 32, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionHeaderRecipes ?? t('crafting.title.products')}
+                    textOptions={{ fill: '#cec7b6', align: 'center' }}
                 />
-                <ThemeImage
-                    name="furniture_icon"
-                    src={srcFurnitureIcon}
-                    layout={{ position: 'absolute', left: 398, width: 131, top: 198, height: 101 }}
-                />
-                <Region
-                    name="header_recipes"
-                    layout={{ position: 'absolute', left: 26, width: 219, top: 32, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionHeaderRecipes ?? t('crafting.title.products')}
-                        textOptions={{ fill: '#cec7b6', align: 'center' }}
-                    />
-                </Region>
-                <Region
-                    name="header_inventory"
-                    layout={{ position: 'absolute', left: 26, width: 219, top: 200, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <ThemeText
-                        text={captionHeaderInventory ?? t('crafting.title.mixer')}
-                        textOptions={{ fill: '#cec7b6', align: 'center' }}
-                    />
-                </Region>
-                <Region
-                    name="header_mixer"
-                    layout={{ position: 'absolute', left: 292, width: 215, bottom: 346, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionHeaderMixer ?? 'Spellbook wdfsdf ef ewfwe fwfe wef ewf wefwe'}
-                        textOptions={{ fill: '#9ca1a2', wordWrap: true, wordWrapWidth: 215 }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 304, width: 134, top: 180, height: 79, maxHeight: 120, flexDirection: 'column', gap: 8 }}>
-                    <Region
-                        name="info_text1"
-                        layout={{ width: 134, flexShrink: 0, maxWidth: 134, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionInfoText1 ?? 'This spell will produce yy yy yyyyyyyy yyyyyy yy yyy xxxxxx xxx xxxxx'}
-                            textOptions={{ fill: '#93999a', wordWrap: true, wordWrapWidth: 134 }}
-                        />
-                    </Region>
-                    <Region
-                        name="info_text2"
-                        layout={{ width: 134, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionInfoText2 ?? 'This spell will produce xxxxxx xxx xxxxx'}
-                            textOptions={{ fill: '#697577', wordWrap: true, wordWrapWidth: 134 }}
-                        />
-                    </Region>
-                </Region>
-                <Button
-                    variant="6"
-                    name="btn_craft"
-                    tintColor="#299f3a"
-                    onPointerTap={onBtnCraft}
-                    layout={{ position: 'absolute', left: 294, width: 216, top: 317, height: 30, minWidth: 216, maxWidth: 216 }}
-                />
-                <CraftingwidgetLayoutProgressBar {...progressBar} />
-                <CraftingwidgetLayoutItemgridProducts {...itemgridProducts} />
-                <CraftingwidgetLayoutItemgridInventory {...itemgridInventory} />
-                <CraftingwidgetLayoutItemgridMixer {...itemgridMixer} />
             </Region>
+            <Region
+                name="header_inventory"
+                layout={{ position: 'absolute', left: 26, width: 219, top: 200, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionHeaderInventory ?? t('crafting.title.mixer')}
+                    textOptions={{ fill: '#cec7b6', align: 'center' }}
+                />
+            </Region>
+            <Region
+                name="header_mixer"
+                layout={{ position: 'absolute', left: 292, width: 215, bottom: 346, height: 28, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionHeaderMixer ?? 'Spellbook wdfsdf ef ewfwe fwfe wef ewf wefwe'}
+                    textOptions={{ fill: '#9ca1a2', wordWrap: true, wordWrapWidth: 215 }}
+                />
+            </Region>
+            <Region layout={{ position: 'absolute', left: 304, width: 134, top: 180, height: 79, maxHeight: 120, flexDirection: 'column', gap: 8 }}>
+                <Region
+                    name="info_text1"
+                    layout={{ width: 134, flexShrink: 0, maxWidth: 134, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionInfoText1 ?? 'This spell will produce yy yy yyyyyyyy yyyyyy yy yyy xxxxxx xxx xxxxx'}
+                        textOptions={{ fill: '#93999a', wordWrap: true, wordWrapWidth: 134 }}
+                    />
+                </Region>
+                <Region
+                    name="info_text2"
+                    layout={{ width: 134, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionInfoText2 ?? 'This spell will produce xxxxxx xxx xxxxx'}
+                        textOptions={{ fill: '#697577', wordWrap: true, wordWrapWidth: 134 }}
+                    />
+                </Region>
+            </Region>
+            <Button
+                variant="6"
+                name="btn_craft"
+                tintColor="#299f3a"
+                onPointerTap={onBtnCraft}
+                layout={{ position: 'absolute', left: 294, width: 216, top: 317, height: 30, minWidth: 216, maxWidth: 216 }}
+            />
+            <CraftingwidgetLayoutProgressBar {...progressBar} />
+            <CraftingwidgetLayoutItemgridProducts {...itemgridProducts} />
+            <CraftingwidgetLayoutItemgridInventory {...itemgridInventory} />
+            <CraftingwidgetLayoutItemgridMixer {...itemgridMixer} />
         </Frame>
     );
 };

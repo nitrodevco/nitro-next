@@ -23,42 +23,40 @@ export const PackagecardLayout = ({ captionText, captionTitle, layout, onClose, 
             onClose={onClose}
             layout={{ width: 374, height: 243, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="0"
-                    layout={{ position: 'absolute', left: 0, width: 362, top: 0, height: 211 }}
+            <Border
+                variant="0"
+                layout={{ position: 'absolute', left: 0, width: 362, top: 0, height: 211 }}
+            >
+                <ThemeImage
+                    name="image_bg"
+                    src={srcImageBg}
+                    layout={{ position: 'absolute', left: 10, width: 114, top: 16, height: 114 }}
+                />
+                <ThemeImage
+                    name="gift_image"
+                    src={srcGiftImage}
+                    layout={{ position: 'absolute', left: 10, width: 114, top: 16, height: 114 }}
+                />
+                <Region
+                    name="title"
+                    layout={{ position: 'absolute', left: 135, width: 216, top: 16, height: 52, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
-                    <ThemeImage
-                        name="image_bg"
-                        src={srcImageBg}
-                        layout={{ position: 'absolute', left: 10, width: 114, top: 16, height: 114 }}
+                    <ThemeText
+                        text={captionTitle ?? t('widget.furni.present.title')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 216 }}
                     />
-                    <ThemeImage
-                        name="gift_image"
-                        src={srcGiftImage}
-                        layout={{ position: 'absolute', left: 10, width: 114, top: 16, height: 114 }}
+                </Region>
+                <Region
+                    name="text"
+                    layout={{ position: 'absolute', left: 135, width: 219, top: 68, height: 80, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionText ?? ''}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 219 }}
                     />
-                    <Region
-                        name="title"
-                        layout={{ position: 'absolute', left: 135, width: 216, top: 16, height: 52, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionTitle ?? t('widget.furni.present.title')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 216 }}
-                        />
-                    </Region>
-                    <Region
-                        name="text"
-                        layout={{ position: 'absolute', left: 135, width: 219, top: 68, height: 80, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionText ?? ''}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 219 }}
-                        />
-                    </Region>
-                    <PackagecardLayoutStateContent {...stateContent} />
-                </Border>
-            </Region>
+                </Region>
+                <PackagecardLayoutStateContent {...stateContent} />
+            </Border>
         </Frame>
     );
 };

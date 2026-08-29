@@ -22,20 +22,18 @@ export const IssueHandlerLayout = ({ buttons, chatCont, issueCont, layout, onCfh
             onClose={onClose}
             layout={{ width: 750, height: 650, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Dropmenu
-                    variant="100"
-                    name="cfh_topics"
-                    onPointerTap={onCfhTopics}
-                    layout={{ position: 'absolute', left: 410, width: 320, top: 15, height: 20 }}
-                >
-                    CFH TOPICS:
-                </Dropmenu>
-                <IssueHandlerLayoutSanctioninfo {...sanctioninfo} />
-                <IssueHandlerLayoutButtons {...buttons} />
-                <IssueHandlerLayoutIssueCont {...issueCont} />
-                <IssueHandlerLayoutChatCont {...chatCont} />
-            </Region>
+            <Dropmenu
+                variant="100"
+                name="cfh_topics"
+                onPointerTap={onCfhTopics}
+                layout={{ position: 'absolute', left: 410, width: 320, top: 15, height: 20 }}
+            >
+                CFH TOPICS:
+            </Dropmenu>
+            <IssueHandlerLayoutSanctioninfo {...sanctioninfo} />
+            <IssueHandlerLayoutButtons {...buttons} />
+            <IssueHandlerLayoutIssueCont {...issueCont} />
+            <IssueHandlerLayoutChatCont {...chatCont} />
         </Frame>
     );
 };

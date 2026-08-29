@@ -22,10 +22,8 @@ export const PackagecardInfoLayout = ({ elementList, layout, onClose }: Packagec
             onClose={onClose}
             layout={{ width: 342, height: 298, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: -2, width: 336, top: 0, height: 246, minWidth: 330, maxWidth: 380, justifyContent: 'center' }}>
-                    <PackagecardInfoLayoutElementList {...elementList} />
-                </Region>
+            <Region layout={{ position: 'absolute', left: -2, width: 336, top: 0, height: 246, minWidth: 330, maxWidth: 380, justifyContent: 'center' }}>
+                <PackagecardInfoLayoutElementList {...elementList} />
             </Region>
         </Frame>
     );

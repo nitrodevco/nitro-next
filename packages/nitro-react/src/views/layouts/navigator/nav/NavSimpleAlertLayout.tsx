@@ -22,25 +22,23 @@ export const NavSimpleAlertLayout = ({ captionBodyText, layout, onClose, onOk }:
             onClose={onClose}
             layout={{ width: 193, height: 157, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="body_text"
-                    layout={{ position: 'absolute', left: 12, width: 160, top: 14, height: 78, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 160 }}
-                    />
-                </Region>
-                <Button
-                    variant="3"
-                    name="ok"
-                    onPointerTap={onOk}
-                    layout={{ position: 'absolute', left: 62, width: 60, top: 97, height: 22, minWidth: 60, maxWidth: 60 }}
-                >
-                    {t('generic.ok')}
-                </Button>
+            <Region
+                name="body_text"
+                layout={{ position: 'absolute', left: 12, width: 160, top: 14, height: 78, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 160 }}
+                />
             </Region>
+            <Button
+                variant="3"
+                name="ok"
+                onPointerTap={onOk}
+                layout={{ position: 'absolute', left: 62, width: 60, top: 97, height: 22, minWidth: 60, maxWidth: 60 }}
+            >
+                {t('generic.ok')}
+            </Button>
         </Frame>
     );
 };

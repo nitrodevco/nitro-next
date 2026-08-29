@@ -18,9 +18,7 @@ export const UserclassificationFrameLayout = ({ classificationsCont, layout, onC
             onClose={onClose}
             layout={{ width: 292, height: 224, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <UserclassificationFrameLayoutClassificationsCont {...classificationsCont} />
-            </Region>
+            <UserclassificationFrameLayoutClassificationsCont {...classificationsCont} />
         </Frame>
     );
 };

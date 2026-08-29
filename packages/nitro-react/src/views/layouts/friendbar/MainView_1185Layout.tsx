@@ -19,10 +19,8 @@ export const MainView_1185Layout = ({ body, frameHeaderOverride, layout, onClose
             onClose={onClose}
             layout={{ width: 412, height: 650, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <MainView_1185LayoutFrameHeaderOverride {...frameHeaderOverride} />
-                <MainView_1185LayoutBody {...body} />
-            </Region>
+            <MainView_1185LayoutFrameHeaderOverride {...frameHeaderOverride} />
+            <MainView_1185LayoutBody {...body} />
         </Frame>
     );
 };
@@ -305,16 +303,12 @@ export const MainView_1185LayoutEntryTemplateItem = ({ captionUsernameTxt, layou
                 src={srcEntryBgEven ?? layoutImage('badge_leaderboard_entry_even.png')}
                 layout={{ position: 'absolute', left: 0, width: 362, top: 0, height: 41 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="entry_bg_uneven"
+                src={srcEntryBgUneven ?? layoutImage('badge_leaderboard_entry_uneven.png')}
                 layout={{ position: 'absolute', left: 0, width: 362, top: 0, height: 41 }}
-            >
-                <ThemeImage
-                    name="entry_bg_uneven"
-                    src={srcEntryBgUneven ?? layoutImage('badge_leaderboard_entry_uneven.png')}
-                    layout={{ position: 'absolute', left: 0, width: 362, top: 0, height: 41 }}
-                />
-            </Region>
+                visible={false}
+            />
             <MainView_1185LayoutRankContainer {...rankContainer} />
             <MainView_1185LayoutRegionProfile {...regionProfile} />
             <Region

@@ -24,39 +24,37 @@ export const CreditRedeemLayout = ({ captionExchangeText, layout, link, onCancel
             onClose={onClose}
             layout={{ width: 315, height: 165, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
+            <Border
+                variant="0"
+                layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, justifyContent: 'center' }}
+            >
+                <Button
                     variant="0"
-                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32, justifyContent: 'center' }}
+                    name="cancel"
+                    onPointerTap={onCancel}
+                    layout={{ position: 'absolute', left: 12, width: 80, top: 100, height: 22, minWidth: 80 }}
                 >
-                    <Button
-                        variant="0"
-                        name="cancel"
-                        onPointerTap={onCancel}
-                        layout={{ position: 'absolute', left: 12, width: 80, top: 100, height: 22, minWidth: 80 }}
-                    >
-                        {t('generic.cancel')}
-                    </Button>
-                    <ButtonThick
-                        variant="0"
-                        name="exchange"
-                        onPointerTap={onExchange}
-                        layout={{ position: 'absolute', marginLeft: 88.5, marginRight: -88.5, width: 100, top: 100, height: 22, minWidth: 100 }}
-                    >
-                        {t('catalog.redeem.dialog.button.exchange')}
-                    </ButtonThick>
-                    <Region
-                        name="exchange_text"
-                        layout={{ position: 'absolute', left: 20, width: 265, top: 17, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionExchangeText ?? t('widgets.furniture.credit.redeem.value')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 265 }}
-                        />
-                    </Region>
-                    <CreditRedeemLayoutLink {...link} />
-                </Border>
-            </Region>
+                    {t('generic.cancel')}
+                </Button>
+                <ButtonThick
+                    variant="0"
+                    name="exchange"
+                    onPointerTap={onExchange}
+                    layout={{ position: 'absolute', marginLeft: 88.5, marginRight: -88.5, width: 100, top: 100, height: 22, minWidth: 100 }}
+                >
+                    {t('catalog.redeem.dialog.button.exchange')}
+                </ButtonThick>
+                <Region
+                    name="exchange_text"
+                    layout={{ position: 'absolute', left: 20, width: 265, top: 17, height: 26, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionExchangeText ?? t('widgets.furniture.credit.redeem.value')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 265 }}
+                    />
+                </Region>
+                <CreditRedeemLayoutLink {...link} />
+            </Border>
         </Frame>
     );
 };

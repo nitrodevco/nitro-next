@@ -19,27 +19,25 @@ export const HabboCrasherDialogLayout = ({ captionCrasherText, layout, onClose, 
             onClose={onClose}
             layout={{ width: 201, height: 123, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="crasher_text"
-                    layout={{ position: 'absolute', left: 7, width: 171, top: 12, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionCrasherText ?? 'Warning: Pressing the button crashes the client!!!'}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 171 }}
-                    />
-                </Region>
-                <ButtonThick
-                    variant="3"
-                    name="crasher_button"
-                    tooltip={'Pressing me is the last thing you\'ll do...'}
-                    onPointerTap={onCrasherButton}
-                    layout={{ position: 'absolute', left: 50, width: 79, top: 50, height: 34 }}
-                >
-                    Crash Me!
-                </ButtonThick>
+            <Region
+                name="crasher_text"
+                layout={{ position: 'absolute', left: 7, width: 171, top: 12, height: 36, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionCrasherText ?? 'Warning: Pressing the button crashes the client!!!'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 171 }}
+                />
             </Region>
+            <ButtonThick
+                variant="3"
+                name="crasher_button"
+                tooltip={'Pressing me is the last thing you\'ll do...'}
+                onPointerTap={onCrasherButton}
+                layout={{ position: 'absolute', left: 50, width: 79, top: 50, height: 34 }}
+            >
+                Crash Me!
+            </ButtonThick>
         </Frame>
     );
 };

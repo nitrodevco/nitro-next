@@ -22,36 +22,34 @@ export const Doorbell_3013Layout = ({ cancelRegion, captionInfo, captionRoomName
             onClose={onClose}
             layout={{ width: 270, height: 182, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="room_name"
-                    layout={{ position: 'absolute', left: 10, width: 64, top: 14, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            <Region
+                name="room_name"
+                layout={{ position: 'absolute', left: 10, width: 64, top: 14, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={captionRoomName ?? 'Roomname'} />
+            </Region>
+            <Region
+                name="info"
+                layout={{ position: 'absolute', left: 10, right: 20, top: 35, bottom: 81, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionInfo ?? t('navigator.doorbell.info')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 240 }}
+                />
+            </Region>
+            <Region
+                backgroundColor="#eaece8"
+                layout={{ position: 'absolute', left: 10, width: 240, top: 108, height: 36 }}
+            >
+                <Doorbell_3013LayoutCancelRegion {...cancelRegion} />
+                <Button
+                    variant="3"
+                    name="ring"
+                    onPointerTap={onRing}
+                    layout={{ position: 'absolute', right: 5, width: 190, top: 4, height: 28 }}
                 >
-                    <ThemeText text={captionRoomName ?? 'Roomname'} />
-                </Region>
-                <Region
-                    name="info"
-                    layout={{ position: 'absolute', left: 10, right: 20, top: 35, bottom: 81, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfo ?? t('navigator.doorbell.info')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 240 }}
-                    />
-                </Region>
-                <Region
-                    backgroundColor="#eaece8"
-                    layout={{ position: 'absolute', left: 10, width: 240, top: 108, height: 36 }}
-                >
-                    <Doorbell_3013LayoutCancelRegion {...cancelRegion} />
-                    <Button
-                        variant="3"
-                        name="ring"
-                        onPointerTap={onRing}
-                        layout={{ position: 'absolute', right: 5, width: 190, top: 4, height: 28 }}
-                    >
-                        {t('navigator.doorbell.button.ring')}
-                    </Button>
-                </Region>
+                    {t('navigator.doorbell.button.ring')}
+                </Button>
             </Region>
         </Frame>
     );

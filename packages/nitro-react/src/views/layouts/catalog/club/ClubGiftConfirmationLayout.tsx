@@ -24,68 +24,66 @@ export const ClubGiftConfirmationLayout = ({ captionBundleCounter, captionItemNa
             onClose={onClose}
             layout={{ width: 280, height: 142, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}>
-                    <Border
-                        variant="0"
-                        name="image_border"
-                        tintColor="#f1f1f1"
-                        layout={{ position: 'absolute', left: 12, width: 48, top: 12, height: 48 }}
+            <Region layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}>
+                <Border
+                    variant="0"
+                    name="image_border"
+                    tintColor="#f1f1f1"
+                    layout={{ position: 'absolute', left: 12, width: 48, top: 12, height: 48 }}
+                >
+                    <ThemeImage
+                        name="image"
+                        src={srcImage}
+                        layout={{ position: 'absolute', left: 1, width: 46, top: 1, height: 46 }}
+                    />
+                    <Region
+                        name="bundleCounter"
+                        layout={{ position: 'absolute', left: 18, right: 26, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                     >
-                        <ThemeImage
-                            name="image"
-                            src={srcImage}
-                            layout={{ position: 'absolute', left: 1, width: 46, top: 1, height: 46 }}
+                        <ThemeText
+                            text={captionBundleCounter ?? ''}
+                            textOptions={{ fill: '#cccc66' }}
                         />
+                    </Region>
+                    <Border
+                        variant="2"
+                        name="multiContainer"
+                        tintColor="#ff3300"
+                        layout={{ position: 'absolute', left: 10, width: 17, top: 2, height: 13 }}
+                    >
                         <Region
-                            name="bundleCounter"
-                            layout={{ position: 'absolute', left: 18, right: 26, top: 18, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                            name="multiCounter"
+                            layout={{ position: 'absolute', left: 3, width: 4, top: 0, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                         >
                             <ThemeText
-                                text={captionBundleCounter ?? ''}
+                                text={captionMultiCounter ?? ''}
                                 textOptions={{ fill: '#cccc66' }}
                             />
                         </Region>
-                        <Border
-                            variant="2"
-                            name="multiContainer"
-                            tintColor="#ff3300"
-                            layout={{ position: 'absolute', left: 10, width: 17, top: 2, height: 13 }}
-                        >
-                            <Region
-                                name="multiCounter"
-                                layout={{ position: 'absolute', left: 3, width: 4, top: 0, height: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                            >
-                                <ThemeText
-                                    text={captionMultiCounter ?? ''}
-                                    textOptions={{ fill: '#cccc66' }}
-                                />
-                            </Region>
-                        </Border>
                     </Border>
-                    <Region
-                        name="item_name"
-                        layout={{ position: 'absolute', left: 69, width: 184, top: 29, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionItemName ?? ''} />
-                    </Region>
-                    <Button
-                        variant="3"
-                        name="select_button"
-                        onPointerTap={onSelectButton}
-                        layout={{ position: 'absolute', left: 9, width: 120, bottom: 8, height: 25, minWidth: 120, maxWidth: 120 }}
-                    >
-                        {t('catalog.club_gift.select')}
-                    </Button>
-                    <Button
-                        variant="3"
-                        name="cancel_button"
-                        onPointerTap={onCancelButton}
-                        layout={{ position: 'absolute', left: 137, width: 120, bottom: 8, height: 25, minWidth: 120, maxWidth: 120 }}
-                    >
-                        {t('cancel')}
-                    </Button>
+                </Border>
+                <Region
+                    name="item_name"
+                    layout={{ position: 'absolute', left: 69, width: 184, top: 29, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionItemName ?? ''} />
                 </Region>
+                <Button
+                    variant="3"
+                    name="select_button"
+                    onPointerTap={onSelectButton}
+                    layout={{ position: 'absolute', left: 9, width: 120, bottom: 8, height: 25, minWidth: 120, maxWidth: 120 }}
+                >
+                    {t('catalog.club_gift.select')}
+                </Button>
+                <Button
+                    variant="3"
+                    name="cancel_button"
+                    onPointerTap={onCancelButton}
+                    layout={{ position: 'absolute', left: 137, width: 120, bottom: 8, height: 25, minWidth: 120, maxWidth: 120 }}
+                >
+                    {t('cancel')}
+                </Button>
             </Region>
         </Frame>
     );

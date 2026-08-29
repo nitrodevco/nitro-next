@@ -31,46 +31,44 @@ export const CatalogUbuntuWithTabsLayout = ({ captionSearchHelper, catalogHeader
             onClose={onClose}
             layout={{ width: 570, height: 635, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBorder {...catalogHeaderBackgroundBorder} />
-                <Border
-                    variant="105"
-                    name="searchContainer"
-                    layout={{ position: 'absolute', left: 8, width: 184, top: 131, height: 24 }}
+            <CatalogUbuntuWithTabsLayoutCatalogHeaderBackgroundBorder {...catalogHeaderBackgroundBorder} />
+            <Border
+                variant="105"
+                name="searchContainer"
+                layout={{ position: 'absolute', left: 8, width: 184, top: 131, height: 24 }}
+            >
+                <Region
+                    name="search.helper"
+                    layout={{ position: 'absolute', left: 4, width: 82, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <Region
-                        name="search.helper"
-                        layout={{ position: 'absolute', left: 4, width: 82, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionSearchHelper ?? t('catalog.search')}
-                            textOptions={{ fill: '#666666' }}
-                        />
-                    </Region>
-                    <TextInput
-                        value={searchInputValue}
-                        onChange={setSearchInputValue}
-                        textColor="#666666"
-                        layout={{ position: 'absolute', left: 4, width: 144, top: 3, height: 18 }}
+                    <ThemeText
+                        text={captionSearchHelper ?? t('catalog.search')}
+                        textOptions={{ fill: '#666666' }}
                     />
-                    <CatalogUbuntuWithTabsLayoutClearSearchButton {...clearSearchButton} />
-                </Border>
-                <CatalogUbuntuWithTabsLayoutNavigationContainer {...navigationContainer} />
-                <CatalogUbuntuWithTabsLayoutLayoutContainer {...layoutContainer} />
-                <TabContext
+                </Region>
+                <TextInput
+                    value={searchInputValue}
+                    onChange={setSearchInputValue}
+                    textColor="#666666"
+                    layout={{ position: 'absolute', left: 4, width: 144, top: 3, height: 18 }}
+                />
+                <CatalogUbuntuWithTabsLayoutClearSearchButton {...clearSearchButton} />
+            </Border>
+            <CatalogUbuntuWithTabsLayoutNavigationContainer {...navigationContainer} />
+            <CatalogUbuntuWithTabsLayoutLayoutContainer {...layoutContainer} />
+            <TabContext
+                variant="3"
+                name="tab_context"
+                layout={{ position: 'absolute', left: 0, width: 568, top: 5, height: 30 }}
+            >
+                <TabButton
                     variant="3"
-                    name="tab_context"
-                    layout={{ position: 'absolute', left: 0, width: 568, top: 5, height: 30 }}
-                >
-                    <TabButton
-                        variant="3"
-                        name="tab_button"
-                        onPointerTap={onTabButton}
-                        layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 30 }}
-                    />
-                </TabContext>
-                <CatalogUbuntuWithTabsLayoutSearchWaitingForResultsMask {...searchWaitingForResultsMask} />
-            </Region>
+                    name="tab_button"
+                    onPointerTap={onTabButton}
+                    layout={{ position: 'absolute', left: 0, width: 110, top: 0, height: 30 }}
+                />
+            </TabContext>
+            <CatalogUbuntuWithTabsLayoutSearchWaitingForResultsMask {...searchWaitingForResultsMask} />
         </Frame>
     );
 };

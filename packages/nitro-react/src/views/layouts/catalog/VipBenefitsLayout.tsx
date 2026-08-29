@@ -18,36 +18,34 @@ export const VipBenefitsLayout = ({ layout, onClose }: VipBenefitsLayoutProps) =
             onClose={onClose}
             layout={{ width: 457, height: 450, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ThemeImage
-                    src="${image.library.url}directVipBuy/hc_benefits_header.png"
-                    layout={{ position: 'absolute', left: 1, width: 455, top: 0, height: 42 }}
+            <ThemeImage
+                src="${image.library.url}directVipBuy/hc_benefits_header.png"
+                layout={{ position: 'absolute', left: 1, width: 455, top: 0, height: 42 }}
+            />
+            <ThemeImage
+                src="${image.library.url}directVipBuy/hc_benefits_teaser.png"
+                layout={{ position: 'absolute', left: 24, width: 237, top: 91, height: 253 }}
+            />
+            <Region layout={{ position: 'absolute', left: 0, width: 457, top: 55, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <ThemeText
+                    text={t('vip.benefits.title')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ align: 'center' }}
                 />
-                <ThemeImage
-                    src="${image.library.url}directVipBuy/hc_benefits_teaser.png"
-                    layout={{ position: 'absolute', left: 24, width: 237, top: 91, height: 253 }}
+            </Region>
+            <Region layout={{ position: 'absolute', left: 275, width: 163, top: 98, height: 269, minWidth: 163, maxWidth: 163, minHeight: 269, maxHeight: 269, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                <ThemeText
+                    text={t('vip.benefits.description')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 163 }}
                 />
-                <Region layout={{ position: 'absolute', left: 0, width: 457, top: 55, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <ThemeText
-                        text={t('vip.benefits.title')}
-                        textStyle="text-style-u-bold"
-                        textOptions={{ align: 'center' }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 275, width: 163, top: 98, height: 269, minWidth: 163, maxWidth: 163, minHeight: 269, maxHeight: 269, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('vip.benefits.description')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 163 }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 27, width: 403, top: 351, height: 50, minWidth: 403, maxWidth: 403, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <ThemeText
-                        text={t('vip.benefits.details')}
-                        textStyle="text-style-u-regular"
-                        textOptions={{ wordWrap: true, wordWrapWidth: 403 }}
-                    />
-                </Region>
+            </Region>
+            <Region layout={{ position: 'absolute', left: 27, width: 403, top: 351, height: 50, minWidth: 403, maxWidth: 403, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                <ThemeText
+                    text={t('vip.benefits.details')}
+                    textStyle="text-style-u-regular"
+                    textOptions={{ wordWrap: true, wordWrapWidth: 403 }}
+                />
             </Region>
         </Frame>
     );

@@ -24,40 +24,34 @@ export const GuideAcceptLayout = ({ itemlist, layout, onClose, srcFrankGreeting 
             onClose={onClose}
             layout={{ width: 282, height: 276, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="103"
-                    name="border"
-                    layout={{ position: 'absolute', left: 0, width: 280, top: 20, height: 224 }}
-                >
-                    <GuideAcceptLayoutItemlist {...itemlist} />
-                </Border>
-                <ThemeImage
-                    src={layoutImage('help_guide_accept.png')}
-                    layout={{ position: 'absolute', left: 0, width: 70, top: 20, height: 80 }}
+            <Border
+                variant="103"
+                name="border"
+                layout={{ position: 'absolute', left: 0, width: 280, top: 20, height: 224 }}
+            >
+                <GuideAcceptLayoutItemlist {...itemlist} />
+            </Border>
+            <ThemeImage
+                src={layoutImage('help_guide_accept.png')}
+                layout={{ position: 'absolute', left: 0, width: 70, top: 20, height: 80 }}
+            />
+            <Border
+                variant="102"
+                layout={{ position: 'absolute', left: 185, width: 80, top: 0, height: 50 }}
+            >
+                <WidgetSlot
+                    widgetType="countdown"
+                    name="countdown"
+                    options={{ 'countdown:digits': '2' }}
+                    layout={{ position: 'absolute', left: 10, width: 63, top: 10, height: 37 }}
                 />
-                <Border
-                    variant="102"
-                    layout={{ position: 'absolute', left: 185, width: 80, top: 0, height: 50 }}
-                >
-                    <WidgetSlot
-                        widgetType="countdown"
-                        name="countdown"
-                        options={{ 'countdown:digits': '2' }}
-                        layout={{ position: 'absolute', left: 10, width: 63, top: 10, height: 37 }}
-                    />
-                </Border>
-                <Region
-                    visible={false}
-                    layout={{ position: 'absolute', left: -10, width: 230, bottom: -19, height: 140 }}
-                >
-                    <ThemeImage
-                        name="frank_greeting"
-                        src={srcFrankGreeting ?? layoutImage('help_frank_greeting.png')}
-                        layout={{ position: 'absolute', left: -10, width: 230, bottom: -19, height: 140 }}
-                    />
-                </Region>
-            </Region>
+            </Border>
+            <ThemeImage
+                name="frank_greeting"
+                src={srcFrankGreeting ?? layoutImage('help_frank_greeting.png')}
+                layout={{ position: 'absolute', left: -10, width: 230, bottom: -19, height: 140 }}
+                visible={false}
+            />
         </Frame>
     );
 };

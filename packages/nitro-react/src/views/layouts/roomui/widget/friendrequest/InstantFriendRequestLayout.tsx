@@ -26,20 +26,15 @@ export const InstantFriendRequestLayoutProfileRegion = ({ captionText, layout, o
     return (
         <Region
             name="profile_region"
+            layout={{ position: 'absolute', left: 25, width: 142, top: 5, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onProfileRegion}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 25, width: 142, top: 5, height: 32, ...layout }}
         >
-            <Region
-                name="text"
-                layout={{ position: 'absolute', left: 0, width: 142, top: 0, height: 32, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionText ?? ''}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 142 }}
-                />
-            </Region>
+            <ThemeText
+                text={captionText ?? ''}
+                textStyle="text-style-u-bold"
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 142 }}
+            />
         </Region>
     );
 };
@@ -56,17 +51,15 @@ export const InstantFriendRequestLayoutDeclineButton = ({ layout, onDeclineButto
     return (
         <Region
             name="decline_button"
+            layout={{ position: 'absolute', left: 8, width: 152, bottom: 27, height: 16, minWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onDeclineButton}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 8, width: 152, bottom: 27, height: 16, minWidth: 1, ...layout }}
         >
-            <Region layout={{ position: 'absolute', left: 0, width: 152, top: 0, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <ThemeText
-                    text={t('widget.friendrequest.decline')}
-                    textStyle="text-style-u-regular"
-                    textOptions={{ fill: '#ffffff' }}
-                />
-            </Region>
+            <ThemeText
+                text={t('widget.friendrequest.decline')}
+                textStyle="text-style-u-regular"
+                textOptions={{ fill: '#ffffff' }}
+            />
         </Region>
     );
 };

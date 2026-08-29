@@ -26,54 +26,52 @@ export const RoomInviteConfirmLayout = ({ captionInviteNote, captionInviteSummar
             onClose={onClose}
             layout={{ width: 211, height: 175, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="0"
-                    name="border"
-                    layout={{ position: 'absolute', left: 0, width: 199, top: 0, height: 118 }}
+            <Border
+                variant="0"
+                name="border"
+                layout={{ position: 'absolute', left: 0, width: 199, top: 0, height: 118 }}
+            >
+                <Region
+                    name="invite_summary"
+                    layout={{ position: 'absolute', left: 10, width: 180, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <Region
-                        name="invite_summary"
-                        layout={{ position: 'absolute', left: 10, width: 180, top: 5, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionInviteSummary ?? t('friendlist.invite.summary')}
-                            textOptions={{ fill: '#000000' }}
-                        />
-                    </Region>
-                    <TextInput
-                        value={messageInputValue}
-                        onChange={setMessageInputValue}
-                        textColor="#000000"
-                        layout={{ position: 'absolute', left: 10, width: 180, top: 24, height: 70 }}
+                    <ThemeText
+                        text={captionInviteSummary ?? t('friendlist.invite.summary')}
+                        textOptions={{ fill: '#000000' }}
                     />
-                    <Region
-                        name="invite_note"
-                        layout={{ position: 'absolute', left: 10, width: 180, top: 98, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionInviteNote ?? t('friendlist.invite.note')}
-                            textOptions={{ fill: '#000000' }}
-                        />
-                    </Region>
-                </Border>
-                <Button
-                    variant="0"
-                    name="cancel"
-                    onPointerTap={onCancel}
-                    layout={{ position: 'absolute', left: 139, width: 60, top: 122, height: 21, minWidth: 60, maxWidth: 60 }}
+                </Region>
+                <TextInput
+                    value={messageInputValue}
+                    onChange={setMessageInputValue}
+                    textColor="#000000"
+                    layout={{ position: 'absolute', left: 10, width: 180, top: 24, height: 70 }}
+                />
+                <Region
+                    name="invite_note"
+                    layout={{ position: 'absolute', left: 10, width: 180, top: 98, height: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    {t('generic.cancel')}
-                </Button>
-                <ButtonThick
-                    variant="0"
-                    name="ok"
-                    onPointerTap={onOk}
-                    layout={{ position: 'absolute', left: 0, width: 60, top: 122, height: 21, minWidth: 60, maxWidth: 60 }}
-                >
-                    {t('friendlist.invite.send')}
-                </ButtonThick>
-            </Region>
+                    <ThemeText
+                        text={captionInviteNote ?? t('friendlist.invite.note')}
+                        textOptions={{ fill: '#000000' }}
+                    />
+                </Region>
+            </Border>
+            <Button
+                variant="0"
+                name="cancel"
+                onPointerTap={onCancel}
+                layout={{ position: 'absolute', left: 139, width: 60, top: 122, height: 21, minWidth: 60, maxWidth: 60 }}
+            >
+                {t('generic.cancel')}
+            </Button>
+            <ButtonThick
+                variant="0"
+                name="ok"
+                onPointerTap={onOk}
+                layout={{ position: 'absolute', left: 0, width: 60, top: 122, height: 21, minWidth: 60, maxWidth: 60 }}
+            >
+                {t('friendlist.invite.send')}
+            </ButtonThick>
         </Frame>
     );
 };

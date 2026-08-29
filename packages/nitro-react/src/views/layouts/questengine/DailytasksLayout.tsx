@@ -24,9 +24,7 @@ export const DailytasksLayout = ({ layout, mainCont, onClose }: DailytasksLayout
             onClose={onClose}
             layout={{ width: 428, height: 553, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <DailytasksLayoutMainCont {...mainCont} />
-            </Region>
+            <DailytasksLayoutMainCont {...mainCont} />
         </Frame>
     );
 };
@@ -157,16 +155,12 @@ export const DailytasksLayoutLeftCont = ({ captionTaskDescTxt, captionTaskTitleT
                 </Region>
                 <DailytasksLayoutInfoHoverRegion {...infoHoverRegion} />
             </Border>
-            <Region
-                visible={false}
+            <ThemeImage
+                name="task_bitmap"
+                src={srcTaskBitmap}
                 layout={{ position: 'absolute', left: 0, width: 76, top: 28, height: 76, minWidth: 76, maxWidth: 76, minHeight: 76, maxHeight: 76 }}
-            >
-                <ThemeImage
-                    name="task_bitmap"
-                    src={srcTaskBitmap}
-                    layout={{ position: 'absolute', left: 0, width: 76, top: 28, height: 76, minWidth: 76, maxWidth: 76, minHeight: 76, maxHeight: 76 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="task_static_bitmap"
                 src={srcTaskStaticBitmap}
@@ -204,16 +198,12 @@ export const DailytasksLayoutRewardTemplateItem = ({ captionRewardAmountText, la
                 name="reward_display_widget"
                 layout={{ position: 'absolute', left: 2, width: 40, top: 1, height: 40, minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="reward_bitmap"
+                src={srcRewardBitmap}
                 layout={{ position: 'absolute', left: 0, width: 44, top: 0, height: 50, minWidth: 44, maxWidth: 44, minHeight: 50, maxHeight: 50 }}
-            >
-                <ThemeImage
-                    name="reward_bitmap"
-                    src={srcRewardBitmap}
-                    layout={{ position: 'absolute', left: 0, width: 44, top: 0, height: 50, minWidth: 44, maxWidth: 44, minHeight: 50, maxHeight: 50 }}
-                />
-            </Region>
+                visible={false}
+            />
             <Border
                 variant="3"
                 name="reward_amount_border"

@@ -18,13 +18,11 @@ export const EffectSelectorLayout = ({ effectList, layout, onClose }: EffectSele
             onClose={onClose}
             layout={{ width: 280, height: 270, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    backgroundColor="#ffffff"
-                    layout={{ position: 'absolute', left: 4, right: 20, top: 17, bottom: 38 }}
-                />
-                <EffectSelectorLayoutEffectList {...effectList} />
-            </Region>
+            <Region
+                backgroundColor="#ffffff"
+                layout={{ position: 'absolute', left: 4, right: 20, top: 17, bottom: 38 }}
+            />
+            <EffectSelectorLayoutEffectList {...effectList} />
         </Frame>
     );
 };

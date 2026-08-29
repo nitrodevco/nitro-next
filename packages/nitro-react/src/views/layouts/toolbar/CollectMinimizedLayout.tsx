@@ -38,17 +38,13 @@ export const CollectMinimizedLayoutCollectMinimized = ({ layout, onCollectMinimi
                 blend={1}
                 layout={{ position: 'absolute', left: 0, width: 192, top: 0, height: 29 }}
             />
-            <Region
+            <Border
+                variant="3"
+                tintColor="#201e19"
+                blend={0.8}
                 visible={false}
                 layout={{ position: 'absolute', left: 3, width: 186, top: 3, height: 22 }}
-            >
-                <Border
-                    variant="3"
-                    tintColor="#201e19"
-                    blend={0.8}
-                    layout={{ width: '100%', height: '100%' }}
-                />
-            </Region>
+            />
             <Border
                 variant="6"
                 tintColor="#96bdcb"

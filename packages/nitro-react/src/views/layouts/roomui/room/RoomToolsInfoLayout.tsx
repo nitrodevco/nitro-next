@@ -47,19 +47,14 @@ export const RoomToolsInfoLayoutTag1Region = ({ captionTag1, layout, onTag1Regio
     return (
         <Region
             name="tag1_region"
+            layout={{ position: 'absolute', left: 1, width: 29, top: -1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onTag1Region}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 1, width: 29, top: -1, height: 15, ...layout }}
         >
-            <Region
-                name="tag1"
-                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTag1 ?? '#jobs'}
-                    textOptions={{ fill: '#1b79ab' }}
-                />
-            </Region>
+            <ThemeText
+                text={captionTag1 ?? '#jobs'}
+                textOptions={{ fill: '#1b79ab' }}
+            />
         </Region>
     );
 };
@@ -94,19 +89,14 @@ export const RoomToolsInfoLayoutTag2Region = ({ captionTag2, layout, onTag2Regio
     return (
         <Region
             name="tag2_region"
+            layout={{ position: 'absolute', left: 1, width: 34, top: -1, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onTag2Region}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 1, width: 34, top: -1, height: 15, ...layout }}
         >
-            <Region
-                name="tag2"
-                layout={{ position: 'absolute', left: 0, top: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionTag2 ?? '#party'}
-                    textOptions={{ fill: '#1b79ab' }}
-                />
-            </Region>
+            <ThemeText
+                text={captionTag2 ?? '#party'}
+                textOptions={{ fill: '#1b79ab' }}
+            />
         </Region>
     );
 };

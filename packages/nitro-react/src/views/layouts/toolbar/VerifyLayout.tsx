@@ -24,34 +24,32 @@ export const VerifyLayout = ({ inputBorder, layout, onClose, srcPhone, userInput
             onClose={onClose}
             layout={{ width: 477, height: 248, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region
+                backgroundColor="#96bdcb"
+                layout={{ position: 'absolute', left: -2, width: 476, top: -3, height: 100 }}
+            >
                 <Region
-                    backgroundColor="#96bdcb"
-                    layout={{ position: 'absolute', left: -2, width: 476, top: -3, height: 100 }}
-                >
-                    <Region
-                        backgroundColor="#6f95a4"
-                        layout={{ position: 'absolute', left: 2, width: 472, top: 2, bottom: 3 }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 40 }}>
-                    <Region layout={{ position: 'absolute', left: 8, width: 455, top: 8, height: 81 }}>
-                        <Region layout={{ position: 'absolute', left: 70, width: 384, top: 0, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('phone.number.verify.enter.verification.code')}
-                                textStyle="text-style-u-headline-medium"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
-                        <ThemeImage
-                            name="phone"
-                            src={srcPhone ?? '${image.library.url}returnusergifting/phone.png'}
-                            layout={{ position: 'absolute', left: 16, width: 32, top: 2, height: 69 }}
+                    backgroundColor="#6f95a4"
+                    layout={{ position: 'absolute', left: 2, width: 472, top: 2, bottom: 3 }}
+                />
+            </Region>
+            <Region layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 40 }}>
+                <Region layout={{ position: 'absolute', left: 8, width: 455, top: 8, height: 81 }}>
+                    <Region layout={{ position: 'absolute', left: 70, width: 384, top: 0, height: 24, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('phone.number.verify.enter.verification.code')}
+                            textStyle="text-style-u-headline-medium"
+                            textOptions={{ fill: '#ffffff' }}
                         />
                     </Region>
-                    <VerifyLayoutInputBorder {...inputBorder} />
-                    <VerifyLayoutUserInputButtonsContainer {...userInputButtonsContainer} />
+                    <ThemeImage
+                        name="phone"
+                        src={srcPhone ?? '${image.library.url}returnusergifting/phone.png'}
+                        layout={{ position: 'absolute', left: 16, width: 32, top: 2, height: 69 }}
+                    />
                 </Region>
+                <VerifyLayoutInputBorder {...inputBorder} />
+                <VerifyLayoutUserInputButtonsContainer {...userInputButtonsContainer} />
             </Region>
         </Frame>
     );

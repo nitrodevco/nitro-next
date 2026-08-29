@@ -38,16 +38,12 @@ export const ItemPopupLayout = ({ captionItemNameText, layout, srcArrowPointer, 
                     src={srcArrowPointer}
                     layout={{ position: 'absolute', left: 180, width: 18, top: 6, height: 24 }}
                 />
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="nft_overlay_icon"
+                    src={srcNftOverlayIcon ?? layoutImage('collectables_icon_curator_stamp_small.png')}
                     layout={{ position: 'absolute', left: 17, width: 20, top: 171, height: 20 }}
-                >
-                    <ThemeImage
-                        name="nft_overlay_icon"
-                        src={srcNftOverlayIcon ?? layoutImage('collectables_icon_curator_stamp_small.png')}
-                        layout={{ position: 'absolute', left: 17, width: 20, top: 171, height: 20 }}
-                    />
-                </Region>
+                    visible={false}
+                />
                 <WidgetSlot
                     widgetType="limited_item_overlay_preview"
                     name="unique_item_overlay_widget"

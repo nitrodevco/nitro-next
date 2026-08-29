@@ -26,43 +26,41 @@ export const IroRoomFilterFramedLayout = ({ badwordsItemlist, layout, onBadwordA
             onClose={onClose}
             layout={{ width: 250, height: 230, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="0"
-                    name="roomfilter_addword_border"
-                    layout={{ position: 'absolute', left: 5, width: 130, top: 8, height: 30 }}
-                >
-                    <TextInput
-                        value={roomfilterAddwordTxtValue}
-                        onChange={setRoomfilterAddwordTxtValue}
-                        layout={{ position: 'absolute', left: 5, width: 115, top: 6, height: 17, maxWidth: 115 }}
-                    />
-                </Border>
-                <Border
-                    variant="0"
-                    name="roomfilter_badwords_border"
-                    layout={{ position: 'absolute', left: 5, width: 235, top: 50, height: 100 }}
-                >
-                    <IroRoomFilterFramedLayoutBadwordsItemlist {...badwordsItemlist} />
-                    {/* <scrollbar_vertical> for badwords_itemlist - rendered by that list's ScrollArea */}
-                </Border>
-                <Button
-                    variant="3"
-                    name="badword_remove_btn"
-                    onPointerTap={onBadwordRemoveBtn}
-                    layout={{ position: 'absolute', left: 140, width: 286, top: 155, height: 30 }}
-                >
-                    {t('navigator.roomsettings.roomfilter.removeword')}
-                </Button>
-                <Button
-                    variant="3"
-                    name="badword_add_btn"
-                    onPointerTap={onBadwordAddBtn}
-                    layout={{ position: 'absolute', left: 140, width: 264, top: 8, height: 30 }}
-                >
-                    {t('navigator.roomsettings.roomfilter.addword')}
-                </Button>
-            </Region>
+            <Border
+                variant="0"
+                name="roomfilter_addword_border"
+                layout={{ position: 'absolute', left: 5, width: 130, top: 8, height: 30 }}
+            >
+                <TextInput
+                    value={roomfilterAddwordTxtValue}
+                    onChange={setRoomfilterAddwordTxtValue}
+                    layout={{ position: 'absolute', left: 5, width: 115, top: 6, height: 17, maxWidth: 115 }}
+                />
+            </Border>
+            <Border
+                variant="0"
+                name="roomfilter_badwords_border"
+                layout={{ position: 'absolute', left: 5, width: 235, top: 50, height: 100 }}
+            >
+                <IroRoomFilterFramedLayoutBadwordsItemlist {...badwordsItemlist} />
+                {/* <scrollbar_vertical> for badwords_itemlist - rendered by that list's ScrollArea */}
+            </Border>
+            <Button
+                variant="3"
+                name="badword_remove_btn"
+                onPointerTap={onBadwordRemoveBtn}
+                layout={{ position: 'absolute', left: 140, width: 286, top: 155, height: 30 }}
+            >
+                {t('navigator.roomsettings.roomfilter.removeword')}
+            </Button>
+            <Button
+                variant="3"
+                name="badword_add_btn"
+                onPointerTap={onBadwordAddBtn}
+                layout={{ position: 'absolute', left: 140, width: 264, top: 8, height: 30 }}
+            >
+                {t('navigator.roomsettings.roomfilter.addword')}
+            </Button>
         </Frame>
     );
 };

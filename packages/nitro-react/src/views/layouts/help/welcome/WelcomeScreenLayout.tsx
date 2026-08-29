@@ -26,20 +26,15 @@ export const WelcomeScreenLayoutClick = ({ captionText, layout, onClick }: Welco
     return (
         <Region
             name="click"
+            layout={{ position: 'absolute', left: 14, width: 189, top: 8, height: 37, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onClick}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 14, width: 189, top: 8, height: 37, ...layout }}
         >
-            <Region
-                name="text"
-                layout={{ position: 'absolute', left: 0, width: 189, top: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionText ?? 'welcome.scjkh kjh kjh kjh kjh kjh kjh kjhkjh kj hkj hkjhreen.message'}
-                    textStyle="text-style-u-bold"
-                    textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 189 }}
-                />
-            </Region>
+            <ThemeText
+                text={captionText ?? 'welcome.scjkh kjh kjh kjh kjh kjh kjh kjhkjh kj hkj hkjhreen.message'}
+                textStyle="text-style-u-bold"
+                textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 189 }}
+            />
         </Region>
     );
 };
@@ -69,15 +64,13 @@ export const WelcomeScreenLayoutWelcomeScreen = ({ click, layout, onClose, onFra
                 onClose={onFrame}
                 layout={{ position: 'absolute', left: 9, width: 230, top: 0, height: 87 }}
             >
-                <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                    <CloseButton
-                        variant="0"
-                        name="close"
-                        onPointerTap={onClose}
-                        layout={{ position: 'absolute', left: 200, width: 18, top: 4, height: 18 }}
-                    />
-                    <WelcomeScreenLayoutClick {...click} />
-                </Region>
+                <CloseButton
+                    variant="0"
+                    name="close"
+                    onPointerTap={onClose}
+                    layout={{ position: 'absolute', left: 200, width: 18, top: 4, height: 18 }}
+                />
+                <WelcomeScreenLayoutClick {...click} />
             </Frame>
             <ThemeImage
                 name="arrow"

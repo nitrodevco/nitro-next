@@ -21,36 +21,34 @@ export const UserThanksLayout = ({ layout, onClose, onCloseButton }: UserThanksL
             onClose={onClose}
             layout={{ width: 282, height: 192, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 10, top: 0, minWidth: 260, maxWidth: 260, flexDirection: 'column', gap: 5 }}>
-                    <Region layout={{ width: 234, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('guide.help.request.user.thanks.info.title')}
-                            textStyle="text-style-il-heading-2"
-                        />
-                    </Region>
-                    <Region layout={{ width: 260, height: 26, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('guide.help.request.user.thanks.info.desc')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
-                        />
-                    </Region>
-                    <Region layout={{ width: 260, height: 1, flexShrink: 0 }}>
-                        <ThemeImage
-                            src={layoutImage('help_user_feedback.png')}
-                            layout={{ position: 'absolute', left: 0, width: 60, top: -4, height: 94 }}
-                        />
-                    </Region>
-                    <Button
-                        variant="101"
-                        name="close_button"
-                        tintColor="#bbbbbb"
-                        onPointerTap={onCloseButton}
-                        layout={{ width: 266, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
-                    >
-                        {t('guide.help.request.user.thanks.close.button')}
-                    </Button>
+            <Region layout={{ position: 'absolute', left: 10, top: 0, minWidth: 260, maxWidth: 260, flexDirection: 'column', gap: 5 }}>
+                <Region layout={{ width: 234, height: 17, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('guide.help.request.user.thanks.info.title')}
+                        textStyle="text-style-il-heading-2"
+                    />
                 </Region>
+                <Region layout={{ width: 260, height: 26, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('guide.help.request.user.thanks.info.desc')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 260 }}
+                    />
+                </Region>
+                <Region layout={{ width: 260, height: 1, flexShrink: 0 }}>
+                    <ThemeImage
+                        src={layoutImage('help_user_feedback.png')}
+                        layout={{ position: 'absolute', left: 0, width: 60, top: -4, height: 94 }}
+                    />
+                </Region>
+                <Button
+                    variant="101"
+                    name="close_button"
+                    tintColor="#bbbbbb"
+                    onPointerTap={onCloseButton}
+                    layout={{ width: 266, height: 48, flexShrink: 0, minHeight: 48, maxHeight: 48 }}
+                >
+                    {t('guide.help.request.user.thanks.close.button')}
+                </Button>
             </Region>
         </Frame>
     );

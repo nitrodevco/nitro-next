@@ -19,9 +19,7 @@ export const ErrorPopupLayout = ({ contentList, layout, onClose }: ErrorPopupLay
             onClose={onClose}
             layout={{ width: 300, height: 328, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ErrorPopupLayoutContentList {...contentList} />
-            </Region>
+            <ErrorPopupLayoutContentList {...contentList} />
         </Frame>
     );
 };

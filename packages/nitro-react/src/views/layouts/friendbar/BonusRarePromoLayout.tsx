@@ -43,16 +43,12 @@ export const BonusRarePromoLayoutTeaserImageContainer = ({ layout, srcPreview, s
             name="teaser_image_container"
             layout={{ width: 96, height: 63, flexShrink: 0, ...layout }}
         >
-            <Region
-                visible={false}
+            <ThemeImage
+                name="preview"
+                src={srcPreview}
                 layout={{ position: 'absolute', left: 27, width: 44, top: 12, height: 38 }}
-            >
-                <ThemeImage
-                    name="preview"
-                    src={srcPreview}
-                    layout={{ position: 'absolute', left: 27, width: 44, top: 12, height: 38 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="promo_image"
                 src={srcPromoImage}

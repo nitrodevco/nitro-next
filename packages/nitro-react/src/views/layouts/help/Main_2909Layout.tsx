@@ -188,12 +188,10 @@ export const Main_2909Layout = ({ faqLink, habbowayLink, layout, onBullyButton, 
                                 onPointerTap={onEmergencyButton}
                                 layout={{ position: 'absolute', width: 183, top: 93, height: 34 }}
                             >
-                                <Region layout={{ position: 'absolute', left: 0, width: 183, top: 0, height: 34, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                                    <ThemeText
-                                        text={t('help.main2.emergency.button')}
-                                        textStyle="text-style-il-regular-white"
-                                    />
-                                </Region>
+                                <ThemeText
+                                    text={t('help.main2.emergency.button')}
+                                    textStyle="text-style-il-regular-white"
+                                />
                             </ContainerButton>
                         </Border>
                     </Region>

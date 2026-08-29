@@ -29,32 +29,30 @@ export const CatalogUbuntuLayout = ({ captionSearchHelper, catalogHeaderBackgrou
             onClose={onClose}
             layout={{ width: 570, height: 640, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <CatalogUbuntuLayoutCatalogHeaderBackgroundBorder {...catalogHeaderBackgroundBorder} />
-                <Border
-                    variant="105"
-                    layout={{ position: 'absolute', left: 8, width: 184, top: 96, height: 24 }}
+            <CatalogUbuntuLayoutCatalogHeaderBackgroundBorder {...catalogHeaderBackgroundBorder} />
+            <Border
+                variant="105"
+                layout={{ position: 'absolute', left: 8, width: 184, top: 96, height: 24 }}
+            >
+                <Region
+                    name="search.helper"
+                    layout={{ position: 'absolute', left: 4, width: 82, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
                 >
-                    <Region
-                        name="search.helper"
-                        layout={{ position: 'absolute', left: 4, width: 82, top: 3, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionSearchHelper ?? t('catalog.search')}
-                            textOptions={{ fill: '#666666' }}
-                        />
-                    </Region>
-                    <TextInput
-                        value={searchInputValue}
-                        onChange={setSearchInputValue}
-                        textColor="#666666"
-                        layout={{ position: 'absolute', left: 4, width: 144, top: 3, height: 18 }}
+                    <ThemeText
+                        text={captionSearchHelper ?? t('catalog.search')}
+                        textOptions={{ fill: '#666666' }}
                     />
-                    <CatalogUbuntuLayoutClearSearchButton {...clearSearchButton} />
-                </Border>
-                <CatalogUbuntuLayoutNavigationContainer {...navigationContainer} />
-                <CatalogUbuntuLayoutLayoutContainer {...layoutContainer} />
-            </Region>
+                </Region>
+                <TextInput
+                    value={searchInputValue}
+                    onChange={setSearchInputValue}
+                    textColor="#666666"
+                    layout={{ position: 'absolute', left: 4, width: 144, top: 3, height: 18 }}
+                />
+                <CatalogUbuntuLayoutClearSearchButton {...clearSearchButton} />
+            </Border>
+            <CatalogUbuntuLayoutNavigationContainer {...navigationContainer} />
+            <CatalogUbuntuLayoutLayoutContainer {...layoutContainer} />
         </Frame>
     );
 };

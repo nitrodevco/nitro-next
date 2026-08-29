@@ -28,54 +28,42 @@ export const ComposeMessageViewLayout = ({ captionCancelBtnLabel, captionSendMes
             onClose={onClose}
             layout={{ width: 455, height: 470, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ComposeMessageViewLayoutTopPart {...topPart} />
-                <ComposeMessageViewLayoutThreadSubjectContainer {...threadSubjectContainer} />
-                <ComposeMessageViewLayoutMessageTextContainer {...messageTextContainer} />
-                <ContainerButton
-                    variant="3"
-                    name="cancel_btn"
-                    tintColor="#dddddd"
-                    onPointerTap={onCancelBtn}
-                    layout={{ position: 'absolute', left: 25, width: 120, bottom: 62, height: 30, minWidth: 120, justifyContent: 'center' }}
-                >
-                    <Region
-                        name="cancel_btn_label"
-                        layout={{ position: 'absolute', marginLeft: 21.5, marginRight: -21.5, width: 163, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionCancelBtnLabel ?? t('groupforum.compose.cancel')}
-                            textStyle="text-style-u-bold"
-                        />
-                    </Region>
-                </ContainerButton>
-                <ContainerButton
-                    variant="3"
-                    name="post_btn"
-                    tintColor="#0a9bc5"
-                    onPointerTap={onPostBtn}
-                    layout={{ position: 'absolute', right: 40, width: 120, bottom: 62, height: 30, minWidth: 120, justifyContent: 'center' }}
-                >
-                    <Region
-                        name="send_message_label"
-                        layout={{ position: 'absolute', marginLeft: 16, marginRight: -16, width: 152, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionSendMessageLabel ?? t('groupforum.compose.post')}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                </ContainerButton>
-                <Region
-                    name="status_text"
-                    layout={{ position: 'absolute', left: 10, right: 21, bottom: 31, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionStatusText ?? 'Thread subject should not be empty!'}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 424 }}
-                    />
-                </Region>
+            <ComposeMessageViewLayoutTopPart {...topPart} />
+            <ComposeMessageViewLayoutThreadSubjectContainer {...threadSubjectContainer} />
+            <ComposeMessageViewLayoutMessageTextContainer {...messageTextContainer} />
+            <ContainerButton
+                variant="3"
+                name="cancel_btn"
+                tintColor="#dddddd"
+                onPointerTap={onCancelBtn}
+                layout={{ position: 'absolute', left: 25, width: 120, bottom: 62, height: 30, minWidth: 120, justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionCancelBtnLabel ?? t('groupforum.compose.cancel')}
+                    textStyle="text-style-u-bold"
+                />
+            </ContainerButton>
+            <ContainerButton
+                variant="3"
+                name="post_btn"
+                tintColor="#0a9bc5"
+                onPointerTap={onPostBtn}
+                layout={{ position: 'absolute', right: 40, width: 120, bottom: 62, height: 30, minWidth: 120, justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionSendMessageLabel ?? t('groupforum.compose.post')}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </ContainerButton>
+            <Region
+                name="status_text"
+                layout={{ position: 'absolute', left: 10, right: 21, bottom: 31, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionStatusText ?? 'Thread subject should not be empty!'}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 424 }}
+                />
             </Region>
         </Frame>
     );

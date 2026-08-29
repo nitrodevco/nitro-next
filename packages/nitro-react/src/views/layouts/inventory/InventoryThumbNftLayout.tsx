@@ -18,16 +18,12 @@ export const InventoryThumbNftLayout = ({ layout, numberContainer, srcOutline, s
                     tintColor="#cacaca"
                     layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
                 >
-                    <Region
-                        visible={false}
+                    <ThemeImage
+                        name="unique_item_background_bitmap"
+                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                         layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                    >
-                        <ThemeImage
-                            name="unique_item_background_bitmap"
-                            src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                            layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                        />
-                    </Region>
+                        visible={false}
+                    />
                     <WidgetSlot
                         widgetType="product_icon"
                         name="nft_icon"
@@ -35,16 +31,12 @@ export const InventoryThumbNftLayout = ({ layout, numberContainer, srcOutline, s
                     />
                     <InventoryThumbNftLayoutNumberContainer {...numberContainer} />
                 </Border>
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="outline"
+                    src={srcOutline ?? layoutImage('inventory_thumb_selected_outline.png')}
                     layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
-                >
-                    <ThemeImage
-                        name="outline"
-                        src={srcOutline ?? layoutImage('inventory_thumb_selected_outline.png')}
-                        layout={{ position: 'absolute', left: 0, width: 42, top: 0, height: 42 }}
-                    />
-                </Region>
+                    visible={false}
+                />
             </Region>
         </Region>
     );

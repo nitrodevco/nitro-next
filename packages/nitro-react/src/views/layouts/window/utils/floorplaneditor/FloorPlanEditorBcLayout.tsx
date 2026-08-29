@@ -30,79 +30,73 @@ export const FloorPlanEditorBcLayout = ({ controlsContainer, heightmapWrapper, l
             onClose={onClose}
             layout={{ width: 662, height: 600, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Region
+                backgroundColor="#4e4844"
+                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50 }}
+            >
                 <Region
-                    backgroundColor="#4e4844"
-                    layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50 }}
+                    backgroundColor="#2d2724"
+                    layout={{ position: 'absolute', left: 3, right: 3, top: 2, height: 45 }}
                 >
-                    <Region
-                        backgroundColor="#2d2724"
-                        layout={{ position: 'absolute', left: 3, right: 3, top: 2, height: 45 }}
-                    >
-                        <ThemeImage
-                            src={layoutImage('floor_plan_editor_logo.png')}
-                            layout={{ position: 'absolute', left: 9, width: 38, top: 5, height: 38 }}
+                    <ThemeImage
+                        src={layoutImage('floor_plan_editor_logo.png')}
+                        layout={{ position: 'absolute', left: 9, width: 38, top: 5, height: 38 }}
+                    />
+                    <Region layout={{ position: 'absolute', left: 74, width: 115, top: 9, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <ThemeText
+                            text={t('floor.plan.editor.subtitle')}
+                            textStyle="text-style-u-small"
+                            textOptions={{ fill: '#ffffff' }}
                         />
-                        <Region layout={{ position: 'absolute', left: 74, width: 115, top: 9, height: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text={t('floor.plan.editor.subtitle')}
-                                textStyle="text-style-u-small"
-                                textOptions={{ fill: '#ffffff' }}
-                            />
-                        </Region>
                     </Region>
                 </Region>
-                <Border
-                    variant="3"
-                    name="heightmap_border"
-                    tintColor="#bdbdb5"
-                    layout={{ position: 'absolute', left: 10, right: 308, top: 57, bottom: 95 }}
-                >
-                    <FloorPlanEditorBcLayoutControlsContainer {...controlsContainer} />
-                    <Border
-                        variant="3"
-                        name="heightmap_bg"
-                        tintColor="#000000"
-                        layout={{ position: 'absolute', left: 0, right: 12, top: 132, bottom: 12 }}
-                    />
-                    <FloorPlanEditorBcLayoutHeightmapWrapper {...heightmapWrapper} />
-                    <FloorPlanEditorBcLayoutMouseCapturer {...mouseCapturer} />
-                    {/* <scrollbar_vertical> for heightmap_wrapper - rendered by that list's ScrollArea */}
-                    {/* <scrollbar_horizontal> for heightmap_wrapper - rendered by that list's ScrollArea */}
-                    <FloorPlanEditorBcLayoutZoom {...zoom} />
-                    <Region layout={{ position: 'absolute', left: 1034, width: 30, top: 108, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText text="hi :)" />
-                    </Region>
-                </Border>
-                <Border
-                    variant="3"
-                    name="preview_border"
-                    tintColor="#bdbdb5"
-                    layout={{ position: 'absolute', right: 7, width: 289, top: 57, bottom: 94 }}
-                >
-                    <FloorPlanEditorBcLayoutRoomControlsItemlist {...roomControlsItemlist} />
-                    <FloorPlanEditorBcLayoutWallHeightControls {...wallHeightControls} />
-                    <Border
-                        variant="3"
-                        name="preview_bitmap_border"
-                        layout={{ position: 'absolute', left: 0, width: 275, top: 133, bottom: 14 }}
-                    />
-                    <FloorPlanEditorBcLayoutPreviewWrapper {...previewWrapper} />
-                    {/* <scrollbar_horizontal> for preview_wrapper - rendered by that list's ScrollArea */}
-                    {/* <scrollbar_vertical> for preview_wrapper - rendered by that list's ScrollArea */}
-                    <Region
-                        visible={false}
-                        layout={{ position: 'absolute', left: 6, width: 30, top: 372, height: 30 }}
-                    >
-                        <ThemeImage
-                            name="refresh"
-                            src={srcRefresh ?? layoutImage('inventory_furni_recycle_icon.png')}
-                            layout={{ position: 'absolute', left: 6, width: 30, top: 372, height: 30 }}
-                        />
-                    </Region>
-                </Border>
-                <FloorPlanEditorBcLayoutMainButtons {...mainButtons} />
             </Region>
+            <Border
+                variant="3"
+                name="heightmap_border"
+                tintColor="#bdbdb5"
+                layout={{ position: 'absolute', left: 10, right: 308, top: 57, bottom: 95 }}
+            >
+                <FloorPlanEditorBcLayoutControlsContainer {...controlsContainer} />
+                <Border
+                    variant="3"
+                    name="heightmap_bg"
+                    tintColor="#000000"
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 132, bottom: 12 }}
+                />
+                <FloorPlanEditorBcLayoutHeightmapWrapper {...heightmapWrapper} />
+                <FloorPlanEditorBcLayoutMouseCapturer {...mouseCapturer} />
+                {/* <scrollbar_vertical> for heightmap_wrapper - rendered by that list's ScrollArea */}
+                {/* <scrollbar_horizontal> for heightmap_wrapper - rendered by that list's ScrollArea */}
+                <FloorPlanEditorBcLayoutZoom {...zoom} />
+                <Region layout={{ position: 'absolute', left: 1034, width: 30, top: 108, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText text="hi :)" />
+                </Region>
+            </Border>
+            <Border
+                variant="3"
+                name="preview_border"
+                tintColor="#bdbdb5"
+                layout={{ position: 'absolute', right: 7, width: 289, top: 57, bottom: 94 }}
+            >
+                <FloorPlanEditorBcLayoutRoomControlsItemlist {...roomControlsItemlist} />
+                <FloorPlanEditorBcLayoutWallHeightControls {...wallHeightControls} />
+                <Border
+                    variant="3"
+                    name="preview_bitmap_border"
+                    layout={{ position: 'absolute', left: 0, width: 275, top: 133, bottom: 14 }}
+                />
+                <FloorPlanEditorBcLayoutPreviewWrapper {...previewWrapper} />
+                {/* <scrollbar_horizontal> for preview_wrapper - rendered by that list's ScrollArea */}
+                {/* <scrollbar_vertical> for preview_wrapper - rendered by that list's ScrollArea */}
+                <ThemeImage
+                    name="refresh"
+                    src={srcRefresh ?? layoutImage('inventory_furni_recycle_icon.png')}
+                    layout={{ position: 'absolute', left: 6, width: 30, top: 372, height: 30 }}
+                    visible={false}
+                />
+            </Border>
+            <FloorPlanEditorBcLayoutMainButtons {...mainButtons} />
         </Frame>
     );
 };

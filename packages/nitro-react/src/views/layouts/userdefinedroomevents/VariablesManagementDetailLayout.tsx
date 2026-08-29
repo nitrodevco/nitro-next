@@ -25,11 +25,9 @@ export const VariablesManagementDetailLayout = ({ header, infoBox, layout, onClo
             onClose={onClose}
             layout={{ width: 339, height: 512, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <VariablesManagementDetailLayoutHeader {...header} />
-                <VariablesManagementDetailLayoutInfoBox {...infoBox} />
-                <VariablesManagementDetailLayoutVariableValuesContainer {...variableValuesContainer} />
-            </Region>
+            <VariablesManagementDetailLayoutHeader {...header} />
+            <VariablesManagementDetailLayoutInfoBox {...infoBox} />
+            <VariablesManagementDetailLayoutVariableValuesContainer {...variableValuesContainer} />
         </Frame>
     );
 };
@@ -291,27 +289,23 @@ export const VariablesManagementDetailLayoutVariableValuesContainer = ({ caption
                     {t('wiredmenu.inspection.add')}
                 </Button>
             </Region>
-            <Region
+            <Bubble
+                variant="7"
+                name="create_var_bubble"
                 visible={visibleCreateVarBubble ?? false}
                 layout={{ position: 'absolute', left: 122, width: 186, top: 95, height: 145 }}
             >
-                <Bubble
-                    variant="7"
-                    name="create_var_bubble"
-                    layout={{ width: '100%', height: '100%' }}
+                <VariablesManagementDetailLayoutVariableSetting {...variableSetting} />
+                <VariablesManagementDetailLayoutValueSetting {...valueSetting} />
+                <Button
+                    variant="3"
+                    name="create_var_btn"
+                    onPointerTap={onCreateVarBtn}
+                    layout={{ position: 'absolute', left: 6, right: 22, bottom: 20, height: 25, minWidth: 158, maxWidth: 158 }}
                 >
-                    <VariablesManagementDetailLayoutVariableSetting {...variableSetting} />
-                    <VariablesManagementDetailLayoutValueSetting {...valueSetting} />
-                    <Button
-                        variant="3"
-                        name="create_var_btn"
-                        onPointerTap={onCreateVarBtn}
-                        layout={{ position: 'absolute', left: 6, right: 22, bottom: 20, height: 25, minWidth: 158, maxWidth: 158 }}
-                    >
-                        {t('wiredmenu.inspection.create')}
-                    </Button>
-                </Bubble>
-            </Region>
+                    {t('wiredmenu.inspection.create')}
+                </Button>
+            </Bubble>
         </Region>
     );
 };

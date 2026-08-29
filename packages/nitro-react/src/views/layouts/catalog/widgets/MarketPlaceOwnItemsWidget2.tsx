@@ -168,16 +168,12 @@ export const MarketPlaceOwnItemsWidget2ImageContainer = ({ layout, srcItemImage,
             name="image_container"
             layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
         >
-            <Region
-                visible={false}
+            <ThemeImage
+                name="unique_item_background_bitmap"
+                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                 layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            >
-                <ThemeImage
-                    name="unique_item_background_bitmap"
-                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="item_image"
                 src={srcItemImage}
@@ -283,16 +279,12 @@ export const MarketPlaceOwnItemsWidget2ImageContainer2 = ({ layout, srcItemImage
             name="image_container"
             layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
         >
-            <Region
-                visible={false}
+            <ThemeImage
+                name="unique_item_background_bitmap"
+                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                 layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            >
-                <ThemeImage
-                    name="unique_item_background_bitmap"
-                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="item_image"
                 src={srcItemImage}
@@ -388,16 +380,12 @@ export const MarketPlaceOwnItemsWidget2ImageContainer3 = ({ layout, srcItemImage
             name="image_container"
             layout={{ position: 'absolute', left: 9, width: 40, top: 9, height: 40, ...layout }}
         >
-            <Region
-                visible={false}
+            <ThemeImage
+                name="unique_item_background_bitmap"
+                src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                 layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-            >
-                <ThemeImage
-                    name="unique_item_background_bitmap"
-                    src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                    layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="item_image"
                 src={srcItemImage}
@@ -548,20 +536,16 @@ export const MarketPlaceOwnItemsWidget2 = ({ captionRedeemInfo, captionStatusTex
             >
                 {t('shop.marketplace.recall.all.button')}
             </Button>
-            <Region
+            <Button
+                variant="3"
+                name="mark_as_seen_button"
+                onPointerTap={onMarkAsSeenButton}
+                textStyle="text-style-button-shiny-regular"
                 visible={visibleMarkAsSeenButton ?? false}
                 layout={{ position: 'absolute', right: 21, width: 90, bottom: 2, height: 24 }}
             >
-                <Button
-                    variant="3"
-                    name="mark_as_seen_button"
-                    onPointerTap={onMarkAsSeenButton}
-                    textStyle="text-style-button-shiny-regular"
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    {t('shop.marketplace.mark.as.seen.button')}
-                </Button>
-            </Region>
+                {t('shop.marketplace.mark.as.seen.button')}
+            </Button>
             <MarketPlaceOwnItemsWidget2ItemList {...itemList} />
         </Region>
     );

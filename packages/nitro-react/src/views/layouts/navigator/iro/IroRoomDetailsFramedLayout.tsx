@@ -27,12 +27,10 @@ export const IroRoomDetailsFramedLayout = ({ buttonsCont, embedInfo, layout, onC
             onClose={onClose}
             layout={{ width: 236, height: 411, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <IroRoomDetailsFramedLayoutEmbedInfo {...embedInfo} />
-                <IroRoomDetailsFramedLayoutPublicSpaceDetails {...publicSpaceDetails} />
-                <IroRoomDetailsFramedLayoutRoomDetails {...roomDetails} />
-                <IroRoomDetailsFramedLayoutButtonsCont {...buttonsCont} />
-            </Region>
+            <IroRoomDetailsFramedLayoutEmbedInfo {...embedInfo} />
+            <IroRoomDetailsFramedLayoutPublicSpaceDetails {...publicSpaceDetails} />
+            <IroRoomDetailsFramedLayoutRoomDetails {...roomDetails} />
+            <IroRoomDetailsFramedLayoutButtonsCont {...buttonsCont} />
         </Frame>
     );
 };
@@ -557,16 +555,12 @@ export const IroRoomDetailsFramedLayoutRoomDetails = ({ captionRoomDesc, caption
         >
             <IroRoomDetailsFramedLayoutRemoveRightsRegion {...removeRightsRegion} />
             <IroRoomDetailsFramedLayoutMakeHomeRegion {...makeHomeRegion} />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="home"
+                src={srcHome}
                 layout={{ position: 'absolute', left: 185, width: 18, top: 1, height: 18 }}
-            >
-                <ThemeImage
-                    name="home"
-                    src={srcHome}
-                    layout={{ position: 'absolute', left: 185, width: 18, top: 1, height: 18 }}
-                />
-            </Region>
+                visible={false}
+            />
             <IroRoomDetailsFramedLayoutFavouriteRegion {...favouriteRegion} />
             <IroRoomDetailsFramedLayoutMakeFavouriteRegion {...makeFavouriteRegion} />
             <Region

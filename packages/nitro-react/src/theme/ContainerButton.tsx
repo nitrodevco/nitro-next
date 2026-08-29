@@ -118,7 +118,7 @@ export interface ContainerButtonProps extends ThemeProps<ContainerButtonVariant>
  */
 export const ContainerButton: ForwardRefExoticComponent<ContainerButtonProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ContainerButtonProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, selected, children,
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, disabled, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
@@ -129,6 +129,7 @@ export const ContainerButton: ForwardRefExoticComponent<ContainerButtonProps & R
         return (
             <Box
                 ref={ref}
+                visible={visible}
                 layout={{ ...config.layout, ...layout }}
                 {...handlers}
                 cursor={handlers.eventMode === 'static' ? 'pointer' : undefined}

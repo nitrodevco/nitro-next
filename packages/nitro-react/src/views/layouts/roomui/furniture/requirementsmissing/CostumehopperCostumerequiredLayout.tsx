@@ -22,14 +22,12 @@ export const CostumehopperCostumerequiredLayout = ({ layout, list, onClose, srcI
             onClose={onClose}
             layout={{ width: 310, height: 149, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ThemeImage
-                    name="illustration"
-                    src={srcIllustration}
-                    layout={{ position: 'absolute', left: 10, width: 1, top: 0, height: 1 }}
-                />
-                <CostumehopperCostumerequiredLayoutList {...list} />
-            </Region>
+            <ThemeImage
+                name="illustration"
+                src={srcIllustration}
+                layout={{ position: 'absolute', left: 10, width: 1, top: 0, height: 1 }}
+            />
+            <CostumehopperCostumerequiredLayoutList {...list} />
         </Frame>
     );
 };

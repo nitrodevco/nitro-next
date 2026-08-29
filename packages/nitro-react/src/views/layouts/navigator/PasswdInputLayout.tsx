@@ -25,44 +25,42 @@ export const PasswdInputLayout = ({ cancelRegion, captionInfo, captionRoomName, 
             onClose={onClose}
             layout={{ width: 237, height: 217, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region
-                    name="room_name"
-                    layout={{ position: 'absolute', left: 10, width: 176, top: 16, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText text={captionRoomName ?? 'Room name'} />
-                </Region>
-                <Region
-                    name="info"
-                    layout={{ position: 'absolute', left: 10, width: 205, top: 35, height: 68, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                >
-                    <ThemeText
-                        text={captionInfo ?? t('navigator.password.info')}
-                        textOptions={{ wordWrap: true, wordWrapWidth: 205 }}
-                    />
-                </Region>
-                <Region layout={{ position: 'absolute', left: 10, width: 97, top: 107, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <ThemeText text={t('navigator.password.enter')} />
-                </Region>
-                <TextInput
-                    value={passwordInputValue}
-                    onChange={setPasswordInputValue}
-                    layout={{ position: 'absolute', left: 113, width: 100, top: 107, height: 19 }}
+            <Region
+                name="room_name"
+                layout={{ position: 'absolute', left: 10, width: 176, top: 16, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText text={captionRoomName ?? 'Room name'} />
+            </Region>
+            <Region
+                name="info"
+                layout={{ position: 'absolute', left: 10, width: 205, top: 35, height: 68, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionInfo ?? t('navigator.password.info')}
+                    textOptions={{ wordWrap: true, wordWrapWidth: 205 }}
                 />
-                <Region
-                    backgroundColor="#eaece8"
-                    layout={{ position: 'absolute', left: 10, width: 207, top: 142, height: 34 }}
+            </Region>
+            <Region layout={{ position: 'absolute', left: 10, width: 97, top: 107, height: 21, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <ThemeText text={t('navigator.password.enter')} />
+            </Region>
+            <TextInput
+                value={passwordInputValue}
+                onChange={setPasswordInputValue}
+                layout={{ position: 'absolute', left: 113, width: 100, top: 107, height: 19 }}
+            />
+            <Region
+                backgroundColor="#eaece8"
+                layout={{ position: 'absolute', left: 10, width: 207, top: 142, height: 34 }}
+            >
+                <PasswdInputLayoutCancelRegion {...cancelRegion} />
+                <Button
+                    variant="3"
+                    name="try"
+                    onPointerTap={onTry}
+                    layout={{ position: 'absolute', left: 110, width: 188, top: 3, height: 28 }}
                 >
-                    <PasswdInputLayoutCancelRegion {...cancelRegion} />
-                    <Button
-                        variant="3"
-                        name="try"
-                        onPointerTap={onTry}
-                        layout={{ position: 'absolute', left: 110, width: 188, top: 3, height: 28 }}
-                    >
-                        {t('navigator.password.button.try')}
-                    </Button>
-                </Region>
+                    {t('navigator.password.button.try')}
+                </Button>
             </Region>
         </Frame>
     );

@@ -24,45 +24,43 @@ export const DimmerUiLayout = ({ captionOffText, layout, onApplyButton, onClose,
             onClose={onClose}
             layout={{ width: 277, height: 225, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="0"
-                    name="off_border"
-                    layout={{ position: 'absolute', left: 6, width: 254, top: 27, height: 133 }}
+            <Border
+                variant="0"
+                name="off_border"
+                layout={{ position: 'absolute', left: 6, width: 254, top: 27, height: 133 }}
+            >
+                <Region
+                    name="off_text"
+                    layout={{ position: 'absolute', left: 19, width: 219, top: 93, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
-                    <Region
-                        name="off_text"
-                        layout={{ position: 'absolute', left: 19, width: 219, top: 93, height: 34, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionOffText ?? t('widget.dimmer.info.off')}
-                            textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 219 }}
-                        />
-                    </Region>
-                    <ThemeImage
-                        name="off_image"
-                        src={srcOffImage}
-                        layout={{ position: 'absolute', left: 96, width: 56, top: 11, height: 79 }}
+                    <ThemeText
+                        text={captionOffText ?? t('widget.dimmer.info.off')}
+                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 219 }}
                     />
-                </Border>
-                <DimmerUiLayoutTabbedview {...tabbedview} />
-                <Button
-                    variant="0"
-                    name="apply_button"
-                    onPointerTap={onApplyButton}
-                    layout={{ position: 'absolute', left: 4, width: 89, top: 166, height: 24 }}
-                >
-                    {t('widget.dimmer.button.apply')}
-                </Button>
-                <Button
-                    variant="0"
-                    name="on_off_button"
-                    onPointerTap={onOnOffButton}
-                    layout={{ position: 'absolute', right: 16, width: 58, top: 167, height: 22 }}
-                >
-                    {t('widget.dimmer.button.on')}
-                </Button>
-            </Region>
+                </Region>
+                <ThemeImage
+                    name="off_image"
+                    src={srcOffImage}
+                    layout={{ position: 'absolute', left: 96, width: 56, top: 11, height: 79 }}
+                />
+            </Border>
+            <DimmerUiLayoutTabbedview {...tabbedview} />
+            <Button
+                variant="0"
+                name="apply_button"
+                onPointerTap={onApplyButton}
+                layout={{ position: 'absolute', left: 4, width: 89, top: 166, height: 24 }}
+            >
+                {t('widget.dimmer.button.apply')}
+            </Button>
+            <Button
+                variant="0"
+                name="on_off_button"
+                onPointerTap={onOnOffButton}
+                layout={{ position: 'absolute', right: 16, width: 58, top: 167, height: 22 }}
+            >
+                {t('widget.dimmer.button.on')}
+            </Button>
         </Frame>
     );
 };

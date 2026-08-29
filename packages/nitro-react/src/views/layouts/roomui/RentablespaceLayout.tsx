@@ -23,11 +23,9 @@ export const RentablespaceLayout = ({ errorView, layout, onClose, rentedView, re
             onClose={onClose}
             layout={{ width: 256, height: 224, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <RentablespaceLayoutRentView {...rentView} />
-                <RentablespaceLayoutRentedView {...rentedView} />
-                <RentablespaceLayoutErrorView {...errorView} />
-            </Region>
+            <RentablespaceLayoutRentView {...rentView} />
+            <RentablespaceLayoutRentedView {...rentedView} />
+            <RentablespaceLayoutErrorView {...errorView} />
         </Frame>
     );
 };
@@ -255,19 +253,15 @@ export const RentablespaceLayoutCancelRentButtonItem = ({ layout, onCancelRentBu
     const t = useTranslation();
 
     return (
-        <Region
+        <Button
+            variant="3"
+            name="cancel_rent_button"
+            onPointerTap={onCancelRentButton}
             visible={visibleCancelRentButton ?? false}
             layout={{ width: 204, height: 30, flexShrink: 0, ...layout }}
         >
-            <Button
-                variant="3"
-                name="cancel_rent_button"
-                onPointerTap={onCancelRentButton}
-                layout={{ width: '100%', height: '100%' }}
-            >
-                {t('rentablespace.widget.cancel_rent')}
-            </Button>
-        </Region>
+            {t('rentablespace.widget.cancel_rent')}
+        </Button>
     );
 };
 

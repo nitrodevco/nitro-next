@@ -231,15 +231,13 @@ export const CatalogVolterLayoutCatalogMainContainer = ({ captionCatalogHeaderDe
                 onClose={onNavigatorMain}
                 layout={{ position: 'absolute', left: 370, width: 175, top: 24, height: 466 }}
             >
-                <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                    <Border
-                        variant="5"
-                        name="navigationContainer"
-                        layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
-                    >
-                        <CatalogVolterLayoutNavigationList {...navigationList} />
-                    </Border>
-                </Region>
+                <Border
+                    variant="5"
+                    name="navigationContainer"
+                    layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 32 }}
+                >
+                    <CatalogVolterLayoutNavigationList {...navigationList} />
+                </Border>
             </Frame>
             <ThemeImage
                 name="layoutBackground"

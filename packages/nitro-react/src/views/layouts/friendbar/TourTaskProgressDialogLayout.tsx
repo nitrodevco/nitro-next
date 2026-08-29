@@ -22,40 +22,38 @@ export const TourTaskProgressDialogLayout = ({ declineTourRegion, layout, onClos
             onClose={onClose}
             layout={{ width: 378, height: 289, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="104"
-                    tintColor="#e2e2e2"
-                    layout={{ position: 'absolute', left: 15, width: 347, top: 0, height: 211 }}
-                >
-                    <Region layout={{ position: 'absolute', left: 0, width: 215, bottom: 2, height: 110 }}>
-                        <ThemeImage
-                            src={layoutImage('help_frank_greeting.png')}
-                            layout={{ position: 'absolute', left: 0, width: 261, top: 0, height: 160 }}
-                        />
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 60, width: 285, top: 10, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('talent.track.progress.tour.header.caption')}
-                            textStyle="text-style-il-heading-2"
-                            textOptions={{ wordWrap: true, wordWrapWidth: 285 }}
-                        />
-                    </Region>
-                    <Region layout={{ position: 'absolute', left: 60, width: 285, top: 27, height: 30, minHeight: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('talent.track.progress.tour.header.body')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 285 }}
-                        />
-                    </Region>
-                    <WidgetSlot
-                        widgetType="separator"
-                        name="action_separator"
-                        layout={{ position: 'absolute', left: 10, width: 325, top: 57, height: 30 }}
+            <Border
+                variant="104"
+                tintColor="#e2e2e2"
+                layout={{ position: 'absolute', left: 15, width: 347, top: 0, height: 211 }}
+            >
+                <Region layout={{ position: 'absolute', left: 0, width: 215, bottom: 2, height: 110 }}>
+                    <ThemeImage
+                        src={layoutImage('help_frank_greeting.png')}
+                        layout={{ position: 'absolute', left: 0, width: 261, top: 0, height: 160 }}
                     />
-                    <TourTaskProgressDialogLayoutTopList {...topList} />
-                </Border>
-                <TourTaskProgressDialogLayoutDeclineTourRegion {...declineTourRegion} />
-            </Region>
+                </Region>
+                <Region layout={{ position: 'absolute', left: 60, width: 285, top: 10, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('talent.track.progress.tour.header.caption')}
+                        textStyle="text-style-il-heading-2"
+                        textOptions={{ wordWrap: true, wordWrapWidth: 285 }}
+                    />
+                </Region>
+                <Region layout={{ position: 'absolute', left: 60, width: 285, top: 27, height: 30, minHeight: 30, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('talent.track.progress.tour.header.body')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 285 }}
+                    />
+                </Region>
+                <WidgetSlot
+                    widgetType="separator"
+                    name="action_separator"
+                    layout={{ position: 'absolute', left: 10, width: 325, top: 57, height: 30 }}
+                />
+                <TourTaskProgressDialogLayoutTopList {...topList} />
+            </Border>
+            <TourTaskProgressDialogLayoutDeclineTourRegion {...declineTourRegion} />
         </Frame>
     );
 };

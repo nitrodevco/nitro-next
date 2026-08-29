@@ -35,134 +35,114 @@ export const MainView_65Layout = ({ captionBackButtonLabel, captionListHeader, c
             onClose={onClose}
             layout={{ width: 552, height: 565, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <MainView_65LayoutTopPart {...topPart} />
-                <MainView_65LayoutShortcuts {...shortcuts} />
-                <Region
-                    name="list_header"
-                    layout={{ position: 'absolute', left: 0, right: 11, top: 115, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            <MainView_65LayoutTopPart {...topPart} />
+            <MainView_65LayoutShortcuts {...shortcuts} />
+            <Region
+                name="list_header"
+                layout={{ position: 'absolute', left: 0, right: 11, top: 115, height: 25, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+            >
+                <ThemeText
+                    text={captionListHeader ?? 'Topic'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#a6a6a2' }}
+                />
+            </Region>
+            <Border
+                variant="7"
+                name="list_border"
+                layout={{ position: 'absolute', left: 0, right: 12, top: 140, bottom: 105 }}
+            >
+                <MainView_65LayoutScrollableMessageList {...scrollableMessageList} />
+            </Border>
+            <ContainerButton
+                variant="3"
+                name="back_button"
+                tintColor="#dddddd"
+                onPointerTap={onBackButton}
+                layout={{ position: 'absolute', left: 10, width: 95, bottom: 62, height: 30, minWidth: 95, justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionBackButtonLabel ?? t('groupforum.view.back')}
+                    textStyle="text-style-u-bold"
+                />
+            </ContainerButton>
+            <ContainerButton
+                variant="3"
+                name="post_button"
+                tintColor="#0a9bc5"
+                onPointerTap={onPostButton}
+                layout={{ position: 'absolute', right: 190, width: 95, bottom: 62, height: 30, minWidth: 95, justifyContent: 'center' }}
+            >
+                <ThemeText
+                    text={captionPostButtonLabel ?? 'Post'}
+                    textStyle="text-style-u-bold"
+                    textOptions={{ fill: '#ffffff' }}
+                />
+            </ContainerButton>
+            <Region layout={{ position: 'absolute', right: 15, width: 165, bottom: 62, height: 30 }}>
+                <ContainerButton
+                    variant="3"
+                    name="show_first"
+                    onPointerTap={onShowFirst}
+                    layout={{ position: 'absolute', right: 140, width: 25, top: 0, height: 30, justifyContent: 'center' }}
                 >
                     <ThemeText
-                        text={captionListHeader ?? 'Topic'}
+                        text="<<"
                         textStyle="text-style-u-bold"
-                        textOptions={{ fill: '#a6a6a2' }}
+                    />
+                </ContainerButton>
+                <ContainerButton
+                    variant="3"
+                    name="show_previous"
+                    onPointerTap={onShowPrevious}
+                    layout={{ position: 'absolute', right: 110, width: 25, top: 0, height: 30, justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text="<"
+                        textStyle="text-style-u-bold"
+                    />
+                </ContainerButton>
+                <Region
+                    name="page_info"
+                    layout={{ position: 'absolute', left: 58, width: 50, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionPageInfo ?? '30/200'}
+                        textOptions={{ fill: '#949491', align: 'center' }}
                     />
                 </Region>
-                <Border
-                    variant="7"
-                    name="list_border"
-                    layout={{ position: 'absolute', left: 0, right: 12, top: 140, bottom: 105 }}
-                >
-                    <MainView_65LayoutScrollableMessageList {...scrollableMessageList} />
-                </Border>
                 <ContainerButton
                     variant="3"
-                    name="back_button"
-                    tintColor="#dddddd"
-                    onPointerTap={onBackButton}
-                    layout={{ position: 'absolute', left: 10, width: 95, bottom: 62, height: 30, minWidth: 95, justifyContent: 'center' }}
+                    name="show_next"
+                    onPointerTap={onShowNext}
+                    layout={{ position: 'absolute', right: 30, width: 25, top: 0, height: 30, justifyContent: 'center' }}
                 >
-                    <Region
-                        name="back_button_label"
-                        layout={{ position: 'absolute', marginLeft: 17.5, marginRight: -17.5, width: 130, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBackButtonLabel ?? t('groupforum.view.back')}
-                            textStyle="text-style-u-bold"
-                        />
-                    </Region>
+                    <ThemeText
+                        text=">"
+                        textStyle="text-style-u-bold"
+                    />
                 </ContainerButton>
                 <ContainerButton
                     variant="3"
-                    name="post_button"
-                    tintColor="#0a9bc5"
-                    onPointerTap={onPostButton}
-                    layout={{ position: 'absolute', right: 190, width: 95, bottom: 62, height: 30, minWidth: 95, justifyContent: 'center' }}
+                    name="show_last"
+                    onPointerTap={onShowLast}
+                    layout={{ position: 'absolute', right: 0, width: 25, top: 0, height: 30, justifyContent: 'center' }}
                 >
-                    <Region
-                        name="post_button_label"
-                        layout={{ position: 'absolute', width: 29, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionPostButtonLabel ?? 'Post'}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
+                    <ThemeText
+                        text=">>"
+                        textStyle="text-style-u-bold"
+                    />
                 </ContainerButton>
-                <Region layout={{ position: 'absolute', right: 15, width: 165, bottom: 62, height: 30 }}>
-                    <ContainerButton
-                        variant="3"
-                        name="show_first"
-                        onPointerTap={onShowFirst}
-                        layout={{ position: 'absolute', right: 140, width: 25, top: 0, height: 30, justifyContent: 'center' }}
-                    >
-                        <Region layout={{ position: 'absolute', width: 17, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text="<<"
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
-                    </ContainerButton>
-                    <ContainerButton
-                        variant="3"
-                        name="show_previous"
-                        onPointerTap={onShowPrevious}
-                        layout={{ position: 'absolute', right: 110, width: 25, top: 0, height: 30, justifyContent: 'center' }}
-                    >
-                        <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 10, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text="<"
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
-                    </ContainerButton>
-                    <Region
-                        name="page_info"
-                        layout={{ position: 'absolute', left: 58, width: 50, top: 5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionPageInfo ?? '30/200'}
-                            textOptions={{ fill: '#949491', align: 'center' }}
-                        />
-                    </Region>
-                    <ContainerButton
-                        variant="3"
-                        name="show_next"
-                        onPointerTap={onShowNext}
-                        layout={{ position: 'absolute', right: 30, width: 25, top: 0, height: 30, justifyContent: 'center' }}
-                    >
-                        <Region layout={{ position: 'absolute', marginLeft: -0.5, marginRight: 0.5, width: 10, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text=">"
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
-                    </ContainerButton>
-                    <ContainerButton
-                        variant="3"
-                        name="show_last"
-                        onPointerTap={onShowLast}
-                        layout={{ position: 'absolute', right: 0, width: 25, top: 0, height: 30, justifyContent: 'center' }}
-                    >
-                        <Region layout={{ position: 'absolute', width: 17, alignSelf: 'center', marginTop: 0.5, marginBottom: -0.5, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <ThemeText
-                                text=">>"
-                                textStyle="text-style-u-bold"
-                            />
-                        </Region>
-                    </ContainerButton>
-                </Region>
-                <Region layout={{ position: 'absolute', right: 72, width: 300, bottom: 30, height: 20 }}>
-                    <Region
-                        name="status"
-                        layout={{ position: 'absolute', left: 3, right: -3, bottom: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionStatus ?? 'Status text'}
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
+            </Region>
+            <Region layout={{ position: 'absolute', right: 72, width: 300, bottom: 30, height: 20 }}>
+                <Region
+                    name="status"
+                    layout={{ position: 'absolute', left: 3, right: -3, bottom: 1, height: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionStatus ?? 'Status text'}
+                        textOptions={{ align: 'center' }}
+                    />
                 </Region>
             </Region>
         </Frame>

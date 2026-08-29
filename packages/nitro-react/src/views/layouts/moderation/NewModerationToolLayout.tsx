@@ -22,10 +22,8 @@ export const NewModerationToolLayout = ({ layout, mainView, onClose, subviewWrap
             onClose={onClose}
             layout={{ width: 238, height: 206, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <NewModerationToolLayoutMainView {...mainView} />
-                <NewModerationToolLayoutSubviewWrapper {...subviewWrapper} />
-            </Region>
+            <NewModerationToolLayoutMainView {...mainView} />
+            <NewModerationToolLayoutSubviewWrapper {...subviewWrapper} />
         </Frame>
     );
 };

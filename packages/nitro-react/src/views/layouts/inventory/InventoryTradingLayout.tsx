@@ -45,15 +45,11 @@ export const InventoryTradingLayout = ({ buttonContainer, captionHelpText, capti
                     </Region>
                     <InventoryTradingLayoutOffers0 {...offers0} />
                     <InventoryTradingLayoutOffers1 {...offers1} />
-                    <Region
-                        visible={false}
+                    <ThemeImage
+                        src={layoutImage('inventory_trading_trading_split_icon.png')}
                         layout={{ position: 'absolute', left: 212, width: 53, top: 95, height: 42 }}
-                    >
-                        <ThemeImage
-                            src={layoutImage('inventory_trading_trading_split_icon.png')}
-                            layout={{ position: 'absolute', left: 212, width: 53, top: 95, height: 42 }}
-                        />
-                    </Region>
+                        visible={false}
+                    />
                     <WidgetSlot
                         widgetType="separator"
                         options={{ 'separator:vertical': 'true' }}

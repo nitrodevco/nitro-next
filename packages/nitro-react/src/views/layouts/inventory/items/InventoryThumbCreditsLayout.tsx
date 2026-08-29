@@ -21,16 +21,12 @@ export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap
                     tintColor="#cacaca"
                     layout={{ position: 'absolute', left: 1, width: 40, top: 1, height: 40 }}
                 >
-                    <Region
-                        visible={false}
+                    <ThemeImage
+                        name="unique_item_background_bitmap"
+                        src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
                         layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                    >
-                        <ThemeImage
-                            name="unique_item_background_bitmap"
-                            src={srcUniqueItemBackgroundBitmap ?? layoutImage('unique_item_label_1.png')}
-                            layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
-                        />
-                    </Region>
+                        visible={false}
+                    />
                     <ThemeImage
                         name="bitmap"
                         src={srcBitmap}
@@ -43,16 +39,12 @@ export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap
                         options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false' }}
                         layout={{ position: 'absolute', left: 0, width: 40, top: 0, height: 40 }}
                     />
-                    <Region
-                        visible={false}
+                    <ThemeImage
+                        name="recyclable_container"
+                        src={srcRecyclableContainer ?? layoutImage('inventory_thumb_icon_recycle.png')}
                         layout={{ position: 'absolute', left: 2, width: 16, top: 3, height: 16 }}
-                    >
-                        <ThemeImage
-                            name="recyclable_container"
-                            src={srcRecyclableContainer ?? layoutImage('inventory_thumb_icon_recycle.png')}
-                            layout={{ position: 'absolute', left: 2, width: 16, top: 3, height: 16 }}
-                        />
-                    </Region>
+                        visible={false}
+                    />
                     <WidgetSlot
                         widgetType="limited_item_overlay_grid"
                         name="unique_item_overlay_container"
@@ -66,16 +58,12 @@ export const InventoryThumbCreditsLayout = ({ layout, numberContainer, srcBitmap
                         layout={{ position: 'absolute', left: 2, width: 36, top: 2, height: 36 }}
                     />
                     <InventoryThumbCreditsLayoutNumberContainer {...numberContainer} />
-                    <Region
-                        visible={false}
+                    <ThemeImage
+                        name="rent_state"
+                        src={srcRentState ?? layoutImage('inventory_thumb_rent_started.png')}
                         layout={{ position: 'absolute', left: 4, width: 10, top: 4, height: 10 }}
-                    >
-                        <ThemeImage
-                            name="rent_state"
-                            src={srcRentState ?? layoutImage('inventory_thumb_rent_started.png')}
-                            layout={{ position: 'absolute', left: 4, width: 10, top: 4, height: 10 }}
-                        />
-                    </Region>
+                        visible={false}
+                    />
                 </Border>
                 <ThemeImage
                     name="outline"

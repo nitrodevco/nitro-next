@@ -21,9 +21,7 @@ export const ErrorInfoViewLayout = ({ contents, layout, onClose }: ErrorInfoView
             onClose={onClose}
             layout={{ width: 337, height: 148, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ErrorInfoViewLayoutContents {...contents} />
-            </Region>
+            <ErrorInfoViewLayoutContents {...contents} />
         </Frame>
     );
 };

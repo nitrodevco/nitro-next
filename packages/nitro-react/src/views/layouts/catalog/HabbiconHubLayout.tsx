@@ -31,50 +31,48 @@ export const HabbiconHubLayout = ({ albumHeader, allSetsContainer, habbiconPopup
             onClose={onClose}
             layout={{ width: 560, height: 570, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
+            <Border
+                variant="3"
+                name="album_background"
+                tintColor="#d7d1be"
+                layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 40 }}
+            />
+            <HabbiconHubLayoutAlbumHeader {...albumHeader} />
+            <HabbiconHubLayoutTabsBg {...tabsBg} />
+            <TabContext
+                variant="3"
+                name="tab_context"
+                tintColor="#0fffff"
+                layout={{ position: 'absolute', left: 7, width: 540, top: 113, height: 33 }}
+            >
+                <TabButton
                     variant="3"
-                    name="album_background"
-                    tintColor="#d7d1be"
-                    layout={{ position: 'absolute', left: 0, right: 6, top: 0, bottom: 40 }}
-                />
-                <HabbiconHubLayoutAlbumHeader {...albumHeader} />
-                <HabbiconHubLayoutTabsBg {...tabsBg} />
-                <TabContext
-                    variant="3"
-                    name="tab_context"
-                    tintColor="#0fffff"
-                    layout={{ position: 'absolute', left: 7, width: 540, top: 113, height: 33 }}
+                    name="tab_all_sets"
+                    onPointerTap={onTabAllSets}
+                    layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 32 }}
                 >
-                    <TabButton
-                        variant="3"
-                        name="tab_all_sets"
-                        onPointerTap={onTabAllSets}
-                        layout={{ position: 'absolute', left: 0, width: 64, top: 0, height: 32 }}
-                    >
-                        {t('habbicon_book.tab.all_sets')}
-                    </TabButton>
-                    <TabButton
-                        variant="3"
-                        name="tab_owned"
-                        onPointerTap={onTabOwned}
-                        layout={{ position: 'absolute', left: 64, width: 64, top: 0, height: 32 }}
-                    >
-                        {t('habbicon_book.tab.owned')}
-                    </TabButton>
-                    <TabButton
-                        variant="3"
-                        name="tab_favourited"
-                        onPointerTap={onTabFavourited}
-                        layout={{ position: 'absolute', left: 128, width: 82, top: 0, height: 32 }}
-                    >
-                        {t('habbicon_book.tab.favourited')}
-                    </TabButton>
-                </TabContext>
-                <HabbiconHubLayoutAllSetsContainer {...allSetsContainer} />
-                <HabbiconHubLayoutTrayContainer {...trayContainer} />
-                <HabbiconHubLayoutHabbiconPopupLayer {...habbiconPopupLayer} />
-            </Region>
+                    {t('habbicon_book.tab.all_sets')}
+                </TabButton>
+                <TabButton
+                    variant="3"
+                    name="tab_owned"
+                    onPointerTap={onTabOwned}
+                    layout={{ position: 'absolute', left: 64, width: 64, top: 0, height: 32 }}
+                >
+                    {t('habbicon_book.tab.owned')}
+                </TabButton>
+                <TabButton
+                    variant="3"
+                    name="tab_favourited"
+                    onPointerTap={onTabFavourited}
+                    layout={{ position: 'absolute', left: 128, width: 82, top: 0, height: 32 }}
+                >
+                    {t('habbicon_book.tab.favourited')}
+                </TabButton>
+            </TabContext>
+            <HabbiconHubLayoutAllSetsContainer {...allSetsContainer} />
+            <HabbiconHubLayoutTrayContainer {...trayContainer} />
+            <HabbiconHubLayoutHabbiconPopupLayer {...habbiconPopupLayer} />
         </Frame>
     );
 };
@@ -649,26 +647,18 @@ export const HabbiconHubLayoutTileTemplateItem = ({ layout, lockedOverlay, onTil
                 layout={{ position: 'absolute', left: 5, width: 40, top: 5, height: 40, minWidth: 40, maxWidth: 40 }}
             />
             <HabbiconHubLayoutLockedOverlay {...lockedOverlay} />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="favorite_icon"
+                src={srcFavoriteIcon ?? layoutImage('icon_habbicon_fav.png')}
                 layout={{ position: 'absolute', left: 2, width: 14, top: 2, height: 14 }}
-            >
-                <ThemeImage
-                    name="favorite_icon"
-                    src={srcFavoriteIcon ?? layoutImage('icon_habbicon_fav.png')}
-                    layout={{ position: 'absolute', left: 2, width: 14, top: 2, height: 14 }}
-                />
-            </Region>
-            <Region
                 visible={false}
+            />
+            <ThemeImage
+                name="claimable_icon"
+                src={srcClaimableIcon ?? layoutImage('icon_notification_corner_mid.png')}
                 layout={{ position: 'absolute', left: 31, width: 18, top: 1, height: 18 }}
-            >
-                <ThemeImage
-                    name="claimable_icon"
-                    src={srcClaimableIcon ?? layoutImage('icon_notification_corner_mid.png')}
-                    layout={{ position: 'absolute', left: 31, width: 18, top: 1, height: 18 }}
-                />
-            </Region>
+                visible={false}
+            />
         </Region>
     );
 };
@@ -943,26 +933,18 @@ export const HabbiconHubLayoutTrayTileTemplateItem = ({ layout, lockedOverlay, o
                 layout={{ position: 'absolute', left: 5, width: 40, top: 5, height: 40, minWidth: 40, maxWidth: 40 }}
             />
             <HabbiconHubLayoutLockedOverlay2 {...lockedOverlay} />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="favorite_icon"
+                src={srcFavoriteIcon ?? layoutImage('icon_habbicon_fav.png')}
                 layout={{ position: 'absolute', left: 2, width: 14, top: 2, height: 14 }}
-            >
-                <ThemeImage
-                    name="favorite_icon"
-                    src={srcFavoriteIcon ?? layoutImage('icon_habbicon_fav.png')}
-                    layout={{ position: 'absolute', left: 2, width: 14, top: 2, height: 14 }}
-                />
-            </Region>
-            <Region
                 visible={false}
+            />
+            <ThemeImage
+                name="claimable_icon"
+                src={srcClaimableIcon ?? layoutImage('icon_notification_corner_mid.png')}
                 layout={{ position: 'absolute', left: 31, width: 18, top: 1, height: 18 }}
-            >
-                <ThemeImage
-                    name="claimable_icon"
-                    src={srcClaimableIcon ?? layoutImage('icon_notification_corner_mid.png')}
-                    layout={{ position: 'absolute', left: 31, width: 18, top: 1, height: 18 }}
-                />
-            </Region>
+                visible={false}
+            />
         </Region>
     );
 };

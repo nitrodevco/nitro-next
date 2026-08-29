@@ -27,43 +27,41 @@ export const NavigatorFrame2Layout = ({ layout, leftPaneHide, onClose, onTopView
             onClose={onClose}
             layout={{ width: 578, height: 628, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
+            <Border
+                variant="3"
+                tintColor="#eceae0"
+                layout={{ position: 'absolute', left: -3, right: 4, top: -3, bottom: 53 }}
+            />
+            <NavigatorFrame2LayoutWhiteBackground {...whiteBackground} />
+            <Border
+                variant="2"
+                name="left_pane"
+                layout={{ position: 'absolute', left: 6, width: 141, top: 35, bottom: 55 }}
+            >
+                <NavigatorFrame2LayoutLeftPaneHide {...leftPaneHide} />
+                <NavigatorFrame2LayoutQuicklinksList {...quicklinksList} />
+            </Border>
+            <NavigatorFrame2LayoutRightPane {...rightPane} />
+            <NavigatorFrame2LayoutTempBack {...tempBack} />
+            <ThemeImage
+                src={layoutImage('talent_task_progress_bg.png')}
+                layout={{ position: 'absolute', left: -2, right: -5, top: 28, height: 1 }}
+            />
+            <TabContext
+                variant="3"
+                name="top_view_select_tab_context"
+                layout={{ position: 'absolute', left: 115, width: 450, top: -1, height: 30 }}
+            >
+                <TabButton
                     variant="3"
-                    tintColor="#eceae0"
-                    layout={{ position: 'absolute', left: -3, right: 4, top: -3, bottom: 53 }}
-                />
-                <NavigatorFrame2LayoutWhiteBackground {...whiteBackground} />
-                <Border
-                    variant="2"
-                    name="left_pane"
-                    layout={{ position: 'absolute', left: 6, width: 141, top: 35, bottom: 55 }}
+                    name="top_view_select_tab_button"
+                    tooltip={t('navigator.tooltip.select.tab')}
+                    onPointerTap={onTopViewSelectTabButton}
+                    layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 32 }}
                 >
-                    <NavigatorFrame2LayoutLeftPaneHide {...leftPaneHide} />
-                    <NavigatorFrame2LayoutQuicklinksList {...quicklinksList} />
-                </Border>
-                <NavigatorFrame2LayoutRightPane {...rightPane} />
-                <NavigatorFrame2LayoutTempBack {...tempBack} />
-                <ThemeImage
-                    src={layoutImage('talent_task_progress_bg.png')}
-                    layout={{ position: 'absolute', left: -2, right: -5, top: 28, height: 1 }}
-                />
-                <TabContext
-                    variant="3"
-                    name="top_view_select_tab_context"
-                    layout={{ position: 'absolute', left: 115, width: 450, top: -1, height: 30 }}
-                >
-                    <TabButton
-                        variant="3"
-                        name="top_view_select_tab_button"
-                        tooltip={t('navigator.tooltip.select.tab')}
-                        onPointerTap={onTopViewSelectTabButton}
-                        layout={{ position: 'absolute', left: 0, width: 88, top: 0, height: 32 }}
-                    >
-                        top view ph
-                    </TabButton>
-                </TabContext>
-            </Region>
+                    top view ph
+                </TabButton>
+            </TabContext>
         </Frame>
     );
 };
@@ -194,23 +192,19 @@ export const NavigatorFrame2LayoutQuickLinkItem = ({ captionQuickLinkText, layou
             >
                 <ThemeText text={captionQuickLinkText ?? 'quick link ph oijasdf oaijs dfodisjf'} />
             </Region>
-            <Region
+            <ContainerButton
+                variant="0"
+                name="remove_quick_link"
+                tooltip={t('navigator.tooltip.remove.saved.search')}
+                onPointerTap={onRemoveQuickLink}
                 visible={visibleRemoveQuickLink ?? false}
                 layout={{ position: 'absolute', left: 115, width: 16, top: 1, height: 16 }}
             >
-                <ContainerButton
-                    variant="0"
-                    name="remove_quick_link"
-                    tooltip={t('navigator.tooltip.remove.saved.search')}
-                    onPointerTap={onRemoveQuickLink}
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    <ThemeImage
-                        src={layoutImage('newnavigator_icon_ql_remove.png')}
-                        layout={{ position: 'absolute', left: 3, width: 10, top: 3, height: 10 }}
-                    />
-                </ContainerButton>
-            </Region>
+                <ThemeImage
+                    src={layoutImage('newnavigator_icon_ql_remove.png')}
+                    layout={{ position: 'absolute', left: 3, width: 10, top: 3, height: 10 }}
+                />
+            </ContainerButton>
         </Region>
     );
 };
@@ -1324,18 +1318,14 @@ export const NavigatorFrame2LayoutRightPane = ({ blockResults, createRoom, layou
             >
                 <NavigatorFrame2LayoutRandomRoom {...randomRoom} />
             </Border>
-            <Region
+            <Border
+                variant="5"
+                name="promote_room_border"
                 visible={visiblePromoteRoomBorder ?? false}
                 layout={{ position: 'absolute', left: 205, width: 189, bottom: 0, height: 60 }}
             >
-                <Border
-                    variant="5"
-                    name="promote_room_border"
-                    layout={{ width: '100%', height: '100%' }}
-                >
-                    <NavigatorFrame2LayoutPromoteRoom {...promoteRoom} />
-                </Border>
-            </Region>
+                <NavigatorFrame2LayoutPromoteRoom {...promoteRoom} />
+            </Border>
             <NavigatorFrame2LayoutSearchTools {...searchTools} />
             <NavigatorFrame2LayoutBlockResults {...blockResults} />
             <NavigatorFrame2LayoutSearchWaitingForResultsMask {...searchWaitingForResultsMask} />

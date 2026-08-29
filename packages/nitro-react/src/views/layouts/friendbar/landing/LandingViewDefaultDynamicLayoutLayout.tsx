@@ -72,16 +72,12 @@ export const LandingViewDefaultDynamicLayoutLayoutContentBackground = ({ caption
                 src={srcBackgroundRight}
                 layout={{ position: 'absolute', right: 1, width: 526, bottom: 38, height: 407 }}
             />
-            <Region
-                visible={false}
+            <ThemeImage
+                name="left-right_divider"
+                src={srcLeftRightDivider ?? layoutImage('landing_view_reception_horizontal.png')}
                 layout={{ position: 'absolute', left: 890, width: 2, top: 1, height: 670 }}
-            >
-                <ThemeImage
-                    name="left-right_divider"
-                    src={srcLeftRightDivider ?? layoutImage('landing_view_reception_horizontal.png')}
-                    layout={{ position: 'absolute', left: 890, width: 2, top: 1, height: 670 }}
-                />
-            </Region>
+                visible={false}
+            />
             <ThemeImage
                 name="background_horizon"
                 src={srcBackgroundHorizon}

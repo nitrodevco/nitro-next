@@ -134,19 +134,14 @@ export const RoomCompetitionLayoutInfoRegion = ({ captionInfoTxt, colorableTextC
     return (
         <Region
             name="info_region"
+            layout={{ position: 'absolute', left: 57, width: 250, top: 46, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start', ...layout }}
             onPointerTap={onInfoRegion}
             cursor="pointer"
-            layout={{ position: 'absolute', left: 57, width: 250, top: 46, height: 50, ...layout }}
         >
-            <Region
-                name="info_txt"
-                layout={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionInfoTxt ?? 'Link text ph'}
-                    textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 250 }}
-                />
-            </Region>
+            <ThemeText
+                text={captionInfoTxt ?? 'Link text ph'}
+                textOptions={{ fill: colorableTextColor, wordWrap: true, wordWrapWidth: 250 }}
+            />
         </Region>
     );
 };

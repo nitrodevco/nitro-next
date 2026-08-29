@@ -32,7 +32,7 @@ export interface BubbleProps extends ThemeProps<BubbleVariant> {
 }
 
 export const Bubble: ForwardRefExoticComponent<BubbleProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, BubbleProps>(
-    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, usePointer = true, pointer = 'down', children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
+    ({ variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, usePointer = true, pointer = 'down', children, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant<BubbleVariant>({
             cascadeKey: 'bubble', variants: BUBBLE_VARIANTS, variant, defaultVariant, tintColor, textStyle, textColor, onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
         });
@@ -44,6 +44,7 @@ export const Bubble: ForwardRefExoticComponent<BubbleProps & RefAttributes<PixiC
             >
                 <Box
                     ref={ref}
+                    visible={visible}
                     layout={{ ...config.layout, ...layout }}
                 >
                     <BackgroundLayer

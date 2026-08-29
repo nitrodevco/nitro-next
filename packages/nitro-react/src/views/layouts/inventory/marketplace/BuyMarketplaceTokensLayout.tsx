@@ -20,32 +20,30 @@ export const BuyMarketplaceTokensLayout = ({ layout, onBuyTokensButton, onCancel
             onClose={onClose}
             layout={{ width: 283, height: 175, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 36 }}>
-                    <Region layout={{ position: 'absolute', left: 6, width: 255, top: 6, height: 69, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('inventory.marketplace.buy_tokens.info')}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 255 }}
-                        />
-                    </Region>
-                    <Button
-                        variant="6"
-                        name="buy_tokens_button"
-                        tintColor="#00aa00"
-                        onPointerTap={onBuyTokensButton}
-                        layout={{ position: 'absolute', left: 9, width: 157, top: 107, height: 28 }}
-                    >
-                        {t('inventory.marketplace.buy_tokens.buy')}
-                    </Button>
-                    <Button
-                        variant="3"
-                        name="cancel_buy_tokens_button"
-                        onPointerTap={onCancelBuyTokensButton}
-                        layout={{ position: 'absolute', right: 10, width: 56, top: 106, height: 28 }}
-                    >
-                        {t('inventory.marketplace.buy_tokens.cancel')}
-                    </Button>
+            <Region layout={{ position: 'absolute', left: 0, right: 12, top: 0, bottom: 36 }}>
+                <Region layout={{ position: 'absolute', left: 6, width: 255, top: 6, height: 69, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('inventory.marketplace.buy_tokens.info')}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 255 }}
+                    />
                 </Region>
+                <Button
+                    variant="6"
+                    name="buy_tokens_button"
+                    tintColor="#00aa00"
+                    onPointerTap={onBuyTokensButton}
+                    layout={{ position: 'absolute', left: 9, width: 157, top: 107, height: 28 }}
+                >
+                    {t('inventory.marketplace.buy_tokens.buy')}
+                </Button>
+                <Button
+                    variant="3"
+                    name="cancel_buy_tokens_button"
+                    onPointerTap={onCancelBuyTokensButton}
+                    layout={{ position: 'absolute', right: 10, width: 56, top: 106, height: 28 }}
+                >
+                    {t('inventory.marketplace.buy_tokens.cancel')}
+                </Button>
             </Region>
         </Frame>
     );

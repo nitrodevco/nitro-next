@@ -26,60 +26,58 @@ export const PlaylisteditorMainWindowLayout = ({ layout, musicInventoryItemgrid,
             onClose={onClose}
             layout={{ width: 582, height: 437, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
+            <Border
+                variant="0"
+                name="my_music_border"
+                layout={{ position: 'absolute', left: 0, width: 303, top: 0, height: 407 }}
+            >
+                <PlaylisteditorMainWindowLayoutMusicInventoryItemgrid {...musicInventoryItemgrid} />
+                {/* <scrollbar_vertical> for music_inventory_itemgrid - rendered by that list's ScrollArea */}
                 <Border
-                    variant="0"
-                    name="my_music_border"
-                    layout={{ position: 'absolute', left: 0, width: 303, top: 0, height: 407 }}
-                >
-                    <PlaylisteditorMainWindowLayoutMusicInventoryItemgrid {...musicInventoryItemgrid} />
-                    {/* <scrollbar_vertical> for music_inventory_itemgrid - rendered by that list's ScrollArea */}
-                    <Border
-                        variant="2"
-                        tintColor="#60863b"
-                        layout={{ position: 'absolute', left: 4, width: 295, top: 4, height: 79 }}
+                    variant="2"
+                    tintColor="#60863b"
+                    layout={{ position: 'absolute', left: 4, width: 295, top: 4, height: 79 }}
+                />
+                <ThemeImage
+                    name="music_inventory_splash_image"
+                    src={srcMusicInventorySplashImage}
+                    layout={{ position: 'absolute', left: 1, right: 293, top: 1, height: 100 }}
+                />
+                <Region layout={{ position: 'absolute', left: 96, width: 234, top: 29, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('playlist.editor.my.music')}
+                        textStyle="text-style-bold"
+                        textOptions={{ fill: '#ffffff' }}
                     />
-                    <ThemeImage
-                        name="music_inventory_splash_image"
-                        src={srcMusicInventorySplashImage}
-                        layout={{ position: 'absolute', left: 1, right: 293, top: 1, height: 100 }}
-                    />
-                    <Region layout={{ position: 'absolute', left: 96, width: 234, top: 29, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('playlist.editor.my.music')}
-                            textStyle="text-style-bold"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                    <PlaylisteditorMainWindowLayoutPreviewPlayContainer {...previewPlayContainer} />
-                </Border>
+                </Region>
+                <PlaylisteditorMainWindowLayoutPreviewPlayContainer {...previewPlayContainer} />
+            </Border>
+            <Border
+                variant="0"
+                name="playlist_border"
+                layout={{ position: 'absolute', left: 307, width: 263, top: 0, height: 407 }}
+            >
+                <PlaylisteditorMainWindowLayoutPlaylistEditorItemlist {...playlistEditorItemlist} />
+                {/* <scrollbar_vertical> for playlist_editor_itemlist - rendered by that list's ScrollArea */}
                 <Border
-                    variant="0"
-                    name="playlist_border"
-                    layout={{ position: 'absolute', left: 307, width: 263, top: 0, height: 407 }}
-                >
-                    <PlaylisteditorMainWindowLayoutPlaylistEditorItemlist {...playlistEditorItemlist} />
-                    {/* <scrollbar_vertical> for playlist_editor_itemlist - rendered by that list's ScrollArea */}
-                    <Border
-                        variant="2"
-                        tintColor="#34637a"
-                        layout={{ position: 'absolute', left: 5, width: 255, top: 5, height: 79 }}
+                    variant="2"
+                    tintColor="#34637a"
+                    layout={{ position: 'absolute', left: 5, width: 255, top: 5, height: 79 }}
+                />
+                <ThemeImage
+                    name="playlist_editor_splash_image"
+                    src={srcPlaylistEditorSplashImage}
+                    layout={{ position: 'absolute', left: 1, width: 100, top: 1, height: 100 }}
+                />
+                <Region layout={{ position: 'absolute', left: 96, width: 217, top: 29, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('playlist.editor.playlist')}
+                        textStyle="text-style-bold"
+                        textOptions={{ fill: '#ffffff' }}
                     />
-                    <ThemeImage
-                        name="playlist_editor_splash_image"
-                        src={srcPlaylistEditorSplashImage}
-                        layout={{ position: 'absolute', left: 1, width: 100, top: 1, height: 100 }}
-                    />
-                    <Region layout={{ position: 'absolute', left: 96, width: 217, top: 29, height: 26, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('playlist.editor.playlist')}
-                            textStyle="text-style-bold"
-                            textOptions={{ fill: '#ffffff' }}
-                        />
-                    </Region>
-                    <PlaylisteditorMainWindowLayoutNowPlayingContainer {...nowPlayingContainer} />
-                </Border>
-            </Region>
+                </Region>
+                <PlaylisteditorMainWindowLayoutNowPlayingContainer {...nowPlayingContainer} />
+            </Border>
         </Frame>
     );
 };

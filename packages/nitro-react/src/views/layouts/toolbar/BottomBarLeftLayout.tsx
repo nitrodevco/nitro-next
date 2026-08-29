@@ -527,15 +527,11 @@ export const BottomBarLeftLayoutMainToolbar = ({ arrowContainerLeft, arrowContai
             name="main_toolbar"
             layout={{ position: 'absolute', left: 0, width: 623, top: 0, height: 46, ...layout }}
         >
-            <Region
-                visible={false}
+            <ThemeImage
+                src={layoutImage('common_beta_sign.png')}
                 layout={{ position: 'absolute', left: 60, width: 35, top: 25, height: 16 }}
-            >
-                <ThemeImage
-                    src={layoutImage('common_beta_sign.png')}
-                    layout={{ position: 'absolute', left: 60, width: 35, top: 25, height: 16 }}
-                />
-            </Region>
+                visible={false}
+            />
             <BottomBarLeftLayoutArrowContainerLeft {...arrowContainerLeft} />
             <BottomBarLeftLayoutArrowContainerRight {...arrowContainerRight} />
             <BottomBarLeftLayoutToolbarItems {...toolbarItems} />

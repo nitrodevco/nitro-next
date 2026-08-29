@@ -22,9 +22,7 @@ export const ReportWindowLayout = ({ layout, list, onClose }: ReportWindowLayout
             onClose={onClose}
             layout={{ width: 282, height: 347, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ReportWindowLayoutList {...list} />
-            </Region>
+            <ReportWindowLayoutList {...list} />
         </Frame>
     );
 };

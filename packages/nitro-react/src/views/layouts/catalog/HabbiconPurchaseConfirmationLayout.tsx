@@ -21,9 +21,7 @@ export const HabbiconPurchaseConfirmationLayout = ({ content, layout, onClose }:
             onClose={onClose}
             layout={{ width: 353, height: 296, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <HabbiconPurchaseConfirmationLayoutContent {...content} />
-            </Region>
+            <HabbiconPurchaseConfirmationLayoutContent {...content} />
         </Frame>
     );
 };

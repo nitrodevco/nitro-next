@@ -120,7 +120,7 @@ export interface HeaderProps extends ThemeProps<HeaderVariant> {
 
 export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, HeaderProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, caption, onClose,
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, caption, onClose,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
@@ -131,6 +131,7 @@ export const Header: ForwardRefExoticComponent<HeaderProps & RefAttributes<PixiC
         return (
             <Box
                 ref={ref}
+                visible={visible}
                 {...handlers}
                 layout={{
                     flexDirection: 'row',

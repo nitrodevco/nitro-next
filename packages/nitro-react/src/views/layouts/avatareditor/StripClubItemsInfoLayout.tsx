@@ -21,9 +21,7 @@ export const StripClubItemsInfoLayout = ({ border, layout, onClose }: StripClubI
             onClose={onClose}
             layout={{ width: 278, height: 154, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <StripClubItemsInfoLayoutBorder {...border} />
-            </Region>
+            <StripClubItemsInfoLayoutBorder {...border} />
         </Frame>
     );
 };

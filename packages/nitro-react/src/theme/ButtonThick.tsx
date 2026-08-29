@@ -96,7 +96,7 @@ export interface ButtonThickProps extends ThemeProps<ButtonThickVariant> {
 
 export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttributes<PixiContainer>> = forwardRef<PixiContainer, ButtonThickProps>(
     ({
-        variant, defaultVariant, layout, tintColor, textStyle, textColor, disabled, selected, children,
+        variant, defaultVariant, layout, tintColor, textStyle, textColor, visible, disabled, selected, children,
         onPointerOver, onPointerOut, onPointerDown, onPointerUp, onPointerUpOutside, onPointerTap,
     }, ref) => {
         const { ownCascade, config, handlers, resolvedLayer, resolvedOverlay, resolvedTint, resolvedTextStyle, resolvedTextColor } = useThemeVariant({
@@ -107,6 +107,7 @@ export const ButtonThick: ForwardRefExoticComponent<ButtonThickProps & RefAttrib
         return (
             <Box
                 ref={ref}
+                visible={visible}
                 layout={{
                     flexDirection: 'row',
                     justifyContent: 'center',

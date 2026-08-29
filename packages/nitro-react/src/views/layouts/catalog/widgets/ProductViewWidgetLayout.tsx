@@ -201,26 +201,18 @@ export const ProductViewWidgetLayoutMainContainer = ({ bundleGrid, captionCtlgDe
                         textOptions={{ fill: '#ffffff', wordWrap: true, wordWrapWidth: 280 }}
                     />
                 </Region>
-                <Region
-                    visible={false}
+                <ThemeImage
+                    name="tradeable_icon"
+                    src={srcTradeableIcon ?? layoutImage('inventory_furni_no_trade_icon.png')}
                     layout={{ width: 40, height: 16, flexShrink: 0 }}
-                >
-                    <ThemeImage
-                        name="tradeable_icon"
-                        src={srcTradeableIcon ?? layoutImage('inventory_furni_no_trade_icon.png')}
-                        layout={{ width: 40, height: 16, flexShrink: 0 }}
-                    />
-                </Region>
-                <Region
                     visible={false}
+                />
+                <ThemeImage
+                    name="recyclable_icon"
+                    src={srcRecyclableIcon ?? layoutImage('inventory_furni_no_recycle_icon.png')}
                     layout={{ width: 28, height: 16, flexShrink: 0 }}
-                >
-                    <ThemeImage
-                        name="recyclable_icon"
-                        src={srcRecyclableIcon ?? layoutImage('inventory_furni_no_recycle_icon.png')}
-                        layout={{ width: 28, height: 16, flexShrink: 0 }}
-                    />
-                </Region>
+                    visible={false}
+                />
             </Region>
         </Region>
     );

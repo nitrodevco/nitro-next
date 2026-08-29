@@ -78,16 +78,12 @@ export const UniqueItemOverlaySupplyLayoutLimitedItemWidget = ({ captionItemsLef
                     textOptions={{ align: 'right' }}
                 />
             </Region>
-            <Region
-                visible={false}
+            <ThemeImage
+                name="unique_item_sold_out_bitmap"
+                src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_label.png')}
                 layout={{ position: 'absolute', left: 0, width: 40, top: 1, height: 36 }}
-            >
-                <ThemeImage
-                    name="unique_item_sold_out_bitmap"
-                    src={srcUniqueItemSoldOutBitmap ?? layoutImage('unique_item_sold_out_label.png')}
-                    layout={{ position: 'absolute', left: 0, width: 40, top: 1, height: 36 }}
-                />
-            </Region>
+                visible={false}
+            />
         </Region>
     );
 };

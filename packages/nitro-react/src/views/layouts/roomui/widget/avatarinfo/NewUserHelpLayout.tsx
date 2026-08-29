@@ -10,27 +10,23 @@ export interface NewUserHelpLayoutProps {
 export const NewUserHelpLayout = ({ captionHelp, layout, visibleBorder }: NewUserHelpLayoutProps) => {
     return (
         <Region layout={{ position: 'relative', width: 140, height: 51, ...layout }}>
-            <Region
+            <Bubble
+                variant="1"
+                name="border"
                 visible={visibleBorder ?? true}
                 layout={{ position: 'absolute', left: 0, width: 30, top: 0, height: 30 }}
             >
-                <Bubble
-                    variant="1"
-                    name="border"
-                    layout={{ width: '100%', height: '100%' }}
+                <Region
+                    name="help"
+                    layout={{ position: 'absolute', left: 5, top: 5, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
-                    <Region
-                        name="help"
-                        layout={{ position: 'absolute', left: 5, top: 5, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionHelp ?? ''}
-                            textStyle="text-style-u-bold"
-                            textOptions={{ wordWrap: true }}
-                        />
-                    </Region>
-                </Bubble>
-            </Region>
+                    <ThemeText
+                        text={captionHelp ?? ''}
+                        textStyle="text-style-u-bold"
+                        textOptions={{ wordWrap: true }}
+                    />
+                </Region>
+            </Bubble>
         </Region>
     );
 };

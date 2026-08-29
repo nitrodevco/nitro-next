@@ -21,31 +21,29 @@ export const SimpleAlert_1492Layout = ({ captionBodyText, layout, onClose, onOk 
             onClose={onClose}
             layout={{ width: 161, height: 157, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Border
-                    variant="0"
-                    name="border"
-                    layout={{ position: 'absolute', left: 0, width: 150, top: 0, height: 100 }}
+            <Border
+                variant="0"
+                name="border"
+                layout={{ position: 'absolute', left: 0, width: 150, top: 0, height: 100 }}
+            >
+                <Region
+                    name="body_text"
+                    layout={{ position: 'absolute', left: 5, width: 140, top: 0, height: 140, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
-                    <Region
-                        name="body_text"
-                        layout={{ position: 'absolute', left: 5, width: 140, top: 0, height: 140, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
-                            textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 140 }}
-                        />
-                    </Region>
-                </Border>
-                <Button
-                    variant="0"
-                    name="ok"
-                    onPointerTap={onOk}
-                    layout={{ position: 'absolute', left: 47, width: 60, top: 104, height: 21, minWidth: 60, maxWidth: 60 }}
-                >
-                    {t('generic.ok')}
-                </Button>
-            </Region>
+                    <ThemeText
+                        text={captionBodyText ?? 'PH loren ipsum dolor pubba hubba duppa papatiti'}
+                        textOptions={{ fill: '#000000', wordWrap: true, wordWrapWidth: 140 }}
+                    />
+                </Region>
+            </Border>
+            <Button
+                variant="0"
+                name="ok"
+                onPointerTap={onOk}
+                layout={{ position: 'absolute', left: 47, width: 60, top: 104, height: 21, minWidth: 60, maxWidth: 60 }}
+            >
+                {t('generic.ok')}
+            </Button>
         </Frame>
     );
 };

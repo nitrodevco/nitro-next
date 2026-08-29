@@ -21,9 +21,7 @@ export const GroupInfoWindowLayout = ({ groupCont, layout, onClose }: GroupInfoW
             onClose={onClose}
             layout={{ width: 363, height: 268, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <GroupInfoWindowLayoutGroupCont {...groupCont} />
-            </Region>
+            <GroupInfoWindowLayoutGroupCont {...groupCont} />
         </Frame>
     );
 };

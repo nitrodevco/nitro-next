@@ -26,54 +26,52 @@ export const LevelUpLayout = ({ captionCloseButton, captionLevelUpMessage, layou
             onClose={onClose}
             layout={{ width: 430, height: 362, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <Region layout={{ position: 'absolute', left: 10, top: 10, flexDirection: 'column' }}>
-                    <Region layout={{ width: 291, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text={t('talent.track.common.levelup.title')}
-                            textStyle="text-style-il-heading-title"
-                        />
-                    </Region>
-                    <Region
-                        name="level_up_message"
-                        layout={{ width: 410, height: 37, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionLevelUpMessage ?? t('talent.track.helper.levelup.message')}
-                            textStyle="text-style-il-heading-2"
-                            textOptions={{ fill: '#444444', wordWrap: true, wordWrapWidth: 410 }}
-                        />
-                    </Region>
-                    <Border
-                        variant="102"
-                        layout={{ width: 406, height: 176, flexShrink: 0, minWidth: 406, minHeight: 70 }}
-                    >
-                        <LevelUpLayoutLevelUpLayout {...levelUpLayout} />
-                    </Border>
-                    <Button
-                        variant="101"
-                        name="talent_button"
-                        tintColor="#bbbbbb"
-                        onPointerTap={onTalentButton}
-                        layout={{ width: 221, height: 53, flexShrink: 0 }}
-                    >
-                        {t('talent.track.common.levelup.check')}
-                    </Button>
-                    <Region
-                        name="close_button"
-                        layout={{ width: 94, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                        onPointerTap={onCloseButton}
-                        cursor="pointer"
-                    >
-                        <ThemeText text={captionCloseButton ?? t('alert.close.button')} />
-                    </Region>
+            <Region layout={{ position: 'absolute', left: 10, top: 10, flexDirection: 'column' }}>
+                <Region layout={{ width: 291, height: 24, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text={t('talent.track.common.levelup.title')}
+                        textStyle="text-style-il-heading-title"
+                    />
                 </Region>
-                <ThemeImage
-                    name="level_decoration"
-                    src={srcLevelDecoration}
-                    layout={{ position: 'absolute', left: 280, width: 260, bottom: 13, height: 260 }}
-                />
+                <Region
+                    name="level_up_message"
+                    layout={{ width: 410, height: 37, flexShrink: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionLevelUpMessage ?? t('talent.track.helper.levelup.message')}
+                        textStyle="text-style-il-heading-2"
+                        textOptions={{ fill: '#444444', wordWrap: true, wordWrapWidth: 410 }}
+                    />
+                </Region>
+                <Border
+                    variant="102"
+                    layout={{ width: 406, height: 176, flexShrink: 0, minWidth: 406, minHeight: 70 }}
+                >
+                    <LevelUpLayoutLevelUpLayout {...levelUpLayout} />
+                </Border>
+                <Button
+                    variant="101"
+                    name="talent_button"
+                    tintColor="#bbbbbb"
+                    onPointerTap={onTalentButton}
+                    layout={{ width: 221, height: 53, flexShrink: 0 }}
+                >
+                    {t('talent.track.common.levelup.check')}
+                </Button>
+                <Region
+                    name="close_button"
+                    layout={{ width: 94, height: 16, flexShrink: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                    onPointerTap={onCloseButton}
+                    cursor="pointer"
+                >
+                    <ThemeText text={captionCloseButton ?? t('alert.close.button')} />
+                </Region>
             </Region>
+            <ThemeImage
+                name="level_decoration"
+                src={srcLevelDecoration}
+                layout={{ position: 'absolute', left: 280, width: 260, bottom: 13, height: 260 }}
+            />
         </Frame>
     );
 };

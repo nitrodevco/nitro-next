@@ -22,26 +22,24 @@ export const VimeoViewerLayout = ({ layout, onClose, videoBackground }: VimeoVie
             onClose={onClose}
             layout={{ width: 451, height: 356, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <VimeoViewerLayoutVideoBackground {...videoBackground} />
-                <Border
-                    variant="3"
-                    name="video_id_editor"
-                    layout={{ position: 'absolute', left: 12, right: 18, top: 12, height: 19 }}
-                >
-                    <Region layout={{ position: 'absolute', left: 1, width: 52, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                        <ThemeText
-                            text="Video id:"
-                            textStyle="text-style-u-bold"
-                        />
-                    </Region>
-                    <TextInput
-                        value={videoIdValue}
-                        onChange={setVideoIdValue}
-                        layout={{ position: 'absolute', left: 53, right: 2, top: 1, height: 17 }}
+            <VimeoViewerLayoutVideoBackground {...videoBackground} />
+            <Border
+                variant="3"
+                name="video_id_editor"
+                layout={{ position: 'absolute', left: 12, right: 18, top: 12, height: 19 }}
+            >
+                <Region layout={{ position: 'absolute', left: 1, width: 52, top: 1, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <ThemeText
+                        text="Video id:"
+                        textStyle="text-style-u-bold"
                     />
-                </Border>
-            </Region>
+                </Region>
+                <TextInput
+                    value={videoIdValue}
+                    onChange={setVideoIdValue}
+                    layout={{ position: 'absolute', left: 53, right: 2, top: 1, height: 17 }}
+                />
+            </Border>
         </Frame>
     );
 };

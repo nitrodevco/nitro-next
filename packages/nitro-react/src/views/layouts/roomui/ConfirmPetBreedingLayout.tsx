@@ -21,10 +21,8 @@ export const ConfirmPetBreedingLayout = ({ buttonList, elementList, layout, onCl
             onClose={onClose}
             layout={{ width: 320, height: 623, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <ConfirmPetBreedingLayoutElementList {...elementList} />
-                <ConfirmPetBreedingLayoutButtonList {...buttonList} />
-            </Region>
+            <ConfirmPetBreedingLayoutElementList {...elementList} />
+            <ConfirmPetBreedingLayoutButtonList {...buttonList} />
         </Frame>
     );
 };

@@ -23,10 +23,8 @@ export const PremiumPurchaseConfirmationLayout = ({ buttons, content, layout, on
             onClose={onClose}
             layout={{ width: 390, height: 352, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <PremiumPurchaseConfirmationLayoutContent {...content} />
-                <PremiumPurchaseConfirmationLayoutButtons {...buttons} />
-            </Region>
+            <PremiumPurchaseConfirmationLayoutContent {...content} />
+            <PremiumPurchaseConfirmationLayoutButtons {...buttons} />
         </Frame>
     );
 };

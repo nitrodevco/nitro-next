@@ -21,10 +21,8 @@ export const IroEventSettingsLayout = ({ buttons, inputsCont, layout, onClose }:
             onClose={onClose}
             layout={{ width: 241, height: 191, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <IroEventSettingsLayoutInputsCont {...inputsCont} />
-                <IroEventSettingsLayoutButtons {...buttons} />
-            </Region>
+            <IroEventSettingsLayoutInputsCont {...inputsCont} />
+            <IroEventSettingsLayoutButtons {...buttons} />
         </Frame>
     );
 };

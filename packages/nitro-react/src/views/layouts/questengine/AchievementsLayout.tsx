@@ -32,69 +32,67 @@ export const AchievementsLayout = ({ achievementsHeaderCont, achievementsList, c
             onClose={onClose}
             layout={{ width: 389, height: 297, ...layout }}
         >
-            <Region layout={{ position: 'relative', flex: 1, width: '100%' }}>
-                <AchievementsLayoutCategoriesCont {...categoriesCont} />
-                <AchievementsLayoutCategoriesFooterCont {...categoriesFooterCont} />
-                <AchievementsLayoutAchievementsHeaderCont {...achievementsHeaderCont} />
-                <AchievementsLayoutAchievementsList {...achievementsList} />
-                <Border
-                    variant="0"
-                    name="achievement_cont"
-                    tintColor="#cccccc"
-                    layout={{ position: 'absolute', left: 15, right: 14, top: 0, height: 129 }}
+            <AchievementsLayoutCategoriesCont {...categoriesCont} />
+            <AchievementsLayoutCategoriesFooterCont {...categoriesFooterCont} />
+            <AchievementsLayoutAchievementsHeaderCont {...achievementsHeaderCont} />
+            <AchievementsLayoutAchievementsList {...achievementsList} />
+            <Border
+                variant="0"
+                name="achievement_cont"
+                tintColor="#cccccc"
+                layout={{ position: 'absolute', left: 15, right: 14, top: 0, height: 129 }}
+            >
+                <Region
+                    name="achievement_name_txt"
+                    layout={{ position: 'absolute', left: 114, right: 8, top: 18, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
                 >
-                    <Region
-                        name="achievement_name_txt"
-                        layout={{ position: 'absolute', left: 114, right: 8, top: 18, height: 17, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionAchievementNameTxt ?? 'Achievement Name Placeholder'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 238 }}
-                        />
-                    </Region>
-                    <WidgetSlot
-                        widgetType="badge_image"
-                        name="achievement_pic_bitmap"
-                        options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '2', 'badge_image:zoom_y': '2' }}
-                        layout={{ position: 'absolute', left: 10, width: 85, top: 12, height: 85 }}
+                    <ThemeText
+                        text={captionAchievementNameTxt ?? 'Achievement Name Placeholder'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 238 }}
                     />
-                    <Region
-                        name="achievement_desc_txt"
-                        layout={{ position: 'absolute', left: 114, right: 8, top: 34, height: 47, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText
-                            text={captionAchievementDescTxt ?? 'Achievement Desc: pasdsad sadaddsad sadsa as dasd sad asd sada sdas das dsad sad asd asd ad ada sdas dsa das dsa dsad jhg jhg jh gjh gjh g'}
-                            textOptions={{ wordWrap: true, wordWrapWidth: 238 }}
-                        />
-                    </Region>
-                    <Region
-                        name="reward_caption_txt"
-                        layout={{ position: 'absolute', left: 113, width: 162, bottom: 38, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionRewardCaptionTxt ?? t('achievements.details.reward')} />
-                    </Region>
-                    <Region
-                        name="reward_amount_txt"
-                        layout={{ position: 'absolute', left: 164, width: 23, bottom: 38, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-                    >
-                        <ThemeText text={captionRewardAmountTxt ?? '200'} />
-                    </Region>
-                    <Icon
-                        variant="0"
-                        name="currency_icon"
-                        layout={{ position: 'absolute', left: 183, width: 23, bottom: 33, height: 26 }}
+                </Region>
+                <WidgetSlot
+                    widgetType="badge_image"
+                    name="achievement_pic_bitmap"
+                    options={{ 'badge_image:pivot_point': 'center', 'badge_image:stretched_x': 'false', 'badge_image:stretched_y': 'false', 'badge_image:zoom_x': '2', 'badge_image:zoom_y': '2' }}
+                    layout={{ position: 'absolute', left: 10, width: 85, top: 12, height: 85 }}
+                />
+                <Region
+                    name="achievement_desc_txt"
+                    layout={{ position: 'absolute', left: 114, right: 8, top: 34, height: 47, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText
+                        text={captionAchievementDescTxt ?? 'Achievement Desc: pasdsad sadaddsad sadsa as dasd sad asd sada sdas das dsad sad asd asd ad ada sdas dsa das dsa dsad jhg jhg jh gjh gjh g'}
+                        textOptions={{ wordWrap: true, wordWrapWidth: 238 }}
                     />
-                    <Region
-                        name="level_txt"
-                        layout={{ position: 'absolute', left: 4, width: 95, top: 97, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
-                    >
-                        <ThemeText
-                            text={captionLevelTxt ?? t('achievements.details.level')}
-                            textOptions={{ align: 'center' }}
-                        />
-                    </Region>
-                </Border>
-            </Region>
+                </Region>
+                <Region
+                    name="reward_caption_txt"
+                    layout={{ position: 'absolute', left: 113, width: 162, bottom: 38, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionRewardCaptionTxt ?? t('achievements.details.reward')} />
+                </Region>
+                <Region
+                    name="reward_amount_txt"
+                    layout={{ position: 'absolute', left: 164, width: 23, bottom: 38, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
+                >
+                    <ThemeText text={captionRewardAmountTxt ?? '200'} />
+                </Region>
+                <Icon
+                    variant="0"
+                    name="currency_icon"
+                    layout={{ position: 'absolute', left: 183, width: 23, bottom: 33, height: 26 }}
+                />
+                <Region
+                    name="level_txt"
+                    layout={{ position: 'absolute', left: 4, width: 95, top: 97, height: 17, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                >
+                    <ThemeText
+                        text={captionLevelTxt ?? t('achievements.details.level')}
+                        textOptions={{ align: 'center' }}
+                    />
+                </Region>
+            </Border>
         </Frame>
     );
 };

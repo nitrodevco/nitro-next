@@ -94,18 +94,13 @@ export const MemenuEffectSelectedLayoutEffectAmountBg2 = ({ captionEffectAmount,
     return (
         <Region
             name="effect_amount_bg2"
+            layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', ...layout }}
             backgroundColor="#666666"
-            layout={{ position: 'absolute', left: 1, width: 18, top: 1, height: 13, ...layout }}
         >
-            <Region
-                name="effect_amount"
-                layout={{ position: 'absolute', left: 0, width: 18, top: 0, height: 13, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}
-            >
-                <ThemeText
-                    text={captionEffectAmount ?? '99'}
-                    textOptions={{ fill: '#eeeeee' }}
-                />
-            </Region>
+            <ThemeText
+                text={captionEffectAmount ?? '99'}
+                textOptions={{ fill: '#eeeeee' }}
+            />
         </Region>
     );
 };
